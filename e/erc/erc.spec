@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -41,7 +41,7 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #chmod a+x %buildroot%_datadir/%name/{erc-}*
 
 %files
-%doc README LICENSE TODO
+%doc README.md LICENSE TODO
 %_bindir/erc
 %_bindir/unerc
 %_bindir/ercat
@@ -50,6 +50,19 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Thu Feb 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.9-alt1
+- ercat: use pigz when available for faster decompression
+- ercat: use parallel decompressors (pigz, pbzip2, pixz) when available
+- erc: refactor AppImage extraction with --appimage-offset support
+- erc-sh-archive: add content detection via file(1) mime-type
+- erc: get_archive_type uses file(1) with extension priority
+- ercat: add stdin support, decomp/unpack_type refactor
+- erc: add basename command
+- erc: support repack for any format pair with 7z backend
+- add new README.md with project description and usage examples
+- erc: add -C/--directory/--extract-to/--destination/--outdir to extract to specified directory
+- ercat: skip broken files instead of aborting when processing multiple files
+
 * Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
 - erc fix: prevent code execution via AppImage and regex injection
 - erc fix: quote shell variables to prevent word splitting
