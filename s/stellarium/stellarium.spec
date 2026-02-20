@@ -36,7 +36,7 @@
 
 Name: stellarium
 Version: 25.4
-Release: alt1
+Release: alt2
 
 Summary: Astronomical Sky Simulator
 
@@ -74,6 +74,7 @@ BuildRequires: rpm-build-python3
 
 %{?_with_media:BuildRequires: qt6-multimedia-devel}
 %{?_with_text2speech:BuildRequires: qt6-speech-devel}
+%{?_with_text2speech:Requires: speech-dispatcher}
 
 %{?_with_lensdistortion:BuildRequires: libnlopt-devel}
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
@@ -173,6 +174,9 @@ xvfb-run %ctest -E testCalendars
 %_datadir/%name
 
 %changelog
+* Fri Feb 20 2026 Grigory Ustinov <grenka@altlinux.org> 25.4-alt2
+- Added rt dependency on speech-dispatcher to fix speech output support.
+
 * Thu Feb 19 2026 Grigory Ustinov <grenka@altlinux.org> 25.4-alt1
 - Built new version (Closes: #57521).
 - Improved documetation building.
