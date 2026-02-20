@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: A small application for viewing images
@@ -12,6 +12,8 @@ Vcs: https://altlinux.space/shad/minivi
 
 Source: %name-%version.tar
 Source1: minivi.desktop
+
+Requires: libwebp-tools
 
 BuildRequires: lazarus
 
@@ -44,6 +46,9 @@ install -Dm 0644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %doc README.md
 
 %changelog
+* Fri Feb 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.5-alt1
+- 0.10.4 -> 0.10.5
+
 * Mon Feb 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.4-alt1
 - 0.10.3 -> 0.10.4
 - changed Url tag
