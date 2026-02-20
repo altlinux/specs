@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        144.0.7559.132
+Version:        145.0.7632.109
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -44,6 +44,10 @@ Source100:      chromium.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      chromium.default
+# https://github.com/rollup/rollup/blob/master/LICENSE-CORE.md
+# third_party/devtools-frontend/src/package-lock.json
+# https://npm.skia.org/chrome-devtools/@rollup%%2frollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.22.4.tgz
+Source300:      rollup-linux-arm64-gnu-4.22.4.tgz
 
 %if_enabled gost
 # git clone --recurse-submodules https://github.com/deemru/chromium-gost.git
@@ -81,6 +85,7 @@ Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-gentoo-stylesheet.patch
 
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch012: 0012-DEBIAN-swiftshader-use-llvm-16.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
@@ -89,14 +94,19 @@ Patch017: 0017-DEBIAN-rust-sanitize.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
+Patch020: 0020-ALT-swiftshader-fix-llvm.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-ALT-block-error-from-google.patch
 Patch023: 0023-Add-missing-headers.patch
-Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
+Patch027: 0027-DEBIAN-disable-tests-swiftshader.patch
+Patch028: 0028-DEBIAN-jxl-simd-avx512.patch
+Patch029: 0029-DEBIAN-swiftshader-fix-build.patch
+Patch030: 0030-DEBIAN-disable-rustc-allow-features.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
+Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
 Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
@@ -122,15 +132,15 @@ Patch063: 0063-DEBIAN-value-or.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
-Patch066: 0066-DEBIAN-fix-rk3588-v4l2-av1-decoder.patch
+Patch066: 0066-DEBIAN-swiftshader-dependencies.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
-# Backport only CVE fixes:
-Patch068: 0068-DEBIAN-CVE-2026-1861.patch
-Patch069: 0069-DEBIAN-CVE-2026-1862.patch
+Patch068: 0068-DEBIAN-disable-unrar.patch
+Patch069: 0069-DEBIAN-disable-enterprise-tests.patch
 
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
+Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -148,6 +158,7 @@ BuildRequires:  brotli
 BuildRequires:  bzlib-devel
 BuildRequires:  chrpath
 BuildRequires:  elfutils
+BuildRequires:  esbuild
 BuildRequires:  flex
 BuildRequires:  glibc-kernheaders
 BuildRequires:  gperf
@@ -161,6 +172,7 @@ BuildRequires:  libcxxabi-devel
 BuildRequires:  libcxxabi-static
 BuildRequires:  llvm-libunwind-devel
 BuildRequires:  llvm-libunwind-static
+BuildRequires:  libpthreadpool-devel
 #BuildRequires:  libtiff-devel
 BuildRequires:  ninja-build
 BuildRequires:  node
@@ -336,6 +348,20 @@ subst 's/-static-libstdc++/--stdlib=libc++/' `grep -Rl 'static-libstdc++' *`
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
 
+%ifnarch x86_64
+# Add correct path for esbuild binary
+%define es_new %(rpmquery --qf '%%{VERSION}' esbuild)
+%define es_old "0\.25\.1"
+sed -i 's!%es_old!"%es_new"!g' `grep -Rl \"%es_old\" third_party/devtools-frontend/src`
+mkdir -p third_party/devtools-frontend/src/third_party/esbuild
+ln -sf %_bindir/esbuild third_party/devtools-frontend/src/third_party/esbuild/esbuild
+%endif
+
+# unpack rollup binary for aarch64
+%ifarch aarch64
+tar xf %SOURCE300 && mv package third_party/devtools-frontend/src/node_modules/@rollup/rollup-linux-arm64-gnu
+%endif
+
 mkdir -p buildtools/third_party/eu-strip/bin
 ln -sf %_bindir/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
 
@@ -495,6 +521,11 @@ gn_arg+=( enable_vulkan=false )
 gn_arg+=( use_system_libtiff=false )
 gn_arg+=( safe_browsing_use_unrar=false )
 gn_arg+=( build_dawn_tests=false )
+gn_arg+=( webnn_use_tflite=false )
+gn_arg+=( enable_perfetto_unittests=false )
+gn_arg+=( skia_enable_skshaper_tests=false )
+gn_arg+=( tint_build_unittests=false )
+gn_arg+=( enable_screen_ai_browsertests=false )
 
 %if_enabled google_api_keys
 ### From 2013 until early 2021, Google permitted distribution builds of
@@ -661,6 +692,33 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Feb 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.109-alt1
+- New version (145.0.7632.109).
+- Fixes:
+  + CVE-2026-2648: Heap buffer overflow in PDFium
+  + CVE-2026-2649: Integer overflow in V8
+  + CVE-2026-2650: Heap buffer overflow in Media
+
+* Sat Feb 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.75-alt1
+- New version (145.0.7632.75).
+- Fixes:
+  + CVE-2026-2441: Use after free in CSS
+
+* Wed Feb 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.45-alt1
+- New version (145.0.7632.45).
+- Fixes:
+  + CVE-2026-2313: Use after free in CSS
+  + CVE-2026-2314: Heap buffer overflow in Codecs
+  + CVE-2026-2315: Inappropriate implementation in WebGPU
+  + CVE-2026-2316: Insufficient policy enforcement in Frames
+  + CVE-2026-2317: Inappropriate implementation in Animation
+  + CVE-2026-2318: Inappropriate implementation in PictureInPicture
+  + CVE-2026-2319: Race in DevTools
+  + CVE-2026-2320: Inappropriate implementation in File input
+  + CVE-2026-2321: Use after free in Ozone
+  + CVE-2026-2322: Inappropriate implementation in File input
+  + CVE-2026-2323: Inappropriate implementation in Downloads
+
 * Thu Feb 05 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.132-alt1
 - New version (144.0.7559.132).
 - Fixes:
