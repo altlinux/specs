@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.9
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,11 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Feb 20 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt4
+- Fixed replication schedule day offset (thx Vladimir Rubanov):
+  + corrected weekday index to align with MS-ADTS convention (week starts on Sunday)
+  + resolves incorrect display and calculation of schedule by one day
+
 * Tue Feb 17 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt3
 - Added support for AD site links replication scheduling (thx Vladimir Rubanov):
   + implemented site-link and connection management commands
