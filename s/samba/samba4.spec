@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.9
-Release: alt4
+Release: alt5
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,9 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt5
+- Fix missing admx presentaions for firewalld (thx Valentin Sokolov) (Closes #43955).
+
 * Fri Feb 20 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt4
 - Fixed replication schedule day offset (thx Vladimir Rubanov):
   + corrected weekday index to align with MS-ADTS convention (week starts on Sunday)
