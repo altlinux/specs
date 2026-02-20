@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
@@ -50,8 +50,6 @@ autoflake also removes useless pass statements by default.
 
 %install
 %pyproject_install
-rm %buildroot%python3_sitelibdir/{LICENSE,README.md}
-find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 
 %check
 %pyproject_run_unittest test_autoflake.py
@@ -64,6 +62,9 @@ find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.3-alt1
+- Updated to 2.3.3.
+
 * Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.2-alt1
 - Updated to 2.3.2.
 
