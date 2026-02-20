@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: rpmlint
-Version: 2.4.0
-Release: alt2
+Version: 2.9.0
+Release: alt1
 
 Summary: Tool for checking common errors in RPM packages
 License: GPL-2
@@ -74,6 +74,9 @@ python3 -m pytest
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 20 2026 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt1
+- updated from 2.4.0 to 2.9.0
+
 * Wed Apr 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt2
 - backport fix for python-magic and add requires python3(magic).
 - add requires python3(tomli).
