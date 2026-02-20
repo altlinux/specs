@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -1087,6 +1087,7 @@ mkdir -p %buildroot%_systemd_dir/logind.conf.d
 # systemd-oomd default configuration
 install -D -m 0644 -t %buildroot%_systemd_dir/oomd.conf.d/ %SOURCE44
 install -D -m 0644 -t %buildroot%_unitdir/system.slice.d/ %SOURCE45
+install -D -m 0644 -t %buildroot%_unitdir/user.slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_user_unitdir/slice.d/ %SOURCE45
 
 # increase vm.max_map_count
@@ -1947,6 +1948,7 @@ fi
 
 %exclude %_gen_dir/systemd-import-generator
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
+%exclude %_unitdir/user.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
 %if_enabled networkd
@@ -2352,6 +2354,7 @@ fi
 %files oomd-defaults
 %_systemd_dir/oomd.conf.d/10-oomd-defaults.conf
 %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
+%_unitdir/user.slice.d/10-oomd-per-slice-defaults.conf
 %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
 %files container
@@ -2648,6 +2651,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Feb 19 2026 Alexey Shabalin <shaba@altlinux.org> 1:258.4-alt1
+- 258.4.
+- Add /usr/lib/systemd/system/user.slice.d/10-oomd-per-slice-defaults.conf (ALT#57794).
+
 * Tue Dec 23 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.3-alt1
 - 258.3.
 
