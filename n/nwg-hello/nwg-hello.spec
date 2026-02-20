@@ -2,7 +2,7 @@
 %define _tmpfilesdir /lib/tmpfiles.d
 
 Name: nwg-hello
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: GTK3-based greeter for greetd written in python
@@ -65,6 +65,9 @@ install -Dm 644 %{name}.tmpfiles %buildroot/%_tmpfilesdir/%{name}.conf
 %_var/cache/%name/cache.json
 
 %changelog
+* Fri Feb 20 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.3-alt1
+- New version 0.4.3.
+
 * Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.2-alt1
 - New version 0.4.2.
 

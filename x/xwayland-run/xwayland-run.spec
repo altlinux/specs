@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xwayland-run
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Set of utilities to run X/Wayland headless
@@ -48,5 +48,8 @@ Xwayland and various Wayland compositor headless.
 %python3_sitelibdir/wlheadless
 
 %changelog
+* Fri Feb 20 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.5-alt1
+- New version 0.0.5.
+
 * Sat May 24 2025 Nikolay Strelkov <snk@altlinux.org> 0.0.4-alt1
 - Initial build for Sisyphus
