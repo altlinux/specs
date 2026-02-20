@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %_var
 Name: t4k_common
 Version: 0.1.1
-Release: alt6.gita6c6b15
+Release: alt7.gita6c6b15
 Url: https://github.com/tux4kids/t4kcommon
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 BuildRequires: gcc-c++ libSDL_ttf-devel
 BuildRequires: libSDL-devel libSDL_mixer-devel libSDL_image-devel
 BuildRequires: libSDL_pango-devel libSDL_net-devel librsvg-devel librsvg-gir-devel libcairo-devel
-BuildRequires: libpng-devel libxml2-devel doxygen libespeak-ng-devel
+BuildRequires: libpng-devel libxml2-devel doxygen libespeak-ng-devel libespeak-ng-libespeak-devel
 
 %package devel
 Group: Development/Other
@@ -58,6 +58,9 @@ chmod 755 $RPM_BUILD_ROOT%_libdir/lib%name.so
 %_libdir/pkgconfig/t4k_common.pc
 
 %changelog
+* Fri Feb 20 2026 Grigory Ustinov <grenka@altlinux.org> 0.1.1-alt7.gita6c6b15
+- fixed FTBFS
+
 * Tue Feb 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1.1-alt6.gita6c6b15
 - fixed FTBFS
 
