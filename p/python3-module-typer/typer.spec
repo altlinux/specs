@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.24.0
-Release: alt1
+Release: alt2
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
 License: MIT
@@ -85,6 +85,8 @@ pushd dist/
 popd
 %__mkdir_p %buildroot%_docdir/%name-%version
 %__ln_s %name-%version %buildroot%_docdir/%name-slim-%version
+# Avoid conflict with Erlang.
+%__mv %buildroot%_bindir/{%pypi_name,%pypi_name.py3}
 
 %check
 # Clean of the using coverage module, because we don't needs to it.
@@ -105,7 +107,7 @@ export TERM="xterm-256color"
     --deselect="tests/test_completion/test_completion.py::test_install_completion"
 
 %files
-%_bindir/%pypi_name
+%_bindir/%pypi_name.py3
 %doc README.md LICENSE docs
 %python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
@@ -115,6 +117,10 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Sat Feb 21 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt2
+- Renamed /usr/bin/typer to typer.py3 to avoid conflict with Erlang
+  (Closes: 57946).
+
 * Tue Feb 17 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt1
 - Updated to 0.24.0.
 - Dropped the provide for typer-slim in favor of creating a subpackage
