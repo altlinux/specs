@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.7.0
-Release: alt3
+Version: 140.7.1
+Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -452,6 +452,11 @@ done
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Feb 18 2026 Pavel Vasenkov <pav@altlinux.org> 140.7.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-2447 Heap buffer overflow in libvpx
+
 * Thu Jan 22 2026 Michael Shigorin <mike@altlinux.org> 140.7.0-alt3
 - Fix "new version means new blank profile" (Closes: #57602)
   + thanks NixOS guys, see http://github.com/NixOS/nixpkgs/pull/119849
