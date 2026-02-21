@@ -5,7 +5,7 @@
 %define realname p1_pgsql
 
 Name: erlang-%realname
-Version: 1.1.38
+Version: 1.1.40
 Release: alt1
 Summary: Pure Erlang PostgreSQL driver
 Group: Development/Erlang
@@ -46,6 +46,9 @@ This is an Erlang PostgreSQL driver.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 1.1.40-alt1
+- 1.1.38 -> 1.1.40
+
 * Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 1.1.38-alt1
 - 1.1.36 -> 1.1.38
 
