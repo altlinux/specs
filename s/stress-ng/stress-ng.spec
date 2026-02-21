@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.20.00
+Version: 0.20.01
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -47,7 +47,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 360+ stress tests
+  * 370+ stress tests
   * 100+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 60+ virtual memory stress tests
@@ -58,8 +58,9 @@ interfaces. Stress-ng features:
     DragonFlyBSD, Minix, Android, MacOS X, Serenity OS, GNU/Hurd, Haiku,
     Windows Subsystem for Linux, Cygwin and SunOs/Dilos/Solaris. with gcc,
     musl-gcc, clang, icc, icx, tcc and pcc.
-  * tested on alpha, armel, armhf, arm64, hppa, i386, loong64, m68k,
-    mips32, mips64, power32, ppc64el, risc-v, sh4, s390x, sparc64, x86-64
+  * tested on Alpha, ARMEL, ARMHF, ARM64, HPPA, i386, loong64, M68k,
+    MIPS32, MIPS64, OpenRisc (OR1K), Power32, PPC64el, RISC-V, sh4, s390x,
+    SPARC64, VAX (on NetBSD) x86-64
 
 stress-ng was originally intended to make a machine work hard and trip
 hardware issues such as thermal overruns as well as operating system
@@ -118,6 +119,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sat Feb 21 2026 Vitaly Chikunov <vt@altlinux.org> 0.20.01-alt1
+- Update to V0.20.01 (2026-02-20).
+
 * Thu Jan 01 2026 Vitaly Chikunov <vt@altlinux.org> 0.20.00-alt1
 - Update to V0.20.00 (2025-12-31).
 
