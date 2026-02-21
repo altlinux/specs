@@ -30,7 +30,7 @@
 Name: erlang
 Epoch: 1
 Version: 26.2.5.11
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -254,6 +254,8 @@ Summary: Standart visual applications for Erlang - common files
 Group: Development/Erlang
 Requires: %name-otp = %EVR
 Requires: tk
+# Conflicts with python3-module-typer on file /usr/bin/typer
+Conflicts: python3-module-typer
 
 %description visual-common
 Standard visual applications for Erlang programming language.
@@ -1224,6 +1226,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:26.2.5.11-alt2
+- Added conflict with python3-module-typer (ALT #57946).
+
 * Mon Apr 28 2025 Denis Medvedev <nbr@altlinux.org> 1:26.2.5.11-alt1
 - 26.2.5.11 
 Fixes: CVE-2025-32433
