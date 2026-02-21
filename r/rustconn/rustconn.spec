@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 
 Summary: Remote connections manager
@@ -88,6 +88,9 @@ install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/%rdn_name.svg \
 %doc *.md docs/*.md
 
 %changelog
+* Sat Feb 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
+- 0.8.9
+
 * Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
