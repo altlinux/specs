@@ -2,15 +2,17 @@
 %define optflags_lto %nil
 %define sover 111
 
-%def_with bootstrap
+%def_without bootstrap
 
 %if_with bootstrap
 %def_without check
+%else
+%def_with check
 %endif
 
 Name: ldc
 Version: 1.41.0
-Release: alt2
+Release: alt3
 Summary: The LLVM-based D Compiler
 License: BSD-3-Clause and BSL-1.0 and Apache-2.0
 Group: Development/Other
@@ -20,6 +22,8 @@ Requires: zlib-devel
 
 Source0: %name-%version.tar
 Source1: phobos-%version.tar
+
+Patch0: %name-%version-alt-int128-align.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -105,6 +109,8 @@ for use with the LDC compiler.
 rmdir runtime/phobos
 mv phobos-%version runtime/phobos
 
+%patch0 -p1
+
 %build
 %cmake \
     -DMULTILIB=OFF \
@@ -189,6 +195,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure \
 %_includedir/importc.h
 
 %changelog
+* Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 1.41.0-alt3
+- built without bootstrap mode, using the LDC D compiler
+
 * Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 1.41.0-alt2
 - added zlib-devel to main package dependencies to fix the linker error
 
