@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.33
+Version: 0.1.0
 Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
@@ -26,11 +26,13 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
+BuildRequires: libdebuginfod-devel
 BuildRequires: libdw-devel
 BuildRequires: libelf-devel
 BuildRequires: libgomp-devel
 BuildRequires: libkdumpfile-devel
 BuildRequires: liblzma-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libstdc++-devel
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-sphinx
@@ -116,6 +118,7 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %define _customdocdir %_docdir/%name
 %doc COPYING LICENSES README.rst docs
 %_bindir/drgn
+%_bindir/drgn-crash
 %_datadir/drgn
 %_man1dir/drgn.1*
 %python3_sitelibdir/*drgn*
@@ -124,19 +127,27 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Fri Feb 20 2026 Vitaly Chikunov <vt@altlinux.org> 0.1.0-alt1
+- Update to v0.1.0 (2026-02-19).
+- Linux 6.19 and tentative 7.0 support.
+
 * Thu Oct 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.33-alt1
 - Update to v0.0.33 (2025-10-29).
+- Linux 6.17 and 6.18 support.
+- No More Python 3.6 & 3.7 support.
 
 * Thu Jun 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.32-alt1
 - Update to v0.0.32 (2025-06-18).
+- Linux 6.16 support.
+- Last release with Python 3.6 & 3.7 support.
 
 * Sat Apr 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.31-alt1
 - Update to v0.0.31-1-g3977bdc7 (2025-04-19).
-- Linux 6.14 and 6.15 are now supported. Kernel module support was updated for
-  Linux 6.14.
+- Linux 6.14 and 6.15 support.
 
 * Tue Feb 25 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt2
 - spec: Remove dependence on kernel-image-6.6.
+- Linux 6.13 support.
 
 * Thu Dec 19 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt1
 - Update to v0.0.30 (2024-12-18).
@@ -149,12 +160,15 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 
 * Wed Oct 09 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt1
 - Update to v0.0.29 (2024-10-08).
+- Linux 6.11 and 6.12 support (since 0.0.28).
 
 * Fri Jul 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.27-alt1
 - Update to v0.0.27 (2024-07-01).
+- Linux 6.9 and 6.10 support.
 
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.26-alt1
 - Update to v0.0.26 (2024-03-11).
+- Linux 6.8 support, Python 3.13 support.
 
 * Sun Dec 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.25-alt1
 - Update to v0.0.25 (2023-12-01).
@@ -164,6 +178,7 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 
 * Tue Sep 26 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.24-alt1
 - Update to v0.0.24 (2023-09-08).
+- Linux 6.3 & 6.4 support, Python 3.12 support.
 
 * Wed Sep 06 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.23-alt1
 - Update to v0.0.23 (2023-06-28).
