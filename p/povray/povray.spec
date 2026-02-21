@@ -1,14 +1,14 @@
 %define mjversion 3.7
 Name: povray
 Version: %mjversion.0.10
-Release: alt2
+Release: alt3
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 License: AGPL-3.0 and CC-BY-NC-SA-2.5 and CC-BY-SA-3.0
 Group: Graphics
 
-Url: http://www.povray.org
-# VCS: https://github.com/POV-Ray/povray
+Url: https://www.povray.org/
+VCS: https://github.com/POV-Ray/povray
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -16,6 +16,7 @@ Requires: %name-common
 
 BuildRequires: gcc-c++ imake libjpeg-devel libpng-devel libtiff-devel libXpm-devel libXt-devel
 BuildRequires: boost-devel boost-flyweight-devel
+BuildRequires: zlib-devel
 
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
 
@@ -88,6 +89,9 @@ make check
 %doc %_man1dir/*
 
 %changelog
+* Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 3.7.0.10-alt3
+- fixed FTBFS: added zlib-devel to BuildRequires
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.7.0.10-alt2
 - NMU: fixed FTBFS on LoongArch.
 
