@@ -1,5 +1,5 @@
 Name:     bleachbit
-Version:  5.0.2
+Version:  5.1.0
 Release:  alt1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
@@ -69,11 +69,13 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_desktopdir/*.desktop
 %_datadir/%name/
 %_pixmapsdir/*.png
-%_pixmapsdir/*.svg
 %_datadir/metainfo/*.metainfo.xml
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+
 * Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
 - New version.
 
