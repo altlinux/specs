@@ -17,8 +17,8 @@
 %global unbundle_font_latex_xft       1
 
 Name: lyx
-Version: 2.3.7
-Release: alt1.2
+Version: 2.5.0
+Release: alt2
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
@@ -39,15 +39,24 @@ Patch1: 0004-Use-python3-internally-in-the-C-code-as-well.patch
 Patch2: lyx-2.3.6.1-python.patch
 
 BuildRequires(pre): rpm-build-licenses
-
+BuildRequires(pre): rpm-build-perl
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: desktop-file-utils
-BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc
-BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-svg-devel
-BuildRequires: zlib-devel libenchant-devel libhunspell-devel libmythes-devel
+BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc cmake
+BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel boost-cobalt-devel  libmagic-devel
+BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
+#BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-svg-devel
+BuildRequires: zlib-devel libenchant-devel libhunspell-devel libmythes-devel perl-File-Slurp
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: libxkbcommon-devel qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase-gui libqt6-gui cmake 
+BuildRequires: perl-devel perl
 
 Provides: lyx-common lyx-qt lyx-latex-beamer
 Obsoletes: lyx-common lyx-qt lyx-latex-beamer
+%add_python3_req_skip LyX
 
 %if %unbundle_font_latex_xft
 BuildRequires: fonts-ttf-latex-xft
@@ -86,14 +95,15 @@ Virtual package that install required set of tex packages for LyX.
 
 %prep
 %setup
-find 3rdparty -not -type d -not -name Makefile.in -delete
-find lib \( -name '*.py' -or -name '*.py.in' \) \
-	-execdir sed -i '1i #!/usr/bin/python3' {} \+
-sed -i 's|#! */usr/bin/env python|#!/usr/bin/env python3|' \
-	lib/lyx2lyx/lyx2lyx \
-	lib/scripts/listerrors \
-	#
-%autopatch -p1
+#find 3rdparty -not -type d -not -name Makefile.in -delete
+#find lib \( -name '*.py' -or -name '*.py.in' \) \
+#	-execdir sed -i '1i #!/usr/bin/python3' {} \+
+#sed -i 's|#! */usr/bin/env python|#!/usr/bin/env python3|' \
+#	lib/lyx2lyx/lyx2lyx \
+#	lib/scripts/listerrors \
+#	#
+##autopatch -p1
+
 %ifarch %e2k
 # because of the incorrect C++ code in this project and a missing optimization in the compiler for e2k
 # this helps the compiler to perform this optimization
@@ -101,19 +111,36 @@ sed -E -i 's/zoom_m(in|ax)_/(int)&/g' src/frontends/qt4/GuiView.cpp
 %endif
 
 %build
-%autoreconf
-export PYTHON=python3
-%configure \
-	--without-included-boost \
-	--with-enchant \
-	--with-hunspell \
-	--enable-qt5 \
-	#
+#autoreconf
 
-%make_build
+export PYTHON=python3
+
+%cmake -DLYX_INSTALL=ON \
+    -DLYX_REQUIRE_SPELLCHECK=ON \
+    -DLYX_ENCHANT=ON \
+    -DLYX_HUNSPELL=ON \
+    -DLYX_RELEASE=ON \
+    -DLYX_PACKAGE_SUFFIX=OFF \
+    -DLYX_PROGRAM_SUFFIX=OFF \
+    -DLYX_USE_QT=QT6
+%cmake_build
+
+
+#configure \
+#	--disable-dependency-tracking \
+#	--disable-rpath \
+#	--disable-silent-rules \
+#	--without-included-boost \
+#	--with-enchant \
+#	--with-hunspell \
+#	--enable-qt6
+#	
+
+#make_build
 
 %install
-%makeinstall_std
+#makeinstall_std
+%cmake_install
 %find_lang %name
 
 # Unbundle fonts from fonts/
@@ -123,7 +150,7 @@ export PYTHON=python3
 %endif
 
 # This one is optional and python2-only.
-rm %buildroot%_datadir/%name/lyx2lyx/profiling.py
+#rm %buildroot%_datadir/%name/lyx2lyx/profiling.py
 
 install -d -m 755 %buildroot%_desktopdir
 install -m 644 %SOURCE1 %buildroot%_desktopdir/
@@ -151,7 +178,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/lyx.desktop
 
 rm %buildroot%_datadir/icons/hicolor/scalable/apps/lyx.svg
-rm %buildroot%_datadir/%name/scripts/prefTest.pl.in
+#rm %buildroot%_datadir/%name/scripts/prefTest.pl.in
+#rm %buildroot%_datadir/%name/scripts/checkKeys.pl.in
 
 # something what configure.py generates
 touch %buildroot%_datadir/%name/{bbx,bib,bst,cbx,cls,sty}Files.lst
@@ -181,10 +209,19 @@ python3 configure.py
 %ghost %_datadir/%name/*.lst
 %ghost %_datadir/%name/configure.log
 %ghost %_datadir/%name/lyxrc.defaults
+%_datadir/metainfo/org.lyx.LyX.metainfo.xml
 
 %files -n lyx-tex
 
 %changelog
+* Sun Feb 22 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.0-alt2
+- add_python3_req_skip LyX
+
+* Sat Feb 21 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.0-alt1
+- 2.5.0 (Closes: #56180)
+- Build with Qt6 and cmake
+- This release celebrates LyX's 30th anniversary
+
 * Fri Mar 17 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.3.7-alt1.2
 - Fixed build for Elbrus.
 
