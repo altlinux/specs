@@ -1,22 +1,19 @@
-%def_enable check
+%def_with check
 
 Name: bash-completion
 Epoch: 1
-Version: 2.15.0
+Version: 2.17.0
 Release: alt1
 
 Summary: bash-completion offers programmable completion for bash
-License: GPL2
+License: GPL-2.0-only
 Group: Shells
 Url: https://github.com/scop/bash-completion
-
-Packager: Ildar Mulyukov <ildar@altlinux.ru>
+VCS: https://github.com/scop/bash-completion.git
 
 Source: %name-%version.tar
-# https://github.com/scop/bash-completion.git
 Source1: rpm-cache.filetrigger
-#Patch1: %name-alt-iptables.patch
-Patch9: %name-alt-specific.patch
+Patch1: %name-alt-specific.patch
 Source44: %name.watch
 
 %if_enabled check
@@ -37,8 +34,7 @@ of the programmable completion feature of bash 2.04 and later.
 
 %prep
 %setup
-#%%patch1 -p1
-%patch9 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -52,9 +48,7 @@ mkdir -p %buildroot%_sysconfdir/bash_completion.d %buildroot%_rpmlibdir
 install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 
 %check
-# Currently fails
-#= 20 failed, 1222 passed, 423 skipped, 16 xfailed, 4 xpassed in 941.69s (0:15:41) =
-make -C test check ||:
+make check
 
 %files
 %doc AUTHORS CHANGELOG.md README.md doc/*.md
@@ -66,6 +60,11 @@ make -C test check ||:
 %_datadir/cmake/bash-completion
 
 %changelog
+* Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 1:2.17.0-alt1
+- 2.15.0 -> 2.17.0
+- enabled check section back
+- apt-get completion: drop unsupported options for ALT Linux (ALT #40147)
+
 * Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.15.0-alt1
 - 2.15.0
 
