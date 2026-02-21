@@ -1,20 +1,19 @@
 Name: netpbm
-Version: 10.85.04
-Release: alt2
+Version: 10.86.48
+Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
-License: BSD-like
+License: BSD-like AND GPL-2.0-only AND LGPL-2.1
 Group: Graphics
 
 Url: http://netpbm.sourceforge.net
 
-# Source-url: https://github.com/t6/netpbm/archive/v10.85.04.tar.gz
 Source: %name-%version.tar
 
 Requires: lib%{name}11 = %EVR
 
 BuildRequires: flex libjasper-devel libjbig-devel >= 2.0
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel libX11-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel libX11-devel zlib-devel
 
 %package -n lib%{name}11
 Summary: A library for handling different graphics file formats
@@ -123,7 +122,6 @@ cp -av lib/lib%name.a %buildroot%_libdir
 cp -av lib/lib%name.so* %buildroot%_libdir
 
 mv %buildroot%prefix/misc %buildroot%_datadir/%name
-rm -fv %buildroot%_bindir/manweb
 
 # install netpbm-config
 sed	-e '/^@/d'				\
@@ -137,9 +135,6 @@ grep -E '@[A-Z]+@' %buildroot%_bindir/netpbm-config && exit 1
 chmod +x %buildroot%_bindir/netpbm-config
 test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 
-mkdir -p %buildroot%_man1dir
-install -p -m644 man/*.1 %buildroot%_man1dir
-
 %files -n lib%{name}11
 %_libdir/lib%name.so.11
 %_libdir/lib%name.so.11.*
@@ -149,15 +144,12 @@ install -p -m644 man/*.1 %buildroot%_man1dir
 %_libdir/lib%name.so
 %dir %_includedir/netpbm/
 %_includedir/netpbm/*.h
-#_man3dir/*.*
 %doc doc/Netpbm.programming
 
 %files
 %_bindir/*
-%_man1dir/*.*
-#_man5dir/*.*
 %_datadir/%name/
-%doc doc/HISTORY
+%doc doc/{HISTORY,USERDOC}
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -165,6 +157,13 @@ install -p -m644 man/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Fri Feb 20 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.48-alt1
+- 10.86.48.
+- License: update to SPDX + added more licenses from doc/
+- BR: added zlib-devel.
+- Remove manpages and provide manweb as replacement
+  (upstream decision, see USERDOC for details).
+
 * Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 10.85.04-alt2
 - Fix egrep warning
 
