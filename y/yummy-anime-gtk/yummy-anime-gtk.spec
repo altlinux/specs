@@ -2,7 +2,7 @@
 %define app_id space.x1z53.yummy-anime-gtk
 
 Name: yummy-anime-gtk
-Version: 0.1.2.2
+Version: 0.1.3
 Release: alt1
 
 Summary: GTK client for Yummy Anime
@@ -19,7 +19,7 @@ BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libapi-base-5)
+BuildRequires: pkgconfig(libapi-base-6)
 BuildRequires: pkgconfig(webkitgtk-6.0)
 
 Requires: libwebp-pixbuf-loader
@@ -45,8 +45,12 @@ Requires: libwebp-pixbuf-loader
 %_bindir/%name
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
+%_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sat Feb 21 2026 David Sultaniiazov <x1z53@altlinux.org> 0.1.3-alt1
+- Update to 0.1.3.
+
 * Sat Jan 31 2026 David Sultaniiazov <x1z53@altlinux.org> 0.1.2.2-alt1
 - Update to 0.1.2.2.
 
