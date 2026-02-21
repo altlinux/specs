@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-workstation
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: ALT Workstation icon theme
 Group: Graphics
@@ -14,6 +14,9 @@ BuildArch: noarch
 
 Provides: alt-workstation-icon-theme = %EVR
 Obsoletes: alt-workstation-icon-theme < %EVR
+
+Requires: icon-theme-morewaita
+Requires: icon-theme-adwaita-legacy
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson icon-naming-utils gtk4-update-icon-cache
@@ -38,6 +41,9 @@ find %buildroot/%_iconsdir/AltWorkstation/ -name meson.build -exec rm -v {} \;
 %_iconsdir/AltWorkstation/
 
 %changelog
+* Sun Jan 04 2026 Semen Fomchenkov <armatik@altlinux.org> 0.4-alt2
+- Add requires to icon-theme-morewaita and icon-theme-adwaita-legacy.
+
 * Thu Jul 03 2025 Semen Fomchenkov <armatik@altlinux.org> 0.4-alt1
 - Removed image for alterator since they are already include in morewaita.
 

@@ -3,8 +3,8 @@
 %define theme workstation
 %define Theme Workstation
 %define codename Prometheus
-%define status %nil
-%define status_en %nil
+%define status beta
+%define status_en beta
 %define flavour %brand-%theme
 
 %define icon_theme AltWorkstation
@@ -24,8 +24,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.1
-Release: alt1.1
+Version: 11.2
+Release: alt0.02
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -345,11 +345,12 @@ fi
 
 %files gnome-settings
 %_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
-%_datadir/glib-2.0/schemas/50_gnome-dash-app-list-favorites.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-dash-app-list.gschema.override
 %_datadir/glib-2.0/schemas/50_alt-gnome-appearance.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-software-installation-priority.gschema.override
 %_datadir/glib-2.0/schemas/50_mutter-custom-settings.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-default-desktop-terminal-app.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-nautilus-custom-settings.gschema.override
 
 %files mate-settings
 %_datadir/glib-2.0/schemas/zzz_mate-background.gschema.override
@@ -371,6 +372,18 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Sat Feb 21 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.02
+- spec: bump version to 11.2
+- gnome-settings: rename gnome-dash-app-list-favorites to gnome-dash-app-list,
+  since in the future it is planned to configure not only the list
+  of priority applications.
+- gnome-settings: remove extensions settings from alt-gnome-appearance,
+  now in alt-panelmode package.
+- gnome-settings add alt-weather extension.
+- gnome-settings use copyous@boerdereinar.dev instead of
+  clipboard-indicator@tudmotu.com.
+- gnome-settings: add Nautilus custom gsettings overrides (Closes: #57475).
+
 * Wed Nov 12 2025 Michael Shigorin <mike@altlinux.org> 11.1-alt1.1
 - mate-settings: fix desktop background by adding R: a-g-d-w
 

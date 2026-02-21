@@ -2,7 +2,7 @@
 %define xdg_name org.altlinux.%_name
 
 Name: alt-panelmoded
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
@@ -25,7 +25,7 @@ Requires: gnome-shell-extension-dash-to-panel
 Requires: gnome-shell-extension-arcmenu
 Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-appindicator
-Requires: gnome-shell-extension-clipboard-indicator
+Requires: gnome-shell-extension-copyous
 Requires: gnome-shell-extension-add-to-desktop
 
 %description
@@ -51,6 +51,10 @@ with GNOME desktop enviroment.
 %_datadir/glib-2.0/schemas/45_%xdg_name.gschema.override
 
 %changelog
+* Sat Feb 21 2026 Semen Fomchenkov <armatik@altlinux.org> 0.7.4-alt1
+- New version 0.7.4. Closes: #57460
+- Use copyous instead of clipboard-indicator.
+
 * Mon Dec 01 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.2-alt1
 - New version 0.7.2.
 
