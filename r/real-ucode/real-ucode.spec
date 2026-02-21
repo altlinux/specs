@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: real-ucode
-Version: 20251219
+Version: 20260214
 Release: alt1
 Summary: Actually provides the latest CPU microcode for AMD and Intel
 License: Redistributable, no modification permitted
@@ -34,6 +34,13 @@ extremely helpful to those who have major problems with their systems for which
 their manufacturer refuses to assist due to indifference and/or system age.
 }
 
+%define amd_notice %{expand:
+SPECIAL NOTICE (2026-01-12)
+
+AMD ucode loading for both -official and -resigned is now broken on entrysign
+affected machines after 6.18.4 or newer please switch back to linux-firmware
+}
+
 %description
 Please see the README for details.
 The actual microcodes are from https://github.com/platomav/CPUMicrocodes
@@ -57,6 +64,8 @@ BIOS you may try to install firmware-amd-real-ucode-resigned.
 
 %disclaimer
 
+%amd_notice
+
 %package -n firmware-amd-real-ucode-resigned
 Summary: Latest microcode for AMD, resigned
 Group: System/Kernel and hardware
@@ -77,6 +86,8 @@ These may fail to load upon resume from suspend when using s3 sleep, please use
 s2idle instead.
 
 %disclaimer
+
+%amd_notice
 
 %package -n firmware-intel-real-ucode
 Summary: Latest microcode for Intel
@@ -116,6 +127,12 @@ rm ucode.cpio
 /lib/firmware/updates/intel-ucode
 
 %changelog
+* Wed Feb 18 2026 Vitaly Chikunov <vt@altlinux.org> 20260214-alt1
+- Update to 2510ae8 (2026-02-14).
+- Notice: AMD ucode loading for both -official and -resigned is now broken on
+  entrysign affected machines after 6.18.4 or newer please switch back to
+  linux-firmware.
+
 * Sat Dec 20 2025 Vitaly Chikunov <vt@altlinux.org> 20251219-alt1
 - Update to 5e46e06 (2025-12-19).
 
