@@ -1,5 +1,5 @@
 %define module_name	evdi
-%define module_version	1.14.11
+%define module_version	1.14.14
 %define module_release	alt1
 
 %define flavour		6.12
@@ -31,6 +31,9 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
+# https://github.com/DisplayLink/evdi/pull/556
+Patch: 556.patch
+
 %description
 Extensible Virtual Display Interface
 
@@ -43,6 +46,7 @@ the libevdi library.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch -p2
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
@@ -58,6 +62,13 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Feb 22 2026 L.A. Kostis <lakostis@altlinux.org> 1.14.14-alt1
+- Updated to 1.14.14.
+- Fix compile on non-x86 arches (upstream PR#556).
+
+* Mon Dec 08 2025 L.A. Kostis <lakostis@altlinux.org> 1.14.11-alt2
+- Added patches from upstream to compile with kernel 6.18+.
 
 * Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.org> 1.14.11-alt1
 - Updated to 1.14.11.

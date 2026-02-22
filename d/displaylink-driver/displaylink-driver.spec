@@ -1,5 +1,5 @@
 %define module_name	 evdi
-%define module_version 1.14.11
+%define module_version 1.14.14
 %define stage %nil
 %define rel 30
 
@@ -18,7 +18,7 @@
 
 Name: displaylink-driver
 Version: 6.2.0
-Release: alt1.%rel
+Release: alt2.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -37,6 +37,7 @@ Source3: %name.service
 Source4: %name.sleep.sh
 Source5: %name-udev.sh
 Source6: %name.rules
+Source7: evdi.tar
 
 Requires: %name-firmware = %EVR
 Obsoletes: lib%{module_name}0 lib%{module_name}1
@@ -72,7 +73,7 @@ sh %SOURCE1 --nodiskspace --noexec --keep --target . ||:
 %setup -D -T
 
 %build
-tar -xf %{module_name}.tar.gz && pushd library
+tar -xf %SOURCE7 && pushd evdi/library
 CFLAGS="%optflags" \
 %make_build
 popd
@@ -88,12 +89,12 @@ echo %module_name > %buildroot%_sysconfdir/modules-load.d/%module_name.conf
 
 # kernel-source install
 mkdir -p {kernel-source-%module_name-%module_version,%buildroot%_usrsrc/kernel/sources}
-cp -ar module/* kernel-source-%module_name-%module_version/
+cp -ar evdi/module/* kernel-source-%module_name-%module_version/
 tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 # library
-pushd library
+pushd evdi/library
 %makeinstall DESTDIR=%buildroot LIBDIR=%_libdir
 popd
 
@@ -140,6 +141,9 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Sat Feb 21 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.0-alt2.30
+- evdi: updated to v1.14.14.
+
 * Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 6.2.0-alt1.30
 - New release (6.2.0).
 - evdi: updated to 1.14.11.
