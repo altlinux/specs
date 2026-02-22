@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.14
+Version: 1.7.15
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -552,7 +552,7 @@ Requires: nano
 Requires: dansguardian
 Requires: perl-DBD-mysql
 #Requires: ejudge
-Requires: ejabberd
+#Requires: ejabberd
 Requires: alterator-datetime
 Requires: alterator-console
 Requires: apache2
@@ -592,7 +592,6 @@ Requires: alterator-trust
 Requires: alterator-vsftpd
 Requires: alterator-xinetd
 Requires: alterator-postfix-dovecot
-Requires: alterator-ulogd
 Requires: anonftp
 Requires: samba4
 Requires: xauth
@@ -665,6 +664,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 1.7.15-alt1
+- server-apps: removed alterator-ulogd and ejabberd.
+
 * Tue Dec 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.14-alt1
 - Adapted for pascalabcnet 3.11 using dotnet.
 
