@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt5
+Release: alt6
 Epoch: 1
 %K6init
 
@@ -115,7 +115,7 @@ Patch140: alt-watch-wallpaper.patch
 #
 Patch143: alt-run-etc-profile.patch
 Patch144: alt-def-lookandfeel.patch
-Patch145: alt-add-nvidia-prime-to-menu.patch
+Patch145: alt-add-dri-prime-to-menu.patch
 Patch146: alt-fix-wallpaper-confirmation.patch
 #
 Patch150: alt-kcmusers-avatars.patch
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Sun Feb 22 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt6
+- fix icon for PRIME menu entry
+
 * Thu Feb 19 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt5
 - detect DRI PRIME via switcheroo-control
 
