@@ -4,8 +4,8 @@
 %define app_id org.widelands.Widelands 
 
 Name: widelands
-Version: 1.3
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Epoch: 1
 
 Summary: Open source realtime-strategy game
@@ -97,6 +97,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %_datadir/%name
 
 %changelog
+* Sun Feb 22 2026 Anton Midyukov <antohami@altlinux.org> 1:1.3.1-alt1
+- New version 1.3.1.
+
 * Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 1:1.3-alt2
 - Fix build with libpng-devel 1.6.54-alt1.
 
