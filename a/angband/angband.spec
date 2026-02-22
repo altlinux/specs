@@ -1,5 +1,5 @@
 Name:    angband
-Version: 4.2.2
+Version: 4.2.6
 Release: alt1
 
 Summary: Angband is a "graphical" dungeon adventure game
@@ -9,6 +9,7 @@ License: Moria/Angband license
 Group: Games/Adventure
 # https://github.com/angband/angband/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar.gz
+Source999: watch
 Url: http://rephial.org
 
 # Automatically added by buildreq on Fri Sep 21 2012
@@ -60,6 +61,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Feb 22 2026 Anton Farygin <rider@altlinux.org> 4.2.6-alt1
+- 4.2.2 -> 4.2.6
+
 * Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
 - Build new version without -fcommon.
 
