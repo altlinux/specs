@@ -1,5 +1,6 @@
+%define abiversion 7
 Name: libwmf
-Version: 0.2.13
+Version: 0.2.14
 Release: alt1
 
 Summary: A library to convert wmf files
@@ -8,7 +9,6 @@ Group: Text tools
 Url: https://github.com/caolanm/libwmf
 VCS: https://github.com/caolanm/libwmf.git
 Requires: fonts-type1-urw
-Obsoletes: wmf-fonts < %version-%release
 
 Source: %name-%version.tar
 BuildRequires: libICE-devel libexpat-devel libfreetype-devel libgdk-pixbuf-devel libjpeg-devel libpng-devel
@@ -33,7 +33,7 @@ or pixmap.
 %package -n wmf-utils
 Summary: Utilities to convert wmf files
 Group: Text tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n wmf-utils
 This package contains various programs for manipulating files in
@@ -49,7 +49,8 @@ WMF file loader for the GTK+ image manipulation library, GDK-pixbuf.
 %package devel
 Summary: A library to convert wmf files - development environment
 Group: Development/C
-Requires: %name = %version-%release %{name}lite = %version-%release
+Requires: %name = %EVR
+Requires: %{name}lite = %EVR
 
 %description devel
 %name is a library for unix like machines that can convert wmf
@@ -61,7 +62,7 @@ Install %name-devel if you need to compile an application with %name
 support.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -79,11 +80,13 @@ support.
 install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 
 %files
-%_libdir/%name-*.so.*
+%_libdir/%name-*.so.%abiversion
+%_libdir/%name-*.so.%abiversion.*
 %_datadir/%name
 
 %files -n %{name}lite
-%_libdir/%{name}lite-*.so.*
+%_libdir/%{name}lite-*.so.%abiversion
+%_libdir/%{name}lite-*.so.%abiversion.*
 
 %files -n wmf-utils
 %_bindir/wmf2*
@@ -99,6 +102,9 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %_includedir/%name
 
 %changelog
+* Sun Feb 22 2026 Anton Farygin <rider@altlinux.org> 0.2.14-alt1
+- 0.2.13 -> 0.2.14
+
 * Sat Apr 05 2025 Anton Farygin <rider@altlinux.com> 0.2.13-alt1
 - 0.2.8.4 -> 0.2.13
 
