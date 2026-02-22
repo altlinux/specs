@@ -4,8 +4,8 @@ BuildRequires: makeinfo texinfo
 %def_with _octave_arch
 %define octpkg audio
 Name: octave-%octpkg
-Version: 2.0.5
-Release: alt2
+Version: 2.0.10
+Release: alt1
 Summary: Audio Toolbox
 
 Group: Sciences/Mathematics
@@ -15,6 +15,7 @@ URL: http://octave.sourceforge.net
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-octave
+BuildRequires(pre): rpm-build-python3
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -51,6 +52,9 @@ cp -at src  /usr/share/gnu-config/config.{guess,sub}
 %endif
 
 %changelog
+* Sun Feb 22 2026 Andrey Cherepanov <cas@altlinux.org> 2.0.10-alt1
+- New version.
+
 * Wed Dec 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.5-alt2
 - NMU: fixed FTBFS on LoongArch (use fresh config.{sub,guess})
 

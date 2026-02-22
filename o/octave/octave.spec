@@ -6,8 +6,8 @@
 %endif
 
 Name: octave
-Version: 10.3.0
-Release: alt2
+Version: 11.1.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -153,7 +153,7 @@ GNU Octave является высокоуровневым языком, в пе
 %prep
 %setup
 %patch0 -p2
-/bin/cp -f %SOURCE3 libgui/languages/ru_RU.ts
+#/bin/cp -f %SOURCE3 libgui/languages/ru_RU.ts
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -231,6 +231,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 11.1.0-alt1
+- New version.
+
 * Fri Dec 05 2025 Andrey Cherepanov <cas@altlinux.org> 10.3.0-alt2
 - Complete Russian translation (thanks Karashokova Alevtina).
 
