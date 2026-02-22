@@ -6,7 +6,7 @@
 %define _libdir %_prefix/lib
 
 Name: coreaction
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Side bar for showing widgets for C Suite
@@ -95,7 +95,11 @@ sed -i "s|Utility;|Utility;Clock;|" app/cc.cubocore.CoreAction.desktop
 %_datadir/coreapps/resource/country.txt
 %_datadir/coreapps/resource/international.txt
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreAction.svg
+%_datadir/metainfo/cc.cubocore.CoreAction.metainfo.xml
 
 %changelog
+* Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

@@ -3,7 +3,7 @@
 %define appname com.cassidyjames.dippi
 
 Name: dippi
-Version: 4.2.0
+Version: 5.0.2
 Release: alt1
 
 Summary: Calculate display info like DPI and aspect ratio
@@ -21,6 +21,7 @@ BuildRequires: cmake
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: /usr/bin/blueprint-compiler
 
 %description
 Analyze any display. Input a few simple details and figure out the
@@ -70,5 +71,8 @@ Tells you if a display's density is:
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.2-alt1
+- New version 5.0.2.
+
 * Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 4.2.0-alt1
 - Initial build for Sisyphus

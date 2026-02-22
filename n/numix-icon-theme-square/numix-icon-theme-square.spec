@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: numix-icon-theme-square
-Version: 26.02.11
+Version: 26.02.21
 Release: alt1
 
 Summary: Square icon theme from the Numix project
@@ -47,6 +47,9 @@ cp -pr Numix-Square-Light %buildroot%_iconsdir/Numix-Square-Light
 %exclude %_iconsdir/Numix-Square/24/panel
 
 %changelog
+* Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 26.02.21-alt1
+- New version 26.02.21.
+
 * Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 26.02.11-alt1
 - New version 26.02.11.
 

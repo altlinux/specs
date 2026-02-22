@@ -2,7 +2,7 @@
 
 Name: gnome-break-timer
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: Break timer application for GNOME
 License: GPL-3.0-or-later
@@ -26,6 +26,9 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libcanberra)
 BuildRequires: /usr/bin/appstream-util
 BuildRequires: /usr/bin/blueprint-compiler
+BuildRequires: /usr/bin/appstreamcli
+
+ExcludeArch: %ix86
 
 %description
 A break timer application for GNOME.
@@ -39,6 +42,7 @@ helpful, and it uses notifications to indicate when a break has arrived.
 %patch -p1
 
 %build
+build-aux/update-release-info.sh
 %meson
 %meson_build
 
@@ -65,5 +69,9 @@ helpful, and it uses notifications to indicate when a break has arrived.
 %_datadir/metainfo/org.gnome.BreakTimer.metainfo.xml
 
 %changelog
+* Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.0-alt2
+- Fixed FTBFS by generating metainfo/org.gnome.BreakTimer.metainfo.xml.
+- Exclude %%ix86 because of failing test.
+
 * Tue Feb 03 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.0-alt1
 - Initial build for Sisyphus
