@@ -2,7 +2,7 @@
 %define formats text json html template
 
 Name: license-list-data
-Version: 3.27.0
+Version: 3.28.0
 Release: alt1
 
 Summary: License List Data
@@ -37,6 +37,9 @@ done
 %doc *.md
 
 %changelog
+* Sun Feb 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Jul 03 2025 Yuri N. Sedunov <aris@altlinux.org> 3.27.0-alt1
 - 3.27.0
 
