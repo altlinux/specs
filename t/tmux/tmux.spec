@@ -5,14 +5,13 @@
 Summary: Terminal multiplexer
 Name: tmux
 Version: 3.6a
-Release: alt1
+Release: alt2
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
 Url: https://tmux.github.io/
 Vcs: https://github.com/tmux/tmux
 
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-Source1: bash_completion_tmux.sh
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libncurses-devel
 BuildRequires: libutempter-devel
@@ -38,7 +37,6 @@ later reattached.
 
 %install
 %makeinstall_std
-install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 
 %check
 # We have default TERM=screen-256color
@@ -70,9 +68,12 @@ make -C regress ||
 %doc CHANGES README COPYING example_tmux.conf
 %_bindir/*
 %_man1dir/*
-%_datadir/bash-completion/completions/tmux
 
 %changelog
+* Sun Feb 22 2026 Vitaly Chikunov <vt@altlinux.org> 3.6a-alt2
+- Do not install bash completions (fixing file conflict with bash-completion
+  2.17.0). (ALT#57969).
+
 * Sat Jan 10 2026 Vitaly Chikunov <vt@altlinux.org> 3.6a-alt1
 - Update to 3.6a (2025-12-05).
 
