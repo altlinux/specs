@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-yojson
 %define libname %(sed -e 's/^ocaml-//' <<< %name)
-Version: 2.2.2
+Version: 3.0.0
 Release: alt1
 Summary: An optimized parsing and printing library for the JSON format
 Group: Development/ML
@@ -61,6 +61,9 @@ subst '/libraries seq/d' lib/dune
 %doc README.md CHANGES.md examples
 
 %changelog
+* Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 3.0.0-alt1
+- 2.2.2 -> 3.0.0
+
 * Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
 - 2.1.1 -> 2.2.2
 
