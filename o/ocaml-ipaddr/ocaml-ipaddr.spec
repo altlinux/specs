@@ -1,6 +1,6 @@
 %define  modulename ipaddr
 Name:    ocaml-%modulename
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 Summary: An OCaml library for manipulation of IP (and MAC) address representations 
 License: ISC
@@ -46,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Feb 22 2026 Anton Farygin <rider@altlinux.org> 5.6.2-alt1
+- 5.6.1 -> 5.6.2
+
 * Fri Jan 23 2026 Anton Farygin <rider@altlinux.org> 5.6.1-alt1
 - 5.6.0 -> 5.6.1
 
