@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_dqt5_examplesdir/*
 
 Name: dqt5-webchannel
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -70,7 +70,6 @@ Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libdqt5-core = %_dqt5_version
-AutoProv: no,lib
 %description -n libdqt5-webchannel
 %summary
 
@@ -121,6 +120,18 @@ export QT_HASH_SEED=0
 %_dqt5_examplesdir/*
 
 %changelog
+* Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 

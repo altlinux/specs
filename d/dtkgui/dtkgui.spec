@@ -4,7 +4,7 @@
 
 Name: dtkgui
 Version: 6.7.32
-Release: alt1
+Release: alt2
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -33,11 +33,11 @@ BuildRequires: gcc-c++ libgomp-devel
 # DTK5 BuildRequires.
 # libQt5XkbCommonSupport.a -> dqt5-base-devel-static
 BuildRequires(pre): rpm-macros-dqt5
-BuildRequires: extra-cmake-modules dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libqtxdg-devel
+BuildRequires: extra-cmake-modules dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libdqtxdg-devel libdqt5-concurrent libdqt5-waylandclient
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: dqt6-base-devel dqt6-wayland-devel libdqt6-waylandclient libdtk6core-devel
+BuildRequires: dqt6-base-devel dqt6-wayland-devel libdtk6core-devel libdqt6-waylandclient libdqt6-widgets libdqt6-concurrent
 # waiting Qt6XdgIconLoaderConfig.cmake
 # BuildRequires: libdqt6xdg-devel
 
@@ -121,7 +121,7 @@ echo "Start DTK6 build."
 
 echo "Start DTK5 build."
 export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:%_dqt5_datadir/cmake:$CMAKE_PREFIX_PATH
 %cmake -B build5 \
   -GNinja \
   -DDTK5=ON \
@@ -183,6 +183,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_libdir/libdtk6gui.so
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt2
+- Built on separate libqtxdg.
+
 * Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
 - New version 6.7.32.
 - Unified dtk5 and dtk6 modules.

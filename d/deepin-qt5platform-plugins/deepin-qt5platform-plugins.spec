@@ -4,7 +4,7 @@
 
 Name: deepin-qt5platform-plugins
 Version: 6.7.32
-Release: alt1
+Release: alt2
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
@@ -16,7 +16,7 @@ VCS: https://github.com/linuxdeepin/qt5platform-plugins
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %repo-%version-%release.patch
-Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
+Patch1: deepin-qt5platform-plugins-5.6.28-alt-plugin-path.patch
 
 # Common BuildRequires.
 BuildRequires(pre): rpm-build-ninja
@@ -31,7 +31,7 @@ BuildRequires: gcc-c++
 # DTK5 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
-BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel libdqt5-quickshapes
+BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel libdqt5-quickshapes libdqt5-widgets
 # BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libwayland-cursor-devel
 
 Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
@@ -39,7 +39,7 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcb
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: dqt6-base-devel
+BuildRequires: dqt6-base-devel libdqt6-dbus libdqt6-gui libdqt6-widgets vulkan-headers
 
 %description
 %repo is the %summary.
@@ -109,6 +109,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt2
+- Fixed build on shrinked dQt buildrequires.
+
 * Fri Jan 23 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
 - New version 6.7.32.
 - Unified dtk5 and dtk6 modules.

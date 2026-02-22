@@ -5,7 +5,7 @@
 %def_enable pulse
 
 Name: dqt5-multimedia
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt rpm-macros-dqt5
 BuildRequires: gcc-c++ glibc-devel dqt5-base-devel dqt5-xmlpatterns-devel dqt5-declarative-devel
+BuildRequires: libdqt5-opengl
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-app-1.0)
@@ -82,8 +83,7 @@ Requires: libdqt5-core = %_dqt5_version
 # gstreamer plugins may be required for proper audio and video playback
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 Provides: dqt5-multimedia = %EVR
-#Provides: qml(QtMultimedia)
-AutoProv: no,lib
+Provides: dqml(QtMultimedia)
 %description -n libdqt5-multimedia
 %summary
 
@@ -143,6 +143,18 @@ export QT_HASH_SEED=0
 %_dqt5_examplesdir/*
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 

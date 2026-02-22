@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: dqt5-location
-Version: 5.15.16
-Release: alt1.dde.1
+Version: 5.15.17
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -30,6 +30,7 @@ Patch109: 0201-mapbox-gl-fix-smart-ptr.patch
 #BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-notes-devel kde5-calendarsupport-devel kde5-eventviews-devel kde5-grantleetheme-devel kde5-incidenceeditor-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalutils-devel kde5-kdav-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-libgravatar-devel kde5-libkcddb-devel kde5-libkcompactdisc-devel kde5-libkdepim-devel kde5-libksieve-devel kde5-mailcommon-devel kde5-mailimporter-devel kde5-messagelib-devel kde5-pim-apps-libs-devel kde5-pimcommon-devel kde5-syndication-devel kf5-bluez-qt-devel kf5-kactivities-devel kf5-kactivities-stats-devel kf5-karchive-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdiagram-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kplotting-devel kf5-kpty-devel kf5-kross-devel kf5-krunner-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwindowsystem-devel kf5-kxmlrpcclient-devel kf5-libkgapi-devel kf5-libkscreen-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-prison-devel kf5-syntax-highlighting-devel kf5-threadweaver-devel libGConf-devel libgypsy-devel libqtav-devel python-module-google python3-dev python3-module-zope dqt5-connectivity-devel dqt5-multimedia-devel dqt5-phonon-devel dqt5-quick1-devel dqt5-quickcontrols2-devel dqt5-sensors-devel dqt5-serialport-devel dqt5-svg-devel dqt5-tools-devel dqt5-webengine-devel dqt5-websockets-devel dqt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt rpm-macros-dqt5
 BuildRequires: gcc-c++ glibc-devel dqt5-declarative-devel dqt5-xmlpatterns-devel dqt5-serialport-devel
+BuildRequires: libdqt5-concurrent
 BuildRequires: pkgconfig(gconf-2.0)
 BuildRequires: libicu-devel zlib-devel libssl-devel
 %if_disabled bootstrap
@@ -82,7 +83,6 @@ This package contains documentation for Qt5 %qt_module
 %package -n libdqt5-positioning
 Summary: Qt5 library
 Group: System/Libraries
-AutoProv: no,lib
 Requires: %name-common = %EVR
 Requires: libdqt5-core = %_dqt5_version
 %if_disabled bootstrap
@@ -105,7 +105,6 @@ Requires: dqt5-quickcontrols
 %package -n libdqt5-location
 Summary: Qt5 library
 Group: System/Libraries
-AutoProv: no,lib
 Requires: %name-common = %EVR
 Requires: libdqt5-core = %_dqt5_version
 %if_disabled bootstrap
@@ -159,7 +158,7 @@ export QT_HASH_SEED=0
 %_dqt5_libdir/libQt?Location.so.*
 %_dqt5_plugindir/geoservices/
 %_dqt5_qmldir/QtLocation/
-#%_dqt5_qmldir/Qt/labs/location/
+%_dqt5_qmldir/Qt/labs/location/
 
 %files devel
 %_dqt5_headerdir/QtPositioning/
@@ -182,6 +181,12 @@ export QT_HASH_SEED=0
 %_dqt5_examplesdir/*
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.16-alt1.dde.1
 - merge with system qt5-location
 

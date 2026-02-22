@@ -6,16 +6,16 @@
 %define dkf5_bindir %prefix/lib/dkf5/bin
 
 Name: dqt5-tools
-Version: 5.15.13
-Release: alt0.dde.3
+Version: 5.15.17
+Release: alt0.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
-# %%if "%%version" == "%%{get_version dqt5-tools-common}"
-# %%def_disable bootstrap
-# %%else
+%if "%version" == "%{get_version dqt5-tools-common}"
+%def_disable bootstrap
+%else
 %def_enable bootstrap
-# %%endif
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -42,8 +42,7 @@ Patch11: alt-runqttools-with-dqt5-suffix.patch
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-opengl libdqt5-printsupport libdqt5-qml libdqt5-quick libdqt5-sql libdqt5-v8 libdqt5-webkit libdqt5-webkitwidgets libdqt5-widgets libdqt5-xml libstdc++-devel pkg-config python-base python3 python3-base dqt5-base-devel dqt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute dqt5-webkit-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-macros-dqt5
-# BuildRequires(pre): dqt5-tools-common
+BuildRequires(pre): rpm-macros-dqt5 dqt5-tools-common
 #ifnarch %e2k
 BuildRequires: clang-devel llvm-devel
 #endif
@@ -52,6 +51,7 @@ BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel
 BuildRequires: /usr/bin/convert
 %endif
 BuildRequires: dqt5-base-devel dqt5-declarative-devel-static dqt5-xmlpatterns-devel
+BuildRequires: libdqt5-quickwidgets vulkan-headers libdqt5-xml libdqt5-printsupport
 #BuildRequires: dqt5-webkit-devel
 BuildRequires: libXext-devel libX11-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
@@ -75,6 +75,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
 Requires: %name-common
 Requires: dqt5-base-devel
 Requires: %name
@@ -369,11 +370,24 @@ fi
 %_dqt5_libdir/libQt5Help.so.*
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+- prevent bytes written limit by hasher-privd
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.3
 - hide from app stores and menus (ALT #53326)
 
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
 * Wed Oct 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.2
 - fix requires
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
 
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)

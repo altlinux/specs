@@ -4,13 +4,13 @@
 %define optflags_lto %nil
 
 Name: dqt5-declarative
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
-# %%if "%%version" == "%%{get_version dqt5-tools-common}"
+%if "%version" == "%{get_version dqt5-tools-common}"
 %def_disable bootstrap
-# %%else
-# %%def_enable bootstrap
-# %%endif
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -18,10 +18,10 @@ Url: http://qt.io/
 License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
-Source10: rpm-build-qml.tar
+Source10: rpm-build-dqml.tar
 Source20: kde-qt-5.15.tar
-Source1: qml
-Source2: qml.env
+Source1: dqml
+Source2: dqml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 #
@@ -30,19 +30,19 @@ Patch11: alt-remove-createSize.patch
 Patch12: alt-multiscreen-applet-sigsegv-fix.patch
 
 %include %SOURCE1
-%qml_req_skipall 0
-%qml_add_req_nover Qt.test.qtestroot
+%dqml_req_skipall 0
+%dqml_add_req_nover Qt.test.qtestroot
 %define __find_provides %SOURCE3
 %define __find_requires %SOURCE4
 %add_findprov_lib_path %_dqt5_libdir
 
-BuildRequires(pre): rpm-macros-dqt5
-# BuildRequires(pre): dqt5-tools-common
+BuildRequires(pre): rpm-macros-dqt5 dqt5-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel dqt5-base-devel
-# %%if_disabled bootstrap
-# BuildRequires: dqt5-tools
-# %%endif
+BuildRequires: libdqt5-network vulkan-headers libdqt5-test libdqt5-gui libdqt5-widgets libdqt5-sql
+%if_disabled bootstrap
+BuildRequires: dqt5-tools
+%endif
 
 %description
 %summary
@@ -58,6 +58,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
 Requires: %name-common = %EVR
 Requires: dqt5-base-devel rpm-build-dqml
 %description devel
@@ -109,7 +110,7 @@ Requires: libdqt5-core = %_dqt5_version
 %package -n libdqt5-quicktest
 Group: System/Libraries
 Summary: Qt5 - library
-# Provides: qml(Qt.test.qtestroot)
+Provides: dqml(Qt.test.qtestroot)
 Requires: %name-common = %EVR
 Requires: libdqt5-core = %_dqt5_version
 %description -n libdqt5-quicktest
@@ -157,7 +158,7 @@ QML modules by some Alt Linux Team Policy compatible way.
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10 -a20
-mv rpm-build-qml src/
+mv rpm-build-dqml src/
 ls -1d kde-qt-5.15/*.patch | sort | \
 while read p; do
     echo $p
@@ -184,8 +185,8 @@ export PATH=$PWD/bin_add:$PATH
 
 #build rpm-build-dqml
 export BUILDFLAGS="-I../../include/QtQml/%version -I../../include/QtQml/%version/QtQml -I../../include/QtQml"
-pushd src/rpm-build-qml
-%qmake_dqt5 rpmbqml-qmlinfo.pro
+pushd src/rpm-build-dqml
+%qmake_dqt5 rpmbdqml-qmlinfo.pro
 %make_build
 popd
 
@@ -196,13 +197,13 @@ popd
 %endif
 
 #install rpm-build-dqml
-pushd src/rpm-build-qml
-install -pD -m755 rpmbqml-qmlinfo %buildroot%_bindir/rpmbdqml-qmlinfo
-install -pD -m755 rpmbqml-prov-enum.pl %buildroot%_bindir/rpmbdqml-prov-enum.pl
-install -pD -m755 qml.prov %buildroot%_rpmlibdir/dqml.prov
-install -pD -m755 qml.prov.files %buildroot%_rpmlibdir/dqml.prov.files
-install -pD -m755 qml.req %buildroot%_rpmlibdir/dqml.req
-install -pD -m755 qml.req.files %buildroot%_rpmlibdir/dqml.req.files
+pushd src/rpm-build-dqml
+install -pD -m755 rpmbdqml-qmlinfo %buildroot%_bindir/rpmbdqml-qmlinfo
+install -pD -m755 rpmbdqml-prov-enum.pl %buildroot%_bindir/rpmbdqml-prov-enum.pl
+install -pD -m755 dqml.prov %buildroot%_rpmlibdir/dqml.prov
+install -pD -m755 dqml.prov.files %buildroot%_rpmlibdir/dqml.prov.files
+install -pD -m755 dqml.req %buildroot%_rpmlibdir/dqml.req
+install -pD -m755 dqml.req.files %buildroot%_rpmlibdir/dqml.req.files
 popd
 
 mkdir -p %buildroot%_rpmmacrosdir/
@@ -287,7 +288,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml.env
 %_dqt5_libdatadir/libQt?QmlDebug.a
 
 %files -n rpm-build-dqml
-%doc src/rpm-build-qml/LICENSE
+%doc src/rpm-build-dqml/LICENSE
 %_rpmmacrosdir/dqml
 %_rpmmacrosdir/dqml.env
 %_rpmlibdir/dqml.req
@@ -298,6 +299,19 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml.env
 %_bindir/rpmbdqml-qmlinfo
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+- prevent bytes written limit by hasher-privd
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 

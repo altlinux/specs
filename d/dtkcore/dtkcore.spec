@@ -5,7 +5,7 @@
 
 Name: dtkcore
 Version: 6.7.31
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit core modules
 
@@ -36,14 +36,14 @@ BuildRequires: gcc-c++
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: dqt6-base-devel libdtk6log-devel
+BuildRequires: dqt6-base-devel libdtk6log-devel libdqt6-dbus libdqt6-xml
 %if_with docs
 BuildRequires: dqt6-base-doc
 %endif
 
 # DTK5 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt5
-BuildRequires: libdtklog-devel libgsettings-qt-devel dqt5-base-devel
+BuildRequires: libdtklog-devel libgsettings-dqt5-devel dqt5-base-devel libgio-devel libdqt5-xml
 %if_with docs
 BuildRequires: dqt5-base-doc
 %endif
@@ -146,11 +146,14 @@ echo "Start DTK6 build."
 
 echo "Start DTK5 build."
 export PATH=%_dqt5_bindir:$PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export CMAKE_LIBRARY_PATH=%_dqt5_libdir:$CMAKE_LIBRARY_PATH
+export QTDIR=%_dqt5_prefix
 %cmake -B build5 \
   -GNinja \
   -DDTK5=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
@@ -225,6 +228,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %endif
 
 %changelog
+* Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt2
+- Built on separate libgsettings-qt (no qt5 required).
+
 * Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt1
 - New version 6.7.31.
 - Unified dtk5 and dtk6 modules.

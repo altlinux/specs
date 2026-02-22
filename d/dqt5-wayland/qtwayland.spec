@@ -2,7 +2,7 @@
 %global qt_module dqtwayland
 
 Name: dqt5-wayland
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -22,10 +22,10 @@ BuildRequires: libinput-devel libts-devel libmtdev-devel
 BuildRequires: libudev-devel libxkbcommon-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: dqt5-base-devel-static dqt5-declarative-devel dqt5-tools-devel
+BuildRequires: vulkan-headers
 
 Requires: libdqt5-gui = %_dqt5_version libdqt5-quick = %_dqt5_version
 
-AutoProv: no
 # find libraries
 %add_findprov_lib_path %_dqt5_libdir
 
@@ -43,6 +43,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
 Requires: %name-common = %EVR
 Requires: dqt5-base-devel
 %description devel
@@ -76,7 +77,7 @@ Requires: libdqt5-core = %_dqt5_version
 Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
-Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version
+Requires: libdqt5-core = %_dqt5_version
 %description -n libdqt5-waylandcompositor
 %summary
 
@@ -84,7 +85,7 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version
 Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common = %EVR
-Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version
+Requires: libdqt5-core = %_dqt5_version
 %description -n libdqt5-waylandclient
 %summary
 
@@ -156,6 +157,19 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+- prevent bytes written limits by hasher-privd
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qt5 for separate deepin buildings (ALT #48138)
 

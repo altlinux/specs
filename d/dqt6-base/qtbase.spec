@@ -34,7 +34,7 @@
 Name: dqt6-base
 %define major  6
 Version: 6.9.3
-Release: alt0.dde.1
+Release: alt0.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -127,6 +127,8 @@ Common package for Qt%major
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
+Requires: lib%{gname}-core
 Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
@@ -854,6 +856,9 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Feb 16 2026 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.2
+- prevent bytes written limit by hasher-privd
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

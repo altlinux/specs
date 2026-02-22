@@ -1,0 +1,160 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+Name: libdqtxdg
+Version: 3.12.0
+Release: alt0.dde.1
+
+Summary: libdqtxdg fork for DDE
+License: LGPL-2.1
+Group: System/Libraries
+
+Url: https://github.com/lxqt/libqtxdg
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-dqt5
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: dqt5-base-devel dqt5-svg-devel libmagic-devel
+BuildRequires: libdqt5-xml
+BuildRequires: dlxqt-build-tools
+BuildRequires: libgio-devel
+Requires: libdqt5-core = %_dqt5_version
+
+%description
+%summary.
+
+%package devel
+Summary: Development headers for QtXdg library
+Group: Development/C++
+Requires: %name = %EVR
+Requires: libgio-devel
+
+%description devel
+This package provides the development files for qtxdg library
+which implements functions of the XDG Specifications in Qt.
+
+%prep
+%setup
+%ifarch %e2k
+sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
+%endif
+
+%build
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_datadir/cmake:$CMAKE_PREFIX_PATH
+%cmake \
+  -DCMAKE_INSTALL_BINDIR=%_dqt5_bindir \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=NO \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+  -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
+  -DCMAKE_INSTALL_INCLUDEDIR=%_dqt5_headerdir \
+  -DCMAKE_INSTALL_LIBDIR=%_dqt5_libdir \
+  -DCMAKE_INSTALL_DATADIR=%_dqt5_datadir \
+  -DLXQT_ETC_XDG_DIR=%_dqt5_sysconfdir \
+  -DTXDG_DEFAPPS_CONF_INSTALL_DIR=%_dqt5_sysconfdir \
+#
+%cmake_build
+
+%install
+%cmake_install
+
+%files
+%_dqt5_libdir/*.so.*
+%_dqt5_plugindir/*/*.so
+%config %_dqt5_sysconfdir/lxqt-qtxdg.conf
+%config %_dqt5_sysconfdir/qtxdg.conf
+
+%files devel
+%_dqt5_libdir/*.so
+%_dqt5_headerdir/*/
+%_dqt5_libdir/pkgconfig/*.pc
+%_dqt5_datadir/cmake/*/
+
+%changelog
+* Mon Feb 16 2026 Leontiy Volodin <lvol@altlinux.org> 3.12.0-alt0.dde.1
+- fork qt5 for separate deepin buildings (ALT #48138)
+
+* Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt1
+- New version 3.12.0.
+
+* Wed May 03 2023 Anton Midyukov <antohami@altlinux.org> 3.11.0-alt2
+- Requires: libqt5-core = %%_qt5_version
+
+* Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 3.11.0-alt1
+- New version 3.11.0.
+
+* Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt1
+- new version 3.10.0
+
+* Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 3.9.1-alt1
+- new version 3.9.1
+- drop qtxdg-mat (replaced to qtxdg-tools)
+
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 3.9.0-alt1
+- new version 3.9.0
+
+* Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 3.8.0-alt1
+- new version 3.8.0
+
+* Fri Apr 16 2021 Anton Midyukov <antohami@altlinux.org> 3.7.1-alt1
+- new version 3.7.1
+
+* Thu Nov 05 2020 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt1
+- new version 3.6.0
+
+* Sat Apr 25 2020 Anton Midyukov <antohami@altlinux.org> 3.5.0-alt1
+- new version 3.5.0
+
+* Sun Mar 22 2020 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1
+- new version 3.4.0
+- initial subpackage qtxdg-mat
+- update buildrequires
+
+* Tue May 07 2019 Michael Shigorin <mike@altlinux.org> 3.3.1-alt2
+- fixed build on e2k with lcc
+
+* Fri Mar 08 2019 Anton Midyukov <antohami@altlinux.org> 3.3.1-alt1
+- new version 3.3.1
+
+* Sat Jan 26 2019 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
+- new version 3.3.0
+
+* Sat Aug 25 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1.1
+- Rebuilt with qt 5.11
+
+* Tue May 22 2018 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- new version 3.2.0
+
+* Sun Oct 22 2017 Michael Shigorin <mike@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
+* Tue Sep 26 2017 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
+- 3.0.0
+  + see http://lxqt.org/release/2017/09/22/libqtxdg-300/
+
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
+* Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
+* Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
+* Sun Feb 08 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
+- 1.1.0 built against qt5
+
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
+* Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.3-alt1
+- 0.5.3
+  + thanks jleclanche for rapid update so the standalone
+    library package version is greater than 0.5.2 which
+    was bundled with razorqt
+- spec generalization while at that
+- updated the Url:
+
+* Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.1-alt1
+- initial standalone release
+

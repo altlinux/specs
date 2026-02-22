@@ -1,8 +1,10 @@
+%define _libexecdir %_prefix/libexec
+
 %def_disable clang
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.7.28
+Version: 6.7.32
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -17,23 +19,26 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtkwidget-5.6.28-alt-pkgconfig-find-requires.patch
 
 # for webp (dci) icons
 Requires: dqt5-imageformats
 
-# find libraries
-%add_findprov_lib_path %_dqt5_libdir
+# Common BuildRequires.
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake doxygen dtk6-common-devel libcups-devel libxcbutil-devel libstartup-notification-devel libXext-devel libXi-devel libwayland-client-devel libwayland-client
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+BuildRequires: clang-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Thu Oct 19 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5 xorg-proto-devel
-BuildRequires: cmake doxygen dtk6-common-devel libgsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel libwayland-client-devel
+# DTK5 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt5
+BuildRequires: libgsettings-dqt5-devel libgio-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel libdtkcore-devel libdtkgui-devel libdqt5-concurrent libdqt5-printsupport
+
+# DTK6 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: libdtk6core-devel libdtk6gui-devel dqt6-base-devel dqt6-tools-devel dqt6-svg-devel vulkan-headers libdqt6-concurrent libdqt6-printsupport
 
 %description
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -83,26 +88,79 @@ Obsoletes: dtk5-widget-doc < %EVR
 This package provides %name documantation.
 %endif
 
+%package -n dtk6widget
+Summary: Deepin tool kit widget modules
+Group: Graphical desktop/Other
+Provides: libdtk6-widget = %EVR
+Obsoletes: libdtk6-widget < %EVR
+# for webp (dci) icons
+Requires: dqt6-imageformats
+
+%description -n dtk6widget
+DtkWidget is Deepin graphical user interface for deepin desktop development.
+
+%package -n libdtk6widget6
+Summary: Libraries for dtk6widget
+Group: System/Libraries
+Requires: libdqt6-core = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-printsupport = %_dqt6_version
+Requires: libdqt6-widgets = %_dqt6_version
+
+%description -n libdtk6widget6
+DtkWidget is Deepin graphical user interface for deepin desktop development.
+Libraries for dtk6widget.
+
+%package -n libdtk6widget-devel
+Summary: Development package for dtk6widget
+Group: Development/KDE and QT
+Provides: dtk6-widget-devel = %EVR
+Obsoletes: dtk6-widget-devel < %EVR
+
+%description -n libdtk6widget-devel
+Header files and libraries for dtk6widget.
+
+%package -n dtk6widget-examples
+Summary: Examples for dtk6widget
+Group: Development/KDE and QT
+Provides: dtk6-widget-examples = %EVR
+Obsoletes: dtk6-widget-examples < %EVR
+
+%description -n dtk6widget-examples
+DtkWidget is Deepin graphical user interface for deepin desktop development.
+Examples for dtk6widget.
+
+%if_enabled docs
+%package -n dtk6widget-doc
+Summary: dtk6widget documantation
+Group: Documentation
+BuildArch: noarch
+Provides: dtk6-widget-doc = %EVR
+Obsoletes: dtk6-widget-doc < %EVR
+
+%description -n dtk6widget-doc
+This package provides dtk6widget documantation.
+%endif
+
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+
+echo "Start DTK5 build."
 export PATH=%_dqt5_bindir:$PATH
-%cmake \
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:%_libdir/pkgconfig
+%cmake -B build5 \
   -GNinja \
-  -DCMAKE_BUILD_TYPE=None \
+  -DDTK5=ON \
   -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+  -DCMAKE_LIBRARY_PATH=%_dqt5_libdir \
   -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
 %if_enabled docs
   -DBUILD_DOCS=ON \
@@ -115,18 +173,34 @@ export PATH=%_dqt5_bindir:$PATH
   -DDTK_VERSION=%version \
   -DBUILD_PLUGINS=OFF \
 #
-cmake --build %_cmake__builddir -j%__nprocs
+cmake --build build5 -j%__nprocs
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DDTK5=OFF \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
+%if_enabled docs
+  -DBUILD_DOCS=ON \
+%else
+  -DBUILD_DOCS=OFF \
+%endif
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DDTK_VERSION=%version \
+  -DBUILD_PLUGINS=OFF \
+#
 
 %install
-%cmake_install
+DESTDIR=%buildroot cmake --install build5 --verbose
+%DQ6install
 
 %files
 %doc README.md LICENSE CHANGELOG.md
-%dir %_libdir/dtk5/
-%dir %_libdir/dtk5/DWidget/
-%_libdir/dtk5/DWidget/bin/
 %dir %_datadir/dtk5/
 %_datadir/dtk5/DWidget/
+%dir %_libexecdir/dtk5/
+%dir %_libexecdir/dtk5/DWidget/
+%dir %_libexecdir/dtk5/DWidget/bin/
+%_libexecdir/dtk5/DWidget/bin/dtk-svgc
 
 %files -n lib%{name}5
 %_libdir/lib%name.so.5*
@@ -140,13 +214,51 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%name.so
 
 %files examples
+%dir %_libdir/dtk5/
 %dir %_libdir/dtk5/DWidget/
 %_libdir/dtk5/DWidget/examples/
 
+%if_enabled docs
 %files doc
 %_dqt5_docdir/dtkwidget.qch
+%endif
+
+%files -n dtk6widget
+%doc README.md LICENSE CHANGELOG.md
+%dir %_datadir/dtk6/
+%_datadir/dtk6/DWidget/
+%dir %_libexecdir/dtk6/
+%dir %_libexecdir/dtk6/DWidget/
+%dir %_libexecdir/dtk6/DWidget/bin/
+%_libexecdir/dtk6/DWidget/bin/dtk6-svgc
+
+%files -n libdtk6widget6
+%_libdir/libdtk6widget.so.6*
+
+%files -n libdtk6widget-devel
+%dir %_includedir/dtk6/
+%_includedir/dtk6/DWidget/
+%_dqt6_mkspecsdir/modules/*.pri
+%_libdir/cmake/Dtk6Widget/
+%_pkgconfigdir/dtk6widget.pc
+%_libdir/libdtk6widget.so
+
+%files -n dtk6widget-examples
+%dir %_libdir/dtk6/
+%dir %_libdir/dtk6/DWidget/
+%_libdir/dtk6/DWidget/examples/
+
+%if_enabled docs
+%files -n dtk6widget-doc
+%_dqt6_docdir/dtkwidget.qch
+%endif
 
 %changelog
+* Mon Feb 16 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
+- New version 6.7.32.
+- Unified dtk5 and dtk6 modules.
+- Built on separate libgsettings-qt (no qt5 required).
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.28-alt1
 - New version 5.7.28.
 

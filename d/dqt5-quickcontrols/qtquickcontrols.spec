@@ -2,7 +2,7 @@
 %global qt_module dqtquickcontrols
 
 Name: dqt5-quickcontrols
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -15,8 +15,6 @@ Provides: libdqt5-qtquickcontrols = %version-%release
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch: alt-revert-qtbug63437.patch
-
-AutoProv: no
 
 # Automatically added by buildreq on Tue Nov 26 2013 (-bi)
 # optimized out: elfutils libGL-devel libdqt5-clucene libdqt5-core libdqt5-gui libdqt5-help libdqt5-network libdqt5-qml libdqt5-quick libdqt5-sql libdqt5-v8 libdqt5-widgets libdqt5-xml libstdc++-devel python-base python3 python3-base dqt5-base-devel dqt5-declarative-devel dqt5-tools ruby ruby-stdlibs
@@ -75,6 +73,18 @@ export QT_HASH_SEED=0
 %_dqt5_examplesdir/*
 
 %changelog
+* Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qt5 for separate deepin buildings (ALT #48138)
 

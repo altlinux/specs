@@ -33,7 +33,7 @@
 
 Name: dqt5-webengine
 Version: 5.15.18
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -110,6 +110,7 @@ BuildRequires: python-devel python-modules-json
 BuildRequires: dqt5-connectivity-devel dqt5-multimedia-devel dqt5-script-devel dqt5-sensors-devel dqt5-serialport-devel dqt5-svg-devel dqt5-tools-devel
 BuildRequires: dqt5-websockets-devel dqt5-x11extras-devel dqt5-xmlpatterns-devel dqt5-declarative-devel dqt5-location-devel dqt5-webchannel-devel
 BuildRequires: dqt5-phonon-devel
+BuildRequires: libdqt5-quickwidgets libdqt5-printsupport
 
 # find libraries
 %add_findprov_lib_path %_dqt5_libdir
@@ -154,7 +155,6 @@ Group: System/Libraries
 Requires: %name-common
 Requires: libdqt5-core = %_dqt5_version
 Requires: dqt5-quickcontrols2
-AutoProv: no,lib
 %description -n libdqt5-webengine
 %summary
 
@@ -181,7 +181,6 @@ Summary: Qt5 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libdqt5-core = %_dqt5_version
-AutoProv: no,lib
 %description -n libdqt5-pdf
 %summary
 
@@ -472,6 +471,10 @@ done
 %_dqt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Feb 20 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.2
+- enable dqml provides
+- fix build on shrinked dqt5
+
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.1
 - merge with system qt5-webengine
 

@@ -4,7 +4,7 @@
 
 Name: deepin-qt5integration
 Version: 6.7.32
-Release: alt1
+Release: alt2
 
 Summary: Qt platform theme integration plugins for DDE
 
@@ -32,11 +32,11 @@ BuildRequires: gcc-c++
 # DTK5 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5ThemeSupport.a
-BuildRequires: libdtkwidget-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel libwayland-client-devel
+BuildRequires: libdtkwidget-devel libdqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel libwayland-client-devel libdqt5-concurrent
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: libdtk6widget-devel dqt6-base-devel libcups-devel libqt6xdg-devel
+BuildRequires: libdtk6widget-devel dqt6-base-devel libcups-devel libqt6xdg-devel libdqt6-concurrent
 
 %description
 Multiple Qt plugins to provide better Qt5 integration for DDE is included.
@@ -111,6 +111,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_dqt6_plugindir/styles/libchameleon.so
 
 %changelog
+* Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt2
+- Built on separate libqtxdg (no qt5 required).
+
 * Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
 - New version 6.7.32.
 - Unified dtk5 and dtk6 modules.

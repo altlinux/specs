@@ -36,13 +36,13 @@
 %define gname  dqt5
 Name: dqt5-base
 %define major  5
-Version: 5.15.13
+Version: 5.15.17
 Release: alt1.dde.1
-# %%if "%%version" == "%%{get_version dqt5-tools-common}"
+%if "%version" == "%{get_version dqt5-tools-common}"
 %def_disable bootstrap
-# %%else
-#%%def_enable bootstrap
-# %%endif
+%else
+%def_enable bootstrap
+%endif
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -84,6 +84,9 @@ Patch1013: alt-QTBUG-88599.patch
 Patch1014: alt-loongarch64-support.patch
 # Source: https://github.com/OpenMandrivaAssociation/qt5-qtbase/blob/master/qtbase-5.15.9-work-around-pyside2-brokenness.patch
 Patch1015: qt5-base-5.15.11-alt-qtbase-5.15.9-work-around-pyside2-brokenness.patch
+Patch1016: alt-xdg-current-desktop.patch
+#
+Patch2000: 9103-qtbase-5.15.13-qmenu_fix_shortcuts.patch
 
 # macros
 %define _dqt5 %gname
@@ -97,8 +100,7 @@ Patch1015: qt5-base-5.15.11-alt-qtbase-5.15.9-work-around-pyside2-brokenness.pat
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
-BuildRequires(pre): libharfbuzz-devel
-# BuildRequires(pre): dqt5-tools-common
+BuildRequires(pre): libharfbuzz-devel dqt5-tools-common
 BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
 BuildRequires: libdouble-conversion-devel
 BuildRequires: libproxy-devel libssl-devel libkrb5-devel
@@ -121,10 +123,9 @@ BuildRequires: libat-spi2-core-devel
 %{?_enable_sql_sqlite2:BuildRequires: libsqlite-devel}
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
-# %%if_disabled bootstrap
-# BuildRequires: dqt5-base-devel
-# BuildRequires: dqt5-tools
-# %%endif
+%if_disabled bootstrap
+BuildRequires: dqt5-base-devel dqt5-tools
+%endif
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 %if_enabled tests
 BuildRequires: time mesa-dri-drivers /bin/dbus-launch /usr/bin/xvfb-run
@@ -146,6 +147,8 @@ Common package for Qt%major
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
+Requires: lib%{gname}-core
 Requires: %name-common
 Requires: pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
@@ -430,6 +433,9 @@ done
 %patch1013 -p1
 %patch1014 -p1
 %patch1015 -p1
+%patch1016 -p1
+#
+%patch2000 -p1
 
 bin/syncqt.pl -version %version
 
@@ -875,7 +881,26 @@ make check -k ||:
 
 
 %changelog
-* Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt1.dde.1
+* Fri Feb 13 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt1.dde.1
+- merge with new version
+- prevent bytes written limit by hasher-privd
+
+* Wed Dec 03 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version (fixes: CVE-2024-39936 CVE-2024-25580 CVE-2023-51714 CVE-2023-32763 CVE-2023-34410 CVE-2023-37369 CVE-2023-38197 CVE-2023-32762 CVE-2023-33285)
+
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt3
+- add patch for keyboard shortcuts from Corwin
+
+* Mon Jul 22 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt1.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 
 * Wed Apr 24 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt2

@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: dqt5-imageformats
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -86,6 +86,18 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Tue May 21 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qt5 for separate deepin buildings (ALT #48138)
 

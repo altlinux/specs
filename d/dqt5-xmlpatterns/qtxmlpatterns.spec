@@ -1,13 +1,13 @@
 %global qt_module dqtxmlpatterns
 
 Name: dqt5-xmlpatterns
-Version: 5.15.13
+Version: 5.15.17
 Release: alt0.dde.1
-# %%if "%%version" == "%%{get_version dqt5-tools-common}"
+%if "%version" == "%{get_version dqt5-tools-common}"
 %def_disable bootstrap
-# %%else
-# %%def_enable bootstrap
-# %%endif
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtXmlPatterns component
@@ -16,11 +16,10 @@ License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-dqt5
-# BuildRequires(pre): dqt5-tools-common
-# %%if_disabled bootstrap
-# BuildRequires: dqt5-tools
-# %%endif
+BuildRequires(pre): rpm-macros-dqt5 dqt5-tools-common
+%if_disabled bootstrap
+BuildRequires: dqt5-tools
+%endif
 BuildRequires: gcc-c++ glibc-devel dqt5-base-devel dqt5-declarative-devel
 
 # find libraries
@@ -114,6 +113,18 @@ export QT_HASH_SEED=0
 %_dqt5_examplesdir/*
 
 %changelog
+* Wed Jan 28 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
+- merge with new version
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 

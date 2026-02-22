@@ -1,8 +1,10 @@
 %define _libexecdir %_prefix/libexec
 %define twver 0
+# prevent bytes written limit by hasher-privd
+%global __find_debuginfo_files %nil
 
 Name: deepin-terminal
-Version: 6.5.25
+Version: 6.5.28
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -25,9 +27,7 @@ Requires: libdqt5-widgets = %_dqt5_version
 #Recommends:     zssh
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf rpm-macros-cmake
-# Automatically added by buildreq on Wed Jan 21 2026
-# optimized out: cmake-modules dqt5-base-devel dqt5-tools dtkcore fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xml libdtkcore-devel libdtkgui-devel libdtklog-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt1 libp11-kit libqt5-svg libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxcbutil-icccm pkg-config python3 python3-base sh5
-BuildRequires: cmake dqt5-tools-devel dqt5-x11extras-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel dlxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel libchardet-devel libuchardet-devel libwayland-client-devel
 
 %description
 %summary.
@@ -71,7 +71,7 @@ Development package for QTermWidget. Contains headers and dev-libs.
 %patch -p1
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:%_dqt5_datadir/cmake:$CMAKE_PREFIX_PATH
 export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
 export PATH=%_dqt5_bindir:$PATH
 %cmake \
@@ -111,6 +111,16 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/terminal/
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.terminal.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.terminal.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.terminal/
+%_datadir/dsg/configs/org.deepin.terminal/org.deepin.terminal.json
 # outside %%find_lang
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
@@ -133,6 +143,10 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.28-alt1
+- New version 6.5.28.
+- Built on separate lxqt-build-tools (no qt required).
+
 * Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.25-alt1
 - New version 6.5.25.
 
