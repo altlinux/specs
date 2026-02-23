@@ -2,8 +2,8 @@
 %global import_path github.com/AdguardTeam/AdGuardHome
 
 Name: adguardhome
-Version: 0.108.0
-Release: alt1.beta80
+Version: 0.108.0.b.82
+Release: alt1
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
@@ -35,7 +35,7 @@ Free and open source, powerful network-wide ads & trackers blocking DNS server.
 # npm --prefix client ci
 # git add client/node_modules -f && git commit -m "Updated node modules."
 %setup -a 1 -a 2
-%patch -p1
+# %patch -p1
 
 %build
 export GO111MODULE=on
@@ -80,6 +80,9 @@ touch %buildroot%_sysconfdir/%name.yaml
 %ghost %config(noreplace) %_sysconfdir/%name.yaml
 
 %changelog
+* Mon Feb 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0.b.82-alt1
+- Updated to version 0.108.0.b.82.
+
 * Sat Dec 06 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta80
 - Updated to version 0.108.0-b.80.
 
