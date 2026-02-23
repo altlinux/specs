@@ -16,7 +16,7 @@
 %endif
 
 Name: ImageMagick
-Version: %dversion.%drelease
+Version: 7.1.2.15
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -271,6 +271,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 7.1.2.15-alt1
+- 7.1.2.13 -> 7.1.2.15
+
 * Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 7.1.2.13-alt1
 - 7.1.2.12 -> 7.1.2.13
 
