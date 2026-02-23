@@ -2,7 +2,7 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.15
+Version: 8.06.16
 Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
@@ -79,6 +79,9 @@ make install \
 %files -f ocaml-files.runtime
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 8.06.16-alt1
+- 8.06.15 -> 8.06.16
+
 * Thu Feb 13 2025 Anton Farygin <rider@altlinux.ru> 8.06.15-alt1
 - 8.06.15
 
