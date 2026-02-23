@@ -3,8 +3,8 @@
 %endif
 %define pkgname camlzip
 Name: ocaml-%pkgname
-Version: 1.13
-Release: alt2
+Version: 1.14
+Release: alt1
 Summary: OCaml library for reading and writing zip, jar and gzip files
 Group: Development/ML
 License: LGPLv2.1+ with OCaml-LGPL-linking-exception
@@ -16,7 +16,6 @@ BuildRequires(pre): rpm-build-ocaml >= 1.6
 BuildRequires: ocaml zlib-devel ocaml-findlib
 Provides: ocaml-zip = %EVR
 Obsoletes: ocaml-zip < %EVR
-
 
 %description
 This Objective Caml library provides easy access to compressed files
@@ -56,12 +55,14 @@ mkdir -p %buildroot%_ocamldir/stublibs
 
 %ocaml_find_files
 
-
 %files -f ocaml-files.runtime
 
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 1.14-alt1
+- 1.13 -> 1.14
+
 * Sun Jan 19 2025 Anton Farygin <rider@altlinux.ru> 1.13-alt2
 - fixed installation path for the stub library (closes: #52753)
 
