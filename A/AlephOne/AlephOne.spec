@@ -2,7 +2,7 @@ Name: AlephOne
 Version: 1.10
 %define uversion 20240822
 
-Release: alt1
+Release: alt2
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -35,7 +35,7 @@ BuildRequires: libcurl-devel libminiupnpc-devel libopenal-devel libpng-devel lib
 #BuildRequires: libmad-devel libsmpeg-devel libspeex-devel libspeexdsp-devel
 #BuildRequires: libvorbis-devel lua5.3 python3-dev libopenal-devel zlib-devel   /usr/bin/python3
 
-BuildRequires: desktop-file-utils  autoconf-archive
+BuildRequires: desktop-file-utils  autoconf-archive zlib-devel
 
 %description
 Aleph One is an Open Source 3D first-person shooter game, based on the game
@@ -100,6 +100,9 @@ alephone "~/Marathon Infinity"
 
 
 %changelog
+* Mon Feb 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.10-alt2
+- NMU: FTBFS: rebuilded with zlib-devel.
+
 * Sun Jan 19 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1.10-alt1
 - Update to git commit  (20240822)
 
