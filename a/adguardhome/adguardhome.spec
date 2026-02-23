@@ -3,7 +3,7 @@
 
 Name: adguardhome
 Version: 0.108.0.b.82
-Release: alt1
+Release: alt2
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
@@ -54,7 +54,7 @@ npm --prefix client run build-prod
 %golang_prepare
 cd .gopath/src/%import_path
 go build --ldflags "\
-         -X %import_path/internal/version.version=%version \
+         -X %import_path/internal/version.version=%(echo %version | sed 's/\.b/-b/') \
          -X %import_path/internal/version.channel=release" \
          -o=%name
 
@@ -80,6 +80,9 @@ touch %buildroot%_sysconfdir/%name.yaml
 %ghost %config(noreplace) %_sysconfdir/%name.yaml
 
 %changelog
+* Mon Feb 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0.b.82-alt2
+- Fixed internal version of server.
+
 * Mon Feb 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0.b.82-alt1
 - Updated to version 0.108.0.b.82.
 
