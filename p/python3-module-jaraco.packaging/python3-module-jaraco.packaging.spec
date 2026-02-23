@@ -1,8 +1,8 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 10.2.3
-Release: alt1.1
+Version: 10.4.0
+Release: alt1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -44,6 +44,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Mon Feb 23 2026 Andrey Cherepanov <cas@altlinux.org> 10.4.0-alt1
+- New version.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 10.2.3-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
