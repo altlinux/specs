@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-headers
-Version: 2024.10.24
+Version: 2025.07.22
 Release: alt1
 Epoch: 1
 
@@ -22,6 +22,7 @@ Source1: https://github.com/KhronosGroup/OpenCL-CLHPP/releases/download/v%cl_hpp
 Source2: https://www.khronos.org/registry/cl/api/%version/cl.hpp
 
 BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libva-devel
 
 BuildArch: noarch
 
@@ -47,6 +48,13 @@ rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 %_datadir/pkgconfig/OpenCL-Headers.pc
 
 %changelog
+* Mon Feb 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1:2025.07.22-alt1
+- v2025.07.22 (OpenCL 3.0.19).
+- BR: added c++ and libva to satisfy builddeps checks.
+
+* Wed Jun 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2025.06.13-alt1
+- v2025.06.13.
+
 * Thu Nov 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.10.24-alt1
 - v2024.10.24 (OpenCL 3.0.17).
 - BR: don't require c++.
