@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.26.1
 Release: alt1
 
 Summary: RAW image processing for Python, a wrapper for libraw
@@ -106,6 +106,9 @@ install -m0644 build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Sun Feb 22 2026 Alexander Kovalev <alexvk@altlinux.org> 0.26.1-alt1
+- New version 0.26.1.
+
 * Sat Jan 31 2026 Alexander Kovalev <alexvk@altlinux.org> 0.26.0-alt1
 - New version 0.26.0.
 
