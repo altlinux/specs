@@ -14,15 +14,15 @@ relational or object oriented databases.
 
 %define oname tables
 
-# locally tests pass
+# locally tests pass for 3.11.0
 %def_disable check
 
 #TODO: fix docs and bench
 %def_without docs
 
 Name: py%oname
-Version: 3.10.2
-Release: alt3
+Version: 3.11.0
+Release: alt1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -37,7 +37,6 @@ Source1: hdf5-blosc-%version.tar
 
 Patch1: 0004-remove-gtags.patch
 Patch2: pytables-3.10.2-fix-test-package-fix.patch
-Patch3: pytables-3.10.2-numexpr-fix.patch
 
 Requires: python3-module-%oname = %EVR
 Requires: libblosc2
@@ -156,6 +155,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Mon Feb 23 2026 Anton Vyatkin <toni@altlinux.org> 1:3.11.0-alt1
+- New version 3.11.0.
+
 * Wed Oct 29 2025 Anton Vyatkin <toni@altlinux.org> 1:3.10.2-alt3
 - Fix tests (locally tests pass).
 
