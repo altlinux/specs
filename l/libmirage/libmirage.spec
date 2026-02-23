@@ -1,16 +1,17 @@
 %add_optflags -fcommon
 
-%define soversion 11
+%define soversion 12
 
 Name: libmirage
-Version: 3.2.10
+Version: 3.3.1
 Release: alt1
 
 Summary: A CD-ROM image access library
 License: GPLv2+
 Group: System/Libraries
 
-URL: http://cdemu.sourceforge.net
+Url: http://cdemu.sourceforge.net
+Vcs: https://github.com/cdemu/cdemu
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
@@ -32,9 +33,11 @@ BuildRequires: glib-networking
 BuildRequires: gtk-doc
 BuildRequires: intltool
 BuildRequires: libGConf
+BuildRequires: libgcrypt-devel
 BuildRequires: liblzma-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libsndfile-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: zlib-devel
 
 %description
@@ -123,7 +126,7 @@ This package contains files needed to develop with libMirage.
 %_libdir/libmirage.so.*
 
 %files plugins
-%_libdir/libmirage-3.2
+%_libdir/libmirage-3.3
 
 %files common -f %name.lang
 %_datadir/mime/packages/*.xml
@@ -133,10 +136,13 @@ This package contains files needed to develop with libMirage.
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/Mirage-3.2.typelib
 %_pkgconfigdir/%name.pc
-%_includedir/%name-3.2
+%_includedir/%name-3.3
 %_datadir/gir-1.0/*
 
 %changelog
+* Mon Feb 23 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Thu Apr 10 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.10-alt1
 - New version 3.2.10.
 

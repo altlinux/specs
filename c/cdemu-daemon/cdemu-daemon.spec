@@ -1,14 +1,15 @@
 %add_optflags -fcommon
 
 Name: cdemu-daemon
-Version: 3.2.7
+Version: 3.3.0
 Release: alt1
 
 Summary: CDEmu daemon
 License: GPLv2+
 Group: System/Servers
 
-URL: http://cdemu.sourceforge.net
+Url: http://cdemu.sourceforge.net
+Vcs: https://github.com/cdemu/cdemu
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
@@ -63,6 +64,9 @@ to control it.
 %config %_sysconfdir/modules-load.d/%name.conf
 
 %changelog
+* Mon Feb 23 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Sat Aug 31 2024 Nazarov Denis <nenderus@altlinux.org> 3.2.7-alt1
 - New version 3.2.7.
 

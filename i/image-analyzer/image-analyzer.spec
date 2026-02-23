@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: image-analyzer
-Version: 3.2.6
+Version: 3.3.0
 Release: alt1
 
 Summary: Simple Gtk+ application that displays tree structure of disc image
@@ -11,6 +11,7 @@ License: GPLv2+
 Group: Emulators
 
 Url: http://cdemu.sourceforge.net/
+Vcs: https://github.com/cdemu/cdemu
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 # http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
@@ -61,6 +62,9 @@ sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 %_pixmapsdir/*.svg
 
 %changelog
+* Mon Feb 23 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Thu Feb 15 2024 Nazarov Denis <nenderus@altlinux.org> 3.2.6-alt1
 - New version 3.2.6.
 
