@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define modname Wand
 %define pypi_name wand
@@ -9,8 +9,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.6.13
-Release: alt1.1
+Version: 0.7.0
+Release: alt1
 
 Summary: Ctypes-based simple MagickWand API binding for Python
 Group: Development/Python3
@@ -20,7 +20,7 @@ Url: https://wand-py.org/
 Vcs: https://github.com/emcconville/wand.git
 
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/w/%pypi_name/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/w/%pypi_name/%pypi_name-%version.tar.gz
 #Source: https://github.com/emcconville/wand/archive/%version/%modname-%version.tar.gz
 %else
 Source: %modname-%version.tar
@@ -43,11 +43,10 @@ Wand is a ctypes-based simple ImageMagick binding for Python, supporting
 implemented in Wand.
 
 %prep
-%setup -n %modname-%version
-%if_enabled snapshot
+%setup %{?_disable_snapshot:-n %pypi_name-%version} %{?_enable_snapshot:-n %modname-%version
 %define version_tuple %(%__python3 -c 'print(f"{tuple(map(int, "%version".split(".")))}")')
 sed -i -e 's/^\(VERSION_INFO[ \t]*=\).*/\1%version_tuple/' wand/version.py
-%endif
+}
 
 %build
 %pyproject_build
@@ -56,8 +55,7 @@ sed -i -e 's/^\(VERSION_INFO[ \t]*=\).*/\1%version_tuple/' wand/version.py
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-py.test3
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir_noarch/%pypi_name/
@@ -65,6 +63,9 @@ py.test3
 %doc README*
 
 %changelog
+* Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1.1
 - fixed build with setuptools 75.8.1
 

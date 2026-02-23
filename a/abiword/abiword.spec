@@ -13,7 +13,7 @@
 %def_disable collabnet
 
 Name: abiword
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Lean and fast full-featured word processor
@@ -39,7 +39,6 @@ Source13: abiword.xml
 #fedora patches
 Patch11: abiword-2.8.3-desktop.patch
 Patch12: abiword-2.6.0-boolean.patch
-Patch13: abiword-3.0.0-librevenge.patch
 
 Patch20: abiword-3.0.0-python-override.patch
 Patch30: abiword-3.0.5-alt-boost-1.84.patch
@@ -147,7 +146,6 @@ Python 3 bindings for developing with AbiWord library
 #cp %SOURCE20 po/ru-RU.po
 %patch11 -p1 -b .desktop
 %patch12 -p1 -b .boolean
-%patch13 -p0 -b .librevenge
 
 %patch20 -p1 -b python
 sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
@@ -214,6 +212,10 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
+- 3.0.8
+- removed upstreamed librevenge patch
+
 * Thu Jul 31 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
 - 3.0.7
 

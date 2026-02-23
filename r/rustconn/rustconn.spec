@@ -2,14 +2,14 @@
 
 %define __name RustConn
 %define _name rustconn
-%define ver_major 0.8
+%define ver_major 0.9
 %define rdn_name io.github.totoshko88.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: Remote connections manager
@@ -73,21 +73,38 @@ install -Dm644 rustconn/assets/%rdn_name.metainfo.xml \
     %buildroot/%_datadir/metainfo/%rdn_name.metainfo.xml
 install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/%rdn_name.svg \
     %buildroot%_iconsdir/hicolor/scalable/apps/%rdn_name.svg
+# screenshots
+install -d %buildroot%_datadir/app-info/screenshots/%rdn_name
+for screenshot in %_name/assets/screenshots/*.png; do
+install -Dm644 $screenshot \
+    %buildroot%_datadir/app-info/screenshots/%rdn_name/$(basename $screenshot)
+done
+# local files
+for po_file in po/*.po; do
+    lang=$(basename $po_file .po)
+    mkdir -p %buildroot%_datadir/locale/$lang/LC_MESSAGES
+    msgfmt -o %buildroot%_datadir/locale/$lang/LC_MESSAGES/%_name.mo $po_file
+done
 
-%find_lang %name
+%find_lang %_name
 
 %check
 %rust_test
 
-%files -f %name.lang
+%files -f %_name.lang
 %_bindir/%name
 %_bindir/%name-cli
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%dir %_datadir/app-info/screenshots/%rdn_name
+%_datadir/app-info/screenshots/%rdn_name/*.png
 %doc *.md docs/*.md
 
 %changelog
+* Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sat Feb 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
 - 0.8.9
 
