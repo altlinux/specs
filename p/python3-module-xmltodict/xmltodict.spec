@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Summary: Makes working with XML feel like you are working with JSON
@@ -48,6 +48,9 @@ are working with JSON.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 23 2026 Nikita Panov <nexxy@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+
 * Thu Oct 02 2025 Nikita Panov <nexxy@altlinux.org> 1.0.2-alt1
 - New version 1.0.2.
 
