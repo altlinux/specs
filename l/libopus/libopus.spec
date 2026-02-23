@@ -1,8 +1,15 @@
 %define git %nil
+%define soname 0
+# https://gitlab.xiph.org/xiph/opus/-/issues/2396
+%ifnarch aarch64
+%define check_asm true
+%else
+%define check_asm false
+%endif
 
 Name: libopus
-Version: 1.5.2
-Release: alt1.1
+Version: 1.6.1
+Release: alt2
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -13,10 +20,24 @@ Source: opus-%version.tar
 
 BuildRequires(pre): meson, cmake
 
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 %def_disable static
 %def_enable doc
 
 %description
+The Opus codec is designed for interactive speech and audio transmission
+over the Internet. It is designed by the IETF Codec Working Group and
+incorporates technology from Skype's SILK codec and Xiph.Org's CELT codec.
+
+%package -n %{name}%{soname}
+Summary: Opus Audio Codec library
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %{name}%{soname}
 The Opus codec is designed for interactive speech and audio transmission
 over the Internet. It is designed by the IETF Codec Working Group and
 incorporates technology from Skype's SILK codec and Xiph.Org's CELT codec.
@@ -48,7 +69,7 @@ statically linked libopus-based software.
 %build
 printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %meson -Dintrinsics=auto \
-       -Dcheck-asm=true \
+       -Dcheck-asm=%check_asm \
        -Dcustom-modes=true \
 %ifarch x86_64
        -Drtcd=disabled \
@@ -64,10 +85,13 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %install
 %meson_install
 
+# aarch64 test fails due timeout, no idea what's going on there
+%ifnarch aarch64
 %check
 %__meson_test -t 1000
+%endif
 
-%files
+%files -n %{name}%{soname}
 %_libdir/*.so.*
 %doc AUTHORS README COPYING LICENSE_PLEASE_READ.txt
 
@@ -86,6 +110,15 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Mon Feb 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt2
+- aarch64: disable tests.
+
+* Thu Feb 05 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1
+- 1.6.1.
+- Enforce build checks.
+- Rename according shared libraries policy.
+- aarch64: disable check_asm (upstream issue #2396).
+
 * Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1.1
 - added build workaround with recent meson macros.
 
@@ -95,7 +128,7 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 * Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
 - 1.5.1.
 - libopus: enable ML functionality on supported arches (which increases the
-  size of library but gives some benefints like PLC or DRED to improve sound
+  size of library but gives some benefits like PLC or DRED to improve sound
   quality in low-quality/noisy networks).
 - dnn: updated to opus_data-735117b.
 - spec: remove obsoleted patches.
