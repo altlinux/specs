@@ -2,7 +2,7 @@
 
 Name: dhcpdump
 
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: DHCP packet dumper
@@ -42,11 +42,14 @@ install -m 0755 -- %name %buildroot%_sbindir/
 install -m 0755 -- %name.8 %buildroot%_man8dir/
 
 %files
-%doc CONTACT LICENSE CHANGES
+%doc README.md LICENSE
 %_sbindir/%name
 %_man8dir/*
 
 %changelog
+* Mon Feb 23 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10-alt1
+- New version
+
 * Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.9-alt1
 - New version
 - Update upstream URL
