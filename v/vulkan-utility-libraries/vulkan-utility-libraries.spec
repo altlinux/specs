@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: vulkan-utility-libraries
-Version: 1.4.335.0
+Version: 1.4.341.0
 Release: alt1
 Summary: Utility libraries for Vulkan developers
 
@@ -49,6 +49,9 @@ Development headers for Vulkan applications.
 %_libdir/cmake/VulkanUtilityLibraries/*.cmake
 
 %changelog
+* Thu Feb 19 2026 L.A. Kostis <lakostis@altlinux.ru> 1.4.341.0-alt1
+- 1.4.341.0.
+
 * Fri Jan 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.4.335.0-alt1
 - 1.4.335.0.
 
