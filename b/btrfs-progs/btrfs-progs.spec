@@ -7,14 +7,14 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.17.1
+Version: 6.19
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 Url: https://btrfs.readthedocs.io
-VCS: git://git.kernel.org/pub/scm/linux/kernel/git/kdave/btrfs-progs.git
+VCS: https://git.kernel.org/pub/scm/linux/kernel/git/kdave/btrfs-progs.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -67,7 +67,6 @@ develop btrfs filesystem-specific programs.
 You should install btrfs-progs-devel if you want to develop
 btrfs filesystem-specific programs.
 
-
 %package -n libbtrfs
 Summary:	btrfs filesystem-specific libraries and headers
 Group:		System/Kernel and hardware
@@ -75,7 +74,6 @@ Group:		System/Kernel and hardware
 %description -n libbtrfs
 btrfs-progs-devel contains shared libraries needed to
 btrfs filesystem-specific programs.
-
 
 %prep
 %setup -q
@@ -126,7 +124,6 @@ if st and st.type == "link" then
   os.remove("/usr/bin/btrfs")
 end
 
-
 %files
 /sbin/*
 %_bindir/*
@@ -146,6 +143,9 @@ end
 %_includedir/*
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 6.19-alt1
+- 6.17.1 -> 6.19
+
 * Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 6.17.1-alt1
 - 6.17 -> 6.17.1
 
