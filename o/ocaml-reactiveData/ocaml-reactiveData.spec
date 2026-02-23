@@ -1,6 +1,6 @@
 %define libname reactiveData
 Name: ocaml-%libname
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 Summary: Functional reactive programming with incremental changes in data structures
 License: LGPL-3.0-or-later WITH OCaml-LGPL-linking-exception
@@ -38,6 +38,9 @@ programs which use %name
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 0.3.1-alt1
+- 0.3 -> 0.3.1
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 0.3-alt1
 - 0.3
 
