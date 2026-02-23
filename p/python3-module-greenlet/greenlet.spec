@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
@@ -81,6 +81,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" \
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Mon Feb 23 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1
+- Automatically updated to 3.3.2.
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Automatically updated to 3.3.1.
 
