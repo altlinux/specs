@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 %define ver_major 0.53
 %define beta %nil
@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -39,7 +39,8 @@ Url: https://gitlab.gnome.org/World/Phosh/phosh
 Vcs: https://gitlab.gnome.org/World/Phosh/phosh.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+Source: https://gitlab.gnome.org/World/Phosh/phosh/-/archive/v%version/%name-v%version.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -186,10 +187,10 @@ Requires: lib%name = %EVR
 This package contains development files for Phosh shared library.
 
 %prep
-%setup -n %name-%version%beta %{?_enable_snapshot:-a10 -a11
+%setup -n %name-%{?_disable_snapshot:v}%version%beta -a10 -a11
 mv gvc-%gvc_ver subprojects/gvc
 mv libcall-ui-%callui_ver subprojects/libcall-ui
-}
+
 %patch1 -p1 -b .tcb
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
@@ -329,6 +330,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Tue Feb 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.1-alt1
+- 0.53.1
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 
