@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -27,6 +27,7 @@ BuildRequires: ocaml-alt-releases-matrix-devel >= 0.2.0
 BuildRequires: ocaml-lambda-term-devel >= 3.0.0
 BuildRequires: ocaml-lwt-devel >= 5.0.0
 BuildRequires: ocaml-linenoise-devel
+BuildRequires: ocaml-uucp-devel
 BuildRequires: libev-devel
 
 %if_with check
@@ -100,6 +101,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 0.20.0-alt1
+- added optional groups (?:...)? support in version-up patterns
+- added non-printable character detection in spec check
+- added Unicode support for locale-tagged fields in spec check
+- improved watch @ANY_VERSION@ expansion to match uscan behavior
+- improved watch pattern matching with URL anchoring like uscan
+- improved spec check to report exact line and column for non-printable bytes
+- extended submit --replace syntax with TASK_ID:N, removed --subtask flag
+- improved submit --replace to show package names in subtask list
+- unified rpm_spec changelog header parsing, added non-ALT release support
+
 * Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 0.19.0-alt1
 - added changelog date validation to spec check
 - added --host, --arch, --branch filter options to builder list
@@ -151,30 +163,30 @@ developing applications that use %name.
 - fixed up watch file parsing with trailing backslash in comments
 - fixed up to support watch files with regex patterns in URL directories
 
-* Tue Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
+* Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
 - changed clone to not automatically add gitery remote (use --init-gitery)
 - fixed submit to create gitery repo and run init-db for new packages
 - fixed submit to use actual package Name instead of spec filename
 - fixed up to show correct next step hint (zoryn submit)
 - fixed check spec VCS URL validation for git-only servers
 
-* Mon Feb 03 2026 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
+* Tue Feb 03 2026 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
 - added configurable shell commands via [commands] section in ~/.zoryn
 - added readline support in gen environment interactive prompts
 - fixed zoryn up to change to git root directory before running
 
-* Thu Jan 30 2026 Anton Farygin <rider@altlinux.org> 0.14.0-alt1
+* Fri Jan 30 2026 Anton Farygin <rider@altlinux.org> 0.14.0-alt1
 - added terminal title display during long-running commands
 - added changelog bug closure syntax validation in check spec
 - fixed build to use [builders] default list for multi-builder mode
 - fixed build to create .gear/ directory for build logs
 - fixed task batch EINTR crash when resizing terminal window
 
-* Mon Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.1-alt1
+* Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.1-alt1
 - fixed submit to reuse existing tag on HEAD
 - fixed flaky check_host_available test
 
-* Mon Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.0-alt1
+* Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.0-alt1
 - added 'check spec' command for RPM spec validation before submit
 - added 'gen version-up --filter' for version prefix filtering
 - added 'task batch --test' local test build mode
@@ -188,7 +200,7 @@ developing applications that use %name.
 * Sat Jan 24 2026 Anton Farygin <rider@altlinux.ru> 0.12.0-alt2
 - excluded 32-bit architectures (unstable, no real-world usage)
 
-* Fri Jan 24 2026 Anton Farygin <rider@altlinux.org> 0.12.0-alt1
+* Sat Jan 24 2026 Anton Farygin <rider@altlinux.org> 0.12.0-alt1
 - added 'zoryn builder copy' for copying files into/from hasher chroot
 - added 'submit --replace' to replace subtask in existing task
 - added 'submit --dry-run' to preview actions without executing
@@ -200,7 +212,7 @@ developing applications that use %name.
 - fixed task download to auto-create destination directory
 - fixed task rebuild topological sorting with cycle handling
 
-* Wed Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.11.0-alt1
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.11.0-alt1
 - added 'zoryn task test-rebuild' for testing rebuilds with dependencies
 - added 'zoryn builder remove' for deleting builder configs
 - added sandbox execution for .gear/up.d and .gear/merge-up.d hooks
@@ -212,7 +224,7 @@ developing applications that use %name.
 - fixed hasher_number to apply to all build commands
 - fixed various TUI and rebuild workflow issues
 
-* Sun Jan 19 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
+* Mon Jan 19 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
 - security: multiple fixes for shell injection, SSRF, path traversal
 - security: enabled TLS verification, use HTTPS for git/SRPM downloads
 - added 'zoryn task batch' for batch package submission
@@ -225,7 +237,7 @@ developing applications that use %name.
 - fixed remote builder directory handling and exit code detection
 - fixed task dependency logic for multi-repo builds
 
-* Wed Jan 15 2026 Anton Farygin <rider@altlinux.org> 0.9.0-alt1
+* Thu Jan 15 2026 Anton Farygin <rider@altlinux.org> 0.9.0-alt1
 - added interactive TUI mode (--top) for monitoring multi-builder builds
 - added parallel builder status checks with fork
 - added 'zoryn builder config' and 'zoryn builder list --simple' commands
@@ -241,21 +253,21 @@ developing applications that use %name.
 - fixed --builder option being ignored when default_arch configured
 - fixed builder selection to prefer free builders over busy ones
 
-* Mon Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.8.0-alt1
+* Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.8.0-alt1
 - added 'zoryn builder' command for managing remote/local builders
 - added builder support to 'zoryn build', 'zoryn up', 'zoryn task rebuild'
 - added parallel and multi-architecture builds
 
-* Mon Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.7.5-alt1
+* Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.7.5-alt1
 - added 'zoryn build' command for local hasher builds
 - added 'zoryn gen environment' command for dev environment setup
 - added task rebuild --build-deps and --up options
 - added zsh completion
 
-* Sun Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.4-alt1
+* Mon Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.4-alt1
 - renamed 'zoryn build' command to 'zoryn submit'
 
-* Sun Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.3-alt1
+* Mon Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.3-alt1
 - gen watch: added Gentoo/Arch fallback when Debian watch not found
 - task rebuild: added --from-log option with smart log search
 - task download: added -o/--output option and task ID argument
