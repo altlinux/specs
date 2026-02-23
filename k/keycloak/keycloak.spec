@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.5.3
+Version: 26.5.4
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -26,6 +26,7 @@ BuildRequires: java-devel
 BuildRequires: maven-local
 
 Requires: java-21-openjdk
+Requires(post): cert-sh-functions
 
 AutoReqProv: yes, noosgi-fc
 
@@ -50,33 +51,57 @@ mvn -f ../pom.xml clean install -am -DskipTestsuite -DskipExamples -DskipTests -
 popd
 
 %install
-mkdir -p %buildroot%_libexecdir/%name
+mkdir -p %buildroot%_libexecdir/%name/data
 tar xf quarkus/dist/target/%name-%version.tar.gz --strip=1 -C %buildroot%_libexecdir/%name
 mkdir -p %buildroot%_sysconfdir
 mv %buildroot%_libexecdir/%name/conf %buildroot%_sysconfdir/%name
 install -Dpm 0755 %SOURCE1 %buildroot%_bindir/kc.sh
 install -Dpm 0644 %SOURCE4 %buildroot%_unitdir/keycloak.service
+mkdir -p %buildroot%_sharedstatedir/%name
+mkdir -p %buildroot%_sysconfdir/%name/ssl/{private,certs}
+
+%pre
+getent group keycloak >/dev/null || /usr/sbin/groupadd -r keycloak
+getent passwd keycloak >/dev/null || /usr/sbin/useradd -r \
+  -g keycloak -d %_sharedstatedir/%name -s /bin/bash -c "Keycloak" keycloak
 
 %preun
 %preun_service keycloak
 
 %post
+SSLDIR=%_sysconfdir/%name/ssl cert-sh generate keycloak ||:
+chown keycloak:keycloak %_sysconfdir/%name/ssl/private/keycloak.* ||:
+chmod 640 %_sysconfdir/%name/ssl/private/keycloak.* ||:
 test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf/keycloak.conf /etc/keycloak/keycloak.conf
+HOST="$(hostname -f)"
+grep -s ^hostname /etc/keycloak/keycloak.conf || subst "s|^#hostname=.*|hostname=$HOST|" /etc/keycloak/keycloak.conf
 /usr/bin/kc.sh build &>/dev/null ||:
+chown -R keycloak:keycloak %_libexecdir/%name/data
 %post_service keycloak
 
 %files
 %doc README.md
-%config(noreplace) %_sysconfdir/%name/%name.conf
-%config(noreplace) %_sysconfdir/%name/cache-ispn.xml
+%attr(0750,keycloak,keycloak) %dir %_sysconfdir/%name
+%attr(0750,keycloak,keycloak) %dir %_sysconfdir/%name/truststores
+%attr(0750,keycloak,keycloak) %dir %_sysconfdir/%name/ssl
+%attr(0750,keycloak,keycloak) %dir %_sysconfdir/%name/ssl/certs
+%attr(0750,keycloak,keycloak) %dir %_sysconfdir/%name/ssl/private
+%config(noreplace) %attr(0660,keycloak,keycloak) %_sysconfdir/%name/%name.conf
+%config(noreplace) %attr(0660,keycloak,keycloak) %_sysconfdir/%name/cache-ispn.xml
 %config(noreplace) %_unitdir/keycloak.service
 %_bindir/kc.sh
-%dir %_sysconfdir/%name
 %doc %_sysconfdir/%name/README.md
-%dir %_sysconfdir/%name/truststores
 %_libexecdir/%name
+%attr(0750,keycloak,keycloak) %dir %_libexecdir/%name/data
+%attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Sun Feb 22 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.4-alt1
+- New version (fixes: CVE-2026-1190, CVE-2026-0707, CVE-2025-5416,
+  CVE-2026-2575, CVE-2026-2733).
+- Run service under non-privileged user (ALT #57787).
+- Used certificates from /etc/keycloak/ssl.
+
 * Tue Feb 10 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.3-alt1
 - New version (fixes: CVE-2026-1609, CVE-2026-1529, CVE-2026-1486,
   CVE-2025-14778).
