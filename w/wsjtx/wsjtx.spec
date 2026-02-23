@@ -1,14 +1,16 @@
 Name: wsjtx
-Version: 2.7.0
-Release: alt1
+Version: 3.0.0
+Release: alt0.rc1
 Summary: WSJT-X is a computer program used for weak-signal radio communication
 License: GPL-3.0
 Group: Engineering
 Url: https://wsjt.sourceforge.io/wsjtx.html
 
-# Source-url: https://sourceforge.net/projects/wsjt/files/%name-%version/%name-%version.tgz
+# Source-url: https://sourceforge.net/projects/wsjt/files/%name-%version-rc1/%name-%version-rc1.tgz
 Source: %name-%version.tar
-Patch0: wsjtx-2.7.0-ru-translation-fix.patch
+Patch0: %name-%version-rc1-alt-fix-ru-translation.patch
+# move ALLCALL7.TXT and /sounds to the data directory
+Patch1: %name-%version-rc1-alt-move-data-to-datadir.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires(pre): rpm-macros-qt5
@@ -25,6 +27,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5SerialPort)
+BuildRequires: pkgconfig(Qt5WebSockets)
 BuildRequires: ImageMagick-tools
 BuildRequires: dos2unix
 BuildRequires: asciidoctor
@@ -71,27 +74,35 @@ including programmable "band-hopping".
 %setup
 
 # remove bundled hamlib
-rm -f src/hamlib*
+rm -v src/hamlib*
 tar -xzf src/%name.tgz
 
 # remove archive
-rm -f src/%name.tgz*
+rm -v src/%name.tgz*
 
 %autopatch -p1
 
+# fix ALLCALL7.TXT and /sounds paths
+# after patch that moved them to the data directory
+sed -i "s|file='ALLCALL7.TXT'|file='%_datadir/%name/ALLCALL7.TXT'|" %name/lib/ft8var/cwfilter.f90
+sed -i 's|AllCall7File {"ALLCALL7.TXT"}|AllCall7File {"%_datadir/%name/ALLCALL7.TXT"}|' %name/widgets/mainwindow.cpp
+sed -i 's|binPath + "/sounds|"%_datadir/%name/sounds|' %name/widgets/{displaytext,mainwindow}.cpp
+
 pushd %name
 # convert CR + LF to LF
-dos2unix *.iss *.txt
+find . -type f -exec dos2unix {} \;
 
 # fix desktop file
-sed -i 's/Name=wsjtx/Name=WSJT-X/' wsjtx.desktop
+sed -i 's|Name=wsjtx|Name=WSJT-X|' wsjtx.desktop
 popd
 
 %build
 %define optflags_lto %nil
+%add_optflags -Wl,-z,noexecstack
 
 pushd %name
-%cmake
+%cmake \
+    -DCMAKE_Fortran_FLAGS:STRING='%optflags -frecursive'
 %cmake_build
 popd
 
@@ -127,6 +138,13 @@ popd
 %_docdir/%name
 
 %changelog
+* Mon Feb 23 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.0-alt0.rc1
+- new version 3.0.0-rc1
+- update patch to fix some typos in russian translation
+- build with "-frecursive" fortran flag
+- build with "-z noexecstack" linker flags
+- add patch to move data files to the data directory
+
 * Sun Feb 15 2026 Alexander Kovalev <alexvk@altlinux.org> 2.7.0-alt1
 - new version 2.7.0
 - cleanup spec
