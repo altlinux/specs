@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,13 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.21.0-alt1
+- added --packager support in build commands (no more ~/.hasher/config needed)
+- added packager configuration to gen environment
+- changed waiting for busy builders to default behavior
+- fixed local builder status with ~ in hasher_dir path
+- fixed test failures on riscv64 (closes: #57983)
+
 * Mon Feb 23 2026 Anton Farygin <rider@altlinux.org> 0.20.0-alt1
 - added optional groups (?:...)? support in version-up patterns
 - added non-printable character detection in spec check
