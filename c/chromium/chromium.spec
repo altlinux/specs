@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        145.0.7632.109
+Version:        145.0.7632.116
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -692,6 +692,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Feb 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.116-alt1
+- New version (145.0.7632.116).
+- Fixes:
+  + CVE-2026-3061: Out of bounds read in Media
+  + CVE-2026-3062: Out of bounds read and write in Tint
+  + CVE-2026-3063: Inappropriate implementation in DevTools
+
 * Thu Feb 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.109-alt1
 - New version (145.0.7632.109).
 - Fixes:
