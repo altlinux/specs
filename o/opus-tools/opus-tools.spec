@@ -1,11 +1,11 @@
-%define git ecd50e5
+%define git 828e11e
 
 Name: opus-tools
 Version: 0.2
-Release: alt29.g%{git}
+Release: alt41.g%{git}
 
 Summary: Opus Audio Codec utilities
-License: BSD-style
+License: BSD-style AND GPL-2.0-only
 Group: System/Libraries
 Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
@@ -44,6 +44,10 @@ echo PACKAGE_VERSION="%version" > package_version
 %doc AUTHORS COPYING README.md
 
 %changelog
+* Tue Feb 24 2026 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt41.g828e11e
+- v0.2-41-g828e11e.
+- License: added GPLv2 (due opusinfo).
+
 * Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt29.gecd50e5
 - v0.2-29-gecd50e5.
 - Remove Elbrus patch (merged by upstream).

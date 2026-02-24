@@ -1,6 +1,6 @@
 Name: libopusenc
-Version: 0.2.1
-Release: alt2.g9cb17c6
+Version: 0.3
+Release: alt1
 
 Summary: Library for encoding .opus audio files and live streams
 License: BSD
@@ -77,6 +77,9 @@ cp %SOURCE1 .
 %endif
 
 %changelog
+* Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt1
+- 0.3.
+
 * Mon Mar 23 2020 L.A. Kostis <lakostis@altlinux.ru> 0.2.1-alt2.g9cb17c6
 - Bump release.
 

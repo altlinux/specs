@@ -1,5 +1,5 @@
 Name: opusfile
-Version: 0.12.0.39.0a4c
+Version: 0.12.0.56.gcc0
 Release: alt1
 
 Summary: A high-level API for decoding and seeking within .opus files
@@ -126,6 +126,9 @@ EOF
 %endif
 
 %changelog
+* Tue Feb 24 2026 L.A. Kostis <lakostis@altlinux.ru> 0.12.0.56.gcc0-alt1
+- v0.12-39-g0a4cd79 -> v0.12-56-gcc04a82.
+
 * Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12.0.39.0a4c-alt1
 - v0.12-3-g4174c26 -> v0.12-39-g0a4cd79.
 
