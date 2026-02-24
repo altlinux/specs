@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.8.22
+Version: 0.4.9.5
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -23,8 +23,6 @@ Source0: http://tor.eff.org/dist/%name-%version.tar
 Source1: %name.init
 Source2: %name.systemd.service
 Source3: %name.tmpfiles
-
-Patch1:	 %name-0.4.8.4-source-date.patch
 
 BuildRequires: asciidoc-a2x libcap-devel libevent-devel liblzma-devel libseccomp-devel libssl-devel libsystemd-devel libzstd-devel zlib-devel
 
@@ -54,7 +52,6 @@ for high-stakes anonymity.
 
 %prep
 %setup
-%patch1 -p2
 
 # Set default configuration values
 sed -i 's:^#Log notice file.*:Log notice file %_var/log/%name/%name.log:' src/config/torrc.sample.in
@@ -150,6 +147,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.4.9.5-alt1
+- 0.4.8.22 -> 0.4.9.5
+
 * Thu Feb 05 2026 Anton Farygin <rider@altlinux.org> 0.4.8.22-alt1
 - 0.4.8.21 -> 0.4.8.22
 
