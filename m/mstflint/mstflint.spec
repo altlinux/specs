@@ -10,9 +10,10 @@
 %def_disable nvml
 %def_disable vfio
 %def_disable dpa
+%def_disable nvfwreset
 
 Name: mstflint
-Version: 4.34.1.3
+Version: 4.35.0.1
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -70,6 +71,7 @@ echo "#define TOOLS_GIT_SHA \"%release\"" > common/gitversion.h
     %{subst_enable nvml} \
     %{subst_enable vfio} \
     %{subst_enable dpa} \
+    %{subst_enable nvfwreset} \
     MSTFLINT_VERSION_STR="%name %version-%release"
 
 %make_build
@@ -91,6 +93,9 @@ rm -f  %buildroot%_libdir/%name/*.a
 %_man1dir/*
 
 %changelog
+* Tue Feb 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.35.0.1-alt1
+- v4.35.0-1
+
 * Tue Feb 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.34.1.3-alt1
 - v4.34.1-3
 
