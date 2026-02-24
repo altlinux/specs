@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13.1
+Version: 1.14.0
 Release: alt1
 
-Summary: Python package for %pypi_name
+Summary: Python package for protontricks
 License: GPL-3.0
 Group: Development/Python3
 Url: https://pypi.org/project/protontricks/
@@ -38,7 +38,7 @@ Group: File tools
 Requires: winetricks
 
 %description -n %pypi_name
-%{summary %pypi_name}.
+%summary.
 
 %prep
 %setup
@@ -72,6 +72,9 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %_desktopdir/protontricks*.desktop
 
 %changelog
+* Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
+- Updated to 1.14.0.
+
 * Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.13.1-alt1
 - Updated to 1.13.1.
 
