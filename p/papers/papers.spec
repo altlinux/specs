@@ -3,14 +3,14 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 49.3
+Version: 49.4
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
 License: GPL-2.0
 Group: Office
 Url: https://welcome.gnome.org/app/Papers/
-Vcs: https://gitlab.gnome.org/GNOME/Incubator/papers.git/
+Vcs: https://gitlab.gnome.org/GNOME/papers
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -137,6 +137,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 49.4-alt1
+- Updated to 49.4.
+
 * Mon Jan 12 2026 Anton Zhukharev <ancieg@altlinux.org> 49.3-alt1
 - Updated to 49.3.
 
