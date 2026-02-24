@@ -3,7 +3,7 @@
 %def_with check
 
 Name: lua5.4-module-luacov
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1_lr%luarocks_revision
 BuildArch: noarch
 
@@ -52,5 +52,8 @@ luarocks-5.4 test --test-type busted \
 %doc LICENSE README.md
 
 %changelog
+* Tue Feb 10 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.17.0-alt1_lr1
+- Updated to 0.17.0.
+
 * Thu Aug 11 2025 Timofei Fedotov <sovtouch@altlinux.org> 0.16.0-alt1_lr1
 - Initial build for ALT Sisyphus.
