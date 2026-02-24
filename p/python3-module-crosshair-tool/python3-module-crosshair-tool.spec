@@ -1,13 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name crosshair-tool
-%define import_name crosshair
+%define mod_name crosshair
 
+# test only on x86_64 because tests are very flaky and unstable
+%ifarch x86_64
 %def_with check
-%def_with relaxed_check
+%else
+%def_without check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 0.0.94
-Release: alt3
+Version: 0.0.102
+Release: alt1
 
 Summary: An analysis tool for Python that blurs the line between testing and type systems
 License: MIT
@@ -48,21 +52,20 @@ BuildRequires: python3-module-mypy
 export PYTHONHASHSEED=0
 # Disable the test below is required to avoid dead lock.
 %pyproject_run_pytest -vra -n %_smp_build_ncpus \
-    --deselect 'crosshair/libimpl/datetimelib_ch_test.py::test_builtin[check_timedelta_new]' \
-%if_with relaxed_check
-    ||:
-%endif
-    %nil
+    --deselect 'crosshair/libimpl/datetimelib_ch_test.py::test_builtin[check_timedelta_new]'
 
 %files
 %doc README.md
 %_bindir/crosshair
 %_bindir/mypycrosshair
-%python3_sitelibdir/%import_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/_crosshair_tracers.*.so
 
 %changelog
+* Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.102-alt1
+- Updated to 0.0.102.
+
 * Thu Jul 24 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.94-alt3
 - Relaxed tests because they are very flaky.
 
