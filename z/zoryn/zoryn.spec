@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,11 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.21.1-alt1
+- fixed relative URL resolution in watch files (RFC 3986)
+- added Content-Disposition filename support for watch downloads
+- fixed uscan-compatible href matching in watch files
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.21.0-alt1
 - added --packager support in build commands (no more ~/.hasher/config needed)
 - added packager configuration to gen environment
