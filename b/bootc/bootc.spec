@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -37,14 +37,14 @@ Transactional, in-place operating system updates using OCI/Docker container imag
 
 Contains update, test and create commands.
 
-%package -n system-reinstall-bootc
-Summary: Utility to reinstall the current system via bootc
+%package -n system-reinstall-%name
+Summary: Utility to reinstall the current system via %name
 Group: Other
 
 Requires: podman
 
-%description -n system-reinstall-bootc
-This package provides a utility to simplify reinstalling the current system to a given bootc image.
+%description -n system-reinstall-%name
+This package provides a utility to simplify reinstalling the current system to a given %name image.
 
 %prep
 %setup -a10
@@ -58,12 +58,12 @@ This package provides a utility to simplify reinstalling the current system to a
 # Remove broken link
 rm -fv -- %buildroot/%_prefix/lib/%name/storage
 # Needs only for Rad Hat
-rm -fv -- %buildroot/%_unitdir/bootc-publish-rhsm-facts.service
+rm -fv -- %buildroot/%_unitdir/%name-publish-rhsm-facts.service
 
 %post
 # Create link to ostree bootc storage removed at %install
-if [ -e /sysroot/ostree/bootc/storage ] && [ ! -L "%_prefix/lib/%name/storage" ]; then
-    ln -s -- /sysroot/ostree/bootc/storage "%_prefix/lib/%name/storage"
+if [ -e /sysroot/ostree/%name/storage ] && [ ! -L "%_prefix/lib/%name/storage" ]; then
+    ln -s -- /sysroot/ostree/%name/storage "%_prefix/lib/%name/storage"
 fi
 
 %preun
@@ -76,18 +76,26 @@ fi
 %_bindir/%name
 %_prefix/lib/%name/
 %_prefix/lib/dracut/modules.d/51%name
-%_gen_dir/bootc-systemd-generator/
-%_unitdir/bootc-*
+%_gen_dir/%name-systemd-generator/
+%_unitdir/%name-*
 %_docdir/%name/
-%_man5dir/bootc*
-%_man8dir/bootc*
-%_man8dir/system-reinstall-bootc*
+%_man5dir/%{name}*
+%_man8dir/%{name}*
+%_man8dir/system-reinstall-%{name}*
+%_datadir/bash-completion/completions/%name
+%_datadir/elvish/lib/%name.elv
+%_datadir/fish/vendor_completions.d/%name.fish
+%_datadir/powershell/Modules/Bootc/Bootc.psm1
+%_datadir/zsh/site-functions/_%name
 %doc README.md
 
-%files -n system-reinstall-bootc
-%_bindir/system-reinstall-bootc
+%files -n system-reinstall-%name
+%_bindir/system-reinstall-%name
 
 %changelog
+* Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 1.13.0-alt1
+- New version: 1.13.0.
+
 * Tue Feb 17 2026 Vladimir Romanov <rirusha@altlinux.org> 1.12.1-alt1
 - New version: 1.12.1.
 
