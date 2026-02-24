@@ -1,6 +1,6 @@
 Name: installer-feature-selinux
-Version: 0.12
-Release: alt13
+Version: 0.14
+Release: alt1
 
 Summary: Installer selinux hooks
 License: GPL
@@ -29,6 +29,13 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Mon Feb 16 2026 Anton Midyukov <antohami@altlinux.org> 0.14-alt1
+- Do not create home directory for officer.
+
+* Sun Feb 15 2026 Anton Midyukov <antohami@altlinux.org> 0.13-alt1
+- Create user officer before alterator-officer step.
+- Add lsm with selinux to kernel cmdline.
+
 * Wed Nov 11 2020 Anton Midyukov <antohami@altlinux.org> 0.12-alt13
 - Drop a separate script for alterator-setup
 
