@@ -95,11 +95,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.3
-%define ver_minor 5
+%define ver_minor 6
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -481,6 +481,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Feb 24 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.6-alt1
+- 25.3.6
+
 * Wed Feb 11 2026 Anton Midyukov <antohami@altlinux.org> 4:25.3.5-alt2
 - NMU: removed legacy-wayland=bind-wayland-display (Closes: 57839).
 
