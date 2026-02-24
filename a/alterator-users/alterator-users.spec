@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.28
+Version: 10.29
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -54,6 +54,10 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Feb 23 2026 Grant Makyan <karonus@altlinux.org> 10.29-alt1
+- Fix: Move home dir if it changed on usermod
+
+
 * Tue Feb 17 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 10.28-alt1
 - Fix crash when the list of users is empty.
 
