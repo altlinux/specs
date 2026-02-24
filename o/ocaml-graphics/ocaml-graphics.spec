@@ -1,7 +1,7 @@
 %define libname graphics
 Name: ocaml-%libname
-Version: 5.1.2
-Release: alt2
+Version: 5.2.0
+Release: alt1
 Summary: The OCaml graphics library
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
@@ -9,6 +9,7 @@ Url: https://github.com/ocaml/graphics
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-dune-configurator-devel libX11-devel
 BuildRequires: ocaml-compiler-libs >= 5.2.0
+BuildRequires: libXft-devel
 
 %description
 The graphics library provides a set of portable drawing primitives. Drawing
@@ -42,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 5.2.0-alt1
+- 5.1.2 -> 5.2.0
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 5.1.2-alt2
 - fixed build with ocaml 5.2.0
 
