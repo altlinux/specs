@@ -2,11 +2,13 @@
 
 Name: gnome-software-plugin-stplr
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Stapler Support for GNOME Software
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
+Url: https://altlinux.space/stapler/gnome-software-plugin-stplr
+Vcs: https://altlinux.space/stapler/gnome-software-plugin-stplr.git
 
 Source: %name-%version.tar
 
@@ -44,6 +46,9 @@ This package provides support for install packages from Stapler via GNOME Softwa
 %doc README.md
 
 %changelog
+* Tue Feb 24 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.2.0-alt2
+- Add Url and Vcs tags.
+
 * Sat Feb 21 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
