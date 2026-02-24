@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Parser for 'pyproject.toml'
@@ -59,6 +59,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
+- Updated to 0.14.0.
+
 * Wed Feb 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.0-alt1
 - Updated to 0.13.0.
 

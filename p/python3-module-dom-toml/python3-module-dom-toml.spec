@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Dom's tools for Tom's Obvious, Minimal Language
@@ -24,7 +24,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
 %endif
 
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Fri Feb 07 2025 Anton Zhukharev <ancieg@altlinux.org> 2.0.1-alt1
 - Updated to 2.0.1.
 
