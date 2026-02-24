@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-camlidl
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 Summary: Stub code generator and COM binding for Objective Caml
 License: QPL-1.0 WITH OCaml-LGPL-linking-exception and LGPL-2.0-or-later WITH OCaml-LGPL-linking-exception
 Group: Development/ML
@@ -10,14 +10,12 @@ Source0: %name-%version.tar
 # META file from Debian
 Source1: META.camlidl.in
 
-Patch2: fedora-camlidl-Allow-destdir-installs.patch
 Patch3: fedora-camlidl-Pass-g-option-to-ocamlmklib.patch
 
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 BuildRequires: ocaml
 BuildRequires: ocaml-ocamldoc
-
 
 %description
 CamlIDL is a stub code generator and COM binding for Objective Caml.
@@ -45,7 +43,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch2 -p1
 %patch3 -p1
 
 sed -e 's|^OCAMLLIB=.*|OCAMLLIB=%{_libdir}/ocaml|' \
@@ -73,7 +70,7 @@ mkdir -p %buildroot%_bindir
 
 sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_ocamldir/camlidl/META
 
-%makeinstall_std
+%makeinstall_std BINDIR=%buildroot%_bindir
 %__install -m644 lib/*.cm* %buildroot%_ocamldir/
 
 %ocaml_find_files
@@ -88,6 +85,9 @@ sed 's/@VERSION@/%version/' < %SOURCE1 > %buildroot%_ocamldir/camlidl/META
 %_libdir/ocaml/caml/*.h
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 1.13-alt1
+- 1.12 -> 1.13
+
 * Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 1.12-alt2
 - fixed build for bytecode ocaml
 
