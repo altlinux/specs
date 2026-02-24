@@ -2,7 +2,7 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt12.git330a5532
+Release: alt13.gita1a0c7da
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -105,6 +105,9 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Tue Feb 24 2026 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt13.gita1a0c7da
+- New snapshot.
+
 * Sun Jun 22 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt12.git330a5532
 - New snapshot.
 - Fixed run on Wayland (ALT #45176).
