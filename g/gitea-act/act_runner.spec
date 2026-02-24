@@ -1,14 +1,14 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: gitea-act
-Version: 0.2.13
+Version: 0.3.0
 Release: alt1
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
 License: MIT
 Group: Other
-Url: https://%import_path
-
+Url: https://gitea.com/gitea/act_runner
+Vcs: https://gitea.com/gitea/act_runner.git
 Source: %name-%version.tar
 Source2: %name.service
 
@@ -73,6 +73,9 @@ useradd -r -g _%name -s /dev/null -c "gitea-act services" -M -d %_sharedstatedir
 %_unitdir/%name.service
 
 %changelog
+* Tue Feb 24 2026 Alexey Shabalin <shaba@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Wed Sep 03 2025 Alexey Shabalin <shaba@altlinux.org> 0.2.13-alt1
 - 0.2.13
 - Update url for altlinux docker images
