@@ -4,9 +4,9 @@
 %define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
 Name: %rname
-Version: 25.08.1
+Version: 25.12.2
 Release: alt1
-%K5init
+%K6init
 
 Group: Education
 Summary: Graph Theory
@@ -18,14 +18,15 @@ Obsoletes: kde5-rocs < %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: boost-devel extra-cmake-modules grantlee5-devel
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-xmlpatterns-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdeclarative-devel kf5-kdelibs4support
-BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
-BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-syntax-highlighting-devel
+BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel 
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdeclarative-devel 
+BuildRequires: kf6-kdoctools-devel kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
+BuildRequires: kf6-kpackage-devel kf6-kparts-devel kf6-kservice-devel kf6-ktexteditor-devel kf6-ktextwidgets-devel
+BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel kf6-syntax-highlighting-devel
+BuildRequires: kf6-ktexttemplate-devel
 
 %description
 Rocs is a Graph Theory IDE for designing and analyzing graph algorithms.
@@ -37,7 +38,7 @@ Algorithms are specified in JavaScript.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kde-common
 Provides:  kde5-rocs-common = %EVR
 Obsoletes: kde5-rocs-common < %EVR
 %description common
@@ -62,38 +63,41 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 
 %build
-%K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
+%K6build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
     #
 
 %install
-%K5install
-%K5install_move data rocsgraphtheory rocs
+%K6install
+%K6install_move data rocsgraphtheory rocs
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
-#%_K5data/rocsgraphtheory/
+#%_K6data/rocsgraphtheory/
 
 %files
-%_K5bin/rocs
-%_K5plug/rocs/
-%_K5data/rocs/
-%_K5icon/*/*/apps/rocs.*
-%_K5icon/*/*/actions/rocs*.*
-%_K5xdgapp/org.kde.rocs.desktop
-%_K5cfg/rocs.kcfg
+%_K6bin/rocs
+%_K6plug/rocs/
+%_K6data/rocs/
+%_K6icon/*/*/apps/rocs.*
+%_K6icon/*/*/actions/rocs*.*
+%_K6xdgapp/org.kde.rocs.desktop
+%_K6cfg/rocs.kcfg
 %_datadir/metainfo/*.xml
 
 %files devel
-%_K5inc/rocs/
-%_K5link/lib*.so
+%_K6inc/rocs/
+%_K6link/lib*.so
 
 %files -n %librocsgraphtheory
-%_K5lib/librocsgraphtheory.so.%rocsgraphtheory_sover
-%_K5lib/librocsgraphtheory.so.*
+%_K6lib/librocsgraphtheory.so.%rocsgraphtheory_sover
+%_K6lib/librocsgraphtheory.so.*
 
 %changelog
+* Fri Feb 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 
