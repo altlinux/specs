@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -41,12 +41,14 @@ BuildRequires(pre): rpm-build-pyproject
 # Requires Internet, see tests/downstream/integrate.py
 
 %files
-%doc README.md
 %_bindir/hatchling
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 1.29.0-alt1
+- 1.28.0 -> 1.29.0.
+
 * Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 1.28.0-alt1
 - 1.27.0 -> 1.28.0.
 
