@@ -1,4 +1,4 @@
-%global pkg_name github.com/docker/compose
+%global pkg_name github.com/docker/compose/v5
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
@@ -11,7 +11,7 @@
 
 Name:		docker-compose
 Version:	5.0.2
-Release:	alt1
+Release:	alt2
 Summary:	Multi-container orchestration for Docker
 
 Group:		Development/Tools
@@ -59,6 +59,9 @@ install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Tue Feb 24 2026 Vladimir Didenko <cow@altlinux.org> 5.0.2-alt2
+- Fix version reporting (closes: #58000)
+
 * Thu Jan 22 2026 Vladimir Didenko <cow@altlinux.org> 5.0.2-alt1
 - New version
 
