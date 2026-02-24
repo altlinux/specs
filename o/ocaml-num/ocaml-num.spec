@@ -1,5 +1,5 @@
 Name: ocaml-num
-Version: 1.5
+Version: 1.6
 Release: alt1
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
@@ -51,6 +51,9 @@ developing applications that use %name.
 %doc LICENSE
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 1.6-alt1
+- 1.5 -> 1.6
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.5-alt1
 - 1.4 -> 1.5
 
