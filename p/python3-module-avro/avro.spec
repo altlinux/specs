@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.11.3
-Release: alt3
+Version: 1.11.5
+Release: alt1
 
 Summary: Avro is a serialization and RPC framework
 License: Apache-2.0
@@ -84,6 +84,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Feb 24 2026 Alexander Danilov <admsasha@altlinux.org> 1.11.5-alt1
+- new version 1.11.5
+
 * Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 1.11.3-alt3
 - Fixed FTBFS (Pytest 8.2.0).
 
