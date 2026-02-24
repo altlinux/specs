@@ -4,7 +4,7 @@
 
 Name: jcov
 Version: 3.0
-Release: alt1.b07
+Release: alt2.694bcdb
 
 Summary: The JCov open source project is used to gather quality metrics associated with the production of test suites
 License: GPL-2.0
@@ -13,8 +13,7 @@ Url: https://wiki.openjdk.org/display/CodeTools/jcov
 Vcs: https://github.com/openjdk/jcov.git
 
 Source0: %name-%version.tar
-Patch1: jcov-3.0-alt-change-checksums-for-asm-deps.patch
-Patch2: jcov-3.0-alt-change-target-and-source-options.patch
+Patch1: jcov-3.0-alt-change-paths-for-asm-deps.patch
 
 ExcludeArch: %ix86
 
@@ -36,10 +35,12 @@ verifying test execution of regression tests in OpenJDK development.
 %prep
 %setup
 %autopatch -p1
+sed -i "s/^asm\.checksum=.*/asm.checksum=$(sha1sum asm.jar | awk '{print $1}')/" build/build.properties
+sed -i "s/^asm\.tree\.checksum=.*/asm.tree.checksum=$(sha1sum asm-tree.jar | awk '{print $1}')/" build/build.properties
+sed -i "s/^asm\.util\.checksum=.*/asm.util.checksum=$(sha1sum asm-util.jar | awk '{print $1}')/" build/build.properties
 
 %build
 cd build
-sed -i 's/target="8" source="8"/target="%javaver" source="%javaver"/' build.xml
 ant
 
 %install
@@ -56,5 +57,8 @@ ant test
 %doc LICENSE examples
 
 %changelog
+* Tue Feb 24 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt2.694bcdb
+- Updated the sources to version 2025.
+
 * Fri Nov 14 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt1.b07
 - Initial build for ALT Sisyphus.
