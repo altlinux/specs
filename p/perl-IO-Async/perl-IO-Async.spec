@@ -2,21 +2,29 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.804
+Version: 0.805
 Release: alt1
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
-License: perl
+License:  %perl_license
 
 Url: %CPAN %oname
 # https://cpan.metacpan.org/authors/id/P/PE/PEVANS/%oname-%version.tar.gz
 Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{oname}-%{version}.tar.gz
 
+Patch0: %oname-0.805-alt-keep_Future::IO::Impl::IOAsync.patch
+
 BuildArch: noarch
-BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Future.pm) perl(Future/Utils.pm) perl-devel perl(Struct/Dumb.pm) perl(Future/IO.pm)
-# tests
-BuildRequires: perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Future/IO/Impl.pm) perl(Test/Identity.pm) perl(Test/Metrics/Any.pm) perl(experimental.pm)
+
+BuildRequires(pre): rpm-build-licenses perl-devel
+
+# Automatically added by buildreq on Tue Feb 24 2026
+# optimized out: libgpg-error perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-MIME-Charset perl-Metrics-Any perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Html perl-Pod-Simple perl-Term-Size-Any perl-Term-Size-Perl perl-Term-Table perl-TermReadKey perl-Test2-Suite perl-Unicode-LineBreak perl-devel perl-parent perl-podlators perl-threads python3 python3-base python3-dev sh5
+BuildRequires: perl-Future perl-HTML-Parser perl-IO-Socket-IP perl-Module-Build perl-Struct-Dumb perl-Test-Future-IO-Impl perl-Test-Metrics-Any perl-Test-Pod perl-experimental
+
+BuildRequires: perl-Future-IO
+BuildRequires: /proc
 
 %add_findreq_skiplist */IO/Async/MergePoint.pm
 
@@ -43,12 +51,24 @@ This package contains tests for %name.
 %prep
 %setup -q -n %{oname}-%{version}
 
-# broken on LoongArch and ppc64le, but ifarch did not expand here :(
-case `uname -m` in
-  ppc64*|loongarch*)
+%patch0
+
+# 2026-02-09: need Future::IO >= 0.19 don't have it
+## Also broken on LoongArch and ppc64le, but ifarch did not expand here :(
+##case `uname -m` in
+##  ppc64*|loongarch*)
   rm -f t/70future-io.t
-  ;;
-esac
+##  ;;
+##esac
+
+# 2026-02-13: need Struct::Dumb >= 0.16, don't have it
+# Old Struct::Dumb cause segfault in tests, see https://rt.cpan.org/Public/Bug/Display.html?id=150912
+rm -f t/42function.t
+
+# 2026-02-13: also segfaults: https://rt.cpan.org/Public/Bug/Display.html?id=102315
+rm -f t/41routine.t
+
+
 
 %build
 %perl_vendor_build
@@ -70,6 +90,12 @@ esac
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Sat Feb 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.805-alt1
+- New version
+- Fix build:
+  - Drop tests failed due to Perl v5.38.4 and old modules
+  - keep Future-IO-Impl-IOAsync 0.804 due to old Future::IO::ImplBase
+
 * Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.804-alt1
 - automated CPAN update
 
