@@ -35,7 +35,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 10.3.1
+Version: 10.5.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -51,9 +51,8 @@ Patch1001: 0001-update-init-script.patch
 Patch0001: 0001-enable-bgp-bfd-daemons.patch
 Patch0002: 0002-bgpd-add-an-option-for-RT-auto-derivation-to-force-A.patch
 Patch0003: 0003-tests-add-bgp-evpn-autort-test.patch
-Patch0004: 0004-zebra-add-ZEBRA_IF_DUMMY-flag-for-dummy-interfaces.patch
-Patch0005: 0005-fabricd-add-option-to-treat-dummy-interfaces-as-loop.patch
-Patch0006: 0006-fabricd-enable-dummy_as_loopback-option-per-default.patch
+Patch0004: 0004-fabricd-enable-dummy_as_loopback-option-per-default.patch
+Patch0005: 0005-systemd-add-dependancy-to-networking.service.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
@@ -78,7 +77,7 @@ BuildRequires: makeinfo
 %{?_enable_zeromq:BuildRequires: pkgconfig(libzmq) >= 4.0.0}
 %{?_enable_rpki:BuildRequires: pkgconfig(rtrlib) >= 0.8.0}
 %{?_enable_backtrace:BuildRequires: pkgconfig(libunwind)}
-%{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 1.1.0}
+%{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 1.3.0}
 %{?_enable_dp_dpdk:BuildRequires: pkgconfig(libdpdk)}
 
 Requires: /usr/bin/less
@@ -154,7 +153,6 @@ Adds GRPC support to the individual FRR daemons.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
-%patch0006 -p1
 
 %ifarch %e2k
 # EDG frontend doesn't have MSVC extensions
@@ -173,6 +171,7 @@ sed -i 's/struct mgmt_msg_header;/uint16_t code, resv; uint32_t vsplit; uint64_t
     %{?_enable_doc_html:--enable-doc-html} \
     --sbindir=%frr_daemondir \
     --libdir=%frr_libdir \
+    --with-pkgconfigdir=%_pkgconfigdir \
     --libexecdir=%_libexecdir/%name \
     --with-moduledir=%frr_moduledir \
     --runstatedir=%_runtimedir \
@@ -238,6 +237,7 @@ find %buildroot -type f -name "*.la" -delete -print
 #Upstream does not maintain a stable API, these headers from -devel subpackage are no longer needed
 rm %buildroot%_libdir/%name/*.so
 rm -r %buildroot%_includedir
+rm -f  %buildroot/%_pkgconfigdir/*.pc
 
 touch %buildroot%_sysconfdir/%name/%name.conf
 cat > %buildroot%_sysconfdir/%name/vtysh.conf << __EOF__
@@ -333,6 +333,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Tue Feb 24 2026 Alexey Shabalin <shaba@altlinux.org> 10.5.2-alt1
+- updated from 10.3.1 to 10.5.2
+
 * Thu Jul 03 2025 Alexey Shabalin <shaba@altlinux.org> 10.3.1-alt1
 - 10.3.1
 
