@@ -5,7 +5,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: Modern Clipboard Manager for GNOME
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
@@ -44,14 +44,23 @@ GNOME preferences.
 %install
 install -d %buildroot%_datadir/gnome-shell/extensions/%uuid
 unzip -q dist/%uuid.zip -d %buildroot%_datadir/gnome-shell/extensions/%uuid
-glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%uuid/schemas
+
+# fix install gsettings schemas
+mkdir -p %buildroot%_datadir/glib-2.0/schemas
+mv %buildroot%_datadir/gnome-shell/extensions/%uuid/schemas/*.xml \
+	%buildroot%_datadir/glib-2.0/schemas
+rm -vr %buildroot%_datadir/gnome-shell/extensions/%uuid/schemas
 
 %find_lang %uuid
 
 %files -f %uuid.lang
 %_datadir/gnome-shell/extensions/%uuid
+%_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Tue Feb 24 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.3.0-alt2
+- Fix install gsettings schemas
+
 * Mon Jan 19 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
