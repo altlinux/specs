@@ -2,7 +2,7 @@
 %define xdg_name org.altlinux.%_name
 
 Name: alt-panelmoded
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
@@ -51,6 +51,9 @@ with GNOME desktop enviroment.
 %_datadir/glib-2.0/schemas/45_%xdg_name.gschema.override
 
 %changelog
+* Tue Feb 24 2026 Semen Fomchenkov <armatik@altlinux.org> 0.7.5-alt1
+- New version 0.7.5.
+
 * Sat Feb 21 2026 Semen Fomchenkov <armatik@altlinux.org> 0.7.4-alt1
 - New version 0.7.4. Closes: #57460
 - Use copyous instead of clipboard-indicator.
