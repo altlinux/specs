@@ -19,6 +19,8 @@
 %def_with libmemcached
 %def_disable modbus
 %def_enable mysql
+%def_enable connectivity
+%def_enable mqtt
 %def_enable netlink
 %def_enable nginx
 %def_enable notify_desktop
@@ -46,7 +48,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt8
+Release: alt9
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -162,6 +164,8 @@ BuildArch: noarch
 %{?_enable_ipmi:Requires: %name-ipmi}
 %{?_enable_virt:Requires: %name-virt}
 %{?_enable_mysql:Requires: %name-mysql}
+%{?_enable_connectivity:Requires: %name-connectivity}
+%{?_enable_mqtt:Requires: %name-mqtt}
 %{?_enable_netlink:Requires: %name-netlink}
 %{?_enable_nginx:Requires: %name-nginx}
 %{?_enable_notify_desktop:Requires: %name-notify_desktop}
@@ -377,6 +381,27 @@ BuildRequires: libmnl-devel
 This plugin provides netlink support for collectd
 %endif
 
+%if_enabled connectivity
+%package connectivity
+Summary: Network connectivity monitoring plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+
+%description connectivity
+This plugin monitors network interface link status changes (up/down events).
+%endif
+
+%if_enabled mqtt
+%package mqtt
+Summary: MQTT output plugin for collectd
+Group: Monitoring
+Requires: %name = %EVR
+BuildRequires: libmosquitto-devel
+
+%description mqtt
+This plugin can be used to send collectd metrics via MQTT protocol.
+%endif
+
 %if_enabled nginx
 %package nginx
 Summary: nginx support module for collectd
@@ -404,7 +429,7 @@ This plugin provides desktop notification support for collectd
 Summary: email notification support module for collectd
 Group: Monitoring
 Requires: %name = %EVR
-BuildRequires: libesmtp-devel
+BuildRequires: libcurl-devel
 
 %description notify_email
 This plugin provides email notification support for collectd
@@ -685,6 +710,8 @@ mkdir libltdl
 %makeinstall_std INSTALLDIRS=vendor
 install -pDm644 src/collectd.conf %buildroot%_sysconfdir/%name.conf
 sed -i 's,/usr/var,%_var,g' %buildroot%_sysconfdir/%name.conf
+# Comment out LoadPlugin rrdtool since it's in a separate subpackage (ALT#36950)
+sed -i 's/^LoadPlugin rrdtool/#LoadPlugin rrdtool/' %buildroot%_sysconfdir/%name.conf
 install -pDm755 contrib/altlinux/%name.init %buildroot%_initdir/%name
 install -d %buildroot%_libdir/%name/ %buildroot%_localstatedir/%name/
 rm %buildroot%_libdir/%name/*.la
@@ -707,6 +734,7 @@ EOF
 %endif
 
 install -pDm644 contrib/systemd.collectd.service %buildroot%_unitdir/collectd.service
+install -pDm644 contrib/systemd.collectd-ping.conf %buildroot%_unitdir/collectd.service.d/ping.conf
 
 # remove unpackaged perl plugin
 rm -fv %buildroot%perl_vendor_privlib/Collectd/Plugins/OpenVZ.pm
@@ -742,10 +770,38 @@ then
 	echo "consider: chkconfig spawn-fcgi on && service spawn-fcgi start"
 fi
 
+%post rrdcached
+# Create symlink so that rrdcached (restricted by -B flag to /var/lib/rrdcached/db/)
+# can access collectd RRD files (ALT#57972)
+if [ -d %_var/lib/rrdcached/db ] && [ ! -e %_var/lib/rrdcached/db/%name ]; then
+	ln -s %_localstatedir/%name/rrd %_var/lib/rrdcached/db/%name
+fi
+service %name condrestart ||:
+
+%postun rrdcached
+if [ "$1" -eq 0 ] && [ -L %_var/lib/rrdcached/db/%name ]; then
+	rm -f %_var/lib/rrdcached/db/%name
+fi
+service %name condrestart ||:
+
+%post ping
+systemctl daemon-reload ||:
+service %name condrestart ||:
+
+%postun ping
+systemctl daemon-reload ||:
+service %name condrestart ||:
+
 %post rrdtool
+# Enable rrdtool plugin on install (ALT#36950)
+sed -i 's/^#LoadPlugin rrdtool$/LoadPlugin rrdtool/' %_sysconfdir/%name.conf 2>/dev/null ||:
 service %name condrestart ||:
 
 %postun rrdtool
+# Disable rrdtool plugin on uninstall
+if [ "$1" -eq 0 ]; then
+	sed -i 's/^LoadPlugin rrdtool$/#LoadPlugin rrdtool/' %_sysconfdir/%name.conf 2>/dev/null ||:
+fi
 service %name condrestart ||:
 
 %files
@@ -768,6 +824,7 @@ service %name condrestart ||:
 %{?_with_libgps:%exclude %_libdir/%name/gps.so}
 %{?_enable_apache:%exclude %_libdir/%name/apache.so}
 %{?_enable_bind:%exclude %_libdir/%name/bind.so}
+%{?_enable_connectivity:%exclude %_libdir/%name/connectivity.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl_json.so}
 %{?_enable_curl:%exclude %_libdir/%name/curl_xml.so}
@@ -777,6 +834,7 @@ service %name condrestart ||:
 %{?_with_libmemcached:%exclude %_libdir/%name/memcachec.so}
 %{?_with_libmemcached:%exclude %_libdir/%name/memcached.so}
 %{?_enable_modbus:%exclude %_libdir/%name/modbus.so}
+%{?_enable_mqtt:%exclude %_libdir/%name/mqtt.so}
 %{?_enable_mysql:%exclude %_libdir/%name/mysql.so}
 %{?_enable_netlink:%exclude %_libdir/%name/netlink.so}
 %{?_enable_nginx:%exclude %_libdir/%name/nginx.so}
@@ -892,6 +950,16 @@ service %name condrestart ||:
 %_libdir/%name/mysql.so
 %endif
 
+%if_enabled connectivity
+%files connectivity
+%_libdir/%name/connectivity.so
+%endif
+
+%if_enabled mqtt
+%files mqtt
+%_libdir/%name/mqtt.so
+%endif
+
 %if_enabled netlink
 %files netlink
 %_libdir/%name/netlink.so
@@ -920,6 +988,7 @@ service %name condrestart ||:
 %if_enabled ping
 %files ping
 %_libdir/%name/ping.so
+%_unitdir/%name.service.d/ping.conf
 %endif
 
 %if_enabled postgresql
@@ -1010,14 +1079,15 @@ service %name condrestart ||:
 %_libdir/%name/write_tsdb.so
 %endif
 
-# TODO:
-# - reenable netlink plugin
-# - consider building with: libiokit, liboconfig (system),
-#   libiptc [kernhdrs], libjvm?, libkvm, libcredis,
-#   libnotify, libvarnish 
-# - macroize repetitive sections
-
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 5.12.0-alt9
+- used /run/rrdcached.sock instead of /tmp and /var/run paths (ALT#57971)
+- notify_email: replaced libesmtp with libcurl for TLS/SSL support (ALT#49531)
+- added connectivity and mqtt plugins as subpackages (ALT#39459)
+- added CAP_NET_RAW capability for ping plugin via systemd drop-in (ALT#37710)
+- fixed rrdcached plugin permission denied due to -B flag restriction (ALT#57972)
+- commented out LoadPlugin rrdtool in default config (ALT#36950)
+
 * Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 5.12.0-alt8
 - applied upstream commit 050877e1 to fix build with libvirt API changes
 
