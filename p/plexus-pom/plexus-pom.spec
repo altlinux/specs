@@ -1,36 +1,18 @@
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+Name:           plexus-pom
+Version:        25
+Release:        alt1
 
-Name:          plexus-pom
-Version:       23
-Release:       alt1
-Group:         Development/Other
-Summary:       Root Plexus Projects POM
-License:       Apache-2.0
-URL:           https://github.com/codehaus-plexus/plexus-pom
-Source0:       %name-%version.tar
-Source1:       LICENSE-2.0.txt
-Source44:      import.info
-Patch:         remove-extension-alt.patch
-BuildArch:     noarch
+Summary:        Root Plexus Projects POM
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-pom/
+VCS:            https://github.com/codehaus-plexus/plexus-pom
+BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires(pre): rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: /proc
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%endif
+Source0:        %name-%version.tar
 
-# Test dependency that should be propagated down the POM hierarchy
-Requires:      mvn(junit:junit)
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 %description
 The Plexus project provides a full software stack for creating and
@@ -39,25 +21,26 @@ Plexus packages.
 
 %prep
 %setup
-%autopatch -p1
-cp -p %{SOURCE1} LICENSE
+
+%pom_xpath_remove pom:extensions
 
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :taglist-maven-plugin
-%pom_remove_plugin :njord
 %pom_remove_plugin :spotless-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
+%doc *.md
 
 %changelog
+* Tue Feb 17 2026 Evgeniy Serov <scala@altlinux.org> 25-alt1
+- Updated to 25.
+
 * Thu Aug 21 2025 Ilya Muhamadeev <nicourced@altlinux.org> 23-alt1
 - New version.
 

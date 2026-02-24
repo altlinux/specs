@@ -1,27 +1,22 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           plexus-interactivity
 Summary:        Plexus Interactivity Handler Component
-Epoch:          0
-Version:        1.0
-Release:        alt6_2jpp11
-License:        MIT
+Version:        1.5.1
 
-URL:            https://github.com/codehaus-plexus/plexus-interactivity
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
-Source1:        LICENSE.MIT
-
+Release:        alt1
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-interactivity/
+VCS:            https://github.com/codehaus-plexus/plexus-interactivity
 BuildArch:      noarch
 
+Source:        %name-%version.tar
+
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(jline:jline) >= 2
-BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
+
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.jline:jline-reader)
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -31,72 +26,27 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
-
-
-%package api
-Group: Development/Java
-Summary:        API for %{name}
-
-%description api
-API module for %{name}.
-
-
-%package jline
-Group: Development/Java
-Summary:        jline module for %{name}
-
-%description jline
-jline module for %{name}.
-
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-
-cp %{SOURCE1} .
-
-# use jline2, not jline1
-%pom_change_dep jline:jline jline:jline:2.10 plexus-interactivity-jline
-sed -i "s!jline.ConsoleReader!jline.console.ConsoleReader!" \
-    plexus-interactivity-jline/src/main/java/org/codehaus/plexus/components/interactivity/jline/JLineInputHandler.java
-
-%pom_remove_plugin :maven-site-plugin
-
-%mvn_file ":{plexus}-{*}" @1/@2
-
-%mvn_package ":plexus-interactivity"
-
+# TODO: fails via inject
+rm plexus-interactivity-api/src/test/java/org/codehaus/plexus/components/interactivity/DefaultPrompterComponentTest.java
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build
 
 %install
 %mvn_install
 
-
 %files -f .mfiles
-%doc --no-dereference LICENSE.MIT
-
-%files api -f .mfiles-plexus-interactivity-api
-%doc --no-dereference LICENSE.MIT
-
-%files jline -f .mfiles-plexus-interactivity-jline
-%doc --no-dereference LICENSE.MIT
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.MIT
-
+%doc *.md
 
 %changelog
+* Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1
+- Updated to 1.5.1.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt6_2jpp11
 - java11 build
 

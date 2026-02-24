@@ -1,76 +1,44 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-archiver
-Version:        3.5.2
-Release:        alt1_2jpp11
-Summary:        Maven Archiver
-License:        ASL 2.0
+Version:        3.6.2
+Release:        alt1
+
+Summary:        Apache Maven Archiver
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://maven.apache.org/shared/maven-archiver/
+VCS:            https://github.com/apache/maven-archiver
 BuildArch:      noarch
 
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:	%name-%version.tar
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
+
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.mockito:mockito-core)
 
 %description
 The Maven Archiver is used by other Maven plugins
-to handle packaging
+to handle packaging.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE README.md
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.6.2-alt1
+- Updated to 3.6.2.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.5.2-alt1_2jpp11
 - new version
 

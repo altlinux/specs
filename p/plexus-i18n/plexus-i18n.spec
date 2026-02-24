@@ -1,59 +1,49 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           plexus-i18n
-Version:        1.0
-Release:        alt7_0.23.b10.4jpp11
+Version:        1.1.0
+Release:        alt1
+
 Summary:        Plexus I18N Component
-License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-i18n
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-i18n/
+VCS:            https://github.com/codehaus-plexus/plexus-i18n
 BuildArch:      noarch
-# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-i18n-1.0-beta-10/
-# tar cjf plexus-i18n-1.0-beta-10-src.tar.bz2 plexus-i18n-1.0-beta-10/
-Source0:        plexus-i18n-1.0-beta-10-src.tar.bz2
+
+Source0:        %name-%version.tar
+
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
+
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
 
 %description
-The Plexus project seeks to create end-to-end developer tools for 
-writing applications. At the core is the container, which can be 
-embedded or for a full scale application server. There are many 
-reusable components for hibernate, form processing, jndi, i18n, 
-velocity, etc. Plexus also includes an application server which 
+The Plexus project seeks to create end-to-end developer tools for
+writing applications. At the core is the container, which can be
+embedded or for a full scale application server. There are many
+reusable components for hibernate, form processing, jndi, i18n,
+velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-# -n: base directory name
-%setup -q -n plexus-i18n-1.0-beta-10
-
-# plexus maven plugin is deprecated
-# switched it to plexus-component-metadata
-%pom_xpath_set 'pom:plugin[pom:artifactId = "plexus-maven-plugin"]/pom:artifactId' plexus-component-metadata
-# set goal to generate-metadata
-%pom_xpath_set 'pom:goals[pom:goal = "descriptor"]/pom:goal' generate-metadata
-# add missing dep: plexus-container-default
-%pom_add_dep org.codehaus.plexus:plexus-container-default
-# remove maven-compiler-plugin configuration that is broken with Java 11
-%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc *.md
 
 %changelog
+* Wed Feb 18 2026 Evegeniy Serov <scala@altlinux.org> 1.1.0-alt1
+- Updated to 1.1.0.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt7_0.23.b10.4jpp11
 - java11 build
 

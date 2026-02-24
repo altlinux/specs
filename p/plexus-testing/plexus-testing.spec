@@ -1,56 +1,45 @@
-Name: plexus-testing
-Version: 1.3.0
-Release: alt1
+Name:           plexus-testing
+Version:        2.1.0
+Release:        alt1
 
-Summary: Library to help testing plexus components
-License: Apache-2.0
-Group: Development/Java
-Url: https://github.com/codehaus-plexus/plexus-testing
-BuildArch: noarch
+Summary:        Library to help testing plexus components
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-testing/
+VCS:            https://github.com/codehaus-plexus/plexus-testing
+BuildArch:      noarch
 
-Source0: https://github.com/codehaus-plexus/%name/archive/%name-%version.tar.gz
+Source0:        %name-%version.tar
 
-BuildRequires: maven-local
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
-BuildRequires:  mvn(com.google.inject:guice)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.mockito:mockito-core)
+# TODO: switch to mvn() prov, after fixing mockito bug
+BuildRequires:  osgi(org.mockito.junit-jupiter)
 
 %description
 The Plexus Testing contains the necessary classes to be able to test
 Plexus components.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %name.
-
 %prep
 %setup
 
-# Some tests rely on Jakarta Injection API, which is not packaged
-rm src/test/java/org/codehaus/plexus/testing/TestJakartaComponent.java
-rm src/test/java/org/codehaus/plexus/testing/PlexusTestJakartaTest.java
+find . -name pom.xml -type f -exec sed -i '/<classifier>classes<\/classifier>/d' {} +
 
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
+%doc LICENSE README.md
 
 %changelog
+* Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Fri Sep 05 2025 Anton Meleshnikov <alton@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus (thanks fedora for the spec).

@@ -1,107 +1,63 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           plexus-compiler
-Version:        2.15.0
+Version:        2.16.2
 Release:        alt1
+
 Summary:        Compiler call initiators for Plexus
-# extras subpackage has a bit different licensing
-# parts of compiler-api are ASL2.0/MIT
 License:        MIT and Apache-2.0
-URL:            https://github.com/codehaus-plexus/plexus-compiler
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-compiler/
+VCS:            https://github.com/codehaus-plexus/plexus-compiler
 BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
+BuildRequires:  java-devel
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
+
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-%endif
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(org.eclipse.jdt:ecj)
+BuildRequires:  mvn(commons-lang:commons-lang)
 
 %description
 Plexus Compiler adds support for using various compilers from a
 unified api. Support for javac is available in main package. For
-additional compilers see %{name}-extras package.
+additional compilers see %name-extras package.
 
 %package extras
-Group: Development/Java
-Summary:        Extra compiler support for %{name}
-# ASL 2.0: src/main/java/org/codehaus/plexus/compiler/util/scan/
-#          ...codehaus/plexus/compiler/csharp/CSharpCompiler.java
-# ASL 1.1/MIT: ...codehaus/plexus/compiler/jikes/JikesCompiler.java
+Group:          Development/Java
+Summary:        Extra compiler support for %name
 License:        MIT and Apache-2.0 and Apache-1.1
 
 %description extras
-Additional support for csharp, eclipse and jikes compilers
+Additional support for csharp, eclipse and jikes compilers.
 
 %package pom
-Group: Development/Java
-Summary:        Maven POM files for %{name}
+Group:          Development/Java
+Summary:        Maven POM files for %name
 
 %description pom
-This package provides %{summary}.
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-License:        MIT and Apache-2.0 and Apache-1.1
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+This package provides %summary.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-find -name '.class' -delete
-
-%pom_remove_dep :junit-bom
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-site-plugin
 
 %pom_disable_module plexus-compiler-aspectj plexus-compilers
-# missing com.google.errorprone:error_prone_core
 %pom_disable_module plexus-compiler-javac-errorprone plexus-compilers
 
-%pom_disable_module plexus-compiler-eclipse plexus-compilers
-
-# don't build/install compiler-test module, it needs maven2 test harness
 %pom_disable_module plexus-compiler-test
 %pom_disable_module plexus-compiler-its
 
-# don't install sources jars
 %mvn_package ":*::sources:" __noinstall
-
 %mvn_package ":plexus-compiler{,s}" pom
 %mvn_package ":*{csharp,eclipse,jikes}*" extras
 
-# don't generate requires on test dependency (see #1007498)
-%pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
-
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-
-%pom_remove_dep -r org.codehaus.plexus:plexus-compiler-javac-errorprone
-
 %build
-# Tests are skipped because of unavailable plexus-compiler-test artifact
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -j
 
 %install
 %mvn_install
@@ -112,9 +68,10 @@ find -name '.class' -delete
 %files extras -f .mfiles-extras
 %files pom -f .mfiles-pom
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 2.16.2-alt1
+- Updated to 2.16.2.
+
 * Sun Feb 23 2025 Andrey Cherepanov <cas@altlinux.org> 0:2.15.0-alt1
 - new version
 

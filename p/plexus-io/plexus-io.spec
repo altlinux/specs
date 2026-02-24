@@ -1,68 +1,45 @@
-%define _unpackaged_files_terminate_build 1
+Name:           plexus-io
+Version:        3.6.0
+Release:        alt1
 
-Name: plexus-io
-Version: 3.5.1
-Release: alt2
+Summary:        Plexus IO Components
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-io/
+VCS:            https://github.com/codehaus-plexus/plexus-io
+BuildArch:      noarch
 
-Summary: Plexus IO Components
-License: Apache-2.0
-Group: Development/Java
-Url: https://github.com/codehaus-plexus/plexus-io
-VCS: https://github.com/codehaus-plexus/plexus-io.git
-BuildArch: noarch
+Source0:        %name-%version.tar
 
-Source0: %name-%version.tar
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
-BuildRequires: /proc
-BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(com.google.code.findbugs:jsr305)
-BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
-BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
-BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires: mvn(org.slf4j:slf4j-simple)
-BuildRequires: mvn(com.google.inject:guice)
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
 
 %description
 Plexus IO is a set of plexus components, which are designed for use
 in I/O operations.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-API documentation for %name.
+%javadoc_package
 
 %prep
 %setup
 
 %build
-%mvn_file  : plexus/plexus-io plexus/io
-
-%mvn_build -f -- -Dmaven.compiler.source=1.8 \
-  -Dmaven.compiler.target=1.8 \
-  -Dmaven.javadoc.source=1.8 \
-  -Dmaven.compiler.release=8 \
-  #
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference NOTICE.txt
+%doc *.md NOTICE.txt
 
 %changelog
+* Tue Feb 17 2026 Evgeniy Serov <scala@altlinux.org> 3.6.0-alt1
+- Updated to 3.6.0.
+
 * Tue Aug 26 2025 Anton Meleshnikov <alton@altlinux.org> 3.5.1-alt2
 - NMU: Added necessary BuildRequires.
 

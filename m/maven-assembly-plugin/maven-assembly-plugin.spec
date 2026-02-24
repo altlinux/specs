@@ -1,88 +1,48 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-assembly-plugin
-Version:        3.3.0
-Release:        alt1_6jpp11
+Version:        3.7.1
+Release:        alt1
+
 Summary:        Maven Assembly Plugin
-License:        ASL 2.0
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://maven.apache.org/plugins/maven-assembly-plugin/
+VCS:            https://github.com/apache/maven-assembly-plugin
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.jdom:jdom2)
+BuildRequires:  mvn(jaxen:jaxen)
 
 %description
 A Maven plugin to create archives of your project's sources, classes,
 dependencies etc. from flexible assembly descriptors.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package provides %{summary}.
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
 %build
-# Tests need easymockclassextension version 2.x, which is incompatible
-# with easymockclassextension version 3.x we have in Fedora.
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 3.7.1-alt1
+- Updated to 3.7.1.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_6jpp11
 - update
 

@@ -1,46 +1,23 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           plexus-archiver
-Version:        4.2.7
-Release:        alt2
+Version:        4.11.0
+Release:        alt1
+
 Summary:        Plexus Archiver Component
-License:        ASL 2.0
-URL:            https://codehaus-plexus.github.io/plexus-archiver
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-archiver/
+VCS:            https://github.com/codehaus-plexus/plexus-archiver
 BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexus-archiver-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-Patch0:         0001-Remove-support-for-snappy.patch
-Patch1: 0002-Plexus-io-3.5.1-compatibility-alt-patch.patch
+Patch0:		0001-Removed-unsupported-zstd.patch
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.tukaani:xz)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -50,43 +27,36 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%mvn_file :%{name} plexus/archiver
+%setup
+%autopatch -p1
 
-%patch0 -p1
-%patch1 -p1
-%pom_remove_dep org.iq80.snappy:snappy
-rm -rf src/main/java/org/codehaus/plexus/archiver/snappy
-rm -f src/main/java/org/codehaus/plexus/archiver/tar/SnappyTarFile.java
-rm -f src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarSnappyFileResourceCollection.java
-rm src/test/java/org/codehaus/plexus/archiver/snappy/SnappyArchiverTest.java
-rm src/test/java/org/codehaus/plexus/archiver/tar/TarSnappyUnArchiverTest.java
+%pom_remove_dep :zstd-jni
+rm -r src/main/java/org/codehaus/plexus/archiver/zstd
+rm src/main/java/org/codehaus/plexus/archiver/tar/ZstdTarFile.java
+rm src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTarZstdFileResourceCollection.java
+rm src/main/java/org/codehaus/plexus/archiver/tar/PlexusIoTZstdFileResourceCollection.java
 
-# Tests use old plexus-containers-default
-sed -i '/getLoggerManager/d' src/test/java/org/codehaus/plexus/archiver/DuplicateFilesTest.java
+# Tests
+rm -r src/test/java/org/codehaus/plexus/archiver/zstd
+rm src/test/java/org/codehaus/plexus/archiver/tar/TarZstdUnArchiverTest.java
+rm src/test/java/org/codehaus/plexus/archiver/manager/ArchiverManagerTest.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc *.md LICENSE
 
 %changelog
+* Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 4.11.0-alt1
+- Updated to 4.11.0 (without zstd-jni).
+
 * Tue Sep 09 2025 Ivan Khanas <xeno@altlinux.org> 0:4.2.7-alt2
 - Fix FTBFS: plexus-io API incompatibility.
 

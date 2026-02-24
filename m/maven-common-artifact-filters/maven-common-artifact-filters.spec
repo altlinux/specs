@@ -1,85 +1,47 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-common-artifact-filters
-Version:        3.2.0
-Release:        alt1_3jpp11
-Summary:        Maven Common Artifact Filters
-License:        ASL 2.0
-URL:            https://maven.apache.org/shared/
+Version:        3.4.0
+Release:        alt1
+
+Summary:        Apache Maven Common Artifact Filters
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://maven.apache.org/shared/maven-common-artifact-filters/
+VCS:            https://github.com/apache/maven-common-artifact-filters
 BuildArch:      noarch
 
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
-Patch1:         0001-Pass-empty-list-instead-of-null-to-DependencyFilter..patch
-
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
+
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.mockito:mockito-core)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
 
 %description
 A collection of ready-made filters to control inclusion/exclusion of artifacts
 during dependency resolution.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-%patch1 -p1
-
-# Test depends on jmh performance benchmarking library
-%pom_remove_dep org.openjdk.jmh:jmh-core
-%pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
-
-rm src/test/java/org/apache/maven/shared/artifact/filter/PatternFilterPerfTest.java
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.4.0-alt1
+- Updated to 3.4.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_3jpp11
 - new version
 
