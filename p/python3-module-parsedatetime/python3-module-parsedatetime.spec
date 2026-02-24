@@ -1,7 +1,9 @@
+%def_with check
+
 %define  modulename parsedatetime
 
 Name:    python3-module-%modulename
-Version: 2.4
+Version: 2.6
 Release: alt1
 
 Summary: Parse human-readable date/time strings
@@ -12,28 +14,35 @@ URL:     https://github.com/bear/parsedatetime
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Feb 24 2026 Grigory Ustinov <grenka@altlinux.org> 2.6-alt1
+- Automatically updated to 2.6.
+
 * Thu Feb 08 2018 Mikhail Gordeev <obirvalger@altlinux.org> 2.4-alt1
 - Separate build for Sisyphus
