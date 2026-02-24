@@ -6,7 +6,7 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.38.0
+Version: 1.38.1
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -104,6 +104,20 @@ sed -i "s/srcN\[\]/srcN[0]/" src/zm_rtp_ctrl.h
 %install
 install -d %buildroot%_var/run
 %cmakeinstall_std
+
+# Remove frontend template development artifacts from runtime package.
+pro_sidebar_template=%buildroot%_datadir/%name/www/skins/classic/assets/pro-sidebar-template
+rm -rf \
+	${pro_sidebar_template}/build.sh \
+	${pro_sidebar_template}/src \
+	${pro_sidebar_template}/dist_dev \
+	${pro_sidebar_template}/webpack.config.js \
+	${pro_sidebar_template}/postcss.config.js \
+	${pro_sidebar_template}/README.md \
+	${pro_sidebar_template}/READ_ME_BEFORE_EDIT \
+	${pro_sidebar_template}/dist/main.css.map \
+	${pro_sidebar_template}/dist/main.js.map
+
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
 
@@ -178,6 +192,15 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt1
+- 1.38.0 -> 1.38.1
+
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 1.38.0-alt2
+- removed pro-sidebar-template development files from runtime
+  package to avoid yarn autorequire (closes: #58001)
+- removed httpd and janus startup dependencies from
+  systemd service file  (closes: #57998)
+
 * Sat Feb 07 2026 Anton Farygin <rider@altlinux.org> 1.38.0-alt1
 - 1.37.74 -> 1.38.0
 
