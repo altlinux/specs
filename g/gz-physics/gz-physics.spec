@@ -2,7 +2,7 @@
 %define soversion 9
 
 Name: gz-physics
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
@@ -12,6 +12,8 @@ Vcs: https://github.com/gazebosim/gz-physics
 Url: https://gazebosim.org/api/physics/6/introduction.html
 
 Source: %name-%version.tar
+
+Patch: gz-physics-9.1.0-alt-fix-bullet-featherstone-error-with-double-precision.patch
 
 ExcludeArch: %ix86 armh
 
@@ -64,6 +66,7 @@ Group: Development/C++
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -111,6 +114,9 @@ Group: Development/C++
 %_libdir/pkgconfig/gz-physics*.pc
 
 %changelog
+* Tue Feb 17 2026 Pavel Petrykin <silverducks@altlinux.org> 9.1.0-alt1
+- New version.
+
 * Tue Dec 24 2025 Pavel Petrykin <silverducks@altlinux.org> 9.0.0-alt1
 - New version.
 

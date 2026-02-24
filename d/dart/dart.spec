@@ -3,7 +3,7 @@
 %def_with dartpy
 
 Name: dart
-Version: 6.16.5
+Version: 6.16.7
 Release: alt1
 
 Summary: DART: Dynamic Animation and Robotics Toolkit
@@ -161,6 +161,7 @@ Group: Documentation
   -DDART_VERBOSE=ON \
   -DDART_USE_SYSTEM_GOOGLETEST=ON \
   -DDART_USE_SYSTEM_GOOGLEBENCHMARK=ON \
+  -DDART_TREAT_WARNINGS_AS_ERRORS=OFF \
 %if_with dartpy
   -DDART_BUILD_DARTPY=ON \
   -DDART_USE_SYSTEM_PYBIND11=ON \
@@ -240,6 +241,9 @@ Group: Documentation
 %_defaultdocdir/dart
 
 %changelog
+* Fri Feb 20 2026 Pavel Petrykin <silverducks@altlinux.org> 6.16.7-alt1
+- New version.
+
 * Wed Jan 22 2026 Pavel Petrykin <silverducks@altlinux.org> 6.16.5-alt1
 - New version.
 - Reenable build of dartpy (ALT 57546).

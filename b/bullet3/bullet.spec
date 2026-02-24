@@ -5,7 +5,7 @@
 
 Name: bullet3
 Version: 3.25
-Release: alt4
+Release: alt5
 
 Summary: Professional 3D collision detection library
 
@@ -124,7 +124,7 @@ rm -rv {data/,examples/}
     -DINSTALL_LIBS=ON \
     -DOpenGL_GL_PREFERENCE=GLVND \
     -DUSE_CUSTOM_VECTOR_MATH=ON \
-    -DUSE_DOUBLE_PRECISION=OFF \
+    -DUSE_DOUBLE_PRECISION=ON \
     -DINCLUDE_INSTALL_DIR=%_includedir/%oname \
 %if_disabled demo
     -DBUILD_BULLET2_DEMOS=OFF \
@@ -208,6 +208,9 @@ rm -rv {data/,examples/}
 %_libdir/libBulletXmlWorldImporter.so
 
 %changelog
+* Wed Feb 18 2026 Pavel Petrykin <silverducks@altlinux.org> 3.25-alt5
+- Reenable double precision.
+
 * Thu Dec 25 2025 Pavel Petrykin <silverducks@altlinux.org> 3.25-alt4
 - Fix gz-physics compatibility.
 
