@@ -8,7 +8,7 @@
 %def_without kbanking
 
 Name:    kmymoney
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE
@@ -316,7 +316,7 @@ Internationalization and documentation for KMyMoney
 %_K6xdgapp/*%name.desktop
 %doc %_K6doc/en/*
 %_K6cfg/*.kcfg
-%_datadir/%name/*
+#_datadir/%name/*
 %_datadir/mime/packages/*
 %_K6icon/hicolor/*/apps/%name.png
 %_K6icon/hicolor/*/mimetypes/application-x-kmymoney.png
@@ -390,6 +390,9 @@ Internationalization and documentation for KMyMoney
 %exclude %_K6doc/en
 
 %changelog
+* Tue Feb 24 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.2-alt1
+- New version.
+
 * Thu Aug 07 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1
 - New version.
 
