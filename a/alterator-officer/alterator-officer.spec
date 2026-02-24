@@ -1,6 +1,6 @@
 Name: alterator-officer
-Version: 1.0
-Release: alt10
+Version: 1.1
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -37,6 +37,9 @@ alterator module for edit system  security officer properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/officer.d
 
 %changelog
+* Mon Feb 16 2026 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- Do not change home directory and do not add group.
+
 * Tue Apr 16 2019 Denis Medvedev <nbr@altlinux.org> 1.0-alt10
 - officer user creation cleanup.
 
