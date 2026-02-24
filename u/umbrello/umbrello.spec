@@ -1,15 +1,15 @@
 %define rname umbrello
 
-#%ifarch %not_qt5_qtwebengine_arches
+#%ifarch %not_qt6_qtwebengine_arches
 #%def_disable qtwebengine
 #%else
 #%def_enable qtwebengine
 #%endif
 
 Name: %rname
-Version: 25.08.1
+Version: 25.12.2
 Release: alt1
-%K5init
+%K6init
 
 Group: Graphical desktop/KDE
 Summary: UML Modeller
@@ -25,25 +25,25 @@ Source: %rname-%version.tar
 Patch1: alt-no-webkit.patch
 
 # Automatically added by buildreq on Thu Jan 14 2016 (-bi)
-# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxslt-devel python-module-google qt5-svg-devel rpm-build-python3 rpm-build-ruby xsltproc
-BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-tools
+# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf6-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-printsupport libqt6-script libqt6-svg libqt6-test libqt6-widgets libqt6-x11extras libqt6-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base python-modules python3 python3-base qt6-base-devel rpm-build-gir ruby ruby-stdlibs xml-common xml-utils
+#BuildRequires: extra-cmake-modules kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel  kf6-kdoctools kf6-kdoctools-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kparts-devel kf6-kservice-devel kf6-ktexteditor-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel libxslt-devel python-module-google qt6-svg-devel rpm-build-python3 rpm-build-ruby xsltproc
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-tools
 #%if_enabled qtwebengine
-#BuildRequires: qt5-webengine-devel
+#BuildRequires: qt6-webengine-devel
 #%else
-#BuildRequires: qt5-webkit-devel
+#BuildRequires: qt6-webkit-devel
 #%endif
 #BuildRequires: llvm-devel llvm-devel-static clang-devel clang-devel-static
-BuildRequires: libxslt-devel xsltproc
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
-BuildRequires: kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-kcrash-devel kf5-syntax-highlighting-devel
-# kf5-kdelibs4support-devel
+BuildRequires: libxslt-devel xsltproc libcups-devel
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
+BuildRequires: kf6-kdoctools kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
+BuildRequires: kf6-kparts-devel kf6-kservice-devel kf6-ktexteditor-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
+BuildRequires: kf6-kcrash-devel kf6-syntax-highlighting-devel
+# 
 
 %description
 Umbrello UML Modeller is a UML diagramming tool for KDE.
@@ -62,26 +62,31 @@ sed -i 's|\(.*add_subdirectory.*unittests.*\)|#\1|' CMakeLists.txt
 sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 %build
-%add_optflags -I%_K5inc/KWindowSystem
-%K5build \
+%add_optflags -I%_K6inc/KWindowSystem
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
     #
 
 %install
-%K5install
-%K5install_move data umbrello umbrello5
+%K6install
+%K6install_move data umbrello umbrello6
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
 %_bindir/*
-%_K5bin/*
-%_K5data/umbrello*/
-%_K5icon/hicolor/*/apps/umbrello.*
-%_K5icon/hicolor/*/mimetypes/application-x-uml.*
-%_K5xdgapp/org.kde.umbrello*.desktop
+%_K6bin/*
+%_K6data/umbrello*/
+%_K6icon/hicolor/*/apps/umbrello.*
+%_K6icon/hicolor/*/mimetypes/application-x-uml.*
+%_K6xdgapp/org.kde.umbrello*.desktop
 %_datadir/metainfo/*.xml
 
+
 %changelog
+* Fri Feb 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 
