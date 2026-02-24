@@ -3,9 +3,9 @@
 %set_verify_elf_method strict
 
 Name: cmark
-Version: 0.31.1
+Version: 0.31.2
 %define soversion %version
-Release: alt2
+Release: alt1
 Summary: CommonMark parsing and rendering
 License: BSD-2-Clause AND MIT
 Group: Text tools
@@ -81,6 +81,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Feb 24 2026 Andrey Kovalev <ded@altlinux.org> 0.31.2-alt1
+- Updated to upstream version 0.31.2.
+
 * Tue Sep 30 2025 Andrey Kovalev <ded@altlinux.org> 0.31.1-alt2
 - Renamed cmark-devel to libcmark-devel (closes: #47223).
 
