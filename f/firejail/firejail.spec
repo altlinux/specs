@@ -4,7 +4,7 @@
 
 Name: firejail
 Version: 0.9.78
-Release: alt1
+Release: alt2
 Summary: Linux namespaces sandbox program
 License: GPLv2+
 Group: Development/Tools
@@ -23,7 +23,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup
 
 %build
-%configure --disable-userns
+%configure
 %make_build
 
 %install
@@ -33,7 +33,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 
 %files -f %name.lang
 %doc README* RELNOTES COPYING
-%_bindir/%name
+%attr(4711, root, root) %_bindir/%name
 %_bindir/firecfg
 %_bindir/firemon
 %_bindir/jailcheck
@@ -57,6 +57,10 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.9.78-alt2
+- set SUID bit on firejail binary (Closes: #57987)
+- enabled user namespace support (--noroot option)
+
 * Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 0.9.78-alt1
 - 0.9.76 -> 0.9.78
 
