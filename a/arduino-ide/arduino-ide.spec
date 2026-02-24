@@ -2,7 +2,7 @@
 
 Name: arduino-ide
 Version: 2.3.7
-Release: alt1
+Release: alt2
 
 Summary: IDE for Arduino boards and compatible microcontroller platforms.
 Group: Education
@@ -103,5 +103,7 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Tue Feb 17 2026 Grant Makyan <karonus@altlinux.org> 2.3.7-alt2
+- Revert 2.3.8 commit.
 * Thu Jan 27 2026 Grant Makyan <karonus@altlinux.org> 2.3.7-alt1
 - First build for ALT.
