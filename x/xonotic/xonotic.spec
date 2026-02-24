@@ -3,15 +3,15 @@
 %set_verify_elf_method strict
 
 Name: xonotic
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 Summary: A free multi-player first person shooter
 Group: Games/Arcade
 License: GPLv2+
 Url: https://www.xonotic.org/
-
-# stripped version of original xonotic-0.8.2.zip
+VCS: https://gitlab.com/xonotic/xonotic.git
 Source: Xonotic.tar
+Source999: watch
 
 Patch1: xonotic-fedora-gcc11.patch
 
@@ -30,6 +30,14 @@ It features much better quality graphics and visual effects.
 Xonotic places focus on community involvement as its principal driving force
 and structures itself to respect that. The aim of Xonotic is to become the 
 best possible open-source FPS (first-person-shooter) of its kind.
+
+%package data
+Summary: Xonotic data files (graphics, music, maps etc)
+Group: Games/Arcade
+BuildArch: noarch
+%description data
+Data files used to play Xonotic.
+
 
 %prep
 %setup -q -n Xonotic
@@ -55,6 +63,9 @@ install -D -m 644 misc/logos/icons_png/%{name}_128.png %buildroot%_iconsdir/hico
 install -D -m 644 misc/logos/%{name}_icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 install -d %buildroot%_datadir/applications
+
+mkdir -p  %buildroot%_datadir/xonotic/data
+install -pm644 data/*.pk3 %buildroot%_datadir/xonotic/data/
 
 cat > %buildroot%_datadir/applications/%name-sdl.desktop << EOF
 [Desktop Entry]
@@ -88,7 +99,13 @@ EOF
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/*/apps/%name.svg
 
+%files data
+%_datadir/xonotic
+
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.8.6-alt1
+- 0.8.5 -> 0.8.6 with security fixes (Closes: #57982)
+
 * Wed Nov 16 2022 Artyom Bystrov <arbars@altlinux.org> 0.8.5-alt1
 - Updated to upstream version 0.8.5
 
