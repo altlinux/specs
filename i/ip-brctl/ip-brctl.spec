@@ -1,5 +1,5 @@
 Name: ip-brctl
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Drop-in replacement of the standalone brctl utility
@@ -44,5 +44,8 @@ ln -s ip-brctl %buildroot%_sbindir/brctl
 %_man8dir/*
 
 %changelog
+* Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 0.2-alt1
+- Fix brctl show with no bridge (ALT#57898).
+
 * Thu Nov 21 2024 Alexey Shabalin <shaba@altlinux.org> 0.1-alt1
 - Initial build.
