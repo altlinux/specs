@@ -18,8 +18,8 @@
 %define libtextutils_cmark_rc_copy libtextutils-cmark-rc-copy%rccopy_sover
 
 Name: kf6-%rname
-Version: 1.9.0
-Release: alt2
+Version: 1.9.1
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -243,6 +243,9 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Feb 25 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
+- new version
+
 * Wed Feb 04 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt2
 - update requires
 
