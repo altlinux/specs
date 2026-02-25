@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 147.0.1
+Version: 147.0.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -382,6 +382,11 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Fri Feb 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0.2-alt1
+- New version.
+- Fixes:
+  + CVE-2026-2447: Heap buffer overflow in libvpx
+
 * Thu Feb 12 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0.1-alt1
 - New version.
 - Fixes:
