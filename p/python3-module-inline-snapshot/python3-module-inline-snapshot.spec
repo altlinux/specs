@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.31.1
+Version: 0.32.3
 Release: alt1
 
 Summary: Create and update inline snapshots in your python tests
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -27,6 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-black
+BuildRequires: python3-module-isort
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -36,6 +38,7 @@ BuildRequires: python3-module-black
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -57,6 +60,9 @@ BuildRequires: python3-module-black
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.32.3-alt1
+- Updated to 0.32.3.
+
 * Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.31.1-alt1
 - Updated to 0.31.1.
 
