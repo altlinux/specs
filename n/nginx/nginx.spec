@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.28.1
+Version: 1.28.2
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -25,8 +25,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_enable rtmp
 %define modpath %_libdir/%name
 Url: https://nginx.org
-VCS: https://trac.nginx.org/nginx/browser/nginx
-# R/O git mirror https://github.com/nginx/nginx
+VCS: https://github.com/nginx/nginx.git
 Source: %url/%name-%version.tar
 Source1: %name.conf.in
 Source2: %name.init
@@ -424,6 +423,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 1.28.2-alt1
+- 1.28.1 -> 1.28.2 (Fixes: CVE-2026-1642)
+
 * Tue Dec 30 2025 Anton Farygin <rider@altlinux.org> 1.28.1-alt1
 - 1.28.0 -> 1.28.1
 
