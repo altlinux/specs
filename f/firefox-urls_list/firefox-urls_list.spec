@@ -4,7 +4,7 @@
 %define cid	\{88664789-f91e-40e1-adb9-e4e9a8c48867\}
 
 Name:		%firefox_name-%rname
-Version:	0.5.0
+Version:	0.6.0
 Release:	alt1
 
 Summary:	URLs List Firefox extension
@@ -42,5 +42,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.5.0-alt1
 - Initial build for ALT Linux Sisyphus
