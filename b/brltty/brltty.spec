@@ -3,9 +3,9 @@
 %define _localstatedir %_var
 %filter_from_requires /^sudo$/d
 
-%define pkg_version 6.8
+%define pkg_version 6.9
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.8.7
+%define api_ver 0.8.8
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -23,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -395,6 +395,10 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Wed Feb 25 2026 Artem Semenov <savoptik@altlinux.org> 6.9-alt1
+- Updated to new version 6.9
+- Updated brlapi to new version 0.8.8
+
 * Wed Jul 30 2025 Artem Semenov <savoptik@altlinux.org> 6.8-alt2
 - Added build requires to libtinfo-devel
 
