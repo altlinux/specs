@@ -15,7 +15,7 @@
 %define libdcerpc_so_version 0
 %define libndr_krb5pac_so_version 0
 %define libndr_nbt_so_version 0
-%define libndr_so_version 5
+%define libndr_so_version 6
 %define libndr_standard_so_version 0
 %define libnetapi_so_version 1
 %define libsamba_credentials_so_version 1
@@ -121,15 +121,15 @@
 %add_python_compile_exclude %_samba_dc_mod_libdir/python%_python3_version
 %endif
 
-%define talloc_version 2.4.2
-%define tevent_version 0.16.1
-%define tdb_version 1.4.12
-%define ldb_version 2.10.0
+%define talloc_version 2.4.3
+%define tevent_version 0.16.2
+%define tdb_version 1.4.13
+%define ldb_version 2.11.0
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.21.9
-Release: alt5
+Version: 4.22.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -245,7 +245,7 @@ BuildRequires: glibc-devel glibc-kernheaders
 BuildConflicts: setproctitle-devel
 BuildRequires: libiniparser-devel
 BuildRequires: libcups-devel
-BuildRequires: gawk libcap-devel libuuid-devel
+BuildRequires: gawk libcap-devel libuuid-devel libcrypt-devel
 %{?_with_doc:BuildRequires: libxslt xsltproc netpbm dblatex html2text docbook-style-xsl}
 
 %if_with snapper
@@ -1900,6 +1900,7 @@ control role-sambashare enabled
 %endif
 %_samba_mod_libdir/libtime-basic-private-samba.so
 %_samba_mod_libdir/libtorture-private-samba.so
+%_samba_mod_libdir/libutil-crypt-private-samba.so
 %_samba_mod_libdir/libutil-reg-private-samba.so
 %_samba_mod_libdir/libutil-setid-private-samba.so
 %_samba_mod_libdir/libutil-tdb-private-samba.so
@@ -2128,9 +2129,8 @@ control role-sambashare enabled
 #%_samba_libdir/libtorture.so.*
 %if_with dc
 %_samba_mod_libdir/libdlz-bind9-for-torture-private-samba.so
-%else
-%_samba_mod_libdir/libdsdb-module-private-samba.so
 %endif
+%_samba_mod_libdir/libdsdb-module-private-samba.so
 %if_with doc
 %_man1dir/gentest.1*
 %_man1dir/locktest.1*
@@ -2227,6 +2227,7 @@ control role-sambashare enabled
 %config(noreplace) %_sysconfdir/ctdb/nodes
 %config(noreplace) %_sysconfdir/ctdb/notify.sh
 %config(noreplace) %_sysconfdir/ctdb/debug-hung-script.sh
+%config(noreplace) %_sysconfdir/ctdb/ctdb-backup-persistent-tdbs.sh
 %config(noreplace) %_sysconfdir/ctdb/ctdb-crash-cleanup.sh
 %config(noreplace) %_sysconfdir/ctdb/functions
 %config(noreplace) %_sysconfdir/ctdb/debug_locks.sh
@@ -2261,9 +2262,9 @@ control role-sambashare enabled
 %_libexecdir/ctdb/ctdb_mutex_fcntl_helper
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
+%_libexecdir/ctdb/ctdb_smnotify_helper
 %_libexecdir/ctdb/ctdb_takeover_helper
 %_libexecdir/ctdb/tdb_mutex_check
-%_libexecdir/ctdb/smnotify
 %_libexecdir/ctdb/statd_callout
 %_libexecdir/ctdb/statd_callout_helper
 
@@ -2375,6 +2376,13 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.8-alt1
+- Update to maintenance release of Samba 4.22
+- Major changes from upstream:
+  + SMB3 Directory Leases.
+  + Netlogon Ping over LDAP and LDAPS.
+  + AD DC schema upgrade and provision performance improvements.
+
 * Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt5
 - Fix missing admx presentaions for firewalld (thx Valentin Sokolov) (Closes #43955).
 

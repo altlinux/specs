@@ -3,7 +3,7 @@
 %def_with check
 
 Name: libtdb
-Version: 1.4.12
+Version: 1.4.13
 Release: alt1
 
 Summary: A trivial database system
@@ -17,7 +17,7 @@ Patch1: libtdb-revert-breaking-tdb.h.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 
-BuildRequires: socket_wrapper >= 1.4.3
+BuildRequires: socket_wrapper >= 1.4.4
 BuildRequires: nss_wrapper >= 1.1.16
 BuildRequires: uid_wrapper >= 1.3.1
 BuildRequires: pam_wrapper >= 1.1.7
@@ -126,6 +126,9 @@ make test
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 
 %changelog
+* Sun Sep 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4.13-alt1
+- Update to release for samba-4.22.0
+
 * Tue May 13 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4.12-alt1
 - Update to release for samba-4.21.0 (after rc2).
 

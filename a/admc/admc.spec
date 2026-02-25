@@ -11,12 +11,12 @@
 
 Name: admc
 Version: 0.22.3
-Release: alt1
+Release: alt2
 
 Summary: Active Directory Management Center
 License: GPLv3+
 Group: Other
-Url: https://github.com/altlinuxteam/admc
+Url: https://github.com/altlinux/admc
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -124,6 +124,10 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.22.3-alt2
+- Samba 4.22 compatibility update.
+- Fixed project URL.
+
 * Thu Nov 13 2025 Semyon Knyazev <samael@altlinux.org> 0.22.3-alt1
 - Changed lockoutTime attribute from datetime to integer format. (closes: 49829)
 - Disabled critical domain GPO deletion, remove warning dialog in favor

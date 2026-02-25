@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
-%global talloc_version 2.4.2
+%global talloc_version 2.4.3
 
 Name: libtevent
-Version: 0.16.1
+Version: 0.16.2
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -17,6 +17,12 @@ Patch: tevent-alt-fix-python-ldflags.patch
 BuildRequires: libtalloc-devel >= %talloc_version
 BuildRequires: zlib-devel
 BuildRequires: libcmocka-devel >= 1.1.3
+
+BuildRequires: socket_wrapper >= 1.3.4
+BuildRequires: nss_wrapper >= 1.1.13
+BuildRequires: resolv_wrapper >= 1.1.8
+BuildRequires: uid_wrapper >= 1.2.7
+BuildRequires: pam_wrapper >= 1.1.4
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -84,6 +90,9 @@ make test < /dev/null
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Sun Sep 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.16.2-alt1
+- New version for samba-4.22
+
 * Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.16.1-alt1
 - New version for samba-4.20
 
