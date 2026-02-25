@@ -2,7 +2,7 @@
 %global import_path github.com/fluxcd/image-reflector-controller/
 
 Name: flux2-%prog_name
-Version: 0.32.0
+Version: 1.0.4
 Release: alt1
 Summary: Container cluster management
 
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang > 1.21
+BuildRequires(pre): golang > 1.25
 BuildRequires: /proc
 
 %description
@@ -42,5 +42,8 @@ export IGNORE_SOURCES=1
 %doc docs/*
 
 %changelog
+* Wed Feb 18 2026 Aleksandr Gamzin <gamzin@altlinux.org> 1.0.4-alt1
+- 1.0.4.
+
 * Thu Oct 31 2024 Alexey Kostarev <kaf@altlinux.org> 0.32.0-alt1
 - Initial build.

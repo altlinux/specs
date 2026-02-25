@@ -2,8 +2,8 @@
 %define version 2.3.0
 
 Name: flux2
-Version: 2.3.0
-Release: alt2
+Version: 2.7.5
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang > 1.21
+BuildRequires(pre): golang > 1.25
 BuildRequires: /proc
 
 %description
@@ -23,11 +23,14 @@ configuration (like Git repositories and OCI artifacts), and automating updates
 to  configuration when there is new code to deploy.
 
 %prep
+# Regenerate standart flux-controllers manifests:
+# $ ./manifests/scripts/bundle.sh
+
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 %setup
 %golang_prepare
-for file in ./cmd/flux/manifests/*-controller.yaml
+for file in ./cmd/flux/manifests/*.yaml
 do
   sed -E -i 's|image: fluxcd/([a-z-]+):v?([^"]+)|image: registry.altlinux.org/%_priority_distbranch/flux-\1:\2|' "$file"
 done
@@ -50,6 +53,11 @@ export IGNORE_SOURCES=1
 %doc docs/*
 
 %changelog
+* Fri Feb 20 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.7.5-alt1
+- 2.7.5
+- Add note about manifest regeneration
+- Support for new source-watcher manifest.
+
 * Wed Feb 18 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.3.0-alt2
 - Update controller image names to new ALT registry layout.
 
