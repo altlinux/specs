@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.0
 %define beta %nil
 %define rdn_name com.system76.CosmicFiles
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-files
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1%beta
 
 Summary: COSMIC File Manager
@@ -50,19 +50,13 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-export VERGEN_GIT_SHA=%version
-export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_build
 %rust_build --package %name-applet
 
 %install
-export VERGEN_GIT_SHA=%version
-export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 just rootdir=%buildroot install
 
 %check
-export VERGEN_GIT_SHA=%version
-export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_test
 
 %files
@@ -74,6 +68,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Tue Feb 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 
