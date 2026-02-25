@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.20
+Version: 0.5.22
 Release: alt1
 
 Summary: Manager for game installation and execution
@@ -86,6 +86,9 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.22-alt1
+- New version 0.5.22.
+
 * Tue Feb 17 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.20-alt1
 - New version 0.5.20.
 
