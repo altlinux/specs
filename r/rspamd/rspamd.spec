@@ -3,7 +3,7 @@
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
 Version: 3.12.1
-Release: alt1
+Release: alt2
 
 Summary: Fast and modular antispam system written in C
 
@@ -25,7 +25,7 @@ BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: glib2-devel
 BuildRequires: libevent-devel liblua5-devel
-BuildRequires: libpcre2-devel libsqlite3-devel libunwind-devel libicu-devel
+BuildRequires: libpcre2-devel libsqlite3-devel libicu-devel
 BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel
 BuildRequires: libxxhash-devel libzstd-devel doctest-devel libfmt-devel
 BuildRequires: pkgconfig(libsodium) >= 1.0.0
@@ -34,6 +34,10 @@ BuildRequires: pkgconfig(libarchive) >= 3.0.0
 BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
 
 BuildRequires: ragel
+
+%ifnarch %e2k
+BuildRequires: libunwind-devel
+%endif
 
 BuildRequires(pre): rpm-build-intro
 
@@ -129,6 +133,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Wed Feb 25 2026 Michael Shigorin <mike@altlinux.org> 3.12.1-alt2
+- E2K: avoid BR: libunwind-devel (cf.: mcst#6690)
+
 * Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 3.12.1-alt1
 - new version 3.12.1 (with rpmrb script)
 - drop BR: libgmime-devel (removed from the repo)
