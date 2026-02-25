@@ -1,5 +1,5 @@
 Name:           wf-recorder
-Version:        0.5.0
+Version:        0.6.0
 Release:        alt1
 Summary:        Utility program for screen recording of wlroots-based compositors
 License:        MIT
@@ -76,11 +76,17 @@ EOF
 %doc README.md LICENSE
 %_bindir/wf-recorder
 %_bindir/wf_record.sh
+%_datadir/fish/fish/vendor_completions.d/%name.fish
 %_desktopdir/%name-start.desktop
 %_desktopdir/%name-stop.desktop
 %{_mandir}/man?/%{name}*
 
+
 %changelog
+* Wed Feb 25 2026 Artyom Bystrov <arbars@altlinux.org> 0.6.0-alt1
+- Update to new version (Closes: #57974)
+- Add completions for Fish
+
 * Fri Dec 13 2024 Artyom Bystrov <arbars@altlinux.org> 0.5.0-alt1
 - Update to new version (fix FTBFS, causing of FFMPEG 7.1)
 
