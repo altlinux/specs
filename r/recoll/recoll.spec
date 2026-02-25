@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.43.12
+Version: 1.43.13
 Release: alt1
 
 Summary: A personal full text search package
@@ -44,7 +44,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: rpm-build-python3
 BuildRequires: chrpath libxdf-devel findutils liblzma-devel
-BuildRequires: meson rpm-macros-meson cmake libmagic-devel libmagic
+BuildRequires: meson rpm-macros-meson cmake libmagic-devel libmagic jsoncpp-devel
 
 %if_enabled qtgui
 BuildRequires: qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase-gui libqt6-gui libXt-devel xorg-cf-files
@@ -226,6 +226,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Feb 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1.43.13-alt1
+- 1.43.13
+
 * Sat Jan 24 2026 Ilya Mashkin <oddity@altlinux.ru> 1.43.12-alt1
 - 1.43.12
 
