@@ -1,5 +1,5 @@
 Name:     lineup
-Version:  0.1.0
+Version:  0.1.1
 Release:  alt1
 
 Summary:  Lineup is a tool for running tasks on workers
@@ -51,5 +51,10 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Wed Feb 25 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.1-alt1
+- Option to save history (completed tasks)
+- Resume mode to run only incomplete tasks
+- Add when to taskset tasks to ensure running before or after main taskset
+
 * Tue Feb 03 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
