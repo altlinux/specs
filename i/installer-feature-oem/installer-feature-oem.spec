@@ -1,6 +1,6 @@
 Name: installer-feature-oem
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: OEM mode support for installer
 License: GPL-2.0-or-later
@@ -47,6 +47,9 @@ Requires: %name-stage2 = %EVR
 %_datadir/install2/postinstall.d/40-oem-wayland.sh
 
 %changelog
+* Wed Feb 25 2026 Dmitry Terekhin <jqt4@altlinux.org> 0.4-alt2
+- Don't create edition_*/base files if they don't exist
+
 * Fri Feb 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 0.4-alt1
 - Change editions base lists
 
