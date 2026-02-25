@@ -4,7 +4,7 @@
 %define cid	uBO-Scope@raymondhill.net
 
 Name:		%firefox_name-%rname
-Version:	0.1.12
+Version:	1.5.0
 Release:	alt1
 
 Summary:	uBO-Scope Firefox extension
@@ -44,5 +44,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.5.0-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.1.12-alt1
 - Initial build for ALT Linux Sisyphus
