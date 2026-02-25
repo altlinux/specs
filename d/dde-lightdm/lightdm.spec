@@ -7,7 +7,7 @@
 
 Name: dde-lightdm
 Version: 1.32.0
-Release: alt9.dde.1
+Release: alt9.dde.2
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -60,6 +60,7 @@ BuildRequires: libaudit-devel
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 BuildRequires: dqt6-base-devel
+BuildRequires: libdqt6-dbus libdqt6-gui
 
 # For make check:
 BuildRequires: dbus python3 python3-module-pygobject3
@@ -164,6 +165,9 @@ rm -rf %buildroot%_dqt6_libdir/girepository*
 # %_datadir/vala/vapi/*
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 1.32.0-alt9.dde.2
+- Fixed build on shrinked dqt6-base-devel.
+
 * Wed Oct 08 2025 Leontiy Volodin <lvol@altlinux.org> 1.32.0-alt9.dde.1
 - Forked lightdm for independent deepin-session-shell build.
 
