@@ -2,7 +2,7 @@
 %define ocamlmodule gettext
 Name: ocaml-%ocamlmodule
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for i18n
 Group: Development/ML
 License: LGPLv2+ with OCaml-LGPL-linking-exception
@@ -19,7 +19,6 @@ BuildRequires: docbook-style-xsl
 BuildRequires: xsltproc
 BuildRequires: libxml2
 %if_with check
-BuildRequires: ocaml-dune-site-devel
 BuildRequires: ocaml-ounit-devel
 %endif
 
@@ -69,6 +68,9 @@ find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
 %_man5dir/*.5*
 
 %changelog
+* Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt2
+- added upstream fix against linking with dune-site
+
 * Sat Jan 24 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt1
 - 0.4.2 -> 0.5.0
 
