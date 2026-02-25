@@ -1,5 +1,5 @@
 Name:    watchexec
-Version: 2.3.3
+Version: 2.4.3
 Release: alt1
 
 Summary: Executes commands in response to file modifications
@@ -52,6 +52,9 @@ install -Dm 644 doc/%name.1 %buildroot/%_man1dir/%name.1
 %doc *.md
 
 %changelog
+* Wed Feb 25 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.3-alt1
+- new version 2.4.3
+
 * Wed Jan 21 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.3.3-alt1
 - new version 2.3.3
 
