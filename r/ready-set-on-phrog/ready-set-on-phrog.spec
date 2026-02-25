@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -13,11 +13,13 @@ VCS: https://altlinux.space/alt-gnome/ReadySet.git
 Source: %name-%version.tar
 
 Requires: phrog
-Requires: ready-set-plugin-language
-Requires: ready-set-plugin-keyboard
-Requires: ready-set-plugin-user-passwdqc
+Requires: ready-set-plugin-language >= 0.5.0
+Requires: ready-set-plugin-keyboard >= 0.5.0
+Requires: ready-set-plugin-user-passwdqc >= 0.5.0
 
 BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-systemd
 
 %description
 %summary.
@@ -26,22 +28,36 @@ BuildArch: noarch
 %setup
 
 %install
-install -pDm0755 ready-set-first-run \
-	%buildroot%_libexecdir/ready-set-first-run
 install -pDm0644 50_mobi.phosh.phrog_first-run \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
+
 install -pDm0644 50_org.gnome.desktop.screensaver_lock-enabled \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
-install -pDm0644 50_%name.rules \
-	%buildroot%_datadir/polkit-1/rules.d/50_%name.rules
+
+install -pDm0644 config \
+	%buildroot%_datadir/ready-set/config
+
+install -pDm0644 %name.conf \
+	%buildroot%_sysusersdir/%name.conf
+
+install -pDm0755 remove-ready-set \
+	%buildroot%_datadir/ready-set/post-hooks/system/remove-ready-set
+
+install -pDm0755 unset-first-run \
+	%buildroot%_datadir/ready-set/post-hooks/user/unset-first-run
 
 %files
-%_libexecdir/ready-set-first-run
 %_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
 %_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
-%_datadir/polkit-1/rules.d/50_%name.rules
+%_datadir/ready-set/config
+%_sysusersdir/%name.conf
+%_datadir/ready-set/post-hooks/system/remove-ready-set
+%_datadir/ready-set/post-hooks/user/unset-first-run
 
 %changelog
+* Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5-alt1
+- Updated for new ready-set 0.5.0.
+
 * Tue Jan 20 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4-alt1
 - Updated for new ready-set 0.3.1.
 - Removed pwquality config file, because we use passwdqc.

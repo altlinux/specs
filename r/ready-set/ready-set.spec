@@ -8,20 +8,22 @@
 %define libname lib%name
 %define girname ReadySet
 %define api_version 0
+%define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.3.1
+Version: 0.5.0
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
 License: GPL-3.0-or-later
-Group: Other
-Url: https://altlinux.space/alt-gnome/ReadySet
-Vcs: https://altlinux.space/alt-gnome/ReadySet.git
+Group: Graphical desktop/Other
+URL: https://altlinux.space/alt-gnome/ReadySet
+VCS: https://altlinux.space/alt-gnome/ReadySet.git
 
 Source: %name-%version.tar
 
 Requires: %name-common = %EVR
+Conflicts: %gis_name
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -29,10 +31,13 @@ BuildRequires: rpm-build-vala
 BuildRequires: rpm-build-gir
 BuildRequires: meson
 BuildRequires: vala
+BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: blueprint-compiler
+BuildRequires: gir(Adw) = 1
 BuildRequires: gir(Gtk) = 4.0
 BuildRequires: gir(Peas) = 2
+BuildRequires: gir(Gdm) = 1.0
 BuildRequires: pkgconfig(accountsservice)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -44,8 +49,19 @@ BuildRequires: pkgconfig(passwdqc)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(gdm)
 
 %description
+%summary.
+
+%package gdm
+Summary: Files needed for work as initial-setup in gdm
+Group: Graphical desktop/Other
+
+Requires: %name = %EVR
+Requires: gdm
+
+%description gdm
 %summary.
 
 %package common
@@ -179,11 +195,32 @@ Requires: %name = %EVR
 %files
 %_libexecdir/%name
 %_iconsdir/hicolor/*/apps/%{app_id}*
+%_datadir/applications/%{app_id}*
+%_datadir/polkit-1/rules.d/%app_id.rules
+%files gdm
+%_libexecdir/%gis_name
+%_desktopdir/%gis_name.desktop
+%_datadir/dconf/profile/%gis_name
+%_datadir/%gis_name
+%_sharedstatedir/%gis_name
+%_datadir/gnome-session/sessions/%gis_name.session
+%_datadir/gnome-shell/modes/initial-setup.json
+%_userunitdir/%gis_name.service
+%_userunitdir/gnome-session@%gis_name.target.d
+%_sysusersdir/%gis_name.conf
+%_tmpfilesdir/%gis_name.conf
 
 # %files cli
 
 %files common -f %name.lang
-%_libexecdir/%name-ruler
+%_libexecdir/%app_id
+%_sysconfdir/%name
+%_datadir/%name
+%_sharedstatedir/%name
+%_sysconfdir/dbus-1/system.d/%app_id.conf
+%_datadir/polkit-1/actions/%app_id.policy
+%_datadir/dbus-1/system-services/%app_id.service
+%_unitdir/%name.service
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %doc README.en.md
@@ -206,32 +243,35 @@ Requires: %name = %EVR
 %_girdir/%girname-%api_version.gir
 
 %files plugin-keyboard
-%_datadir/%name/rules.d/%app_id.Plugin.Keyboard.rules
-%_libdir/%name/plugins/keyboard.plugin
-%_libdir/%name/plugins/libkeyboard.so
+%_datadir/polkit-1/rules.d/%app_id.Plugin.Keyboard.rules
+%_libdir/%name/plugins/steps/keyboard.plugin
+%_libdir/%name/plugins/steps/libkeyboard.so
 
 %files plugin-language
-%_datadir/%name/rules.d/%app_id.Plugin.Language.rules
-%_libdir/%name/plugins/language.plugin
-%_libdir/%name/plugins/liblanguage.so
+%_datadir/polkit-1/rules.d/%app_id.Plugin.Language.rules
+%_libdir/%name/plugins/steps/language.plugin
+%_libdir/%name/plugins/steps/liblanguage.so
 
 %files plugin-user-common
-%_datadir/%name/rules.d/%app_id.Plugin.User.rules
+%_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
 %_libexecdir/%name-set-root-password
 
 %files plugin-user-passwdqc
-%_libdir/%name/plugins/user-passwdqc.plugin
-%_libdir/%name/plugins/libuser-passwdqc.so
+%_libdir/%name/plugins/steps/user-passwdqc.plugin
+%_libdir/%name/plugins/steps/libuser-passwdqc.so
 
 %files plugin-user-pwquality
-%_libdir/%name/plugins/user-pwquality.plugin
-%_libdir/%name/plugins/libuser-pwquality.so
+%_libdir/%name/plugins/steps/user-pwquality.plugin
+%_libdir/%name/plugins/steps/libuser-pwquality.so
 
 %files plugin-welcome
-%_libdir/%name/plugins/welcome.plugin
-%_libdir/%name/plugins/libwelcome.so
+%_libdir/%name/plugins/steps/welcome.plugin
+%_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.0-alt1
+- New version: 0.5.0.
+
 * Mon Jan 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.1-alt1
 - New version: 0.3.1. (closes: #57526)
 - %name-translation renamed with %name-common to store all common files
