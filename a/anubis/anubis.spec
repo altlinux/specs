@@ -3,7 +3,7 @@
 
 Name: anubis
 Version: 1.25.0
-Release: alt1
+Release: alt2
 
 Group: Networking/WWW
 Summary: Weighs the soul of incoming HTTP requests using proof-of-work to stop AI crawlers
@@ -86,6 +86,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt2
+- Update IPs for chatgpt and mistralai user.
+
 * Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt1
 - updated from 1.24.0 to 1.25.0
 
