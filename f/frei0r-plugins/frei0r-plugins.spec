@@ -1,8 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %def_with opencv
+# Removed from sisyphus due to FTBFS:
+# https://packages.altlinux.org/en/tasks/374128/
+%def_without gavl
 
 Name: frei0r-plugins
-Version: 2.5.1
+Version: 2.5.4
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -55,6 +58,7 @@ Frei0r plugins that use the OpenCV computer vision framework.
 %build
 %cmake \
 	%{?_without_opencv:-DWITHOUT_OPENCV:BOOL=ON} \
+	%{?_without_gavl:-DWITHOUT_GAVL:BOOL=ON} \
 	%nil
 %cmake_build
 
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.5.4-alt1
+- New version.
+
 * Wed Dec 03 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.5.1-alt1
 - New version.
 
