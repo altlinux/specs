@@ -4,7 +4,7 @@
 %define cid	jid1-CKHySAadH4nL6Q@jetpack
 
 Name:		%firefox_name-%rname
-Version:	0.3.7
+Version:	0.3.8
 Release:	alt1
 
 Summary:	Privacy Settings extension for Firefox
@@ -41,6 +41,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.3.8-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.3.7-alt1
 - New version
 
