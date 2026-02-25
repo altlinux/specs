@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.7
+Version: 14.8
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -57,6 +57,7 @@ touch zen/warn_static.h
 sed -i 's|wxUSE_EXCEPTIONS|0|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
 sed -i '/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
 sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
+sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cpp} zen/zstring.cpp
 
 %patch1 -p1
 %patch2 -p1
@@ -119,6 +120,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 14.8-alt1
+- New version 14.8.
+
 * Sun Jan 25 2026 Nikolay Strelkov <snk@altlinux.org> 14.7-alt1
 - New version 14.7.
 

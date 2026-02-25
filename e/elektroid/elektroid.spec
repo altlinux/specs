@@ -4,7 +4,7 @@
 %def_without check
 
 Name: elektroid
-Version: 3.2.3
+Version: 3.3
 Release: alt1
 
 Summary: Sample and MIDI device manager
@@ -23,6 +23,7 @@ BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(cunit)
+BuildRequires: pkgconfig(rubberband)
 
 %description
 Elektroid is a sample and MIDI device manager.
@@ -58,17 +59,24 @@ This package provides both the GUI and CLI application of Elektroid.
 %_desktopdir/io.github.dagargo.Elektroid.desktop
 %exclude %_datadir/elektroid/THANKS
 %dir %_datadir/elektroid
+%_datadir/elektroid/elektroid.css
+%_datadir/elektroid/elektroid.ui
+%_datadir/elektroid/libraries.html
 %dir %_datadir/elektroid/elektron
 %_datadir/elektroid/elektron/devices.json
-%_datadir/elektroid/gui.css
-%_datadir/elektroid/gui.glade
+%dir %_datadir/elektroid/volca_sample_2
+%_datadir/elektroid/volca_sample_2/init_pattern.vlcsplpattb
+%_datadir/elektroid/volca_sample_sdk-COPYING
 %dir %_datadir/elektroid/microbrute
-%_datadir/elektroid/microbrute/gui.glade
+%_datadir/elektroid/microbrute/microbrute.ui
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/elektroid-cli.1.*
 %_man1dir/elektroid.1.*
 %_datadir/metainfo/io.github.dagargo.Elektroid.appdata.xml
 
 %changelog
+* Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 3.3-alt1
+- New version 3.3.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.3-alt1
 - Initial build for Sisyphus

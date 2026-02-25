@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: coregarage
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Settings manager for C Suite
@@ -58,7 +58,11 @@ sed -i "s|Settings;|Settings;DesktopSettings;|" cc.cubocore.CoreGarage.desktop
 %_bindir/coregarage
 %_desktopdir/cc.cubocore.CoreGarage.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreGarage.svg
+%_datadir/metainfo/cc.cubocore.CoreGarage.metainfo.xml
 
 %changelog
+* Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus
