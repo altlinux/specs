@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,10 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Wed Feb 25 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.1-alt1
+- ima_appraise control: Don't change 'lsm' command-line option if
+  'selinux' option is present (thx IVK).
+
 * Thu Jul 31 2025 Paul Wolneykien <manowar@altlinux.org> 1:0.8.0-alt1
 - Updated the README file.
 - Write integrity-applier messages to log file in --auto mode.
