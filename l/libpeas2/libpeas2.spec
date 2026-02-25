@@ -11,12 +11,12 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-%def_disable check
+%def_enable check
 # no demo
 %def_disable demo
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -36,7 +36,7 @@ Source: %_name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson gnome-common
-BuildRequires: libgio-devel >= 2.74.0
+BuildRequires: libgio-devel >= 2.86.0
 # for python3 support
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.2.0
@@ -196,6 +196,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
