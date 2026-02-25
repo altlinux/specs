@@ -1,8 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.38
-%define beta .alpha
+%define beta %nil
 %define api_ver 1.0
+%define sover 1
 %define gtk_api_ver 3.0
 
 %def_disable js
@@ -15,11 +16,11 @@
 %def_disable vala
 %def_enable gtk_doc
 %def_disable glade_catalog
-%def_disable check
+%def_enable check
 
 Name: libpeas
-Version: %ver_major.0
-Release: alt0.5%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -39,7 +40,7 @@ BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= 3.0.0
 # for python3 support
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
+BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.52
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel}
 %{?_enable_python2:
 BuildRequires(pre): rpm-build-python
@@ -168,9 +169,8 @@ xvfb-run %__meson_test
 
 
 %files -f %name.lang
-%_libdir/%{name}*-%api_ver.so.*
+%_libdir/%{name}*-%api_ver.so.%{sover}*
 %dir %_libdir/%name-%api_ver/loaders
-#%_libdir/%name-%api_ver/loaders/libcloader.so
 %_datadir/icons/hicolor/*/*/*
 %doc AUTHORS README
 
@@ -224,6 +224,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
+- 1.38.1 (soname bumped)
+
 * Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt0.5.alpha
 - libpeas-1.36.0-7-g53657c0 from 1.38 branch 
   (see https://gitlab.gnome.org/GNOME/libpeas/-/issues/58)
