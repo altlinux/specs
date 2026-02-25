@@ -1,5 +1,5 @@
 Name: makeself
-Version: 2.5.0
+Version: 2.7.1
 Release: alt1
 
 Summary: It's a small shell script that generates a self-extractable archive from a directory
@@ -32,14 +32,20 @@ executed (for example an installation script).
 install -D -m0755 makeself.sh %buildroot%_bindir/makeself.sh
 install -D -m0755 makeself-header.sh %buildroot%_bindir/makeself-header.sh
 install -D -m0644 makeself.1 %buildroot%_man1dir/makeself.1
+ln -s %{name}.sh %{buildroot}%{_bindir}/%{name}
 
 %files
 %doc README.md
+%_bindir/makeself
 %_bindir/makeself.sh
 %_bindir/makeself-header.sh
 %_man1dir/*
 
 %changelog
+* Wed Feb 25 2026 Ilya Mashkin <oddity@altlinux.ru> 2.7.1-alt1
+- 2.7.1
+- Added makeself link (Closes: #57953)
+
 * Sat May 06 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - new version 2.5.0 (with rpmrb script)
 
