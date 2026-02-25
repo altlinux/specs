@@ -50,7 +50,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 0.3
 Version: %hversion.%urelease
-Release: alt2
+Release: alt3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -79,6 +79,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
+Source4: libreoffice-%version-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -433,6 +434,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
+tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -848,6 +850,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Feb 23 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.0.3-alt3
+- Complete GUI translation on Russian (thanks Olesya Gerasimenko).
+
 * Mon Feb 08 2026 Ilya Sorochan <k0tran@altlinux.org> 26.2.0.3-alt2
 - Add `-flax-vector-conversions` flag for loongarch64 (Fixes FTBFS).
 
