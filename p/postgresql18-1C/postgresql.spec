@@ -22,7 +22,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     18
-%define postgresql_minor     2
+%define postgresql_minor     3
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -58,6 +58,7 @@ Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 # 1C
 Patch101: 00001-1C-FULL.patch
+Patch102: 00002-1C-Fix-test-join.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -468,6 +469,7 @@ goal of accelerating analytics queries.
 
 # 1C
 %patch101 -p1
+%patch102 -p1
 
 %build
 export CC=%__cc
@@ -1169,6 +1171,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 25 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt1
+- 18.2
+- Add 00002-1C-Fix-test-join.patch
+
 * Fri Feb 13 2026 Alexei Takaseev <taf@altlinux.org> 18.2-alt1
 - 18.2 (Fixes CVE-2026-2003, CVE-2026-2004, CVE-2026-2005,
               CVE-2026-2006, CVE-2026-2007)

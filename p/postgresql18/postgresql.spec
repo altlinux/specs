@@ -21,7 +21,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     18
-%define postgresql_minor     2
+%define postgresql_minor     3
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -1142,6 +1142,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 25 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt1
+- 18.3
+
 * Thu Feb 12 2026 Alexei Takaseev <taf@altlinux.org> 18.2-alt1
 - 18.2 (Fixes CVE-2026-2003, CVE-2026-2004, CVE-2026-2005,
               CVE-2026-2006, CVE-2026-2007)
