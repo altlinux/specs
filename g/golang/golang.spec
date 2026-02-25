@@ -50,7 +50,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.25.7
+Version: 1.26.0
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -59,10 +59,12 @@ URL:     http://golang.org/
 
 Source0: golang-%version.tar
 Source1: golang-gdbinit
+Source999: watch
 Patch2:  golang-alt-certs-path.patch
 Patch3:  go-never-download-newer-toolchains.patch
 Patch4:  go-env-nodwarf5.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
+Patch102: 0001-internalruntimegcscan-require-popcnt-for-x86.patch
 
 ExclusiveArch: %go_arches
 
@@ -71,8 +73,11 @@ ExclusiveArch: %go_arches
 %brp_strip_none %go_root/bin/*
 %brp_strip_none %go_root/pkg/*
 %add_findreq_skiplist %go_root/lib/wasm/*
+%add_findreq_skiplist %go_root/lib/hg/*
+%add_findprov_skiplist %go_root/lib/hg/*
 
-AutoReq: nocpp
+AutoReq: nocpp, nopython, nopython3
+AutoProv: nopython, nopython3
 
 Requires: %name-src = %version-%release
 Requires: /proc
@@ -102,7 +107,6 @@ make it easy to write programs that get the most out of multicore and
 networked machines, while its novel type system enables flexible and
 modular program construction.
 
-
 %package gdb
 Summary:   The Go Runtime support for GDB
 Group:     Development/Other
@@ -117,14 +121,12 @@ AutoReq: nopython
 %description gdb
 The Go Runtime support for GDB.
 
-
 %package shared
 Summary: Golang shared object libraries
 Group:   Development/Other
 
 %description shared
 %summary.
-
 
 %package docs
 Summary:   Go sources and documentation
@@ -171,6 +173,7 @@ AutoReq: noshell, noshebang
 %patch3 -p1
 %patch4 -p1
 %patch101 -p1
+%patch102 -p1
 
 %build
 # go1.5 bootstrapping. The compiler is written in golang.
@@ -323,7 +326,6 @@ find \
         -print0 |
     xargs -0 rm -rfv --
 
-
 # find test files
 cwd=$(pwd)
 src_list=$cwd/go-src.list
@@ -375,6 +377,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Feb 20 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.0-alt1
+- updated from 1.25.7 to 1.26.0
+
 * Sat Feb 07 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.7-alt1
 - 1.25.7 (Fixes CVE-2025-61732, CVE-2025-61727).
 
