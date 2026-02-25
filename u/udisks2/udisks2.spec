@@ -20,7 +20,7 @@
 
 Name: %{_name}2
 Version: 2.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -181,6 +181,10 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
+%ifarch %e2k
+# error: invalid argument to attribute "optimize"
+sed 's/optimize((0))/optimize(0)/' -i src/tests/helper.c
+%endif
 
 # set default NTFS driver to ntfs-3g (fc:#2182206)
 sed -i data/builtin_mount_options.conf -e 's/ntfs_drivers=ntfs3,ntfs/ntfs_drivers=ntfs,ntfs3/'
@@ -306,6 +310,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.0-alt1.1
+- fixed build for E2K by ilyakurdyukov@
+
 * Fri Nov 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.11.0-alt1
 - 2.11.0
 
