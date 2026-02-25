@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ioprocess
-Version: 1.4.2
-Release: alt4
+Version: 1.4.3
+Release: alt1
 Summary: Slave process to perform risky IO
 
 Group: System/Base
@@ -54,6 +54,9 @@ Python bindings for ioprocess
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 1.4.3-alt1
+- updated from 1.4.2 to 1.4.3
+
 * Fri May 16 2025 Alexey Shabalin <shaba@altlinux.org> 1.4.2-alt4
 - Fix FTBFS by replacing calloc with malloc.
 
