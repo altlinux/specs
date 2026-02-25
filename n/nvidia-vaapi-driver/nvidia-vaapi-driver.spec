@@ -1,8 +1,8 @@
 %define git %nil
 
 Name: nvidia-vaapi-driver
-Version: 0.0.15
-Release: alt2
+Version: 0.0.16
+Release: alt1
 
 Summary: VA-API implementation that uses NVDEC as a backend
 License: MIT/X11
@@ -13,8 +13,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-#https://bugzilla.altlinux.org/57188
-Patch1: fix-nvGetConfigAttributes.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libva-devel gst-plugins-bad1.0-devel nv-codec-headers libdrm-devel
@@ -36,7 +34,6 @@ parameter nvidia-drm.modeset=1
 %prep
 %setup
 %patch -p1
-%patch1 -p0
 
 %build
 %meson
@@ -50,6 +47,9 @@ parameter nvidia-drm.modeset=1
 %_libdir/dri/nvidia_drv_video.so
 
 %changelog
+* Wed Feb 25 2026 L.A. Kostis <lakostis@altlinux.ru> 0.0.16-alt1
+- 0.0.16.
+
 * Fri Feb 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.0.15-alt2
 - NMU: Fix nvGetConfigAttributes (ALT #57188)
 
