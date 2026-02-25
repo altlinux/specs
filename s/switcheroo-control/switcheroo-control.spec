@@ -1,6 +1,6 @@
 Name: switcheroo-control
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: D-Bus service to check the availability of dual-GPU
 License: GPLv3
@@ -8,6 +8,7 @@ Group: System/Configuration/Hardware
 Url: https://gitlab.freedesktop.org/hadess/switcheroo-control
 
 Source:        %name-%version.tar
+Source2:       xe_drm.h
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-macros-meson
@@ -33,6 +34,9 @@ This package contains the documentation for %name.
 
 %prep
 %setup
+# install custom xe_drm.h
+install -D -m0644 %SOURCE2 src/discrete-detection/drm/xe_drm.h
+sed -i 's|drm/xe_drm.h|drm/drm.h|' meson.build
 
 %build
 %meson \
@@ -72,6 +76,9 @@ This package contains the documentation for %name.
 %doc %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Feb 25 2026 Sergey V Turchin <zerg@altlinux.org> 3.0-alt2
+- NMU: compile switcheroo-control-check-discrete-xe (closes: 57896)
+
 * Mon Nov 03 2025 Roman Alifanov <ximper@altlinux.org> 3.0-alt1
 - new version 3.0 (ALT bug 56258)
 
