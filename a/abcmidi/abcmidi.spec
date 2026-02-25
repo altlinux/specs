@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: abcmidi
-Version: 2026.02.13
+Version: 2026.02.24
 Release: alt1
 
 Summary: Converter from ABC to MIDI format and back
@@ -47,6 +47,9 @@ PostScript code together with the ABC parser from the abcmidi package.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 2026.02.24-alt1
+- New version 2026.02.24.
+
 * Sat Feb 14 2026 Nikolay Strelkov <snk@altlinux.org> 2026.02.13-alt1
 - New version 2026.02.13.
 
