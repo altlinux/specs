@@ -1,6 +1,6 @@
 Name: augeas
 Version: 1.14.1
-Release: alt2
+Release: alt3
 Summary: A library for changing configuration files
 
 Group: System/Configuration/Other
@@ -75,6 +75,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 1.14.1-alt3
+- fixed lenses for ALT Linux configs (closes: #45733)
+
 * Wed May 28 2025 Anton Farygin <rider@altlinux.com> 1.14.1-alt2
 - added commit af2aa88ab with null pointer dereference fix (Fixes CVE-2025-2588)
 
