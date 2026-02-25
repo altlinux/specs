@@ -4,7 +4,7 @@
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 
 Name:		%firefox_name-%rname
-Version:	2024.3.11
+Version:	2026.1.12
 Release:	alt1
 
 Summary:	DuckDuckGo Plus Firefox extension
@@ -45,6 +45,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Mon Feb 23 2026 Nikolay A. Fetisov <naf@altlinux.org> 2026.1.12-alt1
+- New version
+
 * Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 2024.3.11-alt1
 - New version
 
