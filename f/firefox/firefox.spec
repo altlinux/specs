@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 147.0.2
+Version: 147.0.4
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Feb 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0.4-alt1
+- New version (147.0.4).
+- Fixes:
+  + CVE-2026-2447: Heap buffer overflow in libvpx
+
 * Wed Jan 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0.2-alt1
 - New version (147.0.2).
 - Fixes:
