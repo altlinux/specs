@@ -1,7 +1,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -70,6 +70,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Thu Feb 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.11.0-alt1
+- 0.10.1 -> 0.11.0
+
 * Tue Feb 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.1-alt1
 - 0.10.0 -> 0.10.1
 
