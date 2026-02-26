@@ -6,13 +6,15 @@
 
 Name: mupdf
 Version: 1.27.1
-Release: alt1
-Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
-Group: Office
-Url: https://github.com/ArtifexSoftware/mupdf
-License: AGPL-3.0-or-later
+Release: alt2
 
-Source: %name-%version.tar
+Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
+License: AGPL-3.0-or-later
+Group: Office
+
+Url: https://github.com/ArtifexSoftware/mupdf
+
+Source0: %name-%version.tar
 Source1: %name-%version-thirdparty-extract.tar
 Source2: %name-%version-thirdparty-lcms2.tar
 Source3: %name-%version-thirdparty-mujs.tar
@@ -27,7 +29,7 @@ BuildRequires: zlib-devel libopenjpeg2.0-devel libjbig2dec-devel libgumbo-devel
 BuildRequires: libfreeglut-devel libfreetype-devel libharfbuzz-devel gdcm-devel libjpeg-devel
 BuildRequires: libX11-devel libXext-devel
 BuildRequires: python3-module-clang
-BuildRequires: clang
+BuildRequires: clang-devel
 BuildRequires: swig
 BuildRequires: python3-dev
 BuildRequires: tesseract-devel
@@ -59,7 +61,8 @@ Group: Office
 Conflicts: mupdf < 1.27.1
 
 %description
-MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
+MuPDF is a lightweight open source software framework for viewing
+and converting PDF, XPS, and E-book documents.
 
 %description -n libmupdf%abiversion
 MuPDF shared library
@@ -83,15 +86,30 @@ Ideal for server environments where graphical libraries are not required.
 %autopatch -p1
 
 %build
-%make_build shared-release USE_SYSTEM_LIBS=yes USE_TESSERACT=yes FZ_ENABLE_PDF=1 \
-	XCFLAGS="-I/usr/include/freetype2/ -I/usr/include/harfbuzz/ \
-	-I/usr/include/gdcm/gdcmjpeg/ -I/usr/include/gdcm/gdcmjpeg/8/ \
-	-I/usr/include/openjpeg-2.5/" \
-	XLDFLAGS="-g -L/usr/lib64"  XLIBS="-lgdcmjpeg8" --trace
+# NB: lcms2-art is a fork, mujs is also special to mupdf
+# (cf. debian/opensuse build files)
+make_mupdf() {
+	%make_build --trace \
+	USE_SYSTEM_LIBS=yes \
+	USE_TESSERACT=yes \
+	FZ_ENABLE_PDF=1 \
+	XCFLAGS="-I%_includedir/freetype2 \
+		 -I%_includedir/harfbuzz \
+		 -I%_includedir/gdcm/gdcmjpeg \
+		 -I%_includedir/gdcm/gdcmjpeg/8 \
+		 -I%_includedir/openjpeg-2.5" \
+	XLDFLAGS="-g -L%_libdir" \
+	XLIBS="-lgdcmjpeg8" \
+	"$@"
+}
+
+# Lack of proper deps makes separate builds neccessary
+make_mupdf shared-release
+make_mupdf libs python apps
 
 %install
-#%%define _makeinstall_target install-shared-c install-apps install-docs
-make INSTALL="/bin/install -p" \
+# Not %%makeinstall as DESTDIR would get doubled then
+%make_install \
 	 USE_SYSTEM_LIBS=yes \
 	 DESTDIR=%buildroot \
 	 bindir=%_bindir \
@@ -106,10 +124,11 @@ make INSTALL="/bin/install -p" \
 	 pydir=%python3_sitelibdir
 
 rm -f %buildroot%_libdir/libmupdf-third.a \
-     %buildroot%_libdir/libmupdf.a
+      %buildroot%_libdir/libmupdf.a
 
 # Deleting installed from makefile upstream documentation(install-docs)
 rm -r %buildroot%_defaultdocdir/mupdf
+
 # Installing examples for later packaging
 install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 
@@ -117,7 +136,7 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %doc CHANGES COPYING README
 %_bindir/mupdf-gl
 %_bindir/mupdf-x11
-%_mandir/man1/mupdf.1*
+%_man1dir/mupdf.1*
 
 %files -n libmupdf%abiversion
 %_libdir/libmupdf.so.%abiversion
@@ -128,13 +147,10 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %_libdir/libmupdfcpp.so.%soname
 
 %files -n libmupdf-devel
-%dir %_includedir/mupdf
-%dir %_defaultdocdir/mupdf/examples
-%_includedir/mupdf/*.h
-%_includedir/mupdf/fitz/
-%_includedir/mupdf/pdf/
+%_includedir/%name/
 %_libdir/libmupdf.so
 %_libdir/libmupdfcpp.so
+%dir %_defaultdocdir/mupdf/examples
 %doc %_defaultdocdir/mupdf/examples/*
 
 %files -n %python3_name
@@ -145,9 +161,14 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 
 %files tools
 %_bindir/mutool
-%_mandir/man1/mutool.1*
+%_man1dir/mutool.1*
 
 %changelog
+* Wed Feb 25 2026 Michael Shigorin <mike@altlinux.org> 1.27.1-alt2
+- Less fragile BR: (fixes build for sisyphus_e2k).
+- Build before installation, not during it.
+- Spec cleanup.
+
 * Thu Feb 12 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 1.27.1-alt1
 - New version (1.27.1).
 - Splited mutool into separate mupdf-tools subpackage.
