@@ -2,7 +2,7 @@
 %global import_path github.com/cheat/cheat
 
 Name: cheat
-Version: 4.4.2
+Version: 5.1.0
 Release: alt1
 Summary: Cheat allows you to create and view interactive cheatsheets on the command-line.
 License: MIT
@@ -41,25 +41,18 @@ export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
 mkdir -p %buildroot%_datadir/%name
 %golang_install
-install -Dm 0644 -p scripts/cheat.bash %buildroot%_datadir/bash-completion/completions/%name
-install -Dm 0644 -p scripts/cheat.fish %buildroot%_datadir/zsh/site-functions/%name.fish
-install -Dm 0644 -p scripts/cheat.zsh  %buildroot%_datadir/zsh/site-functions/_cheat
 # install man file
 mkdir -p %buildroot%_man1dir/
 install -Dm644 doc/%name.1 %buildroot%_man1dir/
-#install config file
-mkdir -m 0755 -p %buildroot%_sysconfdir/%name
-install -m 0644 -p configs/conf.yml %buildroot%_sysconfdir/%name/conf.yml
 
 %files
 %doc README.md HACKING.md INSTALLING.md
 %_bindir/%name
-%dir %_datadir/%name
-%config(noreplace) %_sysconfdir/%name/conf.yml
-%_datadir/bash-completion/completions/*
-%_datadir/zsh/site-functions/*
 %_man1dir/*.1*
 
 %changelog
+* Thu Feb 26 2026 Pavel Shilov <zerospirit@altlinux.org> 5.1.0-alt1
+- 4.4.2 -> 5.1.0
+
 * Tue May 06 2025 Pavel Shilov <zerospirit@altlinux.org> 4.4.2-alt1
 - Initial build for Sisyphus.
