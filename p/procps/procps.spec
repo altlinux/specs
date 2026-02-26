@@ -1,6 +1,6 @@
 Name: procps
-Version: 4.0.5
-Release: alt3
+Version: 4.0.6
+Release: alt1
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -127,6 +127,9 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Wed Feb 25 2026 Mikhail Efremov <sem@altlinux.org> 4.0.6-alt1
+- Updated to v4.0.6.
+
 * Tue Sep 02 2025 Michael Shigorin <mike@altlinux.org> 4.0.5-alt3
 - E2K: update workaround (ilyakurdyukov@; cf.: mcst#8106).
 
