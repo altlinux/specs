@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Asynchronous interface for peewee ORM powered by asyncio
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
+BuildRequires: python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -54,6 +55,9 @@ sed -i 's/1.0.0/%version/' pyproject.toml
 %python3_sitelibdir/peewee_async-%version.dist-info
 
 %changelog
+* Thu Feb 26 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
 - Automatically updated to 1.2.1.
 
