@@ -6,8 +6,8 @@
 %define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.26.0
-Release: alt3
+Version: 2.27.0
+Release: alt1
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -543,6 +543,9 @@ fi
 %files checkinstall
 
 %changelog
+* Mon Feb 23 2026 Vitaly Chikunov <vt@altlinux.org> 2.27.0-alt1
+- Update to v2.27.0 (2026-02-22).
+
 * Wed Dec 31 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt3
 - tuned-ppd provides ppd-service for gnome-control-center (ALT#57346).
 - Add tuned-ppd conflicts with tlp.
