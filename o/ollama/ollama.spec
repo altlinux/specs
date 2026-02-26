@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.15.6
+Version: 0.17.1
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -118,6 +118,8 @@ find %buildroot%_libexecdir/ollama -name 'libggml-*.so' |
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .cubin )
 ( ! cuobjdump --list-ptx %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
 cat /proc/loadavg
+# We don't have MLX.
+rename go go- x/mlxrunner/mlx/generator/main.go
 go test -v ./...
 %buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
 ldd %buildroot%_bindir/ollama
@@ -168,6 +170,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Thu Feb 26 2026 Vitaly Chikunov <vt@altlinux.org> 0.17.1-alt1
+- Experimental update to v0.17.1 (2026-02-25).
+
 * Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 0.15.6-alt1
 - Update to v0.15.6 (2026-02-06).
 
