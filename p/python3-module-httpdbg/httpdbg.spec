@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.1.5
 Release: alt1
 
 Summary: Tool to trace the HTTP(S) client requests in python code
@@ -62,6 +62,9 @@ A very simple tool to debug HTTP(S) client and server request.
 %_bindir/pyhttpdbg
 
 %changelog
+* Thu Feb 19 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.1.5-alt1
+- Updated to new version v2.1.5.
+
 * Mon Dec 29 2025 Maxim Tulskiy <tulskijms@altlinux.org> 2.0.0-alt1
 - Updated to new version v2.0.0.
 
