@@ -2,23 +2,24 @@
 %define service_name bootloader-update
 
 Name: bootupd
-Version: 0.2.25a
+Version: 0.2.32
 Release: alt1
 
 Summary: Bootloader updater
-License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
+License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
 Group: System/Base
-Url: https://github.com/coreos/bootupd
-Vcs: https://github.com/coreos/bootupd.git
+URL: https://github.com/coreos/bootupd
+VCS: https://github.com/coreos/bootupd.git
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-rust rpm-build-systemd
-BuildRequires: /proc
+BuildRequires: rpm-build-rust
+BuildRequires: rpm-build-systemd
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(openssl)
+BuildRequires: /proc
 
 %description
 Today many Linux systems handle updates for bootloader data in an
@@ -55,5 +56,8 @@ does not update /boot/efi (and also doesn't update the BIOS MBR).
 %doc README.md
 
 %changelog
+* Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.32-alt1
+- New version: 0.2.32.
+
 * Wed Mar 26 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.2.25a-alt1
 - Initial build.
