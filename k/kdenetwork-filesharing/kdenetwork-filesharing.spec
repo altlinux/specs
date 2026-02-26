@@ -3,7 +3,7 @@
 
 Name: %rname
 Version: 25.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -25,6 +25,7 @@ Patch2: alt-uid-min-max.patch
 Patch3: alt-i18n.patch
 Patch4: alt-max-domain-uid.patch
 Patch5: alt-share-under-domain-user.patch
+Patch6: alt-is-smb-installed.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
@@ -46,6 +47,10 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 %patch3 -p1 -b .i18n
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+
+# set SAMBA_PACKAGE_NAME
+sed -i 's|SAMBA_PACKAGE_NAME|"%req_samba_pkgs"|' samba/filepropertiesplugin/sambainstaller.cpp
 
 mv po/ru/kfileshare.po{,.old}
 msgcat --use-first po/ru/kfileshare.po.old %SOURCE10 > po/ru/kfileshare.po
@@ -53,9 +58,9 @@ rm -f po/ru/kfileshare.po.old
 
 %build
 %K6build \
-    -DSAMBA_INSTALL=ON \
-    -DSAMBA_PACKAGE_NAME=\"%req_samba_pkgs\" \
+    -DSAMBA_INSTALL:BOOL=ON \
     #
+#    -DSAMBA_PACKAGE_NAME:STRING=%req_samba_pkgs \
 
 %install
 %K6install
@@ -73,6 +78,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Thu Feb 26 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
+- fix check samba installed (closes: 58030)
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
