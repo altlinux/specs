@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.0
+Version: 2.0.4
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -12,11 +12,14 @@ Vcs: https://github.com/pokerth/pokerth
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: use_bundled_websocketpp.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: ninja-build
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libgnutls-openssl-devel
+%if %_priority_distbranch != p10 && %_priority_distbranch != p11
 BuildRequires: websocketpp-devel
+%endif
 BuildRequires: qt6-base-devel qt6-websockets-devel qt6-svg-devel qt6-tools-devel qt6-multimedia-devel qt6-declarative-devel
 
 BuildRequires: zlib-devel libprotobuf-devel
@@ -48,9 +51,16 @@ This package contents data files for %name.
 %prep
 %setup
 %patch -p1
+# Use bundled websocketpp on branches <= p11:
+# compilation with system websocketpp is broken there.
+%if %_priority_distbranch == p10 || %_priority_distbranch == p11
+%patch1 -p1
+%endif
 
+%if %_priority_distbranch != p10 && %_priority_distbranch != p11
 # be shure that bundled websocketpp is not used
 rm -r src/third_party/websocketpp/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -81,6 +91,10 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Wed Feb 25 2026 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt1
+- Used bundled websocketpp on branches <= p11.
+- Updated to 2.0.4.
+
 * Thu Feb 19 2026 Mikhail Efremov <sem@altlinux.org> 2.0-alt1
 - Updated to 2.0.
 
