@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.0.8
-Release: alt1
+Release: alt2
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -26,7 +26,6 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc gcc-c++
 BuildRequires: packagekit-qt6-devel
-BuildRequires: dqt6-5compat-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-base-devel
@@ -38,43 +37,13 @@ BuildRequires: qt6-svg-devel
 BuildRequires: qt6-speech-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-wayland-devel
-BuildRequires: qt6-sql-interbase
-BuildRequires: qt6-sql-mysql
-BuildRequires: qt6-sql-odbc
-BuildRequires: qt6-sql-postgresql
 BuildRequires: qt6-connectivity-devel
 BuildRequires: qt6-quick3d-devel
-BuildRequires: qt6-quick3d
-BuildRequires: libqt6-quick
-BuildRequires: libqt6-qml
-BuildRequires: libqt6-qmlmodels
-BuildRequires: libqt6-qmlworkerscript
-BuildRequires: libqt6-quickcontrols2
-BuildRequires: libqt6-quickcontrols2fusion
-BuildRequires: libqt6-quickcontrols2material
-BuildRequires: libqt6-quickcontrols2imagine
-BuildRequires: libqt6-quickcontrols2universal
-BuildRequires: libqt6-quickcontrols2fluentwinui3styleimpl
-BuildRequires: libqt6-quickcontrols2basic
-BuildRequires: libqt6-quicktemplates2
-BuildRequires: libqt6-quickeffects
-BuildRequires: libqt6-quicklayouts
-BuildRequires: libqt6-quickshapes
-BuildRequires: libqt6-quickdialogs2
-BuildRequires: libqt6-chartsqml
-BuildRequires: libqt6-location
-BuildRequires: libqt6-positioning
-BuildRequires: libqt6-labsanimation
-BuildRequires: libqt6-core5compat
-BuildRequires: libqt6-qmlcore
-BuildRequires: libqt6-multimediaquick
-BuildRequires: libqt6-labsfolderlistmodel
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-shadertools-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: gst-plugins-good1.0-qt6
-BuildRequires: clang-tools
 BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
 BuildRequires: libwayland-egl-devel
@@ -90,10 +59,8 @@ BuildRequires: libmount-devel
 BuildRequires: libblkid-devel
 BuildRequires: libselinux-devel
 BuildRequires: libunwind-devel
-BuildRequires: libGLES
-BuildRequires: speech-dispatcher
-BuildRequires: libSDL2-devel libSDL2 libSDL2-devel-static
-BuildRequires: libSDL3-devel libSDL3
+BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: patchelf
 BuildRequires: libsoundio-devel
@@ -111,14 +78,13 @@ BuildRequires: libsndio7-devel
 BuildRequires: libqmdnsengine-devel
 BuildRequires: libshape-devel
 BuildRequires: libgeographiclib-devel geographiclib
-BuildRequires: libulog_cpp-devel libulog_cpp1
-BuildRequires: libevents-devel libevents0
+BuildRequires: libulog_cpp-devel
+BuildRequires: libevents-devel
 BuildRequires: libxz-embedded-devel
 BuildRequires: parameterrepository
 BuildRequires: gamecontrollerdb
 BuildRequires: gpsdrivers
 BuildRequires: c_library_v2
-BuildRequires: git
 BuildRequires: /proc
 
 %description
@@ -177,6 +143,9 @@ install -Dm 644 build/org.mavlink.qgroundcontrol.desktop %buildroot%_datadir/app
 %_datadir/applications/org.mavlink.qgroundcontrol.desktop
 
 %changelog
+* Thu Feb 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt2
+- Remove useless BuildRequires (closes: 57928).
+
 * Tue Feb 17 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt1
 - Update version.
 
