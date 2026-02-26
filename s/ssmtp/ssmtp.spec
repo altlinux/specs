@@ -1,6 +1,6 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
-Version: 2.65
+Version: 2.66
 Release: alt1
 License: GPL-2.0-or-later
 Group: System/Servers
@@ -91,6 +91,9 @@ ln -sf %_sbindir/%name %buildroot%_sbindir/sendmail
 %doc README TLS CHANGELOG_OLD INSTALL COPYING ChangeLog
 
 %changelog
+* Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 2.66-alt1
+- 2.65 -> 2.66
+
 * Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 2.65-alt1
 - 2.64 -> 2.65
 
