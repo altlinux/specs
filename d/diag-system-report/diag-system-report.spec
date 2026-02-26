@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool system-report
 Name: diag-%diagnostic_tool
-Version: 0.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Diagnostic Tool for collecting system information
@@ -21,7 +21,7 @@ Diagnostic Tool for collecting system information.
 %setup
 
 %build
-sed -i 's/^VERSION=.*/VERSION=%version%release/' %name
+sed -i 's/^VERSION=.*/VERSION=%version-%release/' %name
 
 %install
 mkdir -p %buildroot%_alterator_datadir/diagnostictools/%name
@@ -38,6 +38,14 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Feb 27 2026 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt1
+- chore: add 'exit_status = true' for new version of executor
+
+* Fri Aug 01 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.1-alt1
+- Use getopt for improved option parsing
+- Fix version output
+- Add trap to clean up temp archive on exit
+
 * Fri May 30 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1-alt1
 - The structure of the files .diag and .backend has been rewritten to the toml format
 
