@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Blu-Ray Discs handling library
@@ -63,6 +63,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Thu Feb 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
+- 1.4.1 released
+
 * Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
 - 1.4.0 released
 
