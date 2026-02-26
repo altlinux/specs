@@ -2,7 +2,7 @@
 %define nameLC plasma_applet_Kde.mymemory.translator
 
 Name: plasma-applet-kde-mymemory-translator
-Version: 0.7.5.3
+Version: 0.8
 Release: alt1
 
 Summary: Mymemory translator
@@ -50,6 +50,9 @@ done
 %_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 
 %changelog
+* Thu Feb 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8-alt1
+- 0.7.5.3 -> 0.8
+
 * Wed Oct 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.5.3-alt1
 - 0.7.5.2 -> 0.7.5.3
 
