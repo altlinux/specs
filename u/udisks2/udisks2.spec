@@ -19,8 +19,8 @@
 %def_enable smart
 
 Name: %{_name}2
-Version: 2.11.0
-Release: alt1.1
+Version: 2.11.1
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -310,6 +310,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
+- 2.11.1 (fixed CVE-2026-26103, CVE-2026-26104)
+
 * Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.0-alt1.1
 - fixed build for E2K by ilyakurdyukov@
 
