@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.21.1
+Version: 0.22.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 0.22.0-alt1
+- added --multi-add flag for mass builder creation with interactive mode
+- added OSV API integration for CVE extraction in version updates
+- added CVE scanning from upstream changelog in tarball workflow
+- added spec add changelog --auto CVE extraction
+- fixed task copy to replicate subtask types instead of assuming builds
+- fixed false git-merge scheme detection for nginx-like packages
+- fixed RPM version comparison in changelog range queries
+- fixed version-config template v prefix stripping
+- improved stability and security
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.21.1-alt1
 - fixed relative URL resolution in watch files (RFC 3986)
 - added Content-Disposition filename support for watch downloads
