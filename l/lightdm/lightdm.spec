@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt11
+Release: alt12
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -150,19 +150,11 @@ manager via D-Bus.
 %setup
 %autopatch -p1
 
-%ifarch %e2k
-# until apx. lcc-1.23.01
-sed -i 's,-Werror=pointer-arith,,' configure.ac
-%endif
-
 # Fix tests with new D-Bus (see a70b042f in dbus package):
 sed -i -e "s,unix:tmpdir=/tmp,unix:tmpdir=$TMPDIR,g" \
     tests/data/session.conf tests/data/system.conf
 
 %build
-%ifarch %e2k
-export CXXFLAGS="%optflags -std=gnu++11"
-%endif
 %autoreconf
 %configure \
 	%{subst_enable introspection} \
@@ -291,6 +283,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Thu Feb 26 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.32.0-alt12
+- e2k build fix
+
 * Fri Oct 17 2025 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt11
 - try to start fallback greeter if main one fails
 - release VT in advance when stopping display server
