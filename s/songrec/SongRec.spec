@@ -2,7 +2,7 @@
 
 Name: songrec
 Version: 0.6.4
-Release: alt2
+Release: alt3
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -57,6 +57,7 @@ subst 's|%nameB|%{nameB}-rainbow|' packaging/rootfs/usr/share/applications/%name
 %rust_install 
 
 install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%{nameB}-rainbow.svg %buildroot%_iconsdir/hicolor/128x128/apps/%{nameB}-rainbow.svg
+install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.svg %buildroot%_iconsdir/hicolor/128x128/apps/%nameB.svg
 install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
 install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
@@ -70,11 +71,14 @@ done
 %files -f %name.lang
 %doc *.md LICENSE
 %_bindir/%name
-%_iconsdir/hicolor/*/apps/%{nameB}-rainbow.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/applications/%nameB.desktop
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Thu Feb 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.4-alt3
+- fixed mostrar system tray icon
+
 * Wed Feb 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.4-alt2
 - updated to git.5ad31ba75a for new russian translate
 - updated icon
