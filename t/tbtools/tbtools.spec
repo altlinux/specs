@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: tbtools
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Thunderbolt/USB4 debugging tools
 Group: System/Configuration/Hardware
@@ -57,6 +57,9 @@ rm -f %buildroot%_prefix/.crates*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Feb 25 2026 L.A. Kostis <lakostis@altlinux.ru> 0.8.0-alt1
+- 0.8.0.
+
 * Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 0.7.0-alt1
 - 0.7.0.
 
