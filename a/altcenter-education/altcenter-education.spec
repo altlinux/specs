@@ -1,5 +1,5 @@
 Name:    altcenter-education
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Manage plugins and component list for Alt Center
@@ -27,5 +27,8 @@ install -Dm 0644 list-components %buildroot%_sysconfdir/altcenter/list-component
 %config(noreplace) %_sysconfdir/altcenter/*
 
 %changelog
+* Thu Feb 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 1.1-alt1
+- Remove yandex from list-components.
+
 * Sun Jun 08 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
