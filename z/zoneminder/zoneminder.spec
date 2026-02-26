@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.38.1
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -192,6 +192,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt2
+- removed (again) 3gp from default configuration (closes: #46708)
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt1
 - 1.38.0 -> 1.38.1
 
