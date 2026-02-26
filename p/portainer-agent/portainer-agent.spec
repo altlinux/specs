@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.33.7
+Version: 2.39.0
 Release: alt1
 
 Summary: Agent for portainer
@@ -11,7 +11,7 @@ Vcs: https://github.com/portainer/agent
 
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
-# go mod vendor
+# go mod vendor -o ../vendor
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
@@ -41,6 +41,9 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.0-alt1
+- New LTS version 2.39.0.
+
 * Thu Feb 12 2026 Leontiy Volodin <lvol@altlinux.org> 2.33.7-alt1
 - New LTS version 2.33.7 (Fixes: CVE-2025-47914, CVE-2025-58181,
   CVE-2025-61726, CVE-2025-68121).

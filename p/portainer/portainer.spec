@@ -3,7 +3,7 @@
 # Only for the test tasks (pocket).
 
 Name: portainer
-Version: 2.33.7
+Version: 2.39.0
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -15,7 +15,7 @@ Vcs: https://github.com/portainer/portainer
 
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
-# go mod vendor
+# go mod vendor -o ../vendor
 Source1: vendor.tar
 #Source2-url: https://github.com/portainer/portainer/releases/download/%version/portainer-%{version}-linux-amd64.tar.gz
 Source2: %name-amd64.tar
@@ -36,7 +36,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.13"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.7"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -119,6 +119,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.0-alt1
+- New LTS version 2.39.0 (Fixes: CVE-2025-15467, GO-2026-4337).
+
 * Thu Feb 12 2026 Leontiy Volodin <lvol@altlinux.org> 2.33.7-alt1
 - New LTS version 2.33.7 (Fixes: CVE-2025-61726, CVE-2025-68121).
 
