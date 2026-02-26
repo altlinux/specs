@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -269,6 +269,9 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt1
+- New version: 0.5.1. (closes: #58028)
+
 * Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.0-alt1
 - New version: 0.5.0.
 
