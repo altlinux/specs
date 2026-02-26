@@ -18,7 +18,7 @@
 
 Name: 389-ds-base
 Version: 3.1.4
-Release: alt2
+Release: alt3
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -428,6 +428,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 26 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt3
+- Backported upstream fix for CVE (fixes: CVE-2025-14905).
+
 * Wed Feb 18 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt2
 - Backported upstream fixes for:
   + https://github.com/389ds/389-ds-base/issues/7096
