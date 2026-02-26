@@ -6,7 +6,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: Extensible control center
@@ -133,6 +133,9 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Thu Feb 26 2026 Alexander Davydzik <paladindev@altlinux.org> 0.6.5-alt1
+- fixed wrong version in about dialog
+
 * Thu Feb 19 2026 Alexander Davydzik <paladindev@altlinux.org> 0.6.4-alt1
 - added more icons
 - added animation to sidebar size changes
