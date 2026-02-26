@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ryokucha
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: A GTK4 library that includes customized widgets
@@ -50,5 +50,8 @@ Development files for GTK4 library that includes customized widgets
 %_datadir/vala/vapi/ryokucha.vapi
 
 %changelog
+* Thu Feb 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus

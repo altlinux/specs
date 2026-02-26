@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: mangowc
-Version: 0.12.3
+Version: 0.12.4
 Release: alt1
 
 Summary: wayland compositor base wlroots and scenefx (dwm but wayland)
@@ -65,8 +65,12 @@ https://github.com/DreamMaoMao/mangowc/wiki .
 %_bindir/mango
 %_bindir/mmsg
 %_datadir/wayland-sessions/mango.desktop
+%_datadir/xdg-desktop-portal/mango-portals.conf
 
 %changelog
+* Thu Feb 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.12.4-alt1
+- New version 0.12.4.
+
 * Fri Feb 20 2026 Nikolay Strelkov <snk@altlinux.org> 0.12.3-alt1
 - New version 0.12.3.
 

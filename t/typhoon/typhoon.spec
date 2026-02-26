@@ -2,10 +2,10 @@
 
 Name: typhoon
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Stylish weather app based on Stormcloud
-License: MIT
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://archisman-panigrahi.github.io/typhoon
 VCS: https://github.com/archisman-panigrahi/typhoon
@@ -13,6 +13,7 @@ VCS: https://github.com/archisman-panigrahi/typhoon
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-qt6-webengine
 
 BuildRequires: meson
 BuildRequires: /usr/bin/appstreamcli
@@ -26,7 +27,16 @@ Requires: /usr/bin/gsettings
 Requires: python3(dbus)
 Requires: python3(cairosvg)
 
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=45638
+%def_disable girar_repacks_srpm
+%if_enabled  girar_repacks_srpm
 BuildArch: noarch
+%endif
+
+ExcludeArch: %not_qt6_qtwebengine_arches
+
+Requires: python3-module-PyQt6
+Requires: python3-module-PyQt6-WebEngine
 
 %description
 Typhoon is a beautiful weather application that provides real-time weather
@@ -64,6 +74,11 @@ sed -i "s|https://archisman-panigrahi.github.io/typhoon/assets/img/||" README.md
 %install
 %meson_install
 
+%if_disabled  girar_repacks_srpm
+# something fake arch-like to bypass girar checks
+mkdir -p %buildroot%perl_vendor_autolib/%name
+%endif
+
 %check
 %meson_test
 
@@ -75,8 +90,14 @@ sed -i "s|https://archisman-panigrahi.github.io/typhoon/assets/img/||" README.md
 %_datadir/metainfo/io.github.archisman_panigrahi.typhoon.metainfo.xml
 %dir %_datadir/typhoon
 %_datadir/typhoon/*
+%if_disabled  girar_repacks_srpm
+%perl_vendor_autolib/%name
+%endif
 
 %changelog
+* Wed Feb 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.1-alt2
+- Corrected license, require PyQt6 and PyQt6-WebEngine python3 modules.
+
 * Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 
