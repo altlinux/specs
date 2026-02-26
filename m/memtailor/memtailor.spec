@@ -3,7 +3,7 @@
 %define soname 0
 
 Name: memtailor
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: C++ library of special purpose memory allocators
 
@@ -114,6 +114,9 @@ rm -rf %buildroot%_prefix/licenses
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.3-alt1
+- New version 1.3.
+
 * Wed Feb 04 2026 Leontiy Volodin <lvol@altlinux.org> 1.2-alt1
 - New version 1.2.
 
