@@ -30,18 +30,19 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.54.1
+Version: 1.58.1
 Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
 Group: System/Libraries
-Url: http://libguestfs.org/
+Url: https://libguestfs.org/
+VCS: https://github.com/libguestfs/libguestfs
 
 Source: %name-%version.tar
 Source2: %name-%version-common.tar
-Patch1: %name-1.54.0-alt-fixes.patch
-Patch2: %name-1.46.0-alt-fixes-common.patch
+Patch1: %name-1.58.1-alt-fixes.patch
+Patch2: %name-1.58.1-alt-fixes-common.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
@@ -66,6 +67,7 @@ BuildRequires: liblzma-devel libzstd-devel
 BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
 BuildRequires: java-devel-default jpackage-utils
+BuildRequires: libjson-c-devel
 
 %if_enabled introspection
 BuildRequires(pre): rpm-build-gir
@@ -152,7 +154,6 @@ Group: System/Base
 This adds the virt-rescue shell which is a "rescue disk" for virtual
 machines, and additional tools to use inside the shell such as ssh,
 network utilities, editors and debugging utilities.
-
 
 %package devel
 Summary: Header files for libguestfs library
@@ -297,7 +298,6 @@ erlang-%name contains Erlang bindings for %name.
 %setup -a2
 tar -xf %SOURCE2 -C common
 
-
 # test_cap_set_file_0 fails becaues we still have old libcap
 # see: d4ab4ff683807dc42525c38dee8016ea9f4fab3f
 sed -i -e 's/"cap_chown=ep"/"= cap_chown+ep"/' generator/actions_core.ml
@@ -356,7 +356,6 @@ rm %buildroot%_libdir/libguestfs_jni.la
 # the moment.  When these are translated properly we intend to add
 # them back.
 rm -rf %buildroot%_mandir/ja/man{1,3}/
-
 
 # delete unneeded
 rm -f %buildroot%_man1dir/guestfs-release-notes*
@@ -437,7 +436,6 @@ fi
 %_datadir/bash-completion/completions/virt-rescue
 %_datadir/bash-completion/completions/virt-tar-in
 %_datadir/bash-completion/completions/virt-tar-out
-
 
 %files -n guestfsd
 %_sbindir/guestfsd
@@ -562,6 +560,9 @@ fi
 %endif #erlang
 
 %changelog
+* Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 1.58.1-alt1
+- 1.54.1 -> 1.58.1
+
 * Thu May 15 2025 Anton Farygin <rider@altlinux.com> 1.54.1-alt1
 - 1.54.1
 
@@ -744,4 +745,3 @@ fi
 
 * Thu Jan 12 2012 Alexey Shabalin <shaba@altlinux.ru> 1.15.16-alt1
 - initial build
-

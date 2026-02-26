@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: guestfs-tools
-Version: 1.53.7
+Version: 1.55.5
 Release: alt1
 
 Summary: Tools to access and modify virtual machine disk images
 License: GPLv2+
 Group: File tools
-Url: http://libguestfs.org/
+Url: https://libguestfs.org/
+VCS: https://github.com/libguestfs/guestfs-tools
 
 Source0: %name-%version.tar
 Source2: %name-%version-common.tar
@@ -28,6 +29,7 @@ BuildRequires: libcrypt-devel
 BuildRequires: libncurses-devel
 BuildRequires: libosinfo-devel
 BuildRequires: hwdata-devel
+BuildRequires: ocaml-dune-site-devel
 BuildRequires: ocaml-libguestfs-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-gettext-devel
@@ -81,7 +83,6 @@ Windows virtual machines.
 %prep
 %setup -a2
 tar -xf %SOURCE2 -C common
-
 
 %build
 %autoreconf
@@ -163,6 +164,9 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-win-reg.1*
 
 %changelog
+* Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 1.55.5-alt1
+- 1.53.7 -> 1.55.5
+
 * Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 1.53.7-alt1
 - 1.52.0 -> 1.53.7
 
