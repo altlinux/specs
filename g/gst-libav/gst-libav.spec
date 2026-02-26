@@ -55,7 +55,7 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -138,7 +138,7 @@ plug-in.
 
 %files
 %_gst_libdir/*.so
-%doc NEWS README* RELEASE
+%doc README* ChangeLog release-notes-%ver_major.*
 
 %if_enabled doc
 %files devel-doc
@@ -146,6 +146,9 @@ plug-in.
 %endif
 
 %changelog
+* Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 

@@ -46,7 +46,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -185,6 +185,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstAnalytics-1.0.typelib
 %_typelibdir/GstBadAudio-%api_ver.typelib
 %_typelibdir/GstCodecs-%api_ver.typelib
+%_typelibdir/GstCodecParsers-%api_ver.typelib
 %_typelibdir/GstCuda-%api_ver.typelib
 %_typelibdir/GstDxva-1.0.typelib
 %_typelibdir/GstHip-1.0.typelib
@@ -212,7 +213,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/webm.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/online-services/youtube.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ts.gep
-%doc NEWS README* RELEASE
+%doc README* ChangeLog release-notes-%ver_major.*
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
@@ -222,6 +223,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstAnalytics-1.0.gir
 %_girdir/GstBadAudio-%api_ver.gir
 %_girdir/GstCodecs-%api_ver.gir
+%_girdir/GstCodecParsers-%api_ver.gir
 %_girdir/GstCuda-%api_ver.gir
 %_girdir/GstDxva-1.0.gir
 %_girdir/GstHip-1.0.gir
@@ -243,6 +245,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1 (fixed CVE-2026-1940, CVE-2026-2923, CVE-2026-3081,
+  CVE-2026-3082, CVE-2026-3084, CVE-2026-3086)
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 

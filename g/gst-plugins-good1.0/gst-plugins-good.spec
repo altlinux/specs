@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -125,7 +125,7 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %{?_enable_qt5:%exclude %_gst_libdir/libgstqmlgl.so}
 %{?_enable_qt6:%exclude %_gst_libdir/libgstqml6.so}
 %_gst_datadir/*
-%doc NEWS README* RELEASE
+%doc README* ChangeLog release-notes-%ver_major.*
 
 %if_enabled qt5
 %files qt5
@@ -144,6 +144,9 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %endif
 
 %changelog
+* Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1 (fixed CVE-2026-3083, CVE-2026-3085)
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 

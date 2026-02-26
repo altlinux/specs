@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -93,7 +93,7 @@ collection.
 %_gst_libdir/libgstdvdsub.so
 %_gst_libdir/libgstrealmedia.so
 %_datadir/gstreamer-%api_ver/*
-%doc NEWS README* RELEASE
+%doc README* ChangeLog release-notes-%ver_major.*
 
 %if_enabled doc
 %files devel-doc
@@ -101,6 +101,9 @@ collection.
 %endif
 
 %changelog
+* Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1 (fixed CVE-2026-2920, CVE-2026-2922)
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 
