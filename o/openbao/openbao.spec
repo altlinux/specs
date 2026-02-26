@@ -2,8 +2,8 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.4.4
-Release: alt2
+Version: 2.5.1
+Release: alt1
 
 Summary: Secure secrets and encryption management system
 License: MPL-2.0
@@ -14,8 +14,9 @@ Vcs: https://github.com/openbao/openbao
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: web-ui-assets.tar
-Source3: %name.service
-Source4: %name.hcl
+Source3: %name.hcl
+
+Patch: %name-%version-alt.patch
 
 ExclusiveArch: %go_arches
 
@@ -29,6 +30,7 @@ dynamic secret generation, and detailed audit logging.
 
 %prep
 %setup -a1 -a2
+%autopatch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -50,8 +52,12 @@ mkdir -p %buildroot%_sysconfdir/%name.d/tls
 mkdir -p %buildroot%_localstatedir/%name/data
 
 install -Dm755 $BUILDDIR/bin/openbao "%buildroot%_bindir/bao"
-install -p -D -m 644 %SOURCE3 %buildroot%_unitdir/%name.service
-install -p -D -m 644 %SOURCE4 %buildroot%_sysconfdir/%name.d/%name.hcl
+install -p -D -m 644 \
+	.release/linux/package/usr/lib/systemd/system/%name.service \
+	%buildroot%_unitdir/%name.service
+install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/%name.d/%name.hcl
+install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
+	%buildroot%_sysconfdir/%name/%name.env
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -70,12 +76,19 @@ install -p -D -m 644 %SOURCE4 %buildroot%_sysconfdir/%name.d/%name.hcl
 %_bindir/bao
 %doc LICENSE README.md
 %_unitdir/%name.service
+%dir %_sysconfdir/%name
 %dir %_sysconfdir/%name.d
 %dir %_sysconfdir/%name.d/tls
+%dir %attr(0700, %name, %name) %_localstatedir/%name
 %dir %attr(0700, %name, %name) %_localstatedir/%name/data
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name.d/%name.hcl
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Tue Feb 24 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt1
+- Updated to new version v2.5.1.
+- Added openbao.env configuration file.
+
 * Wed Jan 21 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.4.4-alt2
 - Added systemd service file support.
 
