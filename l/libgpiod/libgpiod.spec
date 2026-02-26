@@ -1,5 +1,5 @@
 Name: libgpiod
-Version: 2.1.3
+Version: 2.2.3
 Release: alt1
 
 Summary: Linux GPIO interacting library
@@ -88,7 +88,6 @@ This package contains Python bindings for libgpiod.
 %pyproject_install bindings/python/dist/*.whl
 
 %files -n libgpiod2
-%doc COPYING README
 %_libdir/libgpiod.so.*
 
 %files c++
@@ -104,7 +103,7 @@ This package contains Python bindings for libgpiod.
 %_pkgconfigdir/libgpiodcxx.pc
 
 %files -n gpio-tools
-%doc COPYING NEWS README TODO
+%doc COPYING NEWS README* TODO
 %_bindir/gpio*
 %_man1dir/gpio*.1*
 
@@ -113,6 +112,9 @@ This package contains Python bindings for libgpiod.
 %python3_sitelibdir/gpiod-*.dist-info
 
 %changelog
+* Thu Feb 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.3-alt1
+- 2.2.3 released
+
 * Thu Oct 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
 - 2.1.3 released
 
