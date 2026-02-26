@@ -9,8 +9,8 @@
 %define _pluginsdir %_libdir/%name/plugins/4.6
 
 Name: wireshark
-Version: 4.6.3
-Release: alt2
+Version: 4.6.4
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -235,6 +235,13 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 4.6.4-alt1
+- 4.6.3 -> 4.6.4
+- Fixes:
+  * CVE-2026-3201: Improperly Controlled Sequential Memory Allocation in Wireshark
+  * CVE-2026-3202: NULL Pointer Dereference in Wireshark
+  * CVE-2026-3203: Buffer Over-read in Wireshark
+
 * Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 4.6.3-alt2
 - built with http3 and lua support (Closes: #57865)
 
