@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define luarocks_revision 1
-# Disable on bootstrap.
 %def_with check
 
 Name: lua5.4-module-busted
-Version: 2.2.0
-Release: alt2_lr%luarocks_revision
+Version: 2.3.0
+Release: alt1_lr%luarocks_revision
 
 Summary: Busted is a unit testing framework with a focus on being easy to use
 License: MIT
@@ -16,11 +15,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-# This patch has been applied in next upstream version which is not released yet.
-# Fixes strict requirment of lua_cliargs 3.0.
-Patch: lua-module-busted-2.2.0-alt-rockspec-fixes.patch
 # Fixes assets regex path.
-Patch1: lua-module-busted-2.2.0-alt-fixtures_fix.patch
+Patch: lua-module-busted-2.2.0-alt-fixtures_fix.patch
 
 # self-dependency
 %filter_from_requires /lua5.4(busted\..*)/d
@@ -43,7 +39,6 @@ BuildRequires: lua5.4-module-lua-term
 BuildRequires: lua5.4-module-penlight
 BuildRequires: lua5.4-module-mediator_lua
 %if_with check
-BuildRequires: lua5.4-module-busted
 BuildRequires: lua5.4-module-luacov
 %endif
 
@@ -114,8 +109,9 @@ install -p -m 644 completions/bash/busted.bash %buildroot%_datadir/bash-completi
 install -p -m 644 completions/zsh/_busted %buildroot%_datadir/zsh/site-functions/_busted
 
 %check
-luarocks-5.4 test --test-type busted \
-	rockspecs/busted-%version-%luarocks_revision.rockspec
+%lua_path_add_buildroot
+LUA_PATH="$LUA_PATH;$PWD/?.lua"
+%buildroot%luarocks_dbdir/busted/*/bin/busted
 
 %files
 %doc LICENSE
@@ -130,6 +126,9 @@ luarocks-5.4 test --test-type busted \
 %_datadir/zsh/site-functions/_busted
 
 %changelog
+* Thu Feb 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 2.3.0-alt1_lr1
+- New version (2.3.0).
+
 * Wed Aug 13 2025 Sergey Zhidkih <rx1513@altlinux.org> 2.2.0-alt2_lr1
 - Enable tests.
 

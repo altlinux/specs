@@ -4,8 +4,8 @@
 %def_with check
 
 Name: lua5.4-module-penlight
-Version: 1.14.0
-Release: alt2_lr%luarocks_revision
+Version: 1.15.0
+Release: alt1_lr%luarocks_revision
 
 Summary: Penlight is a set of pure Lua libraries for making it easier to work with common tasks
 License: MIT and X11
@@ -70,6 +70,9 @@ luarocks-5.4 test --test-type busted \
 %lua_modulesdir_noarch/pl/
 
 %changelog
+* Thu Feb 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.15.0-alt1_lr1
+- New version (1.15.0).
+
 * Tue Jul 29 2025 Sergey Zhidkih <rx1513@altlinux.org> 1.14.0-alt2_lr1
 - Enable tests.
 
