@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.32
-Release: alt4
+Version: 0.1.33
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,11 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt1
+- Update .clang-format and CODESTYLE.md.
+- Bringing the code to the described style.
+- Add .forgejo/workflows/clang-format.yml.
+
 * Fri Feb 20 2026 Ivan Savin <svn17@altlinux.org> 0.1.32-alt4
 - Update docs/modules/remote(-ru).md.
 

@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -34,6 +34,11 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.1.5-alt1
+- Update .clang-format and CODESTYLE.md.
+- Bringing the code to the described style.
+- Add .forgejo/workflows/clang-format.yml.
+
 * Wed Feb 18 2026 Ivan Savin <svn17@altlinux.org> 0.1.4-alt1
 - Add signal retransmission from a remote. Signals from the
   org.altlinux.alterator sender on the remote machine are retransmitted to the

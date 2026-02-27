@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
-Version: 0.2.1
-Release: alt2
+Version: 0.2.2
+Release: alt1
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,11 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.2.2-alt1
+- Update .clang-format and CODESTYLE.md.
+- Bringing the code to the described style.
+- Add .forgejo/workflows/clang-format.yml.
+
 * Fri Jan 23 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt2
 - Add add secret scanning (alxvmr@).
 - Add .clang-format and CODESTYLE.md.

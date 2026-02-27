@@ -1,6 +1,6 @@
 Name: alterator-module-executor
-Version: 0.1.29
-Release: alt2
+Version: 0.1.30
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.1.30-alt1
+- Update .clang-format and CODESTYLE.md.
+- Bringing the code to the described style.
+- Add .forgejo/workflows/clang-format.yml.
+
 * Fri Jan 23 2026 Ivan Savin <svn17@altlinux.org> 0.1.29-alt2
 - Add add secret scanning (alxvmr@).
 - Add .clang-format and CODESTYLE.md.
