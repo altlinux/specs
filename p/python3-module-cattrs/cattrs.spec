@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 25.3.0
-Release: alt3
+Version: 26.1.0
+Release: alt1
 
 Summary: Complex custom class converters for attrs
 
@@ -34,6 +34,7 @@ BuildRequires: python3-module-msgspec
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-typing-extensions
 BuildRequires: python3-module-attrs
+BuildRequires: python3-module-tomli-w
 %endif
 
 BuildArch: noarch
@@ -81,6 +82,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 26.1.0-alt1
+- Automatically updated to 26.1.0.
+
 * Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 25.3.0-alt3
 - Fixed FTBFS.
 
