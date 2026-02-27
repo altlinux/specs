@@ -9,7 +9,7 @@
 %define dist_name nvidia_%oname
 
 Name:    nvidia-cutlass
-Version: 4.2.1
+Version: 4.3.1
 Release: alt1
 
 Summary: CUDA Templates and Python DSLs for High-Performance Linear Algebra
@@ -71,8 +71,12 @@ export CUDACXX=%_bindir/nvcc
 %doc *.md LICENSE.txt
 %_includedir/%oname
 %_includedir/cute
-%_cmakedir/NvidiaCutlass/*.cmake
+%_cmakedir/NvidiaCutlass
 
 %changelog
+* Thu Feb 26 2026 Nikita Shmatko <nash@altlinux.org> 4.3.1-alt1
+- New version 4.3.1.
+- Minor specfile fixes.
+
 * Wed Nov 26 2025 Nikita Shmatko <nash@altlinux.org> 4.2.1-alt1
- Initial build for Sisyphus.
+- Initial build for Sisyphus.

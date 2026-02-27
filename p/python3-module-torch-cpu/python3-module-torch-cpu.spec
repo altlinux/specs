@@ -12,7 +12,7 @@
 %define rname python3-module-%pypi_name
 
 Name:    %rname-cpu
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (CPU-only)
@@ -21,7 +21,7 @@ Group:   Development/ML
 URL:     https://pytorch.org/
 VCS:     https://github.com/pytorch/pytorch.git
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: third_party.tar
 
 Patch0: 0001-Disabled-submodule-search.patch 
@@ -40,8 +40,7 @@ AutoProv: nopython3
 %add_findreq_skiplist %_libdir/libshm.so
 %add_findreq_skiplist %_libdir/libtorch*.so
 
-BuildRequires(pre): cmake
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): cmake rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
 BuildRequires: valgrind-devel
@@ -63,7 +62,7 @@ BuildRequires: moodycamel-concurrentqueue-devel
 %if_with mpi
 BuildRequires: openmpi-devel
 %endif
-BuildRequires: pybind11-devel
+# BuildRequires: pybind11-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-protobuf
@@ -117,7 +116,7 @@ Requires:      python3-module-typing_extensions
 %add_python3_req_skip tensorboard tensorboard.compat tensorboard.compat.proto tensorboard.compat.proto.attr_value_pb2 tensorboard.compat.proto.config_pb2 tensorboard.compat.proto.event_pb2 tensorboard.compat.proto.graph_pb2 tensorboard.compat.proto.node_def_pb2 tensorboard.compat.proto.step_stats_pb2 tensorboard.compat.proto.summary_pb2 tensorboard.compat.proto.tensor_pb2 tensorboard.compat.proto.tensor_shape_pb2 tensorboard.compat.proto.versions_pb2 tensorboard.plugins.custom_scalar tensorboard.plugins.pr_curve.plugin_data_pb2 tensorboard.plugins.projector.projector_config_pb2 tensorboard.plugins.text.plugin_data_pb2 tensorboard.summary.writer.event_file_writer tensorboard.summary.writer.record_writer
 
 # torch
-%add_python3_req_skip torch._C._autograd torch._C._distributed_c10d torch._C._distributed_rpc torch._C._dynamo.eval_frame torch._C._dynamo.guards torch._C._functorch torch._C._jit_tree_views torch._C._lazy torch._C._lazy_ts_backend torch._C._monitor torch._C._onnx torch._C._profiler tools.flight_recorder.fr_trace torch._C._dynamo torch._C._export
+%add_python3_req_skip torch._C._autograd torch._C._distributed_c10d torch._C._distributed_rpc torch._C._dynamo.eval_frame torch._C._dynamo.guards torch._C._functorch torch._C._jit_tree_views torch._C._lazy torch._C._lazy_ts_backend torch._C._monitor torch._C._onnx torch._C._profiler tools.flight_recorder.fr_trace torch._C._dynamo torch._C._export torch.distributed.flight_recorder.fr_trace
 
 # torchgen
 %add_python3_req_skip torchgen torchgen.model torchgen.utils
@@ -216,6 +215,7 @@ export USE_MAGMA=OFF
 export USE_MEM_EFF_ATTENTION=OFF
 export USE_MKLDNN=OFF
 export USE_MPI=OFF
+export USE_MIMALLOC=OFF
 export USE_NCCL=OFF
 export USE_NNPACK=OFF
 export USE_NUMPY=ON
@@ -223,7 +223,10 @@ export USE_OPENMP=ON
 export USE_PYTORCH_QNNPACK=OFF
 export USE_SYSTEM_SLEEF=ON
 export USE_SYSTEM_EIGEN_INSTALL=ON
-export USE_SYSTEM_PYBIND11=ON
+# Do not use system pybind11: current repo pybind11 (3.0.2) breaks Torch 2.9.x build
+# (pybind11 typing/tuple return-type deduction errors). Use the vendored/pinned pybind11
+# shipped with Torch for compatibility and reproducible builds.
+export USE_SYSTEM_PYBIND11=OFF
 export USE_SYSTEM_LIBS=OFF
 export USE_SYSTEM_NCCL=OFF
 export USE_XNNPACK=OFF
@@ -306,6 +309,12 @@ done
 %_libdir/*.so*
 
 %changelog
+* Mon Feb 23 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt1
+- Updated to 2.10.0 version.
+- Used bundled pybind11 insted of system.
+- Vendored mimalloc for better aarch64 memory allocation.
+- Minor specfile fixes.
+
 * Thu Feb 12 2026 Nikita Shmatko <nash@altlinux.org> 2.9.1-alt1
 - Updated to 2.9.1 version.
 - Fixed usage of system fmt library.

@@ -12,7 +12,7 @@
 %def_without check
 
 Name:    %rname-cpu
-Version: 0.24.1
+Version: 0.25.0
 Release: alt1
 
 Summary: Datasets, Transforms and Models specific to Computer Vision (CPU only)
@@ -109,5 +109,8 @@ export TORCH_CUDA_ARCH_LIST=%CUDA_ARCH_LIST
 %python3_sitelibdir/%{pyproject_distinfo %rname}
 
 %changelog
+* Thu Feb 19 2026 Nikita Shmatko <nash@altlinux.org> 0.25.0-alt1
+- New version 0.25.0.
+
 * Fri Feb 13 2026 Nikita Shmatko <nash@altlinux.org> 0.24.1-alt1
 - Initial build for Sisyphus.
