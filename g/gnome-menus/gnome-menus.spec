@@ -6,25 +6,28 @@
 
 Name: gnome-menus
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: GNOME desktop menu
-License: GPL-2.0
+License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/gnome-menus.git
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 Patch1: %name-3.31.4-alt-add-config-dir.patch
+# https://gitlab.gnome.org/GNOME/gnome-menus/-/issues/6
+# https://github.com/linuxmint/cinnamon-menus/commit/7516e8d138072d167ea93b37a2ffcbcf5b250756.patch
+Patch10: gnome-menus-3.38.1-linuxmint-check-valid-desktop.patch
 
-BuildRequires(pre): rpm-build-gnome rpm-build-xdg
+BuildRequires(pre): rpm-build-xdg
 
-BuildRequires: gnome-common libgio-devel >= 2.29.15
+BuildRequires: libgio-devel >= 2.29.15
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
@@ -107,6 +110,7 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 %prep
 %setup
 %patch1 -b .config_dir
+%patch10 -p1 -b .check_desktop
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -148,6 +152,10 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1.1
+- applied linuxmint patch to fix
+  https://gitlab.gnome.org/GNOME/gnome-menus/-/issues/6
+
 * Sat Sep 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
 - 3.38.1
 
