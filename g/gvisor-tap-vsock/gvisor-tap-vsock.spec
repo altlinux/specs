@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    gvisor-tap-vsock
-Version: 0.7.4
+Version: 0.8.8
 Release: alt1
 
 Summary: Go replacement for libslirp and VPNKit
@@ -30,7 +30,7 @@ dynamic port forwarding
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
-export LDFLAGS="-X github.com/containers/gvisor-tap-vsock/pkg/types.gitVersion=%version"
+export LDFLAGS="-s -w -X github.com/containers/gvisor-tap-vsock/pkg/types.gitVersion=%version"
 
 %ifarch x86_64
 export CGO_CFLAGS+=" -m64 -mtune=generic -fcf-protection=full"
@@ -58,6 +58,9 @@ rm -rf -- %buildroot%go_root
 %_bindir/gvforwarder
 
 %changelog
+* Wed Feb 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.8.8-alt1
+- 0.7.4 -> 0.8.8
+
 * Tue Aug 20 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.7.4-alt1
 - 0.7.3 -> 0.7.4
 - Removed outdated patch (from 0.7.1-alt1.1)
