@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Sphinx extension for capturing program output
@@ -52,6 +52,9 @@ sed -r -i 's/python/python3/' src/sphinxcontrib/programoutput/tests/{test_direct
 %doc *.rst
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.19-alt1
+- Automatically updated to 0.19.
+
 * Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.18-alt1
 - Automatically updated to 0.18.
 
