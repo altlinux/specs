@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.8
+Version:  2.9
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -16,8 +16,7 @@ BuildArch: noarch
 Requires: dconf
 # Required GTK+ themes
 Requires: mate-themes
-# Main menu
-Requires: mate-menu
+Requires: mate-panel
 # Required fonts
 Requires: fonts-ttf-google-noto-sans
 Requires: fonts-ttf-google-crosextra-caladea
@@ -44,6 +43,9 @@ install -pDm644 windows.layout \
 %_datadir/mate-panel/layouts/windows.layout
 
 %changelog
+* Fri Feb 27 2026 Anton Midyukov <antohami@altlinux.org> 2.9-alt1
+- Replace mate-menu with compact menu.
+
 * Thu Oct 03 2024 Anton Midyukov <antohami@altlinux.org> 2.8-alt1
 - zz-mate-theme.gschema.override: do not set icon theme
 
