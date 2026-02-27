@@ -1,5 +1,5 @@
 Name: tree-sitter-lua
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 
 Summary: Lua grammar for tree-sitter
@@ -30,6 +30,9 @@ cp -a queries %buildroot%_libdir/tree-sitter-lua
 %_libdir/tree-sitter-lua
 
 %changelog
+* Fri Feb 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.0-alt1
+- 0.5.0 released
+
 * Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.1-alt1
 - 0.4.1 released
 
