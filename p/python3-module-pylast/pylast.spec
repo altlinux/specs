@@ -1,9 +1,10 @@
 %define oname pylast
 
-%def_with check
+# Almost all tests need network
+%def_without check
 
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 7.0.2
 Release: alt1
 
 Summary: A Python interface to Last.fm (and other API compatible social networks)
@@ -51,6 +52,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 7.0.2-alt1
+- Automatically updated to 7.0.2.
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 
