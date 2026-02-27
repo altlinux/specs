@@ -4,7 +4,7 @@
 
 Name: dyninst
 Version: %major_ver.0.0
-Release: alt2
+Release: alt3
 
 Summary: Tools for binary instrumentation, analysis, and modification
 License: LGPL-2.1-or-later
@@ -18,6 +18,7 @@ Requires: %libname%major_ver = %EVR
 
 # Source-url: https://github.com/dyninst/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: binutils-devel
 BuildRequires: boost-filesystem-devel
@@ -64,6 +65,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%patch1 -p1
 sed -i 's;\(set(DYNINST_INSTALL_LIBDIR \)".*"\()\);\1${CMAKE_INSTALL_LIBDIR}\2;' \
     cmake/DyninstLibrarySettings.cmake
 
@@ -113,6 +115,9 @@ done <<<$(find . -type d -name 'doc')
 %_defaultdocdir/%name
 
 %changelog
+* Wed Feb 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 13.0.0-alt3
+- fix failure when forking mutatee process (closes: 58006)
+
 * Wed Feb 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 13.0.0-alt2
 - fix crash on startup of `parseThat` (closes: 57894)
 
