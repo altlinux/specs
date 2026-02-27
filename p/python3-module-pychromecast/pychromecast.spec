@@ -1,24 +1,31 @@
 Name: python3-module-pychromecast
-Version: 14.0.5
-Release: alt1.1
+Version: 14.0.9
+Release: alt1
 
 Summary: Python library to communicate with the Google Chromecast
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/PyChromecast/
+URL: https://pypi.org/project/PyChromecast/
+VCS: https://github.com/home-assistant-libs/pychromecast
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -31,6 +38,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/%{pyproject_distinfo pychromecast}/
 
 %changelog
+* Fri Feb 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 14.0.9-alt1
+- 14.0.9 released
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 14.0.5-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
