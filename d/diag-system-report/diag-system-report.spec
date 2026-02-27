@@ -2,7 +2,7 @@
 %define diagnostic_tool system-report
 Name: diag-%diagnostic_tool
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: Diagnostic Tool for collecting system information
 License: GPLv3
@@ -11,6 +11,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: system-report
+Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-interface-diag
 
 BuildRequires(pre): rpm-macros-alterator
 
@@ -38,6 +40,9 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Feb 27 2026 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt2
+- build: add missing alterator dependencies in spec
+
 * Fri Feb 27 2026 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt1
 - chore: add 'exit_status = true' for new version of executor
 
