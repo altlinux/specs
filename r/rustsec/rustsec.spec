@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rustsec
-Version: 0.30.4
+Version: 0.32.0
 Release: alt1
 
 Summary: RustSec API & Tooling
@@ -23,7 +23,7 @@ Vulnerability database itself can be found at:
 https://rustsec.org/
 
 %package -n cargo-audit
-Version: 0.21.2
+Version: 0.22.1
 Summary: Audit your dependencies for crates with security vulnerabilities
 Group: Development/Tools
 Url: https://crates.io/crates/cargo-audit
@@ -36,7 +36,7 @@ The advisory database itself can be found at:
 https://github.com/RustSec/advisory-db
 
 %package -n cargo-lock
-Version: 10.1.0
+Version: 11.0.1
 Summary: Self-contained serde-powered Cargo.lock parser/serializer
 Group: Development/Tools
 Url: https://crates.io/crates/cargo-lock
@@ -49,6 +49,12 @@ analysis features. Used by RustSec.
 %prep
 %setup -a 1
 %rust_prep
+%ifarch %ix86
+cat >> .cargo/config.toml <<EOF
+lto = "thin"
+codegen-units = 16
+EOF
+%endif
 
 %build
 %rust_build --all-features -p cargo-audit -p cargo-lock
@@ -69,5 +75,10 @@ analysis features. Used by RustSec.
 %_bindir/cargo-lock
 
 %changelog
+* Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.32.0-alt1
+- New rustsec version (0.32.0).
+- New cargo-audit version (0.22.1).
+- New cargo-lock version (11.0.1).
+
 * Tue Aug 05 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.30.4-alt1
 - Initial build.
