@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Separate project for HTML cleaning functionalities copied from lxml.html.clean.
@@ -56,6 +56,9 @@ sed -i "s@tests/test_clean.txt@@" tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
+- Automatically updated to 0.4.4.
+
 * Wed Oct 22 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
 - Automatically updated to 0.4.3.
 
