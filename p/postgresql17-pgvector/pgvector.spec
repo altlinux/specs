@@ -2,7 +2,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-pgvector
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: Open-source vector similarity search for Postgres
 License: PostgreSQL
@@ -32,6 +32,10 @@ pgvector development header files
 %prep
 %setup
 
+# Portable build
+# If you need maximum performance, comment out the line below and run the application on exactly the same processor.
+sed -i "s|OPTFLAGS = -march=native|OPTFLAGS =|g" Makefile
+
 %build
 %make_build PG_CONFIG=%_bindir/pg_server_config USE_PGXS=1
 
@@ -50,6 +54,10 @@ pgvector development header files
 %_includedir/pgsql/server/extension/*
 
 %changelog
+* Fri Feb 27 2026 Alexei Takaseev <taf@altlinux.org> 0.8.2-alt1
+- 0.8.2 (Fixes: CVE-2026-3172)
+- Portable build
+
 * Wed Oct 22 2025 Alexei Takaseev <taf@altlinux.org> 0.8.1-alt1
 - 0.8.1
 - Add support PostgreSQL 18
