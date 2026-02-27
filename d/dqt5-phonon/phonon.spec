@@ -5,7 +5,7 @@
 
 Name: dqt5-phonon
 Version: 4.11.1
-Release: alt1.dde.1
+Release: alt1.dde.2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,7 @@ Source: phonon-%version.tar
 
 BuildRequires(pre): dqt5-base-devel rpm-build-kf5
 BuildRequires: dqt5-tools-devel dqt5-declarative-devel
+BuildRequires: libdqt5-xml libdqt5-designer
 BuildRequires: libEGL-devel libGL-devel
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: libalsa-devel libpulseaudio-devel
@@ -144,6 +145,9 @@ ln -s `relative %_bindir/phononsettings-dqt5 %_dkf5_bin/phononsettings` %buildro
 %_dqt5_libdir/pkgconfig/phonon4qt5.pc
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt1.dde.2
+- fix build on shrinked dqt5
+
 * Thu May 30 2024 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt1.dde.1
 - fork qt5 for separate deepin buildings (ALT #48138)
 
