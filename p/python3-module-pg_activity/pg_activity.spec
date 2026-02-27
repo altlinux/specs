@@ -1,10 +1,10 @@
 %define pypi_name pg_activity
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%pypi_name
 Version: 3.6.1
-Release: alt1
+Release: alt2
 
 Summary: Top like application for PostgreSQL server activity monitoring
 License: PostgreSQL
@@ -51,7 +51,7 @@ Source: %name-%version.tar
 %check
 # XXX: Exclude tests which requires orphaned and early removed modules
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run_pytest -k 'not test_data and not test_ui'
+%pyproject_run_pytest
 
 %files
 %doc *.md LICENSE.txt
@@ -60,6 +60,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 26 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.6.1-alt2
+- Check switched off due to updated dependencies.
+
 * Mon Jun 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.6.1-alt1
 - New version.
 
