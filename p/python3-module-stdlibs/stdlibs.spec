@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2025.10.28
+Version: 2026.2.26
 Release: alt1
 Summary: List of packages in the stdlib
 License: MIT
@@ -54,11 +54,13 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %pyproject_run -- python -m %mod_name.tests -v
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 27 2026 Stanislav Levin <slev@altlinux.org> 2026.2.26-alt1
+- 2025.10.28 -> 2026.2.26.
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 2025.10.28-alt1
 - 2025.5.10 -> 2025.10.28.
 
