@@ -1,61 +1,50 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-parent
-Version:        26
-Release:        alt1_3jpp11
-Summary:        Parent POM file for Apache projects
-License:        ASL 2.0
+Version:        37
+Release:        alt1
+
+Summary:        Apache Software Foundation Parent POM
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://apache.org/
-Source0:        https://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
+VCS:            https://github.com/apache/maven-apache-parent
 BuildArch:      noarch
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-%endif
+Source0:        %name-%version.tar
 
-# Not generated automatically
-%if %{without bootstrap}
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
-%endif
+
 Requires:       mvn(org.apache:apache-jar-resource-bundle)
-Source44: import.info
 
 %description
 This package contains the parent pom file for apache projects.
 
 %prep
-%setup -q -n apache-%{version}
+%setup
 
+sed -i 's/org\.apache\.apache\.resources:/org.apache:/g' pom.xml
+
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-site-plugin docs
+%pom_remove_plugin :maven-scm-publish-plugin docs
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc LICENSE *.md
 
 %changelog
+* Thu Feb 19 2026 Evgeniy Serov <scala@altlinux.org> 37-alt1
+- Updated to 37.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 26-alt1_3jpp11
 - new version
 

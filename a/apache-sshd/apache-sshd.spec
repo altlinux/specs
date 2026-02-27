@@ -1,112 +1,78 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Epoch:          1
 Name:           apache-sshd
-Version:        2.6.0
-Release:        alt1_2jpp11
-Summary:        Apache SSHD
+Version:        2.17.1
+Release:        alt1
 
-# One file has ISC licensing:
-#   sshd-common/src/main/java/org/apache/sshd/common/config/keys/loader/openssh/kdf/BCrypt.java
-License:        ASL 2.0 and ISC
+Summary:        Apache MINA sshd is a comprehensive Java library for client- and server-side SSH
+License:        Apache-2.0 AND ISC
+Group:          Development/Java
 URL:            http://mina.apache.org/sshd-project
+VCS:            https://github.com/apache/mina-sshd
+BuildArch:      noarch
 
-Source0:        https://archive.apache.org/dist/mina/sshd/%{version}/apache-sshd-%{version}-src.tar.gz
+Source0:        %name-%version.tar
 
-# Avoid optional dep on tomcat native APR library
 Patch0:         0001-Avoid-optional-dependency-on-native-tomcat-APR-libra.patch
 
-# Fix error when generating MANIFEST.MF files and not adding imports
-Patch1:         0002-Fix-manifest-generation.patch
-
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.i2p.crypto:eddsa)
-BuildRequires:  mvn(org.apache.ant:ant)
+
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.bouncycastle:bcpg-jdk18on)
+BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk18on)
+BuildRequires:  mvn(net.i2p.crypto:eddsa)
+BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
-BuildRequires:  mvn(org.bouncycastle:bcpg-jdk15on)
-BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-
-BuildArch:      noarch
-Source44: import.info
 
 %description
 Apache SSHD is a 100% pure java library to support the SSH protocols on both
 the client and server side.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package provides %{name}.
+%javadoc_package
 
 %prep
-%setup -q
+%setup
+%autopatch -p1
 
-# Avoid optional dep on tomcat native APR library
-%patch0 -p1
-%patch1 -p1
-rm -rf sshd-core/src/main/java/org/apache/sshd/agent/unix
+sed -i 's/session\.rootDirectory/maven.multiModuleProjectDirectory/' .mvn/maven.config
+rm -rv sshd-core/src/main/java/org/apache/sshd/agent/unix
 
-# Avoid unnecessary dep on spring framework
 %pom_remove_dep :spring-framework-bom
-%pom_remove_dep :testcontainers-bom sshd-sftp
+%pom_remove_dep :testcontainers-bom sshd-sftp sshd-core sshd-scp
 
-# Build the core modules only
-%pom_disable_module assembly
-%pom_disable_module sshd-mina
-%pom_disable_module sshd-netty
-%pom_disable_module sshd-ldap
-%pom_disable_module sshd-git
-%pom_disable_module sshd-contrib
-%pom_disable_module sshd-spring-sftp
-%pom_disable_module sshd-cli
-%pom_disable_module sshd-openpgp
-
-# Disable plugins we don't need for RPM builds
 %pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :gmavenplus-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-pmd-plugin
-%pom_remove_plugin :maven-antrun-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :impsort-maven-plugin
 %pom_remove_plugin :formatter-maven-plugin . sshd-core
+%pom_remove_plugin :impsort-maven-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :maven-assembly-plugin
 
-# Suppress generation of uses clauses
-%pom_xpath_inject "pom:configuration/pom:instructions" "<_nouses>true</_nouses>" .
+%pom_remove_plugin :maven-enforcer-plugin
+
+%pom_disable_module sshd-spring-sftp
+%pom_disable_module sshd-netty
+%pom_disable_module sshd-benchmarks
+%pom_disable_module sshd-openpgp
+%pom_disable_module sshd-mina
+%pom_disable_module assembly
 
 %build
-# Can't run tests, they require ch.ethz.ganymed:ganymed-ssh2
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dworkspace.root.dir=$(pwd) -Dsource=1.8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGES.md
-%doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
+%doc CHANGES.md LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Wed Feb 25 2026 Evgeniy Serov <scala@altlinux.org> 1:2.17.1-alt1
+- Updated to 2.17.1.
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1:2.6.0-alt1_2jpp11
 - fc34 update
 
