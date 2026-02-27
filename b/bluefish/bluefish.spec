@@ -1,6 +1,6 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.2.19
+Version: 2.4.0
 Release: alt1
 Epoch: 2
 
@@ -105,6 +105,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Fri Feb 27 2026 Anton Midyukov <antohami@altlinux.org> 2:2.4.0-alt1
+- new version (2.4.0)
+
 * Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.19-alt1
 - new version (2.2.19)
 
