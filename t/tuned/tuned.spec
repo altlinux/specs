@@ -7,7 +7,7 @@
 
 Name: tuned
 Version: 2.27.0
-Release: alt1
+Release: alt2
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -57,7 +57,6 @@ Group: System/Configuration/Other
 Requires: %name = %EVR
 Requires: powertop polkit
 %py3_use pygobject3
-%py3_use pygobject3-pygtkcompat
 
 %description gtk
 GTK GUI that can control tuned and provides simple profile editor.
@@ -543,6 +542,9 @@ fi
 %files checkinstall
 
 %changelog
+* Fri Feb 27 2026 Vitaly Chikunov <vt@altlinux.org> 2.27.0-alt2
+- spec: Remove obsolete dependency on pygtkcompat.
+
 * Mon Feb 23 2026 Vitaly Chikunov <vt@altlinux.org> 2.27.0-alt1
 - Update to v2.27.0 (2026-02-22).
 
