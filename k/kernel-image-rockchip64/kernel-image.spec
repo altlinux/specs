@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.13
+%define kernel_sublevel	.14
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -133,7 +133,6 @@ Patch0090: rk3308-dts-legacy-cryptov2.patch
 Patch0091: rk3308-dts-thermal-zones.patch
 Patch0092: rk3308-fix-10mbit-ethernet.patch
 Patch0093: rk3308-fix-uart-dma.patch
-Patch0094: rk3308-i2s-default-rate.patch
 Patch0095: rk3308-internal-rgb-lcdc.patch
 Patch0096: rk3308-vop-output.patch
 Patch0097: rk3328-add-dmc-driver.patch
@@ -522,6 +521,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Feb 27 2026 Alexei Takaseev <taf@altlinux.org> 6.18.14-alt1
+- v6.18.14 (2026-02-26).
+
 * Fri Feb 20 2026 Alexei Takaseev <taf@altlinux.org> 6.18.13-alt1
 - v6.18.13 (2026-02-19).
 
