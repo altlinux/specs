@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kdotool
-Version: 0.2.1
-Release: alt2
+Version: 0.2.2
+Release: alt1
 
 Summary: Xdotool-like for KDE Wayland
 License: Apache-2.0
@@ -13,8 +13,6 @@ Vcs: https://github.com/jinliu/kdotool
 
 Source: %name-%version.tar
 Source1: vendor.tar
-
-Patch: kdotool-0.2.1-alt-never_type_fallback_fixes.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: libdbus-devel
@@ -45,11 +43,11 @@ directory = "vendor"
 verbose = true
 quiet = false
 
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
 [profile.release]
 strip = false
+codegen-units = 1
+opt-level = 3
+debug = 2
 EOF
 
 %build
@@ -65,6 +63,9 @@ EOF
 %_bindir/kdotool
 
 %changelog
+* Thu Feb 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.2-alt1
+- New version (0.2.2).
+
 * Tue Dec 23 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.1-alt2
 - Fix FTBFS with new rust.
 
