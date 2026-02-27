@@ -3,7 +3,7 @@
 
 Name: nautilus-code
 Version: 0.6.alpha
-Release: alt2.b6c50d93.1
+Release: alt2.b6c50d93.2
 
 Summary: Extension which adds right-click menu items to open current folder in code editors
 License: AGPL-3.0
@@ -44,6 +44,9 @@ VSCode or GNOME Builder (if they are installed).
 %_datadir/nautilus-python/extensions/%name.py
 
 %changelog
+* Fri Feb 27 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.alpha-alt2.b6c50d93.2
+- Added zed-editor to zed native variation.
+
 * Tue Dec 16 2025 Vladimir Romanov <rirusha@altlinux.org> 0.6.alpha-alt2.b6c50d93.1
 - Added require on nautilus-python.
 
