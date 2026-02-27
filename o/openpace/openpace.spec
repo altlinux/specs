@@ -1,5 +1,5 @@
 Name:    openpace
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Cryptographic library for EAC version 2
@@ -99,6 +99,9 @@ mv %buildroot%_bindir/{,%name-}example
 %_defaultdocdir/%name
 
 %changelog
+* Fri Feb 27 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - New version.
 
