@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 54f2457
+%global commit_hash 839870b
 
 Name: gemini-cli
-Version: 0.29.2
+Version: 0.30.1
 Release: alt1
 Summary: AI agent that brings the power of Gemini directly into your terminal
 License: Apache-2.0
@@ -58,6 +58,9 @@ install -m 0755 %SOURCE5 %buildroot%_bindir/gemini
 %doc LICENSE
 
 %changelog
+* Sat Feb 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.30.1-alt1
+- Updated to version 0.30.1.
+
 * Thu Feb 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.29.2-alt1
 - Updated to version 0.29.2.
 
