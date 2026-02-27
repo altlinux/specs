@@ -1,28 +1,32 @@
 Name: python3-module-gtts
-Version: 2.5.1
-Release: alt1.1
+Version: 2.5.4
+Release: alt1
 
 Summary: Python interface with Google Translate's TTS API
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/gTTS/
+URL: https://pypi.org/project/gTTS
+VCS: https://github.com/pndurette/gTTS
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(click)
-BuildRequires: python3(requests)
-BuildRequires: python3(testfixtures)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra tests
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -31,7 +35,7 @@ BuildRequires: python3(testfixtures)
 %pyproject_install
 
 %check
-# nb: most are online
+# nb: most tests are online
 %pyproject_run_pytest ||:
 
 %files
@@ -41,6 +45,9 @@ BuildRequires: python3(testfixtures)
 %python3_sitelibdir/%{pyproject_distinfo gtts}/
 
 %changelog
+* Fri Feb 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.4-alt1
+- 2.5.4 released
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
