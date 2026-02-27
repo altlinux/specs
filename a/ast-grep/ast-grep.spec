@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ast-grep
-Version: 0.40.5
+Version: 0.41.0
 Release: alt1
 
 Summary: A CLI tool for code structural search, lint and rewriting
@@ -39,5 +39,8 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Thu Feb 26 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.41.0-alt1
+- new version
+
 * Mon Feb 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.40.5-alt1
 - initial build for ALT Linux
