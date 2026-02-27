@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.30
+Version: 2.0.0
 Release: alt1
 
 Summary: Pure python implementation of identifying files based off their magic numbers
@@ -65,10 +65,14 @@ Disadvantages:
 
 %files
 %doc LICENSE *.md *.rst
+%_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Sat Jul 05 2025 Andrey Cherepanov <cas@altlinux.org> 1.30-alt1
 - New version.
 
