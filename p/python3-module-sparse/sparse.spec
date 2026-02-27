@@ -7,7 +7,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 
 Summary: Sparse multi-dimensional arrays for the PyData ecosystem
@@ -69,6 +69,9 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/mlir_backend
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.18.0-alt1
+- Automatically updated to 0.18.0.
+
 * Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1
 - Automatically updated to 0.17.0.
 
