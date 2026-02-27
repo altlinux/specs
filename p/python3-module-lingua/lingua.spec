@@ -1,15 +1,10 @@
 %define oname lingua
 
-# tests have totally broken with python3.12
-# but I dont care about them, likewise about package
-# It doesn't needed for anything, but mako has
-# optional dependency on lingua<4. So this package
-# is like a dummy
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 4.15.0
-Release: alt3
+Version: 4.16.2
+Release: alt1
 
 Summary: Translation toolset
 
@@ -28,6 +23,7 @@ BuildRequires: python3-module-chameleon.core
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-click
+BuildRequires: python3-module-uv-build
 
 Conflicts: python-module-lingua < %EVR
 Obsoletes: python-module-lingua < %EVR
@@ -42,7 +38,7 @@ xgettext command from gettext, or pybabel from Babel.
 %prep
 %setup
 
-sed -i 's/4.14/4.15/' src/lingua/__init__.py
+sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -51,8 +47,7 @@ sed -i 's/4.14/4.15/' src/lingua/__init__.py
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.rst docs/examples
@@ -62,6 +57,10 @@ sed -i 's/4.14/4.15/' src/lingua/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 4.16.2-alt1
+- Automatically updated to 4.16.2.
+- Built with check.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt3
 - Built without check.
 
