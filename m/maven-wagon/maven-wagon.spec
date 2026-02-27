@@ -1,65 +1,28 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-wagon
 Version:        3.5.3
-Release:        alt1
+Release:        alt2
+
 Summary:        Tools to manage artifacts and deployment
 License:        Apache-2.0
+Group:          Development/Java
 URL:            https://maven.apache.org/wagon
+VCS:            https://github.com/apache/maven-wagon
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
 
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
-BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:  unzip
+
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-%endif
-
-Provides:       maven-wagon-file = %{version}-%{release}
-Provides:       maven-wagon-http = %{version}-%{release}
-Provides:       maven-wagon-http-shared = %{version}-%{release}
-Provides:       maven-wagon-provider-api = %{version}-%{release}
-Provides:       maven-wagon-providers = %{version}-%{release}
-
-Obsoletes:      maven-wagon-file < 3.4.2-alt1_3
-Conflicts:      maven-wagon-file < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-http < 3.4.2-alt1_3
-Conflicts:      maven-wagon-http < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-http-shared < 3.4.2-alt1_3
-Conflicts:      maven-wagon-http-shared < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-provider-api < 3.4.2-alt1_3
-Conflicts:      maven-wagon-provider-api < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-providers < 3.4.2-alt1_3
-Conflicts:      maven-wagon-providers < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-ftp < 3.4.2-alt1_3
-Conflicts:      maven-wagon-ftp < 3.4.2-alt1_3
-Obsoletes:      maven-wagon-http-lightweight < 3.4.2-alt1_3
-Conflicts:      maven-wagon-http-lightweight < 3.4.2-alt1_3
-Source44: import.info
+BuildRequires:  mvn(commons-net:commons-net)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
+BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
+BuildRequires:  mvn(com.jcraft:jsch.agentproxy.jsch)
 
 %description
 Maven Wagon is a transport abstraction that is used in Maven's
@@ -72,38 +35,22 @@ following providers:
 * WebDAV
 * SCM (in progress)
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
 %setup -q -n wagon-%{version}
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_dep :wagon-tck-http wagon-providers/wagon-http
 
-# disable tests, missing dependencies
-%pom_disable_module wagon-tcks
-%pom_disable_module wagon-ssh-common-test wagon-providers
 %pom_disable_module wagon-provider-test
-%pom_remove_dep :wagon-provider-test
-%pom_remove_dep :wagon-provider-test wagon-providers
-
-# missing dependencies
-%pom_disable_module wagon-ftp wagon-providers
-%pom_disable_module wagon-http-lightweight wagon-providers
-%pom_disable_module wagon-scm wagon-providers
-%pom_disable_module wagon-ssh wagon-providers
-%pom_disable_module wagon-ssh-common wagon-providers
-%pom_disable_module wagon-ssh-external wagon-providers
+%pom_disable_module wagon-ssh-common-test wagon-providers
 %pom_disable_module wagon-webdav-jackrabbit wagon-providers
-
-%pom_remove_plugin :maven-shade-plugin wagon-providers/wagon-http
+%pom_disable_module wagon-tck-http wagon-tcks
 
 %mvn_file ":wagon-{*}" %{name}/@1
 %mvn_package ":wagon"
 
 %build
-# tests are disabled because of missing dependencies
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 # Maven requires Wagon HTTP with classifier "shaded"
@@ -113,10 +60,12 @@ following providers:
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-%doc DEPENDENCIES
+%doc LICENSE NOTICE DEPENDENCIES *.md
 
 %changelog
+* Sun Feb 22 2026 Evgeniy Serov <scala@altlinux.org> 3.5.3-alt2
+- Enabled previously disabled modules.
+
 * Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.5.3-alt1
 - New version 3.5.3.
 
