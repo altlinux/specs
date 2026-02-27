@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -22,7 +22,8 @@ Summary: An open source, production quality, multilayer virtual switch
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
 Group: Networking/Other
 
-Url: http://openvswitch.org
+Url: https://www.openvswitch.org/
+VCS: https://github.com/openvswitch/ovs.git
 Source0: %name-%version.tar
 Source11: %name.init
 Source12: %name.tmpfiles
@@ -225,7 +226,9 @@ mkdir -p %buildroot%_logdir/%name
 
 # move completions to datadir
 mkdir -p %buildroot%_datadir/bash-completion/completions
-mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completion/completions/
+mv %buildroot%_sysconfdir/bash_completion.d/ovs-appctl-bashcomp.bash %buildroot%_datadir/bash-completion/completions/ovs-appctl
+mv %buildroot%_sysconfdir/bash_completion.d/ovs-vsctl-bashcomp.bash %buildroot%_datadir/bash-completion/completions/ovs-vsctl
+
 
 # remove unpackaged files
 rm -f %buildroot%_libdir/*.{a,la}
@@ -379,6 +382,10 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Fri Feb 27 2026 Anton Farygin <rider@altlinux.org> 3.3.8-alt1
+- 3.3.7 -> 3.3.8
+- renamed bash completion scripts to valid names (closes: #57388)
+
 * Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 3.3.7-alt1
 - 3.3.7
 
