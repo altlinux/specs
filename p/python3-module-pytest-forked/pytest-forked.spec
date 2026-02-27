@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-forked
+%define mod_name pytest_forked
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 1.6.0
-Release: alt2
+Release: alt3
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
 Group: Development/Python3
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -42,11 +45,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc CHANGELOG.rst README.rst
-%python3_sitelibdir/pytest_forked/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt3
+- Fixed FTBFS (Pytest 9).
+
 * Tue Feb 13 2024 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
 - Fixed FTBFS (Pytest 8).
 

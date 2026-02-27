@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: A hatch plugin to help build Jupyter packages
 License: BSD-3-Clause
@@ -34,7 +34,7 @@ with Jupyter packages.
 %prep
 %setup -n %pypi_name-%version
 %patch -p0
-sed -i 's/--color=yes//' pyproject.toml
+sed -i 's/, "--color=yes"//' pyproject.toml
 
 %build
 %pyproject_build
@@ -53,6 +53,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo hatch_jupyter_builder}
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 0.9.1-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt1
 - New version 0.9.1.
 

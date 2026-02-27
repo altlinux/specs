@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Summary: pytest xdist plugin for distributed testing, most importantly across multiple CPUs
 License: MIT
 Group: Development/Python3
@@ -54,6 +54,9 @@ number of available CPUs, and distribute the tests randomly across them.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 27 2026 Stanislav Levin <slev@altlinux.org> 3.8.0-alt2
+- Fixed FTBFS (pytest 9).
+
 * Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
 - 3.7.0 -> 3.8.0.
 

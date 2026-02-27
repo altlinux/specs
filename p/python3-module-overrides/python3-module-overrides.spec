@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.7.0
-Release: alt1
+Release: alt2
 
 Summary: A decorator to automatically detect mismatch when overriding a method
 License: Apache-2.0
@@ -15,7 +15,8 @@ VCS: https://github.com/mkorpela/overrides
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-
+# https://github.com/mkorpela/overrides/pull/136
+Patch0: overrides-7.7.0-Fix-support-for-pytest-9.0.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -28,6 +29,7 @@ BuildRequires: python3-module-pytest
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -44,6 +46,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 7.7.0-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Sun Jan 28 2024 Anton Vyatkin <toni@altlinux.org> 7.7.0-alt1
 - New version 7.7.0.
 

@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: reStructuredText linter
 License: Unlicense
@@ -19,12 +19,14 @@ BuildRequires: python3-module-docutils >= 0.11
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: ignore-known-deprecated-Publisher-s-set_components.patch
 
 %description
 %summary
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -37,6 +39,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 2.0.2-alt2
+- NMU: ignored known-deprecated Publisher's set_components.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
 - Automatically updated to 2.0.2.
 

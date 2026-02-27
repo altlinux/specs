@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-django
+%define mod_name pytest_django
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.11.1
+Version: 4.12.0
 Release: alt1
 Summary: A Django plugin for py.test
 License: BSD
@@ -22,7 +23,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter django-configurations
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -36,6 +38,9 @@ the pytest testing tool.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup testing
+%endif
 
 %build
 %pyproject_build
@@ -49,11 +54,13 @@ export PYTHONPATH=$(pwd)
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
-%doc README.*
-%python3_sitelibdir/pytest_django/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 4.12.0-alt1
+- 4.11.1 -> 4.12.0.
+
 * Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 4.11.1-alt1
 - 4.10.0 -> 4.11.1.
 

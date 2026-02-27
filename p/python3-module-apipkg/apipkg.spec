@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        3.0.2
-Release:        alt1.1
+Release:        alt2
 
 Summary:        A Python namespace control and lazy-import mechanism
 
@@ -14,6 +14,8 @@ URL:            https://pypi.org/project/apipkg
 VCS:            https://github.com/pytest-dev/apipkg
 
 Source:        %name-%version.tar
+# backported from ca5adbb0b918f63b33c60040104bb0ab6ede7e9d
+Patch0:         ca5adbb-Support-pytest-9.patch
 
 BuildArch:      noarch
 
@@ -36,6 +38,7 @@ copy paste the ~200 lines of code into your project.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -52,6 +55,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 3.0.2-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.0.2-alt1.1
 - NMU: fixed FTBFS (tox 4).
 

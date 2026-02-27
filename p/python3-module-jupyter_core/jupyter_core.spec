@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.9.1
-Release: alt1
+Release: alt2
 Summary: Jupyter core package
 License: BSD-3-Clause
 Group: Development/Python3
@@ -29,7 +29,7 @@ Jupyter core package. A base package on which Jupyter projects rely.
 
 %prep
 %setup
-sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
+sed -i '/addopts/,/]/ s/, "--color=yes"//' pyproject.toml
 
 %build
 %pyproject_build
@@ -56,6 +56,9 @@ sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 5.9.1-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 5.9.1-alt1
 - New version 5.9.1.
 

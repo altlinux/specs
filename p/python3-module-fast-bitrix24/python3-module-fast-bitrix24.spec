@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.4
-Release: alt2
+Release: alt3
 
 Summary: High-performance Python API wrapper for fast bulk data exchange with Bitrix24 via REST API.
 License: MIT
@@ -15,7 +15,7 @@ Url: https://github.com/leshchenko1979/fast_bitrix24.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-
+Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -44,6 +44,7 @@ if you have a large dictionary using the not_document_data configuration value.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -59,6 +60,9 @@ if you have a large dictionary using the not_document_data configuration value.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 1.7.4-alt3
+- NMU: fixed FTBFS (pytest 9).
+
 * Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 1.7.4-alt2
 - NMU: fixed FTBFS (pytest 8.4.0).
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 Summary: A simple module to test your documentation examples with pytest
 License: Apache-2.0
@@ -60,6 +60,9 @@ are executed just like any other Pytest tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 0.3.2-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.3.2-alt1
 - Initial build for ALT Sisyphus.
 

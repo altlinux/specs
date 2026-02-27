@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python library to read characters and key strokes
 License: MIT
@@ -22,12 +22,14 @@ BuildRequires: python3-module-pytest-cov
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch0: readchar-4.1.0-Fix-pytest-9-compatibility.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 rm -f readchar/_win_read.py
 rm -fr tests/windows
 
@@ -46,5 +48,8 @@ rm -fr tests/windows
 %python3_sitelibdir/%pypi_name-%version.dev3.dist-info/
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Fri Aug 09 2024 Alexander Burmatov <thatman@altlinux.org> 4.1.0-alt1
 - Initial build for Sisyphus.

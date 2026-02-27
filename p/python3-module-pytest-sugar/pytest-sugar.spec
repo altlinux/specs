@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-sugar
+%define mod_name pytest_sugar
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
 Group: Development/Python3
@@ -45,12 +46,14 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %pyproject_run_pytest -ra test_sugar.py
 
 %files
-%doc README.md
-%python3_sitelibdir/pytest_sugar.py
-%python3_sitelibdir/__pycache__/pytest_sugar.*
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 1.1.1-alt2
+- Fixed FTBFS (pytest 9).
+
 * Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
 - 1.0.0 -> 1.1.1.
 

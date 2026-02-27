@@ -10,7 +10,7 @@
 
 Name: python3-module-seaborn
 Version: 0.13.2
-Release: alt4
+Release: alt5
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
@@ -21,6 +21,8 @@ Source: %name-%version.tar
 Patch: seaborn-0.13.2-mpl-tick.patch
 Patch1: seaborn-0.13.2-np2-test-fix.patch
 Patch2: seaborn-0.13.2-upstream-ab486df-np2-in1d.patch
+# partially backported from 5023f2ee885a45200f5b63156a158ddf7272c29e
+Patch3: seaborn-0.13.2-support-pytest-9.patch
 
 BuildArch: noarch
 
@@ -64,6 +66,9 @@ rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 0.13.2-alt5
+- NMU: fixed FTBFS (pytest 9).
+
 * Tue Dec 30 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.13.2-alt4
 - Fixed FTBFS.
 

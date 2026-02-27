@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: A Rust based, recursive descent parser for Xonsh
 License: MIT
@@ -16,6 +16,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: %name-%version-vendor.tar
 Patch0: 0001-Fix-build-without-nightly-rust-features.patch
+# https://github.com/jnoortheen/xonsh-rd-parser/issues/29
+Patch1: xonsh-rd-parser-1.6.0-tests-drop-excessive-dependency-on-pytest-subtests.patch
 %pyproject_runtimedeps_metadata
 %pyproject_builddeps_build
 
@@ -74,5 +76,8 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Fri Jun 27 2025 Ivan Khanas <xeno@altlinux.org> 1.6.0-alt1
 - First build for ALT.

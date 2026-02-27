@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2025.3
-Release: alt1
+Release: alt2
 
 Summary: Python package wrapping the IANA time zone database
 
@@ -22,7 +22,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-pytest-subtests
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -51,6 +51,9 @@ standard location), as a part of PEP 615
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 2025.3-alt2
+- NMU: dropped dependency on incorporated pytest-subtests.
+
 * Mon Jan 12 2026 Alexander Burmatov <thatman@altlinux.org> 2025.3-alt1
 - Updated to 2025.3.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.37.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-specification JSON referencing (JSON Schema, OpenAPI, and the one you just made up!)
 License: MIT
@@ -21,7 +21,6 @@ BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-hatch-vcs
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-subtests
 BuildRequires: python3-module-rpds-py
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-typing_extensions
@@ -68,6 +67,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 0.37.0-alt2
+- NMU: dropped dependency on incorporated pytest-subtests.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 0.37.0-alt1
 - New version 0.37.0.
 

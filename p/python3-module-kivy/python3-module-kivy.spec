@@ -4,7 +4,7 @@
 
 Name: python3-module-kivy
 Version: 2.3.1
-Release: alt1.2
+Release: alt2
 
 Summary: Open source UI framework written in Python
 
@@ -15,6 +15,8 @@ Url: https://pypi.org/project/Kivy
 Source: %name-%version.tar
 Patch1: 0001-Remove-old-Python-2-long-from-Cython-files-fixes-bui.patch
 Patch2: kivy-2.2.1-alt-do_not_use_ffpyplayer.patch
+# backported from 122596b656304aef81b53de2aebfc53bd24f0ecc
+Patch3: kivy-2.3.1-Fixes-pytest-9.x.x-issues-rework-creation-and-teardo.patch
 
 Requires: python3-module-docutils
 Requires: python3-module-Pygments
@@ -66,8 +68,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 # remove the legacy garden install script as python requirement, get it from PyPI
 # or https://github.com/kivy-garden/garden/ if you need it
@@ -104,6 +105,9 @@ and not test_local_zipsequence"
 %python3_sitelibdir/kivy/tests
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 2.3.1-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.1-alt1.2
 - fixed FTBFS with cython>3.1
 

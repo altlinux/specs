@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Flask extension for integration with the awesome pydantic package
 License: MIT
@@ -52,7 +52,7 @@ with Flask.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -o=addopts=''
 
 %files
 %doc CHANGES.md LICENSE.txt README.md
@@ -60,6 +60,9 @@ with Flask.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 0.14.0-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
 - Updated to 0.14.0.
 

@@ -2,7 +2,7 @@
 
 Name:    thefuck
 Version: 3.32
-Release: alt3
+Release: alt4
 
 Summary: Magnificent app which corrects your previous console command
 
@@ -35,6 +35,7 @@ Source:  %name-%version.tar
 Patch: dd26fb91a0fdec42fc1990bb91eab21e2c44a0a8.patch
 # use importlib instead of imp for python 3.12
 Patch1: 904693a496c5371bb8eb2d57698b720770c52f14.patch
+Patch2: thefuck-3.32-tests-make-tests-compatible-with-Pytest-9.patch
 
 %description
 %summary.
@@ -43,6 +44,7 @@ Patch1: 904693a496c5371bb8eb2d57698b720770c52f14.patch
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 sed -i '1d' thefuck/conf.py
 sed -i '1d' thefuck/types.py
 
@@ -65,6 +67,9 @@ rm -v thefuck/system/win32.py
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 3.32-alt4
+- NMU: fixed FTBFS (pytest 9).
+
 * Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 3.32-alt3
 - Build without imp.
 

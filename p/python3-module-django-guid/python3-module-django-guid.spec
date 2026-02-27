@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.5.0
-Release: alt2
+Release: alt3
 
 Summary: Middleware that enables single request-response cycle tracing by injecting a unique ID into project logs
 License: MIT
@@ -15,7 +15,7 @@ VCS: https://github.com/snok/django-guid
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-
+Patch0: django-guid-3.5.0-tests-make-use-of-incorporated-Pytest-subtests.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
 %if_with check
@@ -28,7 +28,6 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-sentry-sdk
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-subtests
 %endif
 
 %description
@@ -38,6 +37,7 @@ a unique ID attached to it, making debugging simple.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -54,6 +54,9 @@ a unique ID attached to it, making debugging simple.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 3.5.0-alt3
+- NMU: fixed FTBFS (pytest 9).
+
 * Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 3.5.0-alt2
 - Fixed FTBFS (poetry-core 2.0).
 

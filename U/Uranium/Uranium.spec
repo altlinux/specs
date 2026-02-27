@@ -11,7 +11,7 @@
 
 Name:    Uranium
 Version: 5.4.0
-Release: alt5
+Release: alt6
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -62,6 +62,8 @@ Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
 Patch3: Uranium-5.3.0-python3.12.patch
 # https://github.com/Ultimaker/Uranium/commit/e86d717035af317dab5d62851181873ec3c38ebe.patch
 Patch4: upstream-Replace-deprecated-imp.patch
+# https://github.com/Ultimaker/Uranium/issues/1030
+Patch5: Uranium-5.4.0-tests-replace-deprecated-path-parameter-for-pytest_i.patch
 
 %description
 %summary
@@ -128,6 +130,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 5.4.0-alt6
+- NMU: fixed FTBFS (pytest 9).
+
 * Mon Feb 09 2026 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt5
 - Disable check on %%ix86.
 

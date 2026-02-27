@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.17.0
-Release: alt1
+Release: alt2
 
 Summary: A flake8 plugin to help you write better list/set/dict comprehensions
 
@@ -24,7 +24,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-pytest-randomly
-BuildRequires: python3-module-pytest-flake8
 BuildRequires: python3-module-pytest-flake8-path
 %endif
 
@@ -49,6 +48,9 @@ BuildRequires: python3-module-pytest-flake8-path
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 3.17.0-alt2
+- NMU: fixed FTBFS (removed pytest-flake8).
+
 * Mon Nov 17 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.17.0-alt1
 - Updated to 3.17.0.
 

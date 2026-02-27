@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.4.9
-Release: alt1
+Release: alt2
 
 Summary: Provides an RSpec inspired dsl for python tests
 License: MIT
@@ -27,12 +27,15 @@ BuildRequires: python3-module-alt-pytest-asyncio
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch0: 0001-tests-drop-deprecated-path-parameter-from-pytest_ign.patch
+Patch1: 0002-tests-explicitly-enable-alt-pytest-asyncio.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 sed -i 's|nose.plugins|nose2.plugins|g' pyproject.toml noseOfYeti/plugins/nosetests.py
 
 %build
@@ -51,5 +54,8 @@ sed -i 's|nose.plugins|nose2.plugins|g' pyproject.toml noseOfYeti/plugins/nosete
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 2.4.9-alt2
+- NMU: fixed FTBFS (pytest 9).
+
 * Mon Oct 14 2024 Alexander Burmatov <thatman@altlinux.org> 2.4.9-alt1
 - Initial build for Sisyphus.

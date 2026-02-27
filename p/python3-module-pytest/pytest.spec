@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.4.2
+Version: 9.0.2
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -72,7 +73,7 @@ export TERM=xterm
 %doc CHANGELOG.rst README.rst
 %_bindir/py.test3
 %_bindir/py.test-3
-%python3_sitelibdir/pytest/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/_pytest/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/py.py
@@ -83,6 +84,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 9.0.2-alt1
+- 8.4.2 -> 9.0.2.
+
 * Mon Oct 13 2025 Stanislav Levin <slev@altlinux.org> 8.4.2-alt1
 - 8.4.1 -> 8.4.2.
 
