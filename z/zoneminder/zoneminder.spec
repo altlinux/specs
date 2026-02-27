@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.38.1
-Release: alt2
+Release: alt3
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -29,6 +29,7 @@ Source103: %name-%version-dep-CxxUrl.tar
 BuildRequires(pre): rpm-macros-webserver-common
 Requires: libgnutls libgnutls-openssl zlib ffmpeg
 Requires: php%phpver-pdo_mysql php%phpver-openssl php%phpver-gd php%phpver-apcu php%phpver-intl
+Requires: php%phpver-sockets
 Requires: su
 Requires: perl-Data-Entropy perl-Crypt-Eksblowfish perl-Sys-Mmap webserver perl-Pod-Usage 
 Requires: perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU 
@@ -192,6 +193,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Fri Feb 27 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt3
+- added php-sockets to requires (closes: #58033)
+
 * Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt2
 - removed (again) 3gp from default configuration (closes: #46708)
 
