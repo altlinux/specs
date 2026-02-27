@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define abiversion 53
 
 Name: libfilezilla
-Version: 0.54.0
+Version: 0.54.1
 Release: alt1
 Summary: Small and modern C++ library
 License: GPL-2.0-or-later
@@ -33,10 +34,27 @@ Some of the highlights include:
 * Simple process handling for spawning child processes with redirected
   I/O.
 
+%package -n libfilezilla%abiversion
+Summary: Small and modern C++ library
+Group: System/Libraries
+%description -n libfilezilla%abiversion
+libfilezilla is a free, open source C++ library, offering some basic
+functionality to build high-performing, platform-independent programs.
+Some of the highlights include:
+
+* A typesafe, multi-threaded event system that's very simple to use yet
+  extremely efficient.
+* Timers for periodic events.
+* A datetime class that not only tracks timestamp but also their
+  accuracy, which simplifies dealing with timestamps originating from
+  different sources.
+* Simple process handling for spawning child processes with redirected
+  I/O.
+
 %package devel
 Summary: Development package for %name
 Group: Development/C++
-Requires: %name = %EVR
+Requires: libfilezilla%abiversion = %EVR
 
 %description devel
 Header files for development with %name.
@@ -69,10 +87,11 @@ find %buildroot -name '*.la' -delete
 %check
 LC_ALL=en_US.UTF-8 make check
 
-%files -f %name.lang
+%files -f %name.lang -n libfilezilla%abiversion
 %doc COPYING
 %doc AUTHORS ChangeLog NEWS README
-%_libdir/%name.so.*
+%_libdir/%name.so.%abiversion
+%_libdir/%name.so.%abiversion.*
 
 %files devel
 %doc doc/doxygen-doc/*
@@ -81,6 +100,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.54.1-alt1
+- 0.54.0 -> 0.54.1
+
 * Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.54.0-alt1
 - 0.51.1 -> 0.54.0
 
