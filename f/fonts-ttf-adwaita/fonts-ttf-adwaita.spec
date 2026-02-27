@@ -1,5 +1,5 @@
 %define _name adwaita-fonts
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 
 Name: fonts-ttf-adwaita
@@ -48,6 +48,9 @@ sed -i 's|\(fontsdir = \).*|\1'"'%_ttffontsdir/Adwaita'"'|' meson.build
 %doc README*
 
 %changelog
+* Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

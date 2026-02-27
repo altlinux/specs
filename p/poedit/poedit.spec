@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -82,6 +82,9 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Wed Jan 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

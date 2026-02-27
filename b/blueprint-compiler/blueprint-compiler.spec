@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.19
+%define ver_major 0.20
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_enable docs
@@ -13,14 +13,14 @@ Release: alt1%beta
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
 License: GPL-3.0-or-later
-Url: https://gitlab.gnome.org/jwestman/blueprint-compiler
+Url: https://gitlab.gnome.org/GNOME/blueprint-compiler
 
-Vcs: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
+Vcs: https://gitlab.gnome.org/GNOME/blueprint-compiler.git
 
 %if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version%beta.tar.bz2
+Source: %url/-/archive/v%version/%name-v%version%beta.tar.bz2
 %else
-Source: %name-%version%beta.tar
+Source: %name-v%version%beta.tar
 %endif
 
 BuildArch: noarch
@@ -40,9 +40,7 @@ BuildRequires: fontconfig at-spi2-core typelib(Adw) = 1}
 See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 
 %prep
-%setup -n %name-%version%beta
-# https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/178
-#rm -r tests/sample_errors/deprecations.*
+%setup -n %name-v%version%beta
 
 %build
 %meson \
@@ -72,6 +70,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
