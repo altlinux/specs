@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: hashsum
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 
 Summary: Check hashes for your files
@@ -67,6 +67,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas
 %nautilus_extdir/%name-extension.py
 
 %changelog
+* Fri Feb 27 2026 Alexander Davydzik <paladindev@altlinux.org> 4.0.9-alt1
+- prevent script injection in nautilus extension
+
 * Mon Dec 08 2025 Alexander Davydzik <paladindev@altlinux.org> 4.0.8-alt1
 - updated nautilus version requirement
 
