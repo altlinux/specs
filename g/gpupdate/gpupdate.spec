@@ -39,7 +39,7 @@
 %add_python3_req_skip frontend.appliers.ini_file
 
 Name: gpupdate
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 
 Summary: GPT applier
@@ -211,6 +211,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Feb 26 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.14.2-alt1
+- Fix username resolution for trusted domain users
+
 * Mon Feb 02 2026 Valery Sinelnikov <greh@altlinux.org> 0.14.1-alt1
 - Fixed:
   get_dconf_dict call without username argument
