@@ -1,6 +1,6 @@
 Name: mate-panel
 Version: 1.28.6
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop panel and applets
 License: GPLv2+
@@ -88,6 +88,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Tue Feb 24 2026 Anton Midyukov <antohami@altlinux.org> 2:1.28.6-alt2
+- panel-icon-names.h: change icon for compact menu to alt-main-menu.
+
 * Wed Sep 10 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.6-alt1
 - 1.28.6
 
