@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.22
+Release: alt0.23
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -62,6 +62,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Feb 27 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.23
+- journal: added saving to file and audit support.
+
 * Mon Jan 26 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.22
 - journal settings updated.
 
