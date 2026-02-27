@@ -3,8 +3,8 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%define api_version 6
-%define minor_version 1
+%define api_version 7
+%define minor_version 0
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -17,8 +17,8 @@ Release: alt1
 Summary: Base objects for API libraries on Vala
 License: GPL-3.0-or-later
 Group: System/Libraries
-Url: https://altlinux.space/rirusha/libapi-base
-Vcs: https://altlinux.space/rirusha/libapi-base.git
+URL: https://altlinux.space/rirusha/libapi-base
+VCS: https://altlinux.space/rirusha/libapi-base.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -57,25 +57,6 @@ Requires: %name%api_version = %EVR
 %description devel
 %summary.
 
-%package -n %name%api_version-gir
-Summary: Typelib files for %name
-Group: System/Libraries
-
-Requires: %name%api_version = %EVR
-
-%description -n %name%api_version-gir
-%summary.
-
-%package gir-devel
-Summary: Development gir files for %name for various bindings
-Group: Development/Other
-BuildArch: noarch
-
-Requires: %name%api_version-gir = %EVR
-
-%description gir-devel
-%summary.
-
 %package -n %sname%api_version
 Summary: Serialization/Deserialoztion tools for vala
 Group: Development/C
@@ -90,25 +71,6 @@ Group: Development/C
 Requires: %sname%api_version = %EVR
 
 %description -n %sname-devel
-%summary.
-
-%package -n %sname%api_version-gir
-Summary: Typelib files for %sname
-Group: System/Libraries
-
-Requires: %sname%api_version = %EVR
-
-%description -n %sname%api_version-gir
-%summary.
-
-%package -n %sname-gir-devel
-Summary: Development gir files for %sname for various bindings
-Group: Development/Other
-BuildArch: noarch
-
-Requires: %sname%api_version-gir = %EVR
-
-%description -n %sname-gir-devel
 %summary.
 
 %prep
@@ -135,12 +97,6 @@ Requires: %sname%api_version-gir = %EVR
 %_vapidir/%name-%api_version.deps
 %doc README.md
 
-%files -n %name%api_version-gir
-%_typelibdir/%gir_name-%api_version.typelib
-
-%files gir-devel
-%_girdir/%gir_name-%api_version.gir
-
 %files -n %sname%api_version
 %_libdir/%sname-%api_version.so.*
 
@@ -151,13 +107,10 @@ Requires: %sname%api_version-gir = %EVR
 %_vapidir/%sname-%api_version.vapi
 %_vapidir/%sname-%api_version.deps
 
-%files -n %sname%api_version-gir
-%_typelibdir/%gir_sname-%api_version.typelib
-
-%files -n %sname-gir-devel
-%_girdir/%gir_sname-%api_version.gir
-
 %changelog
+* Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 7.0-alt1
+- New version: 7.0.
+
 * Thu Feb 19 2026 Vladimir Romanov <rirusha@altlinux.org> 6.1-alt1
 - New version: 6.1.
 
