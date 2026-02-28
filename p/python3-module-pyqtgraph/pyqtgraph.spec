@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyqtgraph
 
-%ifarch i586
+%ifarch %ix86
 %def_disable check
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.13.7
+Version: 0.14.0
 Release: alt1
 
 Summary: Scientific Graphics and GUI Library for Python
@@ -36,6 +36,7 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-h5py
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-matplotlib-qt5
+BuildRequires: python3(colorama)
 BuildRequires: xvfb-run
 BuildRequires: python3-module-pytest-xvfb
 BuildRequires: mesa-dri-drivers
@@ -80,6 +81,9 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
+- New version (0.14.0).
+
 * Tue Sep 09 2025 Vasiliy Kovalev <kovalev@altlinux.org> 0.13.7-alt1
 - NMU: 0.12.4 -> 0.13.7.
 - spec: Disable check for i586 (caused by regression PyQt6).
