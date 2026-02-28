@@ -25,7 +25,7 @@
 %endif
 
 Name: dqt6-webengine
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -34,7 +34,7 @@ Url: http://qt.io/
 License: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 ExclusiveArch: %dqt6_qtwebengine_arches
 
-Source: %qt_module-everywhere-src-%version.tar
+Source: %qt_module-everywhere-src-%version.tar.gz
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
 Patch1: alt-ftbfs.patch
@@ -44,8 +44,8 @@ Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
 Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
-Patch15: chromium-130-size-assertions.patch
-Patch16: qtwebengine-revert-create-eglimage.patch
+Patch15: qtwebengine-add-missing-pipewire-headers.patch
+Patch16: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -56,12 +56,13 @@ Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 BuildRequires(pre): rpm-macros-dqt6-webengine
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires(pre): libavformat-devel
+BuildRequires: /proc
 BuildRequires: cmake libstdc++-devel-static
 BuildRequires: libxkbcommon-devel libxkbfile-devel
 %if_enabled system_ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libswresample-devel
 %endif
-BuildRequires: libvpx-devel
+BuildRequires: libvpx-devel libopenh264-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel libdrm-devel libgbm-devel libepoxy-devel
 BuildRequires: libgio-devel libkrb5-devel
@@ -83,7 +84,7 @@ BuildRequires: python3(json) python3(html5lib)
 BuildRequires: dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel
 BuildRequires: dqt6-declarative-devel
 BuildRequires: dqt6-websockets-devel dqt6-webchannel-devel dqt6-positioning-devel
-BuildRequires: libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quickwidgets libdqt6-quicktest libdqt6-designer libdqt6-qmlcompiler
+BuildRequires: libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quickwidgets libdqt6-quicktest libdqt6-designer libdqt6-qmlcompiler libdqt6-printsupport vulkan-headers
 #BuildRequires: dqt6-phonon-devel
 
 # find librares
@@ -208,9 +209,7 @@ Obsoletes: %name < %EVR
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-pushd src/3rdparty/chromium
 %patch15 -p1
-popd
 %patch16 -p1
 #
 #%patch200 -p1
@@ -257,9 +256,6 @@ for f in \
     src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/third_party/lighthouse/report-assets/report-generator.js \
     src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/diff/diff_match_patch.js
 do mkdir -p `dirname $f`; touch $f; done
-pushd src/3rdparty/chromium/third_party/jstemplate
-    cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
-popd
 # jQuery 
 cp %SOURCE100 examples/webenginewidgets/contentmanipulation/
 cp %SOURCE100 src/3rdparty/chromium/third_party/pycoverage/coverage/htmlfiles/
@@ -433,6 +429,15 @@ done
 %_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

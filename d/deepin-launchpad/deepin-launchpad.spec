@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.23
+Version: 2.0.27
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -28,7 +28,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libsystemd-devel dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel libdde-shell-devel deepin-shell
-BuildRequires: libdqt6-qmlcompiler libdqt6-quickcontrols2
+BuildRequires: libdqt6-qmlcompiler libdqt6-quickcontrols2 libdqt6-concurrent vulkan-headers
 
 %description
 %summary.
@@ -84,6 +84,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.27-alt1
+- New version 2.0.27.
+
 * Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.23-alt1
 - New version 2.0.23.
 

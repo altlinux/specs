@@ -7,7 +7,7 @@
 
 Name: deepin-file-manager
 Version: 6.5.110
-Release: alt1
+Release: alt2
 
 Summary: Deepin File Manager
 
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Tue Apr 01 2025
 # optimized out: boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libX11-devel libdde-shell0 libdeepin-pdfium1 libdeepin-qdbus-service0 libdfm6-burn1 libdfm6-io1 libdfm6-mount1 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdtk6widget-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libicu-devel libjson-c5 libp11-kit libpng-devel libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libpoppler2-cpp libqt6-core libqt6-gui libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-devel sh5 vulkan-headers xorg-proto-devel zlib-devel
 BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-dqt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel libdfm6-search-devel libheif-devel libappimage-devel librsvg-devel libappimage-devel-static kf6-syntax-highlighting-devel
-BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test
 BuildRequires: deepin-gettext-tools deepin-desktop-base libfreetype-devel libpng-devel
 
 %if_with clang
@@ -295,6 +295,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.110-alt2
+- Fixed build on shrinked dqt6.
+
 * Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.110-alt1
 - New version 6.5.110.
 

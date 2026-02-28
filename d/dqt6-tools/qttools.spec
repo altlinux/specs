@@ -4,7 +4,7 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -44,7 +44,7 @@ BuildRequires: dqt6-base-devel dqt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: libdqt6-quickwidgets
+BuildRequires: libdqt6-quickwidgets libdqt6-xml libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-sql libdqt6-printsupport libdqt6-openglwidgets libdqt6-quicklayouts libdqt6-qmlcompiler vulkan-headers
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
 %endif
@@ -331,6 +331,15 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

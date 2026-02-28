@@ -7,7 +7,7 @@
 
 Name: deepin-control-center
 Version: 6.1.64
-Release: alt1
+Release: alt2
 
 Summary: New control center for Linux Deepin
 
@@ -28,6 +28,7 @@ ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
 BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel
+BuildRequires: vulkan-headers libdqt6-concurrent libdqt6-test
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -151,6 +152,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.64-alt2
+- Fixed build on shrinked dqt6.
+
 * Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.64-alt1
 - New version 6.1.64.
 

@@ -4,8 +4,8 @@
 %def_without docs
 
 Name: dtkcore
-Version: 6.7.31
-Release: alt2
+Version: 6.7.33
+Release: alt1
 
 Summary: Deepin tool kit core modules
 
@@ -228,6 +228,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %endif
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
+- New version 6.7.33.
+
 * Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt2
 - Built on separate libgsettings-qt (no qt5 required).
 

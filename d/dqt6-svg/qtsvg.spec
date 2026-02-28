@@ -2,7 +2,7 @@
 %global qt_module dqtsvg
 
 Name: dqt6-svg
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires: dqt6-base-devel
+BuildRequires: libdqt6-xml
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: cmake libxkbcommon-devel zlib-devel
 
@@ -128,9 +129,18 @@ done
 %if %qdoc_found
 %_dqt6_docdir/*
 %endif
-#%_dqt6_examplesdir/*
+%_dqt6_examplesdir/*
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

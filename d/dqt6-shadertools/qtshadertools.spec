@@ -1,7 +1,8 @@
 %global qt_module dqtshadertools
+%def_enable glslang_bundle
 
 Name: dqt6-shadertools
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -15,6 +16,7 @@ Url: http://qt.io/
 License: GPL-3.0-or-later
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: qtshadertools-unbundle-glslang.patch
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -23,8 +25,15 @@ BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
 %endif
-BuildRequires: cmake gcc-c++ glibc-devel dqt6-base-devel
-BuildRequires: glslang libGLU-devel libxkbcommon-devel
+BuildRequires: /proc
+BuildRequires: cmake glibc-devel dqt6-base-devel
+BuildRequires: libdqt6-gui
+%if_disabled glslang_bundle
+BuildRequires: glslang glslang-devel libspirv-tools-devel
+%else
+BuildRequires: glslang
+%endif
+BuildRequires: libGLU-devel libxkbcommon-devel
 
 %description
 APIs and tools in this module provide the producer functionality for the shader pipeline
@@ -71,6 +80,9 @@ Requires: libdqt6-core = %_dqt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%if_disabled glslang_bundle
+%patch1 -p1
+%endif
 
 %build
 %if_enabled bootstrap
@@ -118,6 +130,15 @@ Requires: libdqt6-core = %_dqt6_version
 #%_dqt6_examplesdir/*
 
 %changelog
+* Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

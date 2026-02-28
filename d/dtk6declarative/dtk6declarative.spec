@@ -4,7 +4,7 @@
 
 Name: dtk6declarative
 Version: 6.0.48
-Release: alt1
+Release: alt2
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -34,7 +34,7 @@ BuildRequires: gcc-c++
 %endif
 #BuildRequires: doxygen graphviz dqt6-base-doc
 BuildRequires: cmake libdtk6gui-devel dqt6-tools-devel dqt6-declarative-devel dqt6-shadertools-devel
-BuildRequires: libdqt6-quickcontrols2 libdqt6-qmlcompiler
+BuildRequires: libdqt6-quickcontrols2 libdqt6-qmlcompiler vulkan-headers libwayland-client-devel
 
 Requires: libdqt6-core = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quickcontrols2 = %_dqt6_version
 
@@ -164,6 +164,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.48-alt2
+- Fixed build on shrinked dqt6.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.48-alt1
 - New version 6.0.48.
 

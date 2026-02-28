@@ -4,7 +4,7 @@
 
 Name: deepin-tray-loader
 Version: 2.0.20
-Release: alt1
+Release: alt2
 
 Summary: Tray plugins that integrated into task bar for DDE
 
@@ -20,6 +20,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel libgio-devel
 BuildRequires: dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel
+BuildRequires: vulkan-headers libdqt6-concurrent
 
 Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
@@ -167,6 +168,9 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.20-alt2
+- Fixed build on shrinked dqt6.
+
 * Fri Dec 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.20-alt1
 - New version 2.0.20.
 

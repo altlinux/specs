@@ -3,7 +3,7 @@
 %global qt_module dqt5compat
 
 Name: dqt6-5compat
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-dqt6
 BuildRequires(pre): dqt6-tools
 BuildRequires: cmake glibc-devel libxkbcommon-x11-devel libicu-devel
 BuildRequires: dqt6-base-devel dqt6-shadertools-devel dqt6-declarative-devel
-BuildRequires: libdqt6-qmlcompiler
+BuildRequires: libdqt6-qmlcompiler libdqt6-xml
 
 %description
 Porting support from Qt5 to Qt6.
@@ -116,6 +116,15 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

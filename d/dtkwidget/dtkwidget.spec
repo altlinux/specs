@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 6.7.32
+Version: 6.7.33
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -254,6 +254,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %endif
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
+- New version 6.7.33.
+
 * Mon Feb 16 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
 - New version 6.7.32.
 - Unified dtk5 and dtk6 modules.

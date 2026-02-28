@@ -6,7 +6,7 @@
 
 Name: util-dfm
 Version: 1.3.43
-Release: alt1
+Release: alt2
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
 
@@ -22,6 +22,7 @@ Patch1: util-dfm-1.3.43-alt-pkgconfig-dqt6.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel dtk6-common-devel libdtk6core-devel liblucene++-devel
+BuildRequires: libdqt6-concurrent libdqt6-widgets vulkan-headers
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -184,6 +185,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.43-alt2
+- Fixed build on shrinked dqt6.
+
 * Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.43-alt1
 - New version 1.3.43.
 

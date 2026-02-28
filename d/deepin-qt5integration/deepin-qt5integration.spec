@@ -3,8 +3,8 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 6.7.32
-Release: alt2
+Version: 6.7.33
+Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
 
@@ -111,6 +111,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_dqt6_plugindir/styles/libchameleon.so
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
+- New version 6.7.33.
+
 * Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt2
 - Built on separate libqtxdg (no qt5 required).
 

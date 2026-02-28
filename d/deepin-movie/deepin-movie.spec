@@ -1,7 +1,7 @@
 %def_with clang
 
 Name: deepin-movie
-Version: 6.5.26
+Version: 6.5.34
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -15,9 +15,9 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: %name-6.5.6-alt-cxx-flags.patch
+Patch1: %name-6.5.34-alt-cxx-flags.patch
 Patch2: %name-6.5.6-alt-pkgconfig-find-requires.patch
-Patch3: %name-6.5.22-alt-overlinked-libs.patch
+Patch3: %name-6.5.34-alt-overlinked-libs.patch
 
 #Requires: libdmr libdvdnav libgsettings-qt
 # direct dependency because dmr controls mpv via libmpv calls
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Mon Mar 10 2025
 # optimized out: alt-os-release clang19.1 clang19.1-support cmake cmake-modules dqt6-base-devel dqt6-tools glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libclang-cpp19 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-multimediawidgets libdqt6-network libdqt6-opengl libdqt6-openglwidgets libdqt6-printsupport libdqt6-qml libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdvdread-devel libglvnd-devel libgpg-error libgsettings-qt1 libmpris-dqt6-1 libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libva-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel lld19.1 llvm-common llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers xorg-proto-devel
 BuildRequires: dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel gst-plugins1.0-devel libXtst-devel dtk6-common-devel libdtk6widget-devel libdvdnav-devel libffmpegthumbnailer-devel libmpris-dqt6-devel libmpv-devel libxcbutil-devel
-BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libcups-devel libdqt6-openglwidgets libdqt6-concurrent
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -60,15 +60,10 @@ This package provides development files for libdmr.
 %if_with clang
 # build: use system opt flags.
 # The package isn't built with the patch using gcc.
-%patch1 -p1
+%patch1 -p2
 %endif
 %patch2 -p1
 %patch3 -p2
-# ffmpeg7
-sed -i 's|->channels|->ch_layout.nb_channels|g' \
-  src/libdmr/playlist_model.{cpp,h} \
-  src/libdmr/gstutils.{cpp,h} \
-  src/widgets/movieinfo_dialog.cpp
 
 %build
 %if_with clang
@@ -105,7 +100,7 @@ export CXX=g++
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.movie/
-%_datadir/dsg/configs/org.deepin.movie/org.deepin.movie.minimode.json
+%_datadir/dsg/configs/org.deepin.movie/*.json
 
 %files -n libdmr
 %_libdir/libdmr.so.0.1*
@@ -117,6 +112,9 @@ export CXX=g++
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.34-alt1
+- New version 6.5.34.
+
 * Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.26-alt1
 - New version 6.5.26.
 

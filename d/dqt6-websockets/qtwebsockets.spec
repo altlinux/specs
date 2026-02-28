@@ -3,7 +3,7 @@
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 Name: dqt6-websockets
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-dqt6
 BuildRequires(pre): dqt6-tools
 BuildRequires: cmake glibc-devel dqt6-declarative-devel
 BuildRequires: libxkbcommon-devel
-BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler
+BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler vulkan-headers
 
 %description
 QtWebSockets is a pure Qt implementation of WebSockets - both client and server.
@@ -110,6 +110,15 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %_dqt6_examplesdir/*
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

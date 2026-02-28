@@ -2,7 +2,7 @@
 
 Name: deepin-device-formatter
 Version: 1.5.11
-Release: alt1
+Release: alt2
 
 Summary: Device formatter for Deepin Desktop Environment
 
@@ -19,6 +19,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 BuildRequires: gcc-c++ cmake dqt6-base-devel dqt6-tools-devel deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libudisks2-qt6-devel libwayland-client-devel
+BuildRequires: libdqt6-concurrent vulkan-headers libcups-devel
 
 Requires: libdqt6-gui = %_dqt6_version
 #Requires: icon-theme-hicolor
@@ -50,6 +51,9 @@ export LC_ALL=C.UTF-8
 %_datadir/%repo/translations/%repo.qm
 
 %changelog
+* Sat Feb 28 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.11-alt2
+- Fixed build on shrinked dqt6.10.
+
 * Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.11-alt1
 - New version 1.5.11.
 - Fixed build on dtk 6.7.31.

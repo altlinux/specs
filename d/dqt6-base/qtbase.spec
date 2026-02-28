@@ -10,6 +10,8 @@
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 %add_findreq_skiplist %_dqt6_plugindir/platformthemes/libqgtk?.so
+%add_findreq_skiplist %_dqt6_libexecdir/*.py
+%add_findprov_skiplist %_dqt6_libexecdir/*.py
 
 %def_enable sql_pgsql
 %def_enable sql_odbc
@@ -33,8 +35,8 @@
 %define gname  dqt6
 Name: dqt6-base
 %define major  6
-Version: 6.9.3
-Release: alt0.dde.2
+Version: 6.10.2
+Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -44,8 +46,10 @@ Release: alt0.dde.2
 Group: System/Libraries
 Summary: Qt%major - QtBase components
 License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
-
 Url: http://qt.io/
+
+AutoReq: yes, nopython
+AutoProv: yes, nopython
 
 Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
@@ -54,11 +58,16 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
 Patch101: enable_skip_plugins.patch
+# upstream
+Patch200: qtbase-wayland-convey-preference-for-server-side-decorations.patch
+Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
+Patch202: qtbase-wayland-optimize-scroll-operations.patch
+Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
+Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -67,6 +76,8 @@ Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 Patch1006: alt-singleclick.patch
+Patch1007: alt-xdg-current-desktop.patch
+Patch1008: python-shebang.patch
 #
 Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
@@ -379,15 +390,34 @@ Requires: %name-common
 %description -n lib%gname-openglwidgets
 OpenGL widgets library for the Qt%major toolkit
 
+%package -n libdqt6-waylandclient
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+%description -n libdqt6-waylandclient
+%summary
+
+%package -n libdqt6-wlshellintegration
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+%description -n libdqt6-wlshellintegration
+%summary
+
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 #
 %patch100 -p1
 %patch101 -p1
+#
+%patch200 -p1
+%patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -398,6 +428,8 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1005 -p1
 %endif
 %patch1006 -p1
+%patch1007 -p1
+%patch1008 -p1
 #
 #%patch2000 -p1
 
@@ -451,6 +483,7 @@ cmake .. \
     -DINSTALL_SYSCONFDIR:STRING=%_dqt6_sysconfdir \
     -DINSTALL_TRANSLATIONSDIR:STRING=%_dqt6_translationdir \
     -DINSTALL_MKSPECSDIR:STRING=%_dqt6_mkspecsdir \
+    -DINSTALL_QT_SHAREDIR:STRING=%_dqt6_datadir \
     -DMKSPECS_INSTALL_DIR:STRING=%_dqt6_mkspecsdir \
     -DFEATURES_INSTALL_DIR:STRING=%_dqt6_mkspecsdir/features \
     \
@@ -642,7 +675,7 @@ done
 ln -s `relative %buildroot/%_dqt6_headerdir %buildroot/%_dqt6_prefix/include` %buildroot/%_dqt6_prefix/include
 
 # relax depends on sql plugins files
-for f in %buildroot/%_dqt6_libdir/cmake/Qt?Sql/Qt*DriverPluginTargets.cmake ; do
+for f in %buildroot/%_dqt6_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
     sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
 done
 
@@ -740,12 +773,15 @@ done
 %_dqt6_libexecdir/qt-testrunner.py
 %_dqt6_libexecdir/sanitizer-testrunner.py
 %_dqt6_libexecdir/tracepointgen
+%_dqt6_libexecdir/qtwaylandscanner
+%_dqt6_libexecdir/qt_cyclonedx_generator.py
 #
 %dir %_dqt6_headerdir
 %dir %_dqt6_prefix/include/
 %_dqt6_headerdir/Qt*/
 %dir %_dqt6_prefix/mkspecs/
 %_dqt6_archdatadir/mkspecs/
+%_dqt6_datadir/wayland/
 %_dqt6_prefix/lib/libQt%{major}*.prl
 %_dqt6_libdir/libQt%{major}*.prl
 %_dqt6_prefix/lib/libQt%{major}*.so
@@ -795,15 +831,19 @@ done
 %_dqt6_plugindir/sqldrivers/libqsqlite2.so
 %endif
 
+%files -n lib%gname-waylandclient
+%_dqt6_libdir/libQt6WaylandClient.so.*
+%_dqt6_plugindir/wayland-decoration-client/
+%_dqt6_plugindir/wayland-graphics-integration-client/
+%files -n lib%gname-wlshellintegration
+%_dqt6_libdir/libQt6WlShellIntegration.so.*
+%_dqt6_plugindir/wayland-shell-integration/
 %files -n lib%gname-core
 %_dqt6_libdir/libQt%{major}Core.so.*
-
 %files -n lib%gname-concurrent
 %_dqt6_libdir/libQt%{major}Concurrent.so.*
-
 %files -n lib%gname-dbus
 %_dqt6_libdir/libQt%{major}DBus.so.*
-
 %files -n lib%gname-gui
 %_dqt6_libdir/libQt%{major}Gui.so.*
 %_dqt6_plugindir/egldeviceintegrations/*
@@ -813,51 +853,58 @@ done
 %_dqt6_plugindir/platforms/*
 %_dqt6_plugindir/platformthemes/*
 %_dqt6_plugindir/xcbglintegrations/*
-
 %files -n lib%gname-network
 %_dqt6_libdir/libQt%{major}Network.so.*
 %_dqt6_plugindir/networkinformation/*
 %_dqt6_plugindir/tls/*
-
 %files -n lib%gname-opengl
 %_dqt6_libdir/libQt%{major}OpenGL.so.*
-
 %files -n lib%gname-printsupport
 %_dqt6_libdir/libQt%{major}PrintSupport.so.*
 %_dqt6_plugindir/printsupport/*
-
 %files -n lib%gname-sql
 %_dqt6_libdir/libQt%{major}Sql.so.*
 %_dqt6_plugindir/sqldrivers/libqsqlite.so
-
 %files -n lib%gname-test
 %_dqt6_libdir/libQt%{major}Test.so.*
-
 %files -n lib%gname-widgets
 %_dqt6_libdir/libQt%{major}Widgets.so.*
 #%_dqt6_plugindir/accessible/*
-
 %files -n lib%gname-xml
 %_dqt6_libdir/libQt%{major}Xml.so.*
-
 %files -n lib%gname-eglfsdeviceintegration
 %_dqt6_libdir/libQt%{major}EglFSDeviceIntegration.so.*
-
 %files -n lib%gname-xcbqpa
 %_dqt6_libdir/libQt%{major}XcbQpa.so.*
-
 %files -n lib%gname-eglfskmssupport
 %_dqt6_libdir/libQt%{major}EglFsKmsSupport.so.*
-
 %files -n lib%gname-eglfskmsgbmsupport
 %_dqt6_libdir/libQt%{major}EglFsKmsGbmSupport.so.*
-
 %files -n lib%gname-openglwidgets
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
 * Mon Feb 16 2026 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.2
 - prevent bytes written limit by hasher-privd
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt3
+- clean conflicts
+
+* Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt2
+- build docs
+- update conflicts
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
 
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version

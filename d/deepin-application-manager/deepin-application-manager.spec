@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.42
+Version: 1.2.45
 Release: alt1
 
 Summary: App manager for Deepin
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires(pre): ctest
 %endif
 BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dqt6-wayland-devel dtk6-common-devel libdtk6core-devel treeland-protocols libwayland-server-devel libwayland-egl-devel
+BuildRequires: vulkan-headers libdqt6-concurrent
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -85,8 +86,8 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_unitdir/org.desktopspec.ApplicationUpdateNotifier1.service
 %_userunitdir/org.desktopspec.ApplicationManager1.service
 %_userunitdir/dde-autostart*.service
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/org.desktopspec.ApplicationManager1.service
+%dir %_userunitdir/dde-session-core.target.wants/
+%_userunitdir/dde-session-core.target.wants/org.desktopspec.ApplicationManager1.service
 %dir %_userunitdir/app-DDE-.service.d/
 %_userunitdir/app-DDE-.service.d/override.conf
 %dir %_userunitdir/dde-session.target.wants/
@@ -112,6 +113,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.45-alt1
+- New version 1.2.45.
+
 * Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.42-alt1
 - New version 1.2.42.
 

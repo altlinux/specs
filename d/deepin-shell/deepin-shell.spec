@@ -5,7 +5,7 @@
 
 Name: deepin-shell
 Version: 2.0.27
-Release: alt1
+Release: alt2
 
 Summary: Plugins for DDE
 
@@ -21,7 +21,7 @@ Patch1: deepin-shell-2.0.3-alt-fixes-bad-symbols.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel
-BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration
+BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration vulkan-headers libdqt6-test
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -155,6 +155,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.27-alt2
+- Fixed build on shrinked dqt6.
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.27-alt1
 - New version 2.0.27.
 

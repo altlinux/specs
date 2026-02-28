@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: dtklog
-Version: 6.7.31
+Version: 6.7.33
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -132,6 +132,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
+- New version 6.7.33.
+
 * Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt1
 - New version 6.7.31.
 - Unified dtk5 and dtk6 modules.

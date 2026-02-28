@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.2.3
+Version: 0.3.2
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -17,7 +17,7 @@ Vcs: https://github.com/linuxdeepin/ddm
 # Source-url: https://github.com/linuxdeepin/ddm/archive/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: ddm-0.1.9-alt-pam.patch
+Patch1: ddm-0.3.0-alt-pam.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
 BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
@@ -38,7 +38,6 @@ The package provides data files for DDM.
 Summary: Development files for %name
 Group: Development/Other
 Requires: libddm-common-devel = %EVR
-Requires: libddm-auth-devel = %EVR
 
 %description devel
 The package provides development files for DDM.
@@ -57,20 +56,6 @@ Group: Development/C++
 %description -n libddm-common-devel
 The package provides development files for libddm-common.
 
-%package -n libddm-auth%soverda
-Summary: ddm-auth library for DDM
-Group: System/Libraries
-
-%description -n libddm-auth%soverda
-The package provides ddm-auth library for DDM.
-
-%package -n libddm-auth-devel
-Summary: Development files for libddm-auth
-Group: Development/C++
-
-%description -n libddm-auth-devel
-The package provides development files for libddm-auth.
-
 %prep
 %setup
 %autopatch -p1
@@ -85,6 +70,9 @@ export LC_ALL=C.UTF-8
 
 %install
 %DQ6install
+mkdir -p %buildroot%_localstatedir/ddm/
+mkdir -p %buildroot%_logdir/
+touch %buildroot%_logdir/ddm.log
 
 %pre
 # DDM runs as DDE user.
@@ -96,27 +84,18 @@ exit 0
 
 %files
 %doc LICENSES/ README*.md debian/changelog
-%config(noreplace) %_sysconfdir/pam.d/ddm-autologin
 %config(noreplace) %_sysconfdir/pam.d/ddm
-%config(noreplace) %_sysconfdir/pam.d/ddm-greeter
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.deepin.DisplayManager.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/ddm_org.freedesktop.DisplayManager.conf
 %_bindir/ddm
-%_libexecdir/ddm-helper
-%_libexecdir/ddm-helper-start-wayland
-%_libexecdir/ddm-helper-start-single-wayland
-%_libexecdir/ddm-helper-start-x11user
 %_unitdir/ddm.service
 %_sysusersdir/dde.conf
 %_tmpfilesdir/ddm.conf
+%attr(750,dde,dde) %dir %_localstatedir/ddm/
+%attr(600,dde,dde) %ghost %_logdir/ddm.log
 
 %files common
 %dir %_datadir/ddm/
-%dir %_datadir/ddm/flags/
-%_datadir/ddm/flags/*.png
-%dir %_datadir/ddm/faces/
-%_datadir/ddm/faces/*.icon
-%_datadir/ddm/faces/.face.icon
 %dir %_datadir/ddm/scripts/
 %_datadir/ddm/scripts/*
 
@@ -136,21 +115,9 @@ exit 0
 %dir %_libdir/cmake/DDM/
 %_libdir/cmake/DDM/Common*.cmake
 
-%files -n libddm-auth%soverda
-%_libdir/libddm-auth.so.%soverda
-%_libdir/libddm-auth.so.%version
-
-%files -n libddm-auth-devel
-%_libdir/libddm-auth.so
-%dir %_includedir/ddm/
-%dir %_includedir/ddm/auth/
-%dir %_includedir/ddm/auth/*.h
-%dir %_libdir/cmake/DDM/
-%_libdir/cmake/DDM/Auth*.cmake
-
 %changelog
-* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.3-alt1
-- New version 0.2.3.
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
 - Fixed permissions.
 
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.2-alt1

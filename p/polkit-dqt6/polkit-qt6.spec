@@ -7,7 +7,7 @@
 
 Name: polkit-dqt6
 Version: 0.175.0
-Release: alt0.dde.2
+Release: alt0.dde.3
 
 Summary: Qt 6 PolicyKit bindings fork for DDE
 License: GPL-2.0-or-later
@@ -27,6 +27,7 @@ BuildRequires: libpolkit1-devel
 BuildRequires: libvulkan-devel
 BuildPreReq: dqt6-base-devel
 # BuildPreReq: kde-common-devel
+BuildPreReq: libdqt6-dbus libdqt6-widgets
 
 %description
 Polkit-qt6 is a library that lets developers use the PolicyKit API
@@ -103,6 +104,9 @@ rm -fv html/installdox
 %_dqt6_libdir/cmake/PolkitQt6-1/
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 0.175.0-alt0.dde.3
+- fix build on shrinked dQt
+
 * Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.175.0-alt0.dde.2
 - build required packages with dQt instead default Qt
 

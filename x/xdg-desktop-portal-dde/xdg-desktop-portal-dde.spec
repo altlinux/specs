@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-dde
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
@@ -23,7 +23,8 @@ Patch1: %name-1.0.15-alt-fix-undefined-symbols.patch
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Wed Apr 30 2025
 # optimized out: bash5 bashrc cmake cmake-modules dqt6-base-common dqt6-base-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers wayland-devel xorg-proto-devel
-BuildRequires: dqt6-tools dqt6-wayland-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdtk6declarative-devel libwayland-egl-devel libwayland-server-devel treeland-protocols wlr-protocols libcups-devel wayland-protocols libdrm-devel libgbm-devel pipewire-libs-devel libdqt6-qmlcompiler
+BuildRequires: dqt6-tools dqt6-tools-devel dqt6-wayland-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdtk6declarative-devel libwayland-egl-devel libwayland-server-devel treeland-protocols wlr-protocols libcups-devel wayland-protocols libdrm-devel libgbm-devel pipewire-libs-devel libdqt6-qmlcompiler
+BuildRequires: libdqt6-concurrent
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -80,6 +81,9 @@ export READELF="llvm-readelf"
 %_libdir/libxdg-desktop-portal-dde-wayland.so
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.3-alt1
+- New version 1.1.3.
+
 * Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
 - New version 1.1.1.
 

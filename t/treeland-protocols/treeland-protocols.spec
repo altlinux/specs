@@ -1,5 +1,5 @@
 Name: treeland-protocols
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: Wayland protocol extensions for treeland
@@ -43,6 +43,9 @@ sed -i 's|${pc_sysrootdir}||' \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+
 * Fri Dec 19 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.2-alt1
 - New version 0.5.2.
 

@@ -2,7 +2,7 @@
 %global qt_module dqtwayland
 
 Name: dqt6-wayland
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -10,16 +10,15 @@ Summary: Qt6 - Wayland platform support and QtCompositor module
 Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
-Source: %qt_module-everywhere-src-%version.tar
-
 Requires: libdqt6-waylandcompositor
 Requires: libdqt6-waylandclient
-Requires: libdqt6-waylandeglclienthwintegration
 Requires: libdqt6-waylandeglcompositorhwintegration
 Requires: libdqt6-wlshellintegration
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
+
+Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
@@ -50,7 +49,7 @@ AutoReq: no
 Requires: %name-common
 Requires: libwayland-client-devel libwayland-cursor-devel
 Requires: dqt6-base-devel
-Requires: libdqt6-waylandeglclienthwintegration libdqt6-wlshellintegration
+Requires: libdqt6-waylandclient
 %description devel
 %summary.
 
@@ -142,12 +141,14 @@ Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-waylandcompositorwlshell
 %summary
 
-%package -n libdqt6-waylandCompositorxdgshell
+%package -n libdqt6-waylandcompositorxdgshell
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
-%description -n libdqt6-waylandCompositorxdgshell
+Provides: libdqt6-waylandCompositorxdgshell = %EVR
+Obsoletes: libdqt6-waylandCompositorxdgshell < %EVR
+%description -n libdqt6-waylandcompositorxdgshell
 %summary
 
 %prep
@@ -156,6 +157,10 @@ Requires: libdqt6-core = %_dqt6_version
 #for d in gl nogl; do
 #mkdir $d
 #done
+
+# fix extension and protocol detection on dqt6
+sed -i 's|qt6/wayland|dqt6/wayland|g' \
+    cmake/QtWaylandSetup.cmake
 
 %build
 %DQ6build \
@@ -191,7 +196,7 @@ done
 %_dqt6_libdir/libQt6WaylandCompositorPresentationTime.so.*
 %files -n libdqt6-waylandcompositorwlshell
 %_dqt6_libdir/libQt6WaylandCompositorWLShell.so.*
-%files -n libdqt6-waylandCompositorxdgshell
+%files -n libdqt6-waylandcompositorxdgshell
 %_dqt6_libdir/libQt6WaylandCompositorXdgShell.so.*
 %files -n libdqt6-waylandcompositor
 %_dqt6_libdir/libQt?WaylandCompositor.so.*
@@ -199,37 +204,20 @@ done
 %dir %_dqt6_plugindir/wayland-graphics-integration-server/
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-dmabuf-server-buffer.so
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-drm-egl-server-buffer.so
-%_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-linux-dmabuf-unstable-v1.so
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-shm-emulation-server.so
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-vulkan-server.so
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-wayland-eglstream-controller.so
-%files -n libdqt6-waylandclient
-%dir %_dqt6_qmldir/QtWayland/
-%_dqt6_libdir/libQt?WaylandClient.so.*
-%dir %_dqt6_plugindir/platforms/
-%_dqt6_plugindir/platforms/libqwayland-generic.so
-%_dqt6_plugindir/wayland-decoration-client/
-%_dqt6_plugindir/wayland-shell-integration/libfullscreen-shell-v1.so
-%_dqt6_plugindir/wayland-shell-integration/libivi-shell.so
+#
 %_dqt6_plugindir/wayland-shell-integration/libqt-shell.so
-%_dqt6_plugindir/wayland-shell-integration/libxdg-shell.so
+%_dqt6_plugindir/wayland-shell-integration/libivi-shell.so
 %_dqt6_qmldir/QtWayland/Client/
-%dir %_dqt6_plugindir/wayland-graphics-integration-client/
-%_dqt6_plugindir/wayland-graphics-integration-client/lib*server*.so
-%files -n libdqt6-waylandeglclienthwintegration
-%_dqt6_libdir/libQt?WaylandEglClientHwIntegration.so.*
-%_dqt6_plugindir/platforms/libqwayland-egl.so
-%_dqt6_plugindir/wayland-graphics-integration-client/lib*plugin*.so
+
 %files -n libdqt6-waylandeglcompositorhwintegration
 %_dqt6_libdir/libQt?WaylandEglCompositorHwIntegration.so.*
 %_dqt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-wayland-egl.so
-%files -n libdqt6-wlshellintegration
-%_dqt6_libdir/libQt?WlShellIntegration.so.*
-%_dqt6_plugindir/wayland-shell-integration/libwl-shell-plugin.so
 
 %files devel
 %doc LICENSES/*
-%_dqt6_libexecdir/qtwaylandscanner
 %_dqt6_headerdir/Qt*/
 %_dqt6_libdir/libQt*.so
 %_dqt6_libdatadir/libQt*.so
@@ -248,6 +236,16 @@ done
 %endif
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+- update requires on devel subpackage
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

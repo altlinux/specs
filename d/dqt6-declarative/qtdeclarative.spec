@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -47,6 +47,8 @@ Source1: dqml6
 Source2: dqml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
+# FC
+Patch1: qtdeclarative-quickshapes-make-module-public.patch
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -63,6 +65,7 @@ Source4: find-requires.sh
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel dqt6-base-devel dqt6-shadertools-devel
+BuildRequires: libdqt6-widgets libdqt6-openglwidgets libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test vulkan-headers
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
@@ -138,7 +141,7 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-quicktest
 Group: System/Libraries
 Summary: Qt6 - library
-Provides: dqml(Qt.test.qtestroot)
+Provides: dqml6(Qt.test.qtestroot)
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-quicktest
@@ -440,9 +443,26 @@ Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-quickcontrols2fluentwinui3styleimpl
 %summary
 
+%package -n libdqt6-quickshapesdesignhelpers
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-quickshapesdesignhelpers
+%summary
+
+%package -n libdqt6-labssynchronizer
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-labssynchronizer
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
+%patch1 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -522,6 +542,11 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %endif
 %_dqt6_examplesdir/*
 
+%files -n libdqt6-labssynchronizer
+%_dqt6_libdir//libQt6LabsSynchronizer.so.*
+%_dqt6_qmldir/Qt/labs/synchronizer/
+%files -n libdqt6-quickshapesdesignhelpers
+%_dqt6_libdir//libQt6QuickShapesDesignHelpers.so.*
 %files -n libdqt6-qml
 %_dqt6_libdir/libQt?Qml.so.*
 %_dqt6_qmldir/QML/
@@ -686,6 +711,15 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 

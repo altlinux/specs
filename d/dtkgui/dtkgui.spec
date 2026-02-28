@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 6.7.32
-Release: alt2
+Version: 6.7.33
+Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -37,7 +37,7 @@ BuildRequires: extra-cmake-modules dqt5-base-devel-static dqt5-svg-devel dqt5-wa
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: dqt6-base-devel dqt6-wayland-devel libdtk6core-devel libdqt6-waylandclient libdqt6-widgets libdqt6-concurrent
+BuildRequires: dqt6-base-devel dqt6-wayland-devel libdtk6core-devel libdqt6-waylandclient libdqt6-widgets libdqt6-concurrent vulkan-headers
 # waiting Qt6XdgIconLoaderConfig.cmake
 # BuildRequires: libdqt6xdg-devel
 
@@ -183,6 +183,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_libdir/libdtk6gui.so
 
 %changelog
+* Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
+- New version 6.7.33.
+
 * Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt2
 - Built on separate libqtxdg.
 

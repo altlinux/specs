@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_dqt6_examplesdir/*
 
 Name: dqt6-webchannel
-Version: 6.9.3
+Version: 6.10.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-macros-dqt6
 BuildRequires: cmake glibc-devel dqt6-base-devel
 BuildRequires: dqt6-websockets-devel dqt6-declarative-devel
 BuildRequires(pre): dqt6-tools
-BuildRequires(pre): libdqt6-qmlcompiler libdqt6-quicktest
+BuildRequires(pre): libdqt6-qmlcompiler libdqt6-quicktest libdqt6-concurrent vulkan-headers
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -130,6 +130,15 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
 - merge with new version
 
