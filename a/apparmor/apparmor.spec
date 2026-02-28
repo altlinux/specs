@@ -10,7 +10,7 @@
 %def_with python
 
 Name: apparmor
-Version: 4.1.4
+Version: 4.1.6
 Release: alt1
 
 Summary: Name-based Mandatory Access Control
@@ -283,7 +283,9 @@ make -C profiles check-parser
 %python3_sitelibdir_noarch/apparmor-%version-py3*.egg-info
 
 %files -n python3-module-libapparmor
-%python3_sitelibdir/LibAppArmor
+%python3_sitelibdir/LibAppArmor.py
+%python3_sitelibdir/_LibAppArmor.cpython-3*.so
+%python3_sitelibdir/__pycache__/LibAppArmor.cpython-3*.pyc
 %python3_sitelibdir/LibAppArmor-%version-py3*.egg-info
 %endif
 
@@ -294,6 +296,9 @@ make -C profiles check-parser
 %endif
 
 %changelog
+* Sat Feb 28 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.6-alt1
+- NMU: new version 4.1.6.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.4-alt1
 - NMU: new version 4.1.4.
 

@@ -2,8 +2,8 @@
 
 %global import_path github.com/cespare/reflex
 Name: reflex
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Summary: Run a command when files change
 License: MIT
@@ -46,6 +46,9 @@ install -pDm 644 %SOURCE2 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sat Feb 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt2
 - Exclude loongarch64 and riscv64 arches as not buildable.
 

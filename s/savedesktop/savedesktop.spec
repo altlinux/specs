@@ -3,8 +3,8 @@
 %def_with check
 
 Name: savedesktop
-Version: 3.8.1
-Release: alt2
+Version: 4.0
+Release: alt1
 
 Summary: Save your desktop configuration
 License: GPL-3.0-or-later
@@ -76,7 +76,6 @@ sed -i "s|/data/screenshots/||g" README.md
 %doc README.md data/screenshots/*.png
 %_bindir/savedesktop
 %_desktopdir/io.github.vikdevelop.SaveDesktop.desktop
-%_datadir/dbus-1/services/io.github.vikdevelop.SaveDesktop.service
 %_datadir/glib-2.0/schemas/io.github.vikdevelop.SaveDesktop.gschema.xml
 %_iconsdir/hicolor/scalable/apps/io.github.vikdevelop.SaveDesktop.Devel.svg
 %_iconsdir/hicolor/scalable/apps/io.github.vikdevelop.SaveDesktop.svg
@@ -88,6 +87,9 @@ sed -i "s|/data/screenshots/||g" README.md
 %_datadir/savedesktop/*
 
 %changelog
+* Sat Feb 28 2026 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Sun Jan 18 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.1-alt2
 - Explicitly require all the executables which are used by the package.
 
