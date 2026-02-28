@@ -1,12 +1,13 @@
 %add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
-Version: 0.10.1
-Release: alt6.1
+Version: 0.10.2
+Release: alt1
 
 Summary: The Linux Infrared Remote Control package
 License: GPL-2.0-or-later and MIT
 Group: System/Base
-Url: http://www.lirc.org
+Url: https://www.lirc.org
+VCS: https://git.code.sf.net/p/lirc/git
 
 Source: %name-%version.tar
 Source1: lircd
@@ -17,7 +18,6 @@ Source5: confs_by_driver.yaml
 
 Patch1: lirc-0.10.1-disable-getconfig.patch
 Patch2: lirc-0.10.1-alt-sysmacros.patch
-Patch3: lirc-0.10.1-yaml6-compat.patch
 
 Obsoletes: %name-remotes
 
@@ -51,7 +51,7 @@ Development library for LIRC
 Summary: LIRC Configuration Tools and Data
 Requires: lirc = %version-%release
 Group: System/Base
-Requires: python3-module-pygobject3-pygtkcompat
+Requires: python3-module-pygobject3
 Requires: python3-module-yaml
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/lirc
@@ -64,7 +64,6 @@ LIRC configuration process.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %add_optflags -I%_includedir/libftdi
@@ -97,8 +96,6 @@ ln -sf `readlink %buildroot%_bindir/lirc-setup|sed 's,3\...,3,'` %buildroot%_bin
 mkdir -p %buildroot%python3_sitelibdir/lirc
 cp %buildroot%_datadir/lirc/python-pkg/config.py %buildroot%python3_sitelibdir/lirc
 
-
-
 %triggerun -- lirc < 0.9.2
 if [ $2 -gt 0 ] && [ $1 -gt 0 ] && [ -f /etc/lircd.conf ]; then
 # This is upgrade.
@@ -107,7 +104,6 @@ if [ $2 -gt 0 ] && [ $1 -gt 0 ] && [ -f /etc/lircd.conf ]; then
 	mv /etc/lircd.conf /etc/lirc/lircd.conf.d/lircd-saved.conf ||:
 	%post_service lircd
 fi
-
 
 %pre
 /usr/sbin/groupadd -r -f %name &> /dev/null ||:
@@ -119,7 +115,7 @@ fi
 %preun_service lircd
 
 %files
-%doc NEWS doc/irxevent.keys doc/html configs contrib
+%doc NEWS doc/irxevent.keys configs contrib
 %config(noreplace) %_sysconfdir/sysconfig/lircd
 %config(noreplace) %_sysconfdir/lirc/*
 %dir %_sysconfdir/lirc
@@ -164,12 +160,14 @@ fi
 %_mandir/man1/lirc-config-tool*
 %_mandir/man1/lirc-setup*
 %_datadir/lirc/configs
-%_datadir/lirc/lirc.hwdb
 %_datadir/lirc/python-pkg
 %python3_sitelibdir/lirc
 %python3_sitelibdir/lirc-setup
 
 %changelog
+* Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 0.10.2-alt1
+- 0.10.1 -> 0.10.2
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.10.1-alt6.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
