@@ -5,7 +5,7 @@
 
 # rt-tests is taken by perl tests for RT
 Name:    linux-rt-tests
-Version: 2.9
+Version: 2.10
 Release: alt1
 Summary: Programs that test various rt-linux features
 License: GPL-2.0-or-later
@@ -44,6 +44,9 @@ vm-run --kvm=cond %buildroot%_bindir/cyclictest -m -Sp99 -t  -D60 -q
 %_man8dir/*.8*
 
 %changelog
+* Sat Feb 28 2026 Vitaly Chikunov <vt@altlinux.org> 2.10-alt1
+- Update to v2.10 (2026-02-27).
+
 * Fri Jul 04 2025 Vitaly Chikunov <vt@altlinux.org> 2.9-alt1
 - Update to v2.9 (2025-07-01).
 
