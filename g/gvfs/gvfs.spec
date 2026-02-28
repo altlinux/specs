@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -563,6 +563,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.2-alt1
+- 1.58.2 (fixed CVE-2026-28295, CVE-2026-28296)
+
 * Sat Jan 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.1-alt1
 - 1.58.1
 
