@@ -1,7 +1,8 @@
+%define abiversion 0
 %def_disable bootstrap
 
 Name: libcap-ng
-Version: 0.9
+Version: 0.9.1
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -73,12 +74,12 @@ touch NEWS
 %autoreconf
 %if_disabled bootstrap
 
-%configure --libdir=/%_lib
+%configure  --disable-static
 %make_build PYLIBVER=python%_python3_version%_python3_abiflags
 
 %else
 
-%configure --libdir=/%_lib --with-python3=no
+%configure --with-python3=no --disable=static
 %make_build
 
 %endif
@@ -86,28 +87,13 @@ touch NEWS
 %install
 %makeinstall_std
 
-# Move the symlink
-rm -f %buildroot/%_lib/%name.so
-rm -f %buildroot/%_lib/libdrop_ambient.so
-mkdir -p %buildroot%_libdir
-VLIBNAME=$(ls %buildroot/%_lib/%name.so.*.*.*)
-VLIBNAME_DROP=$(ls %buildroot/%_lib/libdrop_ambient.so.*.*.*)
-LIBNAME=$(basename $VLIBNAME)
-LIBDROP_NAME=$(basename $VLIBNAME_DROP)
-ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/%name.so
-ln -s ../../%_lib/$LIBDROP_NAME %buildroot%_libdir/libdrop_ambient.so
-
-# Move the pkgconfig file
-mv %buildroot/%_lib/pkgconfig %buildroot%_libdir
-
-# Remove a couple things so they don't get picked up
-rm -f %buildroot/%_lib/*.{a,la}
-rm -f %buildroot%python3_sitelibdir/*.{a,la}
 
 %files
 %doc COPYING.LIB
-/%_lib/libcap-ng.so.*
-/%_lib/libdrop_ambient.so.*
+%_libdir/libcap-ng.so.%abiversion.*
+%_libdir/libdrop_ambient.so.%abiversion.*
+%_libdir/libcap-ng.so.%abiversion
+%_libdir/libdrop_ambient.so.%abiversion
 
 %files devel
 %_man3dir/*
@@ -131,6 +117,10 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %endif
 
 %changelog
+* Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 0.9.1-alt1
+- 0.9 -> 0.9.1
+- library moved from /%_lib to %_libdir
+
 * Mon Jan 12 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9-alt1
 - NMU: Updated to 0.9.
 
