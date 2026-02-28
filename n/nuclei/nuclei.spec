@@ -3,7 +3,7 @@
 
 Name: nuclei
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: Nuclei is a modern vulnerability scanner built on a simple YAML-based DSL
 
@@ -16,6 +16,7 @@ ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Patch: nuclei-3.7.0-build.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -28,6 +29,7 @@ APIs, networks, DNS, and cloud configurations.
 
 %prep
 %setup -a1
+%patch -p0
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -50,6 +52,9 @@ export IGNORE_SOURCES=1
 %_bindir/nuclei
 
 %changelog
+* Sat Feb 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.7.0-alt2
+- fixed FTBFS
+
 * Fri Jan 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.7.0-alt1
 - 3.6.2 -> 3.7.0
 
