@@ -87,6 +87,7 @@
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
 %vulkan_drivers_add imagination
+%vulkan_drivers_add kosmickrisp
 %endif
 %ifarch loongarch64
 # LS7A1000 and LS7A2000 chipsets, and Loongson SoCs have vivante GPU
@@ -94,8 +95,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 25.3
-%define ver_minor 6
+%define ver_major 26.0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -300,7 +301,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay, screenshot' \
-	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec' \
+	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec, mpeg12dec, jpegdec' \
 %ifarch x86_64
 	-Dintel-rt=true \
 %endif
@@ -472,6 +473,8 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_broadcom.so
 %_libdir/libvulkan_panfrost.so
 %_libdir/libvulkan_powervr_mesa.so
+%_libdir/libvulkan_kosmickrisp.so
+%_datadir/vulkan/icd.d/kosmickrisp_mesa_icd*.json
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
@@ -481,6 +484,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Feb 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.1-alt1
+- 26.0.1
+
 * Tue Feb 24 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.6-alt1
 - 25.3.6
 
