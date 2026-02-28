@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.15.0
+Version:    4.16.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -14,7 +14,7 @@ Source0:    %name-%version.tar
 Patch:      %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-flit-core
 
 %description
 rivalcfg is a small CLI utility program that allows you to configure
@@ -23,8 +23,6 @@ SteelSeries Rival gaming mice on Linux.
 %prep
 %setup
 %patch -p1
-
-sed -i 's|#!/usr/bin/env python|&3|' setup.py
 
 %build
 %pyproject_build
@@ -48,6 +46,10 @@ touch %buildroot%_udevrulesdir/99-steelseries-rival.rules
 
 
 %changelog
+* Sat Feb 28 2026 L.A. Kostis <lakostis@altlinux.ru> 4.16.0-alt1
+- 4.16.0.
+- BR: added flit-core.
+
 * Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15.0-alt1
 - 4.15.0.
 
