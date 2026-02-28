@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usbutils
-Version: 018
+Version: 019
 Release: alt2
 
 Summary: Linux USB utilities
@@ -42,6 +42,13 @@ rm -f %buildroot%_pkgconfigdir/*.pc
 %doc NEWS README.md
 
 %changelog
+* Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 019-alt2
+- Applied upstream patch:
+  + lsusb.c: fix typo dwMaxiumumClock.
+
+* Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 019-alt1
+- New version 019.
+
 * Fri Mar 07 2025 Anton Midyukov <antohami@altlinux.org> 018-alt2
 - NMU: enable usbreset
 
