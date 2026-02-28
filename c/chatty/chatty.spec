@@ -3,10 +3,10 @@
 %define _name Chatty
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.8
-%define tag_ver 1f9bf31f0b67edbb24d439311aec8a0213d3bee9
+%define tag_ver 8fcf8387917bf9d25a005c9e6b506026e77a4876
 %define rdn_name sm.puri.%_name
 %define rdn_name1 sm.puri.%name
-%define cmatrix_ver 0.0.3
+%define cmatrix_ver 0.0.4
 
 %def_enable purple
 %ifarch armh
@@ -18,7 +18,7 @@
 %endif
 
 Name: chatty
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
@@ -33,7 +33,8 @@ Source: https://gitlab.gnome.org/World/Chatty/-/archive/v%version/%name-v%versio
 %else
 Source: %name-%version.tar
 %endif
-Source1: libcmatrix-%cmatrix_ver.tar
+# https://source.puri.sm/Librem5/libcmatrix.git
+Source1: libcmatrix-v%cmatrix_ver.tar.gz
 
 %define glib_ver 2.78
 %define gtk4_ver 4.12
@@ -65,6 +66,7 @@ BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %desktop_ver
 BuildRequires: libfeedback-devel
 BuildRequires: pkgconfig(mm-glib)
 BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(libsystemd)
 %{?_enable_purple:BuildRequires: libpurple-devel}
 %{?_enable_check:BuildRequires: xvfb-run gnupg2}
 # for libcmatrix subproject
@@ -80,7 +82,7 @@ supporting SMS, MMS, XMPP and matrix.
 
 %prep
 %setup -n %{?_enable_snapshot:%name-%version}%{?_disable_snapshot:%_name-v%version-%tag_ver} -a1
-mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
+mv libcmatrix-v%cmatrix_ver subprojects/libcmatrix
 
 %build
 %meson
@@ -99,6 +101,7 @@ xvfb-run %__meson_test
 %files -f %name.lang
 %_sysconfdir/xdg/autostart/%rdn_name-daemon.desktop
 %_bindir/%name
+%_userunitdir/%rdn_name-daemon.service
 %_desktopdir/%rdn_name.desktop
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -106,8 +109,10 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/bash-completion/completions/%name
 
-
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
+- 0.8.9
+
 * Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 
