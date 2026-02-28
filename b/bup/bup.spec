@@ -1,8 +1,12 @@
+%ifarch %e2k
+%def_disable doc
+%else
 %def_enable doc
+%endif
 
 Name:     bup
 Version:  0.33.10
-Release:  alt1
+Release:  alt2
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -133,9 +137,14 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %_unitdir/bup-web.service
 %if_enabled doc
 %_man1dir/bup-web.1*
+%_man5dir/bup-config.5*
 %endif
 
 %changelog
+* Sat Feb 28 2026 Michael Shigorin <mike@altlinux.org> 0.33.10-alt2
+- E2K: skip docs (no pandoc yet).
+- bup-config(5) packaged.
+
 * Thu Jan 29 2026 Andrey Cherepanov <cas@altlinux.org> 0.33.10-alt1
 - New version.
 
