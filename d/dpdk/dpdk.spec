@@ -9,7 +9,7 @@
 %def_enable afxdp
 
 Name: dpdk
-Version: 23.11.5
+Version: 23.11.6
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -17,6 +17,7 @@ Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
 
 Source: %name-%version.tar
+Source999: watch
 
 Patch0001: 0001-Do-not-redefine-strlcpy-and-strlcat.patch
 
@@ -159,6 +160,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 23.11.6-alt1
+- 23.11.5 -> 23.11.6
+
 * Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 23.11.5-alt1
 - Update to LTS release 23.11.5.
 
