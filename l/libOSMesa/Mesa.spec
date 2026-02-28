@@ -2,7 +2,7 @@
 
 Name: libOSMesa
 Version: 25.0.7
-Release: alt2
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: Mesa offscreen rendering libraries
@@ -28,6 +28,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-mako
 BuildRequires: python3-module-pycparser
 BuildRequires: python3-module-yaml
+BuildRequires: python3(packaging)
 
 %description
 %summary.
@@ -101,6 +102,9 @@ rm -rf %buildroot%_includedir/KHR
 %_pkgconfigdir/osmesa.pc
 
 %changelog
+* Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 4:25.0.7-alt3
+- Add BR on python3(packaging) (fix FTBFS).
+
 * Thu Aug 14 2025 Anton Midyukov <antohami@altlinux.org> 4:25.0.7-alt2
 - initial build libOSMesa-devel for compatibility only
 
