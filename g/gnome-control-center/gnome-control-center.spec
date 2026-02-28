@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -235,6 +235,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 49.5-alt1
+- 49.5
+
 * Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 
