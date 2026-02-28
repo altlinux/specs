@@ -1,9 +1,9 @@
 %add_optflags %optflags_shared
-%define soname 19
+%define soname 20
 
 Name: dcmtk
-Version: 3.6.9
-Release: alt3
+Version: 3.7.0
+Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -12,12 +12,6 @@ Group: Graphics
 Url: https://dcmtk.org/dcmtk.php.en
 VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
-Patch0: dcmtk-3.6.6-upstream-cve-2024-52333.patch
-Patch1: dcmtk-3.6.9-upstream-cve-2025-2357.patch
-Patch2: dcmtk-3.6.9-upstream-cve-2025-25472.patch
-Patch3: dcmtk-3.6.9-upstream-cve-2025-25474.patch
-Patch4: dcmtk-3.6.9-upstream-cve-2025-25475.patch
-Patch5: dcmtk-3.6.9-upstream-cve-2025-9732.patch
 
 Requires: lib%name%soname = %EVR
 BuildRequires: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
@@ -55,7 +49,6 @@ NB: a project using tuples from this library will fail to build
 
 %prep
 %setup
-%autopatch -p1
 %ifarch %e2k
 sed -i '/"fenv.h" HAVE_FENV_H/d' CMake/GenerateDCMTKConfigure.cmake
 # unportable magic with va_args
@@ -103,6 +96,9 @@ sed -i -E '/ofstd_(std_|tuple)/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 3.7.0-alt1
+- 3.6.9 -> 3.7.0
+
 * Mon Sep 15 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.9-alt3
 - Fixes:
   + CVE-2025-9732 Out-of-bounds Write
