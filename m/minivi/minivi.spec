@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.11.0
+Version: 0.12.1
 Release: alt1
 
 Summary: A small application for viewing images
@@ -11,9 +11,8 @@ Url: https://altlinux.space/shad/minivi
 Vcs: https://altlinux.space/shad/minivi
 
 Source: %name-%version.tar
-Source1: minivi.desktop
 
-Requires: libwebp-tools
+Requires: libwebp-tools ImageMagick-tools
 
 BuildRequires: lazarus
 
@@ -21,31 +20,36 @@ BuildRequires: lazarus
 A small application for viewing images.
 Everything is minimalistic.
 Functionality:
-    closing the application by pressing Esc / Q / Ctrl + Q
-    opening images, both when associating files and from the application by pressing Ctrl + O / O
-    setting an image as a desktop background by pressing W
-    deleting an image by pressing Del / D
-    calling help by pressing F1
-    switch images with arrows
+	- closing the application by pressing Esc / Q / Ctrl + Q
+	- opening images, both when associating files and from the application by pressing Ctrl + O / O
+	= setting an image as a desktop background by pressing W
+	- information about the image I
+	- deleting an image by pressing Del / D
+	- calling help by pressing F1
+	- switch images using arrows or the right/left mouse button
+	- zoom/unzoom using the mouse wheel, or +/- (may not work in tiling)
 
 %prep
 %setup
+subst 's|~/.local/bin|%buildroot%_bindir|' Makefile
+subst 's|~/.local/share|%buildroot%_datadir|' Makefile
 
 %build
-lazbuild src/minivi.lpi
+make build
 
 %install
-install -D src/%name %buildroot%_bindir/%name
-install -Dm 0644 src/%name.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
-install -Dm 0644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
+make install
 
 %files
+%doc README.md
 %_bindir/%name
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_datadir/applications/%name.desktop
-%doc README.md
 
 %changelog
+* Sat Feb 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.1-alt1
+- 0.11.0 -> 0.12.1
+
 * Mon Feb 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.11.0-alt1
 - 0.10.5 -> 0.11.0
 
