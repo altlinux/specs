@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.61
+%define ver_major 2.62
 %define namespace Rsvg
 %define api_ver 2.0
 %define gtk_api_ver 2.0
@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -35,7 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 # since 2.55 no longer contains vendored Rust dependencies
 %{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
-%define rust_ver 1.85.1
+%define rust_ver 1.92.0
 %define cargo_c_ver 0.10.10
 %define glib_ver 2.52.0
 %define pango_ver 1.46
@@ -207,6 +207,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.0-alt1
+- 2.62.0
+
 * Sat Feb 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.4-alt1
 - 2.61.4
 

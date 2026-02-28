@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.6.1
+Version: 2.7
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -83,7 +83,7 @@ ExifTool.
 
 %install
 %meson_install
-install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
+#install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 
 %find_lang %name
 
@@ -110,16 +110,16 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_libdir/%name/lensID
 %_libdir/%name/resize-help.sh
 %_desktopdir/%rdn_name.desktop
-%_desktopdir/org.geeqie.cache-maintenance.desktop
-%_pixmapsdir/%name.png
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/%name.1.*
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/bash-completion/completions/%name
 %doc NEWS README.*
 
 %changelog
+* Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.7-alt1
+- 2.7
+
 * Tue Jun 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
