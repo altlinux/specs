@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 148.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -382,6 +382,9 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Sat Feb 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0-alt2
+- Update l10n for the 148.
+
 * Wed Feb 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0-alt1
 - New version.
 - Fixes:
