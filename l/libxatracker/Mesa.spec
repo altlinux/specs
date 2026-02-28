@@ -2,7 +2,7 @@
 
 Name: libxatracker
 Version: 25.1.9
-Release: alt2
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: Mesa XA state tracker
@@ -19,6 +19,7 @@ BuildRequires: libdrm-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-mako
 BuildRequires: python3-module-yaml
+BuildRequires: python3(packaging)
 BuildRequires: zlib-devel
 BuildRequires: llvm-devel
 
@@ -91,5 +92,8 @@ rm -rf %buildroot%_includedir/KHR
 %_pkgconfigdir/xatracker.pc
 
 %changelog
+* Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 4:25.1.9-alt3
+- add BR on python3(packaging) (fix FTBFS).
+
 * Fri Dec 12 2025 Anton Midyukov <antohami@altlinux.org> 4:25.1.9-alt2
 - Initial build from old Mesa.
