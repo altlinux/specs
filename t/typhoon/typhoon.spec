@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: typhoon
-Version: 1.7.1
-Release: alt2
+Version: 1.7.2
+Release: alt1
 
 Summary: Stylish weather app based on Stormcloud
 License: GPL-3.0-or-later
@@ -95,6 +95,9 @@ mkdir -p %buildroot%perl_vendor_autolib/%name
 %endif
 
 %changelog
+* Sun Mar 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.2-alt1
+- New version 1.7.2.
+
 * Wed Feb 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.1-alt2
 - Corrected license, require PyQt6 and PyQt6-WebEngine python3 modules.
 
