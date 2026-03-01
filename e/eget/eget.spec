@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.17
+Version: 7.18
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,14 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sun Mar 01 2026 Vitaly Lipatov <lav@altlinux.ru> 7.18-alt1
+- eget: get_urls: filter out ../ and ./ entries from HTML directory listings
+- eget: support multiple files in EGET_IPFS_DB
+- eget: fix missing $CID argument in put_cid_and_url
+- eget: fix -N/--timestamping with -O for wget backend
+- eget: use nanosecond integer timing in speedtest
+- eget: fix division by zero in __calc_avg_filtered for speedtest
+
 * Fri Feb 20 2026 Vitaly Lipatov <lav@altlinux.ru> 7.17-alt1
 - eget: support HTTP/2 in URL accessibility checks
 - eget: add --get-filesize option and url_get_size() function
