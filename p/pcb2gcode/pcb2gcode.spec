@@ -1,14 +1,14 @@
 Name: pcb2gcode
-Version: 2.5.0
+Version: 3.0.1
 Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
-
 Group: Engineering
-License: GPLv3+
-Url: https://github.com/pcb2gcode/pcb2gcode/
-Packager: Anton Midyukov <antohami@altlinux.org>
+License: GPL-3.0-or-later
+URL: https://github.com/pcb2gcode/pcb2gcode
+VCS: https://github.com/pcb2gcode/pcb2gcode
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 # Tests fails
 ExcludeArch: %ix86 %arm
@@ -47,6 +47,9 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS -I%_includedir/librsvg-2.0"
 %doc AUTHORS README.md
 
 %changelog
+* Sun Mar 01 2026 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Fri Oct 07 2022 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
 
