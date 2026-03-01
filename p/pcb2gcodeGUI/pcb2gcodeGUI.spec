@@ -1,17 +1,24 @@
 Name: pcb2gcodeGUI
-Version: 1.3.3
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: A GUI for pcb2gcode
-
 Group: Engineering
-License: GPLv3+
-Url: https://github.com/pcb2gcode/pcb2gcodeGUI/
-Packager: Anton Midyukov <antohami@altlinux.org>
+License: GPL-3.0-or-later
+URL: https://github.com/pcb2gcode/pcb2gcodeGUI
+VCS: https://github.com/pcb2gcode/pcb2gcodeGUI
 
 Source: %name-%version.tar
 #Source1: http://findicons.com/icon/download/177847/pcb/128/png
 Source1: pcb.png
-BuildRequires: gcc-c++ pkgconfig(Qt5) pkgconfig(Qt5Core) pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) desktop-file-utils ImageMagick-tools
+Patch: %name-%version-%release.patch
+
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: desktop-file-utils
+BuildRequires: ImageMagick-tools
 
 Requires: pcb2gcode
 
@@ -23,9 +30,10 @@ of PCBs.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt6 PREFIX=%prefix
 %make_build
 
 %install
@@ -47,7 +55,7 @@ desktop-file-install --dir=%buildroot%_desktopdir %name.desktop
 #Install icons
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
-    convert %SOURCE1 -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
+    magick %SOURCE1 -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
 done
 
 %files
@@ -57,6 +65,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Mar 01 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+- Build with qt6.
+
 * Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2
 - ExcludeArch: %ix86 %arm
 
