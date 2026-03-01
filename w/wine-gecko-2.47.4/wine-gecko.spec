@@ -4,11 +4,11 @@
 
 Name: wine-gecko-2.47.4
 Version: 2.47.4
-Release: alt1
+Release: alt2
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
 
-License: MPL
+License: MPL-2.0
 Group: Office
 Url: http://wiki.winehq.org/Gecko
 
@@ -25,6 +25,9 @@ BuildArch: noarch
 
 AutoReq:no
 AutoProv:no
+
+# Get removed together with the corresponding wine package
+Requires: wine-gecko-req = %version
 
 Provides: wine-gecko = %version
 #Obsoletes: wine-gecko <= 2.47.3-alt1
@@ -51,6 +54,9 @@ cp -a $(basename %SOURCE2 .tar) %buildroot%geckodir/wine-gecko-%version-x86_64/
 %geckodir/wine-gecko-%version-x86_64/
 
 %changelog
+* Fri Feb 27 2026 Vitaly Lipatov <lav@altlinux.ru> 2.47.4-alt2
+- add Requires: wine-gecko-req
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.47.4-alt1
 - new version 2.47.4 (with rpmrb script)
 

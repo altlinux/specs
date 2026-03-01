@@ -9,12 +9,12 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 10.3.0
+%define mono_version 11.0.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
-%define basemajor 10.x
-%define major 10.18
+%define basemajor 11.x
+%define major 11.3
 %define rel %nil
 
 # the packages will conflict with that
@@ -143,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -390,6 +390,10 @@ Requires: %name-common = %EVR
 # wine will ask anyway
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
+
+# wine-mono and wine-gecko require these to get removed on version change
+Provides: wine-mono-req = %mono_version
+Provides: wine-gecko-req = %gecko_version
 
 %if_with buildwow64
 Conflicts: %wow64conflict
@@ -940,6 +944,14 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Fri Feb 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.3-alt1
+- new major version 11
+- set strict require wine-mono 11.0.0
+
+* Fri Feb 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1:10.18-alt3
+- add Provides: wine-mono-req
+- add Provides: wine-gecko-req
+
 * Wed Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1:10.18-alt2
 - wine-vanilla-common: remove BuildArch noarch due ExclusiveArch in wine-vanilla
 
