@@ -6,13 +6,14 @@
 %define progectlicense GPL-2.0
 
 Name:    RHVoice
-Version: 1.16.5
+Version: 1.18.1
 Release: alt1
 
 Summary: a free and open source speech synthesizer for Russian and other languages
 License: %progectlicense
 Group: Sound
 Url: https://github.com/RHVoice/RHVoice
+VCS: https://github.com/RHVoice/RHVoice.git
 
 Source0: %name-%version.tar
 
@@ -119,7 +120,7 @@ BuildArch: noarch \
 Requires: %name = %EVR \
 \
 %description %1 \
-%summary \
+%1 language for  %name \
 \
 %files %1 \
 %dir %_datadir/%name/languages/%1 \
@@ -127,6 +128,7 @@ Requires: %name = %EVR \
 
 
 %langpackage Russian GPL-2.0
+%langpackage Belarusian GPL-2.0-or-later
 %langpackage English GPL-2.0
 %langpackage Albanian GPL-2.0
 %langpackage Czech GPL-2.0
@@ -161,17 +163,19 @@ Provides: %name-Portuguese = %EVR
 # voices
 
 %define voicepackage() \
-%package %1-%2 \
-Summary: %1 %2 voice for  %name \
+%define voicename %2 \
+%{?4: %define voicename %4} \
+%package %1-%voicename \
+Summary: %1 %voicename voice for  %name \
 Group: Sound \
 License: %3 \
 BuildArch: noarch \
 Requires: %name-%1 = %EVR \
 \
-%description %1-%2 \
-%summary \
+%description %1-%voicename \
+%1 %voicename voice for  %name \
 \
-%files %1-%2 \
+%files %1-%voicename \
 %dir %_datadir/%name/voices/%2 \
 %_datadir/%name/voices/%2/* \
 
@@ -183,10 +187,15 @@ Requires: %name-%1 = %EVR \
 %voicepackage Russian anna %progectlicense
 %voicepackage Russian arina CC-BY-NC-ND-4.0
 %voicepackage Russian artemiy CC-BY-NC-ND-4.0
+%voicepackage Russian dasha-rus CC-BY-SA-4.0 dasha
 %voicepackage Russian elena GPL-3.0
+%voicepackage Russian evgeniy-rus CC-BY-NC-ND-4.0 evgeniy
+%voicepackage Russian lyudmila-rus CC-BY-NC-SA-4.0 lyudmila lyudmila
 %voicepackage Russian irina %progectlicense
 %voicepackage Russian mikhail CC-BY-NC-ND-4.0
+%voicepackage Russian michal-rus CC-BY-NC-SA-4.0 michal
 %voicepackage Russian pavel CC-BY-NC-ND-4.0
+%voicepackage Russian ryhor-rus CC-BY-NC-SA-4.0 ryhor
 %voicepackage Russian seva CC-BY-NC-ND-4.0
 %voicepackage Russian tatiana CC-BY-NC-ND-4.0
 %voicepackage Russian timofey CC-BY-NC-ND-4.0
@@ -197,19 +206,14 @@ Requires: %name-%1 = %EVR \
 %voicepackage Russian vsevolod CC-BY-NC-ND-4.0
 %voicepackage Russian yuriy CC-BY-NC-ND-4.0
 
-%package Russian-evgeniy
-Summary: Russian evgeniy voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
 
-%description Russian-evgeniy
-%summary
+# belarusian
 
-%files Russian-evgeniy
-%dir %_datadir/%name/voices/evgeniy-rus
-%_datadir/%name/voices/evgeniy-rus/*
+%voicepackage Belarusian alena-blr CC0-1.0 alena
+%voicepackage Belarusian dasha-blr CC-BY-SA-4.0 dasha
+%voicepackage Belarusian lyudmila-blr CC-BY-NC-SA-4.0 lyudmila
+%voicepackage Belarusian michal-blr CC-BY-NC-SA-4.0 michal
+%voicepackage Belarusian ryhor-blr CC-BY-NC-SA-4.0 ryhor
 
 
 # English
@@ -217,23 +221,11 @@ Requires: %name-Russian = %EVR
 %voicepackage English alan %progectlicense
 %voicepackage English bdl %progectlicense
 %voicepackage English clb %progectlicense
+%voicepackage English dasha-eng CC-BY-SA-4.0 dasha
+%voicepackage English evgeniy-eng CC-BY-NC-ND-4.0 evgeniy
 %voicepackage English ksp RHVoice-Natia-License
 %voicepackage English lyubov CC-BY-NC-ND-4.0
 %voicepackage English slt CMU-License
-
-%package English-evgeniy
-Summary: English evgeniy voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-evgeniy
-%summary
-
-%files English-evgeniy
-%dir %_datadir/%name/voices/evgeniy-eng
-%_datadir/%name/voices/evgeniy-eng/*
 
 
 # Albanian
@@ -264,9 +256,11 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %voicepackage Czech radek CC0-1.0
 %voicepackage Czech zdenek CC0-1.0
 
+
 # Croatian
 
 %voicepackage Croatian karmela CC0 1.0
+%voicepackage Croatian marija CC-BY-SA-4.0
 
 
 # Esperanto
@@ -346,6 +340,13 @@ scons install DESTDIR=%buildroot \
 prefix=%prefix sysconfdir=%_sysconfdir bindir=%_bindir libdir=%_libdir includedir=%_includedir datadir=%_datadir
 
 %changelog
+* Sun Mar 01 2026 Artem Semenov <savoptik@altlinux.org> 1.18.1-alt1
+- Updated to new version 1.18.1
+- Added new croatian voice marija
+- Added new russian voices
+- Added new dasha voice for english
+- Packaged belarusian voices
+
 * Tue May 06 2025 Artem Semenov <savoptik@altlinux.org> 1.16.5-alt1
 - Packaged new voices and languages
 - Updated to 1.16.5
