@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.0.30
+Version: 0.0.31
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -68,6 +68,9 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Sun Mar 01 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.31-alt1
+- New version 0.0.31 (closes ALT#57989, ALT#58004).
+
 * Sat Feb 14 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.30-alt1
 - New version 0.0.30.
 
