@@ -9,7 +9,7 @@
 
 %define modname scipy
 %define ver_major 1.17
-%define ver_minor 0
+%define ver_minor 1
 
 %define numpy_version 1.16.5
 
@@ -223,6 +223,9 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %_includedir/%modname-py3
 
 %changelog
+* Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 1.17.1-alt1
+- 1.17.0 -> 1.17.1
+
 * Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 1.17.0-alt1
 - 1.15.3 -> 1.17.0
 
