@@ -1,11 +1,12 @@
 Name: libva-driver-intel
-Version: 2.4.1
-Release: alt2
+Version: 2.4.5
+Release: alt1
 
 Summary: VA-API (Video Acceleration API) user mode driver for Intel GEN Graphics family
 License: GPLv2
 Group: System/Libraries
-Url: http://cgit.freedesktop.org/vaapi/intel-driver/
+Url: https://github.com/irql-notlessorequal/intel-vaapi-driver
+VCS: https://github.com/irql-notlessorequal/intel-vaapi-driver.git
 
 Conflicts: libva < 1.1.0
 
@@ -36,6 +37,9 @@ find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|'
 %_libdir/dri/*.so
 
 %changelog
+* Sun Mar 01 2026 Anton Farygin <rider@altlinux.org> 2.4.5-alt1
+- 2.4.1 -> 2.4.5
+
 * Sat Jun 18 2022 L.A. Kostis <lakostis@altlinux.ru> 2.4.1-alt2
 - use meson.
 - fix FTBFS (remove intel-gen4asm).
