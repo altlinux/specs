@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: curtail
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An Image Compressor for GNOME
@@ -27,7 +27,7 @@ BuildArch: noarch
 %add_python3_path %_datadir/%name
 
 %define adwaita_ver 1.8
-%define oxipng_ver 10
+%define oxipng_ver 10.1.0
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -75,6 +75,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Sun Mar 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
+- 1.15.1
+
 * Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0
 
