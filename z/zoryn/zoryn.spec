@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 01 2026 Anton Farygin <rider@altlinux.org> 0.23.0-alt1
+- added mountpoint pre-flight validation in build command
+- added automatic mountpoint fixes in builder add
+- added pattern selectors for -b flag (@all, @host:, ranges, exclusions)
+- removed --all-builders flag (use -b @all instead)
+- fixed builder status SSH connection throttling per host
+- fixed spec check VCS URL fallback to git ls-remote
+- fixed HTTP response decompression for watch files
+- fixed SRPM lookup on remote builders in task test-rebuild
+- improved security
+
 * Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 0.22.0-alt1
 - added --multi-add flag for mass builder creation with interactive mode
 - added OSV API integration for CVE extraction in version updates
