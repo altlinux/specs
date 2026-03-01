@@ -1,6 +1,6 @@
 Name: eden
 Version: 0.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo Switch Emulator
 License: GPLv3+
@@ -77,6 +77,9 @@ sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLi
 sed -i -e 's/-Werror=unused/-Wno-error=unused/' src/CMakeLists.txt
 %endif
 
+# Fix RenderDoc API version
+sed -i -e 's/RENDERDOC_API_1_6_0/RENDERDOC_API_1_7_0/' src/core/tools/renderdoc.h
+
 export CC="clang"
 export CXX="clang++"
 export RANLIB="llvm-ranlib"
@@ -119,6 +122,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Sun Mar 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.1.1-alt1.1
+- Fix build with RenderDoc 1.43+
+
 * Fri Jan 30 2026 Nazarov Denis <nenderus@altlinux.org> 0.1.1-alt1
 - New version 0.1.1.
 
