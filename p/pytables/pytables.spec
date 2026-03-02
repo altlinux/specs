@@ -14,14 +14,14 @@ relational or object oriented databases.
 
 %define oname tables
 
-# locally tests pass for 3.11.0
+# locally tests pass for 3.11.1
 %def_disable check
 
 #TODO: fix docs and bench
 %def_without docs
 
 Name: py%oname
-Version: 3.11.0
+Version: 3.11.1
 Release: alt1
 Epoch: 1
 
@@ -155,6 +155,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Mon Mar 02 2026 Anton Vyatkin <toni@altlinux.org> 1:3.11.1-alt1
+- New version 3.11.1.
+
 * Mon Feb 23 2026 Anton Vyatkin <toni@altlinux.org> 1:3.11.0-alt1
 - New version 3.11.0.
 
