@@ -4,7 +4,7 @@
 
 Name: deepin-widgets
 Version: 6.0.25
-Release: alt2
+Release: alt3
 
 Summary: Desktop widgets service/implementation for DDE
 
@@ -22,6 +22,7 @@ Provides: %repo = %EVR
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 BuildRequires: cmake dtkcore libdtkwidget-devel dqt5-svg-devel dqt5-x11extras-devel libgtest-devel libwayland-client-devel
+BuildRequires: libdqt5-concurrent libdqt5-test
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -89,6 +90,9 @@ cmake --build %_cmake__builddir -j1
 %_libdir/cmake/DdeWidgets/DdeWidgetsConfig.cmake
 
 %changelog
+* Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt3
+- Fixed build on shrinked dqt5.
+
 * Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt2
 - Fixed build with dtk 5.7.23.
 
