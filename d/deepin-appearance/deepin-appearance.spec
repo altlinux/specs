@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.77
+Version: 1.1.79
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -20,7 +20,8 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel libgsettings-qt6-devel kf6-kconfig-devel kf6-kwindowsystem-devel kf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
+BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel libgsettings-dqt6-devel kf6-kconfig-devel kf6-kwindowsystem-devel kf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
+BuildRequires: libdqt6-concurrent
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
@@ -40,8 +41,9 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:%_includedir/qt6
-%DQ6build
+%DQ6build \
+  -DCMAKE_LIBRARY_PATH=%_dqt6_libdir \
+#
 
 %install
 %DQ6install
@@ -71,6 +73,11 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:%_includedir/qt6
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.79-alt1
+- New version 1.1.79.
+- Fixed build on shrinked dqt.
+- Built using separate gsetting-qt6 (on dqt6).
+
 * Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.77-alt1
 - New version 1.1.77.
 
