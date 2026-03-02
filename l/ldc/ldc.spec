@@ -1,6 +1,6 @@
 %define llvm_version 18.1
 %define optflags_lto %nil
-%define sover 111
+%define sover 112
 
 %def_without bootstrap
 
@@ -11,8 +11,8 @@
 %endif
 
 Name: ldc
-Version: 1.41.0
-Release: alt3
+Version: 1.42.0
+Release: alt1
 Summary: The LLVM-based D Compiler
 License: BSD-3-Clause and BSL-1.0 and Apache-2.0
 Group: Development/Other
@@ -23,7 +23,7 @@ Requires: zlib-devel
 Source0: %name-%version.tar
 Source1: phobos-%version.tar
 
-Patch0: %name-%version-alt-int128-align.patch
+Patch0: %name-1.41.0-alt-int128-align.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -195,6 +195,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure \
 %_includedir/importc.h
 
 %changelog
+* Mon Mar 02 2026 Anton Farygin <rider@altlinux.org> 1.42.0-alt1
+- 1.41.0 -> 1.42.0
+
 * Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 1.41.0-alt3
 - built without bootstrap mode, using the LDC D compiler
 
