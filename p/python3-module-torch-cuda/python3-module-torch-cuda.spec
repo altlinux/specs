@@ -16,7 +16,7 @@
 
 Name:    python3-module-%pypi_name-cuda
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (with CUDA support)
 License: BSD-3-Clause
@@ -33,12 +33,7 @@ Patch2: 0003-Added-support-for-system-installed-cuDNN-Frontend.patch
 Patch3: 0004-Used-system-cutlass-instead-of-bundled.patch
 Patch4: 0005-Use-system-valgrind-instead-of-bundled.patch
 
-# NOTE: aarch64 build is disabled for now: torch-cuda exceeds build time limits
-# in the current build environment, resulting in
-# repeated wall-time timeouts during compilation/linking.
-# Re-enable when build resources/limits allow.
-
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 # Disable python3 autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: nopython3
 
@@ -251,6 +246,7 @@ export USE_KLEIDIAI=OFF
 export USE_LITE_INTERPRETER_PROFILER=OFF
 export USE_LITE_PROTO=OFF
 export USE_MAGMA=OFF
+export USE_MIMALLOC=OFF
 export USE_MEM_EFF_ATTENTION=OFF
 export USE_MKLDNN=OFF
 export USE_MPI=OFF
@@ -379,6 +375,10 @@ done
 %_libdir/lib%{pypi_name}_cuda_linalg.so
 
 %changelog
+* Mon Mar 02 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt2
+- Built torch-cuda on aarch64.
+- Vendored mimalloc for better aarch64 memory allocation.
+
 * Tue Feb 24 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0 version.
 - Used bundled pybind11 insted of system.
