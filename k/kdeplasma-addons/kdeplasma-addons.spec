@@ -15,7 +15,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt3
+Release: alt4
 #Epoch: 1
 %K6init
 
@@ -41,6 +41,7 @@ Source: %rname-%version.tar
 Patch1: alt-sover.patch
 Patch2: alt-def-dict.patch
 Patch3: alt-displayname-filter.patch
+Patch4: alt-del-ions.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules gcc-c++ qt6-declarative-devel  qt6-declarative-devel qt6-svg-devel qt6-5compat-devel
@@ -123,6 +124,7 @@ Requires: %name-common >= %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 sed -i "s|@PROJECT_VERSION@|%version|" wallpapers/potd/plugins/CMakeLists.txt
 sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" wallpapers/potd/plugins/CMakeLists.txt
@@ -206,6 +208,9 @@ touch touch-%_arch
 
 
 %changelog
+* Mon Mar 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt4
+- remove weather ions with poor connection
+
 * Thu Feb 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 6.5.5-alt3
 - add displayname filter
 
