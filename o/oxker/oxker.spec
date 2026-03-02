@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oxker
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: A simple tui to view and control docker containers
@@ -40,5 +40,8 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Mon Mar 02 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.13.0-alt1
+- new version
+
 * Tue Feb 17 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.12.0-alt1
 - initial build for ALT Linux
