@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.25
+Version: 1.0.26
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -80,6 +80,8 @@ alt-atomic-core \
 alt-orchestra \
 iamos \
 alt-atomic-kyanite \
+maplekavach \
+maplekavach-server \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -91,6 +93,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Mar 02 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.26-alt1
+- Added maplekavach and maplekavach-server.
+
 * Fri Jan 23 2026 Vladimir Romanov <rirusha@altlinux.org> 1.0.25-alt1
 - Added alt-atomic-kyanite.
 
