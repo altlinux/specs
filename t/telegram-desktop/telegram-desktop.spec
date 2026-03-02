@@ -23,7 +23,7 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 6.5.1
+Version: 6.6.0
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -321,6 +321,7 @@ export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
 %endif
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
+    -DDESKTOP_APP_USE_ENCHANT:BOOL=ON \
     -DQT_VERSION_MAJOR=6 \
 %if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
@@ -375,6 +376,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 6.6.0-alt1
+- new version 6.6.0
+
 * Tue Feb 10 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.1-alt1
 - new version 6.5.1
 
