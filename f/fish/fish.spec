@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 4.2.1
+Version: 4.5.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -27,7 +27,7 @@ BuildRequires: cargo-license gcc
 BuildRequires: terminfo
 BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
+# BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 # for check
 BuildRequires: ctest
@@ -70,6 +70,7 @@ export CARGO_NET_OFFLINE=true
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+    -DWITH_DOCS=OFF \
     -DCMAKE_INSTALL_DOCDIR=%_docdir/%name
 %cmake_build -t all
 cargo license > LICENSE.dependencies
@@ -104,9 +105,13 @@ fi
 %_datadir/fish
 %doc %_docdir/%name
 %doc LICENSE.dependencies
-%_man1dir/*
+# %_man1dir/*
 
 %changelog
+* Mon Mar 02 2026 Artyom Sinyugin <writers@altlinux.org> 4.5.0-alt1
+- New release 4.5.0.
+- Sphinx auto doc removed from building process.
+
 * Thu Nov 20 2025 Artyom Sinyugin <writers@altlinux.org> 4.2.1-alt1
 - New version 4.2.1.
 - Fixed zed autocomplete (ALT#57050).
