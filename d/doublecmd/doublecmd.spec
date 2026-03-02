@@ -1,7 +1,7 @@
 %def_with gtk
 
 Name: doublecmd
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Epoch: 1
 
@@ -32,6 +32,7 @@ BuildRequires: ImageMagick-tools
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
 BuildRequires: /proc
+BuildRequires: libwayland-client-devel
 
 %add_python3_path %_libdir/doublecmd/scripts
 
@@ -145,6 +146,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Mar 02 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.2.3-alt1
+- New version.
+
 * Mon Feb 16 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.2.2-alt1
 - New version.
 
