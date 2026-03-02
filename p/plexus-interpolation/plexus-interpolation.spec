@@ -2,7 +2,7 @@
 
 Name: plexus-interpolation
 Version: 1.28
-Release: alt1
+Release: alt2
 
 Summary: Plexus Interpolation API
 License: Apache-2.0
@@ -19,7 +19,7 @@ BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
 BuildRequires: jpackage-default
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 
 %description
@@ -53,6 +53,9 @@ related projects.
 %files -f .mfiles
 
 %changelog
+* Mon Mar 02 2026 Anton Meleshnikov <alton@altlinux.org> 1.28-alt2
+- NMU: FTBFS fix.
+
 * Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 1.28-alt1
 - New version.
 - Rename artifact.
