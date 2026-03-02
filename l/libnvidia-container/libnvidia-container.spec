@@ -3,7 +3,7 @@
 # disable until https://bugzilla.altlinux.org/54930 will be fixed
 #%%define _stripped_files_terminate_build 1
 %define soname 1
-%define git 6eda4d76c8c5f8fc174e4abca83e513fb4dd63b0
+%define git 584976abaef996d9466232a9bc7426fcdb0ed1e0
 %define modprobe_version 550.54.14
 
 Name: libnvidia-container
@@ -20,7 +20,7 @@ License: Apache-2.0 AND GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT AND GPL-2
 #  https://github.com/NVIDIA/nvidia-modprobe/blob/main/utils.mk
 Url: https://github.com/NVIDIA/libnvidia-container
 Vcs: https://github.com/NVIDIA/libnvidia-container.git
-Version: 1.17.9
+Version: 1.18.2
 Release: alt1
 Summary: NVIDIA container runtime library
 Group: System/Libraries
@@ -127,6 +127,9 @@ This package contains command-line tools that facilitate using the library.
 %_bindir/*
 
 %changelog
+* Mon Mar 02 2026 L.A. Kostis <lakostis@altlinux.ru> 1.18.2-alt1
+- 1.18.2 (closes #58078).
+
 * Tue Oct 21 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17.9-alt1
 - 1.17.9.
 
