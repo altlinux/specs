@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.23.0
+Version: 0.24.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,16 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 02 2026 Anton Farygin <rider@altlinux.org> 0.24.0-alt1
+- added desktop notifications for long-running commands
+- added SSH connection multiplexing via ControlMaster
+- added duplicate version-release detection in add_changelog_entry
+- fixed watch file parsing of opts= with regex patterns
+- fixed watch macro expansion before version matching
+- fixed watch Debian macro expansion during parsing
+- fixed up to commit only source directory after gear-update
+- fixed up to handle add_changelog_entry errors in batch update
+
 * Sun Mar 01 2026 Anton Farygin <rider@altlinux.org> 0.23.0-alt1
 - added mountpoint pre-flight validation in build command
 - added automatic mountpoint fixes in builder add
