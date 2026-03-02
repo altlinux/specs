@@ -1,5 +1,5 @@
 Name: squashfs-tools
-Version: 4.7.4
+Version: 4.7.5
 Release: alt1
 
 Summary: squashfs support
@@ -57,6 +57,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Mon Mar 02 2026 Anton Farygin <rider@altlinux.org> 4.7.5-alt1
+- 4.7.4 -> 4.7.5
+
 * Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 4.7.4-alt1
 - 4.7 -> 4.7.4
 
