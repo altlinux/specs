@@ -1,5 +1,5 @@
 Name: kernel-image-7.0
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	6.19
 %define kernel_base_version	7.0
 %define kernel_sublevel	.0
@@ -110,6 +110,7 @@ BuildRequires: libdb4-devel
 BuildRequires: libelf-devel
 BuildRequires: libgmp-devel
 BuildRequires: libmpc-devel
+BuildRequires: libzstd-devel
 BuildRequires: lzma-utils
 BuildRequires: openssl
 BuildRequires: openssl-devel
@@ -590,6 +591,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Mar 01 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt0.rc2
+- Update to v7.0-rc2 (2026-03-01).
+- config: Enable CONFIG_DWMAC_MOTORCOMM=m.
+
 * Mon Feb 23 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt0.rc1
 - Rebase to v7.0-rc1 (2026-02-22).
 
