@@ -1,8 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/cert-manager/cmctl
 
+# # git rev-parse v2.4.1^{commit}
+%define git_commit 4668ed9fb057dc73396e6050b3319532de74c0c5
+
 Name: cmctl
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: 'cmctl' or 'kubectl cert-manager' is the command line utility that makes cert-manager'ing easier.
@@ -31,8 +34,8 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
 export LDFLAGS="$LDFLAGS \
-    -X github.com/cert-manager/cert-manager/pkg/util.AppVersion=%version \
-    -X github.com/cert-manager/cert-manager/pkg/util.AppGitCommit=%release"
+    -X github.com/cert-manager/cert-manager/pkg/util.AppVersion=v%version \
+    -X github.com/cert-manager/cert-manager/pkg/util.AppGitCommit=%git_commit"
 
 %golang_prepare
 
@@ -66,6 +69,11 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Mar 01 2026 Alexander Stepchenko <geochip@altlinux.org> 2.4.1-alt1
+- 2.4.0 -> 2.4.1.
+- Fixes:
+  + CVE-2026-24051: OpenTelemetry-Go Affected by Arbitrary Code Execution via PATH Hijacking
+
 * Tue Dec 09 2025 Aleksandr Gamzin <gamzin@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

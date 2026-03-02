@@ -2,8 +2,11 @@
 
 %global _unpackaged_files_terminate_build 1
 
+# git rev-parse v1.19.4^{commit}
+%define git_commit 83820a03ce3e6b8a1084fa765d77a6b5b98e6943
+
 Name: cert-manager
-Version: 1.19.3
+Version: 1.19.4
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -43,8 +46,8 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-trimpath -mod=vendor"
 export CGO_ENABLED=0
-export LDFLAGS="-X github.com/cert-manager/cert-manager/pkg/util.AppVersion=%version \
-                -X github.com/cert-manager/cert-manager/pkg/util.AppGitCommit=%release"
+export LDFLAGS="-X github.com/cert-manager/cert-manager/pkg/util.AppVersion=v%version \
+                -X github.com/cert-manager/cert-manager/pkg/util.AppGitCommit=%git_commit"
 
 %golang_prepare
 %golang_build cmd/controller
@@ -55,7 +58,8 @@ export LDFLAGS="-X github.com/cert-manager/cert-manager/pkg/util.AppVersion=%ver
 
 %install
 export BUILDDIR="$PWD/.gopath"
-export GOPATH="%go_path"
+export IGNORE_SOURCES=1
+
 %golang_install
 
 mv %buildroot%_bindir/controller-binary %buildroot%_bindir/controller
@@ -63,9 +67,6 @@ mv %buildroot%_bindir/cainjector-binary %buildroot%_bindir/cainjector
 mv %buildroot%_bindir/webhook-binary %buildroot%_bindir/cm-webhook
 mv %buildroot%_bindir/acmesolver-binary %buildroot%_bindir/acmesolver
 mv %buildroot%_bindir/startupapicheck-binary %buildroot%_bindir/startupapicheck
-
-# cleanup
-rm -rf -- %buildroot%_datadir
 
 %files
 %_bindir/controller
@@ -75,6 +76,11 @@ rm -rf -- %buildroot%_datadir
 %_bindir/startupapicheck
 
 %changelog
+* Sun Mar 01 2026 Alexander Stepchenko <geochip@altlinux.org> 1.19.4-alt1
+- 1.19.3 -> 1.19.4.
+- Fixes:
+  + CVE-2026-24051: OpenTelemetry-Go Affected by Arbitrary Code Execution via PATH Hijacking
+
 * Mon Feb 09 2026 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.3-alt1
 - 1.19.2 -> 1.19.3 (closes: #57676).
 
