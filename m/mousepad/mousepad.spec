@@ -1,5 +1,5 @@
 Name: mousepad
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 
 Summary: Mousepad - A simple text editor for Xfce
@@ -13,7 +13,8 @@ Vcs: https://gitlab.xfce.org/apps/mousepad.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.18.0
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools >= 4.18.0
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libgtk+3-devel libgtksourceview4-devel
 # For xgettext to parse the `.policy` file
 BuildRequires: libpolkit-devel
@@ -48,16 +49,14 @@ Mousepad - простой текстовый редактор для Xfce осн
 # we are relly on libxfce4ui version check, so
 # it will be automatically enabled with libxfce4ui-gtk3 >= 4.17.5
 # (Sisyphus) and disabled otherwise (p10).
-%configure \
-	--enable-maintainer-mode \
-	--enable-gtksourceview4 \
-	--enable-plugin-gspell \
-	--disable-plugin-test \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dgtksourceview4=enabled \
+	-Dgspell-plugin=enabled \
+	-Dtest-plugin=disabled \
+	-Dshortcuts-plugin=auto
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang mousepad
 
 %files -f mousepad.lang
@@ -72,9 +71,11 @@ Mousepad - простой текстовый редактор для Xfce осн
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 
-%exclude %_libdir/%name/plugins/*.la
-
 %changelog
+* Mon Mar 02 2026 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Switched to meson build.
+- Updated to 0.7.0.
+
 * Tue Apr 01 2025 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
 - Updated to 0.6.5.
 
