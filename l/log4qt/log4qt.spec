@@ -2,7 +2,7 @@
 
 Name: log4qt
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Summary: Logging for the Qt cross-platform application framework.
 License: Apache-2.0
@@ -20,8 +20,9 @@ BuildRequires: qt5-base-devel
 %define libname liblog4qt%soversion
 
 %description
-Log4Qt is a C++ port of the Apache Software Foundation Log4j
-package using the Qt Framework.
+Log4Qt is a C++ port of the Apache Software Foundation Log4j package
+using the Qt Framework.
+
 It is intended to be used by open source and commercial Qt projects.
 
 %package -n %libname
@@ -29,8 +30,9 @@ Group: System/Libraries
 Summary: %name library
 
 %description -n %libname
-Log4Qt is a C++ port of the Apache Software Foundation Log4j
-package using the Qt Framework.
+Log4Qt is a C++ port of the Apache Software Foundation Log4j package
+using the Qt Framework.
+
 It is intended to be used by open source and commercial Qt projects.
 
 %package -n lib%name-devel
@@ -38,17 +40,13 @@ Summary: Logging for the Qt cross-platform application framework.
 Group: Development/Tools
 
 %description -n lib%name-devel
-Log4Qt is a C++ port of the Apache Software Foundation Log4j
-package using the Qt Framework.
+Log4Qt is a C++ port of the Apache Software Foundation Log4j package
+using the Qt Framework.
 
 This package contains development files for qRestAPI.
 
 %prep
 %setup
-%ifarch %e2k
-# unsupported as of lcc 1.27.14
-sed -i 's,-Wsuggest-final-types -Wsuggest-final-methods,,' CMakeLists.txt
-%endif
 
 %build
 %cmake
@@ -69,6 +67,9 @@ sed -i 's,-Wsuggest-final-types -Wsuggest-final-methods,,' CMakeLists.txt
 %_libdir/cmake/Log4Qt/
 
 %changelog
+* Mon Mar 02 2026 Michael Shigorin <mike@altlinux.org> 1.5.1-alt3
+- drop E2K hack (lcc fixed as of 1.27.15).
+
 * Sun Mar 03 2024 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2
 - E2K: avoid lcc-unsupported options (mcst#8726).
 - Minor spec cleanup.
