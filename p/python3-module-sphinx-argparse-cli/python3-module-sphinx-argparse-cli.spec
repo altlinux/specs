@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.20.1
-Release: alt1.1
+Version: 1.21.1
+Release: alt1
 
 Summary: CLI arguments renderer for Sphinx
 Group: Development/Python3
@@ -21,7 +21,7 @@ Source1: %pypi_name-%version-roots.tar
 %else
 Source: %pypi_name-%version.tar
 %endif
-Patch: %pypi_name-1.20.1-up-fix-testsuite.patch
+#Patch: %pypi_name-1.20.1-up-fix-testsuite.patch
 
 BuildArch: noarch
 Provides: python3-module-%pypi_name = %EVR
@@ -38,7 +38,7 @@ Render CLI arguments (sub-commands friendly) defined by the argparse module.
 
 %prep
 %setup -n %pypi_name-%version -a1
-%patch -p1
+#%%patch -p1
 
 %build
 %pyproject_build
@@ -57,6 +57,9 @@ py.test3
 
 
 %changelog
+* Mon Mar 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.21.1-alt1
+- 1.21.1
+
 * Fri Feb 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1.1
 - fixed testsuite
 
