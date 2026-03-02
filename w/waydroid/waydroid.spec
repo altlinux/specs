@@ -2,8 +2,8 @@
 %define appname id.waydro.Container
 
 Name: waydroid
-Version: 1.6.1
-Release: alt1.1
+Version: 1.6.2
+Release: alt1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
 License: GPLv3+
@@ -72,6 +72,9 @@ fi
 %dir %_localstatedir/%name
 
 %changelog
+* Mon Mar 02 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.2-alt1
+- 1.6.2.
+
 * Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1.1
 - Clean downloaded cache files after uninstall (related to #56970).
 
