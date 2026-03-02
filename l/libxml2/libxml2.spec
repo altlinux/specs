@@ -7,7 +7,7 @@
 
 Name: libxml2
 Version: 2.14.6
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -59,6 +59,7 @@ Requires: %rname-devel = %EVR
 Summary: Various XML utilities
 Group: Text tools
 Requires: %libname = %EVR
+Requires: xml-common
 Provides: xmllint = %epoch:%version
 Obsoletes: xmllint < %epoch:%version
 
@@ -254,6 +255,9 @@ rm -rf %buildroot%_defaultdocdir/%rname
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Mon Mar 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 1:2.14.6-alt3
+- Add missing xml-common dependency to xml-utils subpackage (closes #57732).
+
 * Thu Dec 25 2025 Maxim Slipenko <maks1ms@altlinux.org> 1:2.14.6-alt2
 - Library package renamed to match the shared libs policy.
 
