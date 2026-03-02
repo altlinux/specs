@@ -1,58 +1,44 @@
-%define drawboard_ver 0
-
 %def_disable clang
 
 Name: deepin-draw
-Version: 7.0.5
+Version: 6.5.36
 Release: alt1
+Epoch: 1
 
 Summary: A lightweight drawing tool for Linux Deepin
 
-License: GPL-3.0+ and (BSD-3-Clause and Apache-2.0)
-# deepin-draw-plugins/: BSD-3-Clause and Apache-2.0
+License: GPL-3.0-or-later and BSD-3-Clause
+# deepin-draw-plugins/: BSD-3-Clause
 # src/qtsingleapplication/: BSD-3-Clause
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-draw
-Vcs: https://github.com/linuxdeepin/deepin-draw.git
+VCS: https://github.com/linuxdeepin/deepin-draw
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-draw/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja util-linux rpm-macros-dqt5
-BuildRequires: cmake libfreeimage-devel libdtkwidget-devel libexif-devel libxcbutil-devel dqt5-base-devel dqt5-svg-devel dqt5-linguist dqt5-multimedia-devel dqt5-x11extras-devel dqt5-tools-devel
-# Requires: deepin-session-shell deepin-dqt5integration
+BuildRequires(pre): rpm-build-ninja util-linux rpm-macros-dqt6
+BuildRequires: cmake libfreeimage-devel dtk6-common-devel libdtk6widget-devel libexif-devel libxcbutil-devel dqt6-base-devel dqt6-svg-devel dqt6-tools dqt6-multimedia-devel dqt6-tools-devel
+BuildRequires: libdqt6-test libdqt6-concurrent libwayland-client-devel vulkan-headers libcups-devel
+# Requires: deepin-session-shell deepin-dqt6integration
 Requires: icon-theme-deepin
 
 %description
 A lightweight drawing tool for Linux Deepin.
 
-%package -n libdrawboard%drawboard_ver
-Summary: Library for %name
-Group: System/Libraries
-
-%description -n libdrawboard%drawboard_ver
-The package provides library for %name.
-
-%package -n libdrawboard-devel
-Summary: Development files for libdrawboard%drawboard_ver
-Group: Development/C++
-
-%description -n libdrawboard-devel
-The package provides development files for libdrawboard%drawboard_ver library.
-
 %prep
 %setup
+%patch -p1
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
 export CC=clang
 export CXX=clang++
@@ -61,47 +47,41 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export CC=gcc
 export CXX=g++
 %endif
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
-  #
-cmake --build "%_cmake__builddir" -j%__nprocs
+#
 
 %install
-%cmake_install
-%find_lang %name
-
-%ifnarch armh i586
-mkdir -p %buildroot%_libdir
-mv -f %buildroot/usr/lib/libdrawboard* %buildroot%_libdir
-%endif
+%DQ6install
+%find_lang --with-qt %name
 
 %files -f %name.lang
 %doc README.md LICENSE.txt
 %_bindir/%name
-%_datadir/%name/
 %_desktopdir/%name.desktop
+%dir %_iconsdir/deepin/
+%dir %_iconsdir/deepin/apps/
+%dir %_iconsdir/deepin/apps/scalable/
+%_iconsdir/deepin/apps/scalable/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/mime/packages/%name.xml
 %_datadir/dbus-1/services/com.deepin.Draw.service
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
 
-%files -n libdrawboard%drawboard_ver
-%_libdir/libdrawboard.so.%{drawboard_ver}*
-
-%files -n libdrawboard-devel
-%_libdir/libdrawboard.so
-%dir %_includedir/drawBoard/
-%_includedir/drawBoard/*.h
-
 %changelog
+* Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.36-alt1
+- New version 6.5.36.
+- Updated license tag.
+- Switched to dqt6.
+
 * Tue Feb 18 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
 - New version 7.0.5.
 - Added vcs tag.
