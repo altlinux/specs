@@ -14,7 +14,7 @@
 
 Name: firefox
 Version: 148.0
-Release: alt1
+Release: alt2
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -388,6 +388,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Feb 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0-alt2
+- Update l10n for the 148.
+
 * Wed Feb 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0-alt1
 - New version (148.0).
 - Fixes:
