@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,21 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Mar 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.2-alt1
+- Update components:
+  + update bacula components to version 15
+  + update postgresql components to PostgreSQL 18
+  + remove postgresql16 component
+  + add freeradius component
+- Update edition_server and edition_domain
+  + update server and domain release notes for 11.1
+  + add keycloak and freeradius components to domain edition
+  + add freeradius component to server edition
+  + update postgresql to version 18 in server edition
+- categories: move the "Alterator (legacy)" category up one level -
+  to the "apps" category (thx Maria Alexeeva)
+- docs: add guidelines for categories (thx Maria Alexeeva)
+
 * Tue Feb 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.1-alt1
 - Update edition_server and edition_domain (thx Dmitriy Terekhin):
   + add etcnet to base sections
