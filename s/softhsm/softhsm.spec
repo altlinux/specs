@@ -1,22 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%define softhsm_module "SoftHSM PKCS #11 Module"
 
-# https://github.com/opendnssec/SoftHSMv2/issues/575
+# https://github.com/softhsm/SoftHSMv2/issues/575
 %define optflags_lto %nil
 
 Name: softhsm
-Version: 2.6.1
-Release: alt3
-
+Version: 2.7.0
+Release: alt1
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD-2-Clause
 Group: System/Configuration/Other
-# Source-git: https://github.com/opendnssec/SoftHSMv2.git
-Url: http://www.opendnssec.org/
-
+Url: https://www.softhsm.org/
+Vcs: https://github.com/softhsm/SoftHSMv2
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
-
+Requires: lib%name = %EVR
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: libsqlite3-devel
@@ -24,8 +21,6 @@ BuildRequires: zlib-devel
 BuildRequires: sqlite3
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: cppunit-devel}}
-
-Requires: lib%name = %EVR
 
 %description
 OpenDNSSEC is providing a software implementation of a generic
@@ -100,7 +95,6 @@ exit 0
 %post
 
 %files
-%doc LICENSE README.md NEWS
 %_bindir/softhsm2-dump-file
 %_bindir/softhsm2-keyconv
 %_bindir/softhsm2-migrate
@@ -122,6 +116,9 @@ exit 0
 %_includedir/softhsm/
 
 %changelog
+* Thu Feb 26 2026 Stanislav Levin <slev@altlinux.org> 2.7.0-alt1
+- 2.6.1 -> 2.7.0.
+
 * Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 2.6.1-alt3
 - Backported fix for #729 (pcks11 and softHSM segfault on exit).
 

@@ -4,14 +4,14 @@
 %def_with check
 
 Name: pkcs11-provider
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/latchset/pkcs11-provider
 Source: %name-%version.tar
-
+Patch0: %name-%version-alt.patch
 # BUILD.md
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -38,6 +38,7 @@ compatible to previous versions as well.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -50,11 +51,13 @@ compatible to previous versions as well.
 %meson_test
 
 %files
-%doc HOWTO.md README.md
 %_man7dir/provider-pkcs11.*
 %modulesdir/pkcs11.so
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Thu Oct 02 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0 -> 1.1.0.
 
