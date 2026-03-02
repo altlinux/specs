@@ -5,7 +5,7 @@
 
 Name: mate-dock-applet
 Version: 21.10.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: application dock for the MATE panel
 License: GPL-3.0
@@ -14,21 +14,17 @@ Url: https://github.com/ubuntu-mate/mate-dock-applet
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-BuildRequires: libgio-devel python-devel rpm-build-python3
-BuildRequires: python3 python3-tools
-BuildRequires: pkgconfig(glib-2.0)
-
-Requires: python3 python3-tools
-Requires: mate-panel >= 1.20.0
-Requires: python3-module-pyxdg
-Requires: python3-module-pycairo
-Requires: python3-module-pygobject3 python3-module-pygobject3-pygtkcompat
-Requires: python3-module-Pillow
-Requires: python3-module-xlib
-
+Source: %name-%version.tar
 BuildArch: noarch
 
-Source: %name-%version.tar
+%add_python3_path %_libdir/mate-applets/mate-dock-applet/
+
+Requires: mate-panel >= 1.20.0
+Requires: python3-module-pygobject3
+Requires: typelib(Gtk) = 3.0
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: libgio-devel
 
 %description
 MATE Dock Applet is a MATE Panel applet that displays
@@ -61,6 +57,9 @@ make
 %_libdir/mate-applets/mate-dock-applet/
 
 %changelog
+* Tue Mar 03 2026 Yuri N. Sedunov <aris@altlinux.org> 21.10.0-alt1.2
+- fixed build/runtime dependencies
+
 * Mon Feb 20 2023 Artyom Bystrov <arbars@altlinux.org> 21.10.0-alt1.1
 - new version 21.10.0, fix bug ALT#45088
 

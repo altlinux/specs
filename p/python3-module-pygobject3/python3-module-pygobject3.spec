@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.54
+%define ver_major 3.56
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 
-%define pythoncapi_compat_ver 632d1aa0c
-%define gi_tests_ver d70a37ae2
+%define pythoncapi_compat_ver 22811c3f
+%define gi_tests_ver 5e961ff8
 
 %def_enable pycairo
 %def_disable devel_doc
@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python3 bindings for GObject
@@ -33,7 +33,11 @@ Source1: pythoncapi-compat-%pythoncapi_compat_ver.tar
 # https://gitlab.gnome.org/GNOME/gobject-introspection-tests.git
 Source2: gobject-introspection-tests-%gi_tests_ver.tar
 %endif
-Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
+Patch: pygobject-3.56.0-alt-meson-0.55_build.patch
+
+# removed in 3.56.0
+%def_disable pygtkcompat
+Obsoletes: %name-pygtkcompat
 
 %add_findprov_lib_path %python3_sitelibdir/gi
 
@@ -87,7 +91,6 @@ Group: Development/Python3
 %description nox
 This package provides a part of PyGObject without Cairo dependencies.
 
-# will be removed during the 3.53 development cycle
 %package pygtkcompat
 Summary: PyGTK compatibility layer for PyGObject
 Group: Development/Python3
@@ -154,11 +157,13 @@ xvfb-run %__meson_test -t 2
 %{?_enable_pycairo:%exclude %python3_sitelibdir/gi/_gi_cairo.cpython-*.so}
 %python3_sitelibdir/gi/__pycache__/
 %python3_sitelibdir/*.dist-info
-%exclude %python3_sitelibdir/gi/pygtkcompat.py*
+%{?_enable_pygtkcompat:%exclude %python3_sitelibdir/gi/pygtkcompat.py*}
 
+%{?_enable_pygtkcompat:
 %files pygtkcompat
 %python3_sitelibdir/pygtkcompat/
 %python3_sitelibdir/gi/pygtkcompat.py*
+}
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -171,6 +176,12 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0 (removed pygtkcompat)
+
+* Sun Jan 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.54.5-alt2
+- updated to 3.54.5-4-g427982d3
+
 * Sat Oct 18 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.5-alt1
 - 3.54.5
 
