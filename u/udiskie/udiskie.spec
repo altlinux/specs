@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    %pypi_name
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Automounter for removable media
@@ -44,6 +44,8 @@ Group: Development/Python3
 %install
 %pyproject_install
 
+%find_lang %name
+
 %check
 # .github/workflows/python-package.yml
 %pyproject_run -- python test/test_match.py
@@ -52,24 +54,19 @@ Group: Development/Python3
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
-%files
+%files -f %name.lang
 %doc *.rst COPYING
 %_bindir/*
 %_datadir/bash-completion/completions/*
-%_datadir/locale/de/LC_MESSAGES/udiskie.mo
-%_datadir/locale/en_US/LC_MESSAGES/udiskie.mo
-%_datadir/locale/es_ES/LC_MESSAGES/udiskie.mo
-%_datadir/locale/it_IT/LC_MESSAGES/udiskie.mo
-%_datadir/locale/ru_RU/LC_MESSAGES/udiskie.mo
-%_datadir/locale/sk_SK/LC_MESSAGES/udiskie.mo
-%_datadir/locale/tr_TR/LC_MESSAGES/udiskie.mo
-%_datadir/locale/zh_CN/LC_MESSAGES/udiskie.mo
 %_datadir/zsh/site-functions/_udiskie
 %_datadir/zsh/site-functions/_udiskie-canonical_paths
 %_datadir/zsh/site-functions/_udiskie-mount
 %_datadir/zsh/site-functions/_udiskie-umount
 
 %changelog
+* Mon Mar 02 2026 Artem Semenov <savoptik@altlinux.org> 2.6.2-alt1
+- Updated to 2.6.2
+
 * Tue Jan 13 2026 Artem Semenov <savoptik@altlinux.org> 2.6.1-alt1
 - Updated to 2.6.1
 
