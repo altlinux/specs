@@ -1,11 +1,3 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -29,22 +21,32 @@ BuildRequires: jpackage-11
 
 Name:           xstream
 Version:        1.4.19
-Release:        alt1_2jpp11
+Release:        alt2
+
 Summary:        Java XML serialization library
 License:        BSD
+Group:		Development/Java
 URL:            https://x-stream.github.io
+VCS:		https://github.com/x-stream/xstream
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
 
+Patch0:		0001-Replace-javax-with-jakarta-activation.patch
+Patch1:		0002-Replace-javax-with-jakarta-xml-bind.patch
+
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(io.github.x-stream:mxparser)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:	unzip
+
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(io.github.x-stream:mxparser)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 
 %if %{with activation}
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
@@ -94,7 +96,6 @@ BuildRequires:  mvn(xom:xom)
 %if %{with xpp3}
 BuildRequires:  mvn(xpp3:xpp3_min)
 %endif
-Source44: import.info
 
 %description
 XStream is a simple library to serialize objects to XML
@@ -126,12 +127,13 @@ Benchmark module for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-
+%autopatch -p1
 
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
 # https://jakarta.ee/about/faq#What_happened_with_javax.*_namespace?
 %pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api %{name}
+%pom_change_dep -r javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api
 
 %pom_remove_plugin -r :maven-dependency-plugin
 
@@ -243,6 +245,11 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %doc README.txt
 
 %changelog
+* Thu Feb 12 2026 Evgeniy Serov <scala@altlinux.org> 1.4.19-alt2
+- Fixed FTBFS.
+- Added patches for compability with jakarta.
+- Removed import.info.
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:1.4.19-alt1_2jpp11
 - update
 

@@ -2,7 +2,7 @@
 
 Name: japicmp
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: Comparison of two versions of a jar archive
 License: Apache-2.0
@@ -12,6 +12,8 @@ Vcs: https://github.com/siom79/japicmp.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+
+Patch0:	0001-Replace-javax-with-jakarta-xml-bind.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -61,6 +63,7 @@ helping detect breaking API modifications during automated builds.
 
 %prep
 %setup
+%autopatch -p1
 
 %pom_xpath_remove "/*[local-name()='project']/*[local-name()='build']/*[local-name()='extensions']" pom.xml
 
@@ -90,5 +93,8 @@ sed -i 's/@{argLine}/${argLine}/g' japicmp/pom.xml
 %files ant-task -f .mfiles-japicmp-ant-task
 
 %changelog
+* Thu Feb 12 2026 Evgeniy Serov <scala@altlinux.org> 0.25.0-alt2
+- Fixed FTBFS.
+
 * Mon Dec 15 2025 Ivan Khanas <xeno@altlinux.org> 0.25.0-alt1
 - First build for ALT.

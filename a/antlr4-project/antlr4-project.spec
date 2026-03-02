@@ -32,11 +32,12 @@ BuildRequires: jpackage-11-compat
 
 Name:           antlr4-project
 Version:        4.9.2
-Release:        alt1_1jpp11
-Summary:        Parser generator (ANother Tool for Language Recognition)
+Release:        alt2
 
-License:        BSD
+Summary:        Parser generator (ANother Tool for Language Recognition)
+License:        BSD-3-Clause
 URL:            https://www.antlr.org/
+VCS:		https://github.com/antlr/antlr4
 Source0:        https://github.com/antlr/antlr4/archive/%{version}/antlr4-%{version}.tar.gz
 # Work around a "code too large" error while compiling a generated file
 # https://github.com/antlr/antlr4/pull/2739
@@ -86,7 +87,6 @@ generator for reading, processing, executing, or translating structured\
 text or binary files.  It is widely used to build languages, tools, and\
 frameworks.  From a grammar, ANTLR generates a parser that can build\
 and walk parse trees.
-Source44: import.info
 
 %description 
 
@@ -303,6 +303,8 @@ if [ "%{_lib}" != "lib" ]; then
   sed -i 's/DESTINATION lib/&64/' runtime/Cpp/runtime/CMakeLists.txt
 fi
 
+%pom_remove_dep :tools runtime-testsuite/processors/
+
 %build
 #export JAVA_HOME=%{_jvmdir}/java
 
@@ -476,6 +478,10 @@ rm -fr %{buildroot}%{_docdir}/libantlr4
 %endif
 
 %changelog
+* Thu Feb 12 2026 Evgeniy Serov <scala@altlinux.org> 4.9.2-alt2
+- Fixed FTBFS.
+- Removed import.info.
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 4.9.2-alt1_1jpp11
 - new version
 
