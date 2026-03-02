@@ -1,11 +1,12 @@
 Name: libHX
-Version: 3.22
+Version: 5.2
 Release: alt1
 Summary: General-purpose library for typical low-level operations
 
 Group: System/Libraries
 License: LGPLv2 or LGPLv3
 URL: http://jengelh.hopto.org/files/libHX/
+VCS: https://codeberg.org/jengelh/libhx
 
 Source: libHX-%version.tar
 Patch: %name-%version-%release.patch
@@ -43,23 +44,20 @@ developing applications that use %name
 
 %install
 %makeinstall
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/%name.so; do
-        t=$(readlink "$f")
-        ln -sf ../../%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/%name.so.* %buildroot/%_lib/
 
 %files
-/%_lib/%name.so.*
+%_libdir/%name.so.*
 
 %files devel
-%doc doc/api.txt README.txt
+%doc doc/api.rst README.rst
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/libHX.pc
 
 %changelog
+* Fri Feb 27 2026 Andrey Cherepanov <cas@altlinux.org> 5.2-alt1
+- New version (ALT #28412).
+
 * Wed Oct 18 2017 Valery Inozemtsev <shrek@altlinux.ru> 3.22-alt1
 - 3.22
 

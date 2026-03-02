@@ -1,5 +1,5 @@
 Name: pam_mount
-Version: 2.18
+Version: 2.22
 Release: alt1
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
@@ -49,7 +49,6 @@ Group: Development/Other
 %config(noreplace) %_sysconfdir/security/%name.conf.xml
 /%_lib/security/*
 %_sbindir/*
-/sbin/*
 /%_lib/*.so.*
 %_mandir/man?/*
 
@@ -59,6 +58,9 @@ Group: Development/Other
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Mar 02 2026 Andrey Cherepanov <cas@altlinux.org> 2.22-alt1
+- New version.
+
 * Mon Aug 30 2021 Andrey Cherepanov <cas@altlinux.org> 2.18-alt1
 - New version.
 - Requires ofl and fd0ssh (ALT #37026).

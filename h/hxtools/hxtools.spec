@@ -1,5 +1,5 @@
 Name:    hxtools
-Version: 20250309
+Version: 20251011
 Release: alt1
 
 Summary: A collection of several tools
@@ -11,7 +11,7 @@ URL: http://inai.de/projects/hxtools/
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libHX-devel
+BuildRequires: libHX-devel >= 5.2
 
 %description
 hxtools contains several tools for different tasks written by Jan Engelhardt.
@@ -45,9 +45,10 @@ from the parent process using a pipe.
 %setup
 
 %build
+%add_optflags -DCOMPAT_PROC=
 %autoreconf
 %configure
-%make_build -C sadmin ofl fd0ssh
+%make_build sadmin/ofl sadmin/fd0ssh
 
 %install
 # ofl
@@ -66,6 +67,9 @@ install -Dpm0644 doc/fd0ssh.1 %buildroot%_man1dir/fd0ssh.1
 %_man1dir/fd0ssh.1*
 
 %changelog
+* Sun Oct 12 2025 Andrey Cherepanov <cas@altlinux.org> 20251011-alt1
+- New version.
+
 * Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 20250309-alt1
 - New version.
 
