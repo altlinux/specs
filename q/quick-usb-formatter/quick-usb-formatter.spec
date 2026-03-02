@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt26
+Release: alt27
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Fri Feb 27 2026 Ilya Mukhamadeev <nicourced@altlinux.org> 0.6-alt27
+- Fix segfault.
+
 * Fri Oct 24 2025 Sergey V Turchin <zerg@altlinux.org> 0.6-alt26
 - update build requires
 
