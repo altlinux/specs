@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2651,6 +2651,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Feb 27 2026 Alexey Shabalin <shaba@altlinux.org> 1:258.5-alt1
+- 258.5.
+
 * Thu Feb 19 2026 Alexey Shabalin <shaba@altlinux.org> 1:258.4-alt1
 - 258.4.
 - Add /usr/lib/systemd/system/user.slice.d/10-oomd-per-slice-defaults.conf (ALT#57794).
