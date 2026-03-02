@@ -1,6 +1,6 @@
 Name: surguch
 Version: 0.4.5
-Release: alt1
+Release: alt2
 Summary: Verification and creation of digitally signed pdf documents
 
 Source:  %name-%version.tar
@@ -36,6 +36,15 @@ Requires: nautilus-python
 %description gnome-extension
 An extension that allows you to add files for signing from file manager.
 
+%package mate-extension
+Summary: Mate file manager extension for surguch
+Group: Other
+Requires: surguch
+Requires: mate-file-manager-actions
+
+%description mate-extension
+An extension that allows you to add files for signing from file manager.
+
 
 %prep
 %setup
@@ -64,7 +73,12 @@ An extension that allows you to add files for signing from file manager.
 %files gnome-extension -f %name-gnome-extension.lang
 %_datadir/nautilus-python/extensions/surguch-gnome-extension.py
 
+%files mate-extension
+
 %changelog
+* Mon Mar 02 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.4.5-alt2
+- add subpackage with requires for mate file actions (closes #58061).
+
 * Fri Feb 26 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.4.5-alt1
 - add new launch options, add file manager actions.
 
