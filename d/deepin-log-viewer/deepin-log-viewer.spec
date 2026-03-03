@@ -4,7 +4,7 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.26
+Version: 6.5.28
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -31,6 +31,7 @@ BuildRequires(pre): clang-devel lld-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires: boost-devel-headers cmake deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libminizip-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt6-svg-devel dqt6-tools-devel dqt6-5compat-devel rapidjson-devel libpolkitqt6-dqt6-devel libcups-devel libgio-qt6-devel libicu-devel libwayland-client-devel
+BuildRequires: vulkan-headers libdqt6-concurrent
 
 %description
 %summary.
@@ -131,6 +132,10 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %changelog
+* Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.28-alt1
+- New version 6.5.28.
+- Fixed build on shrinked dqt6.
+
 * Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.26-alt1
 - New version 6.5.26.
 - Fixed build on dtk 6.7.31.
