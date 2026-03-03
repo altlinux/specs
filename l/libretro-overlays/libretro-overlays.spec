@@ -1,5 +1,5 @@
 Name:           libretro-overlays
-Version:        1.20.0
+Version:        1.22.1
 Release:        alt1
 Summary:        Collection of overlays for libretro
 License:        CC-BY-4.0
@@ -33,6 +33,9 @@ done
 %{_datadir}/libretro/overlays/*
 
 %changelog
+* Mon Mar 02 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.1-alt1
+- Update to new version
+
 * Wed Feb  5 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
 - Update to new version
 

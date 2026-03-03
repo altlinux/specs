@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-handhelds
 Version:	20260127
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -13,7 +13,6 @@ Source0:	%{name}-%{version}.tar
 BuildRequires:	nasm gcc gcc-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
-BuildRequires:	libstdc++-devel
 BuildRequires:	vim-common
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(libpng)
@@ -21,7 +20,6 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(sdl2)
-BuildRequires:	libstdc++-devel-static
 
 ExcludeArch: ppc64le
 
@@ -104,6 +102,10 @@ done
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Mon Feb 16 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
+- Switch to stock GCC
+- Remove libstdc++-devel from BR
+
 * Fri Jan 30 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
 - Update to new versions
 

@@ -1,6 +1,6 @@
 Name:           libretro-core-info
 Version:        1.22.2
-Release:        alt1
+Release:        alt2
 Summary:        Provide libretro's core info files
 License:        MIT
 Group:          Emulators
@@ -29,6 +29,9 @@ cp *.info %{buildroot}%{_datadir}/libretro/info
 %{_datadir}/libretro/info/*.info
 
 %changelog
+* Mon Mar 02 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.2-alt2
+- Synchronized with other cores
+
 * Mon Feb 02 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.2-alt1
 - Update to new version
 

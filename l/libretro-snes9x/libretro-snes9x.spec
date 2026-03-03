@@ -1,7 +1,7 @@
 %global __find_debuginfo_files %nil
 
 Summary:	An interface for emulator and game ports
-Name:		libretro-bsnes
+Name:		libretro-snes9x
 Version:	20260127
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
@@ -19,7 +19,6 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libpcap)
-BuildRequires:	libgomp-devel
 
 Conflicts: libretro
 Obsoletes: libretro
@@ -43,17 +42,15 @@ writing input/video/audio drivers - all of that is supplied to him by
 RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
-This set of cores based on Beetle SNES emulator
+This set of cores based on SNES9X emulator
 
-%define bsnesX bsnes bsnes2014_accuracy bsnes2014_balanced bsnes2014_performance bsnes_cplusplus98 bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_mercury_performance
+%define snes9 snes9x snes9x2002 snes9x2005 snes9x2005_plus snes9x2010
 %{expand:%(\
-    for bsnesl in %{bsnesX}; do \
-        echo -e "%%package $bsnesl\n"; \
-        echo -e "Summary: $bsnesl libretro core\nGroup: Emulators\n"; \
-        echo -e "Conflicts: libretro-$bsnesl\n";\
-        echo -e "Obsoletes: libretro-$bsnesl\n";\
-        echo -e "%description ${bsnesl}\n${bsnesl} libretro core\n"; \
-        echo -e "%files $bsnesl\n%_libexecdir/libretro/${bsnesl}_libretro.so\n"; \
+    for snes9x in %{snes9}; do \
+        echo -e "%%package $snes9x\n"; \
+        echo -e "Summary: $snes9x libretro core\nGroup: Emulators\n"; \
+        echo -e "%description ${snes9x}\n${snes9x} libretro core\n"; \
+        echo -e "%files $snes9x\n%_libexecdir/libretro/${snes9x}_libretro.so\n"; \
     done\
 )}
 
@@ -62,7 +59,7 @@ This set of cores based on Beetle SNES emulator
 
 %build
 
-for core in bsnes bsnes_accuracy bsnes_balanced bsnes_performance bsnes_mercury_performance bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_hd_beta bsnes_cplusplus98; do
+for core in snes9x snes9x2002 snes9x2005 snes9x2005_plus snes9x2010; do
 ./libretro-build.sh $core
 done
 
@@ -71,9 +68,8 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
-* Mon Mar 02 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
+* Mon Mar  2 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
 - Update to new versions
-- New core - libretro-bsnes
 
 * Mon Feb  3 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
 - Update to new versions

@@ -1,10 +1,9 @@
 %global __find_debuginfo_files %nil
-%set_gcc_version 13
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-arcades
 Version:	20260127
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -15,10 +14,9 @@ Source0:	%{name}-%{version}.tar
 Patch1: libretro-arcades-20240813-alt1-Fix_build_mame2010.patch
 Patch2: libretro-arcades-20240813-alt1-Fix_build_mame2015.patch 
 
-BuildRequires:	nasm gcc13 gcc13-c++ cmake
+BuildRequires:	nasm gcc gcc-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
-BuildRequires:	libstdc++-devel
 BuildRequires:	vim-common
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(libpng)
@@ -28,7 +26,6 @@ BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(python3)
-BuildRequires:	libstdc++-devel-static
 
 Conflicts: libretro
 Obsoletes: libretro
@@ -54,7 +51,7 @@ libretro API and that's it - we take care of the rest.
 
 THs set contains cores for arcade machines emulation (except FBNeo - this is multi-system emulator)
 
-%define arcades daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_midway mame2003_plus
+%define arcades fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_plus
 %{expand:%(\
     for arcade in %{arcades}; do \
         echo -e "%%package $arcade\n";\
@@ -105,7 +102,7 @@ export CC=%__cc
 export CXX=%__cxx
 %build
 
-for core in daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_midway mame2003_plus; do
+for core in fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_plus; do
 ./libretro-build.sh $core
 done
 
@@ -126,6 +123,10 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Thu Feb 26 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
+- Back to stock GCC
+- Remove libstdc++-devel from BR
+
 * Tue Jan 27 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
 - Update to new versions
 

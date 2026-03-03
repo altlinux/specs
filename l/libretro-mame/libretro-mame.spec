@@ -1,5 +1,5 @@
 Name: libretro-mame
-Version: 0.285
+Version: 0.286
 Release: alt2
 
 Summary: MAME libretro core (Arcade only)
@@ -32,7 +32,7 @@ This package is for RetroArch/Libretro front-end.
 %setup -n %name-%version
 %ifarch %e2k
 %patch2000 -p2
-sed -i 's/if version < 70000/if false/' scripts/genie.lua
+sed -i 's/if version < 100300/if false/' scripts/genie.lua
 sed -i '1i #define LUA_USE_JUMPTABLE 0' 3rdparty/lua/src/lvm.c
 %endif
 
@@ -52,6 +52,12 @@ install -Dp -m0644 ./mamearcade_libretro.so %buildroot%_libexecdir/libretro
 %_libexecdir/libretro/mamearcade_libretro.so
 
 %changelog
+* Mon Mar 02 2026 Artyom Bystrov <arbars@altlinux.org> 0.286-alt2
+- Fix build for E2K
+
+* Mon Mar 02 2026 Artyom Bystrov <arbars@altlinux.org> 0.286-alt1
+- Update to new version
+
 * Mon Feb 02 2026 Artyom Bystrov <arbars@altlinux.org> 0.285-alt2
 - Fix name of package
 

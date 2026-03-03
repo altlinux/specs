@@ -1,10 +1,12 @@
 %global __find_debuginfo_files %nil
+%ifnarch %e2k
 %set_gcc_version 13
+%endif
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
 Version:	20260127
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -13,10 +15,12 @@ Url:		http://www.libretro.com
 Source0:	%{name}-%{version}.tar
 Patch1: libretro-consoles-20240813-alt1-Fix-build-blastem-on-ALT.patch
 
-BuildRequires:	nasm gcc13 gcc13-c++ cmake
+%ifnarch %e2k
+BuildRequires: nasm gcc13 gcc13-c++ cmake
+%endif
+BuildRequires:	nasm gcc gcc-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
-BuildRequires:	libstdc++-devel
 BuildRequires:	vim-common
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(libpng)
@@ -24,7 +28,6 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(sdl2)
-BuildRequires:	libstdc++-devel-static
 
 Conflicts: libretro
 Obsoletes: libretro
@@ -63,7 +66,7 @@ This is set of cores of game consoles emulators.
 )}
 
 %ifnarch aarch64 loongarch64
-%define consoles kronos parallel_n64 yabasanshiro yabause
+%define consoles kronos yabause
 %{expand:%(\
     for console in %{consoles}; do \
         echo -e "%%package $console\n"; \
@@ -75,6 +78,21 @@ This is set of cores of game consoles emulators.
     done\
 )}
 %endif
+
+%ifnarch aarch64 loongarch64 %e2k
+%define consoles parallel_n64 yabasanshiro
+%{expand:%(\
+    for console in %{consoles}; do \
+        echo -e "%%package $console\n"; \
+        echo -e "Summary: $console libretro core\nGroup: Emulators\n"; \
+        echo -e "Conflicts: libretro-$console\n";\
+        echo -e "Obsoletes: libretro-$console\n";\
+        echo -e "%description ${console}\n${console} libretro core\n"; \
+        echo -e "%files $console\n%_libexecdir/libretro/${console}_libretro.so\n"; \
+    done\
+)}
+%endif
+
 
 %ifarch %ix86 x86_64
 %define consoles blastem
@@ -158,6 +176,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Thu Feb 26 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
+- Disable some cores for E2K
+
 * Tue Jan 27 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
 - Update to new version
 
