@@ -1,5 +1,5 @@
 Name:    qalculate-qt
-Version: 5.8.2
+Version: 5.9.0
 Release: alt1
 
 Summary: A very versatile desktop calculator - Qt version
@@ -48,6 +48,9 @@ done
 %_datadir/qalculate-qt/translations/qalculate-qt_*.qm
 
 %changelog
+* Tue Mar 03 2026 Ilya Sorochan <k0tran@altlinux.org> 5.9.0-alt1
+- Update version.
+
 * Tue Jan 13 2026 Ilya Sorochan <k0tran@altlinux.org> 5.8.2-alt1
 - Update version.
 - Enable RUB, BYN and BYR currencies (Closes #57252).
