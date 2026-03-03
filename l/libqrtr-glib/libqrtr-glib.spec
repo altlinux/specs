@@ -1,7 +1,9 @@
 %def_enable introspection
+%def_enable docs
+%define soname 0
 
 Name: libqrtr-glib
-Version: 1.2.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Qualcomm IPC Router protocol helper library
@@ -12,11 +14,11 @@ Vcs: https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: glib2-devel libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: gi-docgen}
 
 %define _unpackaged_files_terminate_build 1
 
@@ -52,6 +54,7 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 %summary
 
+%if_enabled docs
 %package devel-doc
 Summary: This package contains development documentation for %name
 Group: Development/Documentation
@@ -60,6 +63,7 @@ Requires: %name-devel = %version-%release
 
 %description devel-doc
 This package contains development documentation for %name
+%endif
 
 %prep
 %setup
@@ -67,19 +71,15 @@ This package contains development documentation for %name
 
 %build
 %ifarch %e2k
-%define werror false
+%def_disable werror
 %else
-%define werror true
+%def_enable werror
 %endif
 
 %meson \
-%if_enabled introspection
-	-Dintrospection=true \
-%else
-	-Dintrospection=false \
-%endif
-	-Dgtk_doc=true \
-	-Dwerror=%werror
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_bool docs gtk_doc} \
+	%{subst_enable_meson_bool werror werror}
 
 %meson_build -v
 
@@ -87,7 +87,9 @@ This package contains development documentation for %name
 %meson_install
 
 %files
-%_libdir/*.so.*
+%doc NEWS README.md AUTHORS
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%soname.*
 
 %files devel
 %_includedir/*
@@ -102,11 +104,19 @@ This package contains development documentation for %name
 %_datadir/gir-1.0/*.gir
 %endif
 
+%if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
-
+%_datadir/doc/%{name}-1.0/
+%endif
 
 %changelog
+* Tue Mar 03 2026 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Added soname check.
+- Added docs knob.
+- Used macros from rpm-macros-meson.
+- Packaged NEWS, README.md and AUTHORS files.
+- Updated to 1.4.0 (closes: #58096).
+
 * Tue Mar 01 2022 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 

@@ -2,9 +2,10 @@
 %define _libexecdir %prefix/libexec
 
 %def_enable introspection
+%def_enable docs
 
 Name: %_name-glib
-Version: 1.32.0
+Version: 1.34.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -19,8 +20,9 @@ Patch: %_name-%version-%release.patch
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: glib2-devel libgio-devel
+BuildRequires: help2man bash-completion
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-BuildRequires: gtk-doc help2man bash-completion
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 %define soname 4
 
@@ -72,6 +74,7 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 %summary
 
+%if_enabled docs
 %package devel-doc
 Summary: This package contains development documentation for %name
 Group: Development/Documentation
@@ -80,6 +83,7 @@ Requires: %name-devel = %version-%release
 
 %description devel-doc
 This package contains development documentation for %name
+%endif
 
 %prep
 %setup
@@ -88,7 +92,7 @@ This package contains development documentation for %name
 %build
 %meson \
 	%{subst_enable_meson_bool introspection introspection} \
-	-Dgtk_doc=true
+	%{subst_enable_meson_bool docs gtk_doc}
 
 %meson_build -v
 
@@ -122,11 +126,16 @@ This package contains development documentation for %name
 %_datadir/gir-1.0/*.gir
 %endif
 
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
-
+%endif
 
 %changelog
+* Tue Mar 03 2026 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt1
+- Added docs knob.
+- Updated to 1.34.0.
+
 * Fri Apr 11 2025 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
 - Added soname check.
 - Dropped obsoleted patch.

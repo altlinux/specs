@@ -2,9 +2,10 @@
 %define _libexecdir %prefix/libexec
 
 %def_enable introspection
+%def_enable docs
 
 Name: %_name-glib
-Version: 1.36.0
+Version: 1.38.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -23,7 +24,8 @@ BuildRequires: libgudev-devel
 BuildRequires: libqrtr-glib-devel
 BuildRequires: python3
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libqrtr-glib-gir-devel}
-BuildRequires: gtk-doc help2man bash-completion
+BuildRequires: help2man bash-completion
+%{?_enable_docs:BuildRequires: gi-docgen}
 
 %define soname 5
 
@@ -70,6 +72,7 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 %summary
 
+%if_enabled docs
 %package devel-doc
 Summary: This package contains development documentation for %name
 Group: Development/Documentation
@@ -78,6 +81,7 @@ Requires: %name-devel = %version-%release
 
 %description devel-doc
 This package contains development documentation for %name
+%endif
 
 %prep
 %setup
@@ -91,7 +95,7 @@ touch README ChangeLog
 	-Dudev=true \
 	-Dqrtr=true \
 	%{subst_enable_meson_bool introspection introspection} \
-	-Dgtk_doc=true
+	%{subst_enable_meson_bool docs gtk_doc}
 
 %meson_build -v
 
@@ -125,10 +129,17 @@ touch README ChangeLog
 %_datadir/gir-1.0/*.gir
 %endif
 
+%if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%{name}-1.0/
+%endif
 
 %changelog
+* Tue Mar 03 2026 Mikhail Efremov <sem@altlinux.org> 1.38.0-alt1
+- Added docs knob.
+- Dropped obsoleted patch.
+- Updated to 1.38.0.
+
 * Fri Apr 11 2025 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt1
 - Added soname check.
 - Dropped obsoleted patch.
