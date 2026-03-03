@@ -1,6 +1,6 @@
 Name: tcpflow
 Version: 1.6.1
-Release: alt3
+Release: alt4
 
 Summary: Network traffic recorder
 License: GPLv3
@@ -9,6 +9,8 @@ Url: https://github.com/simsong/tcpflow
 
 Source: %name-%version.tar
 Source1: control-tcpflow
+
+Patch1: CVE-2026-25061.patch
 
 Requires: %name-control
 
@@ -38,6 +40,7 @@ See control(8) for details.
 
 %prep
 %setup
+%patch1 -p1
 sed -i '/^#include <string>/ a#include <cstdint>' src/netviz/plot_view.h
 
 %build
@@ -66,6 +69,9 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %config %_controldir/%name
 
 %changelog
+* Tue Mar 03 2026 Alexander Danilov <admsasha@altlinux.org> 1.6.1-alt4
+- Applied upstream patch (fixes: CVE-2026-25061).
+
 * Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt3
 - typo in %%pre scriptlet fixed (closes: 53433)
 
