@@ -3,9 +3,11 @@
 %define _unpackaged_files_terminate_build 1
 %define git %nil
 
+%def_enable tests
+
 Name: nvtop
 Version: 3.3.2
-Release: alt1
+Release: alt2
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
 Group: Monitoring
@@ -20,6 +22,9 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libsystemd-devel libudev-devel libdrm-devel libncurses-devel
+%if_enabled tests
+BuildRequires: libgtest-devel ctest
+%endif
 
 # nvidia gpu information rely on libnvidia-ml library
 %ifarch %ix86 x86_64 aarch64
@@ -43,9 +48,21 @@ a htop familiar way.
 	-DNVIDIA_SUPPORT=OFF \
 %endif
 	-DAMDGPU_SUPPORT=ON \
+%if_enabled tests
+	-DBUILD_TESTING=ON \
+%endif
 	-DINTEL_SUPPORT=ON
 %cmake_build
+
+%install
 %cmake_install
+
+%if_enabled tests
+%check
+pushd %_cmake__builddir
+make test
+popd
+%endif
 
 %files
 %doc README.* COPYING
@@ -56,6 +73,10 @@ a htop familiar way.
 %_datadir/metainfo/io.github.syllo.%name.metainfo.xml
 
 %changelog
+* Tue Mar 03 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt2
+- Enable debuginfo.
+- Enable tests.
+
 * Mon Mar 02 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt1
 - 3.3.2.
 
