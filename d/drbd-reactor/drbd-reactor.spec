@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: drbd-reactor
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Summary: React to DRBD events via plugins.
 
@@ -88,6 +88,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Tue Mar 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.11.0-alt1
+- v1.11.0
+
 * Wed Oct 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.10.0-alt1
 - v1.10.0
 
