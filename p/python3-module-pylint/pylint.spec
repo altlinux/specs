@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 Summary: Python code static checker
 License: GPLv2+
@@ -66,7 +66,6 @@ done
 %pyproject_run_pytest -ra --benchmark-disable tests
 
 %files
-%doc README.rst
 %_bindir/pylint.py3
 %_bindir/pyreverse.py3
 %_bindir/symilar.py3
@@ -75,6 +74,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 4.0.5-alt1
+- 4.0.4 -> 4.0.5.
+
 * Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 4.0.4-alt1
 - 4.0.3 -> 4.0.4.
 
