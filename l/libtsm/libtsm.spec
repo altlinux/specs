@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libtsm
-Version: 4.3.0
+Version: 4.4.2
 Release: alt1
 Summary: Terminal-emulator State Machine
 Group: System/Libraries
 License: MIT
-Url: https://github.com/Aetf/libtsm
+Url: https://github.com/kmscon/libtsm
+Vcs: https://github.com/kmscon/libtsm.git
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -60,6 +61,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 4.4.2-alt1
+- updated from 4.3.0 to 4.4.2
+
 * Thu Feb 19 2026 Alexey Shabalin <shaba@altlinux.org> 4.3.0-alt1
 - updated from 4.2.0 to 4.3.0
 
