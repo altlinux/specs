@@ -3,7 +3,7 @@
 
 Name: 7-zip
 Version: 26.00
-Release: alt1
+Release: alt2
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -14,6 +14,13 @@ Patch3: uninitialized.patch
 Patch100: ALT-armh.patch
 Summary: Official 7-zip for linux, the file archiver with a high compression ratio
 Provides: 7zz = %version-%release
+
+# Replace p7zip package (ALT bug 49730)
+Provides: p7zip = %version-%release
+Obsoletes: p7zip < 25
+Provides: p7zip-standalone = %version-%release
+Obsoletes: p7zip-standalone < 25
+
 
 # Automatically added by buildreq on Fri Jul 02 2021
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python3-base sh4
@@ -116,10 +123,15 @@ popd
 install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
 install -D CPP/7zip/Bundles/SFXCon/_o/7zCon %buildroot%_libdir/7z/7zCon.sfx
 
+ln -s 7zz %buildroot%_bindir/7z
+ln -s 7zz %buildroot%_bindir/7za
+
 %files
 %doc DOC/*
-%_bindir/*
-%_libdir/7z
+%_bindir/7zz
+%_bindir/7z
+%_bindir/7za
+%_libdir/7z/
 
 %if_enabled check
 %check
@@ -128,6 +140,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Fri Feb 27 2026 Vitaly Lipatov <lav@altlinux.ru> 26.00-alt2
+- Add /usr/bin/7z, /usr/bin/7za and provide p7zip (ALT bug 49730)
+
 * Sat Feb 14 2026 Fr. Br. George <george@altlinux.org> 26.00-alt1
 - Autobuild version bump to 26.00
 
