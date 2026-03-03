@@ -1,5 +1,5 @@
 Name:    entr
-Version: 5.7
+Version: 5.8
 Release: alt1
 
 Summary: Event Notify Test Runner
@@ -35,6 +35,9 @@ on the command line.
 %_man1dir/*
 
 %changelog
+* Tue Mar 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.8-alt1
+- 5.8
+
 * Fri Feb 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.7-alt1
 - 5.7
 
