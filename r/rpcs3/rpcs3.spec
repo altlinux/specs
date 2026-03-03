@@ -1,17 +1,18 @@
 %define optflags_lto %nil
 
-%define git_ver 18592
-%define git_commit c5511200d5a8997b5413b37cb3a4860ab3189a63
+%define git_ver 18871
+%define git_commit 595e42c4f3bfa11b8585ea029e1aa9d2c9c68fd1
 
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
-%define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
+%define yaml_cpp_commit 05c44fcd18074836e21e1eda9fc02b3a4a1529b5
 %define soundtouch_commit 3982730833b6daefe77dcfb32b5c282851640c17
 %define fusion_version 1.2.11
 %define gamemode_version 1.8.2
+%define protobuf_version 33.4
 
 Name: rpcs3
-Version: 0.0.39
-Release: alt1.1
+Version: 0.0.40
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -35,23 +36,21 @@ Source3: soundtouch-%soundtouch_commit.tar
 Source4: Fusion-%fusion_version.tar
 # https://github.com/FeralInteractive/gamemode/archive/%gamemode_version/gamemode-%gamemode_version.tar.gz
 Source5: gamemode-%gamemode_version.tar
+# https://github.com/protocolbuffers/protobuf/archive/v%protobuf_version/protobuf-%protobuf_version.tar.gz
+Source6: protobuf-%protobuf_version.tar
 
 BuildRequires: /proc
-BuildRequires: alt-os-release
-BuildRequires: clang
-BuildRequires: clang-tools
 BuildRequires: glslang-devel
 BuildRequires: glslc
 BuildRequires: libGLEW-devel
-BuildRequires: libSDL2-devel
 BuildRequires: libSDL3-devel
+BuildRequires: libabseil-cpp-devel
 BuildRequires: libcubeb-devel
 BuildRequires: libcurl-devel
 BuildRequires: libedit-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
 BuildRequires: libffi-devel
-BuildRequires: libflatbuffers-devel
 BuildRequires: libhidapi-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: libopenal-devel
@@ -71,8 +70,6 @@ BuildRequires: libwayland-server-devel
 BuildRequires: libwolfssl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
-BuildRequires: lld
-BuildRequires: llvm
 BuildRequires: llvm-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-svg-devel
@@ -83,13 +80,14 @@ BuildRequires: zlib-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../Fusion-%fusion_version 3rdparty/fusion/fusion
 %__mv -Tf ../gamemode-%gamemode_version 3rdparty/feralinteractive/feralinteractive
+%__mv -Tf ../protobuf-%protobuf_version 3rdparty/protobuf/protobuf
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -107,13 +105,6 @@ echo "// This is a generated file.
 
 %build
 %add_optflags -I%_includedir/stb
-
-export CC="clang"
-export CXX="clang++"
-export RANLIB="llvm-ranlib"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -153,6 +144,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Tue Mar 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.40-alt1
+- Version 0.0.40
+
 * Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.39-alt1.1
 - Fix FTBFS
 
