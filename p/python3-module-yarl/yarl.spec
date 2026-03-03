@@ -1,11 +1,11 @@
 Name: python3-module-yarl
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 
 Summary: Yet another URL library
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/yarl
+URL: https://pypi.org/project/yarl
 VCS: https://github.com/aio-libs/yarl
 
 Source0: %name-%version.tar
@@ -27,7 +27,8 @@ See http://yarl.readthedocs.io for more
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+sed -rn '/^[^-#]/p' requirements/test*.txt > requirements/extra.txt
+%pyproject_deps_resync_check_pipreqfile requirements/extra.txt
 
 %build
 %pyproject_build
@@ -44,6 +45,9 @@ export YARL_NO_EXTENSIONS=1
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Thu Feb 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.23.0-alt1
+- 1.23.0 released
+
 * Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.22.0-alt1
 - 1.22.0 released
 
