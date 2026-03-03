@@ -1,5 +1,7 @@
+%add_python3_req_skip parse_admx_structure
+
 Name:           freeipa-server-gpo
-Version:        0.0.4
+Version:        0.0.6
 Release:        alt1
 
 Summary:        Prepare FreeIPA for Group Policy Management
@@ -15,6 +17,7 @@ Requires: python3-module-freeipa
 Requires: python3-module-ipaserver
 Requires: freeipa-server-trust-ad
 Requires: samba-common-tools
+Requires: admx-basealt
 Source0: %name-%version.tar
 
 %description
@@ -40,6 +43,8 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %python3_sitelibdir/ipaserver/plugins/gpo.py*
 %python3_sitelibdir/ipaserver/plugins/chain.py*
 %python3_sitelibdir/ipaserver/plugins/gpmaster.py*
+%python3_sitelibdir/ipaclient/plugins/gpo_client.py*
+%python3_sitelibdir/ipaclient/plugins/__pycache__/gpo_client.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpo.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/chain.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpmaster.*
@@ -57,8 +62,23 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %_mandir/man8/ipa-gpo-install.8*
 %_mandir/ru/man8/ipa-gpo-install.8*
 %_datadir/bash-completion/completions/ipa-gpo-install
+%python3_sitelibdir/gpui_service/
+%_prefix/sbin/gpuiservice
+%_prefix/lib/systemd/system/gpuiservice.service
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.altlinux.gpuiservice.conf
+%_datadir/glib-2.0/schemas/org.altlinux.gpuiservice.gschema.xml
+
 
 %changelog
+* Tue Mar 03 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.6-alt1
+- feat(gpuiservice): improve service management with enable --now
+
+* Fri Feb 27 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.5-alt1
+- feat(gpuiservice): add GPUIService support with systemd integration
+- feat(plugins): add ipaclient plugin for GPO operations
+- fix(plugins): fix regex matching for GPO and chain names
+- i18n(ru): update Russian translations for GPUIService strings
+
 * Tue Jan 20 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.4-alt1
 - feat(plugins): add schema verification and error handling
 - revert: remove staging directory for plugins, return to direct
