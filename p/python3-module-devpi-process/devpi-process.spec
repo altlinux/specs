@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Programmatic API to create and use a devpi server process
 License: MIT
@@ -22,7 +22,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +36,9 @@ that programmatically.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -46,11 +50,13 @@ that programmatically.
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
+- 1.1.0 -> 1.1.1.
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.2 -> 1.1.0.
 
