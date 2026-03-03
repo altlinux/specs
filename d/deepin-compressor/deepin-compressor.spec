@@ -2,7 +2,7 @@
 
 Name: deepin-compressor
 Version: 6.5.22
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Archive Manager for Deepin Desktop Environment
@@ -83,7 +83,8 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
-%ifnarch i586
+%ifarch x86_64 aarch64
+# pzip is only available on x86_64 and aarch64 -- see deepin-compressor/src/CMakeLists.txt
 %dir %_libexecdir/%name/
 %_libexecdir/%name/pzip
 %_libexecdir/%name/punzip
@@ -101,6 +102,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Mon Mar 02 2026 Ivan A. Melnikov <iv@altlinux.org> 1:6.5.22-alt2
+- NMU: fix FTBFS on loongarch64 and riscv64.
+
 * Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.22-alt1
 - New version 6.5.22.
 - Built on dqt6 again (by upstream).
