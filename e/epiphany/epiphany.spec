@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -53,7 +53,7 @@ Obsoletes: %name-extensions
 %define sqlite_ver 3.24
 %define portal_ver 0.6
 
-Requires: %name-data = %version-%release indexhtml iso-codes
+Requires: %name-data = %version-%release indexhtml iso-codes dconf
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ blueprint-compiler
@@ -73,7 +73,7 @@ BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libarchive-devel
 BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkitgtk-%webki_api_ver) >= %webkit_ver
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
-%{?_enable_chek:BuildRequires: bubblewrap xdg-dbus-proxy}
+%{?_enable_chek:BuildRequires: xvfb-run bubblewrap xdg-dbus-proxy}
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -96,6 +96,7 @@ This package contains common noarch files needed for Epiphany.
 
 %build
 %meson \
+    -Db_lto=true \
     %{?_subst_enable_meson_feature man man-pages}
 %nil
 %meson_build
@@ -108,6 +109,12 @@ cat << _EOF_\
 homepage-url='file:///usr/share/doc/HTML/index.html'
 _EOF_
 
+cat << _EOF_\
+> %buildroot/%_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.override
+[org.gnome.epiphany]
+enable-adblock=false
+_EOF_
+
 mkdir -p %buildroot/%_altdir
 cat << _EOF_ \
 > %buildroot/%_altdir/%name
@@ -117,7 +124,7 @@ _EOF_
 %find_lang --with-gnome --output=%name.lang %name
 
 %check
-export XDG_RUNTIME_DIR=${PWD}
+export XDG_RUNTIME_DIR=${PWD} PATH="$PATH:%__builddir/src"
 xvfb-run %__meson_test
 
 %files
@@ -141,11 +148,15 @@ xvfb-run %__meson_test
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.gschema.override
+%config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.override
 %{?_enable_man:%_man1dir/*}
 %_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 
 %changelog
+* Tue Mar 03 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
+- 49.3
+
 * Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 

@@ -3,16 +3,14 @@
 %define _libexecdir %_prefix/libexec
 %define rdn_name net.hadess.SensorProxy
 
+# QRTR bus unavailable. Make sure access to AF_QIPCRTR address family is granted
+%def_disable ssc_support
 %def_enable gtk_doc
 %def_disable gtk_tests
-# tests passed in hasher on basalt for i586/x86_64 with -j16
-# 1/1 iio-sensor-proxy-integration-test OK 17.21s
-# but fail in girar for all architectures
-# [x86_64] 1/1 iio-sensor-proxy-integration-test TIMEOUT 60.11s
 %def_enable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -33,6 +31,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver pkgconfig(systemd)
 BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
 BuildRequires: libpolkit-devel
+%{?_enable_ssc_support:BuildRequires: pkgconfig(libssc)}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
 %{?_enable_check:
@@ -70,6 +69,7 @@ Developer documentation for %name.
 
 %build
 %meson \
+    %{subst_enable_meson_feature ssc_support ssc-support} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool check tests} \
     %{subst_enable_meson_bool gtk_tests gtk-tests}
@@ -100,6 +100,10 @@ dbus-run-session %__meson_test -t 4
 
 
 %changelog
+* Tue Mar 03 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9-alt1
+- 3.9
+- optional "Qualcomm SSC support" via libssc (disabled now)
+
 * Sun Aug 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8-alt1
 - 3.8
 
