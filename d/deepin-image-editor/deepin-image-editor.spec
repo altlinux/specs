@@ -8,7 +8,7 @@
 
 Name: deepin-image-editor
 Version: 6.5.2
-Release: alt1
+Release: alt2
 
 Summary: Image editor libraries for Deepin
 
@@ -33,6 +33,7 @@ ExcludeArch: armh
 %endif
 
 BuildRequires: cmake glib2-devel dtk6-common-devel libdtk6widget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel dqt6-svg-devel dqt6-tools-devel libdfm6-io-devel libcups-devel
+BuildRequires: libdqt6-concurrent
 
 %if_with clang
 BuildRequires: clang-devel
@@ -144,6 +145,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt2
+- Fixed build on shrinked dqt6.
+
 * Thu Nov 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
 - New version 6.5.2.
 
