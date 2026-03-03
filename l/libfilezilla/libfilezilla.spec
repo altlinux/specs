@@ -3,7 +3,7 @@
 
 Name: libfilezilla
 Version: 0.54.1
-Release: alt1
+Release: alt2
 Summary: Small and modern C++ library
 License: GPL-2.0-or-later
 Group: System/Libraries
@@ -37,6 +37,30 @@ Some of the highlights include:
 %package -n libfilezilla%abiversion
 Summary: Small and modern C++ library
 Group: System/Libraries
+Requires: libfilezilla-common
+%description -n libfilezilla%abiversion
+libfilezilla is a free, open source C++ library, offering some basic
+functionality to build high-performing, platform-independent programs.
+Some of the highlights include:
+
+* A typesafe, multi-threaded event system that's very simple to use yet
+  extremely efficient.
+* Timers for periodic events.
+* A datetime class that not only tracks timestamp but also their
+  accuracy, which simplifies dealing with timestamps originating from
+  different sources.
+* Simple process handling for spawning child processes with redirected
+  I/O.
+
+%package -n libfilezilla-common
+Summary: Common files for libfilezilla
+Group: System/Libraries
+Conflicts: libfilezilla < 0.54.1
+Conflicts: libfilezilla53 < 0.54.1-alt2
+
+%description common
+Common files for libfilezilla
+
 %description -n libfilezilla%abiversion
 libfilezilla is a free, open source C++ library, offering some basic
 functionality to build high-performing, platform-independent programs.
@@ -87,9 +111,11 @@ find %buildroot -name '*.la' -delete
 %check
 LC_ALL=en_US.UTF-8 make check
 
-%files -f %name.lang -n libfilezilla%abiversion
+%files -f %name.lang -n libfilezilla-common
 %doc COPYING
 %doc AUTHORS ChangeLog NEWS README
+
+%files -n libfilezilla%abiversion
 %_libdir/%name.so.%abiversion
 %_libdir/%name.so.%abiversion.*
 
@@ -100,6 +126,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 0.54.1-alt2
+- added common subpackage with translations to avoid conflicts during upgrade
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.54.1-alt1
 - 0.54.0 -> 0.54.1
 
