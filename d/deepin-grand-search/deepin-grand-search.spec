@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.28
-Release: alt2
+Version: 6.0.29
+Release: alt1
 
 Summary: Basic search tool for DDE
 
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Thu Apr 03 2025
 # optimized out: bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
 BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libdfm6-search-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel deepin-desktop-base libantlr4-devel libdde-shell-devel deepin-shell deepin-desktop-base
+BuildRequires: libdqt6-concurrent
 # aarch64
 BuildRequires: libpcre-devel
 
@@ -95,6 +96,10 @@ export READELF="llvm-readelf"
 # ---
 
 %changelog
+* Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.29-alt1
+- New version 6.0.29.
+- Fixed build on shrinked dqt6.
+
 * Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.28-alt2
 - Fixed build on dde-shell 2.0.27.
 
