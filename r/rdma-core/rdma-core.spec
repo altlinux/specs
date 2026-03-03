@@ -10,7 +10,7 @@
 %def_enable pyverbs
 
 Name: rdma-core
-Version: 60.0
+Version: 62.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -21,6 +21,7 @@ Group: System/Base
 #  providers/hfi1verbs Uses the 3 Clause BSD license
 License: GPL-2.0-only OR BSD-2-Clause
 Url: https://github.com/linux-rdma/rdma-core
+Vcs: https://github.com/linux-rdma/rdma-core.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
@@ -364,6 +365,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_sbindir/rdma-ndd
 %_unitdir/rdma-ndd.service
 %_initdir/rdma-ndd
+%_sbindir/rdma_topo
 %_man7dir/rxe*
 %_man8dir/rdma-ndd.*
 
@@ -402,6 +404,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %if_enabled dma_coherent
 %_libdir/libefa.so.*
 %_libdir/libhns.so.*
+%_libdir/libionic.so.*
 %_libdir/libmana.so.*
 %_libdir/libmlx5.so.*
 %_libdir/libmlx4.so.*
@@ -617,6 +620,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %endif
 
 %changelog
+* Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 62.0-alt1
+- updated from 60.0 to 62.0
+
 * Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 60.0-alt1
 - New version 60.0.
 
