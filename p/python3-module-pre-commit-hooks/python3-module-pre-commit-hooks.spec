@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Summary: Some out-of-the-box hooks for pre-commit
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,7 @@ Vcs: https://github.com/pre-commit/pre-commit-hooks.git
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -54,10 +55,13 @@ export GIT_COMMITTER_EMAIL="test@example.com"
 
 %files
 %_bindir/*
-%doc README.*
+%doc README.* README_ALT
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 27 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 6.0.0-alt2
+- Renamed YAML checker binary to 'pre-commit-check-yaml' to avoid conflict with utils (closes: #58051).
+
 * Thu Feb 12 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 6.0.0-alt1
 - Initial build for ALT.
