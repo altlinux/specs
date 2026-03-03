@@ -4,7 +4,7 @@
 
 Name: deepin-pdfium
 Version: 1.5.8
-Release: alt1
+Release: alt2
 
 Summary: Development library for pdf on Deepin
 
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: dqt6-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
+BuildRequires: libdqt6-gui
 %if_with clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -85,6 +86,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %doc LICENSE debian/changelog
 
 %changelog
+* Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.8-alt2
+- Fixed build on shrinked dqt6.
+
 * Mon Dec 01 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.8-alt1
 - New version 1.5.8.
 
