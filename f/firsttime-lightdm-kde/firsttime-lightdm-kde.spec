@@ -1,5 +1,5 @@
 Name: firsttime-lightdm-kde
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Tue Mar 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- fix editing kde-greeter-fallback.conf
+
 * Fri Feb 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - setup greeter-session and greeter-session-fallback for old NVIDIA
 
