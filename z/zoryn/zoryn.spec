@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,18 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 0.25.0-alt1
+- added --switch-to-upstream-git command for migrating to upstream git scheme
+- added [merge] scheme override in .gear/version-up
+- added Config.set_value_preserving for comment-preserving TOML editing
+- fixed gen watch Debian area detection for non-main packages
+- fixed gen watch cross-source fallbacks with override names
+- fixed up searchmode=plain for watch files
+- fixed changelog parsing of Valkey-style release-note headers
+- fixed task rebuild to sync RPMs from task before rebuilding
+- fixed ssh mux stale socket cleanup and ServerAlive settings
+- fixed builder clean to use SSH multiplexing and filter mux errors
+
 * Mon Mar 02 2026 Anton Farygin <rider@altlinux.org> 0.24.0-alt1
 - added desktop notifications for long-running commands
 - added SSH connection multiplexing via ControlMaster
