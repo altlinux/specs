@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.19
-Release: alt2
+Version: 0.2.20
+Release: alt1
 Summary: CKEditor 5 for Django
 License: BSD-3-Clause
 Group: Development/Python3
@@ -25,7 +25,7 @@ BuildRequires: node
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: python3-module-django-dbbackend-sqlite3
-%add_pyproject_deps_check_filter codespell safety
+%add_pyproject_deps_check_filter codespell safety tox-gh-actions
 %pyproject_builddeps_metadata_extra dev
 %endif
 
@@ -76,6 +76,9 @@ export PYTHONPATH=example/blog:$PYTHONPATH
 %python3_sitelibdir/%mod_name/static/django_ckeditor_5/dist/
 
 %changelog
+* Fri Feb 27 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.2.20-alt1
+- New version (0.2.20).
+
 * Thu Feb 19 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 0.2.19-alt2
 - Vendored node_modules to package missing dist directory.
 - Split frontend into python3-module-django-ckeditor-5-frontend subpackage.
