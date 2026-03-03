@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Source: %name-%version.tar
@@ -66,6 +66,9 @@ fi
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Tue Mar 03 2026 Oleg Solovyov <mcpain@altlinux.org> 1.19-alt1
+- update man page
+
 * Fri Sep 26 2025 Oleg Solovyov <mcpain@altlinux.org> 1.18-alt1
 - rename user-startup/user-shutdown profiles
 
