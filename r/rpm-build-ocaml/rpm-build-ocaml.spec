@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 BuildArch: noarch
 
@@ -11,9 +11,11 @@ Source: scripts-%version.tar
 
 # for proper dependencies
 BuildPreReq: rpm-build >= 4.0.4-alt81
+BuildRequires: rpm-macros-ocaml-version
 
 Requires: %_bindir/ocamlrun
 Requires: %_rpmlibdir/ocaml-reqprov
+Requires: rpm-macros-ocaml-version
 Obsoletes: rpm-build-ocaml4
 
 %description
@@ -21,6 +23,9 @@ RPM macros and reqprov helpers to be used in OCaml packages.
 
 %prep
 %setup -n scripts-%version
+
+%build
+subst 's/@ocamlsver@/%{ocaml_version}/' ocaml
 
 %install
 mkdir -p %buildroot%_rpmlibdir
@@ -34,6 +39,9 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 %_rpmlibdir/ocaml*
 
 %changelog
+* Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 1.6.6-alt1
+- added %%ocaml_bootstrap macros
+
 * Thu Dec 26 2025 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
 - added %%ocaml_find_files_multi and %%dune_install_multi macros
   for multi-package dune projects (e.g., opam, dune)

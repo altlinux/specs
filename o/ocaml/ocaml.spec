@@ -21,7 +21,7 @@
 
 Name: ocaml
 Version: 5.3.0
-Release: alt2
+Release: alt3
 
 Summary: The Objective Caml compiler and programming environment
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -98,6 +98,12 @@ compilers, useful for the development of some OCaml applications.
 Note that this exposes internal details of the OCaml compiler which
 may not be portable between versions.
 
+%package -n rpm-macros-ocaml-version
+Group: Development/ML
+Summary: RPM macros containing the current OCaml version
+%description -n rpm-macros-ocaml-version
+RPM macros %%ocaml_version providing the current OCaml version
+
 %prep
 %setup 
 
@@ -147,6 +153,9 @@ ln -s ../../bin/ocamlobjinfo.byte %buildroot%_rpmlibdir/ocaml-reqprov
 
 #remove installed docs
 rm -rf %buildroot%_docdir
+
+mkdir -p %buildroot%_sysconfdir/rpm/macros.d
+echo "%%ocaml_version	%version" > %buildroot%_sysconfdir/rpm/macros.d/01-ocaml-version
 
 %check
 pushd testsuite
@@ -303,7 +312,13 @@ popd
 %_man1dir/ocamldoc*
 %_libdir/ocaml/ocamldoc/
 
+%files -n rpm-macros-ocaml-version
+%_sysconfdir/rpm/macros.d/*
+
 %changelog
+* Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 5.3.0-alt3
+- added rpm-macros-ocaml-version package with %%ocaml_version macros
+
 * Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 5.3.0-alt2
 - ocaml-reqprov: added cmxs support
 - reduce flaky test_dropped_events.ml failures in bytecode on aarch64 by
