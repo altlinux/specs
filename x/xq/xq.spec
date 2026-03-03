@@ -6,7 +6,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		xq
-Version:	1.3.0
+Version:	1.4.0
 Release:	alt1
 Summary:	Command-line XML and HTML beautifier and content extractor
 
@@ -46,5 +46,8 @@ install -Dpm0644 docs/%name.man %{buildroot}%{_mandir}/man1/%name.1
 %_mandir/man1/%name.1*
 
 %changelog
+* Tue Mar 3 2026 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt1
+- New version
+
 * Tue Feb 10 2026 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
