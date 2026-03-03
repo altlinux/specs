@@ -1,7 +1,7 @@
 %def_disable test
 
 Name: directx-headers
-Version: 1.618.2
+Version: 1.619.0
 Release: alt1
 
 Summary: Official DirectX headers available under an open source license
@@ -14,7 +14,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ dos2unix
 
 %description
 This package provides the official Direct3D 12 headers. These headers are made
@@ -25,6 +25,8 @@ Additionally, this package provides several helpers for using these headers.
 
 %prep
 %setup -n %name-%version
+# better to be safe
+find . -type f -exec dos2unix {} \;
 
 %build
 %meson \
@@ -38,16 +40,17 @@ Additionally, this package provides several helpers for using these headers.
 
 %files
 %doc *.md LICENSE
-%dir %_includedir/directx
-%dir %_includedir/dxguids
-%dir %_includedir/wsl
-%_includedir/directx/*
-%_includedir/dxguids/*
-%_includedir/wsl/*
+%_includedir/composition
+%_includedir/directx
+%_includedir/dxguids
+%_includedir/wsl
 %_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 03 2026 L.A. Kostis <lakostis@altlinux.ru> 1.619.0-alt1
+- Update to 1.619.0.
+
 * Thu Oct 23 2025 L.A. Kostis <lakostis@altlinux.ru> 1.618.2-alt1
 - Update to 1.618.2.
 
