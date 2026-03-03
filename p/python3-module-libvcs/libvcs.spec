@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.38.6
+Version: 0.39.0
 Release: alt1
 
 Summary: Lite, typed, pythonic utilities for git, svn, mercurial, etc
@@ -75,6 +75,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 03 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.39.0-alt1
+- Updated to 0.39.0.
+
 * Wed Jan 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.38.6-alt1
 - Updated to 0.38.6.
 
