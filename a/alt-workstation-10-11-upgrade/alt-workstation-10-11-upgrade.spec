@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-workstation-10-11-upgrade
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: A simple tool for ALT Workstation upgrade from 10 to 11
@@ -34,12 +34,15 @@ BuildRequires: rpm-build-python3
 %meson_install
 
 %files
-%_bindir/alt-workstation-10-11-upgrade
+%_sbindir/alt-workstation-10-11-upgrade
 %_prefix/libexec/alt-workstation-10-11-upgrade-finish
 %_sysconfdir/xdg/autostart/alt-workstation-10-11-upgrade-finish.desktop
 %python3_sitelibdir_noarch/alt_workstation_10_11_upgrade/
 
 %changelog
+* Mon Mar 02 2026 Alexey Volkov <qualimock@altlinux.org> 1.2.0-alt1
+- new version 1.2.0 (closes: 57917, 58055, 58056, 58057)
+
 * Thu Feb 26 2026 Alexey Volkov <qualimock@altlinux.org> 1.1.1-alt1
 - new version 1.1.1 (closes: 57916, 57917)
 
