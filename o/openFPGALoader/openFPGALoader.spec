@@ -4,7 +4,7 @@
 %def_with doc
 
 Name:     openFPGALoader
-Version:  1.0.0
+Version:  1.1.0
 Release:  alt1
 
 Summary:  Universal utility for programming FPGA
@@ -87,6 +87,9 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Mar 03 2026 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - New version 1.0.0.
 
