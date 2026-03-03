@@ -4,7 +4,7 @@
 
 Name: deepin-launcher
 Version: 6.0.19
-Release: alt5
+Release: alt6
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -27,7 +27,8 @@ Conflicts: deepin-launchpad
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5
-BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel libwayland-client-devel
+BuildRequires: cmake dtk6-common-devel dtkcore libgsettings-dqt5-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel libwayland-client-devel
+BuildRequires: libdqt5-concurrent
 %if_with clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -66,6 +67,7 @@ export CXX=g++
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_LIBRARY_PATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -99,6 +101,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dde-launcher/*.h
 
 %changelog
+* Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt6
+- Fixed build on shrinked dqt5.
+- Built on separate gsettings-qt (no qt5).
+
 * Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt5
 - Fixed build on dtk 6.7.31.
 
