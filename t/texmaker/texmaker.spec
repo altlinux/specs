@@ -1,6 +1,6 @@
 Name: texmaker
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -20,6 +20,11 @@ Patch1:		%{name}-5.1.0-unbundle-hunspell.patch
 
 # use system pdf viewers instead of hardcoded evince
 Patch2:		%{name}-5.1.0-viewfiles.patch
+
+# PATCH-FIX-UPSTREAM CVE-2025-50952.patch bsc#1247798 badshah400@gmail.com -- Guard against 0 offset to nullptr in openjpeg bundled with pdfium
+Patch5:         CVE-2025-50952.patch
+# PATCH-FIX-UPSTREAM 0001-Fix-build-with-Qt-6.10.patch -- Qt 6.10 compatibility fix
+Patch6:         0001-Fix-build-with-Qt-6.10.patch
 
 
 BuildRequires(pre): rpm-macros-qt6-webengine rpm-macros-cmake
@@ -57,7 +62,11 @@ needed to develop documents with LaTeX.
 %setup
 #patch0
 #patch1
-#patch2
+#patch3 -p1
+%patch5 -p1
+%patch6 -p1
+
+
 
 # get rid of zero-length space
 #sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.metainfo.xml
@@ -90,6 +99,11 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Tue Mar 03 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.1-alt2
+- Fixed build against Qt 6.10
+- Add CVE-2025-50952.patch: guard against zero offset to a
+  potential nullptr (Fixed: CVE-2025-50952)
+
 * Mon Apr 28 2025 Ilya Mashkin <oddity@altlinux.ru> 6.0.1-alt1
 - 6.0.1
 
