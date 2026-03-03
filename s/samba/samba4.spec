@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.8
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2376,6 +2376,9 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Feb 27 2026 Vladimir Rubanov <august@altlinux.org> 4.22.8-alt2
+- Fixed addition and deletion of sites to/from site-links
+
 * Sat Feb 21 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.8-alt1
 - Update to maintenance release of Samba 4.22
 - Major changes from upstream:
