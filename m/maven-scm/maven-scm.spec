@@ -1,169 +1,58 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
 Name:           maven-scm
-Version:        1.10.0
-Release:        alt1_9jpp11
-Summary:        Common API for doing SCM operations
-License:        ASL 2.0
+Version:        2.2.1
+Release:        alt1
+
+Summary:        Apache Maven SCM (Plugin)
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://maven.apache.org/scm
+VCS:            https://github.com/apache/maven-scm
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/maven/scm/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
-# Patch to migrate to new plexus default container
-# This has been sent upstream: https://issues.apache.org/jira/browse/SCM-731
-Patch1:         0001-Port-maven-scm-to-latest-version-of-plexus-default.patch
-# Workaround upstream's workaround for a modello bug, see: https://issues.apache.org/jira/browse/SCM-518
-Patch2:         0002-Fix-vss-modello-config.patch
-Patch3:         0003-Port-to-current-plexus-utils.patch
-
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
+
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-settings:2.2.1)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit)
-BuildRequires:  mvn(org.sonatype.plexus:plexus-sec-dispatcher)
-Source44: import.info
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.commons:commons-text)
+BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit.ssh.apache)
 
 %description
-Maven SCM supports Maven plugins (e.g. maven-release-plugin) and other
-tools (e.g. Continuum) in providing them a common API for doing SCM operations.
+Maven SCM supports Maven plugins (for example maven-release-plugin) and other
+tools by providing them with a common API for source code management operations.
+You can look at the list of SCMs for more information on using Maven SCM with
+your favorite SCM tool.
 
-%package test
-Group: Development/Java
-Summary:        Tests for %{name}
-Requires:       maven-scm = %{?epoch:%epoch:}%{version}-%{release}
-
-%description test
-Tests for %{name}.
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
-# Remove unnecessary animal sniffer
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin maven-scm-client
 
-%pom_remove_plugin :maven-enforcer-plugin
-
-%pom_change_dep -r :maven-project :maven-compat
-
-# Remove providers-integrity from build (we don't have mks-api)
-%pom_remove_dep org.apache.maven.scm:maven-scm-provider-integrity maven-scm-providers/maven-scm-providers-standard
-%pom_disable_module maven-scm-provider-integrity maven-scm-providers
-
-# Partially remove cvs support for removal of netbeans-cvsclient
-# It still works with cvsexe provider
-%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-client
-%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-standard
-%pom_disable_module maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-cvs
-sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META-INF/plexus/components.xml
-
-# Port to commons-lang3
-%pom_change_dep -r :commons-lang org.apache.commons:commons-lang3:3.8.1
-sed -i "s/org\.apache\.commons\.lang\./org.apache.commons.lang3./" \
-    maven-scm-providers/maven-scm-providers-git/maven-scm-provider-gitexe/src/main/java/org/apache/maven/scm/provider/git/gitexe/command/status/GitStatusConsumer.java \
-    maven-scm-providers/maven-scm-providers-svn/maven-scm-provider-svnexe/src/main/java/org/apache/maven/scm/provider/svn/svnexe/command/checkout/SvnCheckOutConsumer.java \
-    maven-scm-providers/maven-scm-providers-svn/maven-scm-provider-svnexe/src/main/java/org/apache/maven/scm/provider/svn/svnexe/command/remoteinfo/SvnRemoteInfoCommand.java
-
-# Tests are skipped anyways, so remove dependency on mockito.
-%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-jazz
-%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-accurev
-
-# Don't use deprecated "descriptorId" configuration parameter of Maven
-# Assembly Plugin, which was removed in version 3.0.0.
-%pom_xpath_replace "pom:plugin[pom:artifactId='maven-assembly-plugin']/pom:configuration/pom:descriptorId" "
-    <descriptorRefs>
-      <descriptorRef>jar-with-dependencies</descriptorRef>
-    </descriptorRefs>" maven-scm-client
-
-# Put TCK tests into a separate sub-package
-%mvn_package :%{name}-provider-cvstest test
-%mvn_package :%{name}-provider-gittest test
-%mvn_package :%{name}-provider-svntest test
-%mvn_package :%{name}-test test
+%pom_disable_module maven-scm-provider-gittest maven-scm-providers/maven-scm-providers-git
 
 %build
-# Don't build and unit run tests because
-# * accurev tests need porting to a newer hamcrest
-# * vss tests fail with the version of junit in fedora
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
-
-%files test -f .mfiles-test
-%doc LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc *.md LICENSE
 
 %changelog
+* Mon Feb 23 2026 Evgeniy Serov <scala@altlinux.org> 2.2.1-alt1
+- Updated to 2.2.1 (without tests).
+- Fixed FTBFS.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.0-alt1_9jpp11
 - update
 

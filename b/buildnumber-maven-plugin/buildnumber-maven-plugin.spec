@@ -1,48 +1,24 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           buildnumber-maven-plugin
-Version:        1.3
-Release:        alt1_17jpp11
-Summary:        Build Number Maven Plugin
-License:        MIT and ASL 2.0
-URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
+Version:        3.3.0
+Release:        alt1
+
+Summary:        BuildNumber Maven Plugin
+License:        MIT
+Group:          Development/Java
+URL:            https://www.mojohaus.org/buildnumber-maven-plugin/
+VCS:            https://github.com/mojohaus/buildnumber-maven-plugin
 BuildArch: 	noarch
 
-Source0:        http://central.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        %name-%version.tar
 
-Patch0:         00-remove-broken-build-config.patch
-
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java.dev.jna:jna)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings:2.0.6)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-bazaar)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-clearcase)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-cvsexe)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-hg)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-perforce)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-starteam)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-svn-commons)
-BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-svnexe)
+
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+BuildRequires:  mvn(com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava)
+BuildRequires:  mvn(org.tmatesoft.svnkit:svnkit)
 
 %description
 This mojo is designed to get a unique build number for each time you build
@@ -62,42 +38,28 @@ Optionally, you can configure this mojo to produce a revision based on a
 timestamp, or on a sequence, without requiring any interaction with an
 SCM system. Note that currently, the only supported SCM is subversion.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
-cp -p %{SOURCE1} .
-
-%pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
-%pom_remove_dep org.tmatesoft.svnkit:svnkit
+%pom_remove_plugin :takari-lifecycle-plugin
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-invoker-plugin
-
-# junit dependency was removed in Plexus 1.6
-%pom_add_dep junit:junit::test
+%pom_remove_plugin :maven-dependency-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt LICENSE-2.0.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt LICENSE-2.0.txt
+%doc LICENSE.txt *.md
 
 %changelog
+* Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.3-alt1_17jpp11
 - update
 
