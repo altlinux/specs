@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name:    proxmox-datacenter-manager
-Version: 0.9.1
-Release: alt1.1
+Version: 1.0.2
+Release: alt1
 License: AGPL-3.0
 Summary: Manage multiple Proxmox VE cluster and other Proxmox projects
 Group:   System/Servers
@@ -30,6 +30,12 @@ BuildRequires: git rust-wasm32-unknown-unknown-target
 BuildRequires: libapt-devel gcc-c++
 BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
 BuildRequires: lld20.1
+BuildRequires: python3-module-sphinx
+BuildRequires: proxmox-widget-toolkit-dev
+BuildRequires: texlive-dist
+BuildRequires: fonts-ttf-google-lato
+BuildRequires: fonts-ttf-open-sans
+BuildRequires: fonts-ttf-dejavu
 
 Requires: proxmox-mini-journalreader
 Requires: pve-xtermjs
@@ -57,7 +63,7 @@ BuildRequires: proxmox-wasm-builder
 BuildRequires: fonts-font-awesome
 
 Requires: pve-xtermjs
-Requires: fonts-font-awesome 
+Requires: fonts-font-awesome
 Requires: pdm-i18n
 
 %description ui
@@ -90,7 +96,7 @@ install -m0644 %SOURCE16 %buildroot%_sysconfdir/pam.d/proxmox-datacenter-auth
 rm -f %buildroot%_unitdir/%name-banner.service
 rm -f %buildroot%_unitdir/%name-daily-update.service
 rm -f %buildroot%_unitdir/%name-daily-update.timer
-      
+
 %post
 %post_systemd_postponed proxmox-datacenter-api.service proxmox-datacenter-privileged-api.service
 
@@ -99,35 +105,41 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 
 %pre
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
-%_sbindir/useradd -c 'www-data' -d /var/www -s '/sbin/nologin' -r -M www-data 2>/dev/null || :
+%_sbindir/useradd -r -g www-data -M -d /var/www -c 'www-data' -s '/sbin/nologin' www-data 2>/dev/null || :
 
 %files
 %doc debian/copyright
+%_man1dir/proxmox-datacenter-api.1.xz
+%_man1dir/proxmox-datacenter-manager-admin.1.xz
+%_man1dir/proxmox-datacenter-privileged-api.1.xz
+%_man5dir/remotes.cfg.5.xz
+%_man5dir/views.cfg.5.xz
 %_unitdir/proxmox-datacenter-api.service
 %_unitdir/proxmox-datacenter-privileged-api.service
 %_sbindir/%name-admin
 %_sbindir/pdmAtoB
-%_datadir/bash-completion/completions/%name-admin.bc
+%_datadir/bash-completion/completions/%name-admin.bash
 %_datadir/zsh/vendor-completions/_%name-admin
-%_datadir/bash-completion/completions/proxmox-datacenter-api.bc
-%_datadir/bash-completion/completions/proxmox-datacenter-privileged-api.bc
-%_datadir/bash-completion/completions/pdmAtoB.bc
-%_datadir/zsh/vendor-completions/_proxmox-datacenter-api
-%_datadir/zsh/vendor-completions/_proxmox-datacenter-privileged-api
+%_datadir/bash-completion/completions/pdmAtoB.bash
 %_datadir/zsh/vendor-completions/_pdmAtoB
 %_libexecdir/proxmox/*
 %config(noreplace) %_sysconfdir/pam.d/proxmox-datacenter-auth
 
 %files client
+%_man1dir/proxmox-datacenter-manager-client.1.xz
 %_bindir/%name-client
-%_datadir/bash-completion/completions/%name-client.bc
+%_datadir/bash-completion/completions/%name-client.bash
 %_datadir/zsh/vendor-completions/_%name-client
 
 %files ui
+%_datadir/doc/%name
 %doc debian/copyright
 %_datadir/javascript/%name/
 
 %changelog
+* Thu Feb 12 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.2-alt1
+- new wersion
+
 * Wed Oct 22 2025 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1.1
 - NMU: build on loongarch64
 
