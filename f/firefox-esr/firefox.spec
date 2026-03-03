@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.7.1
+Version: 140.8.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -452,6 +452,47 @@ done
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Mon Mar 02 2026 Pavel Vasenkov <pav@altlinux.org> 140.8.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-2757 Incorrect boundary conditions in the WebRTC: Audio/Video component
+  + CVE-2026-2758 Use-after-free in the JavaScript: GC component
+  + CVE-2026-2759 Incorrect boundary conditions in the Graphics: ImageLib component
+  + CVE-2026-2760 Sandbox escape due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-2761 Sandbox escape in the Graphics: WebRender component
+  + CVE-2026-2762 Integer overflow in the JavaScript: Standard Library component
+  + CVE-2026-2763 Use-after-free in the JavaScript Engine component
+  + CVE-2026-2764 JIT miscompilation, use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-2765 Use-after-free in the JavaScript Engine component
+  + CVE-2026-2766 Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-2767 Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-2768 Sandbox escape in the Storage: IndexedDB component
+  + CVE-2026-2769 Use-after-free in the Storage: IndexedDB component
+  + CVE-2026-2770 Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-2771 Undefined behavior in the DOM: Core & HTML component
+  + CVE-2026-2772 Use-after-free in the Audio/Video: Playback component
+  + CVE-2026-2773 Incorrect boundary conditions in the Web Audio component
+  + CVE-2026-2774 Integer overflow in the Audio/Video component
+  + CVE-2026-2775 Mitigation bypass in the DOM: HTML Parser component
+  + CVE-2026-2776 Sandbox escape due to incorrect boundary conditions in the Telemetry component in External Software
+  + CVE-2026-2777 Privilege escalation in the Messaging System component
+  + CVE-2026-2778 Sandbox escape due to incorrect boundary conditions in the DOM: Core & HTML component
+  + CVE-2026-2779 Incorrect boundary conditions in the Networking: JAR component
+  + CVE-2026-2780 Privilege escalation in the Netmonitor component
+  + CVE-2026-2781 Integer overflow in the Libraries component in NSS
+  + CVE-2026-2782 Privilege escalation in the Netmonitor component
+  + CVE-2026-2783 Information disclosure due to JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-2784 Mitigation bypass in the DOM: Security component
+  + CVE-2026-2785 Invalid pointer in the JavaScript Engine component
+  + CVE-2026-2786 Use-after-free in the JavaScript Engine component
+  + CVE-2026-2787 Use-after-free in the DOM: Window and Location component
+  + CVE-2026-2788 Incorrect boundary conditions in the Audio/Video: GMP component
+  + CVE-2026-2789 Use-after-free in the Graphics: ImageLib component
+  + CVE-2026-2790 Same-origin policy bypass in the Networking: JAR component
+  + CVE-2026-2791 Mitigation bypass in the Networking: Cache component
+  + CVE-2026-2792 Memory safety bugs fixed in Firefox ESR 140.8, Thunderbird ESR 140.8, Firefox 148 and Thunderbird 148
+  + CVE-2026-2793 Memory safety bugs fixed in Firefox ESR 115.33, Firefox ESR 140.8, Thunderbird ESR 140.8, Firefox 148 and Thunderbird 148
+
 * Wed Feb 18 2026 Pavel Vasenkov <pav@altlinux.org> 140.7.1-alt1
 - New ESR version.
 - Security fixes:
