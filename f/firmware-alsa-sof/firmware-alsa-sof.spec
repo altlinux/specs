@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2025.05.1
+%define version_major 2025.12.2
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -12,6 +12,7 @@ Vcs: https://github.com/thesofproject/sof-bin
 BuildRequires: alsa-utils alsa-topology-conf
 Source: %name-%version.tar
 Source3: sof-cml-es8336.tplg
+Source999: watch
 Provides: alsa-sof-firmware = %EVR
 # noarch, since the package is firmware
 BuildArch: noarch
@@ -75,6 +76,9 @@ end
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 2025.12.2-alt1
+- 2025.05.1 -> 2025.12.2
+
 * Mon Oct 06 2025 Anton Farygin <rider@altlinux.com> 2025.05.1-alt1
 - 2025.01.1 -> 2025.05.1
 
