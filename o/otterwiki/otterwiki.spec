@@ -2,7 +2,7 @@
 %define rootdir /var/www/webapps/%name
 %define ident _%name
 Name: otterwiki
-Version: 2.11.1
+Version: 2.17.3
 Release: alt1
 Url: https://otterwiki.com
 Group: Networking/WWW
@@ -82,6 +82,9 @@ su -s /bin/sh -c "%_libexecdir/%name-install %ident %rootdir" %ident
 %_bindir/%name
 
 %changelog
+* Tue Mar 03 2026 Fr. Br. George <george@altlinux.org> 2.17.3-alt1
+- Autobuild version bump to 2.17.3
+
 * Wed Jul 02 2025 Fr. Br. George <george@altlinux.org> 2.11.1-alt1
 - Autobuild version bump to 2.11.1
 
