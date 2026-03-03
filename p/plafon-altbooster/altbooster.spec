@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.6.3
-Release: alt1
+Release: alt2
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -10,6 +10,10 @@ Group: System/Configuration/Other
 
 Url: https://github.com/plafonlinux/altbooster
 Vcs: https://github.com/plafonlinux/altbooster
+
+Requires: python3-module-tqdm
+Requires: python3-module-pydantic
+Requires: python3-module-packaging
 
 BuildRequires(pre): rpm-build-python3
 
@@ -21,6 +25,8 @@ Source1: Makefile
 Source2: altbooster.desktop
 Source3: altbooster
 
+Patch: window-5.6.3-alt-fixes.patch
+
 %description
 %summary. 
 
@@ -29,6 +35,7 @@ Source3: altbooster
 cp -a %SOURCE1 ./
 cp -a %SOURCE2 ./
 cp -a %SOURCE3 ./
+%patch -p0
 
 %build
 %install
@@ -45,6 +52,10 @@ install -d %buildroot
 %_bindir/%%oname
 
 %changelog
+* Wed Mar 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.3-alt2
+- added needs requaries
+- disabled update check
+
 * Tue Mar 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.3-alt1
 - Initial build for ALT Linux.
 
