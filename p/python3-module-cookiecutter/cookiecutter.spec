@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: A cross-platform command-line utility that creates projects from cookiecutters
@@ -41,7 +41,7 @@ project template.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test_requirements.txt
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -51,7 +51,7 @@ project template.
 %pyproject_install
 
 # clean symbolic links in docs dir
-rm -v docs/{AUTHORS.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,HISTORY.md,README.md}
+rm -v docs/{AUTHORS.md,CODE_OF_CONDUCT.md,CONTRIBUTING.md,README.md}
 
 # create shells completion files
 export binfile="%buildroot%_bindir/%binfile_name"
@@ -82,6 +82,9 @@ touch pytest.ini
 %_datadir/fish/vendor_completions.d/%binfile_name.fish
 
 %changelog
+* Tue Mar 03 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.7.0-alt1
+- Updated to 2.7.0.
+
 * Mon Mar 04 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.0-alt1
 - 2.5.0 -> 2.6.0
 
