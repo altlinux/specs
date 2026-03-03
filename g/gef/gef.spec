@@ -1,5 +1,5 @@
 Name:    gef
-Version: 2025.01
+Version: 2026.01
 Release: alt1
 
 Summary: GEF (GDB Enhanced Features)
@@ -48,5 +48,8 @@ echo "Don't forget to revert ~/.gdbinit if needed"
 %_bindir/gdb-gef
 
 %changelog
+* Tue Mar 03 2026 Ilya Sorochan <k0tran@altlinux.org> 2026.01-alt1
+- Update version.
+
 * Thu Jan 16 2025 Ilya Sorochan <k0tran@altlinux.org> 2025.01-alt1
 - Initial build for Sisyphus.
