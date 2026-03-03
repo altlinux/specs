@@ -2,8 +2,8 @@
 %define cfontsdir %_prefix/lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: 2.1.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: Monospaced bitmap fonts
 License: BSD-2-Clause
@@ -29,11 +29,6 @@ Spleen is a monospaced bitmap font available in 6 sizes:
 - 16x32
 - 32x64
 
-Each size is provided in the Glyph Bitmap Distribution Format (BDF), and
-release tarballs contain the fonts in the following formats: `PCF`, `PSF`
-(for the Linux console), `OTB`, `OTF`, `.dfont` for macOS users, and `FON`
-for Windows users.
-
 All font sizes contain all ISO/IEC 8859-1 characters (Basic Latin and Latin-1
 Supplement Unicode block), Latin Extended-A characters, as well as Box Drawing,
 Block Elements, and Braille Patterns Unicode blocks, except for the 5x8 and the
@@ -58,7 +53,7 @@ Summary: Monospaced console fonts
 Group: System/Fonts/Console
 
 %description -n fonts-console-%cname
-%{summary -n fonts-console-%cname}.
+%summary.
 
 %prep
 %setup -a1
@@ -94,6 +89,9 @@ done
 %cfontsdir/spleen-*.psfu.gz
 
 %changelog
+* Tue Mar 03 2026 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Sat Oct 05 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt3
 - Fixed name for package with console fonts.
 
