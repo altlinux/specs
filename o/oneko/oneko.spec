@@ -1,5 +1,5 @@
 Name: oneko
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Cat chases the cursor
@@ -7,17 +7,18 @@ License: ALT-Public-Domain
 Group: Toys
 URL: http://www.daidouji.com/oneko/
 # Modified Source to remove BSD images, due to copyright.
-# Source0: http://www.daidouji.com/oneko/distfiles/oneko-1.2.sakura.5.tar.gz
+# 1.2.sakura.6:
+# https://github.com/IreneKnapp/oneko.git
 Source0: oneko-%version.tar.gz
 Source1: oneko.desktop
 Source2: oneko.png
 
-Patch1: 01-oneko-1.2.sakura.5-nobsd.patch
-Patch2: 02-manpages_whatis_fixed.patch
-Patch3: 03-warnings_return_type.patch
-Patch4: 04-warning_implicit_declaration.patch
-Patch5: 05-fix_typo.patch
-Patch6: 06-fix_ftbfs_gcc_15.patch
+Patch1: 01-oneko-1.2.sakura.6-nobsd.patch
+Patch2: 02-oneko-manpages_whatis_fixed.patch
+Patch3: 03-oneko-warnings_return_type.patch
+Patch4: 04-oneko-warning_implicit_declaration.patch
+Patch5: 05-oneko-fix_typo.patch
+Patch6: 06-oneko-fix_ftbfs_gcc_15.patch
 
 # Automatically added by buildreq on Tue Aug 04 2009
 BuildRequires: gccmakedep imake libX11-devel libXext-devel xorg-cf-files
@@ -28,7 +29,7 @@ A cat (neko) chases the cursor (now a mouse) around the screen while you
 work. Alternatively, a dog chases a bone.
 
 %prep
-%setup -q -n %name-%version.sakura.5
+%setup -q -n %name-%version.sakura.6
 %autopatch -p1
 
 %build
@@ -39,9 +40,7 @@ xmkmf -a
 %make_install DESTDIR=%buildroot install
 
 mkdir -p %buildroot%_man1dir/
-mkdir -p %buildroot%_mandir/ja/man1/
 install -p -m0644 oneko.man %buildroot%_man1dir/oneko.1
-install -p -m0644 oneko.man.jp %buildroot%_mandir/ja/man1/oneko.1
 mkdir -p %buildroot%_datadir/applications/
 mkdir -p %buildroot%_datadir/pixmaps/
 install -p -m0644 %SOURCE1 %buildroot%_datadir/applications/
@@ -57,10 +56,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/oneko
 %_datadir/applications/oneko.desktop
 %_datadir/pixmaps/oneko.png
-%_mandir/ja/man1/*
 %_man1dir/*
 
 %changelog
+* Tue Mar 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.2.6-alt1
+- 1.2.sakura.6
+
 * Mon Mar 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.2.5-alt1
 - update patches
 
