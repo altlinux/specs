@@ -4,7 +4,7 @@
 %define git %nil
 
 Name: nvtop
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
@@ -56,6 +56,9 @@ a htop familiar way.
 %_datadir/metainfo/io.github.syllo.%name.metainfo.xml
 
 %changelog
+* Mon Mar 02 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt1
+- 3.3.2.
+
 * Mon Jan 19 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.1-alt1
 - 3.3.1.
 
