@@ -3,17 +3,14 @@
 
 %def_disable docs
 
-# on armh couple tests failed
-# FAILED nibabel/tests/test_arraywriters.py::test_rt_bias
-# FAILED nibabel/tests/test_round_trip.py::test_round_trip
-%ifnarch armh
+%ifnarch armh i586
 %def_with check
 %else
 %def_without check
 %endif
 
 Name: python3-module-%oname
-Version: 5.3.3
+Version: 5.4.0
 Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
@@ -154,6 +151,9 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Tue Mar 03 2026 Anton Vyatkin <toni@altlinux.org> 5.4.0-alt1
+- New version 5.4.0.
+
 * Mon Dec 08 2025 Anton Vyatkin <toni@altlinux.org> 5.3.3-alt1
 - New version 5.3.3.
 
