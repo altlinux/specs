@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 8018
+Version: 8192
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -157,12 +157,10 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 %cmake \
 	-DCMAKE_SKIP_BUILD_RPATH=yes \
 	-DLLAMA_BUILD_TESTS=ON \
-	-DLLAMA_CURL=ON \
 	-DGGML_BACKEND_DL=ON \
 	-DGGML_BACKEND_DIR=%_libexecdir/llama \
 	-DGGML_CPU=ON \
 	-DGGML_RPC=ON \
-	-DLLAMA_OPENSSL=ON \
 %ifarch x86_64
 	-DGGML_CPU_ALL_VARIANTS=ON \
 %endif
@@ -266,6 +264,9 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Tue Mar 03 2026 Vitaly Chikunov <vt@altlinux.org> 1:8192-alt1
+- Update to b8192 (2026-03-03).
+
 * Fri Feb 13 2026 Vitaly Chikunov <vt@altlinux.org> 1:8018-alt1
 - Update to b8018 (2026-02-12).
 
