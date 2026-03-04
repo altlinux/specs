@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: qdrant
-Version: 1.16.3
+Version: 1.17.0
 Release: alt1
 
 Summary: Qdrant Vector Search Engine
@@ -79,5 +79,8 @@ fi
 %_unitdir/qdrant.service
 
 %changelog
+* Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 1.17.0-alt1
+- 1.16.3 -> 1.17.0
+
 * Sat Feb 14 2026 Anton Farygin <rider@altlinux.org> 1.16.3-alt1
 - initial build for ALT Linux
