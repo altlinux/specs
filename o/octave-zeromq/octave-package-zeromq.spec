@@ -5,7 +5,7 @@ BuildRequires: makeinfo rpm-build-python3 texinfo
 %define octpkg zeromq
 Name: octave-%octpkg
 Version: 1.5.7
-Release: alt1
+Release: alt2
 Summary: ZeroMQ Toolbox
 
 Group: Sciences/Mathematics
@@ -36,6 +36,7 @@ ZeroMQ bindings for GNU Octave
 %setup -q -n %{octpkg}-%{version}
 
 %build
+%autoreconf src
 %octave_build
 
 %install
@@ -49,6 +50,10 @@ ZeroMQ bindings for GNU Octave
 %endif
 
 %changelog
+* Thu Mar 05 2026 Ivan A. Melnikov <iv@altlinux.org> 1.5.7-alt2
+- NMU: Use %%autoreconf (fixes FTBFS on loongarch64 and is
+  generally is a good thing to do).
+
 * Sun Feb 22 2026 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
 - New version.
 
