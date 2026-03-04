@@ -2,7 +2,7 @@
 %define zapret_confdir %_sysconfdir/%name
 
 Name: zapret
-Version: 72.9
+Version: 72.10
 Release: alt1
 
 Summary: DPI bypass tool for Linux
@@ -44,7 +44,7 @@ done
 install -Dpm 0755 nfq/nfqws %buildroot%_sbindir/nfqws
 install -Dpm 0755 tpws/tpws %buildroot%_sbindir/tpws
 install -Dpm 0755 ip2net/ip2net %buildroot%_bindir/ip2net
-install -Dpm 0755 mdig/mdig %buildroot%_bindir/mdig
+install -Dpm 0755 mdig/mdig %buildroot%_bindir/zapret-mdig
 
 # shell scripts infrastructure (Linux only)
 mkdir -p %buildroot%zapret_datadir
@@ -68,11 +68,7 @@ mkdir -p %buildroot%zapret_datadir/tmp
 
 # config
 install -Dpm 0644 config.default %buildroot%zapret_confdir/config
-ln -s %zapret_confdir %buildroot%zapret_datadir/config
-
-# fix ZAPRET_BASE in functions
-sed -i 's|ZAPRET_BASE=.*|ZAPRET_BASE=%zapret_datadir|' \
-    %buildroot%zapret_datadir/init.d/sysv/functions
+ln -s %zapret_confdir/config %buildroot%zapret_datadir/config
 
 # systemd service
 install -Dpm 0644 init.d/systemd/zapret.service %buildroot%_unitdir/zapret.service
@@ -102,7 +98,7 @@ ln -s %_sbindir/tpws %buildroot%zapret_datadir/tpws/tpws
 mkdir -p %buildroot%zapret_datadir/ip2net
 ln -s %_bindir/ip2net %buildroot%zapret_datadir/ip2net/ip2net
 mkdir -p %buildroot%zapret_datadir/mdig
-ln -s %_bindir/mdig %buildroot%zapret_datadir/mdig/mdig
+ln -s %_bindir/zapret-mdig %buildroot%zapret_datadir/mdig/mdig
 
 # documentation
 mkdir -p %buildroot%zapret_datadir/docs
@@ -122,7 +118,7 @@ getent passwd tpws >/dev/null || useradd -r -d /dev/null -s /sbin/nologin -g tpw
 %_sbindir/nfqws
 %_sbindir/tpws
 %_bindir/ip2net
-%_bindir/mdig
+%_bindir/zapret-mdig
 %dir %zapret_confdir
 %config(noreplace) %zapret_confdir/config
 %zapret_datadir/
@@ -133,5 +129,10 @@ getent passwd tpws >/dev/null || useradd -r -d /dev/null -s /sbin/nologin -g tpw
 %_unitdir/zapret-list-update.timer
 
 %changelog
+* Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 72.10-alt1
+- new version 72.10 (with rpmrb script)
+- rename mdig to zapret-mdig to avoid conflict
+- remove unnecessary sed patch for ZAPRET_BASE in functions
+
 * Fri Feb 13 2026 Vitaly Lipatov <lav@altlinux.ru> 72.9-alt1
 - initial build for ALT Sisyphus
