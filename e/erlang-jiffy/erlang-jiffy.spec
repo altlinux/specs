@@ -5,17 +5,16 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: JSON NIFs for Erlang
 Group: Development/Erlang
 License: BSD-3-Clause and MIT
 Url: https://github.com/davisp/jiffy
-
-# https://github.com/davisp/jiffy.git
+VCS: https://github.com/davisp/jiffy.git
 Source: %name-%version.tar
 
-Patch1: erlang-jiffy-fedora-use-system-double-conversion.patch
+Patch1: erlang-jiffy-1.1.3-alt-use-system-double-conversion.patch
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
@@ -50,6 +49,9 @@ rm -rf c_src/double-conversion
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 1.1.3-alt1
+- 1.1.2 -> 1.1.3
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.1.2-alt1
 - 1.1.1 -> 1.1.2
 
