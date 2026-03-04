@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.0
-Release: alt5
+Release: alt6
 
 Summary: Testscenarios, a pyunit extension for dependency injection
 
@@ -27,6 +27,9 @@ Patch2: 75b76e7d07bc6d415384e668aefb6b887a3aa13d.patch
 Patch3: fd9a58526f1f77c192c129f6e06cb61bf06dfea4.patch
 # https://github.com/testing-cabal/testscenarios/pull/1
 Patch4: 9e2c6ba88925700a42e46f554419fc1a31fc5f29.patch
+# basically, 2 broken tests expected duplicate runs on no-scenario case,
+# which never has beed correct behavior in generate_scenarios
+Patch5: testscenarios-alt-fix-compatibility-with-testtools-2.8.3.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -51,6 +54,7 @@ itself, allowing easy testing in different situations).
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %pyproject_build
@@ -68,6 +72,9 @@ itself, allowing easy testing in different situations).
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt6
+- Fixed compatibility with newer testtools again.
+
 * Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt5
 - Fixed compatibility with newer testtools.
 

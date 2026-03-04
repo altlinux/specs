@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 Summary: Extensions to the Python standard library's unit testing framework
 License: MIT
@@ -54,6 +54,9 @@ cp -av tests %buildroot%python3_sitelibdir/%mod_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt1
+- Automatically updated to 2.8.5.
+
 * Thu Feb 26 2026 Grigory Ustinov <grenka@altlinux.org> 2.8.4-alt1
 - Automatically updated to 2.8.4.
 
