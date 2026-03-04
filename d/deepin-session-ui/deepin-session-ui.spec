@@ -3,8 +3,8 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.37
-Release: alt2
+Version: 6.0.38
+Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
 
@@ -24,6 +24,7 @@ Conflicts: notify-osd
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd rpm-build-xdg
 BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel libwayland-client-devel
+BuildRequires: libdqt6-concurrent libdqt6-test vulkan-headers libcups-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -106,6 +107,10 @@ export READELF="llvm-readelf"
 %_datadir/dsg/configs/org.deepin.login-reminder/org.deepin.login-reminder.json
 
 %changelog
+* Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.38-alt1
+- New version 6.0.38.
+- Fixed build on shrinked dqt6.
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt2
 - Fixed build on dtk 6.7.31.
 

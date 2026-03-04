@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.15
+Version: 2.0.18
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -30,6 +30,7 @@ Patch1: deepin-session-2.0.6-alt-uos-version.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-build-systemd rpm-build-xdg rpm-macros-dqt6
 BuildRequires: cmake libXcursor-devel libXfixes-devel dtk6-common-devel libdtk6core-devel libsecret-devel libsystemd-devel dqt6-base-devel dqt6-tools-devel libcap-ng-devel
+BuildRequires: libdqt6-concurrent
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -84,8 +85,16 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_userunitdir/dde-version-checker.service
 %_userunitdir/dde-xsettings-checker.service
 %_userunitdir/dde-version-checker@quick-login.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.session/
+%_datadir/dsg/configs/org.deepin.dde.session/org.deepin.dde.session.oom-score-adj.json
 
 %changelog
+* Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.18-alt1
+- New version 2.0.18.
+- Fixed build on shrinked dqt6.
+
 * Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.15-alt1
 - New version 2.0.15.
 
