@@ -1,5 +1,5 @@
 Name: apitrace
-Version: 12.0
+Version: 13.0
 Release: alt1
 
 Summary: Tools for tracing OpenGL
@@ -21,7 +21,7 @@ Patch1: apitrace-11.1-disabled-check-subdirectory.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest
-BuildRequires: libpng-devel libbrotli-devel
+BuildRequires: zlib-devel libpng-devel libbrotli-devel
 BuildRequires: libsnappy-devel
 BuildRequires: desktop-file-utils
 #BuildRequires: libappstream-glib
@@ -112,6 +112,12 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Tue Mar 03 2026 Vitaly Lipatov <lav@altlinux.ru> 13.0-alt1
+- new version 13.0
+
+* Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 12.0-alt2
+- add zlib-devel to BuildRequires (fixes FTBFS)
+
 * Fri Mar 14 2025 Vitaly Lipatov <lav@altlinux.ru> 12.0-alt1
 - new version (12.0) with rpmgs script
 
