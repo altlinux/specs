@@ -1,6 +1,6 @@
 Name: tcpflow
 Version: 1.6.1
-Release: alt4
+Release: alt5
 
 Summary: Network traffic recorder
 License: GPLv3
@@ -69,6 +69,9 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %config %_controldir/%name
 
 %changelog
+* Wed Mar 04 2026 Alexander Danilov <admsasha@altlinux.org> 1.6.1-alt5
+- Changing the patch CVE-2026-25061.patch.
+
 * Tue Mar 03 2026 Alexander Danilov <admsasha@altlinux.org> 1.6.1-alt4
 - Applied upstream patch (fixes: CVE-2026-25061).
 
