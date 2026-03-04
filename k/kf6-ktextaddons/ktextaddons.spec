@@ -14,11 +14,16 @@
 %define libkf6textspeechtotext libkf6textspeechtotext%sover
 %define libkf6textautogeneratetext libkf6textautogeneratetext%sover
 %define libtextautogenerategenericnetwork libtextautogenerategenericnetwork
+
+%define libtextautogenerateollamacloud libtextautogenerateollamacloud%sover
+%define libtextautogenerateollamacommon libtextautogenerateollamacommon%sover
+%define libtextautogenerateollamaonline libtextautogenerateollamaonline%sover
+
 %define rccopy_sover 0
 %define libtextutils_cmark_rc_copy libtextutils-cmark-rc-copy%rccopy_sover
 
 Name: kf6-%rname
-Version: 1.9.1
+Version: 2.0.0
 Release: alt1
 %K6init no_altplace
 
@@ -141,6 +146,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libtextautogenerate-cmark-rc-copy0 < %EVR
 %description -n %libtextutils_cmark_rc_copy
 %name library
 
@@ -149,6 +155,27 @@ Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
 %description -n %libtextautogenerategenericnetwork
+%name library
+
+%package -n %libtextautogenerateollamacloud
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogenerateollamacloud
+%name library
+
+%package -n %libtextautogenerateollamacommon
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogenerateollamacommon
+%name library
+
+%package -n %libtextautogenerateollamaonline
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogenerateollamaonline
 %name library
 
 %package devel
@@ -234,6 +261,15 @@ done
 %files -n %libkf6textautogeneratetext
 %_K6lib/libKF6TextAutoGenerateText.so.*
 %_K6lib/libKF6TextAutoGenerateText.so.%sover
+%files -n %libtextautogenerateollamacloud
+%_K6lib/libtextautogenerateollamacloud.so.*
+%_K6lib/libtextautogenerateollamacloud.so.%sover
+%files -n %libtextautogenerateollamacommon
+%_K6lib/libtextautogenerateollamacommon.so.*
+%_K6lib/libtextautogenerateollamacommon.so.%sover
+%files -n %libtextautogenerateollamaonline
+%_K6lib/libtextautogenerateollamaonline.so.*
+%_K6lib/libtextautogenerateollamaonline.so.%sover
 
 %files devel
 %_K6plug/designer/*text*.so
@@ -243,6 +279,9 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Mar 04 2026 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
+- new version
+
 * Wed Feb 25 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
 - new version
 
