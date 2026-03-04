@@ -1,6 +1,6 @@
 Name: libflif
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Free Lossless Image Format
 
@@ -14,7 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libpng-devel
+BuildRequires: zlib-devel libpng-devel
 
 %description
 FLIF is a lossless image format based on MANIAC compression.
@@ -111,6 +111,9 @@ cd src
 %_libdir/libflif_dec.so.0
 
 %changelog
+* Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt2
+- add zlib-devel to BuildRequires (fixes FTBFS)
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - new version 0.4 (fixes: CVE-2017-14232, CVE-2018-10971,
   CVE-2018-11507, CVE-2018-12109, CVE-2018-14876, CVE-2019-14373)
