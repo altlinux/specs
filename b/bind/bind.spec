@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
 # build rules
-%def_without docs
 %def_with openssl
 %def_with libjson
 %def_with libjemalloc
@@ -27,8 +26,8 @@
 %endif
 
 Name: bind
-Version: 9.18.44
-%define src_version 9.18.44
+Version: 9.18.46
+%define src_version 9.18.46
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -39,6 +38,9 @@ VCS: https://gitlab.isc.org/isc-projects/bind9.git
 
 # ftp://ftp.isc.org/isc/bind9/%src_version/bind-%src_version.tar.xz
 Source0: %name-%version.tar
+%if_with check
+Source1: %pyproject_deps_config_name
+%endif
 Source3: README.bind-devel
 Source4: README.ALT
 
@@ -72,20 +74,14 @@ Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
 Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
 Patch0009: 0009-ALT-tests-Avoid-socket-creation-on-9pfs.patch
 Patch0010: 0010-ALT-tests-Handle-unset-TSAN_OPTIONS.patch
-
-%if_with docs
-BuildRequires: python3(sphinx)
-BuildRequires: python3(sphinx_rtd_theme)
-%endif
+Patch0011: 0011-tests-allow-to-run-tests-in-dnspython-2.7.0-environm.patch
 
 %if_with check
+BuildRequires(pre): rpm-build-pyproject
 # for backtraces
 BuildRequires: gdb
-BuildRequires: python3-module-dnspython
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-requests
+%pyproject_builddeps_check
 %if_with system_tests
-BuildRequires: python3(hypothesis)
 # /usr/bin/gnutls-cli is required by doth tests
 BuildRequires: gnutls-utils
 # taskset is required by cpu tests
@@ -106,7 +102,6 @@ BuildRequires: iproute2
 BuildRequires: perl-Net-DNS
 BuildRequires: perl-File-Fetch
 BuildRequires: perl-Digest-HMAC
-BuildRequires: python3(pytest)
 %endif
 
 Provides: bind-chroot(%_chrootdir)
@@ -155,14 +150,6 @@ Requires: libbind = %EVR
 Provides: libisc-export-devel = %EVR
 Obsoletes: libisc-export-devel < %version
 
-%if_with docs
-%package doc
-Summary: Documentation for ISC BIND
-Group: Development/Other
-BuildArch: noarch
-Prefix: %prefix
-%endif
-
 %description
 The Berkeley Internet Name Domain (BIND) implements an Internet domain
 name server.  BIND is the most widely-used name server software on the
@@ -186,12 +173,6 @@ pages for libdns, libisc, libisccc, libisccfg. These are
 only needed if you want to compile packages that need more BIND
 %src_version nameserver API than the resolver code provided by
 glibc.
-
-%if_with docs
-%description doc
-This package provides various documents that are useful for maintaining
-a working BIND %src_version installation.
-%endif
 
 %prep
 %setup
@@ -230,12 +211,11 @@ s,@NAMED_USER@,%named_user,g;
 s,@LOG_DIR@,%log_dir,g;
 ' --
 
-%build
-%if_with docs
-# see HTMLTARGET in configure.ac and doc/arm/Makefile.in
-export SPHINX_BUILD=/usr/bin/sphinx-build-3
+%if_with check
+%pyproject_deps_resync_check_pipreqfile bin/tests/system/requirements.txt
 %endif
 
+%build
 # https://bugzilla.redhat.com/show_bug.cgi?id=2122841#c30
 %add_optflags -DOPENSSL_API_COMPAT=10100
 
@@ -259,10 +239,6 @@ export SPHINX_BUILD=/usr/bin/sphinx-build-3
 	#
 
 %make_build
-
-%if_with docs
-%make doc
-%endif
 
 %install
 %makeinstall_std
@@ -315,11 +291,6 @@ ln -s %_chrootdir/dev/log %buildroot%_sysconfdir/syslog.d/bind
 # ALT docs
 mkdir -p %buildroot%docdir
 cp -a README.md %SOURCE3 %SOURCE4 %buildroot%docdir/
-
-%if_with docs
-mkdir -p %buildroot%docdir/arm
-cp -a doc/arm/_build/html %buildroot%docdir/arm/
-%endif
 
 # alternative path for plugins
 mkdir -p %buildroot%_libdir/named
@@ -385,7 +356,9 @@ EOF
 pushd bin/tests/system
 # named must be unchrooted for upstream tests
 export ALT_NAMED_OPTIONS=' -t / '
-SYSTEMTEST_NO_CLEAN=1 %make_build -k test V=1
+# preserve tests artifacts
+export PYTEST_ADDOPTS="--noclean"
+%make_build -k check V=1
 
 # teardown
 popd
@@ -402,6 +375,13 @@ cat > run_smoke.sh <<'_EOF'
 # setup
 set -x
 ulimit -n $(ulimit -Hn)
+
+echo 'runner soft limits'
+ulimit -a -S
+
+echo 'runner hard limits'
+ulimit -a -H
+
 runas="$1"
 perl bin/tests/system/testsock.pl || sh -x bin/tests/system/ifconfig.sh up
 ip a
@@ -412,24 +392,40 @@ export ALT_NAMED_OPTIONS=' -t / '
 
 pushd bin/tests/system
 testdirs=
+testnum=0
 for testdir in */; do
+    # skip very slow tests
+    if [ "$testdir" = "dupsigs/" ] ||
+        [ "$testdir" = "timeouts/" ] ||
+        [ "$testdir" = "bailiwick/" ] ||
+        [ "$testdir" = "optout/" ] ||
+        [ "$testdir" = "runtime/" ] ; then
+        continue
+    fi
     subns=$(find "$testdir" -maxdepth 1 -type d -name "ns[0-9]" | wc -l)
     if [ $subns -lt 2 ] && [ $subns -gt 0 ] ; then
+        testnum=$((testnum + 1))
         testdirs="$testdirs ${testdir%%*/}"
     fi
 done
 
-if [ -z "$testdirs" ] ; then
+echo "total number of collected test dirs: $testnum"
+if [ "$testnum" -eq 0 ] ; then
     echo 'Tests using ns==1 not found'
     exit 1
 fi
-setpriv --reuid "$runas" -- python3 -m pytest $testdirs
+setpriv --reuid "$runas" -- python3 -m pytest --durations 10 $testdirs
 
 # teardown
 popd
 sh bin/tests/system/ifconfig.sh down
 _EOF
-time vm-run --kvm=cond --sbin -- /bin/bash --norc --noprofile -eu run_smoke.sh "$(id -un)"
+# limit cpu count: every worker listens on every ip address for both udp and tcp
+# which leads to out of available file descriptors for named in build
+# environments having not big enough nofile limit (e.g. girar has 4096) and big
+# enough cpu count (e.g. girar's x86_64 has 128).
+# 16 is the last working count.
+time vm-run --maxcpu=16 --kvm=cond --sbin -- /bin/bash --norc --noprofile -eu run_smoke.sh "$(id -un)"
 %endif
 
 %pre
@@ -598,13 +594,10 @@ fi
 %_man1dir/nslookup.*
 %_man1dir/nsupdate.*
 
-%if_with docs
-%files doc
-%dir %docdir
-%docdir/arm
-%endif
-
 %changelog
+* Fri Feb 27 2026 Stanislav Levin <slev@altlinux.org> 9.18.46-alt1
+- 9.18.44 -> 9.18.46.
+
 * Thu Jan 22 2026 Stanislav Levin <slev@altlinux.org> 9.18.44-alt1
 - 9.18.43 -> 9.18.44 (fixes: CVE-2025-13878).
 
