@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Griffe extension for inheriting docstrings
@@ -22,7 +22,7 @@ BuildRequires: python3-module-pdm
 BuildRequires: python3-module-pdm-backend
 
 %if_with check
-BuildRequires: python3-module-griffe
+BuildRequires: python3-module-griffe-lib
 BuildRequires: python3-module-mkdocstrings
 %endif
 
@@ -51,5 +51,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/griffe_inherited_docstrings-%version.dist-info
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt1
+- Automatically updated to 1.1.3.
+
 * Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus.

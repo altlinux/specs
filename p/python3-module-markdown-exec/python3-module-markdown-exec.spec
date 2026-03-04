@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.11.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Utilities to execute code blocks in Markdown files
@@ -61,6 +61,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.12.1-alt1
+- Automatically updated to 1.12.1.
+
 * Tue Oct 14 2025 Alexander Burmatov <thatman@altlinux.org> 1.11.0-alt1
 - New 1.11.0 version.
 
