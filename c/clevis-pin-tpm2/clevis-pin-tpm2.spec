@@ -1,5 +1,5 @@
 Name: clevis-pin-tpm2
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Clevis PIN for unlocking with TPM2 supporting Authorized Policies
@@ -7,9 +7,12 @@ Summary: Clevis PIN for unlocking with TPM2 supporting Authorized Policies
 License: MIT
 Group: System/Configuration/Hardware
 Url: https://github.com/fedora-iot/clevis-pin-tpm2
+VCS: https://github.com/fedora-iot/clevis-pin-tpm2
 
-Source: %url/archive/v%version/%name-%version.tar.gz
+# Source-url: https://github.com/fedora-iot/clevis-pin-tpm2/archive/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): /proc rpm-build-rust
 BuildRequires: clang-devel libssl-devel libtpm2-tss-devel
@@ -19,47 +22,32 @@ BuildRequires: clang-devel libssl-devel libtpm2-tss-devel
 
 %prep
 %setup -a1
+%patch -p1
 
 sed -i 's|/tss2/tss2|/tss2|g' \
   vendor/tss-esapi-sys/build.rs
 
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep
 
 %build
-cargo build %_smp_mflags --offline --release
+%rust_build
 
 %install
-cargo install %_smp_mflags --offline --no-track --path .
+%rust_install
 ln -s %_bindir/%name %buildroot%_bindir/clevis-encrypt-tpm2plus
 ln -s %_bindir/%name %buildroot%_bindir/clevis-decrypt-tpm2plus
 
 %files
-%doc LICENSE README.md
+%doc LICENSES/ README.md
 %_bindir/%name
 %_bindir/clevis-encrypt-tpm2plus
 %_bindir/clevis-decrypt-tpm2plus
 
 %changelog
+* Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+- Added VCS tag.
+
 * Wed Sep 13 2023 Leontiy Volodin <lvol@altlinux.org> 0.5.3-alt1
 - Initial build for ALT Sisyphus.
 - Needed for clevis 19.
