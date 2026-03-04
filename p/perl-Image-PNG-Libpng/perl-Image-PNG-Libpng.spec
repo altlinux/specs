@@ -3,7 +3,7 @@
 
 Name: perl-Image-PNG-Libpng
 Version: 0.59
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to libpng
 
@@ -17,7 +17,7 @@ Source: http://mirror.yandex.ru/mirrors/cpan/authors/id/B/BK/BKB/%module_name-%v
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
-BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Scalar/Util.pm) perl(XSLoader.pm) perl(parent.pm) pkgconfig(libpng)
+BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Scalar/Util.pm) perl(XSLoader.pm) perl(parent.pm) pkgconfig(libpng) pkgconfig(zlib)
 
 %description
 Perl interface to libpng.
@@ -53,6 +53,9 @@ rm -f get-pixel.pl nicemake.pl
 %_bindir/*
 
 %changelog
+* Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 0.59-alt2
+- add pkgconfig(zlib) to BuildRequires (fixes FTBFS)
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.59-alt1
 - automated CPAN update
 
