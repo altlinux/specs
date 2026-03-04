@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.21.0
+Version: 1.21.2
 Release: alt1
 
 Summary: A simple code complexity analyser without caring about the C/C++ header files or Java imports, supports most of the popular languages
@@ -62,6 +62,9 @@ sed -i '2i## %version' CHANGELOG.md
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.21.2-alt1
+- Automatically updated to 1.21.2.
+
 * Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 1.21.0-alt1
 - Automatically updated to 1.21.0.
 
