@@ -1,9 +1,9 @@
 %define oname eigen
-%def_with docs
+%def_without docs
 
 Name: %{oname}3
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight C++ template library for vector and matrix math
 License: Apache-2.0 AND MPL-2.0 AND BSD-3-Clause AND Minpack
@@ -161,6 +161,9 @@ cd -
 %endif
 
 %changelog
+* Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt2
+- Really build without documentation (due doxygen errors).
+
 * Tue Oct 14 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version.
 - Build without documentation.
