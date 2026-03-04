@@ -4,7 +4,7 @@
 
 Name: cutter-re
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: GUI for Rizin reverse engineering framework
 License: LGPL-3.0-only and GPL-3.0-only
@@ -60,7 +60,9 @@ mkdir -p src/translations
 mv %buildroot%_bindir/cutter %buildroot%_bindir/%name
 
 # rename cutter to cutter-re in the desktop file
-sed -i 's/%gitname/%name/g' %buildroot%_desktopdir/re.rizin.cutter.desktop
+sed -i -e 's/%gitname/%name/g' \
+    -e 's/^\(Categories=.*\)$/\1Debugger;Viewer;DataVisualization;ComputerScience;/' \
+    %buildroot%_desktopdir/re.rizin.cutter.desktop
 
 # rename cutter svg icon to cutter-re
 mv %buildroot%_datadir/icons/hicolor/scalable/apps/{%gitname,%name}.svg
@@ -85,6 +87,9 @@ sed -i 's/bin\/%gitname/bin\/%name/g' %buildroot%_libdir/cmake/Cutter/CutterTarg
 %dir %_libdir/cmake/Cutter
 
 %changelog
+* Wed Mar 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4.1-alt2
+- add additional categories to the desktop file
+
 * Mon Jun 16 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4.1-alt1
 - new version
 
