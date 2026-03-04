@@ -6,7 +6,7 @@
 %def_without check
 
 Name: kontainer
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 
 Summary: A Kirigami Distrobox GUI
@@ -74,6 +74,9 @@ sed -i "s|Categories=.*|Categories=Emulator;System;|" io.github.DenysMb.Kontaine
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Tue Dec 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

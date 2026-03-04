@@ -5,7 +5,7 @@
 
 Name: treesheets
 Epoch: 1
-Version: 3019
+Version: 3021
 Release: alt1
 
 Summary: Free Form Data Organizer
@@ -16,7 +16,7 @@ VCS: https://github.com/aardappel/treesheets
 
 Source: %name-%version.tar
 
-Patch: %name-%version-%release.patch
+Patch: use-packaged-wx.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
@@ -76,6 +76,9 @@ cp -v %buildroot/%_datadir/doc/TreeSheets/examples/tutorial.cts %buildroot/%_dat
 %_datadir/metainfo/*%{cname}.metainfo.xml
 
 %changelog
+* Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 1:3021-alt1
+- New version 3021.
+
 * Sun Mar 01 2026 Nikolay Strelkov <snk@altlinux.org> 1:3019-alt1
 - New version 3019.
 
