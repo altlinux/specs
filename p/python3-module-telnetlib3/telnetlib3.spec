@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.6.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Telnet server and client Protocol library using asyncio
@@ -20,6 +20,7 @@ BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pexpect
@@ -64,6 +65,9 @@ rm -rv %buildroot%python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
 - Automatically updated to 2.6.0.
 
