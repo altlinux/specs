@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: gvm-libs
-Version: 22.32.0
+Version: 22.35.9
 Release: alt1
 
 Summary: Support libraries for Greenbone Vulnerability Management Solution and OpenVAS
@@ -398,6 +398,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Wed Mar 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 22.35.9-alt1
+- new version
+
 * Mon Dec 01 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.32.0-alt1
 - new version
 

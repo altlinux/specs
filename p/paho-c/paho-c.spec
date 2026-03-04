@@ -2,7 +2,7 @@
 %define abiversion 1
 
 Name: paho-c
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1
 
 Summary: Eclipse Paho C Client Library for the MQTT Protocol
@@ -83,6 +83,9 @@ Development documentation files for the the Paho MQTT C Client.
 %_defaultdocdir/*
 
 %changelog
+* Wed Mar 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.16-alt1
+- new version
+
 * Thu Nov 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.15-alt1
 - new version
 
