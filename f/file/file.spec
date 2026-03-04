@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.46
-Release: alt2
+Version: 5.47
+Release: alt1
 Summary: File type guesser
 License: BSD-2-Clause
 Group: File tools
@@ -130,6 +130,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Fri Feb 27 2026 Vitaly Chikunov <vt@altlinux.org> 5.47-alt1
+- Update to FILE5_47 (2026-02-26).
+
 * Wed Feb 26 2025 Vitaly Chikunov <vt@altlinux.org> 5.46-alt2
 - Update to FILE5_46 (2024-11-27, upstream pushed an updated tag on 2025-01-31).
 
