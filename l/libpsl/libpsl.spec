@@ -1,9 +1,9 @@
 %def_disable bootstrap
-%def_disable builtin
+%def_enable builtin
 
 Name: libpsl
 Version: 0.21.5
-Release: alt1
+Release: alt2
 
 Summary: C library for the Public Suffix List
 License: MIT
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-python3
 %if_disabled bootstrap
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: glib2-devel libgio-devel
 %{?_enable_builtin:BuildRequires: libicu-devel}
 BuildRequires: libidn2-devel
@@ -97,11 +97,7 @@ from a plain text Public Suffix List.
 %build
 %meson \
 	-Druntime=libidn2 \
-%if_enabled builtin
-	-Dbuiltin=true \
-%else
-	-Dbuiltin=false \
-%endif
+	%{subst_enable_meson_bool builtin builtin} \
 	-Dpsl_distfile=%_datadir/publicsuffix/public_suffix_list.dafsa \
 	-Dpsl_file=%_datadir/publicsuffix/effective_tld_names.dat \
 	-Dpsl_testfile=%_datadir/publicsuffix/test_psl.txt \
@@ -146,6 +142,10 @@ install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Wed Mar 04 2026 Mikhail Efremov <sem@altlinux.org> 0.21.5-alt2
+- Enabled builtin PSL (closes: #44575).
+- Used macros from rpm-macros-meson.
+
 * Fri Jan 19 2024 Mikhail Efremov <sem@altlinux.org> 0.21.5-alt1
 - Switched to meson build.
 - Fixed description.
