@@ -1,6 +1,6 @@
 Name: telemt
 Version: 3.0.15
-Release: alt1
+Release: alt2
 
 Summary: MTProxy for Telegram on Rust + Tokio
 
@@ -11,7 +11,7 @@ Url: https://github.com/telemt/telemt
 # Source-url: https://github.com/telemt/telemt.git
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
-Source2: %name.toml
+Source2: config.toml
 Source3: %name.service
 
 BuildRequires(pre): rpm-macros-rust
@@ -41,7 +41,8 @@ EOF
 
 %install
 %rust_install
-install -Dm0644 %{SOURCE2} %buildroot%_sysconfdir/%name.toml
+install -Dm0644 %{SOURCE2} %buildroot%_sysconfdir/%name/config.toml
+install -Dm0644 config.full.toml %buildroot%_sysconfdir/%name/config.full.toml
 install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 
 %post
@@ -52,10 +53,16 @@ install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 
 %files
 %_bindir/%name
-%config(noreplace) %_sysconfdir/%name.toml
+%dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/%name/config.toml
+%_sysconfdir/%name/config.full.toml
 %_unitdir/%name.service
 
 %changelog
+* Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.15-alt2
+- move config to /etc/telemt/config.toml (match --init path)
+- add config.full.toml as full configuration reference
+
 * Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.15-alt1
 - new version 3.0.15
 
