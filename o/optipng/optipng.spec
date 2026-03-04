@@ -1,5 +1,5 @@
 Name: optipng
-Version: 0.7.8
+Version: 7.9.1
 Release: alt1
 
 Summary: Optimizer for png files
@@ -12,9 +12,7 @@ Url: http://optipng.sourceforge.net/
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
-# Automatically added by buildreq on Sun Aug 04 2013
-# optimized out: zlib-devel
-BuildRequires: libpng-devel
+BuildRequires: zlib-devel libpng-devel
 
 %description
 The main purpose of OptiPNG is to *optimize* PNG files, i.e. to reduce
@@ -45,11 +43,17 @@ achieve this goal, OptiPNG performs the following tasks:
 make test
 
 %files
-%doc README.txt LICENSE.txt doc/*
+%doc README.md LICENSE.txt doc/*
 %_bindir/%name
 %_man1dir/*
 
 %changelog
+* Tue Mar 03 2026 Vitaly Lipatov <lav@altlinux.ru> 7.9.1-alt1
+- new version 7.9.1
+
+* Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt2
+- add zlib-devel to BuildRequires (fixes FTBFS)
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt1
 - new version 0.7.8 (with rpmrb script)
 
