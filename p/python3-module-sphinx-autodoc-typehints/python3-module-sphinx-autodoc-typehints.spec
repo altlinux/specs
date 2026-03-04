@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.9.3
+Version: 3.9.6
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -52,6 +52,9 @@ functions.
 
 
 %changelog
+* Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9.6-alt1
+- 3.9.6
+
 * Mon Mar 02 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9.3-alt1
 - 3.9.3
 

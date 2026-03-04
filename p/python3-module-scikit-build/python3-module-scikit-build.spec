@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.18.1
+Version: 0.19.0
 Release: alt1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
@@ -69,6 +69,9 @@ py.test3
 
 
 %changelog
+* Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Thu Aug 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - 0.18.1
 

@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Dosage
@@ -76,6 +76,9 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %doc README*
 
 %changelog
+* Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
+- 2.1.3
+
 * Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
