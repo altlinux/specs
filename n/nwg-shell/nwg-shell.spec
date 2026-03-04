@@ -2,7 +2,7 @@
 
 Name: nwg-shell
 Version: 0.5.49
-Release: alt2
+Release: alt3
 
 Summary: Meta-package for the nwg-shell project
 License: MIT
@@ -54,7 +54,7 @@ Requires: nwg-readme-browser
 Requires: nwg-icon-picker
 Requires: swaync
 Requires: gtklock
-Requires: gtklock-userinfo-module
+Requires: gtklock-module-userinfo
 Requires: gtklock-powerbar-module
 Requires: gtklock-playerctl-module
 Requires: xdg-user-dirs
@@ -134,6 +134,9 @@ echo "                https://nwg-piotr.github.io/nwg-shell/ ."
 %_datadir/backgrounds/*
 
 %changelog
+* Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt3
+- Use gtklock-module-userinfo instead of gtklock-userinfo-module.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt2
 - Applied repocop fix for freedesktop-categories
 
