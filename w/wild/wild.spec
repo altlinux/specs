@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: wild
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Wild is a very fast linker for Linux for iterative development
@@ -48,6 +48,9 @@ install -pvD -m0755 target/release/wild %buildroot%_bindir/wild
 %_bindir/wild
 
 %changelog
+* Mon Feb 09 2026 Denis Rastyogin <gerben@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Tue Nov 25 2025 Denis Rastyogin <gerben@altlinux.org> 0.7.0-alt1
 - Updated to 0.7.0.
 
