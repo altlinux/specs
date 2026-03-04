@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 9.1.0
+Version: 9.3.2
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
 License: MIT and LGPLv2+
 Url: http://www.freedesktop.org/wiki/Software/kmscon/
+Vcs: https://github.com/kmscon/kmscon.git
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
@@ -46,21 +47,27 @@ sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
 
 %install
 %meson_install
-
+mv %buildroot/%_sysconfdir/%name/kmscon.conf.example %buildroot/%_sysconfdir/%name/%name.conf
 %check
 %meson_test
 
 %files
-%doc COPYING NEWS README.md
+%doc COPYING NEWS.md README.md
+%config(noreplace) %_sysconfdir/%name/%name.conf
 %_bindir/%name
+%_bindir/%name-launch-gui
 %_unitdir/*.service
 %dir %_libdir/%name
 %_libdir/%name/mod-*.so
 %dir %_libexecdir/kmscon
 %_libexecdir/kmscon/kmscon
 %_man1dir/%name.1*
+%_man5dir/%name.conf.5*
 
 %changelog
+* Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 9.3.2-alt1
+- updated from 9.1.0 to 9.3.2
+
 * Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 9.1.0-alt1
 - New version 9.1.0.
 
