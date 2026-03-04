@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: tpm2-pkcs11
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 Summary: PKCS#11 interface for TPM 2.0 hardware
 Group: System/Configuration/Hardware
@@ -28,10 +28,11 @@ BuildRequires: dbus
 # for tools
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pyasn1-modules
-BuildRequires: python3-module-pyaml
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-tpm2-pytss
+BuildRequires: python3(pyasn1_modules) python3(pyasn1)
+BuildRequires: python3(yaml)
+BuildRequires: python3(cryptography)
+BuildRequires: python3(tpm2_pytss)
+BuildRequires: python3(pkcs11)
 
 %description
 PKCS #11 is a Public-Key Cryptography Standard that defines a standard method
@@ -91,6 +92,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 1.9.2-alt1
+- updated from 1.9.1 to 1.9.2
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 
