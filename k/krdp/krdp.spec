@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt3
+Release: alt4
 %K6init
 
 Group: Graphical desktop/KDE
@@ -22,6 +22,14 @@ Requires: /usr/bin/openssl
 Source: %rname-%version.tar
 Patch1: kdebug-503474-avc444.patch
 Patch2: alt-use_nla_security.patch
+#
+Patch1001: 0001-Fix-server-to-client-clipboard-CLIPRDR-for-RDP-clien.patch
+Patch1002: 0004-Fix-scroll-wheel-for-RDP-clients-sending-high-resolu.patch
+Patch1003: 0005-Handle-GFX-CapsAdvertise-re-advertisement-from-Windo.patch
+Patch1004: 0006-Fix-thread-safety-issues-in-VideoStream.patch
+Patch1005: 0009-Fix-potential-deadlock-in-RdpConnection-destructor.patch
+Patch1006: 0010-Fix-PortalSession-destructor-crash-and-resource-leak.patch
+
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -65,6 +73,13 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
+#
+%patch1001 -p1
+%patch1002 -p1
+%patch1003 -p1
+%patch1004 -p1
+%patch1005 -p1
+%patch1006 -p1
 
 %build
 %K6build
@@ -102,6 +117,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Wed Mar 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt4
+- add upstream fixes
+
 * Mon Mar 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt3
 - add fix for Windows authority
 
