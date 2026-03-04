@@ -7,13 +7,14 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.0.6
-Release: alt5
+Version: 4.1.1
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
 License: MIT and GPL-2.0-only
-Url: http://www.transmissionbt.com/
+Url: https://transmissionbt.com/
+VCS: https://github.com/transmission/transmission
 
 Provides: %rname = %EVR
 
@@ -29,9 +30,8 @@ Requires(post,postun): desktop-file-utils
 
 Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch2: %name-alt-extra-doc-disable.patch
-Patch3: %name-alt-fix-trsnslations-qt.patch
-Patch4: %name-miniupnp228.patch
-Patch5: %name-alt-fix-FTBFS-cmake4.0.patch
+Patch3: %name-4.1.1-alt-fix-wayland-app-id.patch
+Patch4: %name-4.1.1-alt-use-psl-latest.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
@@ -43,6 +43,11 @@ Source8: %name-%version-third-party-libutp.tar
 Source9: %name-%version-third-party-utfcpp.tar
 Source10: %name-%version-third-party-utfcpp-extern-ftest.tar
 Source11: %name-%version-third-party-wide-integer.tar
+Source12: %name-%version-third-party-rapidjson.tar
+Source13: %name-%version-third-party-rapidjson-thirdparty-gtest.tar
+Source14: %name-%version-third-party-rpavlik-cmake-modules.tar
+Source15: %name-%version-third-party-small.tar
+
 
 BuildPreReq: desktop-file-utils
 
@@ -52,11 +57,11 @@ BuildRequires: ctest
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk4-devel libgtkmm4-devel libglibmm2.68-devel libpcre2-devel libffi-devel  glib2-devel libsystemd-devel
 BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel rpm-build-ubt openssl-devel
 BuildRequires: libb64-devel
-BuildRequires: libnatpmp-devel
 BuildRequires: libminiupnpc-devel
+BuildRequires: libnatpmp-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: libdeflate-devel
-BuildRequires: libpsl-devel
+BuildRequires: libpsl-devel publicsuffix-list-dafsa
 %if "%(rpmvercmp '%{get_version glibc-core}' '2.9')" >= "0"
 BuildRequires: libgio-devel
 %endif
@@ -75,6 +80,7 @@ Group: Networking/File transfer
 Summary: Common files for %name
 Conflicts: %name < 1.00-alt10
 Obsoletes: %name-gui-common < %EVR
+Requires: publicsuffix-list-dafsa
 %description common
 Common files for %name
 
@@ -118,7 +124,7 @@ Requires: %name-common = %EVR
 Daemonised BitTorrent client
 
 %prep
-%setup -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
+%setup -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15
 %autopatch -p1
 %ifarch %e2k
 # error: incomplete type is not allowed
@@ -181,11 +187,10 @@ echo "TRANSMISSION_OPTIONS=\"-e %_logdir/%dname/%dname.log -g %_localstatedir/%d
 mkdir -p %buildroot%_logdir/%dname
 mkdir -p %buildroot%_localstatedir/%dname
 
-# Re-enable if DhtTest.usesBootstrapFile and LT.WebUtilsTest.url passes
-# %check
-# pushd %_cmake__builddir
-# ctest
-# popd
+%check
+pushd %_cmake__builddir
+ctest --output-on-failure
+popd
 
 %pre daemon
 /usr/sbin/groupadd -r -f _%dname
@@ -249,6 +254,14 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 4.1.1-alt1
+- 4.0.6 -> 4.1.1 (Closes: #57658)
+- fixed missing application icon in GNOME on Wayland (closes: #48137)
+  based on GH PR 7669
+- use psl_latest() instead of psl_builtin() for PSL lookups, so that
+  PSL data is loaded from system distfile when builtin is disabled
+- enabled tests
+
 * Sat May 31 2025 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt5
 - fixed FTBFS with cmake4
 
