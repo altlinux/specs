@@ -2,7 +2,7 @@
 %def_with jit
 
 Name:    postgresql%pg_ver-orafce
-Version: 4.16.2
+Version: 4.16.4
 Release: alt1
 
 Summary: The "orafce" project implements in Postgres some of the functions from the Oracle database that are missing
@@ -52,6 +52,9 @@ All functions are fully compatibles with Oracle and respect all known format str
 
 
 %changelog
+* Wed Mar 04 2026 Alexei Takaseev <taf@altlinux.org> 4.16.4-alt1
+- 4.16.4
+
 * Sat Nov 08 2025 Alexei Takaseev <taf@altlinux.org> 4.16.2-alt1
 - 4.16.2
 
