@@ -1,6 +1,6 @@
 Name: gram
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, multiplayer code editor
 License: GPL-3.0
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires: gcc-c++ clang cmake
-BuildRequires: rust-cargo /proc
+BuildRequires: rust-cargo cargo-about /proc
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libgit2)
@@ -39,6 +39,10 @@ tar cf %SOURCE1 .cargo vendor
 
 %build
 export OPENSSL_NO_VENDOR=1
+export ALLOW_MISSING_LICENSES=1
+sed -ri "/^CARGO_ABOUT_VERSION/ s,=.+\$,=\"$(rpmquery --qf %%{version} cargo-about)\"," \
+	script/generate-licenses
+./script/generate-licenses
 cargo build --release --offline --package gram --package cli
 
 %define _libexecdir /usr/libexec
@@ -61,5 +65,8 @@ install -pm0644 -D gram.desktop %buildroot%_desktopdir/gram.desktop
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Wed Mar 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt2
+- fixed dependency licenses generation
+
 * Tue Mar 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
 - 1.0.0 released
