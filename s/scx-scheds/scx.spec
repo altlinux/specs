@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: scx-scheds
-Version: 1.0.19
+Version: 1.0.20
 Release: alt1
 Summary: sched_ext schedulers and tools
 License: GPL-2.0-only
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-macros-systemd
 BuildRequires: bpftool
 BuildRequires: clang-devel
 BuildRequires: jq
-BuildRequires: libbpf-devel
+BuildRequires: libbpf-devel %dnl should not diverge too much from used in bpftool
 BuildRequires: libelf-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libseccomp-devel
@@ -96,6 +96,9 @@ popd
 %_bindir/scx*
 
 %changelog
+* Thu Mar 05 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.20-alt1
+- Experimental update to v1.0.20 (2026-02-06).
+
 * Tue Dec 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.19-alt1
 - Experimental update to v1.0.19 (2025-12-02).
 
