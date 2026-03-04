@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.16
+Version: 0.5.0
 Release: alt1
 
 Summary: Sparse matrix tools extending scipy.sparse, but with incompatible licenses
@@ -22,7 +22,7 @@ BuildRequires: python3-module-numpy
 BuildRequires: python3-module-Cython
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libsuitesparse-devel
-BuildRequires: python3-module-sphinx
+BuildRequires: gcc-c++
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
@@ -37,39 +37,8 @@ proper. Usually this will be because it is released under the GPL.
 So far we have a wrapper for the CHOLMOD library for sparse cholesky
 decomposition.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This is a home for sparse matrix code in Python that plays well with
-scipy.sparse, but that is somehow unsuitable for inclusion in scipy
-proper. Usually this will be because it is released under the GPL.
-
-So far we have a wrapper for the CHOLMOD library for sparse cholesky
-decomposition.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This is a home for sparse matrix code in Python that plays well with
-scipy.sparse, but that is somehow unsuitable for inclusion in scipy
-proper. Usually this will be because it is released under the GPL.
-
-So far we have a wrapper for the CHOLMOD library for sparse cholesky
-decomposition.
-
-This package contains pickles for %oname.
-
 %prep
 %setup
-
-sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
 %pyproject_build
@@ -77,35 +46,20 @@ sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %install
 %pyproject_install
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C doc pickle
-%make -C doc html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %ifnarch armh %ix86
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -ra --pyargs sksparse
+%pyproject_run_pytest
 %endif
 
 %files
-%doc LICENSE.txt README.md doc/_build/html
+%doc README.*
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%{pyproject_distinfo scikit_sparse}
-%exclude %python3_sitelibdir/%oname/pickle
-%exclude %python3_sitelibdir/%mname/test*
-
-%files tests
-%python3_sitelibdir/%mname/test*
-
-%files pickles
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname/pickle
-
 
 %changelog
+* Wed Mar 04 2026 Anton Vyatkin <toni@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Mon Apr 28 2025 Anton Vyatkin <toni@altlinux.org> 0.4.16-alt1
 - New version 0.4.16.
 
