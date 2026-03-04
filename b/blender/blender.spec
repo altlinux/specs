@@ -66,8 +66,8 @@
 %endif
 
 Name: blender
-Version: 4.5.6
-Release: alt2
+Version: 4.5.7
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -533,6 +533,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 4.5.7-alt1
+- 4.5.6 -> 4.5.7
+
 * Tue Feb 04 2026 Anton Farygin <rider@altlinux.org> 4.5.6-alt2
 - added freedesktop thumbnailer file for generating .blend file previews
   in file managers (Closes: #57740)
