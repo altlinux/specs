@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.24.0
-Release: alt2
+Version: 0.24.1
+Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
 License: MIT
@@ -19,6 +19,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: clean_coverage.py
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
@@ -64,6 +65,7 @@ typer-slim now simply installs (all of) Typer.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -117,6 +119,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Tue Feb 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.1-alt1
+- Updated to 0.24.1.
+
 * Sat Feb 21 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt2
 - Renamed /usr/bin/typer to typer.py3 to avoid conflict with Erlang
   (Closes: 57946).
