@@ -1,0 +1,65 @@
+Name: gram
+Version: 1.0.0
+Release: alt1
+
+Summary: A high-performance, multiplayer code editor
+License: GPL-3.0
+Group: Editors
+URL: https://gram.liten.app/
+VCS: https://codeberg.org/GramEditor/gram
+
+ExclusiveArch: aarch64 x86_64
+
+Source0: %name-%version.tar
+Source1: crates.tar
+
+BuildRequires: gcc-c++ clang cmake
+BuildRequires: rust-cargo /proc
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(libgit2)
+BuildRequires: pkgconfig(libssl)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(vulkan)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xkbcommon-x11)
+
+%description
+%summary
+
+%prep
+%setup -a1
+%ifdef bootstrap
+cargo vendor
+tar cf %SOURCE1 .cargo vendor
+%endif
+
+%build
+export OPENSSL_NO_VENDOR=1
+cargo build --release --offline --package gram --package cli
+
+%define _libexecdir /usr/libexec
+
+%install
+install -pm0755 -D target/release/gram %buildroot%_libexecdir/gram-editor
+install -pm0755 -D target/release/cli %buildroot%_bindir/gram
+install -pm0644 -D crates/gram/resources/app-icon.png \
+    %buildroot%_iconsdir/hicolor/512x512/apps/gram.png
+sed -e 's,$DO_STARTUP_NOTIFY,true,' -e 's,$APP_NAME,Gram,' \
+    -e 's,$APP_CLI,gram,' -e 's,$APP_ICON,gram,' -e 's,$APP_ARGS,%%U,' \
+    < crates/gram/resources/gram.desktop.in > gram.desktop
+install -pm0644 -D gram.desktop %buildroot%_desktopdir/gram.desktop
+
+%files
+%doc README* LICENSE* docs
+%_bindir/gram
+%_libexecdir/gram-editor
+%_desktopdir/gram.desktop
+%_iconsdir/*/*/*/*.png
+
+%changelog
+* Tue Mar 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
