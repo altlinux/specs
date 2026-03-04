@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        145.0.7632.116
+Version:        145.0.7632.159
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -350,8 +350,9 @@ ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
 
 %ifnarch x86_64
 # Add correct path for esbuild binary
-%define es_new %(rpmquery --qf '%%{VERSION}' esbuild)
+# third_party/devtools-frontend/src/package.json:    "esbuild": "0.25.1",
 %define es_old "0\.25\.1"
+%define es_new %(rpmquery --qf '%%{VERSION}' esbuild)
 sed -i 's!%es_old!"%es_new"!g' `grep -Rl \"%es_old\" third_party/devtools-frontend/src`
 mkdir -p third_party/devtools-frontend/src/third_party/esbuild
 ln -sf %_bindir/esbuild third_party/devtools-frontend/src/third_party/esbuild/esbuild
@@ -506,10 +507,10 @@ export RUSTC_BOOTSTRAP=1
 gn_arg+=( rust_sysroot_absolute=\"$(rustc --print sysroot)\" )
 gn_arg+=( rustc_version=\"$(rustc --version)\" )
 
-%ifnarch x86_64
-gn_arg+=( icu_use_data_file=false )
-%else
+%ifarch x86_64
 gn_arg+=( icu_use_data_file=true )
+%else
+gn_arg+=( icu_use_data_file=false )
 %endif
 
 %ifarch x86_64 aarch64
@@ -692,6 +693,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 04 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.159-alt1
+- New version (145.0.7632.159).
+
 * Tue Feb 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.116-alt1
 - New version (145.0.7632.116).
 - Fixes:
