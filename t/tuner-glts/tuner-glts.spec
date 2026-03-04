@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerGLTS
 
 Name: tuner-glts
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Plugin for Tuner, that applies gnome dark theme to "legacy" applications
@@ -44,6 +44,8 @@ It is a Tuner plugin that allows you to select light and dark gtk-theme variants
 %doc README.md
 
 %changelog
+* Wed Mar 04 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.1-alt1
+- New version 0.1.1.
+
 * Mon Feb 23 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.0-alt1
 - Initial build.
-
