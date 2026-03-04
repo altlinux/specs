@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -116,6 +116,9 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %changelog
+* Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.2-alt1
 - New version 0.3.2.
 - Fixed permissions.
