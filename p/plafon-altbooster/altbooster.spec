@@ -1,7 +1,7 @@
 %define oname altbooster
 
 Name: plafon-altbooster
-Version: 5.6.4
+Version: 5.6.5
 Release: alt1
 
 Summary: GTK4 App Booster for ALT Linux
@@ -47,6 +47,9 @@ install -d %buildroot
 %_bindir/%%oname
 
 %changelog
+* Thu Mar 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.5-alt1
+- 5.6.4 -> 5.6.5
+
 * Wed Mar 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.4-alt1
 - 5.6.3 -> 5.6.4
 
