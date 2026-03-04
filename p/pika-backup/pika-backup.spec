@@ -8,8 +8,8 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: Keep your data safe
 License: GPL-3.0
@@ -20,8 +20,6 @@ Vcs: https://gitlab.gnome.org/World/pika-backup.git
 
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
-
-Patch1: %name-0.7.5-alt-never_type_fallback_fixes.patch
 
 %define gtk_ver 4.12.5
 %define adwaita_ver 1.4.0
@@ -52,7 +50,6 @@ BorgBackup software.
 
 %prep
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
-%patch1 -p2
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -84,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
+- 0.7.6
+
 * Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1.1
 - src/borg/functions.rs: fixed build with new rust (rx1513@)
 
