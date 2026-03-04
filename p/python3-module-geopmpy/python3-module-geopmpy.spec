@@ -2,7 +2,7 @@
 
 Name: python3-module-%prj_name
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for GEOPM runtime library
 Group: System/Configuration/Other
@@ -13,7 +13,6 @@ VCS: https://github.com/geopm/geopm.git
 Source0: %name-%version.tar
 Patch1: drop-distutils.patch
 ExclusiveArch: x86_64
-
 
 BuildRequires: gcc
 BuildRequires: rpm-build-python3
@@ -30,6 +29,7 @@ BuildRequires: python3-module-yaml
 BuildRequires: libgeopm-devel >= 3.2.1
 BuildRequires: libgeopmd-devel >= 3.2.1
 # for tests
+BuildRequires: libblosc2-devel
 BuildRequires: python3-module-tables-tests
 BuildRequires: /proc
 Requires: geopmd
@@ -71,5 +71,8 @@ popd
 %_bindir/geopmlaunch
 
 %changelog
+* Wed Mar 04 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt2
+- added blosc2 for test
+
 * Fri Jan 16 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt1
 - first build for ALT
