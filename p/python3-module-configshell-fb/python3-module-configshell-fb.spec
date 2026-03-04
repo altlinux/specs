@@ -1,7 +1,7 @@
 %define pypi_name configshell-fb
 
 Name: python3-module-%pypi_name
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: A framework to implement simple but nice CLIs
@@ -36,11 +36,13 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %files
 %doc README.*
-%python3_sitelibdir/__pycache__/configshell_fb.*
-%python3_sitelibdir/configshell_fb.py
+%python3_sitelibdir/configshell_fb
 %python3_sitelibdir/configshell/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 04 2026 Anton Vyatkin <toni@altlinux.org> 2.0.3-alt1
+- New version 2.0.3.
+
 * Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus.
