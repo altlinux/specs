@@ -1,6 +1,6 @@
 Name: kooha
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Simple screen recorder with a minimal interface
@@ -24,28 +24,7 @@ BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gst
 %prep
 %setup -n Kooha-%version -a1
 %patch -p1
-
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep
 
 %build
 %meson
@@ -70,6 +49,9 @@ EOF
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 1:2.3.1-alt2
+- Updated translations.
+
 * Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.3.1-alt1
 - New version 2.3.1.
 - Added VCS tag.
