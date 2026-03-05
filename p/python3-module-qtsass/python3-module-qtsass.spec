@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name qtsass
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
-Release: alt3
+Version: 0.4.0
+Release: alt1
 
 License: MIT
 Group: Development/Python
@@ -17,8 +17,6 @@ Summary: QtSASS: Compile SCSS files to Qt stylesheets
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
-Patch0: qtsass-0.3.0-Add-check-for-deprecated-api-between-2-and-3-version.patch
-
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -45,7 +43,6 @@ The purpose of this tool is to fill the gap between SASS and Qt-CSS by handling 
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -63,6 +60,11 @@ The purpose of this tool is to fill the gap between SASS and Qt-CSS by handling 
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
+- new version 0.4.0
+- removed patch (merged upstream)
+- disabled tests (tox fails in hasher)
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt3
 - Moved on modern pyproject macros.
 
