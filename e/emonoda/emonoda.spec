@@ -1,6 +1,6 @@
 Name: emonoda
-Version: 2.1.38
-Release: alt2
+Version: 2.1.40
+Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -13,8 +13,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/mdevaev/emonoda/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch0: 57712274c38a2a696463d3e5c6f8cadd3c9e7e63.patch
-Patch1: patches/cython-3.1.patch
 
 Provides: rtfetch
 Obsoletes: rtfetch
@@ -31,7 +29,6 @@ The set of tools to organize and management of your torrents.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -56,6 +53,10 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.40-alt1
+- new version 2.1.40 (with rpmrb script)
+- removed cython-3.1 patch (merged upstream)
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.38-alt2
 - fixed FTBFS with cython>3.1
 
