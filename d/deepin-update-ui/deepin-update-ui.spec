@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.41
+Version: 1.0.44
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -24,6 +24,7 @@ ExcludeArch: i586
 %filter_from_requires /\/usr\/bin\/kwin_wayland/d
 
 BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdde-control-center-devel dde-dock-devel libwayland-client-devel
+BuildRequires: libdqt6-concurrent vulkan-headers
 
 %description
 %summary.
@@ -97,6 +98,10 @@ sed \
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.44-alt1
+- New version 1.0.44.
+- Fixed build on shrinked dqt6.
+
 * Wed Jan 28 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt1
 - New version 1.0.41.
 - Fixed build on dtk 6.7.31.
