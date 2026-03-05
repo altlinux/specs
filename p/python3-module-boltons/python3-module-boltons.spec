@@ -1,7 +1,7 @@
 %define modulename boltons
 
 Name: python3-module-boltons
-Version: 23.1.1
+Version: 25.0.0
 Release: alt1
 
 Summary: When they're not builtins, they're boltons.
@@ -15,9 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://pypi.io/packages/source/b/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-flit-core
 
 BuildArch: noarch
 
@@ -32,17 +31,20 @@ Contains over 230 BSD-licensed utility types and functions that can be used as a
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 25.0.0-alt1
+- new version 25.0.0 (with rpmrb script)
+- switch to pyproject build
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 23.1.1-alt1
 - new version 23.1.1 (with rpmrb script)
 
