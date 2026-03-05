@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jnr-posix
 Version:        3.0.47
-Release:        alt1_8jpp11
+Release:        alt2
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
@@ -22,8 +22,8 @@ BuildArch:      noarch
 Source44: import.info
 
 %description
-jnr-posix is a lightweight cross-platform POSIX emulation layer for Java, 
-written in Java and is part of the JNR project 
+jnr-posix is a lightweight cross-platform POSIX emulation layer for Java,
+written in Java and is part of the JNR project
 
 %package        javadoc
 Group: Development/Java
@@ -48,6 +48,9 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 # Unnecessary for RPM builds
 %pom_remove_plugin ":maven-javadoc-plugin"
 
+# Update maven compiler sources versions to build javadoc
+subst "s/1\.5/1\.6/g" ./pom.xml
+
 %build
 %mvn_build -f
 
@@ -62,6 +65,9 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Mar 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.0.47-alt2
+- fixed FTBFS: update maven.compiler.{source,target} properties
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.0.47-alt1_8jpp11
 - java11 build
 
