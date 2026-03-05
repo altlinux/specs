@@ -4,13 +4,15 @@
 
 Name: firejail
 Version: 0.9.78
-Release: alt2
+Release: alt3
 Summary: Linux namespaces sandbox program
 License: GPLv2+
 Group: Development/Tools
 Url: https://firejail.wordpress.com/
 VCS: https://github.com/netblue30/firejail.git
 Source: %name-%version.tar
+Patch1: %name-0.9.78-alt-skip-unreadable-private-etc.patch
+Patch2: %name-0.9.78-alt-whitelist-sandbox-users.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -21,6 +23,8 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure
@@ -57,6 +61,12 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 0.9.78-alt3
+- skip unreadable files in private-etc instead of crashing (closes: #58112)
+- sandbox user isolation: only expose root, nobody and current user instead of
+  using UID_MIN/GID_MIN threshold from /etc/login.defs (closes: #45710)
+- removed login.defs from default private-etc list (no longer needed at runtime)
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.9.78-alt2
 - set SUID bit on firejail binary (Closes: #57987)
 - enabled user namespace support (--noroot option)
