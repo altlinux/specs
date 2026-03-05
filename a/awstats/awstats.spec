@@ -4,8 +4,8 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 7.9
-Release: alt0.2
+Version: 8.0
+Release: alt0.1
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.UTF8): Анализатор логов Web-сервера в режиме реального времени
@@ -23,15 +23,26 @@ Source3: apache2.sites-available
 Source4: apache2.sites-start
 Source5: apache2.ports-start
 Source6: README.ALT.ru_RU.UTF8
+Source7: linuxaltlinux.png
+Source8: palemoon.png
+Source9: yabrowser.png
 
-Patch: %name-%version-%release.patch
+Patch0: 0001-lib-search_engines.pm-update-russian-search.patch
+Patch1: 0005-maxmind-update-asnum-URLs.patch
+Patch2: 0023-Add-Yandex-Browser-detection.patch
+Patch3: 0025-lib-browsers.pm-remove-obsoleted-browsers.patch
+Patch4: 0026-browsers-update.patch
+Patch5: 0031-lang-awstats-ru.txt-fix-translation.patch
+Patch6: 0034-tools-fix-defaults-paths.patch
+Patch7: 0035-lib-operating_systems.pm-add-ALTLinux.patch
+Patch8: 0037-awstats-fix-Edge-detection.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-apache2
 
 # Automatically added by buildreq on Wed Jul 21 2010 (-bi)
 BuildRequires: apache2-common perl-libwww tzdata perl-Switch perl-CGI
-BuildRequires: perl-Data-Validate-IP
+BuildRequires: perl-Data-Validate-IP perl-JSON-XS
 
 %description
 AWStats is a short for Advanced Web Statistics. It's a free tool that generates
@@ -76,8 +87,10 @@ AWStats apache2-related config
 
 %prep
 %setup
-%patch -p1
+%autopatch -p2
 cp %SOURCE6 ./
+cp %SOURCE7 wwwroot/icon/os/
+cp %SOURCE8 %SOURCE9 wwwroot/icon/browser/
 
 %build
 # build awgraphapplet.jar from source, avoiding upstream shipped binary
@@ -142,6 +155,11 @@ install -p -m644 %SOURCE5 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Thu Mar 05 2026 L.A. Kostis <lakostis@altlinux.ru> 8.0-alt0.1
+- 8.0.
+- Split -alt patches from source tree.
+- BR: added perl-JSON-XS.
+
 * Thu Mar 16 2023 L.A. Kostis <lakostis@altlinux.ru> 7.9-alt0.2
 - Fix Edge detection.
 
