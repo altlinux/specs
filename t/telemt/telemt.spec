@@ -1,6 +1,6 @@
 Name: telemt
 Version: 3.0.15
-Release: alt2
+Release: alt3
 
 Summary: MTProxy for Telegram on Rust + Tokio
 
@@ -59,6 +59,11 @@ install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.15-alt3
+- config.toml: enable IPv6 by default
+- telemt.service: add WorkingDirectory, StateDirectory, DynamicUser
+- telemt.service: add CAP_NET_BIND_SERVICE for port 443
+
 * Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.15-alt2
 - move config to /etc/telemt/config.toml (match --init path)
 - add config.full.toml as full configuration reference
