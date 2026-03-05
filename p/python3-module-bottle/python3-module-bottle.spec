@@ -1,8 +1,8 @@
 %define oname bottle
 
 Name: python3-module-%oname
-Version: 0.12.25
-Release: alt2
+Version: 0.13.2
+Release: alt1
 Epoch: 1
 
 Summary: Fast and simple WSGI-framework for small web-applications
@@ -19,8 +19,8 @@ BuildArch: noarch
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
-BuildRequires: python3-module-legacy-cgi
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %py3_provides %oname
 
@@ -52,18 +52,24 @@ This package contains documentation for %oname.
 #ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
-%_bindir/bottle.py
-%python3_sitelibdir/*
+%_bindir/bottle*
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%oname.*
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.13.2-alt1
+- new version 0.13.2
+- switch to pyproject build
+
 * Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 1:0.12.25-alt2
 - Fixed FTBFS.
 
