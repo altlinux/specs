@@ -2,24 +2,26 @@
 
 Name: udisks2-qt5
 Version: 5.0.6
-Release: alt2
+Release: alt3
 
 Summary: Qt5 binding for udisks2
 
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/udisks2-qt5
+VCS: https://github.com/linuxdeepin/udisks2-qt5
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source: https://github.com/linuxdeepin/udisks2-qt5/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 %if_enabled clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: libstdc++-devel dqt5-base-devel
+BuildRequires: libstdc++-devel dqt5-base-devel libdqt5-dbus
 
 %description
 This package provides a Qt5 binding for udisks2.
@@ -76,6 +78,10 @@ export PATH=%_dqt5_bindir:$PATH
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 5.0.6-alt3
+- Fixed build on shrinked dqt5.
+- Added VCS tag.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.6-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
