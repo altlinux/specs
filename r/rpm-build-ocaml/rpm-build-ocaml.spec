@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.6.6
+Version: 1.6.7
 Release: alt1
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 %_rpmlibdir/ocaml*
 
 %changelog
+* Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 1.6.7-alt1
+- renamed %%ocaml_bootstrap -> %%_with_ocaml_bootstrap to use in %%if_with macro
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 1.6.6-alt1
 - added %%ocaml_bootstrap macros
 
