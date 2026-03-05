@@ -3,7 +3,7 @@
 %define polkit_actions %_datadir/polkit-1/actions/
 
 Name: tlp
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: Optimize laptop battery life
@@ -143,6 +143,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1
+
 * Fri Dec 05 2025 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script) (ALT bug 57132)
 - add BuildRequires: rpm-build-python3
