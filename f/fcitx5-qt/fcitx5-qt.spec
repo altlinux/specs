@@ -6,7 +6,7 @@ BuildRequires: libX11-devel libxcb-devel pkgconfig(xkbcommon)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 4
+%define autorelease 5
 
 %global __provides_exclude_from ^%{_libdir}/(fcitx5|qt5)/.*\\.so$
 
@@ -49,6 +49,11 @@ Requires:       %{name}-libfcitx5qtdbus = %{version}-%{release}
 Requires:       %{name}-libfcitx5qt5widgets = %{version}-%{release}
 Source44: import.info
 #Requires:       ((fcitx5-qt6%{?_isa} = %{version}-%{release}) if qt6-qtbase)
+
+# upstream fixes
+Patch0: 0001-Try-new-cmake-style-for-Qt6-76.patch
+Patch1: 0001-Fix-cmake-for-qt6.patch
+Patch2: 0001-Migrate-immodule-probing-also-to-GuiPrivate-target.patch
 
 %description
 Qt library and IM module for fcitx5.
@@ -104,7 +109,9 @@ Development files for %{name}
 
 %prep
 %setup -q
-
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{fedora_v2_cmake} -GNinja -DENABLE_QT4=False \
@@ -174,6 +181,9 @@ Development files for %{name}
 %endif
 
 %changelog
+* Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 5.1.9-alt1_5
+- NMU: fix build on qt 6.10
+
 * Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 5.1.9-alt1_4
 - update (ALT #52979)
 
