@@ -1,20 +1,19 @@
 Name:    python3-module-google-api-core
-Version: 2.29.0
+Version: 2.30.0
 Release: alt1
 
 Summary: Core Library for Google Client Libraries
 License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/googleapis/python-api-core
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+URL:     https://github.com/googleapis/google-cloud-python/tree/main/packages/google-api-core
+VCS:     https://github.com/googleapis/google-cloud-python
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source: python-api-core-%version.tar
+Source: google-api-core-%version.tar
 
 %description
 %summary
@@ -24,7 +23,7 @@ helpers used by all Google API clients. For more information, see the
 documentation at https://googleapis.dev/python/google-api-core/latest.
 
 %prep
-%setup -n python-api-core-%version
+%setup -n google-api-core-%version
 
 %build
 %python3_build
@@ -38,6 +37,10 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.30.0-alt1
+- New version.
+- Upstream moved to https://github.com/googleapis/google-cloud-python/tree/main/packages/google-api-core.
+
 * Fri Jan 09 2026 Andrey Cherepanov <cas@altlinux.org> 2.29.0-alt1
 - New version.
 
