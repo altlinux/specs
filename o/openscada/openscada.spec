@@ -82,8 +82,8 @@ Summary(ru_RU.UTF8): Открытая SCADA система
 Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
-Version: 0.9.8
-Release: alt2
+Version: 0.9.9
+Release: alt1
 # Source-url: https://mirror.eterfund.ru/ftp.oscada.org/OpenSCADA/0.9/openscada-%version.tar.xz
 Source: openscada-%version.tar
 # Source1-url: https://mirror.eterfund.ru/ftp.oscada.org/OpenSCADA/0.9/openscada-res-%version.tar.xz
@@ -1707,6 +1707,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
+- new version 0.9.9
+
 * Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt2
 - replace BR: libgd2-devel with pkgconfig(gdlib)
 
