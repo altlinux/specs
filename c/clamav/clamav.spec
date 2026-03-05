@@ -13,8 +13,8 @@
 %endif
 
 Name: clamav
-Version: 1.4.3
-Release: alt3
+Version: 1.5.2
+Release: alt1
 %define abiversion 12
 
 Summary: Clam Antivirus scanner
@@ -189,6 +189,7 @@ echo "#endif" >> clamav-config.h
 popd
 
 %cmake_build
+
 install -m644 %_sourcedir/virusstat* .
 
 %check
@@ -305,6 +306,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %attr(0755,root,root) %config %_initdir/clamd
 %{?_with_ownconfdir: %dir %clamconfdir}
 %config(noreplace) %verify(not md5 size mtime) %clamconfdir/clamd.conf
+%config %clamconfdir/certs
 %config(noreplace) %_sysconfdir/logrotate.d/clamav
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/clamd
 %_tmpfilesdir/clamav.conf
@@ -390,6 +392,10 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Mar 05 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
+- 1.5.2
+- Fix stuck firsttime start
+
 * Fri Oct 31 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt3
 - Fix Can't open/parse the config file /usr/etc/freshclam.conf (ALT #56693)
 
