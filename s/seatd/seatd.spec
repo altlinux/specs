@@ -1,9 +1,10 @@
 Name: seatd
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 Summary: Minimal seat management daemon and universal library
 License: MIT
-Url: https://github.com/kennylevinsen/seatd
+URL: https://github.com/kennylevinsen/seatd
+VCS: https://github.com/kennylevinsen/seatd
 Group: System/Configuration/Boot and Init
 
 Source0: %name-%version.tar
@@ -11,6 +12,7 @@ Source1: %name.init
 Source2: %name.runner
 Source3: %name.sysconfig
 
+Patch: %name-%version-%release.patch
 Patch0001: 0001-Use-same-group-in-sysv-and-systemd-service.patch
 
 %define _unpackaged_files_terminate_build 1
@@ -89,6 +91,9 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 01 2026 Anton Midyukov <antohami@altlinux.org> 0.9.3-alt1
+- New version 0.9.3.
+
 * Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - New version 0.9.2.
 
