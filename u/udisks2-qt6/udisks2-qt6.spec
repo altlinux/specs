@@ -4,7 +4,7 @@
 
 Name: udisks2-qt6
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Qt6 binding for udisks2
 
@@ -23,7 +23,7 @@ BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: cmake dqt6-base-devel
+BuildRequires: cmake dqt6-base-devel libdqt6-dbus
 
 %description
 This package provides a Qt6 binding for udisks2.
@@ -83,6 +83,9 @@ export LC_ALL=C.UTF-8
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt2
+- Fixed build on shrinked dqt6.
+
 * Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
 - New version 6.0.1.
 - Packaged the docs.
