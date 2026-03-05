@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.70
+Version: 6.1.76
 Release: alt1
 Epoch: 2
 
@@ -83,11 +83,7 @@ sed -i 's/google-chrome/chromium-browser/g' \
 # -- 5.12 ---
 
 # /etc
-sed -i 's|/etc/gdm/custom.conf|/etc/X11/gdm/custom.conf|' \
-    accounts1/handle_event.go \
-    accounts1/users/display_manager.go \
-    misc/systemd/services/system/dde-system-daemon.service
-sed -i 's|/etc/gdm3/custom.conf|/etc/X11/gdm/custom.conf|' \
+sed -i 's|/etc/gdm3/custom.conf|/etc/gdm/custom.conf|' \
     accounts1/users/display_manager.org
 sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
     accounts1/users/display_manager.{go,org} \
@@ -181,6 +177,7 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
 #%%_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
+%_userunitdir/org.deepin.dde.SoundEffect1.service
 # %%_unitdir/dbus-com.deepin.dde.lockservice.service
 %_userunitdir/dde-display-task-refresh-brightness.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
@@ -204,6 +201,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.76-alt1
+- New version 6.1.76.
+
 * Wed Jan 14 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.70-alt1
 - New version 6.1.70.
 
