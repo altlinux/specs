@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 25.12.2
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -30,6 +30,7 @@ Patch3: alt-print-truncate-title.patch
 Patch4: alt-add-indication-for-document-loading-process.patch
 Patch5: alt-cryptopro-verifying.patch
 Patch6: alt-xdg-current-desktop.patch
+Patch7: alt-fix-revision-preview-crash.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel qt6-svg-devel
@@ -115,6 +116,7 @@ Summary: %name library
 %patch6 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 sed -i '/^find_package.*QMobipocket/d' CMakeLists.txt
+%patch7 -p2
 
 tmp_file=`mktemp`
 msgcat --use-first po/ru/okular.po %SOURCE10 >"$tmp_file"
@@ -192,6 +194,9 @@ fi
 
 
 %changelog
+* Thu Mar 05 2026 Oleg Proskurin <proskur@altlinux.org> 25.12.2-alt2
+- Fix the previous document revision preview crash (closes #20814).
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
