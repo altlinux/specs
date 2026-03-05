@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.19.2
+Version: 4.19.4
 Release: alt1
 Epoch: 1
 
@@ -11,7 +11,6 @@ Url: https://github.com/shadow-maint/shadow
 Source0: %url/%name-%version.tar
 Source1: login.defs
 Source2: useradd.default
-Source3: user-group-mod.pamd
 Source4: chfn-chsh.pamd
 Source5: chpasswd-newusers.pamd
 Source6: chage.control
@@ -232,7 +231,7 @@ This virtual package unifies all shadow suite subpackages.
 	--without-sha-crypt \
 	--without-su \
 	--disable-logind \
-	%{?_with_pam:--enable-account-tools-setuid} \
+	--disable-account-tools-setuid \
 	%{subst_enable man}
 %make_build
 
@@ -256,13 +255,6 @@ rm -rf %buildroot%_sysconfdir/pam.d
 %if_with pam
 mkdir -p %buildroot%_sysconfdir/pam.d
 pushd %buildroot%_sysconfdir/pam.d
-install -pm600 %_sourcedir/user-group-mod.pamd user-group-mod
-ln -s user-group-mod groupadd
-ln -s user-group-mod groupdel
-ln -s user-group-mod groupmod
-ln -s user-group-mod useradd
-ln -s user-group-mod userdel
-ln -s user-group-mod usermod
 install -pm640 %_sourcedir/chfn-chsh.pamd chfn-chsh
 ln -s chfn-chsh chfn
 ln -s chfn-chsh chsh
@@ -354,13 +346,6 @@ rm -f %save_login_defs_file
 %dir %attr(770,root,root) %_sysconfdir/shadow-maint/user*.d/
 %dir %attr(770,root,root) %_sysconfdir/shadow-maint/group*.d/
 %if_with pam
-%config(noreplace) %_sysconfdir/pam.d/user-group-mod
-%_sysconfdir/pam.d/groupadd
-%_sysconfdir/pam.d/groupdel
-%_sysconfdir/pam.d/groupmod
-%_sysconfdir/pam.d/useradd
-%_sysconfdir/pam.d/userdel
-%_sysconfdir/pam.d/usermod
 %config(noreplace) %_sysconfdir/pam.d/chpasswd-newusers
 %_sysconfdir/pam.d/chpasswd
 %_sysconfdir/pam.d/newusers
@@ -484,6 +469,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Mar 05 2026 Mikhail Efremov <sem@altlinux.org> 1:4.19.4-alt1
+- Disabled account-tools-setuid build option.
+- Updated to 4.19.4.
+
 * Wed Jan 21 2026 Mikhail Efremov <sem@altlinux.org> 1:4.19.2-alt1
 - Updated to 4.19.2.
 
