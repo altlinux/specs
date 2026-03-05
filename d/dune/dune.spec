@@ -25,9 +25,14 @@
 %def_with check
 %endif
 
+%if_with ocaml_bootstrap
+%undefine _with_check
+%def_without check
+%endif
+
 Name: dune%subpackagename
 Version: 3.21.1
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -36,19 +41,21 @@ Source0: dune-%version.tar
 Patch0: dune-%version-%release.patch
 Provides: ocaml-dune = %EVR
 
-BuildRequires: ocaml >= 4.14.0
-BuildRequires: rpm-build-ocaml >= 1.5
+BuildRequires: ocaml >= 5.3.0
+BuildRequires(pre): rpm-build-ocaml >= 1.6.7
 %if_with subpackage
 BuildRequires: dune
 BuildRequires: ocaml-csexp-devel
 %endif
 
 %if "%dune_pkg" == "bootstrap"
+%if_with check
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-spawn-devel
 BuildRequires: ocaml-csexp-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-pp-devel
+%endif
 %package -n emacs-dune
 Summary: Emacs support for Ocaml Dune
 Requires: %name = %EVR
@@ -353,6 +360,11 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 3.21.1-alt2
+- added autodetected ocaml bootstrap mode
+- disabled check section when building dune package
+  in ocaml bootstrap mode
+
 * Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 3.21.1-alt1
 - 3.21.0 -> 3.21.1
 
