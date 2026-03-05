@@ -1,5 +1,5 @@
 Name: duf
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 
 Summary: Disk Usage/Free Utility - a better 'df' alternative
@@ -37,5 +37,8 @@ install -m 0644 -D duf.1 %buildroot%_man1dir/duf.1
 %_man1dir/duf.1*
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1
+
 * Mon Jun 05 2023 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
 - initial build for ALT Sisyphus
