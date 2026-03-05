@@ -1,3 +1,5 @@
+%define commit_id d888bc3f79b4
+
 %def_enable internal_absl
 
 # Dynamic build is not supported by upstream
@@ -6,7 +8,7 @@
 %def_enable pipewire
 
 Name: libowt-tg
-Version: 4.3.0.13
+Version: 4.3.0.14
 Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
@@ -15,7 +17,7 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/desktop-app/tg_owt
 
-# Source-url: https://github.com/desktop-app/tg_owt/archive/master.zip
+# Source-url: https://github.com/desktop-app/tg_owt/archive/%commit_id.zip
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/cisco/libsrtp/archive/refs/tags/v2.5.0.tar.gz
@@ -180,6 +182,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.14-alt1
+- build from git d888bc3f79b4 (fix build with PipeWire >= 1.5.81)
+
 * Mon Jan 20 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 4.3.0.13-alt1
 - build from git 5c5c71258777d0196dbb3a09cc37d2f56ead28ab
 - and abseil-cpp-20250814.1 libsrtp-2.7.0
