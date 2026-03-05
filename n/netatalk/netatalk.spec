@@ -1,8 +1,8 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.2.4
-Release: alt1
+Version: 4.4.1
+Release: alt2
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
 
@@ -21,10 +21,12 @@ Patch3: netatalk-systemd-execstartpre.patch
 BuildRequires(pre): rpm-build-python3 rpm-macros-meson rpm-build-perl
 BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel docbook-style-xsl python3-module-yaml python3-module-pyaml
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel xsltproc libcups-devel libiniparser-devel
-BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel meson cmake unicode-ucd libxslt libxslt-devel
-BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus findutils libtdb-devel
-BuildRequires:     pandoc
+BuildRequires: libkrb5-devel libldap-devel libpam-devel meson cmake unicode-ucd libxslt libxslt-devel glibc-devel
+BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus findutils libtdb-devel libmariadb-devel libsqlite3x-devel
+BuildRequires: pandoc gcc13
+#libmysqlclient-devel 
 Requires: cracklib-words cracklib
+# systemd
 
 %description
 Netatalk is a freely-available Open Source AFP file server. A *NIX/*BSD
@@ -58,8 +60,8 @@ rm -frv libevent/
 find include \( -name '*.h' -a -executable \) -exec chmod -x {} \;
 
 # py2 -> py3
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ \( -name '*.py' -o -name 'afpstats' \))
+#sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+#    $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
 # Don't call systemctl daemon-reload during the build
 #sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.am
@@ -76,7 +78,7 @@ sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initsc
 
 
 %build
-
+%set_gcc_version 13
 
 %meson  \
         -Ddefault_library=shared                                               \
@@ -86,11 +88,11 @@ sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initsc
         -Dwith-tests=true							\
         -Dwith-cups=true                                                      \
         -Dwith-pkgconfdir-path=%{_sysconfdir}/netatalk                         \
-        -Dwith-init-style=systemd	                                       \
         -Dwith-lockfile-path=%{_runtimedir}/lock/netatalk/netatalk                 \
-	-Dwith-dbus-sysconf-path=%{_sysconfdir}/dbus-1/system.d                \
-	-Dwith-docbook-path=%{_datadir}/sgml/docbook/xsl-stylesheets-%{xslver} \
-        -Dwith-init-hooks=false
+	-Dwith-dbus-sysconf-path=%{_sysconfdir}/dbus-1/system.d                
+#        -Dwith-init-style=systemd	                                       \
+#	-Dwith-docbook-path=%{_datadir}/sgml/docbook/xsl-stylesheets-%{xslver} \
+#        -Dwith-init-hooks=false
 
 
 
@@ -123,7 +125,7 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 
 %files
 %doc CONTRIBUTORS.md NEWS.md COPYING COPYRIGHT INSTALL.md README.md SECURITY.md
-%doc %{_defaultdocdir}/%name/htmldocs
+%doc %{_defaultdocdir}/%name/manual
 %config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afp.conf
@@ -137,11 +139,13 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #exclude %_bindir/netatalk-config
 %_libdir/netatalk/
 %_libdir/libatalk.so.*
+%_libdir/libbstring.so.*
 %_mandir/man*/*
 #exclude %_mandir/man*/netatalk-config*
 %_sbindir/*
 %ghost %dir /var/lock/netatalk
-/usr/lib/systemd/system/netatalk.service
+%_libdir/pkgconfig/bstring.pc
+#/usr/lib/systemd/system/netatalk.service
 #exclude %_localstatedir/netatalk/CNID/README
 #exclude %_localstatedir/netatalk/README
 #dir /var/lib/netatalk
@@ -150,10 +154,21 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_bindir/netatalk-config
 #_datadir/aclocal/netatalk.m4
 %_includedir/atalk/
+%_includedir/bstr*.h
 %_libdir/libatalk.so
+%_libdir/libbstring.so
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Thu Mar 05 2026 Ilya Mashkin <oddity@altlinux.ru> 4.4.1-alt2
+- Disable systemd
+
+* Sat Jan 24 2026 Ilya Mashkin <oddity@altlinux.ru> 4.4.1-alt1
+- 4.4.1
+
+* Wed Sep 17 2025 Ilya Mashkin <oddity@altlinux.ru> 4.3.2-alt1
+- 4.3.2
+
 * Sun Jun 01 2025 Ilya Mashkin <oddity@altlinux.ru> 4.2.4-alt1
 - 4.2.4
 
