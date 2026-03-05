@@ -1,20 +1,24 @@
+# in Sisyphus LibreOffice and LibreOffice-still has been merged into libreoffice
+%define ext_merged_dir  %{_libdir}/libreoffice/share/extensions/
+
+# this kept for compatibility
 %define ext_dir  %{_libdir}/LibreOffice/share/extensions/
 %define ext_still_dir  %{_libdir}/LibreOffice-still/share/extensions/
 %define ext_name altcsp
 
 Name: LibreOffice-plugin-altcsp
-Version: 0.0.3
-Release: alt2
+Version: 0.1.0
+Release: alt1
 
 Group: File tools
-Summary: LibreOffice plugin for alt-csp-cryptopro
+Summary: LibreOffice plugin for surguch
 License: GPL-2.0-or-later
 
 Source: %ext_name.tar
-Requires: alt-csp-cryptopro
+Requires: surguch
 
 %description
-LibreOffice plugin for alt-csp-cryptopro
+LibreOffice plugin for surguch
 
 %prep
 # noop
@@ -32,11 +36,19 @@ cp %_licensedir/%license %buildroot%ext_dir/%ext_name/license.txt
 mkdir -p %buildroot%ext_still_dir/
 cp -r %buildroot%ext_dir/%ext_name/ %buildroot%ext_still_dir/%ext_name/
 
+# copy plugin to LO directory in Sisyphus
+mkdir -p %buildroot%ext_merged_dir/
+cp -r %buildroot%ext_dir/%ext_name/ %buildroot%ext_merged_dir/%ext_name/
+
 %files
 %ext_dir/%ext_name/
 %ext_still_dir/%ext_name/
+%ext_merged_dir/%ext_name/
 
 %changelog
+* Wed Mar 04 2026 Oleg Solovyov <mcpain@altlinux.org> 0.1.0-alt1
+- use surguch
+
 * Fri Jun 24 2022 Oleg Solovyov <mcpain@altlinux.org> 0.0.3-alt2
 - install module for both LO and LO-still
 
