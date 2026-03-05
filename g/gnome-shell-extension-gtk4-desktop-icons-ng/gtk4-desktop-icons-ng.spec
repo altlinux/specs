@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 100.8
-Release: alt1
+Version: 100.17
+Release: alt2
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -65,14 +65,42 @@ and isolate errors from this branch.
 # remove apparmor config
 rm -r %buildroot%_sysconfdir/apparmor.d
 
+# remove unsupported locales
+rm -r %buildroot%_datadir/locale/zh-Hans
+rm -r %buildroot%_datadir/locale/zh-Hant
+
+# override for systemd user units for fix user session end
+mkdir -p %buildroot%_userunitdir/org.gnome.Shell@wayland.service.d
+pushd %buildroot%_userunitdir/org.gnome.Shell@wayland.service.d
+cat > gtk4-ding.conf << EOF
+[Unit]
+After=xdg-desktop-portal.service xdg-document-portal.service gvfs-daemon.service
+EOF
+popd
+mkdir -p %buildroot%_userunitdir/org.gnome.Shell@x11.service.d
+pushd %buildroot%_userunitdir/org.gnome.Shell@x11.service.d
+cat > gtk4-ding.conf << EOF
+[Unit]
+After=xdg-desktop-portal.service xdg-document-portal.service gvfs-daemon.service
+EOF
+popd
+
 %files -f gtk4-ding.lang
 %_datadir/gnome-shell/extensions/gtk4-ding@smedius.gitlab.com
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.gtk4-ding.gschema.xml
 %_desktopdir/com.desktop.ding.desktop
 %_iconsdir/hicolor/scalable/apps/com.desktop.ding.svg
+%_userunitdir/org.gnome.Shell@wayland.service.d/gtk4-ding.conf
+%_userunitdir/org.gnome.Shell@x11.service.d/gtk4-ding.conf
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Thu Mar 05 2026 Anton Midyukov <antohami@altlinux.org> 100.17-alt2
+- Add override for systemd user units for fix user session end (Closes: 57845).
+
+* Wed Mar 04 2026 Anton Midyukov <antohami@altlinux.org> 100.17-alt1
+- New version 100.17.
+
 * Wed Oct 15 2025 Anton Midyukov <antohami@altlinux.org> 100.8-alt1
 - New version 100.8-2.
 
