@@ -2,8 +2,8 @@
 %define efidir altlinux
 
 Name: gnu-efi
-Version: 3.0.18
-Release: alt2.1
+Version: 4.0.4
+Release: alt1
 Epoch: 1
 
 Summary: Building EFI applications using the GNU toolchain
@@ -35,16 +35,19 @@ for IA-64 and x86 platforms using the GNU toolchain.
 %make install INSTALLROOT=%buildroot PREFIX=%prefix LIBDIR=%_libdir
 
 %files
-%doc ChangeLog README.* apps
+%doc README.md LICENSE apps
 %_libdir/libefi.a
 %_libdir/libgnuefi.a
 %_libdir/crt0-efi-*.o
-%_libdir/elf_*_efi.lds
+%_libdir/elf_*.lds
 %_libdir/gnuefi
 %_includedir/efi
 %_pkgconfigdir/gnu-efi.pc
 
 %changelog
+* Wed Mar 04 2026 Egor Ignatov <egori@altlinux.org> 1:4.0.4-alt1
+- New version 4.0.4.
+
 * Wed Apr 16 2025 Ivan A. Melnikov <iv@altlinux.org> 1:3.0.18-alt2.1
 - NMU: build on loongarch64 and riscv64
 

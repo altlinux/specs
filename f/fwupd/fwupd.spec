@@ -33,7 +33,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.19
+Version: 2.0.20
 Release: alt1
 
 Summary: Firmware update daemon
@@ -306,6 +306,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 2.0.20-alt1
+- New version 2.0.20.
+
 * Wed Dec 24 2025 Egor Ignatov <egori@altlinux.org> 2.0.19-alt1
 - 2.0.19
 
