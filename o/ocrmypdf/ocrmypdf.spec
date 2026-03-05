@@ -1,8 +1,9 @@
 %define srcname ocrmypdf
+# TODO: wait for sphinxcontrib-mermaid
 %def_without docs
 
 Name: ocrmypdf
-Version: 16.10.0
+Version: 17.3.0
 Release: alt1
 
 Summary: Add an OCR text layer to scanned PDF files
@@ -14,9 +15,6 @@ Url: https://github.com/ocrmypdf/OCRmyPDF
 # Source-url: %__pypi_url %srcname
 Source: %name-%version.tar
 
-# We drop pi-heif for now, as it is optional.
-Patch1: 0001-Remove-unnecessary-dependencies.patch
-
 BuildArch: noarch
 
 #ExcludeArch: %ix86
@@ -24,6 +22,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-pi-heif
 
 
 BuildRequires: ghostscript >= 9.50
@@ -40,6 +39,12 @@ Requires: ghostscript >= 9.15
 Requires: tesseract >= 4.1.1
 Requires:     unpaper >= 6.1
 
+%if_with docs
+BuildRequires: python3-module-myst-parser
+BuildRequires: python3-module-sphinx-issues
+BuildRequires: python3-module-sphinx-reredirects
+%endif
+
 %description
 OCRmyPDF adds an OCR text layer to scanned PDF files, allowing them to be
 searched or copy-pasted.
@@ -54,7 +59,6 @@ Documentation for ocrmypdf
 
 %prep
 %setup
-%patch1 -p1
 
 subst 's|/usr/bin/env python$|/usr/bin/env python3|' misc/webservice.py
 
@@ -71,7 +75,8 @@ done
 
 %if_with docs
 # generate html docs
-PYTHONPATH="$PWD/build/lib" OCRMYPDF_VERSION="%version" sphinx-build-3 docs html
+subst 's|release = package_version.*|release = "%version"|' docs/conf.py
+PYTHONPATH="$PWD/build/lib" sphinx-build-3 docs html
 # remove the sphinx-build leftovers
 rm -rfv html/.{doctrees,buildinfo}
 %endif
@@ -111,6 +116,10 @@ k="${k-}${k+ and }not test_tesseract_config_invalid"
 %endif
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 17.3.0-alt1
+- new version 17.3.0 (ALT bug 58121)
+- build with pi-heif
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 16.10.0-alt1
 - new version 16.10.0 (with rpmrb script)
 
