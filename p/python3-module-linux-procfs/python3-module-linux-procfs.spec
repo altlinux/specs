@@ -1,5 +1,5 @@
 Name: python3-module-linux-procfs
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Linux /proc abstraction classes
@@ -13,9 +13,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python3-dev
-#BuildRequires: python3-setuptools
-#Requires: python3-module-six
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 Abstractions to extract information from the Linux kernel /proc files.
@@ -24,17 +23,21 @@ Abstractions to extract information from the Linux kernel /proc files.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/pflags
 %python3_sitelibdir/procfs/
-%python3_sitelibdir/python_linux_procfs*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo python_linux_procfs}/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt1
+- new version 0.7.4
+- switch to pyproject build
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.7.3-alt1
 - new version 0.7.3 (with rpmrb script)
 
