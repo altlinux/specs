@@ -2,7 +2,7 @@
 
 %define oname ijson
 Name: python3-module-ijson
-Version: 3.3.0
+Version: 3.4.0.post0
 Release: alt1
 
 Summary: Iterative JSON parser with standard Python iterator interfaces
@@ -40,6 +40,9 @@ Ijson is an iterative JSON parser with standard Python iterator interfaces.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.0.post0-alt1
+- new version 3.4.0.post0
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
 - new version 3.3.0 (with rpmrb script)
 
