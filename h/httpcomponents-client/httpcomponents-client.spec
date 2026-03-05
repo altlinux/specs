@@ -16,15 +16,16 @@ BuildRequires: jpackage-default
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.13
-Release:           alt1_2jpp11
-License:           ASL 2.0
+Version:           4.5.14
+Release:           alt1
+License:           Apache-2.0
 URL:               http://hc.apache.org/
 Source0:           https://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
 BuildArch:         noarch
 
 Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
 Patch1:            0002-Port-to-mockito-2.patch
+Patch2:            0003-Port-to-Mockito-5.patch
 
 BuildRequires:     maven-local
 %if %{with bootstrap}
@@ -63,6 +64,7 @@ encouraged to upgrade.
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %mvn_package :::tests: __noinstall
 
@@ -132,7 +134,7 @@ rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 %build
 %mvn_file ":{*}" httpcomponents/@1
 
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -142,6 +144,10 @@ rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 %doc README.txt RELEASE_NOTES.txt
 
 %changelog
+* Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.14-alt1
+- fixed FTBFS: new version
+- added patch to fix tests with Mockito (thx CentOS Stream)
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 4.5.13-alt1_2jpp11
 - new version
 

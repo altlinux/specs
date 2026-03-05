@@ -16,13 +16,13 @@ BuildRequires: jpackage-default
 %bcond_without reflections
 
 Name:           jna
-Version:        5.12.1
-Release:        alt1_2jpp11
+Version:        5.18.1
+Release:        alt1
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
 # which is pure Apache License 2.0.
-License:        (LGPLv2+ or ASL 2.0) and ASL 2.0
+License:        (LGPLv2+ or Apache-2.0) and Apache-2.0
 
 URL:            https://github.com/java-native-access/jna/
 # ./generate-tarball.sh
@@ -87,7 +87,7 @@ This package contains the javadocs for %{name}.
 %package        contrib
 Group: Development/Java
 Summary:        Contrib for %{name}
-License:        LGPLv2+ or ASL 2.0
+License:        LGPLv2+ or Apache-2.0
 Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
 
@@ -129,13 +129,6 @@ build-jar-repository -s -p lib junit
 rm test/com/sun/jna/StructureFieldOrderInspector.java
 rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
 %endif
-ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
-ln -s $(xmvn-resolve org.ow2.asm:asm) lib/asm-8.0.1.jar
-ln -s $(xmvn-resolve org.hamcrest:hamcrest-all) lib/hamcrest-core-1.3.jar
-ln -s $(xmvn-resolve org.reflections:reflections) lib/test/reflections.jar
-
-cp lib/native/aix-ppc64.jar lib/clover.jar
-
 
 %build
 # We pass -Ddynlink.native which comes from our patch because
@@ -178,6 +171,12 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.18.1-alt1
+- fixed FTBFS:
+  + new version
+  + updated patches
+  + removed already placed files
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 5.12.1-alt1_2jpp11
 - update
 

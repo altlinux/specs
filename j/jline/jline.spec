@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jline
 Version:        3.21.0
-Release:        alt1_4jpp11
+Release:        alt2
 Summary:        Java library for handling console input
 License:        BSD
 URL:            https://github.com/jline/jline3
@@ -159,7 +159,7 @@ This package contains a telnet client.
 %prep
 %setup -q -n jline3-jline-parent-%{version}
 # @viy: tmp til apache-ssh update
-#patch0
+%patch0
 
 
 # remove unnecessary dependency on parent POM
@@ -215,6 +215,9 @@ This package contains a telnet client.
 %files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0:3.21.0-alt2
+- fixed FTBFS: uncomment patch which rename classes
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_4jpp11
 - update
 

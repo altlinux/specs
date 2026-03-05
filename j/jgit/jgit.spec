@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jgit
 Version:        5.11.0
-Release:        alt1_1jpp11
+Release:        alt2
 Summary:        A pure java implementation of git
 
 # We don't ship the EPL-licensed Eclipse features in this package
@@ -17,6 +17,10 @@ Source0:        https://git.eclipse.org/c/jgit/jgit.git/snapshot/jgit-%{gittag}.
 
 # Set the correct classpath for the command line tools
 Patch0: 0001-Ensure-the-correct-classpath-is-set-for-the-jgit-com.patch
+Patch1: jgit-bc-179.patch
+Patch2: jgit-apache-sshd.patch
+Patch3: jgit-CVE-2023-4759.patch
+Patch4: jgit-CVE-2025-4949.patch
 
 BuildArch: noarch
 
@@ -66,6 +70,10 @@ BuildArch: noarch
 %prep
 %setup -n jgit-%{gittag} -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # Disable multithreaded build
 rm .mvn/maven.config
@@ -141,6 +149,14 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.11.0-alt2
+- fixed FTBFS (thx openSUSE Tumbleweed):
+  + added patch to fix BouncyCastle-based GPG support
+  + added patch to fix JGitClientSession
+- security fixes:
+  + CVE-2023-4759: remote code execution
+  + CVE-2025-4949: XML External Entity (XXE) attack
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 5.11.0-alt1_1jpp11
 - new version
 

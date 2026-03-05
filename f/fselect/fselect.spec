@@ -5,7 +5,7 @@
 # 203 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 
 Name:    fselect
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Find files with SQL-like queries
@@ -51,6 +51,9 @@ install -Dm 0644 docs/%name.1 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.9.3-alt1
+- New version.
+
 * Thu Dec 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.9.2-alt1
 - New version.
 
