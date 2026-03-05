@@ -14,7 +14,7 @@
 
 Name: clamav
 Version: 1.5.2
-Release: alt1
+Release: alt2
 %define abiversion 12
 
 Summary: Clam Antivirus scanner
@@ -248,7 +248,7 @@ fi
 
 install -d %buildroot%_sysconfdir/cron.d
 cat <<EOF >%buildroot%_sysconfdir/cron.d/clamav-freshclam
-30 * * * *       root    %_bindir/freshclam --quiet --daemon-notify
+30 * * * *       root    %_bindir/freshclam --quiet --daemon-notify > /dev/null 2>&1
 EOF
 
 %if_without milter
@@ -392,6 +392,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Mar 05 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt2
+- Fix debug noise from freshclam update
+
 * Thu Mar 05 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
 - 1.5.2
 - Fix stuck firsttime start
