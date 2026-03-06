@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: supervisor
-Version: 4.2.5
+Version: 4.3.0
 Release: alt1
 
 Summary: A System for Allowing the Control of Process State on UNIX
@@ -91,6 +91,9 @@ rm -f %buildroot%prefix/doc/*.txt
 
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- new version 4.3.0
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 4.2.5-alt1
 - new version 4.2.5 (with rpmrb script)
 
