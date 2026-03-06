@@ -1,7 +1,7 @@
 %define po_package budgie-session-1
 
 Name: budgie-session
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Budgie Desktop session manager
@@ -84,8 +84,12 @@ provide a stable session manager for Budgie 10.x
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.SessionManager.gschema.xml
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1
+
 * Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version (1.0.0)
+- add ExcludeArch: ix86
 
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - initial build for ALT Sisyphus
