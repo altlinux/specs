@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: %rname
-Version: 25.12.2
-Release: alt2
+Version: 25.12.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -78,6 +78,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Thu Feb 26 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
 - fix check samba installed (closes: 58030)
 

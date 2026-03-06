@@ -9,8 +9,8 @@
 %define libokularcore libokular6core%sover
 
 Name: %rname
-Version: 25.12.2
-Release: alt2
+Version: 25.12.3
+Release: alt1
 %K6init no_altplace
 
 Group: Office
@@ -194,6 +194,9 @@ fi
 
 
 %changelog
+* Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Thu Mar 05 2026 Oleg Proskurin <proskur@altlinux.org> 25.12.2-alt2
 - Fix the previous document revision preview crash (closes #20814).
 
