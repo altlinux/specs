@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Chat
@@ -20,6 +20,7 @@ Requires: kde6-kquickimageeditor
 Requires: kunifiedpush
 
 Source: %rname-%version.tar
+Patch1: alt-hide-send-location.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules
@@ -46,6 +47,7 @@ communication protocol for instant messaging. It is a fork of Spectral.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -67,6 +69,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
+- hide send location button
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
