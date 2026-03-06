@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.5.4
+Version: 26.5.5
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -69,12 +69,21 @@ getent passwd keycloak >/dev/null || /usr/sbin/useradd -r \
 %preun_service keycloak
 
 %post
-SSLDIR=%_sysconfdir/%name/ssl cert-sh generate keycloak ||:
-chown keycloak:keycloak %_sysconfdir/%name/ssl/private/keycloak.* ||:
-chmod 640 %_sysconfdir/%name/ssl/private/keycloak.* ||:
+# Generate SSL key
+if [ ! -e /etc/keycloak/ssl/certs/keycloak.pem ]; then
+  SSLDIR=%_sysconfdir/%name/ssl cert-sh generate keycloak ||:
+  chown keycloak:keycloak %_sysconfdir/%name/ssl/private/keycloak.* ||:
+  chmod 640 %_sysconfdir/%name/ssl/private/keycloak.* ||:
+fi
+# Copy template configuration
 test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf/keycloak.conf /etc/keycloak/keycloak.conf
+# Set hostname
 HOST="$(hostname -f)"
-grep -s ^hostname /etc/keycloak/keycloak.conf || subst "s|^#hostname=.*|hostname=$HOST|" /etc/keycloak/keycloak.conf
+grep -q ^hostname /etc/keycloak/keycloak.conf || subst "s|^#hostname=.*|hostname=$HOST|" /etc/keycloak/keycloak.conf
+# Fix path to new location of SSL key
+grep -q '^https-certificate-file=/var/lib/ssl' /etc/keycloak/keycloak.conf && subst 's|^https-certificate-file=.*|https-certificate-file=/etc/keycloak/ssl/certs/keycloak.pem|' /etc/keycloak/keycloak.conf
+grep -q '^https-certificate-key-file=/var/lib/ssl' /etc/keycloak/keycloak.conf && subst 's|^https-certificate-key-file=.*|https-certificate-key-file=/etc/keycloak/ssl/private/keycloak.pem|' /etc/keycloak/keycloak.conf
+# Rebuild instance
 /usr/bin/kc.sh build &>/dev/null ||:
 chown -R keycloak:keycloak %_libexecdir/%name/data
 %post_service keycloak
@@ -96,6 +105,11 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Fri Mar 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.5-alt1
+- New version (fixes: CVE-2026-3047, CVE-2026-3009, CVE-2026-2603,
+  CVE-2026-2092).
+- Fix path to new location of SSL key in /etc/keycloak/keycloak.conf.
+
 * Sun Feb 22 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.4-alt1
 - New version (fixes: CVE-2026-1190, CVE-2026-0707, CVE-2025-5416,
   CVE-2026-2575, CVE-2026-2733).
