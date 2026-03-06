@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A tiny HTML5 parser
@@ -44,5 +44,8 @@ BuildRequires: python3-module-webencodings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 06 2026 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Wed Oct 30 2024 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
