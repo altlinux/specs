@@ -1,5 +1,5 @@
 Name: sslh
-Version: 2.1.4
+Version: 2.3.0
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -57,6 +57,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt1
 - new version 2.1.4 (with rpmrb script)
 
