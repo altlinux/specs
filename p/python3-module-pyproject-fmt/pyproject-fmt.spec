@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.18.0
+Version: 2.18.1
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -71,6 +71,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 2.18.1-alt1
+- 2.18.0 -> 2.18.1.
+
 * Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 2.18.0-alt1
 - 2.16.1 -> 2.18.0.
 
