@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 Summary: Pretty-print tabular data
 License: MIT
 Group: Development/Python3
@@ -46,7 +46,8 @@ Pretty-print tabular data in Python.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra --doctest-modules --ignore benchmark.py
+# .github/workflows/tabulate.yml
+%pyproject_run_pytest -vra --doctest-modules --ignore benchmark/benchmark.py
 
 %files
 %_bindir/tabulate
@@ -54,6 +55,9 @@ Pretty-print tabular data in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
+- 0.9.0 -> 0.10.0.
+
 * Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
 - Fixed FTBFS.
 
