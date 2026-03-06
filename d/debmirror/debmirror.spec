@@ -1,5 +1,5 @@
 Name: debmirror
-Version: 2.43
+Version: 2.47
 Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
@@ -58,6 +58,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.47-alt1
+- new version 2.47
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 1:2.43-alt1
 - new version 2.43 (with rpmrb script)
 
