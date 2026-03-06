@@ -1,7 +1,7 @@
 %define pypi_name sievelib
 
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Client-side Sieve and ManageSieve library written in Python
@@ -47,5 +47,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pypi_name}-%version.dist-info/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0
+
 * Sun Dec 21 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - initial build for ALT Sisyphus
