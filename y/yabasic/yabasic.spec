@@ -1,6 +1,6 @@
 Name: yabasic
-Version: 2.91.1
-Release: alt2
+Version: 2.91.4
+Release: alt1
 Epoch: 1
 
 Summary: Small basic interpreter with printing and graphics
@@ -44,6 +44,9 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 %_man1dir/*
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.4-alt1
+- new version 2.91.4
+
 * Mon Feb 03 2025 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.1-alt2
 - cleanup BR (remove imake)
 
