@@ -4,7 +4,7 @@
 %def_with check
 
 Name: isa-l
-Version: 2.31.1
+Version: 2.32.0
 Release: alt1
 
 Summary: Intelligent Storage Acceleration Library
@@ -12,9 +12,10 @@ Summary: Intelligent Storage Acceleration Library
 License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/intel/isa-l
-VCS: https://github.com/intel/isa-l.git
+VCS: https://github.com/intel/isa-l
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/intel/isa-l/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: help2man nasm
@@ -96,6 +97,9 @@ sed -i "s/__x86_64__/__e2k__/" igzip/huffman.h
 %_man1dir/igzip.1.xz
 
 %changelog
+* Fri Mar 06 2026 Leontiy Volodin <lvol@altlinux.org> 2.32.0-alt1
+- New version 2.32.0.
+
 * Wed Jun 11 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.1-alt1
 - New version 2.31.1.
 - Added VCS tag.
