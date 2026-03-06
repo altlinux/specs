@@ -4,27 +4,24 @@
 
 %def_with check
 
-Name:    python3-module-%pypi_name
-Version: 0.2.1
+Name: python3-module-%pypi_name
+Version: 0.3.0
 Release: alt1
 
-Summary:   Hypothesis plugin for generating valid Open API documents
-License:   MIT
-Group:     Development/Python3
-Url:       https://github.com/Stranger6667/hypothesis-openapi
-VCS:       https://github.com/Stranger6667/hypothesis-openapi.git
+Summary: Hypothesis plugin for generating valid Open API documents
+License: MIT
+Group: Development/Python3
+Url: https://github.com/Stranger6667/hypothesis-openapi
+VCS: https://github.com/Stranger6667/hypothesis-openapi.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-hypothesis
-BuildRequires: python3-module-referencing
-BuildRequires: python3-module-jsonschema
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -32,6 +29,8 @@ Hypothesis plugin for generating valid Open API documents.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -48,5 +47,9 @@ Hypothesis plugin for generating valid Open API documents.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 03 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.3.0-alt1
+- New version (0.3.0).
+- Updated dependencies management.
+
 * Thu Oct 03 2024 Martynenko Evgeniy <enimalojd@altlinux.org> 0.2.1-alt1
-  - Initial build for ALT. 
+  - Initial build for ALT.

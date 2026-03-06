@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name schemathesis
+%define mod_name schemathesis
 
-# unstable testsuite, randomly fails out of the blue
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.7.6
-Release: alt2
+Version: 4.11.0
+Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
 License: MIT
@@ -17,10 +17,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# backported from a49aad8ecbf219b29feb45878e6c21c20318c5fe
-Patch0: schemathesis-4.7.6-chore-Ditch-pytest-subtests.patch
-# backported from b13d26060ff581a9ccc24a4bdb92b13b7b60dc46
-Patch1: schemathesis-4.7.6-hypothesis-6.149.0.patch
+
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,16 +48,28 @@ finds crashes and validates spec compliance.
 %pyproject_install
 
 %check
-%pyproject_run_pytest --snapshot-update test/ -n auto
+%pyproject_run_pytest \
+--snapshot-update \
+-n auto \
+-k "not test_stateful_auth \
+and not test_stateful_seed \
+and not test_responses_in_another_file \
+and not test_hooks_combination \
+and not test_stateful_all_generation_modes \
+and not test_request_body_with_boolean_true_schema" \
+test/
 
 %files
 %doc LICENSE README.*
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%_bindir/%pypi_name
+%_bindir/schemathesis
 %_bindir/st
 
 %changelog
+* Tue Mar 03 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.11.0-alt1
+- New version (4.11.0).
+
 * Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 4.7.6-alt2
 - NMU: fixed FTBFS (pytest 9).
 
