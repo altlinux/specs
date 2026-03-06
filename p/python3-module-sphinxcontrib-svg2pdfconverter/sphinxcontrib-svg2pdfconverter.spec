@@ -6,7 +6,7 @@
 %def_without check
 
 Name:    %prefixname-%modulename
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Sphinx SVG to PDF converter extension
@@ -92,25 +92,21 @@ This package contains converter using CairoSVG.
 # Note that there is no %%files section for the unversioned python module
 %files common
 %doc README.rst
-%dir %python3_sitelibdir/sphinxcontrib/__pycache__
 %python3_sitelibdir/sphinxcontrib_svg2pdfconverter-%version.dist-info
 
-
 %files -n %prefixname-inkscapeconverter
-%python3_sitelibdir/sphinxcontrib/__pycache__/inkscapeconverter.*.pyc
-%python3_sitelibdir/sphinxcontrib/inkscapeconverter.py
-
+%python3_sitelibdir/sphinxcontrib/inkscapeconverter
 
 %files -n %prefixname-rsvgconverter
-%python3_sitelibdir/sphinxcontrib/__pycache__/rsvgconverter.*.pyc
-%python3_sitelibdir/sphinxcontrib/rsvgconverter.py
-
+%python3_sitelibdir/sphinxcontrib/rsvgconverter
 
 %files -n %prefixname-cairosvgconverter
-%python3_sitelibdir/sphinxcontrib/__pycache__/cairosvgconverter.*.pyc
-%python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
+%python3_sitelibdir/sphinxcontrib/cairosvgconverter
 
 %changelog
+* Fri Mar 06 2026 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
