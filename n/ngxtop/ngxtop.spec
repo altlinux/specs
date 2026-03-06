@@ -1,6 +1,6 @@
 Name:       ngxtop
-Version:    0.0.2
-Release:    alt2
+Version:    0.0.3
+Release:    alt1
 
 Summary:    Real-time metrics for nginx server
 License:    MIT
@@ -55,6 +55,9 @@ See sample usages below for some ideas about what you can do with it.
 
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0.3-alt1
+- new version 0.0.3
+
 * Thu Jan 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.0.2-alt2
 - Porting on Python3.
 
