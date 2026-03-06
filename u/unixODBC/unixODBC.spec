@@ -4,8 +4,8 @@
 %define somask %{abiversion}*
 
 Name:    unixODBC
-Version: 2.3.12
-Release: alt1.1
+Version: 2.3.14
+Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -202,6 +202,9 @@ find doc -name Makefile\* -delete
 %_pkgconfigdir/odbcinst.pc
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.14-alt1
+- new version 2.3.14
+
 * Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 2.3.12-alt1.1
 - Use GCC 13 for build
 
