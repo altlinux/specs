@@ -7,7 +7,7 @@
 
 Name: kf6-%rname
 Version: 6.23.1
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Libraries
@@ -20,6 +20,7 @@ Provides: kf5-kguiaddons = %EVR
 Obsoletes: kf5-kguiaddons < %EVR
 
 Source: %rname-%version.tar
+Source10: yandex-maps-geo-handler.desktop
 #Patch1: fix-modifierless-grabs.patch
 Patch2: alt-fix-multiple-clipboard-insertions.patch
 
@@ -113,6 +114,7 @@ Sip files for python3-module-%rname
 
 %install
 %K6install
+install -m 0644 %SOURCE10 %buildroot/%_K6xdgapp/
 %find_lang %name --all-name
 %K6find_qtlang %name --all-name
 rm -rf %buildroot%_libdir/*/*/*/__*
@@ -149,6 +151,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.1-alt3
+- add Yandex Maps
+
 * Tue Mar 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.23.1-alt2
 - fix delay when pasting text from Klipper wdiget (closes: 57926)
 
