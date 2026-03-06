@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-randomly
+%define mod_name pytest_randomly
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 Summary: Pytest plugin to randomly order tests and control random.seed
 License: MIT
@@ -58,11 +59,13 @@ filled in randomly due to not being specified.
 %pyproject_run_pytest -ra -p no:randomly tests
 
 %files
-%doc README.rst
-%python3_sitelibdir/pytest_randomly/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
+- 4.0.0 -> 4.0.1.
+
 * Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.16.0 -> 4.0.0.
 
