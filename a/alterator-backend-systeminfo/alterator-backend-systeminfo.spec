@@ -2,7 +2,7 @@
 %define shortname systeminfo
 
 Name: alterator-backend-%{shortname}
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Alterator backend for getting system information
@@ -66,6 +66,16 @@ Group: System/Configuration/Other
 %_alterator_libdir/backends/%{shortname}.d/notes
 
 %changelog
+* Tue Mar 03 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.3-alt1
+- chore: added polkit message translation
+- docs: update project documentation, thx sheriffkorov (thx Voropaev Dmitriy)
+- docs: fix broken link in README.md (thx Dmitriy Voropaev)
+- docs: update project documentation, thx parov0z (thx Dmitriy Voropaev)
+- docs: add project documentation, thx sheriffkorov, alxvmr (thx Dmitriy Voropaev)
+- docs: add Markdown documentation for systeminfo1 (thx Dmitriy Voropaev)
+- docs: add documentation for systeminfo1 in D-Bus introspection (thx Dmitriy Voropaev)
+- ci: add secret scanning (thx Maria Alexeeva)
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.2-alt1
 - Add 'exit_status = true' for new version of executor.
 

@@ -1,6 +1,6 @@
 Name: alterator-interface-diag
-Version: 0.1.4
-Release: alt2
+Version: 0.1.5
+Release: alt1
 
 Summary: XML files for org.altlinux.alterator.diag interface
 License: GPLv2+
@@ -27,6 +27,16 @@ install -p -m 644 -D org.altlinux.alterator.diag1.policy %buildroot%_datadir/pol
 %_datadir/polkit-1/actions/org.altlinux.alterator.diag1.policy
 
 %changelog
+* Tue Mar 03 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.5-alt1
+- chore: added polkit translations
+- fix: updated polkit messages
+- doc: update alterator-entry URL (thx Andrey Alekseev)
+- doc: list possible exit codes (thx Andrey Alekseev)
+- doc: fix navigation (thx Andrey Alekseev)
+- doc: correct typos (thx Andrey Alekseev)
+- ci: add secret scanning (thx Maria Alexeeva)
+- fix: correct interface (thx Andrey Alekseev)
+
 * Mon Jul 07 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt2
 - change URL in .spec file
 

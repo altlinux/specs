@@ -3,7 +3,7 @@
 
 Name: diag-%diagnostic_tool
 Version: 0.7.3
-Release: alt1
+Release: alt2
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
@@ -14,7 +14,7 @@ Url: https://altlinux.space/alterator/diag-domain-client
 Source: %name-%version.tar
 
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-interface-diag = 0.1.4
+Requires: alterator-interface-diag = 0.1.5
 Requires: apt-repo samba
 
 BuildRequires(pre): rpm-macros-alterator
@@ -55,6 +55,9 @@ bats tests/report_test.bats
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Mar 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.3-alt2
+- updated interface dependency
+
 * Mon Feb 16 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.3-alt1
 - fixed typos (Closes: 57830 56204)
 - update man (Closes: 57843)

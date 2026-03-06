@@ -3,7 +3,7 @@
 
 Name: diag-%diagnostic_tool
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: Domain Controller Diagnostic Tool
 License: GPLv3
@@ -13,7 +13,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-interface-diag
+Requires: alterator-interface-diag = 0.1.5
 
 BuildRequires(pre): rpm-macros-alterator
 
@@ -43,6 +43,9 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Mar 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.5-alt2
+- updated interface dependancy
+
 * Mon Feb 09 2026 Andrey Limachko <liannnix@altlinux.org> 0.4.5-alt1
 - fix: update diag name and display names
 
