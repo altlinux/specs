@@ -4,7 +4,7 @@
 %define libakonadiconsole libakonadiconsole%sover
 
 Name: %rname
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 %K6init
 
@@ -16,6 +16,8 @@ License: LGPL-2.0-or-later
 ExcludeArch: %not_qt6_qtwebengine_arches
 Provides: kde5-akonadiconsole = %EVR
 Obsoletes: kde5-akonadiconsole < %EVR
+
+Requires: akonadi-search
 
 Source: %rname-%version.tar
 
@@ -85,6 +87,12 @@ desktop-file-install \
 
 
 %changelog
+* Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
+* Wed Feb 25 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
+- fix requires
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 

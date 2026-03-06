@@ -13,7 +13,7 @@
 %define libkpim6ksievecore libpim6ksievecore%sover
 
 Name: kde6-%rname
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 %K6init
 
@@ -147,6 +147,9 @@ done
 
 
 %changelog
+* Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
