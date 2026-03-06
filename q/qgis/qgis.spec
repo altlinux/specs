@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 3.44.7
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -114,6 +114,7 @@ BuildRequires: libpdal-devel
 BuildRequires: pdal
 BuildRequires: libdraco-devel
 BuildRequires: libtiff-devel
+BuildRequires: gdal
 
 Requires: qca-qt5-ossl
 Requires: gpsbabel
@@ -209,6 +210,23 @@ rm -rf src/plugins/dxf2shp_converter/
 sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 
 gzip ChangeLog
+
+# Link: http://kremlin.ru/acts/constitution/item#chapter3
+RT="'Crimea'"
+RT+=",'Sevastopol'"
+RT+=",'Kherson'"
+RT+=",'Zaporizhzhya'"
+RT+=",'Donets''k'"
+RT+=",'Luhans''k'"
+RT="($RT)"
+
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE states_provinces SET iso_a2='RU', sov_a3='RUS', adm0_a3='RUS', admin='Russia', gu_a3='RUS' WHERE name IN $RT"
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE countries SET geom=ST_Union(geom, (SELECT ST_Union(geom) FROM states_provinces WHERE name IN $RT)) WHERE name='Russia'"
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE countries SET geom=ST_Difference(geom, (SELECT ST_Union(geom) FROM states_provinces WHERE name IN $RT)) WHERE name='Ukraine'"
+
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE states_provinces SET name='Zaporozhye' WHERE name='Zaporizhzhya'"
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE states_provinces SET name='Donetsk' WHERE name='Donets''k'"
+ogrinfo resources/data/world_map.gpkg -sql "UPDATE states_provinces SET name='Luhansk' WHERE name='Luhans''k'"
 
 %build
 %ifarch %e2k
@@ -401,6 +419,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Thu Mar 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.44.7-alt2
+- NMU: new release.
+
 * Sat Jan 17 2026 Andrey Cherepanov <cas@altlinux.org> 3.44.7-alt1
 - New version.
 
