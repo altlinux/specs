@@ -1,5 +1,5 @@
 Name: icon-theme-deepin
-Version: 2025.12.04
+Version: 2026.02.27
 Release: alt1
 
 Summary: Icons for the Deepin Desktop Environment
@@ -52,6 +52,9 @@ cp -a bloom/status/16/arrow-*.svg %buildroot%_iconsdir/bloom/status/20/
 %_iconsdir/vintage/
 
 %changelog
+* Fri Mar 06 2026 Leontiy Volodin <lvol@altlinux.org> 2026.02.27-alt1
+- New version 2026.02.27.
+
 * Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 2025.12.04-alt1
 - New version 2025.12.04.
 
