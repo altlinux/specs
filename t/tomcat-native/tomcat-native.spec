@@ -6,16 +6,16 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Epoch:          1
-Version:        1.2.35
-Release:        alt1_2jpp11
+Version:        1.3.6
+Release:        alt1
 Summary:        Tomcat native library
 
 License:        Apache-2.0
 URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
-Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
+Source:         %name-%version.tar
 
 BuildRequires:  gcc-c++
-BuildRequires:  jpackage-17-compat
+BuildRequires:  jpackage-generic-compat
 BuildRequires:  libapr1-devel >= 1.4.3
 BuildRequires:  libssl-devel >= 1.0.2
 # Upstream compatibility:
@@ -35,7 +35,7 @@ provides support for using APR in Tomcat.
 
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup
 f=CHANGELOG.txt ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
 
 
@@ -64,6 +64,10 @@ rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 %changelog
+* Fri Mar 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:1.3.6-alt1
+- new version with security fix (CVE-2026-24734)
+- applied Java version in accordance with jpackage-generic
+
 * Thu Oct 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:1.2.35-alt1_2jpp11
 - fixed FTBFS
 - updated License tag
