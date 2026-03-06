@@ -1,36 +1,57 @@
-%define oname dnspython
+%define _unpackaged_files_terminate_build 1
+%define pypi_name dnspython
+%define mod_name dns
 
 # Testing requires network access
 %def_with check
 
-Name: python3-module-dns
-Version: 2.6.1
+%define add_pyproject_extra() \
+%{expand:%%package -n python3-module-%%{pep503_name %%pypi_name}+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: python3-module-%%{pep503_name %%pypi_name} = %%EVR \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n python3-module-%%{pep503_name %%pypi_name}+%1 \
+Extra "%1" for %%pypi_name. \
+%%files -n python3-module-%%{pep503_name %%pypi_name}+%1 \
+}
+
+Name: python3-module-%mod_name
+Version: 2.8.0
 Release: alt1
 Epoch: 1
-
 Summary: DNS toolkit
-
 License: ISC
 Group: Development/Python
-Url: http://www.dnspython.org
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
-
+Url: https://pypi.org/project/dnspython/
+Vcs: https://github.com/rthalley/dnspython
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%py3_provides %pypi_name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata_extra doh
+%pyproject_builddeps_metadata_extra dnssec
+%pyproject_builddeps_metadata_extra idna
+%pyproject_builddeps_metadata_extra trio
+%pyproject_builddeps_metadata_extra doq
+%endif
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-hatchling
-BuildRequires: pytest3
-
-# optional
-%add_python3_req_skip curio curio.socket
-%add_python3_req_skip aioquic aioquic.quic.configuration aioquic.quic.connection aioquic.quic.events
-
-%py3_provides %oname
-Provides: python3-module-%oname
+# extra functionality
+%add_pyproject_extra doh
+%add_pyproject_extra dnssec
+%add_pyproject_extra idna
+%add_pyproject_extra trio
+%add_pyproject_extra doq
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -44,23 +65,26 @@ direct manipulation of DNS zones, messages, names, and records.
 
 %prep
 %setup
-rm -f examples/._*
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-%python3_prune
 
 %check
-py.test3 -v
+%pyproject_run_pytest -vra
 
 %files
-%doc README.md examples/ LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 1:2.8.0-alt1
+- 2.6.1 -> 2.8.0.
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.1-alt1
 - new version 2.6.1, change license to ISC
 - switch to pyproject_build
