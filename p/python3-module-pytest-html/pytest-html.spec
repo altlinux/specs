@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 Summary: pytest plugin for generating HTML reports
 License: MPL-2.0
@@ -14,11 +14,11 @@ Url: https://pypi.org/project/pytest-html
 Vcs: https://github.com/pytest-dev/pytest-html
 BuildArch: noarch
 Source: %name-%version.tar
-# to update nodejs modules cache run:
-# NODE_ENV= ./alt/update-vendor-nodejs.sh .
 Source1: vendor_nodejs.tar
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: npm
@@ -53,10 +53,12 @@ export SKIP_NPM_CI=yes
 %pyproject_run_pytest -ra testing/test_unit.py
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
+- 4.1.1 -> 4.2.0.
+
 * Tue Mar 05 2024 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
 - Initial build for Sisyphus.
