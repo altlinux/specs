@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Persistent cache for requests library
@@ -55,6 +55,9 @@ Requests-cache is a transparent persistent cache for requests
 %python3_sitelibdir/requests_cache-%version.dist-info
 
 %changelog
+* Fri Mar 06 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 
