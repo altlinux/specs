@@ -1,12 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name nats-py
-%define mod_name nats
+%define ns_name nats
+%define nats_py_version 2.14.0
+%define nats_core_version 0.1.0
+%define nats_server_version 0.0.0
+%define nats_jetstream_version 0.1.0
 
-# tests require running NATS server
+# flaky tests
 %def_without check
 
-Name: python3-module-%pypi_name
-Version: 2.13.1
+Name: python3-module-nats-py
+Version: %nats_py_version
 Release: alt1
 
 Summary: Python3 client for NATS
@@ -21,51 +24,167 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- nats_py_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
 BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_builddeps -- nats_py_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_core_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_server_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_jetstream_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: nats-server
+%pyproject_builddeps -- nats_py_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_py_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter} --extra aiohttp
+%pyproject_builddeps -- nats_py_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter} --extra fast-parse
+%pyproject_builddeps -- nats_py_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter} --extra nkeys
+
+%pyproject_builddeps -- nats_core_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_core_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter} --extra nkeys
+
+%pyproject_builddeps -- nats_server_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_server_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter}
+
+%pyproject_builddeps -- nats_jetstream_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_jetstream_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter}
 %endif
 
 %description
 An asyncio Python client for the NATS messaging system.
 
+%package -n python3-module-nats-core
+Version: %nats_core_version
+Summary: NATS core implementation in Python
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/nats-core
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- nats_core_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
+
+%description -n python3-module-nats-core
+%summary.
+
+%package -n python3-module-nats-server
+Version: %nats_server_version
+Summary: Python library for managing NATS server for development and testing
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/nats-server
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- nats_server_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
+
+%description -n python3-module-nats-server
+%summary.
+
+%package -n python3-module-nats-jetstream
+Version: %nats_jetstream_version
+Summary: Python client for NATS JetStream
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/nats-jetstream
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- nats_jetstream_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
+
+%description -n python3-module-nats-jetstream
+%summary.
+
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+
+# nats-py
+cd nats
+%pyproject_deps_resync nats_py_pep518 pep518
+%pyproject_deps_resync nats_py_pep517 pep517
+%pyproject_deps_resync nats_py_metadata metadata
+cd -
+
+# nats-core
+cd nats-core
+%pyproject_deps_resync nats_core_pep518 pep518
+%pyproject_deps_resync nats_core_pep517 pep517
+%pyproject_deps_resync nats_core_metadata metadata
 %if_with check
-%pyproject_deps_resync_check_depgroup dev
+%pyproject_deps_resync nats_core_check pep735 dev
 %endif
+cd -
+
+# nats-server
+cd nats-server
+%pyproject_deps_resync nats_server_pep518 pep518
+%pyproject_deps_resync nats_server_pep517 pep517
+%pyproject_deps_resync nats_server_metadata metadata
+cd -
+
+# nats-jetstream
+cd nats-jetstream
+%pyproject_deps_resync nats_jetstream_pep518 pep518
+%pyproject_deps_resync nats_jetstream_pep517 pep517
+%pyproject_deps_resync nats_jetstream_metadata metadata
+%if_with check
+%pyproject_deps_resync nats_jetstream_check pep735 dev
+%endif
+cd -
 
 %build
-for workspace in nats nats-server nats-core; do
-pushd $workspace
-%pyproject_build
-popd
+for package in nats nats-core nats-server nats-jetstream; do
+    pushd $package
+    %pyproject_build
+    popd
 done
 
 %install
-for workspace in nats nats-server nats-core; do
-pushd $workspace
-%pyproject_install
-popd
+for package in nats nats-core nats-server nats-jetstream; do
+    pushd $package
+    %pyproject_install
+    popd
 done
 
 %check
-%pyproject_run_pytest -vra -o=addopts=-Wignore
+export PATH="$PATH:%_sbindir"
+for package in nats nats-core nats-server nats-jetstream; do
+    pushd $package
+    %pyproject_run_pytest -vra -o=addopts=-Wignore
+    popd
+done
 
 %files
 %doc LICENSE README.md
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%python3_sitelibdir/nats_core-0.1.0.dist-info
-%python3_sitelibdir/nats_server-0.0.0.dist-info
+%python3_sitelibdir/nats_py-%nats_py_version.dist-info/
+%dir %python3_sitelibdir/nats/
+%python3_sitelibdir/nats/__init__.py
+%python3_sitelibdir/nats/errors.py
+%python3_sitelibdir/nats/nuid.py
+%dir %python3_sitelibdir/nats/__pycache__/
+%python3_sitelibdir/nats/__pycache__/__init__.*.pyc
+%python3_sitelibdir/nats/__pycache__/errors.*.pyc
+%python3_sitelibdir/nats/__pycache__/nuid.*.pyc
+%python3_sitelibdir/nats/py.typed
+%python3_sitelibdir/nats/aio/
+%python3_sitelibdir/nats/js/
+%python3_sitelibdir/nats/micro/
+%python3_sitelibdir/nats/protocol/
+
+%files -n python3-module-nats-core
+%python3_sitelibdir/nats_core-%nats_core_version.dist-info/
+%python3_sitelibdir/nats/client/
+
+%files -n python3-module-nats-server
+%python3_sitelibdir/nats_server-%nats_server_version.dist-info/
+%python3_sitelibdir/nats/server/
+
+%files -n python3-module-nats-jetstream
+%python3_sitelibdir/nats_jetstream-%nats_jetstream_version.dist-info/
+%python3_sitelibdir/nats/jetstream/
 
 %changelog
+* Tue Mar 03 2026 Anton Zhukharev <ancieg@altlinux.org> 2.14.0-alt1
+- Updated to 2.14.0.
+- Moved packages into separate RPMs.
+
 * Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 2.13.1-alt1
 - Updated to 2.13.1.
 
