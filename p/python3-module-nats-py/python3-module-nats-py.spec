@@ -10,9 +10,9 @@
 
 Name: python3-module-nats-py
 Version: %nats_py_version
-Release: alt1
+Release: alt2
 
-Summary: Python3 client for NATS
+Summary: NATS client for Python
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/nats-py/
@@ -57,33 +57,33 @@ Version: %nats_core_version
 Summary: NATS core implementation in Python
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/nats-core
+Url: https://pypi.org/project/nats-core/
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps -- nats_core_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
 
 %description -n python3-module-nats-core
-%summary.
+A Python client for the NATS messaging system..
 
 %package -n python3-module-nats-server
 Version: %nats_server_version
 Summary: Python library for managing NATS server for development and testing
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/nats-server
+Url: https://pypi.org/project/nats-server/
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps -- nats_server_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
 
 %description -n python3-module-nats-server
-%summary.
+Manage NATS server instances from python.
 
 %package -n python3-module-nats-jetstream
 Version: %nats_jetstream_version
 Summary: Python client for NATS JetStream
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/nats-jetstream
+Url: https://pypi.org/project/nats-jetstream/
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps -- nats_jetstream_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
@@ -152,7 +152,7 @@ for package in nats nats-core nats-server nats-jetstream; do
 done
 
 %files
-%doc LICENSE README.md
+%doc nats/README.md
 %python3_sitelibdir/nats_py-%nats_py_version.dist-info/
 %dir %python3_sitelibdir/nats/
 %python3_sitelibdir/nats/__init__.py
@@ -169,18 +169,28 @@ done
 %python3_sitelibdir/nats/protocol/
 
 %files -n python3-module-nats-core
+%doc nats-core/README.md nats-core/CHANGELOG.md
 %python3_sitelibdir/nats_core-%nats_core_version.dist-info/
+%dir %python3_sitelibdir/nats/
 %python3_sitelibdir/nats/client/
 
 %files -n python3-module-nats-server
+%doc nats-server/README.md
 %python3_sitelibdir/nats_server-%nats_server_version.dist-info/
+%dir %python3_sitelibdir/nats/
 %python3_sitelibdir/nats/server/
 
 %files -n python3-module-nats-jetstream
+%doc nats-jetstream/README.md nats-jetstream/CHANGELOG.md
 %python3_sitelibdir/nats_jetstream-%nats_jetstream_version.dist-info/
+%dir %python3_sitelibdir/nats/
 %python3_sitelibdir/nats/jetstream/
 
 %changelog
+* Fri Mar 06 2026 Anton Zhukharev <ancieg@altlinux.org> 2.14.0-alt2
+- Shared /usr/lib/python3/site-packages/nats/ ownership.
+- Corrected docs packaging for each subpackage.
+
 * Tue Mar 03 2026 Anton Zhukharev <ancieg@altlinux.org> 2.14.0-alt1
 - Updated to 2.14.0.
 - Moved packages into separate RPMs.
