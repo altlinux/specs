@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.4.3
+Version: 1.5.0
 Release: alt1
 
 License: BSD-3-Clause
@@ -84,6 +84,9 @@ rm -rf %oname # Don't try unbuilt copy.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0
+
 * Fri Jul 04 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
 - New version 1.4.3
 - Disable check for new gdal
