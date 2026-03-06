@@ -3,7 +3,7 @@
 
 %define oname qtspell
 Name: libqtspell
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Spell checking for Qt text widgets
@@ -175,6 +175,9 @@ that use %name.
 %endif
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2
+
 * Thu Jun 05 2025 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1
 - enable build Qt6 build
