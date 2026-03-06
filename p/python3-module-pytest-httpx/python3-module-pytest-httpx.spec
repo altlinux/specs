@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.35.0
-Release: alt2
+Version: 0.36.0
+Release: alt1
 
 Summary: pytest fixture to mock HTTPX
 License: MIT
@@ -20,7 +20,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,11 +51,13 @@ hosts are explicitly skipped).
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 0.36.0-alt1
+- 0.35.0 -> 0.36.0.
+
 * Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 0.35.0-alt2
 - Fixed FTBFS (httpx 0.28.0).
 
