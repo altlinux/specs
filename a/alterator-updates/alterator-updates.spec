@@ -1,6 +1,6 @@
 Name: alterator-updates
-Version: 0.2.2
-Release: alt2
+Version: 0.2.3
+Release: alt1
 
 Summary: Module to configure automatic system updates
 License: GPLv2+
@@ -45,6 +45,9 @@ Module to configure automatic, schedule-based system updates.
 %_alterator_datadir/applications/*
 
 %changelog
+* Thu Mar 05 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.2.3-alt1
+- Add additional platform.
+
 * Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 0.2.2-alt2
 - NMU:
   + use guile22 on e2k too

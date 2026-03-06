@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Source: %name-%version.tar
@@ -41,8 +41,8 @@ Requires: %name = %EVR
 %package additional-repo
 Summary: Additional local repository
 Group: System/Configuration/Other
-Requires: %name = %EVR
 Requires: apt-repo-tools
+BuildArch: noarch
 
 %description additional-repo
 %summary.
@@ -80,6 +80,12 @@ install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/addit
 %config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Thu Mar 05 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.7.0-alt1
+- Enabling arch panel for local repositories.
+- Separating additional-repo from alterator-mirror.
+- Fix X-Path and add all current architecture for additional.desktop.
+- Fix custom_url for avahi URL.
+
 * Thu Oct 02 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
 - alterator-mirror/allowed: add p11 repository.
 

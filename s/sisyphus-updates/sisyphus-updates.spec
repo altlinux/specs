@@ -1,5 +1,5 @@
 Name:		sisyphus-updates
-Version:	0.3
+Version:	0.4
 Release:	alt1
 
 Summary:	Simple system updater
@@ -32,6 +32,9 @@ install -dpm 755 %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Thu Mar 05 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.4-alt1
+- Fix add repositories without X-Sign.
+
 * Mon Jul 10 2023 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - Removed -e flag from shebang to prevent stop from unreachable sources.
 
