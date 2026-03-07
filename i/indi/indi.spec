@@ -25,7 +25,7 @@ data acquisition, monitoring, and a lot more.
 
 Name: indi
 Version: 2.1.9
-Release: alt1
+Release: alt2
 
 Summary: Instrument Neutral Distributed Interface
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later and BSD-3-Clause AND ISC AND MIT AND CFITSIO
@@ -130,7 +130,9 @@ Conflicts: libindi-devel < 1.8.9-alt1
 %build
 %add_optflags %optflags_shared
 %cmake -G Ninja \
+%ifnarch %e2k
 	-DCMAKE_CXX_FLAGS="-fuse-ld=bfd" \
+%endif
 	-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--no-allow-shlib-undefined" \
 	-DUDEVRULES_INSTALL_DIR=%_udevrulesdir \
 %if_without static
@@ -397,5 +399,8 @@ popd
 %_libdir/lib%{name}AlignmentClient.a
 
 %changelog
+* Sat Mar 07 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.9-alt2
+- e2k build fix
+
 * Wed Feb 18 2026 Ulysses Apokin <ulysses@altlinux.org> 2.1.9-alt1
 - Initial build for Sisyphus instead of obsolete indilib.
