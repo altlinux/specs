@@ -1,16 +1,18 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.27
+Version: %ver_major.28
 Release: alt1
 
 Summary: Genius Calculator
-License: LGPLv3+
+License: GPL-3.0-or-later
 Group: Sciences/Mathematics
 Url: http://www.jirka.org/genius.html
+
+Vcs: https://gitlab.gnome.org/GNOME/genius.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -20,7 +22,7 @@ Source: %name-%version.tar
 
 %define gtk_ver 3.21.4
 %define glib_ver 2.41.1
-%define vte_ver 0.50.0
+%define vte_ver 0.72.0
 %define gtksourceview_ver 3.99.7
 %define mpfr_ver 2.3.0
 
@@ -52,15 +54,15 @@ This package provides headers needed to develop Genius plugins.
 
 %prep
 %setup
-# stuff from newer (2.4.6) libtool
-#rm -f m4/*
 
 subst '/GTK_UPDATE_ICON_CACHE/d' pixmaps/Makefile.am
 
 %build
 %autoreconf
 %configure --disable-static \
-	--disable-update-mimedb
+    --disable-update-mimedb \
+    --disable-scrollkeeper
+%nil
 %make_build
 
 %install
@@ -96,6 +98,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.28-alt1
+- updated to 1.0.28-2-gadefbc77
+
 * Thu Oct 28 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.27-alt1
 - 1.0.27
 
