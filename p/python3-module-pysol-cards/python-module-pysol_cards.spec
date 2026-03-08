@@ -1,7 +1,7 @@
 %define  oname pysol_cards
 
 Name:    python3-module-pysol-cards
-Version: 0.18.1
+Version: 0.24.0
 Release: alt1
 
 Summary: Python library for dealing cards like PySol FC, MS Freecell/Freecell Pro, or PySol legacy
@@ -43,6 +43,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.24.0-alt1
+- new version 0.24.0
+
 * Wed Mar 19 2025 Vitaly Lipatov <lav@altlinux.ru> 0.18.1-alt1
 - new version 0.18.1 (with rpmrb script)
 
