@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-cwcwidth
-Version: 0.1.10
+Version: 0.1.12
 Release: alt1
 
 Summary: Python bindings for wc(s)width
@@ -46,6 +46,9 @@ tox.py3 --sitepackages -vvr --no-deps -s false -- -vra
 %python3_sitelibdir/%oname/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1.12-alt1
+- new version 0.1.12
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 0.1.10-alt1
 - new version 0.1.10 (with rpmrb script)
 
