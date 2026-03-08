@@ -1,5 +1,5 @@
 Name: expected
-Version: 1.1.0
+Version: 1.3.1
 Release: alt1
 
 Summary: C++11/14/17 std::expected with functional-style extensions
@@ -56,6 +56,9 @@ coding with expected cleaner.
 %_datadir/cmake/tl-%name
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1
+
 * Thu Apr 27 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
