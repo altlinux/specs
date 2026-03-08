@@ -1,5 +1,5 @@
 Name: virt_cacard
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Virtual CAC provides PCSC accessible virtual smart card
@@ -34,5 +34,8 @@ to provide PCSC accessible virtual smart card.
 %_bindir/%name
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0
+
 * Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Sisyphus
