@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 3.0.4.1
+Version: 3.0.7
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3-module-pexpect
 BuildRequires: librsync-devel
 
 # No required by default (Dropbox)
@@ -70,6 +71,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt1
+- new version 3.0.7
+
 * Fri May 23 2025 Vitaly Lipatov <lav@altlinux.ru> 3.0.4.1-alt1
 - new version 3.0.4.1 (with rpmrb script)
 
