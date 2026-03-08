@@ -1,13 +1,12 @@
 %define oname pybugz
-%define bash_completion /etc/bash_completion.d/
 
 Name: python3-module-%oname
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: PyBugz - Python Interface to Bugzilla
 
-License: GPL
+License: GPL-2.0
 Group: System/Libraries
 Url: https://github.com/williamh/pybugz
 
@@ -19,7 +18,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3
+BuildRequires: python3-module-flit-core
 
 Conflicts: python-module-%oname
 
@@ -35,12 +34,10 @@ and so on.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-mkdir -p %buildroot%bash_completion/
-install -m644 contrib/bash-completion %buildroot%bash_completion/
+%pyproject_install
 
 %files
 %doc README
@@ -48,11 +45,16 @@ install -m644 contrib/bash-completion %buildroot%bash_completion/
 %_man1dir/*
 %_man5dir/*
 %_datadir/pybugz.d/
-%bash_completion/*
+%_datadir/bash-completion/completions/bugz
+%_datadir/zsh/site-functions/_pybugz
 %python3_sitelibdir/bugz/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo pybugz}
 
 %changelog
+* Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14-alt1
+- new version 0.14
+- migrate to pyproject build (flit_core)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt1
 - new version (0.13) with rpmgs script
 - build from release tarball
