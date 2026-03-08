@@ -1,7 +1,7 @@
 %define oname curtsies
 
 Name: python3-module-curtsies
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Library for interacting with the terminal
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 Curtsies is a library for interacting with the terminal.
@@ -25,16 +25,20 @@ Curtsies is a library for interacting with the terminal.
 %setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
+- new version 0.4.3
+- switch to pyproject build
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - new version 0.4.2 (with rpmrb script)
 
