@@ -1,5 +1,5 @@
 Name: checkmake
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 
 Summary: Linter and analyzer for Makefiles
@@ -39,5 +39,8 @@ install -D -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3.2-alt1
+- new version 0.3.2
+
 * Wed Jan 08 2025 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - initial build for ALT Sisyphus
