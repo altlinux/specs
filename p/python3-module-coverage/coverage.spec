@@ -4,7 +4,7 @@
 %def_without doc
 
 Name: python3-module-coverage
-Version: 7.6.10
+Version: 7.10.7
 Release: alt1
 
 Summary: A tool for measuring code coverage of Python programs
@@ -103,6 +103,9 @@ pytest3
 %endif
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 7.10.7-alt1
+- new version 7.10.7
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.6.10-alt1
 - new version 7.6.10 (with rpmrb script)
 
