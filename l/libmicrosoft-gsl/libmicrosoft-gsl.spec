@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Epoch: 1
 
@@ -77,6 +77,9 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:4.2.0-alt1
+- new version 4.2.0
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:4.1.0-alt1
 - new version 4.1.0 (with rpmrb script)
 
