@@ -1,7 +1,7 @@
 %define module_name pygraphviz
 
 Name: python3-module-%module_name
-Version: 1.11
+Version: 1.14
 Release: alt1
 
 Summary: Python wrapper for the Graphviz Agraph data structure
@@ -17,9 +17,8 @@ Source: %module_name-%version.tar
 
 BuildRequires: libgraphviz-devel
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 Python wrapper for the Graphviz Agraph data structure.
@@ -30,20 +29,21 @@ It can be used to create and draw networks and graphs with Graphviz.
 
 %build
 %add_optflags -I%_includedir/graphviz
-
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
-%__subst "s|from pygraphviz.tests.test import run as test||" %buildroot%python3_sitelibdir/pygraphviz/__init__.py
+%pyproject_install
 
 %files
-%doc %_docdir/*
+%doc README.rst
 %python3_sitelibdir/pygraphviz/
-%python3_sitelibdir/pygraphviz-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo pygraphviz}/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.14-alt1
+- new version 1.14
+- switch to pyproject build
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - new version 1.11 (with rpmrb script)
 
