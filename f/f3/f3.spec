@@ -1,5 +1,5 @@
 Name:		f3
-Version:	8.0
+Version:	9.0
 Release:	alt1
 
 Summary:	Fight Flash Fraud / Fight Fake Flash
@@ -50,6 +50,9 @@ install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
 %_man1dir/*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt1
+- new version 9.0
+
 * Sun Dec 07 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0-alt1
 - new version 8.0 (with rpmrb script)
 
