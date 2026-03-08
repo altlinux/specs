@@ -1,5 +1,5 @@
 Name: gyp
-Version: 0.19.1
+Version: 0.21.1
 Release: alt1
 
 Summary: A fork of the GYP build system for use in the Node.js projects
@@ -48,6 +48,9 @@ rm -vf %buildroot/%python3_sitelibdir/%name/generator/*_test.py
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.21.1-alt1
+- new version 0.21.1
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
 - new version 0.19.1 (with rpmrb script)
 
