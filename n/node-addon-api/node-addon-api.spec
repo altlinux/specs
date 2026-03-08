@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-addon-api
-Version: 8.3.0
+Version: 8.6.0
 Release: alt1
 
 Summary: Module for using Node-API from C++
@@ -74,6 +74,9 @@ cp -rp package.json *.js *.h %buildroot/%nodejs_sitelib/%node_module
 %nodejs_sitelib/%node_module
 
 %changelog
+* Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.0-alt1
+- new version 8.6.0
+
 * Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 8.3.0-alt1
 - new version 8.3.0 (with rpmrb script)
 
