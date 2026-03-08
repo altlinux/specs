@@ -1,10 +1,11 @@
 Name: fd
-Version: 10.3.0
+Version: 10.4.1
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
 Group: File tools
-Url: https://github.com/sharkdp/fd
+Url: https://crates.io/crates/fd-find
+VCS: https://github.com/sharkdp/fd
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -28,6 +29,7 @@ fd is an alternative to GNU find. It features:
 
 %prep
 %setup -a 1
+echo >> .cargo/config.toml
 %rust_prep
 
 %build
@@ -53,6 +55,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 10.4.1-alt1
+- Updated to version 10.4.1.
+
 * Thu Oct 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 10.3.0-alt1
 - Updated to version 10.3.0.
 
