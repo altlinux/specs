@@ -1,7 +1,7 @@
 %define gobuild go build
 
 Name: aerc
-Version: 0.20.1
+Version: 0.21.0
 Release: alt1
 Summary: Email client for your terminal
 
@@ -77,6 +77,9 @@ desktop-file-validate %buildroot/%_desktopdir/aerc.desktop
 %_man7dir/aerc-*.7.*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
+- new version 0.21.0
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 0.20.1-alt1
 - new version 0.20.1 (with rpmrb script)
 
