@@ -1,5 +1,5 @@
 Name: gdu
-Version: 5.32.0
+Version: 5.33.0
 Release: alt1
 
 Summary: Fast disk usage analyzer with console interface written in Go
@@ -48,6 +48,9 @@ install -Dpm 0755 %name.1 %buildroot%_man1dir/gdu.1
 %_bindir/%name
 
 %changelog
+* Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 5.33.0-alt1
+- new version 5.33.0
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.32.0-alt1
 - new version 5.32.0
 
