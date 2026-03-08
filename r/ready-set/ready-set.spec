@@ -12,7 +12,7 @@
 
 Name: ready-set
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: The utility for configuring the system at the first start
 License: GPL-3.0-or-later
@@ -50,6 +50,7 @@ BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(gdm)
+BuildRequires: pkgconfig(xkbcommon)
 
 %description
 %summary.
@@ -269,6 +270,9 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Fri Mar 06 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt2
+- Merged couple of keyboard patches from main branch.
+
 * Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt1
 - New version: 0.5.1. (closes: #58028)
 
