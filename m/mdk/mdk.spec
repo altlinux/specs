@@ -1,5 +1,5 @@
 Name: mdk
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: GNU MIX Development Kit
@@ -81,6 +81,9 @@ rm -f %buildroot%_infodir/dir
 %_emacslispdir/*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1
+
 * Wed Mar 31 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
