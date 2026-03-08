@@ -1,5 +1,5 @@
 Name: cflow
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Analyzes C files charting control flow within the program
@@ -34,9 +34,9 @@ output formats are implemented: POSIX and GNU (extended).
 %setup
 
 %build
-# fix broken configure.am logic
-export EMACS=yes
-%configure --with-lispdir=%_datadir/emacs/site-lisp/
+# disable emacs byte-compilation (emacs not in BuildRequires)
+export EMACS=no
+%configure
 %make_build
 
 %install
@@ -52,9 +52,13 @@ make check
 %_bindir/%name
 %_infodir/%name.info.*
 %_man1dir/*
-%_datadir/emacs/site-lisp/%name-mode.el
+%_datadir/%name/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
+- new version 1.8
+- disable emacs byte-compilation (emacs not in build environment)
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - new version 1.7 (with rpmrb script)
 
