@@ -1,6 +1,6 @@
 Name:          maim
-Version:       5.8.0
-Release:       alt1.2
+Version:       5.8.1
+Release:       alt1
 Summary:       maim (make image) takes screenshots of your desktop.
 License:       GPLv3
 Group:         Graphics
@@ -63,6 +63,9 @@ sed -i 's,CXX_STANDARD\s\+11,CXX_STANDARD 17,' CMakeLists.txt
 %doc COPYING README.md
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 5.8.1-alt1
+- New version 5.8.1.
+
 * Tue Mar 18 2025 Ivan A. Melnikov <iv@altlinux.org> 5.8.0-alt1.2
 - NMU: build with recent libicu (fixes FTBFS on loongarch64)
 
