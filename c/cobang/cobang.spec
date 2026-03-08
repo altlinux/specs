@@ -1,12 +1,12 @@
 %define __name CoBang
 %define _name cobang
-%define ver_major 2.3
+%define ver_major 2.4
 %define rdn_name vn.hoabinh.quan.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A native QR Code and barcode scanner application for Linux desktop
@@ -28,6 +28,7 @@ Requires: python3-module-pygobject3
 Requires: dconf
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
+Requires: typelib(XdpGtk4) = 1.0
 Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -64,5 +65,8 @@ remote.
 %doc README.*
 
 %changelog
+* Sun Mar 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Tue Dec 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - first build for Sisyphus (v2.3.1-5-g4b435d1)
