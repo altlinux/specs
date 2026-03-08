@@ -2,7 +2,7 @@
 %define kf6_version 6.5
 
 Name: budgie-desktop-services
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 
 Summary: Central hub and orchestrator for Budgie Desktop
@@ -51,8 +51,11 @@ for Budgie 10.10.
 %doc COPYING
 %_bindir/org.buddiesofbudgie.Services
 %_datadir/dbus-1/system.d/org.buddiesofbudgie.Services.conf
-%config(noreplace) %_sysconfdir/labwc/autostart
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2
+
 * Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
+- add ExcludeArch: ix86
