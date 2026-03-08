@@ -1,5 +1,5 @@
 Name: webgrind
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary: Xdebug Profiling Web Frontend in PHP
@@ -64,6 +64,9 @@ rm -v %buildroot%webserver_webappsdir/%name/{.gitattributes,.github/workflows/do
 
 
 %changelog
+* Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
+- new version 1.9.4
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
 - new version 1.9.3 (with rpmrb script)
 
