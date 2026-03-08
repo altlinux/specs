@@ -1,5 +1,5 @@
 Name: python3-module-intervaltree
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 License: MIT
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatchling python3-module-uv-dynamic-versioning
 
 %description
 A mutable, self-balancing interval tree.
@@ -26,6 +26,7 @@ Queries may be by point, by range overlap, or by range containment.
 %setup
 
 %build
+export UV_DYNAMIC_VERSIONING_BYPASS=%version
 %pyproject_build
 
 %install
@@ -36,6 +37,9 @@ Queries may be by point, by range overlap, or by range containment.
 %python3_sitelibdir/%{pyproject_distinfo intervaltree}/
 
 %changelog
+* Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version 3.2.0
 - switch to pyproject build (hatchling)
