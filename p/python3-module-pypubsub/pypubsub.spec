@@ -1,7 +1,7 @@
 %define oname pypubsub
 
 Name: python3-module-pypubsub
-Version: 4.0.3
+Version: 4.0.7
 Release: alt1
 
 Summary: Python Publish-Subscribe Package
@@ -18,8 +18,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-setuptools python3-module-setuptools-scm python3-module-wheel
 
 %description
 Provides a publish-subscribe API to facilitate event-based or
@@ -38,15 +38,22 @@ in larger desktop- or server-based applications.
 %setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst README_WxPython.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/pubsub/
+%python3_sitelibdir/contrib/
+%python3_sitelibdir/%{pyproject_distinfo Pypubsub}/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.7-alt1
+- new version 4.0.7
+- switch to pyproject build
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
 - initial build for ALT Sisyphus
