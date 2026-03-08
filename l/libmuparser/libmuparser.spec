@@ -1,6 +1,6 @@
 Name: libmuparser
-Version: 2.2.6.1
-Release: alt2
+Version: 2.3.5
+Release: alt1
 
 Summary: a fast math parser library
 License: MIT
@@ -11,8 +11,8 @@ Url: http://muparser.beltoforion.de/
 Source: %name-%version.tar
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Automatically added by buildreq on Wed Mar 03 2010
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 
 %description
 The main objective of this project is to provide a fast and easy way
@@ -40,30 +40,29 @@ Header files for %name library.
 
 %prep
 %setup
-sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 
 %build
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
-%configure --enable-shared=yes --disable-samples
-%make_build
+%cmake -DENABLE_SAMPLES=OFF -DENABLE_OPENMP=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files -n %{name}2
-%doc Changes.txt License.txt
+%doc CHANGELOG LICENSE
 %_libdir/%{name}*.so.*
 
 %files devel
-#doc examples
 %_libdir/%name.so
 %_includedir/*
 %_pkgconfigdir/*
+%_libdir/cmake/muparser/
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.5-alt1
+- new version 2.3.5
+- migrate to cmake build system
+
 * Wed Oct 16 2019 Michael Shigorin <mike@altlinux.org> 2.2.6.1-alt2
 - E2K: explicit -std=c++11
 
