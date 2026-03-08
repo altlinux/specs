@@ -2,7 +2,7 @@
 %def_without test
 
 Name: python3-module-%oname
-Version: 5.1.0
+Version: 8.0.6
 Release: alt1
 
 Summary: The kitchen sink of Python utility libraries for doing "stuff" in a functional way
@@ -17,9 +17,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-
-%py3_buildrequires pytest
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 kitchen sink of Python utility libraries for doing "stuff" in a functional way.
@@ -29,22 +27,20 @@ Based on the Lo-Dash Javascript library.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
-
-%if_with test
-%check
-PYTHONPATH=%buildroot%python3_sitelibdir/%oname/ pytest3
-%endif
+%pyproject_install
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.6-alt1
+- new version 8.0.6
+- switch to pyproject build
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 
