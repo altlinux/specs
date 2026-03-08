@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.3
-Release: alt1.1
+Version: 4.4.5
+Release: alt1
 
 Summary: LZ4 Bindings for Python
 
@@ -62,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/lz4/
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
+- new version 4.4.5
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.3-alt1.1
 - NMU: Removed extra build dependency on future module.
 
