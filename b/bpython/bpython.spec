@@ -5,7 +5,7 @@
 %def_with urwid
 
 Name: bpython
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
@@ -130,6 +130,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
+- new version 0.26
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.25-alt1
 - new version 0.25
 - renamed to bpython again
