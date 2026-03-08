@@ -1,7 +1,7 @@
 %define oname humanize
 
 Name: python3-module-%oname
-Version: 4.12.1
+Version: 4.15.0
 Release: alt1
 
 Summary: Python humanize utilities
@@ -47,6 +47,9 @@ or into a human readable size or throughput.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 4.15.0-alt1
+- new version 4.15.0
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 4.12.1-alt1
 - new version 4.12.1 (with rpmrb script)
 
