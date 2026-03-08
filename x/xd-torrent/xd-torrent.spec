@@ -1,7 +1,7 @@
 %define xddir /var/lib/xd
 
 Name: xd-torrent
-Version: 0.4.6
+Version: 0.4.8
 Release: alt1
 
 Summary: An I2P BitTorrent client
@@ -80,5 +80,8 @@ export GOFLAGS=-mod=vendor
 %config(noreplace) %_sysconfdir/xd.conf
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
+- new version 0.4.8
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
 - initial build for ALT Linux Sisyphus
