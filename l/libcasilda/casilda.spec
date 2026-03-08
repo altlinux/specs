@@ -3,7 +3,7 @@
 
 %define _name casilda
 %define namespace Casilda
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver_major 1
 %define api_ver 1.0
 %define sover 0
@@ -33,7 +33,7 @@ Source: %_name-%version.tar
 
 %define gtk_ver 4.14
 %define epoxy_ver 1.5
-%define wlr_api_ver 0.18
+%define wlr_api_ver 0.19
 %define wp_ver 1.22
 %define xkb_ver 1.5
 
@@ -154,6 +154,9 @@ install -pD -m755  %__sourcedir/examples/*.{py,js} \
 %endif
 
 %changelog
+* Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0 (ported to wlroots-0.19)
+
 * Sat Oct 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
