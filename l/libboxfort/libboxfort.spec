@@ -2,7 +2,7 @@
 
 %define oname boxfort
 Name: libboxfort
-Version: 0.1.4.0.4.c91d718
+Version: 0.1.5
 Release: alt1
 
 Summary: Convenient & cross-platform sandboxing C library
@@ -49,6 +49,9 @@ Header files for %name library.
 %_includedir/*.h
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1.5-alt1
+- new version 0.1.5
+
 * Sat Oct 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1.4.0.4.c91d718-alt1
 - Support LoongArch and riscv64 architectures
 
