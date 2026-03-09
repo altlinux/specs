@@ -4,7 +4,7 @@
 %define cid	\{17165bd9-9b71-4323-99a5-3d4ce49f3d75\}
 
 Name:		%firefox_name-%rname
-Version:	0.3.3
+Version:	0.3.8
 Release:	alt1
 
 Summary:	Export Tabs URLs Firefox extension
@@ -40,6 +40,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.3.8-alt1
+- New version
+
 * Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.3.3-alt1
 - New version
 
