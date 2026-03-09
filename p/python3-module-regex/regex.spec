@@ -4,7 +4,7 @@
 
 %define modulename regex
 Name: python3-module-regex
-Version: 2024.11.6
+Version: 2025.10.23
 Release: alt1
 
 Summary: Alternative regular expression module, to replace re
@@ -31,15 +31,14 @@ This regex implementation is backwards-compatible with the standard 're' module,
 %install
 %python3_install
 
-# don't package tests
-rm -r %buildroot%python3_sitelibdir/regex/test_regex.py
-rm %buildroot%python3_sitelibdir/regex/__pycache__/test_regex.*
-
 %files
 %doc README.rst docs/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2025.10.23-alt1
+- new version 2025.10.23
+
 * Wed Mar 19 2025 Vitaly Lipatov <lav@altlinux.ru> 2024.11.6-alt1
 - new version 2024.11.6 (with rpmrb script)
 
