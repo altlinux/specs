@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 
 Summary: A small application for viewing images
@@ -47,6 +47,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Mar 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.2-alt1
+- 0.12.1 -> 0.12.2
+
 * Sat Feb 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.1-alt1
 - 0.11.0 -> 0.12.1
 
