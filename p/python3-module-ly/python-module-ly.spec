@@ -1,7 +1,7 @@
 %define oname python-ly
 
 Name: python3-module-ly
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Tool and library for manipulating LilyPond files
@@ -17,12 +17,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
-
-BuildRequires: python3-devel python3-module-setuptools
 
 Conflicts: python-module-ly
 
@@ -57,6 +54,10 @@ You can also read the docs online at http://python-ly.readthedocs.org/.
 
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
+- new version 0.9.9
+- switch to hatchling build backend
+
 * Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
 - new version
 - switch to pyproject_build
