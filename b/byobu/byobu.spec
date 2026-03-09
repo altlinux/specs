@@ -1,7 +1,7 @@
 %define _iconsscaldir  %_iconsdir/hicolor/scalable/apps
 
 Name: byobu
-Version: 6.13
+Version: 6.14
 Release: alt1
 
 Summary: Light-weight, configurable window manager built upon GNU screen
@@ -93,6 +93,9 @@ cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
 %_iconsscaldir/*.svg
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
+- new version 6.14
+
 * Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 6.13-alt1
 - new version 6.13 (with rpmrb script)
 
