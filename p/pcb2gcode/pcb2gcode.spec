@@ -1,5 +1,5 @@
 Name: pcb2gcode
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 Group: Engineering
@@ -47,6 +47,9 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS -I%_includedir/librsvg-2.0"
 %doc AUTHORS README.md
 
 %changelog
+* Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Sun Mar 01 2026 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 
