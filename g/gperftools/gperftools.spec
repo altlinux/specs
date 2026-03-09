@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lfs=relaxed,lint=relaxed
 
 Name: gperftools
-Version: 2.18
-Release: alt2
+Version: 2.18.1
+Release: alt1
 
 Provides: google-perftools
 
@@ -79,6 +79,9 @@ files for developing applications that use the %name package.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 08 2026 Vitaly Chikunov <vt@altlinux.org> 2.18.1-alt1
+- Update to 2.18.1 (2026-03-06).
+
 * Mon Feb 09 2026 Ivan A. Melnikov <iv@altlinux.org> 2.18-alt2
 - NMU: Set tcmalloc pagesize to 16 on loongarch64.
 
