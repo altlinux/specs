@@ -1,7 +1,7 @@
 %define oname repoze.who
 
 Name:           python3-module-%oname
-Version:        3.0.0
+Version:        3.1.0
 Release:        alt1
 
 Summary:        Identification and authentication framework for WSGI
@@ -10,7 +10,7 @@ Group:          Development/Python3
 License:        BSD-derived
 URL:            http://pypi.python.org/pypi/repoze.who/
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://pypi.io/packages/source/r/repoze-who/repoze_who-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
@@ -105,6 +105,9 @@ done
 
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
 - new version 3.0.0 (with rpmrb script)
 
