@@ -2,17 +2,16 @@
 %def_with gtk3
 
 Name: 	 solvespace
-Version: 3.1
+Version: 3.2
 Release: alt1
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
-License: GPLv3
+License: GPL-3.0-only
 Group: 	 Graphics
-Url: 	 http://solvespace.com/
-#VCS:    https://github.com/solvespace/solvespace
+URL: 	 http://solvespace.com/
+VCS:     https://github.com/solvespace/solvespace
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
 Source1:  libdxfrw.tar
 Source2:  mimalloc.tar
@@ -22,7 +21,7 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
-BuildRequires: eigen3
+BuildRequires: eigen3-compat-devel
 BuildRequires: libGL-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libGLU-devel
@@ -118,6 +117,9 @@ tar xf %SOURCE2
 %_includedir/slvs.h
 
 %changelog
+* Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 1:3.2-alt1
+- 3.2-rc1.
+
 * Thu Jun 02 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.1-alt1
 - New version.
 
