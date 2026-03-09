@@ -5,8 +5,8 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.1.2
-Release: alt1.1
+Version: 8.1.3
+Release: alt1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -79,14 +79,6 @@ BuildRequires: pkgconfig(Qt6QuickControls2)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: pkgconfig(libportal-qt6)
 # KDE
-#BuildRequires: pkgconfig(KF6ConfigCore)
-#BuildRequires: pkgconfig(KF6ConfigWidgets)
-#BuildRequires: pkgconfig(KF6CoreAddons)
-#BuildRequires: pkgconfig(KF6I18n)
-#BuildRequires: pkgconfig(KF6IconThemes)
-#BuildRequires: pkgconfig(KF6Kirigami)
-#BuildRequires: pkgconfig(KF6KirigamiAddons)
-#BuildRequires: pkgconfig(KF6QQC2DesktopStyle)
 BuildRequires: kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcolorscheme-devel
 BuildRequires: kf6-kcoreaddons-devel
@@ -105,19 +97,8 @@ KDE/Kirigami frameworks.
 
 %prep
 %setup -n %_name-%version
-%if "%__isa_bits" == "32"
-sed -i 's/tbb/tbb32/' src/meson.build
-%endif
-
-%ifarch %e2k
-# -isystem/usr/include/ breaks the compiler's includes
-sed -i "s/, include_type: 'system'//" src/meson.build
-sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;/' \
-    src/plugins_box.cpp
-%endif
 
 %build
-%add_optflags %(pkg-config --cflags gio-2.0)
 %cmake
 %cmake_build
 
@@ -133,6 +114,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.3-alt1
+- 8.1.3
+
 * Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.2-alt1.1
 - removed useless since 8.0.7 QtWebEngine from BR
 

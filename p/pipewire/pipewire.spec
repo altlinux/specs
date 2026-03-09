@@ -51,7 +51,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Media Sharing Server
@@ -112,7 +112,7 @@ BuildRequires: libebur128-devel
 BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
-%{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_vulkan:BuildRequires: libvulkan-devel >= 1.2.170}
 %{?_enable_xfixes:BuildRequires: pkgconfig(xfixes)}
 %{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
 %{?_enable_libffado:BuildRequires: pkgconfig(libffado)}
@@ -448,6 +448,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_pkgconfigdir/jackserver.pc
 
 %changelog
+* Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Thu Feb 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
