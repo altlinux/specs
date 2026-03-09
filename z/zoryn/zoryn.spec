@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,23 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Mar 09 2026 Anton Farygin <rider@altlinux.org> 0.26.0-alt1
+- added task rm command for removing tasks from gyle
+- added task show command with colorized output, brief and JSON modes
+- added task ls command with filters and streaming output
+- added SSH multiplexing for girar and gau_git connections
+- added --batch-pkgs flag to filter batch values in build/submit/up
+- added subtask positioning in submit --with
+- added Oracle CSAF JSON advisory parser for changelog
+- added per-call max_body_size parameter for gau_http
+- added compact_continuation CVE format for changelog entries
+- added builders_to_rebuild recording in task test-rebuild stats
+- added multiple osv-package names support (comma-separated or TOML array)
+- added check version-up command for config validation
+- added sandbox fallback confirmation prompt in up command
+- fixed submit spec check to report wrong changelog dates as errors
+- fixed up --tag version extraction for packages with dashes
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 0.25.0-alt1
 - added --switch-to-upstream-git command for migrating to upstream git scheme
 - added [merge] scheme override in .gear/version-up
