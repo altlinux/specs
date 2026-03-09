@@ -1,7 +1,7 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
-Version: 3.1.1
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Summary: Open source VPN client for Checkpoint security gateways
 
@@ -16,7 +16,6 @@ Source1: %name-development-%version.tar
 
 ExcludeArch: %ix86 ppc64le
 
-BuildRequires(pre): rpm-macros-features
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 # libdbus-sys
@@ -25,13 +24,12 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(openssl)
 # gobject-sys
 BuildRequires: pkgconfig(gobject-2.0)
-# gdk-sys
-BuildRequires: pkgconfig(gdk-3.0)
-%if_feature webkit2gtk 4.1
-# webkit2gtk (?)
-BuildRequires: pkgconfig(webkit2gtk-4.1)
-Requires: libayatana-appindicator3-1
-%endif
+# gdk4-sys
+BuildRequires: pkgconfig(gtk4)
+# graphene-sys
+BuildRequires: pkgconfig(graphene-gobject-1.0)
+# libsqlite3-sys
+BuildRequires: pkgconfig(sqlite3)
 
 %description
 Open source Linux client for Checkpoint VPN tunnels.
@@ -57,11 +55,8 @@ subst 's|strip = true|strip = false|' Cargo.toml
 cat >> Cargo.toml <<EOF
 debug = 0
 EOF
-subst 's|/opt/snx-rs/||' assets/{snx-rs.service,snx-rs-gui.desktop}
+subst 's|/opt/snx-rs/||' package/{snx-rs.service,snx-rs-gui.desktop}
 
-%if_notfeature webkit2gtk 4.1
-subst 's|, "snx-rs-gui"||' Cargo.toml
-%endif
 
 %build
 %rust_build
@@ -70,27 +65,25 @@ subst 's|, "snx-rs-gui"||' Cargo.toml
 %rust_install snx-rs
 %rust_install snxctl
 
-install -D -m 0644 assets/snx-rs.service %buildroot%_unitdir/snx-rs.service
-install -D -m 0644 assets/snx-rs.conf  %buildroot%_sysconfdir/snx-rs/snx-rs.conf
+install -D -m 0644 package/snx-rs.service %buildroot%_unitdir/snx-rs.service
 
-%if_feature webkit2gtk 4.1
 %rust_install snx-rs-gui
-install -D -m 0644 assets/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.desktop
-%endif
+install -D -m 0644 package/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.desktop
 
 %files
 %doc README.md
 %_bindir/snx-rs
 %_bindir/snxctl
-%if_feature webkit2gtk 4.1
 %_bindir/snx-rs-gui
 %_desktopdir/snx-rs-gui.desktop
-%endif
 %_unitdir/snx-rs.service
-%dir %_sysconfdir/snx-rs/
-%_sysconfdir/snx-rs/snx-rs.conf
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1
+- config file removed by upstream
+- GUI switched from GTK3 to GTK4, always build snx-rs-gui
+
 * Mon Sep 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt2
 - NMU: obviously required libayatana-appindicator3-1 (ALT #55965).
 
