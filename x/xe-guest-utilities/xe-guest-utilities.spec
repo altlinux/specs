@@ -2,7 +2,7 @@
 #
 
 Name: xe-guest-utilities
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 
 Summary: Xen Virtual Machine Monitoring Scripts
@@ -106,6 +106,9 @@ mv build/stage/etc/udev/rules.d/z10_xen-vcpu-hotplug.rules %buildroot%_udevrules
 
 
 %changelog
+* Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 10.0.1-alt1
+- New version
+
 * Wed Feb 11 2026 Nikolay A. Fetisov <naf@altlinux.org> 10.0.0-alt1
 - New version
 
