@@ -2,7 +2,7 @@
 %define cid	\{c45c406e-ab73-11d8-be73-000a95be3b12\}
 
 Name:		%firefox_name-%rname
-Version:	2.0.5
+Version:	3.0.1
 Release:	alt1
 Summary:	The Web Developer extension for Mozilla Firefox
 
@@ -33,6 +33,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 1:3.0.1-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 1:2.0.5-alt1
 - New version
 
