@@ -2,8 +2,8 @@
 %def_with check
 
 Name: openfreebuds
-Version: 0.17.1
-Release: alt2
+Version: 0.17.3
+Release: alt1
 Summary: Open source app for HUAWEI FreeBuds
 License: GPL-3.0
 Group: Sound
@@ -97,6 +97,9 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %exclude %python3_sitelibdir/openfreebuds_qt/designer/*.ui
 
 %changelog
+* Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.3-alt1
+- Updated to version 0.17.3.
+
 * Thu Feb 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt2
 - Fixed FTBFS.
 
