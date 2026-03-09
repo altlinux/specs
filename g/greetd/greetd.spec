@@ -7,7 +7,7 @@
 
 Name: greetd
 Version: 0.10.3
-Release: alt2
+Release: alt3
 Summary: Generic greeter daemon
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -156,6 +156,9 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/agreety.toml 
 /usr/sbin/usermod -d %_pseudouser_home %_pseudouser_user >/dev/null 2>&1 ||:
 
 %changelog
+* Mon Mar 09 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.10.3-alt3
+- pam: add optional pam_gnome_keyring.so
+
 * Sat May 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.3-alt2
 - change pseudouser home
 
