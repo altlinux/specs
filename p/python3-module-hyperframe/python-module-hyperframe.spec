@@ -2,7 +2,7 @@
 
 %define modulename hyperframe
 Name: python3-module-hyperframe
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: HTTP/2 framing layer for Python
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 This library contains the HTTP/2 framing code used in the `hyper`_ project. It
@@ -33,16 +33,21 @@ provide HTTP/2 frame decoding logic.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/hyperframe/
+%python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
+- new version 6.1.0 (with rpmrb script)
+- switch to pyproject build
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - new version (6.0.1) with rpmgs script
 - build python3 module standalone
