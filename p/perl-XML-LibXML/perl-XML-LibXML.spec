@@ -3,7 +3,7 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 2.0210
-Release: alt9
+Release: alt10
 
 Summary: Perl binding for libxml2
 License: Artistic-1.0 OR GPL-2.0-or-later
@@ -12,6 +12,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
+Patch1: XML-LibXML-2.0210-fix-testsuite-with-libxml2-2.14.patch
 
 # To reduce dependencies replace Alien::Libxml2 with pkg-config
 Patch101: XML-LibXML-2.0208-Use-pkgconfig-instead-of-Alien-Libxml2.patch
@@ -41,8 +42,7 @@ providing access to the XPath API in libxml2.
 
 %prep
 %setup -q -n %{dist}-%{version}
-%patch -p1
-%patch101 -p1
+%autopatch -p1
 
 %if_with bootstrap
 # bootstrap: disable build dependency on XML::SAX
@@ -70,6 +70,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Mon Mar 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0210-alt10
+- NMU: fix FTBFS
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 2.0210-alt9
 - unbootstrap
 
