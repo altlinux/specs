@@ -1,5 +1,5 @@
 Name:    pencil2d
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Pencil2D is an easy, intuitive tool to make 2D hand-drawn animations. Pencil2D is open source and cross-platform.
@@ -47,6 +47,9 @@ lrelease-qt5 %name.pro
 %_datadir/zsh/site-functions/_pencil2d
 
 %changelog
+* Mon Mar 09 2026 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
+- New version.
+
 * Sat Jul 13 2024 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
 - New version.
 
