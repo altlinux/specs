@@ -1,9 +1,9 @@
 Name: lbreakout2
 Version: 2.6.5
-Release: alt2
+Release: alt3
 
 Summary: Breakout-style arcade game
-License: GPL
+License: GPLv2+
 Group: Games/Arcade
 
 Url: http://lgames.sourceforge.net
@@ -17,6 +17,7 @@ Source8: lbreakout2.6
 Source9: lbreakout2server.6
 Patch0: 10-ball-turbo-key-pref.patch
 Patch1: spelling-fixes.patch
+Patch2: sdl_fix_pauses.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Requires: %name-data = %version-%release
@@ -24,7 +25,7 @@ Requires: %name-data = %version-%release
 Summary(ru_RU.UTF-8): игра отбивай-и-разбивай со стильной графикой
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: libSDL-devel libSDL_mixer-devel libpng-devel
+BuildRequires: libSDL-devel libSDL_mixer-devel libpng-devel zlib-devel
 
 %description
 LBreakout is a classical Breakout game and this means (if you like Breakout ;-)
@@ -43,7 +44,7 @@ lbreakout2 -- игра, подобная классическим играм ж�
 
 %package data
 Summary: %name levels
-License: GPL
+License: GPLv2+
 Group: Games/Arcade
 BuildArch: noarch
 
@@ -54,6 +55,7 @@ This package contains levels for %name
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
@@ -105,6 +107,11 @@ mv %buildroot%_gamesdatadir/locale/* %buildroot%_datadir/locale/
 # - add .desktop for server (NB: http://secunia.com/advisories/9134/)
 
 %changelog
+* Mon Mar 09 2026 Ilya Mashkin <oddity@altlinux.ru> 2.6.5-alt3
+- Fix FTBFS
+- Update License
+- Add sdl_fix_pauses.patch (Closes: #51523)
+
 * Thu Jul 27 2017 Michael Shigorin <mike@altlinux.org> 2.6.5-alt2
 - dropped weird auto BR: rpm-build-haskell
 - dropped beta macro (looks like there gonna be none)
