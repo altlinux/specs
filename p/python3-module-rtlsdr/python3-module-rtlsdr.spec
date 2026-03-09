@@ -1,14 +1,20 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define modulename rtlsdr
 
 Name: python3-module-%modulename
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: A Python 3 wrapper for librtlsdr (a driver for Realtek RTL2832U based SDR's)
-License: GPLv3
+License: GPL-3.0-only
 Group: Development/Python3
 URL: https://github.com/roger-/pyrtlsdr
+VCS: https://github.com/roger-/pyrtlsdr
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -17,7 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -33,12 +39,18 @@ find . -name '*.py' | xargs sed -i '1s|^#!.*|#!%_bindir/python3|'
 %install
 %pyproject_install
 
+# remove unpackaged files
+rm -vr %buildroot%python3_sitelibdir/doc/source/
+
 %files
 %doc README.md
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/py%modulename-%version.dist-info
 
 %changelog
+* Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
