@@ -1,7 +1,7 @@
 %define commit e73c4d8f71801fe842c0276b603d9c8024d6d957
 Name: winetricks
-Version: 20250207
-Release: alt3
+Version: 20260125
+Release: alt1
 
 Summary: Work around common problems in Wine
 
@@ -94,6 +94,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/bash-completion/completions/winetricks
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 20260125-alt1
+- new version 20260125
+
 * Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 20250207-alt3
 - add wine dependency to remove winetricks with wine (ALT bug 36241)
 
