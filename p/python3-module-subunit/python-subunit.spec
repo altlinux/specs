@@ -1,12 +1,12 @@
 %define oname python-subunit
 
 Name: python3-module-subunit
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Python implementation of subunit test streaming protocol
 
-License: Apache or BSD
+License: Apache-2.0 or BSD
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/python-subunit/
 
@@ -18,10 +18,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-testscenarios
-BuildRequires: python3(hypothesis) python3(fixtures)
-BuildRequires: python3-module-testtools >= 0.9.34
+BuildRequires: python3-module-setuptools python3-module-wheel python3(iso8601) python3(testtools)
 
 %description
 Subunit is a streaming protocol for test results. The protocol is human
@@ -37,22 +34,26 @@ write for other languages.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %check
 #python3 setup.py test
 
 %files
-%doc NEWS README.rst
+%doc NEWS README.md
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/subunit/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
+- new version 1.4.5 (with rpmrb script)
+- switch to pyproject build
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
 - new version 1.4.4 (with rpmrb script)
 
