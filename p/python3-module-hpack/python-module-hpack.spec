@@ -1,9 +1,7 @@
-%def_without check
-
-%define modulename hpack
+%define pypi_name hpack
 
 Name: python3-module-hpack
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Pure-Python HPACK header compression
@@ -12,13 +10,13 @@ Url: https://github.com/python-hyper/hpack
 License: MIT
 Group: Development/Python3
 
-# Source-url: https://pypi.io/packages/source/h/%modulename/%modulename-%version.tar.gz
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 This module contains a pure-Python HTTP/2 header encoding (HPACK) logic for use
@@ -27,20 +25,22 @@ layer that automatically enables the use of ``nghttp2`` if it's available.
 
 %prep
 %setup
-# hack encoding issue
-echo > README.rst
-echo > HISTORY.rst
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/hpack/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0
+- switch to pyproject_build
+
 * Wed Apr 21 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version (4.0.0) with rpmgs script
 - build python3 module separately
