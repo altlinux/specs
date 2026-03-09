@@ -1,25 +1,27 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define goipath github.com/syncthing/syncthing
-%define gopath %_libdir/golang
+%define import_path github.com/syncthing/syncthing
 
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 1.30.0
+Version: 2.0.15
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
-Url: https://github.com/syncthing/syncthing
+URL: https://syncthing.net
+VCS: https://github.com/syncthing/syncthing
 
 # Source-url: https://github.com/syncthing/syncthing/releases/download/v%version/syncthing-source-v%version.tar.gz
 Source: %name-%version.tar
-BuildRequires(pre): rpm-macros-golang rpm-build-golang
-BuildRequires: go >= 1.3
-BuildRequires: udev-rules
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+BuildRequires: go >= 1.4
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(systemd)
 
-Obsoletes: syncthing-inotify
+ExclusiveArch: %go_arches
 
 %description
 Syncthing replaces proprietary sync and cloud services with
@@ -57,55 +59,39 @@ This package contains the main syncthing server tools:
 %setup
 
 %build
-export GO111MODULE=off
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
 
-# prepare build environment
-mkdir -p ./_build/src/github.com/syncthing
+%golang_prepare
 
-TOP=$(pwd)
-pushd _build/src/github.com/syncthing
-ln -s $TOP syncthing
-popd
-
-export GOPATH=$(pwd)/_build:%gopath
-export BUILDDIR=$(pwd)/_build/src/%goipath
-
-# compile assets used by the build process
-pushd _build/src/%goipath
 go run build.go assets
-rm build.go
-popd
 
-# set variables expected by syncthing binaries as additional LDFLAGS
-export BUILD_HOST=alt-linux
-export COMMON_LDFLAGS="-X %goipath/lib/build.Version=v%version -X %goipath/lib/build.Stamp=$(date +%s) -X %goipath/lib/build.User=$USER -X %goipath/lib/build.Host=$BUILD_HOST"
-export BUILDTAGS="noupgrade"
+# set variables expected by syncthing binaries as additional FOOFLAGS
+export BUILD_HOST=altlinux-hasher
+export COMMON_LDFLAGS="-X %import_path/lib/build.Version=v%version -X %import_path/lib/build.Stamp=$SOURCE_DATE_EPOCH -X %import_path/lib/build.User=$USER -X %import_path/lib/build.Host=$BUILD_HOST"
 
-export LDFLAGS="-X %{goipath}/lib/build.Program=syncthing $COMMON_LDFLAGS"
-%gobuild -o _bin/syncthing %goipath/cmd/syncthing
-export LDFLAGS="-X %{goipath}/lib/build.Program=stdiscosrv $COMMON_LDFLAGS"
-%gobuild -o _bin/stdiscosrv %goipath/cmd/stdiscosrv
-export LDFLAGS="-X %{goipath}/lib/build.Program=strelaysrv $COMMON_LDFLAGS"
-%gobuild -o _bin/strelaysrv %goipath/cmd/strelaysrv
-export LDFLAGS="-X %{goipath}/lib/build.Program=strelaypoolsrv $COMMON_LDFLAGS"
-%gobuild -o _bin/strelaypoolsrv %goipath/cmd/infra/strelaypoolsrv
+# noupgrade: disable syncthing self-update functionality
+# libsqlite3 / cgo: link system libsqlite3
+export GO_BUILDTAGS="noupgrade libsqlite3 cgo"
+
+for cmd in cmd/syncthing cmd/stdiscosrv cmd/strelaysrv cmd/infra/strelaypoolsrv ; do
+  export LDFLAGS="-X %import_path/lib/build.Program=$(basename $cmd) $COMMON_LDFLAGS"
+  %gobuild -o bin/$(basename $cmd) --tags "$GO_BUILDTAGS" %import_path/$cmd
+done
 
 %install
-export GO111MODULE=off
-
 # install binaries
 mkdir -p %buildroot/%_bindir
-
-cp -pav _bin/syncthing %buildroot/%_bindir/
-cp -pav _bin/stdiscosrv %buildroot/%_bindir/
-cp -pav _bin/strelaysrv %buildroot/%_bindir/
-cp -pav _bin/strelaypoolsrv %buildroot/%_bindir/
+cp -pav bin/syncthing %buildroot/%_bindir/
+cp -pav bin/stdiscosrv %buildroot/%_bindir/
+cp -pav bin/strelaysrv %buildroot/%_bindir/
+cp -pav bin/strelaypoolsrv %buildroot/%_bindir/
 
 # install man pages
 mkdir -p %buildroot/%_man1dir
 mkdir -p %buildroot/%_man5dir
 mkdir -p %buildroot/%_man7dir
-
 cp -pav ./man/syncthing.1 %buildroot/%_man1dir/
 cp -pav ./man/*.5 %buildroot/%_man5dir/
 cp -pav ./man/*.7 %buildroot/%_man7dir/
@@ -115,26 +101,15 @@ cp -pav ./man/strelaysrv.1 %buildroot/%_man1dir/
 # install systemd units
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_libexecdir/systemd/user
-
 cp -pav etc/linux-systemd/system/syncthing@.service %buildroot/%_unitdir/
-cp -pav etc/linux-systemd/user/syncthing.service %buildroot/%_libexecdir/systemd/user/
-
-# install systemd preset disabling the service per default
-mkdir -p %buildroot/%_libexecdir/systemd/user-preset
-echo "disable syncthing*" > %buildroot/%_libexecdir/systemd/user-preset/90-syncthing.preset
-
-# Unmark source files as executable
-for i in $(find -name "*.go" -executable -print); do
-    chmod a-x $i;
-done
+cp -pav etc/linux-systemd/user/syncthing.service %buildroot/%_userunitdir/
 
 %files
 %doc AUTHORS CONDUCT.md CONTRIBUTING.md LICENSE README.md
-%_bindir/%name
-%_unitdir/%name@.service
-%_libexecdir/systemd/user/*.service
-%_libexecdir/systemd/user-preset/*.preset
-%_mandir/man?/%{name}*
+%_bindir/syncthing
+%_unitdir/syncthing@.service
+%_userunitdir/syncthing.service
+%_mandir/man?/syncthing*
 
 %files tools
 %doc LICENSE
@@ -146,6 +121,12 @@ done
 %_man1dir/strelaysrv*
 
 %changelog
+* Thu Mar 05 2026 Anton Midyukov <antohami@altlinux.org> 2.0.15-alt1
+- New version 2.0.15.
+
+* Sun Nov 23 2025 Anton Midyukov <antohami@altlinux.org> 2.0.11-alt1
+- New version 2.0.11.
+
 * Sun Jul 06 2025 Anton Midyukov <antohami@altlinux.org> 1.30.0-alt1
 - new version (1.30.0) with rpmgs script
 
