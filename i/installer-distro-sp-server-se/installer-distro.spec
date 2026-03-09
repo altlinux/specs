@@ -1,0 +1,476 @@
+%define distro sp-server-se
+Name: installer-distro-%distro
+Version: 11.0
+Release: alt9
+
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+Summary: Installer files for the Cliff distro
+
+Source: %name-%version.tar
+
+BuildRequires: alterator-officer
+
+%description
+Installer files for Cliff distro.
+
+%package common
+Summary: Cliff installer common files
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+
+%description common
+Cliff Installer common files.
+Needed also for alterator-setup.
+
+%package stage2
+Summary: Cliff installer stage2 files
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+Provides: installer-%distro-stage2 = %name-%version
+Requires: installer-stage2
+#modules
+Requires: alterator-sysconfig
+Requires: alterator-datetime
+Requires: alterator-pkg
+Requires: alterator-vm
+Requires: alterator-notes
+Requires: %name-common = %EVR
+Requires: x-cursor-theme-jimmac
+Requires: installer-feature-integalert-stage2
+
+%description stage2
+Cliff installer stage2 files.
+
+%package stage3
+Summary: Cliff installer stage3 files
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+Provides: installer-%distro-stage3 = %name-%version
+#modules
+Requires: alterator-users
+Requires: alterator-officer
+Requires: alterator-root
+Requires: installer-feature-powerbutton-stage3
+Requires: installer-feature-integalert-stage3
+Requires: alterator-luks
+
+%description stage3
+Cliff installer stage3 files.
+
+%package net-eth-stage3
+Summary: Cliff installer stage3 files
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+
+%description net-eth-stage3
+Requires: installer-common-stage3
+Requires: alterator-net-eth dhcpcd
+Requires: alterator-net-general
+Requires: alterator-net-bond alterator-net-bridge
+Requires: alterator-net-vlan
+Requires: installer-feature-nfs-server-stage3
+
+%prep
+%setup
+
+%install
+%define install2dir %_datadir/install2
+mkdir -p %buildroot%install2dir
+mkdir -p %buildroot%install2dir/steps
+cp -a * %buildroot%install2dir/
+cp -a steps.d/* %buildroot%install2dir/steps
+mkdir -p %buildroot%_prefix/lib/alterator/hooks
+mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hooks
+cp %_datadir/alterator/applications/officer.desktop \
+   %buildroot%install2dir/steps/users-officer.desktop
+
+%files common
+%install2dir/steps/*.desktop
+%install2dir/*.d/*
+
+%files stage2
+%install2dir/alterator-menu
+%install2dir/installer-steps
+%ghost %install2dir/services-*
+%install2dir/systemd-*
+%_prefix/lib/alterator/hooks/pkg-preinstall.d/00-pve.sh
+
+%files stage3
+
+%files net-eth-stage3
+
+%changelog
+* Fri Feb 20 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt9
+- installer-steps: remove users-add step.
+
+* Thu Feb 12 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt8
+- Initial fork from installer-distro-cliff.
+- Add alterator-officer to installer steps.
+
+* Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt7
+- pkg-preinstall.d: fix help and translations for network step with PVE.
+
+* Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
+- add pkg-preinstall hook for install etcnet, when not install pve
+
+* Sun Jun 29 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- new subpackage installer-distro-cliff-net-eth-stage3 with
+  dependencies on alterator-net-eth
+- net-eth-stage3: add dependency on alterator-net-vlan
+
+* Fri Jun 27 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
+- systemd-enabled: add networking.service for PVE
+
+* Fri Jun 27 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt3
+- stage2: split installer step pkg -> pkg-groups/pkg-install
+- stage3: remove dependencies on alterator-net-eth
+
+* Wed Jun 11 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt2
+- installer-steps: change order of steps, luks after preinstall
+
+* Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1
+- Do not set noexec option on mountpoint /home
+
+* Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
+- remove postinstall.d/remove 01-remove-installer-server-pkgs.sh
+- remove dependency on alterator-officer
+- convert License fields to SPDX format
+
+* Wed Feb 28 2024 Anton Midyukov <antohami@altlinux.org> 10.0-alt8
+- ghost lists of services
+
+* Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt7
+- alterator-menu: add audit, logs to module-expert-list
+- postinstall.d/20-alterator-menu.sh: do not add 'users' to expert list
+
+* Fri Nov 03 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt6
+- Require renamed installer-feature-integalert-*.
+
+* Wed Nov 01 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt5
+- Require installer-integalert-stage2 and 3 (due to rename of
+  these packages).
+- Fixed descriptions.
+
+* Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt4
+- do not requires alterator-officer
+
+* Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt3
+- Drop officer installer step and initinstall.d/90-remove-unused-officer-steps
+
+* Fri Apr 14 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt2
+- changed how  mem initialization on free is turned on in boot cmdlines
+
+* Tue Nov 15 2022 Anton Midyukov <antohami@altlinux.org> 10.0-alt1
+- bump version
+- 90-remove-unused-officer-steps: fix for SP Release 10.x
+
+* Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 8.2-alt10
+- installer-steps: replace vm with vm-ortodox
+- stage3: do'nt require alterator-grub
+
+* Thu Dec 09 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt9
+- corrected avahi disable
+
+* Fri Dec 03 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt8
+- avahi and nrpe disabled by default
+
+* Wed Nov 11 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt7
+- Require alterator-officer by installer-distro-cliff-stage2 only
+- Not add officer step into alterator-setup
+- Drop installer-distro-cliff-rootfs subpackage
+- Spec: use rpm macros for e2k arch (Closes: 39105)
+
+* Thu Nov 05 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt6
+- less services enabled by default
+
+* Mon Nov 02 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt5
+- supress officer-related errors when no such user exists
+
+* Thu Oct 22 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
+- officer step skip in network installation
+
+* Thu Oct 22 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt3
+- Merge with p9
+- Require installer-integ-stage2 packages in rootfs.
+
+* Tue Oct 20 2020 Anton Midyukov <antohami@altlinux.org> 8.2-alt2
+- Moved installer steps to installer-distro-cliff-common subpackage
+- Added officer step for alterator-setup
+
+* Mon Sep 14 2020 Paul Wolneykien <manowar@altlinux.org> 8.2-alt0.M90P.1
+- Build version 8.2-alt1 for the p9 branch.
+- Require installer-integ packages in stage2 and stage3.
+
+* Mon Sep 14 2020 Paul Wolneykien <manowar@altlinux.org> 8.2-alt1
+- Moved postinstall.d/90-integrity-init.sh to the settings-s package.
+- Added initinstall script to pre-select password check-box in grub.
+
+* Tue Sep 08 2020 Denis Medvedev <nbr@altlinux.org> 8.1-alt5
+- Packet is made arch, not requiring alterator-grub on armh
+and e2k
+
+* Mon Sep 07 2020 Denis Medvedev <nbr@altlinux.org> 8.1-alt4
+- added setting proper control for osec needed for integalert
+
+* Fri Sep 04 2020 Denis Medvedev <nbr@altlinux.org> 8.1-alt3
+- moved part of integrity initialization to installer.
+
+* Wed Feb 26 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt2
+- build for sisyphus
+
+* Wed Jul 17 2019 Denis Medvedev <nbr@altlinux.org> 8.1-alt1.M80C.7
+- users-officer.desktop now lives here, not in alterator-officer.
+
+* Sat Jun 29 2019 Denis Medvedev <nbr@altlinux.org> 8.1-alt1.M80C.6
+- ipv6 is only when selinux is on
+
+* Fri Jun 28 2019 Denis Medvedev <nbr@altlinux.org> 8.1-alt1.M80C.5
+- allow officer to run its scripts by making them with right context.
+
+* Wed Jun 26 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1.M80C.4
+- mount separate execable tmpfs into /tmp/.private/root
+
+* Thu May 23 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1.M80C.3
+- changes from nbr@ merged
+
+* Tue May 21 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1.M80C.2
+- add enviroment for officer
+
+* Tue May 21 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.1-alt1.M80C.1
+- delete wheel from default groups
+- set /home and /tmp noexec
+
+* Tue Apr 16 2019 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.13
+- fixed wheel group assignment for officer while selinux mode on.
+
+* Tue Apr 16 2019 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.12
+- handling of selinux smem  and  ipv6.
+
+* Wed Apr 10 2019 Mikhail Efremov <sem@altlinux.org> 8.0-alt1.M80C.11
+- postinstall: Generate host key files.
+- Add hack to bend Russian name for License step.
+
+* Wed Mar 06 2019 Michael Shigorin <mike@altlinux.org> 8.0-alt1.M80C.10
+- license step returned (reverts 8.0-alt1.M80C.1 change)
+
+* Wed Jan 23 2019 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.9
+- remove alterator-officer after installation.
+
+* Sun Jan 20 2019 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.8
+- fix bugs in scripts.
+
+* Thu Jan 17 2019 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.7
+- adding officer to group wheel. Enable trusted mode for
+python and perl.
+
+* Wed Nov 21 2018 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.6
+- moved hider script to a proper place
+
+* Tue Nov 20 2018 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.5
+- hide unused installer steps in some configs.
+
+* Wed Oct 03 2018 Denis Medvedev <nbr@altlinux.org> 8.0-alt1.M80C.4
+- Added alterator-officer
+
+* Mon Apr 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1.M80C.3
+- no alterator-notes
+
+* Mon Apr 17 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1.M80C.2
+- net-bond and net-bridge in stage3
+
+* Tue Apr 04 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1.M80C.1
+- license step removed
+
+* Fri Dec 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt0.M80P.1
+- cliff version: vm/blonde used
+
+* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt2
+- xinetd enabled in systemd installations
+
+* Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1
+- sshd, ahttpd, alteratord enabled in systemd installations
+
+* Fri Apr 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt8
+- 'users' group added to default group list
+
+* Wed Jan 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt7
+- ModemManager enabled in systemd-enabled
+
+* Tue Dec 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt6
+- dm changed to prefdm in systemd-enabled
+
+* Sun Dec 01 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt5
+- Move rare modules to expert list, hide unusable modules trust
+  and moodle-install
+
+* Wed Sep 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt4
+- postfix enabled in systemd
+
+* Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt3
+- removing alterator-luks added
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt2
+- NetworkManager-wait-online disabled by default
+
+* Wed Jul 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt1
+- use cups.service instead cups.socket
+
+* Tue Mar 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt7
+- some sysVinit services disabled in systemd
+
+* Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt6
+- alterator-luks added
+
+* Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt5
+- grub2-efi on x86_64 added
+
+* Wed Nov 28 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt4
+- nscd and nslcd added to systemd-enabled
+
+* Fri Nov 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt3
+- nscd and nslcd temporary removed from services-on
+
+* Wed Oct 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt2
+- nm and avahi added to systemd-enables, nscd and nslcd to services-on
+
+* Tue Sep 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt1
+- bump version
+- systemd-enabled file added
+
+* Fri Aug 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt14
+- removed dependences on outdated installer features
+
+* Thu Aug 25 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt13
+- fix 80-setup-user-groups
+
+* Mon Aug 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt12
+- add first user to vboxusers
+
+* Fri Aug 19 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt11
+- datetime-tcp activation added
+
+* Fri Jul 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt10
+- installer-feature-copy-udev-rules-stage3 added
+
+* Mon Mar 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt9
+- set server role to none
+
+* Wed Mar 02 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt8
+- xdg-user-dirs: coupled Photos/Pictures and Movies/Videos
+
+* Fri Feb 18 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt7
+- bacula-fd on by default
+
+* Thu Feb 17 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt6
+- hide alterator-users only if a-ldap-users is installed
+- unset xdg-user-dirs PUBLICSHARE
+
+* Wed Feb 09 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt5
+- openntpd added to services-on
+
+* Fri Feb 04 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt4
+- libvirtd, qemu-kvm-el and virtualbox added to services-on
+
+* Tue Nov 02 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt3
+- trust moved to expert mode
+
+* Tue Oct 26 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt2
+- net-iptables-manual moved to expert mode
+
+* Fri Oct 22 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt1
+- more services off by default
+
+* Mon Oct 18 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt7
+- slapd turned off by default
+- vm changed to ortodox
+
+* Tue Oct 05 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt6
+- vz off by default
+
+* Fri Oct 01 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt5
+- server role setting added
+
+* Wed Sep 29 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt4
+- alterator-users moded to expert mode list
+
+* Tue Sep 28 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt3
+- alterator-{auth,services} moved from expert list
+
+* Tue Apr 06 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt2
+- services, started by defaul set up
+
+* Mon Mar 15 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9-alt1
+- s/lilo/grub/
+
+* Fri Feb 05 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt1
+- first build based on server-light
+
+* Tue Sep 08 2009 Anton Farygin <rider@altlinux.ru> 5.0-alt2
+- disabled bind, alteratord and ntpd services by default
+- specfile cleanup
+
+* Thu May 07 2009 Anton Farygin <rider@altlinux.ru> 5.0-alt1
+- initial build, based on Office Server
+
+* Tue Apr 28 2009 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt8
+- Added installer-feature-net-br-stage2 to stage2.
+
+* Fri Apr 10 2009 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt7
+- preinstall.d: Renamed 01-home -> 01-fs, added /srv support there.
+- postinstall.d/03-button.sh: Replaced with installer-feature-powerbutton-stage3.
+- initinstall.d/05-vm-profile-ofs: Replaced with installer-feature-vm-ofs-stage2.
+- preinstall.d/01-fs: Replaced with installer-feature-vm-ofs-stage3.
+- module-order-list: Added new modules.
+
+* Thu Apr 02 2009 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt6
+- Updated alterator/menu/module-order-list from inger@.
+- Renamed to installer-distro-office-server.
+
+* Thu Apr 02 2009 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt5
+- stage3: Added requirement on installer-feature-nfs-server-stage3.
+- initinstall.d/05-vm-profile: Rewritten.
+- postinstall.d/06-xinetd.sh: Removed.
+- postinstall.d/10-alteratord.sh: s/run_chroot/exec_chroot/.
+- preinstall.d/01-home: Rewritten.
+- Added files for /etc/alterator/menu/.
+- Updated BuildRequires.
+
+* Thu Feb 26 2009 Stanislav Ievlev <inger@altlinux.org> 5.0-alt4
+- remove unused files
+- add postinstall.d script for alteratord
+
+* Tue Feb 24 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt3
+- root and ldap steps moved to firsttime 
+
+* Mon Feb 09 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt2
+- root and net steps changed to office-server 
+
+* Wed Feb 04 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt1
+- joined tzone and datetime 
+
+* Fri Jan 23 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- updated for sisyphus installer state 
+
+* Wed Nov 05 2008 Alexandra Panyukova <mex3@altlinux.ru> 0.2-alt5.M41
+- Version for M41
+- sysconfig step added
+
+* Fri Dec 14 2007 Grigory Batalov <bga@altlinux.ru> 0.2-alt4
+- Xinetd hook to disable localhost-only access.
+- Check alterator-firewall backend presence before call.
+
+* Mon Nov 19 2007 Grigory Batalov <bga@altlinux.ru> 0.2-alt3
+- Alterator-ulogd hook.
+
+* Mon Nov 19 2007 Grigory Batalov <bga@altlinux.ru> 0.2-alt2
+- Use $destdir in postinstall hooks.
+
+* Wed Oct 10 2007 Grigory Batalov <bga@altlinux.ru> 0.2-alt1
+- Merge installer-hpc-0.2-alt2.
+- Add translations.
+- Alterator-iptables hook.
+- Carry finish step (finish.scm).
+
+* Sat Sep 08 2007 Grigory Batalov <bga@altlinux.ru> 0.1-alt1
+- Initial build based on installer-hpc.
