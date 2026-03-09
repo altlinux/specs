@@ -3,7 +3,7 @@
 %def_with bootstrap
 
 Name: python3-module-incremental
-Version: 22.10.0
+Version: 24.7.2
 Release: alt1
 
 Summary: Incremental is a small library that versions your Python project
@@ -19,9 +19,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with bootstrap
 %add_python3_req_skip twisted.python.compat twisted.python.filepath twisted.trial.unittest
@@ -34,18 +33,21 @@ Incremental is a small library that versions your Python projects.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %files
-%doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 24.7.2-alt1
+- new version 24.7.2
+- switch to pyproject build
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 22.10.0-alt1
 - new version 22.10.0 (with rpmrb script)
 
