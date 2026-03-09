@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.1.2
+Version: 4.2.3
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -21,7 +21,8 @@ Group: Development/Tools
 Url: https://cmake.org/
 VCS: https://gitlab.kitware.com/cmake/cmake.git
 
-# Source-url: https://gitlab.kitware.com/cmake/cmake/-/archive/v%version/cmake-v%version.tar.bz2
+# Anubis breaks: Source-url: https://gitlab.kitware.com/cmake/cmake/-/archive/v%version/cmake-v%version.tar.bz2
+# Source-url: https://github.com/Kitware/CMake/releases/download/v%version/cmake-%version.tar.gz
 Source: %name-%version.tar
 
 Source2: CMakeCache.txt
@@ -326,6 +327,9 @@ popd
 
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.3-alt1
+- new version 4.2.3
+
 * Sat Oct 04 2025 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
 - new version 4.1.2 (with rpmrb script)
 
