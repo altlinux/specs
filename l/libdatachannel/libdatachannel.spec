@@ -1,16 +1,16 @@
-%define soversion() %(echo "%1" | awk -F. '{print $1"."$2}')
+%define sover 0.24
 
 Name: libdatachannel
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
-Summary: WebRTC network library featuring Data Channels, Media Transport, and WebSockets
+Summary: WebRTC network library
 
 License: MPL-2.0
 Group: Networking/Other
-Url: https://libdatachannel.org/
-Vcs: https://github.com/paullouisageneau/libdatachannel
-# Source-url: https://github.com/paullouisageneau/%name/archive/v%version/%name-%version.tar.gz
+URL: https://libdatachannel.org/
+VCS: https://github.com/paullouisageneau/libdatachannel
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -31,10 +31,21 @@ WebRTC Media Transport, and WebSockets in C++17 with C bindings for POSIX
 platforms (including GNU/Linux, Android, FreeBSD, Apple macOS and iOS)
 and Microsoft Windows.
 
+%package -n %name%sover
+Summary: WebRTC network library
+Group: Networking/Other
+Obsoletes: %name < %version
+
+%description -n %name%sover
+libdatachannel is a standalone implementation of WebRTC Data Channels,
+WebRTC Media Transport, and WebSockets in C++17 with C bindings for POSIX
+platforms (including GNU/Linux, Android, FreeBSD, Apple macOS and iOS)
+and Microsoft Windows.
+
 %package devel
 Summary: Development files for %name
 Group: Development/Other
-Requires: %name = %EVR
+Requires: %name%sover = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -42,20 +53,26 @@ developing applications that use %name.
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i -E 's/(std::.*<.*> .*)\{\};/\1={};/' examples/streamer/ArgParser.hpp
 %endif
 
 %build
-%cmake -DPREFER_SYSTEM_LIB=ON -DUSE_GNUTLS=ON -DUSE_NICE=ON
+%cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DPREFER_SYSTEM_LIB=ON \
+	-DUSE_GNUTLS=ON \
+	-DUSE_NICE=ON
 %cmake_build
 
 %install
 %cmake_install
 
-%files
+%files -n %name%sover
 %doc LICENSE
-%_libdir/%name.so.%{soversion %version}*
+%_libdir/%name.so.%sover
+%_libdir/%name.so.%sover.*
 
 %files devel
 %doc README.md DOC.md
@@ -64,6 +81,10 @@ sed -i -E 's/(std::.*<.*> .*)\{\};/\1={};/' examples/streamer/ArgParser.hpp
 %_libdir/%name.so
 
 %changelog
+* Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 0.24.1-alt1
+- Buil old version 0.24.1.
+- Build with -DCMAKE_BUILD_TYPE=RelWithDebInfo.
+
 * Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 0.24.0-alt1
 - New version 0.24.0.
 

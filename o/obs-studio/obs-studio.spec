@@ -4,14 +4,14 @@
 %add_python3_path %_libdir/obs-scripting/
 %add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
 
-%define websocket_version 5.6.3
+%define websocket_version 5.7.2
 #%%define browser_version 2.26.3
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 32.0.4
-Release: alt2
+Version: 32.1.0
+Release: alt1
 License: GPL-2.0-or-later
 Group: Video
 URL: https://github.com/obsproject/obs-studio
@@ -131,7 +131,7 @@ Development files for %name.
 
 %prep
 %setup -a1
-%patch -p1
+%autopatch -p1
 rmdir plugins/obs-websocket
 mv obs-websocket-%websocket_version plugins/obs-websocket
 #rmdir plugins/obs-browser
@@ -166,13 +166,13 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %build
 %add_optflags -I%_sourcedir/%name-%version/libobs
 %cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DOBS_VERSION_OVERRIDE=%version \
 	-DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
-	-DUNIX_STRUCTURE=1 -GNinja \
-	-DCMAKE_SKIP_RPATH=1 \
-	-DWITH_RTMPS=ON \
+	-GNinja \
+	-DOBS_COMPILE_DEPRECATION_AS_WARNING=ON \
 	-DENABLE_BROWSER=OFF \
-	-DENABLE_WEBRTC=OFF \
+	-DENABLE_WEBRTC=ON \
 	-DBUILD_VST=OFF \
 	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
 	-DENABLE_AJA=OFF \
@@ -218,6 +218,10 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 32.1.0-alt1
+- New versiom 32.1.0.
+- Enable webrtc plugin.
+
 * Sun Feb 08 2026 Anton Midyukov <antohami@altlinux.org> 32.0.4-alt2
 - Cherry-pick upstream commit "frontend: Cleanup Qt GuiPrivate linkage" for
   build with qt6 >= 6.10.
