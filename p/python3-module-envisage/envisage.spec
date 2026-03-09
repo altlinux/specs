@@ -3,7 +3,7 @@
 %define oname envisage
 
 Name: python3-module-envisage
-Version: 7.0.3
+Version: 7.0.4
 Release: alt1
 
 Summary: Extensible Application Framework
@@ -94,6 +94,9 @@ This package contains development documentation for Envisage.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0.4-alt1
+- new version 7.0.4
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0.3-alt1
 - new version 7.0.3 (with rpmrb script)
 
