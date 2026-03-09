@@ -3,7 +3,7 @@
 %define real_name Perl-Version
 
 Name: perl-Perl-Version
-Version: 1.018
+Version: 1.019
 Release: alt1
 
 Summary: Perl module to parse and manipulate Perl version strings
@@ -54,6 +54,9 @@ version formatted like the original.
 %_man1dir/perl-reversion*
 
 %changelog
+* Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.019-alt1
+- New version
+
 * Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.018-alt1
 - New version
 
