@@ -1,5 +1,5 @@
 Name: python3-module-QtDarkStyle
-Version: 3.2
+Version: 3.2.3
 Release: alt1
 
 License: MIT
@@ -8,7 +8,7 @@ Url: https://github.com/ColinDuquesnoy/QDarkStyleSheet
 
 Summary: The most complete dark stylesheet for Python and Qt applications
 
-# Source-url: https://github.com/ColinDuquesnoy/QDarkStyleSheet/archive/v%version.tar.gz
+# Source-url: https://github.com/ColinDuquesnoy/QDarkStyleSheet/archive/v.%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 Provides: python3-module-QDarkStyle
 Provides: python3-module-%{pep503_name QDarkStyle}
+Provides: python3-module-qdarkstyle = %EVR
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
@@ -38,6 +39,9 @@ rm -fv %buildroot/usr/bin/{qdarkstyle.example,qdarkstyle.utils}
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- new version 3.2.3
+
 * Thu Nov 09 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2-alt1
 - new version 3.2 (with rpmrb script)
 
