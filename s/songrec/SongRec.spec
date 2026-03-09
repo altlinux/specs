@@ -1,8 +1,8 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.6.4
-Release: alt3
+Version: 0.6.6
+Release: alt1
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -61,7 +61,7 @@ install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.s
 install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
 install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
-for locale in fr_FR nl it pl es ja ca cs_CZ de_DE ko_KR sk_SK pt_BR ru; do
+for locale in fr_FR nl it pl es ja ca cs_CZ de_DE ko_KR sk_SK pt_BR ru ar; do
  install -Dm 0644 translations/locale/${locale}/LC_MESSAGES/%name.mo \
  %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%name.mo
 done
@@ -76,6 +76,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Mon Mar 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.6-alt1
+- 0.6.4 -> 0.6.6
+
 * Thu Feb 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.4-alt3
 - fixed mostrar system tray icon
 
