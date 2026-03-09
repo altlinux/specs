@@ -1,5 +1,5 @@
 Name: libjodycode
-Version: 3.1.1
+Version: 4.1.2
 Release: alt1
 
 Summary: General purpose utility functions
@@ -42,19 +42,21 @@ developing applications that use %name.
 # Do not include the static library
 rm -f %buildroot%_libdir/libjodycode.a
 
-# man page is currently empty
-rm -rf %buildroot%_man7dir
-
 %files
 %doc LICENSE.txt
 %doc CHANGES.txt README.md
 %_libdir/libjodycode.so.*
 
 %files devel
+%_man3dir/*
 %_includedir/libjodycode.h
 %_libdir/libjodycode.so
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
+- new version 4.1.2
+- add man3 page to devel
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1
 - add Vcs, update Source URL

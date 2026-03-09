@@ -1,14 +1,14 @@
 Name: jdupes
-Version: 1.27.3
+Version: 1.31.1
 Release: alt1
 
 Summary: A powerful duplicate file finder and an enhanced fork of 'fdupes'
 
 License: %mit
 Group: File tools
-Url: https://github.com/jbruchon/jdupes
+Url: https://codeberg.org/jbruchon/jdupes
 
-# Source-url: https://github.com/jbruchon/jdupes/archive/v%version.tar.gz
+# Source-url: https://codeberg.org/jbruchon/jdupes/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -46,6 +46,10 @@ between the two programs. For example, the -I switch in jdupes means
 %_man1dir/*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.31.1-alt1
+- new version 1.31.1
+- update URL to codeberg
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.27.3-alt1
 - new version 1.27.3 (with rpmrb script)
 
