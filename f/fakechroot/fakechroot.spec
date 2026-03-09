@@ -4,7 +4,7 @@
 
 Name: fakechroot
 Version: 2.20.1
-Release: alt4
+Release: alt5
 Summary: Gives a fake chroot environment
 Group: Development/Tools
 License: LGPL-2.1-or-later
@@ -30,9 +30,6 @@ privileges.
 grep -Zlr '_FORTIFY_SOURCE' | xargs -0 sed -i '/^#define _FORTIFY_SOURCE 2/d'
 
 %build
-%ifarch x86_64
-%add_optflags -fanalyzer
-%endif
 %add_optflags -Wno-unused-variable
 %autoreconf
 %configure \
@@ -71,6 +68,9 @@ find %buildroot%_libdir -name '*.la' -delete -print
 %_mandir/man1/%name.1*
 
 %changelog
+* Fri Mar 06 2026 Vitaly Chikunov <vt@altlinux.org> 2.20.1-alt5
+- Apply new patches from Debian 2.20.1+ds-18 (2024-11-15) and PRs.
+
 * Wed Dec 13 2023 Vitaly Chikunov <vt@altlinux.org> 2.20.1-alt4
 - Recreate after deletion by ftbfs cleaner, based on Debian version
   2.20.1+ds-15 (2023-02-06) and upstream PRs.
