@@ -1,7 +1,9 @@
 %define oname org.kde.drawy
+%define apiversion 1.0.0
+%define soname 0
 
 Name: drawy
-Version: 20260228
+Version: 20260309
 Release: alt1
 
 Summary: Drawy is a work-in-progress infinite whiteboard tool
@@ -28,8 +30,38 @@ BuildRequires: kf6-syntax-highlighting-devel
 Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++,
 which aims to be a native-desktop alternative to the amazing web-based Excalidraw.
 
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: lib%{name}gui%soname = %EVR
+Requires: lib%{name}widgets%soname = %EVR
+Requires: libstandardformplugin%soname = %EVR
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n lib%{name}gui%soname
+Group: System/Libraries
+Summary: %name library
+%description -n lib%{name}gui%soname
+%name library.
+
+%package -n lib%{name}widgets%soname
+Group: System/Libraries
+Summary: %name library
+%description -n lib%{name}widgets%soname
+%name library.
+
+%package -n libstandardformplugin%soname
+Group: System/Libraries
+Summary: %name library
+%description -n libstandardformplugin%soname
+%name library.
+
 %prep
 %setup
+#seted lib devel path
+subst 's|DrawyCore|include/DrawyCore|' src/gui/CMakeLists.txt
 
 %build
 %K6cmake
@@ -43,15 +75,32 @@ which aims to be a native-desktop alternative to the amazing web-based Excalidra
 %files -f %name.lang
 %doc *.md LICENSES
 %_bindir/%name
-%_libdir/*.so.*
-%_libdir/kf?/devel/*.so
 %_libdir/qt?/plugins/drawypluginforms/*.so
 %_datadir/applications/%oname.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_datadir/metainfo/%oname.metainfo.xml
 %_datadir/qlogging-categories?/%name.categories
 
+%files devel
+%_libdir/kf?/devel/*.so
+%_includedir/DrawyCore
+
+%files -n lib%{name}gui%soname
+%_libdir/lib%{name}gui.so.%soname
+%_libdir/lib%{name}gui.so.%apiversion
+
+%files -n lib%{name}widgets%soname
+%_libdir/lib%{name}widgets.so.%soname
+%_libdir/lib%{name}widgets.so.%apiversion
+
+%files -n libstandardformplugin%soname
+%_libdir/libstandardformplugin.so.%soname
+%_libdir/libstandardformplugin.so.%apiversion
+
 %changelog
+* Tue Mar 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260309-alt1
+- updated to git.6d6ebd1b1d
+
 * Sun Mar 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260228-alt1
 - updated to git.170e895b33
 
