@@ -1,7 +1,7 @@
 %define xdg_name io.github.zingytomato.netpeek
 
 Name: netpeek
-Version: 0.2.3.1
+Version: 0.2.6
 Release: alt1
 License: GPL-3.0
 
@@ -23,6 +23,8 @@ BuildRequires: meson rpm-build-python3
 BuildRequires: pkgconfig(gio-2.0)
 
 BuildRequires: gtk4-update-icon-cache
+
+Requires: nmap
 
 %add_python3_path %_datadir/%name
 
@@ -51,5 +53,8 @@ that helps you discover devices on your local network.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.6-alt1
+- new version 0.2.6 (with rpmrb script)
+
 * Sat Aug 09 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.3.1-alt1
 - Initial build
