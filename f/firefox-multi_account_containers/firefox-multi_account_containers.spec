@@ -4,7 +4,7 @@
 %define cid	@testpilot-containers
 
 Name:		%firefox_name-%rname
-Version:	8.1.3
+Version:	8.3.6
 Release:	alt1
 
 Summary:	Firefox Multi-Account Containers extension
@@ -47,5 +47,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Feb 24 2026 Nikolay A. Fetisov <naf@altlinux.org> 8.3.6-alt1
+- New version
+
 * Mon Nov 27 2023 Nikolay A. Fetisov <naf@altlinux.org> 8.1.3-alt1
 - Initial build for ALT Linux Sisyphus
