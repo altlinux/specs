@@ -1,8 +1,8 @@
-%global nnuehash1 1c0000000000
+%global nnuehash1 c288c895ea92
 %global nnuehash2 37f18f62d772
 
 Name: stockfish
-Version: 17.1
+Version: 18
 Release: alt1
 Group: Games/Boards
 
@@ -119,6 +119,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Tue Feb 24 2026 Leonid Znamenok <respublica@altlinux.org> 18-alt1
+- New version 18.
+
 * Mon Jun 09 2025 Leonid Znamenok <respublica@altlinux.org> 17.1-alt1
 - New version 17.1.
 
