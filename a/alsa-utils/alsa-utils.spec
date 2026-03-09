@@ -2,7 +2,7 @@
 
 Name: alsa-utils
 Version: 1.2.13
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -104,6 +104,13 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sun Mar 08 2026 Anton Midyukov <antohami@altlinux.org> 1:1.2.13-alt2
+- Add upstream fixes:
+  + alsactl: 90-alsa-restore.rules - fix alsa_restore_go/std (Closes: 56062)
+  + alsactl: 90-alsa-restore.rules - fix AMD acp-pdm-mach link
+  + amixer: fix unknown TVL sequence print
+  + alsactl: info - handle situations when devices are not available in kernel
+
 * Sun Jan 19 2025 Michael Shigorin <mike@altlinux.org> 1:1.2.13-alt1
 - 1.2.13
 
