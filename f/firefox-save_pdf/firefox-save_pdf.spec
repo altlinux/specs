@@ -4,7 +4,7 @@
 %define cid	\{077f4ca9-a296-4624-9524-4e9b3835f512\}
 
 Name:		%firefox_name-%rname
-Version:	0.1
+Version:	0.2
 Release:	alt1
 
 Summary:	Save PDF Firefox extension
@@ -42,5 +42,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.2-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
