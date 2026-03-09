@@ -4,7 +4,7 @@
 %def_without doc
 
 Name: python3-module-coverage
-Version: 7.10.7
+Version: 7.13.4
 Release: alt1
 
 Summary: A tool for measuring code coverage of Python programs
@@ -96,6 +96,7 @@ pytest3
 %_bindir/python3-coverage
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/a1_coverage.pth
 
 %if_with doc
 %files doc
@@ -103,6 +104,10 @@ pytest3
 %endif
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.13.4-alt1
+- new version 7.13.4
+- add a1_coverage.pth to files
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 7.10.7-alt1
 - new version 7.10.7
 
