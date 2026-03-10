@@ -3,7 +3,7 @@
 
 Name:    proxmox-datacenter-manager
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 License: AGPL-3.0
 Summary: Manage multiple Proxmox VE cluster and other Proxmox projects
 Group:   System/Servers
@@ -105,7 +105,7 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 
 %pre
 %_sbindir/groupadd -r -f www-data 2>/dev/null ||:
-%_sbindir/useradd -r -g www-data -M -d /var/www -c 'www-data' -s '/sbin/nologin' www-data 2>/dev/null || :
+%_sbindir/useradd -r -g www-data -M -d /var/www -c 'www-data' -s '/sbin/nologin' www-data 2>/dev/null ||:
 
 %files
 %doc debian/copyright
@@ -137,8 +137,12 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 %_datadir/javascript/%name/
 
 %changelog
+* Tue Mar 10 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.2-alt1.1
+- adapt package upgrade
+- remove subscription/support cmds from report
+
 * Thu Feb 12 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.2-alt1
-- new wersion
+- new version
 
 * Wed Oct 22 2025 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1.1
 - NMU: build on loongarch64
