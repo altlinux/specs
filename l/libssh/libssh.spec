@@ -7,7 +7,7 @@
 %define libssh libssh
 
 Name: libssh
-Version: 0.11.3
+Version: 0.11.4
 Release: alt1
 
 Group: System/Libraries
@@ -114,6 +114,10 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Tue Mar 10 2026 Alexander Danilov <admsasha@altlinux.org> 0.11.4-alt1
+- new version (fixes: CVE-2025-14821, CVE-2026-0964, CVE-2026-0965, 
+  CVE-2026-0966, CVE-2026-0967, CVE-2026-0968)
+
 * Wed Sep 24 2025 Alexander Danilov <admsasha@altlinux.org> 0.11.3-alt1
 - new version (fixes: CVE-2025-8114 CVE-2025-8277)
 
