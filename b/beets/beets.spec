@@ -5,7 +5,7 @@
 
 Name: beets
 Version: 2.6.2
-Release: alt1
+Release: alt2
 Summary: Music library manager and MusicBrainz tagger.
 License: MIT and ISC
 Group: Sound
@@ -70,6 +70,7 @@ Requires: ffmpeg
 Requires: ImageMagick-tools
 Requires: python3(flask)
 Requires: python3(lap)
+Requires: python3(beetsplug)
 
 
 %if_with check
@@ -79,7 +80,6 @@ BuildRequires: python3-module-requests-mock
 BuildRequires: python3-module-pytest-flask
 %endif
 
-%add_python3_req_skip beetsplug
 %add_python3_req_skip titlecase
 
 %description
@@ -110,6 +110,7 @@ Requires: python3(mpd)
 Requires: python3-module-pygobject3
 Requires: python3(flask)
 Requires: python3(soco)
+Provides: python3(beetsplug)
 
 %description -n python3-module-beetsplug
 Contains a number of plugins to improve meta-data, format paths,
@@ -141,7 +142,10 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %python3_sitelibdir/beetsplug/
 
 %changelog
-* Tue Mar 04 2026 Pavel Shilov <zerospirit@altlinux.org> 2.6.2-alt1
+* Tue Mar 10 2026 Pavel Shilov <zerospirit@altlinux.org> 2.6.2-alt2
+- Update to fix (ALT #58167)
+
+* Wed Mar 04 2026 Pavel Shilov <zerospirit@altlinux.org> 2.6.2-alt1
 - Update to new version 2.6.2.
 
 * Tue Oct 21 2025 Pavel Shilov <zerospirit@altlinux.org> 2.5.1-alt1
