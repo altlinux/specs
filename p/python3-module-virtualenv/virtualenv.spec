@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.38.0
+Version: 21.1.0
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 BuildRequires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
 %endif
 
@@ -62,6 +62,9 @@ rm src/%mod_name/seed/wheels/embed/*.whl
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -80,6 +83,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 21.1.0-alt1
+- 20.38.0 -> 21.1.0.
+
 * Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 20.38.0-alt1
 - 20.36.1 -> 20.38.0.
 
