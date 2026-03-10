@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 Summary: Fast, spec compliant Python 3.13+ tokenizer
 License: MIT
@@ -31,10 +31,14 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
+# disable mypycifying because it's alpha sw
+export PYTOKENS_USE_MYPYC=0
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
 %build
+# disable mypycifying because it's alpha sw
+export PYTOKENS_USE_MYPYC=0
 %pyproject_build
 
 %install
@@ -49,6 +53,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.3.0 -> 0.4.1.
+
 * Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - 0.2.0 -> 0.3.0.
 
