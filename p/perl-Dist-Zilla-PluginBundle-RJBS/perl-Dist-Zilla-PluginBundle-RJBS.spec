@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-PluginBundle-RJBS
 
 Name: perl-Dist-Zilla-PluginBundle-RJBS
-Version: 5.035
+Version: 5.036
 Release: alt1
 
 Summary: BeLike::RJBS when you build your dists
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Mon Jan 23 2017
-# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Dist-Zilla perl-Encode perl-Moose perl-Parse-CPAN-Meta perl-Pod-Elemental perl-Pod-Elemental-PerlMunger perl-Pod-Weaver perl-devel python-base python-modules python3-base
-BuildRequires: perl-Dist-Zilla-Plugin-CheckChangesHasContent perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-CheckPrereqsIndexed perl-Dist-Zilla-Plugin-Git perl-Dist-Zilla-Plugin-Git-Contributors perl-Dist-Zilla-Plugin-GithubMeta perl-Dist-Zilla-Plugin-PodWeaver perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-TaskWeaver perl-Dist-Zilla-Plugin-Test-ReportPrereqs perl-Pod-Elemental-Transformer-List perl-Pod-Weaver-Section-Contributors
+# Automatically added by buildreq on Tue Mar 10 2026
+# optimized out: libgpg-error perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Data-Section perl-Digest-SHA perl-Dist-Zilla perl-Encode perl-JSON-PP perl-Moose perl-Parse-CPAN-Meta perl-Path-Tiny perl-Pod-Elemental perl-Pod-Elemental-PerlMunger perl-Pod-Weaver perl-Sub-Exporter-ForMethods perl-devel perl-parent python3 python3-base sh5
+BuildRequires: perl-Dist-Zilla-Config-Slicer perl-Dist-Zilla-Plugin-CheckChangesHasContent perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-CheckPrereqsIndexed perl-Dist-Zilla-Plugin-Git perl-Dist-Zilla-Plugin-Git-Contributors perl-Dist-Zilla-Plugin-Git-Remote-Check perl-Dist-Zilla-Plugin-GithubMeta perl-Dist-Zilla-Plugin-PodWeaver perl-Dist-Zilla-Plugin-PromptIfStale perl-Dist-Zilla-Plugin-TaskWeaver perl-Dist-Zilla-Plugin-Test-Compile perl-Dist-Zilla-Plugin-Test-ReportPrereqs perl-Dist-Zilla-Role-PluginBundle-PluginRemover perl-Pod-Elemental-Transformer-List perl-Pod-Weaver-Section-Contributors
 
 %description
 Perl module Dist::Zilla::PluginBundle::RJBS is a Dist::Zilla plugin
@@ -45,6 +45,9 @@ to bundle settings that RJBS uses.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Tue Mar 10 2026 Nikolay A. Fetisov <naf@altlinux.org> 5.036-alt1
+- New version
+
 * Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 5.035-alt1
 - New version
 
