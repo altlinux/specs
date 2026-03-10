@@ -14,7 +14,7 @@
 
 Name: firefox-esr
 Version: 140.8.0
-Release: alt1
+Release: alt2
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -418,21 +418,12 @@ rm -rf -- \
 install -D -m 644 .rpm/policies.json \
 	%buildroot%_sysconfdir/firefox/policies/policies.json
 
-# Provide environment variables
-for i in sh csh; do
-	install -D -m 755 .rpm/firefox-esr.$i \
-		%buildroot%_sysconfdir/profile.d/firefox-esr.$i
-done
-
 %files
 %dir %_sysconfdir/firefox
 %dir %_sysconfdir/firefox/defaults
 %dir %_sysconfdir/firefox/defaults/pref
 %dir %_sysconfdir/firefox/policies
 %config(noreplace) %_sysconfdir/firefox/policies/policies.json
-%dir %_sysconfdir/profile.d
-%config(noreplace) %_sysconfdir/profile.d/firefox-esr.sh
-%config(noreplace) %_sysconfdir/profile.d/firefox-esr.csh
 %_altdir/firefox
 %_bindir/firefox
 %_bindir/firefox-wayland
@@ -452,6 +443,9 @@ done
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Mar 10 2026 Pavel Vasenkov <pav@altlinux.org> 140.8.0-alt2
+- Fix "Thunderbird and Firefox accounts are reset." (Closes: #58172) 
+
 * Mon Mar 02 2026 Pavel Vasenkov <pav@altlinux.org> 140.8.0-alt1
 - New ESR version.
 - Security fixes:
