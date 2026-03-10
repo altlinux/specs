@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 6.9.1
-Release: alt2
+Release: alt3
 
 Summary: Python 3 bindings for Qt 6
 License: GPL-3.0
@@ -54,6 +54,8 @@ BuildRequires: qt6-declarative-devel qt6-webchannel-devel
 #endif
 
 Requires: python3-module-PyQt6-sip
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 %description
 Python 3 bindings for the Qt C++ class library. Also includes a PyQt6 backend
@@ -149,6 +151,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Tue Mar 10 2026 Anton Zhukharev <ancieg@altlinux.org> 6.9.1-alt3
+- NMU: Mapped PyPI name to distro's one.
+
 * Thu Oct 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
 - NMU: update build requires to the future when QtLocation bindings will appear
 
