@@ -2,7 +2,7 @@
 
 Name:    exhibit
 Version: 1.6.0
-Release: alt1.g656eaea.7
+Release: alt2
 
 Summary: 3D models viewer
 License: GPL-3.0-or-later
@@ -60,6 +60,9 @@ PLY, OBJ, FBX, Alembic).
 
 
 %changelog
+* Fri Mar 06 2026 Valentin Sokolov <sova@altlinux.org> 1.6.0-alt2
+- Updated to upstream tag v1.6.0.
+
 * Thu Jan 22 2026 Valentin Sokolov <sova@altlinux.org> 1.6.0-alt1.g656eaea.7
 - Update to version 1.6.0
 
