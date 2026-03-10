@@ -1,7 +1,7 @@
 %define pear_name DB
 
 Name: pear-DB
-Version: 1.11.0
+Version: 1.12.3
 Release: alt1
 
 Summary: Database Abstraction Layer
@@ -64,6 +64,8 @@ DB is compatible with both PHP 4 and PHP 5.
 
 %install
 %pear_install_std
+# Remove broken shell scripts that cause shell.req to fail
+find %buildroot -name 'run.cvs' -delete
 
 %post
 %register_pear_module
@@ -80,6 +82,10 @@ DB is compatible with both PHP 4 and PHP 5.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.3-alt1
+- new version 1.12.3
+- fix build: remove broken run.cvs test scripts
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
 - new version 1.11.0 (with rpmrb script)
 
