@@ -1,8 +1,8 @@
-%define sover 351
+%define sover 360
 
 Name: libplacebo
-Version: 7.351.0
-Release: alt0.2
+Version: 7.360.0
+Release: alt0.1
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 License: LGPL-2.1+
@@ -57,6 +57,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Mar 09 2026 L.A. Kostis <lakostis@altlinux.ru> 7.360.0-alt0.1
+- 7.360.0.
+
 * Sat Nov 08 2025 L.A. Kostis <lakostis@altlinux.ru> 7.351.0-alt0.2
 - vulkan: fix for python 3.14.
 
