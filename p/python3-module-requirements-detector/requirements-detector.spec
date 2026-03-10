@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Python tool to find and list requirements of a Python project
@@ -58,6 +58,9 @@ depends on.
 
 
 %changelog
+* Tue Mar 10 2026 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Wed Nov 13 2024 Anton Vyatkin <toni@altlinux.org> 1.3.2-alt1
 - New version 1.3.2.
 
