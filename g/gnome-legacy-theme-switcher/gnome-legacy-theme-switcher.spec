@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-legacy-theme-switcher
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: A service, that applies gnome dark theme to "legacy" applications
@@ -51,6 +51,9 @@ BuildArch: noarch
 %_libexecdir/systemd/user/gnome-session@gnome.target.d/%name.conf
 
 %changelog
+* Tue Mar 10 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.3-alt1
+- New version 0.1.3.
+
 * Fri Jun 06 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.2-alt1
 - Initial build. (thx parovoz@alt)
 
