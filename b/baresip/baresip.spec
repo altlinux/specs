@@ -1,6 +1,6 @@
 Name: baresip
 Version: 4.6.0
-Release: alt1
+Release: alt2
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
 License: BSD-3-Clause
@@ -8,12 +8,13 @@ Group: Communications
 
 Url: https://github.com/baresip/baresip
 
-#Source-url: https://github.com/baresip/baresip/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/baresip/baresip/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
 BuildRequires: libre-devel >= 4.5.0
+BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
 
 Obsoletes: %{name}-mpa < 4.3.0
 
@@ -48,6 +49,16 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the Advanced Audio Coding (AAC) audio codec.
+
+%package amr
+Summary: AMR audio codec module for baresip
+Group: Communications
+Requires: %name = %version-%release
+
+%description amr
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module provides the Adaptive Multi-Rate (AMR) audio codec.
 
 %package alsa
 Summary: ALSA audio driver module for baresip
@@ -132,6 +143,17 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the communication channel to control and monitor baresip via D-BUS.
+
+%package directfb
+Summary: DirectFB video output driver module for baresip
+Group: Communications
+BuildRequires: libdirectfb-devel
+Requires: %name = %version-%release
+
+%description directfb
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module provides the DirectFB video output driver.
 
 %package g722
 Summary: G.722 audio codec module for baresip
@@ -360,7 +382,7 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.25*
+%_libdir/lib%name.so.26*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -414,6 +436,9 @@ This module provides the X11 video output driver.
 %files aac
 %_libdir/%name/modules/aac.so
 
+%files amr
+%_libdir/%name/modules/amr.so
+
 %files alsa
 %_libdir/%name/modules/alsa.so
 
@@ -434,6 +459,9 @@ This module provides the X11 video output driver.
 
 %files ctrl_dbus
 %_libdir/%name/modules/ctrl_dbus.so
+
+%files directfb
+%_libdir/%name/modules/directfb.so
 
 %files g722
 %_libdir/%name/modules/g722.so
@@ -495,6 +523,13 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.0-alt2
+- real update to 4.6.0
+- fix Source-url
+- fix soname (so.25 -> so.26)
+- add amr and directfb subpackages
+- add libopencore-amrnb-devel libopencore-amrwb-devel to BR
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.0-alt1
 - new version 4.6.0
 
