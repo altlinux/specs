@@ -5,15 +5,14 @@
 %def_with system_libzstd
 
 Name: victorialogs
-Version: 1.27.0
-Release: alt2
+Version: 1.47.0
+Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
 Group: Development/Other
 License: Apache-2.0
 Url: https://victoriametrics.com/
-
-Packager: Alexey Shabalin <shaba@altlinux.org>
+Vcs: https://github.com/VictoriaMetrics/VictoriaLogs.git
 
 Source0: %name-%version.tar
 
@@ -155,8 +154,9 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %files common
 %dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs
 %config(noreplace) %attr(0640, root, _%name) %_sysconfdir/sysconfig/%name
-%doc docs/victorialogs/CHANGELOG.md docs/victorialogs/FAQ.md docs/victorialogs/LogsQL.md
+%doc docs/victorialogs/CHANGELOG.md docs/victorialogs/FAQ.md docs/victorialogs/logsql.md
 %doc docs/victorialogs/QuickStart.md docs/victorialogs/README.md docs/victorialogs/data-ingestion
+%doc docs/victorialogs/querying
 
 %files vlagent
 %_bindir/vlagent
@@ -165,6 +165,9 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs/vlagent-remotewrite-data
 
 %changelog
+* Tue Mar 10 2026 Alexey Shabalin <shaba@altlinux.org> 1.47.0-alt1
+- updated from 1.27.0 to 1.47.0
+
 * Wed Aug 13 2025 Ivan A. Melnikov <iv@altlinux.org> 1.27.0-alt2
 - Use libzstd from the repository instead of the vendored one
   (fixes FTBFS on loongarch64).
