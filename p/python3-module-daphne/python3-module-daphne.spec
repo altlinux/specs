@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.2
-Release: alt3
+Version: 4.2.1
+Release: alt1
 
 Summary: Django Channels HTTP/WebSocket server
 License: BSD-3-Clause
@@ -14,7 +14,6 @@ URL: https://github.com/django/daphne
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch: daphne-4.1.2-test-twisted-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -37,7 +36,6 @@ prefixing to determine WebSocket endpoints versus HTTP endpoints.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -56,6 +54,9 @@ prefixing to determine WebSocket endpoints versus HTTP endpoints.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 10 2026 Andrey Kovalev <ded@altlinux.org> 4.2.1-alt1
+- Updated to upstream version 4.2.1.
+
 * Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 4.1.2-alt3
 - Built with Hypothesis supplied without numerous redundant dependencies.
 
