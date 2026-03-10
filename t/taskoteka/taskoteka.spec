@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,5 +52,15 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Mar 10 2026 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- added ACL module and needs_approval query parameter for GET /tasks
+  (--acl-dir, --allow-unlisted options)
+- needs_approval filter matches girar three-state logic exactly:
+  superuser handling, qualified disapproval, maint-first semantics
+- added relax_git_inheritance_check_for_commit and
+  relax_lastchange_inheritance_check_for_evr fields to subtask output
+- optimized refresh: removed unnecessary stat() calls, EPERM tasks
+  check acl dirs for new approvals, full reread every 10 minutes
+
 * Tue Mar 10 2026 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
 - initial build for Sisyphus
