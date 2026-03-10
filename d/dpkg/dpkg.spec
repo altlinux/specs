@@ -2,8 +2,8 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.21.22
-Release: alt4
+Version: 1.23.5
+Release: alt1
 
 Summary: Package maintenance system for Debian Linux
 
@@ -13,7 +13,6 @@ Url: http://packages.debian.org/unstable/base/dpkg
 
 Source0: http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 Patch: dpkg-ALT-e2k-cputable.patch
-Patch2: CVE-2025-6297.patch
 
 # boostrap notes:
 # 1) build dep loop via perl-Dpkg (just add noarch package);
@@ -24,6 +23,7 @@ Patch2: CVE-2025-6297.patch
 
 BuildRequires: perl-podlators perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
 
+BuildRequires: gcc-c++
 BuildRequires: zlib-devel liblzma-devel libmd-devel libzstd-devel
 
 Requires: perl-Digest-SHA perl-Term-ANSIColor
@@ -42,8 +42,7 @@ This module provides dpkg functionalities.
 %set_perl_req_method relaxed
 %prep
 %setup
-%patch -p2
-%patch2 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -59,7 +58,6 @@ This module provides dpkg functionalities.
 %install
 %makeinstall_std
 
-rm -f %buildroot%_man7dir/deb-version.*
 
 # cleanup
 %if_without extbuild
@@ -72,9 +70,7 @@ rm -rf %buildroot%_libdir/pkgconfig/libdpkg.pc
 
 # remove unpacked files
 rm -v %buildroot/usr/lib/dpkg/dpkg-db-backup
-rm -v %buildroot/usr/sbin/dpkg-fsys-usrunmess
 rm -rf %buildroot/usr/share/doc/dpkg/
-#rm -v %buildroot%_man8dir/dpkg-fsys-usrunmess.8.*
 rm -v %buildroot/usr/share/zsh/vendor-completions/_dpkg-parsechangelog
 
 
@@ -95,7 +91,8 @@ cat dpkg-dev.lang >> %name.lang
 %dir %_sysconfdir/%name
 %_man1dir/dpkg*
 %_man5dir/*
-%_man8dir/*
+%_man7dir/*
+/usr/lib/dpkg/dpkg-db-keeper
 %if_with extbuild
 %lang(pl) %_mandir/pl/man?/*
 %lang(de) %_mandir/de/man?/*
@@ -117,6 +114,11 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.5-alt1
+- new version 1.23.5
+- update e2k cputable patch
+- drop CVE-2025-6297 patch (fixed upstream)
+
 * Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt4
 - add Requires: perl-Term-ANSIColor (ALT bug 56550)
 
