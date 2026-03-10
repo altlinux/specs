@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.0.0
+Version: 11.0.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -22,7 +22,11 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra django
+%pyproject_builddeps_metadata_extra twisted
+%pyproject_builddeps_metadata_extra sybil
+%pyproject_builddeps_check
+%pyproject_builddeps -- dep_group1 %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter}
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-twisted-core-tests
 %endif
@@ -36,6 +40,10 @@ when writing unit tests or doc tests.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%pyproject_deps_resync dep_group1 pep735 django-dev
+%endif
 
 %build
 %pyproject_build
@@ -43,18 +51,17 @@ when writing unit tests or doc tests.
 %install
 %pyproject_install
 
-# don't ship tests
-rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
-
 %check
-%pyproject_run_pytest -ra %mod_name/tests/
+%pyproject_run_pytest -vra -Wignore
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 11.0.0-alt1
+- 10.0.0 -> 11.0.0.
+
 * Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 10.0.0-alt1
 - 9.1.0 -> 10.0.0.
 
