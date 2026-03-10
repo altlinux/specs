@@ -1,5 +1,5 @@
 Name: input-remapper
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: An easy to use tool to change the behaviour of your input devices
@@ -66,6 +66,9 @@ chmod a+x %buildroot%_bindir/*
 %_iconsdir/hicolor/scalable/apps/input-remapper.svg
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0
+
 * Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1
 - switch to pyproject build
