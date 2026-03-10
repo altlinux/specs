@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.45.0
+Version: 4.49.1
 Release: alt1
 
 Summary: Generic virtualenv management and test command line tool
@@ -80,6 +80,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 4.49.1-alt1
+- 4.45.0 -> 4.49.1.
+
 * Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 4.45.0-alt1
 - 4.42.0 -> 4.45.0.
 
