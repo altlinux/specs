@@ -1,7 +1,7 @@
 %define pear_name Net_IMAP
 
 Name: pear-Net_IMAP
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Provides an implementation of the IMAP protocol
@@ -52,6 +52,9 @@ Net_Socket and the optional Auth_SASL class.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
 - new version 1.1.3 (with rpmrb script)
 
