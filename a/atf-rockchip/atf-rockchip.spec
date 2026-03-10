@@ -1,12 +1,12 @@
 Name: atf-rockchip
 Version: 2.14
-Release: alt1
+Release: alt2
 
 Summary: ARM Trusted Firmware
 License: BSD
 Group: System/Kernel and hardware
 
-Conflicts: rk35-firmware < 20241023-alt3
+Conflicts: rk35-firmware < 20241023-alt4
 
 %ifndef crossbuild
 ExclusiveArch: aarch64
@@ -27,7 +27,7 @@ This package provides support for the RK3328, RK3399 and PX30 SoC families.
 
 %build
 export CROSS_COMPILE=aarch64-none-elf-
-for plat in px30 rk3328 rk3368 rk3399 rk3568 rk3576 rk3588; do
+for plat in px30 rk3328 rk3368 rk3399 rk3576 rk3588; do
 	make distclean
 	make -j8 PLAT=$plat bl31
 	install -pm0644 -D build/$plat/release/bl31/bl31.elf out/$plat/bl31.elf
@@ -43,6 +43,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Tue Mar 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14-alt2
+- 3568 bl31 causes regressions, drop it again
+
 * Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14-alt1
 - 2.14.0 released
 

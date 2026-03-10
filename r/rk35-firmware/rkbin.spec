@@ -1,10 +1,12 @@
 Name: rk35-firmware
 Version: 20241023
-Release: alt3
+Release: alt4
 
 Summary: RK35 BSP firmware
 License: Distributable
 Group: System/Kernel and hardware
+
+Conflicts: atf-rockchip < 2.14-alt2
 
 AutoReqProv: no
 
@@ -18,17 +20,22 @@ Source: %name.tar
 %summary
 
 %install
-mkdir -p %buildroot%_datadir/{rk35{6,8}8,rkbin/bin/rk35}
+mkdir -p %buildroot%_datadir/{atf/rk35{6,8}8,rkbin/bin/rk35}
 tar xf %SOURCE0 -C %buildroot%_datadir/rkbin/bin/rk35
+ln -svr %buildroot%_datadir/rkbin/bin/rk35/*3568*bl31* %buildroot%_datadir/atf/rk3568/bl31.elf
 %set_verify_elf_method none
 
 %files
 %_datadir/rkbin/bin/rk35
+%_datadir/atf/rk3568
 
 %check
 cd %buildroot%_datadir/rkbin/bin/rk35 && md5sum -c MD5SUM
 
 %changelog
+* Tue Mar 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20241023-alt4
+- readded bl31 for rk3568, again
+
 * Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 20241023-alt3
 - dropped rk3568 bl31 in favour of ATF one
 

@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2026.01
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -14,7 +14,7 @@ ExclusiveArch: aarch64
 Source: %name-%version-%release.tar
 
 BuildRequires: aarch64-none-elf-gcc
-BuildRequires: atf-rockchip >= 2.12 rk35-firmware >= 20241023
+BuildRequires: atf-rockchip >= 2.14-alt2 rk35-firmware >= 20241023-alt4
 BuildRequires: bc ccache dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 BuildRequires: python3(libfdt)
 BuildRequires: python3(setuptools)
@@ -80,6 +80,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Mar 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.01-alt2
+- rebuilt with vendor-supplied rk3568 bl31 (closes: 58099)
+
 * Tue Jan 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.01-alt1
 - 2026.01 released
 
