@@ -3,9 +3,10 @@
 # true for 3.010
 # ERROR: spam-assassin version 4.000000 is not supported (only versions 2.x)
 %def_disable spamassasin
+%def_without test
 
 Name: perl-%dist
-Version: 3.011
+Version: 3.012
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -54,7 +55,7 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %endif
 
 %files
-%doc ChangeLog README README.todo examples README.md
+%doc ChangeLog README.todo examples README.md
 %perl_vendor_privlib/Mail/
 %if_enabled spamassasin
 %exclude %perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.p*
@@ -68,6 +69,10 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %endif
 
 %changelog
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.012-alt1
+- new version 3.012
+- disable tests (network-dependent, fail in hasher)
+
 * Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 3.011-alt1
 - automated CPAN update
 
