@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.26.0
+Version: 0.27.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 10 2026 Anton Farygin <rider@altlinux.org> 0.27.0-alt1
+- added task_api library for Tasks API with automatic SSH fallback
+- added task add command with repo/del/rebuild/copy actions
+- added task run command to queue tasks for build
+- added task delsub alias for task delete
+- added --needs-approval filter to task ls (maint/tester)
+- added swift, aborted_by, depends header fields to task show
+- added new subtask fields from Taskoteka API to task show
+- added TAB completion for task IDs, users, actions and branches
+- fixed task rebuild and task test-rebuild branch derivation from task_repo
+
 * Mon Mar 09 2026 Anton Farygin <rider@altlinux.org> 0.26.0-alt1
 - added task rm command for removing tasks from gyle
 - added task show command with colorized output, brief and JSON modes
