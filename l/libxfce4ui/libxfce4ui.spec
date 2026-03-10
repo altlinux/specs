@@ -10,12 +10,10 @@
 %def_enable gudev
 %endif
 
-%def_disable glade
-
-%def_disable docs
+%def_enable docs
 
 Name: libxfce4ui
-Version: 4.21.3
+Version: 4.21.7
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -35,7 +33,6 @@ BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel
 BuildRequires: libX11-devel libICE-devel libSM-devel libstartup-notification-devel
 BuildRequires: libgtk+3-devel
-%{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_libgtop:BuildRequires: libgtop-devel}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
@@ -148,7 +145,6 @@ This package conteins Xfce utilities for %name.
 	-Dx11=enabled \
 	-Dwayland=enabled \
 	-Dstartup-notification=enabled \
-	%{subst_enable_meson_feature glade glade} \
 	%{subst_enable_meson_feature libgtop libgtop} \
 	%{subst_enable_meson_feature gudev gudev} \
 	%{subst_enable_meson_feature epoxy epoxy} \
@@ -188,12 +184,6 @@ This package conteins Xfce utilities for %name.
 %_libdir/%libxfce4kbd_name_gtk3.so
 %_libdir/%libxfce4ui_name_gtk3.so
 
-%if_enabled glade
-%_datadir/glade/catalogs/*.xml
-%_datadir/glade/pixmaps/*/*/*/*
-%_libdir/glade/modules/*.so
-%endif
-
 %if_enabled introspection
 %files gtk3-gir
 %_libdir/girepository-1.0/*.typelib
@@ -216,6 +206,10 @@ This package conteins Xfce utilities for %name.
 %_bindir/xfce-open
 
 %changelog
+* Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 4.21.7-alt1
+- Returned devel-doc subpackage.
+- Updated to 4.21.7.
+
 * Mon Jan 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1
 - Renamed build options to match meson options.
 - Added utils subpackage.
