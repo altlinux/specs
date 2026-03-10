@@ -1,5 +1,7 @@
+%define soname 1
+
 Name: nlopt
-Version: 2.9.1
+Version: 2.10.1
 Release: alt1
 
 Summary: Library for nonlinear optimization
@@ -23,11 +25,12 @@ providing a common interface for a number of different free optimization
 routines available online as well as original implementations of various
 other algorithms.
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: Shared libraries of NLopt
 Group: System/Libraries
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+%description -n lib%name%soname
 NLopt is a free/open-source library for nonlinear optimization,
 providing a common interface for a number of different free optimization
 routines available online as well as original implementations of various
@@ -35,22 +38,10 @@ other algorithms.
 
 This package contains shared libraries of NLopt.
 
-%package -n lib%name-cxx
-Summary: Shared libraries of NLopt (C++ interface)
-Group: System/Libraries
-
-%description -n lib%name-cxx
-NLopt is a free/open-source library for nonlinear optimization,
-providing a common interface for a number of different free optimization
-routines available online as well as original implementations of various
-other algorithms.
-
-This package contains shared libraries of NLopt (C++ interface).
-
 %package -n lib%name-devel
 Summary: Development files of NLopt
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 NLopt is a free/open-source library for nonlinear optimization,
@@ -63,7 +54,7 @@ This package contains development files of NLopt.
 %package tests
 Summary: Tests for NLopt
 Group: Sciences/Mathematics
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %description tests
 NLopt is a free/open-source library for nonlinear optimization,
@@ -76,7 +67,7 @@ This package contains tests for NLopt.
 %package -n python3-module-%name
 Summary: Python wrapper for NLopt 
 Group: Development/Python
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %description -n python3-module-%name
 NLopt is a free/open-source library for nonlinear optimization,
@@ -113,9 +104,10 @@ This package contains development documentation for NLopt.
 %install
 %cmakeinstall_std
 
-%files -n lib%name
+%files -n lib%name%soname
 %doc AUTHORS ChangeLog COPYING NEWS.md README.md TODO
-%_libdir/*.so.*
+%_libdir/libnlopt.so.%soname
+%_libdir/libnlopt.so.%soname.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -135,6 +127,11 @@ This package contains development documentation for NLopt.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt1
+- new version 2.10.1
+- rename libnlopt to libnlopt1 per Shared Libs Policy (soname 1)
+- remove empty libnlopt-cxx subpackage
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
 - new version 2.9.1 (with rpmrb script)
 
