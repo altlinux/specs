@@ -1,9 +1,9 @@
 %define subname		avkys
-%define major	9.2
+%define major	9.3
 %define libname lib%name
 
 Name: webcamoid
-Version: %major.3
+Version: %major.0
 Release: alt1
 
 Summary: A webcam funny video tool
@@ -11,6 +11,7 @@ Summary: A webcam funny video tool
 Group: Video
 License: GPL-3.0-or-later
 Url: https://github.com/hipersayanX/webcamoid
+ExcludeArch: %ix86
 
 Packager: Alexei Mezin <alexvm@altlinux.ru>
 
@@ -109,6 +110,10 @@ sed -i -e 's|/qt/qml|/qt6/qml|' -e 's|/qt/plugins|/qt6/plugins|' CMakeLists.txt 
 %_libdir/*.so
 
 %changelog
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 9.3.0-alt1
+- new version 9.3.0
+- exclude i586 build (SIMD intrinsics fail on i586 target)
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 9.2.3-alt1
 - new version 9.2.3
 - the project switched to Qt6 since 9.2.0
