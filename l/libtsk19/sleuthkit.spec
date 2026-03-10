@@ -1,60 +1,31 @@
-%define soname 23
+%define soname 19
+%define oname sleuthkit
 
-Name: sleuthkit
-Version: 4.14.0
-Release: alt1
+Name: libtsk%soname
+Version: 4.12.1
+Release: alt2
 
-Summary: The Sleuth Kit
+Summary: Shared library of The Sleuth Kit (legacy)
 
 License: GPL
-Group: File tools
+Group: System/Legacy libraries
 Url: http://www.sleuthkit.org/sleuthkit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/sleuthkit/sleuthkit/releases/download/sleuthkit-%version/sleuthkit-%version.tar.gz
 Source: %name-%version.tar
-Source1: mac-robber-1.02.tar.bz2
 # https://github.com/sleuthkit/sleuthkit/issues/642
 Patch: sleuthkit-adapt-for-new-libewf.diff
 
-# Automatically added by buildreq on Sun Aug 04 2013
-# optimized out: bouncycastle bouncycastle-mail cppunit ecj gcc-java gnu-config libgcj4.7-jar libstdc++-devel python3-base zlib-devel
-BuildRequires: cppunit-devel gcc-c++ glibc-devel libaff-devel libewf-devel zlib-devel sharutils
+BuildRequires: gcc-c++ glibc-devel libaff-devel libewf-devel zlib-devel
 
 %description
-The Sleuth Kit (previously known as TASK) is a collection of UNIX-based command
-line file system forensic tools that allow an investigator to examine NTFS,
-FAT, FFS, EXT2FS, and EXT3FS file systems of a suspect computer in a
-non-intrusive fashion. The  tools have a layer-based design and can extract
-data from internal file system structures. Because the tools do not rely on the
-operating system to process the file systems, deleted and hidden content is
-shown.
-
-When performing a complete analysis of a system, command line tools can become
-tedious. The Autopsy Forensic Browser is a graphical interface to the tools in
-The Sleuth Kit, which allows one to more easily conduct an investigation.
-Autopsy provides case management, image integrity, keyword searching, and other
-automated operations.
-
-%package -n libtsk%soname
-Summary: Shared libraries of The Sleuth Kit
-Group: System/Libraries
-Obsoletes: libtsk < %EVR
-
-%description -n libtsk%soname
-Shared libraries of The Sleuth Kit.
-
-%package -n libtsk-devel
-Summary: Header files and libraries for developing applications which will use libtsk
-Group: Development/C
-Requires: libtsk%soname = %EVR
-
-%description -n libtsk-devel
-Header files and libraries for developing applications which will use libewf.
+Legacy shared library libtsk.so.19 for backward compatibility.
+Use libtsk23 for new development.
 
 %prep
-%setup -q -n %name-%version -a1
+%setup -q
 %patch -p2
 find -name Makefile.am | xargs subst "s| -static||g"
 
@@ -63,100 +34,23 @@ find -name Makefile.am | xargs subst "s| -static||g"
 %configure --disable-static
 %make_build
 
-gcc %optflags -o mac-robber mac-robber-1.02/mac-robber.c
-
-mv mac-robber-1.02/README README.mac-robber
-mv mac-robber-1.02/CHANGES CHANGES.mac-robber
-chmod 644 README.mac-robber
-
 %install
 %makeinstall_std
-
-install -d %buildroot%_datadir/sorter
-install -d %buildroot%_man1dir
-
-install -m755 mac-robber %buildroot%_bindir/
-#install -m644 man/man1/* %buildroot%_man1dir/
-#install -m644 share/sorter/* %buildroot%_datadir/sorter/
+# Keep only the library
+rm -rf %buildroot%_bindir
+rm -rf %buildroot%_includedir
+rm -f %buildroot%_libdir/*.so
+rm -rf %buildroot%_libdir/pkgconfig
+rm -rf %buildroot%_man1dir
+rm -rf %buildroot%_datadir/tsk
 
 %files
-%doc ChangeLog.txt INSTALL.txt README.mac-robber README.md licenses/
-%doc CHANGES.mac-robber
-%_bindir/blkcalc
-%_bindir/blkcat
-#_bindir/disk_sreset
-#_bindir/disk_stat
-%_bindir/fcat
-%_bindir/fiwalk
-%_bindir/jpeg_extract
-%_bindir/blkls
-%_bindir/blkstat
-%_bindir/ffind
-%_bindir/fls
-%_bindir/fsstat
-%_bindir/hfind
-%_bindir/icat
-%_bindir/ifind
-%_bindir/ils
-%_bindir/img_cat
-%_bindir/img_stat
-%_bindir/istat
-%_bindir/jcat
-%_bindir/jls
-%_bindir/mac-robber
-%_bindir/mactime
-#%_bindir/md5
-%_bindir/mmls
-%_bindir/mmstat
-%_bindir/mmcat
-%_bindir/pstat
-%_bindir/sigfind
-%_bindir/sorter
-%_bindir/srch_strings
-%_bindir/tsk_*
-%_bindir/usnjls
-%_man1dir/blkcalc.1*
-%_man1dir/blkcat.1*
-#_man1dir/disk_sreset.1*
-#_man1dir/disk_stat.1*
-%_man1dir/blkls.1*
-%_man1dir/blkstat.1*
-%_man1dir/ffind.1*
-%_man1dir/fls.1*
-%_man1dir/fcat.1*
-%_man1dir/fsstat.1*
-%_man1dir/hfind.1*
-%_man1dir/icat.1*
-%_man1dir/ifind.1*
-%_man1dir/ils.1*
-%_man1dir/img_cat.1*
-%_man1dir/img_stat.1*
-%_man1dir/istat.1*
-%_man1dir/jcat.1*
-%_man1dir/jls.1*
-%_man1dir/mactime.1*
-%_man1dir/mmls.1*
-%_man1dir/mmcat.1*
-%_man1dir/mmstat.1*
-%_man1dir/sigfind.1*
-%_man1dir/sorter.1*
-%_man1dir/tsk_*
-%_man1dir/usnjls.1*
-%_datadir/tsk/
-
-%files -n libtsk%soname
 %_libdir/libtsk.so.%soname
 %_libdir/libtsk.so.%soname.*
 
-%files -n libtsk-devel
-%_libdir/*.so
-%_includedir/tsk/
-%_pkgconfigdir/tsk.pc
-
 %changelog
-* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.14.0-alt1
-- new version 4.14.0
-- rename libtsk to libtsk23 per Shared Libs Policy (soname 23)
+* Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.12.1-alt2
+- rebuild as legacy libtsk19 (soname 19) per Shared Libs Policy
 
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.12.1-alt1
 - new version 4.12.1 (with rpmrb script)
