@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.12.0
-Release: alt5
+Version: 0.12.1
+Release: alt1
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -11,7 +11,6 @@ License: GPLv3
 Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
-Patch1: %name-fmt11-fix.patch
 Patch2: alt-qt-6.10.patch
 
 BuildRequires: cmake gcc-c++
@@ -20,7 +19,8 @@ BuildRequires: qt6-declarative-devel libkdsingleapplication-qt6-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: boost-asio-devel boost-devel-headers boost-signals-devel
 BuildRequires: libssl-devel zlib-devel libtweeny-devel liblmdbxx-devel
-BuildRequires: libmtxclient-devel liblmdb-devel cmark-devel
+BuildRequires: libmtxclient-devel >= 0.10.1
+BuildRequires: liblmdb-devel cmark-devel
 BuildRequires: nlohmann-json-devel libfmt-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
 BuildRequires: gst-plugins-bad-devel gst-plugins-devel
@@ -85,6 +85,9 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Mar 10 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.12.1-alt1
+- New version 0.12.1.
+
 * Sat Feb 14 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.12.0-alt5
 - e2k build fix
 
