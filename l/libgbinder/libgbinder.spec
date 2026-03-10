@@ -3,7 +3,7 @@
 
 Name: libgbinder
 
-Version: 1.1.43
+Version: 1.1.44
 Release: alt0.1
 Summary: Binder client library
 License: BSD
@@ -86,6 +86,9 @@ make -C unit test
 %_bindir/binder-call
 
 %changelog
+* Mon Mar 09 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1.44-alt0.1
+- 1.1.44.
+
 * Sun Sep 21 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1.43-alt0.1
 - 1.1.43.
 
