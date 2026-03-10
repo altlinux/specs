@@ -16,7 +16,7 @@
 
 Name: exiv1
 Version: 1.00.0.9
-Release: alt1
+Release: alt2
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -103,6 +103,9 @@ __EOF__
 %_libdir/cmake/exiv2/
 
 %changelog
+* Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 1.00.0.9-alt2
+- update to main 9efd0ede
+
 * Wed Feb 04 2026 Sergey V Turchin <zerg@altlinux.org> 1.00.0.9-alt1
 - update to 1.00.0.9 f22a40e0
 
