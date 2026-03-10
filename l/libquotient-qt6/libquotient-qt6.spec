@@ -11,7 +11,7 @@ older use the previous name - libQMatrixClient.}
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: libquotient-qt6
-Version: 0.9.5
+Version: 0.9.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -66,6 +66,9 @@ rm -rf %buildroot/%_datadir/ndk-modules
 %_libdir/pkgconfig/%{aname}Qt?.pc
 
 %changelog
+* Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt1
+- new version
+
 * Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
 - new version
 
