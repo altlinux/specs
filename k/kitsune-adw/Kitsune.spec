@@ -1,0 +1,55 @@
+%define oname net.armatik.Kitsune
+%define nameS kitsune
+
+Name: kitsune-adw
+Version: 0.5.0
+Release: alt1
+
+Summary: Kitsune is an unofficial client for watching AniLiberty anime
+License: GPL-3.0-or-later
+Group: Video
+
+Url: https://altlinux.space/armatik/Kitsune
+Vcs: https://altlinux.space/armatik/Kitsune
+
+BuildArch: noarch
+AutoProv: nopython3
+
+Source: %name-%version.tar
+
+Requires: libwebp-pixbuf-loader
+%add_python3_path %_datadir/%nameS
+
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson pkgconfig(gtk4) pkgconfig(libadwaita-1) 
+BuildRequires: typelib(Adw) blueprint-compiler /usr/bin/glib-compile-schemas
+BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
+
+%description
+%summary.
+
+%prep
+%setup
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+
+%find_lang %name --all-name
+
+%files -f %name.lang
+%_bindir/%nameS
+%_desktopdir/%oname.desktop
+%_datadir/glib-2.0/schemas/%oname.*
+%_iconsdir/hicolor/*/*/*.svg
+%_datadir/%nameS
+%_datadir/metainfo/%oname.*
+%doc *.md
+
+%changelog
+* Tue Mar 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.0-alt1
+- Initial build for ALT Linux.
+
