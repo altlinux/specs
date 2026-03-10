@@ -18,7 +18,7 @@
 
 Name: bluez
 Version: 5.86
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -106,6 +106,19 @@ Requires: %name = %EVR
 %description test-tools
 This package contains test tools for using BlueZ.
 
+%package btmgmt
+Summary: Interactive bluetooth management tool
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description btmgmt
+btmgmt is interactive bluetooth management tool. The tool issues commands to
+the Kernel using the Bluetooth Management socket, some commands may require
+net-admin capability in order to work since the Bluetooth Management interface
+is considered a low-level interface meant for the likes of bluetoothd(8),
+it is not recommended for applications to use it directly as it may result in
+unexpected behavior.
+
 %package -n zsh-completion-%name
 Summary: Zsh completion for %name
 Group: Shells
@@ -146,6 +159,9 @@ export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 %{?_enable_btpclient:install -m755 tools/btpclient %buildroot%_bindir/}
 %{?_enable_obex:install -m755 tools/obexctl %buildroot%_bindir/}
 install -m755 tools/bneptest %buildroot%_bindir/
+install -m755 tools/btmgmt %buildroot%_bindir/
+make doc/btmgmt.1
+install -m644 doc/btmgmt.1 %buildroot%_man1dir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
@@ -192,6 +208,7 @@ fi
 %_bindir/bluemoon
 %_bindir/bluetoothctl
 %_bindir/btattach
+%exclude %_bindir/btmgmt
 %_bindir/btmon
 %_bindir/hex2hcd
 %_bindir/l2ping
@@ -219,6 +236,7 @@ fi
 %{?_enable_obex:%_datadir/dbus-1/services/org.bluez.obex.service}
 %_localstatedir/bluetooth
 %_man1dir/*.1*
+%exclude %_man1dir/btmgmt.1*
 %_man8dir/*.8*
 
 %files -n lib%name
@@ -237,6 +255,10 @@ fi
 
 %files cups
 %_prefix/lib/cups/backend/bluetooth
+
+%files btmgmt
+%_bindir/btmgmt
+%_man1dir/btmgmt.1*
 
 %if_enabled btpclient
 %files btpclient
@@ -259,6 +281,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 10 2026 L.A. Kostis <lakostis@altlinux.ru> 5.86-alt2
+- Added btmgmt (closes #58160).
+
 * Mon Feb 09 2026 L.A. Kostis <lakostis@altlinux.ru> 5.86-alt1
 - 5.86.
 
