@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.4
-Release: alt1.gitac4f56e
+Version: 0.6.0
+Release: alt1
 
 Summary: Ultra-lightweight pure Python package to check if a file is binary or text
 License: BSD-3-Clause
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -33,10 +34,11 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -46,15 +48,18 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run -- tests/test_check.py
+%pyproject_run_pytest --ignore="tests/test_sdist.py"
 
 %files
 %_bindir/%pypi_name
-%doc README.rst
+%doc README.md LICENSE
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.0-alt1
+- Updated to 0.6.0.
+
 * Sat Aug 26 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.4-alt1.gitac4f56e
 - Initial build for ALT Sisyphus
 

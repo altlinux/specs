@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Glue between async and thread worlds
@@ -86,5 +86,8 @@ sed -i '/^addopts = .*/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.1-alt1
+- Updated to 1.1.1.
+
 * Tue Mar 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Sisyphus.
