@@ -1,62 +1,53 @@
-%def_without test
-%define oname dask
+%define modulename dask
 
 Name: python3-module-dask
-Version: 2021.12.0
-Release: alt2.1
-
-License: BSD
-Group: Development/Python
-Url: https://dask.org
+Version: 2026.1.2
+Release: alt1
 
 Summary: Parallel PyData with Task Scheduling
 
-# Source-url: %__pypi_url %oname
+Url: https://github.com/dask/dask/
+License: MIT
+Group: Development/Python3
+
+# Source-url: https://pypi.io/packages/source/d/%modulename/%modulename-%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
-Patch:  dask-upstream-fresh-numpy.patch
-Patch1: dask-remove-deprecated-numpy-compat.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools-scm
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-intro
-BuildRequires: python3-module-setuptools
-
-# TODO
-%add_python3_req_skip distributed distributed.client distributed.utils_test
+%add_python3_req_skip distributed distributed.client distributed.diagnostics.plugin distributed.protocol distributed.protocol.pickle distributed.shuffle distributed.shuffle._arrow distributed.shuffle._core distributed.shuffle._merge distributed.shuffle._shuffle distributed.utils distributed.utils_test distributed.worker
 %add_python3_req_skip fsspec fsspec.compression fsspec.core fsspec.implementations.local fsspec.utils
-%add_python3_req_skip partd pyarrow pyarrow.parquet s3fs tlz.curried tlz.functoolz
+%add_python3_req_skip partd pyarrow pyarrow.parquet s3fs tlz.curried tlz.functoolz skimage.io
 
 %description
 Dask is a flexible parallel computing library for analytics.
 
 %prep
 %setup
-%autopatch -p1
-
-# hotfix for python3.12
-sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
-sed -i 's/readfp/read_file/' versioneer.py
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-%python3_prune
-
-%if_with test
-%check
-%pyproject_run_pytest
-%endif
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
+%_bindir/dask
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.1.2-alt1
+- new version 2026.1.2
+- switch to pyproject build with setuptools-scm
+- remove obsolete patches (applied upstream)
+
 * Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 2021.12.0-alt2.1
 - NMU: Remove tests from the package (Closes: #55804).
 
