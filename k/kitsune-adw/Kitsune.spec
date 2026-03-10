@@ -2,7 +2,7 @@
 %define nameS kitsune
 
 Name: kitsune-adw
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Kitsune is an unofficial client for watching AniLiberty anime
@@ -38,6 +38,9 @@ BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
 %install
 %meson_install
 
+#removed conflicts files
+rm -v %buildroot%_iconsdir/hicolor/scalable/actions/image-missing-symbolic.svg
+
 %find_lang %name --all-name
 
 %files -f %name.lang
@@ -50,6 +53,9 @@ BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
 %doc *.md
 
 %changelog
+* Wed Mar 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
+- 0.5.0 -> 0.6.0
+
 * Tue Mar 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.0-alt1
 - Initial build for ALT Linux.
 
