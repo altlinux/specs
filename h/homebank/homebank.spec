@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
+%define ver_major 5.10
+%define ver_minor 0
 %define rdn_name fr.free.mdoyen.HomeBank
 
 Name: homebank
-Version: 5.9.7
+Version: %ver_major
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -61,7 +62,7 @@ This package contains help files for HomeBank. The manual is easy to
 read and rather useful for a first time user.
 
 %prep
-%setup -n %name-%_version
+%setup -n %name-%ver_major.%ver_minor
 
 %build
 %autoreconf
@@ -97,6 +98,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Tue Mar 10 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10-alt1
+- 5.10
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.7-alt1
 - 5.9.7
 
