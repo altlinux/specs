@@ -1,6 +1,6 @@
 Name: libbsd
-Version: 0.11.3
-Release: alt2
+Version: 0.12.2
+Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
 
@@ -11,11 +11,6 @@ Url: http://libbsd.freedesktop.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://libbsd.freedesktop.org/releases/%name-%version.tar
-Patch: libbsd-0.9.1-alt-e2k.patch
-# patches from Fedora
-Patch3: %name-symver.patch
-# LoongArch support (from upstream)
-Patch3500: libbsd-loongarch.patch
 
 BuildRequires: libmd-devel
 
@@ -36,13 +31,6 @@ Development files for the libbsd library.
 
 %prep
 %setup
-%ifarch %e2k
-%patch -p1
-%else
-# this patch breaks Elbrus build
-%patch3 -p1
-%patch3500 -p1
-%endif
 
 %build
 %configure --disable-static
@@ -73,6 +61,10 @@ rm %buildroot/%_man3dir/setproctitle*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12.2-alt1
+- new version 0.12.2
+- remove patches applied upstream (e2k, symver, loongarch)
+
 * Thu Jul 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.3-alt2
 - support LoongArch architecture (lp64d ABI)
 
