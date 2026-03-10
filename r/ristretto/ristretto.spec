@@ -1,6 +1,6 @@
 Summary: Ristretto is an image-viewer for the Xfce Desktop Environment
 Name: ristretto
-Version: 0.13.3
+Version: 0.14.0
 Release: alt1
 License: GPLv2+
 Url: https://docs.xfce.org/apps/ristretto/start
@@ -8,13 +8,16 @@ Url: https://docs.xfce.org/apps/ristretto/start
 Vcs: https://gitlab.xfce.org/apps/ristretto.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: fix_for_libmagic_4.patch
 
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.16.0
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0 xfce4-dev-tools >= 4.16.0
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: libexif-devel libcairo-devel libmagic-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -26,21 +29,14 @@ environment.
 %prep
 %setup
 %patch -p1
-case "$(rpm -q --qf "%%{VERSION}" libmagic-devel)" in
-	4.*)
-%patch1 -p1
-	;;
-esac
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-%make_build
+%meson
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -51,6 +47,14 @@ esac
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 0.14.0-alt1
+- Dropped obsoleted patch for libmagic-4.*.
+- Switched to meson build.
+- Updated to 0.14.0.
+
+* Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 0.13.4-alt1
+- Updated to 0.13.4.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.13.3-alt1
 - Updated to 0.13.3.
 
