@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 1.1.5
+Version: 1.2.0
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -18,6 +18,7 @@ Patch: %name-%version-%release.patch
 %def_disable wayland
 %endif
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfce4util >= 4.16.0 libxfconf-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
@@ -48,16 +49,15 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	%{subst_enable wayland} \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	%{subst_enable_meson_feature wayland wayland} \
+	-Ddoc=true
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 mkdir -p %buildroot%_altdir
@@ -75,6 +75,10 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Switched to meson build.
+- Updated to 1.2.0.
+
 * Wed Mar 26 2025 Mikhail Efremov <sem@altlinux.org> 1.1.5-alt1
 - Updated to 1.1.5.
 
