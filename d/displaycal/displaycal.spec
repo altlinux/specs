@@ -2,8 +2,8 @@
 %define up_name DisplayCAL
 
 Name: displaycal
-Version: 3.9.16
-Release: alt1
+Version: 3.9.17
+Release: alt2
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -73,7 +73,7 @@ rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 # see for details: misc/build_windows_installer.cmd
 rm -v %buildroot%python3_sitelibdir/%up_name/freeze.py
 # it's not used for Linux anyway
-rm -v %buildroot%python3_sitelibdir/%up_name/cacert.pem
+rm -vf %buildroot%python3_sitelibdir/%up_name/cacert.pem
 
 %files
 %_sysconfdir/xdg/autostart/z-displaycal-apply-profiles.desktop
@@ -95,6 +95,12 @@ rm -v %buildroot%python3_sitelibdir/%up_name/cacert.pem
 %exclude %_datadir/doc-base/
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.17-alt2
+- fix build: use rm -f for cacert.pem
+
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.17-alt1
+- new version 3.9.17
+
 * Wed Jul 23 2025 Stanislav Levin <slev@altlinux.org> 3.9.16-alt1
 - NMU: 3.9.14 -> 3.9.16 (closes: #55039).
 
