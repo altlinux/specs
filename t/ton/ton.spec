@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2024.03
+Version: 2026.02
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -34,10 +34,17 @@ Source4: %name-crc32c-%version.tar
 # Source5-url: https://github.com/facebook/rocksdb/archive/refs/tags/v8.6.7.tar.gz
 Source5: %name-rocksdb-%version.tar
 
-# Source6-url: https://github.com/supranational/blst/archive/refs/tags/v0.3.11.tar.gz
+# Source6-url: https://github.com/supranational/blst/archive/refs/tags/v0.3.15.tar.gz
 Source6: %name-blst-%version.tar
 
+# TON-specific forks (submodules)
+Source7: %name-tl-parser-%version.tar
+Source8: %name-libraptorq-%version.tar
+
+Source9: %name-secp256k1-%version.tar
+
 Patch1: 0001-Fix-error-control-reaches-end-of-non-void-function.patch
+Patch2: ton-use-system-libs.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.17
@@ -47,13 +54,15 @@ BuildRequires: git-core
 
 BuildRequires: zlib-devel libssl-devel libreadline-devel
 
-BuildRequires: libsodium-devel libsecp256k1-devel
+BuildRequires: libsodium-devel
 
 # for storage-daemon
 BuildRequires: libblas-devel libgsl-devel
 
 # for blockchain-explorer
 BuildRequires: libmicrohttpd-devel
+BuildRequires: liblz4-devel
+BuildRequires: libbacktrace-devel
 
 # Unusable -DTON_USE_ROCKSDB=OFF
 # due
@@ -141,11 +150,12 @@ storage-daemon-cli
 
 
 %prep
-%setup -a4 -a5 -a6
+%setup -a4 -a5 -a6 -a7 -a8 -a9
 %patch1 -p1
+%patch2 -p1
 
 %build
-%cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=OFF
+%cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=OFF -DUSE_QUIC=OFF
 %cmake_build --target rldp-http-proxy
 %cmake_build --target generate-random-id
 %cmake_build --target lite-client
@@ -207,6 +217,14 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.02-alt1
+- new version 2026.02 (with rpmrb script)
+- add -DUSE_QUIC=OFF (disable bundled ngtcp2/openssl QUIC)
+- add patch to use system OpenSSL, libsodium, liblz4, libsecp256k1,
+  libbacktrace, libmicrohttpd, zlib instead of bundled third-party builds
+- add bundled tl-parser and libraptorq (TON-specific forks)
+- update bundled blst to 0.3.15
+
 * Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2024.03-alt1
 - new version 2024.03 (with rpmrb script)
 
