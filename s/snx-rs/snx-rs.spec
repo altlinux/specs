@@ -1,6 +1,6 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: Open source VPN client for Checkpoint security gateways
@@ -79,6 +79,9 @@ install -D -m 0644 package/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.
 %_unitdir/snx-rs.service
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt1
+- new version 5.2.2
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
 - new version 5.2.1
 - config file removed by upstream
