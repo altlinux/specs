@@ -11,7 +11,7 @@
 %endif
 
 Name: %rname
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 %K6init
 
@@ -151,6 +151,7 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 #%_K6lib/libmarbledeclarative.so
 %_K6bin/marble*
 %_K6plug/*marble*.so
+%_K6plug/kf6/thumbcreator/*marble*.so
 %_K6plug/kf6/krunner/*marble*.so
 %_K6data/plasma/plasmoids/org.kde.plasma.worldclock/
 %_K6data/plasma//wallpapers/org.kde.plasma.worldmap/
@@ -185,6 +186,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
