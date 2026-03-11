@@ -1,10 +1,10 @@
 Name: binwalk
-Version: 2.3.4
+Version: 3.1.0
 Release: alt1
 
 Summary: Firmware Analysis Tool
 
-License: MIT License
+License: MIT
 Group: File tools
 Url: https://github.com/ReFirmLabs/binwalk
 
@@ -12,18 +12,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/ReFirmLabs/binwalk/archive/v%version.tar.gz
 Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
-# TODO:
-%add_python3_req_skip lzma
-%add_python3_req_skip capstone
+ExcludeArch: %ix86
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libdb4-devel python3-module-cmd2 python3-module-setuptools
-
-# TODO (see https://bugzilla.altlinux.org/show_bug.cgi?id=19293):
-#BuildPreReq: python3-module-magic > 5.0.0
-
-#Requires: python3-module-matplotlib python3-module-numpy
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust /proc
+BuildRequires: bzlib-devel liblzma-devel libfreetype-devel fontconfig-devel
 
 %description
 Binwalk is a firmware analysis tool designed to assist in the analysis,
@@ -36,32 +31,39 @@ for inspecting and reverse engineering firmware, including:
 
 * Embedded file identification and extraction
 * Executable code identification
-* Type casting
 * Entropy analysis and graphing
 * Heuristic data analysis
-* "Smart" strings analysis 
 
 Binwalk's file signatures are (mostly) compatible with the magic signatures
 used by the Unix file utility, and include customized/improved signatures
 for files that are commonly found in firmware images such as compressed/archived files,
-firmware headers, kernels, bootloaders, filesystems, etc. 
+firmware headers, kernels, bootloaders, filesystems, etc.
 
 %prep
-%setup
+%setup -a1
+
+mkdir -p .cargo
+cat >> .cargo/config <<'EOF'
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-%python3_build
+%rust_build
 
 %install
-%python3_install
-[ "%_libdir" = "/usr/lib" ] || mv %buildroot/usr/lib %buildroot%_libdir
+%rust_install
 
 %files
-%_bindir/*
-%python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-info
+%_bindir/%name
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (rewritten in Rust)
+
 * Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
 - new version 2.3.4 (with rpmrb script)
 
@@ -98,4 +100,3 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Linux Sisyphus
-
