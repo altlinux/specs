@@ -1,5 +1,5 @@
 Name: 	  zsh-completions
-Version:  0.35.0
+Version:  0.36.0
 Release:  alt1
 
 Summary:  Additional completion definitions for Zsh
@@ -33,6 +33,9 @@ cp src/_* %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Wed Mar 11 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.36.0-alt1
+- New version 0.36.0.
+
 * Fri Sep 22 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.35.0-alt1
 - New version 0.35.0.
 
