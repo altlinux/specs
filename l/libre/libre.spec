@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -52,6 +52,9 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.0-alt1
+- new version 4.6.0
+
 * Thu Feb 05 2026 Ilya Demyanov <turbid@altlinux.org> 4.5.0-alt1
 - new version 4.5.0 (with rpmrb script)
 
