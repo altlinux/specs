@@ -7,7 +7,7 @@
 
 Name: octave
 Version: 11.1.0
-Release: alt1
+Release: alt1.1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -154,6 +154,11 @@ GNU Octave является высокоуровневым языком, в пе
 %setup
 %patch0 -p2
 #/bin/cp -f %SOURCE3 libgui/languages/ru_RU.ts
+%ifarch %e2k
+# lcc 1.29.15 ftbfs workaround
+sed -i 's/^.*~octave_base_.*() = default;$/#ifndef __EDG__\n&\n#endif/' \
+	libinterp/octave-value/ov-base-int.h
+%endif
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -231,6 +236,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Mar 11 2026 Michael Shigorin <mike@altlinux.org> 11.1.0-alt1.1
+- E2K: lcc 1.29.15 ftbfs workaround (ilyakurdyukov@).
+
 * Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 11.1.0-alt1
 - New version.
 
