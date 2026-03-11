@@ -1,8 +1,8 @@
 %define defphp php%php_defver
 
 Name: m4b-tool
-Version: 0.4.2
-Release: alt5
+Version: 0.5.2
+Release: alt1
 
 Summary: m4b-tool is a command line utility to merge, split and chapterize audiobook files such as mp3, ogg, flac, m4a or m4b
 
@@ -10,12 +10,13 @@ License: MIT
 Group: File tools
 Url: https://github.com/sandreas/m4b-tool
 
-# Source-url: https://github.com/sandreas/m4b-tool/archive/v.%version.tar.gz
+# Source-url: https://github.com/sandreas/m4b-tool/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
+Source2: box.phar
+Source3: composer.phar
 
-Patch: 35f6fe997f0543d3f6ef6ca400738f94ff9c29ce.patch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -28,7 +29,7 @@ BuildRequires(pre): rpm-build-php >= 8.4
 # fdkaac
 BuildRequires: ffmpeg mp4v2-utils git-core
 BuildRequires: /usr/bin/php
-BuildRequires: %defphp-intl %defphp-mbstring
+BuildRequires: %defphp-intl %defphp-mbstring %defphp-zip %defphp-curl %defphp-dom %defphp-simplexml %defphp-openssl
 
 Requires: %defphp-intl %defphp-mbstring
 Requires: ffmpeg mp4v2-utils
@@ -41,19 +42,20 @@ nearly all audio formats should be supported, e.g. mp3, aac, ogg, alac and flac.
 
 %prep
 %setup -a1
-%patch -p1
 
 # Build need git repo
 git init
 git config user.email "you@example.com"
 git config user.name "Your Name"
-git add build
+git add .
 git commit -am "Fix for build"
 git tag "%version"
 
 %build
 echo "Generating PHAR ..."
-php -d phar.readonly=off tools/box.phar build
+cp %SOURCE3 composer.phar
+chmod +x composer.phar
+php -d phar.readonly=off %SOURCE2 compile --composer-bin=./composer.phar
 
 %install
 mkdir -p %buildroot/%_bindir/
@@ -66,6 +68,12 @@ install -m755 dist/m4b-tool.phar %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
+- new version 0.5.2
+- fix Source-url tag format
+- remove obsolete patch
+- use external box.phar for PHAR building
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt5
 - use php_defver
 
