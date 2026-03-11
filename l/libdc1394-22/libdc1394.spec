@@ -1,24 +1,24 @@
-%define abiversion 26
-Name: libdc1394
-Version: 2.2.7
-Release: alt1
+%define abiversion 22
+%define oname libdc1394
+Name: %{oname}-%abiversion
+Version: 2.2.5
+Release: alt2
 
-Summary: Library for 1394 Digital Camera Specification
+Summary: Library for 1394 Digital Camera Specification (legacy)
 
 License: LGPL v2.1
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://sf.net/projects/libdc1394/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
 
 Patch1: libdc1394-13b85d2d23548682b617ddc1196f5560a27998bd.patch
 Patch2: libdc1394-2.1.3-alt-v4l.patch
 Patch2000: libdc1394-e2k.patch
 
 %define libraw1394_ver 2.0.4
-Requires: libraw1394 >= %libraw1394_ver
 BuildPreReq: libraw1394-devel >= %libraw1394_ver
 BuildPreReq: libv4l-devel
 
@@ -31,11 +31,11 @@ programming interface for application developers who wish to control
 IEEE 1394 based cameras that conform to the 1394-based Digital Camera
 Specification (found at http://www.1394ta.org/).
 
-%package -n %{name}_%abiversion
+%package -n %name-%abiversion
 Summary: Library for 1394 Digital Camera Specification
 Group: System/Libraries
 
-%description -n %{name}_%abiversion
+%description -n %name-%abiversion
 libdc1394 is a library that is intended to provide a high level
 programming interface for application developers who wish to control
 IEEE 1394 based cameras that conform to the 1394-based Digital Camera
@@ -44,7 +44,7 @@ Specification (found at http://www.1394ta.org/).
 %package devel
 Summary: Development components for libdc1394
 Group: Development/C
-Requires: %{name}_%abiversion = %EVR
+Requires: %name-%abiversion = %version-%release
 Requires: libraw1394-devel >= %libraw1394_ver
 
 %description devel
@@ -53,7 +53,7 @@ This package contains the header-files for libdc1394 development.
 %package tools
 Summary: Development and include files for %name
 Group: System/Kernel and hardware
-Requires: %{name}_%abiversion = %EVR
+Requires: %name-%abiversion = %version-%release
 
 %description tools
 libraw1394 is the only supported interface to the kernel side raw1394 of
@@ -84,26 +84,20 @@ sed -i 's/iso\.i/iso->i/g' dc1394/juju/capture.c
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_includedir
+rm -f %buildroot%_libdir/*.so
+rm -rf %buildroot%_libdir/pkgconfig
+rm -f %buildroot%_bindir/*
+rm -rf %buildroot%_man1dir
 
-%files -n %{name}_%abiversion
-%doc AUTHORS ChangeLog NEWS README
-%_libdir/libdc1394.so.%abiversion
-%_libdir/libdc1394.so.%abiversion.*
-
-%files devel
-%_includedir/dc1394/
-%_libdir/*.so
-%_pkgconfigdir/*
-
-%files tools
-#%_bindir/dc1394_vloopback
-%_bindir/dc1394_reset_bus
-%_man1dir/*
+%files
+%_libdir/%oname.so.%abiversion
+%_libdir/%oname.so.%abiversion.*
 
 %changelog
-* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.7-alt1
-- new version 2.2.7
-- rename libdc1394-22 subpackage to libdc1394_26 per Shared Libs Policy
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.5-alt2
+- build as legacy library libdc1394.so.22
+- remove manual Requires on libraw1394 (auto-generated from soname)
 
 * Sat Dec 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.5-alt1.1
 - Added patch for Elbrus
