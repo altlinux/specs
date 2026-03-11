@@ -5,8 +5,8 @@
 %define acme_version %version
 
 Name: certbot
-Version: 4.1.1
-Release: alt2
+Version: 5.3.1
+Release: alt1
 
 Summary: A free, automated certificate authority client
 
@@ -42,16 +42,11 @@ Requires: python3-module-cffi >= 1.4.2
 %py3_use cryptography >= 43.0.0
 %py3_use distro >= 1.0.1
 %py3_use josepy >= 2.0.0
-%py3_use parsedatetime >= 2.4
+%py3_use parsedatetime >= 2.6
 %py3_use pyrfc3339
-%py3_use pytz >= 2019.3
-
-%if_notfeature python3 3.9
-%py3_use importlib-resources >= 1.3.1
-%endif
 
 %if_notfeature python3 3.10
-%py3_use importlib-metadata >= 4.6
+%py3_use importlib-metadata >= 8.6.1
 %endif
 
 Provides: letsencrypt = %version
@@ -268,6 +263,10 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.3.1-alt1
+- new version 5.3.1
+- update dependency versions, drop pytz requirement
+
 * Thu Jul 24 2025 Vitaly Lipatov <lav@altlinux.ru> 4.1.1-alt2
 - remove Require: python3-module-future
 
