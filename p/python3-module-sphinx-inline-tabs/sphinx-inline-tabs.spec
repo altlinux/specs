@@ -1,13 +1,10 @@
-%define _unpackaged_files_terminate_build 1
-
 %define pypi_name sphinx-inline-tabs
-%define norm_version 2023.4.21
 
 Name: python3-module-%pypi_name
-Version: 2023.04.21
+Version: 2025.12.21.14
 Release: alt1
 
-Summary: Add inline tabbed content to your Sphinx documentation.
+Summary: Add inline tabbed content to your Sphinx documentation
 License: MIT
 Group: Development/Python3
 
@@ -40,9 +37,12 @@ Add inline tabbed content to your Sphinx documentation.
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/sphinx_inline_tabs
-%python3_sitelibdir/sphinx_inline_tabs-%norm_version.dist-info/
+%python3_sitelibdir/sphinx_inline_tabs-%version.dist-info/
 
 %changelog
+* Thu Mar 12 2026 Grigory Ustinov <grenka@altlinux.org> 2025.12.21.14-alt1
+- Automatically updated to 2025.12.21.14.
+
 * Sun May 28 2023 Egor Ignatov <egori@altlinux.org> 2023.04.21-alt1
 - new version 2023.04.21
 
