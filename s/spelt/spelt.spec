@@ -1,6 +1,6 @@
 Name: spelt
-Version: 0.1.20170307
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Backup photo from VKontakte to local storage
 
@@ -16,14 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
-BuildRequires: python3-module-requests >= 2.9.1
-BuildRequires: python3-module-vk_api >= 7.0
-
-BuildRequires: python-tools-2to3
-
-Requires: python3-module-requests >= 2.9.1
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 Spelt is a small python application aimed to allow users
@@ -31,19 +24,13 @@ to backup their photo from https://vk.com to local storage.
 
 %prep
 %setup
+ln -sf readme.md README.md
 
 %build
-2to3 -w spelt
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-#mkdir -p %buildroot%_bindir/
-#cat <<EOF  >%buildroot%_bindir/%name
-##!/bin/sh
-#python %python_sitelibdir/%name/
-#EOF
-#chmod 755 %buildroot%_bindir/%name
+%pyproject_install
 
 
 %files
@@ -52,6 +39,10 @@ to backup their photo from https://vk.com to local storage.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- new version 0.3.1
+- migrate to pyproject_build
+
 * Sat Jun 17 2017 Vitaly Lipatov <lav@altlinux.ru> 0.1.20170307-alt2
 - build as python3 program
 
