@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     3
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -60,7 +60,6 @@ Patch9: 0008-Add_event-id_to_jsonlog.patch
 Patch101: 00001-1C-FULL.patch
 Patch102: 00002-1C-Fix-test-join.patch
 
-Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 # 1C
@@ -372,7 +371,6 @@ project, or if you want to generate printed documentation.
 Summary: Contributed source and binaries distributed with PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name-server = %EVR
-Provides: %prog_name-contrib = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-contrib
 
@@ -387,7 +385,6 @@ Requires(pre): shadow-utils, syslogd-daemon, grep, sed
 Requires(pre): postgresql-common > 1.0-alt3
 Requires: %name = %EVR
 Requires: glibc-locales
-Provides: %prog_name-server = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-server
 
@@ -407,7 +404,6 @@ to install the postgresql package.
 Summary: The PL/Tcl procedural language for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name-server = %EVR
-Provides: %prog_name-tcl = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-tcl
 
@@ -420,7 +416,6 @@ for the backend.
 Summary: The PL/Perl procedural language for PostgreSQL (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name-server = %EVR
-Provides: %prog_name-perl = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-perl
 
@@ -433,7 +428,6 @@ language for the backend.
 Summary: Development module for Python code to access a PostgreSQL DB (edition for 1C 8.3.13 and later)
 Group: Databases
 Requires: %name-server = %EVR
-Provides: %prog_name-python = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-python
 
@@ -449,7 +443,6 @@ Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
 Requires: llvm20.1
-Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
 The postgresql-llvmjit package contains support for
@@ -1171,6 +1164,12 @@ fi
 %endif
 
 %changelog
+* Tue Mar 10 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt2
+- Delete Provides: %%prog_name = %%EVR, %%prog_name-contrib = %%EVR,
+  %%prog_name-server = %%EVR, %%prog_name-tcl = %%EVR, %%prog_name-perl = %%EVR,
+  %%prog_name-python = %%EVR, %%prog_name-llvmjit = %%EVR - this version only for 1C
+  (ALT #58181, #58182, #58183, #58184, #58185, #58186, #58187)
+
 * Wed Feb 25 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt1
 - 18.2
 - Add 00002-1C-Fix-test-join.patch
