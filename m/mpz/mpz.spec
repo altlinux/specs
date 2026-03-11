@@ -1,7 +1,7 @@
 %def_without qt5
 
 Name: mpz
-Version: 1.1.1
+Version: 2.0.3
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -38,7 +38,7 @@ Similar to "album list" in Foobar2000.
 
 %prep
 %setup
-rm -rv 3rdparty/{yaml-cpp,taglib,utfcpp}-*
+rm -rv 3rdparty/{yaml-cpp,taglib}-*
 
 %build
 %cmake \
@@ -58,6 +58,9 @@ rm -v %buildroot/usr/share/licenses/mpz/license.txt
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- new version 2.0.3
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1
 - switched to cmake
