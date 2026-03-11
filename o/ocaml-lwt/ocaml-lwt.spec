@@ -1,6 +1,6 @@
 %define lwt_modules lwt,lwt_ppx,lwt_react
 Name: ocaml-lwt
-Version: 5.9.2
+Version: 6.1.1
 Release: alt1
 Summary: OCaml lightweight thread library
 
@@ -50,6 +50,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Sat Mar 07 2026 Anton Farygin <rider@altlinux.org> 6.1.1-alt1
+- 5.9.2 -> 6.1.1
+
 * Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 5.9.2-alt1
 - 5.9.0 -> 5.9.2
 

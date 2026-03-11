@@ -1,7 +1,7 @@
 %define pkgname lsp
 Name: ocaml-%pkgname
-Version: 1.22.0
-Release: alt2
+Version: 1.25.0
+Release: alt1
 Summary: LSP Server for OCaml
 License: MIT
 Group: Development/ML
@@ -69,6 +69,9 @@ make test-ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 10 2026 Anton Farygin <rider@altlinux.org> 1.25.0-alt1
+- 1.22.0 -> 1.25.0
+
 * Sun Feb 22 2026 Anton Farygin <rider@altlinux.org> 1.22.0-alt2
 - backport upstream fix for building with yojson 3
 

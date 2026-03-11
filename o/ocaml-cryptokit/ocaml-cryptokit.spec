@@ -4,12 +4,13 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.20.1
+Version: 1.21.1
 Release: alt1
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with OCaml-LGPL-linking-exception
-Url: http://forge.ocamlcore.org/projects/cryptokit/
+Url: https://github.com/xavierleroy/cryptokit
+VCS: https://github.com/xavierleroy/cryptokit.git
 Source0: %name-%version.tar
 BuildRequires: ocaml ocaml-ocamldoc ocaml-zarith-devel ocaml-findlib zlib-devel
 BuildRequires: dune ocaml-dune-configurator-devel
@@ -75,6 +76,9 @@ sed -i 's/#include <cpuid.h>/#define __get_cpuid(x,a,b,c,d) (*(c)=-1,1)/' \
 %doc README.md Changes
 
 %changelog
+* Sat Mar 07 2026 Anton Farygin <rider@altlinux.org> 1.21.1-alt1
+- 1.20.1 -> 1.21.1
+
 * Mon Sep 16 2024 Anton Farygin <rider@altlinux.ru> 1.20.1-alt1
 - 1.18 -> 1.20.1
 

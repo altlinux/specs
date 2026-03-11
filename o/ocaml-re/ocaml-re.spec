@@ -1,7 +1,11 @@
+%if_with ocaml_bootstrap
+%def_without check
+%else
 %def_with check
+%endif
 Name: ocaml-re
-Version: 1.11.0
-Release: alt2
+Version: 1.14.0
+Release: alt1
 Summary: A regular expression library for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/ocaml-re
@@ -10,8 +14,9 @@ Patch0: %name-%version-alt.patch
 Group: Development/ML
 BuildRequires: ocaml
 BuildRequires: dune
+BuildRequires(pre): rpm-build-ocaml > 1.6.6
 %if_with check
-BuildRequires: ocaml-ounit-devel
+BuildRequires: ocaml-ounit-devel ocaml-ppx_expect-devel ocaml-ppx_inline_test-devel
 %endif
 
 %description
@@ -54,6 +59,12 @@ sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 1.14.0-alt1
+- 1.13.3 -> 1.14.0
+
+* Wed May 28 2025 Anton Farygin <rider@altlinux.com> 1.13.3-alt1
+- 1.11.0 -> 1.13.3
+
 * Fri Jan 24 2025 Anton Farygin <rider@altlinux.ru> 1.11.0-alt2
 - added version injection into dune-project and re.opam to include version info
   absent in the Git repository but present in the tarball

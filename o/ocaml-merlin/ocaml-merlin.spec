@@ -1,6 +1,6 @@
 %define pkgname merlin
 Name: ocaml-%pkgname
-Version: 5.4.503
+Version: 5.6.1.504
 Release: alt1
 Summary: Editor helper, provides completion, typing and source browsing in Vim and Emacs
 License: MIT
@@ -42,7 +42,9 @@ developing applications that use %name.
 
 %check
 %ifnarch %ix86
-sed -si 's;lib/ocaml;%_libdir/ocaml;' tests/test-dirs/locate/context-detection/cd-mod_constr.t/run.t tests/test-dirs/occurrences/issue1404.t
+sed -si 's;lib/ocaml;%_libdir/ocaml;' tests/test-dirs/locate/context-detection/cd-mod_constr.t/run.t \
+	tests/test-dirs/occurrences/issue1404.t \
+	tests/test-dirs/locate/ill-typed/issue1580.t
 %endif
 %dune_check --release
 
@@ -54,6 +56,9 @@ sed -si 's;lib/ocaml;%_libdir/ocaml;' tests/test-dirs/locate/context-detection/c
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Mar 07 2026 Anton Farygin <rider@altlinux.org> 5.6.1.504-alt1
+- 5.4.503 -> 5.6.1.504
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 5.4.503-alt1
 - 5.1.502 -> 5.4.503
 

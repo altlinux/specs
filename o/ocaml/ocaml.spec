@@ -20,8 +20,8 @@
 
 
 Name: ocaml
-Version: 5.3.0
-Release: alt3
+Version: 5.4.1
+Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -114,6 +114,7 @@ RPM macros %%ocaml_version providing the current OCaml version
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+autoconf
 ./configure \
 	CFLAGS="%optflags" \
 	--bindir %_bindir \
@@ -122,7 +123,7 @@ RPM macros %%ocaml_version providing the current OCaml version
 	--datarootdir=%_datadir \
 	--mandir %_mandir \
 	--enable-flambda \
-%ifarch x86_64
+%ifarch x86_64,aarch64
 	--enable-frame-pointers \
 %endif
 %if_without nativeocaml
@@ -316,6 +317,9 @@ popd
 %_sysconfdir/rpm/macros.d/*
 
 %changelog
+* Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 5.4.1-alt1
+- 5.3.0 -> 5.4.1
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 5.3.0-alt3
 - added rpm-macros-ocaml-version package with %%ocaml_version macros
 

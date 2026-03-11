@@ -1,6 +1,6 @@
 Name: ocaml-ocamlnet
 Version: 4.1.9
-Release: alt5
+Release: alt6
 Summary: Network protocols for OCaml
 License: BSD-3-Clause
 Group: Development/ML
@@ -11,6 +11,7 @@ Source0:%name-%version.tar
 Patch0: ocamlnet-upstream-ocaml5-support.patch
 Patch1: ocaml-ocamlnet-ocaml5.patch
 Patch2: ocaml-ocamlnet-configure-c99.patch
+Patch3: ocaml-ocamlnet-fedora-netsys_c.h-Don-t-redefine-caml_ba_element_size.patch
 
 BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
@@ -103,6 +104,7 @@ files for developing applications that use %name-nethttpd.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 sed -i 's/^\(version=\).*/\1"%{version}"/' configure
 sed -i 's,ocamlopt -shared -o \.dummy\.cmxs >/dev/null 2>/dev/null,true,' configure
 sed -i 's,ocamlc -safe-string >/dev/null 2>/dev/null,true,' configure
@@ -176,6 +178,10 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Fri Mar 06 2026 Anton Farygin <rider@altlinux.org> 4.1.9-alt6
+- added patch from fedora to fix build with
+  OCaml >= 5 (conflicting declaration of caml_ba_element_size)
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 4.1.9-alt5
 - renamed build dependency ocaml-zip-devel to ocaml-camlzip-devel
 - fixed build with gcc 14

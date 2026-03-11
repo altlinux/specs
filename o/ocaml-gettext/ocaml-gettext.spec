@@ -2,7 +2,7 @@
 %define ocamlmodule gettext
 Name: ocaml-%ocamlmodule
 Version: 0.5.0
-Release: alt2
+Release: alt3
 Summary: OCaml library for i18n
 Group: Development/ML
 License: LGPLv2+ with OCaml-LGPL-linking-exception
@@ -68,6 +68,9 @@ find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
 %_man5dir/*.5*
 
 %changelog
+* Tue Mar 10 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt3
+- applied fedora fix againt building issue with ocaml 5.4
+
 * Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt2
 - added upstream fix against linking with dune-site
 
