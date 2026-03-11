@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Simple Safe Sandboxed Extensible Expression Evaluator for Python
@@ -41,5 +41,8 @@ BuildRequires: python3-module-hatchling
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 11 2026 Anton Vyatkin <toni@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+
 * Tue Apr 29 2025 Anton Vyatkin <toni@altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus.
