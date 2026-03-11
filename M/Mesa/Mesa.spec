@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 
-%define llvmver 20.1
+%define llvmver 21.1
 
 %def_enable egl
 %def_enable gles2
@@ -100,7 +100,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -484,6 +484,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Mar 11 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.1-alt2
+- rebuild with llvm 21.1
+
 * Fri Feb 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.1-alt1
 - 26.0.1
 

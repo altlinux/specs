@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define git 28f7cd9216
+%define git 1562d02b43d
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
-%ifarch %ix86 %arm mipsel
+%ifarch %ix86
 %define optflags_debug -g0
 #define __nprocs 1
 %else
@@ -18,7 +18,7 @@
 
 Name: clspv
 Version: 0.1
-Release: alt0.8.g%{git}
+Release: alt1.g%{git}
 License: Apache-2.0
 Summary: Clspv is a prototype compiler for a subset of OpenCL C to Vulkan compute shaders
 Group: Development/Other
@@ -73,6 +73,12 @@ rm -rf %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Tue Mar 10 2026 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt1.g1562d02b43d
+- GIT 1562d02b43d.
+
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.9.g08efe15704
+- GIT 08efe15704.
+
 * Mon Jul 29 2024 L.A. Kostis <lakostis@altlinux.ru> 0.1-alt0.8.g28f7cd9216
 - GIT 28f7cd9216.
 

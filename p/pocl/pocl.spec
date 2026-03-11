@@ -1,19 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define llvm_ver 20.1
+%define llvm_ver 21.1
 %define soname 2
 %define git %nil
 %ifarch x86_64
 %def_with level0
-%def_with cuda
-# libcuda doesn't have debuginfo
-%filter_from_requires /libcuda\.so\.1/d
 %else
-%def_without cuda
 %def_without level0
 %endif
 %ifarch x86_64 aarch64
 %def_with vulkan
+%def_with cuda
+# libcuda doesn't have debuginfo
+%filter_from_requires /libcuda\.so\.1/d
 # remote client/server
 # http://portablecl.org/docs/html/remote.html
 %def_enable remote
@@ -21,6 +20,7 @@
 %def_without avahi
 %def_with dht
 %else
+%def_without cuda
 %def_without vulkan
 %def_disable remote
 %endif
@@ -28,14 +28,14 @@
 %def_without rdma
 # risc-v/loongarch64 might not supported
 # FIXME disable if LLVM built without openmp
-%def_without openmp
+%def_with openmp
 
 # pocl detects LTO automatically
 %define optflags_lto %nil
 
 Name: pocl
 Version: 7.1
-Release: alt0.1
+Release: alt0.2
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -53,6 +53,7 @@ Patch3: 0001-CMake-resolve-paths-using-file-REAL_PATH.patch
 # https://github.com/pocl/pocl/issues/1528
 Patch4: pocl-6.1-x86-disable-fp16.patch
 Patch5: pocl-alt-use-system-llvmspirvlib.patch
+Patch6: pocl-7.1-revert-cuda-llvm21-check.patch
 # debian
 Patch100: deb-blhc.patch
 
@@ -375,6 +376,11 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Tue Mar 10 2026 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt0.2
+- Build with llvm21.1 (as 21.1.8 fixes cuda issue).
+- openmp: enable again.
+- cuda: enable on aarch64.
+
 * Wed Nov 12 2025 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt0.1
 - 7.1.
 - remote: remove obsoleted vsock/traffic monitor options.

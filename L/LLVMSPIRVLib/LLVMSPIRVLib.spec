@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define llvm_ver_major 20.1
+%define llvm_ver_major 21.1
 %define git %nil
 
 # FIXME!
 %define optflags_lto %nil
 
 Name:    LLVMSPIRVLib
-Version: 20.1.8
+Version: 21.1.5
 Release: alt1
 Summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR
 Group:   Development/C++
@@ -19,7 +19,7 @@ Patch1: llvm-spirv-opensycl.patch
 
 BuildRequires(pre): cmake
 BuildRequires: llvm%{llvm_ver_major}-devel gcc-c++ libstdc++-devel zlib-devel
-BuildRequires: libspirv-tools-devel spirv-headers >= 1.5.5-alt19
+BuildRequires: libspirv-tools-devel spirv-headers >= 1.5.5-alt20
 
 %description
 LLVM/SPIR-V Bi-Directional Translator, a library and tool for translation
@@ -87,9 +87,11 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
-* Thu Nov 20 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.8-alt1
-- 20.1.8.
-- BR: bump spirv-headers version.
+* Wed Mar 11 2026 L.A. Kostis <lakostis@altlinux.ru> 21.1.5-alt1
+- 21.1.5.
+
+* Thu Oct 16 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.1-alt1
+- 21.1.1.
 
 * Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.5-alt1
 - 20.1.5.
