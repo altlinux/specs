@@ -2,14 +2,15 @@
 %def_without docs
 
 Name: %{oname}3
-Version: 5.0.0
-Release: alt2
+Version: 5.0.1
+Release: alt1
 
 Summary: A lightweight C++ template library for vector and matrix math
 License: Apache-2.0 AND MPL-2.0 AND BSD-3-Clause AND Minpack
 Group: Development/C++
 
-Url: http://eigen.tuxfamily.org/
+Url: https://libeigen.gitlab.io/
+VCS: https://gitlab.com/libeigen/eigen.git
 Source: %name-%version.tar
 
 # Fix/workaround doc build failures
@@ -107,9 +108,9 @@ export PATH=$PATH:%_libdir/pastix/bin
 
 %cmake -GNinja \
 	-Wno-dev \
-    -DEIGEN_BUILD_SHARED_LIBS=ON \
-    -DEIGEN_BUILD_BLAS=ON \
-    -DEIGEN_BUILD_LAPACK=ON \
+        -DEIGEN_BUILD_SHARED_LIBS=ON \
+        -DEIGEN_BUILD_BLAS=ON \
+        -DEIGEN_BUILD_LAPACK=ON \
 	-DINCLUDE_INSTALL_DIR=%_includedir/%name \
 	-DPKGCONFIG_INSTALL_DIR=%_libdir/pkgconfig \
 	-DCMAKEPACKAGE_INSTALL_DIR=%_libdir/cmake/%name \
@@ -161,6 +162,9 @@ cd -
 %endif
 
 %changelog
+* Wed Mar 11 2026 Anton Farygin <rider@altlinux.org> 5.0.1-alt1
+- 5.0.0 -> 5.0.1
+
 * Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt2
 - Really build without documentation (due doxygen errors).
 
