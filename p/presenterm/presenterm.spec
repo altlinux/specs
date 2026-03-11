@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           presenterm
-Version:        0.16.0
+Version:        0.16.1
 Release:        alt1
 
 Summary:        A markdown terminal slideshow tool
@@ -42,6 +42,9 @@ presentations into PDF format, and plenty of other features.
 %doc README.md CHANGELOG.md LICENSE
 
 %changelog
+* Fri Feb 20 2026 Sergey Savelev <medovi@altlinux.org> 0.16.1-alt1
+- New version 0.16.1.
+
 * Mon Feb 16 2026 Sergey Savelev <medovi@altlinux.org> 0.16.0-alt1
 - New version 0.16.0.
 
