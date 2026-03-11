@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 2.89
+Version: 3.06
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -19,6 +19,7 @@ Patch2: asymptote-2.28-alt-gsl1.16.patch
 
 BuildRequires: flex gcc-c++ libfftw3-devel libgsl-devel libreadline-devel libtirpc-devel zlib-devel
 BuildRequires: libglm-devel
+BuildRequires: cmake
 BuildRequires: libfreeglut-devel
 BuildRequires: libcurl-devel
 
@@ -28,8 +29,7 @@ BuildRequires(pre): rpm-build-tex rpm-build-python3
 BuildRequires: /proc
 BuildRequires: texlive-collection-latexrecommended
 BuildRequires: ghostscript-utils >= 9.53
-BuildRequires: python3-module-PyQt5
-BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-pyside6-devel
 #BuildRequires: python3-module-mpl_toolkits python3-module-yieldfrom
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -37,8 +37,8 @@ BuildRequires: texi2dvi
 
 %add_python3_path %_datadir/%name/GUI/
 %add_python3_lib_path %_datadir/%name/GUI/
-%add_python3_req_skip configs
-%add_python3_self_prov_path %buildroot%_datadir/asymptote/GUI/pyUIClass/
+%add_python3_req_skip configs determine_pkg_info
+%add_python3_self_prov_path %buildroot%_datadir/asymptote/GUI/xasyqtui/
 
 %description
 Asymptote is a powerful descriptive vector graphics language for technical
@@ -57,23 +57,25 @@ Documentation and examples for %name.
 %prep
 %setup
 %__subst "s|/lib |/%_lib |" configure.ac
-%__subst "s|-lgc |-lgc -lgccpp |" configure.ac
-#patch0 -p2
-#patch1 -p2
-#patch2 -p2
 # some incompatibilities?
 sed -i "s|@printindex cp||g" doc/%name.texi
-
-# sure we do not using internal libgc
-rm -fv *.tar.gz
 
 %build
 %autoreconf
 %configure --with-docdir=%_docdir/%name-doc-%version \
 	--with-latex=%_texmfmain/tex/latex \
 	--with-context=%_texmfmain/tex/context/third \
-	--enable-gc=system \
 	--enable-gsl
+# Use system libgc instead of bundled one
+sed -i 's|^GCLIB =.*|GCLIB = -lgc|;s|^GCPPLIB =.*|GCPPLIB = -lgccpp|' Makefile
+sed -i 's|-I$(GC)/include|-I/usr/include/gc|' Makefile
+# Remove -I/usr/include/gsl from CPPFLAGS: it shadows standard <algorithm> header
+# when Microsoft GSL (from libglm-devel) is installed alongside GNU GSL
+sed -i 's|-I/usr/include/gsl||' Makefile
+# Fix missing std:: qualifier for reverse() in knot.h
+sed -i 's|reverse(v.begin|std::reverse(v.begin|' knot.h
+# generate keywords.h first to fix parallel build race condition
+make keywords.h
 %make_build
 
 %install
@@ -96,6 +98,19 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.06-alt1
+- new version 3.06
+- use system libgc headers directly (fix FTBFS)
+- add cmake to BuildRequires (for LspCpp)
+- fix GSL include path conflict with Microsoft GSL headers
+- fix std::reverse missing qualifier in knot.h
+- switch from PyQt5 to PySide6
+
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.04-alt1
+- new version 3.04
+- fix parallel build (generate keywords.h first)
+- use system libgc instead of bundled one
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 2.89-alt1
 - new version 2.89 (with rpmrb script)
 
