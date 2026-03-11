@@ -1,7 +1,5 @@
-%def_without test
-
 Name: checksec
-Version: 2.7.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Tool to check system for binary-hardening
@@ -12,29 +10,12 @@ Url: https://github.com/slimm609/%name.sh
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %url/archive/%version.tar.gz#/%name-%version.tar
+# Source-url: %url/archive/%version.tar.gz#/%name-%version.tar
+Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
-BuildArch: noarch
-
-%if_with test
-BuildRequires: binutils
-BuildRequires: file
-BuildRequires: findutils
-BuildRequires: gawk
-BuildRequires: libxml2
-BuildRequires: openssl
-BuildRequires: procps-ng
-BuildRequires: %_bindir/jsonlint
-%endif
-
-%filter_from_requires /^.etc.lsb-release/d
-%filter_from_requires /^.etc.os-release/d
-
-#Requires: binutils
-#Requires: file
-#Requires: findutils
-#Requires: gawk
-#Requires: which
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang
 
 %description
 Modern Linux distributions offer some mitigation techniques to make it harder
@@ -51,33 +32,24 @@ The script also lists the status of various Linux kernel protection mechanisms.
 
 %prep
 %setup
-# fix missed PATH under root: sysctl: command not found
-%__subst 's|.*SHLVL.*||' checksec
-
-# Disable --update command.
-%__subst 's/pkg_release=false/pkg_release=true/' checksec
+tar -xf %{SOURCE1}
 
 %build
-# noop
+export GOFLAGS="-mod=vendor"
+go build -o %name .
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_man1dir
-install -pm 0755 %name %buildroot%_bindir
-install -pm 0644 extras/man/%name.1 %buildroot%_man1dir
-
-%check
-pushd tests
-./xml-checks.sh || exit 2
-./json-checks.sh || exit 2
-popd
+install -pD -m755 %name %buildroot%_bindir/%name
 
 %files
-%doc LICENSE.txt
-%doc ChangeLog README.md
+%doc LICENSE README.md
 %_bindir/%name
-%_man1dir/%name.1*
 
 %changelog
+* Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version (3.1.0) via gear-uupdate
+- rewrite spec for Go build (upstream switched from bash to Go)
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - new version 2.7.1 (with rpmrb script)
 
