@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.4.25
+Version: 2.5.10
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -20,6 +20,7 @@ BuildRequires: dmd >= 2.083.1
 
 BuildRequires: libcurl-devel
 BuildRequires: libnotify-devel
+BuildRequires: libdbus-devel
 BuildRequires: libsqlite3-devel >= 3.7.15
 # for pkg-config --variable=systemdsystemunitdir systemd
 BuildRequires: libsystemd-devel
@@ -58,15 +59,20 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 #systemd_preun %name@.service
 
 %files
-%doc README.md LICENSE CHANGELOG.md
+%doc readme.md LICENSE changelog.md
 %_bindir/%name
 %_userunitdir/%name.service
 %_unitdir/%name@.service
 %_man1dir/%name.1.*
 %_docdir/%name
+%_iconsdir/hicolor/scalable/places/onedrive.svg
 %config %_logrotatedir/onedrive
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.10-alt1
+- new version 2.5.10
+- add libdbus-devel to BuildRequires
+
 * Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.4.25-alt1
 - new version 2.4.25 (with rpmrb script)
 
