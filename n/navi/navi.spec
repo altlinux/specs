@@ -1,17 +1,21 @@
 Name: navi
-Version: 0.18.3
+Version: 2.24.0
 Release: alt1
 
 Summary: An interactive cheatsheet tool for the command-line
 
-License: Apache 2.0
+License: Apache-2.0
 Group: Other
 Url: https://github.com/denisidoro/navi
 
-# Source-url: https://github.com/denisidoro/navi/archive/v%version.tar.gz
+# Source-url: https://github.com/denisidoro/navi.git
 Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
-BuildArch: noarch
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust /proc
+
+Requires: /usr/bin/tldr
 
 %description
 An interactive cheatsheet tool for the command-line
@@ -23,27 +27,31 @@ so that you won't say the following anymore:
 
 %prep
 %setup
+tar xf %SOURCE1
+
+mkdir -p .cargo
+cat >> .cargo/config <<'EOF'
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-# Nothing to do
+%rust_build
 
 %install
-mkdir -p %buildroot%_bindir
-cat <<EOF >%buildroot%_bindir/%name
-#!/usr/bin/env bash
-%_datadir/%name/navi "\$@"
-EOF
-chmod 0755 %buildroot%_bindir/%name
-
-#scripts/install %buildroot%_bindir
-mkdir -p %buildroot%_datadir/%name/
-cp -a cheats src navi navi.plugin*  %buildroot%_datadir/%name/
+%rust_install
 
 %files
 %doc README.md
 %_bindir/%name
-%_datadir/%name
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt1
+- new version (2.24.0) via gear-uupdate
+- rewrite as Rust package
+
 * Sun Feb 16 2020 Vitaly Lipatov <lav@altlinux.ru> 0.18.3-alt1
 - initial build for ALT Sisyphus
