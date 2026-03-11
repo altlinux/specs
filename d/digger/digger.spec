@@ -1,6 +1,6 @@
 Name: digger
-Version: 20130313
-Release: alt1.qa1
+Version: 20160420
+Release: alt1
 
 Summary: A Game of Digger
 
@@ -8,8 +8,8 @@ License: Distributable
 Group: Games/Arcade
 Url: http://www.digger.org
 
-Source: %url/%name-%version.tar.gz
-Patch: digger-20020314-alt-gcc34.patch
+# Source-url: https://mirror.yandex.ru/mageia/distrib/cauldron/SRPMS/core/release/digger-20160420-5.mga10.src.rpm
+Source: %name-%version.tar
 
 Source11: %name-16x16.png
 Source12: %name-32x32.png
@@ -19,22 +19,17 @@ Source13: %name-48x48.png
 #Packager: Michael Shigorin <mike@altlinux.ru>
 #Packager: Dima Pashko <troll@watersport.com.ua>
 
-# Automatically added by buildreq on Thu Apr 14 2016
-# optimized out: cmake-modules libX11-devel libgpg-error libjson-c python-base xorg-xproto-devel
-BuildRequires: cmake libSDL-devel zlib-devel
-
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires: libSDL2-devel zlib-devel
 
 %description
 Digger is one of most popular games on IBM PC.
 
 %prep
 %setup
-#patch -p1
+sed -i 's/-DDIGGER_DEBUG//' Makefile
 
 %build
-%cmake_insource
-%make_build
+%make_build ARCH=LINUX
 
 %install
 install -pD -m755 digger %buildroot%_gamesbindir/%name
@@ -68,6 +63,12 @@ install -m644 %SOURCE13 -D %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20160420-alt1
+- new version (20160420)
+- switch from cmake to plain Makefile (upstream changed build system)
+- switch to SDL2
+- disable debug output
+
 * Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 20130313-alt1.qa1
 - Removed libaudio fron BR.
 - Updated BR with buildreq.
