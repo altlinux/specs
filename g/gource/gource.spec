@@ -1,5 +1,5 @@
 Name: gource
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
@@ -11,21 +11,20 @@ Url: http://gource.io/
 # git clone https://github.com/acaudwell/Core.git
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
-Patch3500: %name-ax_boost_base.patch
 
 Requires: fonts-ttf-freefont
 
-BuildPreReq: libSDL2-devel >= 1.2
-BuildPreReq: libSDL2_image-devel >= 1.2
-BuildPreReq: libpcre2-devel
-BuildPreReq: libfreetype-devel
-BuildPreReq: libglew-devel
-BuildPreReq: libglm-devel >= 0.9.3
-BuildPreReq: boost-filesystem-devel >= 1.46
-BuildPreReq: tinyxml-devel
-BuildPreReq: gcc-c++
+BuildRequires: libSDL2-devel >= 1.2
+BuildRequires: libSDL2_image-devel >= 1.2
+BuildRequires: libpcre2-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libglew-devel
+BuildRequires: libglm-devel >= 0.9.3
+BuildRequires: boost-filesystem-devel >= 1.46
+BuildRequires: tinyxml-devel
+BuildRequires: gcc-c++
 # zlib-devel be req by libfreetype
-BuildPreReq: zlib-devel
+BuildRequires: zlib-devel
 
 BuildRequires: libpng-devel
 
@@ -41,7 +40,6 @@ files and directories.
 %prep
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
-%patch3500 -p1
 
 %build
 %autoreconf
@@ -57,6 +55,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Wed Mar 11 2026 Mikhail Efremov <sem@altlinux.org> 0.56-alt1
+- Dropped obsoleted patch.
+- Updated to 0.56.
+
 * Wed Jun 19 2024 Mikhail Efremov <sem@altlinux.org> 0.55-alt1
 - Dropped obsoleted patch.
 - Updated to 0.55.
