@@ -1,15 +1,19 @@
-Name: Seamly2D
-Release: alt1
-Version: 2026.3.9.214
+Name:     Seamly2D
+Release:  alt2
+Version:  2026.3.9.214
 
-Summary: Open source patternmaking software
-Group: Other
-License: GPL-3.0-only
-URL: https://seamly.io
-VCS: https://github.com/FashionFreedom/Seamly2D
+Summary:  Open source patternmaking software to democratize fashion
 
-Source: %name-%version.tar
+Group:    Engineering
+License:  GPL-3.0
+URL:      https://seamly.io
+VCS:      https://github.com/FashionFreedom/Seamly2D
 
+Packager: Grigory Ustinov <grenka@altlinux.org>
+
+Source:   %name-%version.tar
+
+BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-svg-devel
@@ -18,7 +22,16 @@ BuildRequires: libxerces-c-devel
 BuildRequires: chrpath
 
 %description
-%summary.
+Seamly directly tackles the fashion industry's pressing issues by innovating
+garment sizing with its advanced software. Moving beyond outdated
+sizing conventions, Seamly enables designers to create apparel that
+accurately fits a diverse array of body shapes, drastically reducing returns
+and minimizing waste. This technology streamlines the design process,
+enhancing efficiency and cost-effectiveness, thereby fostering
+a more sustainable and ethical fashion industry. Seamly empowers designers
+to produce garments that align with current demands for fit accuracy
+and environmental consciousness, positioning itself as a key player
+in guiding the fashion world toward a more inclusive and sustainable future.
 
 %prep
 %setup
@@ -41,6 +54,9 @@ chrpath -d %buildroot/%_bindir/{seamly2d,seamlyme}
 %_datadir/seamly2d
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 2026.3.9.214-alt2
+- Improved package description.
+
 * Tue Mar 10 2026 Grigory Ustinov <grenka@altlinux.org> 2026.3.9.214-alt1
 - Automatically updated by CronUpdater to 2026.3.9.214.
 

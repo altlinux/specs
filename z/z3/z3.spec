@@ -1,25 +1,28 @@
 %define pypi_name z3-solver
 %set_verify_elf_method strict
 
-Name: z3
-Version: 4.16.0
-Release: alt1
-Summary: High-performance theorem prover (SMT solver)
-License: MIT
-Group: Sciences/Mathematics
-Url: https://github.com/Z3Prover/z3
+Name:     z3
+Version:  4.16.0
+Release:  alt2
 
-Source: %name-%version.tar
+Summary:  High-performance theorem prover (SMT solver)
 
-Patch: python-use-non-devel-so.patch
+License:  MIT
+Group:    Sciences/Mathematics
+URL:      https://z3prover.github.io
+VCS:      https://github.com/Z3Prover/z3
+
+Source:   %name-%version.tar
+
+Patch:    python-use-non-devel-so.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake
-BuildRequires: gcc-c++ doxygen graphviz
-BuildRequires: libgmp-devel libgmpxx-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: libgmpxx-devel
 BuildRequires: python3-devel
-BuildRequires: python3(pkg_resources)
-BuildRequires: python3(setuptools)
+BuildRequires: python3-module-pkg_resources
+BuildRequires: python3-module-setuptools
 
 %description
 Z3 is a high-performance theorem prover being developed at Microsoft
@@ -46,16 +49,6 @@ Research.
 
 This package contains development files of %name.
 
-%package -n lib%name-devel-docs
-Summary: Documentation for %name
-Group: Development/Documentation
-
-%description -n lib%name-devel-docs
-Z3 is a high-performance theorem prover being developed at Microsoft
-Research.
-
-This package contains documentation for %name.
-
 %package -n python3-module-%name
 Summary: Python bindings of %name
 Group: Development/Python3
@@ -80,12 +73,13 @@ This package contains Python bindings of %name.
 %cmake \
     -DZ3_INCLUDE_GIT_HASH:BOOL=OFF \
     -DZ3_INCLUDE_GIT_DESCRIBE:BOOL=OFF \
-    -DZ3_BUILD_DOCUMENTATION:BOOL=ON \
+    -DZ3_BUILD_DOCUMENTATION:BOOL=OFF \
     -DZ3_ENABLE_EXAMPLE_TARGETS:BOOL=OFF \
     -DPYTHON_EXECUTABLE=$(which python3) \
     -DZ3_BUILD_PYTHON_BINDINGS:BOOL=ON \
     -DZ3_INSTALL_PYTHON_BINDINGS:BOOL=ON \
     -DZ3_USE_LIB_GMP:BOOL=ON \
+    -DZ3_LINK_TIME_OPTIMIZATION=ON \
     %nil
 
 %cmake_build
@@ -103,26 +97,26 @@ python3 -c "import z3; print (z3.get_version_string())"
 python3 examples/python/example.py
 
 %files
-%doc LICENSE.txt *.md
-%_bindir/*
+%doc LICENSE.txt README.md RELEASE_NOTES.md
+%_bindir/%name
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/lib%name.so.*
 
 %files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
+%_includedir/%{name}*.h
+%_libdir/lib%name.so
 %_libdir/cmake/%name
-%_libdir/pkgconfig/z3.pc
-
-%files -n lib%name-devel-docs
-%doc examples
-%_defaultdocdir/Z3
+%_libdir/pkgconfig/%name.pc
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 4.16.0-alt2
+- Fixed package URL.
+- Built without docs.
+
 * Mon Feb 23 2026 Grigory Ustinov <grenka@altlinux.org> 4.16.0-alt1
 - Automatically updated to 4.16.0.
 

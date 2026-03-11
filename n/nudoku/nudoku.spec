@@ -1,12 +1,12 @@
 Name:     nudoku
 Version:  7.0.0
-Release:  alt1
+Release:  alt2
 
-Summary:  ncurses based sudoku game
+Summary:  Ncurses based sudoku game
 
-License:  GPLv3
+License:  GPL-3.0
 Group:    Games/Puzzles
-URL:      http://jubalh.github.io/nudoku
+URL:      https://jubalh.github.io/nudoku
 VCS:      https://github.com/jubalh/nudoku
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -39,11 +39,14 @@ nudoku can also generate PDF files, containing sudokus.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS LICENSE README.md
+%doc LICENSE README.md AUTHORS ChangeLog
 %_bindir/%name
 %_man6dir/%name.6.*
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt2
+- Fixed package URL.
+
 * Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
 - Automatically updated to 7.0.0.
 

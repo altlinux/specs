@@ -1,18 +1,19 @@
 Name:     s3fs-fuse
 Version:  1.97
-Release:  alt1
+Release:  alt2
 
 Summary:  FUSE-based file system backed by Amazon S3
 
-License:  GPL-2.0
+License:  GPL-2.0+
 Group:    System/Kernel and hardware
-Url:      https://github.com/s3fs-fuse/s3fs-fuse
+URL:      https://github.com/s3fs-fuse/s3fs-fuse
+VCS:      https://github.com/s3fs-fuse/s3fs-fuse
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ make
+BuildRequires: gcc-c++
 BuildRequires: libfuse3-devel
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
@@ -34,7 +35,7 @@ rsync backup to s3.
 %setup
 
 %build
-./autogen.sh
+%autoreconf
 %configure
 %make_build
 
@@ -42,11 +43,14 @@ rsync backup to s3.
 %makeinstall_std
 
 %files
-%doc AUTHORS README.md ChangeLog
+%doc COPYING AUTHORS README.md ChangeLog
 %_bindir/s3fs
-%_man1dir/*.1.xz
+%_man1dir/s3fs.1.*
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 1.97-alt2
+- Fixed package License.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.97-alt1
 - Automatically updated to 1.97.
 

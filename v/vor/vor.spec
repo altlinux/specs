@@ -1,20 +1,25 @@
 %def_enable Werror
 
-Name:		vor
-Version:	0.5.8
-Release:	alt1
+Name:       vor
+Version:    0.5.8
+Release:    alt2
 
-Summary:	Variations on Rockdogders is an 2D space shooter
+Summary:    Variations on Rockdogders is an 2D space shooter
 
-Group:		Games/Other
-License:	GPLv2+
-Url:		http://jasonwoof.org/vor
+Group:      Games/Arcade
+License:    GPL-2.0+
+URL:        https://sametwice.com/vor
+VCS:        https://github.com/JasonWoof/vor
 
-Source0:	%name-%version.tar
-Source1:	vor.desktop
+Source0:    %name-%version.tar
+Source1:    vor.desktop
 
-BuildRequires: libSDL_image-devel libSDL_mixer-devel desktop-file-utils gcc-c++
-BuildRequires: netpbm povray
+BuildRequires: gcc-c++
+BuildRequires: libSDL_image-devel
+BuildRequires: libSDL_mixer-devel
+BuildRequires: desktop-file-utils
+BuildRequires: netpbm
+BuildRequires: povray
 
 %description
 VoR is a simple, fast-paced action game that will challenge your reflexes.
@@ -41,6 +46,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE1
 %_datadir/%name
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.8-alt2
+- Fixed package Group and URL.
+
 * Mon Apr 27 2020 Grigory Ustinov <grenka@altlinux.org> 0.5.8-alt1
 - Automatically updated to 0.5.8.
 

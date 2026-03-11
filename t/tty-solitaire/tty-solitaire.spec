@@ -2,13 +2,14 @@
 
 Name:     tty-solitaire
 Version:  1.4.1
-Release:  alt1
+Release:  alt2
 
-Summary:  Play solitaire in your terminal!
+Summary:  Play solitaire in your terminal
 
 License:  MIT
 Group:    Games/Cards
-Url:      https://github.com/mpereira/tty-solitaire
+URL:      https://github.com/mpereira/tty-solitaire
+VCS:      https://github.com/mpereira/tty-solitaire
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -29,13 +30,16 @@ Buildrequires: libncursesw-devel
 %makeinstall_std PREFIX=%_prefix
 
 %check
-make test
+%make test
 
 %files
-%_bindir/*
-%doc LICENSE README CHANGELOG TODO.md
+%doc LICENSE README CHANGELOG
+%_bindir/ttysolitaire
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt2
+- Spec refactoring.
+
 * Mon Apr 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Automatically updated to 1.4.1.
 

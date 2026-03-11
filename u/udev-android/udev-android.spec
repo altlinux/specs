@@ -1,20 +1,19 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 %define adbusersgroup adbusers
 
-Name: udev-android
-Version: 20250525
-Release: alt1
+Name:      udev-android
+Version:   20250525
+Release:   alt2
 
-Summary: Udev rules for adb and fastboot
+Summary:   Udev rules for adb and fastboot
 
-License: GPLv3
-Group: System/Configuration/Hardware
-URL: https://github.com/M0Rf30/android-udev-rules
+License:   GPL-3.0
+Group:     System/Configuration/Hardware
+URL:       https://github.com/M0Rf30/android-udev-rules
+VCS:       https://github.com/M0Rf30/android-udev-rules
 
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source:    %name-%version.tar
 
 %description
 This package provides an UDEV rules enabling adb and fastboot to work
@@ -37,6 +36,9 @@ install -p -m644 51-android.rules %buildroot%_udevrulesdir
 %_udevrulesdir/51-android.rules
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 20250525-alt2
+- Added package VCS tag.
+
 * Wed May 28 2025 Grigory Ustinov <grenka@altlinux.org> 20250525-alt1
 - Automatically updated to 20250525.
 

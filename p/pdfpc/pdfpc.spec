@@ -1,19 +1,24 @@
-Name: pdfpc
-Version: 4.7.0
-Release: alt1
-Summary: A GTK based presentation viewer application for GNU/Linux
+Name:     pdfpc
+Version:  4.7.0
+Release:  alt2
+Summary:  A GTK based presentation viewer application for GNU/Linux
 
-Group: Other
-License: GPLv2+
-Url: https://github.com/pdfpc/pdfpc
-Source: %name-%version.tar
+Group:    Office
+License:  GPL-3.0+
+URL:      https://pdfpc.github.io
+VCS:      https://github.com/pdfpc/pdfpc
 
-Patch0: pdfpc-alt-gst-video-info-from-caps.patch
+Source:   %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gst-plugins1.0-devel libgee0.8-devel libgtk+3-devel
-BuildRequires: libgtk4-devel libpoppler-glib-devel libwebkit2gtk-devel vala
-BuildRequires: libdiscount-devel libjson-glib-devel libqrencode-devel
+Patch:    pdfpc-alt-gst-video-info-from-caps.patch
+
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gst-plugins1.0-devel
+BuildRequires: libdiscount-devel
+BuildRequires: libgee0.8-devel
+BuildRequires: libjson-glib-devel
+BuildRequires: libpoppler-glib-devel
+BuildRequires: libqrencode4-devel
 BuildRequires: libwebkit2gtk4.1-devel
 
 Provides: pdf-presenter-console
@@ -30,28 +35,29 @@ which can be created using nearly any of today's presentation software.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 %build
-%cmake \
-	-DSYSCONFDIR=/etc \
-	#
+%cmake -DSYSCONFDIR=/etc
 %cmake_build
 
 %install
 %cmakeinstall_std
 
 %files
-%doc README.rst CHANGELOG.rst
+%doc LICENSE.txt README.rst CHANGELOG.rst
 %_bindir/%name
 %config(noreplace) %_sysconfdir/%{name}rc
-%_mandir/man1/%{name}*
-%_mandir/man5/%{name}*
+%_mandir/man1/%name.1.*
+%_mandir/man5/%{name}rc.5.*
 %dir %_datadir/%name
 %_datadir/%name/icons
 %_datadir/%name/css
 
 %changelog
+* Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt2
+- Fixed package License, Group and URL.
+
 * Fri Dec 20 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
 - Automatically updated to 4.7.0.
 
