@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name tox-uv
+%define pypi_name tox-uv-bare
 %define mod_name tox_uv
 
 %def_with check
@@ -7,10 +7,10 @@
 Name: python3-module-%pypi_name
 Version: 1.33.2
 Release: alt1
-Summary: Integration of uv with tox (meta package).
+Summary: Integration of uv with tox (bare package, bring your own uv)
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/tox-uv
+Url: https://pypi.org/project/tox-uv-bare
 Vcs: https://github.com/tox-dev/tox-uv
 BuildArch: noarch
 Source: %name-%version.tar
@@ -19,63 +19,44 @@ Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+# tox_uv directory was previously packaged in tox-uv
+Conflicts: python3-module-tox-uv <= 1.29.0-alt1
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# install system uv
+BuildRequires: uv
 %endif
 
 %description
-tox-uv is a tox plugin, which replaces virtualenv and pip with uv in your tox
-environments. Note that you will get both the benefits (performance) or
-downsides (bugs) of uv.
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 %pyproject_scm_init
-pushd meta
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-popd
 %if_with check
 %pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
-pushd meta
 %pyproject_build
-popd
 
 %install
-pushd meta
 %pyproject_install
-popd
-# tox_uv directory is packaged in tox-uv-bare which is the dependency of tox-uv
-rm -rv %buildroot%python3_sitelibdir/%mod_name/
 
 %check
-pushd meta
-%pyproject_run -- bash -s <<-'ENDTESTS'
-set -eux
-pushd ..
 export UV_OFFLINE=1
-export UV_NO_BUILD_ISOLATION=1
-python -m pytest -vra meta/tests/
-popd
-ENDTESTS
-popd
+%pyproject_run_pytest -vra tests
 
 %files
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 1.33.2-alt1
-- 1.29.0 -> 1.33.2.
-
-* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1.29.0-alt1
-- 1.28.0 -> 1.29.0.
-
-* Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 1.28.0-alt1
-- Initial build for Sisyphus.
+- Initial build for sisyphus.
