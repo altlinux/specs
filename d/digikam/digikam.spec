@@ -19,8 +19,8 @@ Name: %rname
 %define ver_major 8
 %define ver_minor 5
 %define ver_bugfix 0
-Version: 8.8.0
-Release: alt2
+Version: 9.0.0
+Release: alt1
 %K6init no_altplace
 
 %define sover %version
@@ -269,8 +269,6 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 %_K6icon/hicolor/*/actions/tag-*.*
 %_K6icon/hicolor/*/actions/albumfolder-*.*
 %_K6icon/hicolor/*/actions/tag.*
-%_K6icon/hicolor/*/actions/overexposure.*
-%_K6icon/hicolor/*/actions/underexposure.*
 
 %files devel
 %_K6link/*.so
@@ -289,6 +287,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 9.0.0-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 8.8.0-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 
