@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define app_id space.x1z53.yummy-anime-gtk
+%define app_id space.x1z53.iris
 
-Name: yummy-anime-gtk
-Version: 0.1.4
+Name: iris
+Version: 0.2.0
 Release: alt1
 
 Summary: GTK client for Yummy Anime
 License: GPL-3.0-only
 Group: Video
 
-URL: https://altlinux.space/x1z53/yummy-anime-gtk
-VCS: https://altlinux.space/x1z53/yummy-anime-gtk
+URL: https://altlinux.space/x1z53/iris
+VCS: https://altlinux.space/x1z53/iris
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -23,6 +23,9 @@ BuildRequires: pkgconfig(libapi-base-7)
 BuildRequires: pkgconfig(webkitgtk-6.0)
 
 Requires: libwebp-pixbuf-loader
+
+Provides: yummy-anime-gtk = %EVR
+Obsoletes: yummy-anime-gtk < %EVR
 
 %description
 %summary.
@@ -48,6 +51,10 @@ Requires: libwebp-pixbuf-loader
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Tue Mar 10 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.0-alt1
+- Update to 0.2.0.
+- Application rebranding: yummy-anime-gtk -> iris.
+
 * Fri Feb 27 2026 David Sultaniiazov <x1z53@altlinux.org> 0.1.4-alt1
 - Update to 0.1.4.
 
