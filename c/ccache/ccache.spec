@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ccache
-Version: 4.6
-Release: alt3
+Version: 4.11.3
+Release: alt1
 
 Summary: Compiler cache
 License: GPLv3+
@@ -62,6 +62,9 @@ EOF
 %prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.11.3-alt1
+- new version 4.11.3
+
 * Tue Jul 11 2023 Artyom Bystrov <arbars@altlinux.org> 4.6-alt3
 - Fix build on GCC13
 
