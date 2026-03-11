@@ -4,7 +4,7 @@
 %define libkomparediff2 libkomparediff2_%sover
 
 Name: kde6-%rname
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 %K6init
 
@@ -79,6 +79,9 @@ KF6 library
 
 
 %changelog
+* Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
