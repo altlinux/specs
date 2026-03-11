@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.179
+Version: 2.9.180
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Wed Mar 11 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.9.180-alt1
+- alterator-vm: fix typo
+
 * Mon Feb 16 2026 Anton Midyukov <antohami@altlinux.org> 2.9.179-alt1
 - alterator-users: restore commented strings of russian translations.
 
