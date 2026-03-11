@@ -4,7 +4,7 @@
 %define mod_name jsonschema_rs
 
 Name: %pypi_name
-Version: 0.44.0
+Version: 0.45.0
 Release: alt1
 
 Summary: A high-performance JSON Schema validator
@@ -64,6 +64,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.45.0-alt1
+- New version (0.45.0).
+
 * Mon Mar 02 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.44.0-alt1
 - New version (0.44.0).
 
