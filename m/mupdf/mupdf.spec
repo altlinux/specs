@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define abiversion 27
-%define sominor 1
+%define sominor 2
 %define soname %abiversion.%sominor
 %define python3_name python3-module-mupdf
 
 Name: mupdf
-Version: 1.27.1
-Release: alt2
+Version: 1.27.2
+Release: alt1
 
 Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
 License: AGPL-3.0-or-later
@@ -164,6 +164,9 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %_man1dir/mutool.1*
 
 %changelog
+* Tue Mar 10 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.27.2-alt1
+- New version (1.27.2).
+
 * Wed Feb 25 2026 Michael Shigorin <mike@altlinux.org> 1.27.1-alt2
 - Less fragile BR: (fixes build for sisyphus_e2k).
 - Build before installation, not during it.

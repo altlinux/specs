@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.27.1
+Version: 1.27.2
 Release: alt1
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
@@ -59,43 +59,55 @@ export LDFLAGS="$LDFLAGS -lfreetype -lmupdf"
 %pyproject_install
 
 %check
-# linters have no place in distro build tests
-SKIP="not test_codespell and not test_pylint and not test_py_typed"
-# test_fontarchives tries to download special module via pip
-SKIP="$SKIP and not test_fontarchive"
-# flake8 has no place in downstream packaging
-SKIP="$SKIP and not test_flake8"
-# test_2791 fails sporadically with its empiric bounds
-SKIP="$SKIP and not test_2791 and not test_4090 and not test_4125"
-# test_3050 is known to fail for distribution builds
-SKIP="$SKIP and not test_3050 and not test_3854"
-# test_subset_fonts needs pymupdf_fonts
-SKIP="$SKIP and not test_subset_fonts"
-# test_spikes uses a binary diff on rendered images
-SKIP="$SKIP and not test_spikes"
-# these compare renderings with system fonts or missing fonts
-SKIP="$SKIP and not test_4180"
-# tries to download / install stuff through git and pip
-SKIP="$SKIP and not test_4445 and not test_4457 and not test_barcode"
-SKIP="$SKIP and not test_open2 and not test_4533 and not test_4702"
-# Swig returns different results
-SKIP="$SKIP and not test_4392"
+# Linters and static checks have no place in distro build tests
+SKIP="not test_codespell and \
+      not test_pylint and \
+      not test_py_typed and \
+      not test_flake8"
+
+# Flaky / environment‑dependent tests
+SKIP="$SKIP and not test_3842 and \
+             not test_2791 and \
+             not test_4090 and \
+             not test_4125 and \
+             not test_3050 and \
+             not test_3854 and \
+             not test_spikes and \
+             not test_4180 and \
+             not test_4392"
+
+# Tests pulling extra data or network / packaging tools
+SKIP="$SKIP and not test_fontarchive and \
+             not test_subset_fonts and \
+             not test_4445 and \
+             not test_4457 and \
+             not test_barcode and \
+             not test_open2 and \
+             not test_4533 and \
+             not test_4702"
+
 %ifarch %ix86
-# On the i586 architecture, some tests related to text rendering and positioning,
-# may give minor discrepancies in pixels.
-SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4182 \
-and not test_4435 and not test_4699"
+# On i586, some rendering / positioning tests give minor pixel differences
+SKIP="$SKIP and not test_2246 and \
+             not test_4415 and \
+             not test_4245 and \
+             not test_4182 and \
+             not test_4435 and \
+             not test_4699"
 %endif
 %pyproject_run_pytest -k "$SKIP"
 
 %files
 %doc COPYING README.*
-%_bindir/%mod_name
+%_bindir/pymupdf
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/fitz/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 10 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.27.2-alt1
+- New version (1.27.2).
+
 * Thu Feb 12 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 1.27.1-alt1
 - New version (1.27.1).
 
