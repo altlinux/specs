@@ -1,5 +1,5 @@
 Name: debhelper
-Version: 9.20151005
+Version: 13.30
 Release: alt1
 
 Summary: Tools for Debian Packages
@@ -10,13 +10,15 @@ Url: http://packages.debian.org/unstable/devel/%name
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: ftp://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.xz
+# Source-url: https://deb.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.xz
 Source: %{name}_%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Jan 07 2009
-BuildRequires: dpkg perl-Test-Pod po4a
+BuildRequires: dpkg perl-Test-Pod po4a perl-autodie perl-IPC-Run perl-JSON-PP
+
+# perl.req tries to deparse dh_* scripts which fail without debian/ context
+%set_findreq_skiplist %_bindir/dh_auto_*
 
 %description
 The packages contains helper utilities for Debian alien.
@@ -25,7 +27,8 @@ The packages contains helper utilities for Debian alien.
 %setup -n %name
 
 %build
-make -f debian/rules build
+make version
+make -j1 build
 
 %install
 rm -f *{es,fr}.1
@@ -61,6 +64,11 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 13.30-alt1
+- new version 13.30
+- add missing build dependencies for tests
+- skip perl.req deparse for dh_auto_* scripts
+
 * Thu Nov 05 2015 Vitaly Lipatov <lav@altlinux.ru> 9.20151005-alt1
 - new version 9.20151005 (with rpmrb script)
 
