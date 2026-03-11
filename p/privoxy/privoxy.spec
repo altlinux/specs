@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 3.0.34
+Version: 4.1.0
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -27,7 +27,7 @@ Requires: chkconfig, shadow-utils, chrooted, coreutils
 %define ROOT /var/lib/%name
 
 # Automatically added by buildreq on Thu Sep 19 2002
-BuildRequires: docbook-style-dsssl libpcre-devel zlib-devel
+BuildRequires: docbook-style-dsssl libpcre2-devel zlib-devel
 
 %description
 Privoxy is a web proxy with advanced filtering capabilities for protecting
@@ -143,6 +143,10 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0
+- switch to libpcre2
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.34-alt1
 - new version 3.0.34 (with rpmrb script)
 
