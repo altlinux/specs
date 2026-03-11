@@ -1,7 +1,7 @@
 %define defphp php%php_defver
 
 Name: wp-cli
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
@@ -49,6 +49,9 @@ test "$(%buildroot%_bindir/wp cli version)" = "WP-CLI %version"
 %_bindir/wp
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt1
+- new version 2.12.0
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
 - new version, use php_defver from rpm-macros-php
 
