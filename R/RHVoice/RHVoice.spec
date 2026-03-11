@@ -7,7 +7,7 @@
 
 Name:    RHVoice
 Version: 1.18.1
-Release: alt1
+Release: alt2
 
 Summary: a free and open source speech synthesizer for Russian and other languages
 License: %progectlicense
@@ -190,7 +190,7 @@ Requires: %name-%1 = %EVR \
 %voicepackage Russian dasha-rus CC-BY-SA-4.0 dasha
 %voicepackage Russian elena GPL-3.0
 %voicepackage Russian evgeniy-rus CC-BY-NC-ND-4.0 evgeniy
-%voicepackage Russian lyudmila-rus CC-BY-NC-SA-4.0 lyudmila lyudmila
+%voicepackage Russian lyudmila-rus CC-BY-NC-SA-4.0 lyudmila
 %voicepackage Russian irina %progectlicense
 %voicepackage Russian mikhail CC-BY-NC-ND-4.0
 %voicepackage Russian michal-rus CC-BY-NC-SA-4.0 michal
@@ -259,7 +259,7 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 
 # Croatian
 
-%voicepackage Croatian karmela CC0 1.0
+%voicepackage Croatian karmela CC0-1.0
 %voicepackage Croatian marija CC-BY-SA-4.0
 
 
@@ -296,7 +296,7 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 
 # Serbian
 
-%voicepackage Serbian dragana CC0 1.0
+%voicepackage Serbian dragana CC0-1.0
 
 
 # Slovak
@@ -340,6 +340,9 @@ scons install DESTDIR=%buildroot \
 prefix=%prefix sysconfdir=%_sysconfdir bindir=%_bindir libdir=%_libdir includedir=%_includedir datadir=%_datadir
 
 %changelog
+* Wed Mar 11 2026 Artem Semenov <savoptik@altlinux.org> 1.18.1-alt2
+- Fixed voice subpackage names (Closes: 58198)
+
 * Sun Mar 01 2026 Artem Semenov <savoptik@altlinux.org> 1.18.1-alt1
 - Updated to new version 1.18.1
 - Added new croatian voice marija
