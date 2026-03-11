@@ -2,7 +2,7 @@
 %define        pkgname rubyipmi
 
 Name:          gem-%pkgname
-Version:       0.10.0
+Version:       0.13.0
 Release:       alt1
 Summary:       Command line wrapper for ipmitool and freeipmi
 License:       LGPLv2+
@@ -57,5 +57,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Wed Mar 11 2026 Alexander Danilov <admsasha@altlinux.org> 0.13.0-alt1
+- New version 0.13.0.
+
 * Mon Jun 15 2020 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt1
 - + packaged gem with usage Ruby Policy 2.0
