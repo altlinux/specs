@@ -1,77 +1,60 @@
-%def_with pandoc
-%define oname hddfancontrol
-
 Name: hddfancontrol
-Version: 1.6.2
+Version: 2.1.0
 Release: alt1
 
 Summary: Control system fan speed by monitoring hard drive temperature
 
-License: LGPLv3
+License: GPL-3.0-only
 Group: Monitoring
 Url: https://github.com/desbma/hddfancontrol
 
-# The PyPI archives don't have unit tests in them anymore.
-Source: https://github.com/desbma/hddfancontrol/archive/%version/%oname-%version.tar
+# Source-url: https://github.com/desbma/hddfancontrol.git
+Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
-BuildArch: noarch
-
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-devel
-BuildRequires: python3-module-daemon, python3-module-docutils
-BuildRequires: hddtemp, hdparm
-BuildRequires: udev-rules
-%if_with pandoc
-BuildRequires: python3-module-pypandoc
-%endif
-
-Requires: python3-module-daemon
-Requires: python3-module-docutils
-Requires: python3-module-setuptools
-
-Requires: hddtemp, hdparm
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust /proc
 
 %description
 HDD Fan control is a command line tool to dynamically control fan speed
 according to hard drive temperature on Linux.
 
 %prep
-%setup -n %oname-%version
+%setup -n %name-%version
+tar -xf %{SOURCE1}
 
-# Remove bundled egg-info
-rm -rf %oname.egg-info
+mkdir -p .cargo
+cat >> .cargo/config <<'EOF'
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-%python3_build
+%rust_build
 
 %install
-%python3_install
-
-# Remove the "tests" directory that gets installed systemwide.
-rm -rf %buildroot%python3_sitelibdir/tests
-
-# Install the systemd script and config file.
-mkdir -p %buildroot%_unitdir/
-mkdir -p %buildroot%_sysconfdir/
-
-sed 's,conf.d/hddfancontrol,hddfancontrol.conf,' -i systemd/hddfancontrol.service
+%rust_install
+mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_sysconfdir/sysconfig
 cp -a systemd/hddfancontrol.service %buildroot%_unitdir/
-cp -a systemd/hddfancontrol.conf %buildroot%_sysconfdir/
-
-# Run the tests.
-#check
-#__python3 setup.py test
+cp -a systemd/hddfancontrol.conf %buildroot%_sysconfdir/sysconfig/hddfancontrol
+sed -i 's|/etc/conf.d/|/etc/sysconfig/|' %buildroot%_unitdir/hddfancontrol.service
 
 %files
-%doc LICENSE
-%doc README.md
+%doc LICENSE README.md
 %_bindir/hddfancontrol
 %_unitdir/hddfancontrol.service
-%config(noreplace) %_sysconfdir/hddfancontrol.conf
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%config(noreplace) %_sysconfdir/sysconfig/hddfancontrol
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version (2.1.0) via gear-uupdate
+- rewrite spec for Rust build system (upstream switched from Python to Rust)
+- move config from /etc/conf.d to /etc/sysconfig
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 
