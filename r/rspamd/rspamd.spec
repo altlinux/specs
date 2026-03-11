@@ -2,8 +2,8 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.12.1
-Release: alt2
+Version: 3.14.2
+Release: alt1
 
 Summary: Fast and modular antispam system written in C
 
@@ -116,6 +116,7 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %config(noreplace) %_sysconfigdir/%name
 %config(noreplace) %_logrotatedir/%name
 %_sysconfdir/%name/local.d/module.conf.example
+%_sysconfdir/%name/local.d/antivirus.conf.example
 %_sysconfdir/%name/lua.local.d/module.lua.example
 %_sysconfdir/%name/modules.local.d/module.conf.example
 %_sysconfdir/%name/override.d/module.conf.example
@@ -133,6 +134,10 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.14.2-alt1
+- new version 3.14.2 (with rpmrb script)
+- add antivirus.conf.example to files list
+
 * Wed Feb 25 2026 Michael Shigorin <mike@altlinux.org> 3.12.1-alt2
 - E2K: avoid BR: libunwind-devel (cf.: mcst#6690)
 
