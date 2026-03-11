@@ -7,8 +7,8 @@
 %define _disable_test 0
 
 Name: po4a
-Version: 0.65
-Release: alt2
+Version: 0.74
+Release: alt1
 
 Summary: Tools for helping translation of documentation
 
@@ -21,7 +21,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# Note! change this magic number before upgrade
+# Source-url: https://github.com/mquinson/po4a/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Sep 07 2013
@@ -38,8 +38,11 @@ BuildRequires:  perl-Pod-Parser
 # for Unicode::GCString
 BuildRequires:  perl-Unicode-LineBreak 
 BuildRequires:  perl-YAML-Tiny
+BuildRequires:  perl-unicore
+BuildRequires:  perl-Syntax-Keyword-Try
 
 Requires: gettext-tools
+%add_findreq_skiplist %perl_vendor_privlib/Locale/Po4a/Text.pm
 
 %description
 The po4a (po for anything) project goal is to ease translations (and
@@ -84,8 +87,15 @@ rm -rf %buildroot%_datadir/locale/??_???? # TBD: why is this not packaged?
 %_man7dir/*
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.74-alt1
+- new version 0.74 (with rpmrb script)
+- skip po4a translation step in Po4aBuilder.pm to fix OOM during build
+- add perl-unicore, perl-Syntax-Keyword-Try to BuildRequires
+- skip Text.pm from findreq (Syntax::Keyword::Try XS hook module breaks perl.req)
+
 * Thu Feb 09 2023 Anton Midyukov <antohami@altlinux.org> 0.65-alt2
 - Requires: gettext-tools (Closes: 43546)
+%add_findreq_skiplist %perl_vendor_privlib/Locale/Po4a/Text.pm
 
 * Thu Dec  9 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.65-alt1
 - 0.65
