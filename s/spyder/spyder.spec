@@ -5,7 +5,7 @@
 %def_without check
 
 Name: spyder
-Version: 5.5.5
+Version: 6.1.3
 Release: alt1
 
 Summary: The Scientific Python Development Environment
@@ -68,17 +68,17 @@ Url: https://pypi.org/project/spyder/
 # remove wrong-installed png icon
 %__rm %buildroot%_iconsdir/%pypi_name.png
 
-%__mkdir_p %buildroot/%_iconsdir/hicolor/{512x512,scalable}/
+%__mkdir_p %buildroot/%_iconsdir/hicolor/{512x512,scalable}/apps
 
 # resize png from 500x500 to 512x512
 %_bindir/convert \
   img_src/%pypi_name.png -resize 512x512 \
-  %buildroot%_iconsdir/hicolor/512x512/%pypi_name.png
+  %buildroot%_iconsdir/hicolor/512x512/apps/%pypi_name.png
 
 # also install svg icon
 %__install -m0644 -pD \
   img_src/%pypi_name.svg \
-  %buildroot%_iconsdir/hicolor/scalable/%pypi_name.svg
+  %buildroot%_iconsdir/hicolor/scalable/apps/%pypi_name.svg
 
 # move python-module to arch-directory
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -94,7 +94,7 @@ Url: https://pypi.org/project/spyder/
 %files
 %_bindir/%pypi_name
 %_desktopdir/%pypi_name.desktop
-%_iconsdir/hicolor/*/%pypi_name.*
+%_iconsdir/hicolor/*/apps/%pypi_name.*
 %_datadir/metainfo/*.appdata.xml
 
 %files -n python3-module-%pypi_name
@@ -102,6 +102,9 @@ Url: https://pypi.org/project/spyder/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Aleksandr Dovydenkov <asd@altlinux.org> 6.1.3-alt1
+- Updated to 6.1.3.
+
 * Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 5.5.5-alt1
 - Updated to 5.5.5.
 
@@ -110,4 +113,3 @@ Url: https://pypi.org/project/spyder/
 
 * Wed Nov 08 2023 Anton Zhukharev <ancieg@altlinux.org> 5.5.0-alt1
 - Built for ALT Sisyphus.
-
