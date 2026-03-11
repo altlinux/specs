@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.5.5
-Release: alt2
+Version: 6.5.6
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -44,7 +44,6 @@ Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
 Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 Patch6: alt-gcc13.patch
-Patch7: alt-bad-acer.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -141,7 +140,6 @@ KF6 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 %build
 %K6build \
@@ -205,6 +203,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
+- new version
+
 * Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt2
 - add fix against bad Acer monitors
 

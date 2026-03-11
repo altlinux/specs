@@ -8,8 +8,8 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.5.5
-Release: alt4
+Version: 6.5.6
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
+- new version
+
 * Wed Mar 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt4
 - add upstream fixes
 

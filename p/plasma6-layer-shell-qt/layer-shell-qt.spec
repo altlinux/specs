@@ -4,8 +4,8 @@
 %define liblayershellqtinterface liblayershellqtinterface%sover
 
 Name: plasma6-%rname
-Version: 6.5.5
-Release: alt2
+Version: 6.5.6
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -79,6 +79,9 @@ Requires: %name-common
 %_K6lib/libLayerShellQtInterface.so.*
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
+- new version
+
 * Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt2
 - add upstream fix for window activation
 

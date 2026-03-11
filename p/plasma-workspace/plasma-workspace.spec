@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.5.5
-Release: alt6
+Version: 6.5.6
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.6-alt1
+- new version
+
 * Sun Feb 22 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt6
 - fix icon for PRIME menu entry
 

@@ -14,8 +14,8 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.5.5
-Release: alt4
+Version: 6.5.6
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -208,6 +208,9 @@ touch touch-%_arch
 
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
+- new version
+
 * Mon Mar 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt4
 - remove weather ions with poor connection
 
