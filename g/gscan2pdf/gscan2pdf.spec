@@ -1,12 +1,12 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.13.4
-Release: alt1
+Version: 2.13.5
+Release: alt2
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
 Group: Office
-License: GPL
+License: GPL-3.0-or-later
 
 Url: http://gscan2pdf.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -24,7 +24,7 @@ BuildRequires: perl-Gtk3 perl-Gtk3-ImageView perl-Gtk3-SimpleList libgoocanvas2-
 
 Requires: libgoocanvas2-gir perl-Pod-Perldoc
 
-BuildRequires: perl-Magick perl-Sane >= 0.05
+BuildRequires: perl-Magick perl-Sane >= 0.05 perl-IPC-Cmd
 
 BuildRequires: perl-devel
 
@@ -93,6 +93,12 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt2
+- add perl-IPC-Cmd to BuildRequires
+
+* Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt1
+- new version 2.13.5
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.13.4-alt1
 - new version 2.13.4 (with rpmrb script)
 
