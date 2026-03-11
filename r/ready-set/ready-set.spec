@@ -12,7 +12,7 @@
 
 Name: ready-set
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: The utility for configuring the system at the first start
 License: GPL-3.0-or-later
@@ -21,6 +21,7 @@ URL: https://altlinux.space/alt-gnome/ReadySet
 VCS: https://altlinux.space/alt-gnome/ReadySet.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: %name-common = %EVR
 Conflicts: %gis_name
@@ -181,6 +182,7 @@ Requires: %name = %EVR
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Dpassword_check_backend=both
@@ -270,6 +272,9 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Wed Mar 11 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt3
+- Added cumulative patch.
+
 * Fri Mar 06 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt2
 - Merged couple of keyboard patches from main branch.
 
