@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -13,9 +13,10 @@ VCS: https://altlinux.space/alt-gnome/ReadySet.git
 Source: %name-%version.tar
 
 Requires: phrog
-Requires: ready-set-plugin-language >= 0.5.0
-Requires: ready-set-plugin-keyboard >= 0.5.0
-Requires: ready-set-plugin-user-passwdqc >= 0.5.0
+Requires: ready-set >= 0.5.0
+Requires: ready-set-plugin-language
+Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-user-passwdqc
 
 BuildArch: noarch
 
@@ -40,21 +41,31 @@ install -pDm0644 config \
 install -pDm0644 %name.conf \
 	%buildroot%_sysusersdir/%name.conf
 
-install -pDm0755 remove-ready-set \
-	%buildroot%_datadir/ready-set/post-hooks/system/remove-ready-set
+# Animations can cause segfaults on PinePhone and PinePhone Pro
+install -pDm0755 %name-user-pre \
+	%buildroot%_datadir/ready-set/pre-hooks/user/%name
 
-install -pDm0755 unset-first-run \
-	%buildroot%_datadir/ready-set/post-hooks/user/unset-first-run
+install -pDm0755 %name-user-post \
+	%buildroot%_datadir/ready-set/post-hooks/user/%name
+
+install -pDm0755 %name-system-post \
+	%buildroot%_datadir/ready-set/post-hooks/system/%name
 
 %files
 %_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
 %_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
 %_datadir/ready-set/config
 %_sysusersdir/%name.conf
-%_datadir/ready-set/post-hooks/system/remove-ready-set
-%_datadir/ready-set/post-hooks/user/unset-first-run
+%_datadir/ready-set/pre-hooks/user/%name
+%_datadir/ready-set/post-hooks/user/%name
+%_datadir/ready-set/post-hooks/system/%name
 
 %changelog
+* Wed Mar 11 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6-alt1
+- Improved hooks:
+  - Added animation disabling;
+  - Added ignoring hardware keyboard.
+
 * Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5-alt1
 - Updated for new ready-set 0.5.0.
 
