@@ -4,7 +4,7 @@
 %define libname libblack_hole_solver%sover
 
 Name: black-hole-solver
-Version: 1.12.0
+Version: 1.14.0
 Release: alt1
 
 Group: Games/Cards
@@ -97,5 +97,8 @@ Freecell Solver from within your programs.
 %_libdir/lib*.so
 
 %changelog
+* Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 1.14.0-alt1
+- new version
+
 * Mon Jan 23 2023 Sergey V Turchin <zerg@altlinux.org> 1.12.0-alt1
 - initial build
