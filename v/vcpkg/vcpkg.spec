@@ -1,8 +1,8 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2025.05.19
-Release: alt1.1
+Version: 2025.12.16
+Release: alt1
 
 Summary: C++ Library Manager
 
@@ -75,6 +75,9 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2025.12.16-alt1
+- new version 2025.12.16
+
 * Thu Sep 25 2025 Nazarov Denis <nenderus@altlinux.org> 2025.05.19-alt1.1
 - fix build with fmt 12
 
