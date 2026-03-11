@@ -1,7 +1,7 @@
 %define module_name mongoengine
 
 Name: python3-module-%module_name
-Version: 0.29.1
+Version: 0.29.3
 Release: alt1
 
 Summary: A Python Document-Object Mapper for working with MongoDB
@@ -36,6 +36,9 @@ MongoEngine is an ORM-like layer on top of PyMongo.
 %python3_sitelibdir/%module_name-%version.dist-info
 
 %changelog
+* Wed Mar 11 2026 Anton Vyatkin <toni@altlinux.org> 0.29.3-alt1
+- New version 0.29.3.
+
 * Thu Sep 19 2024 Anton Vyatkin <toni@altlinux.org> 0.29.1-alt1
 - New version 0.29.1.
 
