@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: A cross-platform command-line utility that creates projects from cookiecutters
@@ -82,6 +82,9 @@ touch pytest.ini
 %_datadir/fish/vendor_completions.d/%binfile_name.fish
 
 %changelog
+* Wed Mar 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.1-alt1
+- Updated to 2.7.1.
+
 * Tue Mar 03 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.7.0-alt1
 - Updated to 2.7.0.
 
