@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.18.0
+Version: 8.19.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -232,6 +232,14 @@ popd
 %endif
  
 %changelog
+* Wed Mar 11 2026 Anton Farygin <rider@altlinux.org> 8.19.0-alt1
+- 8.18.0 -> 8.19.0
+- Fixes:
+  * CVE-2026-3805: use after free in SMB connection reuse
+  * CVE-2026-3784: wrong proxy connection reuse with credentials
+  * CVE-2026-3783: token leak with redirect and netrc
+  * CVE-2026-1965: bad reuse of HTTP Negotiate connection
+
 * Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 8.18.0-alt1
 - 8.17.0 -> 8.18.0
 - Fixes:
