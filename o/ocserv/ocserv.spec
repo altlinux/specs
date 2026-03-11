@@ -8,7 +8,7 @@
 %def_enable oidc_auth
 
 Name: ocserv
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: OpenConnect SSL VPN server
@@ -16,6 +16,7 @@ License: GPLv2+
 Group: System/Servers
 
 Url: https://ocserv.openconnect-vpn.net
+Vcs: https://gitlab.com/openconnect/ocserv.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -140,6 +141,9 @@ useradd -r -g %name -G %name  -c 'Ocserv VPN Daemon' \
 %_initdir/%name
 
 %changelog
+* Wed Mar 11 2026 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
+- updated from 1.4.0 to 1.4.1
+
 * Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
