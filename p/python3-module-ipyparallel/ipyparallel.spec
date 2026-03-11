@@ -5,7 +5,7 @@
 %def_with bootstrap
 
 Name: python3-module-%oname
-Version: 9.0.2
+Version: 9.1.0
 Release: alt1
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
@@ -103,6 +103,9 @@ export TMPDIR=/tmp
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Mar 11 2026 Anton Vyatkin <toni@altlinux.org> 9.1.0-alt1
+- New version 9.1.0.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 9.0.2-alt1
 - New version 9.0.2.
 
