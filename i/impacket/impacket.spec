@@ -1,9 +1,10 @@
 %global pypi_name impacket
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 Name: %pypi_name
-Version: 0.12.0
-Release: alt0.1
+Version: 0.13.0
+Release: alt1
 Summary: Collection of Python classes for working with network protocols
 Group: Development/Python3
 
@@ -13,6 +14,14 @@ Source0: %name-%version.tar
 
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-six
+BuildRequires: python3-module-pycryptodomex
+BuildRequires: python3-module-pyasn1
+BuildRequires: python3-module-openssl
+BuildRequires: python3-module-ldap3
+%endif
 
 BuildArch: noarch
 
@@ -57,10 +66,15 @@ rm -rf %buildroot%_docdir/%name
 %python3_sitelibdir_noarch/%{pypi_name}
 %python3_sitelibdir_noarch/%{pypi_name}-%{version}.dist-info/
 
+%check
+%pyproject_run_pytest -m "not remote"
+
 %files examples
 %_bindir/*
 
 %changelog
+* Tue Mar 10 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.13.0-alt1
+- 0.13.0.
+
 * Wed Feb 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.12.0-alt0.1
 - Initial build for ALTLinux.
-
