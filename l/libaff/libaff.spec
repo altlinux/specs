@@ -1,5 +1,5 @@
 Name: libaff
-Version: 3.7.21
+Version: 3.7.22
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
@@ -14,7 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Mar 30 2011
-BuildRequires: gcc-c++ glibc-devel libcurl-devel libexpat-devel libfuse-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel libcurl-devel libexpat-devel libfuse3-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
 
 %description
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
@@ -107,6 +107,10 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.22-alt1
+- new version 3.7.22
+- fix build with libfuse3
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 3.7.21-alt1
 - new version 3.7.21 (with rpmrb script)
 
