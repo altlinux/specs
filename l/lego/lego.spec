@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lego
-Version: 4.24.0
+Version: 4.32.0
 Release: alt1
 Summary: Let's Encrypt/ACME client and library written in Go
 
@@ -18,7 +18,7 @@ Source1: %name-%version-vendor.tar
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.0
+BuildRequires: rpm-build-golang golang >= 1.24.0
 BuildPreReq: /proc
 
 %description
@@ -50,5 +50,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri Mar 06 2026 Alexey Romanyuta <r9odt@altlinux.org> 4.32.0-alt1
+- New version v4.32.0
+
 * Sat Jul 05 2025 Alexey Romanyuta <r9odt@altlinux.org> 4.24.0-alt1
 - Initial build v4.24.0

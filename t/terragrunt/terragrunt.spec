@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: terragrunt
-Version: 0.83.0
+Version: 0.99.4
 Release: alt1
 Summary: Terragrunt is a orchestration tool for OpenTofu/Terraform
 
@@ -18,7 +18,7 @@ Source1: %name-%version-vendor.tar
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.4
+BuildRequires: rpm-build-golang golang >= 1.25.0
 BuildPreReq: /proc
 
 %description
@@ -48,10 +48,14 @@ export IGNORE_SOURCES=1
 %golang_install
 
 %files
-%doc docs/_docs/*
 %_bindir/*
 
 %changelog
+* Fri Mar 06 2026 Alexey Romanyuta <r9odt@altlinux.org> 0.99.4-alt1
+- New version v0.99.4
+- Remove documentation from the package due to a change in the presentation
+  of documentation in the parent project.
+
 * Fri Jul 11 2025 Alexey Romanyuta <r9odt@altlinux.org> 0.83.0-alt1
 - New version v0.83.0
 
