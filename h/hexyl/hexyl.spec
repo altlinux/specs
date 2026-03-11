@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           hexyl
-Version:        0.16.0
+Version:        0.17.0
 Release:        alt1
 
 Summary:        A command-line hex viewer.
@@ -23,18 +23,9 @@ of bytes (NULL bytes, printable ASCII characters,
 ASCII whitespace characters, other ASCII characters and non-ASCII).
 
 %prep
-%setup -q
+%setup -a 1 -q
 %patch -p1
-tar -xf %SOURCE1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -50,5 +41,9 @@ EOF
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Feb 16 2026 Sergey Savelev <medovi@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+- Use macro %%rust_prep.
+
 * Wed Feb 26 2025 Sergey Savelev <medovi@altlinux.org> 0.16.0-alt1
 - Initial build for Sisyphus.
