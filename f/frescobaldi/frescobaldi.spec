@@ -1,30 +1,30 @@
 Name: frescobaldi
-Version: 3.3.0
+Version: 4.0.5
 Release: alt1
 
 Summary: LilyPond music score editor
+
 License: %gpl2plus
 Group: Publishing
 
 Url: http://www.frescobaldi.org/
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-build-python3 rpm-build-licenses rpm-macros-qt6-webengine
 
-BuildRequires: ImageMagick-tools
-BuildRequires: librsvg-utils python3-module-setuptools
+BuildRequires: python3-module-hatchling
+BuildRequires: gettext-tools
+BuildRequires: librsvg-utils
 
-ExcludeArch: %not_qt5_qtwebengine_arches
+ExcludeArch: %not_qt6_qtwebengine_arches
 
 Requires: lilypond
 
-Requires: python3(popplerqt5)
-
 AutoProv:yes,nopython,nopython3
 
-# Source-url: https://github.com/wbsoft/frescobaldi/archive/v%version.tar.gz
+# Source-url: https://github.com/frescobaldi/frescobaldi/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/frescobaldi_app
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/frescobaldi
 
 %description
 Frescobaldi is a LilyPond music score editor, with following features:
@@ -53,27 +53,33 @@ Frescobaldi is a LilyPond music score editor, with following features:
 %setup
 
 %build
-%make_build -C i18n
-%python3_build
-%make_build -C linux
+python3 i18n/mo-gen.py
+msgfmt --desktop -d i18n/frescobaldi --template linux/org.frescobaldi.Frescobaldi.desktop.in -o linux/org.frescobaldi.Frescobaldi.desktop
+msgfmt --xml -d i18n/frescobaldi --template linux/org.frescobaldi.Frescobaldi.metainfo.xml.in -o linux/org.frescobaldi.Frescobaldi.metainfo.xml
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
 if [ "%python3_sitelibdir" != "%python3_sitelibdir_noarch" ] ; then
     mkdir -p %buildroot/%python3_sitelibdir
     mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
 fi
 
-install -d %buildroot%_liconsdir/
-rsvg-convert -w 48 -h 48  \
-%buildroot%_iconsdir/hicolor/scalable/apps/org.frescobaldi.Frescobaldi.svg \
-  -o %buildroot%_liconsdir/org.frescobaldi.Frescobaldi.png
+install -Dm644 linux/org.frescobaldi.Frescobaldi.desktop %buildroot%_desktopdir/org.frescobaldi.Frescobaldi.desktop
+install -Dm644 linux/org.frescobaldi.Frescobaldi.metainfo.xml %buildroot%_datadir/metainfo/org.frescobaldi.Frescobaldi.metainfo.xml
+install -Dm644 frescobaldi/icons/org.frescobaldi.Frescobaldi.svg %buildroot%_iconsdir/hicolor/scalable/apps/org.frescobaldi.Frescobaldi.svg
+install -Dm644 frescobaldi.1 %buildroot%_man1dir/frescobaldi.1
 
+install -d %buildroot%_liconsdir/
+rsvg-convert -w 48 -h 48 frescobaldi/icons/org.frescobaldi.Frescobaldi.svg \
+  -o %buildroot%_liconsdir/org.frescobaldi.Frescobaldi.png
 
 %files
 %doc README.md
 %_bindir/%name
-%python3_sitelibdir/*
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/metainfo/org.frescobaldi.Frescobaldi.metainfo.xml
@@ -81,6 +87,11 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
+- new version 4.0.5
+- switch to PyQt6, pyproject build (hatchling)
+- update Source-url (wbsoft -> frescobaldi)
+
 * Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
 - new version 3.3.0 (with rpmrb script)
 
