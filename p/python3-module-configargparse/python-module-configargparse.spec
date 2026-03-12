@@ -1,7 +1,7 @@
 %global oname ConfigArgParse
 
 Name: python3-module-configargparse
-Version: 1.7
+Version: 1.7.5
 Release: alt1
 
 Summary: A Python module with support for argparse, config files, and env variables
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools-scm
 BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
@@ -36,19 +36,24 @@ argparse to add these features.
 %setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.rst
+%doc README.md
 %doc LICENSE
 %python3_sitelibdir/configargparse.py*
-%python3_sitelibdir/%{oname}*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo configargparse}
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- new version 1.7.5
+- switch to pyproject build
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - new version 1.7 (with rpmrb script)
 
