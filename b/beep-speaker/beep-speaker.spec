@@ -1,18 +1,17 @@
-%define oname beep
 Name: beep-speaker
-Version: 1.3
+Version: 1.4.12
 Release: alt1
 
 Summary: Beep the pc speaker any number of ways
 
-License: GPL
+License: GPL-2.0-only
 Group: Sound
-Url: http://www.johnath.com/beep/
+Url: https://github.com/spkr-beep/beep
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.johnath.com/beep/%oname-%version.tar.bz2
-Patch0: beep_1.2.2-17.diff
+# Source-url: https://github.com/spkr-beep/beep/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 
 %description
 Beep allows the user to control the pc-speaker with precision,
@@ -23,25 +22,26 @@ something interesting occurs. Of course, it has no notion of
 what's interesting, but it's real good at that notifying part.
 
 %prep
-%setup -q -n %oname-%version
-#patch0 -p1
+%setup
 
 %build
-gcc %optflags -Wall -o beep beep.c
+%make_build prefix=%prefix CFLAGS="%optflags" CPPFLAGS=""
 
 %install
-mkdir -p %buildroot/%_bindir
-mkdir -p %buildroot/%_man1dir
-install -m 755 beep %buildroot/%_bindir/
-gunzip beep.1.gz
-install -m 644 beep.1 %buildroot%_man1dir/
+%makeinstall_std prefix=%prefix
+rm -rf %buildroot%_datadir/doc/beep
 
 %files
-%doc CHANGELOG CREDITS README
+%doc CREDITS.md NEWS.md README.md
 %_bindir/beep
 %_man1dir/*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.12-alt1
+- new version (1.4.12) via gear-uupdate
+- updated upstream URL to github.com/spkr-beep/beep
+- updated build to use upstream Makefile
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - new version 1.3 (with rpmrb script)
 
