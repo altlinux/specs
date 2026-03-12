@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.6
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -119,6 +119,7 @@ Patch145: alt-add-dri-prime-to-menu.patch
 Patch146: alt-fix-wallpaper-confirmation.patch
 #
 Patch150: alt-kcmusers-avatars.patch
+Patch151: alt-manage-notification-thumbnail-display.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -336,6 +337,7 @@ Requires: %name-common >= %EVR
 %patch146 -p1
 #
 %patch150 -p1
+%patch151 -p1
 
 pwd
 install -m0644 %SOURCE51 applets/kicker/
@@ -592,6 +594,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Mar 12 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1:6.5.6-alt2
+- optimize notification display
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.6-alt1
 - new version
 
