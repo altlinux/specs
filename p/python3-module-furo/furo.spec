@@ -1,9 +1,9 @@
 %define   modulename furo
-%def_without docs
+%def_with docs
 
 Name:     python3-module-%modulename
 Version:  2025.12.19
-Release:  alt1
+Release:  alt2
 
 Summary:  A clean customizable documentation theme for Sphinx
 
@@ -93,6 +93,9 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Thu Mar 12 2026 Grigory Ustinov <grenka@altlinux.org> 2025.12.19-alt2
+- Built with docs.
+
 * Thu Mar 12 2026 Grigory Ustinov <grenka@altlinux.org> 2025.12.19-alt1
 - Automatically updated to 2025.12.19.
 
