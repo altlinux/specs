@@ -5,9 +5,11 @@
 %define dynname dynamicedt3d
 %define ocvname octovis
 
+%define abiversion 1
+
 Name:    octomap
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: An Efficient Probabilistic 3D Mapping Framework Based on Octrees
 License: BSD
@@ -166,8 +168,8 @@ popd
 %_bindir/log2graph
 
 %files		-n lib%name
-%_libdir/lib%name.so.*
-%_libdir/liboctomath.so.*
+%_libdir/lib%name.so.%{abiversion}*
+%_libdir/liboctomath.so.%{abiversion}*
 
 %files 		devel
 %_includedir/%name
@@ -179,7 +181,7 @@ popd
 %_datadir/ament_index
 
 %files 		-n lib%dynname
-%_libdir/lib%dynname.so.*
+%_libdir/lib%dynname.so.%{abiversion}*
 
 %files 		-n %dynname-devel
 %_includedir/dynamicEDT3D
@@ -192,7 +194,7 @@ popd
 %_bindir/%ocvname
 
 %files 		-n lib%ocvname
-%_libdir/lib%ocvname.so.*
+%_libdir/lib%ocvname.so.%{abiversion}*
 
 %files 		-n %ocvname-devel
 %_includedir/%ocvname
@@ -201,5 +203,8 @@ popd
 %_cmakedir/%ocvname
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 1.10.0-alt2
+- Added ABI versioning.
+
 * Fri Jan 23 2026 Nikita Shmatko <nash@altlinux.org> 1.10.0-alt1
 - Initial build for Sisyphus.

@@ -18,7 +18,7 @@
 
 Name:    ucx
 Version: 1.19.0
-Release: alt1
+Release: alt2
 
 Summary: Unified Communication X  (mailing list - https://elist.ornl.gov/mailman/listinfo/ucx-group)
 License: BSD-3-Clause
@@ -317,9 +317,10 @@ rm -f %{buildroot}%{_libdir}/*.a
 rm -f %{buildroot}%{_libdir}/%name/*.la
 rm -f %{buildroot}%{_libdir}/%name/lib*.so
 rm -f %{buildroot}%{_libdir}/%name/lib*.a
+
 %files -n lib%name%abiversion
 %doc LICENSE README AUTHORS NEWS
-%_libdir/lib*.so.*
+%_libdir/lib*.so.%{abiversion}*
 %_bindir/%{name}_info
 %_bindir/%{name}_perftest
 %_bindir/%{name}_perftest_daemon
@@ -341,73 +342,76 @@ rm -f %{buildroot}%{_libdir}/%name/lib*.a
 %if_with cma
 %files -n lib%name-cma
 %dir %_libdir/%name
-%_libdir/%name/libuct_cma.so.*
+%_libdir/%name/libuct_cma.so.%{abiversion}*
 %endif
 
 %if_with cuda
 %files -n lib%name-cuda
 %dir %_libdir/%name
-%_libdir/%name/libucx_perftest_cuda.so.*
-%_libdir/%name/libucm_cuda.so.*
-%_libdir/%name/libuct_cuda.so.*
+%_libdir/%name/libucx_perftest_cuda.so.%{abiversion}*
+%_libdir/%name/libucm_cuda.so.%{abiversion}*
+%_libdir/%name/libuct_cuda.so.%{abiversion}*
 %endif
 
 %if_with gdrcopy
 %files -n lib%name-gdrcopy
 %dir %_libdir/%name
-%_libdir/%name/libuct_cuda_gdrcopy.so.*
+%_libdir/%name/libuct_cuda_gdrcopy.so.%{abiversion}*
 %endif
 
 %if_with ib
 %files -n lib%name-ib
 %dir %_libdir/%name
-%_libdir/%name/libuct_ib.so.*
+%_libdir/%name/libuct_ib.so.%{abiversion}*
 %endif
 
 %files -n lib%name-ib-efa
-%_libdir/%name/libuct_ib_efa.so.*
+%_libdir/%name/libuct_ib_efa.so.%{abiversion}*
 
 %if_with knem
 %files -n lib%name-knem
 %dir %_libdir/%name
-%_libdir/%name/libuct_knem.so.*
+%_libdir/%name/libuct_knem.so.%{abiversion}*
 %endif
 
 %if_with rdmacm
 %files -n lib%name-rdmacm
 %dir %_libdir/%name
-%_libdir/%name/libuct_rdmacm.so.*
+%_libdir/%name/libuct_rdmacm.so.%{abiversion}*
 %endif
 
 %if_with ugni
 %files -n lib%name-ugni
 %dir %_libdir/%name
-%_libdir/%name/libuct_ugni.so.*
+%_libdir/%name/libuct_ugni.so.%{abiversion}*
 %endif
 
 %if_with xpmem
 %files -n lib%name-xpmem
 %dir %_libdir/%name
-%_libdir/%name/libuct_xpmem.so.*
+%_libdir/%name/libuct_xpmem.so.%{abiversion}*
 %endif
 
 %if_with vfs
 %files -n lib%name-vfs
 %dir %_libdir/%name
-%_libdir/%name/libucs_fuse.so.*
-%_bindir/ucx_vfs
+%_libdir/%name/libucs_fuse.so.%{abiversion}*
+%_bindir/%{name}_vfs
 %endif
 
 %if_with mlx5
 %files -n lib%name-ib-mlx5
-%_libdir/%name/libuct_ib_mlx5.so.*
+%_libdir/%name/libuct_ib_mlx5.so.%{abiversion}*
 %endif
 
 %if_with mad
 %files -n lib%name-mad
-%_libdir/%name/libucx/perftest_mad.so.*
+%_libdir/%name/lib%name/perftest_mad.so.%{abiversion}*
 %endif
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 1.19.0-alt2
+- Minor specfile fixes.
+
 * Mon Oct 13 2025 Nikita Shmatko <nash@altlinux.org> 1.19.0-alt1
 - Initial build for Sisyphus.

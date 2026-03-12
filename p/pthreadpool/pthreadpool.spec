@@ -7,7 +7,7 @@
 
 Name:    pthreadpool
 Version: 0.1.git560c60d
-Release: alt1
+Release: alt2
 
 Summary: Portable (POSIX/Windows/Emscripten) thread pool for C/C++
 License: BSD-2-Clause
@@ -99,7 +99,7 @@ Features:
 
 %files -n lib%name%abiversion
 %doc LICENSE
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%{abiversion}*
 
 %if_with devel
 %files -n lib%name-devel
@@ -109,5 +109,8 @@ Features:
 %endif
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 0.1.git560c60d-alt2
+- Minor specfile fixes.
+
 * Wed Sep 17 2025 Nikita Shmatko <nash@altlinux.org> 0.1.git560c60d-alt1
 - Initial build for Sisyphus.

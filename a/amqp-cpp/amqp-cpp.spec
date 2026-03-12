@@ -5,7 +5,7 @@
 
 Name:    amqp-cpp
 Version: 4.3.27
-Release: alt1
+Release: alt2
 
 Summary: C++ library for asynchronous non-blocking communication with RabbitMQ
 License: Apache-2.0
@@ -57,7 +57,7 @@ sed -i 's|DESTINATION cmake|DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake|' CMakeLis
 
 %files -n lib%name%abiversion
 %doc *.md LICENSE
-%_libdir/lib%libname.so.*
+%_libdir/lib%libname.so.%{abiversion}*
 
 %files -n lib%name-devel
 %_cmakedir/*
@@ -67,5 +67,8 @@ sed -i 's|DESTINATION cmake|DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake|' CMakeLis
 %_libdir/lib%libname.so
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 4.3.27-alt2
+- Minor specfile fixes.
+
 * Wed Oct 29 2025 Nikita Shmatko <nash@altlinux.org> 4.3.27-alt1
 - Initial build for Sisyphus.

@@ -1,9 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable static
 
 %define abiversion 3
-
-%def_with devel
 %def_with doc
 %def_with dft
 %def_with tlfloat
@@ -11,44 +8,37 @@
 
 Name:    sleef
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: SIMD Library for Evaluating Elementary Functions, vectorized libm and DFT
 License: BSL-1.0
 Group:   System/Libraries
-Url:     https://sleef.org/
+Url:     https://sleef.org
 Vcs:     https://github.com/shibatch/sleef.git
-
-Source: %name-%version.tar
 
 ExcludeArch: %ix86
 
 %ifarch aarch64
+# LTO is disabled on aarch64 because SLEEF builds SVE-enabled test binaries (e.g. tester3sve).
+# With -flto the final link stage recompiles IR, but the SVE ISA flags (-march=...+sve) are
+# not consistently propagated to the LTO link step, so GCC lto-wrapper fails with
+# “requires the SVE ISA extension”. Disabling LTO avoids this toolchain/LTO flag propagation issue.
 %define optflags_lto %nil
 %endif
+
+Source: %name-%version.tar
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
-#for test-only:
-BuildRequires: pkgconfig(mpfr)
-BuildRequires: pkgconfig(gmp)
-BuildRequires: pkgconfig(libssl)
-BuildRequires: pkgconfig(libcrypto)
 %if_with dft
 BuildRequires: libgomp-devel
 BuildRequires: pkgconfig(fftw3) 
 %endif
-
 %if_with tlfloat
 BuildRequires: libtlfloat-devel 
 %endif
 
-%global gnuabi_arches %ix86 x86_64 aarch64
-
-%if_enabled static
-%global inline_enabled 1
-%endif
 
 %description
 SLEEF stands for SIMD Library for Evaluating Elementary Functions. It
@@ -82,7 +72,6 @@ versions with up to 1 ULP error (which is the maximum error, not the average)
 and even faster versions with a few ULPs of error. For non-finite inputs and
 outputs, the functions return correct results as specified in the C99 standard.
 
-%if_with devel
 %package -n lib%name-devel
 Summary: Development files for sleef
 Group: Development/C
@@ -91,18 +80,6 @@ Requires: lib%name%abiversion = %EVR
 %description -n lib%name-devel
 The sleef-devel package contains libraries and header files for
 developing applications that use sleef.
-%endif
-
-%if 0%{?inline_enabled}
-%package -n lib%name-static
-Summary:        Inline headers and static library for sleef
-Group: 		Development/C
-Requires:       lib%name-devel = %EVR 
- 
-%description -n lib%name-static
-The sleef-static package contains libraries and header files for
-developing applications that use sleef.
-%endif
 
 %if_with doc
 %package -n lib%name-doc
@@ -111,16 +88,13 @@ Group: Documentation
 BuildArch: noarch
 
 %description -n lib%name-doc
-The sleef-doc package contains detailed API documentation for developing 
-applicatons that use sleef
+The sleef-doc package contains detailed API documentation
+for developing applicatons that use sleef.
 %endif
 
-%ifarch %gnuabi_arches
 %package -n lib%name-gnuabi
 Summary:        GNUABI version of sleef
 Group: 		System/Libraries
- 
-%global gnuabi_enabled 1
  
 %description -n lib%name-gnuabi
 The GNUABI version of the library (libsleefgnuabi.so) is built for x86 and
@@ -137,7 +111,6 @@ Group: 		Development/C
 The sleef-gnuabi-devel package contains libraries for developing applications
 that use the GNUABI version of sleef. Note that this package does not contain
 any header files.
-%endif
 
 %if_with dft
 %package -n lib%name-dft
@@ -168,7 +141,7 @@ Summary:        Vectorized quad-precision math library
 Group: 		System/Libraries
 
 %description -n lib%name-quad
-An experimental quad-precision library
+An experimental quad-precision library.
 
 %package -n lib%name-quad-devel
 Summary:        Development files for sleef-quad
@@ -193,12 +166,9 @@ developing applications that use sleef-quad.
 %else
     -DSLEEFDFT_ENABLE_STREAM:BOOL=FALSE \
 %endif
-    -DSLEEF_BUILD_GNUABI_LIBS:BOOL=%{?gnuabi_enabled:TRUE}%{?!gnuabi_enabled:FALSE} \
-    -DSLEEF_BUILD_INLINE_HEADERS:BOOL=%{?inline_enabled:TRUE}%{?!inline_enabled:FALSE} \
+    -DSLEEF_BUILD_GNUABI_LIBS:BOOL=TRUE \
     -DSLEEF_BUILD_QUAD:BOOL=%{?_with_quad:TRUE}%{!?_with_quad:FALSE} \
     -DSLEEF_BUILD_SHARED_LIBS:BOOL=TRUE \
-    -DSLEEF_ENFORCE_TESTER3:BOOL=TRUE \
-    -DSLEEF_ENFORCE_TESTER4:BOOL=%{?_with_tlfloat:TRUE}%{!?_with_tlfloat:FALSE} \
     -DSLEEF_ENABLE_TLFLOAT:BOOL=%{?_with_tlfloat:TRUE}%{!?_with_tlfloat:FALSE} 
 
 %cmake_build
@@ -208,15 +178,13 @@ developing applications that use sleef-quad.
 
 %files -n lib%name%abiversion
 %doc LICENSE.txt
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%{abiversion}*
 
-%if_with devel
 %files -n lib%name-devel
 %_includedir/%name.h
 %_libdir/lib%name.so
 %_pkgconfigdir/sleef.pc
 %_cmakedir/sleef/
-%endif
 
 %if_with doc
 %files -n lib%name-doc
@@ -224,37 +192,38 @@ developing applications that use sleef-quad.
 %doc docs/
 %endif
 
-%ifarch %gnuabi_arches
 %files -n lib%name-gnuabi
-%{_libdir}/lib%{name}gnuabi.so.*
+%_libdir/lib%{name}gnuabi.so.%{abiversion}*
  
  
 %files -n lib%name-gnuabi-devel
-%{_libdir}/lib%{name}gnuabi.so
-%endif
+%_libdir/lib%{name}gnuabi.so
  
  
 %if_with dft
 %files -n lib%name-dft
-%{_libdir}/lib%{name}dft.so.*
+%_libdir/lib%{name}dft.so.%{abiversion}*
  
  
 %files -n lib%name-dft-devel
-%{_includedir}/%{name}dft.h
-%{_libdir}/lib%{name}dft.so
+%_includedir/%{name}dft.h
+%_libdir/lib%{name}dft.so
 %endif
  
  
 %if_with quad
 %files -n lib%name-quad
-%{_libdir}/lib%{name}quad.so.*
+%_libdir/lib%{name}quad.so.%{abiversion}*
  
  
 %files -n lib%name-quad-devel
-%{_includedir}/%{name}quad.h
-%{_libdir}/lib%{name}quad.so
+%_includedir/%{name}quad.h
+%_libdir/lib%{name}quad.so
 %endif
 
 %changelog
+* Tue Mar 10 2026 Nikita Shmatko <nash@altlinux.org> 3.9.0-alt2
+- Specfile fixes.
+
 * Thu Aug 28 2025 Nikita Shmatko <nash@altlinux.org> 3.9.0-alt1
 - Initial build for Sisyphus.

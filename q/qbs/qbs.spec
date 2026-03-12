@@ -2,16 +2,18 @@
 
 %define _libexecdir %_usr/libexec
 
+%define abiversion 3
+
 %def_with check
 
 Name:    qbs
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: Modern build tool for software projects
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
 Group:   Development/Tools 
-Url: 		 https://qbs.io/
+Url:  	 https://qbs.io
 Vcs:     https://github.com/qbs/qbs.git
 
 Source: %name-%version.tar
@@ -37,7 +39,7 @@ Obsoletes: %name-common < %EVR
 Qbs is a tool that helps simplify the build process for developing projects
 across multiple platforms. Qbs can be used for any software project, regardless
 of programming language, toolkit, or libraries used.
- 
+
 Qbs is an all-in-one tool that generates a build graph from a high-level
 project description (like qmake or CMake) and additionally undertakes the task
 of executing the commands in the low-level build graph (like make).
@@ -111,7 +113,7 @@ rm -rfv %buildroot%_datadir/%name/python
 %doc *.md LICENSE.LGPLv21 LICENSE.LGPLv3 LICENSE.GPL3-EXCEPT LGPL_EXCEPTION.txt
 %_bindir/%{name}*
 %_libdir/%name
-%_libdir/lib%{name}*.so.*
+%_libdir/lib%{name}*.so.%{abiversion}*
 %_datadir/%name
 %_libexecdir/%name
 %_man1dir/%name.1*
@@ -125,6 +127,10 @@ rm -rfv %buildroot%_datadir/%name/python
 %_datadir/%name/examples
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 3.1.2-alt2
+- Added ABI versioning.
+- Minor specfile fixes.
+
 * Thu Dec 18 2025 Nikita Shmatko <nash@altlinux.org> 3.1.2-alt1
 - New version 3.1.2.
 - Removed obsolete i586 compatibility patch.

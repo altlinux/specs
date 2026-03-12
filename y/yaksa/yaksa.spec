@@ -3,7 +3,7 @@
 
 Name:    yaksa
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Yaksa: High-performance Noncontiguous Data Management
 License: BSD-3-Clause
@@ -56,7 +56,7 @@ rm %buildroot%_libdir/libyaksa.la
 
 %files -n lib%name%abiversion
 %doc *.md COPYRIGHT
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%{abiversion}*
 
 %files -n lib%name-devel
 %_includedir/*.h
@@ -64,5 +64,8 @@ rm %buildroot%_libdir/libyaksa.la
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 0.3-alt2
+- Minor spefile fixes.
+
 * Mon Oct 13 2025 Nikita Shmatko <nash@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus.

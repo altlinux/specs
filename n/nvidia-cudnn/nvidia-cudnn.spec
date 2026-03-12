@@ -6,7 +6,7 @@
 
 Name:           nvidia-cudnn
 Version:        %major_version.26
-Release:        alt1
+Release:        alt2
 Group:  	System/Libraries
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA
@@ -139,25 +139,25 @@ popd
 
 %files -n lib%oname%soversion
 %doc LICENSE
-%_libdir/lib%oname.so.*
+%_libdir/lib%oname.so.%{soversion}*
 
 %files -n lib%oname%soversion-adv
-%_libdir/libcudnn_adv.so.*
+%_libdir/libcudnn_adv.so.%{soversion}*
  
 %files -n lib%oname%soversion-cnn
-%_libdir/libcudnn_cnn.so.*
+%_libdir/libcudnn_cnn.so.%{soversion}*
  
 %files -n lib%oname%soversion-ops
-%_libdir/libcudnn_ops.so.*
+%_libdir/libcudnn_ops.so.%{soversion}*
  
 %files -n lib%oname%soversion-heuristic
-%_libdir/libcudnn_heuristic.so.*
+%_libdir/libcudnn_heuristic.so.%{soversion}*
  
 %files -n lib%oname%soversion-engines
-%_libdir/libcudnn_engines_*.so.*
+%_libdir/libcudnn_engines_*.so.%{soversion}*
  
 %files -n lib%oname%soversion-graph
-%_libdir/libcudnn_graph.so.*
+%_libdir/libcudnn_graph.so.%{soversion}*
 
 %files -n lib%oname-devel
 %_includedir/%{oname}*
@@ -167,5 +167,8 @@ popd
 %_libdir/lib%{oname}*.a
 
 %changelog
+* Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 9.13.1.26-alt2
+- Minor specfile fixes.
+
 * Wed Nov 26 2025 Nikita Shmatko <nash@altlinux.org> 9.13.1.26-alt1
 - Initial build for Sisyphus.
