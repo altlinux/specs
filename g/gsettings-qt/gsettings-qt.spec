@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: gsettings-qt
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Qt/QML bindings for GSettings
 License: LGPL-3.0-or-later
@@ -142,6 +142,9 @@ cmake --install "build5" --verbose
 %_libdir/lib%name.so
 
 %changelog
+* Thu Mar 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 - Enabled tests.

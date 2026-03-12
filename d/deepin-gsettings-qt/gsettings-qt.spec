@@ -7,8 +7,8 @@
 %def_disable clang
 
 Name: deepin-gsettings-qt
-Version: 1.0.0
-Release: alt0.dde.1
+Version: 1.1.1
+Release: alt1
 Summary: Qt/QML bindings for GSettings
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -25,8 +25,8 @@ BuildRequires: clang-devel
 BuildRequires: gcc-c++
 %endif
 BuildRequires: libgio-devel ayatana-cmake-modules
-BuildRequires: dqt6-declarative-devel libdqt6-qml libdqt6-widgets
-BuildRequires: dqt5-declarative-devel libdqt5-qml libdqt5-widgets
+BuildRequires: dqt6-declarative-devel libdqt6-qml libdqt6-widgets libdqt6-test libdqt6-quick libdqt6-quicktest
+BuildRequires: dqt5-declarative-devel libdqt5-qml libdqt5-widgets libdqt5-test libdqt5-quicktest
 
 # find libraries
 %add_findprov_lib_path %_dqt6_libdir %_dqt5_libdir
@@ -148,6 +148,9 @@ mv -f %buildroot%_dqt5_libdir/qt5/qml/GSettings/* %buildroot%_dqt5_qmldir/GSetti
 %_dqt5_libdir/lib%{name0}.so
 
 %changelog
+* Thu Mar 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Sun Feb 15 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt0.dde.1
 - New version 1.1.0.
 - Built on dqt5 and dqt6.
