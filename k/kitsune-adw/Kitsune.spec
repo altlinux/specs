@@ -1,8 +1,10 @@
 %define oname net.armatik.Kitsune
 %define nameS kitsune
 
+%def_without check
+
 Name: kitsune-adw
-Version: 0.6.1
+Version: 0.7.1
 Release: alt1
 
 Summary: Kitsune is an unofficial client for watching AniLiberty anime
@@ -25,6 +27,10 @@ BuildRequires: meson pkgconfig(gtk4) pkgconfig(libadwaita-1)
 BuildRequires: typelib(Adw) blueprint-compiler /usr/bin/glib-compile-schemas
 BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
 
+%if_with check
+BuildRequires: python3-module-pytest typelib(Soup)
+%endif
+
 %description
 %summary.
 
@@ -40,6 +46,11 @@ BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
 
 %find_lang %name --all-name
 
+%if_with check
+%check
+%meson_test
+%endif
+
 %files -f %name.lang
 %_bindir/%nameS
 %_desktopdir/%oname.desktop
@@ -50,6 +61,9 @@ BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
 %doc *.md
 
 %changelog
+* Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
+- 0.6.1 -> 0.7.1
+
 * Wed Mar 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.1-alt1
 - 0.6.0 -> 0.6.1
 
