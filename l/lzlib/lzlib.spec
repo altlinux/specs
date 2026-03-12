@@ -1,6 +1,6 @@
 Name: lzlib
-Version: 1.15
-Release: alt3
+Version: 1.16
+Release: alt1
 
 Summary: Provides in-memory LZMA (de)compression functions
 License: BSD-2-Clause
@@ -50,6 +50,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Thu Mar 12 2026 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- new version (watch file uupdate)
+
 * Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt3
 - separate %%check
 - use %%configure macro
