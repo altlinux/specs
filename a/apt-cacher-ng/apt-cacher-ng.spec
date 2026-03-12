@@ -1,25 +1,24 @@
 Name: apt-cacher-ng
-Version: 0.8.5
-Release: alt5
+Version: 3.7.5
+Release: alt1
 
 Summary: Caching HTTP download proxy for software packages
 
-License: BSD
+License: BSD-4-Clause
 Group: Networking/Other
-Url: http://www.unix-ag.uni-kl.de/~bloch/acng/
+Url: https://www.unix-ag.uni-kl.de/~bloch/acng/
 
-Source: http://ftp.debian.org/debian/pool/main/a/apt-cacher-ng/%{name}_%version.orig.tar
-Source1: acng.service
+# Source-url: https://deb.debian.org/debian/pool/main/a/apt-cacher-ng/%{name}_%version.orig.tar.xz
+Source: %name-%version.tar
 Source2: acng.init
 Patch0: acng-conf.patch
-Patch1: acng-0.8.5-alt-vfilepattern.patch
-Patch2: acng-0.8.5-alt-perl_tobase64.patch
-
-BuildRequires: boost-devel boost-devel-headers
-BuildRequires: bzlib-devel libfuse-devel liblzma-devel zlib-devel openssl-devel
-BuildRequires: cmake gcc-c++
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ pkg-config
+BuildRequires: bzlib-devel liblzma-devel zlib-devel
+BuildRequires: libevent-devel libcares-devel
+BuildRequires: libssl-devel
+BuildRequires: libsystemd-devel
 
 # workaround for sysvinit: see ALT bugs 11359 and 32101:
 Requires: su
@@ -33,28 +32,19 @@ resource usage.
 %prep
 %setup
 %patch0 -p 1
-%patch1 -p 1
-%patch2 -p 1
-echo "-llzma" >> link.flags
 
 %build
-%cmake
+%cmake \
+    -DACNG_CACHE_DIR=%_cachedir/%name \
+    -DACNG_LOG_DIR=%_logdir/%name \
+    -DSDINSTALL=ON
 %cmake_build
 
 %install
-mkdir -p %buildroot%_sbindir
-install -p -m 755 %_cmake__builddir/apt-cacher-ng %buildroot%_sbindir/
-install -p -m 755 %_cmake__builddir/in.acng %buildroot%_sbindir/
-
-mkdir -p %buildroot%_libexecdir/%name
-install -p -m 755 scripts/{expire-caller.pl,distkill.pl,urlencode-fixer.pl} %buildroot%_libexecdir/%name/
-install -p -m 755 %_cmake__builddir/acngtool %buildroot%_libexecdir/%name/
-
-mkdir -p %buildroot%_sysconfdir/%name
-cp -a conf/* %buildroot%_sysconfdir/%name/
+%cmake_install
 
 mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d
-cat <<'_EOF'_ > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
+cat <<'_EOF_' > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 // Uncomment next line to enable %name in apt
 // Acquire::http { Proxy "http://localhost:3142"; };
 _EOF_
@@ -62,14 +52,8 @@ _EOF_
 mkdir -p %buildroot%_initdir
 install -p -m755 %SOURCE2 %buildroot%_initdir/acng
 
-mkdir -p %buildroot%_man8dir
-install -p -m644 doc/man/*.8 %buildroot%_man8dir
-
 mkdir -p %buildroot%_logdir/%name/
 mkdir -p %buildroot%_cachedir/%name/
-
-install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
-install -pDm 644 systemd/%name.conf %buildroot/lib/tmpfiles.d/%name.conf
 
 %pre
 /usr/sbin/groupadd -r -f %name ||:
@@ -77,18 +61,17 @@ install -pDm 644 systemd/%name.conf %buildroot/lib/tmpfiles.d/%name.conf
 	-d %_cachedir/%name -s /dev/null -r %name >/dev/null 2>&1 ||:
 
 %files
-%_unitdir/acng.service
-/lib/tmpfiles.d/*
+/lib/systemd/system/%name.service
+%_prefix/lib/tmpfiles.d/%name.conf
 %_sbindir/apt-cacher-ng
-%_sbindir/in.acng
-%_libexecdir/%name/
+%_libdir/libsupacng.so
+%_prefix/lib/%name/
 %config(noreplace) %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
+%_sysconfdir/avahi/services/%name.service
 %_initdir/acng
 %_man8dir/*
-%doc COPYING README TODO
-%doc doc/html
-%doc doc/apt-cacher-ng.pdf
+%_datadir/doc/%name/
 %dir %attr(0775,root,%name) %_logdir/%name/
 %dir %attr(0770,root,%name) %_cachedir/%name/
 
@@ -103,8 +86,16 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Wed Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
+- new version 3.7.5 (major update from 0.8.5)
+- switch to cmake build with proper paths
+- drop obsolete patches (vfilepattern, perl_tobase64)
+- update dependencies: drop boost/fuse, add libevent/libcares
+- use upstream systemd service
+- remove in.acng binary (dropped upstream)
+
 * Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 0.8.5-alt5
-- use %cmake macros for build
+- use %%cmake macros for build
 
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.8.5-alt4.1
 - NMU: Rebuild with new openssl 1.1.0.
@@ -126,7 +117,7 @@ chmod ug+rw %_logdir/%name/* ||:
 
 * Fri Nov 21 2014 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt2
 - 0.8.0
-- %name pseudouser/group (just as in upstream) for daemon
+- %%name pseudouser/group (just as in upstream) for daemon
 - vfilepattern patch updated
 - Cleanup BuildRequires
 - Update sysv init script to run as pseudouser and extract it from patch
