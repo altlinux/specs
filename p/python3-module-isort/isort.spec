@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.0
+Version: 8.0.1
 Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
@@ -29,8 +29,6 @@ BuildRequires: python3-module-black
 %add_pyproject_deps_check_filter example-shared-isort-profile
 %add_pyproject_deps_check_filter hypothesmith
 %add_pyproject_deps_check_filter pep8-naming
-%add_pyproject_deps_check_filter pip-api
-%add_pyproject_deps_check_filter pipreqs
 %add_pyproject_deps_check_filter portray
 %add_pyproject_deps_check_filter hatch
 %pyproject_builddeps_metadata
@@ -72,13 +70,15 @@ mv %buildroot%_bindir/isort{,.py3}
 %pyproject_run_pytest -vra tests/unit/
 
 %files
-%doc README.md
 %_bindir/isort.py3
 %_bindir/isort-identify-imports
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 8.0.1-alt1
+- 7.0.0 -> 8.0.1.
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
 - 6.0.1 -> 7.0.0.
 
