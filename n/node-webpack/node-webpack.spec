@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack
-Version: 5.65.0
+Version: 5.105.4
 Release: alt1
 
 Summary: A bundler for javascript and friends
@@ -64,12 +64,17 @@ JSON, Coffeescript, LESS, ... and your custom stuff.
 mkdir -p %buildroot%nodejs_sitelib/%node_module/
 cp -a * %buildroot/%nodejs_sitelib/%node_module/
 rm -rf %buildroot/%nodejs_sitelib/%node_module/test/
+rm -rf %buildroot/%nodejs_sitelib/%node_module/examples/
 
 %files
 %doc LICENSE README.md
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 5.105.4-alt1
+- new version 5.105.4
+- remove examples dir (contains ELF binary, breaks noarch)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 5.65.0-alt1
 - new version 5.65.0 (with rpmrb script)
 
