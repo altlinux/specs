@@ -1,14 +1,14 @@
 %define dist Acme-Damn
 Name: perl-%dist
-Version: 0.08
-Release: alt1.2
+Version: 0.09
+Release: alt1
 
 Summary: 'Unbless' Perl objects
-License: GPL or Artistic
+License: GPL-1.0-or-later OR Artistic-1.0-Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IB/IBB/Acme-Damn-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/B/BR/BRTASTIC/Acme-Damn-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Exception
@@ -35,6 +35,10 @@ it.
 %perl_vendor_autolib/Acme
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.09-alt1
+- new version 0.09
+- updated License tag to SPDX format
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.2
 - rebuild with new perl 5.28.1
 
