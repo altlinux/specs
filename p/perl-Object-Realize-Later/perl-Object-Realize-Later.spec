@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Object-Realize-Later
-Version: 0.21
+Version: 4.00
 Release: alt1
 
 Summary: Delayed realization of objects
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 04 2006
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-Log-Report
 
 %description
 This module helps you implementing delay loading of object-data.  While
@@ -51,10 +51,14 @@ alive when the program is not needing them anymore.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc Changes README ChangeLog README.md
+%doc ChangeLog README.md
 %perl_vendor_privlib/Object/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.00-alt1
+- new version 4.00 (with rpmrb script)
+- add perl-Log-Report to BuildRequires
+
 * Thu Feb 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
