@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20231124
+Version: 20251111
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -36,7 +36,8 @@ unset MAKEFLAGS
 	--prefix=%prefix \
 	--with-default-sys-path=%_datadir/mk \
 	--mksrc none \
-	--sysconfdir=%_sysconfdir
+	--sysconfdir=%_sysconfdir \
+	op=build
 
 %install
 mkdir -p %buildroot%_datadir/mk
@@ -50,6 +51,10 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 20251111-alt1
+- new version 20251111
+- use boot-strap op=build instead of op=all to avoid flaky test on i586
+
 * Thu Dec 14 2023 Aleksey Cheusov <cheusov@altlinux.org> 20231124-alt1
 - Update to 20231124
 
