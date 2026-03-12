@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        145.0.7632.159
+Version:        146.0.7680.71
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -111,6 +111,7 @@ Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 
+Patch040: 0040-DEBIAN-foreach.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
@@ -121,11 +122,13 @@ Patch047: 0047-DEBIAN-libpng-testonly.patch
 Patch048: 0048-DEBIAN-clang19.patch
 Patch049: 0049-DEBIAN-clang19-cookie-string-view.patch
 
+Patch050: 0050-DEBIAN-jxl-features.patch
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 
+Patch060: 0060-DEBIAN-llvm-19-clone-traits.patch
 Patch061: 0061-DEBIAN-autofill-binarypb.patch
 Patch062: 0062-DEBIAN-nodejs-set-intersection.patch
 Patch063: 0063-DEBIAN-value-or.patch
@@ -137,10 +140,13 @@ Patch067: 0067-DEBIAN-gn-allowlist.patch
 Patch068: 0068-DEBIAN-disable-unrar.patch
 Patch069: 0069-DEBIAN-disable-enterprise-tests.patch
 
-Patch070: 0070-FEDORA-type-mismatch-error.patch
+Patch070: 0070-DEBIAN-llvm-22-ignore-for-ubsan.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
+Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
+Patch076: 0076-DEBIAN-fixes-bytemuck.patch
+
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -505,7 +511,8 @@ gn_arg+=( chrome_pgo_phase=0 )
 # use system rust
 export RUSTC_BOOTSTRAP=1
 gn_arg+=( rust_sysroot_absolute=\"$(rustc --print sysroot)\" )
-gn_arg+=( rustc_version=\"$(rustc --version)\" )
+# gn_arg+=( rustc_version=\"$(rustc --version)\" )
+gn_arg+=( rustc_version=\"$(rustc --version 2>/dev/null | awk -v OFS='-' '{print $1,$2}')\" )
 
 %ifarch x86_64
 gn_arg+=( icu_use_data_file=true )
@@ -693,8 +700,52 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.71-alt1
+- New version (146.0.7680.71).
+- Fixes:
+  + CVE-2026-3913: Heap buffer overflow in WebML
+  + CVE-2026-3914: Integer overflow in WebML
+  + CVE-2026-3915: Heap buffer overflow in WebML
+  + CVE-2026-3916: Out of bounds read in Web Speech
+  + CVE-2026-3917: Use after free in Agents
+  + CVE-2026-3918: Use after free in WebMCP
+  + CVE-2026-3919: Use after free in Extensions
+  + CVE-2026-3920: Out of bounds memory access in WebML
+  + CVE-2026-3921: Use after free in TextEncoding
+  + CVE-2026-3922: Use after free in MediaStream
+  + CVE-2026-3923: Use after free in WebMIDI
+  + CVE-2026-3924: Use after free in WindowDialog
+  + CVE-2026-3925: Incorrect security UI in LookalikeChecks
+  + CVE-2026-3926: Out of bounds read in V8
+  + CVE-2026-3927: Incorrect security UI in PictureInPicture
+  + CVE-2026-3928: Insufficient policy enforcement in Extensions
+  + CVE-2026-3929: Side-channel information leakage in ResourceTiming
+  + CVE-2026-3930: Unsafe navigation in Navigation
+  + CVE-2026-3931: Heap buffer overflow in Skia
+  + CVE-2026-3932: Insufficient policy enforcement in PDF
+  + CVE-2026-3934: Insufficient policy enforcement in ChromeDriver
+  + CVE-2026-3935: Incorrect security UI in WebAppInstalls
+  + CVE-2026-3936: Use after free in WebView
+  + CVE-2026-3937: Incorrect security UI in Downloads
+  + CVE-2026-3938: Insufficient policy enforcement in Clipboard
+  + CVE-2026-3939: Insufficient policy enforcement in PDF
+  + CVE-2026-3940: Insufficient policy enforcement in DevTools
+  + CVE-2026-3941: Insufficient policy enforcement in DevTools
+  + CVE-2026-3942: Incorrect security UI in PictureInPicture
+
 * Wed Mar 04 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.159-alt1
 - New version (145.0.7632.159).
+- Fixes:
+  + CVE-2026-3536: Integer overflow in ANGLE
+  + CVE-2026-3537: Object lifecycle issue in PowerVR
+  + CVE-2026-3538: Integer overflow in Skia
+  + CVE-2026-3539: Object lifecycle issue in DevTools
+  + CVE-2026-3540: Inappropriate implementation in WebAudio
+  + CVE-2026-3541: Inappropriate implementation in CSS
+  + CVE-2026-3542: Inappropriate implementation in WebAssembly
+  + CVE-2026-3543: Inappropriate implementation in V8
+  + CVE-2026-3544: Heap buffer overflow in WebCodecs
+  + CVE-2026-3545: Insufficient data validation in Navigation
 
 * Tue Feb 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 145.0.7632.116-alt1
 - New version (145.0.7632.116).
