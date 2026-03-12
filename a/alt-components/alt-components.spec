@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.10
+Version: 0.6.11
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,12 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Mar 10 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.11-alt1
+- Add support for hidden keys.
+- Add support for short names.
+- Separate name display options - required for display 
+  (regular names or short names), optional (ID).
+
 * Wed Feb 18 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.10-alt1
 - Fix display of components in transaction that includes virtual packages.
 - Sort components after categories in model.
