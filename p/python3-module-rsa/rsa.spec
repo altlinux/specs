@@ -2,11 +2,11 @@
 %define pypi_name rsa
 %define mod_name %pypi_name
 
-%def_with check
+%def_without check
 
 Name: python3-module-rsa
-Version: 4.9
-Release: alt2
+Version: 4.9.1
+Release: alt1
 
 Summary: Pure-Python RSA implementation
 License: Apache-2.0
@@ -60,6 +60,10 @@ Stuvel.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.9.1-alt1
+- new version 4.9.1
+- disabled %%check (upstream sdist does not include tests)
+
 * Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 4.9-alt2
 - migrated from removed setuptools' test command (see #50996).
 
