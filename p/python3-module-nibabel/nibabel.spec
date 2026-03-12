@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
@@ -151,6 +151,9 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Thu Mar 12 2026 Anton Vyatkin <toni@altlinux.org> 5.4.2-alt1
+- New version 5.4.2.
+
 * Wed Mar 11 2026 Anton Vyatkin <toni@altlinux.org> 5.4.1-alt1
 - New version 5.4.1.
 
