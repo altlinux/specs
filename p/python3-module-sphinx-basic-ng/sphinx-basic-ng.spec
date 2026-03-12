@@ -1,11 +1,11 @@
 %define   modulename sphinx-basic-ng
 %define   pypi_name sphinx_basic_ng
 %define   stage .beta2
-%def_without docs
+%def_with docs
 
 Name:      python3-module-%modulename
 Version:   1.0.0
-Release:   alt0.2%stage
+Release:   alt0.3%stage
 
 Summary:   A modernised skeleton for Sphinx themes
 
@@ -27,6 +27,7 @@ BuildRequires: python3-module-myst-parser
 BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-furo
+BuildRequires: python3-module-accessible-pygments
 %endif
 
 Provides: python3-module-%pypi_name
@@ -72,6 +73,9 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Thu Mar 12 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt0.3.beta2
+- Built with docs.
+
 * Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt0.2.beta2
 - Built package according to generally accepted norms.
 
