@@ -1,5 +1,5 @@
 Name: libpjsip
-Version: 2.14.1
+Version: 2.16
 Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
@@ -102,6 +102,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.16-alt1
+- new version 2.16
+
 * Wed Nov 20 2024 Alexander Danilov <admsasha@altlinux.org> 2.14.1-alt1
 - new version 2.14.1
 
