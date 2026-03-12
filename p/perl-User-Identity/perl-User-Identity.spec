@@ -18,12 +18,12 @@ BuildRequires: perl(Hash/Ordered.pm)
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 1.03
+Version: 4.00
 Release: alt1
 
 Summary: Define a user
 
-License: Artistic
+License: GPL-1.0-or-later OR Artistic-1.0-Perl
 Group: Development/Perl
 Url: http://www.cpan.org
 
@@ -33,7 +33,7 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 04 2006
-BuildRequires: perl-TimeDate perl-devel
+BuildRequires: perl-TimeDate perl-devel perl-Log-Report
 
 %description
 The User::Identity object is created to maintain a set of informational
@@ -54,7 +54,6 @@ or whatever. Extension to simplify this task are still to be developed.
 
 %install
 %perl_vendor_install
-rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
 %doc ChangeLog README.md
@@ -62,6 +61,11 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.00-alt1
+- new version 4.00 (with rpmrb script)
+- added perl-Log-Report to BuildRequires
+- fixed license tag
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 1.03-alt1
 - automated CPAN update
 
