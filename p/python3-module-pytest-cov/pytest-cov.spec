@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-cov
+%define mod_name pytest_cov
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.3.0
+Version: 7.0.0
 Release: alt1
 Summary: Pytest plugin for measuring coverage
 License: MIT
@@ -22,8 +23,10 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter hunter
+# not packaged yet
+%add_pyproject_deps_check_filter testcontainers
 %pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_check
 BuildRequires: python3-module-coverage
 %endif
 
@@ -46,6 +49,9 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -54,21 +60,16 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 %pyproject_install
 
 %check
-# PYTHONPATH_ALT sets PYTHONPATH to measure coverage for subprocesses because
-# *.pth files are processed by site module *before* getting access to
-# global site packages
-export PYTHONPATH_ALT=$(python3 -c "import os, sys, site;print(os.pathsep.join(site.getsitepackages([sys.base_prefix])))")
-# let virtual environments have access to globally installed packages by default
-export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
 %pyproject_run_pytest -vra -Wignore
 
 %files
-%doc README.*
-%python3_sitelibdir/pytest-cov.pth
-%python3_sitelibdir/pytest_cov/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
+- 6.3.0 -> 7.0.0.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 6.3.0-alt1
 - 6.2.1 -> 6.3.0.
 
