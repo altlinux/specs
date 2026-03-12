@@ -2,8 +2,8 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 9.2.0
-Release: alt2
+Version: 9.6.0
+Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -77,6 +77,9 @@ rm -vr %buildroot%_prefix/test/
 %_libdir/libmyodbc9w.so
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 9.6.0-alt1
+- new version 9.6.0
+
 * Fri Feb 21 2025 Vitaly Lipatov <lav@altlinux.ru> 9.2.0-alt2
 - update spec with all previous spec changes
 
