@@ -5,7 +5,7 @@
 %global _zig_cache_dir %_builddir/zig-cache
 
 Name: ly
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: The Ly display manager
@@ -47,6 +47,9 @@ mv -f ./vendor %_zig_cache_dir
 %_sysconfdir/pam.d/%name-autologin
 
 %changelog
+* Thu Mar 12 2026 Anton Zhukharev <ancieg@altlinux.org> 1.3.2-alt1
+- Updated to 1.3.2.
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
