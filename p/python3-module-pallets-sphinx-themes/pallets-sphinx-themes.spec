@@ -1,7 +1,7 @@
-%define oname Pallets-Sphinx-Themes
+%define pypi_name pallets_sphinx_themes
 
 Name: python3-module-pallets-sphinx-themes
-Version: 2.1.1
+Version: 2.5.0
 Release: alt1
 
 Summary: Sphinx themes for Pallets and related projects.
@@ -10,13 +10,13 @@ License: BSD-3-Clause
 Group: Development/Python3
 Url: https://www.palletsprojects.com/
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
 
 %description
 Themes for the Pallets projects. If you're writing an extension, use the
@@ -26,16 +26,20 @@ appropriate theme to make your documentation look consistent.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.rst LICENSE.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0
+- switch to pyproject build (flit_core)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1 (with rpmrb script)
 
