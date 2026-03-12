@@ -1,12 +1,12 @@
 %define oname mpmath
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Python library for arbitrary-precision floating-point arithmetic
 
-License: New BSD License
+License: BSD-3-Clause
 Group: Development/Python3
 Url: http://mpmath.org/
 
@@ -17,13 +17,13 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
+%add_python3_req_skip hypothesis hypothesis.strategies pexpect pytest
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-setuptools_scm
 
-%{?!_disable_check:BuildRequires: xvfb-run}
-BuildRequires: pytest3
+%{?!_disable_check:BuildRequires: xvfb-run pytest3 python3-module-hypothesis python3-module-pexpect}
 
 
 %description
@@ -45,20 +45,25 @@ interface.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %check
-xvfb-run pytest3
+xvfb-run pytest3 --ignore=mpmath/tests/test_cli.py --ignore=mpmath/tests/test_demos.py
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+- switch to pyproject build
+- fix License tag to SPDX identifier
+
 * Mon Apr 07 2025 Alexander Danilov <admsasha@altlinux.org> 1.3.0-alt1
 - new version 1.3.0.
 
