@@ -2,8 +2,8 @@
 %define pname browser_cookie3
 
 Name: python3-module-browser-cookie3
-Version: 0.17.1
-Release: alt2
+Version: 0.20.1
+Release: alt1
 
 Summary: Loads cookies from your browser into a cookiejar object
 
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch1: %name-import.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
@@ -30,18 +31,22 @@ the same content you see in the web browser.
 %patch1 -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
+%pyproject_install
 
 %files
+%_bindir/browser-cookie
 %doc README.md
 %python3_sitelibdir/%pname/
-%python3_sitelibdir/%pname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.20.1-alt1
+- new version 0.20.1 (with rpmrb script)
+- switch to pyproject macros
+
 * Sat Apr 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.17.1-alt2
 - fix requires search (make sqlite3 require visible) (ALT bug 45728)
 
