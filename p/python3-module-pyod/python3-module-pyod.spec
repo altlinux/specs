@@ -1,7 +1,7 @@
 %define oname pyod
 
 Name: python3-module-pyod
-Version: 1.1.0
+Version: 2.0.7
 Release: alt1
 Epoch: 1
 
@@ -43,7 +43,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro
 %add_python3_req_skip keras.layers keras.losses keras.models keras.regularizers
 %add_python3_req_skip sklearn.externals.funcsigs sklearn.externals.joblib
 %add_python3_req_skip suod.models.base
-%add_python3_req_skip torch torch.nn torch.nn.functional torch.optim
+%add_python3_req_skip torch torch.nn torch.nn.functional torch.optim torch.utils.data
 
 # for tests
 BuildRequires: python3-module-pytest python3-module-scikit-learn python3-module-numba
@@ -73,6 +73,10 @@ PYTHONPATH=$(pwd) py.test3 || echo "Test result are ignored. Wait for https://bu
 %python3_sitelibdir/%oname-*.egg-info/
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.0.7-alt1
+- new version 2.0.7
+- add torch.utils.data to req skip list
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:1.1.0-alt1
 - new version 1.1.0 (with rpmrb script) (ALT bug 45906)
 
