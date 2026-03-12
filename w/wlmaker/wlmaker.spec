@@ -1,6 +1,6 @@
 Name:    wlmaker
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
 License: Apache-2.0
@@ -10,24 +10,31 @@ Url:     https://github.com/phkaeser/wlmaker
 Source0: %name-%version.tar
 # To get required submodule version open github version tag,
 # go to submodules/libbase @ <hash>, Code -> Download ZIP,
-# and extract it to .gear/submodules/libbase.
+# and extract it to .gear/submodules/.
+#
+# Additionally there were appeared another bundled library source ceratinly
+# configured as upstream wrote:
+# > For wlmaker, the library is configured to permit much longer lines, and use
+# > the heap for dynamic sizing.
+# not sure is it wrong choise of required data structure or author strongly know
+# what to do, but from our side linkage with existing shared library raises
+# runtime error.
 Source1: submodules.tar
 
-Patch: %name-%version-alt-link_inih-so.patch
+Patch: %name-%version-alt-fix-xkb-config.patch
 
 BuildRequires(pre): rpm-build-cmake ctest
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots-0.18)
+BuildRequires: pkgconfig(wlroots-0.19)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: pkgconfig(xcb-ewmh)
 BuildRequires: pkgconfig(libxdg-basedir)
-BuildRequires: pkgconfig(inih)
 
 BuildRequires: flex doxygen
 
@@ -80,6 +87,11 @@ Key features:
 %_sysconfdir/xdg/%name
 
 %changelog
+* Thu Mar 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.7.1-alt2
+- Linked last wlroots version (closes: #58162).
+- Added another one vendored submodule.
+- Avoided keyboard configuration reading.
+
 * Mon Feb 16 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.7.1-alt1
 - 0.6.2 -> 0.7.1
 - Patched to link with libinih.
