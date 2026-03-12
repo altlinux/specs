@@ -15,14 +15,14 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20250925
+Version: 20260312
 Release: alt1
 
 Group: Graphics
 Summary: System/Base
 License: GPL-3.0-or-later
-Url: https://atomic.alt-gnome.ru/
-Vcs: https://altlinux.space/alt-atomic/onyx-branding.git
+URL: https://atomic.alt-gnome.ru/
+VCS: https://altlinux.space/alt-atomic/onyx-branding.git
 
 Source: %name-%version.tar
 
@@ -33,9 +33,6 @@ BuildRequires: meson
 %description
 %summary.
 
-%define provide_list altlinux fedora redhat system altlinux
-%define obsolete_list altlinux-release fedora-release redhat-release
-
 %package release
 Summary: %pname release files
 Group: System/Configuration/Other
@@ -43,10 +40,11 @@ Group: System/Configuration/Other
 BuildArch: noarch
 
 Requires: alt-atomic-icons
-Requires: pam-limits-desktop
+Requires: pam-limits-off
 Requires: alt-os-release
-Provides: %(for n in %provide_list; do echo -n "$n-release = %EVR "; done) altlinux-release-%theme
-Obsoletes: %obsolete_list
+Provides: system-release = %EVR
+Provides: altlinux-release = %EVR
+Provides: altlinux-release-%theme = %EVR
 Conflicts: altlinux-release-%altbranch
 %branding_add_conflicts %flavour_onyx release
 
@@ -59,6 +57,10 @@ Group: Graphical desktop/GNOME
 
 BuildArch: noarch
 
+Requires: gnome-shell-extension-appindicator
+Requires: gnome-shell-extension-clipboard-indicator
+Requires: nautilus-open-any-terminal
+# Requires: ptyxis
 Requires: dconf
 Requires: %name-graphics = %EVR
 Requires(post): libgio
@@ -77,18 +79,12 @@ Group: System/Configuration/Boot and Init
 
 BuildArch: noarch
 
-Provides: plymouth-theme-%theme = %EVR
-Requires: icon-theme-alt-atomic-onyx
-Requires: plymouth
-Requires: plymouth-theme-bgrt
-Requires: plymouth-plugin-label
-Requires: fonts-ttf-dejavu
+Requires: plymouth-theme-%theme
 %branding_add_conflicts %flavour_onyx bootsplash
 
 %description bootsplash
 This package contains graphics for boot process for %pname
 (needs console splash screen enabled).
-release
 
 %package graphics
 Summary: This package contains some graphics for %pname design.
@@ -97,6 +93,7 @@ Group: Graphics
 BuildArch: noarch
 
 Requires: alt-atomic-icons
+Requires: wallpapers-alt-atomic-gnome
 
 Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour_onyx graphics
@@ -128,7 +125,7 @@ Requires(post,preun): alternatives >= 0.2
 
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
-plymouth-set-default-theme bgrt
+plymouth-set-default-theme %theme
 
 %files release
 %_sysconfdir/*-release
@@ -142,6 +139,13 @@ plymouth-set-default-theme bgrt
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Thu Mar 12 2026 Vladimir Romanov <rirusha@altlinux.org> 20260312-alt1
+- Cleaned requires.
+- Added requires on wallpapers-alt-atomic-gnome.
+- Changed settings, move input-sources to image.
+- Added flathub.alt-gnome.ru to gnome-software whitelist.
+- Replaced req on pam-limits-desktop with pam-limits-off.
+
 * Thu Sep 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250925-alt1
 - A more accurate ID was used in the release file.
 

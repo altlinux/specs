@@ -15,14 +15,14 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-core
-Version: 20250925
+Version: 20260312
 Release: alt1
 
 Group: Graphics
 Summary: System/Base
 License: GPL-3.0-or-later
-Url: https://atomic.alt-gnome.ru/
-Vcs: https://altlinux.space/alt-atomic/core-branding.git
+URL: https://atomic.alt-gnome.ru/
+VCS: https://altlinux.space/alt-atomic/core-branding.git
 
 Source: %name-%version.tar
 
@@ -33,9 +33,6 @@ BuildRequires: meson
 %description
 %summary.
 
-%define provide_list altlinux fedora redhat system altlinux
-%define obsolete_list altlinux-release fedora-release redhat-release
-
 %package release
 Summary: %pname release files
 Group: System/Configuration/Other
@@ -43,10 +40,11 @@ Group: System/Configuration/Other
 BuildArch: noarch
 
 Requires: alt-atomic-icons
-Requires: pam-limits-desktop
+Requires: pam-limits-off
 Requires: alt-os-release
-Provides: %(for n in %provide_list; do echo -n "$n-release = %EVR "; done) altlinux-release-%theme
-Obsoletes: %obsolete_list
+Provides: system-release = %EVR
+Provides: altlinux-release = %EVR
+Provides: altlinux-release-%theme = %EVR
 Conflicts: altlinux-release-%altbranch
 %branding_add_conflicts %flavour_core release
 
@@ -80,5 +78,9 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Thu Mar 12 2026 Vladimir Romanov <rirusha@altlinux.org> 20260312-alt1
+- Cleaned requires.
+- Replace requires on pam-limits-desktop with pam-limits-off.
+
 * Thu Sep 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250925-alt1
 - Initial build.
