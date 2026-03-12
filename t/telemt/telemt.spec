@@ -1,6 +1,6 @@
 Name: telemt
-Version: 3.0.15
-Release: alt3
+Version: 3.3.16
+Release: alt1
 
 Summary: MTProxy for Telegram on Rust + Tokio
 
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: config.toml
 Source3: %name.service
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -59,6 +61,9 @@ install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.16-alt1
+- new version 3.3.16
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.15-alt3
 - config.toml: enable IPv6 by default
 - telemt.service: add WorkingDirectory, StateDirectory, DynamicUser
