@@ -1,8 +1,8 @@
 Name: theme-kworkstation
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
-Summary: Workstatio K theme
+Summary: Workstation K theme
 Group: Graphics
 URL: https://altlinux.org
 License: GPL-3.0
@@ -40,6 +40,9 @@ done
 %_datadir/plasma/desktoptheme/altos-*/icons/*alt*.*
 
 %changelog
+* Thu Mar 12 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt2
+- fix package summary
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt1
 - update alt-main-menu icon
 
