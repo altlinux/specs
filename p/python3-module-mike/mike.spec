@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mike
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 Summary: Deploy multiple versions of your MkDocs
 License: MIT
@@ -14,6 +15,8 @@ Vcs: https://github.com/jimporter/mike
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -43,12 +46,14 @@ to creating and executing
 %pyproject_run_unittest -v
 
 %files
-%doc *.md
-%python3_sitelibdir/mike/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_bindir/mike
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
+- 2.1.3 -> 2.1.4.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 2.1.2 -> 2.1.3.
 
