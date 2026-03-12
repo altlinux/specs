@@ -1,8 +1,8 @@
 %define oname py2pack
 
 Name:       py2pack
-Version:    0.8.7
-Release:    alt2
+Version:    0.9.1
+Release:    alt1
 
 Summary:    Generate distribution packages from Python packages on PyPI
 License:    GPL-2.0+
@@ -17,10 +17,7 @@ Patch1:     py2pack-alt-spec-support.patch
 Patch2:     py2pack-alt-spec-default.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-jinja2 python3-module-six
-BuildRequires: python3-module-cssselect python3-module-lxml
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-hatchling
 
 Requires: python3-module-py2pack = %version-%release
 
@@ -35,8 +32,6 @@ universal tool to package Python modules.
 %package -n python3-module-py2pack
 Summary: General purpose template engine
 Group: Development/Python3
-%py3_requires pbr
-
 %description -n python3-module-py2pack
 This script allows to generate RPM spec or DEB dsc files from Python modules.
 It allows to list Python modules or search for them on the Python Package Index
@@ -49,20 +44,26 @@ universal tool to package Python modules.
 %patch2 -p1
 
 %build
-export PBR_VERSION=%version
-%python3_build
+
+%pyproject_build
 
 %install
-export PBR_VERSION=%version
-%python3_install
+
+%pyproject_install
 
 %files
 %_bindir/%oname
 
 %files -n python3-module-py2pack
-%python3_sitelibdir/%{oname}*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1
+- updated ALT patches for new version
+- switch to pyproject build (hatchling)
+
 * Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 0.8.7-alt2
 - NMU: skip distutils.core requires.
 
