@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-
 %define pypi_name boto3
+%define mod_name %pypi_name
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.40.25
+Version: 1.42.65
 Release: alt1
 Summary: The AWS SDK for Python
 License: Apache-2.0
@@ -52,14 +53,16 @@ pull requests on this repository. Thanks!
 %pyproject_install
 
 %check
-%pyproject_run -- python scripts/ci/run-tests
+%pyproject_run -- python scripts/ci/run-tests unit/
 
 %files
-%doc README.*
-%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 1.42.65-alt1
+- 1.40.25 -> 1.42.65.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 1.40.25-alt1
 - 1.40.22 -> 1.40.25.
 

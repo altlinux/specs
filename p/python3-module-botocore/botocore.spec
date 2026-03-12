@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name botocore
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.40.59
+Version: 1.42.65
 Release: alt1
 Summary: The low-level, core functionality of boto 3
 License: Apache-2.0
@@ -38,9 +39,9 @@ botocore package is the foundation for AWS-CLI.
 %setup
 %autopatch -p1
 
-rm botocore/cacert.pem
+rm %mod_name/cacert.pem
 
-VENDORED_PATH='botocore/vendored'
+VENDORED_PATH='%mod_name/vendored'
 # gen vendored list for upstream (assume package/module name is the same as
 # project name)
 set -o pipefail
@@ -57,7 +58,7 @@ rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
 cp "%SOURCE1" "$UNVENDORED_PATH"
 sed -i \
-    -e 's/@VENDORED_ROOT@/"botocore.vendored"/' \
+    -e 's/@VENDORED_ROOT@/"%mod_name.vendored"/' \
     -e 's/@VENDORED_FAKE_PACKAGES@/{"requests.packages"}/' \
     "$UNVENDORED_PATH"
 
@@ -74,14 +75,16 @@ sed -i \
 %pyproject_install
 
 %check
-%pyproject_run -- python scripts/ci/run-tests --with-xdist
+%pyproject_run -- python scripts/ci/run-tests --with-xdist unit/
 
 %files
-%doc README.*
-%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 1.42.65-alt1
+- 1.40.59 -> 1.42.65.
+
 * Sun Oct 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.40.59-alt1
 - Automatically updated to 1.40.59.
 

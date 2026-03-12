@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name moto
+%define mod_name %pypi_name
 
 %def_with check
 # full testsuite takes too long for now, run it locally
@@ -8,7 +9,7 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 5.1.12
+Version: 5.1.22
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -32,6 +33,7 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter antlr4-python3-runtime
 # not packaged
 %add_pyproject_deps_check_filter pycognito
+%add_pyproject_deps_check_filter aws-sam-translator
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_metadata_extra server
 %pyproject_builddeps_check
@@ -67,13 +69,15 @@ export TESTS=tests/test_core
     --ignore tests/test_cognitoidp/test_cognitoidp.py \
 
 %files
-%doc README.*
 %_bindir/moto_server
 %_bindir/moto_proxy
-%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 5.1.22-alt1
+- 5.1.12 -> 5.1.22.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 5.1.12-alt1
 - 5.1.11 -> 5.1.12.
 
