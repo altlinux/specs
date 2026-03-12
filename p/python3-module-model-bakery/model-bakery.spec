@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.5
+Version: 1.23.3
 Release: alt1
 Summary: Smart object creation facility for Django
 License: Apache-2.0
@@ -16,11 +16,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -34,6 +37,9 @@ code.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -45,11 +51,13 @@ code.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 12 2026 Stanislav Levin <slev@altlinux.org> 1.23.3-alt1
+- 1.20.5 -> 1.23.3.
+
 * Mon Jun 09 2025 Stanislav Levin <slev@altlinux.org> 1.20.5-alt1
 - 1.20.4 -> 1.20.5.
 
