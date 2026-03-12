@@ -1,5 +1,5 @@
 Name: torrent-file-editor
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 License: GPLv3+
@@ -41,6 +41,9 @@ cd ./build
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1
+
 * Fri Jun 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
 - 0.3.17 -> 1.0.0
 - fixed FTBFS
