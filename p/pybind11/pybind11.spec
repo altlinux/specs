@@ -4,7 +4,7 @@
 
 Name: pybind11
 Version: 3.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -21,7 +21,7 @@ BuildRequires: boost-devel
 BuildRequires: catch-devel
 BuildRequires: ccmake
 BuildRequires: cmake
-BuildRequires: eigen3
+BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
 BuildRequires: python3-module-scikit-build-core
 
@@ -113,6 +113,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1.1
+- NMU: fix BuildRequires: eigen3 -> eigen3-devel
+
 * Tue Feb 17 2026 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1
 - New version 3.0.2.
 
