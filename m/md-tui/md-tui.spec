@@ -2,7 +2,7 @@
 %global bin_name mdt
 
 Name: md-tui
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 Summary: Markdown renderer in the terminal
 License: AGPL-3.0
@@ -34,6 +34,9 @@ TUI application for viewing markdown files directly in your terminal.
 %doc LICENSE
 
 %changelog
+* Thu Mar 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.5-alt1
+- Updated to version 0.9.5.
+
 * Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.4-alt1
 - Updated to version 0.9.4.
 
