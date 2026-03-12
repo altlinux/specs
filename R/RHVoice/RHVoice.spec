@@ -6,8 +6,8 @@
 %define progectlicense GPL-2.0
 
 Name:    RHVoice
-Version: 1.18.1
-Release: alt2
+Version: 1.18.2
+Release: alt1
 
 Summary: a free and open source speech synthesizer for Russian and other languages
 License: %progectlicense
@@ -15,7 +15,7 @@ Group: Sound
 Url: https://github.com/RHVoice/RHVoice
 VCS: https://github.com/RHVoice/RHVoice.git
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: scons
 BuildRequires: gcc-c++        
@@ -27,9 +27,18 @@ BuildRequires: libportaudio2-devel
 BuildRequires: libspeechd-devel
 BuildRequires: flite-devel
 BuildRequires: boost-devel
+BuildRequires: libsonic-devel
 
 %description
-%summary
+RHVoice uses statistical parametric synthesis. It relies on existing open
+ source speech technologies (mainly HTS and related software).
+ .
+ Voices are built from recordings of natural speech. They have small footprints,
+ because only statistical models are stored on users' computers. And though
+ the voices lack the naturalness of the synthesizers which generate speech
+ by combining segments of the recordings themselves, they are still very
+ intelligible and resemble the speakers who recorded the source material.
+
 
 %package -n lib%name%sover
 Summary: Lib files for %name
@@ -333,13 +342,28 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %setup
 
 %build
-scons languages=all voices=all audio_libs=all
+scons \
+  languages=all \
+  voices=all \
+  audio_libs=all \
+  enable_sonic=True
 
 %install
-scons install DESTDIR=%buildroot \
-prefix=%prefix sysconfdir=%_sysconfdir bindir=%_bindir libdir=%_libdir includedir=%_includedir datadir=%_datadir
+scons install \
+  DESTDIR=%buildroot \
+  prefix=%prefix \
+  sysconfdir=%_sysconfdir \
+  bindir=%_bindir \
+  libdir=%_libdir \
+  includedir=%_includedir \
+  datadir=%_datadir \
+  servicedir=default
 
 %changelog
+* Thu Mar 12 2026 Artem Semenov <savoptik@altlinux.org> 1.18.2-alt1
+- Updated to new version 1.18.2
+- Added libsonic support
+
 * Wed Mar 11 2026 Artem Semenov <savoptik@altlinux.org> 1.18.1-alt2
 - Fixed voice subpackage names (Closes: 58198)
 
