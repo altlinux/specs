@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.25.1
+Version: 3.25.2
 Release: alt1
 Summary: A platform independent file lock for Python
 License: Unlicense
@@ -57,6 +57,9 @@ the same lock object twice, it will not block.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 12 2026 Stanislav Levin <slev@altlinux.org> 3.25.2-alt1
+- 3.25.1 -> 3.25.2.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 3.25.1-alt1
 - 3.25.0 -> 3.25.1.
 
