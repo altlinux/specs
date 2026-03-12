@@ -6,7 +6,7 @@
 
 Name: easytag
 Version: %ver_major.3
-Release: alt5
+Release: alt6
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -91,6 +91,9 @@ sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Thu Mar 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt6
+- easytag-2.4.3-171-g2d70038 (updated russian translation)
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt5
 - updated to easytag-2.4.3-161-gac46f71 (2.5.1)
 - fixed build with taglib-0
