@@ -6,7 +6,7 @@
 
 Name:    nvidia-cudnn-frontend
 Version: 1.15.0
-Release: alt1
+Release: alt2
 
 Summary: cuDNN-frontend provides a c++ wrapper for the cudnn backend API and samples on how to use it
 License: MIT
@@ -19,7 +19,7 @@ Patch: 0001-added-flag-for-use-system-dlpack.patch
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-ml
 BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -36,8 +36,7 @@ It simplifies the construction and execution of deep learning operations
 by exposing a graph-based abstraction layer over the low-level cuDNN primitives.
 
 %package -n python3-module-%name
-AutoReq:       nopython3
-Requires:      python3-base
+%remove_torch_deps
 Requires:      pytorch
 Summary:       Python bindings for cuDNN frontend API 
 Group: 	       Development/Python
@@ -60,7 +59,6 @@ with fine-grained control over cuDNN execution plans.
 
 # Move header files into /usr/include
 install -d %buildroot%_includedir
-install -d %buildroot%_includedir
 find %buildroot%python3_sitelibdir/include -type f -exec sh -c '
   root="$1"
   dst="$2"
@@ -77,10 +75,14 @@ find %buildroot%python3_sitelibdir/include -type f -exec sh -c '
 %_includedir/*
 
 %files -n python3-module-%name
-%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 
 %changelog
+* Thu Mar 05 2026 Nikita Shmatko <nash@altlinux.org> 1.15.0-alt2
+- Switched to rpm-macros-ml.
+- Minor specfile fixes.
+
 * Thu Feb 05 2026 Nikita Shmatko <nash@altlinux.org> 1.15.0-alt1
 - Initial build for Sisyphus.

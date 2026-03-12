@@ -4,15 +4,15 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.8
-Release: alt2
+Release: alt3
 
 Summary: Unified slicing for all Python data structures
 License: MIT
 Group:   Development/Python3
-URL: 	 https://pypi.org/project/slicer/
+URL: 	 https://pypi.org/project/slicer
 Vcs:     https://github.com/interpretml/slicer.git
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-ml
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
@@ -20,13 +20,8 @@ BuildRequires: python3-module-pandas
 BuildRequires: python3-module-torch
 %endif
 
-AutoReq: 	nopython3
-Requires: 	python3-base
-Requires: 	python3-module-numpy
-Requires: 	python3-module-pandas
-Requires: 	python3(pytest)
-Requires: 	python3-module-scipy
-Requires: 	pytorch
+%remove_torch_deps
+Requires: pytorch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -57,6 +52,9 @@ It supports many data types including:
 %python3_sitelibdir/%pypi_name-%version-*.egg-info
 
 %changelog
+* Wed Feb 25 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt3
+- Switched to rpm-macros-ml.
+
 * Wed Feb 04 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt2
 - Disabled python3 autorequires to avoid torch dependencies.
 - Switched to virtual dependency on pytorch.

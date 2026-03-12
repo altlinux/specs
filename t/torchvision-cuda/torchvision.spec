@@ -13,15 +13,15 @@
 
 Name:    %rname-cuda
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: Datasets, Transforms and Models specific to Computer Vision
 License: BSD-3-Clause
 Group:   Development/ML
-URL: 	 https://docs.pytorch.org/vision/
+URL: 	 https://docs.pytorch.org/vision
 VCS:     https://github.com/pytorch/vision.git
 
-BuildRequires(pre): cmake ninja-build rpm-build-python3
+BuildRequires(pre): cmake ninja-build rpm-build-python3 rpm-macros-ml
 BuildRequires: gcc-c++
 BuildRequires: libpng-devel
 BuildRequires: libjpeg-devel
@@ -31,17 +31,12 @@ BuildRequires: pybind11-devel
 BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-torch-cuda-devel
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
 
 # Remove python torch dependencies 
-%filter_from_requires /^python3[(]torch/d
-%filter_from_requires /^libtorch[.]so/d
-%filter_from_requires /^libtorch_/d
-%filter_from_requires /^libc10[.]so/d
-%filter_from_requires /^libc10_/d
-%filter_from_requires /^libshm[.]so/d
+%remove_torch_deps
 
 %description
 The torchvision package consists of popular datasets, model architectures,
@@ -75,7 +70,7 @@ Requires: 	python3-module-torch-cuda
 
 %build
 %cmake -G Ninja \
-       -DTorch_DIR=%python3_sitelibdir/torch/share/cmake/Torch \
+       -DTorch_DIR=%_torchdir \
        -DWITH_CUDA=ON \
        -DUSE_CUDNN=ON \
        -DTORCHVISION_USE_FFMPEG=ON \
@@ -105,6 +100,10 @@ export TORCH_CUDA_ARCH_LIST=%CUDA_ARCH_LIST
 %python3_sitelibdir/%{pyproject_distinfo %rname}
 
 %changelog
+* Tue Mar 03 2026 Nikita Shmatko <nash@altlinux.org> 0.25.0-alt2
+- Switched to rpm-macros-ml.
+- Build torchvision-cuda on aarch64.
+
 * Thu Feb 19 2026 Nikita Shmatko <nash@altlinux.org> 0.25.0-alt1
 - New version 0.25.0.
 
