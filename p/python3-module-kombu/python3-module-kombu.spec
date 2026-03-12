@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.3.5
-Release: alt2
+Version: 5.6.2
+Release: alt1
 
 Group: Development/Python3
 License: BSD-3-Clause
@@ -17,6 +17,7 @@ Summary: Kombu is an AMQP messaging framework for Python
 URL: https://pypi.org/project/kombu/
 VCS: https://github.com/celery/kombu/
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 # Patches from Debian
@@ -65,6 +66,7 @@ BuildRequires: python3-module-sphinx
 %endif
 
 %add_python3_req_skip azure.core.exceptions azure.servicebus azure.servicebus.exceptions azure.servicebus.management
+%add_python3_req_skip google.cloud google.cloud.monitoring_v3 google.cloud.pubsub_v1 google.cloud.pubsub_v1.publisher google.cloud.pubsub_v1.subscriber google.pubsub_v1
 
 %description
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
@@ -126,6 +128,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1:5.6.2-alt1
+- new version 5.6.2
+- skip google.cloud dependencies (not packaged)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1:5.3.5-alt2
 - temp. disable tests (not yet adopted for python 3.12)
 
