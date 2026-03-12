@@ -1,6 +1,6 @@
 %define __name CoBang
 %define _name cobang
-%define ver_major 2.4
+%define ver_major 2.5
 %define rdn_name vn.hoabinh.quan.%__name
 
 %def_enable check
@@ -29,6 +29,7 @@ Requires: dconf
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
 Requires: typelib(XdpGtk4) = 1.0
+Requires: typelib(GstApp) = 1.0
 Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -65,6 +66,9 @@ remote.
 %doc README.*
 
 %changelog
+* Thu Mar 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Sun Mar 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
