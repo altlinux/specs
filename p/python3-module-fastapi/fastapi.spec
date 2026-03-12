@@ -3,9 +3,20 @@
 %define module_name %pypi_name
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
 Version: 0.135.1
-Release: alt1
+Release: alt2
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -19,11 +30,11 @@ Source1: %pyproject_deps_config_name
 Source2: clean_coverage_usage.py
 Patch: %name-%version-alt.patch
 
+# Manually manage extra dependencies with metadata.
+AutoReq: yes, nopython3
 # Some packages require fastapi-slim, but it's fastapi with the no installed
 # certain requirements.
 Provides: %name-slim = %EVR
-# Filter fastapi-cli, because it's needed for managing fastapi project.
-%add_pyproject_deps_runtime_filter fastapi-cli
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
@@ -34,7 +45,7 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: python3-module-argon2-cffi
 BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata -- --extra all
+%pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
 %endif
 
@@ -60,6 +71,10 @@ The key features are:
   standards for APIs: OpenAPI (previously known as Swagger) and JSON
   Schema.
 
+%add_python_extra standard
+%add_python_extra standard-no-fastapi-cloud-cli
+%add_python_extra all
+
 %prep
 %setup
 %autopatch -p1
@@ -69,6 +84,9 @@ The key features are:
 %pyproject_deps_resync_check_depgroup tests
 %endif
 
+# Clean of the using coverage module, because we don't needs to it.
+%SOURCE2 tests/
+
 %build
 %pyproject_build
 
@@ -76,8 +94,6 @@ The key features are:
 %pyproject_install
 
 %check
-# Clean of the using coverage module, because we don't needs to it.
-%SOURCE2 tests/
 %pyproject_run -- bash -s <<-'ENDTESTS'
 # Create symbolic link to python_multipart in order to make 'multipart' import
 # name for passing tests since it was deleted in the python3-module-multipart
@@ -94,6 +110,10 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.135.1-alt2
+- Introduced subpackages needed to install FastAPI with its optional
+  dependencies.
+
 * Tue Mar 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.135.1-alt1
 - Updated to 0.135.1.
 
