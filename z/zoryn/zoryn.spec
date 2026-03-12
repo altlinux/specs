@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,16 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Mar 12 2026 Anton Farygin <rider@altlinux.org> 0.28.0-alt1
+- fixed task copy to use SRPM package names and Tasks API instead of SSH
+- fixed task copy to use batch RDB query for EVR comparison
+- fixed spec changelog CVE sub-item indentation and format detection
+- fixed task ls to show warning when Tasks API is unavailable
+- fixed up --switch-to-upstream-git to always run gear-update-tag
+- added --copy-rebuilds, --rebuild-only and --dry-run flags to task copy
+- added get_task function and EVR fields to task_api
+- added --all flag to task ls
+
 * Tue Mar 10 2026 Anton Farygin <rider@altlinux.org> 0.27.0-alt1
 - added task_api library for Tasks API with automatic SSH fallback
 - added task add command with repo/del/rebuild/copy actions
