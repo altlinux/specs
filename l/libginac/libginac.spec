@@ -1,7 +1,7 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 Epoch: 1
 
@@ -9,11 +9,12 @@ Summary: C++ class library for symbolic calculations
 
 License: GPLv2+
 Group: Sciences/Mathematics
-Url: http://www.ginac.de/
+Url: https://www.ginac.de/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://ginac.de/ginac-%version.tar
+# Source-url: https://codeberg.org/ginac/ginac.git
+Source: %oname-%version.tar
 
 BuildRequires: python3
 BuildRequires: flex gcc-c++ libcln-devel libncurses-devel libreadline-devel
@@ -93,6 +94,9 @@ rm -fv %buildroot/usr/lib/ginac-excompiler
 %_infodir/*.info*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.9-alt1
+- new version 1.8.9 (Source-url: moved to codeberg.org)
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.8-alt1
 - new version 1.8.8 (with rpmrb script)
 
