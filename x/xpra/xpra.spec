@@ -1,7 +1,8 @@
 # TODO: python-uinput
+%def_with wayland
 
 Name: xpra
-Version: 6.2.3
+Version: 6.4.3
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -16,9 +17,16 @@ Source: https://xpra.org/src/xpra-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libXres-devel libxkbfile-devel libpam0-devel libsystemd-devel libdrm-devel
+BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libXres-devel libXcursor-devel libxkbfile-devel libpam0-devel libsystemd-devel libdrm-devel
 BuildRequires: libxxhash-devel libproc2-devel
 BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
+
+# Wayland
+%if_with wayland
+BuildRequires: libwlroots-devel libwayland-server-devel libwayland-client-devel wayland-protocols libpixman-devel libxkbcommon-devel /usr/bin/wayland-scanner
+%else
+%add_python3_req_skip xpra.wayland.compositor xpra.wayland.models.window
+%endif
 
 # Video
 BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel liblz4-devel
@@ -153,8 +161,9 @@ sed -i 's|if pkg_config_ok("--exists", "pam", "pam_misc"):|if False:|' setup.py
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
+export CFLAGS="${CFLAGS:-%optflags} $(pkg-config --cflags pygobject-3.0)"
 
-%python3_build_debug \
+%python3_build \
 	--without-strict \
 	--without-nvidia \
 	--without-pandoc_lua \
@@ -179,6 +188,8 @@ move_if_not_there %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot%_tmpfilesdi
 move_if_not_there %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
 move_if_not_there %buildroot/lib/systemd/system/xpra.service %buildroot%_unitdir
 move_if_not_there %buildroot/lib/systemd/system/xpra.socket %buildroot%_unitdir
+move_if_not_there %buildroot/lib/systemd/system/xpra-encoder.service %buildroot%_unitdir
+move_if_not_there %buildroot/lib/systemd/system/xpra-encoder.socket %buildroot%_unitdir
 
 mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
 
@@ -220,16 +231,24 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 #_sysconfdir/init.d/%name
 %_unitdir/%name.service
 %_unitdir/%name.socket
+%_unitdir/%name-encoder.service
+%_unitdir/%name-encoder.socket
 %_udevrulesdir/71-xpra-virtual-pointer.rules
 %_sysconfdir/dbus-1/system.d/xpra.conf
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
-%dir %_sysconfdir/%name/ssl/certs
 %attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
 
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.3-alt1
+- new version 6.4.3
+- add libXcursor-devel to BuildRequires
+- fix pygobject include path (add CFLAGS from pkg-config)
+- add xpra-encoder service/socket files
+- enable wayland compositor support (add wlroots, wayland build dependencies)
+
 * Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 6.2.3-alt1
 - NMU: 6.2.3
 
