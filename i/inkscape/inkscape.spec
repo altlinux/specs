@@ -11,8 +11,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major.2
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -26,10 +26,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: inkview.desktop
-
-# fix build with Poppler 25.07.0
-Patch1: 7261.patch
-Patch2: 7321.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -267,6 +263,10 @@ true
 %files checkinstall
 
 %changelog
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
+- new version 1.4.3
+- remove poppler patches (included upstream)
+
 * Fri Oct 17 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt2
 - fix build with poppler 25.07 (ALT bug 56339)
 
