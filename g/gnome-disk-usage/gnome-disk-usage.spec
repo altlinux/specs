@@ -2,12 +2,12 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME disk usage analyser.
@@ -22,9 +22,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 Provides: gnome-disk-usage-analyser = %EVR
 Provides: baobab = %EVR
 
-%define gtk4_ver 4.16.0
+%define gtk4_ver 4.20.0
 %define vala_ver 0.23.3
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson vala-tools >= %vala_ver
@@ -66,6 +66,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
