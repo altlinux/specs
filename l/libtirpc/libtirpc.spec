@@ -1,6 +1,6 @@
 Name: libtirpc
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: transport-independent RPC library
 License: BSD
@@ -51,6 +51,9 @@ This package holds development part of %name library
 %_man3dir/*
 
 %changelog
+* Fri Mar 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.7-alt2
+- fixed rpc_gss_getcred symbol visibility
+
 * Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.7-alt1
 - 1.3.7 released
 
