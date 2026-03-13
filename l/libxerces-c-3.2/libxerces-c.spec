@@ -10,15 +10,16 @@
 # values: pthreads, none
 %define threads pthreads
 
-Name: libxerces-c
+%define libname libxerces-c
+Name: %libname-3.2
 Version: 3.2.5
-Release: alt1
+Release: alt2
 
-Summary: Xerces-C++ validating XML parser
+Summary: Xerces-C++ validating XML parser (legacy)
 
 Url: http://xml.apache.org/xerces-c/
 License: Apache
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -28,18 +29,8 @@ Source: %oname-%version.tar
 # Automatically added by buildreq on Wed Mar 09 2005
 BuildRequires: gcc-c++ libstdc++-devel
 
-Conflicts: %name-utils < %version-%release
-
 %description
-Xerces-C++ is a validating XML parser written in a portable subset of C++.
-Xerces-C++ makes it easy to give your application the ability to read and
-write XML data. A shared library is provided for parsing, generating,
-manipulating, and validating XML documents.
-
-The parser provides high performance, modularity, and scalability. Source
-code, samples and API documentation are provided with the parser. For
-portability, care has been taken to make minimal use of templates, no RTTI,
-and minimal use of #ifdefs.
+Legacy shared library libxerces-c-3.2.so for backward compatibility.
 
 %package utils
 Summary: Utils for Xerces-C++ validating XML parser
@@ -103,32 +94,21 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %install
 %makeinstall_std
 
-# There is a file in the package with a name starting with <tt>._</tt>, 
-# the file name pattern used by Mac OS X to store resource forks in non-native 
-# file systems. Such files are generally useless in packages and were usually 
-# accidentally included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-# for ones installed as %%doc
 find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 
-
-#rm -f %buildroot%_libdir/%name.a
+rm -rf %buildroot%_includedir
+rm -f %buildroot%_libdir/%libname.so
+rm -rf %buildroot%_pkgconfigdir
+rm -rf %buildroot%_bindir
 
 %files
-%_libdir/libxerces-c-*.so
-
-%files devel
-%_includedir/xercesc/
-%_libdir/%name.so
-%_pkgconfigdir/xerces-c.pc
-
-%files doc
-%doc LICENSE NOTICE CREDITS doc/
-
-%files utils
-%_bindir/*
+%_libdir/%libname-3.2.so
 
 %changelog
+* Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt2
+- build as legacy library libxerces-c-3.2.so
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
 - new version 3.2.5 (with rpmrb script)
 
