@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hardinfo2
-Version: 2.2.13
+Version: 2.2.16
 Release: alt1
 
 Summary: System Information and Benchmark for Linux Systems
@@ -26,7 +26,6 @@ Requires: vulkan-tools
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libcairo-devel
 BuildRequires: glib2-devel
@@ -48,7 +47,7 @@ It can benchmark your system and compare to other machines online.
 %setup
 
 %build
-%cmake -DHARDINFO2_QT5_MOCQT5=1
+%cmake -DHARDINFO2_QT5=0
 %cmake_build
 
 %install
@@ -75,6 +74,10 @@ install -D %_builddir/%{name}-%{version}/tools/hardinfo2 %buildroot/%_initdir/%n
 %_initdir/%name
 
 %changelog
+* Fri Mar 13 2026 Vladislav Glinkin <smasher@altlinux.org> 2.2.16-alt1
+- New version (2.2.16)
+- Built without Qt5 benchmarks (Closes: #57631)
+
 * Mon Aug 18 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.13-alt1
 - 2.2.10 -> 2.2.13
 
