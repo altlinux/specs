@@ -1,9 +1,8 @@
 %define sover 2
 %define oname svt-av1
-
-Name: libSvtAv1Enc%sover
+Name: lib%oname
 Version: 2.3.0
-Release: alt2
+Release: alt3
 
 Summary: Scalable Video Technology for AV1 Encoder (legacy)
 
@@ -21,7 +20,7 @@ Url: https://gitlab.com/AOMediaCodec/SVT-AV1
 # Source-url:        %url/-/archive/v%version/%oname-%version.tar.bz2
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-meson
 BuildRequires: gcc-c++
@@ -37,11 +36,10 @@ BuildRequires:  pkgconfig(gstreamer-video-1.0)
 
 BuildRequires:  pkgconfig(libcpuinfo)
 
+Obsoletes: libSvtAv1Enc2
+
 %description
-The Scalable Video Technology for AV1 Encoder (SVT-AV1 Encoder) is an
-AV1-compliant encoder library core. The SVT-AV1 development is a
-work-in-progress targeting performance levels applicable to both VOD and Live
-encoding / transcoding video applications.
+Legacy shared library libSvtAv1Enc.so.2 for backward compatibility.
 
 %package -n lib%name
 Group: Video
@@ -90,7 +88,7 @@ Requires: gst-plugins-base1.0
 This package provides %oname-based GStreamer plug-in.
 
 %prep
-%setup -n %oname-%version
+%setup
 rm -rfv third_party/cpuinfo
 rm -rfv third_party/aom*
 rm -rfv third_party/googletest
@@ -142,8 +140,8 @@ rm -rf %buildroot%_man1dir
 %_libdir/gstreamer-1.0/libgstsvtav1enc.so
 
 %changelog
-* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt2
-- build as legacy library libSvtAv1Enc.so.2 with gstreamer1-svt-av1 plugin
+* Sat Mar 14 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt3
+- rebuild as libsvt-av1 legacy package (replaces libSvtAv1Enc2)
 
 * Mon Mar 10 2025 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version (2.3.0) with rpmgs script
