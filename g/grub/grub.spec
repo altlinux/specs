@@ -21,8 +21,8 @@
 %add_python3_req_skip %_libdir/grub/*/gdb_helper.py
 
 Name: grub
-Version: 2.12
-Release: alt16
+Version: 2.14
+Release: alt1
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -38,7 +38,7 @@ Source1: grub2-sysconfig
 Source2: gnulib-%version.tar
 
 Source3: 39_memtest
-Source4: grub.filetrigger
+Source4: grub-mkconfig.filetrigger
 
 Source6: grub-autoupdate
 
@@ -46,16 +46,21 @@ Source8: update-grub
 Source9: update-grub.8
 
 Source10: grub-efi-autoupdate
-Source11: embedded_grub.cfg
 
 Source12: grub-entries
 Source13: grub-entries.8
 
-Source14: grub-efi.filetrigger
+Source14: grub-efi-autoupdate.filetrigger
+Source15: grub-efi-install
 
 Source16: grub-dumpsbat.c
 
 Source17: alt-ru.po
+
+Source18: grub-sysconfig-migrate
+
+Source19: grub-pc-autoupdate.filetrigger
+Source20: grub-ieee1275-autoupdate.filetrigger
 
 Patch0: %name-%version-alt.patch
 
@@ -65,6 +70,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: flex
 BuildRequires: ruby
 BuildRequires: autogen
+BuildRequires: autoconf-archive
 BuildRequires: texinfo
 BuildRequires: help2man
 BuildRequires: squashfs-tools
@@ -115,11 +121,23 @@ Group: System/Kernel and hardware
 Provides: grub2-common = %EVR
 Obsoletes: grub2-common < %EVR
 
+%package common-extra
+Summary: GRand Unified Bootloader (extra common part)
+Group: System/Kernel and hardware
+Requires: grub-common = %EVR
+Requires: xorriso
+Requires: mtools
+
+%package mount
+Summary: GRUB FUSE filesystem mounter
+Group: System/Kernel and hardware
+Requires: grub-common = %EVR
+
 %package pc
 Summary: GRand Unified Bootloader (PC BIOS variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
-%ifarch %ix86 x86_64
+%ifarch %ix86
 Provides: grub2 = %EVR
 Provides: grub = %EVR
 %endif
@@ -143,7 +161,7 @@ Requires: %name-common = %EVR
 Provides: grub2-efi = %EVR
 Obsoletes: grub2-efi < %EVR
 Requires(pre): efibootmgr >= 15
-%ifarch aarch64 loongarch64 riscv64
+%ifarch x86_64 aarch64 loongarch64 riscv64
 Provides: grub2 = %EVR
 Provides: grub = %EVR
 %endif
@@ -172,6 +190,17 @@ of multiple boot images (needed for modular kernels such as the GNU Hurd).
 %desc_generic
 
 This package carries the shared code and data.
+
+%description common-extra
+%desc_generic
+
+This package carries the extra shared code and data.
+
+%description mount
+%desc_generic
+
+This package provides grub-mount, a FUSE-based mounter for filesystem
+images supported by GRUB (ext2/3/4, XFS, Btrfs, FAT, etc.).
 
 %description pc
 %desc_generic
@@ -216,14 +245,14 @@ EOF
 grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
 
 # Append ALT-specific translations to ru.po
-cat %SOURCE17 >> po/ru.po
+msgcat po/ru.po %SOURCE17 -o po/ru.po
 
 # autogen.sh script searches for *.in files under ./util to create
 # po/POTFILES-shell.in which is used to update po files
 sed -n -e 's/\$/\\\$/' -e 's/^msgid /gettext_printf /p' %SOURCE17 > util/alt-l18n-strings.in
 
 %build
-./bootstrap --no-git --gnulib-srcdir=./gnulib
+./bootstrap --no-git --skip-po --gnulib-srcdir=./gnulib
 build_grub() {
 	local dir="$1"; shift
 	mkdir -p "$dir"
@@ -244,15 +273,17 @@ build_efi_image() {
 	"$mkimage" -O "$format" -o "$dir"/grub.efi -d "$dir"/grub-core \
 		-m memdisk.squashfs -p "" --sbat sbat.csv \
 		part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs \
-		squash4 normal chain boot configfile diskfilter \
+		squash4 erofs normal chain boot configfile diskfilter \
 		minicmd reboot halt search search_fs_uuid search_fs_file \
 		search_label sleep test syslinuxcfg all_video video font \
 		gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat \
 		gzio iso9660 loadenv loopback mdraid09 mdraid1x png jpeg \
 		extcmd keystatus procfs cryptodisk gcry_rijndael gcry_sha1 \
 		gcry_sha256 luks luks2 gcry_sha512 gcry_serpent gcry_twofish \
+		gcry_gost28147 gcry_gostr3411_94 \
 		crypto pbkdf2 password_pbkdf2 echo regexp tftp \
-		f2fs exfat ntfs ntfscomp memdisk raid5rec \
+		f2fs exfat ntfs ntfscomp memdisk raid5rec probe \
+		tpm2_key_protector bli blsuki true \
 		"$@"
 }
 
@@ -345,17 +376,25 @@ install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
 sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
 
-install -pDm755 %SOURCE4 %buildroot%_rpmlibdir/grub.filetrigger
+install -pDm755 %SOURCE4 %buildroot%_rpmlibdir/grub-mkconfig.filetrigger
 %ifarch %ix86 x86_64 ppc64le
 install -pDm755 %SOURCE6 %buildroot%_sbindir/grub-autoupdate
+%endif
+%ifarch %ix86 x86_64
+install -pDm755 %SOURCE19 %buildroot%_rpmlibdir/grub-pc-autoupdate.filetrigger
+%endif
+%ifarch ppc64le
+install -pDm755 %SOURCE20 %buildroot%_rpmlibdir/grub-ieee1275-autoupdate.filetrigger
 %endif
 
 %ifarch %efi_arches
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
-install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi.filetrigger
+install -pDm755 %SOURCE15 %buildroot%_sbindir/grub-efi-install
+install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi-autoupdate.filetrigger
 install -pDm644 sbat.csv %buildroot%_datadir/grub/sbat.csv
 %endif
 install -pDm755 %SOURCE12 %buildroot%_sbindir/grub-entries
+install -pDm755 %SOURCE18 %buildroot%_sbindir/grub-sysconfig-migrate
 
 # install grub-dumpsbat utility used in grub-efi-autoupdate
 install -pDm755 grub-dumpsbat %buildroot%_bindir/grub-dumpsbat
@@ -390,6 +429,12 @@ install -pDm644 build-efi/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}.efi
 rm -f %buildroot%_libdir/grub-efi/*/*.h
 %endif
 
+%post common
+# Do migration only on upgrade
+if [ $1 -eq 2 ]; then
+    grub-sysconfig-migrate ||:
+fi
+
 %files common -f grub.lang
 %dir %_sysconfdir/grub.d
 %dir %_datadir/grub
@@ -399,7 +444,6 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 /boot/grub/fonts/
 /boot/grub/themes/
 %_sysconfdir/grub.d/00_header
-%_sysconfdir/grub.d/05_altlinux_theme
 %_sysconfdir/grub.d/10_linux
 %_sysconfdir/grub.d/20_linux_xen
 %_sysconfdir/grub.d/25_bli
@@ -415,7 +459,9 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.cfg
 %_sysconfdir/default/grub
 %_datadir/bash-completion/completions/*
-%_rpmlibdir/grub.filetrigger
+%exclude %_datadir/bash-completion/completions/grub-mkfont
+%exclude %_datadir/bash-completion/completions/grub-mkrescue
+%_rpmlibdir/grub-mkconfig.filetrigger
 # these tools are only for efi and x86_64
 %ifarch x86_64
 %_bindir/grub-render-label
@@ -430,6 +476,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-set-default
 %_sbindir/grub-sparc64-setup
 %_sbindir/grub-entries
+%_sbindir/grub-sysconfig-migrate
 %_sbindir/update-grub
 %_bindir/grub-editenv
 %_bindir/grub-file
@@ -439,13 +486,10 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_bindir/grub-menulst2cfg
 %_bindir/grub-mknetdir
 %_bindir/grub-mkstandalone
-%_bindir/grub-mkfont
 %_bindir/grub-mklayout
 %_bindir/grub-mkimage
 %_bindir/grub-mkpasswd-pbkdf2
 %_bindir/grub-mkrelpath
-%_bindir/grub-mkrescue
-%_bindir/grub-mount
 %_bindir/grub-script-check
 %_bindir/grub-syslinux2cfg
 %_bindir/grub-dumpsbat
@@ -453,18 +497,35 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_datadir/grub/unicode.pf2
 %_man1dir/*
 %_man8dir/*
+%exclude %_man1dir/grub-mkfont.1*
+%exclude %_man1dir/grub-mkrescue.1*
+%exclude %_man1dir/grub-mount.1*
 %_infodir/grub.info.*
 %_infodir/grub-dev.info.*
+
+%files common-extra
+%_bindir/grub-mkfont
+%_bindir/grub-mkrescue
+%_man1dir/grub-mkfont.1*
+%_man1dir/grub-mkrescue.1*
+%_datadir/bash-completion/completions/grub-mkfont
+%_datadir/bash-completion/completions/grub-mkrescue
+
+%files mount
+%_bindir/grub-mount
+%_man1dir/grub-mount.1*
 
 %ifarch %ix86 x86_64
 %files pc
 %_sbindir/grub-autoupdate
+%_rpmlibdir/grub-pc-autoupdate.filetrigger
 %_libdir/grub/*-pc/
 %endif
 
 %ifarch ppc64le
 %files ieee1275
 %_sbindir/grub-autoupdate
+%_rpmlibdir/grub-ieee1275-autoupdate.filetrigger
 %_libdir/grub/*-ieee1275/
 %endif
 
@@ -476,45 +537,32 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_libdir/grub/i386-efi
 %endif
 %_sbindir/grub-efi-autoupdate
+%_sbindir/grub-efi-install
 %_libdir/grub/%grubefiarch
-%_rpmlibdir/grub-efi.filetrigger
+%_rpmlibdir/grub-efi-autoupdate.filetrigger
 %_datadir/grub/sbat.csv
 
 %files efi-checkinstall
 %endif
 
-%ifarch %ix86 x86_64 ppc64le
-%ifarch %ix86 x86_64
-%post pc
-%endif
-%ifarch ppc64le
-%post ieee1275
-%endif
-grub-autoupdate || {
-	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
-	echo "** WARNING: please run it by hand, record the output offline,"
-	echo "** WARNING: make sure you have bootable rescue CD/flash media handy"
-	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
-} >&2
-%endif
-
-%post efi
-[ -z "$DURING_INSTALL" ] || exit 0
-modprobe -q efivars ||:
-modprobe -q efivarfs ||:
-grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/grub2 ||
-	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/grub2
-
-grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/grub2 ||
-	echo 'GRUB_BOOTLOADER_ID="altlinux"' >> %_sysconfdir/sysconfig/grub2
-
-grub-efi-autoupdate || {
-	echo "** WARNING: grub-efi-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
-	echo "** WARNING: please run grub-efi-autoupdate by hand, record the output offline,"
-	echo "** WARNING: make sure you have recovery bootable media handy."
-} >&2
-
 %changelog
+* Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt1
+- update to grub 2.14
+- add grub-efi-install utility for EFI installation with Secure Boot support and
+  proper NVRAM management (closes: #52976)
+- add probe module to efi image (closes: #54496)
+- align with upstream usage for GRUB_CMDLINE_LINUX variable (closes: #53710)
+- replace 'failsafe' with 'single' default for recovery boot entries (closes: #44269)
+- add GRUB_BTRFS_USE_DEFAULT_SUBVOL option (closes: #56881)
+- new subpackage grub-common-extra (closes: #38715, #51394, #51395)
+- add ALT Linux distro name translation (closes: #36004)
+- add "UEFI Firmware settings" translation (closes: #48768)
+- read distro name from /etc/os-release (closes: #55546)
+- add btrfs savedefault support (closes: #50525)
+- disable savedefault for f2fs (closes: #52193)
+- refactor grub filetriggers (closes: #57107)
+- enhance grub-efi-autoupdate UX (closes: #56960)
+
 * Thu Nov 20 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt16
 - Fix grub-install on i386-pc (closes: #56911)
 - add upstream security patch set 2025-11-18:

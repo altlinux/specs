@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -20,7 +20,7 @@ Requires: alterator-hw-functions >= 0.7.7-alt1
 Conflicts: guile-evms < 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
-BuildRequires: grub >= 2.00-alt7
+BuildRequires: grub-common
 BuildRequires: libdevmapper-devel
 
 %ifarch %ix86 x86_64
@@ -55,6 +55,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 0.30-alt1
+- backend3/grub: fix config path in turn_luks_crypto_on
+- backend3/grub: fix duplicates in grub config (closes: #56951)
+- backend3/grub: switch to grub-efi-install
+
 * Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 0.29-alt1
 - chroot to /mnt/destination if found
 
