@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -29,8 +29,9 @@ BuildRequires(pre): rpm-macros-systemd
 %setup
 
 %install
-install -pDm0644 50_mobi.phosh.phrog_first-run \
-	%buildroot%_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
+for i in 50_*; do
+	install -pDm0644 $i %buildroot%_sysconfdir/dconf/db/local.d/$i;
+done
 
 install -pDm0644 50_org.gnome.desktop.screensaver_lock-enabled \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
@@ -41,26 +42,19 @@ install -pDm0644 config \
 install -pDm0644 %name.conf \
 	%buildroot%_sysusersdir/%name.conf
 
-# Animations can cause segfaults on PinePhone and PinePhone Pro
-install -pDm0755 %name-user-pre \
-	%buildroot%_datadir/ready-set/pre-hooks/user/%name
-
-install -pDm0755 %name-user-post \
-	%buildroot%_datadir/ready-set/post-hooks/user/%name
-
 install -pDm0755 %name-system-post \
 	%buildroot%_datadir/ready-set/post-hooks/system/%name
 
 %files
-%_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
-%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
+%_sysconfdir/dconf/db/local.d/50_*
 %_datadir/ready-set/config
 %_sysusersdir/%name.conf
-%_datadir/ready-set/pre-hooks/user/%name
-%_datadir/ready-set/post-hooks/user/%name
 %_datadir/ready-set/post-hooks/system/%name
 
 %changelog
+* Fri Mar 13 2026 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
+- Use dconf override instead ready-set hooks.
+
 * Wed Mar 11 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6-alt1
 - Improved hooks:
   - Added animation disabling;
