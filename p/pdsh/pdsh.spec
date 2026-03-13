@@ -13,14 +13,14 @@
 %def_with machines
 
 Name: pdsh
-Version: 2.35
+Version: 2.36
 Release: alt1
 
 Summary: Parallel remote shell program
 License: GPLv2+
 Group: System/Base
 
-Url: http://sourceforge.net/projects/pdsh
+Url: https://github.com/chaos/pdsh
 Source0: http://dl.sourceforge.net/sourceforge/pdsh/%name-%version.tar.gz
 Source1: dshdir.pl
 Source2: dshdir.1
@@ -401,6 +401,10 @@ fi
 ##############################################################################
 
 %changelog
+* Sat Mar 14 2026 Ilya Mashkin <oddity@altlinux.ru> 2.36-alt1
+- 2.36
+- Update Url
+
 * Sat Mar 30 2024 Ilya Mashkin <oddity@altlinux.ru> 2.35-alt1
 - 2.35
 
