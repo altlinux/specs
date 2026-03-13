@@ -1,5 +1,5 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/alt-atomic/onyx-branding to altlinux branch 
+# https://altlinux.space/alt-atomic/onyx-branding 
 
 %define _unpackaged_files_terminate_build 1
 
@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260312
+Version: 20260313
 Release: alt1
 
 Group: Graphics
@@ -92,7 +92,7 @@ Group: Graphics
 
 BuildArch: noarch
 
-Requires: alt-atomic-icons
+Requires: icon-theme-alt-atomic-onyx
 Requires: wallpapers-alt-atomic-gnome
 
 Requires(post,preun): alternatives >= 0.2
@@ -139,6 +139,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Fri Mar 13 2026 Vladimir Romanov <rirusha@altlinux.org> 20260313-alt1
+- Replaced alt-atomic-icons with icon-theme-alt-atomic-onyx in graphics.
+
 * Thu Mar 12 2026 Vladimir Romanov <rirusha@altlinux.org> 20260312-alt1
 - Cleaned requires.
 - Added requires on wallpapers-alt-atomic-gnome.
