@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.6.7
-Release: alt1
+Release: alt2
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -12,9 +12,7 @@ Url: https://github.com/plafonlinux/altbooster
 Vcs: https://github.com/plafonlinux/altbooster
 
 Requires: pip
-Requires: python3-module-tqdm
-Requires: python3-module-pydantic
-Requires: python3-module-packaging
+Requires: gnome-extensions-cli
 
 BuildRequires(pre): rpm-build-python3
 
@@ -47,6 +45,9 @@ install -d %buildroot
 %_bindir/%%oname
 
 %changelog
+* Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.7-alt2
+- used system package gnome-extensions-cli
+
 * Mon Mar 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.7-alt1
 - 5.6.5 -> 5.6.7
 
