@@ -10,7 +10,7 @@
 %endif
 
 Name: ispc
-Version: 1.29.1
+Version: 1.30.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -179,6 +179,9 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Fri Mar 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1.30.0-alt1
+- 1.30.0.
+
 * Tue Dec 30 2025 L.A. Kostis <lakostis@altlinux.ru> 1.29.1-alt1
 - 1.29.1.
 - Build w/ llvm 21.1.
