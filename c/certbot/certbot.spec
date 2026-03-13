@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -21,7 +21,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 BuildRequires(pre): rpm-build-python3 rpm-build-intro rpm-macros-features
 # man pages
 BuildRequires: python3-module-sphinx
@@ -52,21 +52,7 @@ Requires: python3-module-cffi >= 1.4.2
 Provides: letsencrypt = %version
 Obsoletes: letsencrypt
 
-%define certbotdir %_datadir/%name
-%py3_provides certbot
-
 AutoProv:yes,nopython
-
-# https://lists.altlinux.org/pipermail/devel/2012-March/193598.html
-# https://lists.altlinux.org/pipermail/devel/2019-October/208661.html
-%add_python3_path %certbotdir
-%allow_python3_import_path %certbotdir
-
-#add_python3_lib_path %certbotdir/certbot_nginx
-#add_python3_lib_path %certbotdir/certbot_apache
-#add_python3_lib_path %certbotdir/certbot_dns-rfc2136
-#add_python3_lib_path %certbotdir/certbot_dns-route53
-#add_python3_lib_path %certbotdir/certbot_postfix
 
 %description
 Let's Encrypt is a free, automated certificate authority that aims
@@ -147,38 +133,38 @@ Certbot dns_route53 plugin.
 
 %build
 cd certbot
-%python3_build
+%pyproject_build
 
 cd ../certbot-apache
-%python3_build
+%pyproject_build
 cd ../certbot-nginx
-%python3_build
+%pyproject_build
 #cd ../certbot-postfix
 #python_build
 cd ../certbot-dns-route53
-%python3_build
+%pyproject_build
 cd ../certbot-dns-rfc2136
-%python3_build
+%pyproject_build
 cd ../certbot/docs
 %make_build SPHINXBUILD=/usr/bin/py3_sphinx-build man
 
 
 %install
 cd certbot
-%python3_install --install-purelib=%certbotdir
+%pyproject_install
 
 cd ../certbot-apache
-%python3_install --install-purelib=%certbotdir
+%pyproject_install
 cd ../certbot-nginx
-%python3_install --install-purelib=%certbotdir
+%pyproject_install
 #cd ../certbot-postfix
-#python_install --install-purelib=%certbotdir
+#python_install
 %if_with dns_route53
 cd ../certbot-dns-route53
-%python3_install --install-purelib=%certbotdir
+%pyproject_install
 %endif
 cd ../certbot-dns-rfc2136
-%python3_install --install-purelib=%certbotdir
+%pyproject_install
 cd ..
 
 # TODO: remove compat dirs
@@ -194,20 +180,9 @@ ln -s %name %buildroot%_bindir/letsencrypt
 install -Dp -m644 certbot/docs/_build/man/certbot.1 %buildroot/%_man1dir/certbot.1
 install -Dp -m644 certbot/docs/_build/man/certbot.7 %buildroot/%_man7dir/certbot.7
 
-rm -rv %buildroot%certbotdir/certbot*/_internal/tests/
-rm -rv %buildroot%certbotdir/certbot*/tests/
-rm -rv %buildroot%certbotdir/certbot/*/*_test*
-#rm -rv %buildroot%certbotdir/certbot/*_test*
-#rm -rv %buildroot%certbotdir/certbot/certbot_compatibility_test/
-
-
-#  it is better do not require argparse on python >= 2.7.
-#__subst "s|^argparse$||" %buildroot%python_sitelibdir/%name-%{version}*.egg-info/requires.txt
-
-%__subst 's|^__requires__.*|\
-# ALT: use own package dir\
-import site\
-site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
+rm -rv %buildroot%python3_sitelibdir/certbot*/_internal/tests/
+rm -rv %buildroot%python3_sitelibdir/certbot*/tests/
+rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
 
 %check
 #python_test
@@ -227,22 +202,19 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %dir %_sharedstatedir/letsencrypt/
 %dir %_logdir/letsencrypt/
 
-#files -n python-module-%name
-#doc LICENSE.txt
-%dir %certbotdir/
-%certbotdir/%name/
-%certbotdir/%name-%{version}*.egg-info
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %if_with plugins
 %files nginx
 %doc LICENSE.txt
-%certbotdir/certbot_nginx/
-%certbotdir/certbot_nginx-%{version}*.egg-info
+%python3_sitelibdir/certbot_nginx/
+%python3_sitelibdir/%{pyproject_distinfo certbot_nginx}/
 
 %files apache
 %doc LICENSE.txt
-%certbotdir/certbot_apache/
-%certbotdir/certbot_apache-%{version}*.egg-info
+%python3_sitelibdir/certbot_apache/
+%python3_sitelibdir/%{pyproject_distinfo certbot_apache}/
 
 #files postfix
 #doc LICENSE.txt
@@ -251,18 +223,22 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 
 %files dns_rfc2136
 %doc LICENSE.txt
-%certbotdir/certbot_dns_rfc2136/
-%certbotdir/certbot_dns_rfc2136-%{version}*.egg-info
+%python3_sitelibdir/certbot_dns_rfc2136/
+%python3_sitelibdir/%{pyproject_distinfo certbot_dns_rfc2136}/
 
 %if_with dns_route53
 %files dns_route53
 %doc LICENSE.txt
-%certbotdir/certbot_dns_route53/
-%certbotdir/certbot_dns_route53-%{version}*.egg-info
+%python3_sitelibdir/certbot_dns_route53/
+%python3_sitelibdir/%{pyproject_distinfo certbot_dns_route53}/
 %endif
 %endif
 
 %changelog
+* Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
+- new version 5.4.0
+- migrate to pyproject build system
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.3.1-alt1
 - new version 5.3.1
 - update dependency versions, drop pytz requirement
