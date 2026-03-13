@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -85,6 +85,9 @@ developing applications that use %name.
 
 
 %changelog
+* Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- improve countries filter
+
 * Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
