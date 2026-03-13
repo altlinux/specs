@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 # see _pysndfile_version in _pysndfile.pyx
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
@@ -22,6 +22,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libsndfile-devel
 BuildRequires: python3-devel python3(wheel) python3(setuptools)
+BuildRequires: python3(pkgconfig)
 BuildRequires: python3(cython) libnumpy-py3-devel
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-html5lib python3-module-notebook
@@ -41,8 +42,8 @@ and derived formats) can be read and written with PySndfile.
 %patch -p1
 # fix lib/inc dirs
 sed -i 's/"lib"/"%_lib"/' setup.py
-echo -e "sndfile_libdir=%_libdir" >> setup.cfg
-echo -e "sndfile_incdir=%_includedir" >> setup.cfg
+#echo -e "sndfile_libdir=%_libdir" >> setup.cfg
+#echo -e "sndfile_incdir=%_includedir" >> setup.cfg
 
 %build
 %pyproject_build
@@ -65,6 +66,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
