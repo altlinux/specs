@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: %binary_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The best way of working with Protocol Buffers.
@@ -95,6 +95,9 @@ install -vDm644 $BUILDDIR/manpages/* -t %buildroot/%_man1dir
 %doc *.md
 
 %changelog
+* Tue Mar 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.66.1-alt1
+- 1.66.1
+
 * Tue Feb 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.66.0-alt1
 - 1.66.0
 
