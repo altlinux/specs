@@ -1,6 +1,6 @@
 Name: task-common
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: Common dependencies
 License: GPL-3.0-or-later
@@ -26,7 +26,9 @@ Requires: cpufreq-simple
 %endif
 Requires: eject
 Requires: bc
+%ifnarch %ix86
 Requires: ncdu
+%endif
 Requires: tree
 Requires: sysfsutils
 Requires: mc
@@ -176,6 +178,9 @@ fi
 %files desktop-x11
 
 %changelog
+* Fri Mar 13 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt3
+- Exclude ncdu on %%ix86 arches.
+
 * Thu Aug 07 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt2
 - NMU: Drop xorg-drv-nouveau on loongarch64 (not supported)
   and riscv64 (not needed).
