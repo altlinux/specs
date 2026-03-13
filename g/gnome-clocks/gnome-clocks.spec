@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 
 %def_enable waked
@@ -23,14 +23,14 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 Source: %name-%version%beta.tar
 %endif
 # https://bugzilla.altlinux.org/51204
-Patch10: %name-46.0-alt-waked.patch
+Patch10: %name-50.0-alt-waked.patch
 
-%define glib_ver 2.72
+%define glib_ver 2.80
 %define gweather_ver 3.99
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4
-%define gtk4_ver 4.16
-%define adwaita_ver 1.6
+%define gtk4_ver 4.20
+%define adwaita_ver 1.8
 
 Requires: geoclue2
 %{?_enable_waked:Requires: waked}
@@ -44,6 +44,8 @@ BuildRequires: gobject-introspection-devel libgtk4-gir-devel libgweather4.0-vala
 BuildRequires: libgweather4.0-devel >= %gweather_ver libgeocode-glib2.0-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libicu-devel
+BuildRequires: %_bindir/oggenc
 %{?_enable_check:BuildRequires:/usr/bin/appstreamcli  desktop-file-utils}
 
 %description
@@ -72,11 +74,16 @@ Clock application designed for GNOME 3
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
+%_datadir/sounds/gnome/default/alarms/*.oga
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS*
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+- updated alt-waked.patch (ALT #51204)
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
