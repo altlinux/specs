@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name: criterion
-Version: 2.4.1
+Version: 2.4.3
 Release: alt1
 
 Summary: A cross-platform C and C++ unit testing framework for the 21th century
@@ -15,11 +15,8 @@ BuildRequires: cmake meson libnanomsg-devel libnanopb-devel libboxfort-devel lib
 
 ExcludeArch: armh ppc64le
 
-# Source-url: https://github.com/Snaipe/Criterion/archive/v%version.tar.gz
+# Source-url: https://github.com/Snaipe/Criterion/releases/download/v%version/criterion-%version.tar.xz
 Source: %name-%version.tar
-
-# Source1-script: .gear/criterion-postsubmodules/copy-source.sh
-Source1: %name-postsubmodules-%version.tar
 
 %description
 A dead-simple, yet extensible, C and C++ unit testing framework.
@@ -40,7 +37,7 @@ Group: Development/C++
 A dead-simple, yet extensible, C and C++ unit testing framework.
 
 %prep
-%setup -a1
+%setup
 subst 's|must_regenerate_pb =.*|must_regenerate_pb = false|' meson.build
 subst 's|protobuf-nanopb-static|protobuf-nanopb|' meson.build
 
@@ -68,6 +65,9 @@ rm %buildroot%_libdir/libcriterion.a
 %_pkgconfigdir/criterion.pc
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- new version 2.4.3
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
 - new version 2.4.1 (with rpmrb script)
 
