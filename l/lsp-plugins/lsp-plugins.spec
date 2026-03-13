@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.26
+Version: 1.2.27
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -107,9 +107,7 @@ rm -f %buildroot%_libdir/*.a
 %{?_enable_ui:%_libdir/liblsp-r3d-glx-lib*.so}
 %dir %_libdir/%name
 %_libdir/%name/lib%name-jack-%version.so
-%_desktopdir/%{xdg_name}_*.desktop
-%_datadir/desktop-directories/%name.directory
-%_xdgmenusdir/applications-merged/%name.menu
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %doc CHANGELOG* README*
 
@@ -132,6 +130,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.27-alt1
+- 1.2.27
+
 * Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.26-alt1
 - 1.2.26
 
