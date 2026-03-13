@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.2
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -139,7 +139,7 @@ Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
 Requires: gcc-c++ cmake ninja-build
-Requires: libssl-devel
+Requires: libssl-devel libwayland-cursor-devel
 %description devel
 %summary.
 
@@ -863,6 +863,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
+- fix requires
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 
