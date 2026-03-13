@@ -2,7 +2,7 @@
 
 Name: fooyin
 Version: 0.9.2
-Release: alt3
+Release: alt4
 
 Summary: Music player built around customisation
 License: GPL-3.0
@@ -22,15 +22,11 @@ BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
 #
-BuildRequires: qt6-sql-interbase
-BuildRequires: qt6-sql-mysql
-BuildRequires: qt6-sql-odbc
-BuildRequires: qt6-sql-postgresql
 BuildRequires: libpostproc-devel
 BuildRequires: qcoro6-devel
 BuildRequires: /proc
 #
-BuildRequires: libtag-devel
+BuildRequires: taglib-devel
 BuildRequires: libalsa-devel
 BuildRequires: libsndfile-devel
 BuildRequires: libavcodec-devel
@@ -82,6 +78,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt4
+- NMU: fix build requires
+
 * Mon Mar 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.9.2-alt3
 - NMU: fix FTBFS
 - update to upstream/master
