@@ -1,10 +1,10 @@
 %define defphp php%php_defver
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.43
+%define major 1.44
 
 Name: mediawiki
-Version: %major.0
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -67,7 +67,7 @@ Requires: %defphp-libs >= 8.0.0
 # inside %defphp-libs
 # Requires: %defphp-ctype %defphp-iconv %defphp-json %defphp-xml
 Requires: %defphp-dom %defphp-fileinfo %defphp-intl %defphp-mbstring
-Requires: %defphp-mcrypt %defphp-xmlreader %defphp-gd
+Requires: %defphp-xmlreader %defphp-gd
 Requires: %defphp-opcache %defphp-apcu
 Requires: %defphp-openssl
 
@@ -511,6 +511,35 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.44.3-alt1
+- new version 1.44.3
+- drop php-mcrypt dependency (deprecated since PHP 7.1, removed in 8.x)
+- fix CLI installer writing LocalSettings.php to wrong path
+- (T304474, CVE-2025-32696) SECURITY: Apply proper restrictions on file revert action
+- (T24521, CVE-2025-32697) SECURITY: Differentiate between cascading protection of file content and file pages
+- (T385958, CVE-2025-32698) SECURITY: LogPager restriction enforcer does not correctly enforce suppression
+- (T387130, CVE-2025-32699) SECURITY: Potential javascript injection via Unicode normalization in Action API
+- (T358689, CVE-2025-3469) SECURITY: i18n XSS vulnerability in HTMLMultiSelectField with sections
+- (T391343, CVE-2025-6589) SECURITY: BlockList: Hide rows containing suppressed users
+- (T392746, CVE-2025-6590) SECURITY: Escape usernames in HTMLUserTextField validation errors
+- (T392276, CVE-2025-6591) SECURITY: Escape i18n messages in action=feedcontributions
+- (T396230, CVE-2025-6593) SECURITY: fix IP leak to unverified email
+- (T395063, CVE-2025-6594) SECURITY: apisandbox: Fix reflected XSS
+- (T389009, CVE-2025-6597) SECURITY: Do not treat autocreation as login for reauthentication
+- (T389010, CVE-2025-6926) SECURITY: Allow extensions to suppress the reauth flag on login
+- (T397595, CVE-2025-6927) SECURITY: Fix autoblocks visibility and leak of hidden usernames
+- (T406322, CVE-2025-11261) SECURITY: Escape system messages in mw.language.listToText
+- (T387478, CVE-2025-61634) SECURITY: REST: Set cache-control for redirects
+- (T394396, CVE-2025-61636) SECURITY: Escape rawElement content
+- (T394856, CVE-2025-61637) SECURITY: Escape system messages used by live preview
+- (T401099, CVE-2025-61638) SECURITY: Sanitize data- attributes
+- (T280413, CVE-2025-61639) SECURITY: Use ManualLogEntry::getDeleted in getRecentChange
+- (T402075, CVE-2025-61640) SECURITY: Parse messages instead of inserting them as HTML
+- (T298690, CVE-2025-61641) SECURITY: Disable maxsize in QueryAllPages in miser mode
+- (T402313, CVE-2025-61642) SECURITY: Escape submit button label for Codex-based HTMLForms
+- (T403757, CVE-2025-61643) SECURITY: Don't send suppressed recent changes to RCFeeds
+- (T398706, CVE-2025-61646) SECURITY: Prevent leaking hidden usernames in Watchlist/RecentChanges
+
 * Thu Feb 13 2025 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt2
 - switch to use %php_defver from rpm-build-php
 
