@@ -4,7 +4,7 @@
 
 Name:     davmail
 Version:  6.5.1
-Release:  alt1
+Release:  alt2
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -15,6 +15,7 @@ Source0:  %name-%version.tar
 Source1:  %name.desktop
 
 Patch1: davmail-alt-disable-download-jre.patch
+Patch2: 0001-disable-update-check.patch
 BuildArch: noarch
 
 Requires: %java_version
@@ -40,6 +41,7 @@ window and full calendar support with attendees free/busy display.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 sed -i '/class-path/I d' build.xml
@@ -71,6 +73,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Mar 13 2026 Evgeniy Serov <scala@altlinux.org> 6.5.1-alt2
+- Disabled update check.
+
 * Thu Oct 30 2025 Andrey Cherepanov <cas@altlinux.org> 6.5.1-alt1
 - New version.
 
