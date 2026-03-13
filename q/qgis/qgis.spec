@@ -7,15 +7,15 @@
 %def_enable devel
 %def_enable server
 
-%ifarch %qt5_qtwebengine_arches
-%def_enable qt5_qtwebengine
+%ifarch %qt6_qtwebengine_arches
+%def_enable qt6_qtwebengine
 %else
-%def_disable qt5_qtwebengine
+%def_disable qt6_qtwebengine
 %endif
 
 Name:    qgis
-Version: 3.44.7
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -53,7 +53,7 @@ ExcludeArch: armh ppc64le %ix86
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: flex bison
@@ -67,8 +67,8 @@ BuildRequires: libgdal-devel
 BuildRequires: libgeos-devel
 BuildRequires: libgsl-devel
 BuildRequires: libproj-devel
-BuildRequires: libqca-qt5-devel
-BuildRequires: libqscintilla2-qt5-devel
+BuildRequires: qca-qt6-devel
+BuildRequires: libqscintilla2-qt6-devel
 BuildRequires: libspatialite-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libzip-devel
@@ -76,31 +76,31 @@ BuildRequires: postgresql-devel
 %if_enabled python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-PyQt6-devel
 BuildRequires: python3-module-PyQt-builder
 BuildRequires: python3-module-nose2
-BuildRequires: python3-module-qscintilla2-qt5-devel
+BuildRequires: python3-module-qscintilla2-qt6-devel
 BuildRequires: python3-module-sip6
 BuildRequires: python3-module-OWSLib
 %endif
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-3d-devel
-BuildRequires: qt5-location-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-tools-devel-static
-BuildRequires: qt5-webkit-devel
-%if_enabled qt5_qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-3d-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-location-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-sql
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-tools-devel-static
+%if_enabled qt6_qtwebengine
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: libqtkeychain-qt5-devel
-BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-serialport-devel
+BuildRequires: libqtkeychain-qt6-devel
+BuildRequires: qt6-serialport-devel
 BuildRequires: spatialindex-devel
 BuildRequires: libexiv2-devel
 BuildRequires: txt2tags
-BuildRequires: libqwt6-qt5-devel
+BuildRequires: libqwt6-qt6-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libprotobuf-lite-devel
 BuildRequires: protobuf-compiler
@@ -115,12 +115,20 @@ BuildRequires: pdal
 BuildRequires: libdraco-devel
 BuildRequires: libtiff-devel
 BuildRequires: gdal
+BuildRequires: pdf4qt-devel
+BuildRequires: liblcms2-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libopenjpeg2.0-devel
+BuildRequires: openjpeg-tools2.0
+BuildRequires: blend2d-devel
+BuildRequires: libcups-devel
 
-Requires: qca-qt5-ossl
+Requires: qca-qt6-ossl
 Requires: gpsbabel
-Requires: libqwt6-qt5
+Requires: libqwt6-qt6
 Requires: python3-module-pyopengl
-Requires: qt5-3d
+Requires: qt6-3d
 
 Provides: qgis3 = %EVR
 Obsoletes: qgis3 < %EVR
@@ -129,7 +137,6 @@ Obsoletes: qgis3 < %EVR
 %add_findprov_skiplist %%python_sitelibdir/qgis/*.so 
 %add_python3_path %_datadir/qgis/python
 %filter_from_requires /^python3(processing.core.GeoAlgorithm)/d
-%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
 
 %description
 Geographic Information System (GIS) manages, analyzes, and displays
@@ -167,7 +174,7 @@ Summary: Python integration and plug-ins for Quantum GIS
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
 Requires: python3-module-gdal
-Requires: python3-module-qscintilla2-qt5
+Requires: python3-module-qscintilla2-qt6
 Provides: qgis3-python = %EVR
 Obsoletes: qgis3-python < %EVR
 
@@ -250,7 +257,7 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
     -DWITH_GRASS=TRUE \
     -DGRASS_PREFIX8=%_libdir/grass \
 %endif
-%if_enabled qt5_qtwebengine
+%if_enabled qt6_qtwebengine
     -DWITH_QTWEBENGINE:BOOL=ON \
 %else
     -DWITH_QTWEBENGINE:BOOL=OFF \
@@ -260,14 +267,15 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
     -DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
     -DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
     -DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
-    -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
-    -DQWT_LIBRARY=%_libdir/libqwt-qt5.so \
+    -DQWT_INCLUDE_DIR=%_includedir/qt6/qwt \
+    -DQWT_LIBRARY=%_libdir/libqwt-qt6.so \
     -DENABLE_TESTS:BOOL=FALSE \
     -DWITH_QTMOBILITY:BOOL=FALSE \
     -DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
     -DLIBZIP_CONF_INCLUDE_DIR:PATH=%_libdir/libzip/include \
-    -DQCA_INCLUDE_DIR:PATH=%_includedir/qt5/Qca-qt5/QtCrypto \
+    -DQCA_INCLUDE_DIR:PATH=%_includedir/qt6/Qca-qt6/QtCrypto \
     -DWITH_OAUTH2_PLUGIN=OFF \
+    -DWITH_PDF4QT=FALSE \
     .
 %ifarch %ix86
 export NPROCS=8
@@ -325,6 +333,7 @@ cp %SOURCE4 %SOURCE3 \
 %if_enabled python
 # Copy test utilities form tests to plugins/processing/tests
 cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/processing/tests/
+rm -f %buildroot%python3_sitelibdir/%name/PyQt/{Qt,QtWebKit,QtWebKitWidgets}.py
 %endif
 
 %find_lang %name --with-qt
@@ -335,17 +344,18 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %name.lang
 rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
        %buildroot%_includedir/%name \
        %buildroot%_libdir/lib%{name}*.so \
-       %buildroot%_libdir/qt5/plugins/designer/libqgis_customwidgets.so* \
+       %buildroot%_libdir/qt6/plugins/designer/libqgis_customwidgets.so* \
        %buildroot%_datadir/doc/%name-server-%version \
        %buildroot%_sysconfdir/httpd/conf.d/%{name}-server.conf \
        %buildroot%_libexecdir/%name
 %endif
 
-%if_disabled qt5_qtwebengine
+%if_disabled qt6_qtwebengine
 rm -rvf %buildroot%python3_sitelibdir/%name/PyQt/QtWebEngine*
-sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
+sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt6.api
 %endif
 
+rm -f %buildroot%python3_sitelibdir/pyproject.toml
 
 %files -f %name.lang
 %doc BUGS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
@@ -391,7 +401,7 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %_datadir/%name/FindQGIS.cmake
 %_includedir/%name
 %_libdir/lib%{name}*.so
-%_libdir/qt5/plugins/designer/libqgis_customwidgets.so*
+%_libdir/qt6/plugins/designer/libqgis_customwidgets.so*
 %endif
 
 %if_enabled grass
@@ -407,7 +417,7 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %_libdir/libqgispython.so.*
 %_datadir/%name/python
 %python3_sitelibdir/%name
-%python3_sitelibdir/PyQt5/uic/widget-plugins/
+%python3_sitelibdir/PyQt6/uic/widget-plugins/
 %endif
 
 %if_enabled server
@@ -419,6 +429,10 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Tue Mar 10 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+- Supported Qt6.
+
 * Thu Mar 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.44.7-alt2
 - NMU: new release.
 
