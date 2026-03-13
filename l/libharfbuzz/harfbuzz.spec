@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 12.3
+%define ver_major 13.1
 %define namespace HarfBuzz
 %define api_ver 0.0
 
@@ -18,7 +18,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -43,6 +43,7 @@ Source: %_name-%version.tar
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
 BuildRequires: pkgconfig(freetype2) >= %freetype_ver libcairo-devel >= %cairo_ver
+BuildRequires: pkgconfig(libpng) pkgconfig(zlib)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
 %{?_enable_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
@@ -155,6 +156,8 @@ GObject introspection devel data for the HarfBuzz library
 %files
 %_libdir/%name.so.*
 %_libdir/%name-subset.so.*
+%_libdir/%name-raster.so.*
+%_libdir/%name-vector.so.*
 
 %if_enabled icu
 %files icu
@@ -175,8 +178,12 @@ GObject introspection devel data for the HarfBuzz library
 %_includedir/%_name/
 %_libdir/%name.so
 %_libdir/%name-subset.so
+%_libdir/%name-raster.so
+%_libdir/%name-vector.so
 %_pkgconfigdir/%_name.pc
 %_pkgconfigdir/%_name-subset.pc
+%_pkgconfigdir/%_name-raster.pc
+%_pkgconfigdir/%_name-vector.pc
 %{?_enable_icu:
 %_libdir/%name-icu.so
 %_pkgconfigdir/%_name-icu.pc}
@@ -198,8 +205,10 @@ GObject introspection devel data for the HarfBuzz library
 %files utils
 %_bindir/hb-info
 %_bindir/hb-view
+%_bindir/hb-raster
 %_bindir/hb-shape
 %_bindir/hb-subset
+%_bindir/hb-vector
 %_man1dir/hb-*
 
 %if_enabled introspection
@@ -211,6 +220,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 13.1.1-alt1
+- 13.1.1
+
 * Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 12.3.2-alt1
 - 12.3.2
 

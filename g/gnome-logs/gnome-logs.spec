@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Logs
 
@@ -57,10 +57,13 @@ GNOME Logs is a log viewer for the systemd journal.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/*/%{xdg_name}*.svg
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
