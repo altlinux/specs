@@ -1,5 +1,5 @@
 Name: ncdu
-Version: 1.22
+Version: 2.9.2
 Release: alt1
 
 Summary: Text-based disk usage viewer
@@ -10,8 +10,13 @@ Url: http://dev.yorhel.nl/ncdu/
 
 Source: http://dev.yorhel.nl/download/%name-%version.tar
 
-# Automatically added by buildreq on Fri Jun 11 2010
-BuildRequires: libncursesw-devel
+ExclusiveArch: %zig_arches
+
+BuildRequires(pre): rpm-macros-zig
+BuildRequires: zig libncursesw-devel libzstd-devel
+
+# No build.zig.zon, disable system integration
+%define _zig_system_integration %nil
 
 %description
 ncdu (NCurses Disk Usage) is a curses-based version of the well-known 'du',
@@ -21,18 +26,22 @@ and provides a fast way to see what directories are using your disk space.
 %setup
 
 %build
-%configure
-%make_build
+%zig_build
 
 %install
-%makeinstall
+%zig_install
+install -Dpm644 ncdu.1 %buildroot%_man1dir/ncdu.1
 
 %files
-%doc COPYING ChangeLog
+%doc LICENSES/MIT.txt ChangeLog
 %_bindir/ncdu
 %_man1dir/ncdu.1.*
 
 %changelog
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
+- new version 2.9.2
+- switch to Zig build system (ncdu 2.x)
+
 * Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
 - new version 1.22 (with rpmrb script)
 
