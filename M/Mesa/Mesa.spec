@@ -96,11 +96,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.0
-%define ver_minor 1
+%define ver_minor 2
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -484,6 +484,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Mar 13 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.2-alt1
+- 26.0.2
+
 * Wed Mar 11 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.1-alt2
 - rebuild with llvm 21.1
 
