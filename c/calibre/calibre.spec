@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 8.4.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -20,6 +20,7 @@ Patch1: calibre-no-update.patch
 Patch2: calibre-nodisplay.patch
 Patch3: calibre-alt-loongarch64-and-riscv64-support.patch
 Patch4: alt-drop-pykakasi.patch
+Patch5: alt-qt6.10.patch
 
 AutoProv:no
 
@@ -248,6 +249,7 @@ TXT, PDF, LRS и FB2.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 # then drop pykakasi autoreq
 rm -f src/calibre/ebooks/unihandecode/jadecoder.py
 
@@ -350,6 +352,9 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt2
+- NMU: fix to build with Qt 6.10 (closes: 58199)
+
 * Mon Jun 09 2025 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt1
 - NMU: new version (closes: 54742)
 
