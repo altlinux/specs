@@ -1,8 +1,9 @@
 %define pg_ver 14
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-pgaudit
 Version: 1.6.3
-Release: alt0.rc1
+Release: alt1
 Epoch:   1
 
 Summary: PostgreSQL Audit Extension
@@ -45,10 +46,17 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 
 %files
 %doc README.md LICENSE
-%_libdir/pgsql/*
+%_libdir/pgsql/*.so
+%if %{enable_llvm}
+%_libdir/pgsql/bitcode/*
+%endif
 %_datadir/pgsql/extension/*
 
 %changelog
+* Fri Mar 13 2026 Alexei Takaseev <taf@altlinux.org> 1:1.6.3-alt1
+- 1.6.3
+- Use LLVM if it used in PostgreSQL
+
 * Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:1.6.3-alt0.rc1
 - Build pgaudit 1.6 for Postgresql 14
 
