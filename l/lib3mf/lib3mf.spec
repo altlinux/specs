@@ -3,7 +3,7 @@
 
 Name: lib3mf
 Version: 2.2.0
-Release: alt4
+Release: alt5
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
@@ -72,8 +72,8 @@ sed -i -e 's|Libraries/libzip/zip.h|zip.h|' \
 	-DUSE_INCLUDED_GTEST=OFF \
 	-DUSE_INCLUDED_SSL=OFF \
 	-DSTRIP_BINARIES=OFF \
-	-DCMAKE_INSTALL_LIBDIR=%_lib \
-	-DCMAKE_INSTALL_INCLUDEDIR=include/%name
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
+	-DCMAKE_INSTALL_INCLUDEDIR=%_includedir/%name
 %cmake_build
 
 %install
@@ -111,6 +111,9 @@ ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Sat Mar 14 2026 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt5
+- Fix FTBFS.
+
 * Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt4
 - use system libzip
 
