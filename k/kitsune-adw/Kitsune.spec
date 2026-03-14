@@ -5,7 +5,7 @@
 
 Name: kitsune-adw
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Kitsune is an unofficial client for watching AniLiberty anime
 License: GPL-3.0-or-later
@@ -20,6 +20,7 @@ AutoProv: nopython3
 Source: %name-%version.tar
 
 Requires: libwebp-pixbuf-loader
+Requires: gst-plugin-gtk4
 %add_python3_path %_datadir/%nameS
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -61,6 +62,9 @@ BuildRequires: python3-module-pytest typelib(Soup)
 %doc *.md
 
 %changelog
+* Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt2
+- added gst-plugin-gtk4 dependency
+
 * Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
 - 0.6.1 -> 0.7.1
 
