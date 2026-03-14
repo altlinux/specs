@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Simple Safe Sandboxed Extensible Expression Evaluator for Python
@@ -41,6 +41,9 @@ BuildRequires: python3-module-hatchling
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Mar 14 2026 Anton Vyatkin <toni@altlinux.org> 1.0.6-alt1
+- New version 1.0.6.
+
 * Fri Mar 13 2026 Anton Vyatkin <toni@altlinux.org> 1.0.5-alt1
 - New version 1.0.5.
 
