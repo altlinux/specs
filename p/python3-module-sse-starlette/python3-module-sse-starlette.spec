@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.5
+Version: 3.3.2
 Release: alt1
 
 Summary: SSE plugin for Starlette
@@ -20,10 +20,13 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter testcontainers
 %pyproject_builddeps_metadata_extra examples
 %pyproject_builddeps_check
 %endif
@@ -37,7 +40,7 @@ Server Sent Events for Starlette and FastAPI.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -51,11 +54,13 @@ rm -fv tests/{experimentation,integration}/test_multiple_consumers*.py
 %pyproject_run_pytest -vra -m "not (integration or e2e)"
 
 %files
-%doc AUTHORS CHANGELOG.md LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 14 2026 Anton Zhukharev <ancieg@altlinux.org> 3.3.2-alt1
+- Updated to 3.3.2.
+
 * Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 2.3.5-alt1
 - Updated to 2.3.5.
 
@@ -70,4 +75,3 @@ rm -fv tests/{experimentation,integration}/test_multiple_consumers*.py
 
 * Wed Jul 24 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Built for ALT Sisyphus.
-
