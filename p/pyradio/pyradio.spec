@@ -1,10 +1,10 @@
 %define pypi_name pyradio
 
 Name: %pypi_name
-Version: 0.9.3.11.27
+Version: 0.9.3.11.28
 Release: alt1
 
-Summary: Curses based internet radio player
+Summary: Command line internet radio player
 
 License: MIT
 Group: Sound
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pypi_name.desktop
 
-Patch: radio-0.9.3.11.16-alt-fixes.patch
+Patch: radio-0.9.3.11.28-alt-fixes.patch
 Patch1: main-0.9.3.11.16-alt-fixes.patch
 Patch2: win-0.9.3.11.22-alt-linux.patch
 Patch3: config-0.9.3.11.16-alt-fixes.patch
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
-Command line internet radio player.
+Curses based internet radio player.
 
 %package -n python3-module-%pypi_name
 Group: Development/Python3
@@ -58,6 +58,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.28-alt1
+- 0.9.3.11.27 -> 0.9.3.11.28
+
 * Sat Feb 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.27-alt1
 - 0.9.3.11.26 -> 0.9.3.11.27
 
