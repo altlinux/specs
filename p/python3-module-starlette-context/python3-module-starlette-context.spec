@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Middleware for Starlette that allows you to store and access the context data of a request
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -39,7 +41,7 @@ such as x-request-id or x-correlation-id.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -52,14 +54,15 @@ such as x-request-id or x-correlation-id.
 %pyproject_run_pytest -vra
 
 %files
-%doc AUTHORS LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 14 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.1-alt1
+- Updated to 0.5.1.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
 * Wed Jul 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.6-alt1.25.gf46610a
 - Built for ALT Sisyphus.
-
