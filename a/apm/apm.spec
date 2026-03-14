@@ -3,7 +3,7 @@
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: Atomic Package Manager 
@@ -76,6 +76,21 @@ done
 %doc README.ru.md
 
 %changelog
+* Sat Mar 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+- Added HTTP API server (Swagger UI, WebSocker, auth via token).
+- Added installing local RPM files support and resolving conflicts.
+- New AppStream module for applications metainfo.
+- Improved package list filtering (OR logic, protection against SQL injection)
+- Added new options:
+  - --format-type - show text --format via tree ot plain;
+  - --output - output only specified fields;
+  - --verbose - enable verbose logging to stdout;
+  - --option - override APT options.
+- Replaced pogreb storage with  SQLite.
+- Fixed issues, improved processing of APT transactions and locks.
+- Added integration tests (RPM, thread safety).
+
 * Mon Jan 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.3-alt1
 - v0.3.3
 
