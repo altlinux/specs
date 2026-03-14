@@ -1,6 +1,6 @@
 
 Name: rssguard
-Version: 5.0.0
+Version: 5.0.4
 Release: alt1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
@@ -41,6 +41,7 @@ BuildRequires:  pkgconfig(Qt6Xml)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(mpv)
 BuildRequires:  cmake
+BuildRequires:  awk
 
 
 Requires:       icon-theme-hicolor
@@ -75,8 +76,11 @@ RSS Guard умеет проигрывать подкасты встроенны�
 %setup
 # Add additional vendored sources
 tar zxf %SOURCE1 -C src/librssguard
-# Preserve libraty license
+# Preserve libraries licenses
 cp src/librssguard/3rd-party/litehtml/LICENSE litehtml-LICENSE.txt
+awk '/\/\*/{flag=1; next} /\*\//{flag=0; exit} flag' src/librssguard/3rd-party/sc/simplecrypt.h > simplecrypt-LICENSE.txt
+
+
 # add Go vendored sources
 tar zxf %SOURCE2 -C resources/scripts/standalone/article-extractor
 
@@ -93,7 +97,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.rssguard.desktop
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssguard.metainfo.xml
 
 %files
-%doc README.md litehtml-LICENSE.txt
+%doc README.md litehtml-LICENSE.txt simplecrypt-LICENSE.txt
 %_bindir/%name
 %_libdir/lib%name.so
 %_desktopdir/*.desktop
@@ -103,6 +107,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Sat Mar 14 2026 Alexei Mezin <alexvm@altlinux.org> 5.0.4-alt1
+- New version
+
 * Sat Feb 28 2026 Alexei Mezin <alexvm@altlinux.org> 5.0.0-alt1
 - New vesrion: major version upgrade!
   * No more QtWebEngine dependency!
