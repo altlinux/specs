@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -89,6 +89,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS README*
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
