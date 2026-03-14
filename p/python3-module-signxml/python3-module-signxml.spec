@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.2
+Version: 4.4.0
 Release: alt1
 
 Summary: Python XML Signature and XAdES library
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,10 +55,12 @@ recommended ones.
 %pyproject_run -- python3 ./test/test.py -v
 
 %files
-%doc Changes.rst LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 14 2026 Anton Zhukharev <ancieg@altlinux.org> 4.4.0-alt1
+- Updated to 4.4.0.
+
 * Fri Jan 23 2026 Anton Zhukharev <ancieg@altlinux.org> 4.2.2-alt1
 - Packaged for ALT Sisyphus.
