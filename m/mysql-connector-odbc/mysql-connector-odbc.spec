@@ -3,7 +3,7 @@
 
 Name: mysql-connector-odbc
 Version: 9.6.0
-Release: alt1
+Release: alt2
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -12,6 +12,8 @@ Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 License: %gpl2only
 Group: System/Libraries
 Url: https://github.com/mysql/mysql-connector-odbc
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source0-url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/%version.tar.gz
 Source0: %name-%version.tar
@@ -49,7 +51,7 @@ https://dev.mysql.com/doc/connector-odbc/en/
     -DHAVE_STRUCT_TIMESPEC=1 \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DDISABLE_GUI=1 \
-    -DRPM_BUILD=1 \
+    -DINSTALL_LIBDIR=%_lib \
     ..
 
 %cmake_build
@@ -77,6 +79,10 @@ rm -vr %buildroot%_prefix/test/
 %_libdir/libmyodbc9w.so
 
 %changelog
+* Fri Mar 13 2026 Ivan A. Melnikov <iv@altlinux.org> 9.6.0-alt2
+- NMU: use correct INSTALL_LIBDIR on all supported platforms
+  (fixes FTBFS on loongarch64 and riscv64).
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 9.6.0-alt1
 - new version 9.6.0
 
