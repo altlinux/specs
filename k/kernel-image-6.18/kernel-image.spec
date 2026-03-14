@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.16
+%define kernel_sublevel	.18
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -590,6 +590,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Mar 13 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.18-alt1
+- v6.18.18 (2026-03-13).
+
+* Fri Mar 13 2026 Vitaly Chikunov <vt@altlinux.org> 6.18.17-alt2
+- netfs: Fix kernel BUG in netfs_limit_iter() for ITER_KVEC iterators.
+- netfs: Fix NULL pointer dereference in netfs_unbuffered_write() on retry.
+
+* Thu Mar 12 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.17-alt1
+- v6.18.17 (2026-03-12).
+- Baikal Electronics SoC family.
+
 * Wed Mar 04 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.16-alt1
 - v6.18.16 (2026-03-04).
 
