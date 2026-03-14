@@ -3,7 +3,7 @@
 
 Name: arrowdl
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: ArrowDL (Arrow Downloader) is a download manager
 
@@ -74,7 +74,7 @@ install -Dm 0644 installer/unix/appimage/%oname.svg \
 install -Dm644 web-extension/launcher/unix/launcher-manifest-chrome.json \
 	%buildroot%_sysconfdir/chromium/native-messaging-hosts/%webname.json
 install -Dm644 web-extension/launcher/unix/launcher-manifest-firefox.json \
-	%buildroot%_datadir/mozilla/extensions/any/%webname.json
+	%buildroot%_libdir/mozilla/native-messaging-hosts/%webname.json
 
 %files
 %_bindir/*
@@ -84,12 +84,15 @@ install -Dm644 web-extension/launcher/unix/launcher-manifest-firefox.json \
 %doc *.md
 
 %files web-extension-firefox
-%_datadir/mozilla/extensions/any/%webname.json
+%_libdir/mozilla/native-messaging-hosts/%webname.json
 
 %files web-extension-chrome
 %_sysconfdir/chromium/native-messaging-hosts/%webname.json
 
 %changelog
+* Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.1-alt2
+- fixed path for FireFox web extension
+
 * Sat Mar 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.1-alt1
 - Initial build for ALT Linux.
 
