@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_47
+Release:        alt2_48
 Summary:        Space shooter in 3D
 # Automatically converted from old format: GPLv2+ - review is highly recommended.
 License:        GPL-2.0-or-later
@@ -40,6 +40,7 @@ Requires:       %{name}-data = %{version}
 BuildRequires:  gcc-c++
 BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libpng17-tools libvorbis-devel
 BuildRequires:  automake desktop-file-utils libappstream-glib libappstream-glib-gir
+BuildRequires:  zlib-devel
 Requires:       icon-theme-hicolor mesa-gears mesa-info
 Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
@@ -122,6 +123,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Mar 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.00-alt2_48
+- NMU: fix FTBFS
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.00-alt2_47
 - update to new release by fcimport
 
