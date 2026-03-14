@@ -2,7 +2,7 @@
 %define nameLC plasma_applet_plasmusic.toolbar
 
 Name: plasma-applet-%nameL
-Version: 3.7.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Plasma widget that shows playing song information and provide controls
@@ -31,7 +31,7 @@ mv src/translate %_builddir/%name-%version/
 install -d %buildroot%_datadir/plasma/plasmoids/%nameL
 cp -r src/* %buildroot%_datadir/plasma/plasmoids/%nameL/
 
-for locale in it nl uk; do
+for locale in it nl uk fr tr; do
  msgfmt translate/${locale}.po -o translate/${locale}.mo
  install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
@@ -43,6 +43,9 @@ done
 %_datadir/plasma/plasmoids/%nameL
 
 %changelog
+* Sun Mar 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.0-alt1
+- 3.7.0 -> 4.0.0
+
 * Wed Oct 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.7.0-alt1
 - 3.6.0 -> 3.7.0
 
