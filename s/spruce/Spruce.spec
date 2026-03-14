@@ -2,7 +2,7 @@
 
 Name: spruce
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -18,6 +18,7 @@ Obsoletes: python3-module-spruce <= 0.1.6-alt1
 Source: %name-%version.tar
 
 Requires: python3-module-pycairo
+Requires: python3-module-pygobject3
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson
@@ -50,6 +51,9 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %doc *.md
 
 %changelog
+* Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.8-alt2
+- added pygobject3 dependency
+
 * Tue Feb 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.8-alt1
 - 0.1.7 -> 0.1.8
 
