@@ -4,11 +4,9 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-pve  docs-alt-virtualization-one docs-alt-platform docs-alt-mobile
-
 Name: docs-%variant
 Version: 11.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -19,9 +17,8 @@ BuildArch: noarch
 
 Source: %name-%version-%release.tar
 
-Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
-
-BuildRequires(pre):rpm-build-licenses
+BuildRequires(pre): rpm-macros-alternatives
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: publican
 BuildRequires: perl-podlators
 BuildRequires: libwebp-tools
@@ -37,15 +34,23 @@ BuildRequires: libwebp-tools
 
 %install
 %make_install DESTDIR=%buildroot docdir=%_docsinstalldir install
-ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationdir
 sed -i 's/src="images\/\(.*\).png"/src="images\/\1.webp"/g' %buildroot%_docsinstalldir/ru-RU/index.html
 for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %buildroot%_docsinstalldir/ru-RU/images/$(basename $file .png).webp -quiet && rm $file; done
 
+# Set alternative to doc
+mkdir -p -- %buildroot%_altdir
+cat > %buildroot%_altdir/%name <<EOF
+%_documentationdir	%_docsinstalldir	61
+EOF
+
 %files
 %_docsinstalldir
-%_documentationdir
+%_altdir/%name
 
 %changelog
+* Fri Mar 13 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt4
+- update to ALT Mobile 11.0RC3
+
 * Mon Jan 19 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt3
 - small improvements
 - typo fixes (closes #57525)
