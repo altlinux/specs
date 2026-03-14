@@ -2,10 +2,10 @@
 %define module_version	1.0.31
 %define module_release	alt1
 
-%define flavour 6.12
+%define flavour 6.18
 %define karch   x86_64 loongarch64
 
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.18
 %setup_kernel_module %flavour
 
 %define install_mod_dir updates
