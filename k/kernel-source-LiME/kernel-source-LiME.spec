@@ -1,6 +1,6 @@
 %define module_name LiME
 %define module_version 1.9.1
-%define module_release	alt6
+%define module_release	alt7
 
 Name: kernel-source-%module_name
 Version: %module_version
@@ -39,6 +39,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar.bz2 -t %kernel_srcdir
 ./check.sh || true
 
 %changelog
+* Fri Mar 13 2026 Vitaly Chikunov <vt@altlinux.org> 1.9.1-alt7
+- Compatibility with v6.19.
+
 * Wed Apr 09 2025 Vitaly Chikunov <vt@altlinux.org> 1.9.1-alt6
 - Improve robustness of the tests.
 
