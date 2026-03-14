@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.11
+Version: 0.1.13
 Release: alt1
 
 Summary: A spec-compliant gitignore parser for Python 3.5+
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -43,12 +45,14 @@ A spec-compliant gitignore parser for Python.
 %pyproject_run_unittest
 
 %files
-%doc README.md LICENSE
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 14 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.13-alt1
+- Updated to 0.1.13.
+
 * Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.11-alt1
 - Updated to 0.1.11.
 
