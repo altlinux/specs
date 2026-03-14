@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.5
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -301,6 +301,10 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sat Mar 14 2026 Anton Midyukov <antohami@altlinux.org> 0.10.5-alt2
+- xrdp-alt-startwm.patch: fix command runwm (Closes: 58126).
+- xrdp-alt-startwm.patch: get STARTUP from command 'runwm --print'.
+
 * Wed Jan 28 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.5-alt1
 - New version (fixes: CVE-2025-68670).
 
