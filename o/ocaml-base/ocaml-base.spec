@@ -1,6 +1,6 @@
 %define oname base
 Name: ocaml-%oname
-Version: 0.17.1
+Version: 0.17.3
 Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
@@ -53,6 +53,9 @@ developing applications that use %name.
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Sat Mar 14 2026 Anton Farygin <rider@altlinux.org> 0.17.3-alt1
+- 0.17.1 -> 0.17.3
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.17.1-alt1
 - 0.17.1
 
