@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,16 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Mar 14 2026 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- added full-text search API (GET /tasks?q=...)
+- added EVR fields (epoch, version, release) to subtask output
+- added build status per architecture and approval comments to task output
+- added message field to task output
+- fixed archived task comments/build_status reading from wrong directory
+- fixed age field staleness in cached tasks (computed at serialization time)
+- hardened file readers with size limits (1MB for read_file, 10K lines for plan)
+- improved cache refresh performance (2x faster via lock-free parallel workers)
+
 * Tue Mar 10 2026 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - added ACL module and needs_approval query parameter for GET /tasks
   (--acl-dir, --allow-unlisted options)
