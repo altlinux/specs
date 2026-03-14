@@ -1,12 +1,13 @@
 Name: rapidyaml
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: A library to parse and emit YAML
 License: MIT
 Group: System/Libraries
 
-URL: https://github.com/biojppm/%name
+Url: https://github.com/biojppm/%name
+Vcs: https://github.com/biojppm/%name
 Packager: Nazarov Denis <nenderus@altlinux.org> 
 
 Source: https://github.com/biojppm/%name/releases/download/v%version/%name-%version-src.tgz
@@ -80,6 +81,9 @@ This package contains development headers and examples.
 %_libdir/libryml.so
 
 %changelog 
+* Sat Mar 14 2026 Nazarov Denis <nenderus@altlinux.org> 0.11.0-alt1
+- Version 0.11.0
+
 * Wed Oct 01 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
 - Version 0.10.0
 
