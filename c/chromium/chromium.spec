@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        146.0.7680.75
+Version:        146.0.7680.80
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -700,6 +700,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Mar 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.80-alt1
+- New version (146.0.7680.80).
+- Fixes:
+  + CVE-2026-3909: Out of bounds write in Skia
+  + CVE-2026-3910: Inappropriate implementation in V8
+
 * Fri Mar 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.75-alt1
 - New version (146.0.7680.75).
 
