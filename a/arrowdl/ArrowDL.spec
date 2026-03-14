@@ -3,7 +3,7 @@
 
 Name: arrowdl
 Version: 4.2.1
-Release: alt2
+Release: alt3
 
 Summary: ArrowDL (Arrow Downloader) is a download manager
 
@@ -14,6 +14,13 @@ Url: https://www.arrow-dl.com
 Vcs: https://github.com/setvisible/ArrowDL
 
 Source: %name-%version.tar
+
+#remove update check from UI
+Patch: mainwindow-4.2.1-alt-fixes.patch
+Patch1: preferencedialog-4.2.1-alt-fixes.patch
+Patch2: preferencedialogCPP-4.2.1-alt-fixes.patch
+#freebsd patch for fixed path for download registry database
+Patch3: patch-src_core_settings.patch
 
 Requires: yt-dlp
 #libcrypto3 libssl3
@@ -48,6 +55,10 @@ subst 's|/ABSOLUTE/PATH/TO/APP/DIRECTORY/launcher|%_bindir/launcher|' \
 web-extension/launcher/unix/launcher-manifest-chrome.json 
 subst 's|/ABSOLUTE/PATH/TO/APP/DIRECTORY/launcher|%_bindir/launcher|' \
 web-extension/launcher/unix/launcher-manifest-firefox.json
+#set never autocheck update default
+subst 's|OnceADay|Never|' src/core/settings.cpp
+
+%autopatch -p0
 
 %build
 %cmake \
@@ -90,6 +101,10 @@ install -Dm644 web-extension/launcher/unix/launcher-manifest-firefox.json \
 %_sysconfdir/chromium/native-messaging-hosts/%webname.json
 
 %changelog
+* Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.1-alt3
+- fixed: path for registry database
+- remove update check from UI
+
 * Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.1-alt2
 - fixed path for FireFox web extension
 
