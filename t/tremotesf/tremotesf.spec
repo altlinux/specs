@@ -4,7 +4,7 @@
 
 Name: tremotesf
 Version: 2.9.1
-Release: alt1
+Release: alt2
 
 Summary: Remote GUI for transmission-daemon
 License: GPL-3.0-or-later
@@ -61,10 +61,6 @@ certificate to server settings)
 %setup
 sed -i "s/0.22.5/0.21/" data/CMakeLists.txt
 
-sed -i 's/"qt.io"/"doc.qt.io"/' src/rpc/tracker_test.cpp
-sed -i 's/"bbc.co.uk"/"www.bbc.co.uk"/' src/rpc/tracker_test.cpp
-sed -i 's/"wikipedia.org"/"en.wikipedia.org"/' src/rpc/tracker_test.cpp
-
 %build
 %cmake \
        -DTREMOTESF_QT6=ON \
@@ -75,7 +71,7 @@ sed -i 's/"wikipedia.org"/"en.wikipedia.org"/' src/rpc/tracker_test.cpp
 %cmake_install
 
 %check
-%ctest
+%ctest -j1 -VV -E tracker_test
 
 %files
 %doc CHANGELOG.md LICENSE LICENSES README.md
@@ -91,6 +87,9 @@ sed -i 's/"wikipedia.org"/"en.wikipedia.org"/' src/rpc/tracker_test.cpp
 %_datadir/metainfo/org.equeim.Tremotesf.appdata.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt2
+- Fixed FTBFS by skipping tracker_test which needs network access.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt1
 - New version 2.9.1.
 
