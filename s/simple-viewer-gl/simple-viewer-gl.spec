@@ -2,8 +2,13 @@
 %define _stripped_files_terminate_build 1
 
 Name: simple-viewer-gl
-Version: 3.05
-Release: alt2
+Epoch: 1
+Version: 3.3.4
+# WARNING: do not forget to run
+#          sed -i '/^If you like/d' third-party/fmtlib/README.rst
+#          sed -i '/^help/d' third-party/fmtlib/README.rst
+#          on each version update.
+Release: alt1
 
 Summary: Simple and tiny image viewer based on OpenGL
 License: GPL-2.0
@@ -32,6 +37,8 @@ BuildRequires: libopenjpeg2.0-devel
 BuildRequires: libwebp-devel
 BuildRequires: libcurl-devel
 BuildRequires: imlib2-devel
+BuildRequires: pkgconfig(OpenEXR)
+BuildRequires: pkgconfig(libheif)
 
 %description
 Simple Viewer GL is a simple and tiny image viewer based on OpenGL.
@@ -49,26 +56,24 @@ XPM, WebP, OpenEXR, and many more.
 
 %prep
 %setup
-sed -i "s|; cmake|; cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5|" Makefile
 
 %build
-%make
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std PREFIX=%_prefix
-install -Dm 644 sviewgl.desktop %buildroot%_desktopdir/sviewgl.desktop
-install -p -Dm644 res/Icon-16.png %buildroot%_datadir/icons/hicolor/16x16/apps/sviewgl.png
-install -p -Dm644 res/Icon-32.png %buildroot%_datadir/icons/hicolor/32x32/apps/sviewgl.png
+%cmake_install
 
 %files
 %doc Copying.txt README.md
 %_bindir/sviewgl
 %_desktopdir/sviewgl.desktop
-%_datadir/icons/hicolor/16x16/apps/sviewgl.png
-%_datadir/icons/hicolor/32x32/apps/sviewgl.png
+%_iconsdir/hicolor/*/apps/sviewgl.png
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 1:3.3.4-alt1
+- New version 3.3.4 with enabled support of OpenEXR and HEIF.
+
 * Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 3.05-alt2
 - Enabled build on i586 without OpenJPEG. 
 
