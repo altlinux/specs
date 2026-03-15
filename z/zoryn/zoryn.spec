@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,23 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Mar 15 2026 Anton Farygin <rider@altlinux.org> 0.29.0-alt1
+- suppressed noisy sandbox chroot preparation output with stage progress
+- extracted build stage detection into build_log library
+- fixed rebuild fallback checking wrong log filename
+- fixed print_error and print_warning to write to stderr
+- fixed IPv6 link-local SSRF check false positives
+- fixed PTY fork safety and buffer cleanup
+- fixed case-insensitive Version/Release tag matching in spec writes
+- fixed spec detect_old_version to search only after %%changelog
+- fixed RPM macro expansion in get_vcs_tag
+- fixed crash on narrow terminals in TUI
+- fixed remote name validation in girar
+- fixed sandbox environment variable key escaping
+- fixed version/release split on last dash in RDB
+- fixed SSH multiplexing host registration on master start failure
+- fixed spec-check to skip reachability checks for unexpanded RPM macros
+
 * Thu Mar 12 2026 Anton Farygin <rider@altlinux.org> 0.28.0-alt1
 - fixed task copy to use SRPM package names and Tasks API instead of SSH
 - fixed task copy to use batch RDB query for EVR comparison
