@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 148.0
-Release: alt2
+Version: 148.0.2
+Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -388,6 +388,13 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Mar 10 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0.2-alt1
+- New version (148.0.2).
+- Fixes:
+  + CVE-2026-3845: Heap buffer overflow in the Audio/Video: Playback component in Firefox for Android
+  + CVE-2026-3846: Same-origin policy bypass in the CSS Parsing and Computation component
+  + CVE-2026-3847: Memory safety bugs fixed in Firefox 148.0.2
+
 * Sat Feb 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0-alt2
 - Update l10n for the 148.
 
