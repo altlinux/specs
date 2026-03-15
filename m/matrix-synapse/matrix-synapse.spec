@@ -3,7 +3,7 @@
 
 Name: matrix-synapse
 Version: 1.148.0
-Release: alt1
+Release: alt2
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -187,7 +187,7 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %python3_sitelibdir/*
-%dir /etc/synapse/
+%attr(0750,root,_synapse) %dir /etc/synapse/
 %attr(0640,root,_synapse) %config(noreplace) /etc/synapse/homeserver.yaml
 %attr(0640,root,_synapse) %config(noreplace) /etc/synapse/log_config.yaml
 
@@ -196,6 +196,9 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Mon Mar 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.148.0-alt2
+- fix /etc/synapse directory permissions for _synapse user (ALT bug 57534)
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.148.0-alt1
 - new version 1.148.0
 - switch user creation to systemd-sysusers
