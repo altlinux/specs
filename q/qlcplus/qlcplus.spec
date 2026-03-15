@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     qlcplus
-Version:  5.2.0
+Version:  5.2.1
 Release:  alt1
 
 Summary:  Q Light Controller Plus
@@ -67,6 +67,7 @@ export LANG="C.UTF-8"
 %cmake_install
 %if_with qmlui
 mv %buildroot%_bindir/qlcplus-qml %buildroot%_bindir/qlcplus
+mv %buildroot%_datadir/applications/qlcplus5.desktop %buildroot%_datadir/applications/qlcplus.desktop
 sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot%_datadir/applications/qlcplus.desktop
 %endif
 rm %buildroot%_libdir/*.a
@@ -92,6 +93,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Mar 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.2.1-alt1
+- Update to 5.2.1.
+
 * Fri Feb 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
 - Update to 5.2.0.
 
