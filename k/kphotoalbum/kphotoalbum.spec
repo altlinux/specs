@@ -4,7 +4,7 @@
 %def_with check
 
 Name: kphotoalbum
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 
 Summary: Photo Album for easy organization of your images
@@ -46,6 +46,7 @@ BuildRequires: kf6-kdoctools-devel
 BuildRequires: kf6-purpose-devel
 BuildRequires: kde6-libkdcraw-devel
 BuildRequires: marble-devel
+BuildRequires: qt6-multimedia-devel
 
 %if_with check
 BuildRequires: ctest
@@ -148,5 +149,8 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6data/metainfo/org.kde.kphotoalbum.appdata.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
+- New version 6.2.0.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt1
 - Initial build of kf6-based KPhotoAlbum for Sisyphus

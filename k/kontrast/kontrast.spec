@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kontrast
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 
 Summary: Contrast inspection tool for Plasma and Plasma Mobile
@@ -61,6 +61,9 @@ sed -i "s|Categories=.*|Categories=Qt;KDE;Utility;Accessibility;|" org.kde.kontr
 %_datadir/metainfo/org.kde.kontrast.appdata.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
+- New version 25.12.3.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.2-alt1
 - New version 25.12.2.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: arianna
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 
 Summary: Epub Reader for Plasma and Plasma Mobile
@@ -88,6 +88,9 @@ sed -i "s/Categories=.*/Categories=Qt;KDE;Office;Viewer;Database;/" org.kde.aria
 %_datadir/qlogging-categories6/arianna.categories
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
+- New version 25.12.3.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.2-alt1
 - New version 25.12.2.
 

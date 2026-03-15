@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kbackup
-Version: 25.12.2
+Version: 25.12.3
 Release: alt1
 
 Summary: Backup program with an easy-to-use interface
@@ -59,5 +59,8 @@ excluded from the backup process.
 %_K6data/mime/packages/kbackup.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
+- New version 25.12.3.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.2-alt1
 - Initial build of kf6-based KBackup for Sisyphus
