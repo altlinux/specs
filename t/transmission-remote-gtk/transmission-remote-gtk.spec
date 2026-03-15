@@ -1,5 +1,5 @@
 Name:    transmission-remote-gtk
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: GTK remote control for the Transmission BitTorrent client
@@ -43,6 +43,9 @@ Transmission BitTorrent client, using its HTTP RPC protocol.
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Mar 15 2026 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Sat Dec 27 2025 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
 - New version 1.7.0.
 
