@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sigil
-Version: 2.7.0
-Release: alt2
+Version: 2.7.5
+Release: alt1
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -152,6 +152,9 @@ ln -sfv %buildroot%_libdir/%name/libsigilgumbo.so %buildroot%_libdir/libsigilgum
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.7.5-alt1
+- new version 2.7.5 (with rpmrb script)
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 2.7.0-alt2
 - Exclude riscv64 arch as not buildable.
 

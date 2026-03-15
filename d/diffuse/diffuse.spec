@@ -3,7 +3,7 @@
 %def_with check
 
 Name: diffuse
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: graphical tool for merging and comparing text files
@@ -21,6 +21,10 @@ BuildRequires: python3-module-wheel
 BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gio-2.0)
+
+Requires: libgtk+3-gir
+Requires: python3-module-pygobject3
+Requires: python3-module-pycairo
 
 BuildArch: noarch
 
@@ -66,14 +70,17 @@ sed -i "s/Categories=.*/Categories=GTK;Development;RevisionControl;/" data/io.gi
 %_datadir/gnome/help/diffuse/cs/diffuse.xml
 %_datadir/gnome/help/diffuse/it/diffuse.xml
 %_datadir/gnome/help/diffuse/ru/diffuse.xml
-%_datadir/man/cs/man1/diffuse.1.xz
-%_datadir/man/it/man1/diffuse.1.xz
-%_datadir/man/ru/man1/diffuse.1.xz
+%_datadir/man/cs/man1/diffuse.1.*
+%_datadir/man/it/man1/diffuse.1.*
+%_datadir/man/ru/man1/diffuse.1.*
 %_datadir/omf/diffuse/diffuse-C.omf
 %_datadir/omf/diffuse/diffuse-cs.omf
 %_datadir/omf/diffuse/diffuse-it.omf
 %_datadir/omf/diffuse/diffuse-ru.omf
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus
