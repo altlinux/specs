@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Ctypes bindings for the high-level API in libfuse 2 and 3
@@ -48,5 +48,8 @@ libfuse.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
+- New version 3.1.1.
+
 * Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.0-alt1
 - Initial build for Sisyphus
