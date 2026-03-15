@@ -2,15 +2,15 @@
 %define app_id space.x1z53.iris
 
 Name: iris
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: GTK client for Yummy Anime
 License: GPL-3.0-only
 Group: Video
 
-URL: https://altlinux.space/x1z53/iris
-VCS: https://altlinux.space/x1z53/iris
+URL: https://altlinux.space/alt-gnome/iris
+VCS: https://altlinux.space/alt-gnome/iris
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -51,6 +51,10 @@ Obsoletes: yummy-anime-gtk < %EVR
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Mar 16 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.1-alt1
+- Update to 0.2.1.
+- Change URL and VCS.
+
 * Tue Mar 10 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.0-alt1
 - Update to 0.2.0.
 - Application rebranding: yummy-anime-gtk -> iris.
