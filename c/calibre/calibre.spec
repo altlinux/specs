@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 8.4.0
-Release: alt2
+Version: 8.16.2
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -18,9 +18,7 @@ Source: %name-%version.tar
 
 Patch1: calibre-no-update.patch
 Patch2: calibre-nodisplay.patch
-Patch3: calibre-alt-loongarch64-and-riscv64-support.patch
 Patch4: alt-drop-pykakasi.patch
-Patch5: alt-qt6.10.patch
 
 AutoProv:no
 
@@ -214,6 +212,8 @@ BuildRequires: python3-module-PyQt6-devel
 
 BuildRequires: libspeechd-devel
 #>= 0.11.5
+BuildRequires: libespeak-ng-devel
+BuildRequires: libonnxruntime-devel
 BuildRequires: libxxhash-devel
 #>= 3.3.0
 
@@ -247,9 +247,7 @@ TXT, PDF, LRS и FB2.
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
-%patch5 -p1
 # then drop pykakasi autoreq
 rm -f src/calibre/ebooks/unihandecode/jadecoder.py
 
@@ -352,6 +350,12 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 8.16.2-alt1
+- new version 8.16.2
+- drop loongarch64/riscv64 patch (stb_sprintf.h removed upstream)
+- drop Qt 6.10 patch (handled natively in build.py)
+- add libespeak-ng-devel, libonnxruntime-devel BR for TTS/piper support
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt2
 - NMU: fix to build with Qt 6.10 (closes: 58199)
 
