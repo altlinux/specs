@@ -2,7 +2,7 @@
 %define zapret_confdir %_sysconfdir/%name
 
 Name: zapret
-Version: 72.10
+Version: 72.12
 Release: alt1
 
 Summary: DPI bypass tool for Linux
@@ -129,6 +129,9 @@ getent passwd tpws >/dev/null || useradd -r -d /dev/null -s /sbin/nologin -g tpw
 %_unitdir/zapret-list-update.timer
 
 %changelog
+* Mon Mar 16 2026 Vitaly Lipatov <lav@altlinux.ru> 72.12-alt1
+- new version 72.12 (ALT bug 58082)
+
 * Wed Mar 04 2026 Vitaly Lipatov <lav@altlinux.ru> 72.10-alt1
 - new version 72.10 (with rpmrb script)
 - rename mdig to zapret-mdig to avoid conflict
