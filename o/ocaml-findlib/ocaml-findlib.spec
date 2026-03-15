@@ -1,15 +1,17 @@
 %define _name findlib
 Name: ocaml-%_name
-Version: 1.9.6
-Release: alt2
+Version: 1.9.8
+Release: alt1
 Summary: A module packaging tool for OCaml
 License: MIT
 Group: Development/ML
 Url: https://projects.camlcity.org/projects/findlib.html
 VCS: https://github.com/ocaml/ocamlfind
-Source: %_name-%version.tar
+Source: %name-%version.tar
+Patch1: findlib-1.9.8-alt-doc-use-xsltproc.patch
 BuildRequires: rpm-build-ocaml >= 1.6 ocaml-labltk-devel >= 8.06.2 libtinfo-devel ocaml-ocamldoc
 BuildRequires: ocaml-ocamlbuild libX11-devel tcl-devel tk-devel libncurses-devel openjade
+BuildRequires: OpenSP xsltproc docbook-style-xsl
 
 %description
 The "findlib" library provides a scheme to manage reusable software
@@ -35,7 +37,8 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -n %_name-%version
+%setup
+%patch1 -p1
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
 sed -i -e '/path/s,@SITELIB@,\0:%_libdir/ocaml,' findlib.conf.in
@@ -54,6 +57,7 @@ make all OCAMLC_FLAGS=-bin-annot
 %ifarch %ocaml_native_arch
 make opt OCAMLC_FLAGS=-bin-annot
 %endif
+(cd doc && make ref-man)
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -74,11 +78,13 @@ make install \
 %_man5dir/*
 
 %files devel -f ocaml-files.devel
-%doc doc/README doc/guide-html
 %_libdir/ocaml/findlib/Makefile.config
 %_libdir/ocaml/findlib/Makefile.packages
 
 %changelog
+* Sun Mar 15 2026 Anton Farygin <rider@altlinux.org> 1.9.8-alt1
+- 1.9.6 -> 1.9.8
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.9.6-alt2
 - added support for bytecode-only version of the ocaml package
 
