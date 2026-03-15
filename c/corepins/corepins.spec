@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: corepins
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Bookmarking app for C Suite
@@ -39,7 +39,11 @@ sed -i "s|Utility;|Office;Database;|" cc.cubocore.CorePins.desktop
 %_bindir/corepins
 %_desktopdir/cc.cubocore.CorePins.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CorePins.svg
+%_datadir/metainfo/cc.cubocore.CorePins.metainfo.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

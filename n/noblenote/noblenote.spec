@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: noblenote
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Qt program for taking notes
@@ -13,6 +13,7 @@ Url: https://github.com/hakaishi/nobleNote
 Source: %name-%version.tar
 
 BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: /usr/bin/lrelease-qt6
 
 %description
@@ -49,6 +50,9 @@ install -Dm644 noblenote.desktop %buildroot%_desktopdir/noblenote.desktop
 %_pixmapsdir/noblenote-icons/*
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Fri Dec 05 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
 - New version 1.4.0 with Qt6 only support.
 

@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alizams
-Version: 1.9.10
-Release: alt2
+Version: 1.9.11
+Release: alt1
 
 Summary: DICOM Viewer
 License: GPL-3.0
@@ -83,6 +83,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.11-alt1
+- New version 1.9.11.
+
 * Sat Sep 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.10-alt2
 - Define DISABLE_SIMDMATH=ON only on necessary architectures.
 

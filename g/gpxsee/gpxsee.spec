@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gpxsee
-Version: 15.11
+Version: 16.0
 Release: alt1
 
 Summary: GPS log file viewer and analyzer
@@ -17,6 +17,7 @@ BuildRequires: qt6-tools
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-svg-devel
+BuildRequires: qt6-multimedia-devel
 BuildRequires: pkgconfig(zlib)
 
 Requires: qtpbfimageplugin-qt6
@@ -80,6 +81,9 @@ qmake-qt6 \
 %_datadir/mime/packages/%{name}.xml
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 16.0-alt1
+- New version 16.0.
+
 * Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 15.11-alt1
 - New version 15.11.
 
