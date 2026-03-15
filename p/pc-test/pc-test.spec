@@ -6,7 +6,7 @@
 %endif
 
 Name: pc-test
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 
 Summary: PC Test Suite
@@ -143,6 +143,15 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Sun Mar 15 2026 Leonid Krivoshein <klark@altlinux.org> 2.1.7-alt1
+- Added:
+  + support for ALT SP 10.2.2
+  + support for ALT Virtualization 11 PVE
+- Fixed:
+  + improved support of the wayland server
+- Removed:
+  + deleted links to blocked VK videos
+
 * Mon Sep 08 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.6-alt1
 - Fixed:
   + sudo configuration success check (ALT #53393)
