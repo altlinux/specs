@@ -1,5 +1,7 @@
+%def_with check
+
 Name: pcb2gcode
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 Group: Engineering
@@ -13,7 +15,12 @@ Patch: %name-%version-%release.patch
 # Tests fails
 ExcludeArch: %ix86 %arm
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: gcc-c++
+%if_with check
+BuildRequires: ctest
+%endif
 BuildRequires: boost-program_options-devel boost-geometry-devel
 BuildRequires: pkgconfig(glibmm-2.4) >= 2.8
 BuildRequires: pkgconfig(gdkmm-2.4) >= 2.8
@@ -30,23 +37,27 @@ dynamic calibration of the milling depth.
 %setup
 
 %build
-export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS -I%_includedir/librsvg-2.0"
-%autoreconf
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-%make_build check
+%if_with check
+%ctest -E gerberimporter_tests
+%endif
 
 %files
 %_bindir/*
-%_man1dir/*.1*
-%doc AUTHORS README.md
+%_man1dir/*.1.*
+%doc AUTHORS README.md COPYING
 
 %changelog
+* Sun Mar 15 2026 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+- Build with cmake.
+
 * Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt1
 - New version 3.0.2.
 
