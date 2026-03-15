@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id be.alexandervanhee.gradia
-%def_enable check
-%set_verify_elf_method fhs=relaxed
+# %set_verify_elf_method fhs=relaxed
 
 Name: gradia
-Version: 1.7.1
+Version: 1.12.0
 Release: alt1
 Epoch: 1
 
@@ -15,25 +14,28 @@ Group: Graphics
 Url: https://github.com/AlexanderVanhee/Gradia
 Vcs: https://github.com/AlexanderVanhee/Gradia
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-python3
 BuildRequires: meson
-BuildRequires: gtk4-update-icon-cache
+BuildRequires: appstream
+BuildRequires: desktop-file-utils
 BuildRequires: blueprint-compiler
+BuildRequires: gtk4-update-icon-cache
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(pygobject-3.0)
-%if_enabled check
-BuildRequires: appstream
-BuildRequires: desktop-file-utils
-%endif
+BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: typelib(GtkSource) = 5
 
 Requires: python3(gi)
 Requires: python3(PIL)
 Requires: python3(cairo)
 Requires: python3(gi._gi_cairo)
+Requires: python3(pytesseract)
+Requires: libwebp-pixbuf-loader
 
 %description
 On social media, it's often hard to control how your images appear to others.
@@ -46,14 +48,15 @@ overall appearance.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%meson
+%meson --buildtype=release
 %meson_build
 
 %install
 %meson_install
-%find_lang --with-gnome %name
+%find_lang %name
 
 %check
 %meson_test
@@ -69,6 +72,9 @@ overall appearance.
 %doc README.md
 
 %changelog
+* Sat Mar 07 2026 David Sultaniiazov <x1z53@altlinux.org> 1:1.12.0-alt1
+- Update to v1.12.0.
+
 * Thu Jul 24 2025 x1z53 <x1z53@altlinux.org> 1:1.7.1-alt1
 - Update to v1.7.1
 - Remove D-Bus service
