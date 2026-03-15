@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -138,6 +138,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sun Mar 15 2026 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt1
+- New version 1.7.3.
+
 * Sat Feb 14 2026 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
 - New version 1.7.2.
 
