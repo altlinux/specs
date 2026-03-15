@@ -1,6 +1,6 @@
 %define libname logs
 Name:           ocaml-%libname
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary:        Logging infrastructure for OCaml
 License:        ISC
@@ -53,6 +53,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %_ocamldir/logs/top/logs_top_init_ml
 
 %changelog
+* Sun Mar 15 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
+- 0.9.0 -> 0.10.0
+
 * Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.9.0-alt1
 - 0.7.0 -> 0.9.0
 
