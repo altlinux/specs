@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libqofono
-Version: 0.124
+Version: 0.128
 Release: alt1
 
 Summary: Qt 5 library for Ofono
@@ -18,10 +18,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-qml
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
 BuildRequires: pkgconfig(Qt5Qml)
+BuildRequires: cmake
 
 %description
 A library for accessing the ofono daemon, and a declarative plugin for
@@ -69,19 +71,18 @@ are provided for run-time.
 %prep
 %setup
 %patch -p1
+sed -i "s|/opt/tests|%_libexecdir|g" test/auto/tst_qofono/CMakeLists.txt test/auto/tests/CMakeLists.txt
+sed -i "s|/opt/examples|%_datadir|g" ofonotest/CMakeLists.txt
 
 %build
-%qmake_qt5 \
-           libqofono.pro \
-           CONFIG+=nostrip \
-           QMAKE_CXXFLAGS="%optflags"
-%make_build
+%cmake \
+       -DQT_MAJOR_VERSION=5
+%cmake_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%{buildroot}
+%cmake_install
 
-mkdir -p %buildroot%_libdir/qt5/mkspecs/features
-mv -v %buildroot/usr/share/qt5/share/qt5/mkspecs/features/qofono-qt5.prf %buildroot%_libdir/qt5/mkspecs/features
+mv -v %buildroot%_datadir/libqofono-qt5/ofonotest %buildroot%_libexecdir/libqofono-qt5/
 
 %files
 %doc README TODO
@@ -96,18 +97,21 @@ mv -v %buildroot/usr/share/qt5/share/qt5/mkspecs/features/qofono-qt5.prf %buildr
 %_includedir/qofono-qt5/*.h
 %dir %_includedir/qofono-qt5/dbus
 %_includedir/qofono-qt5/dbus/*.xml
-%_libdir/libqofono-qt5.prl
 %_libdir/libqofono-qt5.so
 %_libdir/pkgconfig/qofono-qt5.pc
-%_libdir/qt5/mkspecs/features/qofono-qt5.prf
 
 %files examples
+%_libexecdir/libqofono-qt5/ofonotest
 %_datadir/libqofono-qt5/qml/ofonotest/main.qml/main.qml
 
 %files tests
+%exclude %_libexecdir/libqofono-qt5/ofonotest
 %dir %_libexecdir/libqofono-qt5
 %_libexecdir/libqofono-qt5/*
 
 %changelog
+* Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 0.128-alt1
+- new version 0.128 (with rpmrb script)
+
 * Tue Jul 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.124-alt1
 - Initial build for Sisyphus
