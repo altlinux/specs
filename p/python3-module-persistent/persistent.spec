@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.5
-Release: alt1
+Release: alt2
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -25,6 +25,7 @@ BuildRequires: python3-module-objects.inv
 BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-furo
 BuildRequires: python3-module-sphinx_basic_ng
+BuildRequires: python3-module-accessible-pygments
 %endif
 %if_with check
 BuildRequires: python3-module-zope.testrunner
@@ -121,6 +122,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Mon Mar 16 2026 Anton Vyatkin <toni@altlinux.org> 6.5-alt2
+- Fix FTBFS.
+
 * Tue Nov 18 2025 Anton Vyatkin <toni@altlinux.org> 6.5-alt1
 - New version 6.5.
 
