@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name Showtime
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define rdn_name org.gnome.%_name
 
 %def_enable check
 
 Name: showtime
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Movie player for GNOME
@@ -83,6 +83,9 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

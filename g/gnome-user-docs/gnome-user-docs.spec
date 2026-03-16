@@ -1,10 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: General GNOME User Documentation
@@ -53,6 +53,9 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 

@@ -3,14 +3,14 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_enable check
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
@@ -132,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnome-calculator
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GTK4 based desktop calculator
@@ -213,6 +213,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 

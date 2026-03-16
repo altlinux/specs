@@ -1,21 +1,21 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 50
+%define beta .rc.1
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
-%def_enable introspection
-%def_enable wayland
 %def_enable x11
+%def_enable introspection
 %def_enable check
 
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: A quick previewer for Nautilus
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -23,9 +23,9 @@ Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/GNOME/sushi
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define gst_ver 1.0
@@ -37,7 +37,6 @@ Requires: %lo_bin
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(GtkSource) = 4
 Requires: typelib(WebKit2) = 4.1
-
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
@@ -95,12 +94,11 @@ GObject introspection devel data for the Sushi library.
 %set_typelibdir %_libdir/%name/girepository-1.0
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
-%meson \
-%{?_disable_wayland:-Dwayland=disabled} \
-%{?_disable_x11:-DX11=disabled}
+%meson -Dwayland=enabled \
+    %{subst_enable_meson_feature x11 X11}
 %nil
 %meson_build
 
@@ -120,10 +118,13 @@ GObject introspection devel data for the Sushi library.
 %_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
 %_datadir/%name/
 %_datadir/dbus-1/services/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc.1
+- 50.rc.1
+
 * Fri Apr 05 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

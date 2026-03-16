@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
@@ -81,6 +81,9 @@ GNU gettext/GNOME desktop world.
 
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

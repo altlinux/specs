@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %def_enable systemd
 %def_enable check
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple process monitor
@@ -26,13 +26,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.68.0
-%define gtk_ver 4.19
+%define glib_ver 2.84
+%define gtk_ver 4.20
 %define glibmm_ver 2.68
-%define gtkmm_ver 4.19.1
+%define gtkmm_ver 4.20
 %define libgtop_ver 2.38.0
 %define rsvg_ver 2.35
-%define adw_ver 1.6
+%define adw_ver 1.8
 
 Requires: polkit
 
@@ -79,6 +79,7 @@ Gnome-system-monitor is a simple process and system monitor.
 %_libexecdir/%name/gsm-taskset
 %_desktopdir/*
 %_datadir/polkit-1/actions/org.gnome.%name.policy
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_iconsdir/hicolor/*/apps/*
@@ -86,6 +87,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

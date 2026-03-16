@@ -1,5 +1,6 @@
-%define ver_major 43
+%define ver_major 50
 %define xdg_name org.gnome.PowerStats
+%def_enable check
 
 Name: gnome-power-manager
 Version: %ver_major.0
@@ -8,19 +9,22 @@ Release: alt1
 Summary: GNOME Power management tools
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org/projects/gnome-power-manager/
+Url: https://projects.gnome.org/gnome-power-manager
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-power-manager.git
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: upower >= 0.9.7
+%define upower_ver 0.99.8
+
+Requires: upower >= %upower_ver
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-meson
 
 BuildRequires: meson
-BuildRequires: glib2-devel >= 2.46.0
-BuildRequires: libgtk+3-devel >= 3.3.8
-BuildRequires: libupower-devel >= 0.99.8
-BuildRequires: /usr/bin/appstream-util
+BuildRequires: libgtk4-devel >= 4.0.0
+BuildRequires: libupower-devel >= %upower_ver
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 # for docbook2man
 BuildRequires: docbook-utils
 
@@ -37,26 +41,27 @@ stand alone program after the rest was merged into gnome-settings-daemon.
     -Denable-tests=true
 %meson_build
 
-%check
-%meson_test
-
 %install
 %meson_install
-
 %find_lang --with-gnome %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/gnome-power-statistics
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* AUTHORS
 
-
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0 (ported to GTK4)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

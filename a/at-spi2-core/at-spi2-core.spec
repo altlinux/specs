@@ -1,11 +1,13 @@
 %define _name at-spi2
-%define ver_major 2.58
+%define ver_major 2.60
 %define api_ver_major 2
 %define api_ver 2.0
 %define namespace Atspi
 %define atk_api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
+%def_enable dbus_glib
+%define default_bus dbus-daemon
 %def_enable introspection
 %def_enable x11
 %def_enable gtk2
@@ -15,7 +17,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -35,14 +37,16 @@ Requires: dbus-tools-gui
 %define meson_ver 0.63
 %define glib_ver 2.67.4
 %define dbus_ver 1.5
+%define dbus_glib_ver 0.104
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg rpm-build-python3
 BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver
 BuildRequires: /usr/bin/dbus-daemon libdbus-devel >= %dbus_ver
 BuildRequires: libxml2-devel pkgconfig(libei-1.0) pkgconfig(xkbcommon)
+%{?_enable_dbus_glib:BuildRequires:pkgconfig(dbus-glib-1) >= %dbus_glib_ver}
 %{?_enable_systemd:BuildRequires:pkgconfig(systemd)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
+%{?_enable_x11:BuildRequires: pkgconfig(xtst) pkgconfig(xi) pkgconfig(xres)}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
 %{?_enable_doc:BuildRequires: /usr/bin/sphinx-build-3 python3-module-sphinx_rtd_theme gi-docgen}
 
@@ -184,6 +188,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 
 %build
 %meson \
+    -Ddefault_bus="%default_bus" \
     -Ddbus_daemon=/bin/dbus-daemon \
     %{subst_enable_meson_feature x11 x11} \
     %{subst_enable_meson_bool gtk2 gtk2_atk_adaptor} \
@@ -261,6 +266,12 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.0-alt1
+- 2.60.0
+
+* Sun Mar 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2.59.90-alt1
+- 2.59.90
+
 * Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 2.58.3-alt1
 - 2.58.3
 

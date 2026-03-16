@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 48
+%define ver_major 50
 %define beta %nil
 
 %def_disable libcap_ng
@@ -16,7 +16,7 @@
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: %name is a password keeper for GNOME
 License: GPL-2.0 and LGPL-2.1
@@ -148,6 +148,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:}
 %endif
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt2
 - updated to 48.0-23-gc814a0dc
 - added "Conflicts" to oo7

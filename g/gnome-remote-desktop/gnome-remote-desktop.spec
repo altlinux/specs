@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.RemoteDesktop
 
@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 %define pw_api_ver 0.3
 %define pw_ver 0.3.49
 %define vnc_ver 0.9.11
-%define freerdp_ver 3.15
+%define freerdp_ver 3.22
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
 %define nvenc_ver 11.1.5.0
@@ -57,6 +57,7 @@ BuildRequires: libei-devel >= %ei_ver
 BuildRequires: libdbus-devel libpolkit-devel >= %polkit_ver
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
 BuildRequires: pipewire wireplumber mutter-gnome
+BuildRequires: pkgconfig(krb5)
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
 %{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver pkgconfig(winpr3)}
 %{?_enable_man:BuildRequires: /usr/bin/a2x xmllint}
@@ -92,7 +93,6 @@ Remote desktop daemon for GNOME using pipewire.
 %_userunitdir/%name.service
 %_userunitdir/%name-handover.service
 %_userunitdir/%name-headless.service
-%_desktopdir/%xdg_name.Handover.desktop
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.enums.xml
 %{?_enable_man:%_man1dir/grdctl.1*}
@@ -110,6 +110,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Feb 17 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
 - 49.3
 
