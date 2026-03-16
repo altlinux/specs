@@ -2,15 +2,17 @@
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
 Version: 1.12.0
-Release: alt1
+Release: alt2
 
 License: LGPL-2.1-or-later
 Group: System/Libraries
 
 Source: %name-%version.tar
 #Patch2: %%name-%%version-altlinux.patch
+Patch0001: 0001-loader-dont-use-libxml2-deprecated-APIs.patch
 
 Url: https://libosinfo.org
+Vcs: https://gitlab.com/libosinfo/libosinfo.git
 BuildRequires(pre): meson >= 0.49.0
 BuildRequires: gettext >= 0.19.8
 BuildRequires: gtk-doc
@@ -75,6 +77,7 @@ Contains developer documentation for %name.
 %prep
 %setup
 #%%patch2 -p1
+%patch0001 -p1
 
 %build
 %meson \
@@ -120,6 +123,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Mar 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt2
+- loader: don't use libxml2 deprecated APIs.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
 - New version 1.12.0.
 
