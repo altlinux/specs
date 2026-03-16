@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zExceptions
+%define pypi_name zExceptions
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.0
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 6.0
+Release: alt1
 Summary: zExceptions contains common exceptions used in Zope
 License: ZPL-2.1
 Group: Development/Python3
@@ -14,33 +14,32 @@ Url: https://pypi.org/project/zExceptions
 Vcs: https://github.com/zopefoundation/zExceptions
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.interface
-BuildRequires: python3-module-zope.publisher
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
 zExceptions contains common exceptions and helper functions related to
 exceptions as used in Zope.
 
-%package tests
-Summary: Tests for zExceptions
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-zExceptions contains common exceptions and helper functions related to
-exceptions as used in Zope.
-
-This package contains tests for zExceptions.
-
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -52,16 +51,14 @@ This package contains tests for zExceptions.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/%oname/tests
-
-%files tests
-%python3_sitelibdir/%oname/tests
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.0 -> 6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
