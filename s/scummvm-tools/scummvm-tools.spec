@@ -1,6 +1,6 @@
 Name: scummvm-tools
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
 Group: Games/Adventure
@@ -11,6 +11,7 @@ Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Mar 12 2009
 BuildRequires: gcc-c++ libflac-devel libpng-devel libvorbis-devel libwxGTK3.2-devel
+BuildRequires: zlib-devel
 
 %description
 This is a collection of various tools that may be useful to use
@@ -35,6 +36,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Mon Mar 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.9.0-alt2
+- NMU: FTBFS with zlib
+
 * Tue Nov 25 2025 Fr. Br. George <george@altlinux.org> 2.9.0-alt1
 - Autobuild version bump to 2.9.0
 
