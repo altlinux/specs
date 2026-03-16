@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%global pypi_name croniter
+%define pypi_name croniter
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.2.2
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -18,6 +19,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -32,31 +35,32 @@ Croniter provides iteration for datetime object with cron like format.
 %prep
 %setup
 %autopatch -p1
+%python3_fix_shebang .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
-
-# Remove reundant script header to avoid rpmlint warnings
-find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %check
-# TimezoneDateutil test fails, see https://bugzilla.altlinux.org/show_bug.cgi?id=39164
-%pyproject_run_pytest -ra -k 'not testTimezoneDateutil'
+%pyproject_run_pytest -vra
 
 %files
-%doc README.rst
-%python3_sitelibdir/croniter/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 6.2.2-alt1
+- 6.0.0 -> 6.2.2.
+
 * Wed Dec 18 2024 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.0.1 -> 6.0.0.
 
