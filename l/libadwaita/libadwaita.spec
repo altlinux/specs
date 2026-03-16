@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.8
+%define ver_major 1.9
 %define beta %nil
 %define namespace Adw
 %define api_ver 1
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -24,15 +24,15 @@ Url: https://gitlab.gnome.org/GNOME/libadwaita
 Vcs: https://gitlab.gnome.org/GNOME/libadwaita.git
 
 %if_disabled snapshot
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
-Source: https://github.com/GNOME/libadwaita/archive/%version/%name-%version.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: https://github.com/GNOME/libadwaita/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
 
 %define meson_ver 0.63
-%define glib_ver 2.80.0
-%define gtk_ver 4.20.3
+%define glib_ver 2.84.0
+%define gtk_ver 4.21.1
 %define gi_ver 1.84
 
 BuildRequires(pre): rpm-macros-meson
@@ -147,6 +147,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.0-alt1
+- 1.9.0
+
 * Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.4-alt1
 - 1.8.4
 
