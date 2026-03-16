@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: command-not-found
-Version: 0.5
-Release: alt2
+Version: 0.6
+Release: alt1
 
 Summary: Console assistant for ALT Linux
 License: GPL-3.0-or-later
@@ -29,6 +29,12 @@ BuildRequires: meson
 %meson
 %meson_build
 
+%post
+echo "Please exit from all shells and restart them."
+
+%postun
+echo "After package removal, it is recommended to exit from all shells and restart them."
+
 %install
 %meson_install
 %find_lang %name
@@ -41,6 +47,12 @@ BuildRequires: meson
 %config(noreplace) %_sysconfdir/command-not-found/config
 
 %changelog
+* Mon Mar 16 2026 Anton Osipov <radiolamp@altlinux.org> 0.6-alt1
+- Improved package sorting (Closes: 58094).
+- Added post and postun recommendation to restart $SHELL (Closes: 57241).
+- Added warning that command not found if program is disabled (Closes: 57241).
+- Complete removal of apt-cache.
+
 * Tue Dec 16 2025 Anton Osipov <radiolamp@altlinux.org> 0.5-alt2
 - Add runtime dependency on apt-repo-tools (Closes: 57242).
 
