@@ -1,5 +1,5 @@
 Name: liquidsfz
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 
 Summary: SFZ sampler
@@ -15,7 +15,11 @@ BuildRequires: pkgconfig(readline)
 BuildRequires: pkgconfig(tinfo)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(lv2)
-BuildRequires: pkgconfig(fftw3f)
+BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xcursor)
 
 %package -n libliquidsfz
 Summary: SFZ sampler
@@ -71,6 +75,9 @@ This package contains liquidsfz as LV2 plugin.
 %_libdir/lv2/liquidsfz.lv2
 
 %changelog
+* Mon Mar 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
+- 0.4.0 released
+
 * Fri Oct 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.2-alt1
 - initial
 
