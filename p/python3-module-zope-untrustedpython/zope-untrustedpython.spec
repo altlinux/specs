@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2
+Version: 7.0
 Release: alt1
 Summary: Zope Untrusted Python Library
 License: ZPL-2.1
@@ -51,13 +51,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 7.0-alt1
+- 6.2 -> 7.0.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 6.2-alt1
 - Initial build for Sisyphus.
