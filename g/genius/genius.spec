@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.28
+Version: %ver_major.29
 Release: alt1
 
 Summary: Genius Calculator
@@ -98,6 +98,9 @@ popd
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.29-alt1
+- 1.0.29
+
 * Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.28-alt1
 - updated to 1.0.28-2-gadefbc77
 
