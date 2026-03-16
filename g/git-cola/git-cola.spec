@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 4.17.1
+Version: 4.18.2
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -50,7 +50,7 @@ sed -i '/prefix =/s|\$(HOME)|%_prefix|' Makefile
 
 %build
 %pyproject_build
-%make_build doc man
+%make_build doc
 %ifnarch aarch64 ppc64le
 %make_build html
 %endif
@@ -96,6 +96,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Mon Mar 16 2026 Leontiy Volodin <lvol@altlinux.org> 4.18.2-alt1
+- New version 4.18.2.
+
 * Mon Feb 02 2026 Leontiy Volodin <lvol@altlinux.org> 4.17.1-alt1
 - New version 4.17.1.
 
