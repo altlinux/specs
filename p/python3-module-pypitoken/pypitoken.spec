@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.1
+Version: 7.1.1
 Release: alt1
 Summary: Manipulate PyPI API tokens
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -36,12 +38,11 @@ can generate a token that will only allow some projects, or even a single one.
 %prep
 %setup
 %autopatch -p1
-# fix 0.0.0 version
-sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry tests
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -54,10 +55,12 @@ sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
 %pyproject_run_pytest -ra -o=addopts='' -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
+- 7.0.1 -> 7.1.1.
+
 * Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 7.0.1-alt1
 - Initial build for Sisyphus.
