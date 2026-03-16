@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.8
+Version: 2.1.10
 Release: alt1
 Summary: Never use print() to debug again
 License: MIT
@@ -45,11 +45,13 @@ execution with a single, simple function call.
 %pyproject_run_unittest -v
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 2.1.10-alt1
+- 2.1.8 -> 2.1.10.
+
 * Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 2.1.8-alt1
 - 2.1.7 -> 2.1.8.
 
