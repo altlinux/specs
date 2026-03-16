@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
@@ -53,6 +53,9 @@ A Python implementation of RFC 7519.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
+- 2.12.0 -> 2.12.1.
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 2.12.0-alt1
 - 2.11.0 -> 2.12.0.
 
