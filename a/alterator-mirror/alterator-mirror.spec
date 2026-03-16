@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Source: %name-%version.tar
@@ -80,6 +80,12 @@ install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/addit
 %config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Fri Mar 13 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.7.1-alt1
+- Fix the size column to be human-readable in the additional packages table.
+- Fix URL zeroing when receiving the 11 platform.
+- Add the ability to add additional architectures.
+- Fix additional table with packages (ALT #58201).
+
 * Thu Mar 05 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.7.0-alt1
 - Enabling arch panel for local repositories.
 - Separating additional-repo from alterator-mirror.
