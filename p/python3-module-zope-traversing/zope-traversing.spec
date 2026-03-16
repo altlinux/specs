@@ -8,7 +8,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 6.0
 Release: alt1
 Summary: Resolving paths in the object hierarchy
 License: ZPL-2.1
@@ -55,10 +55,8 @@ view.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
@@ -66,5 +64,8 @@ view.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/browser/__pycache__/tests.*
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.1 -> 6.0.
+
 * Tue Sep 09 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - Initial build for Sisyphus.
