@@ -1,9 +1,9 @@
 %define pg_ver 15
-%def_with jit
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_cron
 Version: 1.6.7
-Release: alt1
+Release: alt2
 
 Summary: The pg_cron is a simple cron-based job scheduler for PostgreSQL
 License: PostgreSQL
@@ -36,12 +36,15 @@ the database.
 %files
 %doc LICENSE README.md pg_cron.conf
 %_libdir/pgsql/*.so
-%if_with jit
+%if %{enable_llvm}
 %_libdir/pgsql/bitcode/*
 %endif
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Mar 16 2026 Alexei Takaseev <taf@altlinux.org> 1.6.7-alt2
+- Use LLVM if it used in PostgreSQL
+
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 1.6.7-alt1
 - 1.6.7
 - Enable JIT on LoongArch
