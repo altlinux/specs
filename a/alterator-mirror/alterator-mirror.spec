@@ -2,7 +2,7 @@
 
 Name: alterator-mirror
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -38,15 +38,6 @@ Requires: %name = %EVR
 %description allowed
 %summary.
 
-%package additional-repo
-Summary: Additional local repository
-Group: System/Configuration/Other
-Requires: apt-repo-tools
-BuildArch: noarch
-
-%description additional-repo
-%summary.
-
 %prep
 %setup -q
 
@@ -58,7 +49,6 @@ BuildArch: noarch
 install -d %buildroot%_logdir/%name
 install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
-install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/additional.desktop
 
 %files
 %config(noreplace) %_sysconfdir/logrotate.d/*
@@ -76,10 +66,11 @@ install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/addit
 %files allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
-%files additional-repo
-%config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
-
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt2
+- Remove subpackage alterator-mirror-additional (replaced with
+  altlinux-repos-additional).
+
 * Fri Mar 13 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.7.1-alt1
 - Fix the size column to be human-readable in the additional packages table.
 - Fix URL zeroing when receiving the 11 platform.
