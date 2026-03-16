@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt7
+Release: alt8
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -98,6 +98,9 @@ mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hook
 %files net-eth-stage3
 
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt8
+- pkg-preinstall.d/00-pve.sh: fix for case when no group is selected.
+
 * Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt7
 - pkg-preinstall.d: fix help and translations for network step with PVE.
 
