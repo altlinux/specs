@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.1.1
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -32,6 +32,8 @@ Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch2: %name-alt-extra-doc-disable.patch
 Patch3: %name-4.1.1-alt-fix-wayland-app-id.patch
 Patch4: %name-4.1.1-alt-use-psl-latest.patch
+Patch5: %name-4.1.1-alt-fix-gtk-action-lookup.patch
+Patch6: %name-4.1.1-alt-fix-magnet-options-dialog.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
@@ -254,6 +256,10 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Mar 16 2026 Anton Farygin <rider@altlinux.org> 4.1.1-alt2
+- aligned gtk magnet options dialog with qt behavior (closes: #58178)
+- fixed gtk action lookup crash for alternate speed toggle (closes: #58177)
+
 * Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 4.1.1-alt1
 - 4.0.6 -> 4.1.1 (Closes: #57658)
 - fixed missing application icon in GNOME on Wayland (closes: #48137)
@@ -523,4 +529,3 @@ fi
 
 * Sat Sep 08 2007 Sergey V Turchin <zerg at altlinux dot org> 0.81-0.1.M40
 - initial specfile
-
