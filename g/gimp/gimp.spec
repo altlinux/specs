@@ -4,14 +4,11 @@
 %define optflags_lto %nil
 %endif
 
-%define ver_major 3.0
+%define ver_major 3.2
 %define oldver 3.0
 
-%define mypaint_ver 1.3
-%define brushes_ver 1.0
-
 Name: gimp
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -25,7 +22,7 @@ Obsoletes: gimp2 < %version-%release
 Provides: gimp2 = %version-%release
 Conflicts: gimp2-perl create-resources <= 0.1.3-alt1
 Requires: lib%name = %version-%release
-Requires: iso-codes icc-profiles mypaint-brushes%brushes_ver
+Requires: iso-codes icc-profiles mypaint-brushes
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -35,7 +32,7 @@ BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libXcursor-devel libXfixes-d
 BuildRequires: libarchive-devel libexpat-devel libgexiv2-devel libgs-devel libgtk+3-gir-devel libgudev-devel libheif-devel liblcms2-devel liblzma-devel
 BuildRequires: libmng-devel libmypaint-devel libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkit2gtk-devel libwebp-devel
 BuildRequires: libjxl-devel libwmf-devel openexr-devel python3-module-pygobject3 vala-tools xdg-utils meson cmake iso-codes-devel libbabl-devel libgegl-devel
-BuildRequires: libbabl-gir libgegl-gir libgexiv2-gir-devel libexiv2-devel mypaint-brushes%brushes_ver-devel libappstream-devel shared-mime-info-devel
+BuildRequires: libbabl-gir libgegl-gir libgexiv2-gir-devel libexiv2-devel mypaint-brushes-devel libappstream-devel shared-mime-info-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -127,6 +124,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Tue Jan 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.0.8-alt1
 - 3.0.8
 
