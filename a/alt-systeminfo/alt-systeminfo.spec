@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -92,6 +92,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Mon Mar 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.13-alt1
+- Remove the logo and link in the "Release Notes" window.
+
 * Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.12-alt1
 - Add display of URL BaseALT and ALT Linux Team icons
   depending on the edition (thx Oleg Chagaev).
