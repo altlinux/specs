@@ -4,7 +4,7 @@
 
 Name: gradia
 Version: 1.12.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Make your screenshots ready for all
@@ -36,6 +36,7 @@ Requires: python3(cairo)
 Requires: python3(gi._gi_cairo)
 Requires: python3(pytesseract)
 Requires: libwebp-pixbuf-loader
+Requires: typelib(GtkSource) = 5
 
 %description
 On social media, it's often hard to control how your images appear to others.
@@ -72,6 +73,9 @@ overall appearance.
 %doc README.md
 
 %changelog
+* Mon Mar 16 2026 Leontiy Volodin <lvol@altlinux.org> 1:1.12.0-alt1.1
+- NMU: fix startup on p11 branch (ALT #58161).
+
 * Sat Mar 07 2026 David Sultaniiazov <x1z53@altlinux.org> 1:1.12.0-alt1
 - Update to v1.12.0.
 
