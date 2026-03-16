@@ -1,8 +1,9 @@
 %define pg_ver 14
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-pgauditlogtofile
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
 License: PostgreSQL
@@ -46,10 +47,16 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 
 %files
 %doc README.md LICENSE
-%_libdir/pgsql/*
+%_libdir/pgsql/*.so
+%if %{enable_llvm}
+%_libdir/pgsql/bitcode/*
+%endif
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Mar 16 2026 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt2
+- Use LLVM if it used in PostgreSQL
+
 * Wed Mar 04 2026 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
