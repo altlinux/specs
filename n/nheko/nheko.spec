@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -38,6 +38,7 @@ BuildRequires: clang llvm-devel
 
 # Additional (runtime) dependencies
 Requires: qt6-multimedia libqt6-quickparticles
+Requires: libqt6-quickdialogs2
 
 %description
 The motivation behind the project is to provide a native desktop app
@@ -85,6 +86,9 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 0.12.1-alt2
+- NMU: Add missing runtime dependencies on libqt6-quickdialogs2 (closes: 58253).
+
 * Tue Mar 10 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.12.1-alt1
 - New version 0.12.1.
 
