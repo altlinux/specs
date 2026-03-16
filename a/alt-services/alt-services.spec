@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.15
+Version: 0.1.16
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -67,6 +67,19 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Mar 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.16-alt1
+- Fixed (thx Andrey Alekseev):
+  + log entry headers were editable by double-click
+  + diagnostic error handler message was covered by its buttons
+  + progress page was not responsive making it impossible to expand/collapse
+    log entries until operation is finished
+  + the wizard was not modal
+  + diagnostic-related parameters were displayed on confirmation
+    page as "not set"
+  + "Finish" wizard button was not activated
+- Added (thx Andrey Alekseev):
+  + icons for buttons of diagnostic error handler message
+
 * Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.15-alt1
 - Fixed (thx Andrey Alekseev):
   + parameters being parsed & serialized incorrectly
