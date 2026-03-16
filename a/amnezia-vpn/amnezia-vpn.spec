@@ -1,11 +1,13 @@
+%define git_commit_hash 477afb9d
+
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
-%define amnezia_xray_bindings_commit 281f9fe1ff9553d953a9c688cc91bb77e225f68b
+%define amnezia_xray_bindings_version 1.1.0
 
 Name: amnezia-vpn
-Version: 4.8.12.9
-Release: alt4
+Version: 4.8.14.5
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -23,8 +25,8 @@ Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 Source2: qtkeychain-%qtkeychain_commit.tar
 # https://github.com/%name/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
 Source3: QSimpleCrypto-%qsimplecrypto_commit.tar
-# https://github.com/%name/amnezia-xray-bindings/archive/%amnezia_xray_bindings_commit/amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar.gz
-Source4: amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar
+# https://github.com/%name/amnezia-xray-bindings/archive/v%amnezia_xray_bindings_version/amnezia-xray-bindings-%amnezia_xray_bindings_version.tar.gz
+Source4: amnezia-xray-bindings-%amnezia_xray_bindings_version.tar
 
 Source5: vendor.tar
 
@@ -77,7 +79,7 @@ This package contains systemd service files.
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
 %__mv -Tf ../QSimpleCrypto-%qsimplecrypto_commit client/3rd/QSimpleCrypto
 
-%__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_commit/vendor
+%__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_version/vendor
 
 %build
 # Export AGW public key and S3 endpoint for work VPN from Amnezia
@@ -85,7 +87,7 @@ export PROD_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEF
 export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/, https://storage.googleapis.com/lambda-list/"
 
 # Build amnezia xray bindings
-pushd ../amnezia-xray-bindings-%amnezia_xray_bindings_commit
+pushd ../amnezia-xray-bindings-%amnezia_xray_bindings_version
 %make_build
 popd
 
@@ -111,7 +113,7 @@ sed \
     -e 's|set(OPENSSL_USE_STATIC_LIBS TRUE)|set(OPENSSL_USE_STATIC_LIBS FALSE)|' \
     -i client/cmake/3rdparty.cmake
 sed \
-    -e 's|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../client/3rd-prebuilt/3rd-prebuilt/amnezia_xray")|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../amnezia-xray-bindings-%amnezia_xray_bindings_commit")|' \
+    -e 's|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../client/3rd-prebuilt/3rd-prebuilt/amnezia_xray")|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../amnezia-xray-bindings-%amnezia_xray_bindings_version")|' \
     -e 's|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64/amnezia_xray.a")|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/build/amnezia_xray.a")|' \
     -e 's|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64")|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/build")|' \
     -e 's|set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/linux/include")|set(OPENSSL_INCLUDE_DIR "%_includedir")|' \
@@ -119,9 +121,12 @@ sed \
     -e 's|set(OPENSSL_USE_STATIC_LIBS TRUE)|set(OPENSSL_USE_STATIC_LIBS FALSE)|' \
     -i service/server/CMakeLists.txt
 
+# Set git commit
+sed -e 's|add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")|add_definitions(-DGIT_COMMIT_HASH="%git_commit_hash")|' -i client/CMakeLists.txt
+
 # Build Amnezia VPN
 %add_optflags -Wno-error=return-type
-%cmake
+%cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
 %cmake_build
 
 %install
@@ -165,6 +170,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Mon Mar 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.14.5-alt1
+- Version 4.8.14.5
+
 * Tue Feb 10 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt4
 - Switch to use fork tun2socks from Amnezia for XRay protocol
 
