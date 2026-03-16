@@ -1,19 +1,19 @@
 %def_disable snapshot
-
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 49
+%define ver_major 50
+%define beta %nil
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.2.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Fit falling blocks together
 Group: Games/Boards
-License: GPL-2.0-or-later
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Quadrapassel
 
 Vcs: https://gitlab.gnome.org/GNOME/quadrapassel.git
@@ -37,8 +37,9 @@ BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: librsvg-devel pkgconfig(gee-0.8)
-BuildRequires: libmanette-devel >= %manette_ver libgsound-devel
+BuildRequires: librsvg-devel
+BuildRequires: pkgconfig(sndfile) pkgconfig(openal)
+BuildRequires: libmanette-devel >= %manette_ver
 
 %description
 GNOME version of the popular russian game Tetris.
@@ -69,6 +70,9 @@ which will disappear.
 
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1%beta
+- 50.0
+
 * Fri Dec 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2.3-alt1
 - 49.2.3
 

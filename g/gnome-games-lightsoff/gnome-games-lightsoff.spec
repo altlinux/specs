@@ -2,14 +2,14 @@
 
 %define _name lightsoff
 %define xdg_name org.gnome.LightsOff
-%define ver_major 48
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Lights Off is a puzzle game
@@ -63,6 +63,12 @@ and its non-diagonal neighbors.
 %_man6dir/%_name.6*
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

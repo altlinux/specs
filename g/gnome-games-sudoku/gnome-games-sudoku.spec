@@ -3,14 +3,14 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Sudoku game
@@ -25,8 +25,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 Provides:  %__name = %EVR
 
 %define glib_ver 2.80.0
-%define gtk_ver 4.18
-%define adw_ver 1.7
+%define gtk_ver 4.20
+%define adw_ver 1.8
 %define qqwing_ver 1.3.4
 
 BuildRequires(pre): rpm-macros-meson
@@ -68,6 +68,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Thu Feb 05 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 
