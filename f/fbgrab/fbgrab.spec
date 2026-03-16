@@ -1,6 +1,6 @@
 Name: fbgrab
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: fbgrab - takes screenshots using the framebuffer device
 Summary(ru_RU.UTF-8): gbgrab - программа для создания скриншотов с помощью устройста фреймбуфера (/dev/fb*)
@@ -17,6 +17,7 @@ Source1: Readme_ru
 # Automatically added by buildreq on Thu Jan 19 2023
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error sh4 zlib-devel
 BuildRequires: libpng-devel
+BuildRequires: zlib-devel
 
 
 %description
@@ -52,6 +53,9 @@ install -D -m644 screenshots/*.png  %buildroot%_docdir/%name
 %_docdir/%name/*
 
 %changelog
+* Mon Mar 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.5-alt2
+- NMU: FTBFS with zlib
+
 * Thu Jan 19 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.5-alt1
 - Version 1.5
 
