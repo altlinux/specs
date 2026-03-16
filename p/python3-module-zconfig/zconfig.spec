@@ -1,72 +1,43 @@
 %define _unpackaged_files_terminate_build 1
-
-%define oname zconfig
+%define pypi_name zconfig
+%define mod_name ZConfig
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.2
-Release: alt1.1
-
-Summary: Python configuration module from Zope
+Name: python3-module-%pypi_name
+Version: 4.3
+Release: alt1
+Summary: Structured Configuration Library
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/ZConfig
 Vcs: https://github.com/zopefoundation/ZConfig
-
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+Conflicts: python-module-zconfig < 3.2.0-alt2
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-manuel
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
+# manuel.testing is subpackaged
 BuildRequires: python3-module-manuel-tests
-BuildRequires: python3-module-docutils
 %endif
 
-Conflicts: python-module-%oname < 3.2.0-alt2
-
 %description
-ZConfig is a configuration library intended for general use. It supports a
-hierarchical schema-driven configuration model that allows a schema to specify
-data conversion routines written in Python. ZConfig\'s model is very different
-from the model supported by the ConfigParser module found in Python\'s standard
-library, and is more suitable to configuration-intensive applications.
-
-ZConfig schema are written in an XML-based language and are able to \"import\"
-schema components provided by Python packages. Since components are able to
-bind to conversion functions provided by Python code in the package (or
-elsewhere), configuration objects can be arbitrarily complex, with values that
-have been verified against arbitrary constraints. This makes it easy for
-applications to separate configuration support from configuration loading even
-with configuration data being defined and consumed by a wide range of separate
-packages.
-
-Authors:
---------
-Zope Corporation < zodb-devAATTzope.org>
-
-%package tests
-Summary: Tests for ZConfig
-Group: Development/Python3
-Requires: %name = %version-%release
-%py3_requires zope.testrunner
-
-%description tests
-ZConfig is a configuration library intended for general use. It supports a
-hierarchical schema-driven configuration model that allows a schema to specify
-data conversion routines written in Python. ZConfig\'s model is very different
-from the model supported by the ConfigParser module found in Python\'s standard
-library, and is more suitable to configuration-intensive applications.
-
-This package contains tests for ZConfig.
+%summary.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -79,17 +50,15 @@ This package contains tests for ZConfig.
 
 %files
 %_bindir/*
-%python3_sitelibdir/ZConfig
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/*/tests
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/tests/
+%exclude %python3_sitelibdir/%mod_name/*/*/tests/
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 4.3-alt1
+- 4.2 -> 4.3.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
