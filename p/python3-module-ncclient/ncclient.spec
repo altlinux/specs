@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
@@ -35,11 +35,7 @@ Poulopoulos (@leopoul)
 %prep
 %setup
 %autopatch -p1
-# workaround for versioneer
-grep -qsF ' export-subst' .gitattributes || exit 1
-vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-grep -qs '^[ ]*git_refnames[ ]*=[ ]*".*"[ ]*$' "$vers_f" || exit 1
-sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
+%pyproject_scm_init v%version
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -56,11 +52,13 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %pyproject_run_pytest -vra test/
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
+- 0.7.0 -> 0.7.1.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - 0.6.19 -> 0.7.0.
 
