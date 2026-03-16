@@ -1,11 +1,11 @@
 Name:    tuwunel
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
 Group:   System/Servers
 URL:     https://github.com/matrix-construct/tuwunel
-VCS:     https://github.com/matrix-construct/tuwunel
+VCS:     https://github.com/matrix-construct/tuwunel.git
 
 ExcludeArch: %ix86
 
@@ -16,12 +16,10 @@ Source3: %name.sysusers
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 BuildRequires: liburing-devel
 BuildRequires: unzip
-BuildRequires: libclang21
-BuildRequires: glibc-devel clang
-BuildRequires: clang
+BuildRequires: glibc-devel
+BuildRequires: clang21.1 libclang21
 BuildRequires: gcc-c++
 
 %description
@@ -58,5 +56,8 @@ mkdir -p %buildroot/%_localstatedir/%name
 %doc LICENSE README.md
 
 %changelog
+* Mon Mar 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt1
+- Updated from 1.5.0 to 1.5.1 with security fixes.
+
 * Wed Feb 18 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 1.5.0-alt1
 - Initial build.
