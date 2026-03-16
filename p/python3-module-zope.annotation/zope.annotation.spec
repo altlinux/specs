@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
+Version: 6.0
 Release: alt1
 Summary: Object annotation mechanism
 License: ZPL-2.1
@@ -19,6 +19,8 @@ Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # setuptools(pkg_resources) is used by namespace root which is not used in ALT
 %add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
@@ -49,13 +51,14 @@ objects without need to modify object class.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.2 -> 6.0.
+
 * Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.1 -> 5.2.
 
