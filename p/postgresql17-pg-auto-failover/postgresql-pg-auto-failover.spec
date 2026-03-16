@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pg_ver 17
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg-auto-failover
 Version: 2.2
-Release: alt2
+Release: alt3
 
 Summary: Postgres %pg_ver extension and service for automated failover and high-availability
 License: PostgreSQL
@@ -58,10 +59,15 @@ by the monitor.
 %doc *.md
 %_bindir/pg_autoctl
 %_libdir/pgsql/*.so
-%_libdir/pgsql/bitcode/pgautofailover*
+%if %{enable_llvm}
+%_libdir/pgsql/bitcode/*
+%endif
 %_datadir/pgsql/extension
 
 %changelog
+* Mon Mar 16 2026 Alexei Takaseev <taf@altlinux.org> 2.2-alt3
+- Use LLVM if it used in PostgreSQL
+
 * Thu Jan 15 2026 Alexei Takaseev <taf@altlinux.org> 2.2-alt2
 - Add support PostgreSQL 18
 - Add BR libnuma-devel
