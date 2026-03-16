@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,11 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Mar 16 2026 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
+- detect failed subtask builds via try_iter filtering
+- build results filtered by try_iter to exclude stale data from previous iterations
+- optimize refresh: 1 stat for cold states (FAILED, TESTED, EPERM) instead of 4
+
 * Sat Mar 14 2026 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - added full-text search API (GET /tasks?q=...)
 - added EVR fields (epoch, version, release) to subtask output
