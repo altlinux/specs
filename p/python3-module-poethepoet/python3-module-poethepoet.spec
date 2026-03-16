@@ -2,7 +2,7 @@
 %define pypi_name poethepoet
 
 Name: python3-module-%pypi_name
-Version: 0.37.0
+Version: 0.42.1
 Release: alt1
 
 Summary: A task runner that works well with poetry and uv
@@ -23,9 +23,9 @@ BuildRequires(pre): rpm-build-pyproject
 %description
 A task runner that works well with poetry and uv.
 
-Poethepoet (or just "poe") is a simple task runner that works particularly 
-well with Python projects that use Poetry as their build tool. It provides 
-a standard way to define and run tasks for your project, from the command 
+Poethepoet (or just "poe") is a simple task runner that works particularly
+well with Python projects that use Poetry as their build tool. It provides
+a standard way to define and run tasks for your project, from the command
 line or from within your preferred editor or IDE.
 
 Key features:
@@ -53,6 +53,9 @@ Key features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 10 2026 Denis Rastyogin <gerben@altlinux.org> 0.42.1-alt1
+- Updated to 0.42.1.
+
 * Tue Sep 02 2025 Denis Sergeev <zeff@altlinux.org> 0.37.0-alt1
 - 0.36.0 -> 0.37.0.
 
