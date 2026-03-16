@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 580
-%define nv_release 126
-%define nv_minor 09
-%define pkg_rel alt305
+%define nv_release 142
+%define nv_minor %nil
+%define pkg_rel alt306
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt306
+- new version
+
 * Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 580.126.09-alt305
 - new version
 

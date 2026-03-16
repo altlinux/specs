@@ -19,8 +19,8 @@
 %endif
 
 %define nv_version 580
-%define nv_release 126
-%define nv_minor   09
+%define nv_release 142
+%define nv_minor   %nil
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release
 %if "%nv_minor" != "%nil"
@@ -320,6 +320,9 @@ done
 %endif
 
 %changelog
+* Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt1
+- new version
+
 * Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 580.126.09-alt1
 - new version
 
