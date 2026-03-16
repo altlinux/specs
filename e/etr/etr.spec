@@ -3,13 +3,13 @@
 %define _name etr
 # conflicts with extreme-tuxracer
 %define binary_name %_name
-%define ver_major 1.0
+%define ver_major 1.1
 %define import_path github.com/tkjaer/%_name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: ECMP-aware traceroute
@@ -64,6 +64,9 @@ export IGNORE_SOURCES=1
 %doc *.md docs/probe-encoding-design.md
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Mon Feb 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
