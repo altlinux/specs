@@ -1,6 +1,6 @@
 Name: powermanga
 Version: 0.93.1
-Release: alt2
+Release: alt3
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
@@ -22,7 +22,7 @@ BuildPreReq: rpm-build-licenses
 # Based on configure.ac
 BuildRequires: libXxf86dga-devel libXext-devel
 BuildRequires: libSDL-devel libSDL_mixer-devel
-BuildPreReq: libpng-devel
+BuildPreReq: libpng-devel zlib-devel
 
 %description
 In this shoot them up with 3d graphics, you'll have to face and destroy
@@ -50,9 +50,7 @@ description). To play the game, you should install both %name and %name-data pac
 %endif
 
 %configure \
-	--mandir=%_man6dir \
-	--enable-x11 \
-	--with-x
+	--mandir=%_man6dir
 %make scoredir=%_localstatedir/games
 
 %install
@@ -78,6 +76,10 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Mon Mar 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.93.1-alt3
+- fixed FTBFS
+- fixed segmentation fault (ALT #50648)
+
 * Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 0.93.1-alt2
 - Fixed build on ix86 due to --enable-default-pie
 
