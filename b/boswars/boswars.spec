@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install
 
 Name:           boswars
 Version:        2.8
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Bos Wars is a futuristic real-time strategy game
 License:        GPL-2.0-only
 URL:            https://www.boswars.org/
@@ -33,6 +33,7 @@ BuildRequires:	libpng-devel libpng17-tools
 BuildRequires:	libtheora-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	python3
+BuildRequires:	zlib-devel
 Requires:       icon-theme-hicolor
 Provides:	bundled(guichan)
 Provides:	bundled(tolua++)
@@ -91,6 +92,9 @@ install -D -p -m 644 %{SOURCE5} %{buildroot}%{_mandir}/man6/%{name}.6
 
 
 %changelog
+* Mon Mar 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.8-alt1_4
+- NMU: fix FTBFS with zlib
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.8-alt1_3
 - update to new release by fcimport
 
