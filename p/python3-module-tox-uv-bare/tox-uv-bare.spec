@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.33.2
+Version: 1.33.4
 Release: alt1
 Summary: Integration of uv with tox (bare package, bring your own uv)
 License: MIT
@@ -58,5 +58,8 @@ export UV_OFFLINE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.33.4-alt1
+- 1.33.2 -> 1.33.4.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 1.33.2-alt1
 - Initial build for sisyphus.

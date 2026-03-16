@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tox-uv
-%define mod_name tox_uv
+%define mod_name tox_uv_meta
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.33.2
+Version: 1.33.4
 Release: alt1
-Summary: Integration of uv with tox (meta package).
+Summary: Integration of uv with tox (meta package)
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tox-uv
@@ -52,8 +52,6 @@ popd
 pushd meta
 %pyproject_install
 popd
-# tox_uv directory is packaged in tox-uv-bare which is the dependency of tox-uv
-rm -rv %buildroot%python3_sitelibdir/%mod_name/
 
 %check
 pushd meta
@@ -68,9 +66,13 @@ ENDTESTS
 popd
 
 %files
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.33.4-alt1
+- 1.33.2 -> 1.33.4.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 1.33.2-alt1
 - 1.29.0 -> 1.33.2.
 
