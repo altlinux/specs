@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1
-Release: alt2
+Version: 1.1
+Release: alt1
 Summary: Custom YAML tag for referencing environment variables in YAML files
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -39,15 +41,17 @@ A custom YAML tag for referencing environment variables in YAML files.
 %pyproject_install
 
 %check
-%pyproject_run -- python test_yaml_env_tag.py
+%pyproject_run -- python tests/test_yaml_env_tag.py
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.cpython*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.1-alt1
+- 0.1 -> 1.1.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.1-alt2
 - Fixed FTBFS (tox 4).
 
