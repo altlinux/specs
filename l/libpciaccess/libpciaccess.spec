@@ -1,5 +1,5 @@
 Name: libpciaccess
-Version: 0.18.1
+Version: 0.19
 Release: alt1
 Epoch: 1
 Summary: X.org libpciaccess library
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:0.19-alt1
+- 0.19
+
 * Tue Mar 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:0.18.1-alt1
 - 0.18.1
 
