@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt9
+Release: alt10
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -101,6 +101,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt10
+- pkg-preinstall.d/00-pve.sh: fix for case when no group is selected.
+
 * Fri Feb 20 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt9
 - installer-steps: remove users-add step.
 
