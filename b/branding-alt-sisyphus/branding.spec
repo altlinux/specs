@@ -16,7 +16,7 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20250612
+Version: 20260316
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -288,6 +288,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 20260316-alt1
+- os-release: fix NAME, add VARIANT.
+
 * Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 20250612-alt1
 - ahttpd/images/steps: replace all icons with symlinks on empty.png
   (Closes: 52730)
