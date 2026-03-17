@@ -10,7 +10,7 @@
 %define libkookulargenerator_odt libkookulargenerator_odt%sover_gen
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.3
 Release: alt1
 #Epoch: 0
 %K6init no_altplace
@@ -429,6 +429,9 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Tue Nov 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
