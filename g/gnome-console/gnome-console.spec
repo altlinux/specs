@@ -3,7 +3,7 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 %define _name console
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
@@ -11,7 +11,7 @@
 %def_without nautilus
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Console
@@ -102,6 +102,9 @@ EOF
 %endif
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
