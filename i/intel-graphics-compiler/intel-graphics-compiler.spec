@@ -1,11 +1,11 @@
 %define soversion 2
-%define llvmversion 15
+%define llvmversion 16
 %define optflags_lto %nil
 
 %set_verify_elf_method skip
 
 Name: intel-graphics-compiler
-Version: 2.18.5
+Version: 2.28.4
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -40,7 +40,7 @@ BuildRequires: libmlir%llvmversion.0-devel
 BuildRequires: libvc-intrinsics-devel
 BuildRequires: libvc-intrinsics-devel-static
 BuildRequires: libintel-opencl-clang%llvmversion-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libtinfo-devel
 
 ExclusiveArch: x86_64
 
@@ -100,6 +100,7 @@ export ALTWRAP_LLVM_VERSION=%llvmversion.0
   -Wno-dev \
   -DIGC_OPTION__ARCHITECTURE_TARGET='Linux64' \
   -DIGC_OPTION__SPIRV_TOOLS_MODE=Prebuilds \
+  -DIGC_OPTION__API_ENABLE_OPAQUE_POINTERS=ON \
   -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds
 %cmake_build
 
@@ -138,6 +139,10 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Mon Mar 16 2026 L.A. Kostis <lakostis@altlinux.ru> 2.28.4-alt1
+- Updated to upstream version 2.28.4.
+- Enable opaque pointers (as upstream does).
+
 * Tue Sep 23 2025 Andrey Kovalev <ded@altlinux.org> 2.18.5-alt1
 - Updated to upstream version 2.18.5.
 

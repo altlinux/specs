@@ -6,9 +6,9 @@
 # Self-provided by python3(lldb14.0) in a custom path.
 %filter_from_requires /python[0-9.]\+(lldb)/d
 
-%global v_major 15
+%global v_major 16
 %global v_majmin %v_major.0
-%global v_full %v_majmin.7
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -18,9 +18,9 @@
 %global mlir_name mlir%v_majmin
 %global polly_name polly%v_majmin
 
-%global llvm_default_name llvm15.0
-%global clang_default_name clang15.0
-%global lld_default_name lld15.0
+%global llvm_default_name llvm%_llvm_version
+%global clang_default_name clang%_llvm_version
+%global lld_default_name lld%_llvm_version
 
 %global llvm_prefix %_prefix/lib/llvm-%v_majmin
 %global llvm_bindir %llvm_prefix/bin
@@ -37,6 +37,10 @@
 AutoReq: nopython
 AutoProv: nopython
 
+# mold needs additional ldflags
+# which pollute llvm-config --ldflags output
+%def_without mold
+
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
 %define optflags_debug -g0
@@ -46,19 +50,29 @@ AutoProv: nopython
 %endif
 
 # LTO-related flags are set by CMake.
+# LTO causes LLVM to break badly on %%ix86 see
+# https://github.com/llvm/llvm-project/issues/57740
+# will enable it conditionally per platform
 %global optflags_lto %nil
 
 %define hwasan_symbolize_arches x86_64 aarch64
-%ifarch riscv64
+%ifarch riscv64 loongarch64
 %def_without lldb
 %else
-%def_with lldb
+%def_without lldb
+%endif
+%ifarch loongarch64
+# XXX: LoongArch target is not ready yet, see https://reviews.llvm.org/D138135
+%def_without lld
+%else
+%def_with lld
 %endif
 
 %def_disable tests
 # disable clang on aarch64 due very long compile time
+# Do NOT use clang on LoongArch since lld is not ready yet
 %ifarch x86_64 ppc64le
-%def_with clang
+%def_without clang
 %else
 %def_without clang
 %endif
@@ -79,14 +93,14 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt11
+Release: alt9
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
 # Source-URL: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-project-%tarversion.src.tar.xz
-Source: llvm-project.tar
+Source: llvm-project-%{v_major}.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
@@ -97,6 +111,7 @@ Patch6: clang-12-alt-mips-use-fpxx-by-default.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-10-alt-python3.patch
+Patch11: RH-0010-PATCH-clang-Produce-DWARF4-by-default.patch
 # TODO: upstream this
 # Patch11: hwasan_symbolize-python3.patch
 Patch12: llvm-12-alt-mips-pcrel-personality.patch
@@ -104,45 +119,29 @@ Patch13: llvm-12-debian-mips-force-nomadd4.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
-# ROCm needs this
-Patch19: llvm-D132140.patch
-Patch20: llvm-support-python-3.13.patch
+Patch19: llvm-alt-cmake-build-with-install-rpath.patch
+Patch20: clang-16-alt-rocm-device-libs-path.patch
+Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
+Patch22: clang-D142199.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
-Patch103: clang-15-alt-rocm-device-libs-path.patch
-# fix libdevice search path for CUDA
-Patch104: clang-alt-nvvm-libdevice.patch
-# use DWARF4 by default
-Patch200: clang-produce-DWARF4-by-default.patch
+Patch103: clang-alt-nvvm-libdevice.patch
 
-# intel graphics compiler patches
-# https://github.com/intel/intel-graphics-compiler/tree/master/external/llvm/releases/15.0.0/patches_external
-Patch300: intel-IGC-0001-SCEV-Cache-ZExt-SCEV-expressions.patch
-Patch301: intel-IGC-0002-SCEV-Cache-ZExt-SCEV-expressions.patch
-Patch302: intel-IGC-0003-SCEV-Cache-ZExt-SCEV-expressions.patch
-Patch303: intel-IGC-0004-SCEV-Cache-ZExt-SCEV-expressions.patch
-Patch304: intel-IGC-0005-SCEV-Cache-ZExt-SCEV-expressions.patch
-Patch305: intel-IGC-alter-unroll-max-upperbound-command-line-option-value.patch
-Patch306: intel-IGC-Backport-When-creating-a-stack-space-for-inlined-byv.patch
-Patch307: intel-IGC-check-for-NaN-before-folding-select-for-FP.patch
-Patch308: intel-IGC-Don-t-emit-bitreverse-or-bswap-intrinsics-of-illegal.patch
-Patch309: intel-IGC-fix_DebugTypeInfoRemoval-remap_eval-ambiguity.patch
-Patch310: intel-IGC-InstCombine-Only-fold-bitcast-fptrunc-if-destination.patch
-Patch311: intel-IGC-LowerSwitch-RemoveUnreachableBBs.patch
-Patch312: intel-IGC-make-getPreviousDefRecursive-iterative.patch
-Patch313: intel-IGC-no-autoupgrader-igc-struct-typed-intrinsic.patch
-Patch314: intel-IGC-no-extra-BBs-in-JumpThreading-pass.patch
-Patch315: intel-IGC-no-instcombine-code-sinking.patch
-Patch316: intel-IGC-Remove-too-strict-restrictions-in-LICM-pass.patch
-Patch317: intel-IGC-unify-max-alignment-with-generic-max.patch
-# https://github.com/intel/opencl-clang/releases
-Patch400: clang-D151339-add-cl_ext_image_raw10_raw12.patch
-Patch401: intel-clang-0001-Remove-__IMAGE_SUPPORT__-macro-for-SPIR.patch
-Patch402: intel-clang-0002-Remove-wrong-check-of-__opencl_c_images-feature-macr.patch
-Patch403: intel-clang-0003-Fix-checking-mechanism-for-read_write-Image-type.patch
-Patch404: intel-clang-0004-OpenCL-Allow-undefining-header-only-macros.patch
-Patch405: intel-clang-0005-Enable-use-of-GNU-C-extension.patch
-Patch406: intel-clang-0006-OpenCL-Add-cl_khr_kernel_clock-builtins-91950.patch
+Patch200: clang-D151339-add-cl_ext_image_raw10_raw12.patch
+# intel opencl-clang v16.0.8 patches
+Patch201: intel-clang-0001-Remove-__IMAGE_SUPPORT__-macro-for-SPIR.patch
+Patch202: intel-clang-0002-Remove-wrong-check-of-__opencl_c_images-feature-macr.patch
+Patch203: intel-clang-0003-Fix-checking-mechanism-for-read_write-Image-type.patch
+Patch204: intel-clang-0004-OpenCL-Allow-undefining-header-only-macros.patch
+Patch205: intel-clang-0005-Enable-use-of-GNU-C-extension.patch
+Patch206: intel-clang-0006-OpenCL-Add-cl_khr_kernel_clock-builtins-91950.patch
+Patch207: intel-clang-0007-Clang-BFloat16-Upgrade-__bf16-to-arithmetic-type-cha.patch
+Patch208: intel-clang-0008-Clang-Enable-BFloat16-for-SPIR-SPIR-V.patch
+Patch209: intel-clang-0009-Clang-SPIR-V-Emit-target-extension-types-for-OpenCL-types-on-SPIR-V.patch
+Patch210: intel-clang-0010-OpenCL-Set-cl_khr_gl_msaa_sharing-minimum-version-to.patch
+Patch211: intel-clang-0011-OpenCL-Diagnose-invalid-conversion-from-pointer-to-v.patch
+
+Patch3500: llvm-16-loongarch-cpuname.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -159,14 +158,16 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
+BuildRequires: python3-module-myst-parser zip zlib-devel binutils-devel ninja-build
+# see https://bugs.altlinux.org/show_bug.cgi?id=52353
+BuildRequires: fonts-ttf-dejavu
 %if_with lldb_contrib
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(ncursesw)
 BuildRequires: pkgconfig(libxml-2.0)
 #BuildRequires: pkgconfig(lua)
 BuildRequires: swig-devel
-BuildRequires: python3-module-sphinx-automodapi python3-module-six
+BuildRequires: python3-module-sphinx-automodapi
 %if_with lldb_python
 BuildRequires: python3-devel
 %endif
@@ -175,6 +176,9 @@ BuildRequires: python3-devel
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
+%endif
+%if_with mold
+BuildRequires: mold
 %endif
 
 %define requires_filesystem Requires: %name-filesystem = %EVR
@@ -357,6 +361,7 @@ Group: Development/C
 %requires_filesystem
 Requires: clang-devel >= %_llvm_version
 Requires: %clang_name = %EVR
+Requires: %clang_name-tidy-devel-static = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -364,6 +369,18 @@ AutoProv: nopython
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
+
+%package -n %clang_name-tidy-devel-static
+Summary: Static libraries for clang tidy
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n %clang_name-tidy-devel-static
+This package contains static libraries for Clang Tidy.
 
 %package -n %clang_name-devel-static
 Summary: Static libraries for clang
@@ -637,7 +654,7 @@ This package contains documentation for the Polly optimizer.
 # for pkg in compiler-rt; do
    # mv $pkg-%tarversion.src projects/$pkg
 # done
-%setup -n llvm-project
+%setup -n llvm-project-%{v_major}
 %patch -p1 -b .alt-i586-fallback
 %patch1 -p1 -b .alt-triple
 %patch2 -p1
@@ -649,51 +666,35 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch10 -p1
-#patch11 -p1
+#%%patch11 -p1 -b .clang-DWARF4
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 #patch15 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p1
-%patch20 -p1
-
+%patch19 -p1 -b .llvm-cmake-build-with-install-rpath
+%patch20 -p1 -b .clang-rocm-device-path
+%patch21 -p1
+%patch22 -p1 -b .recommonmark
 %patch101 -p1
 %patch102 -p2
-%patch103 -p1 -b .clang-rocm-device-libs-path
-%patch104 -p1 -b .clang-libdevice-fix-path
-%patch200 -p1
+%patch103 -p1
+# intel opencl-clang patches
+%patch200 -p2
+%patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
+%patch206 -p1
+%patch207 -p1
+%patch208 -p1
+%patch209 -p1
+%patch210 -p1
+%patch211 -p1
 
-# IGC patches
-%ifarch x86_64
-%patch300 -p1
-%patch301 -p1
-%patch302 -p1
-%patch303 -p1
-%patch304 -p1
-%patch305 -p1
-%patch306 -p1
-%patch307 -p1
-%patch308 -p1
-%patch309 -p1
-%patch310 -p1
-%patch311 -p1
-%patch312 -p1
-%patch313 -p1
-%patch314 -p1
-%patch315 -p1
-%patch316 -p1
-%patch317 -p1
-# clang patches
-%patch400 -p2 -b .clang-add-cl_ext_image_raw10_raw12.patch
-%patch401 -p1
-%patch402 -p1
-%patch403 -p1
-%patch404 -p1
-%patch405 -p1
-%patch406 -p1
-%endif
+%patch3500 -p1 -b .la64
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -701,7 +702,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-PROJECTS="clang;clang-tools-extra;compiler-rt;lld;mlir;polly"
+PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
+%if_with lld
+PROJECTS="$PROJECTS;lld"
+%endif
 %if_with lldb
 PROJECTS="$PROJECTS;lldb"
 %endif
@@ -709,23 +713,27 @@ export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
-%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define builddir %_cmake__builddir
-export ALTWRAP_LLVM_VERSION=15.0
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
+%ifarch loongarch64
+	-DLLVM_PARALLEL_LINK_JOBS=%__nprocs \
+%else
 %if_with clang
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
 %else
 	-DLLVM_PARALLEL_LINK_JOBS=4 \
 %endif
+%endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
+	%_cmake_skip_rpath \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
-	-DLLVM_TARGETS_TO_BUILD="all" \
-	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
+	-DLLVM_TARGETS_TO_BUILD="host" \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
 	-DLLVM_ENABLE_FFI:BOOL=ON \
@@ -736,22 +744,24 @@ export ALTWRAP_LLVM_VERSION=15.0
 	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
 	-DCLANG_LINK_CLANG_DYLIB=ON \
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
+	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
 	\
 	%if_with clang
-	-DLLVM_ENABLE_LTO=Thin \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	-DLLVM_ENABLE_LTO=Thin \
+	%if_with mold
+	-DLLVM_USE_LINKER=mold \
+	-DCMAKE_CXX_LINK_FLAGS="-Wl,--thinlto-jobs=all" \
+	%else
 	-DLLVM_ENABLE_LLD:BOOL=ON \
-	%else
-	%ifarch mipsel
-	-DLLVM_ENABLE_LTO=Off \
-	%else
-	-DLLVM_ENABLE_LTO=Off \
 	%endif
-	%ifnarch riscv64
+	%else
+	-DLLVM_ENABLE_LTO=Off \
+	%ifnarch riscv64 loongarch64
 	-DLLVM_USE_LINKER=gold \
 	%endif
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
@@ -766,9 +776,6 @@ export ALTWRAP_LLVM_VERSION=15.0
 	-DLLVM_BUILD_TOOLS:BOOL=ON \
 	\
 	-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
-	%ifarch %ix86
-	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="i586-pc-linux-gnu" \
-	%endif
 	\
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
@@ -803,9 +810,17 @@ sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 ninja -vvv -j $NPROCS -C %builddir
 
 %install
+%if_with lld
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' %builddir/tools/lld/cmake_install.cmake
+%endif
 DESTDIR=%buildroot ninja -C %builddir install
+
+# scanbuild is noarch
+if [ %_libsuff == 64 ]; then
+mkdir -p %buildroot%llvm_prefix/lib ||:
+mv %buildroot%llvm_libdir/{libear,libscanbuild} %buildroot%llvm_prefix/lib
+fi
 
 # Prepare Clang documentation.
 rm -rf %builddir/clang-docs
@@ -820,7 +835,7 @@ install -m 0755 %builddir/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
 mkdir -p %buildroot%llvm_docdir/lld
 
 %ifarch %ix86
-cd %buildroot%llvm_libdir/clang/%v_full/lib/*-*-*-*
+cd %buildroot%llvm_libdir/clang/%v_major/lib/*-*-*-*
 ls *-i[3-9]86* | while read f; do ln -s $f $(echo $f | sed 's|i[3-9]86|i386|') ; done
 cd -
 %endif
@@ -867,6 +882,8 @@ find %buildroot%llvm_libdir/*.so* -type f,l \
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
 done
+# FIXME
+rm -f %buildroot%_libdir/libmlir_float16_utils.so
 
 # List all packaged binaries in this source package.
 find %buildroot%_bindir/*-%v_major > %_tmppath/PATH-executables
@@ -940,7 +957,7 @@ bin	llvm-mt
 bin,man	llvm-nm
 bin,man	llvm-objcopy
 bin,man	llvm-objdump
-bin	llvm-opt-report
+bin,man	llvm-opt-report
 bin,man	llvm-otool
 bin,man	llvm-pdbutil
 bin,man	llvm-profdata
@@ -963,6 +980,8 @@ bin,man	llvm-strings
 bin,man	llvm-strip
 bin,man	llvm-symbolizer
 bin,man	llvm-tblgen
+bin,man	llvm-debuginfo-analyzer
+bin,man	llvm-remarkutil
 bin	llvm-undname
 bin	llvm-xray
 bin	modularize
@@ -971,7 +990,6 @@ bin	pp-trace
 bin	run-clang-tidy
 bin	sancov
 bin	sanstats
-bin	split-file
 bin	verify-uselistorder
 
 man	FileCheck
@@ -999,6 +1017,8 @@ bin	scan-view
 EOExecutableList
 
 emit_filelist >%_tmppath/dyn-files-%clang_name-tools <<EOExecutableList
+bin	amdgpu-arch
+bin	nvptx-arch
 bin	c-index-test
 bin	clang-apply-replacements
 bin	clang-change-namespace
@@ -1006,13 +1026,12 @@ bin	clang-check
 bin	clang-doc
 bin	clang-extdef-mapping
 bin	clang-format
+bin	clang-include-cleaner
 bin	clang-include-fixer
 bin	clang-linker-wrapper
 bin	clang-move
-bin	clang-nvlink-wrapper
 bin	clang-offload-bundler
 bin	clang-offload-packager
-bin	clang-offload-wrapper
 bin	clang-pseudo
 bin	clang-query
 bin	clang-refactor
@@ -1020,7 +1039,7 @@ bin	clang-rename
 bin	clang-reorder-fields
 bin	clang-repl
 bin	clang-scan-deps
-man	clang-tblgen
+bin,man	clang-tblgen
 bin	clang-tidy
 bin	find-all-symbols
 bin	git-clang-format
@@ -1032,6 +1051,7 @@ bin	mlir-cpu-runner
 bin	mlir-linalg-ods-yaml-gen
 bin	mlir-lsp-server
 bin	mlir-opt
+bin	mlir-pdll
 bin	mlir-pdll-lsp-server
 bin	mlir-reduce
 bin,man	mlir-tblgen
@@ -1046,16 +1066,16 @@ EOExecutableList
 # Comment out file validation for CMake targets placed
 # in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(tblgen-lsp-server\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
-/APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(tblgen-lsp-server\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
 # that may be placed in a different package.
 sed -i '
-/APPEND _IMPORT_CHECK_FILES_FOR_.* .*[/]bin[/].*/ {s|^|#|}
+/APPEND _cmake_import_check_files_for_.* .*[/]bin[/].*/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/clang/ClangTargets-*.cmake
 
 %check
@@ -1081,8 +1101,10 @@ ninja -C %builddir check-all || :
 %dir %llvm_man1dir
 %dir %llvm_docdir
 %dir %llvm_docdir/LLVM
+%if_with lldb
 %dir %llvm_python3_libdir
 %dir %llvm_python3_sitelibdir
+%endif
 
 %files -f %_tmppath/dyn-files-%name
 %doc llvm/CREDITS.TXT llvm/LICENSE.TXT llvm/README.txt
@@ -1130,7 +1152,7 @@ ninja -C %builddir check-all || :
 %llvm_libdir/clang
 # clang-tools
 %ifarch %hwasan_symbolize_arches
-%exclude %llvm_libdir/clang/%v_full/bin/hwasan_symbolize
+%exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
 
 %files -n %clang_name-libs-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
@@ -1142,7 +1164,11 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libclang*.so
 %llvm_libdir/cmake/clang
 %llvm_libdir/libclang*.a
+%exclude %llvm_libdir/libclangTidy*.a
 %llvm_libdir/libfindAllSymbols.a
+
+%files -n %clang_name-tidy-devel-static
+%llvm_libdir/libclangTidy*.a
 
 %files -n %clang_name-analyzer -f %_tmppath/dyn-files-%clang_name-analyzer
 %llvm_libexecdir/c++-analyzer
@@ -1158,13 +1184,14 @@ ninja -C %builddir check-all || :
 %llvm_datadir/clang
 %exclude %llvm_datadir/clang/bash-autocomplete.sh
 %ifarch %hwasan_symbolize_arches
-%llvm_libdir/clang/%v_full/bin/hwasan_symbolize
+%llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
 
 %files -n %clangd_name
 %llvm_bindir/clangd
 %_bindir/clangd-%v_major
 
+%if_with lld
 %files -n %lld_name
 %llvm_bindir/lld
 %_bindir/lld-%v_major
@@ -1182,6 +1209,7 @@ ninja -C %builddir check-all || :
 %llvm_includedir/mach-o
 %llvm_libdir/cmake/lld
 %llvm_libdir/liblld*.a
+%endif
 
 %if_with lldb
 %files -n %lldb_name
@@ -1211,8 +1239,6 @@ ninja -C %builddir check-all || :
 
 %files -n python3-module-%lldb_name
 %llvm_python3_sitelibdir/lldb
-# Hope this file will not be needed anywhere else.
-%llvm_python3_sitelibdir/six.py
 %endif
 
 %files -n lib%mlir_name
@@ -1223,7 +1249,9 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libmlir_c_runner_utils.so.*
 %_libdir/libmlir_c_runner_utils.so.*
 %llvm_libdir/libmlir_runner_utils.so.*
+%llvm_libdir/libmlir_float16_utils.so.*
 %_libdir/libmlir_runner_utils.so.*
+%_libdir/libmlir_float16_utils.so.*
 
 %files -n lib%mlir_name-devel
 %llvm_includedir/mlir
@@ -1233,6 +1261,7 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libmlir_async_runtime.so
 %llvm_libdir/libmlir_c_runner_utils.so
 %llvm_libdir/libmlir_runner_utils.so
+%llvm_libdir/libmlir_float16_utils.so
 %llvm_libdir/cmake/mlir
 
 %files -n %mlir_name-tools -f %_tmppath/dyn-files-%mlir_name-tools
@@ -1252,8 +1281,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/clang
 %doc %llvm_docdir/LLVM/clang-tools
 
+%if_with lld
 %files -n %lld_name-doc
 %doc %llvm_docdir/lld
+%endif
 
 %if_with lldb
 %files -n %lldb_name-doc
@@ -1264,49 +1295,95 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
-* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt11
-- x86_64: apply patches from intel-opencl.
+* Sun Mar 15 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt9
+- Apply clang patches from intel opencl-clang v16.0.9.
+- Built only host targets.
+- lldb: disable.
+- Built with gcc to overcome LTO errors.
 
-* Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 15.0.7-alt10
-- NMU: fixed build with python3.13.
-
-* Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt9
-- x86_64: Added IGC patches to match IGC requirements.
-
-* Mon Feb 12 2024 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt8
-- backport fix from llvm17.0:
-  clang: fix wrong -print-runtime-dir on %%ix86.
-
-* Fri Dec 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt7
+* Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt8
 - Applied fixes:
-  clang: fix CUDA libdevice search path.
+  + clang: fix CUDA libdevice search path.
 
-* Mon Oct 02 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt6
-- Fix FTBFS: use llvm15.0 to build us explicitly.
-- clang: Pass --build-id=sha1 to linkers by default. (Closes: 47780)
-  Both of these changes are applied to clangs we build ALT packages with; if we
-  ever decouple clang-for-packages from clang-for-users, upstream behaviour can
-  be restored for the latter.
+* Fri Nov 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt7
+- spec: clang-devel does not fit into 4 GB on LoongArch, split clangTidy.a
+  into a subpackage to avoid the problem. Fixes FTBFS on LoongArch.
+- LoongArch: made `llc --version` print a meaningful CPU name instead of
+  '(unknown)' (upstream commit e53f41c39f3eb5052965c720d2cb517d2945fd12).
+  Some CMake scripts (in particular pocl) rely on `Host CPU` to figure out
+  the native target.
+- spec: do not restrict build concurrency on LoongArch (got enough CPU and
+  RAM here).
 
-* Tue Sep 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt5
-- Fix FTBFS: add missing six module (yes upstream #D131304
-  fixes this, but this change is too big).
+* Sat Sep 30 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt6
+- Restored clang-ALT-bug-40628-grecord-command-line.patch.
+- Made clang pass --build-id=sha1 to the linker.
 
-* Mon Jun 19 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt4
-- ppc64le: fix macro and build with clang.
-- clang: extend rocm device libs lookup path.
+* Thu Sep 14 2023 Arseny Maslennikov <arseny@altlinux.org> 16.0.6-alt5
+- Re-disabled broken import checks.
+- spec: Merged the loongarch64 alt triple patch into clang-alt-triple.patch.
 
-* Fri Jun 16 2023 Arseny Maslennikov <arseny@altlinux.org> 15.0.7-alt3
-- libpolly-doc: Marked as noarch.
-- Dropped tblgen-lsp-server from LLVMExports target check. That program is
-  located in a different subproject.
+* Tue Sep 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16.0.6-alt4
+- Support LoongArch architecture (lp64d ABI):
+  + clang-alt-triple-loongarch64.patch: added loongarch64-alt-linux triple
+  + spec: do not build/package lld on LoongArch (LoongArch targets are
+    not supported yet)
+  + spec: do not build lldb on LoongArch (not supported yet)
+  + spec: build with GCC/binutils on LoongArch (since lld does not support
+    LoongArch targets yet)
 
-* Mon Jun 12 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt2
+* Mon Aug 07 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt3
+- Added patches:
+  + lld: added python 3.12+ compatibility patch.
+  + clang: switch from recommonmark to myst_parser.
+
+* Thu Jun 29 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt2
+- x86_64: link with lld again (as mold needs non-standard ldflags which pollute
+  llvm-config output).
+- clang: update alt-triple patch (which should fix ROCM path detection in
+  AMDGPU driver).
+
+* Wed Jun 21 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt1
+- 16.0.6.
+- clang: fix rocm search path patch.
+- use versioned sources to fix debuginfo path intersections.
+
+* Tue Jun 20 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt3
+- Sync changes from llvm15.0:
+  + clang: extend rocm device libs lookup path.
+  + libpolly-doc: Marked as noarch (by arseny@).
+  + Dropped tblgen-lsp-server from LLVMExports target check. That program is
+    located in a different subproject (by arseny@).
+
+* Sat Jun 10 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt2
+- x86_64: use mold instead of lld.
 - aarch64: compile w/ gcc again (still 5hrs to compile w/ clang).
+- disable LTO if compiling w/ gcc (as upstream issue 57740).
 
-* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt1
-- 15.0.7.
-- clang: produce DWARF4 by default (backport RH patch from llvm16.x).
+* Thu Jun 08 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.5-alt1
+- 16.0.5.
+- cmake: use install rpath instead of build rpath to make
+  verify-elf happy.
+- clang: use DWARF4 by default (patch from RH).
+- spec: try to compile ppc64/aarch64 w/ clang again.
+
+* Tue May 30 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.5
+- trying to fix armh build.
+
+* Mon May 29 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.4
+- armh: build with clang without LLD/LTO.
+
+* Mon May 29 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.3
+- scanbuild: fix noarch install.
+- aarch64: use gcc (compilation with clang takes 5hrs!).
+
+* Sun May 28 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.2
+- .spec: fix %%ix86 build.
+
+* Fri May 26 2023 L.A. Kostis <lakostis@altlinux.ru> 16.0.4-alt0.1
+- 16.0.4.
+- Rediffed -alt patches.
+- .spec: update for new tools/directories.
 
 * Tue Jan 03 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.6-alt1.1
 - llvm/AMDGPU: Added __builtin_amdgcn_s_sendmsg_rtn (D132140).

@@ -1,7 +1,7 @@
-%define llvmversion 15
+%define llvmversion 16
 
 Name: libintel-opencl-clang%llvmversion
-Version: 15.0.4
+Version: 16.0.9
 Release: alt1
 
 Summary: Library to compile OpenCL C kernels to SPIR-V modules
@@ -11,6 +11,7 @@ Group: Development/C++
 Url: https://github.com/intel/opencl-clang
 # Source-url: https://github.com/intel/opencl-clang/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch: opencl-clang-alt-libspirv-inc.patch
 
 ExcludeArch: i586
 
@@ -36,7 +37,7 @@ is capable to compile OpenCL C kernels to SPIR-V modules.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
-Conflicts: libintel-opencl-clang14-devel
+Conflicts: libintel-opencl-clang14-devel, libintel-opencl-clang15-devel
 
 %description devel
 This package contains libraries and header files for
@@ -44,9 +45,13 @@ developing against %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
+    -Wno-dev \
+    -DLLVMSPIRV_INCLUDED_IN_LLVM=OFF \
+    -DSPIRV_TRANSLATOR_DIR=%_prefix \
     -DLLVM_TABLEGEN_EXE:FILEPATH=%_libexecdir/llvm-%llvmversion.0/bin/llvm-tblgen \
     -DLLVM_DIR=%_libexecdir/llvm-%llvmversion.0/lib64/cmake/llvm/
 %cmake_build
@@ -63,6 +68,15 @@ developing against %name
 %_includedir/cclang/
 
 %changelog
+* Mon Mar 16 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.9-alt1
+- 16.0.9.
+
+* Mon Mar 16 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.8-alt1
+- 16.0.8.
+
+* Fri Dec 19 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.5-alt1
+- 15.0.5.
+
 * Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.4-alt1
 - 15.0.4.
 

@@ -1,11 +1,11 @@
 %define soversion 1
-%define llvmversion 15
+%define llvmversion 16
 %define prefix legacy1
 %define optflags_lto %nil
 
 Name: intel-compute-runtime-legacy
-Version: 24.35.30872.32
-Release: alt3
+Version: 24.35.30872.36
+Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -95,6 +95,10 @@ export ALTWRAP_LLVM_VERSION=%llvmversion.0
 %_libdir/libze_intel_gpu_%prefix.so.%soversion
 
 %changelog
+* Tue Mar 17 2026 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.36-alt1
+- 24.35.30872.36.
+- Rebuild w/ llvm16.
+
 * Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.32-alt3
 - Rebuild w/ llvm15.
 

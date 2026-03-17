@@ -1,11 +1,11 @@
-%define llvmversion 15
+%define llvmversion 16
 %define git %nil
 
 Name: spirv-llvm%llvmversion.0-translator
-Version: 15.0.19
+Version: 16.0.22
 Release: alt1
 
-Summary: LLVM 15 to SPIRV Translator
+Summary: LLVM %llvmversion to SPIRV Translator
 License: NCSA
 Group: Development/C++
 
@@ -25,10 +25,10 @@ BuildRequires: mlir%llvmversion.0-tools
 BuildRequires: libmlir%llvmversion.0-devel
 BuildRequires: libpolly%llvmversion.0-devel
 
-Patch: spirv-llvm15.0-translator-15.0.12-alt-rename-pc-file.patch
+Patch: spirv-llvm16.0-translator-16.0.22-alt-rename-pc-file.patch
 
 %description
-Khronos LLVM 15 to SPIRV Translator. This is a library
+Khronos LLVM %llvmversion to SPIRV Translator. This is a library
 to be used by Mesa for OpenCL support. It translate
 LLVM IR to Khronos SPIR-V. It also includes a
 standalone tool used for building libclc.
@@ -46,7 +46,7 @@ Summary: %name static libraries
 Group: Development/C++
 Requires: lib%name = %EVR
 Conflicts: libLLVMSPIRVLib
-Conflicts: libspirv-llvm14.0-translator-devel
+Conflicts: libspirv-llvm14.0-translator-devel, libspirv-llvm15.0-translator-devel
 
 %description -n lib%name-devel
 %name development headers.
@@ -56,7 +56,7 @@ Summary: %name translator CLI
 Group: Development/C++
 Requires: lib%name = %EVR
 Conflicts: llvm-spirv
-Conflicts: llvm14-spirv
+Conflicts: llvm14-spirv, llvm15-spirv
 
 %description -n llvm%llvmversion-spirv
 command line utility for translating between LLVM bitcode and SPIR-V binary.
@@ -93,6 +93,9 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Mon Mar 16 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.22-alt1
+- 16.0.22.
+
 * Fri Dec 19 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.19-alt1
 - 15.0.19.
 

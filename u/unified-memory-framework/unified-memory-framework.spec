@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: unified-memory-framework
-Version: 0.11.2
+Version: 1.0.3
 Release: alt1
 
 Summary: The Unified Memory Framework (UMF) is a library for constructing allocators and memory pools
@@ -14,7 +14,6 @@ Group: Development/C++
 Url: https://oneapi-src.github.io/unified-memory-framework/
 Vcs: https://github.com/oneapi-src/unified-memory-framework.git
 Source: %name-%version.tar
-Patch: umf-alt-fix-ze-loader-name.patch
 
 ExclusiveArch: x86_64
 
@@ -47,7 +46,6 @@ UMF development headers and libraries
 
 %prep
 %setup
-%patch -p1
 
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -79,6 +77,9 @@ rm -rf %buildroot%_docdir/umf
 %_libdir/cmake/umf
 
 %changelog
+* Sat Mar 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.0.3-alt1
+- 1.0.3.
+
 * Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.11.2-alt1
 - 0.11.2.
 

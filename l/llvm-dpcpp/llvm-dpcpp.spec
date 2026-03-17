@@ -46,12 +46,12 @@
 %def_without jit
 %def_disable tests
 
-%define tarversion v6.2.0
+%define tarversion v6.3.0
 %define mversion %version
 
 Name: %llvm_name
-Version: 6.2.0
-Release: alt0.2
+Version: 6.3.0
+Release: alt0.1
 Epoch: 1
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
@@ -60,7 +60,7 @@ License: Apache-2.0 with LLVM-exception
 Url: https://github.com/intel/llvm.git
 Source0: llvm-project-%version.tar
 # vc-intrinsics https://github.com/intel/vc-intrinsics
-# 4e51b2467104a257c22788e343dafbdde72e28bb
+# 60cea7590bd022d95f5cf336ee765033bd114d69
 # vc-i is highly coupled with llvm so we can't use system one.
 Source1: vc-intrinsics.tar
 # compute-runtime headers (25.05.32567.17)
@@ -69,7 +69,6 @@ Source2: compute-runtime.tar
 # ALTLinux patches
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
-Patch5: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 Patch6: clang-ALT-bug-40628-grecord-command-line.patch
 Patch7: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
@@ -82,12 +81,8 @@ Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.pa
 Patch100: dpc-opencl-alt-use-system-cl-libs.patch
 Patch101: xptifw-alt-use-system-phm.patch
 Patch102: sycl-alt-do-not-hardcode-cl-lib.patch
-Patch103: ur-l0-remove-ext-semaphores-19835.patch
 Patch104: sycl-alt-remove-cl-headers.patch
-# https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/3217
-Patch105: llvm-spirv-fix-spirv-present-result.patch
 Patch106: clang-sycl-fix-arl-ocloc-name.patch
-Patch109: sycl-use-system-umf.patch
 Patch110: llvm-fix-dylib-deps.patch
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -110,7 +105,7 @@ BuildRequires: zip zlib-devel binutils-devel ninja-build libzstd-devel-static
 BuildRequires: gdb libhwloc-devel libbacktrace-devel emhash-devel
 BuildRequires: ocl-icd-devel libtbb-devel spirv-tools libspirv-tools-devel
 BuildRequires: libvulkan-devel spirv-headers >= 1.5.5-alt17 glslang glslc libze-devel
-BuildRequires: libumf-devel parallel-hashmap-devel
+BuildRequires: libumf-devel >= 1.0.0 parallel-hashmap-devel
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel
 %else
@@ -475,7 +470,6 @@ Requires: %libclc_name = %EVR
 #%%patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 #%%patch3 -p1 -b .alt-fix-linking
-%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch10 -p1
@@ -487,13 +481,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch100 -p1
 %patch101 -p2 -b .xptifw-use-system-phm
 %patch102 -p1
-%patch103 -p2 -b .ur-remove-ext-semaphores
 %patch104 -p1 -b .sycl-alt-remove-cl-headers
-pushd llvm-spirv
-%patch105 -p1 -b .llvm-spirv
-popd
 %patch106 -p1
-%patch109 -p2
 %patch110 -p2
 
 # LLVM 12 and onward deprecate Python 2:
@@ -524,7 +513,6 @@ export PWD=$(pwd)
 	-o "%_cmake__builddir" \
 	--l0-headers %_includedir/level_zero \
 	--l0-loader %_libdir/libze_loader.so \
-	--cmake-opt="-DLLVM_PARALLEL_LINK_JOBS=4" \
 %if_with mold
 	--cmake-opt="-DLLVM_USE_LINKER=mold" \
 %else
@@ -709,8 +697,8 @@ bin	llvm-lto2
 bin	llvm-mc
 bin	llvm-mca
 bin	llvm-ml
+bin	llvm-ml64
 bin	llvm-modextract
-bin	llvm-mt
 bin	llvm-nm
 bin	llvm-objcopy
 bin	llvm-objdump
@@ -788,6 +776,7 @@ bin	clang-scan-deps
 bin	clang-sycl-linker
 bin	clang-tblgen
 bin	git-clang-format
+bin	offload-arch
 bin	hmaptool
 EOExecutableList
 
@@ -799,6 +788,7 @@ bin	sycl-prof
 bin	sycl-sanitize
 bin	sycl-trace
 bin	sycl-module-split
+bin	syclbin-dump
 EOExecutableList
 
 # Comment out file validation for CMake targets placed
@@ -1006,6 +996,12 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Fri Mar 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1:6.3.0-alt0.1
+- Initial build of 6.3.0:
+  + cleanup merged/obsoleted patches.
+  + vc-intrinsics: update to 60cea7590bd022d95f5cf336ee765033bd114d69.
+  + BR: bump umf requires.
+
 * Tue Dec 09 2025 L.A. Kostis <lakostis@altlinux.ru> 1:6.2.0-alt0.2
 - build: disable assertions (were enabled by default).
 
