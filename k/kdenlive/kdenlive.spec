@@ -5,8 +5,8 @@
 %define current_ver_mlt %{get_version mlt-utils}
 
 Name: kdenlive
-Version: 25.08.3
-Release: alt2
+Version: 25.12.3
+Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -54,7 +54,6 @@ Source4: rapidjson.tar
 Source5: Imath.tar
 Patch2: alt-find-lumas.patch
 Patch3: alt-defaults.patch
-Patch4: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): libavformat-devel
@@ -63,6 +62,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules
 #BuildRequires: git-core
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-networkauth-devel
+BuildRequires: libkddockwidgets-qt6-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: imath-devel pybind11-devel rapidjson-devel
 BuildRequires: libswresample-devel
@@ -93,7 +93,6 @@ tar xvf %SOURCE5
 popd
 #%patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 install -m 0644 %SOURCE1 .
 sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
@@ -101,6 +100,7 @@ sed -i "/GIT_REPOSITORY.*OpenTimelineIO/s|GIT_REPOSITORY.*|URL file://${PWD}/oti
 
 %build
 %K6build \
+    -DFETCH_OTIO:BOOL=ON \
     -DOTIO_AUTOMATIC_SUBMODULES:BOOL=OFF \
     -DOTIO_DEPENDENCIES_INSTALL:BOOL=OFF \
     -DOTIO_CXX_INSTALL:BOOL=OFF \
@@ -130,6 +130,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/qlogging-categories?/*.*categories
 
 %changelog
+* Tue Mar 17 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 - update requires
