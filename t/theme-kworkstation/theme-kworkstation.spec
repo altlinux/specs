@@ -1,6 +1,6 @@
 Name: theme-kworkstation
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Summary: Workstation K theme
 Group: Graphics
@@ -16,7 +16,7 @@ Requires: kde-theme-alt
 Requires: icon-theme-altos
 
 %description
-Workstatio K theme.
+Workstation K theme.
 
 %prep
 %setup
@@ -40,6 +40,9 @@ done
 %_datadir/plasma/desktoptheme/altos-*/icons/*alt*.*
 
 %changelog
+* Tue Mar 17 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt3
+- fix package description
+
 * Thu Mar 12 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt2
 - fix package summary
 
