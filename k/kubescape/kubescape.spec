@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kubescape
-Version: 4.0.0
+Version: 4.0.2
 Release: alt1
 Summary: Kubernetes security CLI tool
 License: Apache-2.0
@@ -11,6 +11,8 @@ URL: https://kubescape.io/
 VCS: https://github.com/kubescape/kubescape
 
 ExclusiveArch: %go_arches
+ExcludeArch: %ix86
+
 Source0: %name-%version.tar
 Source1: vendor.tar
 
@@ -45,5 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Mar 10 2026 Alexey Rodygin <alehandro@altlinux.org> 4.0.2-alt1
+- Update to new version 4.0.2.
+- Disable build on i586 due to lack of memory error.
+
 * Wed Feb 18 2026 Alexey Rodygin <alehandro@altlinux.org> 4.0.0-alt1
 - Initial build for ALT Linux
