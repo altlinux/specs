@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.44
+Version: 1.0.46
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -98,6 +98,9 @@ sed \
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Tue Mar 17 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.46-alt1
+- New version 1.0.46.
+
 * Thu Mar 05 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.44-alt1
 - New version 1.0.44.
 - Fixed build on shrinked dqt6.
