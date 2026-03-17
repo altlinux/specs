@@ -10,7 +10,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.21.1
+Version: 4.21.2
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -162,6 +162,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Mar 17 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
+- Updated to 4.21.2.
+
 * Sun Mar 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
 - Updated to 4.21.1.
 
