@@ -1,4 +1,4 @@
-%define ver_major 49
+%define ver_major 50
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: dspy
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to discover and explore D-Bus services
@@ -61,6 +61,9 @@ D-Spy was originally part of GNOME Builder.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 

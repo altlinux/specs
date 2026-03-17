@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
@@ -10,9 +10,9 @@
 %define xdg_name org.gnome.Sysprof
 %define _libexecdir %_prefix/libexec
 
-
 %def_enable sysprofd
 %def_enable gtk
+%def_disable docs
 %ifnarch %e2k
 %def_enable libunwind
 %endif
@@ -35,8 +35,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.76
-%define gtk_ver 4.15.2
-%define adw_ver 1.6
+%define gtk_ver 4.20
+%define adw_ver 1.8
 %define dex_ver 0.9
 %define panel_ver 1.4
 %define systemd_ver 222
@@ -51,10 +51,10 @@ BuildRequires: libdw-devel
 BuildRequires: libdebuginfod-devel
 BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: gobject-introspection-devel
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adw_ver}
 %{?_enable_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
-
 
 %description
 The Sysprof profiler is a statistical profiler based on hardware
@@ -76,7 +76,9 @@ developing applications that use GtkGHex library.
 %build
 %meson \
     %{subst_enable_meson_bool gtk gtk} \
-    %{?_enable_sysprofd:-Dsysprofd=bundled}
+    %{?_enable_sysprofd:-Dsysprofd=bundled} \
+    %{subst_enable_meson_bool docs docs}
+%nil
 %meson_build
 
 %install
@@ -122,6 +124,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 1.0
+%define ver_major 1.1
 %define beta %nil
 %define api_ver 1
 %define namespace Dex
 
-%def_disable liburing
+%def_enable liburing
 %def_enable introspection
 %def_enable vala
 %def_enable docs
@@ -32,10 +32,10 @@ Source: %name-%version.tar
 Patch2000: %name-e2k.patch
 
 %define meson_ver 1.0.0
-%define glib_ver 2.68
+%define glib_ver 2.88
 %define uring_ver 0.7
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson >= %meson_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 %{?_enable_liburing:BuildRequires: liburing-devel >= %uring_ver}
@@ -99,6 +99,8 @@ This package contains Dex example programs.
 %patch2000 -p2
 %endif
 
+sed -i 's|pure: true|pure: false|' src/meson.build
+
 %build
 %meson \
     %{subst_enable_meson_feature liburing liburing} \
@@ -127,6 +129,8 @@ This package contains Dex example programs.
 %if_enabled introspection
 %files gir
 %_typelibdir/%namespace-%api_ver.typelib
+%python3_sitelibdir/gi/overrides/%namespace.py
+%python3_sitelibdir/gi/overrides/__pycache__/*
 
 %files gir-devel
 %_girdir/%namespace-%api_ver.gir
@@ -143,8 +147,12 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Fri Sep 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
+- enabled liburing support
 
 * Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
