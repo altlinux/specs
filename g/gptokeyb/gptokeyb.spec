@@ -1,6 +1,6 @@
 Name:    gptokeyb
 Version: 0.2.9
-Release: alt3.gitb85b098
+Release: alt4.gitb85b098
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
 License: GPLv2
@@ -79,6 +79,9 @@ install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
 %_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Tue Mar 17 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt4.gitb85b098
+- Fix name of Powkiddy RGB20 Pro
+
 * Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt3.gitb85b098
 - Fix button mapping
 
