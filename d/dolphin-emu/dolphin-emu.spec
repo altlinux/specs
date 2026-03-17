@@ -1,17 +1,17 @@
-%define git_commit 2614969fa80dfeb87d2a4ad3bdaa703237127074
+%define git_commit d8558142ead21b3fa39809c4aedb982fbfc85feb
 
 %define enet_version 1.3.18
 %define implot_commit 3da8bd34299965d3b0ab124df743fe3e076fa222
-%define rcheevos_version 12.0.0
+%define rcheevos_version 12.2.0
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 %define watcher_version 0.13.6
-%define cpp_ipc_commit a0c7725a1441d18bc768d748a93e512a0fa7ab52
+%define cpp_ipc_version 1.4.0
 %define imgui_version 1.92.2b
 %define cpp_optparse_commit 2265d647232249a53a03b411099863ceca35f0d3
 %define mgba_commit 0b40863f64d0940f333fa1c638e75f86f8a26a33
 
 Name: dolphin-emu
-Version: 2512
+Version: 2603
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -35,8 +35,8 @@ Source3: rcheevos-%rcheevos_version.tar
 Source4: tinygltf-%tinygltf_commit.tar
 # https://github.com/e-dant/watcher/archive/%watcher_version/watcher-%watcher_version.tar.gz
 Source5: watcher-%watcher_version.tar
-# https://github.com/mutouyun/cpp-ipc/archive/%cpp_ipc_commit/cpp-ipc-%cpp_ipc_commit.tar.gz
-Source6: cpp-ipc-%cpp_ipc_commit.tar
+# https://github.com/mutouyun/cpp-ipc/archive/v%cpp_ipc_version/cpp-ipc-%cpp_ipc_version.tar.gz
+Source6: cpp-ipc-%cpp_ipc_version.tar
 # https://github.com/ocornut/imgui/archive/v%imgui_version/imgui-%imgui_version.tar.gz
 Source7: imgui-%imgui_version.tar
 # https://github.com/weisslj/cpp-optparse/archive/%cpp_optparse_commit/cpp-optparse-%cpp_optparse_commit.tar.gz
@@ -104,7 +104,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 %__mv -Tf ../watcher-%watcher_version Externals/watcher/watcher
-%__mv -Tf ../cpp-ipc-%cpp_ipc_commit Externals/cpp-ipc/cpp-ipc
+%__mv -Tf ../cpp-ipc-%cpp_ipc_version Externals/cpp-ipc/cpp-ipc
 %__mv -Tf ../imgui-%imgui_version Externals/imgui/imgui
 %__mv -Tf ../cpp-optparse-%cpp_optparse_commit Externals/cpp-optparse/cpp-optparse
 %__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
@@ -147,6 +147,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Tue Mar 17 2026 Nazarov Denis <nenderus@altlinux.org> 2603-alt1
+- Version 2603
+
 * Tue Jan 06 2026 Nazarov Denis <nenderus@altlinux.org> 2512-alt1
 - Version 2512
 
