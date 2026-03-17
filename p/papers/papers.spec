@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 49.4
+Version: 50.0
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -50,7 +50,7 @@ BuildArch: noarch
 Requires: %name = %EVR
 
 %description doc
-%{summary doc}
+%summary.
 
 %package devel
 Summary: Development files for Papers
@@ -58,7 +58,7 @@ Group: Development/GNOME and GTK+
 Requires: %name = %EVR
 
 %description devel
-%{summary devel}
+%summary.
 
 %package gir
 Summary: GObject instrospection data for Papers
@@ -66,7 +66,7 @@ Group: System/Libraries
 Requires: %name = %EVR
 
 %description gir
-%{summary gir}
+%summary.
 
 %package gir-devel
 Summary: GObject introspection devel data for Papers
@@ -75,7 +75,7 @@ BuildArch: noarch
 Requires: %name-gir = %EVR
 
 %description gir-devel
-%{summary gir-devel}
+%summary.
 
 %prep
 %setup -a1
@@ -137,6 +137,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Mar 17 2026 Anton Zhukharev <ancieg@altlinux.org> 50.0-alt1
+- Updated to 50.0.
+
 * Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 49.4-alt1
 - Updated to 49.4.
 
