@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt12
+Release: alt13
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -47,6 +47,7 @@ Patch27: %name-1.32.0-qt6-library.patch
 Patch28: %name-1.32.0-wrapper-args.patch
 Patch29: %name-1.32.0-fallback-greeter.patch
 Patch30: %name-1.32.0-release-vt.patch
+Patch31: %name-1.32.0-greeter-setup-script.patch
 
 Requires: dm-tool
 Requires: lightdm-greeter
@@ -283,6 +284,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Mon Mar 16 2026 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt13
+- fix run fallback greeter in case of problems with the X server
+- ignore greeter-setup-script error with warning
+
 * Thu Feb 26 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.32.0-alt12
 - e2k build fix
 
