@@ -4,7 +4,7 @@
 
 Name: rabbitmq-c
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -31,7 +31,7 @@ RabbitMQ broker.
 Summary: Libraries for %name
 Group: System/Libraries
 Provides: librabbitmq-c = %EVR
-Conflicts: librabbitmq-c
+Conflicts: librabbitmq-c < %EVR
 
 %description -n librabbitmq-c%sover
 %summary
@@ -83,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Fri Mar 13 2026 Egor Ignatov <egori@altlinux.org> 0.15.0-alt2
+- Fix librabbitmq-c%%sover self conflict (Closes: #58226)
+
 * Fri Nov 29 2024 Egor Ignatov <egori@altlinux.org> 0.15.0-alt1
 - 0.15.0
 
