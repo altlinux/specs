@@ -1,9 +1,9 @@
 %define pg_ver 18
-%def_with jit
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_partman
 Version: 5.4.3
-Release: alt1
+Release: alt2
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
 License: PostgreSQL
@@ -53,14 +53,17 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 
 %files
 %_bindir/*
-%_libdir/pgsql/pg_partman_bgw.so
-%if_with jit
-%_libdir/pgsql/bitcode/src/pg_partman_bgw*
+%_libdir/pgsql/*.so
+%if %{enable_llvm}
+%_libdir/pgsql/bitcode/*
 %endif
 %_datadir/pgsql/extension/*
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Tue Mar 17 2026 Alexei Takaseev <taf@altlinux.org> 5.4.3-alt2
+- Use LLVM if it used in PostgreSQL
+
 * Fri Mar 06 2026 Alexei Takaseev <taf@altlinux.org> 5.4.3-alt1
 - 5.4.3
 
