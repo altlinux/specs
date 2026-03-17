@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -61,6 +61,9 @@ rm -r ./vendor/hiredis/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.3.0 -> 3.3.1.
+
 * Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.2.1 -> 3.3.0.
 
