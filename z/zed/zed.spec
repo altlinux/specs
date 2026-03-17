@@ -5,12 +5,13 @@
 %define app_cli zed-editor
 
 %define webrtc_basedir %_builddir
-%define webrtc_tar webrtc-b99fd2c-6
+# git grep WEBRTC_TAG
+%define webrtc_tar webrtc-0001d84-2
 %define webrtc_source %SOURCE4
 %define webrtc_dir %webrtc_basedir/linux-x64-release
 
 Name: zed
-Version: 0.225.10
+Version: 0.227.1
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -25,7 +26,7 @@ Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: config.toml
 Source3: update-metadata-releases.py
-Source4: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
+Source4: https://github.com/livekit/rust-sdks/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-rust
@@ -37,6 +38,7 @@ BuildRequires: gcc-c++
 BuildRequires: libgit2-devel libssh2-devel libssl-devel
 BuildRequires: libzstd-devel zlib-devel bzip2-devel
 BuildRequires: libalsa-devel
+BuildRequires: glib2-devel libgio-devel libexpat-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
@@ -106,6 +108,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Mar 12 2026 Alexey Shabalin <shaba@altlinux.org> 0.227.1-alt1
+- updated from 0.225.10 to 0.227.1
+
 * Fri Feb 27 2026 Alexey Shabalin <shaba@altlinux.org> 0.225.10-alt1
 - updated from 0.223.5 to 0.225.10
 
