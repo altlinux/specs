@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt1
+Release: alt2
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -546,6 +546,12 @@ fi
 %endif
 
 %changelog
+* Tue Mar 17 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt2
+- fix grub-efi-install not passing target to grub-install
+- fix boot regression with btrfs on multiple devices on systems without udev
+- add grub-efi-{install,autoupdate} ESP discovery fallback on GUID mismatch
+- os-prober minor btrfs improvements
+
 * Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt1
 - update to grub 2.14
 - add grub-efi-install utility for EFI installation with Secure Boot support and

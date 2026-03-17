@@ -2,7 +2,7 @@
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.83
+Version: 1.84
 Release: alt2
 
 Summary: Operating systems detector
@@ -13,13 +13,6 @@ VCS: https://salsa.debian.org/installer-team/os-prober.git
 
 Source0: %name-%version.tar
 
-Patch: %name-1.42-UUID-rootdev-alt.patch
-Patch1: %name-1.77-alt-grub2-detect-auto-reference.patch
-Patch2: %name-1.77-alt-grub2-skip-30_os-prober-parsing.patch
-Patch3: %name-1.77-alt-check-identical-uuid-of-root.patch
-Patch4: %name-1.77-alt-dmdevfs-use-for-raid.patch
-Patch5: os-prober-1.83-fedora-grub-mount-workaround.patch
-
 %description
 This is a small package that may be depended on by any bootloader
 installer package to detect other filesystems with operating systems on
@@ -27,12 +20,6 @@ them, and work out how to boot other linux installs.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %make_build
@@ -52,11 +39,15 @@ cp -a os-probes/mounted/common/* %buildroot%_libexecdir/os-probes/mounted/
 cp -a os-probes/common/* %buildroot%_libexecdir/os-probes/
 
 mkdir -p %buildroot%_libexecdir/linux-boot-probes/mounted
+mkdir -p %buildroot%_libexecdir/linux-boot-probes/btrfs
 cp -a linux-boot-probes/common/* %buildroot%_libexecdir/linux-boot-probes
 cp -a linux-boot-probes/mounted/x86/* \
    %buildroot%_libexecdir/linux-boot-probes/mounted/
 cp -a linux-boot-probes/mounted/common/* \
    %buildroot%_libexecdir/linux-boot-probes/mounted/
+cp -a linux-boot-probes/btrfs/* \
+   %buildroot%_libexecdir/linux-boot-probes/btrfs/
+
 
 mkdir -p %buildroot%_localstatedir/os-prober
 
@@ -71,6 +62,12 @@ mkdir -p %buildroot%_localstatedir/os-prober
 %_localstatedir/os-prober
 
 %changelog
+* Tue Mar 17 2026 Egor Ignatov <egori@altlinux.org> 1.84-alt2
+- Add btrfs support (closes: #54224, #49156).
+
+* Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 1.84-alt1
+- 1.84
+
 * Wed Mar 05 2025 Egor Ignatov <egori@altlinux.org> 1.83-alt2
 - Add fedora patch to workaround grub-mount being slow with large directories.
 
