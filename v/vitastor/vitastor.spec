@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 2.4.4
+Version: 3.0.5
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -17,8 +17,8 @@ Source3: json11.tar
 Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ ninja-build
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
 
 BuildRequires: pkgconfig(liburing) >= 2.11
 BuildRequires: pkgconfig(libnl-3.0) pkgconfig(libnl-genl-3.0)
@@ -125,16 +125,10 @@ balancer or any failover method you want to in that case.
 Group: System/Libraries
 Summary: Vitastor SDS user-space client library
 License: VNPL-1.1 OR GPL-2.0+
+Obsoletes: lib%name-blk < 3.0.0
 
 %description -n lib%name-client
 Vitastor SDS user-space client library.
-
-%package -n lib%name-blk
-Group: System/Libraries
-Summary: Vitastor SDS blk library
-
-%description -n lib%name-blk
-Vitastor SDS blk library.
 
 %package -n lib%name-kv
 Group: System/Libraries
@@ -145,9 +139,10 @@ Vitastor shared key/value database library.
 
 %package -n lib%name-devel
 Group: Development/C++
-Summary: Vitastor SDS headers of client and blk library
+Summary: Vitastor SDS headers of client and library
 License: VNPL-1.1 OR GPL-2.0+
-Requires: lib%name-blk = %EVR lib%name-client = %EVR
+Requires: lib%name-client = %EVR
+Requires: lib%name-kv = %EVR
 
 %description -n lib%name-devel
 This package contains libraries and headers needed to develop programs
@@ -176,15 +171,15 @@ sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake \
-        -DWITH_QEMU=OFF \
-        -DWITH_FIO=OFF \
-	-DWITH_SYSTEM_LIBURING=ON \
-        -GNinja
-%cmake_build
+%meson \
+    -Dwith_qemu=false \
+    -Dwith_fio=false \
+    -Dwith_system_liburing=true
+
+%meson_build
 
 %install
-%cmake_install
+%meson_install
 
 mkdir -p %buildroot{%_sysconfdir,%_libexecdir,%_localstatedir}/%name
 cp -r mon %buildroot%_libexecdir/%name
@@ -272,9 +267,6 @@ fi
 %_bindir/%name-nfs
 %_bindir/vitastor-kv
 
-%files -n lib%name-blk
-%_libdir/lib%{name}_blk.so.*
-
 %files -n lib%name-client
 %_libdir/lib%{name}_client.so.*
 
@@ -293,6 +285,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 17 2026 Alexey Shabalin <shaba@altlinux.org> 3.0.5-alt1
+- 3.0.5
+
 * Tue Dec 09 2025 Alexey Shabalin <shaba@altlinux.org> 2.4.4-alt1
 - 2.4.4
 
