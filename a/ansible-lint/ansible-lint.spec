@@ -1,6 +1,6 @@
 Name: ansible-lint
 Version: 26.3.0
-Release: alt1
+Release: alt2
 
 Summary: Best practices checker for Ansible
 
@@ -33,6 +33,8 @@ Requires: ansible-core >= 2.17.6
 Requires: ansible-compat >= 25.1.3
 Requires: python3-module-yamllint
 
+%add_python3_req_skip pytest
+
 %description
 ansible-lint checks playbooks for practices and behavior that could
 potentially be improved.
@@ -56,6 +58,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 17 2026 Andrey Cherepanov <cas@altlinux.org> 26.3.0-alt2
+- Remove pytest from autorequirements.
+
 * Fri Mar 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.3.0-alt1
 - New version.
 
