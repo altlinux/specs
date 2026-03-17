@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.18
+%define ver_major 5.20
 %define namespace GtkSource
 %define api_ver 5
 
@@ -172,6 +172,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 5.20.0-alt1
+- 5.20.0
+
 * Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 5.18.0-alt1
 - 5.18.0
 

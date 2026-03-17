@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name glycin
-%define ver_major 2.0
+%define ver_major 2.1
 %define beta %nil
 %define namespace Gly
 %define api_ver_major 2
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-%api_ver_major
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -31,10 +31,11 @@ Source: %_name-%version%beta.tar
 %endif
 Source1: %_name-%version%beta-cargo.tar
 
-%define gtk_ver 4.12
+%define gtk_ver 4.16
 %define cairo_ver 1.17
 %define rsvg_ver 2.52.0
-%define heif_ver 1.14.2
+%define heif_ver 1.17.0
+%define jxl_ver 0.11.1
 %define lcms_ver 2.14
 %define seccomp_ver 2.5.0
 
@@ -45,7 +46,7 @@ BuildRequires: pkgconfig(cairo) >= %cairo_ver
 BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver
 BuildRequires: pkgconfig(libheif) >= %heif_ver
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(libjxl)
+BuildRequires: pkgconfig(libjxl) >= %jxl_ver
 BuildRequires: pkgconfig(lcms2) >= %lcms_ver
 BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
 BuildRequires: gobject-introspection-devel gir(Gtk) = 4.0
@@ -207,6 +208,9 @@ tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.8-alt1
 - 2.0.8
 

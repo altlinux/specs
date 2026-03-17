@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Loupe
 
@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
@@ -35,7 +35,7 @@ Source1: %name-%version-cargo.tar
 %define lcms2_ver 2.12.0
 %define seccomp_ver 2.5.0
 %define glycin_api_ver 2
-%define glycin_ver 2.0
+%define glycin_ver 2.1
 
 Provides: gnome-image-viewer = %EVR
 Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver
@@ -85,6 +85,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -48,6 +48,8 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
 # for Glycin
 BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver pkgconfig(lcms2)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
@@ -86,6 +88,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
