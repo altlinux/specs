@@ -1,6 +1,6 @@
 Name: rocksndiamonds
 Version: 4.3.8.2
-Release: alt1
+Release: alt3
 
 Summary: A boulderdash like game
 License: GPL-2.0
@@ -13,6 +13,7 @@ Source2: %name.1
 Source10: %name.16.png
 Source11: %name.32.png
 Source12: %name.48.png
+Source22: RocksDoor.png
 
 Requires: %name-data = %version-%release
 
@@ -53,10 +54,8 @@ This package contains levels for Rocks'N'Diamonds
 %setup
 
 %build
-## 8.12.2022 - switch to single-core build. Reason: 
-## https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/rocksndiamonds-4.3.2.1-alt1
-
 %define _pkgdatadir %_gamesdatadir/%name
+# disable SMP build due to git.alt ftbfs unreproducible on basalt (#411265)
 make OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
 
 %install
@@ -66,12 +65,22 @@ install -pD -m644 %name.1 %buildroot%_mandir/man1/%name.1 || \
 install -pD -m644 %SOURCE2 %buildroot%_mandir/man1/%name.1
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
+install -pD -m644 %SOURCE22 graphics/gfx_classic/
+
 mkdir -p %buildroot%_pkgdatadir
 cp -a docs graphics levels sounds music  %buildroot%_pkgdatadir
 
 install -m644 %SOURCE10 -D %buildroot/%_miconsdir/%name.png
 install -m644 %SOURCE11 -D %buildroot/%_niconsdir/%name.png
 install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
+
+mv %buildroot%_gamesbindir/%name{,.bin}
+cat > %buildroot%_gamesbindir/%name << EOF
+#!/bin/sh
+cd %_pkgdatadir
+exec %name.bin
+EOF
+chmod 755 %buildroot%_gamesbindir/%name
 
 %files
 %_gamesbindir/*
@@ -84,6 +93,14 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Tue Mar 17 2026 Michael Shigorin <mike@altlinux.org> 4.3.8.2-alt3
+- Disable SMP build (still fails to build on git.alt but not locally)
+
+* Fri Mar 13 2026 Michael Shigorin <mike@altlinux.org> 4.3.8.2-alt2
+- Door graphics denazification (closes: ALT#58219; thx zerg@)
+- Add wrapper to fix startup (closes: ALT#52894)
+- Re-enable SMP build (fixed since 2022)
+
 * Tue Feb 27 2024 Artyom Bystrov <arbars@altlinux.org> 4.3.8.2-alt1
 - Update to new version
 
