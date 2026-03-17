@@ -1,7 +1,7 @@
 %def_with check
 Name: opam
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: A source-based package manager for OCaml
 Group: Development/ML
 License: LGPL-2.1-only WITH OCaml-LGPL-linking-exception
@@ -28,6 +28,8 @@ BuildRequires: ocaml-spdx_licenses-devel >= 1.0.0
 BuildRequires: ocaml-swhid_core-devel
 BuildRequires: ocaml-uutf-devel
 BuildRequires: libstdc++-devel
+
+Requires: ocaml-opam-installer = %EVR
 
 %if_with check
 BuildRequires: rpm-build-vm
@@ -252,6 +254,10 @@ vm-run --user ./run-test-in-vm.sh
 %files -n ocaml-opam-state-devel -f ocaml-files.devel.opam-state
 
 %changelog
+* Tue Mar 17 2026 Anton Farygin <rider@altlinux.org> 2.5.0-alt2
+- temporarily added a dependency on opam-installer to the opam package
+  to simplify the OCaml bootstrapping process in the p11 branch
+
 * Thu Dec 25 2025 Anton Farygin <rider@altlinux.org> 2.5.0-alt1
 - 2.3.0 -> 2.5.0
 - switch from make to dune build system
