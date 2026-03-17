@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.12
+Release: alt0.13
 Epoch: 1
 Url: https://altsp.su
 
@@ -47,14 +47,15 @@ Group: Graphics
 Summary: System/Base
 License: GPL-2.0-or-later
 
-%define distro_name ALT SP Workstation
-%define distro_name_ru Альт СП Рабочая Станция
+%define Brand_ru Альт
+%define distro_name SP Workstation
+%define distro_name_ru СП Рабочая Станция
 
 %description
-Distro-specific packages with design and texts for %distro_name.
+Distro-specific packages with design and texts for %Brand %distro_name.
 
 %description -l ru_RU.UTF-8
-Пакеты оформления для дистрибутива %distro_name_ru.
+Пакеты оформления для дистрибутива %Brand_ru %distro_name_ru.
 
 %package bootloader
 Group:   System/Configuration/Boot and Init
@@ -72,16 +73,16 @@ Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 %define grub_high black/white
 
 %description bootloader
-Here you find the graphical boot logo for %distro_name.
+Here you find the graphical boot logo for %Brand %distro_name.
 Suitable for both grub2.
 
 %description bootloader -l ru_RU.UTF-8
 В данном пакете находится тема для экрана выбора вариантов загрузки (grub2)
-для дистрибутива %distro_name_ru.
+для дистрибутива %Brand_ru %distro_name_ru.
 
 %package bootsplash
 Summary:  Theme for splash animations during bootup
-Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива %distro_name_ru
+Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива %Brand_ru %distro_name_ru
 License:  Distributable
 Group:    System/Configuration/Boot and Init
 BuildArch: noarch
@@ -93,16 +94,16 @@ Requires(pre):   plymouth
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
-This package contains graphics for boot process for %distro_name
+This package contains graphics for boot process for %Brand %distro_name
 (needs console splash screen enabled).
 
 %description bootsplash -l ru_RU.UTF-8
 В данном пакете находится тема для экрана загрузки для дистрибутива
-%distro_name_ru.
+%Brand_ru %distro_name_ru.
 
 %package alterator
-Summary: Design for alterator for %distro_name
-Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива %distro_name_ru
+Summary: Design for alterator for %Brand %distro_name
+Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива %Brand_ru %distro_name_ru
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -115,15 +116,15 @@ Obsoletes: design-alterator-server design-alterator-desktop design-altertor-brow
 Requires(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
-Design for QT and web alterator for %distro_name.
+Design for QT and web alterator for %Brand %distro_name.
 
 %description alterator -l ru_RU.UTF-8
 В данном пакете находится тема для "Центра управления системой" (Alterator)
-и модулей библиотеки QT для дистрибутива %distro_name_ru.
+и модулей библиотеки QT для дистрибутива %Brand_ru %distro_name_ru.
 
 %package graphics
-Summary: Design for %distro_name
-Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
+Summary: Design for %Brand %distro_name
+Summary(ru_RU.UTF-8): Тема для дистрибутива %Brand_ru %distro_name_ru
 License: Different licenses
 Group: Graphics
 BuildArch: noarch
@@ -136,19 +137,19 @@ Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour graphics
 
 %description graphics
-This package contains some graphics for %distro_name design.
+This package contains some graphics for %Brand %distro_name design.
 
 %description graphics -l ru_RU.UTF-8
 В данном пакете находится необходимые графические элементы для дистрибутива 
-%distro_name_ru.
+%Brand_ru %distro_name_ru.
 
 %define provide_list altlinux fedora redhat system altlinux
 %define obsolete_list altlinux-release fedora-release redhat-release
 
 %package release
 BuildArch: noarch
-Summary:  %distro_name release file
-Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
+Summary:  %Brand %distro_name release file
+Summary(ru_RU.UTF-8): Описание дистрибутива %Brand_ru %distro_name_ru
 License:  GPL-2.0-or-later
 Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
@@ -158,17 +159,17 @@ Conflicts: altlinux-release-sisyphus altlinux-release-p9 altlinux-release-p10
 Requires: alt-os-release
 
 %description release
-%distro_name release file.
+%Brand %distro_name release file.
 
 %description release -l ru_RU.UTF-8
-В данном пакете находится описание дистрибутива %distro_name_ru.
+В данном пакете находится описание дистрибутива %Brand_ru %distro_name_ru.
 
 %package notes
 BuildArch: noarch
 Provides:  alt-license-theme = %version alt-notes-%theme
 Obsoletes: alt-license-%theme alt-notes-%theme
 Summary:   Distribution license and release notes
-Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
+Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %Brand_ru %distro_name_ru
 License:   Distributable
 Group:     Documentation
 %branding_add_conflicts %flavour notes
@@ -178,11 +179,11 @@ Distribution license and release notes
 
 %description notes -l ru_RU.UTF-8
 В данном пакете находится лицензия и дополнительные сведения
-для дистрибутива %distro_name_ru.
+для дистрибутива %Brand_ru %distro_name_ru.
 
 %package gnome-settings
 BuildArch: noarch
-Summary: GNOME settings for %distro_name
+Summary: GNOME settings for %Brand %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
@@ -194,53 +195,54 @@ Requires(post): libgio
 Requires: %name-graphics = %EVR
 
 %description gnome-settings
-GNOME settings for %distro_name.
+GNOME settings for %Brand %distro_name.
 
 %package mate-settings
 BuildArch: noarch
-Summary: MATE settings for %distro_name
+Summary: MATE settings for %Brand %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
 Requires: gtk3-theme-clearlooks-phenix
 Requires: x-cursor-theme-jimmac
+Requires: lightdm-conf-greeter-hide-users
 %branding_add_conflicts %flavour mate-settings 
 PreReq(post): lightdm-gtk-greeter
 PreReq(post): libgio
 
 %description mate-settings
-MATE settings for %distro_name
+MATE settings for %Brand %distro_name
 
 %package menu
 BuildArch: noarch
-Summary: Menu merge for %distro_name
+Summary: Menu merge for %Brand %distro_name
 License: Distributable
 Group:   Graphical desktop/Other
 Requires: altlinux-freedesktop-menu-common
 %branding_add_conflicts %flavour menu
 
 %description menu
-Menu merge for %distro_name.
+Menu merge for %Brand %distro_name.
 
 %package slideshow
-Summary: Slideshow for %distro_name installer
-Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
+Summary: Slideshow for %Brand %distro_name installer
+Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %Brand_ru %distro_name_ru
 License: Distributable
 Group: System/Configuration/Other 
 BuildArch: noarch
 %branding_add_conflicts %flavour slideshow
 
 %description slideshow
-Slideshow for %distro_name installer.
+Slideshow for %Brand %distro_name installer.
 
 %description slideshow -l ru_RU.UTF-8
 В данном пакете находятся изображения для организации "слайдшоу" в установщике 
-дистрибутива %distro_name_ru.
+дистрибутива %Brand_ru %distro_name_ru.
 
 %package indexhtml
 BuildArch: noarch
-Summary:  HTML welcome page for %distro_name
-Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %distro_name_ru
+Summary:  HTML welcome page for %Brand %distro_name
+Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %Brand_ru %distro_name_ru
 License:  distributable
 Group:    System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
@@ -252,11 +254,11 @@ Requires(post): indexhtml-common
 #Requires: shared-desktop-icons
 
 %description indexhtml
-%distro_name welcome page.
+%Brand %distro_name welcome page.
 
 %description indexhtml -l ru_RU.UTF-8
 В данном пакете содержится стартовая страница для дистрибутива
-%distro_name_ru.
+%Brand %distro_name_ru.
 
 %prep
 %setup -n branding
@@ -264,7 +266,7 @@ cp /usr/share/distro-licenses/ALT_SP_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' LKNV='%LKNV' BRANCH='%altbranch' X86='%x86' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND='%Brand' BRAND_RU='%Brand_ru' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' LKNV='%LKNV' BRANCH='%altbranch' X86='%x86' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' ./configure
 make
 
 %install
@@ -375,6 +377,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Mar 17 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.13
+- mate-settings: Add dependency on lightdm-conf-greeter-hide-users.
+- os-release: fix NAME, add VARIANT.
+- Split PRODUCT_NAME into BRAND and PRODUCT_NAME.
+
 * Tue Feb 10 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.12
 - Add menu subpackage.
 
