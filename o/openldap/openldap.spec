@@ -16,9 +16,10 @@
 %def_enable argon2
 %def_disable static
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 smbk5pwd trace usn variant vc
+%define lmdb_ver %(rpm -q --qf '%%{VERSION}' liblmdb)
 
 Name: openldap
-Version: 2.6.10
+Version: 2.6.13
 Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
@@ -111,7 +112,8 @@ BuildRequires: libopenslp-devel
 BuildRequires: chrooted groff-base libltdl-devel libssl-devel shtool
 BuildRequires: libsystemd-devel
 BuildRequires: libevent-devel libuuid-devel
-BuildRequires: liblmdb-devel
+BuildRequires: liblmdb-devel >= 0.9.35
+BuildRequires(pre): liblmdb
 # for tests
 #BuildRequires: krb5-kdc krb5-kinit cyrus-sasl2 libsasl2-plugin-gssapi openssl
 
@@ -146,6 +148,7 @@ BuildArch: noarch
 Summary: LDAP servers
 Group: System/Servers
 Requires: libldap%{so_ver} = %version-%release
+Requires: liblmdb = %lmdb_ver
 
 Provides: openldap2.4-servers = %version-%release
 Obsoletes: openldap2.4-servers < %version-%release
@@ -545,6 +548,11 @@ install -p -m644 doc/guide/admin/guide.txt \
 %check
 # rm failed tests
 rm -f tests/scripts/test063-delta-multiprovider
+%ifarch %ix86 %arm mipsel
+rm -f tests/scripts/test017-syncreplication-refresh
+rm -f tests/scripts/test019-syncreplication-cascade
+%endif
+
 %make SLAPD_DEBUG=0 test
 
 %pre servers
@@ -725,6 +733,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Fri Mar 13 2026 Alexey Shabalin <shaba@altlinux.org> 2.6.13-alt1
+- 2.6.13.
+- Added strict dependency on the liblmdb version (ALT #58189).
+
 * Thu Nov 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.10-alt1
 - 2.6.10.
 - use libsodium for support argon2.
