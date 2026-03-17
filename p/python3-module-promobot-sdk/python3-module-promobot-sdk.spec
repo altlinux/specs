@@ -1,7 +1,7 @@
 %define pypi_name promobot-sdk
 
 Name: python3-module-%pypi_name
-Version: 0.6.9
+Version: 0.6.11
 Release: alt1
 
 Summary: Promobot Python SDK (manipulator MEdu)
@@ -39,10 +39,13 @@ to the robot, taking control, and executing movement and gripper commands
 %doc README.md
 %doc LICENSE
 %python3_sitelibdir/sdk/
-%python3_sitelibdir/pm_python_sdk-0.6.9.dist-info/
+%python3_sitelibdir/pm_python_sdk-%version.dist-info/
 
 
 %changelog
+* Tue Mar 17 2026 Valentin Sokolov <sova@altlinux.org> 0.6.11-alt1
+- Update to version 0.6.11
+
 * Tue Jan 13 2026 Valentin Sokolov <sova@altlinux.org> 0.6.9-alt1
 - Update to version 6.9
 
