@@ -22,7 +22,7 @@
 %define fakebrand xalt
 
 %define major 11
-%define minor 2
+%define minor 3
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
@@ -340,7 +340,7 @@ __EOF__
 # disable annoing autostart
 mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
 for n in \
-    tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store \
+    tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store localsearch-3 \
     org.gnome.Software ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot%_sysconfdir/skel/.config/autostart/$n.desktop
 done
@@ -501,6 +501,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Mar 17 2026 Sergey V Turchin <zerg at altlinux dot org> 11.3.0-alt1
+- clear status
+
+* Mon Mar 02 2026 Sergey V Turchin <zerg at altlinux dot org> 11.3.0-alt0.1
+- new beta
+
 * Wed Dec 10 2025 Sergey V Turchin <zerg at altlinux dot org> 11.2.0-alt1
 - clear status
 
