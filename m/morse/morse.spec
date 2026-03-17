@@ -1,19 +1,17 @@
 Name: morse
 Summary: Morse Classic morse trainer program
-Version: 2.6
+Version: 2.7
 Release: alt1
 License: BSD
 Group: Communications
 Url: http://catb.org/~esr/morse/
 Vcs: https://gitlab.com/esr/morse-classic.git
 Source0: %name-%version.tar
-Patch01: 01-morsexml.patch
-Patch02: 02-hardening.patch
-Patch03: 03-fix-pa_simple_write-with-mono-output.patch
-Patch04: 04-fix_ftbfs.patch
-Patch05: 05-fix_-X_handling.patch
-Patch06: 06-cross.patch
-Patch07: 07-gcc-14.patch
+Patch1: 01-morsexml.patch
+Patch2: 02-makefile.patch
+Patch3: 03-fix-pa_simple_write-with-mono-output.patch
+Patch4: 04-gcc-14.patch
+Patch5: 05-fix_-X_handling.patch
 
 %define Backends X11 OSS Linux PA ALSA
 
@@ -56,6 +54,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_bindir/QSO
 
 %changelog
+* Tue Mar 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.7-alt1
+- 2.7
+
 * Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.6-alt1
 - 2.6
 
