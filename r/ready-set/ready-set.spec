@@ -11,8 +11,8 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.5.1
-Release: alt3
+Version: 0.6.0
+Release: alt1
 
 Summary: The utility for configuring the system at the first start
 License: GPL-3.0-or-later
@@ -185,7 +185,7 @@ Requires: %name = %EVR
 %autopatch -p1
 
 %build
-%meson -Dpassword_check_backend=both
+%meson -Dpassword_check_backend=both -Duser_with_set_root=true
 %meson_build
 
 %install
@@ -200,6 +200,7 @@ Requires: %name = %EVR
 %_iconsdir/hicolor/*/apps/%{app_id}*
 %_datadir/applications/%{app_id}*
 %_datadir/polkit-1/rules.d/%app_id.rules
+
 %files gdm
 %_libexecdir/%gis_name
 %_desktopdir/%gis_name.desktop
@@ -257,6 +258,7 @@ Requires: %name = %EVR
 
 %files plugin-user-common
 %_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
+%_datadir/polkit-1/rules.d/%app_id.Plugin.User.SetRootPassword.rules
 %_libexecdir/%name-set-root-password
 
 %files plugin-user-passwdqc
@@ -272,6 +274,20 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Tue Mar 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.0-alt1
+- New version: 0.6.0.
+- Renamed `intact` mode to `sandbox` (CLI option `--sandbox`).
+- Added operation modes: `INITIAL_SETUP`, `INSTALLER`, `TOUR`.
+- Added On-Screen Keyboard (sm.puri.OSK0) support via D-Bus.
+- Implemented pre/post hooks (user and system).
+- Added Weblate integration (translate.alt-gnome.ru).
+- Keyboard: Added Latin layout check, default `keyboard-input-sources` logic.
+- User: Added `user_with_set_root` option, RU->EN username translation.
+- Language: Changed transition animation.
+- Interface: Improved tooltips and error messages, updated ru translation.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.6.0
+
 * Wed Mar 11 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.1-alt3
 - Added cumulative patch.
 
