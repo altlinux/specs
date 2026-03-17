@@ -12,7 +12,7 @@
 
 Name: rpcs3
 Version: 0.0.40
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -103,6 +103,9 @@ echo "// This is a generated file.
 #define RPCS3_GIT_VERSION_NO_UPDATE 1
 " > %name/git-version.h
 
+# Fix miniupnpc version
+sed -e 's|miniupnpc>=2.3.3|miniupnpc>=2.2.4|' -i 3rdparty/miniupnp/CMakeLists.txt
+
 %build
 %add_optflags -I%_includedir/stb
 
@@ -144,6 +147,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Tue Mar 17 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.40-alt2
+- Fix miniupnpc version
+
 * Tue Mar 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.40-alt1
 - Version 0.0.40
 
