@@ -22,7 +22,7 @@
 
 Name: branding-%flavour
 Version: 11
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Url: https://en.altlinux.org/starterkits
@@ -301,6 +301,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11-alt7
+- os-release: fix NAME, add VARIANT.
+
 * Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt6
 - ahttpd/images/steps: replace all icons with symlinks on empty.png
 
