@@ -2,7 +2,7 @@
 
 Name: kanshi
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: Dynamic display configuration
 License: MIT
@@ -15,8 +15,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: meson ninja-build
-BuildRequires: libwayland-client-devel libscfg-devel
-BuildRequires: scdoc
+BuildRequires: libwayland-client-devel libscfg-devel libvali-devel
+BuildRequires: scdoc vali
 
 %description
 kanshi allows you to define output profiles that are automatically
@@ -32,7 +32,6 @@ protocol.
 %patch0 -p1
 
 %build
-
 %meson
 %meson_build
 
@@ -45,10 +44,15 @@ protocol.
 %files
 %doc LICENSE README.md
 %_bindir/kanshi
+%_bindir/kanshictl
 %_man1dir/kanshi.1.xz
+%_man1dir/kanshictl.1.xz
 %_man5dir/kanshi.5.xz
 
 %changelog
+* Tue Mar 17 2026 Andrey Kovalev <ded@altlinux.org> 1.9.0-alt2
+- Rebuilt kanshi with kanshictl.
+
 * Tue Feb 03 2026 Andrey Kovalev <ded@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
