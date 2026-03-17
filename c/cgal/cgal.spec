@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 6.0.1
+Version: 6.1.1
 Release: alt1
 
 Summary: Easy access to efficient and reliable geometric algorithms
@@ -67,6 +67,14 @@ Thid package contains development documentation for CGAL.
 
 %prep
 %setup -a1
+# convert branch-build layout to flat release structure
+cmake -DDESTINATION=%_builddir -DCGAL_VERSION=%version \
+	-P Scripts/developer_scripts/cgal_create_release_with_cmake.cmake
+rm -rf %_builddir/CGAL-%version/doc_html
+mv doc_html %_builddir/CGAL-%version/
+cd %_builddir
+rm -rf %name-%version
+mv CGAL-%version %name-%version
 
 %build
 %cmake \
@@ -95,6 +103,9 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon Mar 16 2026 Anton Farygin <rider@altlinux.org> 6.1.1-alt1
+- 6.0.1 -> 6.1.1
+
 * Sat Feb 22 2025 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
 - 5.6.1 -> 6.0.1
 
