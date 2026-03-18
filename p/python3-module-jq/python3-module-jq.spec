@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jq
-%define import_name jq
+%define mod_name jq
 
 %def_with check
 
 %python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 1.10.2
+Version: 1.11.0
 Release: alt1
 
 Summary: Python bindings for jq
@@ -57,11 +57,13 @@ export JQPY_USE_SYSTEM_LIBS=1
 %pyproject_run_pytest -vra
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/%import_name.*.so
+%python3_sitelibdir/%mod_name.*.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
+- Updated to 1.11.0.
+
 * Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.10.2-alt1
 - Updated to 1.10.2.
 - Built based on Python Limited API.
@@ -126,4 +128,3 @@ export JQPY_USE_SYSTEM_LIBS=1
 
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150118
 - Initial build for Sisyphus
-
