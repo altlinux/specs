@@ -1,151 +1,67 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name setuptools
-%define mod_name %pypi_name
-%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
+%define mod_name pkg_resources
 
 %def_with check
-# control vendoring, enable bootstrap to bundle dependencies
-%def_without bootstrap
 
-Name: python3-module-%pypi_name
+Name: python3-module-pkg-resources
 Epoch: 1
-Version: 82.0.1
-Release: alt1
-Summary: Most extensible Python build backend with support for C/C++ extension modules
+Version: 80.10.2
+Release: alt2
+Summary: Package Discovery and Resource Access for Python3 libraries
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/setuptools/
 VCS: https://github.com/pypa/setuptools
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# renamed pkg_resources => pkg-resources
+Provides: python3-module-pkg_resources = %EVR
+Obsoletes: python3-module-pkg_resources < %EVR
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata_extra core
-# setuptools has commands for doing binary builds; for them to work always:
-Requires: python3-dev
-# compat
-Requires: python3-module-pkg-resources >= 1:80.10.2-alt2
-Provides: python3-module-distribute = %EVR
-%if_with bootstrap
-# hide bundled packages
-%add_findprov_skiplist %python3_sitelibdir/%mod_name/_vendor/*
-%endif
-%add_findprov_skiplist %python3_sitelibdir/%mod_name/_distutils/*msvc*compiler*.py*
-
+# Not separated yet:
+Conflicts: python3-module-setuptools < 39.2.0-alt3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
-# required internally by setuptools, distutils
 %pyproject_builddeps_metadata_extra core
-
 %if_with check
-BuildRequires: /dev/shm
-# For the tests of the setuptools commands to do binary builds:
-BuildPreReq: python3-dev
 %add_pyproject_deps_check_filter pytest-perf
 %pyproject_builddeps_metadata_extra test
 %endif
 
-# namespace package for system seed wheels which will be used within venv
-# created by virtualenv
-BuildRequires: python3(system_seed_wheels)
-
 %description
-%summary.
-
-%package wheel
-Summary: %summary
-Group: Development/Python3
-%py3_requires system_seed_wheels
-
-%description wheel
-Provides the seed package for virtualenv(packaged as wheel).
+Copy of last version of setuptools' pkg_resources. Only for gradual migration.
 
 %prep
 %setup
 %autopatch -p1
-
-# Remove bundled exes
-# today's paths containing *.exe
-# setuptools/
-# setuptools/_distutils/command/
-find -type f -name '*.exe' -delete
-
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+# skip building and installation of distutils hack
+rm setup.py
 
 %build
 %pyproject_build
 
-mkdir ./dist_venv
-cp -a -t ./dist_venv ./dist/{setuptools-%version-*.whl,.wheeltracker}
-
-%if_without bootstrap
-# clean up setuptools' build directory, otherwise its _vendor is packaged
-rm -r ./build
-# build altlinux version of a wheel (unvendored dependencies),
-# setuptools 71.0.0 + prefer installed dependencies
-rm -r %mod_name/_vendor
-%pyproject_build
-%endif
-
 %install
 %pyproject_install
 
-# since we package python modules as arch dependent
-%if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
-mkdir -p %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
-%endif
-
-# 71.0.1 includes tests again
-pushd %buildroot%python3_sitelibdir/
-rm -r \
-  ./%mod_name/tests \
-  ./%mod_name/_distutils/tests \
-%if_with bootstrap
-  ./%mod_name/_vendor/importlib_resources/tests \
-%endif
-
-popd
-
-# package a built wheel (will be used within venv created by virtualenv)
-built_wheel="$(cat ./dist_venv/.wheeltracker)" ||
-        { echo Make sure you built a pyproject ; exit 1 ; }
-mkdir -p "%buildroot%system_wheels_path"
-cp -t "%buildroot%system_wheels_path/" "./dist_venv/$built_wheel"
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
+rm %buildroot%python3_sitelibdir/%mod_name/api_tests.txt
 
 %check
-# avoid rebuilding setuptools' wheel
-built_wheel="$(cat ./dist/.wheeltracker)" ||
-        { echo Make sure you built a pyproject ; exit 1 ; }
-export PRE_BUILT_SETUPTOOLS_WHEEL="$(realpath "./dist/$built_wheel")"
-%if_without bootstrap
-# some tests depend on presence of the vendored dependencies
-export NO_VENDOR=1
-# to allow virtualenv's venv use globally installed packages
-export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
-# to make pip install built wheel of setuptools and ignore the globally
-# installed one of the same version (see setuptools/tests/fixtures.py::venv)
-export PIP_IGNORE_INSTALLED=1
-# required for `setup.py develop` which uses pip internally since setuptools 80
-export PIP_NO_BUILD_ISOLATION=NO
-%endif
-%pyproject_run_pytest -vra -n4
+%pyproject_run_pytest -vra -n4 %mod_name/tests/
 
 %files
-%python3_sitelibdir/_distutils_hack/
-%python3_sitelibdir/distutils-precedence.pth
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-
-%files wheel
-%system_wheels_path/setuptools-%version-*.whl
+%exclude %python3_sitelibdir/%{pyproject_distinfo setuptools}/
 
 %changelog
-* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1:82.0.1-alt1
-- 80.10.2 -> 82.0.1.
+* Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1:80.10.2-alt2
+- Built the last known pkg-resources.
 
 * Tue Jan 27 2026 Stanislav Levin <slev@altlinux.org> 1:80.10.2-alt1
 - 80.9.0 -> 80.10.2.
