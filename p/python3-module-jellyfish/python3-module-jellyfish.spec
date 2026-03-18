@@ -6,14 +6,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Python library for doing approximate and phonetic matching of strings
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/jellyfish/
-Vcs: https://github.com/jamesturk/jellyfish
+Vcs: https://codeberg.org/jpt/jellyfish
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -21,6 +21,8 @@ Source2: config.toml
 Source3: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,11 +52,13 @@ install -vD %SOURCE2 .cargo/config.toml
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Tue Apr 01 2025 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
@@ -85,4 +89,3 @@ install -vD %SOURCE2 .cargo/config.toml
 
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20140812
 - Initial build for Sisyphus
-
