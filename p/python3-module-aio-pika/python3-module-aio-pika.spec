@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.5.8
+Version: 9.6.1
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -21,6 +21,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -42,10 +44,9 @@ Features:
 * Object oriented API.
 * Transparent auto-reconnects with complete state recovery with connect_robust
   (e.g. declared queues or exchanges, consuming state and bindings).
-* Python 3.7+ compatible.
-* For python 3.5 users available aio-pika<7
-* Transparent publisher confirms support
-* Transactions support
+* Python 3.10+ compatible.
+* Transparent publisher confirms support.
+* Transactions support.
 * Completely type-hints coverage.
 
 %prep
@@ -67,11 +68,13 @@ Features:
 %pyproject_run_pytest -vra
 
 %files
-%doc README.rst COPYING
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 9.6.1-alt1
+- Updated to 9.6.1.
+
 * Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 9.5.8-alt1
 - Updated to 9.5.8.
 
