@@ -2,7 +2,7 @@
 %def_with check
 
 Name: gleam
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: A friendly language for building type-safe, scalable systems!
@@ -66,6 +66,9 @@ install -Dp target/release/lib%{name}_wasm.so -t %buildroot%_libdir
 %_libdir/lib%{name}_wasm.so
 
 %changelog
+* Tue Mar 17 2026 Artem Krasovskiy <aibure@altlinux.org> 1.15.0-alt1
+- New version 1.15.0.
+
 * Wed Feb 04 2026 Artem Krasovskiy <aibure@altlinux.org> 1.14.0-alt1
 - New version 1.14.0.
 
