@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name llm-ollama
-%define mod_name llm_ollama
+%define pypi_name llm-echo
+%define mod_name llm_echo
 
-%def_with check
+# requires the Internet connection
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
+Version: 0.3a3
 Release: alt1
 
-Summary:  LLM plugin providing access to models running on an Ollama server
+Summary: Debug plugin for LLM providing an echo model
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/llm-ollama/
-Vcs: https://github.com/taketwo/llm-ollama
+Url: https://pypi.org/project/llm-echo/
+Vcs: https://github.com/simonw/llm-echo
 
 BuildArch: noarch
 
@@ -45,18 +46,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=-Wignore
+%pyproject_run_pytest -vra
 
 %files
-%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.1-alt1
-- Updated to 0.15.1.
-
-* Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.1-alt1
-- Updated to 0.9.1.
-
-* Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
-- Built for ALT Sisyphus.
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3a3-alt1
+- Packaged for ALT Sisyphus.

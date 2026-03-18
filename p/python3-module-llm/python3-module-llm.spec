@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name llm
-%define pypi_nname llm
 %define mod_name llm
 
 %def_with check
 
-Name: python3-module-%pypi_nname
-Version: 0.24.2
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 0.29
+Release: alt1
 
 Summary: Access large language models from the command-line
 License: Apache-2.0
@@ -21,11 +20,15 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: /proc
 %endif
 
 %description
@@ -38,6 +41,9 @@ on your own machine.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -47,15 +53,17 @@ on your own machine.
 
 %check
 %pyproject_run_pytest -vra -o=addopts=-Wignore \
--k 'not test_gpt4o_mini_sync_and_async and not test_embed_multi_files_encoding'
+    -k 'not (test_gpt4o_mini_sync_and_async or test_embed_multi_files_encoding)'
 
 %files
-%doc README.md
 %_bindir/llm
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.29-alt1
+- Updated to 0.29.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.24.2-alt2
 - NMU: fixed FTBFS by skipping two tests.
 
@@ -67,4 +75,3 @@ on your own machine.
 
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.23-alt1
 - Built for ALT Sisyphus.
-

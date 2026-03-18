@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name llm-ollama
-%define mod_name llm_ollama
+%define pypi_name pytest-recording
+%define mod_name pytest_recording
 
+# requires the Internet connection
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
+Version: 0.13.4
 Release: alt1
 
-Summary:  LLM plugin providing access to models running on an Ollama server
-License: Apache-2.0
+Summary: A pytest plugin to record and replay HTTP traffic
+License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/llm-ollama/
-Vcs: https://github.com/taketwo/llm-ollama
+Url: https://pypi.org/project/pytest-recording/
+Vcs: https://github.com/kiwicom/pytest-recording
 
 BuildArch: noarch
 
@@ -26,7 +27,7 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -45,18 +46,15 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=-Wignore
+# Skip test_block_network_with_allowed hosts due to it requires the Internet
+# connection to do requests.
+%pyproject_run_pytest -vra \
+    --deselect 'tests/test_blocking_network.py::test_block_network_with_allowed_hosts'
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.1-alt1
-- Updated to 0.15.1.
-
-* Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.1-alt1
-- Updated to 0.9.1.
-
-* Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
-- Built for ALT Sisyphus.
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.13.4-alt1
+- Packaged for ALT Sisyphus.
