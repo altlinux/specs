@@ -6,26 +6,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0
-Release: alt1.1
+Version: 4.0
+Release: alt1
 
 Summary: Component vocabularies
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.componentvocabulary/
 Vcs: https://github.com/zopefoundation/zope.componentvocabulary
-
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
-# namespace root
-%py3_requires zope
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -47,23 +47,18 @@ This package contains various vocabularies.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests
 
 %changelog
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 4.0-alt1
+- 3.0 -> 4.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
