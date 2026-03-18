@@ -1,6 +1,6 @@
 Name: lzip
-Version: 1.25
-Release: alt3
+Version: 1.26
+Release: alt1
 
 Summary: LZMA file compressor
 License: GPLv2+
@@ -59,6 +59,9 @@ make check
 %_infodir/lzip.info*
 
 %changelog
+* Wed Mar 18 2026 Michael Shigorin <mike@altlinux.org> 1.26-alt1
+- new version (watch file uupdate)
+
 * Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt3
 - added %%check
 - parallel build
