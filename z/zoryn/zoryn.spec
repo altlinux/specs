@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,20 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Wed Mar 18 2026 Anton Farygin <rider@altlinux.org> 0.30.0-alt1
+- added zoryn up --continue/--abort/--restart/--stage/--from pipeline control
+- added pipeline library for generic sequential pipeline with state persistence
+- added task test-rebuild --verify-failures for distinguishing regressions
+- added task manage interactive TUI with full-text search, log viewer, event log
+- added task manage --no-color flag and NO_COLOR env variable support
+- added task manage per-part coloring matching task ls color scheme
+- added task manage subtask search in task detail view
+- fixed sandbox env var names escaping in execute_direct and execute_hasher
+- fixed pipeline lock file descriptor leak
+- fixed up --from, --sandbox, --rebuild flag handling in pipeline stages
+- fixed build post-build checks to only check current build RPMs
+- fixed build log parsing with compression suffix
+
 * Sun Mar 15 2026 Anton Farygin <rider@altlinux.org> 0.29.0-alt1
 - suppressed noisy sandbox chroot preparation output with stage progress
 - extracted build stage detection into build_log library
