@@ -1,4 +1,4 @@
-%define kernel_base_version 6.6
+%define kernel_base_version 6.12
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -9,30 +9,30 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 # git grep -Fh SPDX-License-Identifier: include/uapi arch/*/include/uapi |sed 's/\*\// &/' |tr -s ' '|sort |uniq -c |sort -n
 #   1 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) AND MIT) */
 #   1 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR MIT) */
-#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB */
-#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) or BSD-3-Clause */
+#   1 /* SPDX-License-Identifier: (GPL-2.0-only WITH Linux-syscall-note) OR MIT */
 #   2 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR CDDL-1.0) */
 #   2 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) */
+#   2 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause */
 #   2 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note
 #   3 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
-#   4 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
 #   4 /* SPDX-License-Identifier: GPL-2.0-or-later WITH Linux-syscall-note */
 #   4 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
-#   4 /* SPDX-License-Identifier: MIT */
 #   5 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
-#   5 /* SPDX-License-Identifier: BSD-3-Clause */
+#   5 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
 #   5 /* SPDX-License-Identifier: LGPL-2.0+ WITH Linux-syscall-note */
 #   6 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
 #   6 /* SPDX-License-Identifier: ((GPL-2.0-only WITH Linux-syscall-note) OR BSD-3-Clause) */
+#   6 /* SPDX-License-Identifier: BSD-3-Clause */
+#   6 /* SPDX-License-Identifier: MIT */
 #  11 /* SPDX-License-Identifier: GPL-1.0+ WITH Linux-syscall-note */
 #  15 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB) */
 #  16 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
-#  24 # SPDX-License-Identifier: GPL-2.0
-#  24 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
-#  26 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
-# 165 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
-# 993 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#  23 # SPDX-License-Identifier: GPL-2.0
+#  28 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+#  29 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+# 166 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+# 980 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: https://www.kernel.org/
@@ -126,17 +126,16 @@ building most standard programs and are also needed to build glibc. \
 %endif
 
 # In the kernel tree:
-# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|\1|p' | sort | xargs echo %%define kernel_arches
-%define kernel_arches alpha arc arm arm64 csky hexagon ia64 loongarch m68k microblaze mips nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|\1|p' | sort | grep -vx um | xargs echo %%define kernel_arches
+%define kernel_arches alpha arc arm arm64 csky hexagon loongarch m68k microblaze mips nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
 
-# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_package \1 1|p' | sort
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_package \1 1|p' | grep -v ' um '| sort
 %do_package alpha 1
 %do_package arc 1
 %do_package arm 1
 %do_package arm64 1
 %do_package csky 1
 %do_package hexagon 1
-%do_package ia64 1
 %do_package loongarch 1
 %do_package m68k 1
 %do_package microblaze 1
@@ -267,14 +266,13 @@ cd - > /dev/null
 %files %{1} -f package-%{1}.files \
 %endif
 
-# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_files \1 1|p' | sort
+# ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_files \1 1|p' | grep -v ' um ' | sort
 %do_files alpha 1
 %do_files arc 1
 %do_files arm 1
 %do_files arm64 1
 %do_files csky 1
 %do_files hexagon 1
-%do_files ia64 1
 %do_files loongarch 1
 %do_files m68k 1
 %do_files microblaze 1
@@ -300,6 +298,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Wed Mar 18 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.12-alt1
+- v6.6 -> v6.12.
+
 * Wed Feb 07 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.6-alt1
 - v6.5 -> v6.6.
 
