@@ -35,7 +35,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.25.5
-Release: alt7
+Release: alt8
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -160,7 +160,6 @@ Python bindings for protocol buffers
 Summary: Java Protocol Buffers runtime library
 Group: Development/Java
 BuildArch:      noarch
-BuildRequires:  /proc
 BuildRequires:  jpackage-default
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.gson:gson)
@@ -170,10 +169,12 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 %if_with java_tests
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(com.google.truth:truth)
 BuildRequires:  mvn(junit:junit)
+
 %endif
 BuildRequires(pre):  rpm-build-java
 BuildRequires:  libgmock-devel libgtest-devel
@@ -284,7 +285,6 @@ sed -i '$a #ifdef __EDG__\n#undef PROTOBUF_CONSTINIT\n#define PROTOBUF_CONSTINIT
 
 %if_with java
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin java/util/pom.xml java/pom.xml
-%pom_remove_dep com.google.errorprone:error_prone_annotations java/util/pom.xml
 %pom_remove_dep com.google.j2objc:j2objc-annotations java/util/pom.xml
 
 # Remove annotation libraries we don't have
@@ -299,14 +299,6 @@ find -name '*.java' | xargs sed -ri \
 
 # These use easymockclassextension
 rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
-# These use truth or error_prone_annotations or guava-testlib
-rm java/core/src/test/java/com/google/protobuf/LiteralByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
-rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
-rm java/core/src/test/java/com/google/protobuf/TextFormatTest.java
-rm -r java/util/src/test/java/com/google/protobuf/util
-rm -r java/util/src/main/java/com/google/protobuf/util
  
 # Make OSGi dependency on sun.misc package optional
 %pom_xpath_inject "pom:configuration/pom:instructions" "<Import-Package>sun.misc;resolution:=optional,*</Import-Package>" java/core
@@ -480,6 +472,9 @@ popd
 
 
 %changelog
+* Fri Feb 27 2026 Evgeniy Serov <scala@altlinux.org> 3.25.5-alt8
+- Fixed build with new guava.
+
 * Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.25.5-alt7
 - python bindings packaged elsewhere (closes: 55941)
 

@@ -1,136 +1,98 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           guava
-Version:        31.0.1
-Release:        alt2_3jpp11
-Summary:        Google Core Libraries for Java
-# Most of the code is under ASL 2.0
-# Few classes are under CC0, grep for creativecommons
-License:        ASL 2.0 and CC0
-URL:            https://github.com/google/guava
+Version:        33.5.0
+Release:        alt1
+
+Summary:        Google core libraries for Java
+License:        Apache-2.0 AND CC0-1.0
+Group:          Development/Java
+URL:            https://guava.dev
+VCS:            https://github.com/google/guava
 BuildArch:      noarch
 
-Source0:        https://github.com/google/guava/archive/v%{version}/guava-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-Patch1:         0001-Remove-multi-line-annotations.patch
+Patch0:         0001-remove-missing-dependenvies-frome-module-info.patch
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  %{?module_prefix}mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(junit:junit)
+BuildRequires(pre): maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(com.google.errorprone:error_prone_core)
+BuildRequires:  mvn(com.google.errorprone:error_prone_annotations)
+BuildRequires:  mvn(org.jspecify:jspecify)
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(com.google.jimfs:jimfs)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  jurand
 
 %description
-Guava is a suite of core and expanded libraries that include
-utility classes, Googlea.'s collections, io classes, and much
-much more.
-This project is a complete packaging of all the Guava libraries
-into a single jar.  Individual portions of Guava can be used
-by downloading the appropriate module and its dependencies.
-
-%{?javadoc_package}
+Guava is a set of core Java libraries from Google that includes new collection
+types (such as multimap and multiset), immutable collections, a graph library,
+and utilities for concurrency, I/O, hashing, primitives, strings, and more!
+It is widely used on most Java projects within Google, and widely used by many
+other companies as well.
 
 %package testlib
-Group: Development/Java
+Group:          Development/Java
 Summary:        The guava-testlib artifact
 
 %description testlib
-guava-testlib provides additional functionality for conveninent unit testing
+Guava testlib is a set of Java classes for more convenient unit testing.
 
 %prep
-%setup -q
+%setup
+%autopatch -p1
 
-find . -name '*.jar' -delete
-
-%pom_remove_parent guava-bom
-
-%pom_disable_module guava-gwt
 %pom_disable_module guava-tests
+%pom_disable_module guava-gwt
+
+%pom_remove_plugin -r :central-publishing-maven-plugin
+%pom_remove_plugin -r :toolchains-maven-plugin
+%pom_remove_plugin -r :maven-toolchains-plugin
+%pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
+
+%pom_remove_dep -r :listenablefuture
+%pom_remove_dep -r :j2objc-annotations
+
+%pom_xpath_remove pom:jdkToolchain
+
+%pom_xpath_remove pom:annotationProcessorPaths
+sed -i /Xplugin:ErrorProne/d pom.xml
+
+# Fix with missing j2objc dependency
+jurand -i -s -a guava guava-testlib \
+  -p com[.]google[.]j2objc[.]annotations[.] \
+  -m com[.]google[.].*[.]annotations \
 
 %pom_xpath_inject pom:modules "<module>futures/failureaccess</module>"
 %pom_xpath_inject pom:parent "<relativePath>../..</relativePath>" futures/failureaccess
 %pom_xpath_set pom:parent/pom:version %{version}-jre futures/failureaccess
 
-%pom_remove_plugin -r :animal-sniffer-maven-plugin
-# Downloads JDK source for doc generation
-%pom_remove_plugin :maven-dependency-plugin guava
-
-%pom_remove_dep :caliper guava-tests
-
 %mvn_package :guava-parent guava
+%mvn_package :failureaccess guava
 
-# javadoc generation fails due to strict doclint in JDK 1.8.0_45
-%pom_remove_plugin -r :maven-javadoc-plugin
-
-%pom_xpath_inject /pom:project/pom:build/pom:plugins/pom:plugin/pom:configuration/pom:instructions "<_nouses>true</_nouses>" guava/pom.xml
-
-%pom_remove_dep -r :error_prone_annotations
-%pom_remove_dep -r :j2objc-annotations
-%pom_remove_dep -r org.checkerframework:
-%pom_remove_dep -r :listenablefuture
-
-annotations=$(
-    find -name '*.java' \
-    | xargs fgrep -h \
-        -e 'import com.google.j2objc.annotations' \
-        -e 'import com.google.errorprone.annotation' \
-        -e 'import com.google.errorprone.annotations' \
-        -e 'import com.google.common.annotations' \
-        -e 'import org.codehaus.mojo.animal_sniffer' \
-        -e 'import org.checkerframework' \
-    | sort -u \
-    | sed 's/.*\.\([^.]*\);/\1/' \
-    | paste -sd\|
-)
-
-# guava started using quite a few annotation libraries for code quality, which
-# we don't have. This ugly regex is supposed to remove their usage from the code
-find -name '*.java' | xargs sed -ri \
-    "s/^import .*\.($annotations);//;s/@($annotations)"'\>\s*(\((("[^"]*")|([^)]*))\))?//g'
-
-%patch1 -p1 -b .multiline
-
-%mvn_package "com.google.guava:failureaccess" guava
-
-%mvn_package "com.google.guava:guava-bom" __noinstall
+%mvn_package :guava-bom __noinstall
+%mvn_package :guava:module: __noinstall
 
 %build
-# Tests fail on Koji due to insufficient memory,
-# see https://bugzilla.redhat.com/show_bug.cgi?id=1332971
-%mvn_build -s -f
-#-- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -s -j
 
 %install
 %mvn_install
 
 %files -f .mfiles-guava
-%doc CONTRIBUTORS README*
-%doc --no-dereference COPYING
+%doc CONTRIBUTORS LICENSE *.md
 
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Fri Feb 27 2026 Evgeniy Serov <scala@altlinux.org> 33.5.0-alt1
+- Updated to 33.5.0.
+
 * Thu May 15 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.1-alt2_3jpp11
 - Use more compatible name jpackage-11-compat.
 

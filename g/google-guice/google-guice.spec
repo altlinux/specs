@@ -1,33 +1,30 @@
-Name:    google-guice
-Version: 5.1.0
-Release: alt2
-Epoch:   0
+Name:           google-guice
+Version:        5.1.0
+Release:        alt3
 
-Summary: Lightweight dependency injection framework for Java 5 and above
-License: Apache-2.0
-Group:   Development/Java
-URL:     https://github.com/google/guice
-
-BuildArch: noarch
+Summary:        Lightweight dependency injection framework for Java 5 and above
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://github.com/google/guice
+VCS:            https://github.com/google/guice
+BuildArch:      noarch
 
 # ./create-tarball.sh %%version
-Source0: %name-%version.tar.xz
-Source1: create-tarball.sh
-Source2: google-guice-guice.xml
+Source0:        %name-%version.tar.xz
+Source1:        create-tarball.sh
+Source2:        google-guice-guice.xml
 
-BuildRequires(pre): /proc rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(aopalliance:aopalliance)
-BuildRequires: mvn(com.google.code.findbugs:jsr305)
-BuildRequires: mvn(com.google.guava:guava)
-BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(javax.servlet:servlet-api)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.apache:apache-jar-resource-bundle) = 1.4
+BuildRequires(pre): maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(com.google.guava:guava-testlib)
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(org.easymock:easymock)
 
 AutoReq: yes,noosgi
 
@@ -126,52 +123,44 @@ Summary: Bill of Materials for Guice
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Bill of Materials module for Guice.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
 %setup
 
-%java_remove_annotations core/src/ \
-  -p ^com.google.common.annotations. \
-  -p ^com.google.errorprone.annotations.
-
-# We don't have struts2 in Fedora yet.
-%pom_disable_module struts2 extensions
-# Android-specific extension
-%pom_disable_module dagger-adapter extensions
- 
-# Remove additional build profiles, which we don't use anyways
-# and which are only pulling additional dependencies.
-%pom_xpath_remove "pom:profile[pom:id='guice.with.jarjar']" core
- 
-# Fix OSGi metadata due to not using jarjar
-%pom_xpath_set "pom:instructions/pom:Import-Package" \
-  "!com.google.inject.*,*" core
- 
-# Animal sniffer is only causing problems. Disable it for now.
-%pom_remove_plugin :animal-sniffer-maven-plugin core
-%pom_remove_plugin :animal-sniffer-maven-plugin extensions
- 
-%pom_remove_plugin :maven-gpg-plugin
- 
-# We don't have the custom doclet used by upstream. Remove
-# maven-javadoc-plugin to generate javadocs with default style.
-%pom_remove_plugin -r :maven-javadoc-plugin
- 
-# remove test dependency to make sure we don't produce requires
-# see #1007498
-%pom_remove_dep :guava-testlib extensions
-%pom_xpath_remove "pom:dependency[pom:classifier='tests']" extensions
- 
 %pom_remove_parent
+
+%pom_disable_module dagger-adapter extensions
 %pom_disable_module persist extensions
 %pom_disable_module spring extensions
+%pom_disable_module struts2 extensions
 %pom_disable_module testlib extensions
+
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin -r :animal-sniffer-maven-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+
+%pom_xpath_remove "pom:profile[pom:id='guice.with.jarjar']" core
+%pom_xpath_set "pom:instructions/pom:Import-Package" "!com.google.inject.*,*" core
+
+%pom_remove_dep :org.apache.felix.framework core
+%pom_remove_dep :javax.inject-tck core
+# fixes build with guava 33.5.0
+%pom_add_dep com.google.code.findbugs:jsr305 core
+
+rm core/test/com/googlecode/guice/GuiceTck.java
+rm core/test/com/googlecode/guice/OSGiContainerTest.java
+
+rm extensions/servlet/test/com/google/inject/servlet/ContinuingRequestIntegrationTest.java
+rm extensions/servlet/test/com/google/inject/servlet/ServletTest.java
+rm extensions/servlet/test/com/google/inject/servlet/AllTests.java
+
+%mvn_alias :guice :::classes:
 
 %build
 %mvn_file  ":guice-{*}"  guice/guice-@1
 %mvn_file  ":guice" guice/%{name} %{name}
-%mvn_build -f -s
+%mvn_build -s
 
 %install
 %mvn_install
@@ -193,6 +182,10 @@ ln -s %_javadir/guice/google-guice.jar \
 %files -n guice-bom -f .mfiles-guice-bom
 
 %changelog
+* Sat Feb 28 2026 Evgeniy Serov <scala@altlinux.org> 5.1.0-alt3
+- Fixed build with new guava.
+- Enabled tests.
+
 * Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 0:5.1.0-alt2
 - Create a symlink with the correct artifact name.
 
