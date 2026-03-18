@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 100.17
-Release: alt2
+Version: 100.18
+Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-Requires: gnome-shell >= 40.0
+Requires: gnome-shell >= 49.0
 Requires: nautilus >= 3.38.0
 Requires: file-roller >= 3.38.0
 # https://bugzilla.altlinux.org/53044
@@ -95,6 +95,9 @@ popd
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Wed Mar 18 2026 Anton Midyukov <antohami@altlinux.org> 100.18-alt1
+- New version 100.18.
+
 * Thu Mar 05 2026 Anton Midyukov <antohami@altlinux.org> 100.17-alt2
 - Add override for systemd user units for fix user session end (Closes: 57845).
 
