@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.49.1
+Version: 4.50.0
 Release: alt1
 
 Summary: Generic virtualenv management and test command line tool
@@ -64,9 +64,6 @@ mv %buildroot%_bindir/tox{,.py3}
 register-python-argcomplete tox.py3 > tox.py3
 install -p -m 0644 -D -t '%buildroot%bash_completions_dir' tox.py3
 
-# drop man page template
-rm %buildroot%_man1dir/tox.1.rst
-
 %check
 export VIRTUALENV_SYSTEM_SITE_PACKAGES=YES
 export TOX_LIMITED_SHEBANG=1
@@ -74,12 +71,16 @@ export PIP_NO_BUILD_ISOLATION=NO
 %pyproject_run_pytest -vra
 
 %files
+%_man1dir/tox.1.*
 %_bindir/tox.py3
 %bash_completions_dir/tox.py3
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Stanislav Levin <slev@altlinux.org> 4.50.0-alt1
+- 4.49.1 -> 4.50.0.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 4.49.1-alt1
 - 4.45.0 -> 4.49.1.
 
