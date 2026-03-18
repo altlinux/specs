@@ -1,5 +1,5 @@
 Name: libnfnetlink
-Version: 1.0.1.0.8.5087
+Version: 1.0.2
 Release: alt1
 Epoch: 1
 
@@ -52,6 +52,9 @@ rm %buildroot%_libdir/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 18 2026 Mikhail Efremov <sem@altlinux.org> 1:1.0.2-alt1
+- 1.0.1-8-g5087de4 -> 1.0.2.
+
 * Tue Mar 05 2019 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.1.0.8.5087-alt1
 - 1.0.1 -> 1.0.1-8-g5087de4.
 

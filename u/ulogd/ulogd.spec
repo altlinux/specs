@@ -1,5 +1,5 @@
 Name: ulogd
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 %def_disable nfacct
@@ -156,6 +156,9 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Wed Feb 18 2026 Mikhail Efremov <sem@altlinux.org> 2.0.9-alt1
+- Updated to 2.0.9.
+
 * Wed Dec 06 2023 Mikhail Efremov <sem@altlinux.org> 2.0.8-alt1
 - Don't use rpm-build-licenses.
 - Use useradd -N instead of -n.
