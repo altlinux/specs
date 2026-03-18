@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
-%global commit_hash 21828ea
+%global commit_hash 8809230
 
 Name: trs
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Summary: Secure CLI utility for moving files to trash using the XDG Trash specification
 License: MIT
@@ -63,6 +63,9 @@ install -m 0644 _trs %buildroot/%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_trs
 
 %changelog
+* Wed Mar 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
+- Updated to version 0.7.0.
+
 * Mon Mar 16 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.0-alt1
 - Updated to version 0.6.0.
 
