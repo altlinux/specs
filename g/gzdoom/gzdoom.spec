@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.13.2
+Version: 4.14.2
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -109,6 +109,9 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Wed Mar 18 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.2-alt1
+- Update ti new version
+
 * Thu Dec 12 2024 Artyom Bystrov <arbars@altlinux.org> 4.13.2-alt1
 - Update to new version
 
