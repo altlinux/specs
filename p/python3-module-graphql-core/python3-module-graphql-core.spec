@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.6
+Version: 3.2.8
 Release: alt1
 
-Summary: A Python 3.6+ port of the GraphQL.js reference implementation of GraphQL
+Summary: A Python 3.7+ port of the GraphQL.js reference implementation of GraphQL
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/graphql-core/
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,7 +31,7 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-GraphQL-core 3 is a Python 3.6+ port of GraphQL.js, the JavaScript
+GraphQL-core 3 is a Python 3.7+ port of GraphQL.js, the JavaScript
 reference implementation for GraphQL, a query language for APIs
 created by Facebook.
 
@@ -52,11 +54,13 @@ created by Facebook.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 3.2.8-alt1
+- Updated to 3.2.8.
+
 * Thu Feb 27 2025 Anton Zhukharev <ancieg@altlinux.org> 3.2.6-alt1
 - Updated to 3.2.6.
 
@@ -71,4 +75,3 @@ created by Facebook.
 
 * Sat May 13 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2.3-alt1
 - Initial build for ALT Sisyphus.
-
