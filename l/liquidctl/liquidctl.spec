@@ -1,10 +1,10 @@
-%define git d6568b1
+%define git %nil
 %define _unpackaged_files_terminate_build 1
 %def_with test
 
 Name: liquidctl
-Version: 1.15.0
-Release: alt0.3.g%{git}
+Version: 1.16.0
+Release: alt1
 Summary: Cross-platform tool and drivers for liquid coolers and other devices
 Group: System/Configuration/Hardware
 
@@ -62,6 +62,9 @@ export XDG_RUNTIME_DIR=%buildroot/.test_rundir \
 %python3_sitelibdir_noarch/%{name}*dist-info
 
 %changelog
+* Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 1.16.0-alt1
+- 1.16.0.
+
 * Mon Feb 02 2026 L.A. Kostis <lakostis@altlinux.ru> 1.15.0-alt0.3.gd6568b1
 - Update to v1.15.0-60-gd6568b1.
 - Enable tests.
@@ -71,4 +74,3 @@ export XDG_RUNTIME_DIR=%buildroot/.test_rundir \
 
 * Sun Jun 01 2025 L.A. Kostis <lakostis@altlinux.ru> 1.15.0-alt0.1
 - Initial build for ALTLinux.
-
