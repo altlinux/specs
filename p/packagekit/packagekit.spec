@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt8
+Release:   alt9
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -169,6 +169,9 @@ popd
 mkdir -p %{buildroot}%{_unitdir}/system-update.target.wants/
 ln -sf ../packagekit-offline-update.service %{buildroot}%{_unitdir}/system-update.target.wants/packagekit-offline-update.service
 
+# enable getty to start at systemd boot
+ln -sf ../getty.target %{buildroot}%{_unitdir}/system-update.target.wants/
+
 # get rid of test backend
 rm %buildroot%_libdir/packagekit-backend/libpk_backend_test_*.so
 rm -r %buildroot%_datadir/PackageKit/helpers/test_spawn
@@ -321,6 +324,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Wed Mar 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt9
+- run getty at systemd startup (closes: 58174)
+
 * Mon Nov 10 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt8
 - e2k build fix
 
