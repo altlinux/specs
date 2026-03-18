@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name numpydoc
-%define mod_name %pypi_name
+%define mod_name numpydoc
 
 # tests requires an access to the Internet
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.10.0
 Release: alt1
 Epoch: 1
 
@@ -22,6 +22,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,12 +55,14 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE.txt README.rst
-%_bindir/%pypi_name
+%_bindir/numpydoc
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1:1.10.0-alt1
+- Updated to 1.10.0.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1:1.8.0-alt1
 - Updated to 1.8.0.
 
@@ -67,4 +71,3 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 
 * Sat Oct 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1:1.6.0-alt1
 - Built for ALT Sisyphus.
-
