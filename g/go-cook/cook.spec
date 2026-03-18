@@ -2,7 +2,7 @@
 %define import_path github.com/glitchedgitz/cook
 
 Name: go-cook
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: A wordlist framework to fullfill your kinks with your wordlists. For security researchers, bug bounty and hackers
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %doc README.md LICENSE
 
 %changelog
+* Tue Mar 17 2026 Artem Krasovskiy <aibure@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Thu Dec 26 2024 Artem Krasovskiy <aibure@altlinux.org> 2.2.1-alt1
 - Initial build for Sisyphus
 
