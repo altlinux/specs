@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 Summary: Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)
 License: BSD-2-Clause
@@ -52,6 +52,9 @@ based on ASN.1 specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 0.6.3-alt1
+- 0.6.2 -> 0.6.3 (fixes: CVE-2026-30922).
+
 * Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1
 - 0.6.1 -> 0.6.2 (fixes: CVE-2026-23490).
 
