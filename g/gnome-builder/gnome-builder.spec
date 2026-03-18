@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -18,8 +18,8 @@
 %def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
 License: GPL-3.0-or-later
@@ -75,7 +75,7 @@ Requires: typelib(Json) = 1.0
 #%{?_with_flatpak:Requires: flatpak-builder}
 Requires: meson %_bindir/git %_bindir/indent %_bindir/xmllint
 #Requires: devhelp
-%{?_enable_manuals:Requires: manuals >= %ver_major}
+%{?_enable_manuals:Requires: manuals}
 Requires: %_bindir/uncrustify %_bindir/ctags %_bindir/cmark
 Requires: libpeas2-python3-loader
 
@@ -202,6 +202,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
 - required manuals instead of devhelp (ALT #57434)
 

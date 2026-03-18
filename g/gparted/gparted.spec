@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -37,7 +37,10 @@ Requires: yelp
 Requires: polkit >= %polkit_ver
 %{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
-Requires: dosfstools >= 3.0.18 ntfs-3g btrfs-progs >= 4.5
+Requires: dosfstools >= 3.0.18
+Requires: mtools
+Requires: ntfs-3g
+Requires: btrfs-progs >= 4.5
 Requires: cryptsetup
 # for raid support
 Requires: mdadm dmraid dmsetup lvm2
@@ -131,6 +134,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
