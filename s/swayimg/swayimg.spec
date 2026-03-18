@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayimg
-Version: 4.7
+Version: 5.0
 Release: alt1
 Summary: Image viewer for Wayland.
 License: MIT
@@ -44,6 +44,7 @@ BuildRequires: pkgconfig(libavif)
 BuildRequires: pkgconfig(libsixel)
 BuildRequires: pkgconfig(libraw)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: libluajit-devel
 BuildRequires: openexr-devel
 
 %description
@@ -64,22 +65,27 @@ opening the image directly in a terminal window.
 %install
 %meson_install
 
+rm -v %buildroot/%_datadir/licenses/%name/LICENSE
+
 %check
 %meson_test
 
 %files
-%doc README.md
+%doc *.md LICENSE
 %_bindir/%name
 %dir %_datadir/%name
-%_datadir/%name/swayimgrc
+%_datadir/doc/%name
+%_datadir/%name/*.lua
 %_desktopdir/%name.desktop
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/bash-completion/completions/%name
 %_man1dir/%name.1*
-%_man5dir/swayimgrc.5*
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Mar 18 2026 Pavel Shilov <zerospirit@altlinux.org> 5.0-alt1
+- Update to new version 5.0.
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 4.7-alt1
 - Update to new version 4.7.
 
