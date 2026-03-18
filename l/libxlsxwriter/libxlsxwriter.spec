@@ -1,5 +1,5 @@
 Name: libxlsxwriter
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: A C library for creating Excel XLSX files
 Group: Development/C
@@ -51,7 +51,7 @@ rm -f include/xlsxwriter/third_party/zip.h
 
 %files
 %doc Readme.md Changes.txt License.txt
-%_libdir/%name.so.10*
+%_libdir/%name.so.11*
 
 %files devel
 %_includedir/xlsxwriter.h
@@ -60,6 +60,9 @@ rm -f include/xlsxwriter/third_party/zip.h
 %_libdir/pkgconfig/xlsxwriter.pc
 
 %changelog
+* Thu Mar 19 2026 Ilya Mashkin <oddity@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Sat Sep 20 2025 Ilya Mashkin <oddity@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
