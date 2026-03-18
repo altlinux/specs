@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.4
+Version: 4.5.5
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -20,13 +20,13 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs >= 1.6.1
-BuildRequires: python3-module-mkdocs-material >= 9.7.3
+BuildRequires: python3-module-mkdocs-material >= 9.7.5
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.3
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.3
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 5.2.11
+Requires: python3-module-django >= 5.2.12
 Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 6.2.0
 Requires: python3-module-django-filter >= 25.2
@@ -59,8 +59,8 @@ Requires: python3-module-rq >= 2.7.0
 Requires: python3-module-social-app-django >= 5.7.0
 Requires: python3-module-social-core >= 4.8.5
 Requires: python3-module-sorl-thumbnail >= 13.0.0
-Requires: python3-module-strawberry-graphql >= 0.307.1
-Requires: python3-module-strawberry-django >= 0.79.0
+Requires: python3-module-strawberry-graphql >= 0.311.3
+Requires: python3-module-strawberry-django >= 0.82.0
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2025.3
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Mar 18 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.5-alt1
+- New 4.5.5 version.
+
 * Wed Mar 04 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.4-alt1
 - New 4.5.4 version.
 
