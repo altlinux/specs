@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -79,6 +79,13 @@ install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 %_datadir/%name/%{name}_gui.py
 
 %changelog
+* Wed Mar 18 2026 Mikhail Tergoev <fidel@altlinux.org> 0.10.0-alt1
+- updated to version 0.10.0
+- updated installation scripts: emias, ctm-service (ALT bug: 58046)
+- added installation scripts: apropos-z, olimp
+- added wine-cx support (fork crossover)
+- GUI: fixes and improvements
+
 * Fri Feb 13 2026 Mikhail Tergoev <fidel@altlinux.org> 0.9.0-alt1
 - updated to version 0.9.0
 - added wine-wow64 support
