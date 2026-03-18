@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.50.0
+Version: 0.75.0
 Release: alt1
 
 Summary: An exceptional library
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -38,7 +40,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_depgroup test
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -51,11 +53,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.75.0-alt1
+- Updated to 0.75.0.
+
 * Tue Mar 25 2025 Anton Zhukharev <ancieg@altlinux.org> 0.50.0-alt1
 - Updated to 0.50.0.
 
@@ -70,4 +74,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
 - Built for ALT Sisyphus.
-
