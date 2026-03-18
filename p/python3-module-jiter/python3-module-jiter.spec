@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jiter
-%define pypi_nname jiter
 %define mod_name jiter
 
 %def_with check
 
-Name: python3-module-%pypi_nname
-Version: 0.9.0
+Name: python3-module-%pypi_name
+Version: 0.13.0
 Release: alt1
 
 Summary: Fast iterable JSON parser
@@ -21,6 +20,8 @@ Source2: %pyproject_deps_config_name
 Source3: config.toml
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -58,14 +59,15 @@ cd crates/jiter-python
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.13.0-alt1
+- Updated to 0.13.0.
+
 * Tue Mar 11 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - Updated to 0.9.0.
 
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.8.2-alt1
 - Built for ALT Sisyphus.
-
