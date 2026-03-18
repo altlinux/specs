@@ -3,8 +3,8 @@
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: hstr
-Version: 3.1
-Release: alt2
+Version: 3.2
+Release: alt1
 
 Summary: Suggest box like shell history completion
 License: Apache-2.0
@@ -14,9 +14,6 @@ Vcs: https://github.com/dvorka/hstr
 
 Source: %name-%version.tar
 
-BuildRequires: automake
-BuildRequires: gcc
-BuildRequires: bash-completion
 BuildRequires: libncurses-devel
 BuildRequires: libncursesw-devel
 BuildRequires: libreadline-devel
@@ -44,6 +41,9 @@ from the history. It aims to make completion easier and faster than Ctrl-r.
 %bash_completionsdir/%name
 
 %changelog
+* Wed Mar 18 2026 Denis Sergeev <zeff@altlinux.org> 3.2-alt1
+- 3.1 -> 3.2.
+
 * Fri Mar 07 2025 Denis Sergeev <zeff@altlinux.org> 3.1-alt2
 - Bumped release to override autoimport package.
 
