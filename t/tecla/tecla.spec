@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Tecla
 
@@ -67,6 +67,9 @@ This package contains development files for %name
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

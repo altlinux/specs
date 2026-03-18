@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: epiphany
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -154,6 +154,9 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 

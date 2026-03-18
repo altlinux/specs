@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
@@ -16,7 +16,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -29,7 +29,6 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
-Patch10: %name-47.0-fc-pygobject-3.52.patch
 
 Provides: %oldname = %EVR
 Obsoletes: %oldname < 2.14.2-alt1
@@ -40,8 +39,8 @@ Obsoletes: %oldname < 2.14.2-alt1
 
 %add_python3_path %_libdir/%name/plugins
 
-%define glib_ver 2.74
-%define peas_ver 0.7.4
+%define glib_ver 2.86
+%define peas_ver 1.38
 %define portal_ver 0.5
 %define gtk_ver 3.24.15
 %define handy_ver 1.5
@@ -120,7 +119,6 @@ the functionality of the EOG GUI.
 
 %prep
 %setup -n %name-%version%beta
-%patch10 -p1
 
 %build
 %meson \
@@ -189,6 +187,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sat Jan 10 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

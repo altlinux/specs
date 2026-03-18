@@ -1,14 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
+%define xdg_name org.gnome.Orca
 
 %def_enable braille
 # experimental spiel (https://github.com/eeejay/spiel) support disabled by default
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -32,7 +33,7 @@ Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
 %add_python3_req_skip gi.repository.Gio
 %{?_disable_spiel:%add_typelib_req_skiplist typelib(Spiel)}
 
-Requires: yelp
+Requires: dconf yelp
 Requires: at-spi2-core
 # don't speak russian
 #Requires: speech-dispatcher-module-flite flite
@@ -93,16 +94,20 @@ Jaws For Windows компании Freedom Scientific.
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README* TODO
 %_bindir/%name
+%_desktopdir/%name.desktop
 %python3_sitelibdir/%name/
 %_userunitdir/%name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_man1dir/*
-%_datadir/%name/
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Nov 25 2025 Yuri N. Sedunov <aris@altlinux.org> 49.5-alt1
 - 49.5
 
