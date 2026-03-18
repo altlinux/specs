@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: A stand-alone implementation of several NumPy dtype extensions used in machine learning
@@ -16,13 +16,15 @@ Vcs: https://github.com/jax-ml/ml_dtypes
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Source2: %name-%version-third_party-eigen.tar
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: gcc-c++
+BuildRequires: eigen3-devel
 BuildRequires: libnumpy-py3-devel
 %if_with check
 %add_pyproject_deps_check_filter pyink
@@ -34,7 +36,7 @@ BuildRequires: python3-module-numpy-testing
 %summary.
 
 %prep
-%setup -a2
+%setup
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -49,10 +51,12 @@ BuildRequires: python3-module-numpy-testing
 %pyproject_run -- pytest -vra --import-mode append ml_dtypes/tests
 
 %files
-%doc CHANGELOG.md README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.4-alt1
+- Updated to 0.5.4.
+
 * Fri Jul 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.2-alt1
 - Packaged for ALT Sisyphus.
