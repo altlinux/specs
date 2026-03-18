@@ -3,7 +3,7 @@
 
 Name:    x2goserver
 Version: 4.1.0.3
-Release: alt4
+Release: alt5
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -45,7 +45,6 @@ Requires: perl-X2Go-Server = %EVR
 Requires: psmisc
 Requires: pwgen
 Requires: sshfs
-Requires: sudo
 Requires: fonts-bitmap-misc
 Requires: xauth
 Requires: xkbutils
@@ -236,6 +235,23 @@ simply a local X11 session.
 This package contains all the integration and configuration logics
 of a system-wide manageable desktop sharing setup.
 
+%package sudo
+Summary: X2Go Server (Sudo support)
+Requires: %name = %version-%release
+Requires: sudo
+Group: Communications
+BuildArch: noarch
+
+%description sudo
+X2Go is a server based computing environment with
+- session resuming
+- low bandwidth support
+- session brokerage support
+- client side mass storage mounting support
+- audio support
+- authentication by smartcard and USB stick
+
+This package contains configuration files for sudo support
 
 %prep
 %setup -q
@@ -317,7 +333,6 @@ exit 0
 
 %files
 %config(noreplace) %_sysconfdir/logcheck/ignore.d.server/x2goserver
-%config(noreplace) %_sysconfdir/sudoers.d/x2goserver
 %dir %_sysconfdir/x2go/
 %dir %_sysconfdir/x2go/x2gosql
 %dir %_sysconfdir/x2go/x2gosql/passwords
@@ -446,7 +461,13 @@ exit 0
 %dir %_sysconfdir/x2go/desktopsharing
 %config(noreplace) %_sysconfdir/x2go/desktopsharing/settings
 
+%files sudo
+%config(noreplace) %_sysconfdir/sudoers.d/x2goserver
+
 %changelog
+* Wed Mar 18 2026 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt5
+- split pkg with sudo requirement
+
 * Mon Jul 29 2024 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt4
 - fix build and package
 
