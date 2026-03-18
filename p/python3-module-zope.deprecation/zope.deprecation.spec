@@ -1,25 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name zope.deprecation
+%define ns_name zope
+%define mod_name deprecation
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 5.1
-Release: alt1.1
+Version: 6.0
+Release: alt1
 
 Summary: Zope Deprecation Infrastructure
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.deprecation/
 Vcs: https://github.com/zopefoundation/zope.deprecation.git
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 %add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 Requires: python3-module-zope
@@ -44,24 +49,19 @@ to mark deprecated modules, classes, functions, methods and properties.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
-%python3_sitelibdir/zope/deprecation/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/__pycache__/tests.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 1:6.0-alt1
+- 5.1 -> 6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
