@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name leb128
-%define mod_name %pypi_name
+%define mod_name leb128
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: LEB128 or Little Endian Base 128
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,11 +51,13 @@ encoding for all integer literals.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.0.9-alt1
+- Updated to 1.0.9.
+
 * Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 
@@ -62,4 +66,3 @@ encoding for all integer literals.
 
 * Thu Mar 07 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.5-alt1
 - Built for ALT Sisyphus.
-
