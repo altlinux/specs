@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt23
+Release:       alt24
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Mar 17 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt24
+- ! select version over all the sources's full path from downdir to updir
+
 * Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt23
 - ! data to install for fake source
 - ! #to_os method

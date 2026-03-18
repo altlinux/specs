@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.10.0.1
-Release: alt3
+Release: alt4
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -260,6 +260,7 @@ Group: Development/Ruby
 BuildArch: noarch
 Provides: %name-ruby = %EVR ruby-%name = %EVR
 Obsoletes: %name-ruby < %EVR ruby-%name < %EVR
+Provides: gem(opennebula) = 6.10.0.1
 Requires: gem(activesupport) >= 0
 Requires: gem(ffi-rzmq) >= 0
 Requires: gem(rack-protection) >= 0
@@ -1150,6 +1151,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Wed Mar 18 2026 Pavel Skrylev <majioa@altlinux.org> 6.10.0.1-alt4
+- ! fixed explicit provide rule declaration
+
 * Tue Aug 26 2025 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt3
 - fix onedb migrations
 
