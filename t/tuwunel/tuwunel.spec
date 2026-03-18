@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:    tuwunel
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
 Group:   System/Servers
@@ -30,11 +32,16 @@ fully implementing the Matrix Specification for all but the most niche uses.
 
 %prep
 %setup -a1
+%rust_prep
 cat %SOURCE2 >> .cargo/config.toml
 sed 's/PrivateUsers/#PrivateUsers/' -i rpm/%name.service
 
 %build
 %rust_build
+
+%check
+export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
+%rust_test -- --skip smoke --skip smoke_async --skip smoke_shutdown
 
 %pre
 %sysusers_create_package %name %SOURCE3
@@ -50,12 +57,17 @@ mkdir -p %buildroot/%_localstatedir/%name
 %_sbindir/%name
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
-%attr(644,%name,%name) %config(noreplace) %_sysconfdir/%name/%name.toml
-%attr(755,%name,%name) %dir %_localstatedir/%name/
-%attr(755,%name,%name) %dir %_sysconfdir/%name/
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.toml
+%dir %attr(755,%name,%name) %_localstatedir/%name
 %doc LICENSE README.md
 
 %changelog
+* Wed Mar 18 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt2
+- Add execute test in %%check section.
+- Change owner of conf dir and file to root.
+- Fix build debuginfo package.
+
 * Mon Mar 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt1
 - Updated from 1.5.0 to 1.5.1 with security fixes.
 
