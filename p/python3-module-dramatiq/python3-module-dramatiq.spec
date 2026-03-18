@@ -5,8 +5,19 @@
 # tests require rabbitmq, redis, prometheus running services
 %def_without check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 1.18.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A fast and reliable distributed task processing library for Python 3
@@ -21,6 +32,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -31,6 +44,14 @@ BuildRequires(pre): rpm-build-pyproject
 
 %description
 %summary.
+
+%add_python_extra all
+%add_python_extra gevent
+%add_python_extra memcached
+%add_python_extra prometheus
+%add_python_extra rabbitmq
+%add_python_extra redis
+%add_python_extra watch
 
 %prep
 %setup
@@ -48,13 +69,15 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc COPYING COPYING.LESSER README.md
 %_bindir/dramatiq
 %_bindir/dramatiq-gevent
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
 - Updated to 1.18.0.
 
@@ -75,4 +98,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Wed Oct 05 2022 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
 - initial build for Sisyphus
-
