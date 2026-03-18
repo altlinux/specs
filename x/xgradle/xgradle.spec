@@ -3,7 +3,7 @@
 
 Name: xgradle
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Gradle plugin for system dependency resolution and offline builds
 License: Apache-2.0
@@ -106,6 +106,7 @@ chmod +x commit.sh
 %build
 %gradle_publish -DgitCommitId=$(./commit.sh) \
   -Prelease \
+  -Djava11 \
   #
 
 %install
@@ -172,6 +173,9 @@ install -Dm 644 rpm-macros/xgradle-fjava \
 %_rpmmacrosdir/xgradle-fjava
 
 %changelog
+* Wed Mar 18 2026 Ivan Khanas <xeno@altlinux.org> 0.2.0-alt2
+- Set java 11 target compilation.
+
 * Tue Mar 17 2026 Ivan Khanas <xeno@altlinux.org> 0.2.0-alt1
 - New version.
 - Sbom generation support.
