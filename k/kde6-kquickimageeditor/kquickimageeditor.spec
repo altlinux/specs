@@ -4,7 +4,7 @@
 %define libkquickimageeditor libkquickimageeditor%sover
 
 Name: kde6-%rname
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 %K6init altplace
 
@@ -74,6 +74,9 @@ Obsoletes: %name < %EVR
 %_K6archdata/mkspecs/modules/*KQuickImageEditor*.pri
 
 %changelog
+* Wed Mar 18 2026 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- new version
+
 * Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
 - new version
 
