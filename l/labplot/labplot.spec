@@ -3,7 +3,7 @@ ExcludeArch: %ix86
 %define soversion 2.12.0
 Name: labplot
 Version: 2.12.1
-Release: alt2
+Release: alt3
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Url: https://labplot.kde.org/
 %K6init no_altplace
 
 Conflicts: labplot1.6
-Requires: ImageMagick-tools gsl pstoedit
+Requires: ImageMagick-tools gsl pstoedit cantor
 
 VCS: https://invent.kde.org/education/labplot.git
 Source: %name-%version.tar
@@ -122,6 +122,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_K6link/liblabplot.so
 
 %changelog
+* Wed Mar 18 2026 Sergey V Turchin <zerg@altlinux.org> 2.12.1-alt3
+- fix requires (closes: 58267)
+
 * Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 2.12.1-alt2
 - fixed build with qt6 >= 6.10 (Qt6GuiPrivate no longer auto-loaded,
   missing QElapsedTimer include)
