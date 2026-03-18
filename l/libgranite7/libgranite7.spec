@@ -1,4 +1,5 @@
 %def_disable snapshot
+%def_enable gtk_stylesheets
 %def_enable docs
 %def_enable check
 
@@ -11,7 +12,7 @@
 %define sover 7
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Extension of GTK4 libraries
@@ -96,7 +97,10 @@ GObject introspection devel data for the Granite library.
 %setup -n %_name-%version
 
 %build
-%meson %{subst_enable_meson_bool docs documentation}
+%meson \
+    %{subst_enable_meson_bool docs documentation} \
+    %{subst_enable_meson_bool gtk_stylesheets gtk-stylesheets}
+%nil
 %meson_build
 
 %install
@@ -109,7 +113,7 @@ GObject introspection devel data for the Granite library.
 %files -f %_name-%api_ver_major.lang
 %_libdir/*.so.%{sover}*
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/themes/%namespace/
+%{?_enable_gtk_stylesheets:%_datadir/themes/%namespace/}
 %_datadir/metainfo/%_name-%api_ver_major.metainfo.xml
 %doc README*
 
@@ -132,6 +136,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 7.8.1-alt1
+- 7.8.1
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 7.8.0-alt1
 - 7.8.0
 

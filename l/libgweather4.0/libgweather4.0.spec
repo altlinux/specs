@@ -2,14 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name libgweather
-%define ver_major 4.4
+%define ver_major 4.6
 %define beta %nil
 %define api_ver_major 4
 %define api_ver 4.0
 %define namespace GWeather
 %define xdg_name org.gnome.GWeather%api_ver_major
 
-%def_disable soup2
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
@@ -18,8 +17,8 @@
 %def_disable online_check
 
 Name: %_name%api_ver
-Version: %ver_major.4
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -33,28 +32,25 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
 Source: %_name-%version%beta.tar
 %endif
-Patch8: %name-4.4.4-alt-update-russian-locations.patch
-Patch9: %name-4.4.4-alt-update-russian-translation.patch
-Patch10: %name-4.4.4-alt-add-new-territories.patch
-Patch11: %name-4.4.4-alt-update-new-territories-translation.patch
-#Patch10: %_name-4.4.2-alt-Novorossia.patch
-#Patch11: %_name-4.4.4-alt-Novorossia-po-locations.patch
 
 %define glib_ver 2.68
-%define soup2_ver 2.44
 %define soup_api_ver 3.0
 %define soup3_ver 2.99.2
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
 %define geocode_ver 3.26.3
+%define locations_ver 2026.1
+
+Requires: gweather-locations >= %locations_ver
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-meson
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver libxml2-devel pkgconfig(json-glib-1.0)
 BuildRequires: xsltproc perl-XML-Parser xml-utils gzip
 BuildRequires: python3-module-pygobject3 python3-module-pylint
-%{?_disable_soup2:BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver}
-%{?_enable_soup2:BuildRequires: libsoup-devel >= %soup2_ver pkgconfig(geocode-glib-1.0)}
+BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
+BuildRequires: pkgconfig(geocode-glib-2.0) >= %geocode_ver
+BuildRequires: pkgconfig(gweather-locations) >= %locations_ver
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -65,22 +61,10 @@ BuildRequires: vala-tools >= %vala_ver}
 libgweather is a library to access weather information from online
 services for numerous locations.
 
-%package data
-Summary: Locations data for %name
-Group: System/Libraries
-BuildArch: noarch
-
-%description data
-libgweather is a library to access weather information from online
-services for numerous locations.
-
-This package contains locations development data for %name.
-
 %package devel
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %EVR
-Requires: %name-data = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -125,11 +109,6 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup -n %_name-%version%beta
-%patch8 -p1 -b .extR
-%patch9 -p1 -b .extR
-%patch10 -p1 -b .NR
-%patch11 -p1 -b .NR
-
 sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 %build
@@ -137,10 +116,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %add_optflags -D_GNU_SOURCE
 %meson \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
-    %{subst_enable_meson_bool vala enable_vala} \
-    %{subst_enable_meson_bool soup2 soup2}
+    %{subst_enable_meson_bool vala enable_vala}
 %nil
-%meson_build %_name-%api_ver-locations-pot %_name-%api_ver-update-po
+%meson_build %_name-%api_ver-update-po
 %meson_build
 
 %install
@@ -151,8 +129,6 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %__meson_test -v --print-errorlogs %{?_disable_online_check:--suite lint}
 
 %files -f %name.lang
-%dir %_libdir/%_name-%api_ver_major
-%_libdir/%_name-%api_ver_major/Locations.bin
 %_libdir/%_name-%api_ver_major.so.*
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -162,11 +138,6 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %_includedir/%_name-%api_ver
 %_libdir/%_name-%api_ver_major.so
 %_pkgconfigdir/*
-
-%files data
-%dir %_datadir/%_name-%api_ver_major
-%_datadir/%_name-%api_ver_major/Locations.xml
-%_datadir/%_name-%api_ver_major/locations.dtd
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -188,6 +159,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %endif
 
 %changelog
+* Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.4-alt2
 - qualimock@:
   updated Russian Federation locations (all regions including new
