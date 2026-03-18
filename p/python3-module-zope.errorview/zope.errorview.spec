@@ -6,9 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1
+Version: 3.0
 Release: alt1
-
 Summary: Basic HTTP and Browser exception views
 License: ZPL-2.1
 Group: Development/Python3
@@ -24,7 +23,6 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-# setuptools(pkg_resources) is used by namespace root which is not used in ALT
 %add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -53,13 +51,14 @@ Provides basic HTTP and Browser views for common exceptions.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Mar 18 2026 Stanislav Levin <slev@altlinux.org> 3.0-alt1
+- 2.1 -> 3.0.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 2.1-alt1
 - 2.0 -> 2.1.
 
