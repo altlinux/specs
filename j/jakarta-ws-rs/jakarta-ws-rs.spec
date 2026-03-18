@@ -1,82 +1,79 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jakarta-ws-rs
+Version: 4.0.0
+Release: alt1
+
+Summary: Jakarta RESTful Web Services
+License: EPL-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global srcname jaxrs-api
+Url: https://github.com/jakartaee/rest
+Vcs: https://github.com/jakartaee/rest.git
+BuildArch: noarch
 
-Name:           jakarta-ws-rs
-Version:        2.1.6
-Release:        alt1_8jpp11
-Summary:        Jakarta RESTful Web Services
-# ASL 2.0: jaxrs-api/src/main/java/javax/ws/rs/core/GenericEntity.java
-License:        (EPL-2.0 or GPLv2 with exceptions) and ASL 2.0
+Source0: %name-%version.tar
 
-URL:            https://github.com/eclipse-ee4j/jaxrs-api
-Source0:        %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
-BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
-BuildRequires:  mvn(org.mockito:mockito-core)
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       glassfish-jax-rs-api = %{version}-%{release}
-Obsoletes:      glassfish-jax-rs-api < 2.1.6-7
-
-# javadoc subpackage is currently not built
-Obsoletes:      glassfish-jax-rs-api-javadoc < 2.1.6-7
-Source44: import.info
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: maven-local
+BuildRequires: jpackage-17-compat
+BuildRequires: ee4j-parent
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-source-plugin
+BuildRequires: maven-plugin-build-helper
+BuildRequires: mockito-core
+BuildRequires: maven-assembly-plugin
+BuildRequires: maven-enforcer-plugin
 
 %description
-JAX-RS Java API for RESTful Web Services (JSR 339).
+Jakarta RESTful Web Services provides a specification document, TCK and
+foundational API to develop web services following the Representational State
+Transfer (REST) architectural pattern.
 
+%package spec
+Summary: Jakarta RESTful Web Services specification POM
+Group: Development/Java
+
+%description spec
+Jakarta RESTful Web Services specification artifact and parent metadata used
+for Maven builds.
+
+%package parent
+Summary: Jakarta RESTful Web Services parent POM
+Group: Development/Java
+
+%description parent
+Parent POM for Jakarta RESTful Web Services Maven artifacts.
+
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup
+%pom_disable_module examples
+%pom_disable_module jaxrs-tck
 
-pushd jaxrs-api
-# remove unnecessary maven plugins
-%pom_remove_plugin :buildnumber-maven-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :maven-deploy-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :maven-jxr-plugin
-%pom_remove_plugin :maven-source-plugin
-
-%pom_xpath_remove "pom:build/pom:finalName"
-
-# add aliases for old maven artifact coordinates
-%mvn_alias jakarta.ws.rs:jakarta.ws.rs-api javax.ws.rs:javax.ws.rs-api
-popd
-
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :asciidoctor-maven-plugin jaxrs-spec/pom.xml
 
 %build
-pushd jaxrs-api
-# skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DbuildNumber=unknown
-popd
-
+%mvn_build -s
 
 %install
-pushd jaxrs-api
 %mvn_install
-popd
 
+%files -f .mfiles-jakarta.ws.rs-api
 
-%files -f jaxrs-api/.mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
-%doc README.md CONTRIBUTING.md
+%files spec -f .mfiles-jakarta.ws.rs-spec
 
+%files parent -f .mfiles-all
 
 %changelog
+* Wed Mar 18 2026 Ivan Khanas <xeno@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.1.6-alt1_8jpp11
 - new version
-
