@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.7.6
 Release: alt1
 
 Summary: A pytest plugin that allows multiple failures per test
@@ -48,8 +48,11 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 3 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.7.6-alt1
+- Updated to 2.7.6.
+
 * Mon Nov 17 2025 Timofei Fedotov <sovtouch@altlinux.org> 2.6.0-alt1
-- Updated to 2.6.0.
+- Updated to 2.6.0
 
 * Tue Aug 25 2025 Timofei Fedotov <sovtouch@altlinux.org> 2.5.3-alt1
 - Initial build for ALT Sisyphus.
