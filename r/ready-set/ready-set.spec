@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -274,6 +274,12 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Tue Mar 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.1-alt1
+- New version: 0.6.1.
+- Fixed quitting app before GDM verification.
+- Fixed visibility of OSK button at end page.
+- Don't allow to show steps via gesture with `simple`.
+
 * Tue Mar 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.0-alt1
 - New version: 0.6.0.
 - Renamed `intact` mode to `sandbox` (CLI option `--sandbox`).
