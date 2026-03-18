@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,18 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Mar 17 2026 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
+- added GET /events SSE endpoint for real-time task change notifications
+- added broadcast hub with per-client buffers and connection limits
+- added --max-sse-connections, --max-sse-per-ip, --sse-max-lifetime,
+  --sse-heartbeat-interval, --sse-buffer-size, --sse-ip-header,
+  --sse-trusted-proxy CLI options
+- fixed EPERM approval detection (re-read every 30s)
+- fixed arbitrary file read via symlinks (lstat hardening)
+- fixed partial task rejection (require state/owner/repo)
+- fixed consistent GET /tasks/{id} for EPERM tasks
+- removed per-request thread spawning in read_build_status
+
 * Mon Mar 16 2026 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
 - detect failed subtask builds via try_iter filtering
 - build results filtered by try_iter to exclude stale data from previous iterations
