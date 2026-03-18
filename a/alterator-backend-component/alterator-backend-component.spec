@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -17,7 +17,7 @@ Source0: %name-%version.tar
 Requires: alterator-interface-%{shortname} = %EVR
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-entry >= 0.2.0
-Requires: alterator-backend-systeminfo >= 0.4.1
+Requires: alterator-backend-systeminfo >= 0.4.3
 
 Provides: alterator-backend-component_categories = %EVR
 Provides: alterator-backend-batch-components = 0.3.1-alt2
@@ -69,6 +69,13 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Mar 17 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.5-alt1
+- Translate polkit action messages (thx Maria Alexeeva)
+- Add `Description` and `DescriptionRaw` methods to 
+  org.altlinux.alterator.batch_components1 interface.
+- Add `Description` and `DescriptionRaw` methods to 
+  org.altlinux.alterator.batch_component_categories1 interface.
+
 * Wed Feb 18 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.4-alt1
 - Fix batch_components1.Status incorrect result if system locale is not
   English.
