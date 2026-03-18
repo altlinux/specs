@@ -1,8 +1,8 @@
 Name: AlephOne
-Version: 1.10
-%define uversion 20240822
+Version: 1.11
+%define uversion 20250829
 
-Release: alt2
+Release: alt1
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -14,7 +14,7 @@ Url: https://alephone.lhowon.org
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source0: %name-%uversion.tar
+Source0: %name-%version.tar
 Source1: %name.desktop
 Source2: %name-48x48.png
 Source3: alephone-wrapper.sh
@@ -35,7 +35,7 @@ BuildRequires: libcurl-devel libminiupnpc-devel libopenal-devel libpng-devel lib
 #BuildRequires: libmad-devel libsmpeg-devel libspeex-devel libspeexdsp-devel
 #BuildRequires: libvorbis-devel lua5.3 python3-dev libopenal-devel zlib-devel   /usr/bin/python3
 
-BuildRequires: desktop-file-utils  autoconf-archive zlib-devel
+BuildRequires: desktop-file-utils  autoconf-archive zlib-devel asio-devel
 
 %description
 Aleph One is an Open Source 3D first-person shooter game, based on the game
@@ -52,7 +52,8 @@ to alephone. For example:
 alephone "~/Marathon Infinity"
 
 %prep
-%setup -n %name-%uversion
+%setup
+#-n %name-%uversion
 #patch0 -p2
 
 %build
@@ -100,6 +101,9 @@ alephone "~/Marathon Infinity"
 
 
 %changelog
+* Wed Mar 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11-alt1
+- 1.10 -> 1.11
+
 * Mon Feb 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.10-alt2
 - NMU: FTBFS: rebuilded with zlib-devel.
 
