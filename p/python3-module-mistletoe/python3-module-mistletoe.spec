@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mistletoe
-%define mod_name %pypi_name
+%define mod_name mistletoe
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: A fast, extensible and spec-compliant Markdown parser in pure Python
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -60,12 +62,14 @@ cat requirements.txt test-requirements.txt > full-requirements.txt
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
-%_bindir/%pypi_name
+%_bindir/mistletoe
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.5.1-alt1
+- Updated to 1.5.1.
+
 * Thu Oct 30 2025 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 
@@ -86,4 +90,3 @@ cat requirements.txt test-requirements.txt > full-requirements.txt
 
 * Thu Sep 29 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - initial build for Sisyphus
-
