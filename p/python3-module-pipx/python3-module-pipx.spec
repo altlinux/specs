@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Install and Run Python Applications in Isolated Environments
@@ -21,6 +21,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,12 +53,14 @@ BuildRequires: python3-module-pytest
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE docs
 %_bindir/pipx
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.9.0-alt1
+- Updated to 1.9.0.
+
 * Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
 - Updated to 1.8.0.
 
@@ -83,4 +87,3 @@ BuildRequires: python3-module-pytest
 
 * Thu Nov 23 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - Built for ALT Sisyphus.
-
