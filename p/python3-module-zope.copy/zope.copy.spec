@@ -1,35 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.copy
+%define pypi_name zope.copy
+%define ns_name zope
+%define mod_name copy
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.0
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 6.0
+Release: alt1
 Summary: Pluggable object copying mechanism
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.copy/
 Vcs: https://github.com/zopefoundation/zope.copy.git
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.location
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zodbpickle
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 %endif
-
-%py3_requires zope
 
 %description
 This package provides a pluggable way to copy persistent objects. It was
@@ -37,44 +38,32 @@ once extracted from the zc.copy package to contain much less
 dependencies. In fact, we only depend on zope.interface to provide
 pluggability.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.component
-%py3_requires zope.location
-%py3_requires zope.testing
-
-%description tests
-This package contains tests for %oname.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
 
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
-%doc LICENSE.txt *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/copy/tests
-
-%files tests
-%python3_sitelibdir/zope/copy/tests
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.0 -> 6.0.
+
 * Fri Jan 31 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt2
 - Mapped PyPI name to the distro's one.
 
