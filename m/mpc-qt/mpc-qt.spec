@@ -4,14 +4,16 @@
 %define app_id io.github.mpc_qt.mpc-qt
 
 Name:     mpc-qt
-Version:  25.07
+Version:  26.01
 Release:  alt1
 
-Summary:  A clone of Media Player Classic reimplemented in Qt.
+Summary:  A clone of Media Player Classic reimplemented in Qt
 License:  GPL-2.0
 Group:    Video
-Url:      https://github.com/mpc-qt/mpc-qt
-Vcs:      https://github.com/mpc-qt/mpc-qt.git
+
+URL:      https://github.com/mpc-qt/mpc-qt
+VCS:      https://github.com/mpc-qt/mpc-qt.git
+
 Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 
@@ -46,10 +48,13 @@ rm -r %buildroot%_defaultdocdir/%name
 %_bindir/%name
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/metainfo/%app_id.appdata.xml
-%doc DOCS/ipc.md
+%_datadir/metainfo/%app_id.metainfo.xml
+%doc LICENSE README.md DOCS/ipc.md
 
 %changelog
+* Tue Mar 17 2026 Polina Poidenko <polipoki@altlinux.org> 26.01-alt1
+- New version 26.01.
+
 * Mon Jul 21 2025 Anton Midyukov <antohami@altlinux.org> 25.07-alt1
 - New version 25.07.
 - Revert mpc-qt.desktop: remove MimeType and X-KDE-Protocols.
