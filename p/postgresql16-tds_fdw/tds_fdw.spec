@@ -1,11 +1,11 @@
 %define pg_ver 16
 %define prog_name tds_fdw
-%def_with jit
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Summary: TDS Foreign data wrapper
 Name: postgresql%pg_ver-%prog_name
 Version: 2.0.5
-Release: alt1
+Release: alt2
 License: PostgreSQL
 Group: Databases
 Url: https://github.com/tds-fdw/tds_fdw
@@ -36,14 +36,15 @@ as Sybase databases and Microsoft SQL server.
 %files
 %_defaultdocdir/postgresql/extension/*
 %_libdir/pgsql/*.so
-%if %pg_ver >= 11
-%if_with jit
+%if %{enable_llvm}
 %_libdir/pgsql/bitcode/*
-%endif
 %endif
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 2.0.5-alt2
+- Use LLVM if it used in PostgreSQL
+
 * Thu Sep 18 2025 Alexei Takaseev <taf@altlinux.org> 2.0.5-alt1
 - 2.0.5
 - Add lost %%install section

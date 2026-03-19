@@ -1,4 +1,4 @@
-%define pg_ver 14
+%define pg_ver 18
 %define prog_name tds_fdw
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
