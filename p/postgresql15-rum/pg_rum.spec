@@ -1,8 +1,8 @@
 %define pg_ver 15
-%def_with jit
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-rum
-Version: 1.3.14
+Version: 1.3.15
 Release: alt1
 Summary: The rum module provides an access method to work with a `RUM` index. It is based on the `GIN` access method's code.
 License: PostgreSQL
@@ -41,12 +41,16 @@ in the index with lexemes. So it is necessary to perform an additional heap scan
 
 %files
 %_libdir/pgsql/*.so
-%if_with jit
+%if %{enable_llvm}
 %_libdir/pgsql/bitcode/*
 %endif
 %_datadir/pgsql/extension/*
 %doc LICENSE README.md TODO
 
 %changelog
+* Thu Mar 12 2026 Alexei Takaseev <taf@altlinux.org> 1.3.15-alt1
+- 1.3.15
+- Use LLVM if it used in PostgreSQL
+
 * Wed Sep 03 2025 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt1
 - Initial build for ALT Linux

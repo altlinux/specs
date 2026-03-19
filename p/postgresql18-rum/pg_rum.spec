@@ -1,4 +1,4 @@
-%define pg_ver 16
+%define pg_ver 18
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-rum
