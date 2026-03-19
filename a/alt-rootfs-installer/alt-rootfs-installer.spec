@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
 Version: 0.7.3
-Release: alt1
+Release: alt2
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -41,6 +41,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt2
+- Add starfive_visionfive2 and pine64_star64 boards (thx Ilya Sorochan).
+
 * Thu Jan 15 2026 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
 - fix: always create /boot partition with LUKS (thx ved@).
 - option --luks-opt is sufficient for creating a LUKS partition (thx ved@).
