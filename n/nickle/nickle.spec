@@ -1,5 +1,5 @@
 Name: nickle
-Version: 2.101
+Version: 2.108
 Release: alt1
 Summary: A programming language-based prototyping environment
 
@@ -9,7 +9,7 @@ Url: http://nickle.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://nickle.org/release/nickle-%version.tar.gz
 
-BuildRequires: libncurses-devel libreadline-devel bison flex bc
+BuildRequires: libncurses-devel libreadline-devel bison flex bc meson rpm-macros-meson cmake ninja-build libgmp-devel
 
 # for documentation
 #BuildRequires(pre): rpm-build-ruby
@@ -46,18 +46,23 @@ function interface) libraries (e.g. the Cairo interface for Nickle).
 %setup
 
 %build
-autoreconf -fiv
-#configure
-%configure --docdir=%{_defaultdocdir}
-make %{?_smp_flags}
+#autoreconf -fiv
+##configure
+#configure --docdir=%{_defaultdocdir}
+#make %{?_smp_flags}
+%meson
+%meson_build
+
 
 %check
-cd test
-make check
+#cd test
+#make check
+%meson_test
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm `find examples -name 'Makefile*'`
+%meson_install
+#make install DESTDIR=$RPM_BUILD_ROOT
+#rm `find examples -name 'Makefile*'`
 rm examples/COPYING
 
 # Fix permissions on example files
@@ -65,10 +70,10 @@ chmod a-x examples/menace2.5c
 chmod a-x examples/turtle/snowflake.5c
 
 %files
-%doc README README.name COPYING AUTHORS NEWS TODO examples
+%doc README README.name AUTHORS NEWS TODO examples
 %_bindir/nickle
 %_datadir/nickle/
-%exclude %_datadir/nickle/COPYING
+#exclude %_datadir/nickle/COPYING
 %exclude %_datadir/nickle/examples
 %_man1dir/nickle.1*
 
@@ -76,6 +81,10 @@ chmod a-x examples/turtle/snowflake.5c
 %_includedir/nickle
 
 %changelog
+* Thu Mar 19 2026 Ilya Mashkin <oddity@altlinux.ru> 2.108-alt1
+- 2.108
+- Build with meson
+
 * Sun Nov 24 2024 Ilya Mashkin <oddity@altlinux.ru> 2.101-alt1
 - 2.101
 
