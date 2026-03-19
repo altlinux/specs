@@ -2,11 +2,11 @@
 # LTO will be checked during configuration
 %define optflags_lto %nil
 
-%define igc_version 2.28.4
-%define libze_version 1.27.0
+%define igc_version 2.30.1
+%define libze_version 1.28.0
 
 Name: intel-compute-runtime
-Version: 26.05.37020.3
+Version: 26.09.37435.1
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -128,6 +128,9 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %_includedir/ocloc_api.h
 
 %changelog
+* Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 26.09.37435.1-alt1
+- Updated to upstream version 26.09.37435.1.
+
 * Tue Mar 17 2026 L.A. Kostis <lakostis@altlinux.ru> 26.05.37020.3-alt1
 - Updated to upstream version 26.05.37020.3.
 

@@ -2,7 +2,7 @@
 %define llvmversion 16
 
 Name: libvc-intrinsics
-Version: 0.24.3
+Version: 0.25.0
 Release: alt1
 
 Summary: Set of new intrinsics on top of core LLVM IR instructions that represent SIMD semantics of a program targeting GPU
@@ -64,6 +64,9 @@ Group: Development/C++
 %_libdir/libLLVMGenXIntrinsics.a
 
 %changelog
+* Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 0.25.0-alt1
+- 0.25.0.
+
 * Sun Mar 15 2026 L.A. Kostis <lakostis@altlinux.ru> 0.24.3-alt1
 - Updated to upstream version 0.24.3.
 - Built with llvm16.

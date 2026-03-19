@@ -1,6 +1,6 @@
 %define soversion 1
 Name: level-zero
-Version: 1.27.0
+Version: 1.28.0
 Release: alt1
 
 Summary: OneAPI Level Zero Specification Headers and Loader
@@ -74,6 +74,9 @@ developing applications that use libze.
 %_pkgconfigdir/level-zero.pc
 
 %changelog
+* Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 1.28.0-alt1
+- 1.28.0.
+
 * Sun Mar 15 2026 L.A. Kostis <lakostis@altlinux.ru> 1.27.0-alt1
 - 1.27.0.
 

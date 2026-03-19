@@ -2,10 +2,14 @@
 %define llvmversion 16
 %define optflags_lto %nil
 
+%define vc_int_ver 0.25.0
+%define opencl_ver 16.0.9
+%define spirv_ver 16.0.22
+
 %set_verify_elf_method skip
 
 Name: intel-graphics-compiler
-Version: 2.28.4
+Version: 2.30.1
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -29,17 +33,17 @@ BuildRequires: spirv-headers
 BuildRequires: spirv-tools
 BuildRequires: clang%llvmversion.0
 BuildRequires: lld%llvmversion.0-devel
-BuildRequires: libspirv-tools-devel
-BuildRequires: libspirv-llvm%llvmversion.0-translator-devel
+BuildRequires: libspirv-tools-devel >= %spirv_ver
+BuildRequires: libspirv-llvm%llvmversion.0-translator-devel >= %spirv_ver
 BuildRequires: llvm%llvmversion-spirv
 BuildRequires: llvm%llvmversion.0-devel
 BuildRequires: llvm%llvmversion.0-polly
 BuildRequires: libpolly%llvmversion.0-devel
 BuildRequires: mlir%llvmversion.0-tools
 BuildRequires: libmlir%llvmversion.0-devel
-BuildRequires: libvc-intrinsics-devel
-BuildRequires: libvc-intrinsics-devel-static
-BuildRequires: libintel-opencl-clang%llvmversion-devel
+BuildRequires: libvc-intrinsics-devel >= %vc_int_ver
+BuildRequires: libvc-intrinsics-devel-static >= %vc_int_ver
+BuildRequires: libintel-opencl-clang%llvmversion-devel >= %opencl_ver
 BuildRequires: zlib-devel libtinfo-devel
 
 ExclusiveArch: x86_64
@@ -100,7 +104,6 @@ export ALTWRAP_LLVM_VERSION=%llvmversion.0
   -Wno-dev \
   -DIGC_OPTION__ARCHITECTURE_TARGET='Linux64' \
   -DIGC_OPTION__SPIRV_TOOLS_MODE=Prebuilds \
-  -DIGC_OPTION__API_ENABLE_OPAQUE_POINTERS=ON \
   -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds
 %cmake_build
 
@@ -139,6 +142,10 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 2.30.1-alt1
+- 2.30.1.
+- Pin required components versions.
+
 * Mon Mar 16 2026 L.A. Kostis <lakostis@altlinux.ru> 2.28.4-alt1
 - Updated to upstream version 2.28.4.
 - Enable opaque pointers (as upstream does).
