@@ -1,13 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name openai
-%define pypi_nname openai
 %define mod_name openai
 
 # check requires the Internet connection
 %def_without check
 
-Name: python3-module-%pypi_nname
-Version: 1.91.0
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
+Name: python3-module-%pypi_name
+Version: 2.29.0
 Release: alt1
 
 Summary: The official Python library for the OpenAI API
@@ -22,6 +32,9 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%add_pyproject_deps_runtime_filter pandas-stubs
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -36,6 +49,11 @@ The OpenAI Python library provides convenient access to the
 OpenAI REST API from any Python 3.8+ application. The library includes
 type definitions for all request params and response fields, and
 offers both synchronous and asynchronous clients powered by httpx.
+
+%add_python_extra aiohttp
+%add_python_extra datalib
+%add_python_extra realtime
+%add_python_extra voice-helpers
 
 %prep
 %setup
@@ -56,12 +74,14 @@ offers both synchronous and asynchronous clients powered by httpx.
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc CHANGELOG.md README.md
 %_bindir/openai
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 2.29.0-alt1
+- Updated to 2.29.0.
+
 * Tue Jun 24 2025 Anton Zhukharev <ancieg@altlinux.org> 1.91.0-alt1
 - Updated to 1.91.0.
 
@@ -103,4 +123,3 @@ offers both synchronous and asynchronous clients powered by httpx.
 
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 1.65.2-alt1
 - Built for ALT Sisyphus.
-
