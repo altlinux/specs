@@ -1,10 +1,10 @@
 %define pg_ver 18-1C
 %define prog_name repmgr
-%def_with jit
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.5.0
-Release: alt4
+Release: alt5
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -91,7 +91,7 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %_tmpfilesdir/%prog_name.conf
 %attr(1775,root,postgres) %dir %_logdir/%prog_name
 %_libdir/pgsql/*.so
-%if_with jit
+%if %{enable_llvm}
 %_libdir/pgsql/bitcode/*
 %endif
 %_datadir/pgsql/extension/*
@@ -100,6 +100,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt5
+- Use LLVM if it used in PostgreSQL
+
 * Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt4
 - Add BR libnuma-devel
 
