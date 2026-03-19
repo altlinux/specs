@@ -1,15 +1,15 @@
 %define nameU ru.transistor_radio.transistor
 
 Name: transistor
-Version: 1.3
+Version: 1.5
 Release: alt1
 
 Summary: Internet radio player for KDE
-License: BSD-3-Clause and BSD-2-Clause and GPL-2.0-or-later
+License: LGPL-3.0-only and GPL-3.0-or-later
 Group: Sound
 
-URL: https://invent.kde.org/saurov/transistor
-Vcs: https://invent.kde.org/saurov/transistor
+URL: https://gitlab.com/driglu4it/transistor
+Vcs: https://gitlab.com/driglu4it/transistor
 
 Source: %name-%version.tar
 
@@ -36,15 +36,22 @@ with over 50,000 stations.
 %install
 %K6install
 
-%files
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
 %_bindir/%name
 %_datadir/applications/%nameU.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/knotifications?/%name.*
-%_datadir/metainfo/%nameU.appdata.xml
+%_datadir/metainfo/%nameU.metainfo.xml
 %doc *.md
 
 %changelog
+* Thu Mar 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5-alt1
+- 1.3 -> 1.5 (git.a1eaf2d3bf)
+- chenged url && vcs
+- chenged license
+
 * Wed Jan 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3-alt1
 - 1.1 -> 1.3
 
