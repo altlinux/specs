@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.5.5
+Version: 26.5.6
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -105,6 +105,11 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu Mar 19 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.6-alt1
+- New version (fixes: CVE-2026-1180, CVE-2026-1035, CVE-2025-14777,
+  CVE-2025-14082, CVE-2026-3121, CVE-2026-3190, CVE-2026-3911,
+  CVE-2026-2366).
+
 * Fri Mar 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.5-alt1
 - New version (fixes: CVE-2026-3047, CVE-2026-3009, CVE-2026-2603,
   CVE-2026-2092).
