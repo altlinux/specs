@@ -4,10 +4,12 @@
 
 %def_with check
 
+%python3_set_limited_api
+
 %define abiversion 1
 Name: onnx
-Version: 1.18.0
-Release: alt4
+Version: 1.20.1
+Release: alt1
 
 Summary: Open standard for machine learning interoperability
 License: Apache-2.0
@@ -19,21 +21,19 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires(pre): rpm-build-cmake
 %add_pyproject_deps_build_filter cmake
 %add_pyproject_deps_build_filter protobuf
 %pyproject_builddeps_build
+BuildRequires: python3-module-nanobind
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-devel
 BuildRequires: pybind11-devel
 %if_with check
-%add_pyproject_deps_check_filter jupyter
 %add_pyproject_deps_check_filter lintrunner
-%add_pyproject_deps_check_filter nbval
 %pyproject_builddeps_metadata_extra reference
 %pyproject_builddeps_check
 BuildRequires: python3-module-numpy-testing
@@ -60,15 +60,9 @@ Requires: lib%name%abiversion = %EVR
 %package -n python3-module-%pypi_name
 Summary: Python module for %name
 Group: Development/Python3
-# Python3 dependencies generator can't find the following providements
-# and we need to set them explicitly:
-Provides: python3(onnx.onnx_cpp2py_export.checker)
-Provides: python3(onnx.onnx_cpp2py_export.defs)
-Provides: python3(onnx.onnx_cpp2py_export.inliner)
-Provides: python3(onnx.onnx_cpp2py_export.parser)
-Provides: python3(onnx.onnx_cpp2py_export.printer)
-Provides: python3(onnx.onnx_cpp2py_export.shape_inference)
-Provides: python3(onnx.onnx_cpp2py_export.version_converter)
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 %description -n python3-module-%pypi_name
 %summary.
@@ -83,6 +77,7 @@ Provides: python3(onnx.onnx_cpp2py_export.version_converter)
 %endif
 
 %build
+export nanobind_DIR=%python3_sitelibdir_noarch/nanobind/cmake
 %cmake \
     -DBUILD_SHARED_LIBS=1 \
     -DONNX_USE_PROTOBUF_SHARED_LIBS=1
@@ -99,7 +94,6 @@ cd %buildroot%python3_sitelibdir
 python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 
 %files -n lib%name%abiversion
-%doc LICENSE README.md
 %_libdir/libonnx.so.%abiversion
 %_libdir/libonnx.so.%abiversion.*
 %_libdir/libonnx_proto.so.%abiversion
@@ -118,6 +112,9 @@ python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.1-alt1
+- Updated to 1.20.1.
+
 * Thu Nov 13 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt4
 - Cleaned up packaging scheme after 1.18.0-alt3.
 
