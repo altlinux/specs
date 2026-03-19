@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: %_name
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 
 Summary: A fast high compression read-only file system
@@ -38,16 +38,12 @@ BuildRequires: pkgconfig(jemalloc)
 BuildRequires: pkgconfig(flac++)
 BuildRequires: pkgconfig(fuse3)
 BuildRequires: libbrotli-devel
-BuildRequires: libdouble-conversion-devel
 BuildRequires: libutf8cpp-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-context-devel
 BuildRequires: boost-asio-devel
 BuildRequires: libunwind-devel
-BuildRequires: libevent-devel
-BuildRequires: libgflags-devel
-BuildRequires: libglog-devel
 %{?_enable_check:BuildRequires: libgtest-devel ctest fuse3}
 
 %description
@@ -72,7 +68,7 @@ This package provides DWarFS tools (dwarfsck, dwarfsextract, mkdwarfs)
 Summary: DwarFS fuse3 driver
 Group: System/Kernel and hardware
 Requires: %name-tools = %EVR
-Requires: %{get_dep fuse3}
+Requires: fuse3
 
 %description -n fuse-%name
 This package provides DWarFS driver for FUSE3.
@@ -119,6 +115,7 @@ ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
 %_man7dir/%_name-env.7*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
+%doc README* CHANGES*
 
 %files -n fuse-%name
 /sbin/%_name
@@ -131,6 +128,9 @@ ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
 %exclude %_libdir/cmake/%_name/
 
 %changelog
+* Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
+- 0.15.0
+
 * Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - first build for Sisyphus
 

@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: Planify
@@ -85,11 +85,12 @@ This package contains files necessary to develop Planify plugins.
 
 %files -f %_name.lang
 %_bindir/%rdn_name
+%_bindir/%rdn_name.cli
 %_bindir/%rdn_name.quick-add
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %files -n lib%_name
@@ -102,6 +103,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 4.18.3-alt1
+- 4.18.3
+
 * Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 4.18.0-alt1
 - 4.18.0
 
