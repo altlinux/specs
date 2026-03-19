@@ -4,9 +4,11 @@
 
 %def_with check
 
+%python3_set_limited_api
+
 Name: python3-module-%pypi_name
-Version: 0.4.6
-Release: alt2
+Version: 0.4.7
+Release: alt1
 
 Summary: A comprehensive and scalable set of string tokenizers and similarity measures in Python
 License: BSD-3-Clause
@@ -16,9 +18,10 @@ Vcs: https://github.com/anhaidgroup/py_stringmatching
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Source2: setup.py
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -38,7 +41,6 @@ The package is free, open-source, and BSD-licensed.
 %prep
 %setup
 %autopatch -p1
-%__install %SOURCE2 .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -47,18 +49,21 @@ The package is free, open-source, and BSD-licensed.
 
 %install
 %pyproject_install
+rm -rv %buildroot%python3_sitelibdir/%mod_name/tests
+rm -rv %buildroot%python3_sitelibdir/{LICENSES,build_tools,docs}
 
 %check
 %__mv %mod_name/tests tests && %__rm -rf %mod_name
 %pyproject_run_unittest
 
 %files
-%doc LICENSE CHANGES.txt README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.7-alt1
+- Updated to 0.4.7.
+
 * Thu Jul 24 2025 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt2
 - Fixed compatibility with numpy>=2.0.0 (thx sobue@).
 
@@ -73,4 +78,3 @@ The package is free, open-source, and BSD-licensed.
 
 * Sat Oct 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt1
 - Built for ALT Sisyphus.
-
