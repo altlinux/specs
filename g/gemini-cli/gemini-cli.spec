@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 839870b
+%global commit_hash 04b86e8
 
 Name: gemini-cli
-Version: 0.30.1
+Version: 0.34.0
 Release: alt1
 Summary: AI agent that brings the power of Gemini directly into your terminal
 License: Apache-2.0
@@ -29,13 +29,29 @@ directly into your terminal. It provides lightweight access to Gemini,
 giving you the most direct path from your prompt to our model.
 
 %prep
-# ./alt/update_modules.sh
 %setup -a 1 -a 2 -a 3 -a 4
 mkdir -p packages/{core,cli}/src/generated
 tee packages/{core,cli}/src/generated/git-commit.{js,ts} <<EOF
 export const GIT_COMMIT_INFO = '%commit_hash';
 export const CLI_VERSION = '%version';
 EOF
+
+mkdir -p packages/devtools/dist/src
+tee packages/devtools/dist/src/index.d.ts <<'EOF'
+export interface NetworkLog { id: string; url?: string; }
+export interface ConsoleLogPayload { message?: string; }
+export interface InspectorConsoleLog extends ConsoleLogPayload { id: string; timestamp: number; }
+export interface SessionInfo { sessionId: string; }
+export class DevTools {
+  private static instance: DevTools | undefined;
+  private constructor();
+  static getInstance(): DevTools;
+  start(): Promise<string>;
+  stop(): Promise<void>;
+  getPort(): number;
+}
+EOF
+
 # use system esbuild
 ln -sv %_bindir/esbuild .
 sed -i "s/0.25.6/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
@@ -58,6 +74,9 @@ install -m 0755 %SOURCE5 %buildroot%_bindir/gemini
 %doc LICENSE
 
 %changelog
+* Thu Mar 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.0-alt1
+- Updated to version 0.34.0.
+
 * Sat Feb 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.30.1-alt1
 - Updated to version 0.30.1.
 
