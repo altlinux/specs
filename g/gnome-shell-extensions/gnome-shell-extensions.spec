@@ -1,12 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
-%def_enable x11
 %def_enable check
 
 Name: gnome-shell-extensions
@@ -29,6 +28,7 @@ Source: %name-%version%beta.tar
 %endif
 
 Requires: gnome-shell >= %version
+Requires: typelib(Adw) = 1
 
 # extensions/apps-menu/extension.js
 # const {
@@ -76,7 +76,6 @@ This extension provides system monitor for GNOME Shell.
 %build
 %meson \
     %{subst_enable_meson_bool classic_mode classic_mode} \
-    %{subst_enable_meson_bool x11 x11} \
     -Dextension_set=all
 %nil
 %meson_build
@@ -92,16 +91,12 @@ This extension provides system monitor for GNOME Shell.
 # Classic mode
 %if_enabled classic_mode
 %files -n gnome-session-classic
-%_datadir/wayland-sessions/gnome-classic-wayland.desktop
+%_datadir/gnome-session/sessions/gnome-classic.session
+%dir %_userunitdir/gnome-session@gnome-classic.target.d
+%_userunitdir/gnome-session@gnome-classic.target.d/gnome-classic.session.conf
 %_datadir/wayland-sessions/gnome-classic.desktop
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
-%endif
-
-%if_enabled x11
-%files -n gnome-session-classic-xsession
-%_datadir/xsessions/gnome-classic.desktop
-%_datadir/xsessions/gnome-classic-xorg.desktop
 %endif
 
 %files system-monitor
@@ -211,6 +206,12 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
+- 50.rc
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

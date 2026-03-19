@@ -1,6 +1,9 @@
+#FS_IOC_GETFSUUID
+#https://bugzilla.altlinux.org/58153
+
 %define _name localsearch
 %define old_name tracker-miners
-%define ver_major 3.10
+%define ver_major 3.11
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -9,7 +12,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: LocalSearch is the file search framework of the GNOME desktop
@@ -25,7 +28,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %def_enable poppler
 %def_enable libgxps
 %def_enable libexif
-%def_enable libiptcdata
 %def_enable libgsf
 %def_enable libjpeg
 %def_enable libtiff
@@ -42,6 +44,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %def_enable mp3
 %def_enable ps
 %def_enable text
+%def_enable zip
 %def_enable icon
 %def_enable libosinfo
 %def_enable playlist
@@ -49,7 +52,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 #Has header "linux/landlock.h" : YES 
 #Checking if "landlock is enabled in kernel" runs: NO (1)
 #meson.build:210:4: ERROR: Problem encountered: Landlock was auto-enabled in build options, but is disabled in the kernel
-%def_disable landlock
+# https://bugzilla.altlinux.org/57436
+%def_enable landlock
 %def_enable man
 
 %define glib_ver 2.62
@@ -94,8 +98,7 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_raw:BuildRequires: libgexiv2-0.16-devel}
 %{?_enable_poppler:BuildRequires: libpoppler-glib-devel >= %poppler_ver}
 %{?_enable_libgxps:BuildRequires: libgxps-devel}
-%{?_enable_libexif:BuildRequires: libexif-devel >= %libexif_ver}
-%{?_enable_libiptcdata:BuildRequires: libiptcdata-devel}
+%{?_enable_libexif:BuildRequires: libgexiv2-0.16-devel}
 %{?_enable_libgsf:BuildRequires: libgsf-devel >= %libgsf_ver}
 %{?_enable_libjpeg:BuildRequires: libjpeg-devel}
 %{?_enable_libtiff:BuildRequires: libtiff-devel}
@@ -104,6 +107,7 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
 %{?_enable_libgif:BuildRequires: libgif-devel}
 %{?_enable_webp:BuildRequires: pkgconfig(libwebpdemux)}
+%{?_enable_zip:BuildRequires: pkgconfig(libzip)}
 %{?_enable_libcue:BuildRequires: libcue-devel >= %libcue_ver }
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
@@ -125,11 +129,11 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %build
 %meson \
+    %{subst_enable_meson_feature landlock landlock} \
     %{subst_enable_meson_feature xml xml} \
     %{subst_enable_meson_feature poppler pdf} \
     %{subst_enable_meson_feature libgxps xps} \
     %{subst_enable_meson_feature libexif exif} \
-    %{subst_enable_meson_feature libiptcdata iptc} \
     %{subst_enable_meson_feature libgsf gsf} \
     %{subst_enable_meson_feature libjpeg jpeg} \
     %{subst_enable_meson_feature libtiff tiff} \
@@ -139,6 +143,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
     %{subst_enable_meson_feature raw raw} \
     %{subst_enable_meson_feature exempi xmp} \
     %{subst_enable_meson_feature libcue cue} \
+    %{subst_enable_meson_feature zip zip} \
     %{subst_enable_meson_bool abiword abiword} \
     %{subst_enable_meson_bool mp3 mp3} \
     %{subst_enable_meson_bool ps ps} \
@@ -167,6 +172,7 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_libdir/libtracker-extract.so
 %_libexecdir/%name-%api_ver_major
 %_libexecdir/%name-control-%api_ver_major
+%_libexecdir/%name-endpoint-%api_ver_major
 %_libexecdir/%name-extractor-%api_ver_major
 %_libexecdir/%name-writeback-%api_ver_major
 %_datadir/%name%api_ver_major/
@@ -205,6 +211,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

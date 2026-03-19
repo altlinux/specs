@@ -1,15 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 49
-%define beta %nil
+%define ver_major 50
+%define beta .rc
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
@@ -23,6 +23,7 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 %else
 Source: %name-%version%beta.tar
 %endif
+Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 
 %define systemd_ver 242
 %define session_ver %ver_major
@@ -37,7 +38,7 @@ Source: %name-%version%beta.tar
 %define gsds_ver 3.37.1
 %define ibus_ver 1.4.99
 %define malcontent_ui_api_ver 1
-%define malcontent_ver 0.11
+%define malcontent_ver 0.14
 %define webkit_api_ver 6.0
 %define webkit_ver 2.39.1
 %define goa_ver 3.45.2
@@ -78,6 +79,8 @@ you through configuring it. It is integrated with gdm.
 
 %prep
 %setup -n %name-%version%beta
+# define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
+sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' %name/pages/timezone/tz.h
 
 %build
 %meson \
@@ -87,6 +90,7 @@ you through configuring it. It is integrated with gdm.
 
 %install
 %meson_install
+sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 
 mkdir -p %buildroot%_localstatedir/lib/%name
 mkdir -p %buildroot%_localstatedir/run/%name
@@ -103,6 +107,7 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_datadir/dconf/profile/%name
 %dir %_datadir/%name
 %_datadir/%name/initial-setup-dconf-defaults
+%_datadir/%name/zone.tab
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/gnome-shell/modes/initial-setup.json
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
@@ -114,6 +119,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
+- 50.rc
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

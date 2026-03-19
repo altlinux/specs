@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.86
+%define ver_major 1.88
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 140
@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -26,9 +26,6 @@ Source: %_name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
-
-# https://gitlab.gnome.org/GNOME/gjs/-/merge_requests/1047/
-Patch10: %_name-1.87.1-up-allow_optional_inout_arguments_to_be_null.patch
 
 %define glib_ver 2.85.1
 %define gir_api_ver 1.0
@@ -79,7 +76,6 @@ the functionality of the installed Gjs library package.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
 
 %build
 %meson \
@@ -121,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.88.0-alt1
+- 1.88.0
+
 * Tue Feb 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1.86.0-alt2
 - applied upstream fix "Allow optional inout arguments to be null"
   (fixed Gst.init in gnome-shell screencast, gnome-sound-recorder etc.

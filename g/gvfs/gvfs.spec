@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.58
+%define ver_major 1.60
 
 # obexftp support removed since 3.15.91
 %def_disable obexftp
@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -65,7 +65,7 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define bluez_ver 4.0
 %define udisks_ver 1.99
 %define mtp_ver 1.1.12
-%define goa_ver 3.53.1
+%define goa_ver 3.57
 %define libarchive_ver 3.0.22
 %define imobiledevice_ver 1.3
 %define nfs_ver 1.9.8
@@ -563,6 +563,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.60.0-alt1
+- 1.60.0
+
 * Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.2-alt1
 - 1.58.2 (fixed CVE-2026-28295, CVE-2026-28296)
 

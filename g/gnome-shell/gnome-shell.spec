@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
-%define api_ver 17
+%define api_ver 18
 %define gst_api_ver 1.0
-%define gvc_ver 664eba4
+%define gvc_ver d2442f45
 
-%def_enable x11
+%def_enable xwayland
 %def_enable extensions_tool
 %def_enable extensions_app
 %def_disable gtk_doc
@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -28,14 +28,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
-%{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
-Patch3: %name-48.1-alt-invalid_user_shell.patch
+%{?_enable_snapshot:Source1: gvc-%gvc_ver.tar}
+Patch3: %name-50-alt-invalid_user_shell.patch
 Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
-%define gjs_ver 1.85.1
+%define gjs_ver 1.87.1
 %define mutter_ver %ver_major
 %define gtk_ver 4.0
 %define adwaita_ver 1.0
@@ -56,7 +56,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.19
-%define gsds_ver 49
+%define gsds_ver %ver_major
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
@@ -168,7 +168,7 @@ BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
 BuildRequires: pkgconfig(tecla)
-%{?_enable_x11:BuildRequires: libX11-devel libXfixes-devel}
+%{?_enable_xwayland:BuildRequires: libX11-devel libXfixes-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 
@@ -211,7 +211,7 @@ preferences and removing or disabling unwanted extensions.
 %prep
 %setup -n %name-%version%beta %{?_enable_snapshot:-a1
 mkdir subprojects/gvc
-cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
+cp -a gvc-%gvc_ver/* subprojects/gvc/}
 %patch3 -b .shells
 %patch4 -b .default_folders
 
@@ -237,7 +237,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %files
 %_bindir/%name
-#%_bindir/%name-extension-prefs
 %_bindir/%name-test-tool
 %{?_enable_extensions_tool:%_bindir/gnome-extensions
 %_bindir/gnome-shell-extension-tool}
@@ -283,9 +282,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
 %_userunitdir/%xdg_name-disable-extensions.service
-%_userunitdir/%xdg_name.target
-%_userunitdir/%{xdg_name}@wayland.service
-%_userunitdir/%{xdg_name}@x11.service
+%_userunitdir/%{xdg_name}@.service
 
 %_man1dir/*
 %_iconsdir/hicolor/*/*/%xdg_name.Extensions*.svg
@@ -312,6 +309,12 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
+- 50.rc
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 

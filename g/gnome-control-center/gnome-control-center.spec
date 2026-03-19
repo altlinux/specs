@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -11,7 +11,6 @@
 %define gxdp_ver e68375c7
 
 %def_disable debug
-%def_enable x11
 %def_enable bluetooth
 %def_enable snap
 %def_enable malcontent
@@ -19,7 +18,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -43,6 +42,7 @@ Patch10: %name-50.x-up-Allow_changing_password_with_remote_user.patch
 %define glib_ver 2.76.6
 %define gtk4_ver 4.17.5
 %define adwaita_ver 1.8
+%define bp_ver 0.19
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
 %define gsds_ver %ver_major
@@ -62,13 +62,14 @@ Patch10: %name-50.x-up-Allow_changing_password_with_remote_user.patch
 %define grilo_ver 0.3.0
 %define polkit_ver 0.114
 %define snapd_ver 1.62
-%define malcontent_ver 0.11.0
+%define malcontent_ver 0.14.0
 %define gudev_ver 232
 %define pulse_ver 2.0
 %define cups_ver 1.4
+%define gmobile_ver 0.6.0
 
 Requires: %name-data = %EVR
-
+Requires: polkit dconf
 # For /usr/share/gnome
 Requires: gnome-filesystem
 Requires: gnome-settings-daemon >= %sett_daemon_ver
@@ -102,7 +103,7 @@ Requires: ppd-service
 Requires: switcheroo-control
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson blueprint-compiler
+BuildRequires: meson blueprint-compiler >= %bp_ver
 BuildRequires: desktop-file-utils gtk-doc xsltproc /usr/bin/appstreamcli
 BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
@@ -129,7 +130,6 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
 BuildRequires: tecla-devel
-%{?_enable_x11:BuildRequires: libX11-devel libXi-devel}
 %{?_enable_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
 %{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
@@ -137,6 +137,7 @@ BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libepoxy-devel
 %{?_enable_check:BuildRequires: python3(dbusmock)}
+BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -171,8 +172,6 @@ you'll want to install this package.
 %prep
 %setup -n %name-%version%beta %{?_enable_snapshot:-a10
 mv libgxdp-%gxdp_ver subprojects/libgxdp}
-
-%patch10 -p1 -b .remote-user
 
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
 #sed -i 's|zone\.tab|zone1970.tab|' panels/system/datetime/tz.h
@@ -235,6 +234,12 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
+* Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
+- 50.rc
+
 * Sat Feb 28 2026 Yuri N. Sedunov <aris@altlinux.org> 49.5-alt1
 - 49.5
 

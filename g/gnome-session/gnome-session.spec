@@ -1,15 +1,14 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable docs
 %def_enable man
-%def_enable x11
 
 Name: gnome-session
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -36,22 +35,16 @@ Requires: dbus-tools-gui
 Requires: gnome-filesystem
 Requires: upower gcr gcr4
 Requires: xdg-user-dirs
-
-Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
+Requires: %name-wayland = %EVR
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk4-devel
-BuildRequires: pkgconfig(gnome-desktop-4) libjson-glib-devel
+BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: perl-XML-Parser xmlto docbook-utils
 BuildRequires: pkgconfig(systemd) >= %systemd_ver
-%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(sm) pkgconfig(ice)
-BuildRequires: pkgconfig(xtrans) pkgconfig(xcomposite)}
 %{?_enable_docs:BuildRequires: docbook-utils xmlto}
 %{?_enable_man:BuildRequires: docbook-utils docbook-style-xsl xsltproc}
-# since 3.22.2
-BuildRequires: libepoxy-devel
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -87,7 +80,6 @@ This package permits to log into GNOME using Xorg.
 %build
 export PATH=$PATH:/sbin
 %meson \
-    %{subst_enable_meson_bool x11 x11} \
     %{subst_enable_meson_bool docs docbook} \
     %{subst_enable_meson_bool man man}
 %nil
@@ -96,16 +88,15 @@ export PATH=$PATH:/sbin
 %install
 %meson_install
 
-%find_lang --with-gnome --output=%name.lang %name-%ver_major
+%find_lang --with-gnome --output=%name.lang %name
 
 %check
 %meson_test
 
 %files -f %name.lang
 %_bindir/%name
-%{?_enable_x11:
 %_bindir/%name-inhibit
-%_bindir/%name-quit}
+%_bindir/%name-quit
 %_libexecdir/%name-init-worker
 %_libexecdir/%name-service
 %_libexecdir/%name-ctl
@@ -130,13 +121,12 @@ export PATH=$PATH:/sbin
 %_userunitdir/%name-restart-dbus.service
 %_userunitdir/%name-shutdown.target
 %_userunitdir/%name-signal-init.service
-%_userunitdir/%name-wayland.target
-%_userunitdir/%name-wayland@.target
 %_userunitdir/%name.target
 %_userunitdir/%name@.target
-%{?_enable_x11:
+%_userunitdir/gnome-session-services.target
 %_userunitdir/gnome-session-x11-services-ready.target
 %_userunitdir/%name-x11-services.target
+%{?_enable_x11:
 %_userunitdir/%name-x11.target
 %_userunitdir/%name-x11@.target
 }
@@ -148,18 +138,13 @@ export PATH=$PATH:/sbin
 %doc NEWS README*
 %doc %_datadir/doc/%name/
 
-%if_enabled x11
-%files xsession
-%_datadir/xsessions/gnome.desktop
-%_datadir/xsessions/gnome-xorg.desktop
-%endif
-
 %files wayland
 %_datadir/wayland-sessions/gnome.desktop
-%_datadir/wayland-sessions/gnome-wayland.desktop
-
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Nov 25 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 

@@ -2,7 +2,7 @@
 
 %define _name tinysparql
 %define old_name tracker
-%define ver_major 3.10
+%define ver_major 3.11
 %define beta %nil
 %define namespace Tsparql
 %define old_namespace Tracker
@@ -24,7 +24,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
@@ -255,10 +255,12 @@ GObject introspection devel data for the Tracker library.
 
 %if_enabled test_utils
 %files tests
-#%_libdir/%_name-%api_ver/trackertestutils/
 %endif
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

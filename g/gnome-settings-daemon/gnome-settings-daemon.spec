@@ -1,14 +1,12 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
 %def_enable systemd
-# disabled by default
-%def_enable x11
 # enabled by default
 %def_enable xwayland
 # tests require, as minimum, running colord
@@ -16,7 +14,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -34,7 +32,7 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.70.0
 %define gnome_desktop_ver 3.37.1
-%define notify_ver 0.7.3
+%define notify_ver 0.8.7
 %define pulse_ver 2.0
 %define gsds_ver 47
 %define colord_ver 0.1.9
@@ -79,7 +77,7 @@ BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsv
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libgweather4.0-devel >= %gweather_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(gcr-4)
-%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xfixes)}
+BuildRequires: pkgconfig(xfixes)
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
 %description
@@ -111,7 +109,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %build
 %meson \
     %{subst_enable_meson_bool smartcard smartcard} \
-    %{subst_enable_meson_bool x11 x11} \
     %{subst_enable_meson_bool xwayland xwayland} \
     -Dudev_dir='%_udevdir'
 %nil
@@ -182,6 +179,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

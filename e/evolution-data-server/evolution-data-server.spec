@@ -3,8 +3,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.58
-%define ver_base 3.58
+%define ver_major 3.60
+%define ver_base 3.60
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define sover_libecal 3
@@ -33,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -295,6 +295,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.0-alt1
+- 3.60.0
+
 * Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.3-alt1
 - 3.58.3
 

@@ -1,16 +1,17 @@
 %def_disable snapshot
 
 %define _name calls
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Calls
+%define callui_ver 3a2044f8
 
 %def_enable man
 #12/12 sip  TIMEOUT
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -26,15 +27,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %else
 Source: %_name-%version%beta.tar
 %endif
+%{?_enable_snapshot:Source1: libcall-ui-%callui_ver.tar}
 
-%define glib_ver 2.74
+%define glib_ver 2.76
 %define adw_ver 1.6
 %define mm_ver 1.12.0
 %define feedback_ver 0.0.1
 
 Requires: ModemManager >= %mm_ver
 Requires: gst-plugins-base1.0
-Requires: feedbackd callaudiod
+Requires: feedbackd callaudiod mobile-broadband-provider-info
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
@@ -52,6 +54,11 @@ BuildRequires: pkgconfig(sofia-sip-ua-glib)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-audio-1.0)
 BuildRequires: vapi(folks) vapi(libebook-contacts-1.2)
+BuildRequires: pkgconfig(mobile-broadband-provider-info)
+BuildRequires: pkgconfig(gmobile)
+BuildRequires: pkgconfig(gsound)
+# for libcall-ui
+BuildRequires: pkgconfig(libhandy-1)
 %{?_enable_man:BuildRequires: %_bindir/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run /usr/bin/appstreamcli desktop-file-utils}
 
@@ -60,7 +67,9 @@ Calls is a dialer for phone calls, initially PSTN calls but eventually
 other systems like SIP in future.
 
 %prep
-%setup -n %_name-%version%beta
+%setup -n %_name-%version%beta %{?_enable_snapshot:-a1
+rm -rf subprojects/libcall-ui
+mv libcall-ui-%callui_ver subprojects/libcall-ui}
 
 %build
 %meson \
@@ -97,6 +106,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1.1-alt1
 - 49.1.1
 

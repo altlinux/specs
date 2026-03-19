@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 
 %def_enable check
@@ -24,7 +24,7 @@ Source: %name-%version%beta.tar
 %endif
 
 %define xdg_desktop_portal_ver 1.19.1
-%define adw_ver 1.7
+%define adw_ver 1.8
 %define gsds_ver 47
 
 Requires: xdg-desktop-portal-gtk >= 1.14
@@ -66,6 +66,9 @@ to provide various portal features.
 
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

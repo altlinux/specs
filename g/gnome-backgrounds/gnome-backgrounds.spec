@@ -1,4 +1,4 @@
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 
 Name: gnome-backgrounds
@@ -41,6 +41,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

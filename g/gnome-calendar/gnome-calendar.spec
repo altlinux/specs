@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -25,7 +25,7 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.80.0
-%define gtk4_ver 4.20
+%define gtk4_ver 4.21.2
 %define adwaita_ver 1.8
 %define ical_ver 1.0.1
 %define eds_ver 3.46
@@ -46,6 +46,7 @@ BuildRequires: libgweather4.0-devel >= %gweather_ver
 BuildRequires: pkgconfig(libgeoclue-2.0) pkgconfig(geocode-glib-2.0) >= %geocode_ver
 BuildRequires: libsoup3.0-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(fribidi)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 
 %description
@@ -92,6 +93,12 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
+- 50.rc
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

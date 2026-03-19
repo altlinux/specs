@@ -1,15 +1,6 @@
 %def_disable snapshot
 
-%ifndef _priority_distbranch
-%define altbranch `rpm --eval %_priority_distbranch`
-%else
-%define altbranch %_priority_distbranch
-%endif
-%ifndef altbranch
-%define altbranch sisyphus
-%endif
-
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 1.0
 
@@ -22,21 +13,16 @@
 
 %def_disable static
 %def_disable debug
-%def_enable ipv6
-%def_with xdmcp
-%def_with selinux
+%def_enable selinux
 %def_with libaudit
 %def_with plymouth
-%def_enable wayland
 %def_enable x11
 %def_enable xsession
-#Enable running X server as user
-%def_enable user_display_server
 %def_enable check
 
 Name: gdm
-Version: %ver_major.2
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0-or-later
@@ -51,8 +37,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-Source1: gdm_xdmcp-45.0.control
-
 # PAM config files
 Source10: gdm.pam
 Source11: gdm-autologin.pam
@@ -62,7 +46,6 @@ Source14: gdm-smartcard.pam
 Source15: gdm-fingerprint.pam
 
 Patch2: gdm-40.beta-alt-Xsession.patch
-Patch7: gdm-40.beta-alt-Init.patch
 # replace xterm by x-terminal-emulator (ALT #40031)
 Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 # for p11
@@ -79,10 +62,9 @@ Provides: gnome-dm
 %define glib_ver 2.56.0
 %define gtk_ver 3.16.0
 %define shell_ver 48
-%define libcanberra_ver 0.4
 %define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
-%define session_ver 40
+%define session_ver %ver_major
 %define gudev_ver 232
 
 Provides: %name-user-switch-applet = %EVR
@@ -95,8 +77,8 @@ Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils iso-codes lsb-release shadow-utils
 Requires: gnome-session >= %session_ver
-#Requires: gnome-session-wayland
 Requires: /bin/dbus-run-session
+Requires: polkit
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-gir rpm-macros-pam0 rpm-build-systemd
@@ -107,24 +89,15 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libaccountsservice-devel >= %accountsservice_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: dconf pkgconfig(systemd) libpam-devel
-%{?_with_selinux:BuildRequires: libselinux-devel libattr-devel}
+%{?_enable_selinux:BuildRequires: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_plymouth:BuildRequires: plymouth-devel}
-BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
-
-%{?_enable_x11:
-BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
-BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel xorg-sdk
-BuildRequires: xorg-xephyr xorg-server
-BuildRequires: libdmx-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libkeyutils-devel}
-
 BuildRequires: libcheck-devel >= %check_ver
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdaemon-devel libudev-devel
 BuildRequires: pkgconfig(dconf) pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(polkit-gobject-1)
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
@@ -194,11 +167,7 @@ This package contains user documentation for Gdm.
 %prep
 %setup -n %name-%version%beta
 %patch2 -p1 -b .XSession
-%patch7 -p1 -b .Init
 %patch8 -p1 -b .XSession-Xterm
-if [ "%altbranch" != sisyphus ]; then
-%patch9 -p1 -b .Revert-Disable
-fi
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -207,7 +176,6 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 # to find /sbin/nologin
 export PATH=$PATH:/sbin
 %meson \
-    %{subst_enable_meson_bool ipv6 ipv6} \
     -Drun-dir=/run/gdm \
     -Dinitial-vt='%vt_nr' \
     -Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
@@ -216,15 +184,12 @@ export PATH=$PATH:/sbin
     -Dpam-mod-dir='%_pam_modules_dir' \
     -Ddefault-pam-config='%default_pam_config' \
     -Ddmconfdir='%_sysconfdir/X11/sessions' \
-    -Dudev-dir='%_udevrulesdir' \
     -Ddbus-sys='%_datadir/dbus-1/system.d' \
-    %{?_without_xdmcp:-Dxdmcp=disabled} \
     %{?_without_libaudit:-Dlibaudit=disabled} \
     %{?_without_plymouth:-Dplymouth=disabled} \
-    %{subst_enable_meson_bool wayland wayland-support} \
     %{subst_enable_meson_bool x11 x11-support} \
     %{subst_enable_meson_bool xsession gdm-xsession} \
-    %{subst_enable_meson_bool user_display_server user-display-server}
+    %{subst_enable_meson_feature selinux selinux}
 %nil
 %meson_build
 
@@ -237,37 +202,25 @@ rm -f %buildroot%_sysconfdir/pam.d/gdm
 # env.d directories
 mkdir -p %buildroot{%gdm_confdir,%_datadir/%name}/env.d
 
-%{?_enable_x11:
-# control gdm/xdmcp
-install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp}
-
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
 %check
 dbus-run-session %__meson_test
 
-%if_enabled x11
-%pre
-%pre_control gdm_xdmcp
-
-%post
-%post_control -s disabled gdm_xdmcp
-%endif
-
 %files
 %_sbindir/gdm
 %_bindir/gdm-config
-%_bindir/gdmflexiserver
-%{?_enable_x11:%_libexecdir/gdm-host-chooser
-%_libexecdir/gdm-simple-chooser
+%{?_enable_x11:
 %_libexecdir/gdm-x-session}
 %_libexecdir/gdm-session-worker
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-runtime-config
+%_libexecdir/gdm-new-session
 %exclude %_libexecdir/gdm-auth-config-redhat
 %_pam_modules_dir/pam_gdm.so
 %_unitdir/gdm.service
+%_unitdir/gnome-headless-session@.service
 %_userunitdir/gnome-session@gnome-login.target.d/gnome-login.session.conf
 %doc AUTHORS NEWS README*
 
@@ -277,6 +230,10 @@ dbus-run-session %__meson_test
 %config %_sysconfdir/pam.d/gdm-launch-environment
 %config %_sysconfdir/pam.d/gdm-smartcard
 %config %_sysconfdir/pam.d/gdm-fingerprint
+# unified authentication
+# See 'enable-switchable-authentication',
+# 'enable-web-authentication', 'enable-passkey-authentication' keys
+#%config %_sysconfdir/pam.d/gdm-switchable-auth
 %_datadir/dbus-1/system.d/%name.conf
 %config %_datadir/polkit-1/rules.d/20-%name.rules
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
@@ -284,12 +241,6 @@ dbus-run-session %__meson_test
 %config(noreplace) %gdm_confdir/custom.conf
 %{?_enable_x11:%gdm_confdir/Xsession}
 %gdm_confdir/env.d/
-%gdm_confdir/Init/
-%gdm_confdir/PostLogin/
-%gdm_confdir/PostSession/
-%gdm_confdir/PreSession/
-
-%{?_enable_x11:%config %_controldir/gdm_xdmcp}
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
@@ -299,8 +250,12 @@ dbus-run-session %__meson_test
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/gnome-session/sessions/gnome-login.session
 %_datadir/dconf/profile/%name
-%_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
-%_datadir/gdm/greeter/applications/mimeapps.list
+%_datadir/%name/greeter/applications/mime-dummy-handler.desktop
+%_datadir/%name/greeter/applications/mimeapps.list
+%dir %_datadir/%name/greeter/wayland-sessions
+%_datadir/%name/greeter/wayland-sessions/gnome-greeter.desktop
+%_datadir/%name/greeter/wayland-sessions/gnome-initial-setup.desktop
+%_datadir/polkit-1/actions/org.gnome.displaymanager.policy
 
 %files help -f %name-help.lang
 
@@ -321,6 +276,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
 - gdm-launch-environment.pam:
   succeed_if also checks if user in group gnome-initial-setup

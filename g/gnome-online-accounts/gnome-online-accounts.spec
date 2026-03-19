@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.56
+%define ver_major 3.58
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.OnlineAccounts
 %define namespace Goa
@@ -17,7 +17,7 @@
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -39,7 +39,7 @@ Requires: lib%name = %EVR
 %{?_enable_kerberos:Requires: realmd systemd-sysvinit}
 Requires: dconf gnome-keyring
 
-%define glib_ver 2.68
+%define glib_ver 2.84
 %define gtk4_ver 4.15.2
 %define adw_ver 1.4
 %define gcr_ver 4.1.0
@@ -135,6 +135,7 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %files -f %name.lang
 %if_enabled backend
 %_libexecdir/goa-daemon
+%_desktopdir/org.gnome.goa-daemon.desktop
 %_libexecdir/goa-identity-service
 %_libexecdir/goa-oauth2-handler
 %_desktopdir/%xdg_name.OAuth2.desktop
@@ -181,6 +182,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Wed Feb 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.4-alt1
 - 3.56.4
 

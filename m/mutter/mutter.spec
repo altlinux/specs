@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 17
+%define api_ver 18
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define rdn_name org.gnome.Mutter
@@ -14,7 +14,7 @@
 %define _libexecdir %_prefix/libexec
 # only private lib now
 %def_enable privatelib
-%def_enable x11
+%def_enable xwayland
 %def_enable remote_desktop
 %def_enable installed_tests
 %def_enable egl_device
@@ -23,7 +23,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -63,15 +63,15 @@ Source: %name-%version%beta.tar
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
 %define wayland_ver 1.23
-%define wayland_protocols_ver 1.41
+%define wayland_protocols_ver 1.47
 # xwayland with ei support
 %define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
-%define libinput_ver 1.27
+%define libinput_ver 1.30
 %define fribidi_ver 1.0.0
 %define gsds_ver 48
 %define gudev_ver 238
-%define pipewire_ver 0.3.21
+%define pipewire_ver 1.6.0
 %define sysprof_ver 3.38
 %define json_glib_ver 0.12.0
 %define graphene_ver 1.10.2
@@ -120,14 +120,16 @@ BuildRequires: pkgconfig(glycin-2) >= %glycin_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gudev_ver
-BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel >= %xwayland_ver %_bindir/cvt
+BuildRequires: libGL-devel libGLES-devel  %_bindir/cvt
 BuildRequires: libdbus-devel
 BuildRequires: pkgconfig(libdisplay-info) >= %display_info_ver
 BuildRequires: pkgconfig(bash-completion)
 BuildRequires: python3(argcomplete) zenity /usr/bin/rst2man
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
 %{?_enable_wayland_eglstream:BuildRequires: pkgconfig(wayland-egl) pkgconfig(wayland-eglstream-protocols)}
-%{?_enable_x11:BuildRequires: pkgconfig(gtk4)
+%{?_enable_xwayland:
+BuildRequires: xorg-xwayland-devel >= %xwayland_ver
+BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcomposite)
 BuildRequires: pkgconfig(xcursor)
@@ -142,14 +144,12 @@ BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xcb-res)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xau)
-BuildRequires: pkgconfig(ice)
-BuildRequires: pkgconfig(sm)
 BuildRequires: pkgconfig(xcb-randr)
 BuildRequires: pkgconfig(xkbcommon-x11)
 BuildRequires: pkgconfig(xtst)}
 
 %description
-Mutter is a Wayland display server and X11 window manager and compositor library.
+Mutter is a Wayland display server and compositor library.
 
 %package -n lib%name
 Summary: Shared library for Mutter
@@ -226,11 +226,13 @@ sed -i '/-Werror=return-type/d' meson.build
 %build
 %meson \
     -Dintrospection=true \
-    %{subst_enable_meson_bool x11 x11} \
     %{subst_enable_meson_bool remote_desktop remote_desktop} \
     %{subst_enable_meson_bool egl_device egl_device} \
     %{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
-    %{subst_enable_meson_bool installed_tests installed_tests}
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %ifarch %ix86
+    -Dclutter_tests=false
+    %endif
 %nil
 %meson_build
 
@@ -251,7 +253,6 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %_udevrulesdir/61-%name.rules
 %_libexecdir/%name-backlight-helper
 %_libexecdir/%name-devkit
-%_libexecdir/%name-restart-helper
 %_libexecdir/%name-x11-frames
 %dir %pkglibdir/plugins
 %pkglibdir/plugins/*.so
@@ -288,7 +289,6 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -n lib%name-gir
 %pkglibdir/Clutter-%api_ver.typelib
 %pkglibdir/Cogl-%api_ver.typelib
-#%pkglibdir/CoglPango-%api_ver.typelib
 %pkglibdir/Meta-%api_ver.typelib
 %pkglibdir/Mtk-%api_ver.typelib
 %pkglibdir/MetaTest-%api_ver.typelib
@@ -296,7 +296,6 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -n lib%name-gir-devel
 %pkglibdir/Clutter-%api_ver.gir
 %pkglibdir/Cogl-%api_ver.gir
-#%pkglibdir/CoglPango-%api_ver.gir
 %pkglibdir/Meta-%api_ver.gir
 %pkglibdir/Mtk-%api_ver.gir
 %pkglibdir/MetaTest-%api_ver.gir
@@ -314,6 +313,12 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.0-alt1
+- 50.0
+
+* Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50-alt0.9.rc
+- 50.rc
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1:49.4-alt1
 - 49.4
 

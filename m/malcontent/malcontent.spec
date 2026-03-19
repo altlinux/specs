@@ -1,15 +1,25 @@
+%define _libexecdir %_prefix/libexec
 %def_disable snapshot
+
+%define ver_major 0.14
+%define beta %nil
 %define api_ver 0
 %define ui_api_ver 1
 %define namespace Malcontent
-%define xdg_name org.freedesktop.MalcontentControl
+%define xdg_name org.freedesktop.Malcontent
+%define xdg_name1 org.freedesktop.MalcontentControl
 
-%def_enable check
+# subprojects
+%define libgsystemservice_ver 0.3.0
+%define gvdb_ver 466fc220
+%define tinycdb_ver 0.81
+
+%def_disable check
 %def_enable ui
 
 Name: malcontent
-Version: 0.13.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Parental controls implementation
 Group: Security/Networking
@@ -19,10 +29,14 @@ Url: https://gitlab.freedesktop.org/pwithnall/malcontent/
 Vcs: https://gitlab.freedesktop.org/pwithnall/malcontent.git
 
 %if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version.tar.bz2
+Source: %url/-/archive/%version/%name-%version%beta.tar.bz2
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
+Source1: gvdb-%gvdb_ver.tar
+Source2: libgsystemservice-%libgsystemservice_ver.tar
+# our tinycdb is too old and unupdateble: @core
+Source3: https://www.corpit.ru/mjt/tinycdb/tinycdb-%tinycdb_ver.tar.gz
 
 %define glib_ver 2.54.2
 %define gtk4_ver 4.12
@@ -31,10 +45,11 @@ Source: %name-%version.tar
 %define appstream_ver 0.12.10
 %define flatpak_ver 1.14
 
+Requires: lib%name = %EVR
 Requires: polkit accountsservice >= %accountsservice_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-pam0
-BuildRequires: meson yelp-tools
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-pam0 rpm-build-gir
+BuildRequires: meson yelp-tools gi-docgen reuse
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(polkit-gobject-1)
@@ -44,9 +59,14 @@ BuildRequires: pkgconfig(flatpak) >= %flatpak_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0) gir(AccountsService) = 1.0
 BuildRequires: pam-devel
 BuildRequires: libglib-testing-devel
+BuildRequires: pkgconfig(gnome-desktop-4)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libsystemd)
 %{?_enable_ui:BuildRequires: pkgconfig(gtk4) >= %gtk4_ver gir(Gtk) = 4.0
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1}
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
+# for tinycdb
+BuildRequires: libcdb-devel
 
 %description
 %name implements parental controls support which can be used by
@@ -112,6 +132,8 @@ library.
 Summary: Parental Controls UI
 Group: Security/Networking
 License: GPL-2.0-or-later
+Requires: %name = %EVR
+Requires: lib%name = %EVR
 Requires: lib%name-ui = %EVR
 
 %description control
@@ -140,7 +162,11 @@ This package contains tools for querying and updating the parental
 controls settings for users.
 
 %prep
-%setup
+%setup -n %name-%version%beta -a1 -a2 -a3
+mv gvdb-%gvdb_ver/* subprojects/gvdb/
+mv libgsystemservice-%libgsystemservice_ver subprojects/libgsystemservice
+mv tinycdb-%tinycdb_ver subprojects/
+cp subprojects/packagefiles/tinycdb/meson.build subprojects/tinycdb-%tinycdb_ver
 
 %build
 %meson -Dpamlibdir=%_pam_modules_dir \
@@ -156,14 +182,37 @@ controls settings for users.
 %__meson_test
 
 %files -f %name.lang
+%_libexecdir/%name-timer-extension-agent
+%_libexecdir/%name-timerd
+%_libexecdir/%name-webd
+%_libexecdir/%name-webd-update
+%_unitdir/%name-timer-extension-agent.service
+%_unitdir/%name-timerd.service
+%_unitdir/%name-webd-update.service
+%_unitdir/%name-webd-update.timer
+%_unitdir/%name-webd.service
 %_datadir/accountsservice/interfaces/*.xml
 %_datadir/dbus-1/interfaces/*.xml
+%_datadir/dbus-1/services/%xdg_name1.service
+%_datadir/dbus-1/system-services/%{xdg_name}Timer1.ExtensionAgent.service
+%_datadir/dbus-1/system-services/%{xdg_name}Timer1.service
+%_datadir/dbus-1/system-services/%{xdg_name}Web1.service
+%_datadir/dbus-1/system.d/%{xdg_name}Timer1.ExtensionAgent.conf
+%_datadir/dbus-1/system.d/%{xdg_name}Timer1.conf
+%_datadir/dbus-1/system.d/%{xdg_name}Web1.conf
 %_datadir/polkit-1/actions/*.policy
 %_datadir/polkit-1/rules.d/*.rules
+%_sysusersdir/%name-timer-extension-agent.conf
+%_sysusersdir/%name-timerd.conf
+%_sysusersdir/%name-webd.conf
+%_man8dir/%name-timer-extension-agent.8*
+%_man8dir/%name-timerd.8*
+%_man8dir/%name-webd.8*
 %doc README.md NEWS
 
 %files -n lib%name
-%_libdir/libmalcontent-%api_ver.so.*
+%_libdir/lib%name-%api_ver.so.*
+%_libdir/libnss_%name.so.*
 
 %files -n lib%name-gir
 %_typelibdir/%namespace-%api_ver.typelib
@@ -171,6 +220,7 @@ controls settings for users.
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
+%_libdir/libnss_%name.so
 %_pkgconfigdir/%name-%api_ver.pc
 %_girdir/%namespace-%api_ver.gir
 
@@ -189,10 +239,10 @@ controls settings for users.
 
 %files control
 %_bindir/%name-control
-%_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
-%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/metainfo/%xdg_name.metainfo.xml
+%_desktopdir/%xdg_name1.desktop
+%_iconsdir/hicolor/scalable/apps/%xdg_name1.svg
+%_iconsdir/hicolor/symbolic/apps/%xdg_name1-symbolic.svg
+%_datadir/metainfo/%xdg_name1.metainfo.xml
 %endif
 
 %files pam
@@ -202,8 +252,13 @@ controls settings for users.
 %_bindir/%name-client
 %_man8dir/%name-client.*
 
+%exclude %_datadir/doc/lib%name-%api_ver/
+%exclude %_datadir/doc/lib%name-ui-%ui_api_ver/
 
 %changelog
+* Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Wed Sep 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
 - 0.13.1
 

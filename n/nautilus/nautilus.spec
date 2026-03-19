@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define api_ver 4.1
 %define ext_api_ver 4
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -28,25 +28,26 @@ Url: https://apps.gnome.org/Nautilus
 Vcs: https://gitlab.gnome.org/GNOME/nautilus.git
 
 %if_disabled snapshot
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
-Source: https://github.com/GNOME/nautilus/archive/%version/%name-%version%beta.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: https://github.com/GNOME/nautilus/archive/%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
 
-%define desktop_file_utils_ver 0.8
 %define glib_ver 2.84.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
 %define gtk4_ver 4.16
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 %define libxml2_ver 2.7.8
-%define gexiv2_ver 0.14.2
+%define gexiv2_ver 0.16
 %define gir_ver 0.10.2
 %define tracker_ver 3.8
 %define autoar_ver 0.4.4
 %define portal_ver 0.5
 %define selinux_ver 2.0
+%define glycin_api_ver 2
+%define glycin_ver 2
 
 Requires(post): libcap-utils
 Requires: lib%name = %version-%release
@@ -56,11 +57,12 @@ Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
 Requires: gnome-disk-utility
+Requires: glycin-%glycin_api_ver-loaders
 %{?_enable_tracker:Requires: tinysparql localsearch}
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: /usr/bin/appstreamcli
+BuildRequires: meson blueprint-compiler
+BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: libpango-devel >= %pango_ver
@@ -73,7 +75,9 @@ BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libseccomp-devel
 BuildRequires: libcloudproviders-devel
 BuildRequires: pkgconfig(icu-uc) pkgconfig(icu-i18n)
-%{?_enable_extensions:BuildRequires: libgexiv2-devel >= %gexiv2_ver
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
+%{?_enable_extensions:BuildRequires: libgexiv2-0.16-devel >= %gexiv2_ver
 BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)}
 %{?_enable_docs:BuildRequires: docbook-utils gi-docgen}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver localsearch}
@@ -212,6 +216,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
 - 49.4
 

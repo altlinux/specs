@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define plugins_ver 23
 %define _libexecdir %_prefix/libexec
@@ -41,8 +41,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -195,7 +195,6 @@ _EOF_
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-cmd
-%_libexecdir/%name-restarter
 %{?_enable_external_appstream:%_libexecdir/%name-install-appstream}
 %dir %_libdir/%name
 %_libdir/%name/libgnomesoftware.so*
@@ -207,6 +206,7 @@ _EOF_
 %{?_enable_packagekit:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_packagekit.so}
 %_userunitdir/%name.service
 %_desktopdir/%xdg_name.desktop
+%_desktopdir/%name-local-file-metainfo.desktop
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
 %_datadir/swcatalog/xml/gnome-pwa-list-proprietary.xml
@@ -249,6 +249,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1.1
 - new optional -plugin-packagekit subpackage
 

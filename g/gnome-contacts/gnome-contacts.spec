@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -32,9 +32,12 @@ Source: %name-%version%beta.tar
 %define eds_ver 3.42
 %define portal_ver 0.6
 %define libqrencode_ver 4.1.1
+%define glycin_api_ver 2
+%define glycin_ver 2
 
 Requires: gst-plugins-base1.0
 Requires: gst-plugin-gtk4
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools blueprint-compiler
@@ -46,6 +49,9 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libqrencode-devel >= %libqrencode_ver
 BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
+
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -81,6 +87,9 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 %doc README*
 
 %changelog
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
