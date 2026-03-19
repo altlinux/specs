@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: Traversal over Python's objects subtree and calculate the total size of the subtree in bytes (deep size)
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -57,11 +59,12 @@ execution.
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Tue Apr 29 2025 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt1
 - Packaged for ALT Sisyphus.
-
