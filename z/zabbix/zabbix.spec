@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		f4175e9b3ce
+%define svnrev		36bdd34b378
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.23
+Version: 7.0.24
 Release: alt1
 Epoch: 1
 
@@ -101,14 +101,12 @@ Requires: %_sbindir/fping
 Summary: %name agent
 Group: Monitoring
 Requires: %name-common = %EVR
-Requires: %name-agent-sudo
 
 %if_enabled agent2
 %package agent2
 Summary: %name agent2
 Group: Monitoring
 Requires: %name-common = %EVR
-Requires: %name-agent-sudo
 %endif
 
 %if_enabled webservice
@@ -123,6 +121,7 @@ Summary: sudo entry for %name agent
 Group: Monitoring
 BuildArch: noarch
 Requires: %name-common = %EVR
+Requires: sudo
 
 %package proxy
 Summary: %name proxy with Sqlite3 support
@@ -864,6 +863,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.24-alt1
+- 7.0.24 (Fixes: CVE-2026-23925)
+- Remove Requires: zabbix-agent-sudo in zabbix-agent and zabbix-agent2 (ALT #57478)
+
 * Wed Feb 18 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.23-alt1
 - 7.0.23
 
