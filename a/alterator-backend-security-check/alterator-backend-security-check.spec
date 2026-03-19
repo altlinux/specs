@@ -2,7 +2,7 @@
 %define app_id org.altlinux.alterator.securitycheck
 
 Name: alterator-backend-security-check
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: Security check tool
 Group: System/Configuration/Other
@@ -45,6 +45,9 @@ Alterator.
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 
 %changelog
+* Tue Mar 17 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+
 * Wed Mar 04 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.0.3-alt1
 - New version 1.0.3.
 
