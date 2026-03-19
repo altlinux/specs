@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name djangorestframework
+%define mod_name rest_framework
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.16.1
+Version: 3.17.0
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
@@ -15,9 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# we have several versions of Django
-# so, we cannot rely on auto-requires
-%filter_from_requires /^python3(django\(\..*\)\?)/d
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -37,7 +37,7 @@ Web APIs.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/requirements-testing.txt
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -47,14 +47,16 @@ Web APIs.
 %pyproject_install
 
 %check
-%pyproject_run -- python runtests.py
+%pyproject_run_pytest -vra
 
 %files
-%doc README.md
-%python3_sitelibdir/rest_framework/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 19 2026 Stanislav Levin <slev@altlinux.org> 3.17.0-alt1
+- 3.16.1 -> 3.17.0.
+
 * Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 3.16.1-alt1
 - 3.16.0 -> 3.16.1.
 
