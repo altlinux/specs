@@ -1,7 +1,7 @@
 %define oname allowlockedremotedesktop@kamens.us
 
 Name: gnome-shell-extension-allowlockedremotedesktop
-Version: 4900
+Version: 5000
 Release: alt1
 
 Summary: Allow remote desktop connections when the screen is locked
@@ -39,6 +39,9 @@ unzip -q %{oname}.shell-extension.zip \
 %doc README.md
 
 %changelog
+* Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 5000-alt1
+- 4900 -> 5000 (GNOME 50 supported)
+
 * Mon Feb 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 4900-alt1
 - Initial build for ALT Linux. 
 
