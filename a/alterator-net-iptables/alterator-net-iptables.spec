@@ -1,6 +1,6 @@
 Name: alterator-net-iptables
-Version: 4.19.11
-Release: alt2
+Version: 4.19.12
+Release: alt1
 
 Summary: alterator module for simple iptables configuration
 License: GPL
@@ -63,6 +63,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Thu Mar 19 2026 Fedor Moseichuck <phobos@altlinux.org> 4.19.12-alt1
+- ui: fix internal interfaces link
+
 * Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 4.19.11-alt2
 - E2K: move to guile22 too.
 - Minor spec cleanup.
