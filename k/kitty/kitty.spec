@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.45.0
+Version: 0.46.1
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -232,6 +232,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Wed Mar 18 2026 Egor Ignatov <egori@altlinux.org> 0.46.1-alt1
+- new version 0.46.1
+
 * Wed Dec 24 2025 Egor Ignatov <egori@altlinux.org> 0.45.0-alt1
 - new version 0.45.0
 
