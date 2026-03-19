@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: intel-compute-runtime-legacy
-Version: 24.35.30872.36
+Version: 24.35.30872.45
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
 
 BuildRequires(pre): cmake ninja-build
-BuildRequires: clang%llvmversion.0-devel libstdc++-devel
+BuildRequires: gcc-c++ libstdc++-devel
 BuildRequires: libintel-opencl-clang%llvmversion-devel
 BuildRequires: libigdfcl-devel
 BuildRequires: libigc-devel
@@ -70,10 +70,7 @@ functions, unified memory, and I/O capabilities..
 %patch1 -p1
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvmversion.0
 %cmake -G Ninja \
- -DCMAKE_C_COMPILER=/usr/bin/clang \
- -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
  -DCMAKE_INSTALL_PREFIX=%prefix \
  -DCMAKE_INSTALL_LIBDIR=%_libdir \
  -DNEO_ALLOW_LEGACY_PLATFORMS_SUPPORT:BOOL=TRUE \
@@ -95,6 +92,10 @@ export ALTWRAP_LLVM_VERSION=%llvmversion.0
 %_libdir/libze_intel_gpu_%prefix.so.%soversion
 
 %changelog
+* Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.45-alt1
+- 24.35.30872.45.
+- Build with gcc.
+
 * Tue Mar 17 2026 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.36-alt1
 - 24.35.30872.36.
 - Rebuild w/ llvm16.
