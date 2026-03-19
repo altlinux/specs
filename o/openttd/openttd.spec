@@ -5,7 +5,7 @@
 
 Name: openttd
 Version: 15.2
-Release: alt1
+Release: alt2
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
@@ -25,6 +25,9 @@ Requires: openttd-3rd-party >= 0.6.1
 
 BuildRequires: libSDL2-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel liblzma-devel libxdg-basedir-devel libfluidsynth-devel
 BuildRequires: cmake
+%ifarch %e2k
+BuildRequires: clang-devel
+%endif
 
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -33,11 +36,23 @@ An open source clone of the Microprose game "Transport Tycoon Deluxe".
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+# error: implicit instantiation of undefined template
+sed -i '/<string>/i #include <sstream>' src/stdafx.h
+%endif
+
 echo "%version	%daterev	0	%gitsnapshot	1	1" >.ottdrev
 echo "%version" >.version
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_DATADIR=share/games
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_INSTALL_DATADIR=share/games \
+%ifarch %e2k
+    -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+    -DCMAKE_C{,XX}_FLAGS_RELWITHDEBINFO="-O2 -DNDEBUG" \
+%endif
+    %nil
 %cmake_build
 
 %install
@@ -52,6 +67,9 @@ echo "%version" >.version
 %_man6dir/*
 
 %changelog
+* Thu Mar 19 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 15.2-alt2
+- e2k build fix
+
 * Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 15.2-alt1
 - 15.1 -> 15.2
 
