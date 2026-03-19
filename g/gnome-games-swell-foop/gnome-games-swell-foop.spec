@@ -3,14 +3,14 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 48
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.SwellFoop
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The "Same Game" puzzle
@@ -29,15 +29,16 @@ Source: %_name-%version%beta.tar
 Provides:  %_name = %EVR
 
 %define glib_ver 2.78.0
-%define gtk_ver 4.10
-%define adw_ver 1.5
+%define gtk_ver 4.20
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(librsvg-2.0)
-BuildRequires: pkgconfig(libgnome-games-support-2)
+# for libgnome-games-support
+BuildRequires: pkgconfig(gee-0.8)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -53,7 +54,7 @@ area in as few moves as possible.
 
 %install
 %meson_install
-%find_lang --with-gnome %_name
+%find_lang --with-gnome --output=%_name.lang %_name %{_name}_libgnome-games-support
 
 %check
 %__meson_test
@@ -68,6 +69,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

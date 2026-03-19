@@ -5,13 +5,15 @@
 %define namespace SSC
 %define sover 2
 
+%define qrtr_ver 1.2
+
 %def_enable introspection
 %def_enable vala
-%def_disable check
+%def_enable check
 
 Name: libssc
-Version: %ver_major.1
-Release: alt0.5
+Version: %ver_major.2
+Release: alt1
 
 Summary: Library for exposing Qualcomm Sensor Core to Linux
 Group: System/Libraries
@@ -25,6 +27,8 @@ Source: https://codeberg.org/DylanVanAssche/libssc/archive/v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+# https://github.com/linux-msm/qrtr.git
+Source1: qrtr-%qrtr_ver.tar
 
 %define glib_ver 2.56
 %define qmi_ver 1.33.4
@@ -76,14 +80,21 @@ GObject introspection devel data for %name.
 
 
 %prep
-%setup -n %name
-%{?_enable_tests:sed -i 's/pytest-3/py.test-3/' meson.build}
+%setup -n %name -a1
+mv qrtr-%qrtr_ver/* mocking/qrtr/
+sed -i 's|\/_build\/|/%__builddir/|' mocking/ssc-server
 
 %build
 %meson \
     %{?optflags_lto:-Db_lto=true}
 %nil
 %meson_build
+
+%{?_enable_check:
+pushd mocking/qrtr
+%meson
+%meson_build
+popd}
 
 %install
 %meson_install
@@ -93,7 +104,6 @@ export PYTHONPATH=${PWD}/%__builddir/data
 %__meson_test
 
 %files
-#%_bindir/ssc-server*
 %_bindir/ssccli
 %_libdir/%name.so.%{sover}*
 
@@ -114,6 +124,12 @@ export PYTHONPATH=${PWD}/%__builddir/data
 %endif
 
 %changelog
+* Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
+* Tue Mar 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt0.6
+- enabled %%check
+
 * Tue Mar 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt0.5
 - first build for Sisyphus
 
