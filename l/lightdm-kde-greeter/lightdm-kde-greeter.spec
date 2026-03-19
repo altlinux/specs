@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.1.4
-Release: alt2
+Version: 6.1.5
+Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -18,6 +18,7 @@ Source1: %fallback_session_filename
 
 Patch1: add-russian-translations-to-desktop-files.patch
 Patch2: remove-numlock-indication.patch
+Patch3: revert-port-from-powermanagement-dataengine.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
@@ -57,6 +58,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K6build \
@@ -109,6 +111,11 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Thu Mar 19 2026 Anton Golubev <golubevan@altlinux.org> 6.1.5-alt1
+- don't crop background image
+- update deprecated path variables
+- don't port from powermanagement dataengine until plasma 6.6
+
 * Fri Feb 20 2026 Anton Golubev <golubevan@altlinux.org> 6.1.4-alt2
 - remove NumLock indication (Closes: 57905)
 
