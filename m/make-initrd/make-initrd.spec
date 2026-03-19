@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.57.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,6 +71,7 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch0: 0001-feature-btrfs-Add-multi-device-RAID-boot-support.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -407,6 +408,10 @@ fi
 %endif
 
 %changelog
+* Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt2
+- Add upstream commit:
+  + Add multi-device (RAID) boot support.
+
 * Thu Feb 12 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt1
 - Feature acpica:
   + Added a new feature for ACPI table upgrade.
