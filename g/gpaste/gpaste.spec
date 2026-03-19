@@ -11,7 +11,7 @@
 
 Name: gpaste
 Version: %ver_major.3
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -118,6 +118,8 @@ in notification area.
 %patch1 -b .format
 %endif
 
+sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
+
 %build
 %ifarch %ix86
 %add_optflags -Wno-incompatible-pointer-types
@@ -194,6 +196,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt3
+- updated to v45.3-29-g5b2593e4 (GNOME 50 supported)
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt2
 - updated to v45.3-20-ge2587abf (GNOME 49 supported)
 
