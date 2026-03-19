@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1
+- docs: add multiple documentation
+- vm.mk: add apt-rsync to vm/bare and vm/systemd (thx Nadezhda Fedorova)
+- vm.mk: use netplan in vm/cloud-systemd (thx Nadezhda Fedorova)
+- build-distro: allow setting DISTRO boot name directly (thx Sergey Konev)
+- Remove feature domain-client and corresponding package lists to him
+- stage2: Avoid DRM modules in ISO initrd on loongarch64 and riscv64
+  (thx Ivan Melnikov)
+- base+smartcard: use metapackage task-smartcard
+- tar2fs: use grub-efi-install when available (grub 2.14)
+- lib/arch.mk: initial virt_arch() and initial grub_arch()
+  (thx Michael Shigorin)
+
 * Mon Jan 26 2026 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt1
 - live-install: do not add xterm for wayland-only installer
 - alternatives: do not abort script, when alternatives-manual error
