@@ -1,11 +1,11 @@
 Name: radicle
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
 License: MIT Apache-2.0
 Group: Development/Other
-Url: https://radicle.xyz/
+URL: https://radicle.xyz/
 
 Requires: git-core
 
@@ -41,7 +41,7 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=48582815c27aa5b
+export GIT_HEAD=748ddade2feb6f0
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
@@ -73,6 +73,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Thu Mar 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.0-alt1
+- 1.7.0 released
+
 * Wed Jan 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt1
 - 1.6.1 released
 
