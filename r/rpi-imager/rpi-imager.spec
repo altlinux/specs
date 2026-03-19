@@ -1,5 +1,5 @@
 Name:           rpi-imager
-Version:        1.8.1
+Version:        2.0.6
 Release:        alt1
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
@@ -9,13 +9,13 @@ URL:            https://github.com/raspberrypi/rpi-imager
 Source:         %name-%version.tar
 Patch:          %name-%version-alt.patch
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel qt6-declarative-devel qt6-tools-devel
 BuildRequires: libarchive-devel libcurl-devel libssl-devel
-BuildRequires: libdrm-devel liblzma-devel
-BuildRequires: cmake gcc-c++
+BuildRequires: libdrm-devel liblzma-devel libgnutls-devel liburing-devel
+BuildRequires: cmake gcc-c++ zlib-devel
+BuildRequires: libidn2-devel libnettle-devel
 
-Requires: qt5-quickcontrols2
 Requires: udisks2
 
 %description
@@ -36,12 +36,14 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 %files
 %_bindir/%name
-%_datadir/applications/%name.desktop
-%_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/metainfo/rpi-imager.metainfo.xml
-
+%_datadir/applications/com.raspberrypi.rpi-imager.desktop
+%_datadir/icons/hicolor/*/apps/%name.svg
+%_datadir/metainfo/com.raspberrypi.rpi-imager.metainfo.xml
 
 %changelog
+* Tue Mar 17 2026 Dmitry Terekhin <jqt4@altlinux.org> 2.0.6-alt1
+- Update to new release 2.0.6 (Closes: 58040)
+
 * Fri Oct 27 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.8.1-alt1
 - Update to new release 1.8.1
 
