@@ -2,7 +2,7 @@
 
 Name: libgavl
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Common A/V support library for gmerlin projects
 License: GPLv2+
@@ -12,7 +12,7 @@ Vcs: https://github.com/bplaum/gavl.git
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86
+Patch: %name-%version-%release.patch
 
 BuildRequires: automake
 BuildRequires: libtool
@@ -50,10 +50,11 @@ Generated API reference for libgavl.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
-%configure
+%configure --with-cpuflags=none
 
 %make_build
 
@@ -74,5 +75,8 @@ Generated API reference for libgavl.
 %_docdir/libgavl-%version
 
 %changelog
+* Thu Mar 19 2026 Grant Makyan <karonus@altlinux.org> 2.0.1-alt2
+- Fix i586 build.
+
 * Thu Mar 05 2026 Grant Makyan <karonus@altlinux.org> 2.0.1-alt1
 - First build for ALT.
