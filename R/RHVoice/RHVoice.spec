@@ -6,7 +6,7 @@
 %define progectlicense GPL-2.0
 
 Name:    RHVoice
-Version: 1.18.2
+Version: 1.18.3
 Release: alt1
 
 Summary: a free and open source speech synthesizer for Russian and other languages
@@ -360,6 +360,9 @@ scons install \
   servicedir=default
 
 %changelog
+* Fri Mar 20 2026 Artem Semenov <savoptik@altlinux.org> 1.18.3-alt1
+- Updated to new version 1.18.3
+
 * Thu Mar 12 2026 Artem Semenov <savoptik@altlinux.org> 1.18.2-alt1
 - Updated to new version 1.18.2
 - Added libsonic support
