@@ -3,8 +3,8 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: firejail
-Version: 0.9.78
-Release: alt3
+Version: 0.9.80
+Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
 Group: Development/Tools
@@ -13,6 +13,7 @@ VCS: https://github.com/netblue30/firejail.git
 Source: %name-%version.tar
 Patch1: %name-0.9.78-alt-skip-unreadable-private-etc.patch
 Patch2: %name-0.9.78-alt-whitelist-sandbox-users.patch
+Patch3: %name-0.9.80-alt-firecfg-path-warning.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -25,6 +26,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure
@@ -61,6 +63,11 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Fri Mar 20 2026 Anton Farygin <rider@altlinux.org> 0.9.80-alt1
+- 0.9.78 -> 0.9.80
+- firecfg: warn when symlinks won't intercept commands
+  due to PATH order (closes: #58210)
+
 * Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 0.9.78-alt3
 - skip unreadable files in private-etc instead of crashing (closes: #58112)
 - sandbox user isolation: only expose root, nobody and current user instead of
