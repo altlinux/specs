@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 2026
 %def_enable check
 
 Name: gweather-locations
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GWeather Locations Database
@@ -70,6 +70,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" data/meson.build
 %doc README* NEWS
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.2-alt1
+- 2026.2
+
 * Sun Mar 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.1-alt1
 - first build for Sisyphus (2026.1-23-g294a5c7)
 
