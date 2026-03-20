@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: faugus-launcher
-Version: 1.14.3
+Version: 1.16.5
 Release: alt1
 
 Summary: A simple and lightweight app for running Windows games using UMU-Launcher
@@ -44,9 +44,8 @@ Requires: typelib(Gtk) = 3.0
 %_bindir/faugus-launcher
 %_bindir/faugus-run
 %_bindir/faugus-proton-manager
+%_bindir/faugus-shortcut
 %_desktopdir/faugus-launcher.desktop
-%_desktopdir/faugus-proton-manager.desktop
-%_desktopdir/faugus-run.desktop
 %_desktopdir/faugus-shortcut.desktop
 %python3_sitelibdir/faugus/
 %_datadir/faugus-launcher/
@@ -56,6 +55,9 @@ Requires: typelib(Gtk) = 3.0
 %_datadir/metainfo/faugus-launcher.metainfo.xml
 
 %changelog
+* Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 1.16.5-alt1
+- new version 1.16.5 (ALT bug: 58294)
+
 * Wed Feb 18 2026 Boris Yumankulov <boria138@altlinux.org> 1.14.3-alt1
 - new version 1.14.3
 
