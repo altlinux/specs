@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.10b0
+Version: 0.9.11b0
 Release: alt1
 
 Summary: Pure Python wrapper for SDL3
@@ -61,5 +61,8 @@ rm -rfv sdl3/bin
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.11b0-alt1
+- New version 0.9.11b0.
+
 * Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.10b0-alt1
 - Initial build for Sisyphus

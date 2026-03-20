@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gromit-mpx
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: GTK+ based tool to make annotations on screen with multiple pointers
@@ -59,6 +59,9 @@ rm -rv %{buildroot}%{_datadir}/doc/
 %_datadir/pixmaps/*
 
 %changelog
+* Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 

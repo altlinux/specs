@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 3.2.4
+Version: 3.2.6
 Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(Qt6Graphs)
 BuildRequires: pkgconfig(Qt6Bluetooth)
 BuildRequires: pkgconfig(Qt6SerialPort)
 BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6WebEngineQuick)
 
 Requires: libqt6-core5compat
 Requires: libqt6-qmlcore
@@ -37,6 +38,10 @@ Requires: libqt6-quickeffects
 Requires: libqt6-quicklayouts
 Requires: libqt6-quickshapes
 Requires: libqt6-qml
+Requires: libqt6-webenginequick
+
+# no libqt6-webenginequick
+ExcludeArch: %ix86 riscv64
 
 %description
 Serial Studio is an open-source tool that helps you see data from Arduino,
@@ -66,12 +71,16 @@ sed -i "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
 
 %files -f %{name}.lang
 %doc LICENSE.md README.md doc/brand/logo.svg doc/screenshot.png
-%doc FAQ.md USE-CASES.md COMPARISON.md LICENSES CLAUDE.md examples
+%doc LICENSES CLAUDE.md examples
 %_bindir/serial-studio-gpl3
 %_desktopdir/serial-studio-gpl3.desktop
 %_datadir/metainfo/serial-studio.metainfo.xml
+%_datadir/mime/packages/serial-studio-ssproj.xml
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.6-alt1
+- New version 3.2.6.
+
 * Mon Feb 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.4-alt1
 - Initial build for Sisyphus
