@@ -2,8 +2,8 @@
 %define src_dir %_usrsrc/%dkms_name-%version
 
 Name: xpadneo
-Version: 0.9.8
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: Driver for Xbox Wireless Controller
 
@@ -13,8 +13,6 @@ Url: https://github.com/atar-axis/xpadneo
 
 # Source-url: https://github.com/atar-axis/xpadneo/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-
-Patch: xpadneo-0.9.8-alt-get-rid-of-redundant-file-installs-removes.patch
 
 Requires: dkms-xpadneo = %EVR
 BuildArch: noarch
@@ -33,22 +31,20 @@ Advanced Linux Driver for Xbox One Wireless Gamepad (DKMS-variant).
 
 %prep
 %setup
-sed "s/@DO_NOT_CHANGE@/%version/" hid-xpadneo/dkms.conf.in > hid-xpadneo/dkms.conf
-%patch -p2
 
 %build
 %install
+make VERSION="%version" PREFIX="%buildroot" ETC_PREFIX=/usr/lib  install
+
 cd "%dkms_name"
 
 # Module source
-install -Dm0644 -t "%buildroot%_usrsrc/%dkms_name-%version/src" src/*
+install -d "%buildroot%_usrsrc/%dkms_name-%version"
+cp -a src "%buildroot%_usrsrc/%dkms_name-%version/"
 
 # DKMS files
 install -Dm0644 -t "%buildroot%_usrsrc/%dkms_name-%version" Makefile dkms.conf
-
-# Module dependencies
-install -Dm0644 -t "%buildroot/etc/modprobe.d" etc-modprobe.d/*
-install -Dm0644 -t "%buildroot%_udevrulesdir" etc-udev-rules.d/*
+install -Dm0755 -t "%buildroot%_usrsrc/%dkms_name-%version" dkms.post_{install,remove}
 
 %post -n dkms-xpadneo
 #!/bin/sh
@@ -65,13 +61,18 @@ if [ "$(dkms status -m %dkms_name -v %version)" ]; then
 fi
 
 %files
-%config(noreplace) /etc/modprobe.d/xpadneo.conf
+/usr/lib/modprobe.d/xpadneo.conf
 %_udevrulesdir/
+%dir %_docdir/xpadneo
 
 %files -n dkms-xpadneo
 %_usrsrc/%dkms_name-%version/
 
 %changelog
+* Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 0.10-alt1
+- new version 0.10 (ALT bug: 58279)
+- use make to build
+
 * Tue Jan 06 2026 Boris Yumankulov <boria138@altlinux.org> 0.9.8-alt2
 - rebase DKMS hooks cleanup patch
 
