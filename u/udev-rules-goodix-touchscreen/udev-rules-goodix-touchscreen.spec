@@ -1,5 +1,5 @@
 Name: udev-rules-goodix-touchscreen
-Version: 5
+Version: 6
 Release: alt1
 Summary: Fix orientation of Goodix touchscreen on number of devices
 License: GPL-2.0-or-later
@@ -29,6 +29,10 @@ install -Dm0644 goodix-touchscreen.service %buildroot%_unitdir/goodix-touchscree
 mkdir -p %buildroot%_presetdir
 install -m 0644 20-udev-rules-goodix-touchscreen.preset %buildroot%_presetdir/
 
+# uninstall old udev rules
+%triggerin -- %name <= 6
+rm -f %_udevrulesdir/90-goodix-*.rules
+
 %post
 %post_service goodix-touchscreen.service
 
@@ -42,6 +46,9 @@ install -m 0644 20-udev-rules-goodix-touchscreen.preset %buildroot%_presetdir/
 %_presetdir/20-udev-rules-goodix-touchscreen.preset
 
 %changelog
+* Fri Mar 20 2026 Artyom Bystrov <arbars@altlinux.org> 6-alt1
+- Change default path of udev rules (closes: #58220)
+
 * Fri Mar 13 2026 Artyom Bystrov <arbars@altlinux.org> 5-alt1
 - Fix accepting udev rule on MIG tablet
 
