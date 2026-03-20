@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: openvas-scanner
-Version: 23.40.3
+Version: 23.41.7
 Release: alt1
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
@@ -140,6 +140,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Fri Mar 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 23.41.7-alt1
+- new version
+
 * Wed Mar 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 23.40.3-alt1
 - new version
 
