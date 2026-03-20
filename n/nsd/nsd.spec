@@ -1,7 +1,7 @@
 %set_autoconf_version 2.71
 
 Name: nsd
-Version: 4.14.1
+Version: 4.14.2
 Release: alt1
 
 Summary: Name Server Daemon
@@ -94,6 +94,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Fri Mar 20 2026 Alexei Takaseev <taf@altlinux.org> 4.14.2-alt1
+- 4.14.2
+
 * Wed Feb 25 2026 Alexei Takaseev <taf@altlinux.org> 4.14.1-alt1
 - 4.14.1
 
