@@ -1,5 +1,5 @@
 Name: libgsm
-Version: 1.0.23
+Version: 1.0.24
 Release: alt1
 
 Summary: GSM audio encoding/decoding library
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: https://www.quut.com/gsm/
 # http://www.quut.com/gsm/gsm-%version.tar.gz
 Source: gsm-%version.tar
+Source999: watch
 Patch1: gsm-makefile.patch
 Patch2: gsm-rh-warnings.patch
 
@@ -72,6 +73,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 %_man3dir/*
 
 %changelog
+* Fri Mar 20 2026 Anton Farygin <rider@altlinux.org> 1.0.24-alt1
+- 1.0.23 -> 1.0.24
+
 * Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 1.0.23-alt1
 - 1.0.22 -> 1.0.23
 
