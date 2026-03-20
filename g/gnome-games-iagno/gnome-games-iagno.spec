@@ -1,20 +1,24 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define _name iagno
-%define ver_major 3.38
+%define ver_major 50
 %define xdg_name org.gnome.Reversi
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Gnome version of Othello (Reversi) board game
 Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Iagno
+
+Vcs: https://gitlab.gnome.org/GNOME/iagno.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -22,17 +26,21 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-Provides:  %_name = %version-%release
+Provides:  %_name = %EVR
 
-%define glib_ver 2.40.0
-%define gtk_ver 3.22.23
+%define adw_ver 1.8
+%define glycin_api_ver 2
+%define glycin_ver 2
+
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgsound-devel
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Iagno is a computer version of the game Reversi, more popularly called
@@ -40,8 +48,6 @@ Othello.
 
 %prep
 %setup -n %_name-%version
-# comment out duplicate "id" entry from help/LINGUAS
-sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
 
 %build
 %meson
@@ -51,17 +57,23 @@ sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
 %meson_install
 %find_lang --with-gnome %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
-%attr(-,root,games) %_bindir/%_name
+%_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_man6dir/%_name.*
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt3
 - upated to 3.38.1-41-g70bc10b
 - fixed build with meson >= 0.61

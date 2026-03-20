@@ -4,13 +4,13 @@
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 41
+%define ver_major 50
 %define _libexecdir %_prefix/libexec
 
 %def_disable bootstrap
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -29,20 +29,17 @@ Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnobots
 Provides:  gnome-games-gnobots = %EVR
 
-%define glib_ver 2.82
-%define gtk_ver 4.16
-%define adw_ver 1.6
-%define rsvg_ver 2.60
+%define adw_ver 1.8
+%define glycin_api_ver 2
+%define glycin_ver 2
 
-# for glycin
-Requires: bubblewrap glycin-loaders
+Requires: bubblewrap glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -82,6 +79,9 @@ tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 
