@@ -4,7 +4,7 @@
 %global pypi_name fast-depends
 
 Name: python3-module-%pypi_name
-Version: 3.0.5
+Version: 3.0.8
 Release: alt1
 
 Summary: Extracted FastAPI Dependency Injection System
@@ -58,6 +58,9 @@ Async and sync modes are both supported.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Fri Mar 20 2026 Egor Ignatov <egori@altlinux.org> 3.0.8-alt1
+- New version 3.0.8.
+
 * Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 3.0.5-alt1
 - New version 3.0.5.
 

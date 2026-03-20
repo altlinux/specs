@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -13,7 +13,7 @@ Group: Development/Python3
 BuildArch: noarch
 
 VCS: https://github.com/airtai/FastStream
-Url: https://faststream.airt.ai/latest/
+Url: https://faststream.ag2.ai/latest/
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
@@ -44,6 +44,7 @@ automatically.
 %patch0 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup
 
 %build
 %pyproject_build
@@ -61,6 +62,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Mar 03 2026 Egor Ignatov <egori@altlinux.org> 0.6.7-alt1
+- New version 0.6.7.
+
 * Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 0.6.6-alt1
 - New version 0.6.6.
 
