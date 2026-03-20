@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ananicy-rules
-Version: 1.1.23
+Version: 1.1.30
 Release: alt1
 
 Summary: List of rules used to assign specific nice values to specific processes
@@ -35,6 +35,9 @@ cp -rfv ananicy.conf %buildroot%_sysconfdir/ananicy.d/
 %doc README.md
 
 %changelog
+* Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 1.1.30-alt1
+- new version 1.1.30
+
 * Wed Feb 18 2026 Boris Yumankulov <boria138@altlinux.org> 1.1.23-alt1
 - new version 1.1.23
 
