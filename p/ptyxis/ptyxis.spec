@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: ptyxis
-Version: 49.3
+Version: 50.1
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -87,6 +87,9 @@ desktop-file-validate %buildroot%_desktopdir/org.gnome.Ptyxis.desktop
 %_altdir/%name
 
 %changelog
+* Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 50.1-alt1
+- new version 50.1
+
 * Tue Jan 27 2026 Boris Yumankulov <boria138@altlinux.org> 49.3-alt1
 - new version 49.3
 
