@@ -18,7 +18,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     22
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -459,6 +459,11 @@ goal of accelerating analytics queries.
 %patch4 -p1
 %patch6 -p2
 %patch8 -p1
+
+%ifarch %e2k
+# disable SSE4.2 emulation
+sed -i 's/_mm_crc32_/_no_crc32_/g' configure* meson.build config/c-compiler.m4
+%endif
 
 %build
 export CC=%__cc
@@ -1115,6 +1120,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 20 2026 Alexei Takaseev <taf@altlinux.org> 14.22-alt2
+- Disable SSE4.2 emulation on e2k (ilyakurdyukov@)
+
 * Wed Feb 25 2026 Alexei Takaseev <taf@altlinux.org> 14.22-alt1
 - 14.22
 

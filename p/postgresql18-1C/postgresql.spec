@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     3
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -464,6 +464,11 @@ goal of accelerating analytics queries.
 %patch101 -p1
 %patch102 -p1
 
+%ifarch %e2k
+# disable SSE4.2 emulation
+sed -i 's/_mm_crc32_/_no_crc32_/g' configure* meson.build config/c-compiler.m4
+%endif
+
 %build
 export CC=%__cc
 export CXX=%__cxx
@@ -526,7 +531,7 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 
 %ifnarch %ix86
 %check
-vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+vm-run --rootfs --user --sudo --cpu=2 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 %endif
 
 %install
@@ -1164,6 +1169,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 20 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt3
+- Disable SSE4.2 emulation on e2k (ilyakurdyukov@)
+
 * Tue Mar 10 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt2
 - Delete Provides: %%prog_name = %%EVR, %%prog_name-contrib = %%EVR,
   %%prog_name-server = %%EVR, %%prog_name-tcl = %%EVR, %%prog_name-perl = %%EVR,
