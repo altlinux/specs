@@ -1,14 +1,20 @@
 Name: pdf2djvu
 Version: 0.9.19
-Release: alt3
+Release: alt4
 
 Summary: PDF to DjVu converter
 License: GPL-2.0
 Group: Office
 Url: http://jwilk.net/software/pdf2djvu/
+
+Requires: djvu-utils
+
 # https://github.com/jwilk/pdf2djvu/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
-Requires: djvu-utils
+# FC
+Patch1: pdf2djvu-poppler-26.01.0.patch
+Patch2: pdf2djvu-poppler-version.patch 
+
 # Automatically added by buildreq on Fri Nov 19 2010
 BuildRequires: djvu-utils fontconfig-devel gcc-c++ libGraphicsMagick-c++-devel libdjvu-devel
 BuildRequires: libgomp-devel libpoppler-devel libxslt-devel pstreams libexiv2-devel libuuid-devel
@@ -25,6 +31,7 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %add_optflags -std=c++20
@@ -46,6 +53,9 @@ popd
 %_mandir/*/man1/*
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt4
+- fix compile with new poppler
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt3
 - fix compile with new poppler
 
