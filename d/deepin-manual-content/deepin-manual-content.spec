@@ -1,7 +1,7 @@
 %define repo dde-manual-content
 
 Name: deepin-manual-content
-Version: 3.0.5
+Version: 3.0.8
 Release: alt1
 
 Summary: Additional system assets for deepin-manual
@@ -42,5 +42,8 @@ BuildRequires: cmake gcc-c++
 %_datadir/deepin-manual/manual-assets/system/dde/
 
 %changelog
+* Fri Mar 20 2026 Leontiy Volodin <lvol@altlinux.org> 3.0.8-alt1
+- New version 3.0.8.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 3.0.5-alt1
 - Initial build for ALT Sisyphus (for deepin-manual).
