@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.6
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -594,6 +594,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Mar 19 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1:6.5.6-alt3
+- reduce the size of thumbnails in notifications
+
 * Thu Mar 12 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1:6.5.6-alt2
 - optimize notification display
 
