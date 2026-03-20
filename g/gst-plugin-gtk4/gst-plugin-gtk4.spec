@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 0.14
+%define ver_major 0.15
 
 %def_disable bootstrap
 %def_disable check
 
 Name: gst-plugin-gtk4
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer GTK4 Sink element and Paintable widget
@@ -58,6 +58,9 @@ cargo cinstall %opts --destdir=%buildroot
 %doc README*
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
+- 0.15.0
+
 * Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
 - 0.14.4
 

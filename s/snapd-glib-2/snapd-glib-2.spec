@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: snapd-glib-%api_ver
-Version: 1.70
+Version: 1.72
 Release: alt1
 
 Group: System/Libraries
@@ -24,9 +24,6 @@ Url: https://github.com/canonical/snapd-glib
 Vcs: https://github.com/canonical/snapd-glib.git
 
 Source: https://github.com/canonical/%_name/archive/%version/%_name-%version.tar.gz
-# https://bugzilla.altlinux.org/53704
-# fixed in 1.68 (6620406c7)
-Patch: snapd-glib-1.67-alt-add-lost-snapdqt_global.h.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
 BuildRequires: meson gcc-c++
@@ -166,6 +163,9 @@ for snapd-qt to verify the functionality of snapd-qt.
 %endif
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.72-alt1
+- 1.72
+
 * Thu Jun 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.70-alt1
 - 1.70
 

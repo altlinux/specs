@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: blueprint-compiler
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
@@ -33,7 +33,8 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 %{?_enable_check:BuildRequires: xvfb-run /usr/bin/dbus-launch python3-module-pygobject3
 BuildRequires: fontconfig at-spi2-core typelib(Adw) = 1}
-%{?_enable_docs:BuildRequires: /usr/bin/sphinx-build-3 python3(sphinx_basic_ng) python3(furo)}
+%{?_enable_docs:BuildRequires: /usr/bin/sphinx-build-3 python3(sphinx_basic_ng) python3(furo)
+BuildRequires: python3-module-accessible-pygments}
 
 %description
 %summary
@@ -70,6 +71,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
+- 0.20.3
+
 * Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 

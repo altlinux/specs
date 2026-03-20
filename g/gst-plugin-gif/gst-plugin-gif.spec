@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 0.14
+%define ver_major 0.15
 
 %def_disable bootstrap
 %def_disable check
 
 Name: gst-plugin-gif
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer GIF encoder plugin
@@ -51,6 +51,9 @@ cargo cinstall %opts --destdir=%buildroot
 #%doc README*
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
+- 0.15.0
+
 * Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
 - 0.14.4
 
