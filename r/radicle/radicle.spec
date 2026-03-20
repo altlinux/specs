@@ -1,5 +1,5 @@
 Name: radicle
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
@@ -41,7 +41,7 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=748ddade2feb6f0
+export GIT_HEAD=d9915d275fd07d2
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
@@ -73,6 +73,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Fri Mar 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.1-alt1
+- 1.7.1 released
+
 * Thu Mar 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.0-alt1
 - 1.7.0 released
 
