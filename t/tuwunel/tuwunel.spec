@@ -2,7 +2,7 @@
 
 Name:    tuwunel
 Version: 1.5.1
-Release: alt2
+Release: alt3
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
 Group:   System/Servers
@@ -47,22 +47,27 @@ export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
 %sysusers_create_package %name %SOURCE3
 
 %install
-install -Dm 755 target/release/%name %buildroot/%_sbindir/%name
-install -Dm 644 rpm/tuwunel.service %buildroot/%_unitdir/%name.service
-install -Dm 644 %SOURCE3 %buildroot/%_sysusersdir/%name.conf
-install -Dm 644 %name-example.toml %buildroot/%_sysconfdir/%name/%name.toml
-mkdir -p %buildroot/%_localstatedir/%name
+%rust_install -t %_sbindir
+install -Dm 644 rpm/tuwunel.service %buildroot%_unitdir/%name.service
+install -Dm 644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
+install -Dm 644 %name-example.toml %buildroot%_sysconfdir/%name/%name.toml
+mkdir -p %buildroot%_localstatedir/%name
 
 %files
 %_sbindir/%name
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/%name.toml
+%config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.toml
 %dir %attr(755,%name,%name) %_localstatedir/%name
 %doc LICENSE README.md
 
 %changelog
+* Thu Mar 19 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt3
+- Removed read access for everyone from the configuration file
+  because it may contain secrets.
+- Add support MAS (PR#342).
+
 * Wed Mar 18 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt2
 - Add execute test in %%check section.
 - Change owner of conf dir and file to root.
