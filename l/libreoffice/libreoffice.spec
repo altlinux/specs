@@ -48,9 +48,9 @@
 
 Name: libreoffice
 %define hversion 26.2
-%define urelease 0.3
+%define urelease 1.2
 Version: %hversion.%urelease
-Release: alt3
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -850,6 +850,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 27 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.1.2-alt1
+- New version.
+- Fixed insert audio files using qt6/kf6 VCL (ALT #57028).
+
 * Mon Feb 23 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.0.3-alt3
 - Complete GUI translation on Russian (thanks Olesya Gerasimenko).
 
