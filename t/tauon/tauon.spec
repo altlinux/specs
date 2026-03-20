@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tauon
-Version: 9.1.1
+Version: 9.1.2
 Release: alt1
 
 Summary: Play your music with style
@@ -67,6 +67,8 @@ Requires: python3(OpenGL_accelerate)
 Requires: python3-module-pysdl3
 Requires: python3(natsort)
 Requires: python3(setproctitle)
+
+%add_python3_req_skip AppKit objc
 
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
@@ -145,6 +147,9 @@ install -Dm755 extra/tauonmb.sh %buildroot%_bindir/tauon
 %python3_sitelibdir/%{pyproject_distinfo tauon_music_box}
 
 %changelog
+* Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 9.1.2-alt1
+- New version 9.1.2.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 9.1.1-alt1
 - New version 9.1.1.
 
