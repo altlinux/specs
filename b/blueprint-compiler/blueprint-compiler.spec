@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: blueprint-compiler
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
@@ -71,6 +71,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
+- 0.20.4
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
 - 0.20.3
 
