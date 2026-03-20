@@ -31,8 +31,8 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.21.1
-Release: alt2
+Version: 3.22.0
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -360,6 +360,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Fri Mar 20 2026 Anton Farygin <rider@altlinux.org> 3.22.0-alt1
+- 3.21.1 -> 3.22.0
+
 * Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 3.21.1-alt2
 - added autodetected ocaml bootstrap mode
 - disabled check section when building dune package
