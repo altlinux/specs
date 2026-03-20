@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Mar 20 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt4
+- update to ALT Education 11.1RC2
+- fix error mediawiki (closes #57849)
+
 * Thu Feb 05 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt3
 - fix some typos
 - update screen
