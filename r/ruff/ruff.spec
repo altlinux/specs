@@ -5,11 +5,11 @@
 
 %define ruff_pypi_name ruff
 %define ruff_import_name ruff
-%define ruff_version 0.15.6
+%define ruff_version 0.15.7
 
 %define ty_pypi_name ty
 %define ty_import_name ty
-%define ty_version 0.0.22
+%define ty_version 0.0.24
 
 %define bash_completionsdir %_datadir/bash-completion/completions
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
@@ -31,7 +31,6 @@ Source2: config.toml
 Source3: %pyproject_deps_config_name
 Source4: ty.toml
 
-%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: rust
@@ -47,6 +46,9 @@ BuildRequires: libzstd-devel
 Summary: An extremely fast Python linter, written in Rust (Python package)
 Group: Development/Python3
 BuildArch: noarch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 Requires: %ruff_pypi_name = %EVR
 
 %description -n python3-module-%ruff_pypi_name
@@ -69,6 +71,9 @@ Group: Development/Python3
 Url: https://pypi.org/project/ty/
 Vcs: https://github.com/astral-sh/ty
 BuildArch: noarch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 Requires: %ty_pypi_name = %EVR
 
 %description -n python3-module-%ty_pypi_name
@@ -142,7 +147,6 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %endif
 
 %files
-%doc LICENSE README.md BREAKING_CHANGES.md docs
 %_bindir/ruff
 %bash_completionsdir/%ruff_pypi_name
 %fish_completionsdir/%ruff_pypi_name.fish
@@ -153,7 +157,6 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pep427_name %ruff_pypi_name}-%ruff_version.dist-info/
 
 %files -n %ty_pypi_name
-%doc LICENSE
 %_bindir/ty
 %bash_completionsdir/%ty_pypi_name
 %fish_completionsdir/%ty_pypi_name.fish
@@ -164,6 +167,10 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Fri Mar 20 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.7-alt1
+- Updated ruff to 0.15.7.
+- Updated ty to 0.0.24.
+
 * Fri Mar 13 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.6-alt1
 - Updated ruff to 0.15.6.
 - Updated ty to 0.0.22.
@@ -449,4 +456,3 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 
 * Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 0.0.285-alt1
 - Built for ALT Sisyphus.
-
