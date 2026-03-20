@@ -4,10 +4,10 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           os-maven-plugin
-Version:        1.6.2
-Release:        alt1_3jpp11
+Version:        1.7.1
+Release:        alt1
 Summary:        Maven plugin for generating platform-dependent properties
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/trustin/os-maven-plugin/
 BuildArch:      noarch
 
@@ -48,7 +48,7 @@ This package provides %{summary}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-%patch0 -p1
+%patch0 -p2
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -74,6 +74,9 @@ find -name plugin.xml -delete
 %doc LICENSE.txt
 
 %changelog
+* Fri Mar 20 2026 Anton Meleshnikov <alton@altlinux.org> 1.7.1-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.6.2-alt1_3jpp11
 - new version
 
