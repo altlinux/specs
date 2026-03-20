@@ -1,7 +1,7 @@
 %define soversion 6
 
 Name: metee
-Version: 6.0.0
+Version: 6.2.1
 Release: alt1
 Summary: ME TEE Interface Library
 License: MIT
@@ -9,7 +9,6 @@ Group: System/Libraries
 URL: https://github.com/intel/metee
 
 Source: %name-%version.tar
-Patch: %name-alt-fix-cflags.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc gcc-c++
@@ -39,7 +38,6 @@ lib%name development libraries and headers.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake -DBUILD_SHARED_LIBS=ON
@@ -56,9 +54,14 @@ lib%name development libraries and headers.
 %_includedir/%name.h
 
 %changelog
+* Tue Mar 17 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.1-alt1
+- 6.2.1.
+
+* Mon Sep 01 2025 L.A. Kostis <lakostis@altlinux.ru> 6.0.1-alt1
+- 6.0.1.
+
 * Fri Jun 20 2025 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt1
 - 6.0.0.
 
 * Fri Jan 31 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.1-alt1
 - Initial build for ALTLinux.
-
