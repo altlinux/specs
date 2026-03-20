@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.1.1
-Release: alt2
+Release: alt3
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -132,9 +132,14 @@ Daemonised BitTorrent client
 # error: incomplete type is not allowed
 sed -i 's/default_specs\[\] = {/default_specs[5] = {/' \
 	third-party/fmt/include/fmt/chrono.h
+sed -i 's/large_power_of_5\[\] = {/large_power_of_5[5] = {/' \
+	third-party/fast_float/include/fast_float/bigint.h
 # undefined reference to ~fixed_static_array()
 sed -i '/~fixed_static_array() = default/d' \
 	third-party/wide-integer/math/wide_integer/uintwide_t.h
+# internal compiler error
+sed -ri 's/if \(static auto constexpr/if \(auto constexpr/;s/if \((static [^;]*; )/\1if (/' \
+	libtransmission/*.cc
 %endif
 
 %build
@@ -256,6 +261,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Fri Mar 20 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.1-alt3
+- e2k build fix
+
 * Mon Mar 16 2026 Anton Farygin <rider@altlinux.org> 4.1.1-alt2
 - aligned gtk magnet options dialog with qt behavior (closes: #58178)
 - fixed gtk action lookup crash for alternate speed toggle (closes: #58177)
