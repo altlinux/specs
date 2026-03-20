@@ -1,5 +1,5 @@
 Name: davfs2
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Linux file system driver that allows you to mount a WebDAV server as a local file system.
@@ -9,7 +9,6 @@ Url: https://savannah.nongnu.org/projects/davfs2/
 VCS: https://github.com/alisarctl/davfs2
 
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon May 25 2009
 BuildRequires: libexpat-devel libneon-devel libssl-devel zlib-devel libkeyutils-devel
@@ -31,7 +30,6 @@ via proxy server.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 ./bootstrap
@@ -40,9 +38,6 @@ via proxy server.
 
 %install
 %make_install install DESTDIR=%buildroot
-mkdir -p %buildroot/sbin
-ln -s ..%_sbindir/mount.davfs %buildroot/sbin/mount.davfs
-ln -s ..%_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %find_lang %name
 
 %pre
@@ -53,7 +48,6 @@ ln -s ..%_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %files -f %name.lang
 %doc AUTHORS ChangeLog FAQ INSTALL NEWS README.md TODO THANKS
 %config %_sysconfdir/%name/
-/sbin/*.davfs
 %_sbindir/*.davfs
 %_man5dir/*
 %_man8dir/*
@@ -63,6 +57,10 @@ ln -s ..%_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %exclude %_mandir/es
 
 %changelog
+* Fri Mar 20 2026 Anton Farygin <rider@altlinux.org> 1.7.3-alt1
+- 1.7.2 -> 1.7.3
+- removed /sbin support
+
 * Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 1.7.2-alt1
 - 1.7.1 -> 1.7.2
 
