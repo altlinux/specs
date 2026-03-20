@@ -18,7 +18,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -220,6 +220,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 13.2.1-alt1
+- 13.2.1
+
 * Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 13.2.0-alt1
 - 13.2.0
 
