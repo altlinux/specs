@@ -1,13 +1,11 @@
 %define _name whisper
-# no tags, see meson.build for version
 %define ver_major 1.3
-%define commit cf12b33
 %define rdn_name it.mijorus.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Listen to your microphone
@@ -64,5 +62,8 @@ It's useful for testing your microphone or for listening to your voice.
 %doc README.*
 
 %changelog
+* Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus

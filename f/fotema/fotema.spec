@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -30,8 +30,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-# grep ORT_VERSION ort/build.rs
-%define onnx_ver 1.23.2
+%define onnx_ver 1.24.4
 Source4: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-x64-%onnx_ver.tgz
 Source5: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-aarch64-%onnx_ver.tgz
 
@@ -119,6 +118,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Thu Jan 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 

@@ -2,7 +2,7 @@
 
 %define _name screen-autorotate
 %define __name screen-rotate
-%define ver_major 28
+%define ver_major 29
 %define beta %nil
 %define uuid %__name@shyzus.github.io
 %define xdg_name org.gnome.shell.extensions.%__name
@@ -55,6 +55,9 @@ This extension uses Mutter's D-Bus API, so it works on both X11 and Wayland.
 %doc README.md
 
 %changelog
+* Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 29-alt1
+- 29 (GNOME 50 supported)
+
 * Sun Feb 01 2026 Yuri N. Sedunov <aris@altlinux.org> 28-alt1
 - 28
 

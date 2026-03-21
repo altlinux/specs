@@ -1,8 +1,8 @@
 %def_enable snapshot
 
 %define _name GstPipelineStudio
-%define ver_major 0.4
-%define rdn_name org.freedesktop.dabrain34.%_name
+%define ver_major 0.5
+%define rdn_name dev.mooday.%_name
 
 %def_disable bootstrap
 
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
