@@ -1,6 +1,6 @@
 # commit 523084f9582a67c7847df4e5dd48dd49241bf7dc
 
-%define git_commit 5230
+%undefine git_commit
 
 %def_enable plugins
 
@@ -9,16 +9,15 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.27
+Version: 2.4.30
 
 Epoch: 1
 
-
-%ifdef git_commit
-Release: alt0.git_1_%git_commit
-%else
+#%ifdef git_commit
+#Release: alt0.git_1_%git_commit
+#%else
 Release: alt1
-%endif
+#%endif
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -52,8 +51,8 @@ Summary(uk_UA.UTF-8): Тривимірна мережева гра на танк
 #Requires: %name-server
 
 # Automatically added by buildreq on Tue Nov 21 2023 (-bi)
-# optimized out: debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libGLU-devel libctf-nobfd0 libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python3 python3-base rpm-build-file sh5 termutils xz zlib-devel
-BuildRequires: gcc-c++ libGLEW-devel libSDL2-devel libcares-devel libcurl-devel libglm-devel libncurses-devel libpng-devel perl-parent
+# optimized out: debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libGLU-devel libctf-nobfd0 libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python3 python3-base rpm-build-file sh5 termutils xz
+BuildRequires: gcc-c++ libGLEW-devel libSDL2-devel libcares-devel libcurl-devel libglm-devel libncurses-devel libpng-devel perl-parent zlib-devel
 
 # BuildRequires: catdoc iconv
 BuildRequires: ccache
@@ -248,6 +247,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:2.4.30-alt1
+- 2.4.27 -> 2.4.30
+
 * Fri Mar 29 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:2.4.27-alt0.git_1_5230
 - Update to git commit 5230
 
