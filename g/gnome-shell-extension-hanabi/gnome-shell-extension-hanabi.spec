@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-hanabi
 Version: 1
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Live Wallpaper for GNOME
@@ -47,7 +47,8 @@ or 'Force GtkMediaFile' in the extension settings can help.
 # fixed tooltips
 %patch1 -p0
 # fixed Gjs-CRITICAL for run Hanabi in GNOME 49.3
-subst 's|Gst.init(null);||' src/renderer/renderer.js
+#https://github.com/jeffshee/gnome-ext-hanabi/pull/207/changes
+subst 's|Gst.init(null);|Gst.init([]);|' src/renderer/renderer.js
 # fixed for GNOME 50
 %patch2 -p0
 
@@ -68,6 +69,9 @@ subst 's|Gst.init(null);||' src/renderer/renderer.js
 %doc README.md
 
 %changelog
+* Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt6
+- fixed patch
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt5
 - fixed for GNOME 50
 
