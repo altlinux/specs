@@ -1,62 +1,66 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname hammer_cli
 
 Name:          gem-hammer-cli
-Version:       3.5.0
+Version:       3.18.0
 Release:       alt1
 Summary:       Next-gen CLI tool for foreman
-License:       GPL-3.0
+License:       GPL-3.0-only
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/hammer-cli
 Vcs:           https://github.com/theforeman/hammer-cli.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source1:       default_config.yml
 Source:        %name-%version.tar
-Patch:         clamp-1.3.2.patch
+Source1:       default_config.yml
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(gettext) >= 3.1.3
-BuildRequires: gem(rake) >= 10.1.0
-BuildRequires: gem(thor) >= 0
-BuildRequires: gem(minitest) >= 4.7.4
-BuildRequires: gem(minitest-spec-context) >= 0
-BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(ci_reporter) >= 1.6.3
-BuildRequires: gem(clamp) >= 1.3.2
-BuildRequires: gem(logging) >= 0
-BuildRequires: gem(unicode-display_width) >= 0
-BuildRequires: gem(unicode) >= 0
+%if_enabled check
 BuildRequires: gem(amazing_print) >= 0
-BuildRequires: gem(highline) >= 0
+BuildRequires: gem(apipie-bindings) >= 0.7.0
+BuildRequires: gem(base64) >= 0
+BuildRequires: gem(ci_reporter_minitest) >= 1.0
+BuildRequires: gem(clamp) >= 1.3.1
+BuildRequires: gem(csv) >= 0
 BuildRequires: gem(fast_gettext) >= 0
+BuildRequires: gem(gettext) >= 3.1.3
+BuildRequires: gem(highline) >= 0
 BuildRequires: gem(locale) >= 2.0.6
-BuildRequires: gem(apipie-bindings) >= 0.5.0
+BuildRequires: gem(logging) >= 0
+BuildRequires: gem(minitest) >= 5.18
+BuildRequires: gem(minitest-spec-context) >= 0
+BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(thor) >= 0
+BuildRequires: gem(unicode-display_width) >= 0
+BuildConflicts: gem(ci_reporter_minitest) >= 2
+BuildConflicts: gem(clamp) >= 2.0.0
 BuildConflicts: gem(gettext) >= 4.0.0
-BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(ci_reporter) >= 3
-BuildConflicts: gem(clamp) >= 1.4.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency ci_reporter >= 2.0.0,minitest < 3
 %ruby_alias_names hammer_cli,hammer-cli
-Requires:      gem(clamp) >= 1.3.2
+Requires:      ruby >= 2.7
+Requires:      gem(amazing_print) >= 0
+Requires:      gem(apipie-bindings) >= 0.7.0
+Requires:      gem(base64) >= 0
+Requires:      gem(clamp) >= 1.3.1
+Requires:      gem(csv) >= 0
+Requires:      gem(fast_gettext) >= 0
+Requires:      gem(highline) >= 0
+Requires:      gem(locale) >= 2.0.6
 Requires:      gem(logging) >= 0
 Requires:      gem(unicode-display_width) >= 0
-Requires:      gem(unicode) >= 0
-Requires:      gem(amazing_print) >= 0
-Requires:      gem(highline) >= 0
-Requires:      gem(fast_gettext) >= 0
-Requires:      gem(locale) >= 2.0.6
-Requires:      gem(apipie-bindings) >= 0.5.0
-Conflicts:     gem(clamp) >= 1.4.0
-Provides:      gem(hammer_cli) = 3.5.0
+Conflicts:     gem(clamp) >= 2.0.0
+Provides:      gem(hammer_cli) = 3.18.0
 
 %description
 Hammer is a generic clamp-based CLI framework. Hammer-cli provides just the core
@@ -72,14 +76,16 @@ Available plugins are listed on the Foreman's wiki.
 
 
 %package       -n hammer
-Version:       3.5.0
+Version:       3.18.0
 Release:       alt1
 Summary:       Next-gen CLI tool for foreman executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета hammer_cli
-Group:         Development/Ruby
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(hammer_cli) = 3.5.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(hammer_cli) = 3.18.0
 
 %description   -n hammer
 Next-gen CLI tool for foreman executable(s).
@@ -99,15 +105,18 @@ Available plugins are listed on the Foreman's wiki.
 Исполнямка для самоцвета hammer_cli.
 
 
+%if_enabled    doc
 %package       -n gem-hammer-cli-doc
-Version:       3.5.0
+Version:       3.18.0
 Release:       alt1
 Summary:       Next-gen CLI tool for foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hammer_cli
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(hammer_cli) = 3.5.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(hammer_cli) = 3.18.0
 
 %description   -n gem-hammer-cli-doc
 Next-gen CLI tool for foreman documentation files.
@@ -125,29 +134,33 @@ Available plugins are listed on the Foreman's wiki.
 
 %description   -n gem-hammer-cli-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета hammer_cli.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-hammer-cli-devel
-Version:       3.5.0
+Version:       3.18.0
 Release:       alt1
 Summary:       Next-gen CLI tool for foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hammer_cli
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(hammer_cli) = 3.5.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(hammer_cli) = 3.18.0
+Requires:      gem(ci_reporter_minitest) >= 1.0
 Requires:      gem(gettext) >= 3.1.3
-Requires:      gem(rake) >= 10.1.0
-Requires:      gem(thor) >= 0
-Requires:      gem(minitest) >= 4.7.4
+Requires:      gem(minitest) >= 5.18
 Requires:      gem(minitest-spec-context) >= 0
-Requires:      gem(simplecov) >= 0
 Requires:      gem(mocha) >= 0
-Requires:      gem(ci_reporter) >= 1.6.3
+Requires:      gem(rake) >= 0
+Requires:      gem(simplecov) >= 0
+Requires:      gem(thor) >= 0
+Requires:      gem(unicode-display_width) >= 0
+Conflicts:     gem(ci_reporter_minitest) >= 2
 Conflicts:     gem(gettext) >= 4.0.0
-Conflicts:     gem(rake) >= 14
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(ci_reporter) >= 3
 
 %description   -n gem-hammer-cli-devel
 Next-gen CLI tool for foreman development package.
@@ -163,9 +176,9 @@ as bulk actions or admin tasks.
 
 Available plugins are listed on the Foreman's wiki.
 
-
 %description   -n gem-hammer-cli-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета hammer_cli.
+%endif
 
 
 %prep
@@ -177,31 +190,36 @@ Available plugins are listed on the Foreman's wiki.
 
 %install
 %ruby_install
-install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/hammer/cli.modules.d/default_config.yml
 
 %check
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n hammer
-%doc README.md
+%doc LICENSE README.md
 %_bindir/hammer
 %_bindir/hammer-complete
-%config(noreplace) %attr(710,_foreman,foreman) %_sysconfdir/hammer/cli.modules.d/default_config.yml
 
+%if_enabled    doc
 %files         -n gem-hammer-cli-doc
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-hammer-cli-devel
-%doc README.md
+%doc LICENSE README.md
+%endif
 
 
 %changelog
+* Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 3.18.0-alt1
+- ^ 3.5.0 -> 3.18.0
+
 * Mon Feb 06 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
 - ^ 3.1.0 -> 3.5.0
 
