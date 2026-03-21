@@ -1,8 +1,8 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.8
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 Requires: python3-module-pycairo
 Requires: python3-module-pygobject3
+%add_python3_path %_datadir/%name
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson
@@ -47,10 +48,12 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/%name
 %_datadir/metainfo/%oname.metainfo.xml
-%python3_sitelibdir/%name/
 %doc *.md
 
 %changelog
+* Sun Mar 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
+- 0.1.8 -> 0.2.0
+
 * Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.8-alt2
 - added pygobject3 dependency
 
