@@ -6,7 +6,7 @@
 %def_enable qtwebengine
 %endif
 
-%define ver_major 3.4
+%define ver_major 3.5
 %define xdg_name org.openshot.OpenShot
 Name: openshot
 Version: %ver_major.0
@@ -25,14 +25,13 @@ Vcs: https://github.com/OpenShot/openshot-qt.git
 #Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-qt-%version.tar.gz
 Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/OpenShot/openshot-qt.git
 Source: %_name-%version.tar
 %endif
 
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.4.0
+Requires: python3-module-%name >= 0.6
 Requires: blender inkscape xdg-utils
 # https://bugzilla.altlinux.org/45836
 Requires: python3-module-PyQt5 python3-module-zmq
@@ -80,6 +79,9 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

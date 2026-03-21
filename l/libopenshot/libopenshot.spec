@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.5
-%define api_ver 28
+%define ver_major 0.6
+%define api_ver 29
 
 %def_enable python
 %def_enable opencv
@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -119,6 +119,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sat Dec 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1.1
 - rebuilt against FFmpeg-8.0 libraries
 

@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -154,6 +154,9 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

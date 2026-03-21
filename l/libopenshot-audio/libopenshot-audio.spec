@@ -1,5 +1,5 @@
 %define _name libopenshot
-%define ver_major 0.5
+%define ver_major 0.6
 %define api_ver 10
 %define libopenshot_ver 0.5
 
@@ -73,6 +73,9 @@ sed -E -i 's/(std::vector<.*feedbackVolume) *\{/\1={/' \
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
