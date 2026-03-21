@@ -3,7 +3,7 @@
 %define soname 0
 
 Name: drawy
-Version: 20260315
+Version: 20260321
 Release: alt1
 
 Summary: Drawy is a work-in-progress infinite whiteboard tool
@@ -98,6 +98,9 @@ subst 's|DrawyCore|include/DrawyCore|' src/gui/CMakeLists.txt
 %_libdir/libstandardformplugin.so.%apiversion
 
 %changelog
+* Sun Mar 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260321-alt1
+- updated to git.0127c29998
+
 * Sun Mar 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260315-alt1
 - updated to git.b2a2567c74
 
