@@ -3,7 +3,7 @@
 
 Name: python3-module-pysidesix-frameless-window
 
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: A cross-platform frameless window based on PySide6
@@ -51,6 +51,9 @@ rm -r %buildroot%_prefix/lib
 %doc *.md LICENSE
 
 %changelog
+* Sun Mar 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1
+
 * Sun Feb 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
 - 0.7.7 -> 0.8.0
 
