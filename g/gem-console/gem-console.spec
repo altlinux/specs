@@ -1,21 +1,22 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname console
 
 Name:          gem-console
-Version:       1.27.0
+Version:       1.34.3
 Release:       alt1
 Summary:       Beautiful logging for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/socketry/console
 Vcs:           https://github.com/socketry/console.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(fiber-annotation) >= 0
@@ -26,12 +27,12 @@ BuildConflicts: gem(fiber-local) >= 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 3.2
 Requires:      gem(fiber-annotation) >= 0
 Requires:      gem(fiber-local) >= 1.1
 Requires:      gem(json) >= 0
 Conflicts:     gem(fiber-local) >= 2
-Provides:      gem(console) = 1.27.0
-
+Provides:      gem(console) = 1.34.3
 
 %description
 Provides beautiful console logging for Ruby applications. Implements fast,
@@ -45,14 +46,16 @@ buffered log output. Features:
 
 %if_enabled    doc
 %package       -n gem-console-doc
-Version:       1.27.0
+Version:       1.34.3
 Release:       alt1
 Summary:       Beautiful logging for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета console
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(console) = 1.27.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(console) = 1.34.3
 
 %description   -n gem-console-doc
 Beautiful logging for Ruby documentation files.
@@ -72,14 +75,16 @@ buffered log output. Features:
 
 %if_enabled    devel
 %package       -n gem-console-devel
-Version:       1.27.0
+Version:       1.34.3
 Release:       alt1
 Summary:       Beautiful logging for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета console
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(console) = 1.27.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(console) = 1.34.3
 
 %description   -n gem-console-devel
 Beautiful logging for Ruby development package.
@@ -110,23 +115,26 @@ buffered log output. Features:
 %ruby_test
 
 %files
-%doc readme.md
+%doc license.md readme.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-console-doc
-%doc readme.md
+%doc license.md readme.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-console-devel
-%doc readme.md
+%doc license.md readme.md
 %endif
 
 
 %changelog
+* Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 1.34.3-alt1
+- ^ 1.27.0 -> 1.34.3
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.27.0-alt1
 - ^ 1.16.2 -> 1.27.0
 

@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_disable   check
+%def_enable    doc
+%def_disable   devel
 %define        gemname capistrano
 
 Name:          gem-capistrano
-Version:       3.17.1
+Version:       3.20.0
 Release:       alt1
 Summary:       Capistrano -- Welcome to easy deployment with Ruby over SSH
 License:       MIT
@@ -12,36 +16,34 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(rspec) >= 0
-BuildRequires: gem(rspec-core) >= 3.4.4
-BuildRequires: gem(cucumber) >= 0
-BuildRequires: gem(danger) >= 0
-BuildRequires: gem(rubocop) >= 0.48.1
+%if_enabled check
 BuildRequires: gem(airbrussh) >= 1.0.0
+BuildRequires: gem(cucumber) >= 10.1
 BuildRequires: gem(i18n) >= 0
+BuildRequires: gem(mocha) >= 3.0
 BuildRequires: gem(rake) >= 10.0.0
+BuildRequires: gem(rspec) >= 3.13
+BuildRequires: gem(rubocop) = 1.81.7
 BuildRequires: gem(sshkit) >= 1.9.0
-BuildConflicts: gem(rspec-core) >= 4
-BuildConflicts: gem(psych) >= 5
-BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(cucumber) >= 11
+BuildConflicts: gem(mocha) >= 4
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rspec-core >= 3.10.1,rspec-core < 4
-%ruby_use_gem_dependency psych >= 4.0.3,psych < 5
+Requires:      ruby >= 2.5
 Requires:      gem(airbrussh) >= 1.0.0
 Requires:      gem(i18n) >= 0
 Requires:      gem(rake) >= 10.0.0
 Requires:      gem(sshkit) >= 1.9.0
 Obsoletes:     ruby-capistrano < %EVR
 Provides:      ruby-capistrano = %EVR
-Provides:      gem(capistrano) = 3.17.1
-
+Provides:      capistrano = %EVR
+Provides:      gem(capistrano) = 3.20.0
 
 %description
 Capistrano is a framework for building automated deployment scripts. Although
@@ -50,14 +52,16 @@ of any language or framework, be it Rails, Java, or PHP.
 
 
 %package       -n cap
-Version:       3.17.1
+Version:       3.20.0
 Release:       alt1
 Summary:       Capistrano -- Welcome to easy deployment with Ruby over SSH executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета capistrano
-Group:         Development/Ruby
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(capistrano) = 3.17.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(capistrano) = 3.20.0
 
 %description   -n cap
 Capistrano -- Welcome to easy deployment with Ruby over SSH
@@ -71,15 +75,18 @@ of any language or framework, be it Rails, Java, or PHP.
 Исполнямка для самоцвета capistrano.
 
 
+%if_enabled    doc
 %package       -n gem-capistrano-doc
-Version:       3.17.1
+Version:       3.20.0
 Release:       alt1
 Summary:       Capistrano -- Welcome to easy deployment with Ruby over SSH documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета capistrano
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(capistrano) = 3.17.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(capistrano) = 3.20.0
 
 %description   -n gem-capistrano-doc
 Capistrano -- Welcome to easy deployment with Ruby over SSH documentation
@@ -91,25 +98,21 @@ of any language or framework, be it Rails, Java, or PHP.
 
 %description   -n gem-capistrano-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета capistrano.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-capistrano-devel
-Version:       3.17.1
+Version:       3.20.0
 Release:       alt1
 Summary:       Capistrano -- Welcome to easy deployment with Ruby over SSH development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета capistrano
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(capistrano) = 3.17.1
-Requires:      gem(mocha) >= 0
-Requires:      gem(rspec) >= 0
-Requires:      gem(rspec-core) >= 3.4.4
-Requires:      gem(danger) >= 0
-Requires:      gem(rubocop) >= 0.48.1
-Conflicts:     gem(rspec-core) >= 4
-Conflicts:     gem(psych) >= 5
-Conflicts:     gem(rubocop) >= 2
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(capistrano) = 3.20.0
 
 %description   -n gem-capistrano-devel
 Capistrano -- Welcome to easy deployment with Ruby over SSH development
@@ -121,6 +124,7 @@ of any language or framework, be it Rails, Java, or PHP.
 
 %description   -n gem-capistrano-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета capistrano.
+%endif
 
 
 %prep
@@ -136,24 +140,31 @@ of any language or framework, be it Rails, Java, or PHP.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n cap
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.txt README.md
 %_bindir/cap
 %_bindir/capify
 
+%if_enabled    doc
 %files         -n gem-capistrano-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-capistrano-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Fri Mar 20 2026 Pavel Skrylev <majioa@altlinux.org> 3.20.0-alt1
+- ^ 3.17.1 -> 3.20.0
+
 * Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 3.17.1-alt1
 - ^ 3.16.0 -> 3.17.1
 

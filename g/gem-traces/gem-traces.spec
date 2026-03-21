@@ -1,70 +1,51 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
 %define        gemname traces
 
 Name:          gem-traces
-Version:       0.7.0
+Version:       0.18.2
 Release:       alt1
 Summary:       Application instrumentation and tracing
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/socketry/traces
 Vcs:           https://github.com/socketry/traces.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(bake-test) >= 0.2 gem(bake-test) < 1
-BuildRequires: gem(bake-test-external) >= 0.2 gem(bake-test-external) < 1
-BuildRequires: gem(covered) >= 0.16 gem(covered) < 1
-BuildRequires: gem(sus) >= 0.13 gem(sus) < 1
-%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(traces) = 0.7.0
-
+Requires:      ruby >= 3.2
+Provides:      gem(traces) = 0.18.2
 
 %description
 Application instrumentation and tracing.
 
 
+%if_enabled    doc
 %package       -n gem-traces-doc
-Version:       0.7.0
+Version:       0.18.2
 Release:       alt1
 Summary:       Application instrumentation and tracing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета traces
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(traces) = 0.7.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(traces) = 0.18.2
 
 %description   -n gem-traces-doc
 Application instrumentation and tracing documentation files.
 
 %description   -n gem-traces-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета traces.
-
-
-%package       -n gem-traces-devel
-Version:       0.7.0
-Release:       alt1
-Summary:       Application instrumentation and tracing development package
-Summary(ru_RU.UTF-8): Файлы для разработки самоцвета traces
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Requires:      gem(traces) = 0.7.0
-Requires:      gem(bake-test) >= 0.2 gem(bake-test) < 1
-Requires:      gem(bake-test-external) >= 0.2 gem(bake-test-external) < 1
-Requires:      gem(covered) >= 0.16 gem(covered) < 1
-Requires:      gem(sus) >= 0.13 gem(sus) < 1
-
-%description   -n gem-traces-devel
-Application instrumentation and tracing development package.
-
-%description   -n gem-traces-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета traces.
+%endif
 
 
 %prep
@@ -80,15 +61,20 @@ Application instrumentation and tracing development package.
 %ruby_test
 
 %files
+%doc license.md readme.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-traces-doc
+%doc license.md readme.md
 %ruby_gemdocdir
-
-%files         -n gem-traces-devel
+%endif
 
 
 %changelog
+* Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 0.18.2-alt1
+- ^ 0.7.0 -> 0.18.2
+
 * Tue Oct 18 2022 Pavel Skrylev <majioa@altlinux.org> 0.7.0-alt1
 - + packaged gem with Ruby Policy 2.0
