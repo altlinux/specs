@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt5
+Release: alt6
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -24,7 +24,7 @@ Patch3: %name-1.2.0-cmake.patch
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: rpm-build-lmms libfltk-devel 
+BuildRequires: libfltk-devel 
 BuildRequires: gcc-c++ cmake
 BuildRequires: git-core
 BuildRequires: bash-completion
@@ -150,6 +150,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Sat Mar 21 2026 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt6
+- Rebuild without rpm-build-lmms.
+
 * Mon Apr 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2.2-alt5
 - build with libgig
 
