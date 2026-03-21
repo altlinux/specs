@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -60,6 +60,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.58.2-alt1
+- 2.58.2
+
 * Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
 - 2.58.1
 - enabled %%check
