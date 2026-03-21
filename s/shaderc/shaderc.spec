@@ -1,6 +1,6 @@
 %define sover 1
-%define glslang_ver 16.0.0
-%define spirv_tools_ver 2025.4
+%define glslang_ver 16.2.0
+%define spirv_tools_ver 2026.1
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %def_disable static
@@ -11,7 +11,7 @@
 %endif
 
 Name: shaderc
-Version: 2025.4
+Version: 2026.1
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -120,6 +120,10 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 
 %changelog
+* Fri Mar 20 2026 L.A. Kostis <lakostis@altlinux.ru> 2026.1-alt0.1
+- v2026.1.
+- BR: bump deps.
+
 * Thu Oct 23 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.4-alt0.1
 - v2025.4.
 - BR: bump deps.
