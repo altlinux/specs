@@ -1,15 +1,15 @@
 %def_disable snapshot
 
 %define ver_major 50
-%define beta .rc
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
@@ -47,7 +47,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 #Requires: gnome-online-accounts >= %goa_ver
 
 Requires: gnome-session >= %session_ver
-Requires: gdm dconf geoclue2 >= %geoclue_ver
+Requires: polkit gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
 Requires: ibus tecla
 Requires: gnome-tour
@@ -119,6 +119,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc
 - 50.rc
 
