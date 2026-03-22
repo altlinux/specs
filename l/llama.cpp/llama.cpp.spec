@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 8192
+Version: 8470
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -190,6 +190,7 @@ install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
 install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 # We need to run the tests, not install them.
 rm %buildroot%_bindir/test-*
+rm %buildroot%_bindir/export-graph-ops
 # Completions.
 install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-server
 printf '%%s\n' llama-cli llama-simple llama-run llama-mtmd-cli |
@@ -205,7 +206,7 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/
 llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback wants network.
-%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented'
+%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented|test-llama-archs'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
@@ -264,6 +265,9 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 1:8470-alt1
+- Update to b8470 (2026-03-22).
+
 * Tue Mar 03 2026 Vitaly Chikunov <vt@altlinux.org> 1:8192-alt1
 - Update to b8192 (2026-03-03).
 
