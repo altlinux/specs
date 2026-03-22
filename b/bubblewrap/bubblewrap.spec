@@ -6,18 +6,20 @@
 %endif
 
 Name: bubblewrap
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
 License: LGPL-2.0-or-later
 Group: System/Base
-Url: https://github.com/projectatomic/bubblewrap
+Url: https://github.com/containers/bubblewrap
 
-# Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
-Vcs: https://github.com/projectatomic/bubblewrap.git
+Vcs: https://github.com/containers/bubblewrap.git
+
+# Source-url: https://github.com/containers/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
 Source: %name-%version.tar
-#Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
+#Source: https://github.com/containers/%name/releases/download/v%version/%name-%version.tar.xz
+#Source: https://github.com/containers/%name/archive/v%version/%name-%version.tar.gz
 
 %if %priv_mode == "none"
 Requires(pre): sysctl-conf-userns
@@ -62,6 +64,9 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 - spec cleanup
