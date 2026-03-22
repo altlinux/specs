@@ -1,30 +1,39 @@
 Name: supertux2
-Version: 0.6.3
-Release: alt3
+Version: 0.7.0
+Release: alt1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
 Group: Games/Arcade
 
-Url: https://www.supertux.org/
+URL: https://www.supertux.org/
+VCS: https://github.com/SuperTux/supertux
 
 # Source-url: https://github.com/SuperTux/supertux/releases/download/v%version/SuperTux-v%version-Source.tar.gz
-Source: SuperTux-v%version-Source.tar.gz
+Source: SuperTux-v%version-Source.tar
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
-Patch: supertux2-0.6.3-alt-gcc12.patch
+Requires: %name-data = %EVR
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-Requires: %name-data = %version-%release
-
-# Automatically added by buildreq on Mon Oct 01 2012 (-bi)
-# WTF? vorbis-tools? really?
 BuildPreReq: cmake rpm-macros-cmake rpm-build-ninja doxygen
-BuildRequires: boost-program_options-devel boost-filesystem-devel boost-locale-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel zlib-devel libpng-devel libfreetype-devel libraqm-devel libfribidi-devel libglm-devel
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(physfs)
+BuildRequires: libglm-devel
+BuildRequires: libfreetype-devel
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: libSDL2_image-devel
+BuildRequires: libSDL2_ttf-devel
+BuildRequires: pkgconfig(openal)
+BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(glew)
+BuildRequires: libcurl-devel
+BuildRequires: pkgconfig(fmt)
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -40,6 +49,7 @@ Note! This is a still development version.
 Summary: Data files for supertux2
 Group: Games/Arcade
 BuildArch: noarch
+Requires: %name = %EVR
 
 %description data
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -53,25 +63,24 @@ This is package contains data files for supertux2.
 
 %prep
 %setup -n SuperTux-v%version-Source
-%patch -p2
+%autopatch -p1
 
 %ifarch %e2k
-# see also http://github.com/albertodemichelis/squirrel/pull/226/commits
+# see also https://github.com/albertodemichelis/squirrel/pull/226/commits
 # (thx Ramil Sattarov for the reference)
 sed -i 's/LINKER_LANGUAGE C/&XX/' external/squirrel/sq/CMakeLists.txt
 %endif
 
 %build
-# cmake 4
-# EMSCRIPTEN and VCPKG_BUILD do not used by the project
-export CMAKE_POLICY_VERSION_MINIMUM=3.5
-%cmake_insource \
+%cmake \
         -GNinja \
         -DINSTALL_SUBDIR_BIN=bin \
         -DINSTALL_SUBDIR_SHARE=share/supertux2 \
-        -DCMAKE_BUILD_TYPE="Release" \
-        -DENABLE_BOOST_STATIC_LIBS=OFF
-cmake --build "%_cmake__builddir" -j%__nprocs
+        -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+        -DENABLE_BOOST_STATIC_LIBS=OFF \
+        -DUSE_STATIC_SIMPLESQUIRREL=ON
+
+%cmake_build 
 
 %install
 %cmake_install
@@ -105,6 +114,10 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Sun Mar 22 2026 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+- supertux2-data: add runtime dependency on supertux2.
+
 * Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt3
 - Fixed build with cmake 4.
 
