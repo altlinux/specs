@@ -1,17 +1,11 @@
-%define git_date 2025-11-06
-%define git_commit d0c3bd6491f07d11b5b6a334ed540b57d767d1c2
+# git rev-parse --short=7 %version
+%define git_descr e3cdadb
 
-# git rev-list --count %git_commit
-%define app_ver 151
-# git rev-parse --short=7 %git_commit
-%define git_descr d0c3bd6
-
-%define vulkan_headers_version 1.4.329
 %define json_commit 54be9b04f0ec65d0bcfe0da54e7f01ea86fbfc3e
 %define volk_commit e51c647181c7a8101454e69446079bc34100a320
 
 Name: shadps4-qtlauncher
-Version: %app_ver
+Version: 224
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator (Qt GUI)
@@ -24,14 +18,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://github.com/shadps4-emu/%name/archive/shadPS4QtLauncher-%git_date-%git_commit/%name-shadPS4QtLauncher-%git_date-%git_commit.tar.gz
-Source0: %name-shadPS4QtLauncher-%git_date-%git_commit.tar
-# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source1: Vulkan-Headers-%vulkan_headers_version.tar
+# https://github.com/shadps4-emu/%name/archive/v%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 # https://github.com/nlohmann/json/archive/%json_commit/json-%json_commit.tar.gz
-Source2: json-%json_commit.tar
+Source1: json-%json_commit.tar
 # https://github.com/zeux/volk/archive/%volk_commit/volk-%volk_commit.tar.gz
-Source3: volk-%volk_commit.tar
+Source2: volk-%volk_commit.tar
 
 Provides: shadps4-qt = %EVR
 Obsoletes: shadps4-qt <= 0.2.0-alt1
@@ -53,15 +45,14 @@ BuildRequires: qt6-tools-devel
 QtLauncher is the official launcher for shadPS4.
 
 %prep
-%setup -n %name-shadPS4QtLauncher-%git_date-%git_commit -b 1 -b 2 -b 3
+%setup -b 1 -b 2
 
-%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/vulkan-headers
 %__mv -Tf ../json-%json_commit externals/json
 %__mv -Tf ../volk-%volk_commit externals/volk
 
 # Enforce package versioning in GUI
 sed -i \
--e 's|@APP_VERSION@|%app_ver|g' \
+-e 's|@APP_VERSION@|%version|g' \
 -e 's|@GIT_BRANCH@|main|g' \
 -e 's|@GIT_DESC@|%git_descr|g' \
 src/common/scm_rev.cpp.in
@@ -94,12 +85,15 @@ export LANG=C.UTF-8
 %files
 %doc CONTRIBUTING.md README.md
 %_bindir/shadPS4QtLauncher
-%_datadir/metainfo/net.shadps4.shadPS4.metainfo.xml
-%_desktopdir/net.shadps4.shadPS4.desktop
+%_datadir/metainfo/net.shadps4.%name.metainfo.xml
+%_desktopdir/net.shadps4.%name.desktop
 %_iconsdir/hicolor/512x512/apps/net.shadps4.shadPS4.png
 %_iconsdir/hicolor/scalable/apps/net.shadps4.shadPS4.svg
 %_libexecdir/%name
 
 %changelog
+* Sun Mar 22 2026 Nazarov Denis <nenderus@altlinux.org> 224-alt1
+- Version 224
+
 * Sat Nov 08 2025 Nazarov Denis <nenderus@altlinux.org> 151-alt1
 - Initial build for ALT Linux
