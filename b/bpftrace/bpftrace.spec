@@ -6,21 +6,17 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.24.2
+Version: 0.25.0
 Release: alt1
-Summary: High-level tracing language for Linux eBPF
+Summary: High-level tracing language for Linux
 Group: Development/Debuggers
 License: Apache-2.0
-Url: https://github.com/bpftrace/bpftrace
-# Docs: https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
-# Docs: https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
-# Docs: http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
-# Docs: http://www.brendangregg.com/ebpf.html#bpftrace
-# PR: https://lwn.net/Articles/793749/
-# PR: http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+Url: https://bpftrace.org/
+Vcs: https://github.com/bpftrace/bpftrace
 
 Source: %name-%version.tar
-ExclusiveArch:	x86_64 aarch64 loongarch64 riscv64
+Source1: libbpf-0.tar
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 %define llvm_ver 19
 %define llvm_pkgver %llvm_ver.1
@@ -59,17 +55,18 @@ BuildRequires: rpm-build-vm
 }}
 
 %description
-bpftrace is a high-level tracing language for Linux enhanced Berkeley
-Packet Filter (eBPF) available in recent Linux kernels (4.x). bpftrace
-uses LLVM as a backend to compile scripts to BPF-bytecode and makes use of
-BCC for interacting with the Linux BPF system, as well as existing Linux
-tracing capabilities: kernel dynamic tracing (kprobes), user-level dynamic
-tracing (uprobes), and tracepoints. The bpftrace language is inspired by
-awk and C, and predecessor tracers such as DTrace and SystemTap. bpftrace
-was created by Alastair Robertson.
+bpftrace is a general purpose tracing tool and language for Linux.
+It leverages eBPF to provide powerful, efficient tracing capabilities
+with minimal overhead. bpftrace uses LLVM as a compiler backend,
+and libbpf for interacting with the Linux BPF subsystem, including
+kernel dynamic tracing (kprobes, hardware and software perf events),
+user-level dynamic tracing (USDT, uprobes), tracepoints (regular, raw),
+and more. The bpftrace language is inspired by awk, C, and predecessor
+tracers such as DTrace and SystemTap.
 
 %prep
 %setup
+tar xf %SOURCE1 -C .
 
 %build
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
@@ -97,6 +94,14 @@ pushd %buildroot%_man8dir
  rename bpftrace-bpftrace bpftrace bpftrace-bpftrace*.gz
 popd
 
+# Clean up for %%doc docs
+rm docs/coding_guidelines.md \
+	docs/design_principles.md \
+	docs/developers.md \
+	docs/fuzzing.md \
+	docs/nix.md \
+	docs/release_process.md
+
 # Need to keep BEGIN_trigger and END_trigger
 # https://github.com/iovisor/bpftrace/issues/954
 %brp_strip_debug %_bindir/bpftrace
@@ -118,14 +123,16 @@ fi
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md CHANGELOG.md CONTRIBUTING-TOOLS.md
-%doc docs/reference_guide.md docs/tutorial_one_liners.md
+%doc LICENSE README.md CHANGELOG.md docs
 %_bindir/*
 %_datadir/%name
 %_man8dir/*
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
+- Update to v0.25.0 (2026-03-13).
+
 * Mon Dec 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.2-alt1
 - Update to v0.24.2 (2025-12-12).
 
