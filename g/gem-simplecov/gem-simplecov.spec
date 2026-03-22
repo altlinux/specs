@@ -6,7 +6,7 @@
 
 Name:          gem-simplecov
 Version:       0.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
 License:       MIT
 Group:         Development/Ruby
@@ -61,6 +61,8 @@ Obsoletes:     ruby-simplecov < %EVR
 Provides:      ruby-simplecov = %EVR
 Provides:      gem(simplecov) = 0.22.0
 
+%ruby_ignore_names rspec_rails,parallel_tests,monorepo
+
 %description
 SimpleCov is a code coverage analysis tool for Ruby. It uses Ruby's built-in
 Coverage library to gather code coverage data, but makes processing its results
@@ -71,7 +73,7 @@ up with just a couple lines of code.
 
 %package       -n gem-base
 Version:       0.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Base stuff
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -87,7 +89,7 @@ Base stuff, really
 %if_enabled    doc
 %package       -n gem-base-doc
 Version:       0.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Base stuff documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета base
 Group:         Development/Documentation
@@ -109,7 +111,7 @@ Base stuff, really
 
 %package       -n gem-extra
 Version:       0.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Extra stuff
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -126,7 +128,7 @@ Extra stuff, really
 %if_enabled    doc
 %package       -n gem-extra-doc
 Version:       0.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Extra stuff documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета extra
 Group:         Development/Documentation
@@ -149,7 +151,7 @@ Extra stuff, really
 %if_enabled    devel
 %package       -n gem-extra-devel
 Version:       0.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Extra stuff development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета extra
 Group:         Development/Ruby
@@ -172,7 +174,7 @@ Extra stuff, really
 %if_enabled    doc
 %package       -n gem-simplecov-doc
 Version:       0.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета simplecov
 Group:         Development/Documentation
@@ -200,7 +202,7 @@ up with just a couple lines of code.
 %if_enabled    devel
 %package       -n gem-simplecov-devel
 Version:       0.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета simplecov
 Group:         Development/Ruby
@@ -293,6 +295,9 @@ up with just a couple lines of code.
 
 
 %changelog
+* Mon Mar 23 2026 Pavel Skrylev <majioa@altlinux.org> 0.22.0-alt1.1
+- ! fixed spec filtering out rspec_rails, parallel_tests, and monorepo sources
+
 * Wed Nov 05 2025 Pavel Skrylev <majioa@altlinux.org> 0.22.0-alt1
 - ^ 0.21.2 -> 0.22.0
 

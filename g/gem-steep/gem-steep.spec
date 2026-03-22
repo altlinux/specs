@@ -6,7 +6,7 @@
 
 Name:          gem-steep
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Gradual Typing for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -77,6 +77,8 @@ Conflicts:     gem(rbs) >= 4
 Conflicts:     gem(terminal-table) >= 5
 Provides:      gem(steep) = 1.10.0
 
+%ruby_ignore_names gemfile_steep
+
 %description
 Gradual Typing for Ruby. Steep does not infer types from Ruby programs, but
 requires declaring types and writing annotations.
@@ -84,7 +86,7 @@ requires declaring types and writing annotations.
 
 %package       -n steep
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Gradual Typing for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета steep
 Group:         Other
@@ -106,7 +108,7 @@ requires declaring types and writing annotations.
 %if_enabled    doc
 %package       -n gem-steep-doc
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Gradual Typing for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета steep
 Group:         Development/Documentation
@@ -128,7 +130,7 @@ requires declaring types and writing annotations.
 %if_enabled    devel
 %package       -n gem-steep-devel
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Gradual Typing for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета steep
 Group:         Development/Ruby
@@ -184,6 +186,9 @@ requires declaring types and writing annotations.
 
 
 %changelog
+* Mon Mar 23 2026 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1.1
+- ! fixed spec to filter out gemfile_steep source
+
 * Thu Oct 23 2025 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
 - ^ 1.7.1 -> 1.10.0
 
