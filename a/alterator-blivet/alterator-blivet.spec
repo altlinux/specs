@@ -2,8 +2,8 @@
 
 
 Name: alterator-blivet
-Version: 1.1.0
-Release: alt0.3
+Version: 1.1.1
+Release: alt1
 
 Summary: Alterator module for volume management based on blivet
 License: GPLv3
@@ -41,6 +41,10 @@ install -Dpm644 blivetstorage/*.py -t %buildroot%python3_sitelibdir/blivetstorag
 %python3_sitelibdir/blivetstorage/*
 
 %changelog
+* Sat Mar 21 2026 Sergey Konev <darisishe@altlinux.org> 1.1.1-alt1
+- Create ESP RAID1 when btrfs RAID1 is used
+- Disable btrfs RAID schemas for BIOS legacy
+
 * Thu Jun 05 2025 Sergey Konev <darisishe@altlinux.org> 1.1.0-alt0.3
 - virtualization module: minor i18n fix
 

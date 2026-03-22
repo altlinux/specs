@@ -1,8 +1,8 @@
 %define distro virtualization-pve
 
 Name: installer-distro-%distro
-Version: 11.0.0
-Release: alt0.4
+Version: 11.1.0
+Release: alt1
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -74,6 +74,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Sat Mar 21 2026 Sergey Konev <darisishe@altlinux.org> 11.1.0-alt1
+- Skip alterator-grub step, autoinstall grub in removable mode
+
 * Mon Jun 30 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.4
 - Removed setup-dhcp-ifupdown2 script
   (now setup-dhcp from general installer does that)
