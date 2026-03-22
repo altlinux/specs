@@ -9,7 +9,7 @@
 %endif
 
 Name: libbpf
-Version: 1.6.3
+Version: 1.7.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -69,6 +69,9 @@ LD_LIBRARY_PATH=$PWD/src ./a.out -verbosity=99 -max_total_time=11
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 1.7.0-alt1
+- Update to v1.7.0 (2026-03-12).
+
 * Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 1.6.3-alt1
 - Update to v1.6.3 (2026-02-03).
 
