@@ -2,7 +2,7 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt7
+Release:  alt8
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
@@ -27,6 +27,7 @@ Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-add-to-desktop
 Requires: gnome-shell-extension-session-keeper
 Requires: gnome-shell-extension-caffeine
+Requires: gnome-shell-extension-no-overview-at-startup
 
 Conflicts: alt-panelmoded
 
@@ -45,6 +46,9 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Sun Mar 22 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt8
+- Enable extension 'no-overview-at-startup'.
+
 * Tue Feb 24 2026 Dmitry Terekhin <jqt4@altlinux.org> 1.0-alt7
 - Enable extension 'caffeine'.
 
