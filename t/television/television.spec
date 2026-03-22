@@ -1,10 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global bin_name tv
+%global bin_path ./target/release/%bin_name
 
 %def_with check
 
 Name: television
-Version: 0.15.3
+Version: 0.15.4
 Release: alt1
 Summary: A fast, portable and hackable fuzzy finder for the terminal
 License: MIT
@@ -41,20 +42,33 @@ EOF
 
 %build
 %rust_build
+%bin_path completions bash > %bin_name.bash
+%bin_path completions fish > %bin_name.fish
+%bin_path completions zsh > _%bin_name
 
 %install
 %rust_install %bin_name
 install -Dm 0644 man/%bin_name.1 %buildroot%_man1dir/%bin_name.1
+install -Dm 0644 %bin_name.bash %buildroot%_datadir/bash-completion/completions/%bin_name.bash
+install -Dm 0644 %bin_name.fish %buildroot%_datadir/fish/vendor_completions.d/%bin_name.fish
+install -Dm 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions/_%bin_name
 
 %check
-export TV_BIN_PATH=./target/release/tv
+export TV_BIN_PATH=%bin_path
 %rust_test --lib --bin tv --test app --test channels
 
 %files
 %_bindir/%bin_name
 %_man1dir/%bin_name.1.*
+%_datadir/bash-completion/completions/%bin_name.bash
+%_datadir/fish/vendor_completions.d/%bin_name.fish
+%_datadir/zsh/site-functions/_%bin_name
 %doc LICENSE
 
 %changelog
+* Sun Mar 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.4-alt1
+- Updated to version 0.15.4.
+- Packaged shell completions for bash, zsh, fish.
+
 * Sat Mar 21 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.3-alt1
 - Initial build for ALT.
