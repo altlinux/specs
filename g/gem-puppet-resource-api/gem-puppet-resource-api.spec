@@ -1,50 +1,43 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname puppet-resource_api
 
 Name:          gem-puppet-resource-api
-Version:       1.9.0
+Version:       2.0.0
 Release:       alt1
 Summary:       This library provides a simple way to write new native resources for puppet
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/puppetlabs/puppet-resource_api
 Vcs:           https://github.com/puppetlabs/puppet-resource_api.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintainers Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(CFPropertyList) >= 0
-BuildRequires: gem(rspec) >= 3.0
-BuildRequires: gem(simplecov-console) >= 0
-BuildRequires: gem(puppetlabs_spec_helper) >= 3.0
-BuildRequires: gem(rspec-puppet) >= 0
-BuildRequires: gem(codecov) >= 0
-BuildRequires: gem(rake) >= 13.0
-BuildRequires: gem(license_finder) >= 0
-BuildRequires: gem(rubocop) >= 0.57.0
-BuildRequires: gem(rubocop-rspec) >= 0
+%if_enabled check
+BuildRequires: gem(ffi) >= 1.15.5
 BuildRequires: gem(github_changelog_generator) >= 1.15
-BuildRequires: gem(pry-byebug) >= 0
-BuildRequires: gem(ffi) >= 0
-BuildRequires: gem(puppet) >= 0
 BuildRequires: gem(hocon) >= 1.0
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(puppetlabs_spec_helper) >= 8
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rubocop) >= 2
+BuildRequires: gem(pry-byebug) >= 0
+BuildRequires: gem(puppet) >= 0
+BuildConflicts: gem(ffi) >= 2
 BuildConflicts: gem(github_changelog_generator) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency puppetlabs_spec_helper >= 7.0.2,puppetlabs_spec_helper < 8
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency ffi >= 1.17.0,ffi < 2
 %ruby_alias_names puppet-resource_api,puppet-resource-api
 Requires:      gem(hocon) >= 1.0
-Provides:      gem(puppet-resource_api) = 1.9.0
-
+Provides:      gem(puppet-resource_api) = 2.0.0
 
 %description
 This is an implementation of the Resource API specification.
@@ -58,15 +51,18 @@ module:
 * New unit tests for 100% coverage.
 
 
+%if_enabled    doc
 %package       -n gem-puppet-resource-api-doc
-Version:       1.9.0
+Version:       2.0.0
 Release:       alt1
 Summary:       This library provides a simple way to write new native resources for puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet-resource_api
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet-resource_api) = 1.9.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(puppet-resource_api) = 2.0.0
 
 %description   -n gem-puppet-resource-api-doc
 This library provides a simple way to write new native resources for puppet
@@ -84,35 +80,27 @@ module:
 
 %description   -n gem-puppet-resource-api-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета puppet-resource_api.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-puppet-resource-api-devel
-Version:       1.9.0
+Version:       2.0.0
 Release:       alt1
 Summary:       This library provides a simple way to write new native resources for puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet-resource_api
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet-resource_api) = 1.9.0
-Requires:      gem(CFPropertyList) >= 0
-Requires:      gem(rspec) >= 3.0
-Requires:      gem(simplecov-console) >= 0
-Requires:      gem(puppetlabs_spec_helper) >= 3.0
-Requires:      gem(rspec-puppet) >= 0
-Requires:      gem(codecov) >= 0
-Requires:      gem(rake) >= 13.0
-Requires:      gem(license_finder) >= 0
-Requires:      gem(rubocop) >= 0.57.0
-Requires:      gem(rubocop-rspec) >= 0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(puppet-resource_api) = 2.0.0
+Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(github_changelog_generator) >= 1.15
+Requires:      gem(hocon) >= 1.0
 Requires:      gem(pry-byebug) >= 0
-Requires:      gem(ffi) >= 0
 Requires:      gem(puppet) >= 0
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(puppetlabs_spec_helper) >= 8
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(ffi) >= 2
 Conflicts:     gem(github_changelog_generator) >= 2
 
 %description   -n gem-puppet-resource-api-devel
@@ -131,6 +119,7 @@ module:
 
 %description   -n gem-puppet-resource-api-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета puppet-resource_api.
+%endif
 
 
 %prep
@@ -146,19 +135,26 @@ module:
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md HISTORY.md contrib
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-puppet-resource-api-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md HISTORY.md contrib
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-puppet-resource-api-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md HISTORY.md contrib
+%endif
 
 
 %changelog
+* Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- ^ 1.9.0 -> 2.0.0
+
 * Wed Dec 20 2023 Pavel Skrylev <majioa@altlinux.org> 1.9.0-alt1
 - ^ 1.8.14 -> 1.9.0
 

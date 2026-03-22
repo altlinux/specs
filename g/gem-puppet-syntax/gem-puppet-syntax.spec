@@ -1,48 +1,60 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname puppet-syntax
 
 Name:          gem-puppet-syntax
-Version:       3.3.0
+Version:       7.2.0
 Release:       alt1
 Summary:       Syntax checks for Puppet manifests, templates, and Hiera YAML
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/voxpupuli/puppet-syntax
 Vcs:           https://github.com/voxpupuli/puppet-syntax.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintainers Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(pry) >= 0
-BuildRequires: gem(rb-readline) >= 0
+%if_enabled check
+BuildRequires: gem(openvox) >= 8
+BuildRequires: gem(rake) >= 13.1
 BuildRequires: gem(rspec) >= 0
-BuildRequires: gem(github_changelog_generator) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(puppet) >= 5
+BuildRequires: gem(voxpupuli-rubocop) >= 5.2.0
+BuildConflicts: gem(openvox) >= 9
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(voxpupuli-rubocop) >= 5.3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(rake) >= 0
-Requires:      gem(puppet) >= 5
-Provides:      gem(puppet-syntax) = 3.3.0
-
+Requires:      ruby >= 3.2
+Requires:      gem(openvox) >= 8
+Requires:      gem(rake) >= 13.1
+Conflicts:     gem(openvox) >= 9
+Conflicts:     gem(rake) >= 14
+Provides:      puppet-syntax = %EVR
+Provides:      gem(puppet-syntax) = 7.2.0
 
 %description
 Syntax checks for Puppet manifests and templates
 
 
+%if_enabled    doc
 %package       -n gem-puppet-syntax-doc
-Version:       3.3.0
+Version:       7.2.0
 Release:       alt1
 Summary:       Syntax checks for Puppet manifests, templates, and Hiera YAML documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet-syntax
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet-syntax) = 3.3.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(puppet-syntax) = 7.2.0
 
 %description   -n gem-puppet-syntax-doc
 Syntax checks for Puppet manifests, templates, and Hiera YAML documentation
@@ -52,21 +64,28 @@ Syntax checks for Puppet manifests and templates
 
 %description   -n gem-puppet-syntax-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета puppet-syntax.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-puppet-syntax-devel
-Version:       3.3.0
+Version:       7.2.0
 Release:       alt1
 Summary:       Syntax checks for Puppet manifests, templates, and Hiera YAML development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet-syntax
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet-syntax) = 3.3.0
-Requires:      gem(pry) >= 0
-Requires:      gem(rb-readline) >= 0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(puppet-syntax) = 7.2.0
+Requires:      gem(openvox) >= 8
+Requires:      gem(rake) >= 13.1
 Requires:      gem(rspec) >= 0
-Requires:      gem(github_changelog_generator) >= 0
+Requires:      gem(voxpupuli-rubocop) >= 5.2.0
+Conflicts:     gem(openvox) >= 9
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(voxpupuli-rubocop) >= 5.3
 
 %description   -n gem-puppet-syntax-devel
 Syntax checks for Puppet manifests, templates, and Hiera YAML development
@@ -76,6 +95,7 @@ Syntax checks for Puppet manifests and templates
 
 %description   -n gem-puppet-syntax-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета puppet-syntax.
+%endif
 
 
 %prep
@@ -91,18 +111,25 @@ Syntax checks for Puppet manifests and templates
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md HISTORY.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-puppet-syntax-doc
-%doc README.md
+%doc CHANGELOG.md HISTORY.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-puppet-syntax-devel
-%doc README.md
+%doc CHANGELOG.md HISTORY.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 7.2.0-alt1
+- ^ 3.3.0 -> 7.2.0
+
 * Wed Dec 20 2023 Pavel Skrylev <majioa@altlinux.org> 3.3.0-alt1
 - + packaged gem with Ruby Policy 2.0

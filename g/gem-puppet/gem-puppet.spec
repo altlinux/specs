@@ -6,7 +6,7 @@
 
 Name:          gem-puppet
 Version:       8.10.0.39
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -58,7 +58,7 @@ BuildConflicts: gem(getoptlong) >= 0.3
 BuildConflicts: gem(json-schema) >= 3
 BuildConflicts: gem(locale) >= 3
 BuildConflicts: gem(multi_json) >= 2
-BuildConflicts: gem(puppet-resource_api) >= 2
+BuildConflicts: gem(puppet-resource_api) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec-its) >= 2
@@ -80,6 +80,7 @@ BuildConflicts: gem(webrick) >= 2
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
 %ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
+%ruby_use_gem_dependency puppet-resource_api >= 2.0.0,puppet-resource_api < 3
 Requires:      facter
 Requires:      ruby >= 3.1.0
 Requires:      rubygems > 1.3.1
@@ -99,7 +100,7 @@ Conflicts:     gem(fast_gettext) >= 4
 Conflicts:     gem(getoptlong) >= 0.3
 Conflicts:     gem(locale) >= 3
 Conflicts:     gem(multi_json) >= 2
-Conflicts:     gem(puppet-resource_api) >= 2
+Conflicts:     gem(puppet-resource_api) >= 3
 Conflicts:     gem(scanf) >= 2
 Conflicts:     gem(semantic_puppet) >= 2
 Provides:      gem(puppet) = 8.10.0.39
@@ -115,7 +116,7 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       8.10.0.39
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -128,7 +129,7 @@ Requires:      gem(puppet) = 8.10.0.39
 Requires:      gem(puppet-resource_api) >= 1.5
 Requires:      gem(semantic_puppet) >= 1.0
 Conflicts:     gem(facter) >= 5
-Conflicts:     gem(puppet-resource_api) >= 2
+Conflicts:     gem(puppet-resource_api) >= 3
 Conflicts:     gem(semantic_puppet) >= 2
 Provides:      puppet-agent = %EVR
 Requires(preun,post): %name = %EVR
@@ -148,7 +149,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    doc
 %package       -n gem-puppet-doc
 Version:       8.10.0.39
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -172,19 +173,62 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    devel
 %package       -n gem-puppet-devel
 Version:       8.10.0.39
-Release:       alt0.2
+Release:       alt0.3
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(puppet) = 8.10.0.39
+Requires:      gem(concurrent-ruby) >= 1.0
+Requires:      gem(deep_merge) >= 1.0
+Requires:      gem(fast_gettext) >= 2.1
+Requires:      gem(ffi) > 1.16.2
+Requires:      gem(getoptlong) >= 0.2.0
+Requires:      gem(json-schema) >= 2.0
+Requires:      gem(locale) >= 2.1
+Requires:      gem(multi_json) >= 1.13
+Requires:      gem(pry) >= 0
+Requires:      gem(puppet-resource_api) >= 1.5
+Requires:      gem(racc) >= 1.8.0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(rspec) >= 3.1
+Requires:      gem(rspec-its) >= 1.1
+Requires:      gem(rubocop) >= 1.0
+Requires:      gem(rubocop-i18n) >= 3.0
 Requires:      gem(rubocop-performance) >= 1.0
 Requires:      gem(rubocop-rake) >= 0.6
 Requires:      gem(rubocop-rspec) >= 2.0
+Requires:      gem(ruby-prof) >= 0.16.0
+Requires:      gem(scanf) >= 1.0
+Requires:      gem(semantic_puppet) >= 1.0
+Requires:      gem(vcr) >= 6.1
+Requires:      gem(webmock) >= 3.0
+Requires:      gem(webrick) >= 1.7
+Requires:      gem(yard) >= 0
+Conflicts:     gem(concurrent-ruby) >= 2
+Conflicts:     gem(deep_merge) >= 2
+Conflicts:     gem(facter) >= 5
+Conflicts:     gem(fast_gettext) >= 4
+Conflicts:     gem(ffi) >= 2
+Conflicts:     gem(getoptlong) >= 0.3
+Conflicts:     gem(json-schema) >= 3
+Conflicts:     gem(locale) >= 3
+Conflicts:     gem(multi_json) >= 2
+Conflicts:     gem(puppet-resource_api) >= 3
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rubocop-i18n) >= 4
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
 Conflicts:     gem(rubocop-rspec) >= 4
+Conflicts:     gem(scanf) >= 2
+Conflicts:     gem(semantic_puppet) >= 2
+Conflicts:     gem(vcr) >= 7
+Conflicts:     gem(webmock) >= 4
+Conflicts:     gem(webrick) >= 2
 
 %description   -n gem-puppet-devel
 A network tool for managing many disparate systems development package.
@@ -340,6 +384,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.3
+- ! fixed dep to puppet-resource_api gem
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.2
 - ! fixed dep to rubocop-rspec gem
 
