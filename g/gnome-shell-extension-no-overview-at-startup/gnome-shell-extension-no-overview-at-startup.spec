@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-%_name-at-startup
 Version: 49
-Release: alt1
+Release: alt2
 
 Summary: No overview at start-up. For GNOME Shell 40+
 Group: Graphical desktop/GNOME
@@ -34,6 +34,9 @@ cp -ar *.js* %buildroot%_datadir/gnome-shell/extensions/%uuid/
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Sun Mar 22 2026 Anton Midyukov <antohami@altlinux.org> 49-alt2
+- metadata.json: add gnome 50 support
+
 * Mon Nov 03 2025 Roman Alifanov <ximper@altlinux.org> 49-alt1
 - new version 49 (with rpmrb script)
 
