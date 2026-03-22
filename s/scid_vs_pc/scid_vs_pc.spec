@@ -1,5 +1,5 @@
 Name: scid_vs_pc
-Version: 4.25
+Version: 4.26
 Release: alt1
 Group: Games/Boards
 
@@ -48,7 +48,9 @@ This package provides noarch data needed for %name.
         OPTIMIZE="%optflags" \
         BINDIR=%_bindir \
         SHAREDIR=%_datadir/%name
-%make_build
+
+# j1 to avoid races
+make -j1
 
 %install
 %makeinstall_std
@@ -74,5 +76,8 @@ install -m0644 sounds/*.wav %buildroot%_datadir/%name/sounds
 %exclude %_datadir/%name/bitmaps/MkScidPieces
 
 %changelog
+* Sun Feb 15 2026 Leonid Znamenok <respublica@altlinux.org> 4.26-alt1
+- New version (4.26).
+
 * Fri Jan 17 2025 Leonid Znamenok <respublica@altlinux.org> 4.25-alt1
 - Initial build for Sisyphus.
