@@ -3,8 +3,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: musl
-Version: 1.2.5
-Release: alt7
+Version: 1.2.6
+Release: alt1
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -87,15 +87,14 @@ mkdir -p src/fts
 cp debian/musl-fts/fts.c debian/musl-fts/config.h src/fts/
 cp debian/musl-fts/fts.h include/
 
-%define _muslarch %_arch
 %ifarch armh
 %define _muslarch armhf
-%endif
-%ifarch ppc64le
+%elifarch ppc64le
 %define _muslarch powerpc64le
-%endif
-%ifarch %ix86
+%elifarch %ix86
 %define _muslarch i386
+%else
+%define _muslarch %_arch
 %endif
 %define ldname ld-musl-%_muslarch.so.1
 %define ldpath ld-musl-%_muslarch.path
@@ -201,6 +200,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Sat Mar 21 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.6-alt1
+- Update to v1.2.6 (2026-03-20).
+
 * Sun Mar 16 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt7
 - Fix -static-pie linking with gcc (enabling static ASLR builds).
 - Add a highly experimental musl-devel-static-import package to import system
