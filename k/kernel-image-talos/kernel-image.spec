@@ -5,9 +5,9 @@
 
 Name: kernel-image-talos
 Release: alt1
-%define kernel_src_version	6.12
-%define kernel_base_version	6.12
-%define kernel_sublevel	.74
+%define kernel_src_version	6.18
+%define kernel_base_version	6.18
+%define kernel_sublevel	.18
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -460,6 +460,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Mar 17 2026 Alexander Stepchenko <geochip@altlinux.org> 6.18.18-alt1
+- v6.18.18 (2026-03-13).
+- config: update kernel config as per Talos 1.12.
+
 * Mon Mar 02 2026 Alexander Stepchenko <geochip@altlinux.org> 6.12.74-alt1
 - v6.12.74 (2026-02-19).
 - Use Talos 1.11 kernel configuration as a reference.

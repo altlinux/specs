@@ -2,7 +2,7 @@
 %global import_path github.com/siderolabs/talos
 %global commit      da6c6e46118aa55b32dd839533afe8c112471502
 %global shortcommit %(c=%commit; echo ${c:0:7})
-%global altkernel 6.12.74-talos
+%global altkernel 6.18.18-talos
 %define _libexecdir %prefix/libexec
 %define alt_registry registry.altlinux.org
 %define alt_orchestra_registry altlinux.space/alt-orchestra
@@ -14,7 +14,7 @@
 
 Name: talos
 Version: 1.12.5
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -205,6 +205,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed Mar 18 2026 Alexander Stepchenko <geochip@altlinux.org> 1.12.5-alt2
+- Update DefaultKernelVersion to 6.18.18.
+
 * Tue Mar 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.5-alt1
 - New version 1.12.5.
 
