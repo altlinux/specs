@@ -5,44 +5,51 @@
 
 %define _name 2048
 %define __name gnome-%_name
-%define ver_major 3.38
+%define ver_major 50
 %define xdg_name org.gnome.TwentyFortyEight
 
+%def_disable bootstrap
+
 Name: gnome-games-%_name
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A 2048 clone for GNOME
 Group: Games/Boards
-License: %gpl3plus
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/2048
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-2048.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 %else
 Source: %__name-%version.tar
 %endif
+Source1: %name-%version-cargo.tar
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 
-%define gtk_ver 3.22.3
-%define clutter_gtk_ver 1.6
+%define gtk_ver 4.20
 %define gee_ver 0.14
-%define libgames_ver 1.2.0
-%define vala_ver 0.24
+%define adw_ver 1.8
 
-BuildRequires(pre): rpm-macros-meson rpm-build-licenses
-BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: vala-tools >= %vala_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildRequires: libgee0.8-devel >= %gee_ver libgnome-games-support-devel >= %libgames_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson rust-cargo yelp-tools
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: libgee0.8-devel >= %gee_ver
+%{?_enable_check:BuildRequires: appstreamcli desktop-file-utils clippy}
 
 %description
 Move the tiles until you obtain the 2048 tile.
 
 %prep
-%setup -n %__name-%version
-sed -E -i "s/^[[:space:]]*'(desktop|appdata)-file'\,//" data/meson.build
+%setup -n %__name-%version %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson
@@ -50,17 +57,24 @@ sed -E -i "s/^[[:space:]]*'(desktop|appdata)-file'\,//" data/meson.build
 
 %install
 %meson_install
-%find_lang --with-gnome %__name
+%find_lang --with-gnome --output=%__name.lang %__name %{__name}_libgnome-games-support
 
-%files -f gnome-%_name.lang
+%check
+%__meson_test
+
+%files -f %__name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_man6dir/%__name.6.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
+- 50.1 (ported to Rust/Libadwaita)
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
 - updated to 3.38.2-12-gf080df6 (updated translations)
 - fixed build with meson >= 0.61

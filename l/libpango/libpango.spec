@@ -25,7 +25,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -229,6 +229,9 @@ rm -f tests/layouts/valid-20.layout
 
 
 %changelog
+* Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.57.1-alt1
+- 1.57.1
+
 * Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.57.0-alt1
 - 1.57.0
 

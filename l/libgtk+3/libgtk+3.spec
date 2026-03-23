@@ -24,7 +24,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.51
+Version: %ver_major.52
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -92,6 +92,7 @@ BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXr
 BuildRequires: libXrender-devel libXt-devel
 BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: libharfbuzz-devel libxkbcommon-devel iso-codes-devel
+BuildRequires: zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel  wayland-protocols >= %wayland_protocols_ver}
@@ -445,6 +446,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 3.24.52-alt1
+- 3.24.52
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.51-alt1
 - updated to 3.24.51-17-gb4151ee7ab
 

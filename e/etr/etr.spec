@@ -3,7 +3,7 @@
 %define _name etr
 # conflicts with extreme-tuxracer
 %define binary_name %_name
-%define ver_major 1.1
+%define ver_major 1.2
 %define import_path github.com/tkjaer/%_name
 
 %def_disable bootstrap
@@ -64,6 +64,9 @@ export IGNORE_SOURCES=1
 %doc *.md docs/probe-encoding-design.md
 
 %changelog
+* Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
