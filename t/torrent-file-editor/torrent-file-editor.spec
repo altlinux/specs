@@ -1,5 +1,7 @@
+%define oname io.github.torrent_file_editor.Torrent-file-editor
+
 Name: torrent-file-editor
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 License: GPLv3+
@@ -11,7 +13,7 @@ Vcs: https://github.com/torrent-file-editor/torrent-file-editor
 
 Source: %name-%version.tar
 
-BuildRequires: ccmake qt6-tools-devel qt6-5compat-devel
+BuildRequires: ccmake qt6-tools-devel qt6-5compat-devel qt6-svg-devel
 
 %description
 Qt based GUI tool designed to create and edit .torrent files
@@ -36,11 +38,14 @@ cd ./build
 %files
 %doc README.md LICENSE
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_datadir/appdata/*.xml
-%_iconsdir/hicolor/*/apps/%name.*
+%_desktopdir/%oname.desktop
+%_datadir/metainfo/*.xml
+%_iconsdir/hicolor/*/apps/%oname.*
 
 %changelog
+* Mon Mar 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2
+
 * Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.1-alt1
 - 1.0.0 -> 1.0.1
 
