@@ -1,8 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define app_id io.github.elfmz.far2l
+
 Name: far2l
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -34,6 +36,8 @@ BuildRequires: libXi-devel
 BuildRequires: libX11-devel
 BuildRequires: libxml2-devel
 BuildRequires: desktop-file-utils
+BuildRequires: python3(markdown)
+BuildRequires: libgnutls-devel
 
 # skip optional requires from /usr/share/far2l scripts
 %filter_from_requires /^sudo/d
@@ -105,8 +109,12 @@ desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far
 %_iconsdir/far2ledit-wx.svg
 %_mandir/ru/man1/far2l.*
 %_man1dir/far2l.*
+%_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Sun Oct 26 2025 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
 - new version (2.7.0) with rpmgs script
 
