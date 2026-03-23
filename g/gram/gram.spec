@@ -1,6 +1,6 @@
 Name: gram
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: A high-performance, multiplayer code editor
 License: GPL-3.0
@@ -65,6 +65,9 @@ install -pm0644 -D gram.desktop %buildroot%_desktopdir/gram.desktop
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Mar 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.0-alt1
+- 1.1.0 released
+
 * Wed Mar 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt2
 - fixed dependency licenses generation
 
