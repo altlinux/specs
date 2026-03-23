@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.1.0
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -74,6 +74,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Mar 23 2026 Sergey Konev <darisishe@altlinux.org> 11.1.0-alt2
+- Add proper l10n for Grub autoinstall
+
 * Sat Mar 21 2026 Sergey Konev <darisishe@altlinux.org> 11.1.0-alt1
 - Skip alterator-grub step, autoinstall grub in removable mode
 
