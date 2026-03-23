@@ -2,7 +2,7 @@
 
 Name:    tuwunel
 Version: 1.5.1
-Release: alt3
+Release: alt4
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
 Group:   System/Servers
@@ -15,6 +15,7 @@ Source:  %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: config.toml
 Source3: %name.sysusers
+Patch1:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -32,6 +33,7 @@ fully implementing the Matrix Specification for all but the most niche uses.
 
 %prep
 %setup -a1
+%patch1 -p1
 %rust_prep
 cat %SOURCE2 >> .cargo/config.toml
 sed 's/PrivateUsers/#PrivateUsers/' -i rpm/%name.service
@@ -45,6 +47,12 @@ export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
 
 %pre
 %sysusers_create_package %name %SOURCE3
+
+%post
+%post_systemd %name.service
+
+%preun
+%preun_systemd %name.service
 
 %install
 %rust_install -t %_sbindir
@@ -63,6 +71,11 @@ mkdir -p %buildroot%_localstatedir/%name
 %doc LICENSE README.md
 
 %changelog
+* Fri Mar 20 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt4
+- Add support MAS (PR#342) realy.
+- Not add tuwunel user to uucp group.
+- Add post scrips for restart service after upgrade.
+
 * Thu Mar 19 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt3
 - Removed read access for everyone from the configuration file
   because it may contain secrets.
