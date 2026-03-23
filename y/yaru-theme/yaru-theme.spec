@@ -4,7 +4,7 @@
 %def_enable xfwm4
 
 Name: yaru-theme
-Version: 25.10.3
+Version: 26.04.3
 Release: alt1
 
 Summary: Ubuntu Yaru theme suite
@@ -13,8 +13,6 @@ License: GPL-3.0 and CC-BY-SA-4.0
 Group: Graphical desktop/GNOME
 URL: https://github.com/ubuntu/yaru
 VCS: https://github.com/ubuntu/yaru.git
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -159,6 +157,9 @@ popd
 %_datadir/folder-color-switcher/colors.d/Yaru.json
 
 %changelog
+* Sun Mar 22 2026 Alexander Kovalev <alexvk@altlinux.org> 26.04.3-alt1
+- New version 26.04.3.
+
 * Sat Oct 04 2025 Alexander Kovalev <alexvk@altlinux.org> 25.10.3-alt1
 - New version 25.10.3.
 
