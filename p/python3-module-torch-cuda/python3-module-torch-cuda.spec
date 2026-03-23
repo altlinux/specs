@@ -16,7 +16,7 @@
 
 Name:    python3-module-%pypi_name-cuda
 Version: 2.10.0
-Release: alt2
+Release: alt3
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (with CUDA support)
 License: BSD-3-Clause
@@ -183,6 +183,7 @@ AutoProv: 	nopython3
 Requires: 	lib%pypi_name-cuda-cpu = %EVR
 Requires:	libprotobuf-devel
 Requires:	nvidia-cuda-devel
+Requires: 	nvidia-cuda-devel-static
 Requires: 	libcudnn-devel
 Requires: 	nvidia-cutlass-headers
 Requires: 	libnccl-devel
@@ -375,6 +376,9 @@ done
 %_libdir/lib%{pypi_name}_cuda_linalg.so
 
 %changelog
+* Wed Mar 18 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt3
+- Added cuda-devel-static to requires (Closes: #58170).
+
 * Mon Mar 02 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt2
 - Built torch-cuda on aarch64.
 - Vendored mimalloc for better aarch64 memory allocation.
