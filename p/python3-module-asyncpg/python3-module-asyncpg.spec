@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name asyncpg
-%define mod_name %pypi_name
+%define mod_name asyncpg
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.30.0
-Release: alt1.9.g5b14653.1
+Version: 0.31.0
+Release: alt1
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
@@ -19,16 +19,17 @@ Source1: submodules.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
-BuildRequires: python3-module-pytest
 BuildRequires: libpq-devel
-BuildRequires: postgresql17-server
-BuildRequires: postgresql17-contrib
+BuildRequires: postgresql18-server
+BuildRequires: postgresql18-contrib
 %endif
 
 %description
@@ -36,8 +37,8 @@ asyncpg is a database interface library designed specifically for PostgreSQL
 and Python/asyncio. asyncpg is an efficient, clean implementation of PostgreSQL
 server binary protocol for use with Python's asyncio framework.
 
-asyncpg requires Python 3.8 or later and is supported for PostgreSQL
-versions 9.5 to 17. Older PostgreSQL versions or other databases implementing
+asyncpg requires Python 3.9 or later and is supported for PostgreSQL
+versions 9.5 to 18. Older PostgreSQL versions or other databases implementing
 the PostgreSQL protocol may work, but are not being actively tested.
 
 %prep
@@ -45,12 +46,16 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+rm -rv %buildroot%python3_sitelibdir/%mod_name/_testbase/
 
 %check
 # Don't append current directory to sys.path to
@@ -59,12 +64,13 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %pyproject_run -- pytest -vra ./tests -k 'not test_auth_gssapi'
 
 %files
-%doc README.rst LICENSE AUTHORS
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/%mod_name/_testbase/
 
 %changelog
+* Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.31.0-alt1
+- Updated to 0.31.0.
+
 * Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 0.30.0-alt1.9.g5b14653.1
 - NMU: Change BR libpq5-devel -> libpq-devel
 
@@ -88,4 +94,3 @@ the PostgreSQL protocol may work, but are not being actively tested.
 
 * Sun Aug 07 2022 Anton Zhukharev <ancieg@altlinux.org> 0.26.0-alt1
 - initial build for Sisyphus
-
