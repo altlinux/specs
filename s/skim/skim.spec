@@ -1,5 +1,5 @@
 Name:    skim
-Version: 1.11.2
+Version: 4.0.0
 Release: alt1
 
 Summary: Fuzzy Finder in rust
@@ -15,6 +15,9 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires(pre): rpm-build-vim
 BuildRequires: /proc
 
+# Due to frizbee
+ExclusiveArch: x86_64 aarch64
+
 %description
 Half of our life is spent on navigation: files, lines, commands...
 You need skim!  It's a general fuzzy finder that saves you time.
@@ -22,7 +25,6 @@ You need skim!  It's a general fuzzy finder that saves you time.
 %package tmux
 Summary: Script for launching %name skim in a tmux pane
 Group: Development/Tools
-BuildArch: noarch
 Requires: %name = %EVR
 
 %description tmux
@@ -31,7 +33,6 @@ Script for launching %name in a tmux pane.
 %package -n vim-plugin-%name
 Summary: Vim plugin for %name
 Group: Editors
-BuildArch: noarch
 Requires: %_bindir/vim
 Requires: %name = %EVR
 
@@ -84,6 +85,9 @@ SK=%buildroot%_bindir/sk
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Fri Mar 13 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.0.0-alt1
+- new version 4.0.0
+
 * Fri Jan 30 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.2-alt1
 - new version 1.11.2
 
