@@ -1,45 +1,47 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name zope.processlifetime
+%define ns_name zope
+%define mod_name processlifetime
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1
-Release: alt1.1
-
+Version: 4.0
+Release: alt1
 Summary: Zope process lifetime events
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.processlifetime/
 Vcs: https://github.com/zopefoundation/zope.processlifetime
-
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 %endif
-
-Requires: python3-module-zope.interface
 
 %description
 This package provides interfaces / implementations for events relative
 to the lifetime of a server process (startup, database opening, etc.)
 
-%package tests
-Summary: Tests for zope.processlifetime
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package provides interfaces / implementations for events relative
-to the lifetime of a server process (startup, database opening, etc.)
-
-This package contains tests for zope.processlifetime.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -47,29 +49,19 @@ This package contains tests for zope.processlifetime.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope/processlifetime/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
-
-%files tests
-%python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
-
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Fri Mar 20 2026 Stanislav Levin <slev@altlinux.org> 4.0-alt1
+- 3.1 -> 4.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
