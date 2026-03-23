@@ -2,7 +2,7 @@
 
 Name: gnome-shell-extension-simple-tiling
 Version: 7.6
-Release: alt1
+Release: alt2
 
 Summary: A simple Tiling Window Manager for Gnome
 
@@ -27,6 +27,8 @@ A lightweight, opinionated, and automatic tiling window manager for GNOME Shell.
 %setup
 subst 's|@unzip -q $(UUID)-modern-v$(VERSION).zip -d $(EXTDIR)/$(UUID)|@unzip -q $(UUID)-modern-v$(VERSION).zip -d $(EXTDIR)|' Makefile
 
+subst 's|"49"|"49", "50"|' metadata_modern.json.in
+
 %build
 make build-modern
 
@@ -39,5 +41,8 @@ make install-modern EXTDIR=%buildroot%_datadir/gnome-shell/extensions
 %doc README.md
 
 %changelog
+* Tue Mar 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 7.6-alt2
+- fixed for GNOME 50
+
 * Mon Dec 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 7.6-alt1
 - Initial build for ALT Linux.
