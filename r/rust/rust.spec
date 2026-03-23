@@ -4,18 +4,29 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 21.1
+%define llvm_version 21.1
 %define r_ver 1.76.0
 
+# Since we don't plan to package separate patch versions,
+# it's better to use major.minor for versioned files.
+%define v_major 1
+%define v_minor 94
+%define v_patch 0
+%define v_majmin %v_major.%v_minor
+%define v_full %v_majmin.%v_patch
+
+%define rust_toolchain_short_name alt
+%define rust_toolchain_name %rust_toolchain_short_name-%v_majmin
+
 Name: rust
-Version: 1.93.1
+Version: %v_full
 Release: alt1
 Epoch: 1
 
 Summary: The Rust Programming Language
 License: Apache-2.0 and MIT
 Group: Development/Other
-URL: http://www.rust-lang.org/
+Url: http://www.rust-lang.org/
 VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
@@ -30,14 +41,16 @@ Patch002: rust-1.93.0-fedora_alt-use_system_lld.patch
 # https://github.com/rust-lang/rust/issues/114940
 Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
 
-Requires: /proc
 Requires: gcc
+Requires: rustc
+Requires: rust-cargo
 # This component was removed as of Rust 1.69.0.
 # https://github.com/rust-lang/rust/pull/101841
 Obsoletes: %name-analysis < 1.69.0
 
 # for gdb python binding
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-rust-toolchain-common
 BuildRequires: /proc
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
@@ -55,11 +68,11 @@ BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
 BuildRequires: pkgconfig(libffi)
 
-BuildRequires: clang%{llvm_version}
-BuildRequires: clang%{llvm_version}-devel
-BuildRequires: clang%{llvm_version}-support
-BuildRequires: llvm%{llvm_version}-devel
-BuildRequires: lld%{llvm_version}-devel
+BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-devel
+BuildRequires: clang%llvm_version-support
+BuildRequires: llvm%llvm_version-devel
+BuildRequires: lld%llvm_version-devel
 %else
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -79,57 +92,55 @@ BuildRequires: rust-cargo
 %define rustc %rustdir/bin/rustc
 %endif
 
-%ifarch %ix86
-%define r_arch i686
-%endif
-%ifarch x86_64
-%define r_arch x86_64
-%endif
-%ifarch aarch64
-%define r_arch aarch64
-%endif
-%ifarch armh
-%define r_arch armv7
-%endif
-%ifarch ppc64le
-%define r_arch powerpc64le
-%endif
-%ifarch loongarch64
-%define r_arch loongarch64
-%endif
-%ifarch riscv64
-%define r_arch riscv64gc
-%endif
-
-%ifarch armh
-%define abisuff eabihf
-%else
-%define abisuff %nil
-%endif
-
-%define rust_triple %r_arch-unknown-linux-gnu%abisuff
-%define _common_libdir %prefix/lib
-%define rustlibdir %_common_libdir/rustlib
-%define _libexecdir /usr/libexec
-
 # While we don't want to encourage dynamic linking to rust shared libraries, as
 # there's no stable ABI, we still need the unallocated metadata (.rustc)
 # to support custom-derive plugins like #[proc_macro_derive(Foo)].
 %if_without debuginfo
 # Since 1.12.0: striping debuginfo damages *.so files
-%add_debuginfo_skiplist %_libdir/* %_bindir/* %_libexecdir/*
-%add_debuginfo_skiplist %rustlibdir/%rust_triple/bin/*
-%add_debuginfo_skiplist %rustlibdir/%rust_triple/lib/*
+%add_debuginfo_skiplist %rust_libdir/* %rust_bindir/* %rust_libexecdir/*
+%add_debuginfo_skiplist %rust_rustlib/%rust_host_triple/bin/*
+%add_debuginfo_skiplist %rust_rustlib/%rust_host_triple/lib/*
 %endif
 
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
 segfaults, and guarantees thread safety.
 
+This meta package will install rust compiler rustc, rust package
+manager cargo and C compiler gcc required for some crates.
+
+%package toolchain
+Group: Development/Other
+Summary: The Rust programming language stable toolchain
+# Meta-package required for common toolchain.
+Provides: rust-toolchain
+Requires(postun): rust-toolchain-common
+Requires: %rust_toolchain_name-component
+
+%description toolchain
+This package contains a directory containing any component from stable
+rust toolchain.
+
+Removing this package will result in uninstallation of all toolchain
+components.
+
+%package -n rustc
+Group: Development/Tools
+Summary: The Rust programming language compiler
+Provides: %rust_toolchain_name-component
+Requires: /proc
+Requires(postun): %name-toolchain = %EVR
+Requires: rust-%rust_host_triple-target
+
+%description -n rustc
+%summary.
+
 %package gdb
 Group: Development/Other
 Summary: Run rust compiler under gdb
-Requires: %name = %EVR
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
+Requires: rustc
 Requires: gdb
 AutoReq: nopython,nopython3
 AutoProv: nopython,nopython3
@@ -140,6 +151,8 @@ AutoProv: nopython,nopython3
 %package doc
 Summary: Documentation for Rust
 Group: Development/Documentation
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
 # NOT BuildArch: noarch
 # Note, while docs are mostly noarch, some things do vary by target_arch.
 
@@ -149,7 +162,11 @@ its standard library.
 
 %package cargo
 Summary: The Rust package manager
+License: Apache-2.0 and MIT and GPLv2 and Zlib and LGPLv2.1 and BSD-3-Clause and Unlicense and OpenSSL and SSLeay-standalone and curl and GPLv2+ with linking exception
 Group: Development/Tools
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
+# Backward compatibility: some packages used rust-cargo to install everything from rust meta-package.
 Requires: rust
 
 %description cargo
@@ -159,6 +176,8 @@ and ensure that you'll always get a repeatable build.
 %package -n rustfmt
 Summary: Tool to find and fix Rust formatting issues
 Group: Development/Tools
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
 Requires: rust-cargo = %EVR
 
 %description -n rustfmt
@@ -167,7 +186,9 @@ A tool for formatting Rust code according to style guidelines.
 %package analyzer
 Summary: A Rust compiler front-end for IDEs
 Group: Development/Tools
-Requires: %name = %EVR
+Provides: %rust_toolchain_name-component
+Requires: rustc
+Requires(postun): %name-toolchain = %EVR
 Obsoletes: rls <= 1:1.71.0-alt1
 
 %description analyzer
@@ -177,10 +198,12 @@ for Rust.
 
 %package -n clippy
 Summary: Lints to catch common mistakes and improve your Rust code
+License: Apache-2.0 or MIT
 Group: Development/Tools
-License: MPL-2.0
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
+Requires: rust
 Requires: rust-cargo
-Requires: %name = %EVR
 
 %description -n clippy
 A collection of lints to catch common mistakes and improve your Rust code.
@@ -188,6 +211,8 @@ A collection of lints to catch common mistakes and improve your Rust code.
 %package src
 Summary: Sources for the Rust standard library
 Group: Development/Other
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
 AutoReq: no
 AutoProv: no
 
@@ -195,11 +220,24 @@ AutoProv: no
 This package includes source files for the Rust standard library.  It may be
 useful as a reference for code completion tools in various editors.
 
+%package %rust_host_triple-target
+Summary: Static libraries for native Rust compiler support
+Url: https://doc.rust-lang.org/rustc/platform-support.html
+Group: Development/Other
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
+Requires: rustc
+
+%description %rust_host_triple-target
+%summary.
+
 %package wasm32-unknown-unknown-target
 Summary: Static libraries for wasm32-unknown-unknown target support
-URL: https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html
+Url: https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html
 Group: Development/Other
-Requires: rust
+Provides: %rust_toolchain_name-component
+Requires(postun): %name-toolchain = %EVR
+Requires: rustc
 Requires: lld
 
 %description wasm32-unknown-unknown-target
@@ -216,10 +254,19 @@ binaries.
 %setup -a1
 %autopatch -p1
 
+# Sanity check that toolchain is not FHS path.
+TOOLCHAIN_DIR=%rust_toolchain_dir
+DIR_DEPTH="${TOOLCHAIN_DIR//[!\/]}"
+if [ "${#DIR_DEPTH}" -lt 3 ]; then
+    echo "Toolchain dir must not be a FHS path!"
+    echo "Path provided: (%rust_toolchain_dir)"
+    exit 1
+fi
+
 %if_with bootstrap
-tar xf .rpm/rust-%r_ver-%rust_triple.tar.gz
+tar xf .rpm/rust-%r_ver-%rust_host_triple.tar.gz
 mkdir -p %rustdir
-pushd rust-%r_ver-%rust_triple
+pushd rust-%r_ver-%rust_host_triple
 ./install.sh --prefix=%rustdir
 popd
 
@@ -265,7 +312,7 @@ include = [
     ]
 
 [build]
-target = ["%rust_triple", "wasm32-unknown-unknown"]
+target = ["%rust_host_triple", "wasm32-unknown-unknown"]
 cargo = "%cargo"
 rustc = "%rustc"
 python = "python3"
@@ -282,7 +329,8 @@ test-stage = 3
 doc-stage = 3
 
 [install]
-prefix = "%prefix"
+prefix = "%rust_toolchain_dir"
+sysconfdir = "etc/"
 
 [rust]
 channel = "stable"
@@ -305,7 +353,7 @@ lld = false
 %if_without bundled_llvm
 link-shared = true
 
-[target.%rust_triple]
+[target.%rust_host_triple]
 cc = "clang"
 cxx = "clang++"
 ar = "llvm-ar"
@@ -332,47 +380,47 @@ python3 x.py doc
 
 python3 x.py install
 
-rm -f -- %buildroot/%_libdir/lib*.so.old
-
-# Make sure the shared libraries are in the proper libdir
-if [ "%_libdir" != "%_common_libdir" ]; then
-	mkdir -pv %buildroot%_libdir
-	mv %buildroot%_common_libdir/*.so %buildroot%_libdir
-fi
-
 # Remove installer artifacts (manifests, uninstall scripts, etc.)
-find %buildroot/%rustlibdir -maxdepth 1 -type f -delete
+find %buildroot%rust_rustlib -maxdepth 1 -type f -delete
 
 # We don't actually need to ship any of those python scripts in rust-src anyway.
-find %buildroot/%rustlibdir/src -type f -name '*.py' -delete
+find %buildroot/%rust_rustlib/src -type f -name '*.py' -delete
 
-# Remove old binaries
-find %buildroot/%_bindir -type f -name '*.old' -delete
+%add_python3_path %rust_rustlib/etc
 
-# Drop compiled python
-find %buildroot/%rustlibdir/etc -type f -name '*.pyc' -delete
-%add_python3_path %rustlibdir/etc
+mkdir -pv %buildroot{%_bindir,%_libdir,%_man1dir,%_docdir,%prefix/libexec,%_sysconfdir/bash_completion.d/,%_datadir/zsh/site-functions/}
 
-pushd %buildroot%_docdir
-mv -v rustc         rustc-%version
-mv -v docs          rust-doc-%version
-mv -v cargo         rust-cargo-%version
-mv -v rustfmt       rustfmt-%version
-mv -v clippy        rust-clippy-%version
-mv -v rust-analyzer rust-analyzer-%version
-popd
+ln -srv %buildroot%rust_libdir/librustc_driver-*.so %buildroot%_libdir
+
+mv -v %buildroot%rust_docdir/docs %buildroot%rust_docdir/rust
+
+%ln_content %rust_bindir %_bindir
+%ln_content %rust_libexecdir %prefix/libexec
+%ln_content %rust_docdir %_docdir "-%v_majmin"
+%ln_content %rust_sysconfdir/bash_completion.d %_sysconfdir/bash_completion.d
+%ln_content %rust_datadir/zsh/site-functions %_datadir/zsh/site-functions
+
+mv -v %buildroot%_docdir/rust-%v_majmin %buildroot%_docdir/rust-docs-%v_majmin
+
+# Apply compression before creating symlinks, otherwise comperssion
+# is applied afterward, thus breaking link.
+/usr/lib/rpm/compress_files %buildroot%rust_man1dir/*
+
+%ln_content %rust_man1dir %_man1dir "-%v_majmin"
+
+ln -srv %buildroot%rust_toolchain_dir %buildroot%rust_toolchain_home/%rust_toolchain_short_name
 
 %check
 . ./env.sh
 
 %if_without bundled_llvm
 # ensure that rustc_driver is actually dynamically linked to libLLVM
-find %buildroot/%_libdir \
+find %buildroot%rust_libdir \
 	-name 'librustc_driver-*.so' -execdir objdump -p '{}' '+' |
 	grep -qs 'NEEDED.*LLVM'
 %endif
 
-export LD_LIBRARY_PATH="%buildroot/%_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="%buildroot%rust_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 # https://rustc-dev-guide.rust-lang.org/tests/intro.html
 failed=
@@ -393,7 +441,7 @@ for i in \
 
 	# "crashes/93237.rs" and "crashes/108499.rs" fail on i586
 	# For more info see https://github.com/rust-lang/rust/issues/148482.
-	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_triple "tests/$i" \
+	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_host_triple "tests/$i" \
         %ifarch %ix86
             --skip tests/crashes/93237.rs --skip tests/crashes/108499.rs \
         %endif
@@ -417,57 +465,122 @@ rm -rf %rustdir
 %endif
 
 %files
-%doc %_docdir/rustc-%version
+# Meta-package.
+
+%files toolchain
+%dir %rust_toolchain_dir
+%rust_toolchain_home/alt
+%dir %rust_bindir
+%dir %rust_libdir
+%dir %rust_rustlib
+%dir %rust_libexecdir
+%dir %rust_datadir
+%dir %rust_datadir/man
+%dir %rust_man1dir
+%dir %rust_docdir
+%dir %rust_sysconfdir
+%dir %rust_sysconfdir/bash_completion.d
+%dir %rust_datadir/zsh/
+%dir %rust_datadir/zsh/site-functions
+
+%files -n rustc
+%rust_docdir/rustc
+%rust_bindir/rustc
+%rust_bindir/rustdoc
+%rust_libdir/librustc*.so
+%rust_libexecdir/rust-analyzer-proc-macro-srv
+%rust_sysconfdir/target-spec-json-schema.json
+%rust_man1dir/rustc.*
+%rust_man1dir/rustdoc.*
+%_docdir/rustc-%v_majmin
 %_bindir/rustc
 %_bindir/rustdoc
-%_libdir/lib*.so
-%_libexecdir/rust-analyzer-proc-macro-srv
-%_sysconfdir/target-spec-json-schema.json
-%dir %rustlibdir
-%dir %rustlibdir/etc
-%rustlibdir/%rust_triple/
-%exclude %rustlibdir/etc/*
-%_man1dir/rustc.*
-%_man1dir/rustdoc.*
+%_libdir/librustc*.so
+%prefix/libexec/rust-analyzer-proc-macro-srv
+%_man1dir/rustc-%v_majmin.*
+%_man1dir/rustdoc-%v_majmin.*
 
 %files gdb
+%rust_bindir/rust-gdb
+%rust_bindir/rust-gdbgui
+%rust_rustlib/etc
 %_bindir/rust-gdb
 %_bindir/rust-gdbgui
 %exclude %_bindir/rust-lldb
-%rustlibdir/etc/*
-%exclude %rustlibdir/etc/lldb_*
+%exclude %rust_bindir/rust-lldb
+%exclude %rust_rustlib/etc/lldb_*
 
 %files doc
-%doc %_docdir/rust-doc-%version
+%rust_docdir/rust
+%_docdir/rust-docs-%v_majmin
 
 %files cargo
-%doc %_docdir/rust-cargo-%version
+%rust_docdir/cargo
+%rust_bindir/cargo
+%rust_man1dir/cargo*.1*
+%rust_sysconfdir/bash_completion.d/cargo
+%rust_datadir/zsh/site-functions/_cargo
+%_docdir/cargo-%v_majmin
 %_bindir/cargo
 %_man1dir/cargo*.1*
 %_sysconfdir/bash_completion.d/cargo
 %_datadir/zsh/site-functions/_cargo
 
 %files -n rustfmt
-%doc %_docdir/rustfmt-%version
+%rust_docdir/rustfmt
+%rust_bindir/rustfmt
+%rust_bindir/cargo-fmt
+%_docdir/rustfmt-%v_majmin
 %_bindir/rustfmt
 %_bindir/cargo-fmt
 
 %files analyzer
-%doc %_docdir/rust-analyzer-%version
+%rust_docdir/rust-analyzer
+%rust_bindir/rust-analyzer
+%_docdir/rust-analyzer-%v_majmin
 %_bindir/rust-analyzer
 
 %files -n clippy
-%doc %_docdir/rust-clippy-%version
+%rust_docdir/clippy
+%rust_bindir/cargo-clippy
+%rust_bindir/clippy-driver
+%_docdir/clippy-%v_majmin
 %_bindir/cargo-clippy
 %_bindir/clippy-driver
 
 %files src
-%rustlibdir/src
+%rust_rustlib/src
+
+%files %rust_host_triple-target
+%rust_rustlib/%rust_host_triple/
 
 %files wasm32-unknown-unknown-target
-%rustlibdir/wasm32-unknown-unknown/
+%rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Sat Mar 21 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.94.0-alt1
+- New version (1.94.0).
+- Fix licenses for cargo and clippy.
+- Introduce toolchain packaging:
+  + Move all rust files into own toolchain directory:
+    /usr/lib[64]/rust-toolchains/<toolchain name>.
+    Toolchain name is "alt-major.minor" (https://semver.org/).
+    The latest stable toolchain provides an "alt" symlink to itself.
+  + Link files that the user interacts with to the corresponding files
+    in the toolchain directory.
+  + Add support for rustup. Toolchain can be linked with:
+    "rustup toolchain link <your short name for toolchain> <toolchain_dir>"
+  + Suffix documentation and man pages with "-major.minor".
+  + Provide rust-toolchain subpackage. Removing this package will
+    result in complete toolchain removal.
+- Split rust:
+  + Move rustc and rustdoc into rustc subpackage, removing dependency
+    on gcc.
+  + Split rustc and native target libraries to simplify packaging and
+    maintain consistency with other targets.
+  + rust is now meta-package containing requirements on rustc, cargo
+    and gcc.
+
 * Fri Feb 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.93.1-alt1
 - New version (1.93.1).
 
