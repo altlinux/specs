@@ -2,7 +2,7 @@
 
 Name: hardinfo2
 Version: 2.2.16
-Release: alt1
+Release: alt2.ge49ec08d
 
 Summary: System Information and Benchmark for Linux Systems
 License: GPL-2.0-or-later
@@ -74,6 +74,9 @@ install -D %_builddir/%{name}-%{version}/tools/hardinfo2 %buildroot/%_initdir/%n
 %_initdir/%name
 
 %changelog
+* Mon Mar 23 2026 Vladislav Glinkin <smasher@altlinux.org> 2.2.16-alt2.ge49ec08d
+- Built from commit with memory leaks fixes (Closes: #58315)
+
 * Fri Mar 13 2026 Vladislav Glinkin <smasher@altlinux.org> 2.2.16-alt1
 - New version (2.2.16)
 - Built without Qt5 benchmarks (Closes: #57631)
