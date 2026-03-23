@@ -3,12 +3,13 @@
 %define gpstatepath %_sharedstatedir/gssproxy
 %define _localstatedir %_var
 %define gssproxy_user _gssproxy
+%define gssproxy_group _gssproxy
 
 %def_with check
 
 Name: gssproxy
-Version: 0.9.1
-Release: alt1.1
+Version: 0.9.2
+Release: alt1
 Summary: GSSAPI Proxy
 
 Group: System/Servers
@@ -113,8 +114,6 @@ install -m0644 examples/99-network-fs-clients.conf %buildroot%_sysconfdir/gsspro
 install -d -m755 %buildroot%_sysconfdir/gss/mech.d
 install -m644 examples/proxymech.conf %buildroot%_sysconfdir/gss/mech.d/
 mkdir -p %buildroot%gpstatepath/rcache
-mkdir -p %buildroot%_runtimedir
-install -d -m0770 %buildroot%_runtimedir/gssproxy
 # do not pack la files
 rm -f %buildroot%_libdir/%name/proxymech.la
 
@@ -122,9 +121,40 @@ rm -f %buildroot%_libdir/%name/proxymech.la
 grep -qs 'run_as_user' %buildroot%_sysconfdir/gssproxy/gssproxy.conf && exit 1
 echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.conf
 
+mkdir -p %buildroot%_unitdir/%name.service.d/
+cat > %buildroot%_unitdir/%name.service.d/run_as_user.conf <<-'__SVC_EOF__'
+[Service]
+# required to set correct permissions for StateDirectory
+Group=%gssproxy_group
+PrivateTmp=yes
+ProtectHome=true
+ReadWritePaths=
+# additional caps required if run_as_user is used (see drop_privs func)
+# default CapabilityBoundingSet=CAP_DAC_OVERRIDE (also required by root)
+CapabilityBoundingSet=CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_SYS_PTRACE
+# r for %gssproxy_group group (default UMask=0177)
+UMask=0137
+# required to resolve dns names
+# default PrivateNetwork=yes
+PrivateNetwork=false
+# default IPAddressDeny=any
+IPAddressDeny=
+# default RestrictAddressFamilies=AF_UNIX AF_LOCAL
+RestrictAddressFamilies=
+# replicate permissions
+# /var/lib/gssproxy 0755,root,%gssproxy_group
+# /var/lib/gssproxy/clients 0770,root,%gssproxy_group
+# /var/lib/gssproxy/rcache 0770,root,%gssproxy_group
+StateDirectory=
+StateDirectory=gssproxy
+# rx for %gssproxy_group group (default StateDirectoryMode=0700)
+# rx for others to access the default socket
+StateDirectoryMode=0755
+__SVC_EOF__
+
 %pre
-%_sbindir/groupadd -r -f %gssproxy_user >/dev/null 2>&1 ||:
-%_sbindir/useradd -r -g %gssproxy_user -G _keytab -d %_sharedstatedir/gssproxy \
+%_sbindir/groupadd -r -f %gssproxy_group >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -g %gssproxy_group -G _keytab -d %_sharedstatedir/gssproxy \
 -s /dev/null -c "User for gssproxy" %gssproxy_user >/dev/null 2>&1 ||:
 
 %post
@@ -146,33 +176,36 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %preun_service gssproxy
 
 %triggerpostun -- gssproxy < 0.8.0-alt2
-/bin/chown %gssproxy_user:%gssproxy_user %gpstatepath/rcache/* >/dev/null 2>&1 ||:
-/bin/chown %gssproxy_user:%gssproxy_user %gpstatepath/clients/* >/dev/null 2>&1 ||:
+/bin/chown %gssproxy_user:%gssproxy_group %gpstatepath/rcache/* >/dev/null 2>&1 ||:
+/bin/chown %gssproxy_user:%gssproxy_group %gpstatepath/clients/* >/dev/null 2>&1 ||:
 
 %files
 %_unitdir/%name.service
+%_unitdir/%name.service.d/
 %_sbindir/%name
 %_userunitdir/gssuserproxy.service
 %_userunitdir/gssuserproxy.socket
-%attr(0755,root,%gssproxy_user) %dir %pubconfpath
-%attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/gssproxy.conf
+%attr(0755,root,%gssproxy_group) %dir %pubconfpath
+%attr(0640,root,%gssproxy_group) %config(noreplace) %_sysconfdir/gssproxy/gssproxy.conf
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/gss/mech.d/proxymech.conf
-%attr(0775,root,%gssproxy_user) %dir %gpstatepath
-%attr(0770,root,%gssproxy_user) %dir %gpstatepath/clients
-%attr(0770,root,%gssproxy_user) %dir %gpstatepath/rcache
-%attr(0770,root,%gssproxy_user) %dir %_runtimedir/gssproxy
+%attr(0755,root,%gssproxy_group) %dir %gpstatepath
+%attr(0770,root,%gssproxy_group) %dir %gpstatepath/clients
+%attr(0770,root,%gssproxy_group) %dir %gpstatepath/rcache
 %dir %_libdir/%name
 %_libdir/%name/proxymech.so
 %_man5dir/*
 %_man8dir/*
 
 %files nfs-server
-%attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/24-nfs-server.conf
+%attr(0640,root,%gssproxy_group) %config(noreplace) %_sysconfdir/gssproxy/24-nfs-server.conf
 
 %files nfs-client
-%attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
+%attr(0640,root,%gssproxy_group) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
 
 %changelog
+* Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
+- 0.9.1 -> 0.9.2.
+
 * Sat Dec 09 2023 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1.1
 - NMU: fix FTBFS on loongarch64
   + use rpm-macros-valgrind;
