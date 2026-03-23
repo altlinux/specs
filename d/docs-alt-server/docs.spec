@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Mar 23 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt6
+- update to ALT Server 11.1RC2
+- fix some typos (closes #57752, #57753)
+- update docker (closes #57754)
+- add FreeRADIUS
+
 * Thu Jan 29 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt5
 - the spec file has been rewritten to support alternatives
 
