@@ -3,7 +3,7 @@
 # Only for the test tasks (pocket).
 
 Name: portainer
-Version: 2.39.0
+Version: 2.39.1
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -36,7 +36,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.7"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.8"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -67,7 +67,7 @@ go build -x \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=eb63a7ad7cd11c364ec9305c7d6e6435542876c7' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=2c1f3c27d5b817ba405f44efe225972e789c2ec1' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %else
@@ -119,6 +119,11 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Mon Mar 23 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.1-alt1
+- New LTS version 2.39.1 (Fixes: CVE-2026-25679, CVE-2026-27142,
+  CVE-2026-27139, CVE-2026-24051, CVE-2026-33186, GO-2026-4550,
+  GO-2026-4473, GO-2026-4394).
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.0-alt1
 - New LTS version 2.39.0 (Fixes: CVE-2025-15467, GO-2026-4337).
 

@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.39.0
+Version: 2.39.1
 Release: alt1
 
 Summary: Agent for portainer
@@ -25,7 +25,7 @@ BuildRequires: rpm-build-golang /proc
 %patch -p1
 
 %build
-go build \
+go build -x \
    -mod=vendor \
    -buildmode=pie \
    -trimpath \
@@ -41,6 +41,10 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Mon Mar 23 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.1-alt1
+- New LTS version 2.39.1 (Fixes: CVE-2026-33186, GO-2026-4394,
+  GO-2026-4473, GO-2026-4550).
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.0-alt1
 - New LTS version 2.39.0.
 
