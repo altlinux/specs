@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.12
+Version: 0.6.13
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,10 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.13-alt1
+- Fix workaround EDG compiler bug with structured binding on e2k.
+  Thx Ilya Kurdyukov <ilyakurdyukov@altlinux.org>.
+
 * Wed Mar 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.12-alt1
 - Fix premature termination of signal processing received via DBus.
   Thx Oleg Chagaev (Closes: #57920).
