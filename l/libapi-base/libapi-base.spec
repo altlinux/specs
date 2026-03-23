@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 0
+%define minor_version 2
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -57,6 +57,25 @@ Requires: %name%api_version = %EVR
 %description devel
 %summary.
 
+%package -n %name%api_version-gir
+Summary: Typelib files for %name
+Group: System/Libraries
+
+Requires: %name%api_version = %EVR
+
+%description -n %name%api_version-gir
+%summary.
+
+%package gir-devel
+Summary: Development gir files for %name for various bindings
+Group: Development/Other
+BuildArch: noarch
+
+Requires: %name%api_version-gir = %EVR
+
+%description gir-devel
+%summary.
+
 %package -n %sname%api_version
 Summary: Serialization/Deserialoztion tools for vala
 Group: Development/C
@@ -73,8 +92,28 @@ Requires: %sname%api_version = %EVR
 %description -n %sname-devel
 %summary.
 
+%package -n %sname%api_version-gir
+Summary: Typelib files for %sname
+Group: System/Libraries
+
+Requires: %sname%api_version = %EVR
+
+%description -n %sname%api_version-gir
+%summary.
+
+%package -n %sname-gir-devel
+Summary: Development gir files for %sname for various bindings
+Group: Development/Other
+BuildArch: noarch
+
+Requires: %sname%api_version-gir = %EVR
+
+%description -n %sname-gir-devel
+%summary.
+
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Drun_net_tests=false
@@ -97,6 +136,12 @@ Requires: %sname%api_version = %EVR
 %_vapidir/%name-%api_version.deps
 %doc README.md
 
+%files -n %name%api_version-gir
+%_typelibdir/%gir_name-%api_version.typelib
+
+%files gir-devel
+%_girdir/%gir_name-%api_version.gir
+
 %files -n %sname%api_version
 %_libdir/%sname-%api_version.so.*
 
@@ -107,7 +152,19 @@ Requires: %sname%api_version = %EVR
 %_vapidir/%sname-%api_version.vapi
 %_vapidir/%sname-%api_version.deps
 
+%files -n %sname%api_version-gir
+%_typelibdir/%gir_sname-%api_version.typelib
+
+%files -n %sname-gir-devel
+%_girdir/%gir_sname-%api_version.gir
+
 %changelog
+* Mon Mar 23 2026 Vladimir Romanov <rirusha@altlinux.org> 7.2-alt1
+- New version: 7.2.
+- Returned building typelib and gir.
+- Added API_BASE_UNKNOWN_PROPS for detection unused props.
+- Added string[] type property support.
+
 * Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 7.0-alt1
 - New version: 7.0.
 
