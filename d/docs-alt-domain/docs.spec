@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -40,7 +40,7 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 # Set alternative to doc
 mkdir -p -- %buildroot%_altdir
 cat > %buildroot%_altdir/%name <<EOF
-%_documentationdir	%_docsinstalldir	57
+%_documentationdir	%_docsinstalldir	54
 EOF
 
 %files
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jan 30 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt3
+- add alt-services
+- add LAPS
+- fix typos (closes #57773, #57768)
+
 * Fri Jan 30 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt2
 - the spec file has been rewritten to support alternatives
 - add new GNOME admx file (closes #57406)
