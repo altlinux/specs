@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.12.1
-Release: alt2
+Release: alt3
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -11,7 +11,11 @@ License: GPLv3
 Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
+Source2: nheko_ru.ts
 Patch2: alt-qt-6.10.patch
+Patch3: fix_reply_rendering.patch
+Patch4: fix_calls.patch
+Patch5: fix_screen_capture_on_wayland.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: qt6-tools-devel qt6-multimedia-devel qt6-svg-devel
@@ -40,6 +44,16 @@ BuildRequires: clang llvm-devel
 Requires: qt6-multimedia libqt6-quickparticles
 Requires: libqt6-quickdialogs2
 
+# Additional dependencies for call
+Requires: gstreamer1.0
+Requires: gst-plugins-base1.0
+Requires: gst-plugins-good1.0
+Requires: gst-plugins-bad1.0
+Requires: gst-plugins-nice1.0
+
+# Additional dependencies for get rid of errors
+Requires: gst-plugins-good1.0-qt6
+
 %description
 The motivation behind the project is to provide a native desktop app
 for Matrix that feels more like a mainstream chat app (Riot, Telegram etc)
@@ -48,6 +62,7 @@ and less like an IRC client.
 %prep
 %setup
 %autopatch -p1
+cp %SOURCE2 resources/langs/nheko_ru.ts
 
 %build
 %cmake -DUSE_BUNDLED_SPDLOG=OFF    \
@@ -86,6 +101,14 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 23 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.12.1-alt3
+- Add OpenSUSE patch to fix reply rendering.
+- Add patch to fix call support.
+- Add patch to fix screen capture on wayland.
+- Add dependencies to call support.
+- Add dependencies to get rid of errors messages.
+- Update russian translation from upstream.
+
 * Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 0.12.1-alt2
 - NMU: Add missing runtime dependencies on libqt6-quickdialogs2 (closes: 58253).
 
