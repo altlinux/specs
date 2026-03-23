@@ -4,7 +4,7 @@
 Name: pve-container
 Summary: Proxmox VE Container management tool
 Version: 6.0.18
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -62,6 +62,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Sun Mar 22 2026 Sergey Konev <darisishe@altlinux.org> 6.0.18-alt3
+- Restrict network device name and bridge patterns to ASCII-only
+
 * Fri Feb 06 2026 Sergey Konev <darisishe@altlinux.org> 6.0.18-alt2
 - Turn off AppArmor-related stuff
 - Rewrite loop via stable syntax (Closes: 57720)
