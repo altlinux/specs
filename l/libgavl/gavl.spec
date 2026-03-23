@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 3
 
 Name: libgavl
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 Summary: Common A/V support library for gmerlin projects
 License: GPLv2+
@@ -11,7 +12,6 @@ Url: https://github.com/bplaum/gavl
 Vcs: https://github.com/bplaum/gavl.git
 
 Source: %name-%version.tar
-
 Patch: %name-%version-%release.patch
 
 BuildRequires: automake
@@ -30,22 +30,33 @@ contains data structures and routines for handling uncompressed (and some
 compressed) audio and video data, connectors, metadata/value containers, and
 various utility code shared by gmerlin components.
 
+%package -n libgavl%soname
+Summary: Common A/V support library for gmerlin projects
+License: GPLv2+
+Group: System/Libraries
+Obsoletes: libgavl < %EVR
+Provides: libgavl = %EVR
+
+%description -n libgavl%soname
+gavl is a support library used by other packages in the gmerlin project. It
+contains data structures and routines for handling uncompressed (and some
+compressed) audio and video data, connectors, metadata/value containers, and
+various utility code shared by gmerlin components.
+
 %package devel
 Summary: Development files for libgavl
 Group: Development/C
 
-Requires: libgavl = %version-%release
-
 %description devel
 Header files and pkg-config metadata for developing applications using libgavl.
 
-%package doc
+%package -n libgavl%soname-doc
 Summary: API documentation for libgavl
 Group: Documentation
 
 BuildArch: noarch
 
-%description doc
+%description -n libgavl%soname-doc
 Generated API reference for libgavl.
 
 %prep
@@ -61,20 +72,23 @@ Generated API reference for libgavl.
 %install
 %makeinstall_std
 
-%files
+%files -n libgavl%soname
 %doc AUTHORS COPYING README
-%_libdir/*.so.*
+%_libdir/*.so.%{soname}*
 
 %files devel
 %_includedir/gavl
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%files doc
+%files -n libgavl%soname-doc
 %_docdir/gavl
-%_docdir/libgavl-%version
+%_docdir/libgavl%soname-%version
 
 %changelog
+* Thu Mar 19 2026 Grant Makyan <karonus@altlinux.org> 2.0.1-alt3
+- Fix: add package with soname.
+
 * Thu Mar 19 2026 Grant Makyan <karonus@altlinux.org> 2.0.1-alt2
 - Fix i586 build.
 
