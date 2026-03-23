@@ -1,29 +1,27 @@
 %define app_id org.altlinux.gnome-legacy-theme-switcher
-%def_enable check
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-legacy-theme-switcher
 Version: 0.1.3
-Release: alt1
+Release: alt2
 
-Summary: A service, that applies gnome dark theme to "legacy" applications
+Summary: A service that applies dark gnome theme to "legacy" applications
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
+
 Url: https://altlinux.space/alt-gnome/gnome-legacy-theme-switcher
 Vcs: https://altlinux.space/alt-gnome/gnome-legacy-theme-switcher
-
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-%if_enabled check
 BuildRequires: libgio
-%endif
 
 BuildArch: noarch
 
 %description
-%name allows you to select light and dark gtk-theme variants to sync with dark/light mode in gnome.
+%name allows to select light and dark gtk-theme variants
+to sync with dark/light mode in gnome.
 
 %prep
 %setup
@@ -47,10 +45,15 @@ BuildArch: noarch
 %files
 %_bindir/%name
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
-%_libexecdir/systemd/user/%name.service
-%_libexecdir/systemd/user/gnome-session@gnome.target.d/%name.conf
+%_user_unitdir/%name.service
+%_user_unitdir/gnome-session@gnome.target.d/%name.conf
 
 %changelog
+* Mon Mar 23 2026 Michael Shigorin <mike@altlinux.org> 0.1.3-alt2
+- Fix build --without check.
+- Drop useless %%def_enable check.
+- Minor spec cleanup.
+
 * Tue Mar 10 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.3-alt1
 - New version 0.1.3.
 
