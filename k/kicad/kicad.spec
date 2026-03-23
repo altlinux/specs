@@ -4,7 +4,7 @@
 %define majver 9.0
 
 Name: kicad
-Version: 9.0.7
+Version: 10.0.0
 Release: alt1
 Epoch: 1
 
@@ -54,6 +54,9 @@ BuildRequires: pkgconfig(xdmcp)
 BuildRequires: pkgconfig(xdamage)
 BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: libspnav-devel
+BuildRequires: libpoppler-devel
+BuildRequires: libpoppler-glib-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwayland-cursor-devel
@@ -189,12 +192,17 @@ done
 %_iconsdir/hicolor/*/apps/*.*
 %_datadir/%name/
 %_datadir/mime/packages/*
+%_datadir/zsh/site-functions/_kicad-cli
+%_datadir/bash-completion/completions/kicad-cli
 
 %files common
 %dir %_datadir/kicad
 %dir %_datadir/kicad/template
 
 %changelog
+* Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.0-alt1
+- New version 10.0.0.
+
 * Thu Feb 05 2026 Polina Poidenko <polipoki@altlinux.org> 1:9.0.7-alt1
 - New version 9.0.7.
 

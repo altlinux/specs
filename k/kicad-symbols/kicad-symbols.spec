@@ -4,18 +4,20 @@
 Name: kicad-symbols
 Summary: schematic symbol libraries for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Библиотеки электрических обозначений для kicad (разработка печатных плат)
-Version: 9.0.7
+Version: 10.0.0
 Release: alt1
 License: GPL-2.0-or-later
 Group: Engineering
-Url: https://gitlab.com/kicad/libraries/%name
-# Source-url: https://gitlab.com/kicad/libraries/%name/-/archive/%version/%name-%version.tar.gz
+URL: https://gitlab.com/kicad/libraries/kicad-symbols
+VCS: https://gitlab.com/kicad/libraries/kicad-symbols
+# Source-url: https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%version/kicad-symbols-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
+BuildRequires: %_bindir/python3
 
 Requires: kicad-common >= %version
 
@@ -47,6 +49,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/template/sym-lib-table
 
 %changelog
+* Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 10.0.0-alt1
+- New version 10.0.0.
+
 * Thu Feb 05 2026 Polina Poidenko <polipoki@altlinux.org> 9.0.7-alt1
 - new version (9.0.7) with rpmgs script
 
