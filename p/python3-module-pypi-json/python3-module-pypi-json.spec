@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.0.post1
 Release: alt1
 
 Summary: PyPI JSON API client library
@@ -19,13 +19,13 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
-%py3_provides %pypi_name
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -36,9 +36,9 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile tests/requirements.txt
 %endif
@@ -53,14 +53,15 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.0.post1-alt1
+- Updated to 0.5.0.post1.
+
 * Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
 - initial build for Sisyphus
-
