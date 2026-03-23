@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.5.6
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -28,7 +28,6 @@ License: GPL-2.0-or-later
 Conflicts: kwin < 6.4
 
 Requires: hwdata
-Requires: /usr/bin/Xwayland
 Requires: qt6-multimedia qt6-virtualkeyboard qt6-declarative
 Requires: kf6-kirigami kscreenlocker kf6-kdeclarative
 Requires: libplasmaquick6
@@ -43,7 +42,7 @@ Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
 Patch5: alt-xdg-current-desktop.patch
 
-BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel qt6-5compat-devel
 BuildRequires: libqaccessibilityclient-qt6-devel
@@ -96,7 +95,6 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF6 library
 Requires: %name-common >= %EVR
-Requires: libwayland-client = %{get_version libwayland-client-devel}
 %description -n %libkwin
 KF6 library
 
@@ -150,9 +148,6 @@ done
 %K6install_move data kconf_update knsrcfiles krunner
 %find_lang %name --with-kde --all-name
 
-%post
-/sbin/setcap CAP_SYS_NICE=+ep %_K6bin/kwin_wayland ||:
-
 %files common -f %name.lang
 %doc LICENSES/*
 %_K6icon/*/*/apps/*.*
@@ -191,6 +186,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Mon Mar 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt2
+- cleanup from wayland
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 
