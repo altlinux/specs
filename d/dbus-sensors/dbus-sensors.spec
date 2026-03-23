@@ -16,7 +16,7 @@
 
 Name: dbus-sensors
 Version: 0.1
-Release: alt1.gitd7be555
+Release: alt2.gitd7be555.1
 
 Summary: D-Bus configurable sensor scanning applications
 License: Apache-2.0
@@ -36,6 +36,10 @@ Source1: libgpiod-1.6.3.tar.gz
 Source2: libgpiod_1.6.3-1_patch.zip
 
 Patch: fix-dbus-sensors-ALT-libgpiod-1.6.3-linker.patch
+Patch1: Add_support_for_W83795G_sensor.patch
+Patch2: Set_LED_if_fan_is_not_present.patch
+Patch3: Add_possibility_to_set_ScaleFactor_for_Tachs.patch
+Patch4: Set_Fan_LED_group_on_service_start.patch
 
 BuildRequires(Pre): rpm-macros-meson
 
@@ -57,7 +61,7 @@ detection (x86) are also supported.
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 # Meson downloads source code from the internet and places it in a directory
 # subprojects/packagecache.
 # See https://mesonbuild.com/Wrap-dependency-system-manual.html
@@ -110,5 +114,11 @@ install -Dpm 0644 %SOURCE2 subprojects/packagecache
 %_unitdir/xyz.openbmc_project.psusensor.service
 
 %changelog
+* Fri Mar 6  2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.gitd7be555.1
+- Set led if fan is not present.
+- Set fan led group on service start.
+- Add support for W83795G sensor.
+- Add possibility to set ScaleFactor for Tachs.
+
 * Wed Dec 10 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt1.gitd7be555
 - Initial build for Sisyphus.

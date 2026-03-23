@@ -2,7 +2,7 @@
 
 Name: phosphor-pid-control
 Version: 1.0.0
-Release: alt1.git951aff4
+Release: alt2.git3bfece8.1
 
 Summary: OpenBMC PID-based Thermal Control Daemon
 License: Apache-2.0
@@ -11,6 +11,10 @@ Url: https://github.com/openbmc/phosphor-pid-control
 Vcs: https://github.com/openbmc/phosphor-pid-control.git
 
 Source: %name-%version.tar
+
+Patch: Change_defualt_for_handle-missing-object-paths_option.patch
+Patch1: Fix_build_with_our_old_sdbusplus.patch
+Patch2: Print_fail_reason_why_zone_enters_failsafe_mode.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -56,6 +60,7 @@ Requires: libmanualcmds = %EVR
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -76,5 +81,11 @@ Requires: libmanualcmds = %EVR
 %_libdir/ipmid-providers/libmanualcmds.so
 
 %changelog
+* Tue Mar 10 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt2.git3bfece8.1
+- Update to the 3bfece8 upstream stage.
+- Change defualt for handle-missing-object-paths option.
+- Fix build with our old sdbusplus.
+- Print fail reason why zone enters failsafe mode.
+
 * Wed Aug 27 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt1.git951aff4
 - Initial build for Sisyphus.

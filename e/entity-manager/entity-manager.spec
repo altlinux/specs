@@ -1,6 +1,6 @@
 Name: entity-manager
 Version: 0.1
-Release: alt1.git48e44b7
+Release: alt2.git48e44b7.1
 
 Summary: Run-time JSON driven system configuration manager
 License: Apache-2.0
@@ -9,6 +9,8 @@ Url: https://github.com/openbmc/entity-manager
 Vcs: https://github.com/openbmc/entity-manager.git
 
 Source: %name-%version.tar
+
+Patch: Fix_path_to_the_binary_inside_unit_files.patch
 
 BuildRequires(Pre): rpm-macros-meson
 
@@ -38,6 +40,7 @@ one needs to create.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -56,5 +59,8 @@ one needs to create.
 %_datadir/%name/configurations
 
 %changelog
+* Thu Mar 5 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.git48e44b7.1
+- Fix path to the binary inside unit files.
+
 * Thu Dec 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt1.git48e44b7
 - Initial build for Sisyphus.
