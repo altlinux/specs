@@ -17,7 +17,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     17
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -463,7 +463,7 @@ goal of accelerating analytics queries.
 
 %ifarch %e2k
 # disable SSE4.2 emulation
-sed -i 's/_mm_crc32_/_no_crc32_/g' configure* meson.build config/c-compiler.m4
+sed -i 's/_mm_crc32_/_no_crc32_/g' configure* config/c-compiler.m4
 %endif
 
 %build
@@ -1127,6 +1127,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 23 2026 Alexei Takaseev <taf@altlinux.org> 15.17-alt3
+- Fix "sed: can't read meson.build: No such file or directory" on e2k
+
 * Fri Mar 20 2026 Alexei Takaseev <taf@altlinux.org> 15.17-alt2
 - Disable SSE4.2 emulation on e2k (ilyakurdyukov@)
 
