@@ -1,6 +1,6 @@
 Name:    freeoffice
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 Summary: Free Office Application Suite
 License: Proprietary
@@ -23,7 +23,6 @@ Requires: libreoffice-langpack-uz
 Requires: thunderbird
 Requires: davmail
 Requires: surguch
-Requires: alt-csp-cryptopro
 Requires: chromium
 Requires: ca-certificates-digital.gov.ru
 Requires: zenity
@@ -92,6 +91,9 @@ install -Dpm0644 com.Basealt.FreeOffice.desktop %buildroot%_desktopdir/com.Basea
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt4
+- NMU: remove runtime dependency on obsoleted package alt-csp-cryptopro.
+
 * Wed Nov 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
 - Required libreoffice instead of LibreOffice-still.
 
