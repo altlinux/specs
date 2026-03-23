@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.7.1
+Version: 9.0.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -26,7 +26,6 @@ Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -64,11 +63,13 @@ CPython.
 %pyproject_run_pytest -vra --ignore exercises.py
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 20 2026 Stanislav Levin <slev@altlinux.org> 9.0.0-alt1
+- 8.7.1 -> 9.0.0.
+
 * Mon Dec 22 2025 Stanislav Levin <slev@altlinux.org> 8.7.1-alt1
 - 8.7.0 -> 8.7.1.
 
