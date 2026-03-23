@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Pytest plugin for regression testing
@@ -24,6 +24,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,14 +52,16 @@ Fixtures to write regression tests.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra tests -Wignore
+%pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.10.0-alt1
+- Updated to 2.10.0.
+
 * Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 2.7.0-alt1
 - Updated to 2.7.0.
 
@@ -81,4 +85,3 @@ Fixtures to write regression tests.
 
 * Thu Sep 29 2022 Anton Zhukharev <ancieg@altlinux.org> 2.4.1-alt1
 - initial build for Sisyphus
-
