@@ -3,7 +3,7 @@
 
 Name: freefilesync
 Version: 14.8
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
 License: GPL-3.0
@@ -27,6 +27,9 @@ Patch2: ffs_allow_parallel_ops.patch
 
 # final local patch with parts from ffs_devuan.patch
 Patch100: %name-%version-%release.patch
+
+# fix C++23 deducing this for older GCC (p11)
+Patch101: freefilesync-14.8-fix-cxx23-deducing-this.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libwxBase3.2-devel
@@ -62,6 +65,7 @@ sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cp
 %patch1 -p1
 %patch2 -p1
 %patch100 -p1
+%patch101 -p1
 
 %build
 export CXXFLAGS="%{optflags}  -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 -DwxInfoDC=wxClientDC -DwxReadOnlyDC=wxDC"
@@ -120,6 +124,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Mar 20 2026 Vitaly Lipatov <lav@altlinux.ru> 14.8-alt2
+- fix build with GCC 13 (p11): replace C++23 deducing this with traditional recursive lambdas
+
 * Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 14.8-alt1
 - New version 14.8.
 
