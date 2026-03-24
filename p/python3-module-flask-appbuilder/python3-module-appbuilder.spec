@@ -7,7 +7,7 @@
 %def_without check
 
 Name: python3-module-%pypi_nname
-Version: 5.0.1
+Version: 5.2.0
 Release: alt1
 Summary: Simple and rapid application development framework, built on top of Flask
 License: BSD-3-Clause
@@ -68,5 +68,8 @@ and many built-in functionalities for building web applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 24 2026 Alexey Rodygin <alehandro@altlinux.org> 5.2.0-alt1
+- Updated to new version v5.2.0.
+
 * Tue Jan 13 2026 alehandro <alehandro@altlinux.org> 5.0.1-alt1
 - Initial build for ALT Linux.
