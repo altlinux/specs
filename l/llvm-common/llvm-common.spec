@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 20.1
+%global _llvm_version 21.1
 
 Name: llvm-common
-Version: 20.1.0
-Release: alt1.1
+Version: 21.1.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -84,6 +84,15 @@ Group: Development/C
 BuildArch: noarch
 Provides: llvm-common-clang-tools = %EVR
 Requires: clang%_llvm_version-tools
+Requires(pre,postun): %name = %version-%release
+
+%package -n clang-libs
+Summary: clang shared libraries
+License: Apache-2.0 with LLVM-exception
+Group: Development/C
+BuildArch: noarch
+Provides: llvm-common-clang-libs = %EVR
+Requires: clang%_llvm_version-libs
 Requires(pre,postun): %name = %version-%release
 
 %package -n clangd
@@ -188,6 +197,9 @@ This package contains common symlinks to wrap Clang.
 
 %description -n clang-tools
 This package contains common symlinks to wrap the Clang-based tools.
+
+%description -n clang-libs
+This package contains shared libraries for the clang compiler.
 
 %description -n clangd
 This package contains common symlinks to wrap clangd, a Clang-based C and C++
@@ -406,7 +418,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %buildroot%_bindir/clang --version
 %buildroot%_bindir/clang-cpp --version
 %buildroot%_bindir/llc --version
-
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 %_rpmmacrosdir/%name.env
@@ -433,7 +444,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %_libdir/cmake/llvm
 
 %files -n llvm-devel-static
-
 %files -n clang
 %_bindir/clang++
 %_bindir/clang
@@ -451,6 +461,7 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %exclude %_bindir/clang-cpp
 %exclude %_bindir/clangd
 
+%files -n clang-libs
 %files -n clang-devel
 %_libdir/cmake/clang
 
@@ -461,7 +472,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %_bindir/wasm-ld
 
 %files -n lld-devel
-
 %ifnarch loongarch64
 %files -n lldb
 %_bindir/lldb
@@ -472,7 +482,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %endif
 
 %files -n libmlir-devel
-
 %files -n mlir-tools
 %_bindir/mlir-cpu-runner
 %_bindir/mlir-linalg-ods-yaml-gen
@@ -485,7 +494,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %_bindir/tblgen-lsp-server
 
 %files -n libpolly-devel
-
 %package tooltests-checkinstall
 Summary: Tests to be run as part of checkinstall
 Group: Development/Other
@@ -513,13 +521,16 @@ By installing this package, you immediately run the test suite
 for llvm-alt-tool-wrapper.
 
 %files checkinstall
-
 %pre checkinstall
 for i in %_CI_tests_execdir/[0-9]*; do
 	"$i"
 done
 
 %changelog
+* Tue Mar 24 2026 L.A. Kostis <lakostis@altlinux.ru> 21.1.0-alt1
+- Bump llvm_version to 21.1.
+- Added clang-libs (closes #58032).
+
 * Wed Nov 12 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.0-alt1.1
 - llvm: Added FileCheck link.
 
