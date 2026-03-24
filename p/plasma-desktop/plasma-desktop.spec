@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.5.6
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -48,7 +48,7 @@ Patch4: alt-def-kicker.patch
 Patch5: alt-start-baloo.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-singleclick.patch
-#
+Patch8: fbff416bdc-for-revert.patch
 Patch9: alt-dont-indicate-audio-on-taskbar.patch
 Patch10: alt-def-session.patch
 Patch11: alt-def-key-numlock.patch
@@ -170,7 +170,7 @@ SDDM breeze theme
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#
+%patch8 -R -p1
 #%patch9 -p1
 %patch10 -p1
 %patch11 -p1
@@ -276,6 +276,9 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Tue Mar 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt2
+- revert commit for kdebug#513135 to fix moving panel widgets
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 
