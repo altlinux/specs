@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-source-%module_name
-Version: 1.3.6.7
+Version: 1.3.6.9
 Release: alt1
 
 Summary: Wangxun 10 Gigabit Ethernet driver
@@ -57,5 +57,9 @@ cp %name-%version/txgbe.7 %buildroot%_man7dir/
 %doc %name-%version/scripts/set_irq_affinity
 
 %changelog
+* Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.6.9-alt1
+- 1.3.6.9
+- linux 6.17+ compatibility
+
 * Tue Jul 29 2025 Ivan A. Melnikov <iv@altlinux.org> 1.3.6.7-alt1
 - initial build for ALT

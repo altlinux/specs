@@ -2,10 +2,10 @@
 %define module_version	1.3.6.9
 %define module_release	alt1
 
-%define flavour 6.12
+%define flavour 6.18
 %define karch   x86_64 loongarch64
 
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.18
 %setup_kernel_module %flavour
 
 # install the module to /lib/modules/RELEASE/updates, to override
