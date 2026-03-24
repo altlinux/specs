@@ -1,12 +1,15 @@
-%define dpdk_build_path "dpdk/build"
-%define dpdk_path "dpdk"
+%define _libexecdir /usr/libexec
 
-%def_disable static
 %def_disable tests
 %def_enable clang
+%def_enable shared
+# system libs or built-in
+%def_without dpdk
+%def_without isal
+%def_without vfio_user
 
 Name: spdk
-Version: 25.05.1
+Version: 26.01
 Release: alt1
 
 Summary: Storage Performance Development Kit
@@ -16,49 +19,44 @@ Group: Development/Tools
 Url: https://spdk.io
 VCS: https://github.com/spdk/spdk
 
-ExcludeArch: i586 ppc64le armh
+ExcludeArch: i586 ppc64le armh aarch64
 
-Source: spdk-%version.tar
+Source0: spdk-%version.tar
+Source1: dpdk.tar
+Source2: intel-ipsec-mb.tar
+Source3: isa-l.tar
+Source4: ocf.tar
+Source5: libvfio-user.tar
+Source6: xnvme.tar
+Source7: isa-l-crypto.tar
 Patch0: spdk-%version-%release.patch
 Patch1: spdk-25.05-alt-scripts-syntax.patch
-Patch2: spdk-24.09-alpinelinux-use-system-isal.patch
+Patch2: spdk-26.01-alt-use-system-isal.patch
 Patch3: spdk-23.09-alpinelinux-remove-stupid.patch
-# python module
-Patch4: spdk-25.05-upstream-python-1.patch
-Patch5: spdk-25.05-upstream-python-2.patch
-Patch6: spdk-25.05-upstream-python-3.patch
-Patch7: spdk-25.05-upstream-python-4.patch
-# ---
-Patch8: spdk-25.05-alt-fix-symbols.patch
+Patch4: spdk-26.01-alt-fix-symbols.patch
 
-# This is a minimal set of requirements needed for SPDK apps to run when built with
-# default configuration. These are also predetermined by rpmbuild. Extra requirements
-# can be defined through a comma-separated list passed via $requirements when building
-# the spec.
-#Requires: glibc
-#Requires: libaio
-#Requires: libgcc
-#Requires: libstdc++
-#Requires: libuuid
-#Requires: ncurses-libs
-#Requires: numactl-libs
-#Requires: openssl-libs
-#Requires: zlib
-
-%add_python3_req_skip common spdk.rpc spdk.rpc.client spdk.rpc.helpers spdk.sma spdk.sma.proto.nvmf_tcp_pb2 spdk.sma.proto.nvmf_tcp_pb2_grpc spdk.sma.proto.sma_pb2 spdk.sma.proto.sma_pb2_grpc spdk.spdkcli
+%add_python3_req_skip common spdk.rpc spdk.rpc.client spdk.rpc.helpers spdk.sma spdk.sma.proto.nvmf_tcp_pb2 spdk.sma.proto.nvmf_tcp_pb2_grpc spdk.sma.proto.sma_pb2 spdk.sma.proto.sma_pb2_grpc spdk.spdkcli gdb gdb.printing
 %filter_from_requires /\%_prefix\/libexec\/spdk\/scripts\/pkgdep/d
 %filter_from_requires /\%_sysconfdir\/opt\/spdk-pkgdep\/paths\/export.sh/d
 %filter_from_requires /apt*/d
 %filter_from_requires /pacman/d
-# %%filter_from_requires /bpftrace/d
+# TODO: find all python2 requires.
+%filter_from_requires /python-base/d
 
 Requires: systemd-utils
 
 # Automatically added by buildreq on Mon Oct 16 2023
 # optimized out: bash5 bashrc glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libncurses-devel libstdc++-devel libtinfo-devel pkg-config python3 python3-base python3-dev sh5
-BuildRequires: libaio-devel libfuse3-devel libisal-devel libisal_crypto-devel libssl-devel libuuid-devel libsystemd-devel libncurses-devel patchelf python3-devel libcap-devel
-BuildRequires: rdma-core-devel zlib-devel libpcap-devel libdbus-devel libelf-devel libzstd-devel libjansson-devel dpdk-devel
+BuildRequires: libaio-devel libfuse3-devel libssl-devel libuuid-devel libsystemd-devel libncurses-devel patchelf python3-devel libcap-devel nasm libfdt-devel
+BuildRequires: rdma-core-devel zlib-devel libpcap-devel libdbus-devel libelf-devel libzstd-devel libjansson-devel
+%if_with isal
+BuildRequires: libisal-devel libisal_crypto-devel
+%endif
+%if_with dpdk
+BuildRequires: dpdk-devel
+%endif
 BuildRequires: python3-module-pyproject-installer python3-module-wheel python3-module-setuptools python3-module-hatchling
+BuildRequires: meson python3-module-elftools libnuma-devel
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: clang-devel
@@ -71,6 +69,9 @@ BuildRequires: gcc-c++
 %if_enabled tests
 BuildRequires: CUnit-devel
 %endif
+
+# find libraries
+%add_findprov_lib_path %_libdir/spdk/lib
 
 %description
 The Storage Performance Development Kit (SPDK) provides a set of tools and
@@ -90,10 +91,20 @@ SPDK development libraries and headers
 %package libs
 Summary: SPDK libraries
 Group: System/Libraries
+%if_with dpdk
 Requires: libdpdk
+%endif
 
 %description libs
 SPDK libraries
+
+%package libs-dpdk
+Summary: DPDK libraries for SPDK
+Group: System/Libraries
+# Requires: libdpdk
+
+%description libs-dpdk
+DPDK libraries for SPDK
 
 %if_enabled static
 %package devel-static
@@ -113,16 +124,14 @@ BuildArch: noarch
 This package provides python3 module for %name.
 
 %prep
-%setup
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
 %patch0 -p1
 %patch1 -p1
+%if_with isal
 %patch2 -p1
+%endif
 %patch3 -p1
-%patch4 -p1 -R
-%patch5 -p1 -R
-%patch6 -p1 -R
-%patch7 -p1 -R
-%patch8 -p1
+%patch4 -p2
 
 sed -i '/CONFIG_PREFIX=/s|/usr/local|%_prefix|' CONFIG
 
@@ -141,38 +150,50 @@ sed -i 's|/lib|/%_lib|; s|/include|/include/spdk|' \
 sed -i 's|libdir?=$(CONFIG_PREFIX)/lib|libdir?=$(CONFIG_PREFIX)/%_lib|' \
   mk/spdk.common.mk
 
-sed -i 's|/usr/local/bin/pip|%_bindir/pip3|' \
+sed -i 's|/bin/pip|%_bindir/pip3|' \
   scripts/pkgdep/*.sh
 
-sed -i 's|/usr/local/bin/|%_prefix/libexec/spdk/bin/|' \
+sed -i 's|/usr/local/bin/|%_libexecdir/spdk/bin/|' \
   docker/build_base/post-install \
   docker/traffic-generator/init
 
-sed -i '/setup_cmd/d' python/Makefile
+sed -i 's|/usr/local/lib/sysctl.d/|%_sysctldir/|' \
+  scripts/setup.sh
 
-sed -i 's/isa-l\/include/isa-l/' \
-  lib/util/crc16.c \
-  lib/util/crc64.c \
-  lib/util/crc_internal.h \
-  lib/util/xor.c
-
-sed -i 's/\.\.\/isa-l\/include/isa-l/' \
-  lib/accel/accel_sw.c
+%if_without isal
+sed -i \
+  -e 's|-Wl,-rpath=$(ISAL_CRYPTO_DIR)/.libs|-Wl,-rpath=%_libdir/spdk/lib|;' \
+  -e 's|-Wl,-rpath=$(ISAL_DIR)/.libs|-Wl,-rpath=%_libdir/spdk/lib|;' \
+  mk/spdk.common.mk
+%else
+sed -i '/isal/s|SYS_LIBS|LOCAL_SYS_LIBS|g' \
+  $(find ./ -name 'Makefile')
+%endif
 
 # Remove illegal absolute entry from RPATH.
 sed -i '/-Wl,-rpath=$(DESTDIR)\/$(libdir)/d' \
   mk/spdk.common.mk
-sed -i 's| -Wl,-rpath=$(DPDK_LIB_DIR)||' \
-  lib/env_dpdk/env.mk
 sed -i 's|-rpath=$(SPDK_LIB_DIR),||' \
-  test/external_code/hello_world/Makefile
-sed -i 's|-rpath=$(SPDK_LIB_DIR)||' \
-  test/external_code/nvme/Makefile
+  $(find ./test/external_code/ -name 'Makefile') \
+  $(find ./examples -name 'Makefile')
 
 # fix startup scripts
 sed -i 's|include/spdk/pci_ids.h|include/pci_ids.h|' \
   scripts/common.sh \
   test/vmd/vmd.sh
+
+# fix python shebangs
+sed -i \
+  -e 's|/usr/bin/env python3|%__python3|;' \
+  -e 's|/usr/bin/env python|%__python3|;' \
+  $(find ./ -name '*.py')
+sed -i '1i #!%__python3' \
+  dpdk/usertools/telemetry-endpoints/*.py \
+  scripts/gdb_macros.py \
+  scripts/perf/nvmf/common.py
+
+# disable python buildings via uv using Makefile
+sed -i '/python/d' Makefile
 
 %build
 %if_enabled clang
@@ -184,156 +205,267 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export CC=gcc
 export CXX=g++
 %endif
+
+%if_with dpdk
 export CONFIG_DPDK_LIB_DIR=%_libdir
 export CONFIG_DPDK_INC_DIR=%_includedir/dpdk
 export DPDK_ABS_DIR=%_prefix
 export DPDK_INC_DIR=%_includedir/dpdk
 export DPDK_LIB_DIR=%_libdir
-export SPDK_ROOT_DIR=$PWD
+%endif
+
 %_configure_script \
-	--prefix=%prefix \
-%if_disabled clang
-	--cross-prefix=%_target_alias \
+  --prefix=%_prefix \
+  --libdir=%_libdir \
+%if_with dpdk
+  --with-dpdk=%_libdir \
 %endif
-	--with-system-isal \
-	--without-crypto \
-	--with-fuse \
-	--with-dpdk=%_libdir \
-%if_disabled static
 %if_disabled clang
-	--enable-lto \
+  --cross-prefix=%_target_alias \
+%endif
+%if_with isal
+  --with-system-isal \
+%endif
+  --without-crypto \
+%if_enabled shared
+%if_disabled clang
+  --enable-lto \
 %else
-	--disable-lto \
+  --disable-lto \
 %endif
-	--with-shared \
+  --with-shared \
 %endif
 %if_disabled tests
-	--disable-tests \
-	--disable-unit-tests \
+  --disable-tests \
+  --disable-unit-tests \
 %endif
 #
-
 %make_build
 cd python/
+%make all
 %pyproject_build
 cd -
 
 %install
+%if_with dpdk
 export CONFIG_DPDK_LIB_DIR=%_libdir
 export CONFIG_DPDK_INC_DIR=%_includedir/dpdk
+%else
+export DPDK_LIB_DIR=%_libdir/spdk/lib
+%endif
 
 %makeinstall_std
 cd python/
 %pyproject_install
 cd -
 
-# And some useful setup scripts SPDK uses
-mkdir -p %buildroot%_prefix/libexec/spdk
-mkdir -p %buildroot%_prefix/libexec/spdk/bin
-mkdir -p %buildroot%_prefix/libexec/spdk/examples
-mkdir -p %buildroot%_sysconfdir/bash_completion.d
-mkdir -p %buildroot%_sysconfdir/profile.d
+cfs() {
+  (($# > 1)) || return 0
+  local dst=$1 f
+  mkdir -p "$dst"
+  shift; for f; do [[ -e $f ]] && cp -a "$f" "$dst"; done
+}
 
-# Special case for SPDK_RUN_EXTERNAL_DPDK setup
-[[ -e %dpdk_path/intel-ipsec-mb ]] && find %dpdk_path/intel-ipsec-mb/ -name '*.so*' -exec cp -a {} %buildroot%_libdir/ ';'
-[[ -e %dpdk_path/isa-l/build/lib ]] && cp -a %dpdk_path/isa-l/build/lib/*.so* %buildroot%_libdir/
-
-# Try to include all the binaries that were potentially built
-[[ -e build/examples ]] && cp -a build/examples/* %buildroot%_prefix/libexec/spdk/examples/
-[[ -e build/bin ]] && cp -a build/bin/* %buildroot%_prefix/libexec/spdk/bin/
-
-cat <<-'EOF' > %buildroot%_sysconfdir/profile.d/spdk_path.sh
-PATH=$PATH:%_prefix/libexec/spdk
-PATH=$PATH:%_prefix/libexec/spdk/scripts
-PATH=$PATH:%_prefix/libexec/spdk/scripts/vagrant
-PATH=$PATH:%_prefix/libexec/spdk/test/common/config
-PATH=$PATH:%_prefix/libexec/spdk/bin
-PATH=$PATH:%_prefix/libexec/spdk/include
-PATH=$PATH:%_prefix/libexec/spdk/examples
-export PATH
-EOF
-
-cp -a scripts %buildroot%_prefix/libexec/spdk/scripts
-ln -s %_prefix/libexec/spdk/scripts/bash-completion/spdk %buildroot%_sysconfdir/bash_completion.d/spdk
+cl() {
+  [[ -e $2 ]] || return 0
+  cfs "$1" $(find "$2" -name '*.so*' -type f -o -type l | grep -v .symbols)
+}
 
 # We need to take into the account the fact that most of the scripts depend on being
 # run directly from the repo. To workaround it, create common root space under dir
 # like /usr/libexec/spdk and link all potential relative paths the script may try
 # to reference.
 
+mkdir -p %buildroot%_libdir/spdk/lib/
+mkdir -p %buildroot%_libexecdir/spdk/bin/
+mkdir -p %buildroot%_includedir/spdk/dpdk/
+mv -f %buildroot%_includedir/{cmdline*.h,generic,rte*.h} %buildroot%_includedir/spdk/dpdk/
+mv -f %buildroot%_bindir/{iscsi_tgt,nvmf_tgt,vhost,spdk*} %buildroot%_libexecdir/spdk/bin/
+
+# DPDK always builds both static and shared, so we need to remove one or the other
+# SPDK always builds static, so remove it if we want shared.
+
+%if_without isal
+mv -f %buildroot%_includedir/isa-l* %buildroot%_includedir/spdk/dpdk/
+rm -f %buildroot%_prefix/lib/pkgconfig/libisal*.pc
+%if_enabled shared
+rm -f %buildroot%_prefix/lib/libisal*.a
+mv -f %buildroot%_prefix/lib/libisal*.so* %buildroot%_libdir/spdk/lib/
+%else
+rm -f %buildroot%_prefix/lib/libisal*.so*
+mv -f %buildroot%_prefix/lib/libisal*.a %buildroot%_libdir/spdk/lib/
+%endif
+%endif
+
+%if_enabled shared
+mv -f %buildroot%_prefix/lib/librte*.so* %buildroot%_libdir/spdk/lib/
+mv -f %buildroot%_prefix/lib/dpdk/pmds*/librte*.so* %buildroot%_libdir/spdk/lib/
+rm -f %buildroot%_libdir/*.a
+rm -rf %buildroot%_prefix/lib/lib*.a
+%else
+mv -f %buildroot%_libdir/librte*.a %buildroot%_libdir/spdk/lib/
+mv -f %buildroot%_prefix/lib/dpdk/pmds*/librte*.a %buildroot%_libdir/spdk/lib/
+rm -f %buildroot%_libdir/lib*.so*
+%endif
+
+%if_with dpdk
+# DPDK also installs some python scripts to bin that we do not want to package here
+rm -f %buildroot%_bindir/dpdk-*.py
+# DPDK examples do not need to be packaged in our RPMs
+rm -rf %buildroot%_datadir/dpdk
+# In case sphinx-build is available, DPDK will leave some files we don't need
+rm -rf %buildroot%_datadir/doc/dpdk
+%else
+mkdir -p %buildroot%_libexecdir/spdk/scripts/dpdk/
+mv -f %buildroot%_bindir/dpdk-*.py %buildroot%_libexecdir/spdk/scripts/dpdk/
+mv -f %buildroot%_datadir/dpdk/telemetry-endpoints/ %buildroot%_libexecdir/spdk/scripts/dpdk/
+rm -rf %buildroot%_prefix/lib/pkgconfig/libdpdk*.pc
+rm -rf %buildroot%_datadir/dpdk/examples/
+%endif
+
+# The ISA-L install may have installed some binaries that we do not want to package
+rm -f %buildroot%_bindir/igzip
+rm -rf %buildroot%_datadir/man
+
+# Include libvfio-user libs in case --with-vfio-user is in use together with --with-shared
+%if_with vfio_user && %if_enabled shared
+cl %buildroot%_libdir/libvfio-user build/libvfio-user/
+%endif
+
+# And some useful setup scripts SPDK uses
+mkdir -p %buildroot%_libexecdir/spdk
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
+mkdir -p %buildroot%_sysconfdir/profile.d
+# mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
+
+# %if_enabled shared
+# cat <<-EOF > %buildroot%_sysconfdir/ld.so.conf.d/spdk.conf
+# %_libdir/spdk/lib
+# EOF
+# %endif
+
+cat <<-'EOF' > %buildroot%_sysconfdir/profile.d/spdk_path.sh
+PATH=$PATH:%_libexecdir/spdk/scripts
+PATH=$PATH:%_libexecdir/spdk/scripts/vagrant
+PATH=$PATH:%_libexecdir/spdk/test/common/config
+PATH=$PATH:%_libexecdir/spdk/bin
+PATH=$PATH:%_libexecdir/spdk/include
+PATH=$PATH:%_libexecdir/spdk/examples
+export PATH
+EOF
+
+cfs %buildroot%_libexecdir/spdk scripts
+cfs %buildroot%_libexecdir/spdk build/examples
+ln -s %_libexecdir/spdk/scripts/bash-completion/spdk %buildroot%_sysconfdir/bash_completion.d/
+
 # setup.sh uses pci_ids.h
 ln -s %_includedir/spdk %buildroot%_prefix/libexec/spdk/include
 
-mv -f %buildroot%_bindir/* %buildroot%_prefix/libexec/spdk/bin/
+# Remove obloleted scripts
+rm -rf %buildroot%_libexecdir/spdk/scripts/*.orig
 
+%if_enabled shared
 # libspdk_ut_mock.so.3.0 statically linked?!
 rm -f %buildroot%_libdir/libspdk_ut_mock.so*
 rm -f %buildroot%_pkgconfigdir/spdk_ut_mock.pc
 
 # fix undefined symbols
-patchelf %buildroot%_libdir/libspdk_env_dpdk_rpc.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_scheduler_dpdk_governor.so.4.0 --add-needed libspdk_env_dpdk.so.15.1
-#patchelf %buildroot%_libdir/libspdk_accel_dpdk_cryptodev.so.3.0 --add-needed librte_cryptodev.so.24.0
-patchelf %buildroot%_libdir/libspdk_scheduler_gscheduler.so.4.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_scheduler_dynamic.so.4.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_sock_posix.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_event_nvmf.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_event_vmd.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_accel_ioat.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_blobfs_bdev.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev.so.17.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_virtio.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_raid.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_nvme.so.7.1 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_null.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_malloc.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_gpt.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_bdev_delay.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_fuse_dispatcher.so.1.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_fsdev.so.2.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_virtio.so.7.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_vhost.so.8.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_vfio_user.so.5.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_ftl.so.9.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_nbd.so.7.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_iscsi.so.8.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_ioat.so.7.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_nvmf.so.20.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_vmd.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_nvme.so.15.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_event.so.14.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_init.so.6.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_blobfs.so.11.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_blob.so.12.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_thread.so.11.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_trace.so.11.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_scsi.so.9.0 --add-needed libspdk_env_dpdk.so.15.1
-patchelf %buildroot%_libdir/libspdk_util.so.10.1 --add-needed libspdk_blobfs_bdev.so.6.0
-patchelf %buildroot%_libdir/libspdk_util.so.10.1 --add-needed libspdk_env_dpdk.so.15.1
-
-%if_disabled static
-# remove static libraries
-rm -f %buildroot%_libdir/*.a
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_eal.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_mempool.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_ring.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_mbuf.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_bus_pci.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_pci.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_mempool_ring.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_telemetry.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_kvargs.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_rcu.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_power.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_ethdev.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_vhost.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_net.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_dmadev.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk.so.16.1 --add-needed librte_cryptodev.so.26.0
+patchelf %buildroot%_libdir/libspdk_env_dpdk_rpc.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_scheduler_dpdk_governor.so.5.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_scheduler_dpdk_governor.so.5.0 --add-needed librte_power.so.26
+patchelf %buildroot%_libdir/libspdk_scheduler_gscheduler.so.5.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_scheduler_dynamic.so.5.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_sock_posix.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_event_nvmf.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_event_vmd.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_accel.so.17.0 --add-needed libisal.so.2.0.31
+patchelf %buildroot%_libdir/libspdk_accel.so.17.0 --add-needed libisal_crypto.so.2.0.26
+patchelf %buildroot%_libdir/libspdk_accel_ioat.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev.so.19.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_virtio.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_raid.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_nvme.so.8.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_null.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_malloc.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_gpt.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_bdev_delay.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_fuse_dispatcher.so.2.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_fsdev.so.3.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_virtio.so.8.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_vhost.so.9.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_vfio_user.so.6.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_ftl.so.10.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_nbd.so.8.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_iscsi.so.9.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_ioat.so.8.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_nvmf.so.22.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_vmd.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_nvme.so.17.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_event.so.15.1 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_init.so.7.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_blob.so.13.1 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_thread.so.12.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_trace.so.12.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_scsi.so.10.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_util.so.11.0 --add-needed libspdk_env_dpdk.so.16.1
+patchelf %buildroot%_libdir/libspdk_util.so.11.0 --add-needed libisal.so.2.0.31
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_trace_record --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_trace --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_top --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_tgt --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_nvme_perf --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_nvme_identify --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_nvme_discover --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_lspci --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/spdk_dd --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/vhost --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/nvmf_tgt --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/bin/iscsi_tgt --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libdir/spdk/lib/*.so --add-rpath %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/examples/* --shrink-rpath --allowed-rpath-prefixes %_libdir/spdk/lib
+patchelf %buildroot%_libexecdir/spdk/examples/* --add-rpath %_libdir/spdk/lib
 %endif
 
 %files
+# %_sysconfdir/ld.so.conf.d/spdk.conf
 %_sysconfdir/profile.d/*
 %_sysconfdir/bash_completion.d/spdk
-%dir %_prefix/libexec/spdk/
-%_prefix/libexec/spdk/*
+%dir %_libexecdir/spdk/
+%_libexecdir/spdk/*
 
 %files devel
 %dir %_includedir/spdk/
 %_includedir/spdk/*
-%_libdir/lib*.so
 %_pkgconfigdir/*.pc
-
+%if_enabled shared
+%_libdir/lib*.so
 %files libs
 %_libdir/lib*.so.*
-
-%if_enabled static
+%else
 %files devel-static
 %_libdir/lib*.a
+%endif
+
+%if_without dpdk
+%files libs-dpdk
+%dir %_libdir/spdk/
+%_libdir/spdk/lib/
 %endif
 
 %files -n python3-module-%name
@@ -341,6 +473,11 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir_noarch/%{name}-*
 
 %changelog
+* Tue Mar 24 2026 Leontiy Volodin <lvol@altlinux.org> 26.01-alt1
+- New version 26.01.
+- Built on built-in dpdk (ALT #58136).
+- Excluded build on aarch64.
+
 * Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 25.05.1-alt1
 - New version 25.05.1 (Fixes: CVE-2025-57275).
 - Fixed build with libsystemd 258.1.
