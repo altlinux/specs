@@ -3,7 +3,7 @@
 
 Name: 	 solvespace
 Version: 3.2
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -12,35 +12,37 @@ Group: 	 Graphics
 URL: 	 http://solvespace.com/
 VCS:     https://github.com/solvespace/solvespace
 
-Source0:  %name-%version.tar
-Source1:  libdxfrw.tar
-Source2:  mimalloc.tar
-Patch1:   use-explicit-git-hash.patch
+Source0: %name-%version.tar
+Source1: submodules.tar
+Patch1: use-explicit-git-hash.patch
+Patch2: solvespace-alt-cxx-standard-for-eigen.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
-BuildRequires: eigen3-compat-devel
+BuildRequires: eigen3
+BuildRequires: eigen3-devel
 BuildRequires: libGL-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libGLU-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libdrm-devel
+BuildRequires: libexpat-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libharfbuzz-devel
 %if_with gtk3
 BuildRequires: libgtkmm3-devel
 %else
 BuildRequires: libgtkmm2-devel
 %endif
-BuildRequires: libpangomm-devel
 BuildRequires: libjson-c-devel
-BuildRequires: libpng-devel
-BuildRequires: libharfbuzz-devel
-BuildRequires: libdrm-devel
+BuildRequires: libpangomm-devel
 BuildRequires: libpcre-devel
 BuildRequires: libpixman-devel
-BuildRequires: libexpat-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libXxf86vm-devel
+BuildRequires: libpng-devel
 BuildRequires: libspnav-devel
 BuildRequires: zlib-devel
 
@@ -82,10 +84,11 @@ This package includes development files for libslvs.
 %prep
 %setup -q
 tar xf %SOURCE1
-tar xf %SOURCE2
 %patch1 -p1
+%patch2 -p1
 
 %build
+%add_optflags -I%_includedir/eigen3
 %cmake \
     -GNinja \
     -Wno-dev \
@@ -108,6 +111,7 @@ tar xf %SOURCE2
 %_datadir/%name
 %_datadir/mime/packages/solvespace-slvs.xml
 %_datadir/metainfo/*.metainfo.xml
+%_datadir/thumbnailers/solvespace.thumbnailer
 
 %files -n libslvs
 %_libdir/libslvs.so.*
@@ -117,6 +121,9 @@ tar xf %SOURCE2
 %_includedir/slvs.h
 
 %changelog
+* Tue Mar 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt2
+- New version.
+
 * Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 1:3.2-alt1
 - 3.2-rc1.
 
