@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        146.0.7680.153
+Version:        146.0.7680.164
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -700,8 +700,47 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Mar 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.164-alt1
+- New version (146.0.7680.164).
+- Fixes:
+  + CVE-2026-4673: Heap buffer overflow in WebAudio
+  + CVE-2026-4674: Out of bounds read in CSS
+  + CVE-2026-4675: Heap buffer overflow in WebGL
+  + CVE-2026-4676: Use after free in Dawn
+  + CVE-2026-4677: Out of bounds read in WebAudio
+  + CVE-2026-4678: Use after free in WebGPU
+  + CVE-2026-4679: Integer overflow in Fonts
+  + CVE-2026-4680: Use after free in FedCM
+
 * Thu Mar 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.153-alt1
 - New version (146.0.7680.153).
+- Fixes:
+  + CVE-2026-4439: Out of bounds memory access in WebGL
+  + CVE-2026-4440: Out of bounds read and write in WebGL
+  + CVE-2026-4441: Use after free in Base
+  + CVE-2026-4442: Heap buffer overflow in CSS
+  + CVE-2026-4443: Heap buffer overflow in WebAudio
+  + CVE-2026-4444: Stack buffer overflow in WebRTC
+  + CVE-2026-4445: Use after free in WebRTC
+  + CVE-2026-4446: Use after free in WebRTC
+  + CVE-2026-4447: Inappropriate implementation in V8
+  + CVE-2026-4448: Heap buffer overflow in ANGLE
+  + CVE-2026-4449: Use after free in Blink
+  + CVE-2026-4450: Out of bounds write in V8
+  + CVE-2026-4451: Insufficient validation of untrusted input in Navigation
+  + CVE-2026-4452: Integer overflow in ANGLE
+  + CVE-2026-4453: Integer overflow in Dawn
+  + CVE-2026-4454: Use after free in Network
+  + CVE-2026-4455: Heap buffer overflow in PDFium
+  + CVE-2026-4456: Use after free in Digital Credentials API
+  + CVE-2026-4457: Type Confusion in V8
+  + CVE-2026-4458: Use after free in Extensions
+  + CVE-2026-4459: Out of bounds read and write in WebAudio
+  + CVE-2026-4460: Out of bounds read in Skia
+  + CVE-2026-4461: Inappropriate implementation in V8
+  + CVE-2026-4462: Out of bounds read in Blink
+  + CVE-2026-4463: Heap buffer overflow in WebRTC
+  + CVE-2026-4464: Integer overflow in ANGLE
 
 * Sat Mar 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.80-alt1
 - New version (146.0.7680.80).
