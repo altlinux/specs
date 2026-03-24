@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.13
+Version: 0.2.14
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -9,10 +9,9 @@ License: GPLv2+
 Group: System/Configuration/Other
 URL: https://altlinux.space/alterator/alterator-backend-packages
 
-BuildArch: noarch
-
 Source0: %name-%version.tar
 
+BuildRequires: libpackagekit-glib-devel
 Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
@@ -37,6 +36,9 @@ through apt and rpm.
 
 %prep
 %setup
+
+%build
+%make
 
 %install
 %makeinstall_std
@@ -65,6 +67,10 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Tue Mar 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.14-alt1
+- Add missing timeouts.
+- Use libpackagekit for CheckDistUpgrade.
+
 * Mon Feb 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.13-alt1
 - Add cdrom source availability check before apt operations (thx Oleg Chagaev).
 
