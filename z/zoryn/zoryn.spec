@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,18 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 0.31.0-alt1
+- added gen pypi2spec command for generating RPM specs from PyPI metadata
+- added task log command for direct TUI log viewing
+- added task manage SSE real-time updates, copy subtask support, commit/test-only actions
+- added task ls clickable hyperlinks (OSC 8)
+- added task batch --continue/--abort/--restart for interrupted batch recovery
+- added per-branch default builders via TOML sub-tables ([builders.<branch>])
+- fixed task test-rebuild ignoring [builders] default config setting
+- fixed up merge abort when unresolved conflicts remain
+- fixed up tarball-watch file parser and version detection with HTTP redirects
+- fixed HTTP handling of non-standard Content-Encoding
+
 * Wed Mar 18 2026 Anton Farygin <rider@altlinux.org> 0.30.0-alt1
 - added zoryn up --continue/--abort/--restart/--stage/--from pipeline control
 - added pipeline library for generic sequential pipeline with state persistence
