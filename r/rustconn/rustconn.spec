@@ -2,14 +2,14 @@
 
 %define __name RustConn
 %define _name rustconn
-%define ver_major 0.9
+%define ver_major 0.10
 %define rdn_name io.github.totoshko88.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.5
 Release: alt1
 
 Summary: Remote connections manager
@@ -102,6 +102,9 @@ done
 %doc *.md docs/*.md
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
 * Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt1
 - 0.9.7
 

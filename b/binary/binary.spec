@@ -1,5 +1,5 @@
 %define _name binary
-%define ver_major 5.3
+%define ver_major 5.4
 %define rdn_name io.github.fizzyizzy05.%_name
 
 %def_enable check
@@ -59,6 +59,9 @@ hexadecimal and binary numbers.
 %doc README.*
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
 - updated to 5.3-2-g12046d6
 
