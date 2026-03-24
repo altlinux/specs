@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.3.1.3
+Version: 2.4
 Release: alt1
 
 Summary: Sphinx objects.inv Inspection/Manipulation Tool
@@ -45,6 +45,9 @@ BuildRequires: python3(dictdiffer) python3(jsonschema)}
 
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
+- 2.4
+
 * Tue May 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1.3-alt1
 - 2.3.1.3
 
