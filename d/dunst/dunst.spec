@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: dunst
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: Lightweight replacement for the notification-daemons
@@ -59,6 +59,9 @@ sed -i '/RUN_SUITE(suite_draw)/d' test/test.c
 %_sysconfdir/%name
 
 %changelog
+* Mon Mar 23 2026 Ulysses Apokin <ulysses@altlinux.org> 1.13.2-alt1
+- New version.
+
 * Tue Feb 17 2026 Ulysses Apokin <ulysses@altlinux.org> 1.13.1-alt1
 - New version.
 
