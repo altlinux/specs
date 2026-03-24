@@ -3,7 +3,7 @@
 %global import_path github.com/cenkalti/rain
 
 Name: rain
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 Summary: Rain is the main BitTorrent client used at put.io
 License: MIT
@@ -54,6 +54,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt1
+- New version
+
 * Fri Sep 05 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.1-alt1
 - 1.12.12 -> 2.2.1
 
