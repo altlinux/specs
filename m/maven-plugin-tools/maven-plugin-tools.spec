@@ -1,6 +1,6 @@
 Name:           maven-plugin-tools
 Version:        3.9.0
-Release:        alt1
+Release:        alt2
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        Apache-2.0
@@ -13,6 +13,7 @@ Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugin-tools/%{n
 Patch0:         0001-Disable-help-MOJO-generation.patch
 Patch1:         0002-Remove-dependency-on-jtidy.patch
 Patch2:         0003-Disable-reporting.patch
+Patch4:         0004-sisu-index-for-aven-plugin-tools-java.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: jpackage-default
@@ -160,6 +161,10 @@ rm maven-plugin-tools-generators/src/main/java/org/apache/maven/tools/plugin/gen
 %files java -f .mfiles-maven-plugin-tools-java
 
 %changelog
+* Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 0:3.9.0-alt2
+- NMU: Fix building of legacy plugins that rely on MOJO metadata
+  extraction from javadoc.
+
 * Sat Jul 26 2025 Andrey Cherepanov <cas@altlinux.org> 0:3.9.0-alt1
 - New version.
 

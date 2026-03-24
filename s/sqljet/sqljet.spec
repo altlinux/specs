@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_25jpp11
+Release:        alt4_25jpp11
 Summary:        Pure Java SQLite
 
 License:        GPLv2
@@ -23,7 +23,7 @@ BuildRequires:  ant
 BuildRequires:  antlr
 BuildRequires:  antlr32-java
 BuildRequires:  antlr32-tool
-BuildRequires:  easymock3
+BuildRequires:  easymock
 BuildRequires:  junit
 BuildRequires:  stringtemplate
 BuildRequires:  hamcrest
@@ -65,7 +65,7 @@ EOF
 
 
 %build
-export CLASSPATH=$(build-classpath antlr32/antlr-runtime-3.2 antlr32/antlr-3.2 antlr stringtemplate easymock3 junit hamcrest-core)
+export CLASSPATH=$(build-classpath antlr32/antlr-runtime-3.2 antlr32/antlr-3.2 antlr stringtemplate easymock junit hamcrest-core)
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars osgi javadoc pom
 
 %install
@@ -81,6 +81,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars osgi javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 0:1.1.10-alt4_25jpp11
+- NMU: use easymock instead of easymock3 (fixes FTBFS)
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.1.10-alt3_25jpp11
 - update
 
