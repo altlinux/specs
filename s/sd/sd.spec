@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sd
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: sd is an intuitive find & replace CLI
@@ -40,6 +40,11 @@ install -D %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 1.1.0-alt1
+- New version:
+  + sd now processes input line-by-line by default (previous whole-file behavior
+  is still available via --across / -A)
+
 * Sat Dec 16 2023 Vladislav Glinkin <smasher@altlinux.org> 1.0.0-alt1
 - Updated to 1.0.0
 
