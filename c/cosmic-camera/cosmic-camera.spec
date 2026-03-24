@@ -3,14 +3,14 @@
 %define _name camera
 %define binary_name %_name
 %define rdn_name io.github.cosmic_utils.%_name
-%define ver_major 0.1
+%define ver_major 0.3
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.23
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Camera
@@ -28,13 +28,16 @@ Source: %_name-%version%beta.tar
 Source1: %_name-%version%beta-cargo.tar
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: just
+BuildRequires: just gcc-c++
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libcamera)
+BuildRequires: cmake clang-devel nasm
 BuildRequires: pkgconfig(gstreamer-video-1.0)
 
 Requires: gst-plugins-base1.0
+Requires: icon-theme-cosmic
 
-#ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh
 
 %description
 Camera is a third-party camera application for the COSMIC desktop
@@ -66,6 +69,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
 - 0.1.23
 
