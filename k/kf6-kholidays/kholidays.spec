@@ -1,7 +1,7 @@
 %define rname kholidays
 
 Name: kf6-%rname
-Version: 6.23.0
+Version: 6.24.0
 Release: alt1
 %K6init altplace
 
@@ -16,6 +16,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libqt6-core libqt6-gui libqt6-network libqt6-qml libqt6-xml libstdc++-devel perl python-base python-modules python3 python3-base qt6-base-devel qt6-tools rpm-build-python3 rpm-build-qml ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules libssl-devel python3-dev qt6-declarative-devel qt6-tools-devel rpm-build-kf6 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: /usr/bin/flex
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 
 %description
@@ -74,6 +75,9 @@ mkdir -p %buildroot/%_K6data/libkholidays/
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
 - new version
 

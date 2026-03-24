@@ -1,7 +1,7 @@
 %define rname kcmutils
 
 Name: kf6-%rname
-Version: 6.23.0
+Version: 6.24.0
 Release: alt1
 %K6init altplace
 
@@ -21,6 +21,7 @@ BuildRequires: kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kservice-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-kxmlgui-devel kf6-sonnet-devel kf6-attica-devel
 BuildRequires: kf6-kpackage-devel kf6-kio-devel
+BuildRequires: kf6-kirigami
 
 %description
 KCMUtils provides various classes to work with KCModules. KCModules can be
@@ -52,6 +53,7 @@ KF6 library
 Group: System/Libraries
 Summary: KF6 library
 Requires: %name-common
+Requires: kf6-kirigami
 %description -n libkf6kcmutilsquick
 KF6 library
 
@@ -95,6 +97,9 @@ KF6 library
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
 - new version
 

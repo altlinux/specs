@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf6-%rname
-Version: 6.23.0
+Version: 6.24.0
 Release: alt1
 %K6init no_altplace
 
@@ -16,7 +16,7 @@ Summary: Abstraction to provide and leverage actions of a specific kind
 Url: http://www.kde.org
 License: LGPL-2.1-or-later
 
-Requires: libkf6prison kf6-kirigami kf6-kdeclarative
+Requires: libkf6prison libkf6itemmodels kf6-kirigami kf6-kdeclarative
 %if_disabled bootstrap
 #Requires: connect
 %endif
@@ -31,6 +31,7 @@ BuildRequires: kaccounts-integration-devel
 BuildRequires: accounts-qt6-devel signon-devel
 %endif
 BuildRequires: intltool
+BuildRequires: libkf6prison libkf6itemmodels
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-kpackage-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
@@ -132,6 +133,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
 - new version
 

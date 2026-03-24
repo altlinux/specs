@@ -11,9 +11,10 @@
 %define libkirigamilayoutsprivate libkirigamilayoutsprivate%sover
 %define libkirigamipolyfill libkirigamipolyfill%sover
 %define libkirigamitemplates libkirigamitemplates%sover
+%define libkirigamicontrols libkirigamicontrols%sover
 
 Name: kf6-kirigami
-Version: 6.23.1
+Version: 6.24.0
 Release: alt1
 %K6init altplace
 
@@ -68,72 +69,79 @@ applications that use %name
 
 %package -n %libkirigami
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigami
-KF6 library
+%name library
 %package -n %libkirigamidelegates
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamidelegates
-KF6 library
+%name library
 
 %package -n %libkirigamiplatform
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamiplatform
-KF6 library
+%name library
 
 %package -n %libkirigamidialogs
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamidialogs
-KF6 library
+%name library
 
 %package -n %libkirigamilayouts
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamilayouts
-KF6 library
+%name library
 
 %package -n %libkirigamiprimitives
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamiprimitives
-KF6 library
+%name library
 
 %package -n %libkirigamiprivate
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamiprivate
-KF6 library
+%name library
 
 %package -n %libkirigamilayoutsprivate
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamilayoutsprivate
-KF6 library
+%name library
 
 %package -n %libkirigamipolyfill
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamipolyfill
-KF6 library
+%name library
 
 %package -n %libkirigamitemplates
 Group: System/Libraries
-Summary: KF6 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkirigamitemplates
-KF6 library
+%name library
+
+%package -n %libkirigamicontrols
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamicontrols
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -166,6 +174,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigami
 %_K6lib/libKirigami.so.*
 %_K6lib/libKirigami.so.%sover
+%files -n %libkirigamicontrols
+%_K6lib/libKirigamiControls.so.%sover
+%_K6lib/libKirigamiControls.so.*
 %files -n %libkirigamidelegates
 %_K6lib/libKirigamiDelegates.so.%sover
 %_K6lib/libKirigamiDelegates.so.*
@@ -195,6 +206,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiTemplates.so.*
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Tue Mar 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.1-alt1
 - new version
 

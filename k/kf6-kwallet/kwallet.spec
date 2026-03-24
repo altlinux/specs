@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.23.0
+Version: 6.24.0
 Release: alt1
 %K6init
 
@@ -75,7 +75,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 
 msgcat --use-first po/ru/kwalletd6.po %SOURCE1 > po/ru/kwalletd6.po.tmp
 cat po/ru/kwalletd6.po.tmp >po/ru/kwalletd6.po
@@ -141,6 +141,9 @@ __EOF__
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
 - new version
 

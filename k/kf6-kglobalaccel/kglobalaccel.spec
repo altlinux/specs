@@ -5,7 +5,7 @@
 %define service_name plasma-kglobalaccel
 
 Name: kf6-%rname
-Version: 6.23.0
+Version: 6.24.0
 Release: alt1
 %K6init
 
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_K6data/kglobalaccel/
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
 - new version
 

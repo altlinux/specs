@@ -1,7 +1,7 @@
 %define rname kservice
 
 Name: kf6-%rname
-Version: 6.23.1
+Version: 6.24.0
 Release: alt1
 %K6init altplace
 
@@ -80,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
 * Tue Mar 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.1-alt1
 - new version
 
