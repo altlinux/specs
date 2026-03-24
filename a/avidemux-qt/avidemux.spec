@@ -15,7 +15,7 @@
 
 Name: avidemux-qt
 Version: 2.8.2
-Release: alt0.2
+Release: alt0.3
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -42,6 +42,7 @@ Source1: ffmpeg.tar.bz2
 Source2: avidemux.desktop
 Source3: http://gitorious.org/avidemux2-6/avidemux2-6/blobs/raw/7cf44bbc1f33894594b2bc84089d1779edc5c2b9/avidemux_plugins/ADM_autoScrips/lib/ADM_resize.py
 Source4: avidemux_ru.ts
+Source5: avidemux2_i18n-%version.tar
 # Debian
 Source20: ffmpeg-remove-x86-optimization.patch
 
@@ -126,7 +127,7 @@ Conflicts: %name <= 2.4.4-alt1
 Common files for %name
 
 %prep
-%setup -n %rname-%version -a1
+%setup -n %rname-%version -a1 -a5
 %if_enabled own_ffmpeg
 %patch1 -p1
 %endif
@@ -146,6 +147,7 @@ Common files for %name
 #install -m 0644 %SOURCE20 avidemux_core/ffmpeg_package/patches/
 
 #cp -f %SOURCE4 po/
+mv avidemux2_i18n-2.8.2/* avidemux/qt4/i18n/
 
 %if_enabled own_ffmpeg
 install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
@@ -207,6 +209,7 @@ ln -s avidemux3_qt6 %buildroot/%_bindir/%rname
 #mkdir -p %buildroot/%_datadir/avidemux6/i18n/
 #install -m 0644 lrelease-qt6 avidemux/qt4/i18n/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
 
+rm -rf  %buildroot/%_datadir/avidemux6/qt6/i18n/qtbase_*.qm
 %find_lang --with-qt avidemux
 #echo "%%defattr(644,root,root,755)" > avidemux.lang
 #for f in %buildroot/%_datadir/avidemux6/i18n/avidemux*.qm
@@ -237,6 +240,9 @@ ln -s avidemux3_qt6 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Mar 24 2026 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt0.3
+- update to master 8c482973
+
 * Wed Oct 29 2025 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt0.2
 - temporary using Qt xcb platform plugin by default (closes: 56600)
 
