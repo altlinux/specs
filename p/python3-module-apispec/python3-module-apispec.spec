@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.8.4
+Version: 6.10.0
 Release: alt1
 Summary: A pluggable API specification generator
 License: MIT
@@ -47,5 +47,8 @@ Currently supports the OpenAPI Specification (f.k.a. the Swagger specification).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 24 2026 Alexey Rodygin <alehandro@altlinux.org> 6.10.0-alt1
+- Updated to new version 6.10.0.
+
 * Tue Jan 13 2026 Alexey Rodygin <alehandro@altlinux.org> 6.8.4-alt1
 - Initial build for ALT Linux
