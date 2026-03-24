@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 25.8.18.1
+Version: 25.8.20.4
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -42,9 +42,6 @@ Source100: %name-contrib-%version-%release.tar
 Source1000: clickhouse.watch
 
 Patch0: %name-%version-%release.patch
-Patch2: clickhouse-avro-gcc10-compat.patch
-Patch3: clickhouse-fastops-gcc-compat.patch
-Patch5: clickhouse-24.3-use-system-toolchain.patch
 
 BuildRequires(pre): rpm-build-python3
 %if_with clang
@@ -113,16 +110,6 @@ tar --strip-components=1 -xf %SOURCE100 -C contrib/
 
 %patch0 -p1
 
-pushd contrib/avro
-%patch2 -p1
-popd
-
-pushd contrib/fastops
-%patch3 -p1
-popd
-
-%patch5 -p1
-
 %build
 if [ %__nprocs -gt 6 ] ; then
 	export NPROCS=6
@@ -146,6 +133,7 @@ export ROOT_PATH=$PWD
 	-DCMAKE_CXX_COMPILER=clang++-%clang_version \
 	-DCOMPILER_CACHE=disabled \
 	-DUSE_LIBCXX:BOOL=ON \
+	-DDISABLE_HERMETIC_BUILD:BOOL=ON \
 	-DPARALLEL_COMPILE_JOBS=$NPROCS \
 	-DPARALLEL_LINK_JOBS=1 \
 %else
@@ -272,6 +260,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Mon Mar 23 2026 Anton Farygin <rider@altlinux.org> 25.8.20.4-alt1
+- 25.8.18.1 -> 25.8.20.4
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 25.8.18.1-alt1
 - 25.8.17.37 -> 25.8.18.1
 
