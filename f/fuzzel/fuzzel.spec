@@ -1,5 +1,5 @@
 Name: fuzzel
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: Application launcher for wlroots based Wayland compositors
@@ -7,6 +7,7 @@ Summary: Application launcher for wlroots based Wayland compositors
 License: MIT
 Group: Other
 Url: https://codeberg.org/dnkl/fuzzel
+Vcs: https://codeberg.org/dnkl/fuzzel
 
 # Source-url: https://codeberg.org/dnkl/fuzzel/releases/download/%version/fuzzel-%version.tar.gz
 Source: %name-%version.tar
@@ -64,8 +65,11 @@ Features:
 %_sysconfdir/xdg/%name/
 
 %changelog
+* Tue Mar 10 2026 Aleksandr Dovydenkov <asd@altlinux.org> 1.14.1-alt1
+- new version 1.14.1
+
 * Fri Feb 06 2026 Aleksandr Dovydenkov <asd@altlinux.org> 1.14.0-alt1
-- new version 1.14.0 
+- new version 1.14.0
 
 * Mon Sep 22 2025 Aleksandr Dovydenkov <asd@altlinux.org> 1.13.1-alt1
 - new version 1.13.1
