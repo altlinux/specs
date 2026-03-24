@@ -3,7 +3,7 @@
 
 Name: isoimagewriter
 Version: 25.12.3
-Release: alt1
+Release: alt2
 
 Group: Archiving/Cd burning
 Summary: Program to write hybrid ISO files onto USB disks
@@ -29,23 +29,28 @@ BuildRequires: kf6-solid-devel
 %setup -n %rname-%version
 
 %build
-%K6cmake
-%K6make
+%K6build
 
 %install
 %K6install
+for n in RosaImageWriter rosa-imagewriter ; do
+    ln -sr %buildroot/%_K6bin/%rname %buildroot/%_K6bin/$n
+done
 
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc *.md LICENSES
-%_bindir/%name
-%_datadir/applications/%nameL.desktop
-%_iconsdir/hicolor/*/apps/%nameL.svg
-%_datadir/%name
-%_datadir/metainfo/%nameL.appdata.xml
+%_K6bin/*mage*riter
+%_K6xdgapp/*%{rname}*.desktop
+%_K6icon/hicolor/*/apps/*%{rname}*.svg
+%_K6data/%rname/
+%_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Tue Mar 24 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- provide rosa-imagewriter binaries
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
