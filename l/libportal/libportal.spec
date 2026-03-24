@@ -15,7 +15,7 @@
 
 Name: libportal
 Version: %ver_major.1
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: Flatpak portal library
@@ -89,7 +89,6 @@ Requires: %name = %EVR
 %name provides GIO-style async APIs for most Flatpak portals.
 This package provides files for development with %name.
 
-
 %package gtk3-devel
 Summary: Development files and libraries for %name-gtk3
 Group: Development/C
@@ -147,6 +146,7 @@ GObject introspection devel data for the Flatpak portal library
 %package gtk3-gir
 Summary: GObject introspection data for %name-gtk3
 Group: System/Libraries
+Requires: %name-gtk3 = %EVR
 Requires: %name-gir = %EVR
 
 %description gtk3-gir
@@ -165,6 +165,7 @@ GObject introspection devel data for the GTK3 portal wrapper library.
 %package gtk4-gir
 Summary: GObject introspection data for %name-gtk4
 Group: System/Libraries
+Requires: %name-gtk4 = %EVR
 Requires: %name-gir = %EVR
 
 %description gtk4-gir
@@ -320,6 +321,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1.2
+- fixed subpackage interdependencies
+
 * Sat Jun 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1.1
 - applied upstream fix for build against Qt 6.9+ (ALT #54716)
 

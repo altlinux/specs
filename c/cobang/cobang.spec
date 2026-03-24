@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A native QR Code and barcode scanner application for Linux desktop
 License: GPL-3.0-or-later
@@ -28,9 +28,12 @@ Requires: python3-module-pygobject3
 Requires: dconf
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
-Requires: typelib(XdpGtk4) = 1.0
 Requires: typelib(GstApp) = 1.0
 Requires: gst-plugin-gtk4
+# loaded but not imported
+Requires: typelib(Rsvg) = 2.0
+Requires: typelib(XdpGtk4) = 1.0
+
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler
@@ -66,6 +69,9 @@ remote.
 %doc README.*
 
 %changelog
+* Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1.1
+- required typelib(Rsvg) = 2.0 (ALT #58347)
+
 * Thu Mar 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
