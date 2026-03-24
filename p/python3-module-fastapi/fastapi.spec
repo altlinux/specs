@@ -15,8 +15,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 0.135.1
-Release: alt2
+Version: 0.135.2
+Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -110,6 +110,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.135.2-alt1
+- Updated to 0.135.2.
+
 * Thu Mar 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.135.1-alt2
 - Introduced subpackages needed to install FastAPI with its optional
   dependencies.
