@@ -2,8 +2,8 @@
 %def_without check
 
 Name: oxker
-Version: 0.13.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: A simple tui to view and control docker containers
 License: MIT
@@ -41,6 +41,9 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Wed Mar 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.13.1-alt1
+- new version
+
 * Wed Mar 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.13.0-alt2
 - disable tests
 
