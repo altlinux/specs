@@ -3,7 +3,7 @@
 
 Name: openbao
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Secure secrets and encryption management system
 License: MPL-2.0
@@ -37,8 +37,11 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export BUILD_TAGS="openbao ui"
-
 export TAGS="${BUILD_TAGS}"
+export LDFLAGS="-X github.com/%name/%name/version.fullVersion=%version
+-X github.com/%name/%name/version.GitCommit=%version-%release
+-X github.com/%name/%name/version.BuildDate=$(date -u +'%%Y-%%m-%%d')"
+
 %golang_prepare
 cd .build/src/%import_path
 
@@ -85,6 +88,9 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Wed Mar 25 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt2
+- Fixed LDFLAGS to set correct version information (Closes: #58272).
+
 * Tue Feb 24 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt1
 - Updated to new version v2.5.1.
 - Added openbao.env configuration file.
