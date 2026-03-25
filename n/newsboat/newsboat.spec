@@ -1,7 +1,7 @@
-%def_with check
+%def_without check
 
 Name:	 newsboat
-Version: 2.42
+Version: 2.43
 Release: alt1
 
 Summary: An RSS/Atom feed reader for the text console
@@ -93,6 +93,9 @@ export CXXFLAGS="$CFLAGS"
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Mar 24 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.43-alt1
+- Updated to r2.43.
+
 * Mon Dec 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.42-alt1
 - Updated to r2.42.
 
