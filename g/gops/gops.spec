@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gops
-Version: 0.3.28
-Release: alt2
+Version: 0.3.29
+Release: alt1
 
 Summary: gops is a command to list and diagnose Go processes currently running on your system
 License: BSD-3-Clause
@@ -55,6 +55,9 @@ install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Mar 25 2026 Nadezhda Fedorova <fedor@altlinux.org> 0.3.29-alt1
+- New version 0.3.29.
+
 * Tue Nov 11 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.3.28-alt2
 - Delete wrong require.
 
