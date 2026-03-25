@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    go-size-analyzer
-Version: 1.10.2
+Version: 1.11.0
 Release: alt1
 
 Summary: A tool for analyzing the size of compiled Go binaries, offering cross-platform support, detailed breakdowns, and multiple output formats
@@ -52,6 +52,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Wed Mar 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+
 * Wed Dec 10 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.2-alt1
 - New version 1.10.2.
 
