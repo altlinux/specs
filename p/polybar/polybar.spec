@@ -1,6 +1,6 @@
 Name: polybar
 Version: 3.7.2
-Release: alt1
+Release: alt2
 
 Summary: A fast and easy-to-use status bar
 License: MIT
@@ -41,6 +41,11 @@ BuildRequires: i3-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libpulse)
 
+%ifarch %e2k
+BuildRequires: clang
+%define cxx -DCMAKE_CXX_COMPILER="clang++"
+%endif
+
 %description
 A fast and easy-to-use status bar for tilling WM
 
@@ -48,7 +53,7 @@ A fast and easy-to-use status bar for tilling WM
 %setup
 
 %build
-%cmake
+%cmake %cxx
 %cmake_build
 
 %install
@@ -70,6 +75,9 @@ rm -rf %buildroot/%_docdir/%name/.buildinfo
 %_datadir/zsh/site-functions/_%{name}_msg
 
 %changelog
+* Wed Mar 25 2026 Michael Shigorin <mike@altlinux.org> 3.7.2-alt2
+- E2K: build with clang (thx @numitorum)
+
 * Sun Aug 25 2024 Roman Alifanov <ximper@altlinux.org> 3.7.2-alt1
 - new version 3.7.2 (with rpmrb script)
 
