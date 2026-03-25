@@ -4,7 +4,7 @@
 
 Name: alterator-explorer
 Version: 0.1.18
-Release: alt1
+Release: alt2
 
 Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
@@ -38,7 +38,7 @@ BuildRequires: ImageMagick-tools
 %endif
 
 Requires: alterator-interface-application >= 0.1.1
-Requires: alterator-backend-categories >= 0.1.2
+Requires: alterator-backend-categories >= 0.1.6
 Requires: alterator-backend-legacy >= 0.1.2
 
 %if_with legacy
@@ -54,7 +54,7 @@ Conflicts: alterator-standalone >= 7.4.3
 %endif
 
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.29
 
 %description
 %summary.
@@ -96,6 +96,10 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt2
+- Fix dependency versions for correct operation with
+  exit_status (alterator-module-executor).
+
 * Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt1
 - Fixed (thx Andrey Alekseev):
   + raising window on wayland

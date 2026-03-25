@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-categories
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Backend for Alterator categories
@@ -46,8 +46,8 @@ mkdir -p %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D categories.backend %buildroot%_datadir/alterator/backends
 install -v -p -m 755 -D category-info %buildroot%_libexecdir/%name
 install -v -p -m 755 -D list-categories %buildroot%_libexecdir/%name
-install -v -p -m 644 -D org.altlinux.alterator.categories.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D org.altlinux.alterator.categories.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D org.altlinux.alterator.categories1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D org.altlinux.alterator.categories1.policy %buildroot%_datadir/polkit-1/actions
 
 %files
 %doc LICENSE
@@ -58,10 +58,15 @@ install -v -p -m 644 -D org.altlinux.alterator.categories.policy %buildroot%_dat
 %_libexecdir/%name/list-categories
 
 %files -n alterator-interface-categories
-%_datadir/polkit-1/actions/org.altlinux.alterator.categories.policy
-%_datadir/dbus-1/interfaces/org.altlinux.alterator.categories.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.categories1.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.categories1.xml
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.6-alt1
+- Add translations for polkit actions.
+- Rename incorrect interface file names
+  (fix the missing validation by alterator-manager).
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
 - Add 'exit_status = true' for new version of executor.
 
