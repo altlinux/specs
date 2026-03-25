@@ -2,7 +2,7 @@
 %define import_path github.com/external-secrets/external-secrets/
 
 Name: external-secrets
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Kubernetes operator for syncing external secrets into Kubernetes Secrets
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %doc README.md 
 
 %changelog
+* Thu Feb 26 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.0.1-alt1
+- Updated to new version v2.0.1.
+
 * Thu Feb 19 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.0.0-alt1
 - Updated to new version v2.0.0.
 
