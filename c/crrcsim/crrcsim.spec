@@ -1,17 +1,32 @@
 Name: crrcsim
-Version: 0.9.12
-Release: alt3
+Version: 0.9.13
+Release: alt1
 
 Summary: A Model-Airplane Flight Simulation Program
 License: GPLv2
 Group: Games/Other
 
-Url: http://crrcsim.berlios.de/wiki
+URL:           http://sourceforge.net/apps/mediawiki/crrcsim/
 # http://download.berlios.de/crrcsim/%%name-%%version.tar.gz
 Source0: %name-%version.tar.gz
 Source1: CRRCsim.desktop
-Patch1: %name-%version-alt-build.patch
-Patch2: %name-%version-alt-nonx86.patch
+#Patch1: %name-0.9.12-alt-build.patch
+#Patch2: %name-0.9.12-alt-nonx86.patch
+
+Patch0:        %{name}-0.9.13-support-for-platforms-without-sys-io.h.patch
+# aarch64 support added
+# upstream report: http://preview.tinyurl.com/cass62h
+Patch1:        %{name}-0.9.13-aarch64-support-added.patch
+# fix for https://bugzilla.redhat.com/show_bug.cgi?id=1307411
+# upstream report: https://sourceforge.net/p/crrcsim/bugs/35/
+Patch2:        %{name}-0.9.13-gcc-7-fixes.patch
+# hg export -r 1554 >crrcsim-0.9.13-issue-41.patch
+# fix fof rhbz#1575624
+Patch3:        %{name}-0.9.13-issue-41.patch
+# Fix compilation with CGAL >5.x
+# upstream report: https://sourceforge.net/p/crrcsim/bugs/44/
+Patch4:        %{name}-0.9.13-cgal-header-mode-only.patch
+
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel
@@ -37,8 +52,15 @@ such as joystick, mouse, keyboard ...
 
 %prep
 %setup
-%patch1 -p2
+
+#patch1 -p2
+#patch2 -p1
+
+
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure
@@ -62,6 +84,10 @@ desktop-file-install --vendor="" \
 %_man1dir/%name.1*
 
 %changelog
+* Thu Mar 26 2026 Ilya Mashkin <oddity@altlinux.ru> 0.9.13-alt1
+- 0.9.13 (Closes: #58135)
+- Update url
+
 * Fri Mar 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.12-alt3
 - NMU: fixed FTBFS on non-x86 architectures (made inputdev_parallel a stub
   on non-x86 architectures).
