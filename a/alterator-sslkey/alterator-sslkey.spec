@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sslkey
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -39,6 +39,9 @@ and certificates
 %_altdata_dir/type/*
 
 %changelog
+* Mon Mar 23 2026 Fedor Moseichuck <phobos@altlinux.org> 0.2.6-alt1
+- ui: fix sign request export
+
 * Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.5-alt1
 - Support subjectAltName (ALT #52348).
 
