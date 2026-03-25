@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,13 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Wed Mar 25 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.3-alt1
+- components: remove beesu legacy package from alt-server-gnome-environment
+- editions,components: remove alt-csp-cryptopro component at all
+- Fix documentation for alt-server (thx Dmitriy Terekhin):
+  + Add documentation to alt-server-gnome-environment.
+  + Don't mention edition in alt-server-gnome-environment component name.
+
 * Mon Mar 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.2-alt1
 - Update components:
   + update bacula components to version 15
