@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-imagesize
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Getting image size from png/jpeg/jpeg2000/gif file in pure Python
@@ -52,6 +52,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Wed Mar 25 2026 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Tue Mar 03 2026 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt1
 - New version 1.5.0.
 
