@@ -2,7 +2,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: hotspot
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: The Linux perf GUI for performance analysis
@@ -73,7 +73,11 @@ desktop-file-validate %buildroot%_datadir/applications/com.kdab.hotspot.desktop
 %_desktopdir/com.kdab.hotspot.desktop
 %_datadir/metainfo/com.kdab.Hotspot.appdata.xml
 %_datadir/knotifications6/hotspot.notifyrc
+%_datadir/mime/packages/com.kdab.hotspot.xml
 
 %changelog
+* Tue Mar 03 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.6.0-alt1
+- Updated to new version v1.6.0.
+
 * Tue Jan 27 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.5.1-alt1
 - Initial build for ALT Sisyphus.
