@@ -1,16 +1,17 @@
 Name: zerofree
-Version: 1.0.3
+Version: 1.1.1
 Release: alt1
 
-Summary: Utility to force unused ext2 inodes and blocks to zero
+Summary: Utility to force unused ext2/3/4 inodes and blocks to zero
 License: GPLv2
 Group: File tools
 
-Url: http://intgat.tigress.co.uk/rmy/uml/
+URL: https://frippery.org/uml/
 Source0: %url/%name-%version.tgz
 Source1: %url/sparsify.c
 Source2: %url/index.html
 Source3: zerofree.sgml
+#Source4: zerofree.8
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libe2fs-devel
@@ -18,8 +19,8 @@ BuildRequires: docbook-to-man OpenSP docbook-dtds
 
 %description
 zerofree is a utility to set unused filesystem inodes and blocks of an
-ext2 filesystem to zero.  This can improve the compressibility and
-privacy of an ext2 filesystem.
+ext2/3/4 filesystem to zero.  This can improve the compressibility and
+privacy of an ext2/3/4 filesystem.
 
 This tool was inspired by the ext2fs privacy (i.e. secure deletion)
 patch described in a Linux kernel mailing list thread.
@@ -56,6 +57,10 @@ install -Dm644 zerofree.8 %buildroot%_man8dir/zerofree.8
 %_man8dir/zerofree.8*
 
 %changelog
+* Thu Mar 26 2026 Ilya Mashkin <oddity@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+- Update url and summary
+
 * Fri Aug 10 2012 Michael Shigorin <mike@altlinux.org> 1.0.3-alt1
 - dropped patch (merged upstream)
 - minor spec cleanup
