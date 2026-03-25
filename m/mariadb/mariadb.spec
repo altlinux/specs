@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.8.6
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -114,10 +114,8 @@ Patch7: mariadb-10.3.8-alt-config-libs.patch
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
 Patch32: mariadb-basedir.patch
-Patch33: mariadb-covscan-signexpr.patch
 
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
-Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-11.8.6-disable-download-fmt.patch
 
@@ -471,8 +469,6 @@ CFLAGS="$CFLAGS -fPIC"
 CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
 CXXFLAGS="$CFLAGS"
 export CFLAGS CXXFLAGS
-LDFLAGS="$LDFLAGS -pie -Wl,-z,relro,-z,now"
-export LDFLAGS
 
 %cmake_insource \
     -DBUILD_CONFIG=mysql_release \
@@ -1123,6 +1119,10 @@ fi
 %endif
 
 %changelog
+* Wed Mar 25 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt3
+- FTBS: Delete custom hardening options, use system defaults
+- Delete unneeded patches
+
 * Thu Feb 19 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt2
 - Fix akonadi crash (ALT #57864)
 
