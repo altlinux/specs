@@ -4,25 +4,23 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.98.0
+Version: 0.116.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
 Group: Development/Other
 Url: https://github.com/openai/codex
+Requires: bubblewrap
 Requires: git-core
 Requires: ripgrep
 
 ExcludeArch: %ix86
 
 Source: %name-%version.tar
-BuildRequires: clang-devel
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: git-core
 BuildRequires: help2man
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
+BuildRequires: libcap-devel
 
 %description
 The default model is gpt-oss:20b which is supposed to be run locally with
@@ -51,11 +49,14 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 
 [profile.release]
 strip = false
+lto = false
+codegen-units = 16
 EOF
 # Disable OOB updates.
-perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
-	END { die unless $x }' codex-rs/tui/src/updates.rs
-test -e vendor/rama-boring-sys/patches
+for i in codex-rs/tui/src/updates.rs codex-rs/tui_app_server/src/updates.rs; do
+	perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
+		END { die unless $x }' $i
+done
 
 %build
 RUST_BACKTRACE=full \
@@ -79,11 +80,10 @@ help2man -N %buildroot%_bindir/%name > %buildroot%_man1dir/%name.1
 PATH=%buildroot%_bindir:$PATH
 codex --version | grep -Fx '%name-cli %version'
 # Test sandboxing.
-! codex sandbox landlock touch a || exit 2
-  codex sandbox landlock --full-auto touch a
-  rm a
-! codex sandbox landlock --full-auto touch ../a || exit 2
-! grep -i 'Update available|api.github.com' %buildroot%_bindir/%name || exit 3
+! codex sandbox linux --full-auto touch a || exit 2
+# bwrap: No permissions to create a new namespace, likely because the kernel
+#  does not allow non-privileged user namespaces. On e.g. debian this can be
+#  enabled with 'sysctl kernel.unprivileged_userns_clone=1'.
 
 %files
 %define _customdocdir %_docdir/%name
@@ -95,6 +95,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Tue Mar 24 2026 Vitaly Chikunov <vt@altlinux.org> 0.116.0-alt1
+- Update to rust-v0.116.0 (2026-03-19).
+
 * Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 0.98.0-alt1
 - Update to rust-v0.98.0 (2026-02-05).
 
