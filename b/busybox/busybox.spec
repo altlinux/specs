@@ -5,7 +5,7 @@
 
 Name: busybox
 Version: 1.37.0
-Release: alt1
+Release: alt2
 Summary: Statically linked binary providing simplified versions of system commands
 License: GPL-2.0-only
 Group: Shells
@@ -13,8 +13,7 @@ Url: https://busybox.net/
 Vcs: https://git.busybox.net/busybox
 
 Source: %name-%version.tar
-BuildRequires: banner
-BuildRequires: musl-devel-static
+BuildRequires: musl-devel-static >= 1.2.5-alt7
 BuildRequires: perl-podlators
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc
@@ -34,7 +33,10 @@ to not require symlinking.
 
 %prep
 %setup
+# Relocation problem on x86.
+sed -Ei 's/(CONFIG_SHA.*_HWACCEL)=y/# \1 is not set/' config
 cp config .config
+sed -i '/^CFLAGS_busybox/s/-static/-static-pie/' Makefile.flags
 
 %build
 %add_optflags -DBB_EXTRA_VERSION='\" (%release%{?disttag::%disttag})\"'
@@ -58,12 +60,12 @@ if %make_build test V=1 CC=musl-gcc EXTRA_CFLAGS="%optflags" &> test.log
 then
 	grep -E 'PASS:|FAIL:|SKIPPED:' test.log
 else
-	banner fail
 	awk "/FAIL:/" RS======================= ORS='\n' test.log
 	exit 1
 fi
 # date tests fail but they do not return exit failure.
-! ldd busybox_unstripped || exit 1
+file busybox_unstripped | grep 'pie executable,.*, static-pie linked,'
+ldd busybox_unstripped | grep 'statically linked'
 # Verify standalone mode.
 ./busybox sh <<-EOF |& grep -Fw 'BusyBox v%version'
 	! ls --version
@@ -78,6 +80,10 @@ size busybox
 %_man1dir/busybox.1*
 
 %changelog
+* Fri Mar 20 2026 Vitaly Chikunov <vt@altlinux.org> 1.37.0-alt2
+- tc: Fix CBQ FTBFS on newer kernels/glibc-kernheaders.
+- Build static PIE executable (with ASLR).
+
 * Sat Mar 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.37.0-alt1
 - Update to 1_37_0 (2024-09-26). (Fixes: CVE-2023-42363, CVE-2023-42366).
 
