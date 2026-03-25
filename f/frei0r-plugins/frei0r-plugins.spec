@@ -5,7 +5,7 @@
 %def_without gavl
 
 Name: frei0r-plugins
-Version: 2.5.4
+Version: 2.5.6
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.5.6-alt1
+- New version.
+
 * Wed Feb 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.5.4-alt1
 - New version.
 
