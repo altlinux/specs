@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt6
+Release: alt7
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -37,6 +37,7 @@ Patch21: xdg-terminal-fix-generic.patch
 Patch24: xdg-screensaver.in-add-xfce4-screensaver-support.patch
 # https://bugzilla.altlinux.org/45772
 Patch25: xdg-open-open_gnome3-try-gio-mount.patch
+Patch26: xdg-utils-add-phosh-support.patch
 
 BuildArch: noarch
 
@@ -102,6 +103,7 @@ popd
 #
 %patch24 -p1
 %patch25 -p2
+%patch26 -p2
 
 %build
 %autoreconf
@@ -128,6 +130,9 @@ rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Wed Mar 25 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.1-alt7
+- xdg-utils-common: add Phosh to detectDE as gnome-like
+
 * Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt6
 - xdg-open: try gio mount before open in open_gnome3 function (Closes: 45772)
 
