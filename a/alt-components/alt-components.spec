@@ -2,7 +2,7 @@
 
 Name: alt-components
 Version: 0.6.13
-Release: alt1
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -26,10 +26,10 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: libexpected-devel
 BuildRequires: alterator-entry >= 0.4.6
 
-Requires: alterator-backend-packages >= 0.2.12
-Requires: alterator-backend-component >= 0.3.4
+Requires: alterator-backend-packages >= 0.2.14-alt1
+Requires: alterator-backend-component >= 0.3.5-alt1
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-backend-systeminfo >= 0.4.2
+Requires: alterator-backend-systeminfo >= 0.4.3-alt1
 Requires: alterator-backend-edition >= 0.4.1
 Requires: libqbase
 Requires: alt-components-base >= 0.7.12-alt1
@@ -64,6 +64,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.13-alt2
+- Upgrade the backend version to ensure correct operation with exit_status.
+
 * Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.13-alt1
 - Fix workaround EDG compiler bug with structured binding on e2k.
   Thx Ilya Kurdyukov <ilyakurdyukov@altlinux.org>.

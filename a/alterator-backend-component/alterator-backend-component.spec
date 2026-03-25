@@ -3,7 +3,7 @@
 
 Name: alterator-backend-%{shortname}
 Version: 0.3.5
-Release: alt1
+Release: alt2
 
 Summary: Backends generations for components backends
 License: GPLv2+
@@ -17,7 +17,7 @@ Source0: %name-%version.tar
 Requires: alterator-interface-%{shortname} = %EVR
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-entry >= 0.2.0
-Requires: alterator-backend-systeminfo >= 0.4.3
+Requires: alterator-backend-systeminfo >= 0.4.3-alt1
 
 Provides: alterator-backend-component_categories = %EVR
 Provides: alterator-backend-batch-components = 0.3.1-alt2
@@ -69,6 +69,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.5-alt2
+- Upgrade the backend version to ensure correct operation with exit_status.
+
 * Tue Mar 17 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.5-alt1
 - Translate polkit action messages (thx Maria Alexeeva)
 - Add `Description` and `DescriptionRaw` methods to 
