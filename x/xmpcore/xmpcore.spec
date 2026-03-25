@@ -7,13 +7,13 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xmpcore
-Version:       5.1.2
-Release:       alt1_16jpp11
+Version:       6.1.10
+Release:       alt1
 Summary:       Java XMP Library
 License:       BSD
-URL:           http://www.adobe.com/devnet/xmp.html
-Source0:       http://repo1.maven.org/maven2/com/adobe/xmp/%{name}/%{version}/%{name}-%{version}-sources.jar
-# from http://repo1.maven.org/maven2/com/adobe/xmp/xmpcore/5.1.2/xmpcore-5.1.2.pom
+URL:           https://www.adobe.com/devnet/xmp.html
+Source0:       https://repo1.maven.org/maven2/com/adobe/xmp/%{name}/%{version}/%{name}-%{version}-sources.jar
+# from https://repo1.maven.org/maven2/com/adobe/xmp/xmpcore/6.1.10/xmpcore-6.1.10.pom
 # customized:
 # fix compiler,javadoc-plugin configuration
 # fix manifest entries
@@ -29,14 +29,6 @@ Source44: import.info
 The XMP Library for Java is based on the
 C++ XMPCore library and the API is similar.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
 %prep
 %setup -q -c
 
@@ -48,11 +40,56 @@ cp -p %{SOURCE1} pom.xml
 cp -p %{SOURCE2} BSD-License.txt
 sed -i 's/\r//' BSD-License.txt
 
+#Add necessary plugins
+%pom_xpath_inject "pom:project" "
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>"
+
+%pom_xpath_inject "pom:project" "
+ <build>
+    <directory>target</directory>
+    <sourceDirectory>java</sourceDirectory>
+    <outputDirectory>target/classes</outputDirectory>
+
+    <plugins>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.0</version>
+            <configuration>
+                <source>11</source>
+                <target>11</target>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+                <execution>
+                    <phase>validate</phase>
+                    <goals>
+                        <goal>create-timestamp</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <timestampFormat>yyyy MMM dd HH:mm:ss-z</timestampFormat>
+                <timestampPropertyName>timestamp</timestampPropertyName>
+            </configuration>
+        </plugin>
+
+    </plugins>
+
+  </build>"
+
 %mvn_file : %{name}
 
 %build
-
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
@@ -60,10 +97,10 @@ sed -i 's/\r//' BSD-License.txt
 %files -f .mfiles
 %doc --no-dereference BSD-License.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference BSD-License.txt
-
 %changelog
+* Wed Mar 25 2026 Anton Meleshnikov <alton@altlinux.org> 6.1.10-alt1
+- new version (disable javadoc)
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 5.1.2-alt1_16jpp11
 - jvm11 build, added unzip BR
 
