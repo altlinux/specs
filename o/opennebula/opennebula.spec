@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.10.0.1
-Release: alt4
+Release: alt5
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -685,6 +685,14 @@ if [ $1 = 1 ]; then
         chmod 0600 %oneadmin_home/.ssh/config
         chown oneadmin:oneadmin %oneadmin_home/.ssh/config
     fi
+
+    if [ ! -f %oneadmin_home/.ssh/id_rsa ]; then
+        su -c "ssh-keygen -N '' -t rsa -f %oneadmin_home/.ssh/id_rsa" -l oneadmin
+        if [ ! -f "%oneadmin_home/.ssh/authorized_keys" ]; then
+            cp -p %oneadmin_home/.ssh/id_rsa.pub %oneadmin_home/.ssh/authorized_keys
+            chmod 600 %oneadmin_home/.ssh/authorized_keys
+        fi
+    fi
 fi
 %tmpfiles_create %_tmpfilesdir/opennebula-common.conf
 
@@ -697,14 +705,6 @@ if [ $1 = 1 ]; then
         echo oneadmin:$PASSWORD > %oneadmin_home/.one/one_auth
         chown -R oneadmin:oneadmin %oneadmin_home/.one
         chmod 600 %oneadmin_home/.one/one_auth
-    fi
-
-    if [ ! -f %oneadmin_home/.ssh/id_rsa ]; then
-        su -c "ssh-keygen -N '' -t rsa -f %oneadmin_home/.ssh/id_rsa" -l oneadmin
-        if [ ! -f "%oneadmin_home/.ssh/authorized_keys" ]; then
-            cp -p %oneadmin_home/.ssh/id_rsa.pub %oneadmin_home/.ssh/authorized_keys
-            chmod 600 %oneadmin_home/.ssh/authorized_keys
-        fi
     fi
 fi
 
@@ -1151,6 +1151,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Wed Mar 25 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt5
+- generate unique ssh-keys for all nodes
+
 * Wed Mar 18 2026 Pavel Skrylev <majioa@altlinux.org> 6.10.0.1-alt4
 - ! fixed explicit provide rule declaration
 

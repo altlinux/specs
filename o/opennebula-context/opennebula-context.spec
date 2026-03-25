@@ -1,7 +1,7 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
 Version: 6.10.0
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 URL: http://opennebula.org
@@ -55,6 +55,18 @@ install -p -D -m 755 src/etc/one-context.d/loc-10-network-pci##one \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network-pci
 install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/functions \
 			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/functions
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-bsd \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-bsd
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-interfaces \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-interfaces
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-netplan \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-netplan
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-nm \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-nm
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-networkd \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-networkd
+install -p -D -m 755 src/etc/one-context.d/loc-10-network.d/netcfg-scripts \
+			%buildroot%_sysconfdir/one-context.d/loc-10-network.d/netcfg-scripts
 #install -p -D -m 755 src/etc/one-context.d/loc-11-dns##one \
 #			%buildroot%_sysconfdir/one-context.d/loc-11-dns
 install -p -D -m 755 src/etc/one-context.d/loc-12-firewall##vr \
@@ -123,6 +135,10 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Wed Mar 25 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0-alt2
+- use grep instead of egrep (ALT #57840)
+- add netcfg files (ALT #57841)
+
 * Tue Jan 27 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0-alt1
 - 6.10.0
 
