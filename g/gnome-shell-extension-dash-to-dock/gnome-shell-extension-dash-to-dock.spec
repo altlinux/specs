@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 103
+%define ver_major 104
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -29,7 +29,7 @@ Source: %url/archive/extensions.gnome.org-v%version%beta/%_name-%version%beta.ta
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 45
+Requires: gnome-shell >= 46
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Dbusmenu)
 
@@ -60,6 +60,9 @@ available.
 %doc README.md
 
 %changelog
+* Wed Mar 25 2026 Yuri N. Sedunov <aris@altlinux.org> 104-alt1
+- 104 (GNOME 50 supported)
+
 * Thu Feb 12 2026 Yuri N. Sedunov <aris@altlinux.org> 103-alt1
 - 103 (GNOME 50 supported)
 
