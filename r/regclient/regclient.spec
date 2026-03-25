@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           regclient
-Version:        0.9.1
+Version:        0.11.2
 Release:        alt1
 
 Summary:        Client interface for the registry API
@@ -77,6 +77,9 @@ install -Dm 644 regsync.fish %buildroot%_datadir/fish/vendor_completions.d/regsy
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Wed Mar 25 2026 Nadezhda Fedorova <fedor@altlinux.org> 0.11.2-alt1
+- 0.9.1 -> 0.11.2
+
 * Mon Aug 25 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.9.1-alt1
 - 0.8.2 -> 0.9.1
 
