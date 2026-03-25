@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.30
+Version: 10.31
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -54,6 +54,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Fri Mar 20 2026 Fedor Moseichuck <phobos@altlinux.org> 10.31-alt1
+- ui: fix password generation
+
 * Thu Feb 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 10.30-alt1
 - Fix: Let change user avatars in XFCE session.
 
