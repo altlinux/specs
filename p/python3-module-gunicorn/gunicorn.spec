@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.1.0
+Version: 25.2.0
 Release: alt1
 
 Summary: WSGI HTTP Server for UNIX
@@ -61,6 +61,9 @@ ln -s gunicorn %buildroot%_bindir/gunicorn.py3
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Anton Vyatkin <toni@altlinux.org> 25.2.0-alt1
+- New version 25.2.0.
+
 * Sat Feb 14 2026 Anton Vyatkin <toni@altlinux.org> 25.1.0-alt1
 - New version 25.1.0.
 
