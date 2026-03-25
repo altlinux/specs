@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.11
+Release: alt0.12
 Epoch: 1
 Url: https://altsp.su
 
@@ -292,6 +292,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Mar 25 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.12
+- release-notes.ru.html: replace BRAND with BRAND_RU.
+
 * Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.11
 - os-release: fix NAME, add VARIANT.
 - Split PRODUCT_NAME into BRAND and PRODUCT_NAME.
