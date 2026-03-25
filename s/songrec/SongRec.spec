@@ -1,7 +1,7 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: An open-source Shazam client for Linux.
@@ -76,6 +76,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Thu Mar 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.7-alt1
+- 0.6.6 -> 0.6.7
+
 * Mon Mar 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.6-alt1
 - 0.6.4 -> 0.6.6
 
