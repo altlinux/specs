@@ -3,7 +3,7 @@
 
 Name: trufflehog
 Version: 3.94.0
-Release: alt1
+Release: alt2
 Summary: CLI tool to find exposed secrets in source and archives
 
 Group: Development/Tools
@@ -14,6 +14,7 @@ Vcs: https://github.com/trufflesecurity/trufflehog.git
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: %go_arches
 ExcludeArch: %ix86
@@ -28,6 +29,7 @@ Docker images, Circle CI/Travis CI setups, or in individual files.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -48,6 +50,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Wed Mar 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.94.0-alt2
+- Disable automatic update fetcher (closes: #57990).
+
 * Wed Mar 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.94.0-alt1
 - New version 3.94.0.
 
