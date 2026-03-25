@@ -1,5 +1,5 @@
 Name: altlinux-repos-additional
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Additional local repository
 Group: System/Configuration/Other
@@ -25,7 +25,7 @@ Name=Additional repository
 Name[ru]=Дополнительный репозиторий
 X-Sign=
 X-Path=/additional
-X-Has-Noarch=no
+X-Has-Noarch=yes
 X-Has-Arepo=no
 X-Components=classic
 X-Has-Arches=aarch64 i586 x86_64
@@ -37,5 +37,8 @@ EOF
 %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Wed Mar 25 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 1.1-alt1
+- Add support for noarch repo (ALT #58343).
+
 * Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt1
 - Iniitial build.
