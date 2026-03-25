@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 Summary: Pytest plugin for measuring coverage
 License: MIT
@@ -67,6 +67,9 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 23 2026 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
+- 7.0.0 -> 7.1.0.
+
 * Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
 - 6.3.0 -> 7.0.0.
 
