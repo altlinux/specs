@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-redis-py
-Version: 7.3.0
+Version: 7.4.0
 Release: alt1
 Summary: Python client for Redis database and key-value store
 License: MIT
@@ -40,6 +40,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Stanislav Levin <slev@altlinux.org> 7.4.0-alt1
+- 7.3.0 -> 7.4.0.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
 - 7.2.1 -> 7.3.0.
 
