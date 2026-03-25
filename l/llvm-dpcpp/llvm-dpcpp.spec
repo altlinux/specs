@@ -51,7 +51,7 @@
 
 Name: %llvm_name
 Version: 6.3.0
-Release: alt0.1
+Release: alt0.2
 Epoch: 1
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
@@ -574,7 +574,7 @@ rm -f %buildroot%llvm_datadir/clang/clang-format-bbedit.applescript
 
 # Install the clang bash completion.
 mkdir -p %buildroot%_datadir/bash-completion/completions
-ln -sr %buildroot%llvm_datadir/clang/bash-autocomplete.sh %buildroot%_datadir/bash-completion/completions/clang-%v_major
+ln -sr %buildroot%llvm_datadir/clang/bash-autocomplete.sh %buildroot%_datadir/bash-completion/completions/clang-%proj
 
 # Symlink executables to %_bindir.
 mkdir -p %buildroot%_bindir
@@ -996,6 +996,9 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Wed Mar 25 2026 L.A. Kostis <lakostis@altlinux.ru> 1:6.3.0-alt0.2
+- bash-completion: fix filename clash with clang-21.
+
 * Fri Mar 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1:6.3.0-alt0.1
 - Initial build of 6.3.0:
   + cleanup merged/obsoleted patches.
