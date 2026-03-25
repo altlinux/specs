@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.19
+%define kernel_sublevel	.20
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -590,6 +590,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Mar 25 2026 Vitaly Chikunov <vt@altlinux.org> 6.18.20-alt1
+- Update to v6.18.20 (2026-03-25).
+- config: Enable USB_SERIAL_CONSOLE=y.
+
 * Thu Mar 19 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.19-alt1
 - v6.18.19 (2026-03-19).
 
