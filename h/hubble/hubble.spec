@@ -1,9 +1,9 @@
 %global import_path github.com/cilium/hubble
 %global _unpackaged_files_terminate_build 1
-%global commit c56853984214cbbe55e5b02b590bfe1b4d5d8302
+%global commit 95622e77ee29730d2ca662b759613ea17e3951f2
 
 Name:    hubble
-Version: 1.18.3
+Version: 1.18.6
 Release: alt1
 
 Summary: Hubble - Network, Service & Security Observability for Kubernetes using eBPF
@@ -53,5 +53,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Mar 25 2026 Nadezhda Fedorova <fedor@altlinux.org> 1.18.6-alt1
+- New version 1.18.6.
+
 * Fri Nov 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.18.3-alt1
 - Initial build for ALTLinux.
