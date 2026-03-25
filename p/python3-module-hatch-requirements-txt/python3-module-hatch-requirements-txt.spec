@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.1
-Release: alt1.git1aa21b8
+Release: alt2.37.gcaf885b
 
 Summary: Hatchling plugin to read project dependencies from requirements.txt
 License: MIT
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,11 +52,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.1-alt2.37.gcaf885b
+- Fixed FTBFS (packaging>=26.0).
+
 * Thu May 23 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.1-alt1.git1aa21b8
 - Fixed FTBFS (updated to 1aa21b8).
 
@@ -69,4 +73,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
 - initial build for Sisyphus
-
