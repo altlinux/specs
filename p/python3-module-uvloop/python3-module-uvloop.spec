@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name uvloop
-%define mod_name %pypi_name
+%define mod_name uvloop
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 0.22.1
-Release: alt2
+Release: alt3.11.ga308f75
 
 Summary: Ultra fast asyncio event loop
 License: MIT and Apache-2.0
@@ -18,15 +18,14 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: libuv-devel
-
 %if_with check
 %pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
-BuildRequires: python3-module-pytest
 BuildRequires: /proc
 BuildRequires: /dev/pts
 %endif
@@ -53,14 +52,16 @@ uvloop is implemented in Cython and uses libuv under the hood.
 
 %check
 rm -rf %mod_name
-%pyproject_run -- pytest -vra
+%pyproject_run_unittest discover -v tests
 
 %files
-%doc README.rst LICENSE-APACHE LICENSE-MIT
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt3.11.ga308f75
+- Fixed FTBFS (python>=3.13).
+
 * Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt2
 - Fixed FTBFS (fixed python version predicate in tests).
 
@@ -98,4 +99,3 @@ rm -rf %mod_name
 
 * Thu Aug 11 2022 Anton Zhukharev <ancieg@altlinux.org> 0.16.0-alt1
 - initial build for Sisyphus
-
