@@ -4,7 +4,7 @@
 
 Name: alterator-explorer
 Version: 0.1.18
-Release: alt2
+Release: alt3
 
 Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
@@ -39,12 +39,12 @@ BuildRequires: ImageMagick-tools
 
 Requires: alterator-interface-application >= 0.1.1
 Requires: alterator-backend-categories >= 0.1.6
-Requires: alterator-backend-legacy >= 0.1.2
+Requires: alterator-backend-legacy >= 0.1.9
 
 %if_with legacy
 Requires: alterator-standalone >= 7.4.3
 Requires: /usr/bin/acc-legacy
-Requires: alterator-backend-legacy
+Requires: alterator-backend-legacy >= 0.1.9
 %else
 # Oldest versions of alterator-standalone don't provides acc-legacy.
 # TODO: Add force disable SwitchBack() logic in this case. So,
@@ -96,6 +96,9 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt3
+- Update version for alterator-backend-legacy.
+
 * Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt2
 - Fix dependency versions for correct operation with
   exit_status (alterator-module-executor).

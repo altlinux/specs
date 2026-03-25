@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -85,8 +85,8 @@ mkdir -p %buildroot%_alterator_datadir/backends
 
 install -v -p -m 755 -D %name.filetrigger %buildroot%_rpmlibdir/10%name.filetrigger
 install -v -p -m 755 -D alterator-generate-legacy-backends %buildroot%_libexecdir/%name/alterator-generate-legacy-backends
-install -v -p -m 644 -D legacy/org.altlinux.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D legacy/org.altlinux.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D legacy/org.altlinux.alterator.legacy1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D legacy/org.altlinux.alterator.legacy1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D framework/org.altlinux.alterator.framework1.xml %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 644 -D framework/org.altlinux.alterator.framework1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 755 -D legacy/alterator-application-legacy %buildroot%_libexecdir/alterator-application-legacy/alterator-application-legacy
@@ -104,8 +104,8 @@ install -v -b -m 644 -D framework/framework_runner.backend %buildroot%_alterator
 %_libexecdir/%name/*
 
 %files -n alterator-interface-legacy
-%_datadir/polkit-1/actions/org.altlinux.alterator.legacy.policy
-%_datadir/dbus-1/interfaces/org.altlinux.alterator.legacy.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.legacy1.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.legacy1.xml
 
 %files -n alterator-interface-framework
 %_datadir/polkit-1/actions/org.altlinux.alterator.framework1.policy
@@ -138,6 +138,11 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.9-alt1
+- Add translations for polkit actions (thx Oleg Chagaev).
+- Rename incorrect interface file names
+  (fix the missing validation by alterator-manager).
+
 * Fri Jan 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.8-alt1
 - Run alterator-explorer UIs if they're available (thx Oleg Chagaev).
 
