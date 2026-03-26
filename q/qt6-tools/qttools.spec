@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.10.2
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -23,7 +23,7 @@ License:  GPL-3.0-only or LGPL-3.0-only
 Requires: %name-common = %EVR
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: alt-run-qttools-with-qt6-suffix.patch
+Patch1: alt-hide-search-and-translate.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -149,7 +149,7 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-#%patch1 -p1
+%patch1 -p1
 
 %build
 %if_disabled bootstrap
@@ -326,6 +326,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Mar 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
+- hide linguist Search and Translate action
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 
