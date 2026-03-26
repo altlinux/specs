@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: json-smart
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: JSON Small and Fast Parser
@@ -78,6 +78,10 @@ for module in accessors-smart json-smart json-smart-action; do
     %pom_remove_plugin :maven-gpg-plugin $module
     %pom_remove_plugin :maven-javadoc-plugin $module
     %pom_remove_plugin :maven-release-plugin $module
+    %pom_remove_plugin :central-publishing-maven-plugin $module
+    # Change version to release
+    # Upstream does the same thing, see https://github.com/netplex/json-smart-v2/blob/v2.6.0/.github/workflows/release-publish.yml
+    sed -i 's|<version>%version-SNAPSHOT</version>|<version>%version</version>|g' $module/pom.xml
 done
 
 # Without this parent POM, I would have to perform %mvn_install in the %build section.
@@ -112,5 +116,8 @@ EOF
 %files action -f .mfiles-json-smart-action
 
 %changelog
+* Thu Mar 26 2026 Arseniy Kostevich <faux@altlinux.org> 2.6.0-alt1
+- New version.
+
 * Tue Mar 24 2026 Arseniy Kostevich <faux@altlinux.org> 2.5.2-alt1
 - Initial build for ALT.
