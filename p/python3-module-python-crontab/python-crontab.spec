@@ -5,7 +5,7 @@
 %define oname python-crontab
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Python Crontab API
@@ -54,5 +54,8 @@ the system cron automatically and simply using a direct API.
 %python3_sitelibdir/crontabs.py
 
 %changelog
+* Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.3.0-alt1
+- NMU: 3.2.0 -> 3.3.0 (ALT #58142)
+
 * Wed Nov 27 2024 Yaroslav Bahtin <alpacost@altlinux.org> 3.2.0-alt1
 - Initial build
