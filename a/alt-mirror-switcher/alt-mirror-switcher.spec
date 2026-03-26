@@ -1,13 +1,13 @@
 Name: alt-mirror-switcher
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: Simple local mirror switcher for ALT
 
 License: GPLv2+
 Group: Other
 
-Url: https://altlinux.space/aleksandershad/alt-mirror-switcher
+Url: https://altlinux.space/shad/alt-mirror-switcher
 
 BuildArch: noarch
 
@@ -85,6 +85,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Thu Mar 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.2-alt2
+- updated URL (issue#26)
+
 * Thu Mar 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.2-alt1
 - 0.7.1 -> 0.7.2
 
