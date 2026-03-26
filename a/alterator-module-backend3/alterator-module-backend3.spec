@@ -1,5 +1,5 @@
 Name: alterator-module-backend3
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Module for using backend3 scripts
@@ -33,6 +33,9 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Mar 26 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt1
+- Add support legacy boolean format in backend3 output parsing (the-nexi@).
+
 * Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.2.2-alt1
 - Update .clang-format and CODESTYLE.md.
 - Bringing the code to the described style.
