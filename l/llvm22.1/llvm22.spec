@@ -96,6 +96,13 @@ AutoProv: nopython
 %define optflags_lto %nil
 %endif
 
+# bolt officially supports x86_64/aarch64/riscv
+%ifarch x86_64 aarch64 riscv64
+%def_with bolt
+%else
+%def_without bolt
+%endif
+
 %if_with lldb
 %def_with lldb_full
 %def_with lldb_python
@@ -114,7 +121,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -739,6 +746,24 @@ time.
 
 These modules are used by llvm runtimes built outside of llvm tree.
 
+%package bolt
+Summary: BOLT is a post-link optimizer developed to speed up large applications
+Group: Development/C
+%requires_filesystem
+
+%description bolt
+BOLT is a post-link optimizer developed to speed up large applications.
+It achieves the improvements by optimizing application's code layout based on
+execution profile gathered by sampling profiler, such as Linux `perf` tool.
+
+%package bolt-doc
+Summary: Documentation for BOLT
+Group: Development/C
+%requires_filesystem
+
+%description bolt-doc
+This package contains documentation for the BOLT.
+
 %prep
 %setup -n llvm-project-%{v_major}
 %patch -p1 -b .alt-i586-fallback
@@ -788,6 +813,9 @@ PROJECTS="$PROJECTS;lld"
 %endif
 %if_with lldb
 PROJECTS="$PROJECTS;lldb"
+%endif
+%if_with bolt
+PROJECTS="$PROJECTS;bolt"
 %endif
 export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
@@ -1232,6 +1260,17 @@ bin	yaml2macho-core
 EOExecutableList
 %endif
 
+%if_with bolt
+emit_filelist >%_tmppath/dyn-files-bolt <<EOExecutableList
+bin	llvm-bolt
+bin	llvm-bolt-binary-analysis
+bin	llvm-bolt-heatmap
+bin	llvm-boltdiff
+bin	merge-fdata
+bin	perf2bolt
+EOExecutableList
+%endif
+
 # Comment out file validation for CMake targets placed
 # in a different package.
 sed -i '
@@ -1536,7 +1575,20 @@ ninja -C %builddir check-all || :
 %dir %llvm_datadir/cmake/Modules
 %llvm_datadir/cmake/Modules/*
 
+%if_with bolt
+%files bolt -f %_tmppath/dyn-files-bolt
+%doc bolt/README.md
+%llvm_libdir/libbolt_rt_instr.a
+%llvm_libdir/libbolt_rt_hugify.a
+
+%files bolt-doc
+%doc %llvm_docdir/LLVM/bolt
+%endif
+
 %changelog
+* Tue Mar 24 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.1-alt0.2
+- x86_64/aarch64/riscv64: Enabled bolt.
+
 * Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.1-alt0.1
 - Update to 22.1.1.
 
