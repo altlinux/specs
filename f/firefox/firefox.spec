@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 148.0.2
+Version: 149.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,56 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Mar 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0-alt1
+- New version (149.0).
+- Fixes:
+  + CVE-2026-4684: Race condition, use-after-free in the Graphics: WebRender component
+  + CVE-2026-4685: Incorrect boundary conditions in the Graphics: Canvas2D component
+  + CVE-2026-4686: Incorrect boundary conditions in the Graphics: Canvas2D component
+  + CVE-2026-4687: Sandbox escape due to incorrect boundary conditions in the Telemetry component
+  + CVE-2026-4688: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-4689: Sandbox escape due to incorrect boundary conditions, integer overflow in the XPCOM component
+  + CVE-2026-4690: Sandbox escape due to incorrect boundary conditions, integer overflow in the XPCOM component
+  + CVE-2026-4691: Use-after-free in the CSS Parsing and Computation component
+  + CVE-2026-4692: Sandbox escape in the Responsive Design Mode component
+  + CVE-2026-4693: Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-4694: Incorrect boundary conditions, integer overflow in the Graphics component
+  + CVE-2026-4695: Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-4696: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-4697: Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-4698: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-4699: Incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-4700: Mitigation bypass in the Networking: HTTP component
+  + CVE-2026-4701: Use-after-free in the JavaScript Engine component
+  + CVE-2026-4722: Privilege escalation in the IPC component
+  + CVE-2026-4702: JIT miscompilation in the JavaScript Engine component
+  + CVE-2026-4723: Use-after-free in the JavaScript Engine component
+  + CVE-2026-4724: Undefined behavior in the Audio/Video component
+  + CVE-2026-4704: Denial-of-service in the WebRTC: Signaling component
+  + CVE-2026-4705: Undefined behavior in the WebRTC: Signaling component
+  + CVE-2026-4706: Incorrect boundary conditions in the Graphics: Canvas2D component
+  + CVE-2026-4707: Incorrect boundary conditions in the Graphics: Canvas2D component
+  + CVE-2026-4708: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-4709: Incorrect boundary conditions in the Audio/Video: GMP component
+  + CVE-2026-4710: Incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-4711: Use-after-free in the Widget: Cocoa component
+  + CVE-2026-4725: Sandbox escape due to use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-4712: Information disclosure in the Widget: Cocoa component
+  + CVE-2026-4713: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-4714: Incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-4715: Uninitialized memory in the Graphics: Canvas2D component
+  + CVE-2026-4716: Incorrect boundary conditions, uninitialized memory in the JavaScript Engine component
+  + CVE-2026-4717: Privilege escalation in the Netmonitor component
+  + CVE-2026-4726: Denial-of-service in the XML component
+  + CVE-2025-59375: Denial-of-service in the XML component
+  + CVE-2026-4727: Denial-of-service in the Libraries component in NSS
+  + CVE-2026-4728: Spoofing issue in the Privacy: Anti-Tracking component
+  + CVE-2026-4718: Undefined behavior in the WebRTC: Signaling component
+  + CVE-2026-4719: Incorrect boundary conditions in the Graphics: Text component
+  + CVE-2026-4720: Memory safety bugs fixed in Firefox ESR 140.9, Thunderbird ESR 140.9, Firefox 149 and Thunderbird 149
+  + CVE-2026-4729: Memory safety bugs fixed in Firefox 149 and Thunderbird 149
+  + CVE-2026-4721: Memory safety bugs fixed in Firefox ESR 115.34, Firefox ESR 140.9, Thunderbird ESR 140.9, Firefox 149 and Thunderbird 149
+
 * Tue Mar 10 2026 Ajrat Makhmutov <rauty@altlinux.org> 148.0.2-alt1
 - New version (148.0.2).
 - Fixes:
