@@ -1,12 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %def_with opencv
-# Removed from sisyphus due to FTBFS:
-# https://packages.altlinux.org/en/tasks/374128/
+
+# The gavl library is not available for i586:
+# https://github.com/bplaum/gavl/issues/16
+%ifarch %ix86
 %def_without gavl
+%else
+%def_with gavl
+%endif
 
 Name: frei0r-plugins
 Version: 2.5.6
-Release: alt1
+Release: alt2
 
 Summary: A free software collection of video effect plugins
 License: GPL-2.0-or-later
@@ -21,6 +26,7 @@ BuildRequires: gcc-c++
 BuildRequires: doxygen
 BuildRequires: libcairo-devel
 %{?_with_opencv:BuildRequires: libopencv-devel}
+%{?_with_gavl:BuildRequires: libgavl-devel}
 
 %description
 The frei0r project is a collection of free and open
@@ -94,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 25 2026 Grant Makyan <karonus@altlinux.org> 2.5.6-alt2
+- Use libgavl for non i586 build.
+
 * Wed Mar 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.5.6-alt1
 - New version.
 
