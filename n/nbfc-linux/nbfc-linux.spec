@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nbfc-linux
-Version: 0.3.19
+Version: 0.4.0
 Release: alt1
 
 Summary: NoteBook FanControl
@@ -56,6 +56,9 @@ NoteBook FanControl ported to Linux
 %_datadir/nbfc/configs/*
 
 %changelog
+* Mon Mar 23 2026 Boris Yumankulov <boria138@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Thu Jun 19 2025 Boris Yumankulov <boria138@altlinux.org> 0.3.19-alt1
 - new version 0.3.19
 
