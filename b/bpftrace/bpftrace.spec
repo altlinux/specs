@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 Summary: High-level tracing language for Linux
 Group: Development/Debuggers
@@ -130,6 +130,9 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Thu Mar 26 2026 Vitaly Chikunov <vt@altlinux.org> 0.25.1-alt1
+- Update to v0.25.1 (2026-03-25).
+
 * Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
 - Update to v0.25.0 (2026-03-13).
 
