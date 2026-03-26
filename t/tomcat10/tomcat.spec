@@ -23,7 +23,7 @@
 
 Name: tomcat10
 Version: 10.1.53
-Release: alt1_jvm17
+Release: alt2_jvm17
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 License: Apache-2.0
@@ -440,6 +440,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Thu Mar 26 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.53-alt2_jvm17
+- Replaced or removed links to local docs (closes: #58401).
+
 * Wed Mar 25 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.53-alt1_jvm17
 - 10.1.52 -> 10.1.53.
 
