@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nbfc-gtk
-Version: 0.2.1
+Version: 0.4.0
 Release: alt1
 
 Summary: GUI for NBFC-Linux (GTK-based)
@@ -35,6 +35,9 @@ ExclusiveArch: x86_64
 
 
 %changelog
+* Mon Mar 23 2026 Boris Yumankulov <boria138@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Thu Jun 19 2025 Boris Yumankulov <boria138@altlinux.org> 0.2.1-alt1
 - new version 0.2.1
 
