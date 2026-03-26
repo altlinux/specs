@@ -2,15 +2,14 @@
 
 %define _name exercise-timer
 %define __name hiit
-%define ver_major 1.8
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name xyz.safeworlds.%__name
 
-%def_disable bootstrap
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Exercise Timer
@@ -27,27 +26,24 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.14
-%define adwaita_ver 1.7
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 
 Provides: %__name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo
+BuildRequires: meson vala-tools blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(alsa)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Exercise Timer is a simple utility to conduct interval training. It is
-built for the GNOME desktop using Libadwaita Relm4 (https://relm4.org/).
+built for the GNOME desktop using Libadwaita.
 
 %prep
-%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
-%{?_enable_bootstrap:
-[ ! -d .cargo ] && mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -72,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Mar 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Sun Aug 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 
