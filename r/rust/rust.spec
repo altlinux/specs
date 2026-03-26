@@ -11,7 +11,7 @@
 # it's better to use major.minor for versioned files.
 %define v_major 1
 %define v_minor 94
-%define v_patch 0
+%define v_patch 1
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
@@ -558,6 +558,12 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Thu Mar 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.94.1-alt1
+- New version (1.94.1).
+- Security fixes:
+  + CVE-2026-33055: tar-rs incorrectly ignores PAX size headers if header size is nonzero
+  + CVE-2026-33056: tar-rs `unpack_in` can chmod arbitrary directories by following symlinks
+
 * Sat Mar 21 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.94.0-alt1
 - New version (1.94.0).
 - Fix licenses for cargo and clippy.

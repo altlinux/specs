@@ -1,5 +1,5 @@
 Name: rust-toolchain-common
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Common files and directories for any rust toolchain
@@ -16,7 +16,7 @@ Requires: rust-toolchain
 %package -n rpm-macros-%name
 Summary: Common RPM macros to build rust toolchains
 Group: Development/Other
-BuildArch: noarch
+# Not noarch since usage of _libdir and current arch.
 
 %description -n rpm-macros-%name
 %summary.
@@ -69,5 +69,8 @@ export RUST_HOST_TRIPLE="%rust_host_triple"
 %_rpmmacrosdir/rust-toolchain
 
 %changelog
+* Thu Mar 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.1.1-alt1
+- Fix macros subpackage being arch independent.
+
 * Wed Mar 18 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.1.0-alt1
 - Initial build.
