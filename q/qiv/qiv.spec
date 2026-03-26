@@ -1,5 +1,5 @@
 Name: qiv
-Version: 3.0.1
+Version: 3.0.3
 Release: alt1
 Epoch: 1
 
@@ -8,7 +8,7 @@ License: GPLv2+
 Group: Graphics
 
 Url: http://spiegl.de/qiv
-Source0: %url/download/%name-%version.tgz
+Source0: %url/download/%name-%version.tar.gz
 Source1: %name.watch
 
 # Automatically added by buildreq on Sun Apr 13 2014
@@ -43,6 +43,9 @@ xz Changelog
 %_man1dir/*
 
 %changelog
+* Wed Mar 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1:3.0.3-alt1
+- 3.0.3
+
 * Tue Apr 08 2025 Michael Shigorin <mike@altlinux.org> 1:3.0.1-alt1
 - new version (watch file uupdate)
 - updated License:
