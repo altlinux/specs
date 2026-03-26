@@ -26,8 +26,8 @@
 %endif
 
 Name: bind
-Version: 9.18.46
-%define src_version 9.18.46
+Version: 9.18.47
+%define src_version 9.18.47
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -393,12 +393,15 @@ export ALT_NAMED_OPTIONS=' -t / '
 pushd bin/tests/system
 testdirs=
 testnum=0
+# ednscompliance and formerr crash with kernel BUG at fs/netfs/iterator.c:248!
 for testdir in */; do
     # skip very slow tests
     if [ "$testdir" = "dupsigs/" ] ||
         [ "$testdir" = "timeouts/" ] ||
         [ "$testdir" = "bailiwick/" ] ||
         [ "$testdir" = "optout/" ] ||
+        [ "$testdir" = "ednscompliance/" ] ||
+        [ "$testdir" = "formerr/" ] ||
         [ "$testdir" = "runtime/" ] ; then
         continue
     fi
@@ -595,6 +598,9 @@ fi
 %_man1dir/nsupdate.*
 
 %changelog
+* Wed Mar 25 2026 Stanislav Levin <slev@altlinux.org> 9.18.47-alt1
+- 9.18.46 -> 9.18.47 (fixes: CVE-2026-1519).
+
 * Fri Feb 27 2026 Stanislav Levin <slev@altlinux.org> 9.18.46-alt1
 - 9.18.44 -> 9.18.46.
 
