@@ -3,7 +3,7 @@
 
 Name: cantata
 Version: 3.4.0
-Release: alt1
+Release: alt2
 Summary: Qt Graphical MPD Client
 License: GPL-3.0
 Group: Sound
@@ -31,7 +31,7 @@ A client for the Music Player Daemon (MPD).
 
 %build
 export PATH="%_qt6_bindir:$PATH"
-%cmake
+%cmake -DBUNDLED_FONTAWESOME=ON
 %cmake_build
 
 %install
@@ -47,6 +47,10 @@ export PATH="%_qt6_bindir:$PATH"
 %doc README*
 
 %changelog
+* Thu Mar 26 2026 Andrey Kovalev <ded@altlinux.org> 3.4.0-alt2
+- Enabled building with bundled FontAwesome to fix incorrect icon display
+  (closes: #58346).
+
 * Thu Dec 11 2025 Andrey Kovalev <ded@altlinux.org> 3.4.0-alt1
 - Updated to upstream version 3.4.0.
 
