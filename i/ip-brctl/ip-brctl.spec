@@ -1,5 +1,5 @@
 Name: ip-brctl
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Drop-in replacement of the standalone brctl utility
@@ -44,6 +44,18 @@ ln -s ip-brctl %buildroot%_sbindir/brctl
 %_man8dir/*
 
 %changelog
+* Fri Mar 27 2026 Alexey Shabalin <shaba@altlinux.org> 0.3-alt1
+- Fix timer validation error texts.
+- Fix delif error argument order.
+- Tighten float input validation.
+- Fix signed long range check.
+- Fix hairpin slave option (ALT#58376).
+- Fix boolean conversion in make_bool (ALT#58372).
+- Fix setmaxage bridge attribute (ALT#58370).
+- Align setgcint docs with implementation (ALT#58360).
+- Fix addif validation (ALT#58359).
+- Fix exec_iplink argument handling (ALT#58358).
+
 * Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 0.2-alt1
 - Fix brctl show with no bridge (ALT#57898).
 
