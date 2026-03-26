@@ -22,7 +22,7 @@
 %global workdir %cachedir/work
 
 Name: tomcat10
-Version: 10.1.52
+Version: 10.1.53
 Release: alt1_jvm17
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
@@ -440,6 +440,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Wed Mar 25 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.53-alt1_jvm17
+- 10.1.52 -> 10.1.53.
+
 * Thu Feb 12 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.52-alt1_jvm17
 - 10.1.47 -> 10.1.52.
 - Made it compatible with dogtag-pki.
