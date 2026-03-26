@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.14
+Version: 0.2.15
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -67,6 +67,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Thu Mar 26 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.15-alt1
+- Add updatable packages to the list of installed packages (Closes: #58366).
+
 * Tue Mar 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.14-alt1
 - Add missing timeouts.
 - Use libpackagekit for CheckDistUpgrade.
