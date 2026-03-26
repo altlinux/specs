@@ -5,7 +5,7 @@
 %python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 0.0.28
+Version: 0.0.29
 Release: alt1
 
 Summary: A modern static site generator by the Material for MkDocs team
@@ -51,5 +51,8 @@ rm -v %buildroot/%python3_sitelibdir/LICENSE.md
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.29-alt1
+- Updated to 0.0.29.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.28-alt1
 - Packaged for ALT Sisyphus.
