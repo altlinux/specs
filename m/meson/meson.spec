@@ -13,7 +13,7 @@
 
 Name: meson
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -140,6 +140,10 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Thu Mar 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1.1
+- meson.macros:
+  added %%__meson_test_timeout_multiplier to %%__meson_test (iv@)
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 
