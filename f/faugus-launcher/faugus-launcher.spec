@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: faugus-launcher
-Version: 1.16.5
+Version: 1.16.6
 Release: alt1
 
 Summary: A simple and lightweight app for running Windows games using UMU-Launcher
@@ -55,6 +55,9 @@ Requires: typelib(Gtk) = 3.0
 %_datadir/metainfo/faugus-launcher.metainfo.xml
 
 %changelog
+* Mon Mar 23 2026 Boris Yumankulov <boria138@altlinux.org> 1.16.6-alt1
+- new version 1.16.6
+
 * Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 1.16.5-alt1
 - new version 1.16.5 (ALT bug: 58294)
 
