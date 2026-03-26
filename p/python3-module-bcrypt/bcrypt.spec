@@ -1,18 +1,21 @@
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 3.2.2
+Version: 5.0.0
 Release: alt1
 Name: python3-module-bcrypt
-Source0: %version.tar.gz
+Source0: %name-%version.tar
 Source1: bfhash
 Source2: bfhash.1
-License: BSD
+Source3: vendor.tar
+License: Apache-2.0
 Group: Development/Python
-Url: http://pypi.python.org/pypi/bcrypt
+Url: https://pypi.org/project/bcrypt
+Vcs: https://github.com/pyca/bcrypt
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_rust
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-six python3-module-cffi
 
 Conflicts: python-module-bcrypt < 3.1.7-alt4
 
@@ -27,13 +30,21 @@ off-line password cracking. The computation cost of the algorithm is
 parametised, so it can be increased as computers get faster.
 
 %prep
-%setup -n bcrypt-%version
+%setup -a3
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
 install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
 
@@ -44,10 +55,16 @@ install -D -m755 %SOURCE1 %buildroot%_bindir/bfhash
 %_man1dir/*
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3
-test `PYTHONPATH=%buildroot%python3_sitelibdir %buildroot%_bindir/bfhash Password '$2a$08$saltsaltsaltsaltsaltsalt'` = '$2a$08$saltsaltsaltsaltsaltsOP5qmOWTOOR/q1xZLey.J4jBko3nSImS'
+%pyproject_run_pytest tests
 
 %changelog
+* Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.0.0-alt1
+- NMU:
+  - 3.2.2 -> 5.0.0 (Closes: 58140, 51355)
+  - chenged url
+  - added vcs
+  - chenged lisense
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.2.2-alt1
 - Autobuild version bump to 3.2.2
 
