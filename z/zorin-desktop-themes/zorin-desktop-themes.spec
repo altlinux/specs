@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: zorin-desktop-themes
-Version: 5.2.2
+Version: 5.2.3
 Release: alt1
 Summary: Zorin OS desktop themes
 
@@ -20,7 +23,7 @@ BuildArch: noarch
 %description
 The Zorin OS desktop theme provided in a variety of color combinations.
 
-%define themes ZorinBlue-Dark ZorinBlue-Light ZorinGreen-Dark ZorinGreen-Light ZorinGrey-Dark ZorinGrey-Light ZorinOrange-Dark ZorinOrange-Light ZorinPurple-Dark ZorinPurple-Light ZorinRed-Dark ZorinRed-Light 
+%define themes ZorinBlue-Dark ZorinBlue-Light ZorinGreen-Dark ZorinGreen-Light ZorinGrey-Dark ZorinGrey-Light ZorinOrange-Dark ZorinOrange-Light ZorinPurple-Dark ZorinPurple-Light ZorinRed-Dark ZorinRed-Light ZorinBrown-Dark ZorinBrown-Light ZorinYellow-Dark ZorinYellow-Light
 
 %{expand:%(\
     for theme in %{themes}; do \
@@ -46,6 +49,12 @@ mkdir -p %buildroot%_datadir/themes
 cp -a Zorin* %buildroot%_datadir/themes
 
 %changelog
+* Wed Mar 25 2026 Kirill Izmestev <felixz@altlinux.org> 5.2.3-alt1
+- New version 5.2.3.
+- Add abort the build if unpacked files.
+- Packed new themes: ZorinBrown-Dark, ZorinBrown-Light, ZorinYellow-Dark,
+  ZorinYellow-Light.
+
 * Sun Feb 08 2026 Kirill Izmestev <felixz@altlinux.org> 5.2.2-alt1
 - New version 5.2.2.
 
