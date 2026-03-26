@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name Werkzeug
+%define pypi_nname werkzeug
 %define mod_name werkzeug
 
 %def_with check
 
-Name: python3-module-%mod_name
-Version: 3.1.6
+Name: python3-module-%pypi_nname
+Version: 3.1.7
 Release: alt1
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://palletsprojects.com/p/werkzeug/
+Url: https://pypi.org/project/Werkzeug/
 Vcs: https://github.com/pallets/werkzeug
 
 BuildArch: noarch
@@ -20,13 +21,11 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# well-known PyPI name
-Provides: python3-module-%pypi_name = %EVR
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -61,11 +60,13 @@ more structure and patterns for defining powerful applications.
 %pyproject_run_pytest -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
 
 %files
-%doc LICENSE.txt CHANGES.rst README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.7-alt1
+- Updated to 3.1.7.
+
 * Fri Feb 20 2026 Andrey Cherepanov <cas@altlinux.org> 3.1.6-alt1
 - New version.
 

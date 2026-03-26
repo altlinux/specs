@@ -7,12 +7,12 @@
 
 Name: python3-module-%pypi_nname
 Version: 3.1.3
-Release: alt1
+Release: alt2
 
 Summary: Flask is a lightweight WSGI web application framework
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://palletsprojects.com/p/flask/
+Url: https://pypi.org/project/Flask/
 Vcs: https://github.com/pallets/flask
 
 BuildArch: noarch
@@ -21,8 +21,9 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-Provides: python3-module-%pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -64,7 +65,6 @@ Extra 'async' for %pypi_name.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE.txt CHANGES.rst README.md
 %_bindir/flask
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -72,6 +72,9 @@ Extra 'async' for %pypi_name.
 %files -n %name+async
 
 %changelog
+* Thu Mar 26 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.3-alt2
+- Fixed FTBFS (werkzeug==3.1.7).
+
 * Thu Feb 19 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.3-alt1
 - Updated to 3.1.3 (fixes GHSA-68rp-wp8r-4726).
 
@@ -146,4 +149,3 @@ Extra 'async' for %pypi_name.
 
 * Sun Jan 06 2013 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt1
 - Initial build for Sisyphus.
-
