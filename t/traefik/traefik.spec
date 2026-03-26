@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 3.6.9
+Version: 3.6.12
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -149,6 +149,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Mar 26 2026 Alexander Danilov <admsasha@altlinux.org> 3.6.12-alt1
+- updated from 3.6.9 to 3.6.12 (Fixes: CVE-2026-29777).
+
 * Fri Mar 06 2026 Alexander Danilov <admsasha@altlinux.org> 3.6.9-alt1
 - updated from 3.6.8 to 3.6.9 (Fixed: CVE-2026-29054).
 
