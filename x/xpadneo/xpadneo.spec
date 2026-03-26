@@ -3,7 +3,7 @@
 
 Name: xpadneo
 Version: 0.10
-Release: alt1
+Release: alt2
 
 Summary: Driver for Xbox Wireless Controller
 
@@ -32,9 +32,11 @@ Advanced Linux Driver for Xbox One Wireless Gamepad (DKMS-variant).
 %prep
 %setup
 
+echo "%version" > VERSION
+
 %build
 %install
-make VERSION="%version" PREFIX="%buildroot" ETC_PREFIX=/usr/lib  install
+make PREFIX="%buildroot" ETC_PREFIX=/usr/lib install
 
 cd "%dkms_name"
 
@@ -69,6 +71,9 @@ fi
 %_usrsrc/%dkms_name-%version/
 
 %changelog
+* Tue Mar 24 2026 Boris Yumankulov <boria138@altlinux.org> 0.10-alt2
+- fix dkms package version (ALT bug: 58326)
+
 * Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 0.10-alt1
 - new version 0.10 (ALT bug: 58279)
 - use make to build
