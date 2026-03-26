@@ -14,7 +14,7 @@ BuildRequires: jpackage-11-compat
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle1.65
 Version:          1.65
-Release:          alt3_4jpp11
+Release:          alt4_4jpp11
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -35,8 +35,8 @@ BuildArch:        noarch
 BuildRequires:    aqute-bnd
 BuildRequires:    ant
 BuildRequires:    ant-junit
-BuildRequires:    jakarta-mail
-BuildRequires:    jakarta-activation
+BuildRequires:    jakarta-mail1
+BuildRequires:    jakarta-activation1
 BuildRequires:    javapackages-local
 
 Requires(post):   javapackages-tools
@@ -117,8 +117,8 @@ cp -p %{SOURCE5} bctls.pom
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f ant/jdk15+.xml \
   -Djunit.jar.home=$(build-classpath junit) \
-  -Dmail.jar.home=$(build-classpath javax.mail) \
-  -Dactivation.jar.home=$(build-classpath jakarta-activation/jakarta.activation) \
+  -Dmail.jar.home=$(build-classpath jakarta-mail1/jakarta.mail) \
+  -Dactivation.jar.home=$(build-classpath jakarta-activation1/jakarta.activation) \
   -Drelease.debug=true -Dbc.javac.source=1.8 -Dbc.javac.target=1.8 \
   clean build-provider build #test
 
@@ -218,6 +218,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Thu Mar 26 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.65-alt4_4jpp11
+- FTBFS fix
+
 * Mon Jul 11 2022 Igor Vlasenko <viy@altlinux.org> 0:1.65-alt3_4jpp11
 - rebuild with jakarta-mail
 
