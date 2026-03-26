@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 Summary: A simple, correct Python build frontend
 License: MIT
@@ -82,7 +82,6 @@ Requires: python3-module-%pypi_name
 %pyproject_run_pytest -vra -m 'not network'
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
@@ -90,6 +89,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Thu Mar 26 2026 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
+- 1.4.0 -> 1.4.2.
+
 * Tue Jan 13 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.0 -> 1.4.0.
 
