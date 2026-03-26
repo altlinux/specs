@@ -2,8 +2,8 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4.5
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
 License: GPLv3
@@ -16,6 +16,13 @@ Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-diag = 0.1.5
 
 BuildRequires(pre): rpm-macros-alterator
+%ifnarch %e2k
+BuildRequires: shellcheck
+%endif
+BuildRequires: alterator-entry bats
+BuildRequires: samba
+BuildRequires: /dev
+BuildRequires: /proc
 
 %filter_from_requires /\/bin\/samba-tool/d
 
@@ -26,23 +33,34 @@ Domain Controller Diagnostic Tool.
 %setup
 
 %build
-sed -i 's/^VERSION=.*/VERSION=%version/' %name
+%make_build
 
 %install
-mkdir -p %buildroot%_alterator_datadir/diagnostictools/%name
+%makeinstall
 
-install -p -D -m755 %name %buildroot%_bindir/%name
-install -p -D -m644 alterator/%name.backend %buildroot%_alterator_datadir/backends/%name.backend
-install -p -D -m644 alterator/%diagnostic_tool.diag %buildroot%_alterator_datadir/diagnostictools/%diagnostic_tool.diag
-install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+%check
+%ifnarch %e2k
+shellcheck %name
+%endif
+%make check
 
 %files
 %_bindir/%name
+%_man1dir/%name.*
 %_alterator_datadir/backends/%name.backend
 %_alterator_datadir/diagnostictools/%diagnostic_tool.diag
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Mar 11 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.5.0-alt1
+- feat: added smb and nmb service checks
+- refactor: replaced service_running with service_status
+- feat: split into tool on two buses
+- build: moved to make build
+- chore: added auto test
+- chore: added man
+- ci: add check current tag with Sisyphus (thx Maria Alexeeva)
+
 * Wed Mar 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.5-alt2
 - updated interface dependancy
 

@@ -2,8 +2,8 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.7.3
-Release: alt2
+Version: 0.7.4
+Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
@@ -44,8 +44,7 @@ Active Directory domain environment diagnostic tool.
 %ifnarch %e2k
 shellcheck %name
 %endif
-find ./alterator/ -type f -exec alterator-entry validate {} \+
-bats tests/report_test.bats
+%make check
 
 %files
 %_bindir/%name
@@ -55,6 +54,13 @@ bats tests/report_test.bats
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Mar 19 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.4-alt1
+- build: moved autotests to makefile
+- build: added .diag tests list check
+- build: moved alterator entry check to bats
+- chore: changed test order
+- ci: add check current tag with Sisyphus (thx Maria Alexeeva)
+
 * Wed Mar 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.3-alt2
 - updated interface dependency
 
