@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.20
+Version: 1.0.21
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -80,7 +80,7 @@ export READELF="llvm-readelf"
 %dir %_unitdir/deepin-service-group@deepin-daemon.service.d/
 %_unitdir/deepin-service-group@deepin-daemon.service.d/override.conf
 %_userunitdir/deepin-service*.service
-%_userunitdir/default.target.wants/deepin-service-manager.service
+%_userunitdir/dde-session-initialized.target.wants/deepin-service-manager.service
 %_datadir/dbus-1/system.d/org.deepin.ServiceManager1.conf
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
@@ -106,6 +106,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.21-alt1
+- New version 1.0.21.
+
 * Mon Jan 19 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.20-alt1
 - New version 1.0.20.
 
