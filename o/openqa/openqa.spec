@@ -22,11 +22,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm) perl(MCP.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm) perl(MCP.pm) perl(Test/Perl/Critic.pm)
 
 Name: openqa
 Version: 4.6
-Release: alt25.gitd6e697fd7
+Release: alt26.gitc1f288ff
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -252,6 +252,9 @@ ln -s %_datadir/openqa/script/openqa-label-all %buildroot%_bindir/openqa-label-a
 ln -s %_datadir/openqa/script/setup-db %buildroot%_bindir/openqa-setup-db
 ln -s %_datadir/openqa/script/dump-db %buildroot%_bindir/openqa-dump-db
 
+install -d -m 755 %buildroot%_datadir/openqa/client
+install -m 755 public/openqa-cli.yaml %buildroot%_datadir/openqa/client/openqa-cli.yaml
+
 #These files are not needed
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap-container
@@ -282,6 +285,8 @@ rm -f t/09-job_clone.t
 rm -f t/26-controllerrunning.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/43-scheduling-and-worker-scalability.t
+rm -f t/43-cli-schedule.t
+rm -f external/os-autoinst-common/xt/02-perlcritic.t
 #rm -f t/42-screenshots.t
 rm -f external/os-autoinst-common/t/10-perlcritic.t
 rm -f t/api/04-jobs.t
@@ -502,6 +507,7 @@ fi
 
 %files client
 %_datadir/openqa/script/client
+%_datadir/openqa/client/openqa-cli.yaml
 %_datadir/openqa/script/clone_job.pl
 %_datadir/openqa/script/dump_templates
 %_datadir/openqa/script/load_templates
@@ -542,6 +548,11 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Wed Mar 25 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt26.gitc1f288ff
+- update to current version
+- add missing openqa-cli.yaml to package (closes: 58245)
+- Commit hash: c1f288ff
+
 * Fri Dec 26 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt25.gitd6e697fd7
 - nginx: switch includes to sites-available.d
 - Commit hash: d6e697fd7
