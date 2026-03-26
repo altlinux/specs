@@ -1,11 +1,14 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname alexandria-book-collection-manager
 
 Name:          gem-alexandria-book-collection-manager
-Version:       0.7.10
-Release:       alt1.3
+Version:       0.7.11
+Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection
-License:       GPL-2.0+
+License:       GPL-2.0-or-later
 Group:         Development/Ruby
 Url:           https://github.com/mvz/alexandria-book-collection-manager
 Vcs:           https://github.com/mvz/alexandria-book-collection-manager.git
@@ -13,81 +16,90 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-build-gnome
-BuildRequires: gem(rake) >= 13.0
-BuildRequires: gem(rspec) >= 3.0
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rspec) >= 4
-%if_with check
-BuildRequires: gem(gnome_app_driver) >= 0.3.2
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(rubocop-i18n) >= 3.0
-BuildRequires: gem(rubocop-performance) >= 1.11.3
-BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
-BuildRequires: gem(webmock) >= 3.9
-BuildRequires: gem(pry) >= 0
-BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(yard) >= 0.9.5
+%if_enabled check
+BuildRequires: gem(alexandria-zoom) >= 0.6.0
+BuildRequires: gem(csv) >= 3.2
 BuildRequires: gem(gettext) >= 3.1
-BuildRequires: gem(gstreamer) >= 4.0.2
-BuildRequires: gem(gtk3) >= 4.0.2
+BuildRequires: gem(gnome_app_driver) >= 0.3.2
+BuildRequires: gem(gstreamer) >= 4.3.0
+BuildRequires: gem(gtk3) >= 4.3.0
 BuildRequires: gem(htmlentities) >= 4.3
 BuildRequires: gem(image_size) >= 3.0
-BuildRequires: gem(marc) >= 1.0
+BuildRequires: gem(irb) >= 1.16
+BuildRequires: gem(logger) >= 1.7
+BuildRequires: gem(marc) >= 1.3
 BuildRequires: gem(nokogiri) >= 1.11
-BuildRequires: gem(psych) >= 3.2
-BuildRequires: gem(zoom) >= 0.5.0
+BuildRequires: gem(observer) >= 0.1.2
+BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(rspec) >= 3.0
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-i18n) >= 3.0.0
+BuildRequires: gem(rubocop-performance) >= 1.11.3
+BuildRequires: gem(rubocop-rake) >= 0.6.0
+BuildRequires: gem(rubocop-rspec) >= 3.6
+BuildRequires: gem(simplecov) >= 0.17
+BuildRequires: gem(webmock) >= 3.9
+BuildConflicts: gem(alexandria-zoom) >= 0.7
+BuildConflicts: gem(csv) >= 4
+BuildConflicts: gem(gettext) >= 4
 BuildConflicts: gem(gnome_app_driver) >= 0.4
+BuildConflicts: gem(gstreamer) >= 4.4
+BuildConflicts: gem(gtk3) >= 4.4
+BuildConflicts: gem(htmlentities) >= 5
+BuildConflicts: gem(image_size) >= 4
+BuildConflicts: gem(irb) >= 2
+BuildConflicts: gem(logger) >= 2
+BuildConflicts: gem(marc) >= 2
+BuildConflicts: gem(nokogiri) >= 2
+BuildConflicts: gem(observer) >= 0.2
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-i18n) >= 4
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(rubocop-rspec) >= 4
+BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(webmock) >= 4
-BuildConflicts: gem(yard) >= 1
-BuildConflicts: gem(gettext) >= 4
-BuildConflicts: gem(gstreamer) >= 5
-BuildConflicts: gem(gtk3) >= 5
-BuildConflicts: gem(htmlentities) >= 5
-BuildConflicts: gem(image_size) >= 4
-BuildConflicts: gem(marc) >= 1.3
-BuildConflicts: gem(nokogiri) >= 2
-BuildConflicts: gem(psych) >= 6
-BuildConflicts: gem(zoom) >= 0.6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop-i18n >= 3.0.0,rubocop-i18n < 4
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
-%ruby_use_gem_dependency yard >= 0.9.34,yard < 1
-%ruby_use_gem_dependency gstreamer >= 4.1,gstreamer < 5
-%ruby_use_gem_dependency gtk3 >= 4.1,gtk3 < 5
-%ruby_use_gem_dependency psych >= 4.0,psych < 6
+Requires:      alexandria
+Requires:      ruby >= 3.2.0
+Requires:      gem(alexandria-zoom) >= 0.6.0
+Requires:      gem(csv) >= 3.2
 Requires:      gem(gettext) >= 3.1
-Requires:      gem(gstreamer) >= 4.0.2
-Requires:      gem(gtk3) >= 4.0.2
+Requires:      gem(gstreamer) >= 4.3.0
+Requires:      gem(gtk3) >= 4.3.0
 Requires:      gem(htmlentities) >= 4.3
 Requires:      gem(image_size) >= 3.0
-Requires:      gem(marc) >= 1.0
+Requires:      gem(logger) >= 1.7
+Requires:      gem(marc) >= 1.3
 Requires:      gem(nokogiri) >= 1.11
-Requires:      gem(psych) >= 3.2
-Requires:      gem(zoom) >= 0.5.0
-Requires:      alexandria
+Requires:      gem(observer) >= 0.1.2
+Conflicts:     gem(alexandria-zoom) >= 0.7
+Conflicts:     gem(csv) >= 4
 Conflicts:     gem(gettext) >= 4
-Conflicts:     gem(gstreamer) >= 5
-Conflicts:     gem(gtk3) >= 5
+Conflicts:     gem(gstreamer) >= 4.4
+Conflicts:     gem(gtk3) >= 4.4
 Conflicts:     gem(htmlentities) >= 5
 Conflicts:     gem(image_size) >= 4
-Conflicts:     gem(marc) >= 1.3
+Conflicts:     gem(logger) >= 2
+Conflicts:     gem(marc) >= 2
 Conflicts:     gem(nokogiri) >= 2
-Conflicts:     gem(psych) >= 6
-Conflicts:     gem(zoom) >= 0.6
-Provides:      gem(alexandria-book-collection-manager) = 0.7.10
+Conflicts:     gem(observer) >= 0.2
+Provides:      alexandria-book-collection-manager = %EVR
+Provides:      gem(alexandria-book-collection-manager) = 0.7.11
 
 %description
 Alexandria is a GNOME application to help you manage your book
@@ -101,17 +113,16 @@ Alexandria:
 
 
 %package       -n alexandria
-Version:       0.7.10
-Release:       alt1.3
+Version:       0.7.11
+Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета alexandria-book-collection-manager
-Group:         Books/Other
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(alexandria-book-collection-manager) = 0.7.10
-Requires:      /usr/bin/update-desktop-database
-Requires:      /usr/sbin/update-menus
-Requires:      GConf
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(alexandria-book-collection-manager) = 0.7.11
 
 %description   -n alexandria
 Alexandria is a GNOME application to help you manage your book collection
@@ -121,15 +132,18 @@ executable(s).
 Исполнямка для самоцвета alexandria-book-collection-manager.
 
 
+%if_enabled    doc
 %package       -n gem-alexandria-book-collection-manager-doc
-Version:       0.7.10
-Release:       alt1.3
+Version:       0.7.11
+Release:       alt1
 Summary:       Alexandria is a GNOME application to help you manage your book collection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета alexandria-book-collection-manager
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(alexandria-book-collection-manager) = 0.7.10
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(alexandria-book-collection-manager) = 0.7.11
 
 %description   -n gem-alexandria-book-collection-manager-doc
 Alexandria is a GNOME application to help you manage your book collection
@@ -137,6 +151,31 @@ documentation files.
 
 %description   -n gem-alexandria-book-collection-manager-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета alexandria-book-collection-manager.
+%endif
+
+
+%if_enabled    devel
+%package       -n gem-alexandria-book-collection-manager-devel
+Version:       0.7.11
+Release:       alt1
+Summary:       Alexandria is a GNOME application to help you manage your book collection development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета alexandria-book-collection-manager
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(alexandria-book-collection-manager) = 0.7.11
+Requires:      gem(irb) >= 1.16
+Conflicts:     gem(irb) >= 2
+
+%description   -n gem-alexandria-book-collection-manager-devel
+Alexandria is a GNOME application to help you manage your book collection
+development package.
+
+%description   -n gem-alexandria-book-collection-manager-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета alexandria-book-collection-manager.
+%endif
 
 
 %prep
@@ -152,21 +191,31 @@ documentation files.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md COPYING ChangeLog.0 README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n alexandria
-%doc README.md
+%doc CHANGELOG.md COPYING ChangeLog.0 README.md
 %_bindir/alexandria
 %_mandir/alexandria.1.xz
 
+%if_enabled    doc
 %files         -n gem-alexandria-book-collection-manager-doc
-%doc README.md
+%doc CHANGELOG.md COPYING ChangeLog.0 README.md
 %ruby_gemdocdir
+%endif
+
+%if_enabled    devel
+%files         -n gem-alexandria-book-collection-manager-devel
+%doc CHANGELOG.md COPYING ChangeLog.0 README.md
+%endif
 
 
 %changelog
+* Wed Mar 25 2026 Pavel Skrylev <majioa@altlinux.org> 0.7.11-alt1
+- ^ 0.7.10 -> 0.7.11
+
 * Wed Jul 31 2024 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt1.3
 - ! upper dep limit to psych to 6.0
 

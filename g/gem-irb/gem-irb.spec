@@ -6,7 +6,7 @@
 
 Name:          gem-irb
 Epoch:         1
-Version:       1.15.1
+Version:       1.17.0
 Release:       alt1
 Summary:       Interactive Ruby command-line tool for REPL (Read Eval Print Loop)
 License:       Ruby or BSD-2-Clause
@@ -17,9 +17,13 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(debug) >= 0
 BuildRequires: gem(pp) >= 0.6.0
+BuildRequires: gem(prism) >= 1.3.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rdoc) >= 4.0.0
 BuildRequires: gem(reline) >= 0.4.2
@@ -29,27 +33,39 @@ BuildRequires: gem(stackprof) >= 0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(test-unit-ruby-core) >= 0
 BuildRequires: gem(tracer) >= 0
+BuildConflicts: gem(prism) >= 1.8.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 Requires:      ruby >= 2.7
-Provides:      gem(irb) = 1.15.1
+Requires:      gem(pp) >= 0.6.0
+Requires:      gem(prism) >= 1.3.0
+Requires:      gem(rdoc) >= 4.0.0
+Requires:      gem(reline) >= 0.4.2
+Conflicts:     gem(prism) >= 1.8.0
+Provides:      gem(irb) = 1.17.0
 
 %description
 Interactive Ruby command-line tool for REPL (Read Eval Print Loop).
 
 
 %package       -n irb
-Version:       1.15.1
+Version:       1.17.0
 Release:       alt1
 Summary:       Interactive Ruby command-line tool for REPL (Read Eval Print Loop) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета irb
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(irb) = 1.15.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
+Requires:      gem(irb) = 1.17.0
+Requires:      gem(debug) >= 0
+Requires:      gem(prism) >= 1.3.0
+Requires:      gem(rdoc) >= 4.0.0
+Conflicts:     gem(prism) >= 1.8.0
 
 %description   -n irb
 Interactive Ruby command-line tool for REPL (Read Eval Print Loop)
@@ -61,14 +77,16 @@ executable(s).
 
 %if_enabled    doc
 %package       -n gem-irb-doc
-Version:       1.15.1
+Version:       1.17.0
 Release:       alt1
 Summary:       Interactive Ruby command-line tool for REPL (Read Eval Print Loop) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета irb
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(irb) = 1.15.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(irb) = 1.17.0
 
 %description   -n gem-irb-doc
 Interactive Ruby command-line tool for REPL (Read Eval Print Loop) documentation
@@ -81,15 +99,19 @@ files.
 
 %if_enabled    devel
 %package       -n gem-irb-devel
-Version:       1.15.1
+Version:       1.17.0
 Release:       alt1
 Summary:       Interactive Ruby command-line tool for REPL (Read Eval Print Loop) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета irb
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(irb) = 1.15.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(irb) = 1.17.0
+Requires:      gem(debug) >= 0
 Requires:      gem(pp) >= 0.6.0
+Requires:      gem(prism) >= 1.3.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rdoc) >= 4.0.0
 Requires:      gem(reline) >= 0.4.2
@@ -99,6 +121,7 @@ Requires:      gem(stackprof) >= 0
 Requires:      gem(test-unit) >= 0
 Requires:      gem(test-unit-ruby-core) >= 0
 Requires:      gem(tracer) >= 0
+Conflicts:     gem(prism) >= 1.8.0
 
 %description   -n gem-irb-devel
 Interactive Ruby command-line tool for REPL (Read Eval Print Loop) development
@@ -118,32 +141,41 @@ package.
 %install
 %ruby_install
 
+rm -rf %buildroot%_bindir/irb
+mkdir -p %buildroot%_altdir/
+cat <<EOF >>%buildroot%_altdir/irb
+%{_bindir}/irb %ruby_gemlibdir/exe/irb 100
+EOF
+
 %check
 %ruby_test
 
 %files
-%doc LICENSE.txt README.md CONTRIBUTING.md
+%doc CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n irb
-%doc LICENSE.txt README.md CONTRIBUTING.md
-%_bindir/irb
-%ruby_mandir/irb.*
+%doc CONTRIBUTING.md LICENSE.txt README.md
+%_mandir/irb.1.xz
+%_altdir/irb
 
 %if_enabled    doc
 %files         -n gem-irb-doc
-%doc LICENSE.txt README.md CONTRIBUTING.md
+%doc CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-irb-devel
-%doc LICENSE.txt README.md CONTRIBUTING.md
+%doc CONTRIBUTING.md LICENSE.txt README.md
 %endif
 
 
 %changelog
+* Wed Mar 25 2026 Pavel Skrylev <majioa@altlinux.org> 1:1.17.0-alt1
+- ^ 1.15.1 -> 1.17.0
+
 * Mon Feb 17 2025 Pavel Skrylev <majioa@altlinux.org> 1:1.15.1-alt1
 - ^ 1.12.0 -> 1.15.1
 
