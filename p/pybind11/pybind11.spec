@@ -4,7 +4,7 @@
 
 Name: pybind11
 Version: 3.0.2
-Release: alt1.1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -12,6 +12,7 @@ Group: Development/Other
 
 Url: https://github.com/pybind/pybind11
 Source: %name-%version.tar
+Patch1: pybind11-fix-virtual-base-shared-ptr.patch
 
 BuildArch: noarch
 
@@ -64,6 +65,7 @@ This package contains the Python 3 files.
 
 %prep
 %setup
+%patch1 -p1
 
 # Dropped dependency on distutils (for python3.12)
 sed -i 's/distutils.ccompiler/setuptools._distutils.ccompiler/' pybind11/setup_helpers.py
@@ -113,6 +115,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Sat Mar 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt2
+- fix shared_ptr downcast with virtual inheritance (GCC 14, upstream PR 6014)
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1.1
 - NMU: fix BuildRequires: eigen3 -> eigen3-devel
 
