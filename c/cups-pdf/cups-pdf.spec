@@ -1,6 +1,6 @@
 Name: cups-pdf
-Version: 3.0.1
-Release: alt2
+Version: 3.0.2
+Release: alt1
 
 Summary: Extension for creating pdf-Files with CUPS
 Summary(ru_RU.UTF-8): Расширения для создания PDF файлов с помощью CUPS
@@ -107,6 +107,10 @@ fi
 %dir %_spooldir/cups-pdf/SPOOL
 
 %changelog
+* Wed Mar 25 2026 Mikhail Efremov <sem@altlinux.org> 3.0.2-alt1
+- Updated patches.
+- Updated to 3.0.2.
+
 * Thu Apr 28 2022 Mikhail Efremov <sem@altlinux.org> 3.0.1-alt2
 - Rework Cups-PDF printer setup (closes: #42624).
 - Remove newlines from title.
