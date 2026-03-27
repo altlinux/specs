@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -21,7 +21,6 @@ BuildRequires: plasma-workspace-devel
 BuildRequires: libplasma6
 BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kpackage-devel
-BuildRequires: plasma6-plasma5support-devel
 BuildRequires: plasma6-lib-devel
 
 Requires: alt-identify-client
@@ -42,7 +41,7 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %find_lang %name --all-name
 
 %files -f %name.lang
-%_K6plug/plasma5support/dataengine/*.so
+%_bindir/alt-weather-plasma
 %_K6qml/org/kde/plasma/alt/private/weather/
 %_datadir/icons/hicolor/scalable/status/*
 %_datadir/icons/breeze/status/64/*
@@ -52,6 +51,10 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Fri Mar 27 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.0-alt1
+- update backend
+- new standalone application based on plasma widget
+
 * Thu Feb 06 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.1.2-alt1
 - fix setting geolocation with coordinates(closes: 52948)
 
