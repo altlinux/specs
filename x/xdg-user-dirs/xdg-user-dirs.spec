@@ -3,8 +3,8 @@
 %endif
 
 Name: xdg-user-dirs
-Version: 0.18
-Release: alt2
+Version: 0.19
+Release: alt1
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
@@ -68,7 +68,7 @@ if "$SYSTEMCTL" --version >/dev/null 2>&1; then
 fi
 
 %files -f %name.lang
-%doc NEWS AUTHORS README
+%doc NEWS AUTHORS README*
 %_bindir/*
 %config(noreplace) %_sysconfdir/xdg/user-dirs.conf
 %config(noreplace) %_sysconfdir/xdg/user-dirs.defaults
@@ -79,6 +79,9 @@ fi
 %_man5dir/*user-dir*
 
 %changelog
+* Fri Mar 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.19-alt1
+- new version
+
 * Wed Nov 08 2023 Anton Midyukov <antohami@altlinux.org> 0.18-alt2
 - clear Packager
 - xdg-user-dirs.service: install to graphical-session-pre.target
