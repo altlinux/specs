@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.7
+Version: 1.1.0
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -87,6 +87,17 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Fri Mar 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.0-alt1
+- Fix rsync stderr handling in squashfs image creation.
+- Fix swapped efi/efiremovable conditions in create_install_scripts.
+- Add full LVM support (Closes: 56560, 56000).
+- Change the vm profile name from workstation to kopidel.
+- Remove unused data/grub-efi.cfg.
+- Redesign install_grub step with using grub-efi-install with fall
+  back to grub-install for EFI when grub-efi-install is absent.
+- Fix broken exdrive validation in fast_check_in_exdrive.
+- Fix missing $ on avoided_mount_flag variable in workdirs-list.sh.
+
 * Fri Feb 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.0.7-alt1
 - Add new installer-common-base-stage2 to the squashfs packages.
 

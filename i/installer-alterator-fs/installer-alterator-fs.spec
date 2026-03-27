@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: installer-alterator-fs
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Installing a file system
@@ -39,6 +39,9 @@ and divided into parts, and puts it on the target system.
 %_alterator_backend3dir/install-fs
 
 %changelog
+* Thu Mar 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.0.1-alt1
+- Add a check for mounting destdir before installation.
+
 * Tue Aug 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.0-alt1
 - Improve logging.
 - Stop installer and print error message if failed to mount_chroot.
