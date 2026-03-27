@@ -1,7 +1,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.11.4
+Version: 0.12.2
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -21,7 +21,7 @@ BuildRequires: pkgconfig(cairo-gobject) pkgconfig(gtk4)
 BuildRequires: pkgconfig(graphene-gobject-1.0) meson
 BuildRequires: pkgconfig(gtksourceview-5) pkgconfig(openssl)
 BuildRequires: pkgconfig(libspelling-1) pkgconfig(libadwaita-1)
-BuildRequires: /usr/bin/appstreamcli
+BuildRequires: /usr/bin/appstreamcli libzstd-devel
 
 %description
 Typesetter is a lightweight desktop application for creating beautiful documents with Typst.
@@ -49,6 +49,7 @@ directory = "vendor"
 EOF
 
 %build
+export ZSTD_SYS_USE_PKG_CONFIG=1
 %meson
 %meson_build
 
@@ -70,6 +71,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Fri Mar 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.2-alt1
+- 0.11.4 -> 0.12.2
+
 * Fri Mar 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.11.4-alt1
 - 0.11.3 -> 0.11.4
 
