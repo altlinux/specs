@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9.182
-Release: alt1
+Release: alt2
 
 Summary: translations for all alterator modules
 License: GPL
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Fri Mar 27 2026 Sergey Konev <darisishe@altlinux.org> 2.9.182-alt2
+- alterator-net-ng: fix translation.
+
 * Fri Mar 27 2026 Sergey Konev <darisishe@altlinux.org> 2.9.182-alt1
 - alterator-net-ng: new translations.
 
