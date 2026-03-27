@@ -4,7 +4,7 @@
 %def_without check
 
 Name: kitsune-adw
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: Kitsune is an unofficial client for watching AniLiberty anime
@@ -61,6 +61,9 @@ BuildRequires: python3-module-pytest typelib(Soup) xvfb-run
 %doc *.md
 
 %changelog
+* Fri Mar 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt1
+- 0.8.4 -> 0.8.5
+
 * Sun Mar 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.4-alt1
 - 0.8.3 -> 0.8.4
 
