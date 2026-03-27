@@ -9,7 +9,7 @@
 
 Name: gssproxy
 Version: 0.9.2
-Release: alt1
+Release: alt2
 Summary: GSSAPI Proxy
 
 Group: System/Servers
@@ -131,7 +131,7 @@ ProtectHome=true
 ReadWritePaths=
 # additional caps required if run_as_user is used (see drop_privs func)
 # default CapabilityBoundingSet=CAP_DAC_OVERRIDE (also required by root)
-CapabilityBoundingSet=CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_SYS_PTRACE
+CapabilityBoundingSet=CAP_SETUID CAP_SETGID CAP_SETPCAP CAP_SYS_PTRACE CAP_KILL
 # r for %gssproxy_group group (default UMask=0177)
 UMask=0137
 # required to resolve dns names
@@ -203,6 +203,9 @@ __SVC_EOF__
 %attr(0640,root,%gssproxy_group) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
 
 %changelog
+* Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.9.2-alt2
+- Fixed service reload.
+
 * Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
 - 0.9.1 -> 0.9.2.
 
