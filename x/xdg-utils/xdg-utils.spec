@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt7
+Release: alt8
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -24,7 +24,7 @@ Patch7: xdg-open-fix-ifs-use.patch
 Patch8: xdg-open-kde5.patch
 Patch9: xdg-su-kde.patch
 Patch10: xdg-common-detect-de-generic.patch
-#
+Patch11: xdg-mime-kde.patch
 Patch12: xdg-open-fix-open-url-in-lxde.patch
 Patch13: xdg-desktop-menu-dummy.patch
 Patch14: xdg-email-detect-thunderbird-kde5.patch
@@ -91,7 +91,7 @@ popd
 #patch8 -p1
 %patch9 -p1 -b .kde
 %patch10 -p2
-#
+%patch11 -p1 -b .kde
 %patch12 -p2
 %patch13 -p1
 %patch14 -p1
@@ -130,6 +130,9 @@ rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Fri Mar 27 2026 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt8
+- xdg-mime: fix find qtpaths (closes: 53770)
+
 * Wed Mar 25 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.1-alt7
 - xdg-utils-common: add Phosh to detectDE as gnome-like
 
