@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.21
-Release: alt1
+Release: alt2
 Summary: Certificate status monitor and PKI enrollment client
 License: GPL-3.0-or-later
 Group: System/Base
@@ -68,6 +68,22 @@ mkdir -p %buildroot%_sharedstatedir/%name/{cas,requests}
 %find_lang %name
 
 %check
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1982807
+# conditional xfail, xfail if nss >= 3.114-alt1 and < 3.122-alt1
+nss_ver="$(rpm -q --qf '%%{VERSION}-%%{RELEASE}' libnss 2>/dev/null)" &&
+    nss_3114="$(rpmvercmp 3.114-alt1 $nss_ver 2>/dev/null)" &&
+    { [ "$nss_3114" -eq 0 ] || [ "$nss_3114" -eq -1 ] ; } &&
+    nss_3122="$(rpmvercmp 3.122-alt1 $nss_ver 2>/dev/null)" &&
+    [ "$nss_3122" -eq 1 ] &&
+    touch tests/025-casave-dbm/xfail ||:
+
+# https://pagure.io/certmonger/issue/297
+# conditional xfail, xfail if nss >= 3.115.1-alt1
+nss_ver="$(rpm -q --qf '%%{VERSION}-%%{RELEASE}' libnss 2>/dev/null)" &&
+    nss_3115="$(rpmvercmp 3.115.1-alt1 $nss_ver 2>/dev/null)" &&
+    { [ "$nss_3115" -eq 0 ] || [ "$nss_3115" -eq -1 ] ; } &&
+    touch tests/007-certsave-dbm/xfail ||:
+
 %make check
 
 %post
@@ -154,6 +170,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.79.21-alt2
+- Fixed FTBFS (nss 3.122).
+
 * Thu Oct 02 2025 Stanislav Levin <slev@altlinux.org> 0.79.21-alt1
 - 0.79.20 -> 0.79.21.
 
