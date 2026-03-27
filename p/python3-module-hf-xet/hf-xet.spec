@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.4.2
 Release: alt1
 Summary: hf-xet xet client tech, used in huggingface_hub
 License: Apache-2.0
@@ -42,7 +42,16 @@ BuildRequires: python3(pytest)
 
 %prep
 %setup -a1
-#autopatch -p1
+%autopatch -p1
+#mkdir -p .cargo
+#cat > .cargo/config.toml <<EOF
+#[source.crates-io]
+#replace-with = "vendored-sources"
+#
+#[source.vendored-sources]
+#directory = "vendor"
+#EOF
+cd %mod_name
 mkdir -p .cargo
 cat > .cargo/config.toml <<EOF
 [source.crates-io]
@@ -70,9 +79,11 @@ export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=s
 export MATURIN_BUILD_ARGS=--release
 export ZSTD_SYS_USE_PKG_CONFIG=1
+cd %mod_name
 %pyproject_build
 
 %install
+cd %mod_name
 %pyproject_install
 
 %check
@@ -84,5 +95,8 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.4.2-alt1
+- Update to new version 1.4.2.
+
 * Fri Nov 28 2025 Pavel Shilov <zerospirit@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus.

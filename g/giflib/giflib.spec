@@ -2,7 +2,7 @@
 %define abiversion 7
 
 Name: giflib
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 Summary: A Library for Working with GIF Images.
 License: MIT
@@ -80,6 +80,9 @@ rm -f %buildroot%_libdir/libgif.a
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Thu Mar 12 2026 Pavel Shilov <zerospirit@altlinux.org> 6.1.2-alt1
+- Update to new version 6.1.2.
+
 * Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 6.1.1-alt1
 - 5.2.2 -> 6.1.1
 
