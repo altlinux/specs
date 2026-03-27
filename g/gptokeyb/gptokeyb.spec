@@ -1,6 +1,6 @@
 Name:    gptokeyb
 Version: 0.2.9
-Release: alt4.gitb85b098
+Release: alt5.gitb85b098
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
 License: GPLv2
@@ -79,6 +79,9 @@ install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
 %_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Fri Mar 27 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt5.gitb85b098
+- Fix name of Anbernic RG353M
+
 * Tue Mar 17 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt4.gitb85b098
 - Fix name of Powkiddy RGB20 Pro
 
