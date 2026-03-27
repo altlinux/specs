@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -24,7 +24,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: %name-common = %EVR
-Conflicts: %gis_name
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -62,6 +61,7 @@ Group: Graphical desktop/Other
 
 Requires: %name = %EVR
 Requires: gdm
+Conflicts: %gis_name
 
 %description gdm
 %summary.
@@ -274,6 +274,19 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Wed Mar 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.2-alt1
+- New version: 0.6.2.
+- Hook execution IOError now logged as warning instead of error.
+- Increased ReadySet DBus service timeout for long-running hooks.
+- Keyboard: Added Drag & Drop for reordering input sources.
+- Keyboard: Added layout preview dialog.
+- Keyboard: Added option to select layout switch combination.
+- Keyboard: Using system `xkb-model` instead of hardcoded `pc105`.
+- Increased default window size.
+- Moved `gnome-initial-setup` conflict to `gdm` subpackage (repocop needs it).
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.6.2
+
 * Tue Mar 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.1-alt1
 - New version: 0.6.1.
 - Fixed quitting app before GDM verification.
