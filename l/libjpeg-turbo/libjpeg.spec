@@ -1,5 +1,5 @@
 Name: libjpeg-turbo
-Version: 3.1.3
+Version: 3.1.4
 Release: alt1
 Epoch: 2
 
@@ -177,6 +177,9 @@ find %buildroot -name 'libturbojpeg.*a' -delete
 %_libdir/libturbojpeg.so.*
 
 %changelog
+* Fri Mar 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2:3.1.4-alt1
+- 3.1.4 released
+
 * Wed Jan 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2:3.1.3-alt1
 - 3.1.3 released
 
