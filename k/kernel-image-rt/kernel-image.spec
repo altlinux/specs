@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.78
+%define kernel_sublevel	.79
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Mar 27 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.79-alt1
+- v6.12.79 (2026-03-27).
+
 * Wed Mar 25 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.78-alt1
 - v6.12.78 (2026-03-25).
 - config: Enable USB_SERIAL_CONSOLE=y.
