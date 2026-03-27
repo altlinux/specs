@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.20.1
-Release: alt3
+Version: 4.20.2
+Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -82,6 +82,9 @@ fi
 %ghost %default_background
 
 %changelog
+* Fri Mar 27 2026 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
+- Updated to 4.20.2.
+
 * Thu Jan 22 2026 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt3
 - Explicitly link against libxfce4util.
 
