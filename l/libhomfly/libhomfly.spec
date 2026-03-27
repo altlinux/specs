@@ -1,7 +1,7 @@
 %define lname libhomfly0
 
 Name: libhomfly
-Version: 1.03
+Version: 1.04
 Release: alt1
 Summary: Library to compute the homfly polynomial of a link
 License: Unlicense
@@ -9,7 +9,8 @@ Group: Sciences/Mathematics
 Url: https://github.com/miguelmarco/libhomfly
 VCS: https://github.com/miguelmarco/libhomfly
 
-Source: https://github.com/miguelmarco/libhomfly/releases/download/%version/%name-%version.tar.gz
+# Source-url: https://github.com/miguelmarco/libhomfly/releases/download/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildRequires: libgc-devel
 
@@ -69,6 +70,9 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/libhomfly.pc
 
 %changelog
+* Fri Mar 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.04-alt1
+- New version 1.04.
+
 * Mon Aug 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.03-alt1
 - New version 1.03.
 - Added VCS tag.
