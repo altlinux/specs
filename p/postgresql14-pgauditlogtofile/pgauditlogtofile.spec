@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-pgauditlogtofile
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
@@ -11,8 +11,10 @@ Group:   Databases
 Url:     https://github.com/fmbiete/pgauditlogtofile
 Source: %name-%version.tar
 Patch0: Add-event_id.patch
+Patch1: fix-compress-libs.patch
 
 BuildRequires: postgresql%pg_ver-server-devel libssl-devel libkrb5-devel libuuid-devel
+BuildRequires: liblz4-devel libzstd-devel zlib-devel
 
 Requires: postgresql%pg_ver-server
 Requires: postgresql%pg_ver-pgaudit
@@ -30,6 +32,8 @@ allows to automatically rotate the files based in a number of minutes.
 %prep
 %setup
 #%%patch0 -p1
+%patch1 -p1
+
 %ifarch %e2k
 # error: unrecognized command line option
 sed -i 's/-fanalyzer//' Makefile
@@ -54,6 +58,9 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Mar 26 2026 Alexei Takaseev <taf@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Mon Mar 23 2026 Alexei Takaseev <taf@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
