@@ -2,8 +2,8 @@
 
 
 Name: alterator-net-ng
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Backend-agnostic alterator module for network configuration
 License: GPLv3
@@ -63,6 +63,11 @@ Requires: python3-module-yaml
 %doc README.md
 
 %changelog
+* Fri Mar 27 2026 Sergey Konev <darisishe@altlinux.org> 0.2.0-alt1
+- Networkd configs support
+- Routing table support
+- Clean out configs of other subsystems before apply
+
 * Wed Feb 25 2026 Sergey Konev <darisishe@altlinux.org> 0.1.0-alt2
 - Add clear error message when no network subsystem selected (Closes: 57992)
 
