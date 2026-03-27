@@ -2,7 +2,7 @@
 %global import_path github.com/Lifailon/lazyjournal
 
 Name: lazyjournal
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 Summary: Terminal user interface for journalctl
 License: MIT
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.6-alt1
+- 0.8.5 -> 0.8.6
+
 * Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.5-alt1
 - 0.8.4 -> 0.8.5
 

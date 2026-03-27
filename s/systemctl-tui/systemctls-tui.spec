@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systemctl-tui
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: A fast, simple TUI for interacting with systemd services and their logs.
 License: MIT 
@@ -52,6 +52,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.5.2-alt1
+- 0.5.1 -> 0.5.2
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.5.1-alt1
 - 0.4.0 -> 0.5.1
 

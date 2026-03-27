@@ -4,8 +4,8 @@
 %def_with check
 
 Name: beets
-Version: 2.6.2
-Release: alt2
+Version: 2.7.1
+Release: alt1
 Summary: Music library manager and MusicBrainz tagger.
 License: MIT and ISC
 Group: Sound
@@ -142,6 +142,9 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %python3_sitelibdir/beetsplug/
 
 %changelog
+* Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt1
+- Update to new version 2.7.1.
+
 * Tue Mar 10 2026 Pavel Shilov <zerospirit@altlinux.org> 2.6.2-alt2
 - Update to fix (ALT #58167)
 
