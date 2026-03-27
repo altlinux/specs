@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.48
+Version: 0.4.49
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,11 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Feb 11 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.49-alt1
+- re-activate volumes after reset (Closes: #56343)
+- fix empty disks shown as completely full (Closes: #32519)
+- choose RAID superblock type from profile.scm
+
 * Sat Oct 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.4.48-alt1
 - Enable going back to change package set in vm/blonde.
 
