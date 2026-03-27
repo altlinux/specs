@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.13
-Release: alt2
+Version: 0.6.14
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -64,6 +64,10 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Fri Mar 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.14-alt1
+- Fix package filtering by architecture.
+  Thx Semen Fomchenkov <armatik@altlinux.org>.
+
 * Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.13-alt2
 - Upgrade the backend version to ensure correct operation with exit_status.
 
