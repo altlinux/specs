@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define soversion 6
+%define soversion 7
 
 Name: hashcat
-Version: 6.2.6
-Release: alt3
+Version: 7.1.2
+Release: alt1
 
 Summary: Advanced password recovery utility
 Group: System/Base
@@ -28,8 +28,8 @@ BuildRequires: libminizip-ng-compat-devel
 %add_findprov_skiplist %_datadir/%name/tools/*
 %add_findreq_skiplist %_datadir/%name/tools/*
 
-# compiling for big-endian architecture is not supported by upstream
-ExcludeArch: ppc64le
+# compiling for big-endian and ix86 architectures is not supported by upstream
+ExcludeArch: ppc64le, %ix86
 
 %description
 Hashcat is the world's fastest and most advanced password recovery utility,
@@ -106,8 +106,10 @@ ln -s libhashcat.so.%soversion %buildroot%_libdir/libhashcat.so
 # install bash completion
 install -D -m 0644 extra/tab_completion/hashcat.sh %buildroot%_datadir/bash-completion/completions/hashcat
 
-# remove installed docs and bash completion
+# remove installed docs, tools and bash completion
 rm -r %buildroot%_datadir/hashcat/docs
+rm -r %buildroot%_bindir/*.py
+rm -r %buildroot%_bindir/*.pl
 rm -r %buildroot%_datadir/hashcat/extra/tab_completion
 
 %files
@@ -117,7 +119,6 @@ rm -r %buildroot%_datadir/hashcat/extra/tab_completion
 %_datadir/bash-completion/completions/hashcat
 
 %files cpu
-
 %files -n lib%name%soversion
 %_libdir/libhashcat.so.%soversion
 %_libdir/libhashcat.so.%version
@@ -130,6 +131,9 @@ rm -r %buildroot%_datadir/hashcat/extra/tab_completion
 %doc docs/*
 
 %changelog
+* Fri Mar 27 2026 Denis Rastyogin <gerben@altlinux.org> 7.1.2-alt1
+- Updated to 7.1.2.
+
 * Wed Jul 31 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt3
 - Install bash completion.
 - Add separate package with CPU requirements.
