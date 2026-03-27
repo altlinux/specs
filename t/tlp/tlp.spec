@@ -4,7 +4,7 @@
 
 Name: tlp
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: Optimize laptop battery life
 
@@ -42,7 +42,8 @@ Requires: cpupower linux-tools
 #Note: Conflicts with laptop-mode-tools
 #Makes sure laptop_mode isn't being used:
 Conflicts: laptop-mode-tools
-Conflicts: power-profiles-daemon
+Provides: ppd-service
+Conflicts: ppd-service
 
 BuildArch: noarch
 
@@ -143,6 +144,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Fri Mar 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt2
+- replace Conflicts: power-profiles-daemon with Provides/Conflicts: ppd-service (ALT bug 58400)
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
 - new version 1.9.1
 
