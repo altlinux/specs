@@ -1,5 +1,5 @@
 Name: utop
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 Summary: Universal toplevel for OCaml
 Group: Development/ML
@@ -55,6 +55,9 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Mar 27 2026 Anton Farygin <rider@altlinux.org> 2.17.0-alt1
+- 2.16.0 -> 2.17.0
+
 * Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 2.16.0-alt1
 - 2.15.0 -> 2.16.0
 
