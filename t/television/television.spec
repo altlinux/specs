@@ -6,7 +6,7 @@
 
 Name: television
 Version: 0.15.4
-Release: alt1
+Release: alt2
 Summary: A fast, portable and hackable fuzzy finder for the terminal
 License: MIT
 Group: File tools
@@ -18,6 +18,10 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+
+Requires: bat
+Requires: fd
+Requires: ripgrep
 
 %if_with check
 BuildRequires: /dev/pts
@@ -66,6 +70,9 @@ export TV_BIN_PATH=%bin_path
 %doc LICENSE
 
 %changelog
+* Fri Mar 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.4-alt2
+- Added missing runtime requires on bat, fd and ripgrep.
+
 * Sun Mar 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.4-alt1
 - Updated to version 0.15.4.
 - Packaged shell completions for bash, zsh, fish.
