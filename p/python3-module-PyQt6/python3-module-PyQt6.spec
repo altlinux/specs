@@ -12,8 +12,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt6-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 6.9.1
-Release: alt3
+Version: 6.10.2
+Release: alt1
 
 Summary: Python 3 bindings for Qt 6
 License: GPL-3.0
@@ -151,6 +151,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Fri Mar 27 2026 Vitaly Lipatov <lav@altlinux.ru> 6.10.2-alt1
+- new version (6.10.2)
+
 * Tue Mar 10 2026 Anton Zhukharev <ancieg@altlinux.org> 6.9.1-alt3
 - NMU: Mapped PyPI name to distro's one.
 

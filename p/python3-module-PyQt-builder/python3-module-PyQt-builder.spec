@@ -1,7 +1,7 @@
 %define oname PyQt-builder
 
 Name: python3-module-PyQt-builder
-Version: 1.15.4
+Version: 1.19.1
 Release: alt1
 
 Summary: The PEP 517 compliant PyQt build system
@@ -16,8 +16,8 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools-scm
 BuildRequires: python3-module-sip6 >= 5.3
-
 
 %description
 PyQt-builder is the PEP 517 compliant build system for PyQt and projects that extend PyQt.
@@ -33,19 +33,23 @@ can then be used to build and install the project.
 %setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -rfv %buildroot%python3_sitelibdir/pyqtbuild/bundle/dlls
 
 %files
 %_bindir/pyqt-bundle
 %_bindir/pyqt-qt-wheel
 %python3_sitelibdir/pyqtbuild/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/pyqt_builder-%version.dist-info/
 
 %changelog
+* Fri Mar 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.19.1-alt1
+- new version 1.19.1
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.15.4-alt1
 - new version 1.15.4 (with rpmrb script)
 

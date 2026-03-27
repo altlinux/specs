@@ -1,8 +1,8 @@
 %define oname sip
 
 Name: python3-module-sip6
-Version: 6.12.0
-Release: alt0.2
+Version: 6.15.3
+Release: alt1
 
 Summary: Python3 bindings generator for C/C++ libraries
 
@@ -100,6 +100,9 @@ rm -f sipbuild/distutils_builder.py
 %python3_sitelibdir/sipbuild/
 
 %changelog
+* Fri Mar 27 2026 Vitaly Lipatov <lav@altlinux.ru> 6.15.3-alt1
+- new version 6.15.3
+
 * Wed Jul 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt0.2
 - NMU: fix to build
 
