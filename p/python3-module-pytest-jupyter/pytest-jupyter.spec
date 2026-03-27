@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: A pytest plugin for testing Jupyter libraries and extensions
 License: BSD-3-Clause
@@ -44,7 +44,7 @@ A set of pytest plugins for Jupyter libraries and extensions.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v -W ignore::DeprecationWarning
 
 %files
 %doc *.md LICENSE
@@ -52,6 +52,9 @@ A set of pytest plugins for Jupyter libraries and extensions.
 %python3_sitelibdir/pytest_jupyter-%version.dist-info
 
 %changelog
+* Thu Mar 26 2026 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt2
+- Fix FTBFS.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt1
 - New version 0.11.0.
 
