@@ -39,7 +39,7 @@ BuildRequires: jpackage-default
 
 Name:           openas2
 Version:        2.10.0
-Release:        alt5
+Release:        alt6
 Summary:        Java-based implementation of the EDIINT AS2 standard
 
 License:        BSD
@@ -62,7 +62,7 @@ Source2:        openas2.service
 # Logrotate to delete old logs (openas2 rotates on its own)
 Source3:        openas2.logrotate
 
-BuildRequires:  maven-local dom4j jakarta-mail bouncycastle glassfish-servlet-api
+BuildRequires:  maven-local dom4j jakarta-mail1 bouncycastle glassfish-servlet-api
 BuildRequires:  hamcrest dos2unix jsr-305
 %if %{with hsqldb}
 BuildRequires:  hsqldb-lib ant
@@ -351,6 +351,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 
 
 %changelog
+* Fri Mar 27 2026 Anton Meleshnikov <alton@altlinux.org> 2.10.0-alt6
+- fixed build (renamed jakarta-mail)
+
 * Wed Dec 24 2025 Anton Meleshnikov <alton@altlinux.org> 2.10.0-alt5
 - fixed build (renamed Buildrequires)
 
