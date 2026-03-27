@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -28,8 +28,8 @@ Requires: samba-doc
 Requires: samba-dcerpc
 Requires: samba-winbind
 Requires: samba-winbind-clients
-Requires: diag-domain-controller >= 0.4.4
-Requires: alterator-service-chrony
+Requires: diag-domain-controller >= 0.4.5-alt1
+Requires: alterator-service-chrony >= 0.4-alt1
 
 %description
 Service for Samba AD management.
@@ -48,7 +48,7 @@ install -p -D -m755 %service-bind %buildroot%_bindir/%service-bind
 install -p -D -m755 %service-status %buildroot%_bindir/%service-status
 install -p -D -m755 %service-configure %buildroot%_bindir/%service-configure
 install -p -D -m755 %service-functions %buildroot%_bindir/%service-functions
-install -p -D -m644 %service-entry-update %buildroot%_bindir/%service-entry-update
+install -p -D -m755 %service-entry-update %buildroot%_bindir/%service-entry-update
 install -p -D -m644 alterator/%service.backend %buildroot%_alterator_datadir/backends/%service.backend
 install -p -D -m644 alterator/%service.service %buildroot%_alterator_datadir/services/%service.service
 install -pDm 644 %service.bash-completion \
@@ -59,6 +59,9 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %ifnarch %e2k
 find service-* -type f -exec shellcheck {} \+
 %endif
+
+%post
+/usr/bin/service-samba-ad-entry-update "true" &>/dev/null
 
 %files
 %_bindir/%service
@@ -74,6 +77,19 @@ find service-* -type f -exec shellcheck {} \+
 %_localstatedir/alterator/service/samba-ad/config-backup
 
 %changelog
+* Thu Feb 26 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.8-alt1
+- Fix function for getting netBios domain name
+- Add optional parameter netBiosName
+- Fix resources name. Add validation hint. Remove useless commets
+- Change realm and netBios name from lower to upper case in status function
+- Add automatic netbios domain name calculation
+- Add dynamic update of available dns backend
+- Remove the check whether the bind is installed from the main
+  program
+- Add separate var for configure domain functional level
+- Add the ability to change the domain functional level
+- Separate the output by domain and forest functional levels
+
 * Tue Feb 10 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.7-alt1
 - Disable shellcheck 2119 and 2120
 - Add validation_hint

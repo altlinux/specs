@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-chrony
 Name: alterator-service-chrony
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Service for managment chrony
@@ -13,10 +13,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires: alterator-entry
+%ifnarch %e2k
+BuildRequires: shellcheck
+%endif
 
-Requires: alterator-module-executor
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-service
-Requires: alterator-entry >= 0.4.5
+Requires: alterator-entry >= 0.4.8
 Requires: chrony
 
 %description
@@ -27,21 +31,38 @@ Service for deploy chrony.
 
 %install
 mkdir -p %buildroot%_alterator_datadir/services
-mkdir -p %buildroot%_localstatedir/alterator/service/%service/backups
+mkdir -p %buildroot%_localstatedir/alterator/service/chrony/config-backup
 
 install -p -D -m755 %service %buildroot%_bindir/%service
-install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
-install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
-install -p -D -m644 default-chrony.conf %buildroot%_localstatedir/alterator/service/%service/default-chrony.conf
+install -p -D -m644 alterator/%service.backend %buildroot%_alterator_datadir/backends/%service.backend
+install -p -D -m644 alterator/%service.service %buildroot%_alterator_datadir/services/%service.service
+install -p -D -m644 default-chrony.conf %buildroot%_localstatedir/alterator/service/chrony/default-chrony.conf
+
+%check
+find ./alterator/ -type f -exec alterator-entry validate {} \+
+%ifnarch %e2k
+find service-* -type f -exec shellcheck {} \+
+%endif
 
 %files
 %_alterator_datadir/backends/%service.backend
 %_alterator_datadir/services/%service.service
 %_bindir/%service
-%_localstatedir/alterator/service/%service/backups
-%_localstatedir/alterator/service/%service/default-chrony.conf
+%_localstatedir/alterator/service/chrony/config-backup
+%_localstatedir/alterator/service/chrony/default-chrony.conf
 
 %changelog
+* Thu Mar 26 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.5-alt1
+- Fix typo (Closes: #58119)
+- Change service name
+- Fixed comment for clients settings (thx Michael Mukhin)
+- Moved alterator files to a separate folder (thx Michael Mukhin)
+- Add Alterator file validation. Add shellcheck (thx Michael Mukhin)
+- Removed serviceword and unused flag (thx Michael Mukhin)
+- Edit .spec file (thx Michael Mukhin)
+- Fixed backups folder (thx Michael Mukhin)
+- Removed unused .json files (thx Michael Mukhin)
+
 * Wed Jan 28 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.4-alt1
 - Fixed work with makestep field (thx Michael Mukhin)
 - Fixed work with rtcsync field (thx Michael Mukhin)
