@@ -1,126 +1,125 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jakarta-json
+Version: 2.1.3
+Release: alt1
+
+Summary: Jakarta JSON Processing API
+License: EPL-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jakarta-json
-Version:        1.1.6
-Release:        alt1_7jpp11
-Summary:        Jakarta JSON Processing
+Url: https://eclipse-ee4j.github.io/jsonp/
+Vcs: https://github.com/eclipse-ee4j/jsonp.git
+BuildArch: noarch
 
-License:        EPL-2.0 or GPLv2 with exceptions
-URL:            https://eclipse-ee4j.github.io/jsonp/
-Source0:        https://github.com/eclipse-ee4j/jsonp/archive/1.1-%{version}-RELEASE.tar.gz
-# Update deprecated method calls
-Patch0:         %{name}-deprecated.patch
+Source0: %name-%version.tar
+Patch0:  %name-%version-alt-patch.patch
+Source1: jsonp-1.1-1.1.6-RELEASE.tar.gz
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: maven-local
+BuildRequires: jpackage-11-compat
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-plugin-build-helper
+BuildRequires: spec-version-maven-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-antrun-plugin
 
-BuildArch:      noarch
+%description
+Jakarta JSON Processing provides portable APIs to parse, generate,
+transform, and query JSON documents. The JAR contains both the 2.1
+(jakarta.json.*) and legacy 1.1 (javax.json.*) API classes.
 
-# These can be removed when Fedora 36 reaches EOL
-Obsoletes:      jsonp < 1.0.4-12
-Provides:       jsonp = %{version}-%{release}
-Obsoletes:      jsonp-javadoc < 1.0.4-12
-
-# These can be removed when Fedora 38 reaches EOL
-Obsoletes:      jakarta-json-jaxrs < 1.1.6-5
-Obsoletes:      jakarta-json-jaxrs-1x < 1.1.6-5
-
-%global _desc \
-Jakarta JSON Processing provides portable APIs to parse, generate,\
-transform, and query JSON documents.
-Source44: import.info
-
-%description 
-%_desc
-
-This package contains an implementation of Jakarta JSON Processing.
-
-# Uncomment this once javadocs can be generated again
-# See https://github.com/fedora-java/xmvn/issues/58
-#%%{?javadoc_package}
-
-%package        api
+%package api
+Summary: Jakarta JSON Processing API
 Group: Development/Java
-Summary:        Jakarta JSON Processing API
 
-%description    api 
-%_desc
+%description api
+Jakarta JSON Processing provides portable APIs to parse, generate,
+transform, and query JSON documents. The JAR contains both the 2.1
+(jakarta.json.*) and legacy 1.1 (javax.json.*) API classes.
 
-This package contains the Jakarta JSON Processing API.
-
-%package        impl
+%package impl
+Summary: Legacy JSON-P implementation for javax.json
 Group: Development/Java
-Summary:        Jakarta JSON Processing default provider
-Requires:       %{name}-api = %{version}-%{release}
+Requires: %name-api = %EVR
 
-%description    impl 
-%_desc
-
-This package contains the default provider for Jakarta JSON Processing.
+%description impl
+Legacy JSON-P implementation classes from version 1.1.6, packaged
+separately for javax.json runtime compatibility.
 
 %prep
-%setup -q -n jsonp-1.1-%{version}-RELEASE
-%patch0 -p1
+%setup -a1
+%autopatch -p1
 
-
-# org.eclipse.ee4j:project is not available in Fedora
 %pom_remove_parent
-
-# Disable unwanted modules in the default profile
-# - bundles: make distribution bundles
-# - demos: build demos
-# - gf: create WARs
-# - jaxrs: depends on jaxb, which has been retired
-# - jaxrs-1x: depends on jaxb, which has been retired
-%pom_xpath_remove "//pom:profile[//pom:id='all']/pom:modules/pom:module[text()='bundles' or text()='demos' or text()='gf' or text()='jaxrs' or text()='jaxrs-1x']"
-
-# Unnecessary plugins for an RPM build
-%pom_remove_plugin -r org.apache.maven.plugins:maven-release-plugin
 %pom_remove_plugin -r org.glassfish.copyright:glassfish-copyright-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:wagon-maven-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin api
-%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin impl
+%pom_remove_plugin com.github.spotbugs:spotbugs-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
 
-# Due to jaxb retirement, remove support for jsr311-api (javax.ws.rs-api)
-%pom_remove_dep javax.ws.rs:jsr311-api
+%pom_remove_parent jsonp-1.1-1.1.6-RELEASE/pom.xml
+%pom_remove_plugin org.codehaus.mojo:build-helper-maven-plugin jsonp-1.1-1.1.6-RELEASE/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin jsonp-1.1-1.1.6-RELEASE/pom.xml
 
-# Do not copy the API classes into the implementation JAR
-%pom_xpath_remove "//pom:plugin[pom:artifactId ='maven-bundle-plugin']//pom:Export-Package" impl
+%pom_remove_plugin org.glassfish.build:spec-version-maven-plugin jsonp-1.1-1.1.6-RELEASE/api/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin jsonp-1.1-1.1.6-RELEASE/api/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin jsonp-1.1-1.1.6-RELEASE/api/pom.xml
+%pom_remove_plugin org.apache.felix:maven-bundle-plugin jsonp-1.1-1.1.6-RELEASE/api/pom.xml
+%pom_remove_plugin org.glassfish.build:spec-version-maven-plugin jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-dependency-plugin jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
+%pom_remove_plugin org.apache.felix:maven-bundle-plugin jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
 
-# Do not install the tests
-%mvn_package org.glassfish:jsonp-tests __noinstall
+%pom_xpath_set "/*[local-name()='project']/*[local-name()='packaging']" jar jsonp-1.1-1.1.6-RELEASE/api/pom.xml
+%pom_xpath_set "/*[local-name()='project']/*[local-name()='packaging']" jar jsonp-1.1-1.1.6-RELEASE/impl/pom.xml
 
-# Provide aliases for old names
-%mvn_alias jakarta.json:jakarta.json-api javax.json:javax.json-api
-%mvn_alias org.glassfish:jakarta.json org.glassfish:javax.json
+%mvn_alias "jakarta.json:jakarta.json-api:%version" \
+  "jakarta.json:jakarta.json-api" \
+  "javax.json:javax.json-api" \
+  "javax.json:javax.json-api:1.1.6" \
+  "org.glassfish:javax.json" \
+  "org.glassfish:jakarta.json" \
+  #
 
 %build
-# Skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -j
+mv .xmvn-reactor .xmvn-reactor-api
+%mvn_build -j -- -f jsonp-1.1-1.1.6-RELEASE/pom.xml -pl api,impl -am
+mv .xmvn-reactor .xmvn-reactor-legacy
 
 %install
-%mvn_install
+xmvn-install -R .xmvn-reactor-api -n %{name} -d %{buildroot}
+mv .mfiles .mfiles-api
+legacy_buildroot="$(mktemp -d)"
+xmvn-install -R .xmvn-reactor-legacy -n %{name}-impl -d "${legacy_buildroot}"
+mv .mfiles .mfiles-legacy
+grep 'jakarta.json-api' .mfiles-legacy > .mfiles-legacy-api || :
+grep -v 'jakarta.json-api' .mfiles-legacy > .mfiles-impl
+sed -e 's/^%%attr([^)]*) //' -e 's/^%%dir //' .mfiles-impl > .mfiles-impl-paths
+while read -r path; do
+    [ -e "${legacy_buildroot}${path}" ] || continue
+    if [ -d "${legacy_buildroot}${path}" ]; then
+        mkdir -p "%{buildroot}${path}"
+    else
+        mkdir -p "%{buildroot}$(dirname "${path}")"
+        cp -a "${legacy_buildroot}${path}" "%{buildroot}${path}"
+    fi
+done < .mfiles-impl-paths
+rm -rf "${legacy_buildroot}"
 
-%files -f .mfiles-json
-%doc --no-dereference LICENSE.md NOTICE.md
+%files api -f .mfiles-api
 
-%files api -f .mfiles-jakarta.json-api
-%doc README.md
-%doc --no-dereference LICENSE.md NOTICE.md
-
-%files impl -f .mfiles-jakarta.json
+%files impl -f .mfiles-impl
 
 %changelog
+* Wed Mar 25 2026 Ivan Khanas <xeno@altlinux.org> 2.1.3-alt1
+- Update to 2.1.3. Legacy 1.1 (javax.json.*) classes merged into JAR.
+- Add separate legacy impl binary package from 1.1.6 sources
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_7jpp11
 - update
 
@@ -129,4 +128,3 @@ This package contains the default provider for Jakarta JSON Processing.
 
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_2jpp11
 - new version
-
