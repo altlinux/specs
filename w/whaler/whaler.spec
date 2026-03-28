@@ -4,8 +4,8 @@
 %define appname com.github.sdv43.whaler
 
 Name: whaler
-Version: 1.2.4
-Release: alt2
+Version: 1.2.5
+Release: alt1
 
 Summary: Docker Container Management
 License: GPL-3.0-or-later
@@ -68,6 +68,9 @@ sed -i "s|^Categories=.*|Categories=GTK;System;Monitor;|" data/com.github.sdv43.
 %_datadir/metainfo/com.github.sdv43.whaler.appdata.xml
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.5-alt1
+- New version 1.2.5.
+
 * Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 1.2.4-alt2
 - NMU: exclude ix86 arches from the build (docker doesn't support it anymore)
 

@@ -3,7 +3,7 @@
 %define appname io.github.phastmike.tags
 
 Name: tags
-Version: 2.0
+Version: 2.1
 Release: alt1
 
 Summary: A simple text tagger
@@ -43,10 +43,12 @@ sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.gi
 %install
 %meson_install
 
+%find_lang %name --all-name
+
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %doc COPYING README.md data/screenshots/tags-default.png
 %_bindir/tags
 %_desktopdir/%{appname}.desktop
@@ -56,6 +58,9 @@ sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.gi
 %_iconsdir/hicolor/symbolic/apps/%{appname}-symbolic.svg
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Sun Jan 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.0-alt1
 - New version 2.0.
 
