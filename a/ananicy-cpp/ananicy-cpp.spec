@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ananicy-cpp
-Version: 1.1.1
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Rewrite of ananicy in c++ for lower cpu and memory usage
 
@@ -57,6 +57,9 @@ Requires: ananicy-rules
 %_unitdir/ananicy-cpp.service
 
 %changelog
+* Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Thu Feb 12 2026 Ilya Sorochan <k0tran@altlinux.org> 1.1.1-alt2
 - add pregenerated vmlinux.h for loongarch and riscv (fixes FTBFS)
 
