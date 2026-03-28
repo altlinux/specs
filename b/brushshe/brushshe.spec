@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: brushshe
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Painting app, written in Python, CustomTkinter and PIL
@@ -29,8 +29,8 @@ Brushshe is a simple and user-friendly raster graphics editor.
 
 %prep
 %setup
-sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/main/docs/||" README.md
-sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/refs/heads/main/Brushshe/icons/logo.svg|/usr/share/icons/hicolor/scalable/apps/brushshe.svg|" README.md
+sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/main/||" README.md
+sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/main/Brushshe/assets/icons/logo.svg|/usr/share/icons/hicolor/scalable/apps/brushshe.svg|" README.md
 
 %build
 # nothing to build here
@@ -56,7 +56,7 @@ cp -v Brushshe/assets/icons/logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps
 install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc LICENSE LICENSE-CC0 README.md docs/screenshot.png
+%doc LICENSE LICENSE-CC0 README.md screenshot.png
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -64,6 +64,9 @@ install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_datadir/Brushshe/*
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Wed Dec 31 2025 Nikolay Strelkov <snk@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
