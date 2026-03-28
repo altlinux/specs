@@ -4,7 +4,7 @@
 %def_without check
 
 Name: geonames
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Parse and query the geonames database dump
@@ -28,8 +28,8 @@ BuildRequires: ctest
 %description
 Parse and query the geonames database dump
 
-A library for parsing and querying a local copy of the geonames.org 
-database. 
+A library for parsing and querying a local copy of the geonames.org
+database.
 
 %package -n libgeonames0
 Summary: Parse and query the geonames database dump
@@ -84,7 +84,7 @@ sed -i '/^cmake_minimum_required/d' cmake/GtkDocScanGObjWrapper.cmake
 %files -n libgeonames0
 %doc AUTHORS ChangeLog COPYING COPYING.data
 %_libdir/libgeonames.so.0
-%_libdir/libgeonames.so.0.3.1
+%_libdir/libgeonames.so.0.3.2
 
 %files -n libgeonames-devel
 %dir %_includedir/%name
@@ -98,5 +98,8 @@ sed -i '/^cmake_minimum_required/d' cmake/GtkDocScanGObjWrapper.cmake
 %exclude %_datadir/locale/zh_Hant/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
+
 * Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus

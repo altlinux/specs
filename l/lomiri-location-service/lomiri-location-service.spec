@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-location-service
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Lomiri Location Service
@@ -157,6 +157,9 @@ the Lomiri Location Service and test executables.
 %_datadir/doc/lomiri-location-service/*
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 3.4.1-alt1
+- New version 3.4.1.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 3.4.0-alt1
 - New version 3.4.0.
 
