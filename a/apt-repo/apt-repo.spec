@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.5.0
+Version:  1.5.1
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -42,6 +42,10 @@ bash -n bash-completion.sh
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Sun Mar 15 2026 Vitaly Chikunov <vt@altlinux.org> 1.5.1-alt1
+- Fix APT proxy support (ALT #58197).
+- Make apt-repo rm match both http and https urls (ALT #58216).
+
 * Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 1.5.0-alt1
 - Support installing kernel tasks.
 - Support installing archived tasks.
