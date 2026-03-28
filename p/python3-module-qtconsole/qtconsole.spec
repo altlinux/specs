@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 5.7.2
-Release: alt1
+Release: alt1.1
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -41,6 +41,7 @@ BuildRequires: python3-module-flaky
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-traitlets-tests
 BuildRequires: /usr/bin/xvfb-run
+BuildRequires: /proc
 %endif
 
 %py3_provides %oname
@@ -112,6 +113,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 5.7.2-alt1.1
+- Fixed FTBFS.
+
 * Wed Mar 25 2026 Anton Vyatkin <toni@altlinux.org> 5.7.2-alt1
 - New version 5.7.2.
 
