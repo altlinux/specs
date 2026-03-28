@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define commit 0f87c748cf34a9bcbc4351ad051bcef8cce79158
+%define commit a3e0e63303c0a310a504c5f3e2a9d71496d7aaab
 %define shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: falcond-profiles
 Version: 1.0
-Release: alt2.git%shortcommit
+Release: alt3.git%shortcommit
 
 Summary: List of rules used in falcond
 
@@ -45,6 +45,9 @@ cp -a usr/share/falcond/profiles/htpc/* %buildroot%_datadir/falcond/profiles/htp
 %_datadir/falcond/profiles/htpc/*.conf
 
 %changelog
+* Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 1.0-alt3.gita3e0e63
+- updated to upstream git a3e0e63
+
 * Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 1.0-alt2.git0f87c74
 - updated to upstream git 0f87c74
 - pin commit to 0f87c748cf34a9bcbc4351ad051bcef8cce79158
