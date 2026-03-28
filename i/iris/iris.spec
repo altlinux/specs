@@ -2,7 +2,7 @@
 %define app_id space.x1z53.iris
 
 Name: iris
-Version: 0.2.1
+Version: 0.2.3
 Release: alt1
 
 Summary: GTK client for Yummy Anime
@@ -51,6 +51,20 @@ Obsoletes: yummy-anime-gtk < %EVR
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sun Mar 29 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.3-alt1
+- Update to 0.2.3:
+  + add delete button for own comment
+  + add reply and edit functions for comments
+  + add rating score and user list for Catalog cards
+  + add share and parse buttons to copy and parse links on anime
+
+* Sun Mar 22 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.2-alt1
+- Update to 0.2.2:
+  + add environment variables for WebKit stability
+  + fix online status only for logged users
+  + add formating tags parsing for comments
+  + add "Leave comment" section
+
 * Mon Mar 16 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.1-alt1
 - Update to 0.2.1.
 - Change URL and VCS.
