@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2026.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Read and write TIFF(r) files
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-fsspec
+BuildRequires: /proc
 %endif
 
 %description
@@ -82,6 +83,9 @@ export SKIP_HTTP=1
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 2026.3.3-alt1.1
+- Fixed FTBFS.
+
 * Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 2026.3.3-alt1
 - Automatically updated to 2026.3.3.
 
