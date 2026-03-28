@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define appname io.github.elly_code.reminduck
+%define appname io.github.ellie_commons.reminduck
 
 Name: reminduck
-Version: 2.3.1
+Version: 2.3.1.5
 Release: alt1
 
 Summary: Remember your stuff in an adorably annoying way
@@ -38,6 +38,7 @@ And it quacks.
 
 %prep
 %setup
+sed -i "s|data/icons/hicolor/128.png|/usr/share/icons/hicolor/128x128/apps/%{appname}.png|" README.md
 sed -i "s|Categories=.*|Categories=Office;ProjectManagement;|" data/reminduck.desktop.in
 sed -i "s|data/screenshots/||" README.md
 
@@ -63,6 +64,9 @@ sed -i "s|data/screenshots/||" README.md
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.1.5-alt1
+- New version 2.3.1.5.
+
 * Thu Jan 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.1-alt1
 - New version 2.3.1.
 
