@@ -2,8 +2,8 @@
 %define src_dir %_usrsrc/%dkms_name-%version
 
 Name: xpadneo
-Version: 0.10
-Release: alt2
+Version: 0.10.1
+Release: alt1
 
 Summary: Driver for Xbox Wireless Controller
 
@@ -71,6 +71,9 @@ fi
 %_usrsrc/%dkms_name-%version/
 
 %changelog
+* Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 0.10.1-alt1
+- new version 0.10.1
+
 * Tue Mar 24 2026 Boris Yumankulov <boria138@altlinux.org> 0.10-alt2
 - fix dkms package version (ALT bug: 58326)
 
