@@ -1,5 +1,5 @@
 Name: myMPD
-Version: 21.0.0 
+Version: 25.0.0
 Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
@@ -19,7 +19,8 @@ BuildRequires: jq
 BuildRequires: libssl-devel
 BuildRequires: libid3tag-devel
 BuildRequires: libflac-devel
-BuildRequires: liblua5.3-devel
+BuildRequires: lua5.4
+BuildRequires: liblua5.4-devel
 BuildRequires: libpcre2-devel
 
 %description
@@ -66,6 +67,9 @@ fi
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Sat Mar 28 2026 Nikolay Burykin <bne@altlinux.org> 25.0.0-alt1
+- 25.0.0
+
 * Sat May 24 2025 Nikolay Burykin <bne@altlinux.org> 21.0.0-alt1
 - 21.0.0
 
