@@ -12,7 +12,7 @@
 
 Name:    python3-module-%oname
 Version: 0.46.0
-Release: alt1
+Release: alt1.1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -57,6 +57,9 @@ following approach:
 
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
+# Hotfix for new setuptools
+sed -i 's/, dry_run=dry_run//' setup.py
+
 %build
 export ALTWRAP_LLVM_VERSION=%{llvm_version}
 export CXX=/usr/bin/clang++-%{clang_version}
@@ -75,6 +78,9 @@ export CC=/usr/bin/clang-%{clang_version}
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1.1
+- Fixed FTBFS
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
 - Automatically updated to 0.46.0.
 
