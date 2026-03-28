@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mate-wayland-session
-Version: 1.28.4
-Release: alt3
+Version: 1.28.5
+Release: alt1
 
 Summary: MATE wayland session manager
 License: GPL-2.0
@@ -70,6 +70,9 @@ NOCONFIGURE=1 mate-autogen
 %_datadir/wayland-sessions/MATE.desktop
 
 %changelog
+* Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 1.28.5-alt1
+- New version 1.28.5.
+
 * Mon Jan 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt3
 - Updated to the latest commit d2d8675.
 - Adjusted dependencies and path to wayfire.ini.
