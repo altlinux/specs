@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: A logging replacement for Python
 License: BSD-3-Clause
@@ -26,7 +26,7 @@ BuildRequires: python3-module-mock python3-module-brotlipy
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_basic_ng
 BuildRequires: python3-module-furo
-
+BuildRequires: python3-module-accessible-pygments
 
 %description
 An awesome logging implementation that is fun to use.
@@ -84,6 +84,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1.1
+- Fixed FTBFS.
+
 * Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
 - Automatically updated to 1.9.2.
 - Built with check.
