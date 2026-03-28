@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: falcond
-Version: 1.2.3
+Version: 2.0.1
 Release: alt1
 
 Summary: Advanced Linux Gaming Performance Daemon
@@ -13,21 +13,24 @@ Url: https://git.pika-os.com/general-packages/falcond
 # Source-url: https://git.pika-os.com/general-packages/falcond/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+Source1: %name-development-%version.tar
+
 ExclusiveArch: %zig_arches
 
 BuildRequires(pre): rpm-macros-zig
 BuildRequires: zig
 
-Requires: power-profiles-daemon falcond-profiles scx-scheds
+Requires: ppd-service falcond-profiles scx-scheds
 
 %description
 falcond is a powerful system daemon designed to automatically optimize your Linux gaming experience. It intelligently manages system resources and performance settings on a per-game basis, eliminating the need to manually configure settings for each game.
 
 %prep
-%setup
+%setup -a1
 
 %build
 cd %name
+cp -r ../zig-cache ./
 %zig_build
 
 %install
@@ -44,6 +47,10 @@ install -Dm644 debian/falcond.service %buildroot%_unitdir
 
 
 %changelog
+* Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+- replace power-profiles-daemon to ppd-service
+
 * Thu Jan 08 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.3-alt1
 - new version 1.2.3
 
