@@ -8,7 +8,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.18.0
-Release: alt1
+Release: alt1.1
 
 Summary: Sparse multi-dimensional arrays for the PyData ecosystem
 
@@ -31,6 +31,7 @@ BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numba
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-dask
+BuildRequires: /proc
 %endif
 
 BuildArch: noarch
@@ -69,6 +70,9 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/mlir_backend
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 0.18.0-alt1.1
+- Fixed FTBFS.
+
 * Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.18.0-alt1
 - Automatically updated to 0.18.0.
 
