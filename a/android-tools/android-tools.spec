@@ -1,10 +1,10 @@
 # requires pandoc
 %def_enable docs
-%global llvm_version 20.1
+%global llvm_version 21.1
 
 Name: android-tools
 Version: 34.0.5
-Release: alt4
+Release: alt5
 
 Summary: Android Debug CLI tools
 License: APL
@@ -57,6 +57,7 @@ Patch104: loong64.patch
 # ALT fixes
 Patch200: alt-libziparchive-compile-fix.patch
 Patch201: alt-absl-workaround.patch
+Patch202: alt-mkf2fs-path.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
@@ -71,6 +72,7 @@ Patch3501: libunwindstack-loongarch64.patch
 %endif
 
 Requires: udev-android
+Requires: f2fs-tools
 
 BuildRequires: clang%{llvm_version} clang%{llvm_version}-support
 %if_with lld
@@ -160,6 +162,7 @@ pushd external/boringssl
 popd
 %patch200 -p1
 %patch201 -p1
+%patch202 -p1
 %patch3500 -p1
 %patch3501 -p1
 
@@ -365,6 +368,10 @@ done
 %aprefix
 
 %changelog
+* Sat Mar 28 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt5
+- Build with Clang 21.1, fixes build failure
+- Hardcode mkf2fs path to '/usr/sbin/mkfs.f2fs' instead of 'make_f2fs' (Closes: #58175)
+
 * Sat Nov 22 2025 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt4
 - Build with Clang 20.1, this also fixes boringssl build failure
 - Makefiles are refreshed from the upstream
