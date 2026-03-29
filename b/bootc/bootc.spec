@@ -2,7 +2,7 @@
 
 Name: bootc
 Version: 1.13.0
-Release: alt1
+Release: alt2
 
 Summary: Boot and upgrade via container images
 License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
@@ -23,6 +23,7 @@ Requires: ostree
 Requires: skopeo
 Requires: podman
 Requires: bootupd
+Requires: bubblewrap
 
 BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
@@ -93,6 +94,9 @@ fi
 %_bindir/system-reinstall-%name
 
 %changelog
+* Mon Mar 23 2026 Vladimir Romanov <rirusha@altlinux.org> 1.13.0-alt2
+- Added runtime dependency on bubblewrap.
+
 * Tue Feb 24 2026 Vladimir Romanov <rirusha@altlinux.org> 1.13.0-alt1
 - New version: 1.13.0.
 
