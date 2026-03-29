@@ -36,21 +36,22 @@
 %def_without lizardfs
 %def_with utils
 %def_with gui_utils
-%def_with system_ntirpc
+%def_without system_ntirpc
 %def_with man_page
 %def_with rpcbind
 %def_with mspac_support
 %def_without monitoring_support
 %def_without legacy_python_install
 
+%define libntirpc_version 7.2
+
 Name: nfs-ganesha
-Version: 7.2
+Version: 9.9
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
 License: LGPL-3.0-or-later
-Url: https://github.com/nfs-ganesha/nfs-ganesha/wiki
-Vcs: https://github.com/nfs-ganesha/nfs-ganesha.git
+Url: https://github.com/nfs-ganesha/nfs-ganesha
 Source: %name-%version.tar
 Source1: libntirpc-0.tar
 Source2: prometheus-cpp-lite-0.tar
@@ -283,6 +284,26 @@ Conflicts: lizardfs-nfs-ganesha
 This package contains a FSAL shared object to be used with NFS-Ganesha
 to support LizardFS.
 
+%package -n libntirpc
+Summary: New Transport Independent RPC Library
+Version: %libntirpc_version
+Group: System/Libraries
+AutoReq: nocpp
+
+%description -n libntirpc
+This package contains a new implementation of the original libtirpc,
+transport-independent RPC (TI-RPC) library for NFS-Ganesha.
+
+%package -n libntirpc-devel
+Summary: Development headers for libntirpc
+Version: %libntirpc_version
+Requires: libntirpc = %EVR
+Group: Development/C
+AutoReq: nocpp
+
+%description -n libntirpc-devel
+Development headers and auxiliary files for developing with libntirpc.
+
 %prep
 %setup
 tar xf %SOURCE1 -C src
@@ -417,7 +438,7 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %preun_systemd nfs-ganesha.service nfs-ganesha-lock.service nfs-ganesha-config.service
 
 %files
-%doc src/LICENSE.txt
+%doc src/LICENSE.txt wiki
 %_bindir/ganesha.nfsd
 %_libdir/libganesha_nfsd.so*
 %dir %_libdir/ganesha
@@ -446,9 +467,11 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 
 %if_without system_ntirpc
 %files -n libntirpc
-%_libdir/libntirpc.so.*
+%doc src/libntirpc/COPYING
+%_libdir/libntirpc.so.%libntirpc_version
 
 %files -n libntirpc-devel
+%doc src/libntirpc/{AUTHORS,THANKS,README}
 %_libdir/libntirpc.so
 %_includedir/ntirpc
 %_pkgconfigdir/libntirpc.pc
@@ -592,6 +615,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Sun Mar 29 2026 Vitaly Chikunov <vt@altlinux.org> 9.9-alt1
+- Update to V9.9 (2026-03-19).
+
 * Mon Sep 29 2025 Vitaly Chikunov <vt@altlinux.org> 7.2-alt1
 - Update to V7.2 (2025-09-26).
 
