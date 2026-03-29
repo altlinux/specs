@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-bluetooth-adapters
 Version: 2.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Tools to enumerate and find Bluetooth Adapters
 License: Apache-2.0
@@ -9,25 +11,25 @@ URL: https://pypi.org/project/bluetooth-adapters
 VCS: https://github.com/bluetooth-devices/bluetooth-adapters
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
 
 BuildArch: noarch
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
+%if_with check
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-bleak
+BuildRequires: python3-module-aiooui
+BuildRequires: python3-module-uart-devices
+BuildRequires: python3-module-usb-devices
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -43,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/bluetooth_adapters-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.1-alt1
 - 2.1.1 released
 

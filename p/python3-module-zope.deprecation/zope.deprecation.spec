@@ -8,7 +8,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Zope Deprecation Infrastructure
 License: ZPL-2.1
@@ -17,21 +17,18 @@ Url: https://pypi.org/project/zope.deprecation/
 Vcs: https://github.com/zopefoundation/zope.deprecation.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
 Requires: python3-module-zope
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope-testrunner
 %endif
 
 %description
@@ -40,8 +37,6 @@ to mark deprecated modules, classes, functions, methods and properties.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -59,6 +54,9 @@ to mark deprecated modules, classes, functions, methods and properties.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1:6.0-alt1.1
+- Demodernized packaging.
+
 * Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 1:6.0-alt1
 - 5.1 -> 6.0.
 

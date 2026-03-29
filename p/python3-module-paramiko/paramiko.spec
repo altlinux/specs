@@ -6,7 +6,6 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
@@ -16,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
+Release: alt1.1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
 Group: Development/Python3
@@ -24,18 +23,30 @@ Url: https://pypi.org/project/paramiko/
 VCS: https://github.com/paramiko/paramiko.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
+BuildRequires: python3-module-alabaster
+BuildRequires: python3-module-black
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-icecream
+BuildRequires: python3-module-invocations
+BuildRequires: python3-module-invoke
+BuildRequires: python3-module-pytest-relaxed
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-releases
+BuildRequires: python3-module-watchdog
+
+BuildRequires: python3-module-bcrypt
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-gssapi
+BuildRequires: python3-module-pyasn1
+BuildRequires: python3-module-pynacl
 BuildRequires: /dev/pts
-# not packaged
-%add_pyproject_deps_check_filter codespell
-%pyproject_builddeps_metadata_extra gssapi
-%pyproject_builddeps_check
 # manually installed (.circleci/config.yml)
 BuildRequires: python3-module-k5test
 %endif
@@ -50,11 +61,6 @@ entirely in python (no C or platform-dependent code).
 %prep
 %setup
 %patch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
 
 %build
 %pyproject_build
@@ -71,6 +77,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1.1
+- Demodernized packaging.
+
 * Tue Aug 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.5.1 -> 4.0.0.
 

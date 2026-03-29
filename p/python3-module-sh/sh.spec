@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.2
-Release: alt1
+Release: alt1.1
 Summary: Python subprocess replacement
 License: MIT
 Group: Development/Python3
@@ -14,14 +14,20 @@ Url: https://pypi.org/project/sh/
 Vcs: https://github.com/amoffat/sh
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
 %if_with check
-%add_pyproject_deps_check_filter rstcheck
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-black
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-toml
+BuildRequires: python3-module-tox
+
 BuildRequires: /dev/pts
 BuildRequires: /proc
 %endif
@@ -40,11 +46,6 @@ systems - Linux, macOS, BSDs etc. Specifically, Windows is not supported.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -63,6 +64,9 @@ export SH_TESTS_RUNNING=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1.1
+- Demodernized packaging.
+
 * Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
 - 2.2.1 -> 2.2.2.
 
