@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 Summary: Serialize all of Python
 License: BSD
 Group: Development/Python3
@@ -14,15 +14,11 @@ Url: https://pypi.org/project/dill/
 Vcs: https://github.com/uqfoundation/dill
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage extra dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -36,7 +32,6 @@ command.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata_extra graph
 %description -n %name+graph
 Extra 'graph' for %pypi_name.
 
@@ -44,7 +39,6 @@ Extra 'graph' for %pypi_name.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata_extra profile
 # file conflict on /usr/bin/get_gprof
 Conflicts: %name+graph < 0.3.8-alt1
 %description -n %name+profile
@@ -52,8 +46,6 @@ Extra 'profile' for %pypi_name.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -78,6 +70,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %_bindir/get_gprof
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1.
 

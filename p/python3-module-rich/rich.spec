@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 14.3.3
-Release: alt1
+Release: alt1.1
 Summary: Render rich text and beautiful formatting in the terminal
 License: MIT
 Group: Development/Python3
@@ -14,16 +14,22 @@ Url: https://pypi.org/project/rich/
 Vcs: https://github.com/Textualize/rich
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-black
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pre-commit
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-typing-extensions
+
+BuildRequires: python3-module-markdown-it-py
+BuildRequires: python3-module-pygments
 %endif
 
 %description
@@ -35,11 +41,6 @@ code, tracebacks, and more - out of the box.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -55,6 +56,9 @@ code, tracebacks, and more - out of the box.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 14.3.3-alt1.1
+- Demodernized packaging.
+
 * Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 14.3.3-alt1
 - 14.3.2 -> 14.3.3.
 

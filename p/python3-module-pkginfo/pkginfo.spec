@@ -6,20 +6,22 @@
 
 Name: python3-module-%pypi_name
 Version: 1.12.1.2
-Release: alt2
+Release: alt2.1
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/pkginfo/
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: pkginfo-1.12.1.2-tests-make-test_installed_ctor_w_dist_info-compat-with-recent-flit.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 %endif
 
 %description
@@ -33,8 +35,6 @@ develop).
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -55,6 +55,9 @@ mv %buildroot%_bindir/pkginfo{,.py3}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.12.1.2-alt2.1
+- Demodernized packaging.
+
 * Thu Feb 20 2025 Stanislav Levin <slev@altlinux.org> 1.12.1.2-alt2
 - made tests compatible with flit 3.11.0.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.16
-Release: alt1
+Release: alt1.1
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
 License: MPL-2.0
 Group: Development/Python3
@@ -13,20 +13,28 @@ Url: https://pypi.org/project/ini2toml
 VCS: https://github.com/abravalheri/ini2toml.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage extras dependencies with metadata
-AutoReq: yes, nopython3
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
 
 %if_with check
-%pyproject_builddeps_metadata_extra all
-%pyproject_builddeps_metadata_extra testing
-%pyproject_builddeps_metadata_extra experimental
+BuildRequires: python3-module-configupdater
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-tomli-w
+BuildRequires: python3-module-tomlkit
+BuildRequires: python3-module-isort
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-randomly
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-tomli
+BuildRequires: python3-module-validate-pyproject
 %endif
+
+%add_python3_req_skip distutils
 
 %description
 The original purpose of this project is to help migrating setup.cfg files to
@@ -37,7 +45,6 @@ file to TOML.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra lite
 Provides: %name+lite = %EVR
 
 %description lite
@@ -47,7 +54,6 @@ Extra 'lite' for %pypi_name.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra full
 Provides: %name+full = %EVR
 
 %description full
@@ -56,9 +62,14 @@ Extra 'full' for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -78,6 +89,9 @@ Extra 'full' for %pypi_name.
 %files lite
 %files full
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.16-alt1.1
+- Demodernized packaging.
+
 * Thu Jul 04 2024 Stanislav Levin <slev@altlinux.org> 0.16-alt1
 - 0.15 -> 0.16.
 
