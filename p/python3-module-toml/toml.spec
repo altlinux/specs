@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.10.2
-Release: alt4
+Release: alt4.1
 Summary: A Python library for parsing and creating TOML.
 License: MIT
 Group: Development/Python3
@@ -13,14 +13,16 @@ Url: https://pypi.org/project/toml/
 Vcs: https://github.com/uiri/toml
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+
 BuildRequires: golang-github-burntsushi-toml-test
 %endif
 
@@ -34,11 +36,6 @@ toml file.
 %prep
 %setup
 %patch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -55,6 +52,9 @@ ln -s %_datadir/toml-test toml-test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt4.1
+- Demodernized packaging.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 0.10.2-alt4
 - Fixed FTBFS (tox 4).
 

@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Bringing the elegance of C# EventHanlder to Python
 License: BSD
@@ -16,13 +16,10 @@ Url: https://pypi.org/project/Events/
 Vcs: https://github.com/pyeve/events
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
 %description
 The C# language provides a handy way to declare, subscribe to and fire
@@ -34,8 +31,6 @@ part of the language.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -53,6 +48,9 @@ part of the language.
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.5-alt1.2
+- Demodernized packaging.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

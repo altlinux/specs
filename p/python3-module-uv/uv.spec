@@ -14,7 +14,7 @@
 
 Name: python3-module-%pypi_name
 Version: %uv_version
-Release: alt1
+Release: alt1.1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
 Group: Development/Python3
@@ -22,19 +22,13 @@ Url: https://pypi.org/project/uv
 Vcs: https://github.com/astral-sh/uv
 Source: %name-%version.tar
 Source1: vendor_rust.tar
-Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 Requires: %pypi_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-maturin
 BuildRequires: /usr/bin/cmake
 BuildRequires: libssl-devel
-%if_with check
-%pyproject_builddeps_metadata
-%endif
 
 %description
 An extremely fast Python package installer and resolver, written in Rust.
@@ -70,8 +64,6 @@ Requires: %pypi_name_uv_build
 %setup -a1
 %autopatch -p1
 cat < vendor_cargoconf.toml >> .cargo/config.toml
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 export CARGO_TERM_VERBOSE=true
@@ -141,6 +133,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1.1
+- Demodernized packaging.
+
 * Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
 - 0.11.1 -> 0.11.2.
 

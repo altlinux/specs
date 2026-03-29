@@ -4,7 +4,7 @@
 
 Name: python3-module-redis-py
 Version: 7.4.0
-Release: alt1
+Release: alt1.1
 Summary: Python client for Redis database and key-value store
 License: MIT
 Group: Development/Python3
@@ -12,22 +12,19 @@ Url: https://pypi.org/project/redis/
 Vcs: https://github.com/redis/redis-py
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+
+%add_python3_req_skip pybreaker
 
 %description
 %summary.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -40,6 +37,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 7.4.0-alt1.1
+- Demodernized packaging.
+
 * Wed Mar 25 2026 Stanislav Levin <slev@altlinux.org> 7.4.0-alt1
 - 7.3.0 -> 7.4.0.
 

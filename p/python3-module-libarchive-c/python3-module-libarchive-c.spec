@@ -6,24 +6,28 @@
 
 Name: python3-module-%pypi_name
 Version: 5.3
-Release: alt1
+Release: alt1.1
 Summary: Python interface to libarchive
 License: CC0
 Group: Development/Python3
 Url: https://pypi.org/project/libarchive-c/
 Vcs: https://github.com/Changaco/python-libarchive-c
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
 Requires: libarchive
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 BuildRequires: libarchive-devel
+
+%if_with check
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-forked
+%endif
 
 %description
 The libarchive library provides a flexible interface for reading and writing
@@ -36,12 +40,14 @@ dynamically load and access the C library.
 %prep
 %setup
 %patch1 -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -64,6 +70,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.3-alt1.1
+- Demodernized packaging.
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 5.3-alt1
 - 5.2 -> 5.3.
 

@@ -8,7 +8,6 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
@@ -16,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 6.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Filesystem events monitoring
 License: Apache-2.0
@@ -26,21 +25,33 @@ VCS: https://github.com/gorakhargosh/watchdog.git
 
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra watchmedo
-%pyproject_builddeps_check
+BuildRequires: python3-module-eventlet
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-ruff
+BuildRequires: python3-module-sphinx
+
+BuildRequires: python3-module-pyyaml
+
 # required by raise_nofile fixture (see tests/test_inotify_c.py)
 BuildRequires: /proc
 %endif
 
 Conflicts: python-module-watchdog
+
+%add_python3_req_skip AppKit
+%add_python3_req_skip FSEvents
+%add_python3_req_skip _watchdog_fsevents
 
 %add_python_extra watchmedo
 
@@ -50,11 +61,6 @@ Python API and shell utilities to monitor file system events.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
-%endif
 
 %build
 %pyproject_build
@@ -73,6 +79,9 @@ export NO_SUDO=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1.1
+- Demodernized packaging.
+
 * Wed Nov 06 2024 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.0.3 -> 6.0.0.
 

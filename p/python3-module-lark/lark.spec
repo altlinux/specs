@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 Summary: A modern parsing library
 License: MIT
 Group: Development/Python3
@@ -15,19 +15,17 @@ Url: https://pypi.org/project/lark
 Vcs: https://github.com/lark-parser/lark
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-AutoReq: yes, nopython3
 # file conflict on site-packages/lark/
 Provides: python3-module-lark-parser = %EVR
 Obsoletes: python3-module-lark-parser <= 0.11.3-alt1
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter js2py
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-interegular
+BuildRequires: python3-module-regex
 %endif
 
 %description
@@ -39,18 +37,12 @@ code.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra %extra_name
 %description -n %name+%extra_name
 Extra '%extra_name' for %pypi_name.
 
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
-%endif
 
 %build
 %pyproject_build
@@ -68,6 +60,9 @@ Extra '%extra_name' for %pypi_name.
 
 %files -n %name+%extra_name
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1.1
+- Demodernized packaging.
+
 * Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.2 -> 1.3.1.
 
