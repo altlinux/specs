@@ -1,8 +1,12 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname vegas
 
 Name:          gem-vegas
 Version:       0.1.11
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Vegas aims to solve the simple problem of creating executable versions of Sinatra/Rack apps
 License:       MIT
 Group:         Development/Ruby
@@ -12,25 +16,26 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(rack) >= 1.0.0
-BuildRequires: gem(mocha) >= 0.9.8
+BuildRequires(pre): rpm-macros-ruby
+BuildRequires: setup-rb
+BuildRequires: rake
+%if_enabled check
 BuildRequires: gem(bacon) >= 1.1.0
+BuildRequires: gem(mocha) >= 0.9.8
+BuildRequires: gem(rack) >= 1.0.0
 BuildRequires: gem(sinatra) >= 0.9.4
-BuildConflicts: gem(mocha) >= 2
 BuildConflicts: gem(bacon) >= 2
-BuildConflicts: gem(sinatra) >= 3
+BuildConflicts: gem(mocha) >= 4
+BuildConflicts: gem(sinatra) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mocha >= 1.11.2,mocha < 2
-%ruby_use_gem_dependency sinatra >= 2.2.3,sinatra < 3
 %ruby_use_gem_dependency bacon >= 1.2.0,bacon < 2
+%ruby_use_gem_dependency mocha >= 2.7.1,mocha < 4
+%ruby_use_gem_dependency sinatra >= 4.0.0,sinatra < 5
 Requires:      gem(rack) >= 1.0.0
 Provides:      gem(vegas) = 0.1.11
-
 
 %description
 Vegas aims to solve the simple problem of creating executable versions of
@@ -39,9 +44,10 @@ applications and provides a simple command line interface and launching
 mechanism.
 
 
+%if_enabled    doc
 %package       -n gem-vegas-doc
 Version:       0.1.11
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Vegas aims to solve the simple problem of creating executable versions of Sinatra/Rack apps documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета vegas
 Group:         Development/Documentation
@@ -60,23 +66,25 @@ mechanism.
 
 %description   -n gem-vegas-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета vegas.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-vegas-devel
 Version:       0.1.11
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Vegas aims to solve the simple problem of creating executable versions of Sinatra/Rack apps development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета vegas
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(vegas) = 0.1.11
-Requires:      gem(mocha) >= 0.9.8
 Requires:      gem(bacon) >= 1.1.0
+Requires:      gem(mocha) >= 0.9.8
 Requires:      gem(sinatra) >= 0.9.4
-Conflicts:     gem(mocha) >= 2
 Conflicts:     gem(bacon) >= 2
-Conflicts:     gem(sinatra) >= 3
+Conflicts:     gem(mocha) >= 4
+Conflicts:     gem(sinatra) >= 5
 
 %description   -n gem-vegas-devel
 Vegas aims to solve the simple problem of creating executable versions of
@@ -89,6 +97,7 @@ mechanism.
 
 %description   -n gem-vegas-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета vegas.
+%endif
 
 
 %prep
@@ -104,19 +113,26 @@ mechanism.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.txt LICENSE README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-vegas-doc
-%doc README.rdoc
+%doc History.txt LICENSE README.rdoc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-vegas-devel
-%doc README.rdoc
+%doc History.txt LICENSE README.rdoc
+%endif
 
 
 %changelog
+* Sun Mar 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.1.11-alt1.3
+- ! fixed gem requies for mocha and sinatra
+
 * Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 0.1.11-alt1.2
 - ! closes build deps under check condition
 
