@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: Fast, simple object-to-object and broadcast signaling
 License: MIT
@@ -14,13 +14,16 @@ VCS: https://github.com/pallets-eco/blinker
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+
 %if_with check
-%pyproject_builddeps_check
+BuildRequires: python3-module-iniconfig
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-pluggy
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
@@ -32,11 +35,6 @@ sent by any sender.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync check pip_reqfile requirements/tests.txt
-%endif
 
 %build
 %pyproject_build
@@ -53,6 +51,9 @@ sent by any sender.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1.1
+- Demodernized packaging.
+
 * Tue Dec 10 2024 Anton Zhukharev <ancieg@altlinux.org> 1.9.0-alt1
 - Updated to 1.9.0.
 

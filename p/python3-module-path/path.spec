@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 17.1.1
-Release: alt1
+Release: alt1.1
 Summary: A module wrapper for os.path
 License: MIT
 Group: Development/Python
@@ -13,18 +13,22 @@ Url: https://pypi.org/project/path/
 VCS: https://github.com/jaraco/path
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 %py3_provides %pypi_name
 Provides: python3-module-path.py = %EVR
 Obsoletes: python3-module-path.py < %EVR
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-# requires internet
-%add_pyproject_deps_build_filter coherent-licensed
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-more-itertools
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-pygments
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -34,9 +38,14 @@ common operations on files to be invoked on those path objects directly.
 %prep
 %setup
 %patch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -53,6 +62,9 @@ common operations on files to be invoked on those path objects directly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 17.1.1-alt1.1
+- Demodernized packaging.
+
 * Mon Jul 28 2025 Stanislav Levin <slev@altlinux.org> 17.1.1-alt1
 - 17.1.0 -> 17.1.1.
 

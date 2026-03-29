@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 25.4.16
-Release: alt1.1
+Release: alt1.2
 Summary: Self-service finite-state machines for the programmer on the go
 License: MIT
 Group: Development/Python3
@@ -14,16 +14,23 @@ Url: https://pypi.org/project/Automat/
 Vcs: https://github.com/glyph/Automat
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %py3_provides %pypi_name
 Provides: python3-module-%pypi_name = %EVR
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata_extra visualize
-%pyproject_builddeps_check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+
+BuildRequires: python3-module-graphviz
+BuildRequires: python3-module-twisted
 %endif
 
 %description
@@ -34,7 +41,6 @@ automata (particularly deterministic finite-state transducers).
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata_extra visualize
 Provides: %name+visualize = %EVR
 
 %description visualize
@@ -43,12 +49,14 @@ Extra 'visualize' for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -73,6 +81,9 @@ rm -r %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 25.4.16-alt1.2
+- Demodernized packaging.
+
 * Mon Apr 21 2025 Stanislav Levin <slev@altlinux.org> 25.4.16-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 6.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Cross Origin Resource Sharing (CORS) support for Flask
 License: MIT
@@ -18,19 +18,26 @@ Vcs: https://github.com/corydolphin/flask-cors
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
 # well-known PyPI name
 Provides: python3-module-%pypi_name = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter deptry
-%add_pyproject_deps_check_filter tox-uv
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-mkdocs
+BuildRequires: python3-module-mkdocs-material
+BuildRequires: python3-module-mkdocstrings
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pre-commit
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-ruff
+
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-werkzeug
 %endif
 
 %description
@@ -42,11 +49,6 @@ cross-origin AJAX possible.
 %autopatch -p1
 echo '__version__ = "%version"' > flask_cors/version.py
 sed -i 's/^version =.*$/version = "%version"/' pyproject.toml
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
 
 %build
 %pyproject_build
@@ -63,6 +65,9 @@ sed -i 's/^version =.*$/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.0.2-alt1.1
+- Demodernized packaging.
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 6.0.2-alt1
 - Updated to 6.0.2.
 

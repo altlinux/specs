@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 10.8.0
-Release: alt1
+Release: alt1.1
 Summary: More routines for operating on iterables, beyond itertools
 License: MIT
 Group: Development/Python3
@@ -11,18 +11,12 @@ Url: https://pypi.org/project/more-itertools/
 VCS: https://github.com/more-itertools/more-itertools
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 # wellknown PyPI name
 %py3_provides %pypi_name
 Provides: python3-module-more_itertools = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
 
 %description
 Python's itertools library is a gem - you can compose elegant solutions
@@ -32,8 +26,6 @@ routines for working with Python iterables.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -49,6 +41,9 @@ routines for working with Python iterables.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 10.8.0-alt1.1
+- Demodernized packaging.
+
 * Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 10.8.0-alt1
 - 10.7.0 -> 10.8.0.
 
