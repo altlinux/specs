@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.0.8
-Release: alt2
+Release: alt3
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -143,6 +143,9 @@ install -Dm 644 build/org.mavlink.qgroundcontrol.desktop %buildroot%_datadir/app
 %_datadir/applications/org.mavlink.qgroundcontrol.desktop
 
 %changelog
+* Tue Mar 24 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt3
+- Remove SDL version hardening, update QGC hardcoded version.
+
 * Thu Feb 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt2
 - Remove useless BuildRequires (closes: 57928).
 
