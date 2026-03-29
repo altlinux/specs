@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.12.0
-Release: alt1.2
+Release: alt1.3
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
+BuildRequires: python3-module-flit-core
 
 %if_with check
 BuildRequires: python3-module-docutils
@@ -87,6 +87,9 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.3
+- Fixed back build dependency.
+
 * Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.2
 - Return back accidently removed flit-core.
 
