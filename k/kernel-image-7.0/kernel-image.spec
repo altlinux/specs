@@ -1,5 +1,5 @@
 Name: kernel-image-7.0
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.19
 %define kernel_base_version	7.0
 %define kernel_sublevel	.0
@@ -591,6 +591,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Mar 29 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt0.rc6
+- Update to v7.0-rc6 (2026-03-29).
+- config: Enable USB_SERIAL_CONSOLE=y.
+
 * Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt0.rc5
 - Update to v7.0-rc5 (2026-03-22).
 
