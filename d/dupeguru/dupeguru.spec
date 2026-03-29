@@ -4,7 +4,7 @@
 
 Name: dupeguru
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: GUI tool to find duplicate files in a system
 License: GPL-3.0
@@ -26,6 +26,7 @@ BuildRequires: python3(sphinx)
 
 %if_with check
 BuildRequires: /usr/bin/pytest3
+BuildRequires: python3(sqlite3)
 %endif
 
 AutoProv: yes,nopython
@@ -40,6 +41,7 @@ AutoReq: yes,nopython
 Requires: python3(mutagen)
 Requires: python3(send2trash)
 Requires: python3(semantic_version)
+Requires: python3(sqlite3)
 
 Source: %name-%version.tar
 
@@ -125,9 +127,12 @@ ln -srv %buildroot%_libexecdir/dupeguru/qt/pe %buildroot%_datadir/dupeguru/qt/pe
 # copy missed file
 cp -pv qt/dg_rc.py %buildroot%_datadir/dupeguru/qt/dg_rc.py
 
+# copy help files
+cp -rpv build/help %buildroot%_datadir/dupeguru/
+
 %files
 %doc CONTRIBUTING.md CREDITS LICENSE README.md Windows.md macos.md
-%doc help/changelog build/help/en/*.html build/help/en/*.js build/help/en/developer
+%doc help/changelog 
 %_bindir/dupeguru
 %_desktopdir/dupeguru.desktop
 %_pixmapsdir/dupeguru.png
@@ -154,5 +159,9 @@ cp -pv qt/dg_rc.py %buildroot%_datadir/dupeguru/qt/dg_rc.py
 %exclude %_datadir/dupeguru/qt/se/__pycache__
 
 %changelog
+* Sun Mar 29 2026 Nikolay Strelkov <snk@altlinux.org> 4.3.1-alt2
+- Added python3(sqlite3) dependency for p11.
+- Placed help files in the correct folder for offline usage.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 4.3.1-alt1
 - Initial build for Sisyphus
