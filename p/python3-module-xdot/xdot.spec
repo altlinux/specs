@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4
-Release: alt1
+Release: alt1.1
 Summary: Interactive viewer for Graphviz dot files
 License: LGPLv3
 Group: Development/Python3
@@ -15,16 +15,17 @@ Vcs: https://github.com/jrfonseca/xdot.py
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%add_pyproject_deps_runtime_filter pygobject
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter pygobject
-%pyproject_builddeps_metadata
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pycairo
-BuildRequires: python3-module-pygobject3 libgtk+3-gir gobject-introspection-devel
+BuildRequires: python3-module-pygobject3
+BuildRequires: libgtk+3-gir gobject-introspection-devel
 BuildRequires: graphviz
 BuildRequires: fonts-ttf-ms
 BuildRequires: /usr/bin/xvfb-run
@@ -41,8 +42,6 @@ or as a library embedded in your Python application.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -61,6 +60,9 @@ or as a library embedded in your Python application.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.4-alt1.1
+- Demodernized packaging.
+
 * Fri Oct 18 2024 Stanislav Levin <slev@altlinux.org> 1.4-alt1
 - 1.1 -> 1.4.
 

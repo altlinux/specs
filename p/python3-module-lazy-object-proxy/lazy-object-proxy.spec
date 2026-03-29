@@ -5,27 +5,27 @@
 
 Name: python3-module-%pypi_name
 Version: 1.12.0
-Release: alt1
+Release: alt1.1
 Summary: A fast and thorough lazy object proxy
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/lazy-object-proxy/
 VCS: https://github.com/ionelmc/python-lazy-object-proxy.git
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
 Provides: python3-module-lazy_object_proxy = %EVR
 Obsoletes: python3-module-lazy_object_proxy < %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter objproxies hunter
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-django
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-benchmark
 %endif
 
 %description
@@ -36,12 +36,14 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -59,6 +61,9 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1.1
+- Demodernized packaging.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
 - 1.11.0 -> 1.12.0.
 

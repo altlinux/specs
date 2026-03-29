@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.12
-Release: alt1
+Release: alt1.1
 Summary: Magic filter based on dynamic attribute getter
 License: MIT
 Group: Development/Python3
@@ -15,16 +15,9 @@ Vcs: https://github.com/aiogram/magic-filter.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %description
 magic-filter is a package that provides magic filter based on dynamic
@@ -37,8 +30,6 @@ expressions in Python.
 # Update the version in __init__.py to match the spec version
 sed -i 's/__version__ = "1"/__version__ = "%version"/' magic_filter/__init__.py
 
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -55,5 +46,8 @@ sed -i 's/__version__ = "1"/__version__ = "%version"/' magic_filter/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.12-alt1.1
+- Demodernized packaging.
+
 * Fri Nov 07 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1.0.12-alt1
 - Initial build.

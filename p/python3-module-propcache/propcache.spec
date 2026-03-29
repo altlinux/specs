@@ -1,6 +1,6 @@
 Name: python3-module-propcache
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Fast implementation of cached properties
 License: Apache-2.0
@@ -9,24 +9,17 @@ Url: https://pypi.org/project/propcache
 VCS: https://github.com/aio-libs/propcache
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
 
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
-
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-expandvars
+BuildRequires: python3-module-Cython
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_pipreqfile requirements/test.txt
 
 %build
 %pyproject_build
@@ -42,6 +35,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/propcache-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1.1
+- Demodernized packaging.
+
 * Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.1-alt1
 - 0.4.1 released
 

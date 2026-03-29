@@ -8,26 +8,25 @@
 
 Name: python3-module-%pypi_name
 Version: 8.2
-Release: alt1
+Release: alt1.1
 Summary: Hookable object support
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.hookable/
 Vcs: http://github.com/zopefoundation/zope.hookable
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope-testing
+BuildRequires: python3-module-zope-testrunner
 %endif
 
 %description
@@ -41,8 +40,6 @@ imported it, will see the change.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -63,6 +60,9 @@ rm %buildroot%python3_sitelibdir/%ns_name/%mod_name/*.c
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 8.2-alt1.1
+- Demodernized packaging.
+
 * Fri Nov 28 2025 Stanislav Levin <slev@altlinux.org> 8.2-alt1
 - 7.0 -> 8.2.
 
