@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.12.0
-Release: alt1.1
+Release: alt1.2
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-docutils
@@ -37,6 +37,7 @@ BuildRequires: python3-module-pip
 Flit is a simple way to put Python packages and modules on PyPI. It tries to
 require less thought about packaging and help you avoid common mistakes
 
+%package -n python3-module-%pypi_name_core
 Summary: Distribution-building parts of Flit
 License: BSD
 Group: Development/Python3
@@ -44,6 +45,7 @@ Group: Development/Python3
 Conflicts: python3-module-flit <= 3.6.0
 %py3_provides %pypi_name_core
 
+%description -n python3-module-%pypi_name_core
 Distribution-building parts of Flit.
 
 %prep
@@ -80,10 +82,14 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/flit/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
+%files -n python3-module-%pypi_name_core
 %python3_sitelibdir/flit_core/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.2
+- Return back accidently removed flit-core.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.1
 - Demodernized packaging.
 
