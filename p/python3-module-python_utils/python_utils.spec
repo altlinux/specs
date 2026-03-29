@@ -9,7 +9,6 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
@@ -17,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%mod_name
 Version: 3.9.1
-Release: alt1
+Release: alt1.1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
 Group: Development/Python3
@@ -25,17 +24,24 @@ Url: https://pypi.org/project/python-utils/
 Vcs: https://github.com/WoLpH/python-utils
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage extra dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%pypi_name = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra tests
+BuildRequires: python3-module-blessings
+BuildRequires: python3-module-loguru
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mypy
+BuildRequires: python3-module-ruff
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-typing-extensions
 %endif
 
 %add_python_extra loguru
@@ -49,8 +55,6 @@ extending it.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -67,6 +71,9 @@ extending it.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.9.1-alt1.1
+- Demodernized packaging.
+
 * Tue Nov 26 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
 - 3.9.0 -> 3.9.1.
 

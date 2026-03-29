@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-async-upnp-client
 Version: 0.46.2
-Release: alt1
+Release: alt1.1
 
 Summary: UPnP Client library for Python/asyncio
 License: Apache-2.0
@@ -9,25 +11,27 @@ URL: https://pypi.org/project/async-upnp-client
 VCS: https://github.com/StevenLooman/async_upnp_client
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-aiohttp-tests
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-didl-lite
+BuildRequires: python3-module-voluptuous
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-aiohttp
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -46,6 +50,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/async_upnp_client-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.46.2-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.46.2-alt1
 - 0.46.2 released
 

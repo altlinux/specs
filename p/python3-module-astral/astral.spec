@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-astral
 Version: 3.2
-Release: alt2
+Release: alt2.1
 
 Summary: Python calculations for the position of the sun and moon.
 License: APL
@@ -9,16 +11,15 @@ Url: https://pypi.org/project/astral
 VCS: https://github.com/sffjunkie/astral
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
+%if_with check
+BuildRequires: python3-module-freezegun
+%endif
 
 %description
 This is astral -- a Python module which calculates:
@@ -28,9 +29,6 @@ This is astral -- a Python module which calculates:
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -46,6 +44,9 @@ This is astral -- a Python module which calculates:
 %python3_sitelibdir/astral-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.2-alt2.1
+- Demodernized packaging.
+
 * Wed Dec 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2-alt2
 - freshen packaging
 

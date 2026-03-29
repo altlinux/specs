@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2026.1.post1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: World timezone definitions, modern and historical
 License: MIT
@@ -13,15 +13,9 @@ Url: https://pypi.org/project/pytz
 VCS: https://github.com/stub42/pytz
 BuildArch: noarch
 Source0: %pypi_name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 pytz brings the Olson tz database into Python. This library allows accurate and
@@ -31,8 +25,6 @@ read more about in the Python Library Reference (datetime.tzinfo).
 
 %prep
 %setup -n %pypi_name-%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -54,6 +46,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1:2026.1.post1-alt1.1
+- Demodernized packaging.
+
 * Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 1:2026.1.post1-alt1
 - 2025.2 -> 2026.1.post1.
 

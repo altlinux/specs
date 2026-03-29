@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.1.1
-Release: alt1
+Release: alt1.1
 Summary: This package contains utility functions used by devpi-server and devpi-client
 License: MIT
 Group: Development/Python3
@@ -14,18 +14,18 @@ Url: https://pypi.org/project/devpi-common
 Vcs: https://github.com/devpi/devpi
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter setuptools-changelog-shortener
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter pytest-github-actions-annotate-failures
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+
+BuildRequires: python3-module-lazy
+BuildRequires: python3-module-packaging-legacy
+BuildRequires: python3-module-requests
 %endif
 
 %description
@@ -34,11 +34,6 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -54,6 +49,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
 - 4.1.0 -> 4.1.1.
 
