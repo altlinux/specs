@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.6
-Release: alt1
+Release: alt1.1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python3
@@ -14,13 +14,21 @@ Url: https://pypi.org/project/WebTest/
 Vcs: https://github.com/Pylons/webtest.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra tests
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pastedeploy
+BuildRequires: python3-module-pyquery
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-waitress
+BuildRequires: python3-module-webob
+BuildRequires: python3-module-wsgiproxy2
 %endif
 
 %description
@@ -35,8 +43,6 @@ This is based on ``paste.fixture.TestApp``.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -52,6 +58,9 @@ This is based on ``paste.fixture.TestApp``.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.0.6-alt1.1
+- Demodernized packaging.
+
 * Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 3.0.6-alt1
 - 3.0.4 -> 3.0.6.
 

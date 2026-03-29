@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 
 Summary: Command-line tool and library to interact with an aria2c
 License: ISC
@@ -17,16 +17,28 @@ VCS: https://github.com/pawamoy/aria2p
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pdm-backend
 
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra tui
-%pyproject_builddeps_check
+BuildRequires: python3-module-fastapi
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-randomly
+BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-responses
+BuildRequires: python3-module-uvicorn
+
+BuildRequires: python3-module-asciimatics
+BuildRequires: python3-module-loguru
+BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-pyperclip
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-websocket-client
 BuildRequires: python3-modules-curses
 %endif
 
@@ -36,13 +48,14 @@ with an aria2c daemon process through JSON-RPC.
 
 %prep
 %setup
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-
-%if_with check
-%pyproject_deps_resync_check_pdm tests
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -60,6 +73,9 @@ with an aria2c daemon process through JSON-RPC.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1.1
+- Demodernized packaging.
+
 * Thu Jul 24 2025 Alexey Volkov <qualimock@altlinux.org> 0.12.1-alt1
 - new version 0.12.1
 

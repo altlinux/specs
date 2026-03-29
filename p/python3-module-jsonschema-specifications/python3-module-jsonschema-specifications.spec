@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2025.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: Support files exposing JSON from the JSON Schema specifications to Python
 License: MIT
@@ -15,17 +15,16 @@ URL: https://pypi.org/project/jsonschema-specifications
 VCS: https://github.com/python-jsonschema/jsonschema-specifications
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
 # mapping of PyPI name to distro name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-referencing
 BuildRequires: python3(pytest)
 %endif
 
@@ -41,11 +40,6 @@ as a referencing-based Schema Registry.
 %prep
 %setup
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_metadata
-%endif
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -65,6 +59,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%mod_name-*.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2025.9.1-alt1.1
+- Demodernized packaging.
+
 * Wed Nov 26 2025 Anton Vyatkin <toni@altlinux.org> 2025.9.1-alt1
 - New version 2025.9.1.
 

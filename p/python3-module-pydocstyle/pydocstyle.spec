@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.3.0
-Release: alt2
+Release: alt2.1
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python3
@@ -14,18 +14,21 @@ Url: https://pypi.org/project/pydocstyle/
 Vcs: https://github.com/PyCQA/pydocstyle
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 Patch1: fix-tests-py312.patch
-%pyproject_runtimedeps_metadata
 # Conflicts due to binaries in /usr/bin
 Conflicts: python-module-%pypi_name
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
 %if_with check
-%add_pyproject_deps_check_filter types-
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-black
+BuildRequires: python3-module-isort
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pytest
+
+BuildRequires: python3-module-snowballstemmer
 %endif
 
 %description
@@ -40,11 +43,6 @@ but it should not be considered a reference implementation.
 %autopatch -p1
 # upstream uses dev version for git tree
 sed -i 's/^version = "@VERSION@"$/version = "%version"/' pyproject.toml
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
-%endif
 
 %build
 %pyproject_build
@@ -64,6 +62,9 @@ sed -i 's/^version = "@VERSION@"$/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt2.1
+- Demodernized packaging.
+
 * Wed Feb 07 2024 Anton Vyatkin <toni@altlinux.org> 6.3.0-alt2
 - Fixed tests pass with python3.12.
 
