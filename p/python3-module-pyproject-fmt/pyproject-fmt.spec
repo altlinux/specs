@@ -1,0 +1,203 @@
+# https://github.com/briansmith/ring/discussions/2753
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pyproject-fmt
+%define mod_name pyproject_fmt
+# see for details pyproject-fmt/Cargo.toml
+#%%python3_set_limited_api 3.9
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 2.20.0
+Release: alt1.1
+Summary: Format pyproject.toml file
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/pyproject-fmt
+VCS: https://github.com/tox-dev/pyproject-fmt.git
+Source: %name-%version.tar
+Source2: vendor_rust.tar
+Source3: tombi_vendorer.py
+Patch: %name-%version-alt.patch
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-maturin
+
+%if_with check
+BuildRequires: python3-module-covdefaults
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
+
+BuildRequires: python3-module-toml-fmt-common
+%endif
+
+%description
+%summary.
+
+%prep
+%setup -a2
+%autopatch -p1
+%SOURCE3 --check
+mv vendor/_tombi_schemas/* ./
+mkdir .cargo
+cat < vendor_cargoconf.toml >> .cargo/config.toml
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
+cd pyproject-fmt
+
+%build
+cd pyproject-fmt
+export CARGO_TERM_VERBOSE=true
+# build with debug info
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_STRIP='none'
+%pyproject_build
+
+%install
+cd pyproject-fmt
+%pyproject_install
+
+%check
+cd pyproject-fmt
+%pyproject_run_pytest -ra tests
+
+%files
+%_bindir/%pypi_name
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
+%changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.20.0-alt1.1
+- Demodernized packaging.
+
+* Thu Mar 19 2026 Stanislav Levin <slev@altlinux.org> 2.20.0-alt1
+- 2.19.0 -> 2.20.0.
+
+* Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1
+- 2.18.1 -> 2.19.0.
+
+* Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 2.18.1-alt1
+- 2.18.0 -> 2.18.1.
+
+* Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 2.18.0-alt1
+- 2.16.1 -> 2.18.0.
+
+* Wed Feb 18 2026 Stanislav Levin <slev@altlinux.org> 2.16.1-alt1
+- 2.16.0 -> 2.16.1.
+
+* Tue Feb 17 2026 Stanislav Levin <slev@altlinux.org> 2.16.0-alt2
+- Fixed FTBFS (maturin 1.12.1).
+
+* Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 2.16.0-alt1
+- 2.15.2 -> 2.16.0.
+
+* Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 2.15.2-alt1
+- 2.15.1 -> 2.15.2.
+
+* Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 2.15.1-alt1
+- 2.14.2 -> 2.15.1.
+
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 2.14.2-alt1
+- 2.12.1 -> 2.14.2.
+
+* Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
+- 2.6.0 -> 2.12.1.
+
+* Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.5.1 -> 2.6.0.
+
+* Wed Feb 19 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
+- 2.5.0 -> 2.5.1.
+
+* Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.4.3 -> 2.5.0.
+
+* Tue Oct 29 2024 Stanislav Levin <slev@altlinux.org> 2.4.3-alt1
+- 2.3.1 -> 2.4.3.
+
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1.
+
+* Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.4 -> 2.3.0.
+
+* Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 2.2.4-alt1
+- 2.2.3 -> 2.2.4.
+
+* Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 2.2.3-alt1
+- 2.2.1 -> 2.2.3.
+
+* Thu Aug 01 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+
+* Wed Jul 31 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.4 -> 2.2.0.
+
+* Wed Jul 03 2024 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
+- 1.8.0 -> 2.1.4.
+
+* Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
+- 1.7.0 -> 1.8.0.
+
+* Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.5.1 -> 1.7.0.
+
+* Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
+- 1.4.1 -> 1.5.1.
+
+* Thu Nov 02 2023 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
+- 1.3.0 -> 1.4.1.
+
+* Fri Oct 27 2023 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.0 -> 1.3.0.
+
+* Tue Oct 03 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
+* Wed Sep 27 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 0.13.1 -> 1.1.0.
+
+* Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 0.13.1-alt1
+- 0.13.0 -> 0.13.1.
+
+* Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
+- 0.12.1 -> 0.13.0.
+
+* Wed Jun 21 2023 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
+- 0.12.0 -> 0.12.1.
+
+* Tue Jun 20 2023 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
+- 0.11.2 -> 0.12.0.
+
+* Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
+- 0.11.1 -> 0.11.2.
+
+* Tue May 02 2023 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1
+- 0.10.0 -> 0.11.1.
+
+* Tue Apr 25 2023 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
+- 0.9.2 -> 0.10.0.
+
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
+- 0.4.1 -> 0.9.2.
+
+* Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
+* Wed Nov 23 2022 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.5 -> 0.4.0.
+
+* Sat Aug 13 2022 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1
+- 0.3.3 -> 0.3.5.
+
+* Mon Apr 04 2022 Stanislav Levin <slev@altlinux.org> 0.3.3-alt1
+- Initial build for Sisyphus.
