@@ -2,7 +2,7 @@
 
 Name: spruce
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -16,6 +16,8 @@ AutoProv: nopython3
 Obsoletes: python3-module-spruce <= 0.1.6-alt1
 
 Source: %name-%version.tar
+#seted GSK_RENDERER=gl for fixed segmentation fault on XFCE
+Patch: set_GSK_RENDERER.patch
 
 Requires: python3-module-pycairo
 Requires: python3-module-pygobject3
@@ -34,6 +36,7 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 
 %prep
 %setup
+%patch -p0
 
 %build
 %meson
@@ -51,6 +54,9 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %doc *.md
 
 %changelog
+* Sun Mar 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt2
+- seted GSK_RENDERER=gl for fixed segmentation fault on XFCE (ALT #58349)
+
 * Sun Mar 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
 - 0.1.8 -> 0.2.0
 
