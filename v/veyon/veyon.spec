@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.9.7
+Version: 4.10.2
 Release: alt1
 
 Summary: Open source computer monitoring and classroom management
@@ -13,7 +13,6 @@ VCS: https://github.com/veyon/veyon/
 
 Source0: %name-%version.tar
 Source1: %name-%version-3rdparty-kldap.tar
-Source2: %name-%version-3rdparty-kldap-qt-compat.tar
 Source3: %name-%version-3rdparty-libfakekey.tar
 Source4: %name-%version-3rdparty-libvncserver.tar
 Source5: %name-%version-3rdparty-libvncserver-webclients-novnc.tar
@@ -91,7 +90,7 @@ Veyon доступен на разных языках и предоставля�
 просто установив Veyon у себя на домашнем ПК.
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9
+%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9
 %autopatch -p1
 
 # Fix: error: "_FORTIFY_SOURCE" redefined [-Werror]
@@ -131,6 +130,15 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Sun Mar 29 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.2-alt1
+- New version.
+
+* Mon Mar 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.1-alt1
+- New version.
+
+* Mon Jan 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.0-alt1
+- New version.
+
 * Fri Aug 15 2025 Ilya Muhamadeev <nicourced@altlinux.org> 4.9.7-alt1
 - New version.
 
