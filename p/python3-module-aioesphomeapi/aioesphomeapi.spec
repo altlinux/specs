@@ -1,8 +1,6 @@
-%def_with check
-
 Name: python3-module-aioesphomeapi
-Version: 44.0.0
-Release: alt1.1
+Version: 44.6.2
+Release: alt1
 
 Summary: Python API to ESPHome devices
 License: MIT
@@ -11,30 +9,26 @@ URL: https://pypi.org/project/aioesphomeapi
 VCS: https://github.com/esphome/aioesphomeapi
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-cython
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-%if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-codspeed
-BuildRequires: python3-module-protobuf
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-aiohappyeyeballs
-BuildRequires: python3-module-async-interrupt
-BuildRequires: python3-module-chacha20poly1305-reuseable
-BuildRequires: python3-module-noiseprotocol
-BuildRequires: python3-module-tzlocal
-BuildRequires: python3-module-zeroconf
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+
+%python3_set_limited_api 3.12
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
 
 %build
 %pyproject_build
@@ -51,6 +45,9 @@ BuildRequires: python3-module-zeroconf
 %python3_sitelibdir/aioesphomeapi-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 44.6.2-alt1
+- 44.6.2 released
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 44.0.0-alt1.1
 - Demodernized packaging.
 
