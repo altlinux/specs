@@ -1,5 +1,5 @@
 Name: noctalia-shell
-Version: 4.1.1
+Version: 4.7.1
 Release: alt1
 
 Summary: A sleek and minimal desktop shell thoughtfully crafted for Wayland
@@ -15,28 +15,28 @@ Source1: README-quickstart.md
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-build-python3
 
 # https://docs.noctalia.dev/getting-started/installation/#dependencies-explained
-Requires: quickshell
-Requires: fonts-ttf-roboto fonts-ttf-inter
-Requires: gpu-screen-recorder-cli
+Requires: noctalia-qs
 Requires: brightnessctl
+Requires: ImageMagick-tools
+Requires: python3
+Requires: git
+Requires: power-profiles-daemon
+Requires: xdg-desktop-portal
 
-# Required for icons (and maybe smth else):
-Requires: xdg-desktop-portal-gtk
-
-# Calendar events are optional (requires python3 and evolution-data-server):
-%add_findreq_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/calendar-events.py
-%add_findreq_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/check-calendar.py
-%add_findreq_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/list-calendars.py
-%add_findprov_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/calendar-events.py
-%add_findprov_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/check-calendar.py
-%add_findprov_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Bin/list-calendars.py
+%add_findreq_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Scripts/dev/*
 
 # False positive
-%filter_from_requires /kitty/d
+%filter_from_requires /swaymsg/d
 %filter_from_requires /hyprland/d
+%filter_from_requires /kitty/d
+%filter_from_requires /labwc-base/d
 %filter_from_requires /mangowc/d
+# Scripts/python/src/theming/lib
+%filter_from_requires /python3(lib)/d
+%filter_from_requires /python3(lib.scheme)/d
 
 %description
 A beautiful, minimal desktop shell for Wayland that actually gets out of your
@@ -50,18 +50,17 @@ install -Dm644 %SOURCE1 .
 %install
 install -dm755 %buildroot%_xdgconfigdir/quickshell/noctalia-shell
 cp -r ./*      %buildroot%_xdgconfigdir/quickshell/noctalia-shell
-install -Dm644 Assets/Services/systemd/noctalia.service \
-               %buildroot%_userunitdir/noctalia.service
-
-%preun
-%preun_service noctalia.service
 
 %files
 %doc README.md LICENSE README-quickstart.md
 %_xdgconfigdir/quickshell/noctalia-shell
-%_userunitdir/noctalia.service
 
 %changelog
+* Mon Mar 30 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.1-alt1
+- Update version.
+- Switch from quickshell to noctalia-qs.
+- Rewise requires.
+
 * Sun Jan 18 2026 Ilya Sorochan <k0tran@altlinux.org> 4.1.1-alt1
 - Update version.
 
