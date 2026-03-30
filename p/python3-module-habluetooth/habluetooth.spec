@@ -1,8 +1,6 @@
-%def_with check
-
 Name: python3-module-habluetooth
-Version: 5.8.0
-Release: alt1.1
+Version: 5.11.2
+Release: alt1
 
 Summary: High availability Bluetooth
 License: Apache-2.0
@@ -11,31 +9,26 @@ Url: https://pypi.org/project/habluetooth
 VCS: https://github.com/bluetooth-devices/habluetooth
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-poetry-core
-BuildRequires: python3-module-cython
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-%if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-codspeed
-BuildRequires: python3-module-async-interrupt
-BuildRequires: python3-module-bleak
-BuildRequires: python3-module-bleak-retry-connector
-BuildRequires: python3-module-bluetooth-data-tools
-BuildRequires: python3-module-btsocket
-BuildRequires: python3-module-bluetooth-auto-recovery
-BuildRequires: python3-module-freezegun
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
-#%%python3_set_limited_api 3.12
+%python3_set_limited_api 3.12
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -51,6 +44,9 @@ BuildRequires: python3-module-freezegun
 %python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.11.2-alt1
+- 5.11.2 released
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.8.0-alt1.1
 - Demodernized packaging.
 
