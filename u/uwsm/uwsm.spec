@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uwsm
-Version: 0.24.3
-Release: alt2
+Version: 0.26.4
+Release: alt1
 
 Summary: Universal Wayland Session Manager
 License: MIT
@@ -22,8 +22,8 @@ BuildRequires: python3-module-pyxdg
 BuildRequires: python3-module-dbus
 
 # Filter dmenu candidates:
-%filter_from_requires /^\(walker\|fuzzel\|wofi\|rofi\)$/d
-%filter_from_requires /^\(tofi\|bemenu\|wmenu\|dmenu\)$/d
+%filter_from_requires /^\(vicinae\|walker\|fuzzel\|wofi\|rofi\)$/d
+%filter_from_requires /^\(hyprlauncher\|tofi\|bemenu\|wmenu\|dmenu\)$/d
 
 %add_python3_path %_datadir/uwsm
 %filter_from_provides /^python3(modules\.uwsm\(\..*\)\?)/d
@@ -60,6 +60,8 @@ rm -rf %buildroot%_docdir/uwsm/
 %_user_unitdir/session-graphical.slice
 %_user_unitdir/wayland-*
 %_user_unitdir/fumon.service
+%_user_presetdir/80-fumon.preset
+%_libexecdir/uwsm/
 %_desktopdir/uuctl.desktop
 %_man1dir/fumon.1.*
 %_man1dir/uuctl.1.*
@@ -68,6 +70,9 @@ rm -rf %buildroot%_docdir/uwsm/
 %_man3dir/uwsm-plugins.3.*
 
 %changelog
+* Tue Mar 10 2026 Egor Ignatov <egori@altlinux.org> 0.26.4-alt1
+- New version 0.26.4.
+
 * Thu Nov 27 2025 Egor Ignatov <egori@altlinux.org> 0.24.3-alt2
 - Remove optional runtime dependencies (closes: #57047)
 
