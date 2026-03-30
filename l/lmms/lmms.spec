@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt6
+Release: alt7
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -99,6 +99,8 @@ mv rpmalloc/* src/3rdparty/rpmalloc/rpmalloc/
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+# unresolved symbol: get_table_gain
+sed -i 's/^inline$/static &/' plugins/LadspaEffect/tap/tap_dynamics_{m,st}.c
 %endif
 
 %build
@@ -150,6 +152,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Mon Mar 30 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.2-alt7
+- e2k build fix
+
 * Sat Mar 21 2026 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt6
 - Rebuild without rpm-build-lmms.
 
