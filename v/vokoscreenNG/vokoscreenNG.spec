@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     vokoscreenNG
-Version:  4.8.3
+Version:  4.9.0
 Release:  alt1
 
 Summary:  VokscreenNG is a user friendly Open Source screencaster for Linux and Windows
@@ -47,6 +47,9 @@ install -Dpm0644 src/applications/%name.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Mar 30 2026 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
+- New version.
+
 * Fri Jan 09 2026 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt1
 - New version.
 
