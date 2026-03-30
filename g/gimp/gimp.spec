@@ -8,7 +8,7 @@
 %define oldver 3.0
 
 Name: gimp
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -31,8 +31,9 @@ BuildPreReq: rpm-build-licenses rpm-build-python3
 BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libXcursor-devel libXfixes-devel libXmu-devel libXpm-devel libalsa-devel libappstream-glib-devel
 BuildRequires: libarchive-devel libexpat-devel libgexiv2-devel libgs-devel libgtk+3-gir-devel libgudev-devel libheif-devel liblcms2-devel liblzma-devel
 BuildRequires: libmng-devel libmypaint-devel libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkit2gtk-devel libwebp-devel
-BuildRequires: libjxl-devel libwmf-devel openexr-devel python3-module-pygobject3 vala-tools xdg-utils meson cmake iso-codes-devel libbabl-devel libgegl-devel
+BuildRequires: libjxl-devel libwmf-devel openexr-devel vala-tools xdg-utils meson cmake iso-codes-devel libbabl-devel libgegl-devel
 BuildRequires: libbabl-gir libgegl-gir libgexiv2-gir-devel libexiv2-devel mypaint-brushes-devel libappstream-devel shared-mime-info-devel
+BuildRequires: python3-module-pygobject3 python3-module-pycairo-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -124,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 30 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.2-alt1
+- 3.2.2
+
 * Mon Mar 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.0-alt1
 - 3.2.0
 
