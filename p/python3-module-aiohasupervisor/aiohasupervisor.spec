@@ -1,29 +1,25 @@
-%def_with check
-
 Name: python3-module-aiohasupervisor
-Version: 0.3.3
-Release: alt1.1
+Version: 0.4.3
+Release: alt1
 
 Summary: Client Library for Home Assistant Supervisor
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/propcache/
+URL: https://pypi.org/project/aiohasupervisor
 VCS: https://github.com/home-assistant-libs/python-supervisor-client
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
-%if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-aioresponses
-BuildRequires: python3-module-mashumaro
-BuildRequires: python3-module-orjson
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter codespell
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -31,6 +27,8 @@ BuildRequires: python3-module-orjson
 %prep
 %setup
 sed -ri '/^version\s+=/ s,"[^"]+","%version",' pyproject.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -46,6 +44,9 @@ sed -ri '/^version\s+=/ s,"[^"]+","%version",' pyproject.toml
 %python3_sitelibdir/aiohasupervisor-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.3-alt1
+- 0.4.3 released
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt1.1
 - Demodernized packaging.
 
