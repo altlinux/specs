@@ -1,6 +1,4 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name sqlalchemy
-%define mod_name %pypi_name
 
 # %%python3_set_limited_api not supported yet
 
@@ -8,20 +6,17 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.48
-Release: alt1.1
+Release: alt2
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.org/project/sqlalchemy
 Vcs: https://github.com/sqlalchemy/sqlalchemy
 Source: %name-%version.tar
 %py3_provides SQLAlchemy
 Provides: python3-module-SQLAlchemy = %EVR
 Obsoletes: python3-module-SQLAlchemy
-# merged into main
-Provides: python3-module-sqlalchemy-tests = %EVR
-Obsoletes: python3-module-sqlalchemy-tests <= 2.0.44-alt1
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
 # in various tests, like in the tests for sphinx).
@@ -49,6 +44,14 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
+%package tests
+Summary: Tests for %pypi_name
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %pypi_name.
+
 %prep
 %setup
 
@@ -63,10 +66,19 @@ simple and Pythonic domain language.
 %pyproject_run_pytest -m "not memory_intensive and not mypy and not timing_intensive" test -n4
 
 %files
-%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%pypi_name/testing
+%exclude %python3_sitelibdir/%pypi_name/dialects/*/provision.py
+
+%files tests
+%python3_sitelibdir/%pypi_name/testing
+%python3_sitelibdir/%pypi_name/dialects/*/provision.py
 
 %changelog
+* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.48-alt2
+- Moved tests in separate subpackage (Closes: #58438).
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.48-alt1.1
 - Demodernized packaging.
 
