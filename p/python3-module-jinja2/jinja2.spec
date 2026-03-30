@@ -1,26 +1,24 @@
-%def_with check
-
 Name: python3-module-jinja2
 Version: 3.1.6
-Release: alt1.1
+Release: alt2
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
-Group: Development/Python3
-Url: https://pypi.org/project/Jinja2/
+Group: Development/Python
+URL: https://pypi.org/project/Jinja2
+VCS: https://github.com/pallets/jinja
 
-# https://github.com/mitsuhiko/jinja2.git
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
-
-%if_with check
-BuildRequires: python3-module-markupsafe
-BuildRequires: python3-module-trio
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 Jinja2 is a template engine written in pure Python. It provides a Django
@@ -29,6 +27,9 @@ sandboxed environment.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
 
 %build
 %pyproject_build
@@ -44,6 +45,9 @@ sandboxed environment.
 %python3_sitelibdir/jinja2-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.6-alt2
+- switch to project metadata for runtime deps
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt1.1
 - Demodernized packaging.
 
