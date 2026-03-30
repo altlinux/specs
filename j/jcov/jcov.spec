@@ -4,7 +4,7 @@
 
 Name: jcov
 Version: 3.0
-Release: alt2.694bcdb
+Release: alt3
 
 Summary: The JCov open source project is used to gather quality metrics associated with the production of test suites
 License: GPL-2.0
@@ -14,6 +14,7 @@ Vcs: https://github.com/openjdk/jcov.git
 
 Source0: %name-%version.tar
 Patch1: jcov-3.0-alt-change-paths-for-asm-deps.patch
+Patch2: jcov-3.0-alt-linux-repair-string-formater.patch
 
 ExcludeArch: %ix86
 
@@ -57,6 +58,9 @@ ant test
 %doc LICENSE examples
 
 %changelog
+* Tue Mar 30 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt3
+- Fixed errors with String.formater (Closes: #57226).
+
 * Tue Feb 24 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt2.694bcdb
 - Updated the sources to version 2025.
 
