@@ -1,9 +1,9 @@
 Name:       s3cmd
-Version:    2.3.0
+Version:    2.4.0
 Release:    alt1
 
 Summary:    S3cmd is a tool for managing Amazon S3 storage space
-License:    GPL
+License:    GPLv2
 Group:      Networking/Other
 Url:        http://s3tools.org/s3cmd
 
@@ -41,6 +41,10 @@ directory tree synchronization.
 
 
 %changelog
+* Mon Mar 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.4.0-alt1
+- NMU: v.2.4.0.
+- Fixed License tag.
+
 * Mon Oct 03 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.3.0-alt1
 - v.2.3.0 (closes #43928)
 

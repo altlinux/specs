@@ -1,5 +1,5 @@
 Name:		freedroid
-Version:	1.2.3
+Version:	1.9.0
 Release:	alt1
 Summary:	A clone of the game "Paradroid"
 Group:		Games/Arcade
@@ -12,9 +12,9 @@ Requires: %name-data = %version
 
 # Automatically added by buildreq on Sun Apr 03 2011
 # optimized out: libSDL-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: pkgconfig(SDL_gfx)
-BuildRequires: pkgconfig(SDL_image)
-BuildRequires: pkgconfig(SDL_mixer)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(SDL2_image)
+BuildRequires: pkgconfig(SDL2_mixer)
 BuildRequires: pkgconfig(ice)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libpng)
@@ -83,6 +83,10 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/*
 
 %changelog
+* Mon Mar 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.0-alt1
+- NMU: New version:
+  + Link against SDL2 API.
+
 * Tue Dec 17 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.2.3-alt1
 - NMU: New version (mentioned in ALT #50551).
 - Source code placement updated to take from version control system tag.
