@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.42.68
-Release: alt1
+Release: alt1.1
 Summary: The AWS SDK for Python
 License: Apache-2.0
 Group: Development/Python3
@@ -14,18 +14,25 @@ Url: https://pypi.org/project/boto3/
 Vcs: https://github.com/boto/boto3
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 # this version includes debundler
 Requires: python3-module-botocore >= 1.27.42-alt1
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-atomicwrites
+BuildRequires: python3-module-colorama
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-wheel
+
+BuildRequires: python3-module-botocore
+BuildRequires: python3-module-jmespath
+BuildRequires: python3-module-s3transfer
 %endif
 
 %description
@@ -40,11 +47,6 @@ pull requests on this repository. Thanks!
 %prep
 %setup
 %autopatch1 -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
 
 %build
 %pyproject_build
@@ -60,6 +62,9 @@ pull requests on this repository. Thanks!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.42.68-alt1.1
+- Demodernized packaging.
+
 * Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 1.42.68-alt1
 - 1.42.65 -> 1.42.68.
 

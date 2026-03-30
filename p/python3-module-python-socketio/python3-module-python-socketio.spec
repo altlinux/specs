@@ -7,7 +7,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 5.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python Socket.IO server and client
 License: MIT
@@ -15,22 +15,24 @@ Group:   Development/Python3
 URL:     https://pypi.org/project/python-socketio
 VCS:     https://github.com/miguelgrinberg/python-socketio
 
-BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3-module-pytest-cov
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-bidict
+BuildRequires: python3-module-python-engineio
+BuildRequires: python3-module-msgpack
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-simple-websocket
+BuildRequires: python3-module-websocket-client
 %endif
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Source1: %pyproject_deps_config_name
 
 Patch: %pypi_name-%version-alt.patch
 
@@ -50,11 +52,6 @@ This package contains documentation for %pypi_name.
 %prep
 %setup -n %pypi_name-%version
 %patch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -76,6 +73,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.11.0-alt1.1
+- Demodernized packaging.
+
 * Thu Feb 01 2024 Andrey Limachko <liannnix@altlinux.org> 5.11.0-alt1
 - 5.11.0
 

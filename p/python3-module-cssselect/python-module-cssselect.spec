@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,15 +14,15 @@ Url: https://pypi.org/project/cssselect/
 Vcs: https://github.com/scrapy/cssselect
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-sybil
 %endif
 
 %description
@@ -32,11 +32,6 @@ engine to find the matching elements in an XML or HTML document.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -52,6 +47,9 @@ engine to find the matching elements in an XML or HTML document.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1.1
+- Demodernized packaging.
+
 * Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.0 -> 1.4.0.
 

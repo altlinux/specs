@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-marshmallow
 Version: 4.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Simplified object serialization
 License: MIT
@@ -9,24 +11,21 @@ URL: https://pypi.org/project/marshmallow
 VCS: https://github.com/marshmallow-code/marshmallow
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra tests
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+
+%if_with check
+BuildRequires: python3-module-simplejson
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -42,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/marshmallow-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.2-alt1
 - 4.2.2 released
 
