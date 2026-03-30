@@ -10,7 +10,7 @@
 %def_disable ipod
 
 Name: %_name
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -127,6 +127,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 4.2.2-alt1
+- 4.2.2
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
