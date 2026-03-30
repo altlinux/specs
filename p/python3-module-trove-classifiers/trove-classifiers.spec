@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2026.1.14.14
-Release: alt1
+Release: alt1.1
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
 Group: Development/Python3
@@ -14,17 +14,17 @@ Url: https://pypi.org/project/trove-classifiers
 VCS: https://github.com/pypa/trove-classifiers.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-black
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-natsort
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -41,12 +41,7 @@ classifiers in packages for PyPI upload or download.
 # calver doesn't provide means for reproducible builds from source tree
 echo '%version' > ./calver_version
 
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/dev.txt
-%endif
 
 %build
 %pyproject_build
@@ -65,6 +60,9 @@ echo '%version' > ./calver_version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2026.1.14.14-alt1.1
+- Demodernized packaging.
+
 * Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 2026.1.14.14-alt1
 - 2025.12.1.14 -> 2026.1.14.14.
 

@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 5.3.6
-Release: alt1.1
+Release: alt1.2
 
 Summary: Socket.IO integration for Flask applications.
 License: MIT
@@ -14,22 +14,14 @@ Group:   Development/Python3
 URL:     https://pypi.org/project/Flask-SocketIO
 VCS:     https://github.com/miguelgrinberg/flask-socketio
 
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pytest-cov
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
-%endif
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Source1: %pyproject_deps_config_name
 
 Patch: %pypi_name-%version-alt.patch
 
@@ -49,8 +41,6 @@ This package contains documentation for %pypi_name.
 %prep
 %setup -n %pypi_name-%version
 %patch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -72,6 +62,9 @@ This package contains documentation for %pypi_name.
 %doc example
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.3.6-alt1.2
+- Demodernized packaging.
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 5.3.6-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

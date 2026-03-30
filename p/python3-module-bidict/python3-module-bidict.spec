@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.22.1
-Release: alt1
+Release: alt1.1
 
 Summary: The bidirectional mapping library for Python
 License: MPL-2.0
@@ -14,20 +14,12 @@ Group:   Development/Python3
 URL:     https://bidict.readthedocs.io
 VCS:     https://github.com/jab/bidict
 
-BuildRequires(pre): rpm-build-pyproject
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
-%endif
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Source1: %pyproject_deps_config_name
 
 %description
 The bidirectional mapping library for Python.
@@ -47,8 +39,6 @@ Features:
 
 %prep
 %setup -n %pypi_name-%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -65,5 +55,8 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.22.1-alt1.1
+- Demodernized packaging.
+
 * Fri Oct 20 2023 Andrey Limachko <liannnix@altlinux.org> 0.22.1-alt1
 - Initial build for Sisyphus

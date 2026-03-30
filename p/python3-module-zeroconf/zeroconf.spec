@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-zeroconf
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python Multicast DNS Service Discovery Library
 License: LGPLv2
@@ -8,21 +10,23 @@ Group: Development/Python
 Url: https://pypi.org/project/zeroconf/
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-poetry-core
+BuildRequires: python3-module-cython
+
+%if_with check
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-codspeed
+BuildRequires: python3-module-ifaddr
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -42,6 +46,9 @@ export SKIP_IPV6=1
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.1
+- Demodernized packaging.
+
 * Wed Oct 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
 - 1.0.0 released
 
