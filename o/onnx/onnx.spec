@@ -8,7 +8,7 @@
 
 %define abiversion 1
 Name: onnx
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 
 Summary: Open standard for machine learning interoperability
@@ -80,7 +80,8 @@ AutoReq: yes, nopython3
 export nanobind_DIR=%python3_sitelibdir_noarch/nanobind/cmake
 %cmake \
     -DBUILD_SHARED_LIBS=1 \
-    -DONNX_USE_PROTOBUF_SHARED_LIBS=1
+    -DONNX_USE_PROTOBUF_SHARED_LIBS=1 \
+    -DONNX_HARDENING=1
 %cmake_build
 %pyproject_build
 
@@ -112,6 +113,9 @@ python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.21.0-alt1
+- Updated to 1.21.0 (fixes GHSA-hqmj-h5c6-369m).
+
 * Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.1-alt1
 - Updated to 1.20.1.
 
