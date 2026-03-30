@@ -16,35 +16,6 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jetty
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 
 %global jtuid       110
 %global username    %{name}
@@ -57,17 +28,12 @@ BuildRequires: jpackage-default
 %global jettylibdir %{_localstatedir}/lib/%{name}
 %global appdir      %{jettylibdir}/webapps
 
+%global addver  .v20250814
 
-%global addver  .v20241219
-
-# minimal version required to build eclipse and thermostat
-# eclipse needs: util, server, http, continuation, io, security, servlet
-# thermostat needs: server, jaas, webapp
-# above modules need: jmx, xml
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.57
+Version:        9.4.58
 Release:        alt1
 Summary:        Java Webserver and Servlet Container
 
@@ -675,6 +641,7 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r :buildnumber-maven-plugin
 %pom_remove_plugin -r :h2spec-maven-plugin
+%pom_xpath_remove pom:build/pom:extensions
 
 # Unnecessary pom flattening can be skipped
 %pom_remove_plugin -r :flatten-maven-plugin jetty-bom
@@ -850,10 +817,7 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %mvn_package :apache-jsp jetty-jsp
 %mvn_alias :apache-jsp :jetty-jsp
 
-# we don't have all necessary dependencies to run tests
-# missing test dep: org.eclipse.jetty.toolchain:jetty-perf-helper
-%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build -f -s
 
 %install
 %mvn_install
@@ -1053,6 +1017,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Mon Feb 09 2026 Andrey Cherepanov <cas@altlinux.org> 9.4.58-alt1
+- New version (fixes: CVE-2025-5115).
+
 * Mon Mar 24 2025 Andrey Cherepanov <cas@altlinux.org> 9.4.57-alt1
 - New version (fixes CVE-2024-6763)
 
