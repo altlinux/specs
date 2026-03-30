@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.4
-Release: alt1
+Release: alt1.1
 Summary: Python API which allows you to retrieve the transcript/subtitles for a given YouTube video
 License: MIT
 Group: Development/Python3
@@ -14,16 +14,18 @@ Url: https://pypi.org/project/youtube-transcript-api/
 Vcs: https://github.com/jdepoix/youtube-transcript-api
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-responses
+
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-requests
 %endif
 
 %description
@@ -35,11 +37,6 @@ like other selenium based solutions do!
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry test
-%endif
 
 %build
 %pyproject_build
@@ -59,6 +56,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.2.4-alt1.1
+- Demodernized packaging.
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.2.4-alt1
 - 1.2.3 -> 1.2.4.
 

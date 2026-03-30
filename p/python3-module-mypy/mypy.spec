@@ -13,32 +13,42 @@
 
 Name: python3-module-%pypi_name
 Version: 1.19.1
-Release: alt1
+Release: alt1.1
 Summary: Optional static typing for Python
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mypy/
 VCS: https://github.com/python/mypy
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter types-
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pathspec
+BuildRequires: python3-module-mypy-extensions
+BuildRequires: python3-module-librt
+# Needed to generate the man pages
+BuildRequires: help2man
+
 %if_with check
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-pre-commit
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-tomli
+
 BuildRequires: /proc
 BuildRequires: gcc-c++
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 # required for mypy/test/testpep561.py
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-editables
 %endif
-# Needed to generate the man pages
-BuildRequires: help2man
 
 %description
 Mypy is an optional static type checker for Python that aims to combine the
@@ -51,8 +61,6 @@ using any Python VM with basically no runtime overhead.
 %package -n python3-module-mypyc
 Summary: Mypy to Python C Extension Compiler
 Group: Development/Python3
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 Requires: python3-module-%pypi_name = %EVR
 Requires: python3-dev
 
@@ -66,11 +74,6 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.in
-%endif
 
 %build
 %pyproject_build
@@ -136,6 +139,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.19.1-alt1.1
+- Demodernized packaging.
+
 * Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 1.19.1-alt1
 - 1.19.0 -> 1.19.1.
 

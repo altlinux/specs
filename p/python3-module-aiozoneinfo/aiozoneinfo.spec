@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-aiozoneinfo
 Version: 0.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Tools to fetch zoneinfo with asyncio
 License: Apache-2.0
@@ -9,25 +11,21 @@ Url: https://pypi.org/project/aiozoneinfo
 VCS: https://github.com/bluetooth-devices/aiozoneinfo
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
+
+%if_with check
+BuildRequires: python3-module-pytest-asyncio
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -43,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiozoneinfo-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt1.1
+- Demodernized packaging.
+
 * Fri Oct 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.3-alt1
 - 0.2.3 released
 

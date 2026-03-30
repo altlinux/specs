@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.39.1
-Release: alt1
+Release: alt1.1
 
 Summary: A library for parsing and manipulating RPM spec files
 License: MIT
@@ -12,19 +12,17 @@ Url: https://github.com/packit/specfile
 Vcs: https://github.com/packit/specfile.git
 
 Source0: %name-%version.tar
-#Source1: %pyproject_deps_config_name
 #Patch0: %name-%version-alt.patch
 
 BuildArch: noarch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-python3 rpm-macros-pyproject
-BuildRequires: rpm-build-python3 rpm-build-pyproject
-BuildRequires: python3(setuptools) python3(setuptools_scm)
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(setuptools_scm)
 BuildRequires: python3(rpm)
 # For tests
-BuildRequires: python3(flexmock) python3(pytest)
-%pyproject_builddeps_build
+BuildRequires: python3(flexmock)
+BuildRequires: python3(pytest)
 
 %description
 %summary.
@@ -52,6 +50,9 @@ sed -i 's/describe-name:.*/describe-name: %version/' .git_archival.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.39.1-alt1.1
+- Demodernized packaging.
+
 * Wed Feb 18 2026 Alexey Shabalin <shaba@altlinux.org> 0.39.1-alt1
 - 0.39.1.
 - Annotate MacroLevel._missing_ signature.

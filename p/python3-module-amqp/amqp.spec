@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.3.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Low-level AMQP client for Python
 License: BSD
@@ -14,13 +14,17 @@ Url: https://pypi.org/project/amqp/
 Vcs: http://github.com/celery/py-amqp.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires: python3-module-pytest-sugar
+
+BuildRequires: python3-module-vine
 %endif
 
 %description
@@ -30,11 +34,6 @@ alternative when librabbitmq is not available.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/test.txt
-%endif
 
 %build
 %pyproject_build
@@ -51,6 +50,9 @@ alternative when librabbitmq is not available.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1:5.3.1-alt1.1
+- Demodernized packaging.
+
 * Wed Nov 13 2024 Stanislav Levin <slev@altlinux.org> 1:5.3.1-alt1
 - 5.2.0 -> 5.3.1.
 
