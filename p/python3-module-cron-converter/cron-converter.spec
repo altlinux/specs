@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cron string converter for Python
 License: MIT
@@ -15,14 +15,16 @@ Vcs: https://github.com/Sonic0/cron-converter
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-python-dateutil
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -35,6 +37,8 @@ by roccivic.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -52,6 +56,9 @@ by roccivic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.3.1-alt1.2
+- Reverted the changes that weren't approved.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1.1
 - Demodernized packaging.
 
