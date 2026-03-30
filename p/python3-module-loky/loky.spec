@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.5.6
-Release: alt1
+Release: alt1.1
 Summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
 License: BSD
 Group: Development/Python3
@@ -13,19 +13,25 @@ Url: https://pypi.org/project/loky
 Vcs: https://github.com/joblib/loky
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 # required by loky/backend/context.py:_count_physical_cores_linux
 Requires: /proc
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
+BuildRequires: python3-module-cloudpickle
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest
 BuildRequires: /proc
-%pyproject_builddeps_metadata_extra tests
 %endif
+
+# filter MS Windows related deps
+%filter_from_requires /python3(msvcrt\(\..*\)\?)/d
+%filter_from_requires /python3(_winapi\(\..*\)\?)/d
+%filter_from_requires /python3(multiprocessing\.popen_spawn_win32\(\..*\)\?)/d
 
 %description
 Provides a robust, cross-platform and cross-version implementation of the
@@ -34,8 +40,6 @@ ProcessPoolExecutor class of concurrent.futures
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -52,6 +56,9 @@ ProcessPoolExecutor class of concurrent.futures
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.5.6-alt1.1
+- Demodernized packaging.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 3.5.6-alt1
 - 3.5.5 -> 3.5.6.
 

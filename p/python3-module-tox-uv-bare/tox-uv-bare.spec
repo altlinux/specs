@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.33.4
-Release: alt1
+Release: alt1.1
 Summary: Integration of uv with tox (bare package, bring your own uv)
 License: MIT
 Group: Development/Python3
@@ -14,18 +14,25 @@ Url: https://pypi.org/project/tox-uv-bare
 Vcs: https://github.com/tox-dev/tox-uv
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 # tox_uv directory was previously packaged in tox-uv
 Conflicts: python3-module-tox-uv <= 1.29.0-alt1
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-covdefaults
+BuildRequires: python3-module-devpi-process
+BuildRequires: python3-module-diff-cover
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
+
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-tox
 # install system uv
 BuildRequires: uv
 %endif
@@ -36,12 +43,14 @@ BuildRequires: uv
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -58,6 +67,9 @@ export UV_OFFLINE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.33.4-alt1.1
+- Demodernized packaging.
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.33.4-alt1
 - 1.33.2 -> 1.33.4.
 

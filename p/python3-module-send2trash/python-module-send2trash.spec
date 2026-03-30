@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.3
-Release: alt1.1
+Release: alt1.2
 Summary: Python library to natively send files to Trash
 License: BSD-3-Clause
 Group: Development/Python3
@@ -13,16 +13,21 @@ Url: https://pypi.org/project/Send2Trash/
 Vcs: https://github.com/hsoft/send2trash
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manage dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
 BuildRequires: python3-module-pytest
 %endif
+
+# For mac
+%add_python3_req_skip Foundation
+# For windows
+%add_python3_req_skip pythoncom
+%add_python3_req_skip pywintypes
+%add_python3_req_skip win32com.server.policy
+%add_python3_req_skip win32com.shell
 
 %description
 Send2Trash is a small package that sends files to the Trash
@@ -30,8 +35,6 @@ natively and on all platforms.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -49,6 +52,9 @@ natively and on all platforms.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.8.3-alt1.2
+- Demodernized packaging.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

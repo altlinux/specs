@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.0
-Release: alt2
+Release: alt2.1
 Summary: An easy library for Python file locking
 License: BSD-3-Clause
 Group: Development/Python3
@@ -15,14 +15,22 @@ Vcs: https://github.com/wolph/portalocker.git
 
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%EVR.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra tests
-%pyproject_builddeps_metadata_extra redis
+BuildRequires: python3-module-portalocker
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mypy
+BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-redis
 %endif
 
 %description
@@ -40,9 +48,14 @@ recommended however.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -59,6 +72,9 @@ recommended however.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2.1
+- Demodernized packaging.
+
 * Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt2
 - Fixed FTBFS (setuptools-scm 9.1.1).
 

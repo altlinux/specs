@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-onvif-zeep-async
 Version: 4.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: ONVIF Client Implementation in Python
 License: MIT
@@ -9,25 +11,27 @@ Url: https://pypi.org/project/onvif-zeep-async
 VCS: https://github.com/hunterjm/python-onvif-zeep-async
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-zeep
+BuildRequires: python3-module-aioresponses
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-ciso8601
+%endif
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_pipreqfile requirements_dev.txt
 
 %build
 %pyproject_build
@@ -43,6 +47,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/onvif_zeep_async-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.4-alt1.1
+- Demodernized packaging.
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.4-alt1
 - 4.0.4 released
 
