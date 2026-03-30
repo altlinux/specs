@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname chef-zero
 
 Name:          gem-chef-zero
-Version:       15.0.28
+Version:       15.1.6
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License:       Apache-2.0
@@ -29,7 +29,7 @@ BuildRequires: gem(ohai) >= 18.1
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(pry-byebug) >= 0
 BuildRequires: gem(pry-stack_explorer) >= 0
-BuildRequires: gem(rack) >= 3.0.0
+BuildRequires: gem(rack) >= 3.1
 BuildRequires: gem(rackup) >= 2.2.1
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.0
@@ -51,15 +51,14 @@ BuildConflicts: gem(uuidtools) >= 3
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency unf_ext >= 0.0.9.1,unf_ext < 1
-%ruby_use_gem_dependency rack >= 3.0.0,rack < 4
-%ruby_use_gem_dependency chef >= 19.1,chef < 20
-%ruby_use_gem_dependency ohai >= 19.0.4,ohai < 20
+%ruby_use_gem_dependency rack >= 3.1.7,rack < 4
+%ruby_use_gem_dependency chef >= 19.1.116,chef < 20
+%ruby_use_gem_dependency ohai >= 19.1.15,ohai < 20
 Requires:      ruby >= 3.0
-Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(ffi-yajl) >= 2.2
 Requires:      gem(hashie) >= 2.0
 Requires:      gem(mixlib-log) >= 2.0
-Requires:      gem(rack) >= 3.0.0
+Requires:      gem(rack) >= 3.1
 Requires:      gem(rackup) >= 2.2.1
 Requires:      gem(unf_ext) >= 0.0.8
 Requires:      gem(uuidtools) >= 2.1
@@ -70,7 +69,7 @@ Conflicts:     gem(mixlib-log) >= 4.0
 Conflicts:     gem(rackup) >= 3
 Conflicts:     gem(unf_ext) >= 1
 Conflicts:     gem(uuidtools) >= 3
-Provides:      gem(chef-zero) = 15.0.28
+Provides:      gem(chef-zero) = 15.1.6
 
 %description
 Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
@@ -87,7 +86,7 @@ Internet.
 
 
 %package       -n chef-zero
-Version:       15.0.28
+Version:       15.1.6
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-zero
@@ -96,8 +95,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.0.28
-Requires:      gem(ffi) >= 1.15.5
+Requires:      gem(chef-zero) = 15.1.6
 
 %description   -n chef-zero
 Self-contained, easy-setup, fast-start in-memory Chef server for testing and
@@ -121,7 +119,7 @@ Internet.
 
 %if_enabled    doc
 %package       -n gem-chef-zero-doc
-Version:       15.0.28
+Version:       15.1.6
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-zero
@@ -130,7 +128,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.0.28
+Requires:      gem(chef-zero) = 15.1.6
 Obsoletes:     chef-zero-doc < %EVR
 Provides:      chef-zero-doc = %EVR
 
@@ -157,7 +155,7 @@ Internet.
 
 %if_enabled    devel
 %package       -n gem-chef-zero-devel
-Version:       15.0.28
+Version:       15.1.6
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-zero
@@ -166,7 +164,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.0.28
+Requires:      gem(chef-zero) = 15.1.6
 Requires:      gem(chef) >= 18.7
 Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(ffi-yajl) >= 2.2
@@ -176,7 +174,7 @@ Requires:      gem(ohai) >= 18.1
 Requires:      gem(pry) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-stack_explorer) >= 0
-Requires:      gem(rack) >= 3.0.0
+Requires:      gem(rack) >= 3.1
 Requires:      gem(rackup) >= 2.2.1
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.0
@@ -249,6 +247,9 @@ Internet.
 
 
 %changelog
+* Mon Mar 30 2026 Pavel Skrylev <majioa@altlinux.org> 15.1.6-alt1
+- ^ 15.0.28 -> 15.1.6
+
 * Thu Nov 20 2025 Pavel Skrylev <majioa@altlinux.org> 15.0.28-alt1
 - ^ 15.0.16 -> 15.0.28
 

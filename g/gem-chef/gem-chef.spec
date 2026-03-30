@@ -6,7 +6,7 @@
 
 Name:          gem-chef
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework
 License:       Apache-2.0
 Group:         Networking/Other
@@ -84,7 +84,7 @@ BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(aws-sdk-s3) >= 2
 BuildConflicts: gem(aws-sdk-secretsmanager) >= 2
 BuildConflicts: gem(bcrypt_pbkdf) >= 2
-BuildConflicts: gem(chef-zero) >= 15.1
+BuildConflicts: gem(chef-zero) >= 16
 BuildConflicts: gem(corefoundation) >= 1
 BuildConflicts: gem(crack) >= 0.4.6
 BuildConflicts: gem(csv) >= 3.4
@@ -122,6 +122,7 @@ BuildConflicts: gem(vault) >= 0.19
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency chef-zero >= 15.1.6,chef-zero < 16
 %ruby_use_gem_dependency unf_ext >= 0.0.9.1,unf_ext < 1
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
 %ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
@@ -177,7 +178,7 @@ Requires:      gem(vault) >= 0.18.2
 Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(aws-sdk-s3) >= 2
 Conflicts:     gem(aws-sdk-secretsmanager) >= 2
-Conflicts:     gem(chef-zero) >= 15.1
+Conflicts:     gem(chef-zero) >= 16
 Conflicts:     gem(corefoundation) >= 1
 Conflicts:     gem(csv) >= 3.4
 Conflicts:     gem(diff-lcs) >= 1.6.0
@@ -220,7 +221,7 @@ the chef library.
 
 %package       -n gem-knife
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -277,7 +278,7 @@ The knife CLI for Chef Infra.
 
 %package       -n knife
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета knife
 Group:         Other
@@ -302,7 +303,7 @@ The knife CLI for Chef Infra.
 %if_enabled    doc
 %package       -n gem-knife-doc
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета knife
 Group:         Development/Documentation
@@ -325,7 +326,7 @@ The knife CLI for Chef Infra.
 %if_enabled    devel
 %package       -n gem-knife-devel
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета knife
 Group:         Development/Ruby
@@ -352,7 +353,7 @@ The knife CLI for Chef Infra.
 
 %package       -n gem-chef-bin
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -370,7 +371,7 @@ Chef-branded binstubs for chef-client.
 
 %package       -n chef
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-bin
 Group:         Other
@@ -392,7 +393,7 @@ Chef-branded binstubs for chef-client.
 %if_enabled    doc
 %package       -n gem-chef-bin-doc
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-bin
 Group:         Development/Documentation
@@ -416,7 +417,7 @@ Chef-branded binstubs for chef-client.
 %if_enabled    devel
 %package       -n gem-chef-bin-devel
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-bin
 Group:         Development/Ruby
@@ -440,7 +441,7 @@ Chef-branded binstubs for chef-client.
 
 %package       -n gem-chef-utils
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -460,7 +461,7 @@ Basic utility functions for Core Chef Infra development
 %if_enabled    doc
 %package       -n gem-chef-utils-doc
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-utils
 Group:         Development/Documentation
@@ -483,7 +484,7 @@ Basic utility functions for Core Chef Infra development
 %if_enabled    devel
 %package       -n gem-chef-utils-devel
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-utils
 Group:         Development/Ruby
@@ -508,7 +509,7 @@ Basic utility functions for Core Chef Infra development
 
 %package       -n gem-chef-config
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -536,7 +537,7 @@ Chef's default configuration and config loading.
 %if_enabled    doc
 %package       -n gem-chef-config-doc
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-config
 Group:         Development/Documentation
@@ -559,7 +560,7 @@ Chef's default configuration and config loading.
 %if_enabled    devel
 %package       -n gem-chef-config-devel
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-config
 Group:         Development/Ruby
@@ -584,7 +585,7 @@ Chef's default configuration and config loading.
 %if_enabled    doc
 %package       -n gem-chef-doc
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef
 Group:         Development/Documentation
@@ -615,7 +616,7 @@ the chef library.
 %if_enabled    devel
 %package       -n gem-chef-devel
 Version:       19.1.116
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef
 Group:         Development/Ruby
@@ -656,9 +657,24 @@ the chef library.
 
 %install
 %ruby_install
+# Install init scripts
+install -Dm 0755 %SOURCE1 %buildroot%_initdir/chef-client
+install -Dm 0644 %SOURCE2 %buildroot%_unitdir/chef-client.service
+install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/chef-client
+install -Dm 0640 %SOURCE4 %buildroot%_sysconfdir/chef/client.rb
+
+mkdir -p %buildroot%_var/log/chef
+mkdir -p %buildroot%_var/lib/chef
+mkdir -p %buildroot%_var/cache/chef
+mkdir -p %buildroot/run/chef
 
 %check
 %ruby_test
+
+%pre           -n chef
+getent group _chef  >/dev/null || groupadd -r _chef
+getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
+
 
 %files
 %doc LICENSE README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
@@ -699,6 +715,14 @@ the chef library.
 %_bindir/chef-shell
 %_bindir/chef-solo
 %_bindir/chef-windows-service
+%_initdir/chef-client
+%_unitdir/chef-client.service
+%_sysconfdir/sysconfig/chef-client
+%config(noreplace) %attr(0640, root, _chef) %_sysconfdir/chef/client.rb
+%dir %attr(0750, root, _chef) %_sysconfdir/chef
+%dir %attr(0750, _chef, _chef) %_var/log/chef
+%dir %attr(0750, _chef, _chef) %_var/lib/chef
+%dir %attr(0750, _chef, _chef) %_var/cache/chef
 
 %if_enabled    doc
 %files         -n gem-chef-bin-doc
@@ -756,6 +780,9 @@ the chef library.
 
 
 %changelog
+* Mon Mar 30 2026 Pavel Skrylev <majioa@altlinux.org> 19.1.116-alt1.2
+- ! fixed spec and deps to chef-zero
+
 * Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 19.1.116-alt1.1
 - ! fixed spec to filter out kitchen-tests source
 
