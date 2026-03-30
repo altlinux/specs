@@ -1,35 +1,35 @@
-%def_with check
-
 Name: python3-module-dbus-fast
 Version: 4.0.0
-Release: alt1.1
+Release: alt2
 
 Summary: Python library for DBus
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/dbus-fast
+URL: https://pypi.org/project/dbus-fast
+VCS: https://github.com/bluetooth-devices/dbus-fast
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-poetry-core
-BuildRequires: python3-module-cython
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 BuildRequires: /usr/bin/dbus-launch
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
-%if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-codspeed
-%endif
-
-#%%python3_set_limited_api 3.12
+%python3_set_limited_api 3.12
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -39,13 +39,16 @@ BuildRequires: python3-module-pytest-codspeed
 
 %check
 dbus-launch sh -c '
-%pyproject_run_pytest -o addopts=  tests'
+%pyproject_run_pytest -Wignore -o addopts=  tests'
 
 %files
 %python3_sitelibdir/dbus_fast
 %python3_sitelibdir/dbus_fast-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt2
+- revert unsolicited packaging changes
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1.1
 - Demodernized packaging.
 
