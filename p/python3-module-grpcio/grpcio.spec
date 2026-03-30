@@ -1,23 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+# upb (micro-protobuf) uses custom ELF sections for extension registration;
+# linker-generated __start_linkarr_upb_AllExts/__stop_linkarr_upb_AllExts
+# symbols end up in .dynsym with non-default visibility, which eu-elflint rejects
+%add_verify_elf_skiplist %python3_sitelibdir/grpc/_cython/cygrpc.cpython-*.so
 
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.64.0
-Release: alt3
+Version: 1.70.2
+Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/grpcio
+VCS: https://github.com/grpc/grpc
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ zlib-devel libcares-devel
 BuildRequires: libssl-devel
-BuildRequires: libre2-devel
+BuildRequires: libre2-devel libabseil-cpp-devel
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(Cython) python3(six) python3(wheel)
 
@@ -25,7 +30,7 @@ BuildRequires: python3(Cython) python3(six) python3(wheel)
 HTTP/2-based RPC framework.
 
 %prep
-%setup -n %oname-%version
+%setup
 %ifarch %e2k
 # EDG frontend fails at this
 sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
@@ -37,6 +42,7 @@ rm -rf third_party/zlib
 rm -rf third_party/cares
 rm -rf third_party/boringssl
 rm -rf third_party/re2
+rm -rf third_party/abseil-cpp
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -48,6 +54,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
+export GRPC_PYTHON_BUILD_SYSTEM_ABSL=1
 
 %pyproject_build
 
@@ -57,6 +64,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
+export GRPC_PYTHON_BUILD_SYSTEM_ABSL=1
 
 %pyproject_install
 
@@ -68,6 +76,13 @@ export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 1.70.2-alt1
+- 1.66.0 -> 1.70.2 (closes: #58336)
+
+* Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 1.66.0-alt1
+- 1.64.0 -> 1.66.0
+- built with system abseil-cpp
+
 * Fri Mar 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.64.0-alt3
 - Fixed build for Elbrus.
 
