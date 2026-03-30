@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 5.9
+%define ver_major 5.10
 %define api_ver 5
 %define namespace Amtk
 
@@ -9,10 +9,10 @@
 %def_enable check
 
 Name: libgedit-amtk
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
-Summary: Gedit Technology - Actions, Menus and Toolbars Kit for GTK applications
+Summary: Gedit Technology - Actions, Menus and Toolbars Kit for GTK3 applications
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://gitlab.gnome.org/World/gedit/libgedit-amtk
@@ -160,6 +160,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10.0-alt1
+- 5.10.0
+
 * Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.2-alt1
 - 5.9.2
 

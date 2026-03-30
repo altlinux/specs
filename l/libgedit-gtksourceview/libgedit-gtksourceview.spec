@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gtksourceview
-Version: %ver_major.6.0
+Version: %ver_major.7.0
 Release: alt1
 
 Summary: Gedit Technology - Source code editing widget
@@ -25,13 +25,17 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.20
+%define gtk_ver 3.24
 %define libxml2_ver 2.6.0
+%define gfls_ver 0.4.0
+%define amtk_ver 5.10
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: pkgconfig(libgedit-gfls-1) >= %gfls_ver
+BuildRequires: pkgconfig(libgedit-amtk-5) >= %amtk_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: xvfb-run xmllint
@@ -157,6 +161,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 299.7.0-alt1
+- 299.7.0
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 299.6.0-alt1
 - 299.6.0
 

@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 # removed python plugins since 48.2
 %def_disable python
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
 %define gtksourceview_ver 299.0.4
-%define gedit_ver 49.0
+%define gedit_ver 50.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -89,6 +89,9 @@ This package contains various plugins for gEdit.
 
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

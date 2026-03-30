@@ -3,9 +3,9 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
-%define lib_ver 49
+%define lib_ver 50
 %define api_ver 3.0
 %define namespace Gedit
 %def_enable plugins
@@ -208,6 +208,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
