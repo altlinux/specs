@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1
+Release: alt1.1
 Summary: Zope testing helpers
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,19 +15,18 @@ Url: https://pypi.org/project/zope.testing/
 Vcs: https://github.com/zopefoundation/zope.testing.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope-testrunner
 %endif
 
 %description
@@ -36,8 +35,6 @@ flexible test runner, and supports both doctest and unittest.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -59,6 +56,9 @@ flexible test runner, and supports both doctest and unittest.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.txt
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.1-alt1.1
+- Demodernized packaging.
+
 * Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 6.0 -> 6.1.
 

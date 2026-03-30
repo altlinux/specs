@@ -5,28 +5,35 @@
 
 Name: python3-module-%pypi_name
 Version: 2.3.0
-Release: alt2
+Release: alt2.1
 Summary: TPM 2.0 TSS Bindings for Python
 Group: Development/Python3
 License: BSD-2-Clause
 Url: https://github.com/tpm2-software/tpm2-pytss
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-%release.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject rpm-build-python3
-%pyproject_builddeps_build
-BuildRequires: python3-devel python3-module-pip
-BuildRequires: python3-module-setuptools python3-module-setuptools_scm python3-module-wheel
-BuildRequires: python3-module-pycparser python3-module-pkgconfig python3-module-packaging
-BuildRequires: python3-module-cffi python3-module-cryptography python3-module-asn1crypto
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pycparser
+BuildRequires: python3-module-pkgconfig
+BuildRequires: python3-devel
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pycparser
+BuildRequires: python3-module-pkgconfig
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-cffi
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-asn1crypto
 BuildRequires: python3-module-yaml
 BuildRequires: libtpm2-tss-devel >= 2.0.0
 
 %if_enabled check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 BuildRequires: python3-module-pytest
 BuildRequires: swtpm
 BuildRequires: tpm2-tools
@@ -45,8 +52,6 @@ tpm2-tools based command line strings and loading tpm2-tools context files.
 %setup
 %patch -p1
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -66,6 +71,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.1
+- Demodernized packaging.
+
 * Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt2
 - Fix FTBFS: backport commits from upstream master.
 

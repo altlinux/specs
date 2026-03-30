@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.21.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for Selenium
 License: Apache-2.0
@@ -13,11 +13,11 @@ Group: Development/Python3
 Url: https://pypi.org/project/selenium
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: selenium-use-without-bundled-libs.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
 %description
 Python language bindings for Selenium WebDriver.
@@ -28,8 +28,6 @@ Python.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -48,6 +46,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.21.0-alt1.1
+- Demodernized packaging.
+
 * Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 4.21.0-alt1
 - 4.20.0 -> 4.21.0.
 

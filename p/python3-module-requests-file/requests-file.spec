@@ -1,6 +1,8 @@
+%def_with check
+
 Name: python3-module-requests-file
 Version: 3.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Local filesystem access for Requests module
 License: Apache-2.0
@@ -9,16 +11,16 @@ Url: https://pypi.org/project/requests-file
 VCS: https://codeberg.org/dashea/requests-file
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-requests
+%endif
 
 %description
 %summary
@@ -26,9 +28,6 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -45,6 +44,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/requests_file-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1.1
+- Demodernized packaging.
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.1-alt1
 - 3.0.1 released
 
