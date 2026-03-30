@@ -6,7 +6,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -67,6 +67,11 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Mon Mar 30 2026 Alexander Stepchenko <geochip@altlinux.org> 1.9.1-alt1
+- New version 1.9.1.
+- Fixes:
+  + CVE-2025-52881: runc: LSM labels can be bypassed with malicious config using dummy procfs files
+
 * Thu Dec 11 2025 Alexander Stepchenko <geochip@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 - Fixes:
