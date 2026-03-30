@@ -8,8 +8,8 @@
 %define elv_completions_dir %_datadir/elvish/lib/
 
 Name: awww
-Version: 0.11.2
-Release: alt1.61.gad93339
+Version: 0.12.0
+Release: alt1
 
 Summary: An Answer to your Wayland Wallpaper Woes
 License: GPL-3.0-only
@@ -65,5 +65,8 @@ find -type f -exec install -m644 -Dpvt %buildroot%_man1dir/ {} \;
 %doc README.md LICENSE example_scripts
 
 %changelog
+* Mon Mar 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0.
+
 * Thu Nov 20 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.2-alt1.61.gad93339
 - Initial build for ALT Sisyphus.
