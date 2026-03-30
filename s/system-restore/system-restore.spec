@@ -9,7 +9,7 @@
 %endif
 
 Name: system-restore
-Version: 0.83
+Version: 0.85
 Release: alt1
 
 Summary: ALT System Restore and Deployment
@@ -35,7 +35,6 @@ Requires: grep
 Requires: iproute2
 Requires: lsblk
 Requires: lvm2
-Requires: mdadm
 Requires: pigz
 Requires: pv
 Requires: sed
@@ -100,6 +99,11 @@ mv -f workdir/sys-part/sysrest %buildroot%_progdir
 %doc AUTHORS LICENSE README.md TODO.md CHANGELOG.md doc iso results workdir
 
 %changelog
+* Mon Mar 30 2026 Leonid Krivoshein <klark@altlinux.org> 0.85-alt1
+- improved interaction with full and system restore.
+- removed unnecessary dependency on mdadm.
+- fixed links in the documentation.
+
 * Sun Mar 29 2026 Leonid Krivoshein <klark@altlinux.org> 0.83-alt1
 - Initial build for Sisyphus (work is still ongoing).
 
