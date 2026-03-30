@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.14
+Version: 1.6.15
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -146,6 +146,9 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sun Mar 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.15-alt1
+- new version 1.6.15
+
 * Thu Mar 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.14-alt1
 - new version 1.6.14
 - drop mcrypt requires (deprecated, not used by roundcube 1.6+)
