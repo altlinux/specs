@@ -1,6 +1,6 @@
 Name: smokeping
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: Latency logging and graphing and alerting system
 
@@ -11,7 +11,6 @@ Url: https://github.com/oetiker/SmokePing
 # Source-url: https://github.com/oetiker/SmokePing/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.service
-Source2: %name.tmpfiles
 Source3: smokeping_cgi_wrapper
 
 BuildArch: noarch
@@ -100,9 +99,6 @@ mkdir -p %buildroot%_cachedir/%name
 # Install systemd unit
 install -Dpm644 %SOURCE1 %buildroot%_unitdir/%name.service
 
-# Install tmpfiles.d config
-install -Dpm644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
-
 # Install CGI wrapper
 install -Dpm755 %SOURCE3 %buildroot%_bindir/smokeping_cgi_wrapper
 
@@ -127,12 +123,15 @@ install -Dpm755 %SOURCE3 %buildroot%_bindir/smokeping_cgi_wrapper
 %dir %_localstatedir/%name
 %dir %_cachedir/%name
 %_unitdir/%name.service
-%_tmpfilesdir/%name.conf
 %_man1dir/*
 %_man3dir/*
 %_man5dir/*
 %_man7dir/*
 
 %changelog
+* Mon Mar 30 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt2
+- add RuntimeDirectory=smokeping to systemd unit (fixes startup in LXC)
+- remove tmpfiles.d config (redundant with RuntimeDirectory)
+
 * Fri Feb 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
 - initial build for ALT Sisyphus
