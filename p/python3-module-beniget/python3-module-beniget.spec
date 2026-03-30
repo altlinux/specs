@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.5.0
-Release: alt1
+Release: alt1.1
 Summary: Extract semantic information about static Python code
 License: BSD-3-Clause
 Group: Development/Python3
@@ -15,14 +15,13 @@ Url: https://pypi.org/project/beniget/
 Vcs: https://github.com/serge-sans-paille/beniget/
 BuildArch: noarch
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
+BuildRequires: python3-module-gast
 %endif
 
 %description
@@ -32,8 +31,6 @@ each definition.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -51,6 +48,9 @@ each definition.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1.1
+- Demodernized packaging.
+
 * Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
 - 0.4.2.post1 -> 0.5.0.
 

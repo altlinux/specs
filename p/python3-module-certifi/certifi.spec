@@ -1,6 +1,6 @@
 Name: python3-module-certifi
 Version: 2025.10.5
-Release: alt1
+Release: alt1.1
 
 Summary: Python package providing Mozilla's CA Bundle
 License: MPL-2.0
@@ -9,15 +9,10 @@ Url: https://pypi.org/project/certifi
 VCS: https://github.com/certifi/python-certifi
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 This installable Python package contains a CA Bundle that you can
@@ -29,8 +24,6 @@ is derived from Mozilla Firefox's canonical set.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -43,6 +36,9 @@ is derived from Mozilla Firefox's canonical set.
 %python3_sitelibdir/certifi-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2025.10.5-alt1.1
+- Demodernized packaging.
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10.5-alt1
 - 2025.10.05 released
 
