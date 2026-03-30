@@ -1,6 +1,6 @@
 Name: python3-module-pymetno
 Version: 0.13.0
-Release: alt1.1
+Release: alt2
 
 Provides: python3-module-metno = %EVR
 Obsoletes: python3-module-metno
@@ -8,21 +8,27 @@ Obsoletes: python3-module-metno
 Summary: Python library to talk to the met.no api
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/PyMetno
+URL: https://pypi.org/project/PyMetno
 VCS: https://github.com/Danielhiversen/pyMetno
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -36,6 +42,9 @@ BuildRequires: python3-module-setuptools
 %python3_sitelibdir/pymetno-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt2
+- revert unsolicited packaging changes
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1.1
 - Demodernized packaging.
 
