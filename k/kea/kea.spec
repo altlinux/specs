@@ -6,7 +6,7 @@
 %define _runstatedir /run
 
 Name: kea
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -389,6 +389,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 3.0.3-alt1
+- 3.0.2 -> 3.0.3 (Fixes: CVE-2026-3608)
+
 * Fri Nov 07 2025 Anton Farygin <rider@altlinux.com> 3.0.2-alt1
 - 3.0.1 -> 3.0.2 (Fixes: CVE-2025-11232)
 
