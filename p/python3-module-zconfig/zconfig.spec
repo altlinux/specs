@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.3
-Release: alt1
+Release: alt1.1
 Summary: Structured Configuration Library
 License: ZPL-2.1
 Group: Development/Python3
@@ -14,16 +14,18 @@ Url: https://pypi.org/project/ZConfig
 Vcs: https://github.com/zopefoundation/ZConfig
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 Conflicts: python-module-zconfig < 3.2.0-alt2
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-manuel
+BuildRequires: python3-module-zope-exceptions
+BuildRequires: python3-module-zope-testrunner
+
 # manuel.testing is subpackaged
 BuildRequires: python3-module-manuel-tests
 %endif
@@ -33,11 +35,6 @@ BuildRequires: python3-module-manuel-tests
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -56,6 +53,9 @@ BuildRequires: python3-module-manuel-tests
 %exclude %python3_sitelibdir/%mod_name/*/*/tests/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.3-alt1.1
+- Demodernized packaging.
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 4.3-alt1
 - 4.2 -> 4.3.
 

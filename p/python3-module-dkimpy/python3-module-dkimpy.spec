@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.8
-Release: alt1
+Release: alt1.1
 Summary: Python 3 module for DKIM and ARC signing and verification
 License: BSD-2-Clause
 Group: Development/Python
@@ -15,14 +15,17 @@ Vcs: https://git.launchpad.net/dkimpy
 BuildArch: noarch
 Source0: %name-%version.tar
 Patch0: 0001-Don-t-rely-on-relative-import.patch
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
 # dkim/dknewkey.py
 Requires: /usr/bin/openssl
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-authres
+BuildRequires: python3-module-dnspython
+BuildRequires: python3-module-pynacl
 # dkim/dknewkey.py
 BuildRequires: /usr/bin/openssl
 %endif
@@ -37,8 +40,6 @@ verification.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,6 +59,9 @@ verification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.8-alt1.1
+- Demodernized packaging.
+
 * Fri Jul 05 2024 Stanislav Levin <slev@altlinux.org> 1.1.8-alt1
 - 1.1.7 -> 1.1.8.
 

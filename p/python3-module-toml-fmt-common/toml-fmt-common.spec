@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 Summary: Common logic to the TOML formatter
 License: MIT
 Group: Development/Python3
@@ -14,16 +14,17 @@ Url: https://pypi.org/project/toml-fmt-common
 Vcs: https://github.com/tox-dev/toml-fmt-common
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-uv-build
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-covdefaults
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
 %endif
 
 %description
@@ -33,12 +34,14 @@ to only be used by that project).
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -54,6 +57,9 @@ to only be used by that project).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1.1
+- Demodernized packaging.
+
 * Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.0 -> 1.3.1.
 

@@ -4,11 +4,11 @@
 
 %def_with check
 
-%python3_set_limited_api
+#%%python3_set_limited_api
 
 Name: python3-module-%pypi_name
 Version: 1.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -17,18 +17,16 @@ Url: https://pypi.org/project/jq/
 Vcs: https://github.com/mwilliamson/jq.py
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-cython
 BuildRequires: libjq-devel
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -39,11 +37,6 @@ This project contains Python bindings for jq.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
-%endif
 
 %build
 export JQPY_USE_SYSTEM_LIBS=1
@@ -61,6 +54,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.11.0-alt1.1
+- Demodernized packaging.
+
 * Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
 - Updated to 1.11.0.
 

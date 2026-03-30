@@ -1,6 +1,6 @@
 Name: python3-module-fnvhash
 Version: 0.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Pure Python FNV hash implementation
 License: MIT
@@ -9,23 +9,18 @@ Url: https://pypi.org/project/fnvhash
 VCS: https://github.com/znerol/py-fnvhash
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
-
-Autoreq: yes, nopython3
-%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -41,6 +36,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/fnvhash-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1.1
+- Demodernized packaging.
+
 * Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.1-alt1
 - 0.2.1 released
 

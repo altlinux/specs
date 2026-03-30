@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4
-Release: alt4
+Release: alt4.1
 
 Summary: Utility library for i18n relied on by various Repoze packages
 License: BSD-4-Clause
@@ -15,11 +15,12 @@ Url: https://pypi.org/project/translationstring/
 Vcs: https://github.com/Pylons/translationstring
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -38,8 +39,6 @@ instance of the babel.support.Translations class.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -57,6 +56,9 @@ instance of the babel.support.Translations class.
 %exclude %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.4-alt4.1
+- Demodernized packaging.
+
 * Fri Oct 18 2024 Stanislav Levin <slev@altlinux.org> 1.4-alt4
 - Migrated from removed setuptools' test command (see #50996).
 
