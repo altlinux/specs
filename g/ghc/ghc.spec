@@ -7,7 +7,7 @@
 
 Name: ghc
 Version: %ghc_version
-Release: alt1
+Release: alt2
 
 Epoch: 1
 
@@ -21,8 +21,6 @@ BuildArch: noarch
 
 Requires: ghc%ghc_major = %version
 Requires: ghc%ghc_major-common = %version
-
-Requires: ghc-devel = %EVR
 
 Conflicts: ghc%ghc_major > %version
 Conflicts: ghc%ghc_major < %version
@@ -124,6 +122,10 @@ This is a meta-package for all the development library packages in GHC
 %files devel
 
 %changelog
+* Sun Mar 08 2026 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt2
+- Droped dependency on ghc-devel
+- Rebuilt with with rpm-build-haskell-extra-2.0.2
+
 * Mon May 12 2025 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt1
 - Bumped to GHC 9.6.7
 
