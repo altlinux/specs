@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: inkview.desktop
+
+Patch1: inkscape-poppler-26.01.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -263,6 +265,9 @@ true
 %files checkinstall
 
 %changelog
+* Mon Mar 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt2
+- fix build with poppler 26.01.0 (upstream patch)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
 - new version 1.4.3
 - remove poppler patches (included upstream)
