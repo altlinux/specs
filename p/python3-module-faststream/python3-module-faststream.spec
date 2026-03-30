@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.7
-Release: alt1.1
+Release: alt2
 
 Summary: Effortless event stream integration for your services
 License: Apache-2.0
@@ -15,46 +15,24 @@ BuildArch: noarch
 VCS: https://github.com/airtai/FastStream
 Url: https://faststream.ag2.ai/latest/
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-uv-build
-BuildRequires: /proc
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-dirty-equals
-BuildRequires: python3-module-email-validator
-BuildRequires: python3-module-fastapi
-BuildRequires: python3-module-freezegun
-BuildRequires: python3-module-httpx
-BuildRequires: python3-module-msgspec
-BuildRequires: python3-module-opentelemetry-sdk
-BuildRequires: python3-module-prometheus-client
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pydantic-settings
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-rerunfailures
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-pyyaml
-BuildRequires: python3-module-uvicorn
-BuildRequires: python3-module-uvloop
-
-BuildRequires: python3-module-anyio
-BuildRequires: python3-module-fast-depends
-BuildRequires: python3-module-typer
-BuildRequires: python3-module-typing-extensions
-BuildRequires: python3-module-watchfiles
-BuildRequires: python3-module-confluent-kafka
-BuildRequires: python3-module-aiokafka
-BuildRequires: python3-module-nats-py
-BuildRequires: python3-module-aio-pika
-BuildRequires: python3-module-redis
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra cli
+%pyproject_builddeps_metadata_extra confluent
+%pyproject_builddeps_metadata_extra kafka
+%pyproject_builddeps_metadata_extra nats
+%pyproject_builddeps_metadata_extra rabbit
+%pyproject_builddeps_metadata_extra redis
 %endif
+BuildRequires: /proc
 
 %description
 FastStream simplifies the process of writing producers and consumers for message
@@ -64,6 +42,9 @@ automatically.
 %prep
 %setup
 %patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup
 
 %build
 %pyproject_build
@@ -81,8 +62,8 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.7-alt1.1
-- Demodernized packaging.
+* Mon Mar 30 2026 Egor Ignatov <egori@altlinux.org> 0.6.7-alt2
+- Revert hostile changes.
 
 * Tue Mar 03 2026 Egor Ignatov <egori@altlinux.org> 0.6.7-alt1
 - New version 0.6.7.
