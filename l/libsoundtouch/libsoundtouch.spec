@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.4.0
-Release: alt2
+Version: 2.4.1
+Release: alt1
 
 Summary: SoundTouch audio processing library
 License: LGPL-2.1-or-later
@@ -83,7 +83,7 @@ echo "libSoundTouch_la_LDFLAGS+=-lomp" >> source/SoundTouch/Makefile.am
 %install
 %cmake_install
 
-# for multispeech
+# for multispeech and freeswitch
 install -pD -m644 %_name.m4 -t %buildroot%_aclocaldir/
 
 rm -rf %buildroot/%_prefix/doc
@@ -107,6 +107,9 @@ rm -rf %buildroot/%_prefix/doc
 %_bindir/%binary_name
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Mon Jan 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2
 - switched build to CMake (ALT #57653)
 

@@ -14,7 +14,7 @@
 
 %define _name gmobile
 %define namespace Gm
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver_major 0
 %define api_ver 0
 %define sover 0
@@ -175,6 +175,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

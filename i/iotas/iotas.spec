@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.12
+%define ver_major 2026
 %define rdn_name org.gnome.World.Iotas
 
 # failed with pypandoc-1.16
 %def_disable check
 
 Name: iotas
-Version: %ver_major.7
+Version: %ver_major.4
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -82,8 +82,6 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %python3_sitelibdir_noarch/markdown_it_img_figures_plugin/
 %python3_sitelibdir_noarch/markdown_it_modified_tasklists_plugin/
 %_datadir/%name/
-%_datadir/gtksourceview-5/language-specs/%name-markdown.lang
-%_datadir/gtksourceview-5/styles/%name-*.xml
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
@@ -94,6 +92,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.4-alt1
+- 2026.4
+
 * Sun Jan 25 2026 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
 - 0.12.7
 

@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Graphs
 %define pypi_name graphs
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -84,6 +84,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.8-alt1
+- 1.8.8
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.7-alt1
 - 1.8.7
 
