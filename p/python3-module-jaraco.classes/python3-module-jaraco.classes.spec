@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.4.0
-Release: alt1.1
+Release: alt1.2
 Summary: Utility functions for Python class constructs
 License: MIT
 Group: Development/Python3
@@ -15,16 +15,22 @@ Url: https://pypi.org/project/jaraco.classes/
 Vcs: https://github.com/jaraco/jaraco.classes
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-more-itertools
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-enabler
+BuildRequires: python3-module-pytest-mypy
 %endif
 
 %description
@@ -33,9 +39,14 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %patch0 -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -52,6 +63,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1.2
+- Demodernized packaging.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

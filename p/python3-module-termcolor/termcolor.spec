@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 Summary: ANSI color formatting for output in terminal
 License: MIT
 Group: Development/Python3
@@ -14,15 +14,16 @@ Url: https://pypi.python.org/pypi/termcolor/
 Vcs: https://github.com/termcolor/termcolor
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata_extra tests
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 %endif
 
 %description
@@ -31,9 +32,14 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -51,6 +57,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
+- Demodernized packaging.
+
 * Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.2.0 -> 3.3.0.
 

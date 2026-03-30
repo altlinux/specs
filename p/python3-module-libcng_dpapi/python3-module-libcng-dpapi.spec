@@ -4,27 +4,24 @@
 
 Name:    python3-module-%mod_name
 Version: 0.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Wrapper around DPAPI-CNG Library
 License: GPLv2
 Group:   Development/Python3
 URL:     https://github.com/august-alt/libcng-dpapi
 
-BuildRequires(pre): rpm-build-pyproject
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3(dnspython)
 BuildRequires: python3(spnego)
-
-Requires: libcng-dpapi
 
 %if_with check
 BuildRequires: python3(pytest-cov)
 %endif
+
+Requires: libcng-dpapi
 
 BuildArch: noarch
 
@@ -55,6 +52,9 @@ PFX user-protected passwords and LAPS encrypted credentials.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.0.2-alt1.1
+- Demodernized packaging.
+
 * Tue Sep 09 2025 Vladimir Rubanov <august@altlinux.org> 0.0.2-alt1
 - Fix bindings for libcng-dpapi (thx to Valery Sinelnikov).
 
