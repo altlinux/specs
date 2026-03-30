@@ -10,7 +10,7 @@
 %endif
 
 Name: thunar
-Version: 4.21.4
+Version: 4.21.5
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -183,6 +183,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Mar 30 2026 Mikhail Efremov <sem@altlinux.org> 4.21.5-alt1
+- Updated to 4.21.5.
+
 * Sat Jan 24 2026 Mikhail Efremov <sem@altlinux.org> 4.21.4-alt1
 - Updated to 4.21.4.
 
