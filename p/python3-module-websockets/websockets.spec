@@ -1,28 +1,32 @@
-%def_with check
-
 Name: python3-module-websockets
 Version: 16.0
-Release: alt1.1
+Release: alt2
 
 Summary: Python WebSocket library
 License: BSD-3-Clause
 Group: Development/Python
-Url: https://github.com/python-websockets/websockets
+URL: https://pypi.org/project/websockets
+VCS: https://github.com/python-websockets/websockets
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-%if_with check
-BuildRequires: python3-module-werkzeug
-%endif
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -39,6 +43,9 @@ BuildRequires: python3-module-werkzeug
 %python3_sitelibdir/websockets-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.0-alt2
+- revert unsolicited packaging changes
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 16.0-alt1.1
 - Demodernized packaging.
 
