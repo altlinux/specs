@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.17.0
-Release: alt1
+Release: alt1.1
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -14,16 +14,23 @@ Url: https://pypi.org/project/djangorestframework
 Vcs: https://github.com/encode/django-rest-framework
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+# we have several versions of Django
+# so, we cannot rely on auto-requires
+%filter_from_requires /^python3(django\(\..*\)\?)/d
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-pytz
+
+BuildRequires: python3-module-django
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -34,11 +41,6 @@ Web APIs.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
 
 %build
 %pyproject_build
@@ -54,6 +56,9 @@ Web APIs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.17.0-alt1.1
+- Demodernized packaging.
+
 * Thu Mar 19 2026 Stanislav Levin <slev@altlinux.org> 3.17.0-alt1
 - 3.16.1 -> 3.17.0.
 

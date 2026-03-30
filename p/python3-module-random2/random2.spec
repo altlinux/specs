@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.2
-Release: alt5
+Release: alt5.1
 
 Summary: Python 3 compatible Python 2 `random` Module
 
@@ -16,21 +16,16 @@ Url: https://pypi.org/project/random2/
 Vcs: https://github.com/strichter/random2
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
 %description
 Python 3 compatible Python 2 `random` Module.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -48,6 +43,9 @@ Python 3 compatible Python 2 `random` Module.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt5.1
+- Demodernized packaging.
+
 * Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 1.0.2-alt5
 - migrated from removed setuptools' test command (see #50996).
 

@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1.1
-Release: alt1
+Release: alt1.1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,16 +15,16 @@ Url: https://pypi.org/project/zope.deferredimport/
 Vcs: https://github.com/zopefoundation/zope.deferredimport.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope-proxy
+BuildRequires: python3-module-zope-testrunner
 %endif
 
 %description
@@ -39,8 +39,6 @@ also cause deprecation warnings to be issued when a variable is used.
 # don't package examples, remove the package *before* run tests to check if it's
 # needed or not
 rm -r src/zope/deferredimport/samples/
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,6 +56,9 @@ rm -r src/zope/deferredimport/samples/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 17 2026 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
 - 6.1 -> 6.1.1.
 

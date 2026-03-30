@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.10.0
-Release: alt3
+Release: alt3.1
 Summary: A library implementing the 'SemVer' scheme
 License: BSD-2-Clause
 Group: Development/Python3
@@ -14,16 +14,23 @@ Url: https://pypi.org/project/semantic-version
 Vcs: https://github.com/rbarrois/python-semanticversion
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%add_pyproject_deps_check_filter readme-renderer tox zest.releaser check-manifest
-%pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-check-manifest
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-django
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-nose2
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-zest-releaser
+
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -33,8 +40,6 @@ It follows strictly the 2.0.0 version of the SemVer scheme.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -56,6 +61,9 @@ rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt3.1
+- Demodernized packaging.
+
 * Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt3
 - Bootstrap for python3.11.
 
