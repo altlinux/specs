@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1
+Release: alt1.1
 Summary: Zope Page Templates
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,19 +15,28 @@ Url: https://pypi.org/project/zope-pagetemplate
 Vcs: https://github.com/zopefoundation/zope.pagetemplate
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
 # setuptools(pkg_resources) is used by namespace root which is not used in ALT
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope-component
+BuildRequires: python3-module-zope-i18n
+BuildRequires: python3-module-zope-i18nmessageid
+BuildRequires: python3-module-zope-interface
+BuildRequires: python3-module-zope-proxy
+BuildRequires: python3-module-zope-security
+BuildRequires: python3-module-zope-tal
+BuildRequires: python3-module-zope-tales
+BuildRequires: python3-module-zope-testing
+BuildRequires: python3-module-zope-testrunner
+BuildRequires: python3-module-zope-traversing
+BuildRequires: python3-module-zope-untrustedpython
 %endif
 
 %description
@@ -39,8 +48,6 @@ GoLive, etc.).
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,6 +65,9 @@ GoLive, etc.).
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.1-alt1.1
+- Demodernized packaging.
+
 * Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 5.2 -> 6.1.
 

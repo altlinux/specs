@@ -10,7 +10,6 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
@@ -18,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 Summary: A simple, correct Python build frontend
 License: MIT
 Group: Development/Python3
@@ -27,21 +26,27 @@ Url: https://pypi.org/project/build
 VCS: https://github.com/pypa/build.git
 BuildArch: noarch
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-# manually manage extras dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+
 %if_with check
-%if_without uv
-%add_pyproject_deps_check_filter uv
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-virtualenv
+BuildRequires: python3-module-wheel
+
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-pyproject-hooks
 %endif
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+
 %add_python_extra virtualenv
 %if_with uv
 %add_python_extra uv
@@ -66,11 +71,6 @@ Requires: python3-module-%pypi_name
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
 
 %build
 %pyproject_build
@@ -89,6 +89,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1.1
+- Demodernized packaging.
+
 * Thu Mar 26 2026 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
 - 1.4.0 -> 1.4.2.
 

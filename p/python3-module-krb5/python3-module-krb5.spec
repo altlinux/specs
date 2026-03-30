@@ -6,19 +6,18 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python krb5 API interface
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/jborean93/pykrb5
 
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-python3
 
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3(cython)
 BuildRequires: libkrb5-devel
 
@@ -53,6 +52,9 @@ details through GSSAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1.1
+- Demodernized packaging.
+
 * Mon Jul 14 2025 Andrey Limachko <liannnix@altlinux.org> 0.7.1-alt1
 - New version 0.7.1.
 - Remove unneeded header file python_krb5.h. (Closes: #55209)

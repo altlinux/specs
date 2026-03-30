@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.6.0
-Release: alt1
+Release: alt1.1
 Summary: Thread-pool Controls
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,13 +14,17 @@ Url: https://pypi.org/project/threadpoolctl
 Vcs: https://github.com/joblib/threadpoolctl
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-cython
+BuildRequires: python3-module-flit
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -33,11 +37,6 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
-%endif
 
 %build
 %pyproject_build
@@ -55,6 +54,9 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1.1
+- Demodernized packaging.
+
 * Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
 - 3.5.0 -> 3.6.0.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.8.1
-Release: alt1
+Release: alt1.1
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
 Group: Development/Python3
@@ -13,15 +13,18 @@ Url: https://pypi.org/project/tempora/
 VCS: https://github.com/jaraco/tempora
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-# requires internet
-%add_pyproject_deps_build_filter coherent-licensed
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-jaraco-functools
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-freezer
+BuildRequires: python3-module-python-dateutil
 %endif
 
 %description
@@ -30,9 +33,14 @@ Objects and routines pertaining to date and time (tempora).
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -49,6 +57,9 @@ Objects and routines pertaining to date and time (tempora).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.8.1-alt1.1
+- Demodernized packaging.
+
 * Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 5.8.1-alt1
 - 5.8.0 -> 5.8.1.
 

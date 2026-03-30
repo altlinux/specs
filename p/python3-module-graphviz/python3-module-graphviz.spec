@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.21
-Release: alt1
+Release: alt1.1
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group: Development/Python3
@@ -14,19 +14,23 @@ Url: https://pypi.org/project/graphviz/
 VCS: https://github.com/xflr6/graphviz
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
 Requires: graphviz
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
 %if_with check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
+
 BuildRequires: graphviz
 # dot's output is polluted with
 # Fontconfig error: Cannot load default config file: No such file: (null)
 # if /etc/fonts/fonts.conf is missing
 BuildRequires: fontconfig
-%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -35,8 +39,6 @@ BuildRequires: fontconfig
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -53,6 +55,9 @@ BuildRequires: fontconfig
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.21-alt1.1
+- Demodernized packaging.
+
 * Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 0.21-alt1
 - 0.20.3 -> 0.21.
 

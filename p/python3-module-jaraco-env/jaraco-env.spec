@@ -8,7 +8,7 @@
 
 Name: python3-module-%norm_name
 Version: 1.0.0
-Release: alt1.1
+Release: alt1.2
 Summary: Facilities for environment variables
 License: MIT
 Group: Development/Python3
@@ -16,13 +16,18 @@ Url: https://pypi.org/project/jaraco-env
 Vcs: https://github.com/jaraco/jaraco.env
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-enabler
+BuildRequires: python3-module-pytest-mypy
 %endif
 
 %description
@@ -31,9 +36,14 @@ This library facilitates handling of environment variables.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -53,6 +63,9 @@ This library facilitates handling of environment variables.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.2
+- Demodernized packaging.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
