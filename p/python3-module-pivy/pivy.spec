@@ -1,7 +1,7 @@
 %define oname pivy
 Name: python3-module-%oname
-Version: 0.6.10
-Release: alt2
+Version: 0.6.11
+Release: alt1
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
 License: ISC
@@ -10,7 +10,6 @@ Url: https://github.com/coin3d/pivy
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: pivy-0.6.6-0001-fix-CMakeLists.txt-for-distutils_cmake.patch
 Patch2: pivy-0.6.6-0002-Gentoo-specific-clear-swig-deprecation-warning.patch
 Patch3: pivy-cmake4.patch
 
@@ -58,6 +57,9 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 30 2026 Andrey Cherepanov <cas@altlinux.org> 2:0.6.11-alt1
+- New version.
+
 * Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 2:0.6.10-alt2
 - Built from correct upstream tag.
 - FTBFS: fixed build with cmake 4.x.
