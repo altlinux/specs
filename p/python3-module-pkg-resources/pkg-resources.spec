@@ -6,7 +6,7 @@
 Name: python3-module-pkg-resources
 Epoch: 1
 Version: 80.10.2
-Release: alt2
+Release: alt2.1
 Summary: Package Discovery and Resource Access for Python3 libraries
 License: MIT
 Group: Development/Python3
@@ -14,22 +14,38 @@ Url: https://pypi.org/project/setuptools/
 VCS: https://github.com/pypa/setuptools
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 # renamed pkg_resources => pkg-resources
 Provides: python3-module-pkg_resources = %EVR
 Obsoletes: python3-module-pkg_resources < %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata_extra core
 # Not separated yet:
 Conflicts: python3-module-setuptools < 39.2.0-alt3
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata_extra core
+
+BuildRequires(pre): rpm-build-python3
+
 %if_with check
-%add_pyproject_deps_check_filter pytest-perf
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-jaraco-functools
+BuildRequires: python3-module-jaraco-text
+BuildRequires: python3-module-more-itertools
+BuildRequires: python3-module-packaging
+BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-build
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-ini2toml
+BuildRequires: python3-module-jaraco-develop
+BuildRequires: python3-module-jaraco-envs
+BuildRequires: python3-module-jaraco-path
+BuildRequires: python3-module-jaraco-test
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-pyproject-hooks
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-home
+BuildRequires: python3-module-pytest-subprocess
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-tomli-w
+BuildRequires: python3-module-virtualenv
 %endif
 
 %description
@@ -38,8 +54,6 @@ Copy of last version of setuptools' pkg_resources. Only for gradual migration.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 # skip building and installation of distutils hack
 rm setup.py
 
@@ -60,6 +74,9 @@ rm %buildroot%python3_sitelibdir/%mod_name/api_tests.txt
 %exclude %python3_sitelibdir/%{pyproject_distinfo setuptools}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1:80.10.2-alt2.1
+- Demodernized packaging.
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1:80.10.2-alt2
 - Built the last known pkg-resources.
 

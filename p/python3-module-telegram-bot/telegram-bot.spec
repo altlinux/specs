@@ -1,6 +1,6 @@
 Name: python3-module-telegram-bot
 Version: 22.5
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface for the Telegram Bot API
 License: LGPLv3
@@ -9,23 +9,17 @@ Url: https://pypi.org/project/python-telegram-bot/
 VCS: https://github.com/python-telegram-bot/python-telegram-bot
 
 Source0: %name-%version.tar
-Source1: pyproject_deps.json
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %description
 %summary
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_depgroup tests
 
 %build
 %pyproject_build
@@ -42,6 +36,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 22.5-alt1.1
+- Demodernized packaging.
+
 * Mon Oct 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 22.5-alt1
 - 22.5 released
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 Summary: Fast, spec compliant Python 3.13+ tokenizer
 License: MIT
 Group: Development/Python3
@@ -14,15 +14,20 @@ Url: https://pypi.org/project/pytokens
 Vcs: https://github.com/tusharsadhwani/pytokens
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-mypy
+
 %if_with check
-%pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-black
+BuildRequires: python3-module-build
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-twine
 %endif
 
 %description
@@ -33,8 +38,6 @@ BuildRequires(pre): rpm-build-pyproject
 %autopatch -p1
 # disable mypycifying because it's alpha sw
 export PYTOKENS_USE_MYPYC=0
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 # disable mypycifying because it's alpha sw
@@ -53,6 +56,9 @@ export PYTOKENS_USE_MYPYC=0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1.1
+- Demodernized packaging.
+
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.3.0 -> 0.4.1.
 
