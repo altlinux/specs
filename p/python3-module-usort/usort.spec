@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.3
-Release: alt1
+Release: alt1.1
 Summary: A small, safe import sorter
 License: MIT
 Group: Development/Python3
@@ -14,15 +14,22 @@ Url: https://pypi.org/project/usort
 Vcs: https://github.com/facebook/usort
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-click
+BuildRequires: python3-module-libcst
+BuildRequires: python3-module-moreorless
+BuildRequires: python3-module-stdlibs
+BuildRequires: python3-module-trailrunner
 %endif
 
 %description
@@ -35,8 +42,6 @@ is left as an exercise for linters and formatters.
 %package -n %pypi_name
 Summary: Executable for %pypi_name
 Group: Development/Python3
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 Requires: %name
 
 %description -n %pypi_name
@@ -45,9 +50,14 @@ Requires: %name
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -67,6 +77,9 @@ Requires: %name
 %_bindir/%pypi_name
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt1.1
+- Demodernized packaging.
+
 * Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1
 - 1.1.0 -> 1.1.3.
 

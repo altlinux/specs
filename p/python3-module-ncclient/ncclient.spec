@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
 Group: Development/Python3
@@ -14,17 +14,24 @@ Url: https://pypi.org/project/ncclient/
 VCS: https://github.com/ncclient/ncclient
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-sphinx
+
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-paramiko
 %endif
+
+%filter_from_requires /python3(ssh.*)/d
 
 %description
 ncclient is a Python library that facilitates client-side scripting
@@ -35,12 +42,14 @@ Poulopoulos (@leopoul)
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init v%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-test.txt
-%endif
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag v"%version"
+fi
 
 %build
 %pyproject_build
@@ -56,6 +65,9 @@ Poulopoulos (@leopoul)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1.1
+- Demodernized packaging.
+
 * Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
 - 0.7.0 -> 0.7.1.
 
