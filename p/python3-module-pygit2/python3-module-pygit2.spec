@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.19.1
+Version: 1.19.2
 Release: alt1
 
 Summary: Python bindings for libgit2
@@ -18,6 +18,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,11 +51,13 @@ Bindings to the libgit2 shared library, implements Git plumbing.
 %pyproject_run_pytest -vra test -k 'not (test_filter or test_buffered_filter)'
 
 %files
-%doc COPYING AUTHORS.md CHANGELOG.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.2-alt1
+- Updated to 1.19.2.
+
 * Mon Dec 29 2025 Anton Zhukharev <ancieg@altlinux.org> 1.19.1-alt1
 - Updated to 1.19.1.
 
