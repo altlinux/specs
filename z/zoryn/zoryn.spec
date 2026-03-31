@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -101,6 +101,23 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Mar 31 2026 Anton Farygin <rider@altlinux.org> 0.32.0-alt1
+- added submit automatic squash of duplicate release commits
+- added PyPI version source for Python packages in up and check version
+- added task test-rebuild --top full TUI rewrite using LTerm with log viewer
+- added tui_logview shared library for log viewer logic
+- added task abort command
+- added task approve and task disapprove commands
+- added task test-rebuild --package and --packages-file flags
+- added CVE:YYYY-NNNNN format support in changelog parser
+- fixed gen version-up v-prefix stripping for tag parts
+- fixed task test-rebuild --top view mode and log viewer issues
+- fixed package_spec is_alt_release for branch and arch releases
+- fixed task test-rebuild --continue-no-refresh stats update
+- fixed task manage approve/disapprove with message in TUI
+- fixed task test-rebuild incorrect rebuild with same git repo tags
+- fixed rdb parse_task_packages_json for gear subtasks with multiple packages
+
 * Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 0.31.0-alt1
 - added gen pypi2spec command for generating RPM specs from PyPI metadata
 - added task log command for direct TUI log viewing
