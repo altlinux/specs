@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.11.6
+Version: 0.12.0
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -32,7 +32,7 @@ BuildRequires: luajit libluajit-devel
 BuildRequires: lua5.1-module-lpeg lua5.1-mpack
 BuildRequires: libluv-devel
 BuildRequires: unibilium-devel
-BuildRequires: libtree-sitter-devel
+BuildRequires: libtree-sitter-devel >= 0.26.0
 BuildRequires: libutf8proc-devel
 
 ExcludeArch: armh
@@ -118,7 +118,6 @@ ln -s %_libdir/libtree-sitter-markdown_inline.so %buildroot/%neovim_ts_parsers_d
 %files runtime
 %dir %_datadir/nvim
 %dir %_datadir/nvim/runtime
-%exclude %_datadir/nvim/runtime/indent/testdir
 %_datadir/nvim/runtime/*
 %_datadir/nvim/sysinit.vim
 
@@ -127,6 +126,9 @@ ln -s %_libdir/libtree-sitter-markdown_inline.so %buildroot/%neovim_ts_parsers_d
 %neovim_ts_parsers_dir/*
 
 %changelog
+* Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.org> 0.12.0-alt1
+- new version
+
 * Wed Jan 28 2026 Vladimir Didenko <cow@altlinux.org> 0.11.6-alt1
 - new version
 

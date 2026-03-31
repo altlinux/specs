@@ -1,20 +1,17 @@
-Name: tree-sitter
-Version: 0.26.7
-Release: alt1
+%define sominor 25
+
+Name: tree-sitter0%sominor
+Version: 0.25.10
+Release: alt3
 
 Summary: Parser generator tool and an incremental parsing library
 License: MIT
 Group: Development/Tools
 
 Url: https://github.com/tree-sitter/tree-sitter
-Source: %name-%version.tar
+Source: tree-sitter-%version.tar
 
 BuildRequires: gcc make
-%ifnarch %e2k
-BuildRequires: rust-cargo
-BuildRequires: clang22.1 clang22.1-support libclang22 libclang-cpp22 libstdc++-devel llvm-common
-BuildRequires: /proc
-%endif
 
 %description
 Tree-sitter is a parser generator tool and an incremental parsing library.
@@ -24,6 +21,9 @@ the syntax tree as the source file is edited.
 %package -n lib%name
 Summary: Tree-sitter library
 Group: Development/Other
+Provides: libtree-sitter = %version-%release
+Conflicts: libtree-sitter < 0.26.0
+Conflicts: libtree-sitter < 0.26.0
 
 %description -n lib%name
 Tree-sitter library
@@ -32,37 +32,17 @@ Tree-sitter library
 Summary: Devel package for tree-sitter library
 Group: Development/Other
 Requires: lib%name = %version-%release
+Provides: libtree-sitter-devel = %version-%release
+Conflicts: libtree-sitter-devel >= 0.26.0
 
 %description -n lib%name-devel
 Development files for tree-sitter library
 
-%package -n %name-cli
-Summary: Tree-sitter CLI tool
-Group: Development/Other
-
-%description -n %name-cli
-Tree-sitter CLI tool
-
 %prep
-%setup
-
-%ifnarch %e2k
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
-%endif
+%setup -n tree-sitter-%version
 
 %build
 %make_build
-
-%ifnarch %e2k
-cargo build --offline --release
-%endif
 
 %install
 export PREFIX=%_prefix
@@ -72,33 +52,27 @@ export LIBDIR=%_libdir
 export PCLIBDIR=%_pkgconfigdir
 make install
 
-%ifnarch %e2k
-mkdir -p %buildroot%_bindir
-install -m 0755 target/release/%name %buildroot%_bindir
-%endif
-
 # install directory for parser symlinks
 install -d %{buildroot}%{_libdir}/%name
 
+%filter_from_provides /pkgconfig(tree-sitter)/d
+
 %files -n lib%name
-%_libdir/*.so.0.*
-%_libdir/%name
+%_libdir/libtree-sitter.so.0.25
 %exclude %_libdir/*.a
 
 %files -n lib%name-devel
-%_libdir/*.so
 %_libdir/*.so.0
+%_libdir/*.so
 %_includedir/*
-%_pkgconfigdir/%name.pc
-
-%ifnarch %e2k
-%files -n %name-cli
-%_bindir/%name
-%endif
+%_pkgconfigdir/tree-sitter.pc
 
 %changelog
-* Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.ru> 0.26.7-alt1
-- new version
+* Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.ru> 0.25.10-alt3
+- don't provide pkgconfig(tree-sitter) to avoid conflict with main package
+
+* Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.ru> 0.25.10-alt2
+- build compatibility version
 
 * Tue Oct 14 2025 Vladimir Didenko <cow@altlinux.ru> 0.25.10-alt1
 - new version

@@ -1,5 +1,5 @@
 Name: tree-sitter-markdown
-Version: 0.5.1
+Version: 0.5.3
 Release: alt1
 
 Summary: Markdown grammar for tree-sitter
@@ -40,5 +40,8 @@ install -pm0644 -D tree-sitter-markdown-inline/src/grammar.json %buildroot%_libd
 %_libdir/tree-sitter-markdown-inline
 
 %changelog
+* Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.org> 0.5.3-alt1
+- 0.5.3.
+
 * Sun Nov 02 2025 Arseny Maslennikov <arseny@altlinux.org> 0.5.1-alt1
 - 0.5.1.
