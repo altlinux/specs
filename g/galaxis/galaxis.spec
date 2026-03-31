@@ -1,14 +1,16 @@
 Name: galaxis
-Version: 1.10
+Version: 1.13
 Release: alt1
 Url: http://www.catb.org/~esr/galaxis/
 Source0: %name-%version.tar.gz
-License: GPL
+License: BSD
 Group: Games/Arcade
 Summary: Curses-based clone of the nifty little Macintosh game
-Packager: Fr. Br. George <george@altlinux.ru>
-# Automatically added by buildreq on Thu Dec 06 2007
-BuildRequires: libncurses-devel
+# Automatically added by buildreq on Tue Mar 31 2026
+# optimized out: asciidoc docbook-dtds docbook-style-xsl glibc-kernheaders-generic libgpg-error libtinfo-devel python3 python3-base sh5 xml-common xml-utils xsltproc xz
+BuildRequires: asciidoc-a2x libncursesw-devel
+
+Patch: galaxis-1.13-a2x.patch
 
 %description
 A UNIX-hosted, curses-based clone of the nifty little Macintosh
@@ -16,6 +18,7 @@ freeware game Galaxis.
 
 %prep
 %setup
+%patch -p1
 
 %build
 make
@@ -27,11 +30,14 @@ install -m755 %name %buildroot%_gamesbindir/
 install %name.6 %buildroot%_man6dir/
 
 %files
-%doc README COPYING
+%doc *.adoc
 %_man6dir/%name.6*
 %_gamesbindir/%name
 
 %changelog
+* Tue Mar 31 2026 Fr. Br. George <george@altlinux.org> 1.13-alt1
+- Autobuild version bump to 1.13
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.10-alt1
 - Autobuild version bump to 1.10
 
