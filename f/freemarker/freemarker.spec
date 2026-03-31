@@ -1,47 +1,48 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           freemarker
-Version:        2.3.31
-Release:        alt1_4jpp11
-Summary:        The Apache FreeMarker Template Engine
-License:        ASL 2.0
-URL:            https://freemarker.apache.org
-BuildArch:      noarch
+%define _unpackaged_files_terminate_build 1
 
-Source0:        http://archive.apache.org/dist/freemarker/engine/%{version}/source/apache-freemarker-%{version}-src.tar.gz
-Source1:        http://archive.apache.org/dist/freemarker/engine/%{version}/source/apache-freemarker-%{version}-src.tar.gz.asc
-Source2:        http://archive.apache.org/dist/freemarker/KEYS
+Name: freemarker
+Version: 2.3.32
+Release: alt1
+
+Summary: The Apache FreeMarker Template Engine
+Group: Development/Java
+License: Apache-2.0
+Url: https://freemarker.apache.org
+Vcs: https://github.com/apache/freemarker
+BuildArch: noarch
+
+Source0: %name-%version.tar.gz
 
 # enable jdom extension
-Patch0:         enable-jdom.patch
-# Fix compatibility with javacc 7
-Patch1:         javacc-7.patch
+Patch0: enable-jdom.patch
+Patch1: javacc-7.patch
+# disable JSP extension
+# Support for the modern JSP 3.0+ will be made in the next version 2.3.33,
+# which we cannot build yet due to the inability to build .kt plugins by gradle
+Patch2: disable-jsp.patch
 
-BuildRequires:  ant
-BuildRequires:  gnupg2
-BuildRequires:  ivy-local
-BuildRequires:  java-1.8.0-openjdk
-BuildRequires:  java-11-openjdk-devel
-BuildRequires:  mvn(biz.aQute:bnd)
-BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(dom4j:dom4j)
-BuildRequires:  mvn(jakarta.el:jakarta.el-api)
-BuildRequires:  mvn(javax.servlet:jsp-api)
-BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(jaxen:jaxen)
-BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java.dev.javacc:javacc)
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
-BuildRequires:  mvn(org.slf4j:log4j-over-slf4j)
-BuildRequires:  mvn(rhino:js)
-BuildRequires:  mvn(xalan:xalan)
-Source44: import.info
+BuildRequires(pre): rpm-build-java
+BuildRequires: /proc
+BuildRequires: jpackage-default
+BuildRequires: ant
+BuildRequires: gnupg2
+BuildRequires: ivy-local
+BuildRequires: java-1.8.0-openjdk
+BuildRequires: java-11-openjdk-devel
+BuildRequires: mvn(biz.aQute:bnd)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(dom4j:dom4j)
+BuildRequires: mvn(jaxen:jaxen)
+BuildRequires: mvn(jdom:jdom)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java.dev.javacc:javacc)
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires: mvn(org.slf4j:log4j-over-slf4j)
+BuildRequires: mvn(rhino:js)
+BuildRequires: mvn(xalan:xalan)
+BuildRequires: mvn(saxpath:saxpath)
+BuildRequires: mvn(avalon-logkit:avalon-logkit)
 
 %description
 Apache FreeMarker is a template engine: a Java library to generate text output
@@ -51,34 +52,21 @@ Language (FTL), which is a simple, specialized language (not a full-blown
 programming language like PHP).
 
 %prep
-%setup -q -n apache-%{name}-%{version}-src
-%patch0 -p1
-%patch1 -p1
-
-
+%setup
+%autopatch -p1
 
 find -type f '(' -name '*.jar' -o -iname '*.class' ')' -print -delete
 
 # Use system ivy settings
 rm ivysettings.xml
 
-# Add jakarta.el-api
-%pom_add_dep jakarta.el:jakarta.el-api:4.0.0
-
-# Remove saxpath
-%pom_remove_dep saxpath:saxpath
-
-# Remove avalon-logkit
-%pom_remove_dep avalon-logkit:avalon-logkit
-rm src/main/java/freemarker/log/_AvalonLoggerFactory.java
-
 # Remove javarebel-sdk
 %pom_remove_dep org.zeroturnaround:javarebel-sdk
 rm src/main/java/freemarker/ext/beans/JRebelClassChangeNotifier.java
-
-# Remove jsp classes
-rm src/main/java/freemarker/ext/jsp/FreeMarkerJspFactory2.java
-rm src/main/java/freemarker/ext/jsp/_FreeMarkerPageContext2.java
+ 
+# Disable JSP deps
+%pom_remove_dep javax.servlet.jsp:jsp-api
+%pom_remove_dep javax.servlet:servlet-api
 
 # Remove jython:jython
 %pom_remove_dep jython:jython
@@ -101,11 +89,7 @@ rm src/main/java/freemarker/ext/jython/_Jython25VersionAdapter.java
 
 %mvn_file : %{name}
 
-sed -i '/"jsp-api"/s,javax.servlet.jsp,javax.servlet,' ivy.xml
-
-
 %build
-#export JAVA_HOME=%{_jvmdir}/java-11
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local -Dsun.boot.class.path=%{_jvmdir}/jre-1.8.0/lib/rt.jar jar maven-pom
 
 %install
@@ -117,6 +101,12 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local 
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Mar 30 2026 Arseniy Kostevich <faux@altlinux.org> 2.3.32-alt1
+- new version
+- fix FTBFS:
+  + disable JSP extension
+  + fix javacc-7.patch
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.31-alt1_4jpp11
 - new version
 
@@ -194,4 +184,3 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local 
 
 * Sat Nov 24 2007 Igor Vlasenko <viy@altlinux.ru> 0:2.3.6-alt1_2jpp1.7
 - converted from JPackage by jppimport script
-
