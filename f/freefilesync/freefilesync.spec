@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.8
-Release: alt2
+Version: 14.9
+Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
 License: GPL-3.0
@@ -55,12 +55,12 @@ author, as opposed to the "FreeFileSync Donation Edition".
 %prep
 %setup
 patch -p1 < %SOURCE1
-touch zen/warn_static.h
 # In-place patching from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync
 sed -i 's|wxUSE_EXCEPTIONS|0|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
 sed -i '/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
 sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
 sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cpp} zen/zstring.cpp
+sed -i '/DisableAutomaticBoundingBoxUpdates/s|^|//|' wx+/dc.h
 
 %patch1 -p1
 %patch2 -p1
@@ -68,7 +68,8 @@ sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cp
 %patch101 -p1
 
 %build
-export CXXFLAGS="%{optflags}  -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 -DwxInfoDC=wxClientDC -DwxReadOnlyDC=wxDC"
+export CXXFLAGS="%{optflags} -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 \
+                 -DwxInfoDC=wxClientDC -DwxReadOnlyDC=wxDC -DwxSYS_COLOUR_GRIDLINES=wxSYS_COLOUR_BTNFACE"
 export LDFLAGS="$LDFLAGS `pkg-config --libs gtk+-3.0`"
 
 # FreeFileSync
@@ -124,6 +125,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 14.9-alt1
+- New version 14.9.
+
 * Fri Mar 20 2026 Vitaly Lipatov <lav@altlinux.ru> 14.8-alt2
 - fix build with GCC 13 (p11): replace C++23 deducing this with traditional recursive lambdas
 
