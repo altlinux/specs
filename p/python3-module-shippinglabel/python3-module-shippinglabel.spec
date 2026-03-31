@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name shippinglabel
-%define mod_name %pypi_name
+%define mod_name shippinglabel
 
 # tests require the Internet connection
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Utilities for handling packages
@@ -21,6 +21,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,11 +53,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 31 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Thu Feb 13 2025 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Updated to 2.2.0.
 
@@ -76,4 +80,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Thu Sep 29 2022 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
 - initial build for Sisyphus
-
