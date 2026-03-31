@@ -5,14 +5,14 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
 License: GPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://www.altlinux.org/Alterator-kopidel
-Vcs: https://altlinux.space/rauty/alterator-kopidel
+Vcs: https://altlinux.space/ALTLinux/alterator-kopidel.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -87,6 +87,17 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Tue Mar 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.1-alt1
+- spec: Update Vcs tag.
+- create_squashfs_altinst: Log rsync output via expected_percentage_handler.
+- test: Add tests for percentage-handlers, check-incoming-parameters, steps helpers, variables, CLI.
+- create_disk_partition_info: Log lsblk, blkid and vm-profile to build.log.
+- kopidel-local: Derive project root from script location instead of git.
+- create_disk_partition_info: Sort plain partitions before LVM (Closes: 56560).
+- lib/percentage-handlers: Fix typo in progress reporting.
+- create_copied_fs: Write archived file list to a separate log.
+- Restructure project documentation.
+
 * Fri Mar 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.0-alt1
 - Fix rsync stderr handling in squashfs image creation.
 - Fix swapped efi/efiremovable conditions in create_install_scripts.
