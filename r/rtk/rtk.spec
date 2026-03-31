@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtk
-Version: 0.33.1
+Version: 0.34.2
 Release: alt1
 
 Summary: CLI proxy that reduces LLM token consumption on common dev commands
@@ -16,7 +16,6 @@ Source2: config.toml
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: rust
-BuildRequires: /proc
 
 %description
 High-performance CLI proxy that reduces LLM token consumption.
@@ -33,10 +32,13 @@ install -Dm 644 %SOURCE2 .cargo/config.toml
 %rust_install
 
 %files
-%_bindir/%name
 %doc README.md
+%_bindir/%name
 
 %changelog
+* Tue Mar 31 2026 Vladislav Glinkin <smasher@altlinux.org> 0.34.2-alt1
+- New version
+
 * Thu Mar 26 2026 Vladislav Glinkin <smasher@altlinux.org> 0.33.1-alt1
 - Initial build for ALT
 
