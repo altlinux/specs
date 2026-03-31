@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 4
+%define abiversion 5
 
 Name: libnetconf2
-Version: 3.7.10
+Version: 4.1.2
 Release: alt1
 Summary: C NETCONF library 
 License: BSD-3-Clause  
@@ -64,6 +64,9 @@ export CFLAGS="%optflags"
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 4.1.2-alt1
+- 3.7.10 -> 4.1.2
+
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.10-alt1
 - New version 3.7.10.
 

@@ -2,7 +2,7 @@
 %define abiversion 2
 
 Name: netopeer2
-Version: 2.4.5
+Version: 2.7.0
 Release: alt1
 Summary: NETCONF server implementation in C.
 License: BSD-3-Clause
@@ -101,6 +101,9 @@ export CFLAGS="%optflags"
 %_man1dir/%name-cli.1.*
 
 %changelog
+* Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 2.7.0-alt1
+- New version 2.7.0
+
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.5-alt1
 - New version 2.4.5.
 

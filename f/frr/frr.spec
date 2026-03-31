@@ -35,7 +35,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 10.5.2
+Version: 10.6.0
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -63,7 +63,7 @@ BuildRequires: libjson-c-devel
 BuildRequires: pkgconfig(libcares)
 BuildRequires: libelf-devel
 BuildRequires: libreadline-devel
-BuildRequires: pkgconfig(libyang) >= 2.1.128
+BuildRequires: pkgconfig(libyang) 
 BuildRequires: libcap-devel
 BuildRequires: makeinfo
 %{?_enable_doc:BuildRequires: python3-module-sphinx}
@@ -333,6 +333,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Tue Mar 31 2026 Pavel Shilov <zerospirit@altlinux.org> 10.6.0-alt1
+- NMU: update to new version 10.6.0 build based on libyang 4 
+
 * Tue Feb 24 2026 Alexey Shabalin <shaba@altlinux.org> 10.5.2-alt1
 - updated from 10.3.1 to 10.5.2
 

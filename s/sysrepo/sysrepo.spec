@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 7
+%define abiversion 8
 
 Name: sysrepo
-Version: 3.7.11
+Version: 4.2.10
 Release: alt1
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
@@ -81,6 +81,9 @@ export CFLAGS="%optflags"
 %_man8dir/*.8.*
 
 %changelog
+* Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 4.2.10-alt1
+- 3.7.11 -> 4.2.10
+
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.11-alt1
 - 3.6.11 -> 3.7.11
 
