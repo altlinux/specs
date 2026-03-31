@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -43,14 +43,18 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %files -f %name.lang
 %_bindir/alt-weather-plasma
 %_K6qml/org/kde/plasma/alt/private/weather/
-%_datadir/icons/hicolor/scalable/status/*
-%_datadir/icons/breeze/status/64/*
-%_datadir/icons/breeze-dark/status/64/*
-%_datadir/plasma-addon-alt-weather/ya_logo/*
-%_datadir/plasma/plasmoids/org.kde.plasma.alt.weather/
+%_K6xdgapp/*weather*.desktop
+%_K6icon/hicolor/scalable/*/*
+%_K6icon/breeze/status/64/*
+%_K6icon/breeze-dark/status/64/*
+%_K6data/plasma-addon-alt-weather/
+%_K6data/plasma/plasmoids/org.kde.plasma.alt.weather/
 %_datadir/metainfo/*
 
 %changelog
+* Tue Mar 31 2026 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt1
+- add application metainfo and desktop-file
+
 * Fri Mar 27 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.0-alt1
 - update backend
 - new standalone application based on plasma widget
