@@ -1,7 +1,7 @@
 %define xdg_name io.github.celluloid_player.Celluloid
 
 Name: celluloid
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: Celluloid (formerly GNOME MPV) is a simple GTK+ frontend for mpv.
@@ -54,6 +54,9 @@ to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Mar 31 2026 Vladimir Didenko <cow@altlinux.org> 0.30-alt1
+- new version
+
 * Mon May 19 2025 Vladimir Didenko <cow@altlinux.org> 0.29-alt1
 - new version
 
