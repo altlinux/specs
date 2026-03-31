@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.50.3
-Release: alt1.1
+Release: alt2
 
 Summary: Generic virtualenv management and test command line tool
 License: MIT
@@ -16,52 +16,22 @@ Url: https://pypi.org/project/tox/
 VCS: https://github.com/tox-dev/tox
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
-BuildRequires: python3-module-docutils
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra completion
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata_extra completion
 %if_with check
-BuildRequires: python3-module-build
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-detect-test-pollution
-BuildRequires: python3-module-devpi-process
-BuildRequires: python3-module-diff-cover
-BuildRequires: python3-module-distlib
-BuildRequires: python3-module-flaky
-BuildRequires: python3-module-pdm-backend
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-re-assert
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-time-machine
-BuildRequires: python3-module-wheel
-
-BuildRequires: python3-module-argcomplete
-BuildRequires: python3-module-cachetools
-BuildRequires: python3-module-colorama
-BuildRequires: python3-module-filelock
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-pluggy
-BuildRequires: python3-module-pyproject-api
-BuildRequires: python3-module-tomli-w
-BuildRequires: python3-module-virtualenv
 BuildRequires: /proc
 # required by test_local_execute_terminal_size
 BuildRequires: /dev/pts
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%add_python3_req_skip _overlapped
-%add_python3_req_skip asyncio.windows_utils
 
 %description
 Tox as is a generic virtualenv management and test command line tool you
@@ -77,14 +47,12 @@ can use for:
 %prep
 %setup
 %patch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -110,8 +78,8 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.50.3-alt1.1
-- Demodernized packaging.
+* Tue Mar 31 2026 Stanislav Levin <slev@altlinux.org> 4.50.3-alt2
+- Undone Python vandalism.
 
 * Fri Mar 20 2026 Stanislav Levin <slev@altlinux.org> 4.50.3-alt1
 - 4.50.1 -> 4.50.3.
