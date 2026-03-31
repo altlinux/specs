@@ -5,13 +5,13 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.0.62
-Release: alt1.1
+Version: 0.0.72
+Release: alt1
 
 Summary: grammars for babi
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/babi-grammars/
+Url: https://pypi.org/project/babi-grammars
 Vcs: https://github.com/asottile/babi-grammars
 
 BuildArch: noarch
@@ -49,6 +49,9 @@ grammars for babi
 %_datadir/babi/
 
 %changelog
+* Tue Mar 31 2026 Vladislav Glinkin <smasher@altlinux.org> 0.0.72-alt1
+- New version
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.0.62-alt1.1
 - Demodernized packaging.
 
