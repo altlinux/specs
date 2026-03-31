@@ -2,14 +2,14 @@
 %define optflags_lto %nil
 
 %define _name identity
-%define ver_major 25.10
+%define ver_major 26.03
 %define xdg_name org.gnome.gitlab.YaLTeR.Identity
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Compare images and videos
@@ -33,6 +33,7 @@ Source1: %_name-%version-cargo.tar
 
 Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
+Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo gcc-c++ blueprint-compiler
@@ -76,6 +77,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Mar 31 2026 Yuri N. Sedunov <aris@altlinux.org> 26.03-alt1
+- v26.03-2-g59a681f
+
 * Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 25.10.1-alt1
 - 25.10.1
 
