@@ -8,8 +8,8 @@
 %endif
 
 Name: glances
-Version: 4.3.0.8
-Release: alt1.2
+Version: 4.5.3
+Release: alt1
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -21,8 +21,6 @@ Source: %name-%version.tar
 Source1: .gear/glances-webserver.service
 Source2: .gear/glances.env
 Patch0: %name-%version-alt.patch
-# see https://github.com/nicolargo/glances/pull/3106
-Patch1: glances-4.3.0.8-alt-fix-config-path.patch
 
 Requires: python3-module-%name = %EVR
 
@@ -77,9 +75,7 @@ Requires: %name = %EVR
 
 %prep
 %setup
-
 %patch0 -p1
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -134,6 +130,22 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 %endif
 
 %changelog
+* Tue Mar 31 2026 Egor Ignatov <egori@altlinux.org> 4.5.3-alt1
+- New version 4.5.3.
+- Fixes:
+  + CVE-2026-30928 Unauthenticated Configuration Secrets Exposure via /api/4/config
+  + CVE-2026-30930 SQL Injection via Process Names in TimescaleDB Export
+  + CVE-2026-32596 REST API Exposed Without Authentication by Default
+  + CVE-2026-32608 Command Injection via Process Names in Action Command Templates
+  + CVE-2026-32609 Incomplete Secrets Redaction on /api/v4/args Endpoint
+  + CVE-2026-32610 Cross-Origin Credential Theft via Default CORS Configuration
+  + CVE-2026-32611 SQL Injection in DuckDB Export via Unparameterized DDL Statements
+  + CVE-2026-32632 DNS Rebinding via Missing Host Validation in REST/WebUI
+  + CVE-2026-32633 Browser API Exposes Reusable Downstream Credentials via /api/4/serverslist
+  + CVE-2026-32634 Autodiscovery Leaks Reusable Credentials to Zeroconf-Spoofed Servers
+  + CVE-2026-33533 Cross-Origin System Information Disclosure via XML-RPC Server CORS Wildcard
+  + CVE-2026-33641 Command Injection via Dynamic Configuration Values
+
 * Fri Aug 15 2025 Michael Shigorin <mike@altlinux.org> 4.3.0.8-alt1.2
 - NMU: disable webserver on e2k due to uvicorn being missing
 
