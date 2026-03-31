@@ -16,7 +16,7 @@
 
 Name:		bcc
 Version: 0.36.1
-Release: alt1
+Release: alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -304,6 +304,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Tue Mar 31 2026 Vitaly Chikunov <vt@altlinux.org> 0.36.1-alt2
+- Fix for Linux v6.19.
+
 * Tue Feb 10 2026 Vitaly Chikunov <vt@altlinux.org> 0.36.1-alt1
 - Update to v0.36.1 (2026-02-09).
 
