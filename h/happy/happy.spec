@@ -3,7 +3,7 @@
 
 Name: happy
 Version: 2.1.5
-Release: alt1
+Release: alt1.1
 License: BSD-2-Clause
 
 Group: Development/Haskell
@@ -14,7 +14,7 @@ Source1: vendor.tar
 
 Summary: Happy is a parser generator for Haskell
 
-BuildRequires(pre): ghc
+BuildRequires(pre): ghc-devel
 BuildRequires(pre): rpm-build-haskell-vendored
 
 %description
@@ -36,6 +36,9 @@ similar way to the @yacc@ tool for C.
 %_bindir/happy
 
 %changelog
+* Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 2.1.5-alt1.1
+- Fixed FTBFS with ghc-1:9.6.7-alt2.
+
 * Mon Jun 09 2025 Leonid Znamenok <respublica@altlinux.org> 2.1.5-alt1
 - 2.1.5
 

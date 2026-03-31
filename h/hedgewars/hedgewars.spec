@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.3
-Release:    alt2
+Release:    alt2.1
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -35,7 +35,7 @@ Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 BuildRequires(pre): cmake
 BuildRequires: fpc-units-gtk2 fpc-units-misc fpc-units-net
 %{?_with_server:
-BuildRequires: ghc cabal-install rpm-build-haskell-vendored
+BuildRequires: ghc-devel cabal-install rpm-build-haskell-vendored
 }
 BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
@@ -171,6 +171,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 1.0.3-alt2.1
+- Fixed FTBFS with ghc-1:9.6.7-alt2.
+
 * Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt2
 - Fixed FTBFS.
 

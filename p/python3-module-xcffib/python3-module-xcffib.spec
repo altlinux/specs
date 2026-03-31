@@ -5,7 +5,7 @@
 
 Name: python3-module-%modulename
 Version: 1.11.2
-Release: alt1
+Release: alt1.1
 
 Summary: A drop-in replacement for xpyb based on cffi
 License: Apache-2.0
@@ -20,7 +20,7 @@ BuildRequires: python3-module-cffi
 BuildRequires: xorg-xcbproto-devel
 
 BuildRequires(pre): rpm-build-haskell-vendored
-BuildRequires: ghc cabal-install
+BuildRequires: ghc-devel cabal-install
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -67,6 +67,9 @@ sed -i "s/__version__ = .*/__version__ = \"%version\"/" xcffib/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 1.11.2-alt1.1
+- Fixed FTBFS with ghc-1:9.6.7-alt2.
+
 * Wed Oct 15 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.2-alt1
 - 1.11.2
 

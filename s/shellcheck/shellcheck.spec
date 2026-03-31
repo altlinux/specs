@@ -1,7 +1,7 @@
 Name: shellcheck
 
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 License: GPL-3.0-or-later
 Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
@@ -9,7 +9,7 @@ Group: Development/Tools
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): ghc
+BuildRequires(pre): ghc-devel
 BuildRequires(pre): rpm-build-haskell-vendored
 
 BuildRequires: pandoc
@@ -48,6 +48,9 @@ cp shellcheck.1 %buildroot%_man1dir
 %_man1dir/shellcheck.1*
 
 %changelog
+* Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 0.11.0-alt1.1
+- Fixed FTBFS with ghc-1:9.6.7-alt2.
+
 * Mon Aug 04 2025 Leonid Znamenok <respublica@altlinux.org> 0.11.0-alt1
 - Updated to 0.11.0.
 
