@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.12.0
-Release: alt1.3
+Release: alt2
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,21 +16,17 @@ VCS: https://github.com/pypa/flit
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+# flit and flit-core are built from the same repo
+%add_pyproject_deps_build_filter %pypi_name_core
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-responses
-BuildRequires: python3-module-testpath
-BuildRequires: python3-module-tomli-w
-
-BuildRequires: python3-module-pip
+%add_pyproject_deps_check_filter %pypi_name_core
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -54,6 +50,11 @@ Distribution-building parts of Flit.
 # debundle tomli, required on Python < 3.11
 rm -r flit_core/flit_core/vendor/
 export PYTHONPATH=$(pwd)/flit_core
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 # build PEP517 backend
@@ -87,14 +88,8 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
-* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.3
-- Fixed back build dependency.
-
-* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.2
-- Return back accidently removed flit-core.
-
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1.1
-- Demodernized packaging.
+* Mon Mar 30 2026 Stanislav Levin <slev@altlinux.org> 3.12.0-alt2
+- Undone Python vandalism.
 
 * Tue Mar 25 2025 Stanislav Levin <slev@altlinux.org> 3.12.0-alt1
 - 3.11.0 -> 3.12.0.
