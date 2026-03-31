@@ -1,5 +1,5 @@
 Name: doctest
-Version: 2.4.12
+Version: 2.5.0
 Release: alt1
 
 Summary: Feature-rich header-only C++ testing framework
@@ -35,7 +35,7 @@ sed -i '/-Werror/d;/-Wcast-align=strict/d' scripts/cmake/common.cmake
 %build
 %cmake \
   -DCMAKE_BUILD_TYPE=Release \
-  -DDOCTEST_WITH_MAIN_IN_STATIC_LIB:BOOL=OFF \
+  -DDOCTEST_WITH_MAIN_IN_STATIC_LIB:BOOL=ON \
   -DDOCTEST_WITH_TESTS:BOOL=ON \
   %nil
 %cmake_build
@@ -53,6 +53,9 @@ ctest --test-dir %_cmake__builddir
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Mar 31 2026 Anton Farygin <rider@altlinux.org> 2.5.0-alt1
+- 2.4.12 -> 2.5.0
+
 * Mon May 12 2025 Anton Farygin <rider@altlinux.com> 2.4.12-alt1
 - 2.4.11 -> 2.4.12
 
