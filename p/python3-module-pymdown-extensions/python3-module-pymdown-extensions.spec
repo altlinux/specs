@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.16.1
+Version: 10.21.2
 Release: alt1
 
 Summary: Extensions for Python Markdown
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,11 +52,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md LICENSE.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 31 2026 Anton Zhukharev <ancieg@altlinux.org> 10.21.2-alt1
+- Updated to 10.21.2.
+
 * Thu Oct 30 2025 Anton Zhukharev <ancieg@altlinux.org> 10.16.1-alt1
 - Updated to 10.16.1.
 
@@ -117,4 +121,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Mon Jul 25 2022 Anton Zhukharev <ancieg@altlinux.org> 9.5-alt1
 - initial build for Sisyphus
-
