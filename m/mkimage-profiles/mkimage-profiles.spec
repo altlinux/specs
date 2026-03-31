@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Mar 31 2026 Anton Midyukov <antohami@altlinux.org> 1.9.2-alt1
+- kernel: Set default KFLAVOURS to 6.18 for sisyphus_riscv64
+  and sisyphus_loongarch64 too
+- lib/arch.mk: export grub_arch and efi_arch for use in conf.d/*.mk
+
 * Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1
 - docs: add multiple documentation
 - vm.mk: add apt-rsync to vm/bare and vm/systemd (thx Nadezhda Fedorova)
