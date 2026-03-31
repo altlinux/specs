@@ -2,7 +2,7 @@
 
 Name: jakarta-json
 Version: 2.1.3
-Release: alt1
+Release: alt2
 
 Summary: Jakarta JSON Processing API
 License: EPL-2.0
@@ -34,6 +34,7 @@ transform, and query JSON documents. The JAR contains both the 2.1
 %package api
 Summary: Jakarta JSON Processing API
 Group: Development/Java
+Provides: %name = %EVR
 
 %description api
 Jakarta JSON Processing provides portable APIs to parse, generate,
@@ -81,9 +82,8 @@ separately for javax.json runtime compatibility.
   "jakarta.json:jakarta.json-api" \
   "javax.json:javax.json-api" \
   "javax.json:javax.json-api:1.1.6" \
-  "org.glassfish:javax.json" \
-  "org.glassfish:jakarta.json" \
   #
+%mvn_alias "org.glassfish:jakarta.json" "org.glassfish:javax.json"
 
 %build
 %mvn_build -j
@@ -109,6 +109,23 @@ while read -r path; do
         cp -a "${legacy_buildroot}${path}" "%{buildroot}${path}"
     fi
 done < .mfiles-impl-paths
+impl_metadata="%{buildroot}/usr/share/maven-metadata/%{name}-impl.xml"
+if [ -f "${impl_metadata}" ]; then
+    perl -0777 -i -pe '
+        s|
+            <artifact>\s*
+            <groupId>jakarta\.json</groupId>\s*
+            <artifactId>jakarta\.json-api</artifactId>.*?
+            </artifact>\n
+        ||sgx;
+        s|
+            <dependency>\s*
+            <groupId>jakarta\.json</groupId>\s*
+            <artifactId>jakarta\.json-api</artifactId>.*?
+            </dependency>\n
+        ||sgx;
+    ' "${impl_metadata}"
+fi
 rm -rf "${legacy_buildroot}"
 
 %files api -f .mfiles-api
@@ -116,6 +133,9 @@ rm -rf "${legacy_buildroot}"
 %files impl -f .mfiles-impl
 
 %changelog
+* Tue Mar 31 2026 Ivan Khanas <xeno@altlinux.org> 2.1.3-alt2
+- Fix jakarta.json-api provides.
+
 * Wed Mar 25 2026 Ivan Khanas <xeno@altlinux.org> 2.1.3-alt1
 - Update to 2.1.3. Legacy 1.1 (javax.json.*) classes merged into JAR.
 - Add separate legacy impl binary package from 1.1.6 sources
