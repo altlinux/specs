@@ -1,17 +1,18 @@
 Name:    Zafiro-icons
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Summary: icon pack flat with light colors
 License: GPL-3.0
 Group:   Other
 Url:     https://github.com/zayronxio/Zafiro-icons
+BuildArch: noarch
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 
-#BuildRequires:
+BuildRequires: /proc
 
 %description
 %summary
@@ -30,6 +31,10 @@ Source: %name-%version.tar
 %prep
 %setup
 
+for icons in Light Dark; do
+mv $icons/apps/scalable/βTORRENT.svg $icons/apps/scalable/TORRENT.svg
+done
+
 %install
 install -d %buildroot%_iconsdir
 
@@ -39,6 +44,10 @@ cp -r Zafiro-icons-Light %buildroot%_iconsdir
 cp -r Zafiro-icons-Dark %buildroot%_iconsdir
 
 %changelog
+* Mon Mar 30 2026 Artyom Bystrov <arbars@altlinux.org> 1.3-alt2
+- add rename for icon with non-ASCII character in name
+- change arch to noarch
+
 * Mon Feb 06 2023 Artyom Bystrov <arbars@altlinux.org> 1.3-alt1
 - new version 1.3
 
