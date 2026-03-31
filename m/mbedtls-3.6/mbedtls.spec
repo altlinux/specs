@@ -3,7 +3,7 @@
 %define so_tls_version 21
 %define so_crypto_version 16
 %define so_x509_version 7
-%define framework_commit 457996474728cb8e968ed21953b72f74d2f536b2
+%define framework_commit dff9da04438d712f7647fd995bc90fadd0c0e2ce
 %def_disable static
 
 %filter_from_provides /^pkgconfig(mbedcrypto)/d
@@ -11,7 +11,7 @@
 %filter_from_provides /^pkgconfig(mbedx509)/d
 
 Name: %pkgname-3.6
-Version: 3.6.5
+Version: 3.6.6
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -155,6 +155,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %endif
 
 %changelog
+* Tue Mar 31 2026 Nazarov Denis <nenderus@altlinux.org> 3.6.6-alt1
+- New version 3.6.6
+
 * Wed Oct 15 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.5-alt1
 - New version 3.6.5.
 - Buid as legacy library with devel subpackage
