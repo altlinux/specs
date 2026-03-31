@@ -2,9 +2,10 @@
 %def_with check
 
 %define pypi_name flask-httpauth
+%define module_name flask_httpauth
 
 Name: python3-module-%pypi_name
-Version: 4.8.0
+Version: 4.8.1
 Release: alt1
 
 Summary: Simple extension that provides authentication for Flask routes
@@ -16,8 +17,6 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,10 +50,15 @@ authentication for Flask routes
 %pyproject_run_pytest -vra
 
 %files
-%doc README* CHANGES*
-%python3_sitelibdir/*
+%doc README.md LICENSE
+%python3_sitelibdir/%module_name.py
+%python3_sitelibdir/__pycache__/%module_name.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 31 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.8.1-alt1
+- Updated to 4.8.1.
+
 * Thu May 25 2023 Alexandr Shashkin <dutyrok@altlinux.org> 4.8.0-alt1
 - 4.7.0 -> 4.8.0
 - spec: reformat README and CHANGES patterns for doc macro in
