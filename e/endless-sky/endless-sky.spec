@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: endless-sky
-Version: 0.10.16
+Version: 0.11.0
 Release: alt1
 
 Summary: Space exploration and combat game
@@ -87,6 +87,9 @@ rm -rv %buildroot/usr/share/doc/endless-sky
 %_datadir/games/endless-sky/
 
 %changelog
+* Tue Mar 31 2026 Pavel Petrykin <silverducks@altlinux.org> 0.11.0-alt1
+- New version.
+
 * Tue Nov 11 2025 Pavel Petrykin <silverducks@altlinux.org> 0.10.16-alt1
 - New version.
 
