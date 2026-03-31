@@ -1,4 +1,4 @@
-%define kernel_base_version 6.18
+%define kernel_base_version 6.19
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -18,21 +18,21 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 #    3 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
 #    4 /* SPDX-License-Identifier: GPL-2.0-or-later WITH Linux-syscall-note */
 #    4 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
+#    5 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
 #    5 /* SPDX-License-Identifier: LGPL-2.0+ WITH Linux-syscall-note */
 #    6 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
 #    6 /* SPDX-License-Identifier: ((GPL-2.0-only WITH Linux-syscall-note) OR BSD-3-Clause) */
-#    6 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
 #    7 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
 #    7 /* SPDX-License-Identifier: BSD-3-Clause */
-#    9 /* SPDX-License-Identifier: MIT */
+#   10 /* SPDX-License-Identifier: MIT */
 #   11 /* SPDX-License-Identifier: GPL-1.0+ WITH Linux-syscall-note */
 #   15 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB) */
 #   16 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
 #   23 # SPDX-License-Identifier: GPL-2.0
-#   34 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
-#   35 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+#   35 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+#   37 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
 #  163 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
-# 1000 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+# 1005 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: https://www.kernel.org/
@@ -298,8 +298,11 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Tue Mar 31 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.19-alt1
+- v6.18 -> v6.19.
+
 * Wed Mar 18 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.18-alt1
-- 6.12 -> 6.18.
+- v6.12 -> v6.18.
 
 * Wed Mar 18 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.12-alt1
 - v6.6 -> v6.12.
