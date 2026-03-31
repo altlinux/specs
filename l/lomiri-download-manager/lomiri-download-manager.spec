@@ -4,8 +4,8 @@
 %def_with check
 
 Name: lomiri-download-manager
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Lomiri Upload/Download Manager
 License: LGPL-3.0
@@ -181,6 +181,9 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_docdir/%name/*
 
 %changelog
+* Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt2
 - Fixed FTBFS.
 

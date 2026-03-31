@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: suru-icon-theme
-Version: 2025.05.0
+Version: 2026.03.0
 Release: alt1
 
 Summary: Suru Icon Theme for Lomiri Operating Environment
@@ -36,5 +36,8 @@ cp -aprv suru %buildroot%_iconsdir/
 %_iconsdir/suru/*
 
 %changelog
+* Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 2026.03.0-alt1
+- New version 2026.03.0.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 2025.05.0-alt1
 - Initial build for Sisyphus
