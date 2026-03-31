@@ -10,7 +10,7 @@
 
 Name: libvncserver
 %define libname %name
-Version: 0.9.14
+Version: 0.9.15
 Release: alt1
 
 Group: System/Libraries
@@ -25,10 +25,12 @@ Source: http://downloads.sourceforge.net/libvncserver/%tname-%version.tar.gz
 # upstream
 Patch1: 0001-libvncserver-Add-API-to-add-custom-I-O-entry-points.patch
 Patch2: 0002-libvncserver-Add-channel-security-handlers.patch
+Patch3: 0003-libvncclient-add-bounds-checks-to-ultrazip-subrectangle-parsing.patch
+Patch4: 0004-libvncserver-fix-null-pointer-dereferences-in-httpd-proxy-handlers.patch
 # SuSE
 Patch20: redef-keysym.patch
 # FC
-Patch30: ffmpeg.patch
+#Patch30: ffmpeg.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libX11-devel libgfortran-devel libstdc++-devel xorg-xproto-devel
@@ -106,13 +108,16 @@ Conflicts: libvncserver < %EVR
 %setup -n %tname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 %patch20 -p1
-%patch30 -p1
+#%patch30 -p1
 
 # set so version
 sed -i 's|^set.*VERSION_SO[[:space:]].*|set(VERSION_SO "%sover")|' CMakeLists.txt
 # fix .pc
-sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' *.pc.cmakein
+sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' src/libvncclient/*.pc.cmakein
+sed -i 's|@CMAKE_INSTALL_PREFIX@/lib$|@LIB_INSTALL_DIR@|' src/libvncserver/*.pc.cmakein
 
 %build
 %cmake
@@ -146,6 +151,9 @@ make -C BUILD install DESTDIR=%buildroot
 
 
 %changelog
+* Tue Mar 31 2026 Alexander Danilov <admsasha@altlinux.org> 0.9.15-alt1
+- New version 0.9.15 (fixes: CVE-2026-32853, CVE-2026-32854).
+
 * Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 0.9.14-alt1
 - new version
 - enable ffmpeg
