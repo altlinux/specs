@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: Python package for protontricks
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Requires: winetricks
 BuildRequires(pre): rpm-build-pyproject
@@ -67,11 +69,13 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %pypi_name
-%doc README.md CHANGELOG.md TROUBLESHOOTING.md
 %_bindir/protontricks*
 %_desktopdir/protontricks*.desktop
 
 %changelog
+* Tue Mar 31 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.1-alt1
+- Updated to 1.14.1.
+
 * Tue Feb 24 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
 - Updated to 1.14.0.
 
@@ -105,4 +109,3 @@ rm %buildroot%_bindir/protontricks-desktop-install
 
 * Fri Dec 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.10.5-alt1
 - Built for ALT Sisyphus.
-
