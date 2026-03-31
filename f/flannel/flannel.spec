@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.28.1
+Version: 0.28.2
 Release: alt1
 
 Summary: flannel is a network fabric for containers
@@ -57,6 +57,12 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Mar 31 2026 Alexander Stepchenko <geochip@altlinux.org> 0.28.2-alt1
+- 0.28.1 -> 0.28.2.
+- Fixes:
+  + CVE-2026-32241: Flannel vulnerable to cross-node remote code execution via extension backend BackendData injection
+  + CVE-2026-33186: gRPC-Go has an authorization bypass via missing leading slash in :path
+
 * Mon Feb 16 2026 Alexander Stepchenko <geochip@altlinux.org> 0.28.1-alt1
 - 0.27.4 -> 0.28.1.
 - Fixes:
