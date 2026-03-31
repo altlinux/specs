@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Tue Mar 31 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.2-alt1
+- add icons for standalone app
+
 * Tue Mar 31 2026 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt1
 - add application metainfo and desktop-file
 
