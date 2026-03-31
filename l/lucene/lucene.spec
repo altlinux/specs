@@ -1,88 +1,61 @@
+Name:    lucene
+Version: 10.4.0
+Release: alt1
+Summary: High-performance, full-featured text search engine
+License: Apache-2.0 AND MIT AND BSD-3-Clause AND BSD-2-Clause
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
-# END SourceDeps(oneline)
+URL: http://lucene.apache.org/
+
+Source0: %name-%version-src.tgz
+Source1: aggregator.pom
+Source2: aggregator-analysis.pom
+
+Source3:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-common/%{version}/lucene-analysis-common-%{version}.pom
+Source4:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-icu/%{version}/lucene-analysis-icu-%{version}.pom
+Source5:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-kuromoji/%{version}/lucene-analysis-kuromoji-%{version}.pom
+Source6:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-morfologik/%{version}/lucene-analysis-morfologik-%{version}.pom
+Source7:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-nori/%{version}/lucene-analysis-nori-%{version}.pom
+Source8:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-opennlp/%{version}/lucene-analysis-opennlp-%{version}.pom
+Source9:  https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-phonetic/%{version}/lucene-analysis-phonetic-%{version}.pom
+Source10: https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-smartcn/%{version}/lucene-analysis-smartcn-%{version}.pom
+Source11: https://repo1.maven.org/maven2/org/apache/lucene/lucene-analysis-stempel/%{version}/lucene-analysis-stempel-%{version}.pom
+
+Source12: https://repo1.maven.org/maven2/org/apache/lucene/lucene-backward-codecs/%{version}/lucene-backward-codecs-%{version}.pom
+Source13: https://repo1.maven.org/maven2/org/apache/lucene/lucene-benchmark/%{version}/lucene-benchmark-%{version}.pom
+Source14: https://repo1.maven.org/maven2/org/apache/lucene/lucene-classification/%{version}/lucene-classification-%{version}.pom
+Source15: https://repo1.maven.org/maven2/org/apache/lucene/lucene-codecs/%{version}/lucene-codecs-%{version}.pom
+Source16: https://repo1.maven.org/maven2/org/apache/lucene/lucene-core/%{version}/lucene-core-%{version}.pom
+Source17: https://repo1.maven.org/maven2/org/apache/lucene/lucene-demo/%{version}/lucene-demo-%{version}.pom
+Source18: https://repo1.maven.org/maven2/org/apache/lucene/lucene-expressions/%{version}/lucene-expressions-%{version}.pom
+Source19: https://repo1.maven.org/maven2/org/apache/lucene/lucene-facet/%{version}/lucene-facet-%{version}.pom
+Source20: https://repo1.maven.org/maven2/org/apache/lucene/lucene-grouping/%{version}/lucene-grouping-%{version}.pom
+Source21: https://repo1.maven.org/maven2/org/apache/lucene/lucene-highlighter/%{version}/lucene-highlighter-%{version}.pom
+Source22: https://repo1.maven.org/maven2/org/apache/lucene/lucene-join/%{version}/lucene-join-%{version}.pom
+Source23: https://repo1.maven.org/maven2/org/apache/lucene/lucene-luke/%{version}/lucene-luke-%{version}.pom
+Source24: https://repo1.maven.org/maven2/org/apache/lucene/lucene-memory/%{version}/lucene-memory-%{version}.pom
+Source25: https://repo1.maven.org/maven2/org/apache/lucene/lucene-misc/%{version}/lucene-misc-%{version}.pom
+Source26: https://repo1.maven.org/maven2/org/apache/lucene/lucene-monitor/%{version}/lucene-monitor-%{version}.pom
+Source27: https://repo1.maven.org/maven2/org/apache/lucene/lucene-queries/%{version}/lucene-queries-%{version}.pom
+Source28: https://repo1.maven.org/maven2/org/apache/lucene/lucene-queryparser/%{version}/lucene-queryparser-%{version}.pom
+Source29: https://repo1.maven.org/maven2/org/apache/lucene/lucene-replicator/%{version}/lucene-replicator-%{version}.pom
+Source30: https://repo1.maven.org/maven2/org/apache/lucene/lucene-sandbox/%{version}/lucene-sandbox-%{version}.pom
+Source31: https://repo1.maven.org/maven2/org/apache/lucene/lucene-spatial3d/%{version}/lucene-spatial3d-%{version}.pom
+Source32: https://repo1.maven.org/maven2/org/apache/lucene/lucene-suggest/%{version}/lucene-suggest-%{version}.pom
+
+ExcludeArch: %ix86 armh
+
+BuildRequires(pre): rpm-build-java
+BuildRequires(pre): maven-local
+BuildRequires: /proc java-devel
+BuildRequires: mvn(com.ibm.icu:icu4j)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(org.antlr:antlr4-runtime)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-commons)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
+
 AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with     jp_minimal
-
-Summary:        High-performance, full-featured text search engine
-Name:           lucene
-Version:        8.8.2
-Release:        alt1_1jpp11
-Epoch:          0
-License:        ASL 2.0
-URL:            http://lucene.apache.org/
-# solr source contains both lucene and dev-tools
-Source0:        https://archive.apache.org/dist/lucene/solr/%{version}/solr-%{version}-src.tgz
-
-Patch0:         0001-Disable-ivy-settings.patch
-Patch1:         0002-Dependency-generation.patch
-
-BuildRequires:  ant
-BuildRequires:  ivy-local
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.ibm.icu:icu4j)
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-%if %{without jp_minimal}
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.antlr:antlr4-runtime)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-continuation)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-http)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-io)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
-BuildRequires:  mvn(xerces:xercesImpl)
-%endif
-
-Provides:       %{name}-core = %{epoch}:%{version}-%{release}
-
-# Obsolete since F32
-# Required deps were removed from fedora
-Obsoletes: %{name}-benchmark < 8.1.1-3
-Obsoletes: %{name}-demo < 8.1.1-3
-Obsoletes: %{name}-facet < 8.1.1-3
-Obsoletes: %{name}-replicator < 8.1.1-3
-Obsoletes: %{name}-spatial-extras < 8.1.1-3
-Obsoletes: %{name}-spatial3d < 8.1.1-3
-Obsoletes: %{name}-test-framework < 8.4.1-4
-
-# Obsolete since F32
-# Module was removed upstream
-Obsoletes: %{name}-spatial < 8.1.1-3
-
-%if %{with jp_minimal}
-# Remove left-over packages that would have broken deps when built in minimal mode
-Obsoletes: %{name}-parent < %{version}-%{release}
-Obsoletes: %{name}-solr-grandparent < %{version}-%{release}
-Obsoletes: %{name}-expressions < %{version}-%{release}
-Obsoletes: %{name}-analyzers-phonetic < %{version}-%{release}
-Obsoletes: %{name}-analyzers-icu < %{version}-%{release}
-Obsoletes: %{name}-analyzers-nori < %{version}-%{release}
-Obsoletes: %{name}-analyzers-kuromoji < %{version}-%{release}
-Obsoletes: %{name}-analyzers-stempel < %{version}-%{release}
-%endif
-
-BuildArch:      noarch
-Source44: import.info
 
 %description
 Apache Lucene is a high-performance, full-featured text search
@@ -90,341 +63,271 @@ engine library written entirely in Java. It is a technology suitable
 for nearly any application that requires full-text search, especially
 cross-platform.
 
-%package analysis
+%package analysis-common
+Summary: Lucene module: analysis-common
 Group: Development/Java
-Summary:      Lucene Common Analyzers
-# Obsoletes since F30
-# This module was removed upstream and no replacement exists
-Obsoletes: %{name}-analyzers-uima < 8.1.1-3
-# Obsolete since F32
-# Required deps were removed from fedora
-Obsoletes: %{name}-analyzers-morfologik < 8.1.1-3
+Obsoletes: %{name}-analysis < %EVR
+Provides: %{name}-analysis = %EVR
 
-%description analysis
-Lucene Common Analyzers.
+%description analysis-common
+%{summary}.
 
-%package analyzers-smartcn
+%package analysis-icu
+Summary: Lucene module: analysis-icu
 Group: Development/Java
-Summary:      Smart Chinese Analyzer
+Obsoletes: %{name}-analyzers-icu < %EVR
+Provides: %{name}-analyzers-icu = %EVR
 
-%description analyzers-smartcn
-Lucene Smart Chinese Analyzer.
+%description analysis-icu
+%{summary}.
 
-%package grouping
+%package analysis-kuromoji
+Summary: Lucene module: analysis-kuromoji
 Group: Development/Java
-Summary:      Lucene Grouping Module
+Obsoletes: %{name}-analyzers-kuromoji < %EVR
+Provides: %{name}-analyzers-kuromoji = %EVR
 
-%description grouping
-Lucene Grouping Module.
+%description analysis-kuromoji
+%{summary}.
 
-%package highlighter
+%package analysis-nori
+Summary: Lucene module: analysis-nori
 Group: Development/Java
-Summary:      Lucene Highlighter Module
+Obsoletes: %{name}-analyzers-nori < %EVR
+Provides: %{name}-analyzers-nori = %EVR
 
-%description highlighter
-Lucene Highlighter Module.
+%description analysis-nori
+%{summary}.
 
-%package join
+%package analysis-phonetic
+Summary: Lucene module: analysis-phonetic
 Group: Development/Java
-Summary:      Lucene Join Module
+Obsoletes: %{name}-analyzers-phonetic < %EVR
+Provides: %{name}-analyzers-phonetic = %EVR
 
-%description join
-Lucene Join Module.
+%description analysis-phonetic
+%{summary}.
 
-%package memory
+%package analysis-smartcn
+Summary: Lucene module: analysis-smartcn
 Group: Development/Java
-Summary:      Lucene Memory Module
+Obsoletes: %{name}-analyzers-smartcn < %EVR
+Provides: %{name}-analyzers-smartcn = %EVR
 
-%description memory
-High-performance single-document index to compare against Query.
+%description analysis-smartcn
+%{summary}.
 
-%package misc
+%package analysis-stempel
+Summary: Lucene module: analysis-stempel
 Group: Development/Java
-Summary:      Miscellaneous Lucene extensions
+Obsoletes: %{name}-analyzers-stempel < %EVR
+Provides: %{name}-analyzers-stempel = %EVR
 
-%description misc
-Miscellaneous Lucene extensions.
-
-%package queries
-Group: Development/Java
-Summary:      Lucene Queries Module
-
-%description queries
-Lucene Queries Module.
-
-%package queryparser
-Group: Development/Java
-Summary:      Lucene QueryParsers Module
-
-%description queryparser
-Lucene QueryParsers Module.
-
-%package sandbox
-Group: Development/Java
-Summary:      Lucene Sandbox Module
-
-%description sandbox
-Lucene Sandbox Module.
+%description analysis-stempel
+%{summary}.
 
 %package backward-codecs
+Summary: Lucene module: backward-codecs
 Group: Development/Java
-Summary:      Lucene Backward Codecs Module
 
 %description backward-codecs
-Codecs for older versions of Lucene.
-
-%package codecs
-Group: Development/Java
-Summary:      Codecs and postings formats for Apache Lucene
-
-%description codecs
-Codecs and postings formats for Apache Lucene.
+%{summary}.
 
 %package classification
+Summary: Lucene module: classification
 Group: Development/Java
-Summary:      Lucene Classification Module
 
 %description classification
-Lucene Classification Module.
+%{summary}.
 
-%package suggest
+%package codecs
+Summary: Lucene module: codecs
 Group: Development/Java
-Summary:      Lucene Suggest Module
 
-%description suggest
-Lucene Suggest Module.
+%description codecs
+%{summary}.
 
-%package monitor
+%package core
+Summary: Lucene module: core
 Group: Development/Java
-Summary:      Lucene Monitor Module
+Provides: lucene = %EVR
+Obsoletes: lucene < %EVR
 
-%description monitor
-Lucene Monitor Module.
-
-%if %{without jp_minimal}
-%package parent
-Group: Development/Java
-Summary:      Parent POM for Lucene
-
-%description parent
-Parent POM for Lucene.
-
-%package solr-grandparent
-Group: Development/Java
-Summary:      Lucene Solr grandparent POM
-
-%description solr-grandparent
-Lucene Solr grandparent POM.
+%description core
+%{summary}.
 
 %package expressions
+Summary: Lucene module: expressions
 Group: Development/Java
-Summary:      Lucene Expressions Module
 
 %description expressions
-Dynamically computed values to sort/facet/search on based on a pluggable
-grammar.
+%{summary}.
 
-%package analyzers-phonetic
+%package facet
+Summary: Lucene module: facet
 Group: Development/Java
-Summary:      Lucene Phonetic Filters
 
-%description analyzers-phonetic
-Provides phonetic encoding via Commons Codec.
+%description facet
+%{summary}.
 
-%package analyzers-icu
+%package grouping
+Summary: Lucene module: grouping
 Group: Development/Java
-Summary:      Lucene ICU Analysis Components
 
-%description analyzers-icu
-Provides integration with ICU (International Components for Unicode) for
-stronger Unicode and internationalization support.
+%description grouping
+%{summary}.
 
-%package analyzers-nori
+%package highlighter
+Summary: Lucene module: highlighter
 Group: Development/Java
-Summary:      An analyzer with morphological analysis for Korean
 
-%description analyzers-nori
-An analyzer with morphological analysis for Korean.
+%description highlighter
+%{summary}.
 
-%package analyzers-kuromoji
+%package join
+Summary: Lucene module: join
 Group: Development/Java
-Summary:      Lucene Kuromoji Japanese Morphological Analyzer
 
-%description analyzers-kuromoji
-Lucene Kuromoji Japanese Morphological Analyzer.
+%description join
+%{summary}.
 
-%package analyzers-stempel
+%package memory
+Summary: Lucene module: memory
 Group: Development/Java
-Summary:      Lucene Stempel Analyzer
 
-%description analyzers-stempel
-Lucene Stempel Analyzer.
+%description memory
+%{summary}.
 
-%endif
-
-%package javadoc
+%package misc
+Summary: Lucene module: misc
 Group: Development/Java
-Summary:        Javadoc for Lucene
-BuildArch: noarch
 
-%description javadoc
+%description misc
+%{summary}.
+
+%package monitor
+Summary: Lucene module: monitor
+Group: Development/Java
+
+%description monitor
+%{summary}.
+
+%package queries
+Summary: Lucene module: queries
+Group: Development/Java
+
+%description queries
+%{summary}.
+
+%package queryparser
+Summary: Lucene module: queryparser
+Group: Development/Java
+
+%description queryparser
+%{summary}.
+
+%package sandbox
+Summary: Lucene module: sandbox
+Group: Development/Java
+
+%description sandbox
+%{summary}.
+
+%package spatial3d
+Summary: Lucene module: spatial3d
+Group: Development/Java
+
+%description spatial3d
+%{summary}.
+
+%package suggest
+Summary: Lucene module: suggest
+Group: Development/Java
+
+%description suggest
 %{summary}.
 
 %prep
-%setup -q -n solr-%{version}
+%setup
+find -mindepth 1 -maxdepth 1 ! -name lucene ! -name LICENSE.txt ! -name NOTICE.txt ! -name README.md -exec rm -rf {} +
+mv -t . lucene/*
+rmdir lucene
 
-%patch0 -p1
-%patch1 -p1
-
-rm -rf solr
-
-find -name "*.jar" -delete
-
-mkdir -p lucene/build/analysis/{kuromoji,nori}
-
-# don't generate uses clauses in osgi metadata
-sed -i -e "/<Export-Package>/a<_nouses>true</_nouses>" dev-tools/maven/pom.xml.template
-
-# optional on internal APIs that might not be present
-sed -i -e "/<Export-Package>/a<Import-Package>com.sun.management;resolution:=\"optional\",sun.misc;resolution:=\"optional\",*</Import-Package>" dev-tools/maven/pom.xml.template
-
-# compatibility with existing packages
-%mvn_alias :%{name}-analyzers-common :%{name}-analyzers
-
-%mvn_package ":%{name}-analysis-modules-aggregator" %{name}-analysis
-%mvn_package ":%{name}-analyzers-common" %{name}-analysis
-%mvn_package ":{*}-aggregator" @1
-
-%build
-pushd %{name}
-find -maxdepth 2 -type d -exec mkdir -p '{}/lib' \;
-
-# generate maven dependencies
-ant -f build.xml generate-maven-artifacts -Divy.mode=local -Dversion=%{version} -Divy.available=true
-
-# fix source dir + move to expected place
-for pom in `find build/poms/%{name} -name pom.xml`; do
-    sed 's/\${module-path}/${basedir}/g' "$pom" > "${pom##build/poms/%{name}/}"
+cp %SOURCE1 pom.xml
+for source in $(ls -1 %_sourcedir/lucene-*.pom | grep -v 'lucene-analysis-.*\.pom'); do
+  module=${source##*/lucene-}
+  module=${module%%%%-%{version}.pom}
+  cp ${source} ${module}/pom.xml
+  %pom_add_parent org.fedoraproject.xmvn.lucene:aggregator:any ${module}
+  %pom_xpath_set -f "pom:dependency[pom:scope='runtime']/pom:scope" "compile" ${module}
 done
-%pom_disable_module src/test core
-%pom_disable_module src/test codecs
 
+pushd analysis
+cp %SOURCE2 pom.xml
+%pom_add_parent org.fedoraproject.xmvn.lucene:aggregator:any
+
+for source in %_sourcedir/lucene-analysis-*.pom; do
+  module=${source##*/lucene-analysis-}
+  module=${module%%%%-%{version}.pom}
+  cp ${source} ${module}/pom.xml
+  %pom_add_parent org.fedoraproject.xmvn.lucene:aggregator-analysis:any ${module}
+done
 popd
 
-mv lucene/build/poms/pom.xml .
-
-# deal with split packages in core/misc/analysis modules by adding additional metadata and
-# require-bundling the core bundle from misc
-%pom_xpath_set "pom:Export-Package" "*;version=\"%{version}\""
-%pom_add_plugin org.apache.felix:maven-bundle-plugin lucene/misc \
-"<configuration><instructions>
-<Require-Bundle>org.apache.lucene.core;bundle-version=\"%{version}\"</Require-Bundle>
-<Export-Package>
- org.apache.lucene.document;version=\"%{version}\";misc=split;mandatory:=misc,
- org.apache.lucene.index;version=\"%{version}\";misc=split;mandatory:=misc,
- org.apache.lucene.search;version=\"%{version}\";misc=split;mandatory:=misc,
- org.apache.lucene.store;version=\"%{version}\";misc=split;mandatory:=misc,
- org.apache.lucene.util.fst;version=\"%{version}\";misc=split;mandatory:=misc,
- *;version=\"%{version}\"</Export-Package>
-</instructions></configuration>"
-%pom_add_plugin org.apache.felix:maven-bundle-plugin lucene/analysis/common \
-"<configuration><instructions>
-<Require-Bundle>org.apache.lucene.core;bundle-version=\"%{version}\"</Require-Bundle>
-<Export-Package>
- org.apache.lucene.analysis.standard;version=\"%{version}\";analysis=split;mandatory:=analysis,
- *;version=\"%{version}\"</Export-Package>
-</instructions></configuration>"
-
-%pom_disable_module solr
-%pom_remove_plugin -r :gmaven-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
-%pom_remove_plugin -r :forbiddenapis
-%pom_remove_plugin -r :buildnumber-maven-plugin
-
-# don't build modules for which deps are not in fedora or not new enough in fedora
-pushd lucene
 %pom_disable_module benchmark
 %pom_disable_module demo
-%pom_disable_module test-framework
-%pom_disable_module facet
+%pom_disable_module luke
 %pom_disable_module replicator
-%pom_disable_module spatial-extras
-%pom_disable_module spatial3d
+%pom_disable_module test-framework
 
-%pom_disable_module opennlp analysis
 %pom_disable_module morfologik analysis
-popd
+%pom_disable_module opennlp analysis
 
-%if %{with jp_minimal}
-pushd lucene
-%pom_disable_module expressions
-%pom_disable_module icu analysis
-%pom_disable_module kuromoji analysis
-%pom_disable_module phonetic analysis
-%pom_disable_module stempel analysis
-%pom_disable_module nori analysis
-popd
+%mvn_package :aggregator __noinstall
+%mvn_package :aggregator-analysis __noinstall
 
-%mvn_package :lucene-parent __noinstall
-%mvn_package :lucene-solr-grandparent __noinstall
-%endif
-
-# Use compiler release flag when building on JDK >8 for correct cross-compiling
-%pom_xpath_inject pom:profiles "
-    <profile>
-      <id>jdk-release-flag</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <properties>
-        <maven.compiler.release>\${java.compat.version}</maven.compiler.release>
-      </properties>
-    </profile>"
-
-# For some reason TestHtmlParser.testTurkish fails when building inside SCLs
-%mvn_build -s -f -- -Dcheckoutid=%{version}
+%build
+%mvn_build -s -f -j
 
 %install
 %mvn_install
 
-# Use the same directory of the main package for subpackage licence and docs
-%global _docdir_fmt %{name}
+%files analysis-common -f .mfiles-lucene-analysis-common
+%files analysis-icu -f .mfiles-lucene-analysis-icu
+%files analysis-kuromoji -f .mfiles-lucene-analysis-kuromoji
+%files analysis-nori -f .mfiles-lucene-analysis-nori
+%files analysis-phonetic -f .mfiles-lucene-analysis-phonetic
+%files analysis-smartcn -f .mfiles-lucene-analysis-smartcn
+%files analysis-stempel -f .mfiles-lucene-analysis-stempel
+%files backward-codecs -f .mfiles-lucene-backward-codecs
+%files classification -f .mfiles-lucene-classification
+%files codecs -f .mfiles-lucene-codecs
 
-%files -f .mfiles-%{name}-core
-%doc lucene/CHANGES.txt lucene/README.txt
-%doc lucene/MIGRATE.txt lucene/JRE_VERSION_MIGRATION.txt
-%doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
+# core is a common dependency of all other modules
+%files core -f .mfiles-lucene-core
+%doc LICENSE.txt NOTICE.txt README.md
 
-%files analysis -f .mfiles-%{name}-analysis
-%files analyzers-smartcn -f .mfiles-%{name}-analyzers-smartcn
-%files grouping -f .mfiles-%{name}-grouping
-%files highlighter -f .mfiles-%{name}-highlighter
-%files join -f .mfiles-%{name}-join
-%files memory -f .mfiles-%{name}-memory
-%files misc -f .mfiles-%{name}-misc
-%files queries -f .mfiles-%{name}-queries
-%files queryparser -f .mfiles-%{name}-queryparser
-%files sandbox -f .mfiles-%{name}-sandbox
-%files backward-codecs -f .mfiles-%{name}-backward-codecs
-%files codecs -f .mfiles-%{name}-codecs
-%files classification -f .mfiles-%{name}-classification
-%files suggest -f .mfiles-%{name}-suggest
-%files monitor -f .mfiles-%{name}-monitor
-%if %{without jp_minimal}
-%files parent -f .mfiles-%{name}-parent
-%files solr-grandparent -f .mfiles-%{name}-solr-grandparent
-%files expressions -f .mfiles-%{name}-expressions
-%files analyzers-phonetic -f .mfiles-%{name}-analyzers-phonetic
-%files analyzers-icu -f .mfiles-%{name}-analyzers-icu
-%files analyzers-nori -f .mfiles-%{name}-analyzers-nori
-%files analyzers-kuromoji -f .mfiles-%{name}-analyzers-kuromoji
-%files analyzers-stempel -f .mfiles-%{name}-analyzers-stempel
-%endif
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference lucene/LICENSE.txt lucene/NOTICE.txt
+%files expressions -f .mfiles-lucene-expressions
+%files facet -f .mfiles-lucene-facet
+%files grouping -f .mfiles-lucene-grouping
+%files highlighter -f .mfiles-lucene-highlighter
+%files join -f .mfiles-lucene-join
+%files memory -f .mfiles-lucene-memory
+%files misc -f .mfiles-lucene-misc
+%files monitor -f .mfiles-lucene-monitor
+%files queries -f .mfiles-lucene-queries
+%files queryparser -f .mfiles-lucene-queryparser
+%files sandbox -f .mfiles-lucene-sandbox
+%files spatial3d -f .mfiles-lucene-spatial3d
+%files suggest -f .mfiles-lucene-suggest
 
 %changelog
+* Mon Mar 30 2026 Andrey Cherepanov <cas@altlinux.org> 10.4.0-alt1
+- New version (fixes: CVE-2024-43383, CVE-2024-45772).
+
+* Sat Jul 19 2025 Andrey Cherepanov <cas@altlinux.org> 10.2.2-alt1
+- New version
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:8.8.2-alt1_1jpp11
 - new version
 
