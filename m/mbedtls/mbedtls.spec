@@ -1,12 +1,15 @@
-%define so_tls_version 22
-%define so_crypto_version 17
-%define so_x509_version 8
-%define so_tfpsacrypto_version 1
-%define tf_psa_crypto_version 1.0.0
+%define so_tls_version 23
+%define so_crypto_version 18
+%define so_x509_version 9
+%define so_tfpsacrypto_version 2
+
+%define mbedtls_version 4.1.0
+%define tf_psa_crypto_version 1.1.0
+
 %def_disable static
 
 Name: mbedtls
-Version: 4.0.0
+Version: %mbedtls_version
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -38,6 +41,7 @@ applications with as little hassle as possible.
 %package -n lib%name%so_tls_version
 Summary: Transport Layer Security protocol suite
 Group: System/Libraries
+Version: %mbedtls_version
 Conflicts: hiawatha
 
 %description -n lib%name%so_tls_version
@@ -49,6 +53,7 @@ applications with as little hassle as possible.
 %package -n libmbedcrypto%so_crypto_version
 Summary: Cryptographic base library for mbedtls
 Group: System/Libraries
+Version: %mbedtls_version
 
 %description -n libmbedcrypto%so_crypto_version
 This subpackage of mbedtls contains a library that exposes
@@ -58,6 +63,7 @@ AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 %package -n libmbedx509-%so_x509_version
 Summary: Library to work with X.509 certificates
 Group: System/Libraries
+Version: %mbedtls_version
 Conflicts: hiawatha < 10.10
 
 %description -n libmbedx509-%so_x509_version
@@ -68,6 +74,7 @@ and read Certificate Revocation Lists.
 %package -n libtfpsacrypto%so_tfpsacrypto_version
 Summary: PSA Cryptographic library for mbedtls
 Group: System/Libraries
+Version: %tf_psa_crypto_version
 
 %description -n libtfpsacrypto%so_tfpsacrypto_version
 This subpackage of mbedtls contains a library that exposes
@@ -77,25 +84,48 @@ AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 %package -n lib%name-devel
 Summary: Development files for mbed TLS
 Group: Development/C
+Version: %mbedtls_version
 Conflicts: hiawatha
 
 %description -n lib%name-devel
 Contains libraries and header files for
 developing applications that use mbed TLS
 
+%package -n libtfpsacrypto-devel
+Summary: Development files for TF PSA Crypto
+Group: Development/C
+Version: %tf_psa_crypto_version
+Conflicts: hiawatha
+
+%description -n libtfpsacrypto-devel
+Contains libraries and header files for
+developing applications that use TF PSA Crypto
+
+
 %if_enabled static
 %package -n lib%name-devel-static
 Summary: Static libraries for mbed TLS
 Group: Development/C
+Version: %mbedtls_version
 
 %description -n lib%name-devel-static
 Static libraries for developing applications
 that use mbed TLS
+
+%package -n libtfpsacrypto-devel-static
+Summary: Static libraries for TF PSA Crypto
+Group: Development/C
+Version: %tf_psa_crypto_version
+
+%description -n libtfpsacrypto-devel-static
+Static libraries for developing applications
+that use TF PSA Crypto
 %endif
 
 %package utils
 Summary: Utilities for PolarSSL
 Group: Development/Tools
+Version: %mbedtls_version
 
 %description utils
 Cryptographic utilities based on mbed TLS
@@ -153,19 +183,22 @@ rm -rf %buildroot%_bindir
 %_libdir/libtfpsacrypto.so.%tf_psa_crypto_version
 
 %files -n lib%name-devel
-%doc ChangeLog LICENSE README.md
+%doc BRANCHES.md BUGS.md CONTRIBUTING.md ChangeLog LICENSE README.md SECURITY.md SUPPORT.md
 %_includedir/%name
 %_includedir/psa
-%_includedir/tf-psa-crypto
 %_libdir/libmbedcrypto.so
 %_libdir/lib%name.so
 %_libdir/libmbedx509.so
-%_libdir/libtfpsacrypto.so
 %_libdir/cmake/MbedTLS
-%_libdir/cmake/TF-PSA-Crypto
 %_pkgconfigdir/mbedcrypto.pc
 %_pkgconfigdir/mbedtls.pc
 %_pkgconfigdir/mbedx509.pc
+
+%files -n libtfpsacrypto-devel
+%doc tf-psa-crypto/BRANCHES.md tf-psa-crypto/BUGS.md tf-psa-crypto/ChangeLog tf-psa-crypto/LICENSE tf-psa-crypto/README.md tf-psa-crypto/SECURITY.md tf-psa-crypto/SUPPORT.md
+%_includedir/tf-psa-crypto
+%_libdir/libtfpsacrypto.so
+%_libdir/cmake/TF-PSA-Crypto
 %_pkgconfigdir/tfpsacrypto.pc
 
 %if_enabled static
@@ -173,6 +206,8 @@ rm -rf %buildroot%_bindir
 %_libdir/libmbedcrypto.a
 %_libdir/lib%name.a
 %_libdir/libmbedx509.a
+
+%files -n libtfpsacrypto-devel-static
 %_libdir/libtfpsacrypto.a
 %endif
 
@@ -181,6 +216,10 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Tue Mar 31 2026 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1
+- Update mbedTLS to 4.1.0
+- Update TF PSA Crypto to 1.1.0
+
 * Wed Oct 15 2025 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1
 - New version 4.0.0.
 
