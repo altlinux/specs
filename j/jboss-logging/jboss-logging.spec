@@ -1,49 +1,51 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jboss-logging
+Version: 3.6.3
+Release: alt1
+
+Summary: The JBoss Logging Framework
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 3.4.1
-%global namedreltag .Final
-%global namedversion %{version}%{?namedreltag}
+Url: http://community.jboss.org
+Vcs: https://github.com/jboss-logging/jboss-logging.git
+BuildArch: noarch
 
-Name:             jboss-logging
-Version:          3.4.1
-Release:          alt1_9jpp11
-Summary:          The JBoss Logging Framework
-License:          ASL 2.0
+Source0: %name-%version.tar
 
-URL:              https://github.com/jboss-logging/jboss-logging
-Source0:          %{url}/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
-Patch1:           0001-Drop-log4j-dependency.patch
-Patch2:           0001-Drop-jboss-logmanager-dependency.patch
-
-BuildArch:        noarch
-
-BuildRequires:    maven-local
-BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
-BuildRequires:    mvn(org.slf4j:slf4j-api)
-Source44: import.info
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: jpackage-17-compat
+BuildRequires: maven-local
+BuildRequires: maven-plugin-bundle
+BuildRequires: jboss-parent
+BuildRequires: slf4j
+BuildRequires: dmlloyd-module-info
+BuildRequires: log4j
+BuildRequires: logback-classic
+BuildRequires: jboss-logmanager
 
 %description
 This package contains the JBoss Logging Framework.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch1 -p1
-%patch2 -p1
+%setup
 
-
-# Unneeded task
 %pom_remove_plugin :maven-source-plugin
-
-cp -p src/main/resources/META-INF/LICENSE.txt .
-sed -i 's/\r//' LICENSE.txt
+%pom_remove_plugin :formatter-maven-plugin
+%pom_remove_plugin :impsort-maven-plugin
+# Log4j in sisyphus is Log4j 2.x with 1.x compat bridge, not real Log4j 1.x.
+# Log4jProviderTestCase and Log4jClassPathTestCase rely on Log4j 1.x-specific
+# behavior (AppenderSkeleton event levels, NDC stacking, provider auto-detection)
+# that the bridge does not replicate correctly.
+%pom_xpath_inject \
+  "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:executions/pom:execution[pom:id='default']/pom:configuration/pom:excludes" \
+  "<exclude>**/Log4jProviderTestCase.java</exclude>"
+%pom_xpath_remove \
+  "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:executions/pom:execution[pom:id='log4j-cp-test']"
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -j
 
 %install
 %mvn_install
@@ -52,6 +54,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Mar 27 2026 Ivan Khanas <xeno@altlinux.org> 3.6.3-alt1
+- New version.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt1_9jpp11
 - update
 

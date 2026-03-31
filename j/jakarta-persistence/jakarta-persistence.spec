@@ -1,56 +1,42 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jakarta-persistence
+Version: 3.2.0
+Release: alt1
+
+Summary: Jakarta Persistence API
+License: EPL-2.0 OR BSD-3-Clause
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global srcname jpa-api
-%global specver 2.2
-
-Name:           jakarta-persistence
-Version:        2.2.3
-Release:        alt1_2jpp11
-Summary:        JPA / Jakarta Persistence API
-License:        EPL-2.0 or BSD
-
-%global src_ver %{specver}-%{version}-RELEASE
-
-URL:            https://github.com/eclipse-ee4j/jpa-api
-Source0:        %{url}/archive/%{src_ver}/%{srcname}-%{version}.tar.gz
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       geronimo-jpa = %{version}-%{release}
-Obsoletes:      geronimo-jpa < 1.1.1-28
-Source44: import.info
-
-%description
-Jakarta Persistence defines a standard for management of persistence
-and object/relational mapping in Java environments.
-
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       geronimo-jpa-javadoc = %{version}-%{release}
-Obsoletes:      geronimo-jpa-javadoc < 1.1.1-28
+Url: https://github.com/jakartaee/persistence
+Vcs: https://github.com/jakartaee/persistence.git
 BuildArch: noarch
 
-%description javadoc
-This package contains the API documentation for %{name}.
+Source0: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: maven-local
+BuildRequires: jpackage-default
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-plugin-build-helper
+BuildRequires: spec-version-maven-plugin
+
+# package renamed in fedora 33, remove in fedora 35
+Provides: geronimo-jpa = %EVR
+Obsoletes: geronimo-jpa < 1.1.1-28
+
+%description
+Jakarta Persistence defines a standard for management of persistence and
+object/relational mapping in Java environments.
 
 %prep
-%setup -q -n %{srcname}-%{src_ver}
+%setup
 
 pushd api
+# lower bytecode target for ALT build
+sed -i 's|<maven.compiler.release>[0-9][0-9]*</maven.compiler.release>|<maven.compiler.release>11</maven.compiler.release>|' pom.xml
+
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
@@ -62,28 +48,22 @@ pushd api
 %mvn_alias jakarta.persistence:jakarta.persistence-api javax.persistence:persistence-api
 popd
 
-
 %build
 pushd api
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -j
 popd
-
 
 %install
 pushd api
 %mvn_install
 popd
 
-
 %files -f api/.mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
-%doc README.md
-
-%files javadoc -f api/.mfiles-javadoc
-%doc --no-dereference LICENSE.md NOTICE.md
-
+%doc --no-dereference LICENSE.md NOTICE.md README.md
 
 %changelog
+* Tue Mar 31 2026 Ivan Khanas <xeno@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 2.2.3-alt1_2jpp11
 - new version
-

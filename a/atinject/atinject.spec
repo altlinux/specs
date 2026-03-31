@@ -1,36 +1,27 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+
+Name: atinject
+Version: 2.0.1
+Release: alt1
+
+Summary: Dependency injection specification for Java (JSR-330)
+License: Apache-2.0
 Group: Development/Java
-AutoReq: yes,noosgi
+Url: https://github.com/eclipse-ee4j/injection-api
+BuildArch: noarch
+
+Source0: atinject-%version.tar
+Patch0: atinject-%version-alt-patch.patch
+Source1: injection-api-1.0.5.tar.gz
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           atinject
-Version:        1.0.5
-Release:        alt2
-Summary:        Dependency injection specification for Java (JSR-330)
-License:        ASL 2.0
-URL:            https://github.com/eclipse-ee4j/injection-api
-BuildArch:      noarch
-
-Source0:        https://github.com/eclipse-ee4j/injection-api/archive/%{version}.tar.gz
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-%endif
-Source44: import.info
+BuildRequires: maven-plugin-bundle
 
 %description
 This package specifies a means for obtaining objects in such a way as
@@ -42,25 +33,29 @@ beneficial to most nontrivial applications.
 %{?javadoc_package}
 
 %prep
-%setup -q -n injection-api-%{version}
+%setup -a1
+%autopatch -p1
 
 %pom_remove_parent
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :moditect-maven-plugin
 
-%mvn_alias : javax.inject:javax.inject
+%mvn_alias : javax.inject:javax.inject jakarta.inject:jakarta.inject-api:1.0.5
+
 %mvn_file : atinject jakarta.inject-api
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
-%files -n %{?module_prefix}%{name} -f .mfiles
+%files -n %name -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.md
 
 %changelog
+* Tue Mar 24 2026 Ivan Khanas <xeno@altlinux.org> 2.0.1-alt1
+- Upgrade to 2.0.1 with dual javax.inject + jakarta.inject support.
+
 * Tue Oct 21 2025 Ivan Khanas <xeno@altlinux.org> 0:1.0.5-alt2
 - Create jakarta.inject-api symlink.
 
