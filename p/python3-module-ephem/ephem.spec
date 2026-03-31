@@ -1,10 +1,6 @@
-%define pypi_name ephem
-
-%def_with check
-
-Name: python3-module-%pypi_name
+Name: python3-module-ephem
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: Compute positions of the planets and stars
 License: MIT
@@ -12,15 +8,16 @@ Group: Development/Python
 URL: https://pypi.org/project/ephem
 VCS: https://github.com/brandon-rhodes/pyephem
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-%if_with check
-BuildRequires: python3(pytest)
-%endif
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 PyEphem provides an ephem Python package for performing high-precision
@@ -33,8 +30,8 @@ position of a planet, asteroid, or comet for a series of dates.
 
 %prep
 %setup
-# remove shebangs in test files
-sed -i '1{/env python/d}' ephem/tests/test_*.py
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -43,16 +40,17 @@ sed -i '1{/env python/d}' ephem/tests/test_*.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest %buildroot%python3_sitelibdir/%pypi_name/tests -k 'not JPLTest'
+mv ephem t
+%pyproject_run_pytest --ignore=t/tests/test_jpl.py t/tests
 
 %files
-%doc *.rst ephem/doc/*.rst issues
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%version.dist-info
-%exclude %python3_sitelibdir/%pypi_name/doc
-%exclude %python3_sitelibdir/%pypi_name/tests
+%python3_sitelibdir/ephem
+%python3_sitelibdir/ephem-%version.dist-info
 
 %changelog
+* Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.1-alt2
+- switch to pyproject packaging style
+
 * Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
 - Automatically updated to 4.2.1.
 
