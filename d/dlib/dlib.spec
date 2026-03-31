@@ -1,8 +1,8 @@
 %define repo dlib
 
 Name: dlib
-Version: 20.0.0
-Release: alt4
+Version: 20.0.1
+Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -102,6 +102,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Tue Mar 31 2026 Leontiy Volodin <lvol@altlinux.org> 20.0.1-alt1
+- New version 20.0.1.
+
 * Fri Jan 16 2026 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt4
 - Fixed build with libpng-devel 1.6.54-alt1.
 
