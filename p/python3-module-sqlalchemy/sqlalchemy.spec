@@ -1,4 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name sqlalchemy
+%define mod_name %pypi_name
 
 # %%python3_set_limited_api not supported yet
 
@@ -6,35 +8,34 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.48
-Release: alt2
+Release: alt3
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
-Group: Development/Python3
+Group: Development/Python
 Url: https://pypi.org/project/sqlalchemy
 Vcs: https://github.com/sqlalchemy/sqlalchemy
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 %py3_provides SQLAlchemy
 Provides: python3-module-SQLAlchemy = %EVR
 Obsoletes: python3-module-SQLAlchemy
+# merged into main
+Provides: python3-module-sqlalchemy-tests = %EVR
+Obsoletes: python3-module-sqlalchemy-tests <= %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
 # in various tests, like in the tests for sphinx).
 Requires: python3-modules-sqlite3
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-cython
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-typing-extensions
-
-BuildRequires: python3-module-greenlet
+%pyproject_builddeps_metadata_extra asyncio
+%pyproject_builddeps_check
 %endif
-
-Requires: python3-module-greenlet
 
 %description
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -44,16 +45,13 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
-%package tests
-Summary: Tests for %pypi_name
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %pypi_name.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 # https://setuptools.pypa.io/en/latest/deprecated/commands.html#release-tagging-options
@@ -66,21 +64,12 @@ This package contains tests for %pypi_name.
 %pyproject_run_pytest -m "not memory_intensive and not mypy and not timing_intensive" test -n4
 
 %files
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/%pypi_name/testing
-%exclude %python3_sitelibdir/%pypi_name/dialects/*/provision.py
-
-%files tests
-%python3_sitelibdir/%pypi_name/testing
-%python3_sitelibdir/%pypi_name/dialects/*/provision.py
 
 %changelog
-* Mon Mar 30 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.48-alt2
-- Moved tests in separate subpackage (Closes: #58438).
-
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.48-alt1.1
-- Demodernized packaging.
+* Tue Mar 31 2026 Stanislav Levin <slev@altlinux.org> 2.0.48-alt3
+- Undone Python vandalism.
 
 * Tue Mar 03 2026 Stanislav Levin <slev@altlinux.org> 2.0.48-alt1
 - 2.0.47 -> 2.0.48.
