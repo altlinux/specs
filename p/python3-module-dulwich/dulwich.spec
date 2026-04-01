@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name dulwich
+%define module_name %pypi_name
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.7
+Version: 1.1.0
 Release: alt1
 
 Summary: Python Git Library
@@ -13,19 +14,24 @@ Group: Development/Python3
 Url: https://www.dulwich.io
 
 Vcs: https://github.com/dulwich/dulwich.git
-Source: https://pypi.io/packages/source/d/%pypi_name/%pypi_name-%version.tar.gz
-
-%py3_provides %pypi_name
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: python3(tox)
-BuildRequires: python3(urllib3)
-BuildRequires: python3(fastimport)}
-BuildRequires: python3(semantic_version)
-BuildRequires: python3-module-setuptools-rust rust rust-cargo
-#gpg.errors.GPGMEError: GPGME: Invalid crypto engine
-#BuildRequires: python3(gpg) /usr/bin/gpg
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-semantic_version
+BuildRequires: rust
+BuildRequires: rust-cargo
+BuildRequires: python3-module-setuptools-rust
+%if_with check
+BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-fastimport
+BuildRequires: python3-module-pytest
+BuildRequires: git
+BuildRequires: gnupg
+BuildRequires: gnupg2
+%endif
 
 %description
 Simple Python implementation of the Git file formats and protocols.
@@ -51,7 +57,7 @@ extensions are also available for better performance.
 This package contains tests for dulwich.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
 mkdir -p .cargo
@@ -79,21 +85,32 @@ done
 popd
 
 %check
-%tox_check
+# tests/compat/ requires network access (git daemon via TCP), unavailable
+#   in the isolated build environment (NO_INTERNET=YES).
+# tests/contrib/ fails due to error in dulwich/contrib/swift.py
+#   (NameError: ObjectFormat is not defined).
+# fuzzing/ requires 'atheris' (fuzzing framework), not available at build time.
+%pyproject_run_pytest --ignore=tests/compat --ignore=tests/contrib --ignore=fuzzing
 
 %files
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/contrib
-%doc AUTHORS COPYING NEWS docs/*.txt
-%doc docs/tutorial README* examples
+%_bindir/dulwich.py3
+%_bindir/dul-upload-pack.py3
+%_bindir/dul-receive-pack.py3
+%python3_sitelibdir/%module_name/
+%exclude %python3_sitelibdir/%module_name/tests
+%exclude %python3_sitelibdir/%module_name/contrib
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc COPYING NEWS docs/*.txt
+%doc docs/tutorial README.rst examples
 
 %files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/contrib
+%python3_sitelibdir/%module_name/tests
+%python3_sitelibdir/%module_name/contrib
 
 %changelog
+* Wed Apr 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.1.0-alt1
+- Updated to new version 1.1.0.
+
 * Wed Jan 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.22.7-alt1
 - NMU: 0.22.7 (Closes: #52703).
 
