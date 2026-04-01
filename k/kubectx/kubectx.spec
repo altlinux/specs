@@ -2,7 +2,7 @@
 %define import_path github.com/ahmetb/kubectx
 
 Name: kubectx
-Version: 0.9.5
+Version: 0.10.2
 Release: alt1
 
 Summary: Fast utilities to switch kubectl contexts and namespaces
@@ -58,6 +58,9 @@ export IGNORE_SOURCES=1
 %_bindir/kubens
 
 %changelog
+* Wed Mar 25 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.10.2-alt1
+- Updated to new version v0.10.2.
+
 * Mon Aug 18 2025 Maxim Tulskiy <tulskijms@altlinux.org> 0.9.5-alt1
 - Initial build for ALT Sisyphus.
 
