@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
-Release: alt1.1
+Version: 1.5.0
+Release: alt1
 
 Summary: python cffi bindings for the oniguruma regex engine
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/onigurumacffi/
+Url: https://pypi.org/project/onigurumacffi
 Vcs: https://github.com/asottile/onigurumacffi
 
 Source0: %name-%version.tar
@@ -50,6 +50,9 @@ python cffi bindings for the oniguruma regex engine
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 1.5.0-alt1
+- New version
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.1
 - Demodernized packaging.
 
