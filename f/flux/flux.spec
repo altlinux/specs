@@ -1,5 +1,5 @@
 Name: flux
-Version: 0.199.0
+Version: 0.200.0
 Release: alt1
 Summary: Influx data language
 Group: Development/Other
@@ -98,6 +98,9 @@ popd
 %_includedir/influxdata
 
 %changelog
+* Thu Apr 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.200.0-alt1
+- 0.199.0 -> 0.200.0
+
 * Sat Dec 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.199.0-alt1
 - 0.198.0 -> 0.199.0
 
