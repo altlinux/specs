@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.33
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,9 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Wed Apr 01 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt2
+- Update docs/modules/executor(-ru).md.
+
 * Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt1
 - Update .clang-format and CODESTYLE.md.
 - Bringing the code to the described style.
