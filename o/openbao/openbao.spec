@@ -2,8 +2,8 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.5.1
-Release: alt2
+Version: 2.5.2
+Release: alt1
 
 Summary: Secure secrets and encryption management system
 License: MPL-2.0
@@ -88,6 +88,9 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Wed Apr 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.2-alt1
+- Updated to new version v2.5.2.
+
 * Wed Mar 25 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt2
 - Fixed LDFLAGS to set correct version information (Closes: #58272).
 
