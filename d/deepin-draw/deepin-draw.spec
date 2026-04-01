@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-draw
-Version: 6.5.36
+Version: 6.5.38
 Release: alt1
 Epoch: 1
 
@@ -77,6 +77,9 @@ export CXX=g++
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
 
 %changelog
+* Wed Apr 01 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.38-alt1
+- New version 6.5.38.
+
 * Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.36-alt1
 - New version 6.5.36.
 - Updated license tag.
