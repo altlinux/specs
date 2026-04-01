@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hunt
-Version: 2.3.0
+Version: 3.0.0
 Release: alt1
 
 Summary: A highly-opinionated simplified Find command made with Rust
@@ -17,7 +17,6 @@ Conflicts: bsd-games
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust
 BuildRequires: rust-cargo
-BuildRequires: /proc
 
 %description
 %summary.
@@ -37,10 +36,13 @@ install -D %SOURCE2 .cargo/config.toml
 %rust_install
 
 %files
-%_bindir/%name
 %doc README.md LICENSE CHANGELOG.md
+%_bindir/%name
 
 %changelog
+* Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 3.0.0-alt1
+- New version
+
 * Tue Mar 26 2024 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt1
 - Update to 2.3.0
 
