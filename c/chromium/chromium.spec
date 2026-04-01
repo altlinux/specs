@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        146.0.7680.164
+Version:        146.0.7680.177
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -53,7 +53,7 @@ Source300:      rollup-linux-arm64-gnu-4.22.4.tgz
 # git clone --recurse-submodules https://github.com/deemru/chromium-gost.git
 #   git checkout -b version commit_id && git submodule update --recursive
 # cd ..; tar cvf chromium-gost.tar --exclude='.git*' chromium-gost
-Source300:      chromium-gost.tar
+Source400:      chromium-gost.tar
 Provides:       chromium-gost = %version
 Obsoletes:      chromium-gost < %version
 %endif
@@ -98,6 +98,7 @@ Patch020: 0020-ALT-swiftshader-fix-llvm.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-ALT-block-error-from-google.patch
 Patch023: 0023-Add-missing-headers.patch
+# Patch024:
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch027: 0027-DEBIAN-disable-tests-swiftshader.patch
@@ -110,6 +111,8 @@ Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
 Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
+# Support extension manifest v2
+Patch039: 0039-extensions-manifestv2_ifdef.patch
 
 Patch040: 0040-DEBIAN-foreach.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -146,7 +149,6 @@ Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
 Patch076: 0076-DEBIAN-fixes-bytemuck.patch
-
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -298,7 +300,7 @@ Chromium is an open-source browser project that aims to build a safer,
 faster, and more stable way for all Internet users to experience the web.
 
 %prep
-%setup -q -n chromium  %{?_enable_gost:-a300}
+%setup -q -n chromium  %{?_enable_gost:-a400}
 %autopatch -p1
 %if_enabled gost
 # Patches from chromium-gost
@@ -681,6 +683,10 @@ EOF
 	done
 )
 
+%if_enabled gost
+# Package popular extensions
+cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
+%endif
 
 %files
 %doc AUTHORS LICENSE
@@ -700,6 +706,32 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.177-alt1
+- New version (146.0.7680.177).
+- Revert extensions manifest v2 support.
+- Fixes:
+  + CVE-2026-5273: Use after free in CSS
+  + CVE-2026-5272: Heap buffer overflow in GPU
+  + CVE-2026-5274: Integer overflow in Codecs
+  + CVE-2026-5275: Heap buffer overflow in ANGLE
+  + CVE-2026-5276: Insufficient policy enforcement in WebUSB
+  + CVE-2026-5277: Integer overflow in ANGLE
+  + CVE-2026-5278: Use after free in Web MIDI
+  + CVE-2026-5279: Object corruption in V8
+  + CVE-2026-5280: Use after free in WebCodecs
+  + CVE-2026-5281: Use after free in Dawn
+  + CVE-2026-5282: Out of bounds read in WebCodecs
+  + CVE-2026-5283: Inappropriate implementation in ANGLE
+  + CVE-2026-5284: Use after free in Dawn
+  + CVE-2026-5285: Use after free in WebGL
+  + CVE-2026-5286: Use after free in Dawn
+  + CVE-2026-5287: Use after free in PDF
+  + CVE-2026-5288: Use after free in WebView
+  + CVE-2026-5289: Use after free in Navigation
+  + CVE-2026-5290: Use after free in Compositing
+  + CVE-2026-5291: Inappropriate implementation in WebGL
+  + CVE-2026-5292: Out of bounds read in WebCodecs
+
 * Tue Mar 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.164-alt1
 - New version (146.0.7680.164).
 - Fixes:
