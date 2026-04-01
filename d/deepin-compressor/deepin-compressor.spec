@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.22
-Release: alt2
+Version: 6.5.23
+Release: alt1
 Epoch: 1
 
 Summary: Archive Manager for Deepin Desktop Environment
@@ -102,6 +102,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Wed Apr 01 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.23-alt1
+- New version 6.5.23.
+
 * Mon Mar 02 2026 Ivan A. Melnikov <iv@altlinux.org> 1:6.5.22-alt2
 - NMU: fix FTBFS on loongarch64 and riscv64.
 
