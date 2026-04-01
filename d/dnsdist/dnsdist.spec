@@ -8,10 +8,12 @@
 %def_enable xsk
 %endif
 
+%def_enable meson
+
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -19,16 +21,22 @@ Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 License: GPL-2.0-only
 Group: Networking/DNS
 Url: https://dnsdist.org
+VCS: https://github.com/PowerDNS/pdns
 
-Source: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
-Patch: dnsdist-2.0.2-upstream-dolog.patch
+Source0: %name-%version.tar.xz
+Source1: dnsdist.1
+Patch: %name-%version-%release.patch
 
 ExcludeArch: i586
 
 # Automatically added by buildreq on Fri Nov 08 2024
 # optimized out: boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libabseil-cpp-devel libabseil-cpp2407.0.0 libgpg-error libstdc++-devel node perl pkg-config sh5 systemd
-BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent python3-module-yaml libgnutls-devel
-BuildRequires: systemd libbpf-devel
+# libstdc++-devel-static: -lstdc++fs
+BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libstdc++-devel-static libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent python3-module-yaml libgnutls-devel
+BuildRequires: systemd libbpf-devel ragel
+%if_enabled meson
+BuildRequires: meson
+%endif
 %if_enabled xsk
 BuildRequires: libxdp-devel
 %endif
@@ -45,12 +53,44 @@ legitimate users while shunting or blocking abusive traffic.
 
 %prep
 %setup
-%patch -p2
+%patch -p1
+
+cd pdns/dnsdistdist
 
 # run as dnsdist user
-sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.in
+sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' \
+    dnsdist.service.in \
+    dnsdist.service.meson.in
 
 %build
+cd pdns/dnsdistdist
+
+%if_enabled meson
+
+%meson \
+    --sysconfdir=%_sysconfdir/%name \
+    -Ddnscrypt=enabled \
+    -Ddns-over-https=enabled \
+    -Ddns-over-tls=enabled \
+%if_enabled providers
+    -Dtls-libssl-providers=true \
+%endif
+    -Dunit-tests=true \
+    -Dcdb=enabled \
+    -Dlmdb=enabled \
+    -Dnghttp2=enabled \
+    -Dre2=enabled \
+    -Dtls-gnutls=enabled \
+    -Dman-pages=false \
+%if_disabled xsk
+    -Debpf=disabled \
+    -Dxsk=disabled \
+%endif
+#
+%meson_build
+
+%else
+
 %autoreconf
 %configure \
     --sysconfdir=%_sysconfdir/%name \
@@ -79,13 +119,22 @@ rm html/js/*
 make min_js
 
 %make_build
+%endif
+
 cp dnsdist.conf-dist dnsdist.conf.sample
 
 %install
+cd pdns/dnsdistdist
+%if_enabled meson
+%meson_install
+%else
 %makeinstall_std
+%endif
 
 # install systemd unit file
-install -D -p -m 644 %name.service %buildroot%_unitdir/%name.service
+install -D -p -m 644 %_target_platform/%name.service %buildroot%_unitdir/%name.service
+install -d %buildroot%_man1dir/
+install -D -p %SOURCE1 %buildroot%_man1dir/%name.1
 install -d %buildroot%_sysconfdir/%name/
 mv %buildroot%_sysconfdir/%name/dnsdist.conf-dist %buildroot%_sysconfdir/%name/dnsdist.conf
 
@@ -103,7 +152,7 @@ exit 0
 %preun_service %name.service
 
 %files
-%doc dnsdist.conf.sample
+%doc pdns/dnsdistdist/dnsdist.conf.sample
 %doc README.md
 %doc COPYING
 %_bindir/%name
@@ -114,6 +163,11 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Wed Apr 01 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1
+- New version 2.0.3.
+- Added VCS tag.
+- Built using meson.
+
 * Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt1
 - New version (2.0.2) with rpmgs script.
 - Enabled gnutls support.
