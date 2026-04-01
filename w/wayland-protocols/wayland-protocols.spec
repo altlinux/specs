@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.47
+%define ver_major 1.48
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -59,6 +59,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md GOVERNANCE* MEMBERS*
 
 %changelog
+* Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.48-alt1
+- 1.48
+
 * Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.47-alt1
 - 1.47
 
