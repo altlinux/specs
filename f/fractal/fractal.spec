@@ -1,25 +1,26 @@
 Name: fractal
-Version: 12.1
+Version: 13
 Release: alt1
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPLv3
 Group: Networking/Instant messaging
 Url: https://gitlab.gnome.org/GNOME/fractal/
 Source: https://gitlab.gnome.org/World/fractal/-/archive/%version/fractal-%version.tar.gz
+# produced by command: cargo-vendor-alt --format=tar --prefix=vendor
 Source1: vendor.tar
 ExcludeArch: i586 armh
 
 BuildRequires(pre): rpm-build-ninja rpm-build-rust
 # Automatically added by buildreq on Mon Oct 30 2023 (-bi)
 # optimized out: alt-os-release ca-trust clang17.0 clang17.0-devel clang17.0-support debugedit desktop-file-utils elfutils fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gst-plugins-bad1.0 gst-plugins1.0-devel gstreamer1.0-devel gtk4-update-icon-cache libX11-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libclang-cpp17 libctf-nobfd0 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgraphene-devel libgst-plugins1.0 libgtk4-devel libharfbuzz-devel libjson-glib libp11-kit libpango-devel libsasl2-3 libwayland-client libwayland-client-devel libwayland-egl llvm-common llvm17.0-libs ninja-build pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools rpm-build-file rpm-build-python3 rust sh5 shared-mime-info xml-utils xz
-BuildRequires: clang gst-plugins-bad1.0-devel grass-sass libadwaita-devel libappstream-glib libgtk+3-devel libgtksourceview5-devel liblcms2-devel libseccomp-devel libshumate-devel libsqlite3-devel libssl-devel libwebp-devel meson pipewire-libs-devel rust-cargo
+BuildRequires: blueprint-compiler clang gst-plugins-bad1.0-devel grass-sass libadwaita-devel libappstream-glib libgtk+3-devel libgtksourceview5-gir-devel liblcms2-devel libseccomp-devel libshumate-gir-devel libsqlite3-devel libssl-devel libwebp-devel meson pipewire-libs-devel rust-cargo
 
 BuildRequires: /proc
 BuildRequires: cmake xdg-desktop-portal-devel clang-devel
 BuildRequires: pkgconfig(gtk4) >= 4.16 pkgconfig(libadwaita-1) >= 1.7 pkgconfig(gstreamer-1.0) >= 1.20
 BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0 pkgconfig(lcms2) >= 2.12.0
 
-Requires: glycin-loaders gst-plugin-gtk4
+Requires: fonts-ttf-google-noto-emoji-color glycin-loaders gst-plugin-gtk4
 
 %description
 Its interface is optimized for collaboration in large groups, such as free
@@ -43,14 +44,14 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=a9ce1c6e5822b8eb8411c5bc257049d9a9d15884"]
+[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=c1bc814ac2c306da704c5e10b7feda2e207beb19"]
 git = "https://github.com/matrix-org/matrix-rust-sdk.git"
-rev = "a9ce1c6e5822b8eb8411c5bc257049d9a9d15884"
+rev = "c1bc814ac2c306da704c5e10b7feda2e207beb19"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/ruma/ruma.git?rev=a2fe858133ba932b4bda730dc7472c9c985739a0"]
+[source."git+https://github.com/ruma/ruma.git?rev=c441eccb92a36467217ff929cd71462fbeeeaf1a"]
 git = "https://github.com/ruma/ruma.git"
-rev = "a2fe858133ba932b4bda730dc7472c9c985739a0"
+rev = "c441eccb92a36467217ff929cd71462fbeeeaf1a"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -81,6 +82,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Mar 27 2026 Ildar Mulyukov <ildar@altlinux.ru> 13-alt1
+- new version (ALT #58247)
+
 * Sun Oct 19 2025 Ildar Mulyukov <ildar@altlinux.ru> 12.1-alt1
 - new version (ALT #54639)
 
