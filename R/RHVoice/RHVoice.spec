@@ -6,7 +6,7 @@
 %define progectlicense GPL-2.0
 
 Name:    RHVoice
-Version: 1.18.3
+Version: 1.18.4
 Release: alt1
 
 Summary: a free and open source speech synthesizer for Russian and other languages
@@ -145,8 +145,10 @@ Requires: %name = %EVR \
 %langpackage Esperanto GPL-2.0
 %langpackage Georgian GPL-2.0
 %langpackage Kyrgyz GPL-2.0
+%langpackage Luxembourgish GPL-2.1
 %langpackage Macedonian AGPL-3.0
 %langpackage Polish GPL-2.0
+%langpackage Romanian GPL-2.1
 %langpackage Serbian GPL-3.0
 %langpackage Slovak LGPL-2.1
 %langpackage Spanish LGPL-2.1
@@ -287,6 +289,11 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %voicepackage Kyrgyz azamat %progectlicense
 %voicepackage Kyrgyz nazgul %progectlicense
 
+# Luxembourgish
+
+%voicepackage Luxembourgish mia CC-BY-SA-4.0
+%voicepackage Luxembourgish mil CC-BY-SA-4.0
+
 
 # Macedonian
 
@@ -301,6 +308,11 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %voicepackage Polish magda CC-BY-4.0
 %voicepackage Polish michal CC0-1.0
 %voicepackage Polish natan CC0-1.0
+
+
+# Romanian
+
+%voicepackage Romanian paul Attribution-ShareAlike-4.0
 
 
 # Serbian
@@ -360,6 +372,10 @@ scons install \
   servicedir=default
 
 %changelog
+* Wed Apr 01 2026 Artem Semenov <savoptik@altlinux.org> 1.18.4-alt1
+- Packaged luxembourgish romanian and voices
+- Updated to new version 1.18.4
+
 * Fri Mar 20 2026 Artem Semenov <savoptik@altlinux.org> 1.18.3-alt1
 - Updated to new version 1.18.3
 
