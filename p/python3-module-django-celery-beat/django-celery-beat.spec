@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.8.1
-Release: alt2
+Release: alt3
 
 Summary: Database-backed Periodic Tasks
 License: BSD-3-Clause
@@ -60,6 +60,9 @@ and how often they should run.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sat Mar 28 2026 Yaroslav Bahtin <alpacost@altlinux.org> 2.8.1-alt3
+- Fixed FTBFS (cron-descriptor >= 2.0)
+
 * Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 2.8.1-alt2
 - NMU: fixed FTBFS (pytest 9).
 
