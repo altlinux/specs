@@ -1,11 +1,11 @@
-%define oname PyQt6_WebEngine
+%define oname pyqt6_webengine
 
 # Note: check QtWebEngine subst below
 %define webenginever %(rpm -q --qf '%%{VERSION}' libqt6-webenginecore | sed -e 's|\\.|_|g')
 
 Name: python3-module-PyQt6-WebEngine
-Version: 6.6.0
-Release: alt2
+Version: 6.10.0
+Release: alt1
 
 Summary: Python bindings for Qt6 WebEngine
 
@@ -70,6 +70,10 @@ sip-build --no-make --debug \
 %_qt6_datadir/qsci/PyQt6-WebEngine.api
 
 %changelog
+* Wed Apr 01 2026 Vitaly Lipatov <lav@altlinux.ru> 6.10.0-alt1
+- new version 6.10.0 (with rpmrb script)
+- fix Source-url: use lowercase oname for PyPI
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
 - NMU: fix package with Qt-6.9
 
