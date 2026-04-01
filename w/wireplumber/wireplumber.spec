@@ -13,7 +13,7 @@
 %define libname %name-%apiversion
 
 Name: wireplumber
-Version: 0.5.13
+Version: 0.5.14
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -50,7 +50,6 @@ BuildRequires: pkgconfig(systemd)
 AutoReq: nolua
 
 Source: %name-%version.tar
-Patch0001: 0001-scripts-device-Migrate-stored-route-props-over-from-.patch
 
 %package doc
 Summary: docs for the client library for WirePlumber
@@ -130,7 +129,6 @@ This package contains GObject introspection development data for lib%libname.
 
 %prep
 %setup
-%patch0001 -p1
 mkdir -p "$HOME/bin"
 printf '%%s\n' '#!/bin/sh -eu' 'exec sphinx-build-3 "$@"' > "$HOME/bin/sphinx-build"
 chmod +x "$HOME/bin/sphinx-build"
@@ -204,6 +202,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Fri Mar 27 2026 Arseny Maslennikov <arseny@altlinux.org> 0.5.14-alt1
+- 0.5.13 -> 0.5.14.
+
 * Wed Dec 24 2025 Arseny Maslennikov <arseny@altlinux.org> 0.5.13-alt1
 - 0.5.12 -> 0.5.13.
 
