@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: gst-pipeline-studio
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Draw your own GStreamer pipeline
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

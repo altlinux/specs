@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name video-trimmer
-%define ver_major 25.03
+%define ver_major 26.03
 %define rdn_name org.gnome.gitlab.YaLTeR.VideoTrimmer
 
 %def_disable bootstrap
@@ -23,8 +23,8 @@ Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
 
-%define gtk_ver 4.16.0
-%define adw_ver 1.7
+%define gtk_ver 4.20.0
+%define adw_ver 1.8
 
 Requires: ffmpeg ffprobe
 
@@ -69,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 26.03-alt1
+- 26.03
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
 - 25.03
 
