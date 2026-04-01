@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: glide
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Media player based on GStreamer and GTK
@@ -27,13 +27,12 @@ Source: %name-%version.tar
 # github tarball provides vendored sources
 %{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
-%define gst_ver 1.24.3
+%define gst_ver 1.26.11
 %define adw_ver 1.8
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-libav
 Requires: gst-plugin-gtk4 >= 0.14.3
-#Requires: gstreamer-vaapi
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -76,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* TODO
 
 %changelog
+* Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt1
+- 0.6.7
+
 * Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
 - 0.6.6
 
