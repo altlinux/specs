@@ -3,6 +3,7 @@
 %define import_path github.com/evilsocket/opensnitch
 
 # Required to build the ebpf module
+%define kver %(cat %_usrsrc/linux-*/include/config/kernel.release 2>/dev/null | cut -d'.' -f1,2)
 %define kbuild_dir %(ls -d %_usrsrc/linux-* 2>/dev/null | head -n 1)
 %ifarch %ix86 x86_64
 %define arch_dir x86
@@ -16,8 +17,8 @@
 %define _pseudouser_home %_localstatedir/%{name}d
 
 Name: opensnitch
-Version: 1.7.2
-Release: alt1
+Version: 1.8.0
+Release: alt1.gitf2ce074
 
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
 License: GPL-3.0-or-later
@@ -46,14 +47,16 @@ BuildRequires: llvm
 
 # opensnitch-ui
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: python3
 BuildRequires: python3-module-configargparse
 BuildRequires: python3-module-grpcio
 BuildRequires: python3-module-grpcio-tools
 BuildRequires: python3-module-notify2
-BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-pyside6
+BuildRequires: python3-module-PyQt6-devel
 BuildRequires: python3-module-unicode_slugify
-BuildRequires: qt5-tools
+BuildRequires: qt6-tools
 
 %description
 %summary.
@@ -84,9 +87,7 @@ Requires: python3-module-notify2
 This package contains opensnitch ui.
 
 %prep
-%setup
-tar xf %SOURCE1
-tar xf %SOURCE2
+%setup -a1 -a2
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -112,13 +113,14 @@ pushd .build/src/%import_path/proto
 popd
 pushd .build/src/%import_path/daemon
 go build -o opensnitchd .
-sed -i 's\/usr/local\%prefix\g' %{name}d.service
 popd
 # Build the opensnitch-daemon-ebpf
 pushd ebpf_prog
 %make ARCH="%arch_dir" \
+	KERNEL_VER="%kver" \
 	KERNEL_DIR="%kbuild_dir" \
-	KERNEL_HEADERS="%kbuild_dir"
+	KERNEL_HEADERS="%kbuild_dir" \
+	EXTRA_FLAGS="-Wno-microsoft-anon-tag -fms-extensions"
 popd
 
 # Build the opensnitch-ui
@@ -126,7 +128,7 @@ pushd ui/i18n
 %make
 popd
 pushd ui
-pyrcc5 -o %name/resources_rc.py %name/res/resources.qrc
+pyside6-rcc opensnitch/res/resources.qrc | sed '0,/PySide6/s//PyQt6/' > opensnitch/resources_rc.py
 find %name/proto -name 'ui_pb2_grpc.py' -exec sed -i 's/^import ui_pb2/from . import ui_pb2/' {} \;
 %pyproject_build
 popd
@@ -144,15 +146,12 @@ mkdir -p %buildroot%_unitdir
 # Path for installing opensnitch configuration files
 mkdir -p %buildroot%_sysconfdir/%{name}d/rules
 
-# Path for logrotate journals
-mkdir -p %buildroot%_logrotatedir
-
 mkdir -p %buildroot%_pseudouser_home
 
 # Install the opensnitch-daemon
-pushd .build/src/%import_path/daemon
-install -Dpm 0755 %{name}d %buildroot/%_bindir
-install -Dpm 0755 %{name}d.service %buildroot%_unitdir
+install -Dpm 0644 utils/packaging/daemon/deb/debian/%{name}.service %buildroot%_unitdir/%{name}d.service
+install -Dpm 0755 .build/src/%import_path/daemon/%{name}d %buildroot/%_bindir
+pushd daemon/data
 install -Dpm 0644 network_aliases.json %buildroot%_sysconfdir/%{name}d/network_aliases.json
 install -Dpm 0644 system-fw.json %buildroot%_sysconfdir/%{name}d/system-fw.json
 install -Dpm 0644 default-config.json %buildroot%_sysconfdir/%{name}d/default-config.json
@@ -167,7 +166,14 @@ pushd ui
 %pyproject_install
 install -Dpm 0644 resources/opensnitch_ui.desktop %buildroot%_desktopdir/%{name}_ui.desktop
 install -Dpm 0644 resources/icons/48x48/opensnitch-ui.png %buildroot%_liconsdir/%name-ui.png
+install -Dpm 0644 resources/io.github.evilsocket.opensnitch.appdata.xml \
+       %buildroot%_metainfodir/io.github.evilsocket.%name.appdata.xml
 popd
+
+# Incorrect installation of additional files
+# The required files were installed manually above
+rm -rv %buildroot%python3_sitelibdir_noarch/usr
+rm -rv %buildroot%python3_sitelibdir_noarch/tests
 
 %pre daemon
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -196,9 +202,17 @@ popd
 %_bindir/%name-ui
 %_desktopdir/%{name}_ui.desktop
 %_liconsdir/%name-ui.png
-%python3_sitelibdir_noarch/*
+%_metainfodir/io.github.evilsocket.%name.appdata.xml
+%python3_sitelibdir_noarch/%name
+%python3_sitelibdir_noarch/%{name}_ui-%version.dist-info
 
 %changelog
+* Wed Apr 01 2026 Ulysses Apokin <ulysses@altlinux.org> 1.8.0-alt1.gitf2ce074
+- new version
+- removed installation of unnecessary files (ALT #57612)
+- added installation of metainfo file
+- fixed FTBFS
+
 * Wed Aug 13 2025 Ulysses Apokin <ulysses@altlinux.org> 1.7.2-alt1
 - new version
 - fixed post-install unowned files
