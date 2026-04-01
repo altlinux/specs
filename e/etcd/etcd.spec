@@ -5,17 +5,18 @@
 
 %global _unpackaged_files_terminate_build 1
 
-%define git_commit 65251b3
+# git rev-parse --short v3.5.28^{commit}
+%define git_commit f22ac30
 
-Name:    etcd
-Version: 3.5.26
+Name: etcd
+Version: 3.5.28
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
-Group:   System/Servers
+Group: System/Servers
 
-URL:     https://etcd.io
-VCS:     https://github.com/etcd-io/etcd
+Url: https://etcd.io
+VCS: https://github.com/etcd-io/etcd
 
 Source0: %name-%version.tar
 
@@ -25,7 +26,7 @@ Obsoletes: etcd3.5.16 < 3.5.16-alt3
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24
+BuildRequires: rpm-build-golang golang >= 1.25
 
 %description
 Etcd is a distributed key value store that provides a reliable way to store data
@@ -33,10 +34,10 @@ across a cluster of machines. Etcd gracefully handles leader elections during ne
 partitions and will tolerate machine failure, including the leader.
 
 %prep
-%setup -q
+%setup
 
 for d in contrib etcdctl etcdutl pkg raft hack security; do
-mv $d/README.md README-$d.md
+    mv $d/README.md README-$d.md
 done
 mv etcdctl/READMEv2.md READMEv2-etcdctl.md
 mv client/v2/README.md README-clientv2.md
@@ -63,6 +64,7 @@ cd .build/src/%import_path
 
 %install
 export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
 
 %golang_install
 
@@ -83,9 +85,6 @@ sed \
     < rpm/etcd.service > %buildroot%_unitdir/%name.service
 
 install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%name/%name.conf
-
-# remove unused files
-rm -rf -- %buildroot/%go_root
 
 %pre
 groupadd -r -f %etcd_group
@@ -112,6 +111,15 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Wed Apr 01 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.28-alt1
+- 3.5.26 -> 3.5.28.
+- Fixes:
+  + CVE-2026-24051: OpenTelemetry-Go Affected by Arbitrary Code Execution via PATH Hijacking
+  + CVE-2026-27141: Sending certain HTTP/2 frames can cause a server to panic in golang.org/x/net
+  + CVE-2026-33186: gRPC-Go has an authorization bypass via missing leading slash in :path
+  + CVE-2026-33343: etcd: Nested etcd transactions bypass RBAC authorization checks
+  + CVE-2026-33413: etcd: Authorization bypasses in multiple APIs
+
 * Tue Jan 27 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.26-alt1
 - 3.5.23 -> 3.5.26
 - Fixes:
