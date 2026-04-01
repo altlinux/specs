@@ -1,5 +1,5 @@
 Name: python3-module-orjson
-Version: 3.11.7
+Version: 3.11.8
 Release: alt1
 
 Summary: Fast, correct JSON library for Python
@@ -49,6 +49,9 @@ tar cf %SOURCE2 .cargo vendor
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Wed Apr 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.8-alt1
+- 3.11.8 released
+
 * Fri Feb 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.7-alt1
 - 3.11.7 released
 
