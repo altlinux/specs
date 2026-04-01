@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: opensc
-Version: 0.27.0
+Version: 0.27.1
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -140,6 +140,9 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %endif
 
 %changelog
+* Wed Apr 01 2026 Andrey Cherepanov <cas@altlinux.org> 0.27.1-alt1
+- New version.
+
 * Tue Mar 31 2026 Andrey Cherepanov <cas@altlinux.org> 0.27.0-alt1
 - New version (fixes: CVE-2025-13763, CVE-2025-49010, CVE-2025-66215,
   CVE-2025-66038, CVE-2025-66037).
