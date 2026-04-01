@@ -5,7 +5,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: audit
-Version: 4.1.3
+Version: 4.1.4
 Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
@@ -286,6 +286,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 27 2026 Anton Farygin <rider@altlinux.org> 4.1.4-alt1
+- 4.1.3 -> 4.1.4
+
 * Mon Feb 09 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt1
 - 4.1.2 -> 4.1.3
 
