@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.50.3
-Release: alt2
+Version: 4.52.0
+Release: alt1
 
 Summary: Generic virtualenv management and test command line tool
 License: MIT
@@ -31,6 +31,8 @@ BuildRequires: /proc
 BuildRequires: /dev/pts
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# required by tests/docs/test_manpage.py
+BuildRequires: /usr/bin/man
 %endif
 
 %description
@@ -78,6 +80,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 31 2026 Stanislav Levin <slev@altlinux.org> 4.52.0-alt1
+- 4.50.3 -> 4.52.0.
+
 * Tue Mar 31 2026 Stanislav Levin <slev@altlinux.org> 4.50.3-alt2
 - Undone Python vandalism.
 
