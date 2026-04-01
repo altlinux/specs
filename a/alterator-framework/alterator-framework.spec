@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-framework
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Qt 6-based host application for Alterator QML modules
@@ -61,6 +61,13 @@ install -d %buildroot%_datadir/alterator-framework/modules
 
 
 %changelog
+* Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.2-alt1
+- New features (thx Oleg Chagaev):
+  + Add DesktopListView.qml component for native desktop-style scrolling.
+- Fix (thx Oleg Chagaev):
+  + QDBusArgument "write from read-only object" warning.
+- Bump API version to 1.2 (thx Oleg Chagaev).
+
 * Thu Feb 26 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
 - New features (thx Oleg Chagaev):
   + executor backend support;

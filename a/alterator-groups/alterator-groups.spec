@@ -1,6 +1,6 @@
 Name:    alterator-groups
-Version: 0.6
-Release: alt3
+Version: 0.7
+Release: alt1
 
 Summary: Alterator module for system groups administration
 License: GPL-2.0+
@@ -17,6 +17,8 @@ Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator >= 3.6-alt7
 
 BuildPreReq: alterator >= 3.6-alt7
+BuildRequires(pre): rpm-macros-alterator
+BuildRequires: qt6-tools
 Conflicts: alterator-fbi < 0.15-alt1
 Conflicts: alterator-lookout < 1.0
 
@@ -27,17 +29,41 @@ Conflicts: alterator-lookout < 1.0
 %setup -q
 
 %build
+%make_build
+
+# QML translations for alterator-framework UI
+lrelease-qt6 alterator-framework/ts/groups_ru.ts
 
 %install
 %makeinstall
 
+install -Dpm644 dbus-backends/groups.backend %buildroot%_alterator_datadir/backends/groups.backend
+install -Dpm644 dbus-backends/org.altlinux.alterator.groups.policy %buildroot%_datadir/polkit-1/actions/org.altlinux.alterator.groups.policy
+install -d %buildroot%_datadir/alterator-framework/modules/groups
+install -m 644 alterator-framework/manifest.json %buildroot%_datadir/alterator-framework/modules/groups/
+install -m 644 alterator-framework/main.qml %buildroot%_datadir/alterator-framework/modules/groups/
+install -d %buildroot%_datadir/alterator-framework/modules/groups/ts
+install -m 644 alterator-framework/ts/groups_ru.qm %buildroot%_datadir/alterator-framework/modules/groups/ts/
+
 %files
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
 %_sysconfdir/alterator/*/
 %_alterator_backend3dir/*
+%_alterator_datadir/backends/groups.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.groups.policy
+%dir %_datadir/alterator-framework
+%dir %_datadir/alterator-framework/modules
+%dir %_datadir/alterator-framework/modules/groups
+%_datadir/alterator-framework/modules/groups/manifest.json
+%_datadir/alterator-framework/modules/groups/main.qml
+%dir %_datadir/alterator-framework/modules/groups/ts
+%_datadir/alterator-framework/modules/groups/ts/groups_ru.qm
 
 %changelog
+* Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.7-alt1
+- Add alterator-framework UI support (thx Oleg Chagaev).
+
 * Mon Apr 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6-alt3
 - Update license name by SPDX.
 - Don't show in web-interface due #50239.
@@ -127,4 +153,3 @@ Conflicts: alterator-lookout < 1.0
 
 * Wed Jul 16 2008 Vladislav Zavjalov <slazav@altlinux.org> 0.1-alt1
 - initial version
-
