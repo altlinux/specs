@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitu
-Version: 0.35.0
-Release: alt2
+Version: 0.41.0
+Release: alt1
 
 Summary: A terminal user interface for Git
 License: MIT
@@ -14,10 +14,7 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: config.toml
 
-Patch1: vendored-nix-loongarch64-support.patch
-
 BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
 
@@ -27,12 +24,6 @@ BuildRequires: rust-cargo
 %prep
 %setup -a 1
 install -D %SOURCE2 .cargo/config.toml
-
-%autopatch -p1
-
-# allow patching vendored rust code
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-     ./vendor/nix-0.26.4/.cargo-checksum.json
 
 %build
 %rust_build
@@ -45,6 +36,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 0.41.0-alt1
+- New version
+
 * Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.35.0-alt2
 - NMU: fix FTBFS on loongarch64
 
