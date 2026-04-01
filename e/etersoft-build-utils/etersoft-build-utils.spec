@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.15
+Version: 3.3.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -57,7 +57,7 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README TODO NEWS QuickHelp*
+%doc AUTHORS README.md README.ru.md TODO NEWS QuickHelp*
 %_bindir/*
 %_datadir/eterbuild/
 %attr(0755,root,root) %_sysconfdir/bashrc.d/*
@@ -70,6 +70,46 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Mar 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
+- gita: add test as alias for run --test-only, always use run with --test-only by default
+- gitask: add -m support for approve command
+- add ETERBUILD_SIGN_CHANGELOG option to sign changelog with tool name
+- rpmbs, rpmpub: add -B option for batch sign mode (without tty)
+- rpmbs: add -G option to cache GPG passphrase for batch mode (-B)
+- rpmreqs: fix symbol version stripping to preserve () for apt
+- rpmrb, rpmbsh: add -a TASK, -A, -f options
+- rpmbs: use gita show instead of girar-show
+- common: add faketty() and stripcolors(), remove colorify()
+- rpmbb: use faketty and rpmeterbuild for colored compiler output
+- myhsh: use faketty/stripcolors, switch to --rpmbuild-args
+- gitask show: add -v option for full task metadata
+- rpmgp: big rewrite
+- rpmgs: use 'ours' merge strategy for .gear/tags-based packages
+- myhsh: use native hasher --faketty instead of faketty wrapper
+- jmake, rpmbp, rpmck, rpmcs: add docmd for command logging
+- rpmlog: add docmd, use --no-pager, add reset_release(), improve changelog formatting
+- gita approve: make subtask optional, approve all subtasks when omitted
+- rpmgs: fix vendoring for Source-git packages with separate packaging branch
+- rpmgs: search Cargo.lock at any depth for vendoring
+- gita add: support 'before' keyword for subtask positioning
+- rpmgs: add yarn support for predownloaded vendoring
+- rpmgs: add dotnet vendoring support for predownloaded
+- loginhsh: skip interactive shell when no tty available
+- rpmbs: fix pinentry via ssh
+- git: add version_to_tag/tag_to_version for ~ and + in versions
+- rpmbs/rpmlog/rpmgs: use version_to_tag for git tag names
+- rpmgs: fatal on failed git merge in update_master_branch_to
+- rpmgs: fail if sources were not actually updated
+- rpmgs: add src.rpm download support
+- gitask: strip ANSI colors, add_changelog: skip editor without tty
+- gitask: extract task viewing into do_task_list/do_task_show/do_task_log functions
+- gitask: use git.altlinux.org tasks API for viewing, SSH as fallback
+- gitask ls: match girar-show output format
+- gitask ls: add --help, --state/-s and --repo/-r filters
+- gitask ls: extract package name from dir path when pkgname is missing
+- gitask ls: make task IDs clickable links to packages.altlinux.org
+- gitask ls/show: display approval status for TESTED/EPERM tasks
+
 * Sat Mar 29 2025 Vitaly Lipatov <lav@altlinux.ru> 3.2.15-alt1
 - rpmcs: some improvements
 - rpmgs: allow Source0 too
