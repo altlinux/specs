@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: procs
-Version: 0.14.10
+Version: 0.14.11
 Release: alt1
 
 Summary: A replacement for ps written in Rust
@@ -19,7 +19,6 @@ Patch0: procs-0.14.8-nix-crate-loongarch64.patch
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust
 BuildRequires: rust-cargo
-BuildRequires: /proc
 
 %description
 %summary.
@@ -40,10 +39,13 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %rust_install
 
 %files
-%_bindir/%name
 %doc README.md CHANGELOG.md
+%_bindir/%name
 
 %changelog
+* Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 0.14.11-alt1
+- New version
+
 * Mon Aug 11 2025 Ilya Sorochan <k0tran@altlinux.org> 0.14.10-alt1
 - 0.14.8 -> 0.14.10
 
