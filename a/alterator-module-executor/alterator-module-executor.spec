@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.31
+Version: 0.1.32
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -37,6 +37,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Mar 30 2026 Ivan Savin <svn17@altlinux.org> 0.1.32-alt1
+- Make "exit_status" option enabled by default.
+
 * Tue Mar 03 2026 Ivan Savin <svn17@altlinux.org> 0.1.31-alt1
 - Changing the emission of signals to unicast.
 
