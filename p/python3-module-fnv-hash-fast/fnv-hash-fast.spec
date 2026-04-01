@@ -1,11 +1,11 @@
 Name: python3-module-fnv-hash-fast
-Version: 1.6.0
+Version: 2.0.2
 Release: alt1
 
 Summary: A fast version of fnv1a
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/fnv-hash-fast/
+URL: https://pypi.org/project/fnv-hash-fast
 VCS: https://github.com/bluetooth-devices/fnv-hash-fast
 
 Source0: %name-%version.tar
@@ -37,14 +37,14 @@ BuildRequires(pre): rpm-build-pyproject
 %check
 %pyproject_run_pytest -o addopts= tests
 
-# extensions built against stable API, drop versioned ABI req
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %python3_sitelibdir/fnv_hash_fast
 %python3_sitelibdir/fnv_hash_fast-%version.dist-info
 
 %changelog
+* Tue Mar 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.2-alt1
+- 2.0.2 released
+
 * Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
 - 1.6.0 released
 
