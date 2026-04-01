@@ -1,5 +1,5 @@
 Name: alterator-root
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -61,6 +61,9 @@ install -m 644 alterator-framework/ts/root_ru.qm %buildroot%_datadir/alterator-f
 %_datadir/alterator-framework/modules/root/ts/root_ru.qm
 
 %changelog
+* Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.5-alt1
+- add polkit action translations (thx Oleg Chagaev)
+
 * Thu Feb 26 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.4-alt1
 - remove version from AlteratorFramework import (thx Oleg Chagaev)
 
