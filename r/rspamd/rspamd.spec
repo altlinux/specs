@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.14.2
+Version: 4.0.0
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -32,6 +32,7 @@ BuildRequires: pkgconfig(libsodium) >= 1.0.0
 BuildRequires: pkgconfig(libarchive) >= 3.0.0
 
 BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
+BuildRequires: perl-JSON-PP perl-NetAddr-IP
 
 BuildRequires: ragel
 
@@ -70,7 +71,7 @@ anywhere in code.
                 -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF \
                 -DSYSTEM_ZSTD=ON \
                 -DSYSTEM_FMT=ON \
-                -DSYSTEM_DOCTEST=ON \
+                -DSYSTEM_DOCTEST=OFF \
                 -DSYSTEM_XXHASH=ON
 
 %make_build
@@ -121,6 +122,7 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %_sysconfdir/%name/modules.local.d/module.conf.example
 %_sysconfdir/%name/override.d/module.conf.example
 
+%_bindir/mapstats
 %_bindir/rspamc*
 %_bindir/rspamd*
 %_bindir/rspamadm*
@@ -134,6 +136,12 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Tue Mar 31 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+- add mapstats to files list
+- add BR: perl-JSON-PP perl-NetAddr-IP (for mapstats perl script)
+- disable SYSTEM_DOCTEST (incompatible with doctest 2.5.0)
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.14.2-alt1
 - new version 3.14.2 (with rpmrb script)
 - add antivirus.conf.example to files list
