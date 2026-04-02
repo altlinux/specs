@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Json Formatter for the standard python logger
@@ -47,6 +47,9 @@ we can stop writing custom parsers for syslog type records.
 %python3_sitelibdir/%{pyproject_distinfo python_json_logger}
 
 %changelog
+* Thu Apr 02 2026 Anton Vyatkin <toni@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 4.0.0-alt1
 - New version 4.0.0.
 
