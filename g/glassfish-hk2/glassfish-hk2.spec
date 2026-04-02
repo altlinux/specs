@@ -2,7 +2,7 @@
 
 Name: glassfish-hk2
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: A light-weight and dynamic dependency injection framework
 License: EPL-2.0
@@ -31,7 +31,7 @@ BuildRequires: jboss-logging
 BuildRequires: easymock
 BuildRequires: aopalliance
 BuildRequires: atinject
-BuildRequires: glassfish-hk2-extra
+BuildRequires: glassfish-hk2-extra-osgi-resource-locator
 BuildRequires: google-guice
 BuildRequires: javassist
 BuildRequires: osgi-core
@@ -355,5 +355,8 @@ rm osgi/adapter/src/main/java/org/jvnet/hk2/osgiadapter/OSGiObrModulesRegistryIm
 %files osgi -f .mfiles-osgi
 
 %changelog
+* Wed Apr 01 2026 Ivan Khanas <xeno@altlinux.org> 3.1.1-alt2
+- Rename glassfish-hk2-extra dependency in buildreq.
+
 * Tue Mar 24 2026 Ivan Khanas <xeno@altlinux.org> 3.1.1-alt1
 - First build for ALT.
