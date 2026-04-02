@@ -3,7 +3,7 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.16.0
+Version: 1.16.2
 Release: alt1
 
 Summary: A TigerVNC remote display system
@@ -276,6 +276,9 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 1.16.2-alt1
+- 1.16.0 -> 1.16.2
+
 * Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 1.16.0-alt1
 - 1.15.0 -> 1.16.0
 
