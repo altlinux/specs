@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 0.9
+%define ver_major 1.0
 %define git_tag 5471f93abac8d2a264493aed9826be66adb76082
 %define rdn_name app.drey.Warp
 
@@ -11,11 +11,11 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Fast and secure file transfer tool
-License: GPL-3.0-or-later
+License: GPL-3.0-only
 Group: Networking/File transfer
 Url: https://apps.gnome.org/Warp
 
@@ -28,12 +28,9 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-#error: failed to run custom build command for `ring v0.16.20`
-ExcludeArch: ppc64le
-
-%define glib_ver 2.80
-%define gtk_ver 4.18
-%define adwaita_ver 1.7
+%define glib_ver 2.82
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 
 Requires: yelp
 %{?_enable_qr:Requires: gst-plugins-bad1.0 gst-plugins-libcamera1.0}
@@ -44,9 +41,8 @@ BuildRequires: yelp-tools
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(dbus-1)
-%{?_enable_qr:BuildRequires: pkgconfig(zbar) pkgconfig(gstreamer-plugins-bad-1.0)}
+%{?_enable_qr:BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
-BuildRequires: license-list-data
 
 %description
 Warp allows you to securely send files to each other via the internet or
@@ -64,8 +60,6 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-ln -s %_datadir/license-list-data vendor/license/license-list-data
-
 %build
 %meson \
     -Dprofile=default \
@@ -82,16 +76,20 @@ ln -s %_datadir/license-list-data vendor/license/license-list-data
 
 %files -f %name.lang
 %_bindir/%name
-#%dir %_datadir/%name/
-# ~600M
-#%_datadir/%name/licenses.json
 %_desktopdir/%rdn_name.desktop
+%dir %_datadir/%name
+# 610K
+%_datadir/%name/licenses.json
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Thu Apr 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- updated to v1.0.0-9-g0ba7d67
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - 0.9.2
 

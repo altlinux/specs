@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.27
+Version: 1.2.29
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -130,6 +130,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Apr 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.29-alt1
+- 1.2.29
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.27-alt1
 - 1.2.27
 
