@@ -1,13 +1,17 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 13.2
+%define ver_major 14.0
 %define namespace HarfBuzz
 %define api_ver 0.0
 
 %def_enable graphite2
 %def_enable icu
 %def_enable cairo
+%def_enable raster
+%def_enable vector
+%def_enable gpu
+%def_enable gpu_demo
 %def_enable gobject
 %def_enable introspection
 %def_enable docs
@@ -18,7 +22,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -47,6 +51,7 @@ BuildRequires: pkgconfig(libpng) pkgconfig(zlib)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
 %{?_enable_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
+%{?_enable_gpu_demo:BuildRequires: pkgconfig(glfw3) pkgconfig(glew)}
 %{?_enable_docs:BuildRequires: gtk-doc help2man}
 %{?_enable_check:BuildRequires: python3-test fonttools}
 
@@ -140,6 +145,10 @@ GObject introspection devel data for the HarfBuzz library
     %{subst_enable_meson_feature icu icu} \
     %{subst_enable_meson_feature cairo cairo} \
     %{subst_enable_meson_feature graphite2 graphite2} \
+    %{subst_enable_meson_feature raster raster} \
+    %{subst_enable_meson_feature vector vector} \
+    %{subst_enable_meson_feature gpu gpu} \
+    %{subst_enable_meson_feature gpu_demo gpu_demo} \
     %{subst_enable_meson_feature gobject gobject} \
     %{subst_enable_meson_feature introspection introspection} \
     %{subst_enable_meson_feature docs docs} \
@@ -156,8 +165,9 @@ GObject introspection devel data for the HarfBuzz library
 %files
 %_libdir/%name.so.*
 %_libdir/%name-subset.so.*
-%_libdir/%name-raster.so.*
-%_libdir/%name-vector.so.*
+%{?_enable_raster:%_libdir/%name-raster.so.*}
+%{?_enable_vector:%_libdir/%name-vector.so.*}
+%{?_enable_gpu:%_libdir/libharfbuzz-gpu.so.*}
 
 %if_enabled icu
 %files icu
@@ -178,12 +188,14 @@ GObject introspection devel data for the HarfBuzz library
 %_includedir/%_name/
 %_libdir/%name.so
 %_libdir/%name-subset.so
-%_libdir/%name-raster.so
-%_libdir/%name-vector.so
+%{?_enable_raster:%_libdir/%name-raster.so}
+%{?_enable_vector:%_libdir/%name-vector.so}
+%{?_enable_gpu:%_libdir/%name-gpu.so}
 %_pkgconfigdir/%_name.pc
 %_pkgconfigdir/%_name-subset.pc
-%_pkgconfigdir/%_name-raster.pc
-%_pkgconfigdir/%_name-vector.pc
+%{?_enable_raster:%_pkgconfigdir/%_name-raster.pc}
+%{?_enable_vector:%_pkgconfigdir/%_name-vector.pc}
+%{?_enable_gpu:%_pkgconfigdir/%_name-gpu.pc}
 %{?_enable_icu:
 %_libdir/%name-icu.so
 %_pkgconfigdir/%_name-icu.pc}
@@ -205,10 +217,11 @@ GObject introspection devel data for the HarfBuzz library
 %files utils
 %_bindir/hb-info
 %_bindir/hb-view
-%_bindir/hb-raster
 %_bindir/hb-shape
 %_bindir/hb-subset
-%_bindir/hb-vector
+%{?_enable_raster:%_bindir/hb-raster}
+%{?_enable_raster:%_bindir/hb-vector}
+%{?_enable_gpu_demo:%_bindir/hb-gpu}
 %_man1dir/hb-*
 
 %if_enabled introspection
@@ -220,6 +233,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Thu Apr 02 2026 Yuri N. Sedunov <aris@altlinux.org> 14.0.0-alt1
+- 14.0.0
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 13.2.1-alt1
 - 13.2.1
 
