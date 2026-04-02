@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -61,6 +61,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 02 2026 Anton Midyukov <antohami@altlinux.org> 2.3.2-alt1
+- New version 2.3.2.
+
 * Thu Jan 29 2026 Anton Midyukov <antohami@altlinux.org> 2.3.1-alt1
 - New version 2.3.1.
 
