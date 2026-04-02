@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,10 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Apr 01 2026 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
+- fixed OpenAPI spec returning literal %%VERSION%% instead of actual version
+- compact GC heap after initial cache load and periodically to limit memory growth
+
 * Tue Mar 17 2026 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - added GET /events SSE endpoint for real-time task change notifications
 - added broadcast hub with per-client buffers and connection limits
