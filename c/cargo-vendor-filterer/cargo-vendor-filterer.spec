@@ -6,7 +6,7 @@
 %def_without integration_tests
 
 Name:    cargo-vendor-filterer
-Version: 0.5.17
+Version: 0.5.18
 Release: alt1
 
 Summary: Tool to `cargo vendor` with filtering
@@ -70,6 +70,11 @@ rm -rf .cargo
 %_bindir/*
 
 %changelog
+* Thu Apr 02 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.18-alt1
+- Updated to 0.5.18.
+- Fixed missing git or SOURCE_EPOCH_DATE message (ALT#58407).
+- Added wasm32-unknown-unknown platform to cargo-vendor-alt (ALT#55820).
+
 * Mon Feb 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.17-alt1
 - Updated to 0.5.17.
 
