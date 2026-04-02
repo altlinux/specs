@@ -5,7 +5,7 @@
 
 Name: ngsolve
 Version: 6.2.2406
-Release: alt1
+Release: alt2
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
 Group: Sciences/Mathematics
@@ -13,11 +13,12 @@ Url: https://github.com/NGSolve/ngsolve
 
 ExclusiveArch: x86_64
 
-# https://github.com/NGSolve/ngsolve.git
+VCS: https://github.com/NGSolve/ngsolve.git
 Source: %name-%version.tar
 
 Patch1: %name-alt-version-detection.patch
 Patch2: %name-alt-return-type.patch
+Patch3: ngsolve-6.2.2406-alt-pybind11-tuple-type.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -101,6 +102,7 @@ This package contains development documentation for NGSolve.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 echo -n v%version > version.txt
 
@@ -161,6 +163,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2406-alt2
+- fixed build with pybind11 3.0
+
 * Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt1
 - NMU: new version for netgen 6.2.2406
 
