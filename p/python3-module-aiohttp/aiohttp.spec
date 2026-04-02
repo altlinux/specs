@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.13.3
+Version: 3.13.5
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -27,6 +27,9 @@ Vcs: https://github.com/aio-libs/aiohttp
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# merged test utils into main
+Provides: python3-module-aiohttp-tests = %EVR
+Obsoletes: python3-module-aiohttp-tests < %EVR
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -41,25 +44,12 @@ BuildRequires: libllhttp-devel
 %add_pyproject_deps_check_filter wait-for-it
 %pyproject_builddeps_metadata_extra speedups
 %pyproject_builddeps_check
-# remove when fixed: https://github.com/aio-libs/aiohttp/pull/11638
-BuildRequires: python3-module-packaging
 %endif
-
-%package tests
-Summary: Tests for aiohttp
-Group: Development/Python
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-Requires: python3-module-aiohttp = %EVR
 
 %add_python_extra speedups
 
 %description
 http client/server for asyncio (PEP-3156).
-
-%description tests
-http client/server for asyncio (PEP-3156).
-This package contains tests for aiohttp
 
 %prep
 %setup
@@ -96,17 +86,13 @@ make cythonize-nodeps
 %endif
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/%mod_name/*test*
-%exclude %python3_sitelibdir/%mod_name/*/*test*
-
-%files tests
-%python3_sitelibdir/%mod_name/*test*
-%python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Wed Apr 01 2026 Stanislav Levin <slev@altlinux.org> 3.13.5-alt1
+- 3.13.3 -> 3.13.5.
+
 * Mon Jan 12 2026 Stanislav Levin <slev@altlinux.org> 3.13.3-alt1
 - 3.13.2 -> 3.13.3
   + (fixes: CVE-2025-69223, CVE-2025-69224, CVE-2025-69225, CVE-2025-69226)
