@@ -3,7 +3,7 @@
 
 Name: alterator-net-ng
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Backend-agnostic alterator module for network configuration
 License: GPLv3
@@ -63,6 +63,9 @@ Requires: python3-module-yaml
 %doc README.md
 
 %changelog
+* Thu Apr 02 2026 Sergey Konev <darisishe@altlinux.org> 0.2.0-alt2
+- Use text-wrap for Routes page notes labels (Closes: 58490)
+
 * Fri Mar 27 2026 Sergey Konev <darisishe@altlinux.org> 0.2.0-alt1
 - Networkd configs support
 - Routing table support
