@@ -4,7 +4,7 @@
 
 Name: rain
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: Rain is the main BitTorrent client used at put.io
 License: MIT
 Group: Networking/File transfer
@@ -13,10 +13,12 @@ Vcs: https://github.com/cenkalti/rain
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+Source2: rain.service
 
 Conflicts: bsd-games
 
 BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: golang
 
 %description
@@ -28,6 +30,7 @@ tracker and keep reporting their ratio correctly.
 
 %prep
 %setup -a 1
+install %SOURCE2 .
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -48,12 +51,29 @@ export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
 
 %golang_install
+install -Dm 644 %name.service %buildroot%_user_unitdir/%name.service
+
+%post
+%systemd_user_post rain.service
+
+%postun
+%systemd_user_postun_with_restart rain.service
+
+%pre
+%systemd_user_preun rain.service
+
+%preun
+%systemd_user_postun rain.service
 
 %files
 %doc LICENSE README.md
 %_bindir/%name
+%_user_unitdir/%name.service
 
 %changelog
+* Thu Apr 02 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt2
+- Added systemd user service
+
 * Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt1
 - New version
 
