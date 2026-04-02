@@ -1,12 +1,12 @@
 %global import_path github.com/TwiN/gatus/v5
 
 Name: gatus
-Version: 5.30.0
+Version: 5.35.0
 Release: alt1
 
 Summary: Automated developer-oriented status page
 License: Apache-2.0
-Group: Other
+Group: Monitoring
 Url: https://gatus.io
 Vcs: https://github.com/TwiN/gatus
 
@@ -16,7 +16,7 @@ Source2: gatus.service
 Source3: config.yaml
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.4
+BuildRequires: rpm-build-golang golang >= 1.25.5
 
 %description
 Gatus is a developer-oriented health dashboard that gives you the ability to
@@ -73,6 +73,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null \
 %attr(775, _%name, _%name) %dir %_localstatedir/%name
 
 %changelog
+* Thu Apr 02 2026 Alexander Stepchenko <geochip@altlinux.org> 5.35.0-alt1
+- 5.30.0 -> 5.35.0.
+
 * Wed Nov 05 2025 Alexander Stepchenko <geochip@altlinux.org> 5.30.0-alt1
 - 5.29.0 -> 5.30.0.
 
