@@ -1,5 +1,5 @@
 Name: telemt
-Version: 3.3.32
+Version: 3.3.35
 Release: alt1
 
 Summary: MTProxy for Telegram on Rust + Tokio
@@ -60,6 +60,10 @@ install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 %doc README.md docs/
 
 %changelog
+* Wed Apr 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.35-alt1
+- new version 3.3.35
+- telemt.service: add LimitNOFILE=65536 (altbug #58405)
+
 * Thu Mar 26 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.32-alt1
 - new version 3.3.32
 - remove config.full.toml (removed upstream, replaced by docs/CONFIG_PARAMS.en.md)
