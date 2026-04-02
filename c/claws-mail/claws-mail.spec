@@ -19,7 +19,7 @@
 
 Name:   	claws-mail
 Version:	4.4.0
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -29,6 +29,7 @@ Url:		https://www.claws-mail.org
 Vcs:		git://git.claws-mail.org/claws.git
 
 Source: %name-%version.tar
+Source1: ru.po
 Patch:	%name-%version-%release.patch
 
 Obsoletes:	%_oldname < %version
@@ -602,6 +603,10 @@ echo 'echo "%version"' >./version
 
 %patch -p1
 
+# Merge our own and upstream Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
+mv -f merged_ru.po po/ru.po
+
 %autoreconf
 
 %build
@@ -816,6 +821,9 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Apr 02 2026 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt2
+- Used our own Russian translation.
+
 * Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt1
 - Dropped obsoleted patches.
 - Updated to 4.4.0.
