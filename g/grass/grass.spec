@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 8.4.2
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -27,6 +27,7 @@ URL:     https://grass.osgeo.org
 ExcludeArch: %ix86 armh
 
 Source: %name-%version.tar
+Source1: demolocation.tar
 
 Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
@@ -134,6 +135,7 @@ This package contains development headers for GRASS.
 
 %prep
 %setup
+tar xf %SOURCE1
 %add_optflags -I%_includedir/gdal
 # Remove bundled lz4
 rm lib/gis/lz4{.h,.c}
@@ -326,6 +328,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Tue Mar 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 8.4.2-alt2
+- Update demolocation map.
+
 * Sat Nov 22 2025 Andrey Cherepanov <cas@altlinux.org> 8.4.2-alt1
 - New version.
 
