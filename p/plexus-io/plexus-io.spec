@@ -1,22 +1,25 @@
 Name:           plexus-io
 Version:        3.6.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Plexus IO Components
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-io/
 VCS:            https://github.com/codehaus-plexus/plexus-io
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+
+BuildArch:      noarch
 
 %description
 Plexus IO is a set of plexus components, which are designed for use
@@ -26,6 +29,8 @@ in I/O operations.
 
 %prep
 %setup
+
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
 %mvn_build
@@ -37,6 +42,10 @@ in I/O operations.
 %doc *.md NOTICE.txt
 
 %changelog
+* Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 3.6.0-alt2
+- Cosmetic fixes.
+- Fix build with new guava.
+
 * Tue Feb 17 2026 Evgeniy Serov <scala@altlinux.org> 3.6.0-alt1
 - Updated to 3.6.0.
 

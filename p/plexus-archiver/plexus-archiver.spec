@@ -1,23 +1,25 @@
 Name:           plexus-archiver
 Version:        4.11.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Plexus Archiver Component
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-archiver/
 VCS:            https://github.com/codehaus-plexus/plexus-archiver
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
-Patch0:		0001-Removed-unsupported-zstd.patch
+Patch0:         0001-Removed-unsupported-zstd.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+
+BuildArch:      noarch
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -54,6 +56,10 @@ rm src/test/java/org/codehaus/plexus/archiver/manager/ArchiverManagerTest.java
 %doc *.md LICENSE
 
 %changelog
+* Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 4.11.0-alt2
+- Cosmetic fixes.
+- Fix build with new guava.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 4.11.0-alt1
 - Updated to 4.11.0 (without zstd-jni).
 
