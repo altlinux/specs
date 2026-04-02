@@ -1,14 +1,14 @@
 Name: libmicrohttpd
-Version: 1.0.2
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
 License: LGPL-2.1-or-later
 Group: System/Libraries
-Url: http://www.gnu.org/software/libmicrohttpd/
-Vcs: https://github.com/Karlson2k/libmicrohttpd
+URL: http://www.gnu.org/software/libmicrohttpd/
+VCS: git://git.gnunet.org/libmicrohttpd.git
+
 Source: %name-%version.tar
-Patch0: 0001-test_get_close_keep_alive-a-minimal-fix-for-curl-8.1.patch
 
 BuildRequires: libgnutls-devel >= 2.12.20
 # For tests
@@ -27,7 +27,6 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %autoreconf
@@ -55,6 +54,9 @@ This package contains the headers and libraries for libmicrohttpd development.
 %_pkgconfigdir/*
 
 %changelog
+* Thu Apr 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.3-alt1
+- 1.0.3 released
+
 * Mon Sep 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2-alt2
 - fix tests for curl-8.16
 
