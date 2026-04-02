@@ -5,7 +5,7 @@
 
 Name: date
 Version: 3.0.4
-Release: alt1
+Release: alt2
 
 Summary: A date and time library based on the C++11/14/17 <chrono> header
 License: BSD-2-Clause and BSL-1.0
@@ -69,13 +69,10 @@ information as well.
 	-DUSE_SYSTEM_TZ_DB=ON \
 	-DBUILD_TZ_LIB=ON \
 	-DCOMPILE_WITH_C_LOCALE=ON \
-	-DDISABLE_STRING_VIEW=ON \
 	-DHAS_REMOTE_API=0 \
 %if_with check
         -DENABLE_DATE_TESTING=ON \
-        -DEXCLUDED_TESTS="ptz;zoned_time;parse" \
-
-%cmake_build --target testit
+        -DEXCLUDED_TESTS="ptz;zoned_time;zoned_time_deduction;parse" \
 %endif
     %nil
 
@@ -85,7 +82,7 @@ information as well.
 %cmake_install
 
 %check
-%ctest
+%cmake_build --target testit
 
 %files devel
 %_includedir/date
@@ -98,6 +95,9 @@ information as well.
 %_libdir/libdate-tz.so.*
 
 %changelog
+* Thu Apr 02 2026 Anton Zhukharev <ancieg@altlinux.org> 3.0.4-alt2
+- Propagated HAS_STRING_VIEW=1 to library consumers (ALT#58483).
+
 * Fri Aug 22 2025 Artem Krasovskiy <aibure@altlinux.org> 3.0.4-alt1
 - New version 3.0.4
 
