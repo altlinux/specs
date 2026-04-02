@@ -1,21 +1,22 @@
 Name:           maven-archiver
 Version:        3.6.2
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Apache Maven Archiver
 License:        Apache-2.0
 Group:          Development/Java
 URL:            http://maven.apache.org/shared/maven-archiver/
 VCS:            https://github.com/apache/maven-archiver
-BuildArch:      noarch
 
-Source0:	%name-%version.tar
+Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.mockito:mockito-core)
+
+BuildArch:      noarch
 
 %description
 The Maven Archiver is used by other Maven plugins
@@ -36,6 +37,9 @@ to handle packaging.
 %doc README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.6.2-alt1.1
+- Cosmetic fixes.
+
 * Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.6.2-alt1
 - Updated to 3.6.2.
 

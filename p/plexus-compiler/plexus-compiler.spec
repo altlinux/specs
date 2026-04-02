@@ -1,24 +1,25 @@
 Name:           plexus-compiler
 Version:        2.16.2
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Compiler call initiators for Plexus
 License:        MIT and Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-compiler/
 VCS:            https://github.com/codehaus-plexus/plexus-compiler
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  java-devel
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
 BuildRequires:  mvn(org.eclipse.jdt:ecj)
 BuildRequires:  mvn(commons-lang:commons-lang)
+
+BuildArch:      noarch
 
 %description
 Plexus Compiler adds support for using various compilers from a
@@ -69,6 +70,9 @@ This package provides %summary.
 %files pom -f .mfiles-pom
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.16.2-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 2.16.2-alt1
 - Updated to 2.16.2.
 

@@ -1,18 +1,19 @@
 Name:           ee4j-parent
 Version:        2.0.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Eclipse EE4J Top-level Project and community related issues
 License:        EPL-2.0
 Group:          Development/Java
 URL:            https://projects.eclipse.org/projects/ee4j
 VCS:            https://github.com/eclipse-ee4j/ee4j
-BuildArch:      noarch
 
 Source:         %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
+
+BuildArch:      noarch
 
 %description
 Eclipse Enterprise for Java (EE4J) is an open source initiative to create
@@ -37,5 +38,8 @@ baseline for creating new standards.
 %doc ../LICENSE.txt ../*.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.0-alt1.1
+- Cosmetic fixes.
+
 * Sun Feb 22 2026 Evgeniy Serov <scala@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.

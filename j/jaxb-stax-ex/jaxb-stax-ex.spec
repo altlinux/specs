@@ -1,17 +1,17 @@
 Name:           jaxb-stax-ex
 Version:        2.1.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Extended StAX API
 License:        BSD-3-Clause
-Group:		Development/Java
+Group:          Development/Java
+URL:            https://github.com/eclipse-ee4j/jaxb-stax-ex
 VCS:            https://github.com/eclipse-ee4j/jaxb-stax-ex
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -45,11 +45,13 @@ the following areas:
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
+%doc LICENSE.md NOTICE.md
 %doc README.md
 
-
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1.1
+- Cosmetic fixes.
+
 * Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 - Removed import.info.

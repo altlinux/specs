@@ -1,24 +1,22 @@
 Name:           avalon-logkit
 Version:        2.1
-Release:        alt3
+Release:        alt3.1
 
 Summary:        Java logging toolkit
-License:        ASL 2.0
-Group:		Development/Java
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://avalon.apache.org/
-BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/excalibur/%{name}/source/%{name}-%{version}-src.zip
+Source0:        %name-%version-src.zip
 
 Patch0001:      0001-Port-build-script-to-Maven-3.patch
 Patch0002:      0002-Port-to-Java-7.patch
 Patch0003:      0003-Fix-encoding.patch
-Patch0004:	0004-Replace-javax-with-jakarta.patch
+Patch0004:      0004-Replace-javax-with-jakarta.patch
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
-BuildRequires:	unzip
+BuildRequires:  unzip
 
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
@@ -27,21 +25,14 @@ BuildRequires:  mvn(log4j:log4j)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 
-Provides:       deprecated()
+BuildArch:      noarch
 
 %description
 LogKit is a logging toolkit designed for secure performance orientated
 logging in applications. To get started using LogKit, it is recomended
 that you read the whitepaper and browse the API docs.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-Provides:       deprecated()
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+%javadoc_package
 
 %prep
 %setup -q
@@ -53,7 +44,7 @@ mv project.xml pom.xml
 %pom_remove_dep log4j:log4j
 rm -rf src/java/org/apache/log/output/lf5
 
-%mvn_file : %{name}
+%mvn_file : %name
 %mvn_alias : logkit:logkit
 
 # Add proper Apache Felix Bundle Plugin instructions
@@ -83,12 +74,12 @@ rm -rf src/java/org/apache/log/output/lf5
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1-alt3.1
+- Cosmetic fixes.
+
 * Fri Jan 30 2026 Evgeniy Serov <scala@altlinux.org> 2.1-alt3
 - Fix build with new jakarta mail.
 

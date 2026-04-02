@@ -1,33 +1,33 @@
+Epoch:          1
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt8
-Epoch:		1
+Release:        alt8.1
 
 Summary:        Java XML-RPC implementation
-License:        ASL 2.0
-Group: 		Development/Java
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://ws.apache.org/xmlrpc/
+VCS:            https://github.com/evolvedbinary/apache-xmlrpc
 
-Source0:        https://archive.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
+Source0:        apache-%name-%version-src.tar.bz2
 
 # Fix build against modern servlet API by implementing missing interfaces
-Patch0: 0001-Javax-Servlet-API.patch
+Patch0:         0001-Javax-Servlet-API.patch
 # Add OSGi metadata so that xmlrpc can be used in OSGi runtimes
-Patch1: 0002-Add-OSGi-metadata.patch
+Patch1:         0002-Add-OSGi-metadata.patch
 # CVE-2016-5003 - Disallow deserialization of <ex:serializable> tags by default
-Patch2: 0003-disallow-deserialization-of-ex-serializable-tags.patch
+Patch2:         0003-disallow-deserialization-of-ex-serializable-tags.patch
 # CVE-2016-5002 - isallow loading of external DTD
-Patch3: 0004-disallow-loading-external-dtd.patch
+Patch3:         0004-disallow-loading-external-dtd.patch
 # Jakarta Commons HttpClient is obsolete and should not be used, one of the other
 # provider implementations should by used instead by clients of xmlrpc
-Patch4: 0005-Remove-dep-on-ancient-commons-httpclient.patch
+Patch4:         0005-Remove-dep-on-ancient-commons-httpclient.patch
 # CVE-2019-17570 - Deserialization of server-side exception from faultCause in XMLRPC error response
-Patch5: 0006-Fix-for-CVE-2019-17570.patch
-Patch6: 0007-Replace-javax-with-jakarta.patch 
+Patch5:         0006-Fix-for-CVE-2019-17570.patch
+Patch6:         0007-Replace-javax-with-jakarta.patch
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
@@ -41,37 +41,31 @@ BuildArch:      noarch
 Apache XML-RPC is a Java implementation of XML-RPC, a popular protocol
 that uses XML over HTTP to implement remote procedure calls.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
 %package common
-Group: Development/Java
-Summary: Common classes for XML-RPC client and server implementations
+Group:          Development/Java
+Summary:        Common classes for XML-RPC client and server implementations
 
 %description common
-%{summary}.
+%summary.
 
 %package client
-Group: Development/Java
-Summary: XML-RPC client implementation
+Group:          Development/Java
+Summary:        XML-RPC client implementation
 
 %description client
-%{summary}.
+%summary.
 
 %package server
-Group: Development/Java
-Summary: XML-RPC server implementation
+Group:          Development/Java
+Summary:        XML-RPC server implementation
 
 %description server
-%{summary}.
+%summary.
+
+%javadoc_package
 
 %prep
-%setup -q -n apache-%{name}-%{version}-src
+%setup -n apache-%name-%version-src
 %autopatch -p1
 
 sed -i 's/\r//' LICENSE.txt
@@ -90,7 +84,7 @@ sed -i -e '/<source>/d' \
        -e '/<target>/d' pom.xml
 
 %mvn_file :{*} @1
-%mvn_package :*-common %{name}
+%mvn_package :*-common %name
 
 %build
 # ignore test failure because server part needs network
@@ -100,17 +94,17 @@ sed -i -e '/<source>/d' \
 %install
 %mvn_install
 
-%files common -f .mfiles-%{name}
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%files common -f .mfiles-%name
+%doc LICENSE.txt NOTICE.txt
 
-%files client -f .mfiles-%{name}-client
+%files client -f .mfiles-%name-client
 
-%files server -f .mfiles-%{name}-server
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%files server -f .mfiles-%name-server
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1:3.1.3-alt8.1
+- Cosmetic fixes.
+
 * Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 1:3.1.3-alt8
 - Updated for compatibility with the new jaxb api.
 

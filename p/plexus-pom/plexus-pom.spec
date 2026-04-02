@@ -1,18 +1,19 @@
 Name:           plexus-pom
 Version:        25
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Root Plexus Projects POM
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-pom/
 VCS:            https://github.com/codehaus-plexus/plexus-pom
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
+
+BuildArch:      noarch
 
 %description
 The Plexus project provides a full software stack for creating and
@@ -38,6 +39,9 @@ Plexus packages.
 %doc *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 25-alt1.1
+- Cosmetic fixes.
+
 * Tue Feb 17 2026 Evgeniy Serov <scala@altlinux.org> 25-alt1
 - Updated to 25.
 

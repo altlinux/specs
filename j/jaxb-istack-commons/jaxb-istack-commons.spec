@@ -1,17 +1,17 @@
 Name:           jaxb-istack-commons
 Version:        4.2.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        iStack Common Utility Code
 License:        BSD-3-Clause
-Group:		Development/Java
+Group:          Development/Java
+URL:            https://github.com/eclipse-ee4j/jaxb-istack-commons
 VCS:            https://github.com/eclipse-ee4j/jaxb-istack-commons
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -29,43 +29,43 @@ BuildArch:      noarch
 Code shared between JAXP, JAXB, SAAJ, and JAX-WS projects.
 
 %package -n istack-commons-maven-plugin
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons Maven Mojo
 %description -n istack-commons-maven-plugin
 This package contains the istack-commons Maven Mojo.
 
 %package -n import-properties-plugin
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons import properties plugin
 %description -n import-properties-plugin
 This package contains the istack-commons import properties Maven Mojo.
 
 %package -n istack-commons-runtime
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons runtime
 %description -n istack-commons-runtime
 This package contains istack-commons runtime.
 
 %package -n istack-commons-tools
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons tools
 %description -n istack-commons-tools
 This package contains istack-commons tools.
 
 %package -n istack-commons-buildtools
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons buildtools
 %description -n istack-commons-buildtools
 This package contains istack-commons buildtools.
 
 %package -n istack-commons-soimp
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons soimp
 %description -n istack-commons-soimp
 This package contains istack-commons soimp.
 
 %package -n istack-commons-test
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        istack-commons test
 %description -n istack-commons-test
 This package contains istack-commons test.
@@ -87,27 +87,30 @@ This package contains istack-commons test.
 %mvn_install
 
 %files -n istack-commons-maven-plugin -f .mfiles-istack-commons-maven-plugin
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n import-properties-plugin -f .mfiles-import-properties-plugin
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n istack-commons-runtime -f .mfiles-istack-commons-runtime
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n istack-commons-tools -f .mfiles-istack-commons-tools
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n istack-commons-buildtools -f .mfiles-istack-commons-buildtools
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n istack-commons-test -f .mfiles-istack-commons-test
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files -n istack-commons-soimp -f .mfiles-istack-commons-soimp
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt1.1
+- Cosmetic fixes.
+
 * Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt1
 - Updated to 4.2.0.
 - Removed import.info.

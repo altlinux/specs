@@ -1,24 +1,25 @@
-Name:          ed25519-java
-Version:       0.3.0
-Release:       alt2
-Summary:       Implementation of EdDSA (Ed25519) in Java
+Name:           ed25519-java
+Version:        0.3.0
+Release:        alt2.1
 
-Group:         Development/Java
-License:       CC0
-URL:           https://github.com/str4d/ed25519-java
-Source0:       https://github.com/str4d/ed25519-java/archive/v%{version}/%{name}-%{version}.tar.gz
+Summary:        Implementation of EdDSA (Ed25519) in Java
+License:        CC0
+Group:          Development/Java
+URL:            https://github.com/str4d/ed25519-java
+VCS:            https://github.com/str4d/ed25519-java
 
-# https://github.com/str4d/ed25519-java/commit/e0ac35769db8553fb714b09f0d3f3d2b001fd033
-Patch0: 0001-EdDSAEngine.initVerify-Handle-any-non-EdDSAPublicKey.patch
-Patch1: 0002-Disable-test-that-relies-on-internal-sun-JDK-classes.patch
+Source0:        %name-%version.tar.gz
 
-BuildRequires: /proc
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+Patch0:         0001-EdDSAEngine.initVerify-Handle-any-non-EdDSAPublicKey.patch
+Patch1:         0002-Disable-test-that-relies-on-internal-sun-JDK-classes.patch
 
-BuildArch:     noarch
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+BuildArch:      noarch
 
 %description
 This is an implementation of EdDSA in Java. Structurally, it
@@ -33,13 +34,7 @@ There are two internal implementations:
   - a bit slower and not constant-time, but compatible
     with any EdDSA parameter specification.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%javadoc_package
 
 %prep
 %setup
@@ -53,7 +48,7 @@ This package contains javadoc for %{name}.
 # Unavailable plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
 
-%mvn_file net.i2p.crypto:eddsa %{name} eddsa
+%mvn_file net.i2p.crypto:eddsa %name eddsa
 
 # Remove hard-coded source/target
 %pom_xpath_remove pom:plugin/pom:configuration/pom:target
@@ -69,12 +64,12 @@ This package contains javadoc for %{name}.
 
 %files -f .mfiles
 %doc README.md
-%doc --no-dereference LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 0.3.0-alt2.1
+- Cosmetic fixes.
+
 * Fri Dec 19 2025 Evgeniy Serov <scala@altlinux.org> 0.3.0-alt2
 - fixed FTBFS
 

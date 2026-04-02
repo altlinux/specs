@@ -1,18 +1,20 @@
 Name:           easymock
 Version:        5.6.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Easy mock objects
 License:        Apache-2.0
-Group:		Development/Java
+Group:          Development/Java
 URL:            http://www.easymock.org
-VCS:		https://github.com/easymock/easymock
+VCS:            https://github.com/easymock/easymock
 
 Source0:        %name-%version.tar
 
-BuildRequires:  /proc
+Patch1:         0001-Disable-android-support.patch
+Patch2:         0002-Migrate-from-deprecated-Hamcrest-is-to-isA.patch
+
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
@@ -23,9 +25,6 @@ BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(junit:junit)
 
-Patch1:         0001-Disable-android-support.patch
-Patch2:         0002-Migrate-from-deprecated-Hamcrest-is-to-isA.patch
-
 BuildArch:      noarch
 
 %description
@@ -34,13 +33,7 @@ them on the fly using Java's proxy mechanism. Due to EasyMock's unique style
 of recording expectations, most refactorings will not affect the Mock Objects.
 So EasyMock is a perfect fit for Test-Driven Development.
 
-%package javadoc
-Group: 		Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: 	noarch
-
-%description javadoc
-This package contains the API documentation for %name.
+%javadoc_package
 
 %prep
 %setup
@@ -52,7 +45,6 @@ This package contains the API documentation for %name.
 %pom_remove_plugin :license-maven-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_dep -r :dexmaker core
-
 
 rm core/src/main/java/org/easymock/internal/Android*.java
 rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
@@ -69,12 +61,12 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 
 %files -f .mfiles
 %doc *.md 
-%doc --no-dereference core/LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference core/LICENSE.txt
+%doc core/LICENSE.txt
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 5.6.0-alt1.1
+- Cosmetic fixes.
+
 * Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 5.6.0-alt1
 - fixed FTBFS
 - new version 5.6.0

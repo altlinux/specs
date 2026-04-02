@@ -1,21 +1,20 @@
 Name:           log4j
 Version:        2.20.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Java logging package
 License:        Apache-2.0
-Group:		Development/Java
-URL:            https://logging.apache.org/%{name}
-VCS:		https://github.com/apache/logging-log4j2
+Group:          Development/Java
+URL:            https://logging.apache.org/%name
+VCS:            https://github.com/apache/logging-log4j2
 
-Source:		%name-%version.tar
+Source0:        %name-%version.tar
 
-Patch0:		logging-log4j-Remove-unsupported-EventDataConverter.patch
-Patch1:		0002-Remove-usage-of-toolchains.patch
+Patch0:         logging-log4j-Remove-unsupported-EventDataConverter.patch
+Patch1:         0002-Remove-usage-of-toolchains.patch
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -41,14 +40,14 @@ variety of output targets.
 %javadoc_package
 
 %package slf4j
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        Binding between LOG4J 2 API and SLF4J
 
 %description slf4j
 Binding between LOG4J 2 API and SLF4J.
 
 %package jcl
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        Apache Log4j Commons Logging Bridge
 
 %description jcl
@@ -87,10 +86,10 @@ Apache Log4j 2 Bill of Material
 find -name '*.jar' -o -name '*.class' -delete
 rm -rf docs/api
  
-%pom_disable_module %{name}-distribution
-%pom_disable_module %{name}-samples
-%pom_disable_module %{name}-flume-ng
-%pom_disable_module %{name}-perf
+%pom_disable_module %name-distribution
+%pom_disable_module %name-samples
+%pom_disable_module %name-flume-ng
+%pom_disable_module %name-perf
  
 %pom_remove_dep -r org.codehaus.groovy:groovy-bom
 %pom_remove_dep -r com.fasterxml.jackson:jackson-bom
@@ -109,13 +108,13 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
  
 %pom_remove_dep -r javax.jms:javax.jms-api
  
-%pom_disable_module %{name}-jdbc-dbcp2
+%pom_disable_module %name-jdbc-dbcp2
  
-%pom_disable_module %{name}-mongodb3
-%pom_disable_module %{name}-mongodb4
+%pom_disable_module %name-mongodb3
+%pom_disable_module %name-mongodb4
  
-%pom_remove_dep :jconsole %{name}-jmx-gui
-%pom_add_dep sun.jdk:jconsole %{name}-jmx-gui
+%pom_remove_dep :jconsole %name-jmx-gui
+%pom_add_dep sun.jdk:jconsole %name-jmx-gui
  
 %pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core
  
@@ -126,26 +125,25 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # Make compiled code compatible with OpenJDK 8
 %pom_xpath_inject 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration' "<release>8</release>"
  
-%pom_disable_module %{name}-api-test
-%pom_disable_module %{name}-core-test
-%pom_disable_module %{name}-layout-template-json-test
-%pom_disable_module %{name}-slf4j2-impl
-	
-%pom_disable_module %{name}-taglib
-%pom_disable_module %{name}-jmx-gui
-%pom_disable_module %{name}-jakarta-web
-%pom_disable_module %{name}-iostreams
-%pom_disable_module %{name}-jul
-%pom_disable_module %{name}-core-its
-%pom_disable_module %{name}-jpa
-%pom_disable_module %{name}-couchdb
-%pom_disable_module %{name}-cassandra
-%pom_disable_module %{name}-appserver
-%pom_disable_module %{name}-spring-cloud-config
-%pom_disable_module %{name}-spring-boot
-%pom_disable_module %{name}-docker
-%pom_disable_module %{name}-kubernetes
-%pom_disable_module %{name}-layout-template-json
+%pom_disable_module %name-api-test
+%pom_disable_module %name-core-test
+%pom_disable_module %name-layout-template-json-test
+%pom_disable_module %name-slf4j2-impl
+%pom_disable_module %name-taglib
+%pom_disable_module %name-jmx-gui
+%pom_disable_module %name-jakarta-web
+%pom_disable_module %name-iostreams
+%pom_disable_module %name-jul
+%pom_disable_module %name-core-its
+%pom_disable_module %name-jpa
+%pom_disable_module %name-couchdb
+%pom_disable_module %name-cassandra
+%pom_disable_module %name-appserver
+%pom_disable_module %name-spring-cloud-config
+%pom_disable_module %name-spring-boot
+%pom_disable_module %name-docker
+%pom_disable_module %name-kubernetes
+%pom_disable_module %name-layout-template-json
  
 %pom_remove_dep -r :jackson-core
 %pom_remove_dep -r :jackson-databind
@@ -162,18 +160,18 @@ rm log4j-1.2-api/src/main/java/org/apache/log4j/builders/layout/*Xml*.java
 rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
 rm -r log4j-1.2-api/src/main/java/org/apache/log4j/or/jms
 
-%mvn_alias :%{name}-1.2-api %{name}:%{name}
-%mvn_file ':{%{name}-1.2-api}' %{name}/@1 %{name}
+%mvn_alias :%name-1.2-api %name:%name
+%mvn_file ':{%name-1.2-api}' %name/@1 %name
  
-%mvn_package ':%{name}-slf4j-impl' slf4j
-%mvn_package ':%{name}-to-slf4j' slf4j
-%mvn_package ':%{name}-taglib' taglib
-%mvn_package ':%{name}-jcl' jcl
-%mvn_package ':%{name}-jmx-gui' jmx-gui
-%mvn_package ':%{name}-web' web
-%mvn_package ':%{name}-bom' bom
-%mvn_package ':%{name}-cassandra' nosql
-%mvn_package ':%{name}-couchdb' nosql
+%mvn_package :%name-slf4j-impl slf4j
+%mvn_package :%name-to-slf4j slf4j
+%mvn_package :%name-taglib taglib
+%mvn_package :%name-jcl jcl
+%mvn_package :%name-jmx-gui jmx-gui
+%mvn_package :%name-web web
+%mvn_package :%name-bom bom
+%mvn_package :%name-cassandra nosql
+%mvn_package :%name-couchdb nosql
  
 %mvn_package :log4j-core-its __noinstall
  
@@ -193,7 +191,6 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %pom_remove_plugin -r org.apache.maven.plugins:maven-failsafe-plugin
 %pom_remove_plugin -r org.ops4j.pax.exam:exam-maven-plugin
 
-
 %build
 %mvn_build -f
 
@@ -209,6 +206,9 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %files bom -f .mfiles-bom
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.20.0-alt1.1
+- Cosmetic fixes.
+
 * Thu Jan 29 2026 Evgeniy Serov <scala@altlinux.org> 2.20.0-alt1
 - Updated to 2.20.0.
 

@@ -1,18 +1,17 @@
 Name:           jaxb
 Version:        4.0.6
-Release:        alt1
+Release:        alt1.1
+
 Summary:        JAXB Reference Implementation
-
-Group: 		Development/Java
 License:        BSD-3-Clause
-URL:            https://github.com/eclipse-ee4j/jaxb-ri
-BuildArch:      noarch
+Group:          Development/Java
+URL:            https://eclipse-ee4j.github.io/jaxb-ri/
+VCS:            https://github.com/eclipse-ee4j/jaxb-ri
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -35,6 +34,8 @@ BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
 BuildRequires:  mvn(xmlunit:xmlunit)
 BuildRequires:  mvn(com.google.code.javaparser:javaparser)
 
+BuildArch:      noarch
+
 %description
 Jakarta XML Binding gives Java developers an efficient and standard way of
 mapping between XML and Java code. Java developers using Jakarta XML Binding
@@ -43,22 +44,22 @@ have to be experts in XML. Jakarta XML Binding makes it easier for developers
 to extend their applications with XML and Web Services technologies.
 
 %package codemodel
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        Codemodel Core
 %description codemodel
 The core functionality of the CodeModel java source code generation
 library.
 
 %package codemodel-annotation-compiler
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        Codemodel Annotation Compiler
 %description codemodel-annotation-compiler
 The annotation compiler ant task for the CodeModel java source code
 generation library.
 
 %package bom
-Group: 		Development/Java
-Summary:	JAXB BOM
+Group:          Development/Java
+Summary:        JAXB BOM
 %description bom
 JAXB Bill of Materials (BOM)
 
@@ -70,7 +71,7 @@ Summary:        JAXB BOM with ALL dependencies
 If you are not sure - DON'T USE THIS BOM. Use com.sun.xml.bind:jaxb-bom instead.
 
 %package codemodel-parent
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        Codemodel
 %description codemodel-parent
 Java source code generation library.
@@ -127,32 +128,32 @@ In other words: the *tool* to generate java classes for the given xml
 representation.
 
 %package relaxng-datatype
-Group:		Development/Java
+Group:          Development/Java
 Summary:        RelaxNG Datatype
 %description relaxng-datatype
 RelaxNG Datatype library.
 
 %package rngom
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        RELAX NG Object Model/Parser
 %description rngom
 This package contains RELAX NG Object Model/Parser.
 
 %package txw2
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        TXW2 Runtime
 %description txw2
 TXW is a library that allows you to write XML documents.
 
 %package txwc2
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        TXW2 Compiler
 %description txwc2
 JAXB schema generator. The tool to generate XML schema based on java
 classes.
 
 %package xsom
-Group: 		Development/Java
+Group:          Development/Java
 Summary:        XML Schema Object Model
 %description xsom
 XML Schema Object Model (XSOM) is a Java library that allows applications to
@@ -187,60 +188,63 @@ rm codemodel/codemodel/src/test/java/com/sun/codemodel/tests/JDefinedClassInstan
 %mvn_install
 
 %files codemodel -f .mfiles-codemodel
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files codemodel-annotation-compiler -f .mfiles-codemodel-annotation-compiler
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files bom -f .mfiles-jaxb-bom
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files bom-ext -f .mfiles-jaxb-bom-ext
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files codemodel-parent -f .mfiles-jaxb-codemodel-parent
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files core -f .mfiles-jaxb-core
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files external-parent -f .mfiles-jaxb-external-parent
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files jxc -f .mfiles-jaxb-jxc
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files runtime-parent -f .mfiles-jaxb-runtime-parent
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files runtime -f .mfiles-jaxb-runtime
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files parent -f .mfiles-jaxb-parent
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files txw-parent -f .mfiles-jaxb-txw-parent
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files xjc -f .mfiles-jaxb-xjc
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files relaxng-datatype -f .mfiles-relaxng-datatype
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files rngom -f .mfiles-rngom
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files txw2 -f .mfiles-txw2
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files txwc2 -f .mfiles-txwc2
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %files xsom -f .mfiles-xsom
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 4.0.6-alt1.1
+- Cosmetic fixes.
+
 * Fri Jan 16 2026 Evgeniy Serov <scala@altlinux.org> 4.0.6-alt1
 - Updated to 4.0.6.
 - Removed import.info.

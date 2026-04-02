@@ -1,25 +1,25 @@
 Name:           snakeyaml
 Version:        2.5
-Release:        alt1
+Release:        alt1.1
 
 Summary:        YAML parser and emitter for Java
 License:        Apache-2.0
-Group: 		Development/Java
-URL:            https://bitbucket.org/snakeyaml/snakeyaml.git
+Group:          Development/Java
+URL:            https://bitbucket.org/snakeyaml/snakeyaml
+VCS:            https://bitbucket.org/snakeyaml/snakeyaml
 
 Source:         %name-%version.tar
 
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
+BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+
 BuildArch:      noarch
-
-BuildRequires: 	/proc
-BuildRequires: 	jpackage-default
-BuildRequires:  maven-local
-
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
-BuildRequires: mvn(org.openjdk.jmh:jmh-core)
-BuildRequires: mvn(org.openjdk.jmh:jmh-generator-annprocess)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 
 %description
 SnakeYAML features:
@@ -33,13 +33,7 @@ SnakeYAML features:
     * when you plan to feed the parser with untrusted data please study the
       settings which allow to restrict incoming data.
 
-%package javadoc
-Group: 		Development/Java
-Summary: 	Javadoc for %name
-BuildArch: 	noarch
-
-%description javadoc
-This package contains the API documentation for %name.
+%javadoc_package
 
 %prep
 %setup
@@ -55,14 +49,7 @@ This package contains the API documentation for %name.
 %pom_remove_dep :lombok
 
 rm -rf src/test/java/examples/jodatime
-#rm -rf src/test/java/org/yaml/snakeyaml/jmh
-
 rm src/test/java/org/yaml/snakeyaml/reader/ReaderBomTest.java
-
-# fails in rpmbuild only due to different locale
-#rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.java
-# fails after unbundling
-#rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
 
 # Tests using dependencies we don't have/have removed
 rm src/test/java/org/yaml/snakeyaml/emitter/template/VelocityTest.java
@@ -73,8 +60,6 @@ rm src/test/java/org/yaml/snakeyaml/issues/issue527/Fuzzy47047Test.java
 rm src/test/java/org/yaml/snakeyaml/issues/issue530/Fuzzy47039Test.java
 rm src/test/java/org/yaml/snakeyaml/issues/issue543/Fuzzer50355Test.java
 rm src/test/java/org/yaml/snakeyaml/issues/issue525/FuzzyStackOverflowTest.java
-#rm src/test/java/org/yaml/snakeyaml/issues/issue529/Fuzzy47028Test.java
-#rm src/test/java/org/yaml/snakeyaml/issues/issue531/Fuzzy47081Test.java
 rm src/test/java/org/yaml/snakeyaml/issues/issue526/Fuzzy47027Test.java
 rm src/test/java/org/yaml/snakeyaml/issues/issue1100/JacksonTest.java
 
@@ -93,6 +78,7 @@ rm src/test/resources/pyyaml/invalid-utf8-byte.stream-error
 rm src/test/resources/pyyaml/empty-document-bug.data
 rm src/test/resources/pyyaml/spec-05-02-utf16be.data
 rm -rf src/test/resources/fuzzer/
+
 # Test using the jpeg data removed above
 rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
 
@@ -105,10 +91,10 @@ rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
 %files -f .mfiles
 %doc LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.5-alt1.1
+- Cosmetic fixes.
+
 * Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.5-alt1
 - updated to 2.5
 - removed import.info

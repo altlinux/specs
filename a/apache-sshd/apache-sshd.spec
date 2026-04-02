@@ -1,21 +1,20 @@
 Epoch:          1
 Name:           apache-sshd
 Version:        2.17.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Apache MINA sshd is a comprehensive Java library for client- and server-side SSH
 License:        Apache-2.0 AND ISC
 Group:          Development/Java
 URL:            http://mina.apache.org/sshd-project
 VCS:            https://github.com/apache/mina-sshd
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
 Patch0:         0001-Avoid-optional-dependency-on-native-tomcat-APR-libra.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -27,6 +26,8 @@ BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+
+BuildArch:      noarch
 
 %description
 Apache SSHD is a 100% pure java library to support the SSH protocols on both
@@ -70,6 +71,9 @@ rm -rv sshd-core/src/main/java/org/apache/sshd/agent/unix
 %doc CHANGES.md LICENSE.txt NOTICE.txt assembly/src/main/legal/licenses/jbcrypt.txt
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1:2.17.1-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 25 2026 Evgeniy Serov <scala@altlinux.org> 1:2.17.1-alt1
 - Updated to 2.17.1.
 

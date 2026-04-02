@@ -1,28 +1,25 @@
-Name:          	jackson-dataformats-text
-Version:       	2.20.1
-Release:       	alt1
+Name:           jackson-dataformats-text
+Version:        2.20.1
+Release:        alt1.1
 
-Summary:       	Jackson standard text-format data format backends
-License:       	ASL 2.0
-Group: 		Development/Java
-URL:  		https://github.com/FasterXML/jackson-dataformats-text
+Summary:        Jackson standard text-format data format backends
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://github.com/FasterXML/jackson-dataformats-text
+VCS:            https://github.com/FasterXML/jackson-dataformats-text
 
-Source:       	%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires: 	/proc
-BuildRequires: 	jpackage-default
-BuildRequires:  maven-local
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
-
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(org.yaml:snakeyaml)
 BuildRequires:  mvn(org.jetbrains:annotations)
-
-#BuildRequires:	jflex
 
 BuildArch:      noarch
 
@@ -30,8 +27,8 @@ BuildArch:      noarch
 Parent pom for Jackson text-format dataformats.
 
 %package -n jackson-dataformat-csv
-Group: Development/Java
-Summary: Support for reading and writing CSV-encoded data via Jackson abstractions
+Group:          Development/Java
+Summary:        Support for reading and writing CSV-encoded data via Jackson abstractions
 
 %description -n jackson-dataformat-csv
 Jackson data format module for reading and writing CSV encoded data, either
@@ -39,8 +36,8 @@ as "raw" data (sequence of String arrays), or via data binding to/from Java
 Objects (POJOs).
 
 %package -n jackson-dataformat-properties
-Group: Development/Java
-Summary: Support for reading and writing content of "Java Properties" files
+Group:          Development/Java
+Summary:        Support for reading and writing content of "Java Properties" files
 
 %description -n jackson-dataformat-properties
 Jackson data format module that supports reading and writing Java Properties
@@ -49,8 +46,8 @@ assuming dotted notation, but configurable from non-nested to other
 separators).
 
 %package -n jackson-dataformat-yaml
-Group: Development/Java
-Summary: Support for reading and writing YAML-encoded data via Jackson abstractions
+Group:          Development/Java
+Summary:        Support for reading and writing YAML-encoded data via Jackson abstractions
 
 %description -n jackson-dataformat-yaml
 Jackson extension component for reading and writing YAML encoded data.
@@ -58,20 +55,13 @@ SnakeYAML library is used for low-level YAML parsing. This project adds
 necessary abstractions on top to make things work with other Jackson
 functionality.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
+%javadoc_package
 
 %prep
 %setup
 
 # TODO: needed for TOML
 %pom_remove_plugin :jflex-maven-plugin toml
-
 
 %pom_disable_module toml
 # can help compile without jflex-maven-plugin
@@ -91,24 +81,24 @@ This package contains API documentation for %{name}.
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %files -n jackson-dataformat-csv
 %doc csv/README.md csv/release-notes/*
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %files -n jackson-dataformat-properties
 %doc properties/README.md properties/release-notes/*
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %files -n jackson-dataformat-yaml
 %doc yaml/README.md yaml/release-notes/*
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1.1
+- Cosmetic fixes.
+
 * Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1
 - fixed FTBFS
 - new version 2.20.1 (without toml)

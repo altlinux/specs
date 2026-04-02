@@ -1,25 +1,26 @@
 Name:           angus-activation
 Version:        2.0.3
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Angus Activation
 License:        BSD-3-Clause
 Group:          Development/Java
 URL:            https://eclipse-ee4j.github.io/angus-activation/
 VCS:            https://github.com/eclipse-ee4j/angus-activation
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
 Patch0:         0001-Remove-GraalVM-native-image-dependency.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+
+BuildArch:      noarch
 
 %description
 This project provides the implementation of Jakarta Activation Specification
@@ -51,5 +52,8 @@ operation(s).
 %doc *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.3-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 25 2026 Evgeniy Serov <scala@altlinux.org> 2.0.3-alt1
 - Initial build for Sisyphus.

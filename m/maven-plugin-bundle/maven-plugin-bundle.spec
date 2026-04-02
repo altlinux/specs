@@ -1,18 +1,16 @@
 Name:           maven-plugin-bundle
 Version:        5.1.9
-Release:        alt1
+Release:        alt1.1
+
 Summary:        Maven Bundle Plugin
-
 License:        Apache-2.0
-Group: 		Development/Java
+Group:          Development/Java
 URL:            https://felix.apache.org
-BuildArch:      noarch
 
-Source0:        https://repo1.maven.org/maven2/org/apache/felix/maven-bundle-plugin/%{version}/maven-bundle-plugin-%{version}-source-release.tar.gz
+Source0:        maven-bundle-plugin-%version-source-release.tar.gz
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
@@ -24,28 +22,23 @@ BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.jdom:jdom)
 
+BuildArch:      noarch
+
 %description
 Provides a maven plugin that supports creating an OSGi bundle
 from the contents of the compilation classpath along with its
 resources and dependencies. Plus a zillion other features.
 
-%package javadoc
-Group: 		Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: 	noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n maven-bundle-plugin-%{version}
+%setup -n maven-bundle-plugin-%version
 
 find -name '*.jar' -delete
 
 %pom_remove_dep :org.apache.felix.bundlerepository
 
 rm -rf src/main/java/org/apache/felix/obrplugin/
-#rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 
 %build
 %mvn_build -f -- -Dmaven.compiler.target=8
@@ -54,12 +47,12 @@ rm -rf src/main/java/org/apache/felix/obrplugin/
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 5.1.9-alt1.1
+- Cosmetic fixes.
+
 * Tue Jan 13 2026 Evgeniy Serov <scala@altlinux.org> 5.1.9-alt1
 - Updated to 5.1.9.
 - Removed import.info.

@@ -1,22 +1,23 @@
 Name:           plexus-interactivity
-Summary:        Plexus Interactivity Handler Component
 Version:        1.5.1
+Release:        alt1.1
 
-Release:        alt1
+Summary:        Plexus Interactivity Handler Component
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-interactivity/
 VCS:            https://github.com/codehaus-plexus/plexus-interactivity
-BuildArch:      noarch
 
-Source:        %name-%version.tar
+Source:         %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.jline:jline-reader)
+
+BuildArch:      noarch
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -44,6 +45,9 @@ rm plexus-interactivity-api/src/test/java/org/codehaus/plexus/components/interac
 %doc *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1
 - Updated to 1.5.1.
 

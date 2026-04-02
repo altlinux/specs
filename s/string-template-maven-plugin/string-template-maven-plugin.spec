@@ -1,29 +1,29 @@
 Name:           string-template-maven-plugin
 Version:        1.1
-Release:        alt3
+Release:        alt3.1
 
 Summary:        Execute StringTemplate files during a maven build
 License:        MIT
-Group:		Development/Java
-VCS:		https://github.com/kevinbirch/string-template-maven-plugin
+Group:          Development/Java
 URL:            https://kevinbirch.github.io/string-template-maven-plugin
-BuildArch:      noarch
+VCS:            https://github.com/kevinbirch/string-template-maven-plugin
 
-Source0:        https://github.com/kevinbirch/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        https://raw.githubusercontent.com/kevinbirch/%{name}/master/LICENSE
+Source0:        %name-%version.tar.gz
+Source1:        LICENSE
 
 Patch0:         %name-aether.patch
 Patch2:         %name-descriptor.patch
-Patch3:		%name-annotations.patch
+Patch3:         %name-annotations.patch
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.antlr:ST4)
-BuildRequires:	mvn(org.twdata.maven:mojo-executor-maven-plugin)
+BuildRequires:  mvn(org.twdata.maven:mojo-executor-maven-plugin)
+
+BuildArch:      noarch
 
 %description
 This plugin allows you to execute StringTemplate template files during
@@ -33,10 +33,10 @@ or from a Java class specified to be executed.
 %javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -n %name-%name-%version
 %autopatch -p1
 
-cp -p %{SOURCE1} .
+cp -p %SOURCE1 .
 
 # Updated name
 %pom_change_dep :stringtemplate :ST4
@@ -69,11 +69,14 @@ sed -i 's/1\.6/1.8/g' pom.xml tests/pom.xml \
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}
+%files -f .mfiles-%name
 %doc README.md
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.1-alt3.1
+- Cosmetic fixes.
+
 * Thu Feb 12 2026 Evgeniy Serov <scala@altlinux.org> 1.1-alt3
 - FTBFS fix
 - updated patches

@@ -1,17 +1,17 @@
 Name:           google-gson
 Version:        2.13.2
-Release:        alt1
-Summary:        Java lib for conversion of Java objects into JSON representation
+Release:        alt1.1
 
-Group: 		Development/Java
+Summary:        Java lib for conversion of Java objects into JSON representation
 License:        Apache-2.0
+Group:          Development/Java
+URL:            https://google.github.io/gson/
 VCS:            https://github.com/google/gson
 
 Source:         %name-%version.tar
 
-BuildRequires: 	/proc
-BuildRequires: 	jpackage-default
-BuildRequires:  maven-local
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(kr.motd.maven:os-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
@@ -32,13 +32,7 @@ JSON representation. It can also be used to convert a JSON string into an
 equivalent Java object. Gson can work with arbitrary Java objects including
 pre-existing objects that you do not have source-code of.
 
-%package javadoc
-Group: 		Development/Java
-Summary:        API documentation for %{name}
-BuildArch: 	noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
+%javadoc_package
 
 %prep
 %setup
@@ -74,13 +68,13 @@ sed 's/${project.version}/%version/' gson/src/main/java-templates/com/google/gso
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
+%doc LICENSE
 %doc README.md CHANGELOG.md UserGuide.md
 
-%files javadoc  -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.13.2-alt1.1
+- Cosmetic fixes.
+
 * Mon Jan 12 2026 Evgeniy Serov <scala@altlinux.org> 2.13.2-alt1
 - Updated to 2.13.2.
 

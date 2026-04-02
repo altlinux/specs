@@ -1,17 +1,17 @@
 Name:           jaxb-api
 Version:        4.0.2
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Jakarta XML Binding API
 License:        BSD-3-Clause
 Group:          Development/Java
+URL:            https://github.com/jakartaee/jaxb-api
 VCS:            https://github.com/jakartaee/jaxb-api
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -43,9 +43,12 @@ sed -i '/<compilerArgs>/,/<\/compilerArgs>/d' api/pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
+%doc LICENSE.md NOTICE.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 4.0.2-alt1.1
+- Cosmetic fixes.
+
 * Mon Jan 19 2026 Evgeniy Serov <scala@altlinux.org> 4.0.2-alt1
 - Updated to 4.0.2.
 - Removed import.info.

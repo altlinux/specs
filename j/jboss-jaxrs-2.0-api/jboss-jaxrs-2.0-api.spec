@@ -1,37 +1,34 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.0.0
 %global namedreltag .Final
-%global namedversion %{version}%{?namedreltag}
 %global oname jboss-jaxrs-api_2.0_spec
 
-Name:          jboss-jaxrs-2.0-api
-Version:       1.0.0
-Release:       alt2
-Summary:       JAX-RS 2.0: The Java API for RESTful Web Services
-# ASL 2.0 src/main/java/javax/ws/rs/core/GenericEntity.java
-License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
-URL:           https://github.com/jboss/jboss-jaxrs-api_spec
-Source0:       https://github.com/jboss/jboss-jaxrs-api_spec/archive/%{oname}-%{namedversion}.tar.gz
+Name:           jboss-jaxrs-2.0-api
+Version:        1.0.0
+Release:        alt2.1
 
-Patch1:        0001-Replace-javax-with-jakarta.patch
+Summary:        JAX-RS 2.0: The Java API for RESTful Web Services
+License:        (CDDL-1.0 or GPLv2 with exceptions) and Apache-2.0
+Group:          Development/Java
+URL:            https://github.com/jboss/jboss-jaxrs-api_spec
+VCS:            https://github.com/jboss/jboss-jaxrs-api_spec
 
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.jboss:jboss-parent:pom:)
-BuildRequires: mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+Source0:        %oname-%version%namedreltag.tar.gz
 
-BuildArch:     noarch
+Patch1:         0001-Replace-javax-with-jakarta.patch
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+
+BuildArch:      noarch
 
 %description
 JSR 339: JAX-RS 2.0: The Java API for RESTful Web Services.
 
 %prep
-%setup -q -n jboss-jaxrs-api_spec-%{oname}-%{namedversion}
+%setup -n jboss-jaxrs-api_spec-%oname-%version%namedreltag
 %autopatch -p1
 
 # Unneeded plugin
@@ -39,7 +36,7 @@ JSR 339: JAX-RS 2.0: The Java API for RESTful Web Services.
 
 %pom_add_dep jakarta.xml.bind:jakarta.xml.bind-api
 
-%mvn_file :%{oname} %{name}
+%mvn_file :%oname %name
 
 # remove after upgrading narayana
 %mvn_alias ":jboss-jaxrs-api_2.0_spec" "org.jboss.resteasy:jaxrs-api"
@@ -51,9 +48,12 @@ JSR 339: JAX-RS 2.0: The Java API for RESTful Web Services.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.0.0-alt2.1
+- Cosmetic fixes.
+
 * Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 1.0.0-alt2
 - Updated for compatibility with the new jaxb api.
 

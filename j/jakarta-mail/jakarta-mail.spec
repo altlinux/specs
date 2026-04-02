@@ -1,17 +1,17 @@
 Name:           jakarta-mail
 Version:        2.1.5
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Jakarta Mail API
 License:        EPL-2.0 or GPLv2 with exceptions
-Group:		Development/Java
+Group:          Development/Java
+URL:            https://jakartaee.github.io/mail-api/
 VCS:            https://github.com/eclipse-ee4j/mail
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -42,10 +42,13 @@ protocol-independent framework to build mail and messaging applications.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 %doc ../README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1.5-alt1.1
+- Cosmetic fixes.
+
 * Tue Jan 27 2026 Evgeniy Serov <scala@altlinux.org> 2.1.5-alt1
 - Updated to 2.1.5.
 

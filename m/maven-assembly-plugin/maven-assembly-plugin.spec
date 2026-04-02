@@ -1,18 +1,17 @@
 Name:           maven-assembly-plugin
 Version:        3.7.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Maven Assembly Plugin
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://maven.apache.org/plugins/maven-assembly-plugin/
 VCS:            https://github.com/apache/maven-assembly-plugin
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
@@ -20,6 +19,8 @@ BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(jaxen:jaxen)
+
+BuildArch:      noarch
 
 %description
 A Maven plugin to create archives of your project's sources, classes,
@@ -40,6 +41,9 @@ dependencies etc. from flexible assembly descriptors.
 %doc README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.7.1-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 3.7.1-alt1
 - Updated to 3.7.1.
 

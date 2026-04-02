@@ -1,18 +1,17 @@
 Name:           maven-scm
 Version:        2.2.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Apache Maven SCM (Plugin)
 License:        Apache-2.0
 Group:          Development/Java
 URL:            http://maven.apache.org/scm
 VCS:            https://github.com/apache/maven-scm
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
@@ -22,6 +21,8 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.commons:commons-text)
 BuildRequires:  mvn(org.eclipse.jgit:org.eclipse.jgit.ssh.apache)
+
+BuildArch:      noarch
 
 %description
 Maven SCM supports Maven plugins (for example maven-release-plugin) and other
@@ -49,6 +50,9 @@ your favorite SCM tool.
 %doc *.md LICENSE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.2.1-alt1.1
+- Cosmetic fixes.
+
 * Mon Feb 23 2026 Evgeniy Serov <scala@altlinux.org> 2.2.1-alt1
 - Updated to 2.2.1 (without tests).
 - Fixed FTBFS.

@@ -1,17 +1,17 @@
 Name:           jaxb-dtd-parser
 Version:        1.5.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        SAX-like API for parsing XML DTDs
 License:        BSD-3-Clause
-Group:		Development/Java
+Group:          Development/Java
+URL:            https://github.com/eclipse-ee4j/jaxb-dtd-parser
 VCS:            https://github.com/eclipse-ee4j/jaxb-dtd-parser
 
-Source:		%name-%version.tar
+Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -36,10 +36,13 @@ SAX-like API for parsing XML DTDs.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../LICENSE.md ../NOTICE.md
 %doc ../README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1.1
+- Cosmetic fixes.
+
 * Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1
 - Updated to 1.5.1.
 - Removed import.info.

@@ -1,20 +1,19 @@
 Name:           angus-mail
 Version:        2.0.5
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Angus Mail
 License:        EPL-2.0
 Group:          Development/Java
 URL:            https://eclipse-ee4j.github.io/angus-mail/
 VCS:            https://github.com/eclipse-ee4j/angus-mail
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
 Patch0:         0001-Remove-GraalVM-native-image-dependency.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
@@ -25,6 +24,8 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(jakarta.servlet.jsp:jakarta.servlet.jsp-api)
+
+BuildArch:      noarch
 
 %description
 This project provides the implementation of Jakarta Mail Specification 2.1+
@@ -64,5 +65,8 @@ rm demos/taglib/src/test/java/demo/ModulesTest.java
 %doc *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.5-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 25 2026 Evgeniy Serov <scala@altlinux.org> 2.0.5-alt1
 - Initial build for Sisyphus.

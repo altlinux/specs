@@ -1,24 +1,25 @@
 Name:           maven-common-artifact-filters
 Version:        3.4.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Apache Maven Common Artifact Filters
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://maven.apache.org/shared/maven-common-artifact-filters/
 VCS:            https://github.com/apache/maven-common-artifact-filters
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
+
+BuildArch:      noarch
 
 %description
 A collection of ready-made filters to control inclusion/exclusion of artifacts
@@ -39,6 +40,9 @@ during dependency resolution.
 %doc README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.4.0-alt1.1
+- Cosmetic fixes.
+
 * Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.4.0-alt1
 - Updated to 3.4.0.
 

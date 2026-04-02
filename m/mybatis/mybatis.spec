@@ -1,22 +1,22 @@
-Name:		mybatis
-Version:	3.5.19
-Release:	alt1
-Summary:	SQL Mapping Framework for Java
+Name:           mybatis
+Version:        3.5.19
+Release:        alt1.1
 
-Group:		Development/Java
-License:	Apache-2.0
-URL:		http://www.mybatis.org/
-VCS:		https://github.com/mybatis/mybatis-3
+Summary:        SQL Mapping Framework for Java
+License:        Apache-2.0
+Group:          Development/Java
+URL:            http://www.mybatis.org/
+VCS:            https://github.com/mybatis/mybatis-3
 
-Source0:	%name-%version.tar
-Source1:	m2.tar
+Source0:        %name-%version.tar
+Source1:        m2.tar
 
-BuildRequires:	/proc
-BuildRequires:	jpackage-default
-BuildRequires:	maven-local
-BuildRequires:	mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-BuildArch:     noarch
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+
+BuildArch:      noarch
 
 %description
 The MyBatis SQL mapper framework makes it easier to use a relational database
@@ -24,14 +24,6 @@ with object-oriented applications. MyBatis couples objects with stored
 procedures or SQL statements using an XML descriptor or annotations. Simplicity
 is the biggest advantage of the MyBatis data mapper over object relational
 mapping tools.
-
-%package javadoc
-Group: 		Development/Java
-Summary:	Javadoc for %{name}
-BuildArch: 	noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
 
 %prep
 %setup
@@ -52,9 +44,12 @@ tar xf %SOURCE1 -C ~
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.5.19-alt1.1
+- Cosmetic fixes.
+
 * Mon Jan 12 2026 Evgeniy Serov <scala@altlinux.org> 3.5.19-alt1
 - Updated to 3.5.19 (bootstrapped).
 - Returned to Sisyphus.

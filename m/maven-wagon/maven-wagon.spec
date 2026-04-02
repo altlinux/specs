@@ -1,18 +1,17 @@
 Name:           maven-wagon
 Version:        3.5.3
-Release:        alt2
+Release:        alt2.1
 
 Summary:        Tools to manage artifacts and deployment
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://maven.apache.org/wagon
 VCS:            https://github.com/apache/maven-wagon
-BuildArch:      noarch
 
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/wagon/wagon/%{version}/wagon-%{version}-source-release.zip
+Source0:        wagon-%version-source-release.zip
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 BuildRequires:  unzip
 
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
@@ -23,6 +22,8 @@ BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interactivity-api)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.connector-factory)
 BuildRequires:  mvn(com.jcraft:jsch.agentproxy.jsch)
+
+BuildArch:      noarch
 
 %description
 Maven Wagon is a transport abstraction that is used in Maven's
@@ -38,7 +39,7 @@ following providers:
 %javadoc_package
 
 %prep
-%setup -q -n wagon-%{version}
+%setup -n wagon-%version
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
 
@@ -47,8 +48,8 @@ following providers:
 %pom_disable_module wagon-webdav-jackrabbit wagon-providers
 %pom_disable_module wagon-tck-http wagon-tcks
 
-%mvn_file ":wagon-{*}" %{name}/@1
-%mvn_package ":wagon"
+%mvn_file :wagon-{*} %name/@1
+%mvn_package :wagon
 
 %build
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -63,6 +64,9 @@ following providers:
 %doc LICENSE NOTICE DEPENDENCIES *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.5.3-alt2.1
+- Cosmetic fixes.
+
 * Sun Feb 22 2026 Evgeniy Serov <scala@altlinux.org> 3.5.3-alt2
 - Enabled previously disabled modules.
 

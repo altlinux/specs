@@ -1,18 +1,17 @@
 Name:           plexus-resources
 Version:        1.3.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Plexus Resource Manager
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-resources/
 VCS:            https://github.com/codehaus-plexus/plexus-resources
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
@@ -21,6 +20,8 @@ BuildRequires:  mvn(org.mockito:mockito-core)
 # TODO: switch to mvn() prov, after fixing mockito bug
 BuildRequires:  osgi(org.mockito.junit-jupiter)
 BuildRequires:  mvn(org.simplify4u:slf4j-mock)
+
+BuildArch:      noarch
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -45,6 +46,9 @@ is like a J2EE application server, without all the baggage.
 %doc *.md LICENSE
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.3.1-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 

@@ -1,22 +1,23 @@
 Name:           plexus-i18n
 Version:        1.1.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Plexus I18N Component
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-i18n/
 VCS:            https://github.com/codehaus-plexus/plexus-i18n
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+
+BuildArch:      noarch
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -41,6 +42,9 @@ is like a J2EE application server, without all the baggage.
 %doc *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.1.0-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evegeniy Serov <scala@altlinux.org> 1.1.0-alt1
 - Updated to 1.1.0.
 

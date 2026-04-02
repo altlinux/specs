@@ -1,13 +1,12 @@
 Name:           reload4j
 Version:        1.2.26
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Reload4j is a drop-in replacement for log4j 1.2.17
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://reload4j.qos.ch/
 VCS:            https://github.com/qos-ch/reload4j
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
@@ -15,12 +14,14 @@ Patch0:         0001-Replace-javax-with-jakarta-mail.patch
 Patch1:         0002-Replace-javax-with-jakarta-jms.patch
 Patch2:         0003-reload4j-remove-internal-sun-api.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(jakarta.jms:jakarta.jms-api)
+
+BuildArch:      noarch
 
 %description
 The reload4j project is a fork of Apache log4j version 1.2.17 in order to fix
@@ -57,5 +58,8 @@ vulnerabilities in log4j 1.2.17.
 %doc LICENSE NOTICE *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 1.2.26-alt1.1
+- Cosmetic fixes.
+
 * Sun Feb 22 2026 Evgeniy Serov <scala@altlinux.org> 1.2.26-alt1
 - Initial build for Sisyphus.

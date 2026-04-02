@@ -1,26 +1,27 @@
 Name:           jdom2
 Version:        2.0.6.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Java manipulation of XML made easy
 License:        Saxpath
 Group:          Development/Java
 URL:            http://www.jdom.org/
 VCS:            https://github.com/hunterhacker/jdom
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 Source3:        bnd.properties
 # Remove bundled jars that might not have clear licensing
 Source4:        generate-tarball.sh
 
-Patch0:	        0001-Adapt-build.patch
+Patch0:         0001-Adapt-build.patch
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
+
+BuildArch:      noarch
 
 %description
 JDOM is a Java-oriented object model which models XML documents.
@@ -46,13 +47,16 @@ sed -i.coverage "s|coverage, jars|jars|" build.xml
 %ant -Dversion=%version -Dcompile.source=1.8 -Dcompile.target=1.8 maven
 
 %install
-%mvn_artifact build/maven/core/%{name}-%{version}.pom build/package/jdom-%{version}.jar
+%mvn_artifact build/maven/core/%name-%version.pom build/package/jdom-%version.jar
 %mvn_install
 
 %files -f .mfiles
 %doc CHANGES.txt COMMITTERS.txt README.md TODO.txt LICENSE.txt
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.6.1-alt1.1
+- Cosmetic fixes.
+
 * Wed Feb 18 2026 Evgeniy Serov <scala@altlinux.org> 2.0.6.1-alt1
 - Updated to 2.0.6.1.
 

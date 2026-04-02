@@ -1,23 +1,24 @@
 Name:           plexus-testing
 Version:        2.1.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Library to help testing plexus components
 License:        Apache-2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-testing/
 VCS:            https://github.com/codehaus-plexus/plexus-testing
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.mockito:mockito-core)
 # TODO: switch to mvn() prov, after fixing mockito bug
 BuildRequires:  osgi(org.mockito.junit-jupiter)
+
+BuildArch:      noarch
 
 %description
 The Plexus Testing contains the necessary classes to be able to test
@@ -38,6 +39,9 @@ find . -name pom.xml -type f -exec sed -i '/<classifier>classes<\/classifier>/d'
 %doc LICENSE README.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1.1
+- Cosmetic fixes.
+
 * Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 

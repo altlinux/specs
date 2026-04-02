@@ -1,24 +1,25 @@
 Name:           buildnumber-maven-plugin
 Version:        3.3.0
-Release:        alt1
+Release:        alt1.1
 
 Summary:        BuildNumber Maven Plugin
 License:        MIT
 Group:          Development/Java
 URL:            https://www.mojohaus.org/buildnumber-maven-plugin/
 VCS:            https://github.com/mojohaus/buildnumber-maven-plugin
-BuildArch: 	noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
 BuildRequires:  mvn(com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava)
 BuildRequires:  mvn(org.tmatesoft.svnkit:svnkit)
+
+BuildArch:      noarch
 
 %description
 This mojo is designed to get a unique build number for each time you build
@@ -57,6 +58,9 @@ SCM system. Note that currently, the only supported SCM is subversion.
 %doc LICENSE.txt *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.3.0-alt1.1
+- Cosmetic fixes.
+
 * Tue Feb 24 2026 Evgeniy Serov <scala@altlinux.org> 3.3.0-alt1
 - Updated to 3.3.0.
 

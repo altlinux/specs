@@ -1,23 +1,24 @@
 Name:           apache-parent
 Version:        37
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Apache Software Foundation Parent POM
 License:        Apache-2.0
 Group:          Development/Java
 URL:            http://apache.org/
 VCS:            https://github.com/apache/maven-apache-parent
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 
 Requires:       mvn(org.apache:apache-jar-resource-bundle)
+
+BuildArch:      noarch
 
 %description
 This package contains the parent pom file for apache projects.
@@ -42,6 +43,9 @@ sed -i 's/org\.apache\.apache\.resources:/org.apache:/g' pom.xml
 %doc LICENSE *.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 37-alt1.1
+- Cosmetic fixes.
+
 * Thu Feb 19 2026 Evgeniy Serov <scala@altlinux.org> 37-alt1
 - Updated to 37.
 

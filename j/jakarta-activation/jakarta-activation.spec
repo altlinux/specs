@@ -1,17 +1,17 @@
 Name:           jakarta-activation
 Version:        2.1.4
-Release:        alt1
+Release:        alt1.1
 
-Summary:        Jakarta Activation Specification project 
+Summary:        Jakarta Activation Specification project
 License:        BSD-3-Clause
-Group:		Development/Java
+Group:          Development/Java
+URL:            https://jakartaee.github.io/jaf-api/
 VCS:            https://github.com/jakartaee/jaf-api
 
 Source:         %name-%version.tar
 
-BuildRequires:  /proc
+BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -47,6 +47,9 @@ appropriate bean to perform the operation(s).
 %doc ../*.md
 
 %changelog
+* Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1.4-alt1.1
+- Cosmetic fixes.
+
 * Fri Jan 16 2026 Evgeniy Serov <scala@altlinux.org> 2.1.4-alt1
 - Updated to 2.1.4.
 - Removed import.info.
