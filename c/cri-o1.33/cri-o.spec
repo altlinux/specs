@@ -13,7 +13,7 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          33
-%define cri_o_patch          9
+%define cri_o_patch          10
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -134,6 +134,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 30 2026 Alexander Stepchenko <geochip@altlinux.org> 1.33.10-alt1
+- 1.33.9 -> 1.33.10.
+
 * Sat Feb 28 2026 Alexander Stepchenko <geochip@altlinux.org> 1.33.9-alt1
 - 1.33.7 -> 1.33.9.
 

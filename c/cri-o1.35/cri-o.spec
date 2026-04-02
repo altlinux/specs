@@ -13,7 +13,7 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          35
-%define cri_o_patch          0
+%define cri_o_patch          1
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -134,6 +134,13 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Mar 30 2026 Alexander Stepchenko <geochip@altlinux.org> 1.35.1-alt1
+- 1.35.0 -> 1.35.1.
+- Fixes:
+  + CVE-2025-31133: runc container escape via "masked path" abuse due to mount race conditions
+  + CVE-2025-52565: container escape due to /dev/console mount and related races
+  + CVE-2025-52881: runc: LSM labels can be bypassed with malicious config using dummy procfs files
+
 * Tue Dec 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.35.0-alt1
 - 1.34.3 -> 1.35.0.
 
