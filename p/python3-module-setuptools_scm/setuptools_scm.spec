@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 9.2.2
+Version: 10.0.5
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -38,6 +38,8 @@ Provides: python3-module-%pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not yet packaged
+%add_pyproject_deps_check_filter '^griffe.*'
 %pyproject_builddeps_metadata_extra rich
 %pyproject_builddeps_check
 BuildRequires: git-core mercurial
@@ -58,7 +60,8 @@ archive.
 %prep
 %setup
 %patch1 -p1
-%pyproject_scm_init
+%pyproject_scm_init setuptools-scm-v%version
+cd setuptools-scm
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -66,21 +69,31 @@ archive.
 %endif
 
 %build
+cd setuptools-scm
 %pyproject_build
 
 %install
+cd setuptools-scm
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra -Wignore
+cd setuptools-scm
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+# change cwd to git root as it's expected by tests
+cd ..
+python -m pytest -vra -Wignore setuptools-scm/
+ENDTESTS
 
 %files
-%doc README.*
 %_bindir/setuptools-scm
 %python3_sitelibdir/setuptools_scm/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 01 2026 Stanislav Levin <slev@altlinux.org> 10.0.5-alt1
+- 9.2.2 -> 10.0.5.
+
 * Mon Oct 20 2025 Stanislav Levin <slev@altlinux.org> 9.2.2-alt1
 - 9.2.1 -> 9.2.2.
 
