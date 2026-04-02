@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.79
+%define kernel_sublevel	.80
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 02 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.80-alt1
+- v6.12.80 (2026-04-02).
+- net/netlabel: Add mark s0 flag for NetLabel subsystem.
+
 * Fri Mar 27 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.79-alt1
 - v6.12.79 (2026-03-27).
 
