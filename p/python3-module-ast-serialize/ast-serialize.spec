@@ -1,0 +1,59 @@
+%define _unpackaged_files_terminate_build 1
+%define pypi_name ast-serialize
+%define mod_name ast_serialize
+
+# see Cargo.toml
+%python3_set_limited_api 3.9
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 0.1.1
+Release: alt1
+Summary: Python bindings for mypy AST serialization
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/ast-serialize
+Vcs: https://github.com/mypyc/ast_serialize
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Source2: vendor_rust.tar
+Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
+
+%description
+%summary.
+
+%prep
+%setup -a2
+%autopatch -p1
+cat < vendor_cargoconf.toml >> .cargo/config.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%build
+export CARGO_TERM_VERBOSE=true
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_STRIP='none'
+%pyproject_build
+
+%install
+%pyproject_install
+
+%check
+# .github/workflows/test.yml
+%pyproject_run -- python test_ast_serialize.py
+
+%files
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+
+%changelog
+* Wed Apr 01 2026 Stanislav Levin <slev@altlinux.org> 0.1.1-alt1
+- Initial build for sisyphus.
