@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.6
+Release: alt0.7
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 02 2026 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.7
+- Fix broken next and previous steps buttons icons
+
 * Fri Feb 13 2026 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.6
 - Alterator: symlink for net-ng installer step icon
 

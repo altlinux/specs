@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 02 2026 Sergey Konev <darisishe@altlinux.org> 11.1-alt2
+- Fix broken next and previous steps buttons icons
+
 * Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 11.1-alt1
 - 11.1
 - os-release: set docs version to 11.1, add LOGO line (Closes: 55555) 
