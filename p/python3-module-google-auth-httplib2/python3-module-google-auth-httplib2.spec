@@ -1,15 +1,14 @@
 %define  modulename google-auth-httplib2
 
 Name:    python3-module-%modulename
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: This library provides an httplib2 transport for google-auth
 License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/googleapis/google-auth-library-python-httplib2
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+URL:     https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth-httplib2
+VCS:     https://github.com/googleapis/google-cloud-python
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools
@@ -35,6 +34,10 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 02 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
+- New version.
+- Project has moved to https://github.com/googleapis/google-cloud-python/tree/main/packages/google-auth-httplib2.
+
 * Tue Dec 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - New version.
 
