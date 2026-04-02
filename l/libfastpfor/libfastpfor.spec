@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfastpfor
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: The FastPFOR C++ library: Fast integer compression
@@ -9,11 +9,11 @@ License: Apache-2.0
 Group: Text tools
 Url: https://github.com/lemire/FastPFor
 
-# latest
-# Source-url: https://github.com/lemire/FastPFor/archive/refs/heads/master.zip
+# Source-url: https://github.com/lemire/FastPFor/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: CMakeLists.txt
+Patch1: %name-add-needPaddingTo128Bits.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -38,6 +38,7 @@ Header files for %name.
 
 %prep
 %setup
+%patch1 -p1
 cp -fv %SOURCE1 .
 
 %build
@@ -57,6 +58,10 @@ subst "s|/lib/Release|/%_lib|" %buildroot%_libdir/cmake/FastPFOR/*.cmake
 %_includedir/fastpfor/
 
 %changelog
+* Tue Mar 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
+- new version 0.4.0 (identical sources to 0.3.1)
+- add needPaddingTo128Bits for manticore-columnar compatibility (patch)
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - new version 0.3.1
 
