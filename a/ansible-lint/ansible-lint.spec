@@ -1,6 +1,6 @@
 Name: ansible-lint
-Version: 26.3.0
-Release: alt2
+Version: 26.4.0
+Release: alt1
 
 Summary: Best practices checker for Ansible
 
@@ -58,6 +58,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 02 2026 Andrey Cherepanov <cas@altlinux.org> 26.4.0-alt1
+- New version.
+
 * Tue Mar 17 2026 Andrey Cherepanov <cas@altlinux.org> 26.3.0-alt2
 - Remove pytest from autorequirements.
 
