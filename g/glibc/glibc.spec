@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.40.0.142.2eb180
+Version: 2.40.0.224.573a
 
 Release: alt1
 Epoch: 6
@@ -749,6 +749,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Apr 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.224.573a-alt1
+- Updated to glibc-2.40-224-g573a7e46ec (fixes CVE-2025-5702, CVE-2025-5745,
+  CVE-2026-0861, CVE-2026-0915, CVE-2025-15281, CVE-2026-4437, CVE-2026-4438).
+
 * Wed Aug 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.142.2eb180-alt1
 - Updated to glibc-2.40-142-g2eb180377b.
 - Enabled Control-flow Enforcement Technology (CET) support.
