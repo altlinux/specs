@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nwg-shell
-Version: 0.5.49
-Release: alt3
+Version: 0.5.50
+Release: alt1
 
 Summary: Meta-package for the nwg-shell project
 License: MIT
@@ -134,6 +134,9 @@ echo "                https://nwg-piotr.github.io/nwg-shell/ ."
 %_datadir/backgrounds/*
 
 %changelog
+* Fri Apr 03 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.50-alt1
+- New version 0.5.50.
+
 * Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt3
 - Use gtklock-module-userinfo instead of gtklock-userinfo-module.
 
