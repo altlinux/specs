@@ -66,7 +66,7 @@
 %endif
 
 Name: blender
-Version: 4.5.7
+Version: 4.5.8
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -395,6 +395,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 %endif #hip
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
+	-DWITH_CYCLES_CUDA_BUILD_SERIAL:BOOL=ON \
 %endif #cuda
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
@@ -461,9 +462,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
-# Limit parallel jobs: OneAPI/SYCL kernel compilation is very memory-intensive
-# and can cause OOM with too many parallel jobs
-ninja-build -v -j 4 -C %_cmake__builddir
+ninja-build -v -C %_cmake__builddir
 
 %if_with docs
 pushd doc/doxygen
@@ -533,6 +532,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 4.5.8-alt1
+- 4.5.7 -> 4.5.8
+
 * Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 4.5.7-alt1
 - 4.5.6 -> 4.5.7
 
