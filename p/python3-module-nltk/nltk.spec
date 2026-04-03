@@ -5,12 +5,12 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.9.1
-Release: alt3
+Version: 3.9.4
+Release: alt1
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
-Url: http://www.nltk.org
+Url: https://pypi.org/project/nltk
 Vcs: https://github.com/nltk/nltk.git
 BuildArch: noarch
 Source: %name-%version.tar
@@ -18,9 +18,8 @@ Source1: %pyproject_deps_config_name
 # apply only for tests on RPM build
 Patch0: skip_nltk_data_tests.patch
 Patch1: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-# optional deps, not packaged yet
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(twython\(\..*\)\?)/d
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_enabled check
@@ -66,6 +65,11 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 03 2026 Stanislav Levin <slev@altlinux.org> 3.9.4-alt1
+- 3.9.1 -> 3.9.4.
+- (Fixes: CVE-2025-14009, CVE-2026-0846, CVE-2026-0847, CVE-2026-0848)
+- (Fixes: CVE-2026-33230, CVE-2026-33231, CVE-2026-33236)
+
 * Thu Nov 21 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt3
 - Added missing tests dependency on sqlite3.
 
