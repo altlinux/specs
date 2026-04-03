@@ -1,11 +1,12 @@
 Name: pdfarranger
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 Url: https://github.com/pdfarranger/pdfarranger
 Group: Publishing
 License: GPLv3
 BuildArch: noarch
-Source: %name-%version.tar.gz
+# Source-url: https://github.com/pdfarranger/pdfarranger/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 Summary: Split pdf documents and rotate, crop and rearrange their pages
 Requires: python3-module-%name = %version-%release, python3-module-pikepdf
 
@@ -50,6 +51,10 @@ cp -a data/icons/* %buildroot/%_iconsdir/
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
+- new version 1.13.0 (ALT bug 58242)
+- fix Source-url, switch to tar format in .gear/rules
+
 * Fri Jul 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
 - NMU: new version 1.12.1 (with rpmrb script)
 
