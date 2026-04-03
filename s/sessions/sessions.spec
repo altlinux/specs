@@ -3,7 +3,7 @@
 
 Name: sessions
 Version: 0.1.15
-Release: alt1
+Release: alt2
 
 Summary: Focus with timed work intervals
 License: AGPL-3.0-or-later
@@ -85,7 +85,7 @@ popd
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/%name
+%attr(401,root,root) %_bindir/%name
 %_datadir/applications/com.pojtinger.felicitas.Sessions.desktop
 %_iconsdir/hicolor/scalable/apps/com.pojtinger.felicitas.Sessions.svg
 %_datadir/metainfo/com.pojtinger.felicitas.Sessions.metainfo.xml
@@ -94,6 +94,9 @@ popd
 %doc README.md
 
 %changelog
+* Fri Apr 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.15-alt2
+- fixed permissions for normally native work, not flatpak
+
 * Thu Apr 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.15-alt1
 - 0.1.3 -> 0.1.15 (git.2662231d6e)
 
