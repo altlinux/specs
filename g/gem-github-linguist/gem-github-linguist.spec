@@ -1,7 +1,7 @@
 %define gemname github-linguist
 
 Name: gem-github-linguist
-Version: 9.4.0
+Version: 9.5.0
 Release: alt1
 Summary: GitHub Language detection
 License: MIT
@@ -86,6 +86,9 @@ install -Dm 644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/linguist/
 %_bindir/github-linguist
 
 %changelog
+* Fri Apr 03 2026 Andrey Kovalev <ded@altlinux.org> 9.5.0-alt1
+- Update to uptream version 9.5.0.
+
 * Tue Jan 20 2026 Andrey Kovalev <ded@altlinux.org> 9.4.0-alt1
 - Update to uptream version 9.4.0.
 
