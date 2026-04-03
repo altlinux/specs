@@ -3,11 +3,11 @@
 %global import_path github.com/git-pkgs/git-pkgs
 
 Name: git-pkgs
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 Summary: A git subcommand for analyzing package/dependency usage in git repositories over time
 License: MIT
-Group: Monitoring
+Group: Development/Tools
 Url: https://git-pkgs.dev
 Vcs: https://github.com/git-pkgs/git-pkgs
 
@@ -29,20 +29,13 @@ made those changes, and why.
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="-X %import_path/torrent.Version=%version"
-
 %golang_prepare
-
-cd .gopath/src/%import_path
-
 %golang_build .
 
 %install
 export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
-
 %golang_install
 
 %files
@@ -50,6 +43,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Apr 03 2026 Vladislav Glinkin <smasher@altlinux.org> 0.15.2-alt1
+- New version
+
 * Wed Mar 25 2026 Vladislav Glinkin <smasher@altlinux.org> 0.15.1-alt1
 - Initial build for ALT
 
