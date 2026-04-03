@@ -19,8 +19,8 @@
 %define libgdcm_vtk libgdcmvtk%{vtk_version}_%vtk_soname
 
 Name: gdcm
-Version: 3.2.2
-Release: alt2
+Version: 3.2.5
+Release: alt1
 
 Summary: Cross-platform DICOM implementation
 License: BSD-3-Clause
@@ -395,6 +395,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Fri Apr 03 2026 Anton Farygin <rider@altlinux.org> 3.2.5-alt1
+- 3.2.2 -> 3.2.5
+
 * Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 3.2.2-alt2
 - Fixed build with vtk 9.5.
 
