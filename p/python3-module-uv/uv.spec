@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.11.2
+%define uv_version 0.11.3
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -14,7 +14,7 @@
 
 Name: python3-module-%pypi_name
 Version: %uv_version
-Release: alt1.1
+Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
 Group: Development/Python3
@@ -22,13 +22,19 @@ Url: https://pypi.org/project/uv
 Vcs: https://github.com/astral-sh/uv
 Source: %name-%version.tar
 Source1: vendor_rust.tar
+Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-maturin
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: /usr/bin/cmake
 BuildRequires: libssl-devel
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 An extremely fast Python package installer and resolver, written in Rust.
@@ -64,6 +70,8 @@ Requires: %pypi_name_uv_build
 %setup -a1
 %autopatch -p1
 cat < vendor_cargoconf.toml >> .cargo/config.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 export CARGO_TERM_VERBOSE=true
@@ -133,8 +141,8 @@ popd
 %_bindir/uv-build
 
 %changelog
-* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1.1
-- Demodernized packaging.
+* Thu Apr 02 2026 Stanislav Levin <slev@altlinux.org> 0.11.3-alt1
+- 0.11.2 -> 0.11.3.
 
 * Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
 - 0.11.1 -> 0.11.2.
