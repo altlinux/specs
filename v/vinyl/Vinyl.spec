@@ -1,8 +1,8 @@
 %define oname page.codeberg.M23Snezhok.Vinyl
-%define nameU Vinyl
+%define nameU vinyl-player
 
 Name: vinyl
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Simple adwaita audio player
@@ -65,6 +65,9 @@ install -Dm 644 data/hicolor/scalable/apps/%oname.svg \
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Sat Apr 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2
+
 * Thu Apr 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
 - 1.2.0 -> 1.2.1
 
