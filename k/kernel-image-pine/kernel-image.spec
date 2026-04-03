@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt2
+Release: alt1
 epoch:1
 %define kernel_need_version	6.18
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.18
-%define kernel_sublevel .20
+%define kernel_sublevel .21
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Apr 03 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:6.18.21-alt1
+- 6.18.21
+
 * Fri Mar 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:6.18.20-alt2
 - PinePhone: rtw8723cs is working again
 
