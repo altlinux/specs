@@ -2,7 +2,7 @@
 %def_with check
 
 Name: dump_syms
-Version: 2.3.5
+Version: 2.3.7
 Release: alt1
 
 Summary: Is a command-line utility for parsing the debugging information the compiler provides
@@ -70,6 +70,9 @@ EOF
 %_bindir/dump_syms
 
 %changelog
+* Fri Apr 03 2026 Ivan Khanas <xeno@altlinux.org> 2.3.7-alt1
+- New version.
+
 * Mon Jul 07 2025 Ivan Khanas <xeno@altlinux.org> 2.3.5-alt1
 - New version.
 
