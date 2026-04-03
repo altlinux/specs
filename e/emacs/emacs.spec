@@ -1,6 +1,6 @@
 Name: emacs
 Version: 30.2
-Release: alt2
+Release: alt3
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -38,9 +38,7 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tinfo)
-# Support for tree-sitter 0.26 is going to be added in Emacs 31
-# BuildRequires: pkgconfig(tree-sitter)
-BuildRequires: libtree-sitter025-devel
+BuildRequires: pkgconfig(tree-sitter)
 BuildRequires: pkgconfig(xaw3d)
 BuildRequires: pkgconfig(xfixes)
 BuildRequires: pkgconfig(xft)
@@ -375,6 +373,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Fri Apr 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 30.2-alt3
+- rebuilt with recent tree-sitter
+
 * Mon Mar 30 2026 Vladimir Didenko <cow@altlinux.org> 30.2-alt2
 - build with tree-sitter 0.25 compat library
 
