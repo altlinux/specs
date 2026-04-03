@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.4
+%define major 11.5
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -953,6 +953,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.5.1-alt1
+- new version 11.5.1
+- update patches to staging wine-11.5
+  + crypt32: Add CERT_STORE_NO_CRYPT_RELEASE_FLAG to CertOpenStore() flags when called from CertOpenSystemStore()
+  - revert "ntdll: Support x86_64 syscall emulation."
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.4.1-alt1
 - new version (11.4.1)
 - wine-cap_net_raw: add /usr/lib/wine path to 'on' command too (ALT bug 56551)
