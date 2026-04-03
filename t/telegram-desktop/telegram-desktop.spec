@@ -23,7 +23,7 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 6.7.1
+Version: 6.7.2
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -376,6 +376,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Fri Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 6.7.2-alt1
+- new version 6.7.2
+
 * Thu Apr 02 2026 Vitaly Lipatov <lav@altlinux.ru> 6.7.1-alt1
 - new version 6.7.1
 
