@@ -3,7 +3,7 @@
 
 Name: plasma-bigscreen
 Version: 6.5.80
-Release: alt1.git.989ac8b2
+Release: alt2.git.989ac8b2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -50,10 +50,10 @@ BuildRequires: kf6-qqc2-breeze-style-devel
 BuildRequires: kde5-plasma-wayland-protocols
 
 # make sure that all Qml imports will be satisfied
-Requires: libkf6bluezqt
+Requires: qml6(org.kde.bluezqt)
 Requires: plasma-workspace-qml
 Requires: libkf6coreaddons
-Requires: libkf6kcmutilsquick
+Requires: qml6(org.kde.kcmutils)
 Requires: kdeconnect
 Requires: kf6-kirigami
 Requires: kf6-kirigami-addons
@@ -62,23 +62,17 @@ Requires: kf6-kdeclarative
 Requires: libkf6svg
 Requires: plasma6-layer-shell-qt
 Requires: milou
-Requires: libplasmaquick6
+Requires: qml6(org.kde.plasma.core)
 Requires: plasma-nm
 Requires: plasma6-plasma5support
 Requires: plasma-nano
 Requires: powerdevil
 Requires: plasma-pa
 Requires: plasma-workspace
-Requires: libqt6-core5compat
-Requires: libqt6-multimediaquick
-Requires: libqt6-qml
-Requires: libqt6-qmlmodels
-Requires: libqt6-quick
-Requires: libqt6-quickcontrols2
-Requires: libqt6-quickeffects
-Requires: libqt6-quicklayouts
-Requires: libqt6-quicktemplates2
-Requires: libqt6-webenginequick
+Requires: qt6-5compat
+Requires: qt6-multimedia
+Requires: qt6-declarative
+Requires: qt6-webengine
 Requires: kf6-qqc2-breeze-style
 
 Requires: kwayland-integration
@@ -87,7 +81,7 @@ Requires: plasma-desktop
 Requires: plasma6-integration
 Requires: xdg-desktop-portal-kde
 Requires: kscreen
-Requires: kde-volume-control-7-pipewire
+Requires: kde-volume-control-pipewire
 
 ExcludeArch: %ix86 riscv64
 
@@ -133,6 +127,9 @@ sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
 %_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
 
 %changelog
+* Fri Apr 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.80-alt2.git.989ac8b2
+- NMU: fix requires
+
 * Fri Feb 14 2026 Nikolay Strelkov <snk@altlinux.org> 6.5.80-alt1.git.989ac8b2
 - Updated to newer commit to get gamepad support (closes: #57842).
 
