@@ -1,6 +1,6 @@
 Name: matrix.to
 Version: 1.2.17
-Release: alt1
+Release: alt2
 
 Summary: A simple URL redirecting service for the Matrix ecosystem
 
@@ -19,6 +19,8 @@ BuildArch: noarch
 
 AutoReq: no
 AutoProv: no
+
+Requires: /var/www/html
 
 BuildRequires: /usr/bin/node
 
@@ -41,6 +43,9 @@ cp -a build %buildroot/var/www/html/%name/
 /var/www/html/%name/
 
 %changelog
+* Fri Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.17-alt2
+- add Requires: /var/www/html
+
 * Thu Apr 02 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.17-alt1
 - initial build for ALT Sisyphus
 
