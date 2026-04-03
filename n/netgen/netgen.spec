@@ -20,8 +20,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2406
-Release: alt4
+Version: 6.2.2602
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -416,6 +416,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2602-alt1
+- 6.2.2406 -> 6.2.2602
+
 * Mon Apr 7 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt4
 - Fixed FTBFS with CMake 4.0.
 

@@ -4,8 +4,8 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2406
-Release: alt2
+Version: 6.2.2602
+Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
 Group: Sciences/Mathematics
@@ -163,6 +163,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2602-alt1
+- 6.2.2406 -> 6.2.2602
+
 * Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2406-alt2
 - fixed build with pybind11 3.0
 
