@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Apr 03 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt7
+- fix FreeRADIUS (closes #58466, #58468, #58467, #58465, #58470, #58477, #58478)
+- fix some typos (closes #58480)
+- fix polkit log typos (closes #58486)
+
+
 * Mon Mar 23 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt6
 - update to ALT Server 11.1RC2
 - fix some typos (closes #57752, #57753)
