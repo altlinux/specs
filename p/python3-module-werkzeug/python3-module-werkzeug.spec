@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 3.1.7
+Version: 3.1.8
 Release: alt1
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
@@ -64,7 +64,10 @@ more structure and patterns for defining powerful applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Thu Mar 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.7-alt1
+* Fri Apr 03 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.8-alt1
+- Updated to 3.1.8.
+
+* Tue Mar 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.7-alt1
 - Updated to 3.1.7.
 
 * Fri Feb 20 2026 Andrey Cherepanov <cas@altlinux.org> 3.1.6-alt1
