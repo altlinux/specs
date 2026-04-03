@@ -1,6 +1,6 @@
 Name:           jackson-dataformats-text
 Version:        2.20.1
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Jackson standard text-format data format backends
 License:        Apache-2.0
@@ -67,6 +67,9 @@ functionality.
 # can help compile without jflex-maven-plugin
 # jflex --skel toml/src/main/jflex/skeleton-toml -d toml/src/main/java toml/src/main/jflex/com/fasterxml/jackson/dataformat/toml/toml.jflex
 
+%pom_remove_plugin -r :gradle-module-metadata-maven-plugin
+%pom_remove_plugin -r :cyclonedx-maven-plugin
+
 %mvn_file ":{*}" jackson-dataformats/@1
 
 %build
@@ -96,6 +99,9 @@ functionality.
 %doc LICENSE
 
 %changelog
+* Fri Apr 03 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt2
+- fixed FTBFS.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1.1
 - Cosmetic fixes.
 

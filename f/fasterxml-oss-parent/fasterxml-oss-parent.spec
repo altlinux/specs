@@ -6,10 +6,10 @@ BuildRequires: jpackage-11-compat
 %global srcname oss-parent
 
 Name:          fasterxml-oss-parent
-Version:       41
-Release:       alt1_2jpp11
+Version:       70
+Release:       alt1
 Summary:       FasterXML parent pom
-License:       ASL 2.0
+License:       Apache-2.0
 
 URL:           https://github.com/FasterXML/oss-parent
 Source0:       %{url}/archive/%{srcname}-%{version}.tar.gz
@@ -41,13 +41,12 @@ This package contains the parent pom file for FasterXML.com projects.
 %pom_remove_plugin :maven-pmd-plugin
 %pom_remove_plugin :maven-scm-plugin
 %pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :nexus-maven-plugin
 %pom_remove_plugin :jdepend-maven-plugin
-%pom_remove_plugin :taglist-maven-plugin
+%pom_remove_plugin :central-publishing-maven-plugin
 %pom_xpath_remove "pom:build/pom:extensions"
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -57,6 +56,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 70-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 41-alt1_2jpp11
 - new version
 

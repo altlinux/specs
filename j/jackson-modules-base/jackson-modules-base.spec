@@ -1,6 +1,6 @@
 Name:           jackson-modules-base
 Version:        2.20.1
-Release:        alt2.1
+Release:        alt3
 
 Summary:        Uber-project for foundational modules of Jackson that build directly on core components but nothing else; not including data format or datatype modules
 License:        Apache-2.0
@@ -118,6 +118,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 # no need
 %pom_disable_module android-record
 
+%pom_remove_plugin -r :gradle-module-metadata-maven-plugin
+%pom_remove_plugin -r :cyclonedx-maven-plugin
+
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
@@ -163,6 +166,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc LICENSE
 
 %changelog
+* Fri Apr 03 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
+- fixed FTBFS.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt2.1
 - Cosmetic fixes.
 

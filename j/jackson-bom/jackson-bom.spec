@@ -4,16 +4,16 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jackson-bom
-Version:        2.11.4
-Release:        alt1_2jpp11
+Version:        2.20.1
+Release:        alt1
 Summary:        Bill of materials POM for Jackson projects
-License:        ASL 2.0
+License:        Apache-2.0
 
 URL:            https://github.com/FasterXML/jackson-bom
 Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.11
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:)
 
 BuildArch:      noarch
 Source44: import.info
@@ -25,14 +25,14 @@ A "bill of materials" POM for Jackson dependencies.
 %setup -q -n %{name}-%{name}-%{version}
 
 # Disable plugins not needed during RPM builds
-%pom_remove_plugin ":maven-enforcer-plugin" base
-%pom_remove_plugin ":nexus-staging-maven-plugin" base
+%pom_remove_plugin :maven-enforcer-plugin base
+%pom_remove_plugin :central-publishing-maven-plugin base
 
 # New EE coords
 %pom_change_dep "javax.activation:javax.activation-api" "jakarta.activation:jakarta.activation-api" base
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -j
 
 %install
 %mvn_install
@@ -42,6 +42,9 @@ A "bill of materials" POM for Jackson dependencies.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 

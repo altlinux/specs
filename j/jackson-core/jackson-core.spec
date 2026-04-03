@@ -2,7 +2,7 @@
 
 Name: jackson-core
 Version: 2.20.1
-Release: alt2
+Release: alt3
 
 Summary: Core part of Jackson
 License: Apache-2.0
@@ -40,6 +40,8 @@ as basic shared abstractions.
 %pom_remove_plugin ":maven-shade-plugin"
 
 %pom_remove_dep ch.randelshofer:fastdoubleparser
+%pom_remove_plugin :gradle-module-metadata-maven-plugin
+%pom_remove_plugin :cyclonedx-maven-plugin
 
 %mvn_file : %name
 
@@ -54,6 +56,9 @@ as basic shared abstractions.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
+- FTBFS fix.
+
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt2
 - Add JPMS support.
 

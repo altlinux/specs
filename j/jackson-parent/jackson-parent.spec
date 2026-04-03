@@ -4,10 +4,10 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-parent
-Version:       2.11
-Release:       alt1_2jpp11
+Version:       2.20
+Release:       alt1
 Summary:       Parent pom for all Jackson components
-License:       ASL 2.0
+License:       Apache-2.0
 
 URL:           https://github.com/FasterXML/jackson-parent
 Source0:       %{url}/archive/%{name}-%{version}.tar.gz
@@ -31,7 +31,7 @@ cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -j
 
 %install
 %mvn_install
@@ -41,6 +41,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20-alt1
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.11-alt1_2jpp11
 - new version
 

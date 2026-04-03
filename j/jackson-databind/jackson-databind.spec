@@ -2,7 +2,7 @@
 
 Name: jackson-databind
 Version: 2.20.1
-Release: alt2
+Release: alt3
 
 Summary: General data-binding package for Jackson (2.x)
 License: Apache-2.0
@@ -34,8 +34,10 @@ Jackson Annotations for configuration.
 %setup
 
 # Remove plugins unnecessary for RPM builds
-%pom_remove_plugin ":maven-enforcer-plugin"
-%pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin org.jacoco:jacoco-maven-plugin
+%pom_remove_plugin :gradle-module-metadata-maven-plugin
+%pom_remove_plugin :cyclonedx-maven-plugin
 
 cp -p src/main/resources/META-INF/NOTICE .
 sed -i 's/\r//' LICENSE NOTICE
@@ -61,6 +63,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
+- FTBFS fix.
+
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt2
 - Add JPMS support.
 

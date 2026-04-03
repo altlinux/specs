@@ -3,7 +3,7 @@
 
 Name: jackson-dataformats-binary
 Version: 2.20.1
-Release: alt1
+Release: alt2
 Summary: Jackson standard binary data format backends
 
 License: Apache-2.0
@@ -94,6 +94,9 @@ pluggable extensions).
 %pom_disable_module protobuf
 %endif
 
+%pom_remove_plugin -r :gradle-module-metadata-maven-plugin
+%pom_remove_plugin -r :cyclonedx-maven-plugin
+
 %pom_disable_module ion
 
 %pom_add_dep -r org.apiguardian:apiguardian-api:test
@@ -131,6 +134,9 @@ pluggable extensions).
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt2
+- FTBFS fix.
+
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
 - New version.
 
