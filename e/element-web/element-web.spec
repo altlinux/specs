@@ -1,18 +1,16 @@
-# TODO: check .gear/predownloaded-preinstall-hook
-
 Name: element-web
-Version: 1.11.25
+Version: 1.12.13
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
 
-License: Apache-2.0
+License: AGPL-3.0-only
 Group: Networking/Instant messaging
 Url: https://element.io/
 
 BuildArch: noarch
 
-# Source-url: https://github.com/vector-im/element-web/archive/v%version.tar.gz
+# Source-url: https://github.com/element-hq/element-web/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from
@@ -21,51 +19,67 @@ Source1: %name-development-%version.tar
 
 AutoReq:yes,nonodejs,nonodejs_native,nomono
 AutoReq:nopython,nomingw32,nomingw64,noshebang
-#AutoProv: no
 
-# [i586] FATAL ERROR: MarkCompactCollector: young object promotion failed
-# Allocation failed - JavaScript heap out of memory
-# [armh] FATAL ERROR: MarkCompactCollector: young object promotion failed
-# Allocation failed - JavaScript heap out of memory
-ExclusiveArch: x86_64 aarch64
+# node_modules vendored on x86_64 (native rollup bindings are arch-specific)
+ExclusiveArch: x86_64
 
-BuildRequires: npm
-# https://github.com/yarnpkg/yarn/issues/7251
-BuildRequires: /proc yarn
+Requires: /var/www/html
 
-BuildRequires: node-webpack >= 4.41.2
-BuildRequires: node-webpack-cli >= 3.3.10
-BuildRequires: node-typescript >= 3.7.3
+BuildRequires: /proc
+BuildRequires: /usr/bin/node
 
 %description
 Element (formerly known as Vector and Riot) is a Matrix web client built using
 the Matrix React SDK.
 
-%define build_root %_builddir/%name-%version
-%define yarnrc %build_root/.yarnrc
-%define yarn_cache %build_root/npm-packages-offline-cache
-
 %prep
 %setup -a1
-rm -f scripts/check-i18n.pl
-cp config.sample.json config.json
-mv package.json.back package.json
-
-yarn config --use-yarnrc %yarnrc set yarn-offline-mirror %yarn_cache
+# Remove packageManager to prevent nx from trying to use specific pnpm version
+subst '/"packageManager"/d' package.json
+# Ensure all dependencies are hoisted to root node_modules
+echo "shamefully-hoist=true" >> .npmrc
+cp apps/web/config.sample.json apps/web/config.json
 
 %build
-VERSION="%version-%release" yarn build --offline
+export PATH=$(pwd)/node_modules/.bin:$PATH
+export NODE_PATH=$(pwd)/node_modules
+# Run prebuild steps manually (nx calls pnpm which is not available)
+cd apps/web
+sh res/css/rethemendex.sh
+node module_system/scripts/install.ts
+cd -
+# Build shared-components
+cd packages/shared-components
+vite build
+cd -
+# Build element-web
+cd apps/web
+webpack-cli --disable-interpret --progress --mode production
 
 %install
 mkdir -p %buildroot/var/www/html/
+cp -a apps/web/webapp %buildroot/var/www/html/%name/
 
-cp -a webapp %buildroot/var/www/html/%name/
+# Move config to /etc and create symlink
+mkdir -p %buildroot%_sysconfdir/%name/
+mv %buildroot/var/www/html/%name/config.json %buildroot%_sysconfdir/%name/config.json
+ln -s %_sysconfdir/%name/config.json %buildroot/var/www/html/%name/config.json
 
 %files
 %doc README.md
+%dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/%name/config.json
 /var/www/html/%name/
 
 %changelog
+* Thu Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.13-alt1
+- new version (1.12.13) via gear-uupdate
+- switch from yarn to pnpm (upstream moved to pnpm monorepo)
+- update License to AGPL-3.0-only
+- update Source-url to element-hq organization
+- add Requires: /var/www/html
+- move config.json to /etc/element-web/ with symlink
+
 * Wed Mar 29 2023 Sergey V Markov <markow@altlinux.org> 1.11.25-alt1
 - new version 1.11.25 (with rpmrb script)
 
