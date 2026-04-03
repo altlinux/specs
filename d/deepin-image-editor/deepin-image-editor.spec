@@ -8,7 +8,7 @@
 
 Name: deepin-image-editor
 Version: 6.5.2
-Release: alt2
+Release: alt3
 
 Summary: Image editor libraries for Deepin
 
@@ -25,8 +25,7 @@ Patch0: %name-%version-%release.patch
 Patch1: deepin-image-editor-6.5.0-alt-fix-broken-pkgconfig.patch
 Patch2: deepin-image-editor-6.5.0-alt-fix-dqt6-pkgconfig.patch
 Patch3: deepin-image-editor-6.5.0-alt-cmake-compat.patch
-Patch4: deepin-image-editor-6.5.0-alt-fix-qt6-cmake.patch
-Patch5: deepin-image-editor-6.5.0-alt-fix-underlinked-libraries.patch
+Patch4: deepin-image-editor-6.5.0-alt-fix-underlinked-libraries.patch
 
 %if_with clang
 ExcludeArch: armh
@@ -99,7 +98,6 @@ Development libraries for deepin-album.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-%patch5 -p2
 
 %build
 %if_with clang
@@ -145,6 +143,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Fri Apr 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt3
+- Applied upstream fixes.
+
 * Tue Mar 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt2
 - Fixed build on shrinked dqt6.
 
