@@ -16,13 +16,14 @@
 %global optflags_lto %nil
 
 Name: squid
-Version: 7.3
+Version: 7.5
 Release: alt1
 
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
 Url: http://www.squid-cache.org/
+VCS: https://github.com/squid-cache/squid
 
 Source0: %name-%version.tar
 Source1: %name-langpack.tar
@@ -322,6 +323,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Fri Apr 03 2026 Egor Ignatov <egori@altlinux.org> 7.5-alt1
+- 7.5 (fixes: CVE-2026-33515,  CVE-2026-32748, CVE-2026-33526)
+
 * Sat Nov 08 2025 Egor Ignatov <egori@altlinux.org> 7.3-alt1
 - 7.3 (fixes: CVE-2025-62168, CVE-2025-59362)
 
