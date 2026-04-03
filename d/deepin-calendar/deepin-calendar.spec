@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.32
+Version: 6.5.37
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -19,8 +19,9 @@ Patch1: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
 
 Requires: icon-theme-hicolor
 
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake libdtkwidget-devel libical-devel dqt5-svg-devel dqt5-tools-devel libwayland-client-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake dtk6-common-devel libdtk6widget-devel libical-devel dqt6-svg-devel dqt6-tools-devel libcups-devel libwayland-client-devel libdqt6-concurrent
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql vulkan-headers
 
 %description
 Calendar for Deepin Desktop Environment.
@@ -30,22 +31,15 @@ Calendar for Deepin Desktop Environment.
 %autopatch -p1
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DSERVICE_INSTALL_DIR=%_libexecdir/deepin-daemon \
-    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-    -DVERSION=%version
-cmake --build "%_cmake__builddir" -j%__nprocs
+%DQ6build \
+  -DLIB_DESTINATION=%_lib \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DSERVICE_INSTALL_DIR=%_libexecdir/deepin-daemon \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+  -DVERSION=%version
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -53,6 +47,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/%repo
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/dde-calendar-service.qm
+%_datadir/%repo/translations/dde-calendar.qm
 %dir %_datadir/%repo/data/
 %_datadir/%repo/data/huangli.db
 %_datadir/dbus-1/services/com.deepin.Calendar.service
@@ -72,12 +68,23 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 %dir %_datadir/deepin-log-viewer/
 %dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
-%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.calendar.json
+%_datadir/deepin-log-viewer/deepin-log.conf.d/dde-calendar.json
 %_userunitdir/com.dde.calendarserver.calendar.service
 %_userunitdir/com.dde.calendarserver.calendar.timer
 %_userunitdir/%repo.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.calendar/
+%_datadir/dsg/configs/org.deepin.dde.calendar/org.deepin.dde.calendar*.json
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.calendar.json
 
 %changelog
+* Fri Apr 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.37-alt1
+- New version 6.5.37.
+- Built on dqt6 again (by upstream).
+
 * Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.32-alt1
 - New version 6.5.32.
 - Built on dqt5 again (by upstream).
