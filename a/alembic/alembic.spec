@@ -5,7 +5,7 @@
 %define soname 1.8
 
 Name: alembic
-Version: 1.8.10
+Version: 1.8.11
 Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
@@ -107,6 +107,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Fri Apr 03 2026 Anton Farygin <rider@altlinux.org> 1.8.11-alt1
+- 1.8.10 -> 1.8.11
+
 * Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 1.8.10-alt1
 - 1.8.8 -> 1.8.10
 
