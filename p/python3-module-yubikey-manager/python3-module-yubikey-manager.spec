@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.9.0
-Release: alt1
+Release: alt2
 
 Summary: Library and CLI for managing your YubiKey configuration
 License: BSD-2-Clause
@@ -20,8 +20,6 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-Requires: ykpers
-Requires: libykpers-1
 Requires: pcsc-lite-ccid
 Provides: %mod_name = %EVR
 %pyproject_runtimedeps_metadata
@@ -67,6 +65,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %_man1dir/%mod_name.1.*
 
 %changelog
+* Fri Apr 03 2026 Anton Zhukharev <ancieg@altlinux.org> 5.9.0-alt2
+- Removed dependency on ykpers.
+
 * Fri Jan 23 2026 Anton Zhukharev <ancieg@altlinux.org> 5.9.0-alt1
 - Updated to to 5.9.0.
 
