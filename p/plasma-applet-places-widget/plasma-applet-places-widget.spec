@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.4
-Release: alt11
+Release: alt12
 %K6init
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,8 @@ Url: https://github.com/dfaust/plasma-applet-places-widget
 License: GPL-2.0
 BuildArch: noarch
 
-Requires: kf6-filesystem libkf6itemmodels kf6-kirigami libplasmaquick6 plasma6-plasma5support
+Requires: kf6-filesystem libkf6itemmodels kf6-kirigami plasma6-plasma5support
+Requires: qml6(org.kde.plasma.components)
 Provides: kde5-plasma-applet-places-widget = %EVR
 Obsoletes: kde5-plasma-applet-places-widget < %EVR
 
@@ -57,6 +58,9 @@ __EOF__
 %_datadir/metainfo/*placesWidget*.xml
 
 %changelog
+* Fri Apr 03 2026 Sergey V Turchin <zerg@altlinux.org> 1.4-alt12
+- fix requires
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 1.4-alt11
 - decrease icon size
 
