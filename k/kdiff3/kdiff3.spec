@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kdiff3
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 Summary: Compare + merge 2 or 3 files or directories
 %K6init
@@ -65,6 +65,9 @@ rm -rf po/*/diff_ext.po
 %_K6icon/hicolor/scalable/apps/kdiff3.svgz
 
 %changelog
+* Fri Apr 03 2026 Sergey V Turchin <zerg@altlinux.org> 1.12.4-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.12.3-alt1
 - new version
 
