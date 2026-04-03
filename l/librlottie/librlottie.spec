@@ -1,9 +1,9 @@
 # See also https://github.com/EasyCoding/rlottie/blob/master/rlottie.spec
 # TODO: external rapidjson
 # see soname version (player version) in CMakeLists.txt
-%define soname 0.0.1
+%define soname 3
 Name: librlottie
-Version: 0.1.2
+Version: 0.3
 Release: alt1
 
 Summary: Platform independent standalone library that plays Lottie Animation
@@ -11,13 +11,13 @@ Summary: Platform independent standalone library that plays Lottie Animation
 Group: Networking/Instant messaging
 License: LGPLv2+ and BSD and MIT
 
-Url: http://www.tizen.org/
+Url: https://github.com/desktop-app/rlottie
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-git: https://github.com/desktop-app/rlottie.git
+# Source-url: https://github.com/desktop-app/rlottie.git
 Source: %name-%version.tar
 
-Patch1: %name-fix-gcc11.patch
+Patch1: %name-soname-0.3.patch
 
 BuildRequires: gcc-c++ cmake
 
@@ -47,9 +47,7 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch1 -p2
-%__subst "s|VERSION 0.0.1|VERSION %version.0|" CMakeLists.txt
-%__subst "s|-Werror||" CMakeLists.txt
+%patch1 -p1
 
 %build
 %cmake_insource
@@ -60,8 +58,8 @@ developing applications that use %name.
 
 %files
 %_libdir/librlottie-image-loader.so
-%_libdir/librlottie.so.0
 %_libdir/librlottie.so.%soname
+%_libdir/librlottie.so.%soname.*
 
 %files devel
 %doc COPYING
@@ -73,6 +71,14 @@ developing applications that use %name.
 %_pkgconfigdir/rlottie.pc
 
 %changelog
+* Thu Apr 02 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
+- switch to desktop-app/rlottie fork (Telegram FitzModifier support)
+- bump soname to 3
+
+* Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- new version 0.2
+- switch to Samsung/rlottie upstream
+
 * Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1
 - build from tag 8c69fc20cf2e150db304311f1233a4b55a8892d7 (Telegram 3.6.1)
 
