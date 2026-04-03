@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.4
+%define major 11.5
 %define rel %nil
 
 # the packages will conflict with that
@@ -944,6 +944,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.5-alt1
+- new version 11.5
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.4-alt1
 - new version 11.4
 - wine-cap_net_raw: add /usr/lib/wine path to 'on' command too (ALT bug 56551)
