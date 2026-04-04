@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.14
+%define ver_major 2.16
 %define rdn_name io.github.plrigaux.%name
 %define bus_name io.github.plrigaux.SysDManager
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -104,6 +104,9 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %doc CHANGELOG* README*
 
 %changelog
+* Fri Apr 03 2026 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
+- 2.16.0
+
 * Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.14.8-alt1
 - 2.14.8
 

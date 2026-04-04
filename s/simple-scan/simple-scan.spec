@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -26,9 +26,9 @@ Source: %name-%version.tar
 Requires: sane xdg-utils gnome-icon-theme colord
 %{?_enable_packagekit:Requires: packagekit}
 
-%define gtk_ver 4.10
+%define gtk_ver 4.20
 %define gusb_ver 0.2.7
-%define adw_ver 1.2
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools /usr/bin/appstreamcli
@@ -68,6 +68,9 @@ sed -i 's|libsane-hpaio|hplip-sane|' src/app-window.vala
 %_man1dir/*
 
 %changelog
+* Fri Apr 03 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Oct 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
