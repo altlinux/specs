@@ -1,6 +1,6 @@
 Name:  adaptix
 Version: 3.0.0
-Release: alt4
+Release: alt5
 
 Summary: An extremely flexible and configurable data model conversion library.
 License: Apache-2.0
@@ -14,8 +14,9 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: release_data.tar
 
-BuildRequires(pre):  rpm-build-python3 rpm-build-gir
-BuildRequires:  python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-uv-build
 
 %description
 %summary
@@ -59,24 +60,24 @@ tar -xf %SOURCE1 -C benchmarks/
 
 %build
 %pyproject_build
-cd tests/tests_helpers/
+pushd tests/tests_helpers/
 %pyproject_build
-cd ..
-cd ..
+popd
 
 %install
 %pyproject_install
 
 cp -r -p examples %buildroot%python3_sitelibdir/%name/
 cp -r -p tests %buildroot%python3_sitelibdir/%name/
-mv %buildroot%python3_sitelibdir/%name/tests/tests_helpers/build/lib/tests_helpers %buildroot%python3_sitelibdir/
+mv %buildroot%python3_sitelibdir/%name/tests/tests_helpers/tests_helpers %buildroot%python3_sitelibdir/
 rm  -r %buildroot%python3_sitelibdir/%name/tests/tests_helpers
 
 %files -n python3-module-%name
 %doc LICENSE *.md
+%exclude %python3_sitelibdir/%name/tests
+%exclude %python3_sitelibdir/%name/examples
 %python3_sitelibdir/%name/
-#%python3_sitelibdir/%{pyproject_distinfo %name}
-%python3_sitelibdir/adaptix-3.0.0b11.dist-info/
+%python3_sitelibdir/adaptix-3.0.0b12.dist-info/
 
 %files -n python3-module-%name-examples
 %python3_sitelibdir/%name/examples
@@ -88,6 +89,9 @@ rm  -r %buildroot%python3_sitelibdir/%name/tests/tests_helpers
 %python3_sitelibdir/tests_helpers
 
 %changelog
+* Sun Apr 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt5
+- update git.03ef02f823 (version 3.0.0b12)
+
 * Sat May 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt4
 - update git.0e4132507c (version 3.0.0b11)
 
