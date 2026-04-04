@@ -4,7 +4,7 @@
 
 Name: kmod
 Version: 34.2
-Release: alt2
+Release: alt3
 Summary: Linux kernel module handling
 
 Group: System/Kernel and hardware
@@ -24,6 +24,7 @@ BuildRequires: scdoc
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: kernel-headers-modules-latest
+BuildRequires: /proc
 }}
 
 Provides: module-init-tools = 3.17-alt1
@@ -62,6 +63,7 @@ applications that wish to load or unload Linux kernel modules.
 %package checkinstall
 Summary: Smoke test for %name
 Group: Development/Other
+BuildArch: noarch
 Requires(post): %name = %EVR
 Requires(post): rpm-build-vm
 
@@ -156,6 +158,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm-ext4.img /tmp/vm.*
 %files checkinstall
 
 %changelog
+* Sat Apr 04 2026 Vitaly Chikunov <vt@altlinux.org> 34.2-alt3
+- spec: BR:/proc to fix FTBFS related to objtool v6.18.
+
 * Sun Nov 30 2025 Vitaly Chikunov <vt@altlinux.org> 34.2-alt2
 - Update to v34.2-4-g6b93232c (2025-06-13).
 
