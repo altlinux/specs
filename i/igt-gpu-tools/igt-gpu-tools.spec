@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: igt-gpu-tools
-Version: 2.1
+Version: 2.4
 Release: alt1
 
 Summary: IGT gpu tools and tests
@@ -44,6 +44,7 @@ BuildRequires: liboping-devel
 BuildRequires: libdb4-devel
 BuildRequires: libgdbm-devel
 BuildRequires: libharfbuzz-devel
+BuildRequires: libpci-devel
 BuildRequires: libjson-c-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk-doc
@@ -129,6 +130,9 @@ sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 %_pkgconfigdir/intel-gen4asm.pc
 
 %changelog
+* Fri Apr 03 2026 Anton Farygin <rider@altlinux.org> 2.4-alt1
+- 2.1 -> 2.4
+
 * Tue Jul 08 2025 Egor Ignatov <egori@altlinux.org> 2.1-alt1
 - New version 2.1.
 
