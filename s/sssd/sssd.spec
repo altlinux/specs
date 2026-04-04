@@ -11,7 +11,7 @@
 
 Name: sssd
 Version: 2.9.8
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -935,6 +935,30 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Thu Apr 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt3
+- Update to latest 2.9 LTM release with additional upstream patches.
+- Performance optimizations:
+  + memberOf plugin: use hash table for deduplication and avoid
+    ldb_dn_compare() in hot paths.
+  + SDAP: eliminate O(N^2) loop, initialize base filter and attribute
+    list only once, use DEBUG_CONDITIONAL in hot paths.
+  + UTIL: optimize sss_create_internal_fqname() with caching and
+    sss_tc_utf8_str_tolower().
+- Important fixes:
+  + Honor ldap filters: now correctly processes ldap_*_search_base
+    settings for nested groups.
+  + Fix handling of unreadable references in IPA.
+  + SDAP: do not require GID for non-POSIX groups (GitHub#8441).
+  + KRB5: fix memory leak in authenticate_stored_users() (GitHub#8531).
+  + UTIL: fix memory leak if get_active_uid() fails.
+- New features:
+  + AD: add basic foreign security principal (FSP) sdap map - now FSPs
+    from trusted domains are properly detected and ignored automatically.
+- New options:
+  + CONFIG: allow ldap_subuid_* attributes in configuration.
+- Documentation:
+  + man: add details about 'an2ln'.
+
 * Sat Jan 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt2
 - Fix typo in system-auth-use_first_pass-sss PAM stack rules.
 
