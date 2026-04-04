@@ -14,7 +14,7 @@
 
 Name: opencolorio
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 
 Patch1: %name-alt-install.patch
 Patch2: %name-alt-armh-multiple-definition.patch
+Patch3: opencolorio-2.5.1-alt-fix-yaml-cpp-0.9-compat.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -106,6 +107,7 @@ Group: Development/Python3
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -201,6 +203,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Sat Apr 04 2026 Anton Farygin <rider@altlinux.org> 2.5.1-alt2
+- fixed test compatibility with yaml-cpp 0.9.0
+
 * Fri Jan 30 2026 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Automatically updated to 2.5.1.
 
