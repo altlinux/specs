@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 10.0
-%define preview .rel
-%define _dotnet_coreversion 10.0.0%preview
+%define _dotnet_coreversion 10.0.4
 
-%define _dotnet_corerelease 10.0.0
-%define _dotnet_corerelease1 10.0.0
+%define _dotnet_corerelease 10.0.4
+%define _dotnet_corerelease1 10.0.4
 
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
@@ -133,6 +132,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.4-alt1
+.NET 10.0.4
+
 * Tue Nov 18 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0.rel-alt1
 - ASP.NET 10.0.0 release
 
