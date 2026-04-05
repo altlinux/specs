@@ -1,20 +1,19 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
 Version: 0.20.7
-Release: alt3
+Release: alt4
 
 Summary: RPM helper scripts for building %pkg packages
 
 License: GPLv2+
 Group: Development/Other
 Url: http://www.altlinux.org/Node.JS_Policy
-BuildArch: noarch
+# not noarch: nodejs_native_arch macro is arch-specific
 
 Source: %name-%version.tar
 Source1: macros.nodejs-tap
 Source2: %pkg.prov.files
 Source3: %pkg.env
-
 Patch0: macros.nodejs-alt.patch
 Patch1: nodejs.req-alt.patch
 Patch2: nodejs.req-alt-rpmbuild404.patch
@@ -58,12 +57,35 @@ See %url for detailed %pkg packaging policy.
 mkdir -p %buildroot/%_rpmmacrosdir/
 cat >> %buildroot/%_rpmmacrosdir/%pkg << 'EOF'
 %%_rpm_build_nodejsdir	%%_datadir/%name
-%%nodejs_arches	%%ix86 x86_64 %%arm
+%%nodejs_arches	x86_64 aarch64 loongarch64 riscv64 mipsel
 EOF
 sed -e s,_rpmconfigdir,_rpm_build_nodejsdir,g macros.nodejs >> %buildroot/%_rpmmacrosdir/%pkg
 
 # TMP:
 cat %{SOURCE1} >> %buildroot%_rpmmacrosdir/%pkg
+
+# Node.js native arch mapping (arch-specific, generated at build time)
+echo "" >> %buildroot%_rpmmacrosdir/%pkg
+echo "# Node.js native platform arch for npm optional dependencies" >> %buildroot%_rpmmacrosdir/%pkg
+echo "# Used by esbuild, rollup, etc. for platform-specific binaries" >> %buildroot%_rpmmacrosdir/%pkg
+%ifarch x86_64
+echo "%%nodejs_native_arch x64" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
+%ifarch aarch64
+echo "%%nodejs_native_arch arm64" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
+%ifarch %e2k
+echo "%%nodejs_native_arch e2k" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
+%ifarch loongarch64
+echo "%%nodejs_native_arch loong64" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
+%ifarch riscv64
+echo "%%nodejs_native_arch riscv64" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
+%ifarch mipsel
+echo "%%nodejs_native_arch mipsel" >> %buildroot%_rpmmacrosdir/%pkg
+%endif
 
 install -D -m755 %pkg.prov %buildroot/usr/lib/rpm/%pkg.prov
 install -D -m755 %{SOURCE2} %buildroot/usr/lib/rpm/%pkg.prov.files
@@ -89,6 +111,11 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Sun Apr 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt4
+- add %%nodejs_native_arch macro (maps RPM arch to Node.js process.arch)
+- update %%nodejs_arches: add aarch64 loongarch64 riscv64 mipsel; remove %%arm %%ix86
+- make rpm-macros-nodejs arch-specific (for nodejs_native_arch)
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt3
 - npm_build: do node-gyp configure firstly, set BR: node-gyp >= 10.1.0
 
