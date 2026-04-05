@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.53
+%define ver_major 0.54
 %define beta %nil
 %define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
@@ -47,7 +47,10 @@ Simple introduction to phosh.
 mv gmobile-%gmobile_ver subprojects/gmobile}
 
 %build
-%meson
+%meson \
+    -Dvendor='ALT Linux' \
+    -Durl='https://altmobile.org'
+%nil
 %meson_build
 
 %install
@@ -74,6 +77,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 %doc README* NEWS
 
 %changelog
+* Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 

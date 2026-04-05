@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.53
+%define ver_major 0.54
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -61,12 +61,15 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %gsds_ver
 BuildRequires: pkgconfig(libfeedback-0.0)
+BuildRequires: pkgconfig(dconf)
 BuildRequires: pkgconfig(libsystemd) >= %systemd_ver
 # compliters: default -- hunspell
 BuildRequires: pkgconfig(hunspell)
 # https://bugzilla.altlinux.org/54897
 BuildRequires: fzf
 BuildRequires: pkgconfig(govarnam)
+# Japanese, Chinese and Korean support
+#BuildRequires: pkgconfig(uim)
 %{?_enable_gtk_doc:BuildRequires: gobject-introspection-devel gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: at-spi2-core xvfb-run words varnam-schemes}
@@ -149,6 +152,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Apr 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Sat Feb 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 

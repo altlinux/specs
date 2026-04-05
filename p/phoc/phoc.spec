@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.53
+%define ver_major 0.54
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -9,7 +9,7 @@
 
 %define dev_uid 500
 %define wlroots_ver_major 0.19
-%define wlroots_ver %wlroots_ver_major.2
+%define wlroots_ver %wlroots_ver_major.3
 # since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
@@ -43,8 +43,6 @@ Source: %name-%version%beta.tar
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 %{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
 Source3: gvdb-%gvdb_ver.tar
-# upstream fix for wlroots against newer libinput
-Patch10: wlroots-0.19.2-up-libinput-1.31.patch
 
 %define glib_ver 2.74
 %define gmobile_ver 0.1.0
@@ -109,7 +107,6 @@ pushd subprojects/wlroots-%wlroots_ver_major.x
 for p in ../packagefiles/wlroots/*.patch; do
     patch -p1 -i $p
 done
-%patch10 -p1
 popd}
 
 mv gvdb-%gvdb_ver subprojects/gvdb
@@ -156,6 +153,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Apr 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 

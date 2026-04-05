@@ -1,4 +1,4 @@
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Tour
 %def_enable check
@@ -55,6 +55,9 @@ A guided tour and greeter for GNOME.
 %doc NEWS README.md
 
 %changelog
+* Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

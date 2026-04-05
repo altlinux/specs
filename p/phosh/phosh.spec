@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.53
+%define ver_major 0.54
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -88,7 +88,7 @@ Requires: sound-theme-phosh
 # since 0.45 to uninstall apps from app-grid
 Requires: gnome-software
 # since 0.46 (ALT #53890)
-Requires: xdg-desktop-portal-phosh >= %ver_major
+Requires: xdg-desktop-portal-phosh >= 0.53
 
 # squeekboard provides osk-wayland
 #Requires: /usr/bin/osk-wayland
@@ -277,6 +277,9 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/scaling-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-media-players.so
 %_libdir/%name/plugins/media-players.plugin
+%_libdir/%name/plugins/lib%name-plugin-simple-custom-status-icon.so
+%_libdir/%name/plugins/simple-custom-status-icon.plugin
+
 %{?_enable_searchd:
 %_libexecdir/%name-searchd
 %_datadir/dbus-1/services/%rdn_name.Search.service}
@@ -330,6 +333,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Tue Feb 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.1-alt1
 - 0.53.1
 

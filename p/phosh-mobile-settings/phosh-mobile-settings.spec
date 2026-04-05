@@ -1,12 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.53
+%define ver_major 0.54
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
+%define libname libpms
+%define namespace Pms
+%define api_ver 1.0
 
 %def_disable embed_gmobile
+%def_enable introspection
+%def_enable man
+%def_enable examples
 # Linux dmabuf support unavailable
 %def_disable check
 
@@ -37,13 +43,14 @@ Source10: gvc-%gvc_ver.tar
 %define phosh_settings_ver 0.40
 %define desktop_ver 44
 
+Requires: %libname = %EVR
 Requires: dconf feedbackd lm_sensors3
 # and ModemManager 1.25.1
 Requires: cellbroadcastd
 # for sysfs backend
 Requires: sysfsutils
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: gcc-c++ meson
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.84
@@ -72,10 +79,58 @@ BuildRequires: gobject-introspection-devel}
 %else
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 %endif
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Adw) = 1}
+%{?_enable_man:BuildRequires: %_bindir/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver phosh /usr/bin/Xwayland}
 
 %description
 Mobile Settings App for phosh and related components.
+
+%package -n %libname
+Summary: Library for %name
+License: LGPL-2.1-or-later
+Group: System/Libraries
+
+%description -n %libname
+The %libname package contains shared library for %name.
+
+%package -n %libname-devel
+Summary: Development files for %libname
+License: LGPL-2.1-or-later
+Group: Development/C
+Requires: %libname = %EVR
+
+%description -n %libname-devel
+The %name-devel package contains libraries and header files for
+developing applications that use %libname.
+
+%package -n %libname-gir
+Summary: GObject introspection data for %libname
+Group: System/Libraries
+Requires: %libname = %EVR
+
+%description -n %libname-gir
+GObject introspection data for %libname
+
+%package -n %libname-gir-devel
+Summary: GObject introspection devel data for %libname
+Group: Development/Other
+BuildArch: noarch
+Requires: %libname-gir = %EVR
+Requires: %libname-devel = %EVR
+
+%description -n %libname-gir-devel
+GObject introspection devel data for %libname
+
+%package -n %libname-demo
+Summary: %libname demo programs
+License: LGPL-3.0-or-later
+Group: Graphical desktop/GNOME
+Requires: %libname = %EVR
+Requires: python3-module-pygobject3
+
+%description -n %libname-demo
+This provides example program that uses %libname.
 
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version%beta -a10 %{?_enable_embed_gmobile:-a11
@@ -86,10 +141,13 @@ pushd subprojects/gvc
 # not needed with latest gvc
 #for p in ../packagefiles/gvc/*.patch; do
 #    patch -p1 -i $p; done
-#popd
+popd
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool examples examples}
+%nil
 %meson_build
 
 %install
@@ -113,10 +171,35 @@ xvfb-run %__meson_test
 %_datadir/icons/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%{?_enable_man:%_man1dir/%name.1*}
 %doc README* NEWS
 
+%files -n %libname
+%_libdir/%libname-%api_ver.so.*
+
+%files -n %libname-devel
+%_includedir/pms-%api_ver/
+%_libdir/%libname-%api_ver.so
+%_pkgconfigdir/pms-%api_ver.pc
+%{?_enable_vala:%_datadir/vala/vapi/pms-%api_ver.*}
+
+%if_enabled introspection
+%files -n %libname-gir
+%_typelibdir/%namespace-%api_ver.typelib
+
+%files -n %libname-gir-devel
+%_girdir/%namespace-%api_ver.gir
+%endif
+
+%if_enabled examples
+%files -n %libname-demo
+%endif
 
 %changelog
+* Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+- new libpms* subpackages
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - updated to v0.53.0-2-g6f77f42
 
