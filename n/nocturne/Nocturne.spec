@@ -2,7 +2,7 @@
 
 Name: nocturne
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: An Adwaita Music Player / Library Manager
 License: GPL-3.0-or-later
@@ -15,7 +15,6 @@ BuildArch: noarch
 AutoProv: nopython3
 
 Source: %name-%version.tar
-Source1: ru.po
 
 %add_python3_path %_datadir/%name/%name
 
@@ -30,7 +29,6 @@ but it's capable of installing and managing it's own Navidrome instance.
 
 %prep
 %setup
-cp -a %SOURCE1 po/
 
 %build
 %meson
@@ -56,6 +54,9 @@ done
 %doc *.md
 
 %changelog
+* Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt2
+- updated to git.ecc43593fd
+
 * Sun Apr 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
 - 0.7.0 -> 0.7.1
 
