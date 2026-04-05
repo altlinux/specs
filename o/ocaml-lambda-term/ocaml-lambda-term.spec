@@ -1,13 +1,14 @@
 %define pkgname lambda-term
 Name: ocaml-%pkgname
 Version: 3.3.3
-Release: alt1
+Release: alt2
 Summary: Terminal manipulation library for OCaml
 
 Group: Development/ML
 License: MIT
 Url: https://github.com/ocaml-community/lambda-term
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: dune ocaml-cppo ocaml-mew-devel ocaml-mew_vi-devel
 BuildRequires: ocaml-lwt_log-devel ocaml-zed-devel >= 3.2.0
@@ -32,6 +33,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build -p %pkgname
@@ -50,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Apr 05 2026 Anton Farygin <rider@altlinux.ru> 3.3.3-alt2
+- fixed mouse motion event decoding in X11 normal encoding (mode 1002)
+
 * Thu Jan 15 2026 Anton Farygin <rider@altlinux.org> 3.3.3-alt1
 - 3.3.2 -> 3.3.3
 
