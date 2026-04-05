@@ -14,7 +14,7 @@
 %endif
 
 Name:    qgis
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -418,6 +418,7 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %_datadir/%name/python
 %python3_sitelibdir/%name
 %python3_sitelibdir/PyQt6/uic/widget-plugins/
+%python3_sitelibdir/%name-%version.dist-info
 %endif
 
 %if_enabled server
@@ -429,6 +430,9 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %endif
 
 %changelog
+* Fri Apr 03 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+
 * Tue Mar 10 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - New version.
 - Supported Qt6.
