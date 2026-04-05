@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -28,6 +28,8 @@ BuildRequires: ocaml-lambda-term-devel >= 3.0.0
 BuildRequires: ocaml-lwt-devel >= 5.0.0
 BuildRequires: ocaml-linenoise-devel
 BuildRequires: ocaml-uucp-devel
+BuildRequires: ocaml-pcre2-devel
+BuildRequires: ocaml-markup-devel
 BuildRequires: libev-devel
 
 %if_with check
@@ -101,6 +103,25 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Apr 05 2026 Anton Farygin <rider@altlinux.org> 0.33.0-alt1
+- task manage: added mouse text selection (click+drag, double/triple-click,
+  auto-scroll, OSC 52 clipboard copy)
+- task manage: added Space/b page navigation keys in log viewer
+- task manage: added syntax highlighting for log output (sublime-syntax,
+  PCRE2 JIT) with user-customizable .tmTheme color themes
+- task manage: changed line wrapping to character-based instead of word-based
+- task manage: fixed last character lost on line wrap
+- task manage: fixed wrapped continuation lines not using full screen width
+- task manage: fixed syntax highlighting caches not cleared between lines
+- build: added --section flag for running specific rpmbuild section in
+  existing chroot, --rpmbuild-args for extra arguments
+- build: added configurable log filename template in [build] config
+- build: added --skip-check rpmbuild value to skip %%check section
+- build: fixed SKIP instead of FAIL for ExcludeArch/ExclusiveArch
+- build: fixed batch value not passed in single-builder batch path
+- gen pypi2spec: improved runtime deps, autoreq settings, spec naming,
+  %%define pypi_name for correct dist-info path
+
 * Tue Mar 31 2026 Anton Farygin <rider@altlinux.org> 0.32.0-alt1
 - added submit automatic squash of duplicate release commits
 - added PyPI version source for Python packages in up and check version
