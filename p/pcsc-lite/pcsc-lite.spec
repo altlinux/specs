@@ -5,7 +5,7 @@
 
 Name: pcsc-lite
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: PC/SC Lite smart card framework and applications
 License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
@@ -110,6 +110,13 @@ rm -rf %buildroot%_defaultdocdir/pcsc-lite
 rm -f %buildroot%_libdir/libpcsclite.a
 %endif
 
+mkdir -p %buildroot%_sharedstatedir/%name
+
+%pre
+getent group pcscd >/dev/null || /usr/sbin/groupadd -r pcscd
+getent passwd pcscd >/dev/null || /usr/sbin/useradd -r \
+  -g pcscd -d %_sharedstatedir/%name -s /bin/bash -c "PCSC Lite" pcscd
+
 %preun
 if sd_booted; then
     %preun_systemd pcscd.service pcscd.socket
@@ -142,6 +149,7 @@ fi
 %dir %_libdir/pcsc/drivers
 %{?_enable_polkit:%_datadir/polkit-1/actions/*.policy}
 %_datadir/metainfo/fr.apdu.pcsclite.metainfo.xml
+%attr(0750,pcscd,pcscd) %dir %_sharedstatedir/%name
 
 # NB: .so belongs here, see ALT#25275
 %files -n libpcsclite
@@ -164,6 +172,9 @@ fi
 %endif
 
 %changelog
+* Sun Apr 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt2
+- Created user pcscd for service file (ALT #58059, #58081).
+
 * Thu Jan 08 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
 - New version.
 
