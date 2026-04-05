@@ -1,6 +1,6 @@
 %def_without asserts
 Name: libuv
-Version: 1.52.0
+Version: 1.52.1
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -53,6 +53,10 @@ libuv header and build tools.
 
 # not for hasher
 %check
+%ifarch %ix86
+# Disable io_uring in tests (fs_link_iouring timeout on i586 in hasher)
+export UV_USE_IO_URING=0
+%endif
 %make check
 
 %install
@@ -70,6 +74,10 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sun Apr 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.52.1-alt1
+- new version 1.52.1 (ALT bug 58503)
+- update thread-affinity test patch for 1.52.1 (skip in hasher)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.52.0-alt1
 - new version 1.52.0
 - update thread-priority test patch for 1.52.0 (skip in hasher)
