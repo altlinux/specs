@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    asbru-cm
-Version: 6.4.0
-Release: alt2
+Version: 6.4.1
+Release: alt1
 
 Summary: Asbru Connection Manager is a user interface that helps organizing remote terminal sessions and automating repetitive tasks.
 License: GPL-3.0
@@ -101,6 +101,9 @@ ln -s ../share/%name/%name %buildroot%_bindir/%name
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Apr 05 2026 Andrey Cherepanov <cas@altlinux.org> 6.4.1-alt1
+- New version.
+
 * Thu Jul 18 2024 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt2
 - Requires gir packages (ALT #50930).
 
