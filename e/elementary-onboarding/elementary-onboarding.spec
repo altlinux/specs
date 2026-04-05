@@ -4,7 +4,7 @@
 %define appname io.elementary.onboarding
 
 Name: elementary-onboarding
-Version: 8.0.4
+Version: 8.1.0
 Release: alt1
 
 Summary: Onboarding app for new users
@@ -56,6 +56,9 @@ OS.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.4-alt1
 - New version 8.0.4.
 

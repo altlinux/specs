@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: tool for refurbishing and modernizing Python codebases
@@ -52,6 +52,9 @@ even better.
 %_bindir/%pypi_name
 
 %changelog
+* Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 

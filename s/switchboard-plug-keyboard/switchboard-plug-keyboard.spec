@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.keyboard
 
 Name: switchboard-plug-keyboard
-Version: 8.1.0
+Version: 8.1.1
 Release: alt1
 
 Summary: Switchboard Keyboard Plug
@@ -52,5 +52,8 @@ sed -i '/var install_button = add_button (_("Install Unlisted Engines…"), Gtk.
 %_datadir/metainfo/io.elementary.settings.keyboard.metainfo.xml
 
 %changelog
+* Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.1-alt1
+- New version 8.1.1.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
 - Initial build for Sisyphus
