@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -174,6 +174,11 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Sun Apr 05 2026 Andrey Cherepanov <cas@altlinux.org> 0.49-alt1
+- Removed LDAP domain in GUI interface, added ALT Domain and ALD Pro support.
+- 90-auth: renamed domain only if their scheme is ldap or krb5 and server role
+  is master.
+
 * Sat Aug 16 2025 Andrey Limachko <liannnix@altlinux.org> 0.48-alt1
 - system-auth: ad: add fallback for older systemd without
   hostnamectl -j support
