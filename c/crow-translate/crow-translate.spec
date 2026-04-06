@@ -1,9 +1,5 @@
-%define version_SingleApplication v3.5.1
-%define version_QHotkey 1.5.0
-%define version_Breeze 6.7.0
-
 Name: crow-translate
-Version: 3.1.0
+Version: 4.0.2
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -13,48 +9,44 @@ License: GPL-3.0-only and MIT and BSD-3-Clause
 Group: System/Internationalization
 Url: https://invent.kde.org/office/crow-translate
 
-# Source-url: https://invent.kde.org/office/crow-translate/-/archive/v%version/crow-translate-v%version.tar.gz
 Source: %name-%version.tar
 
-# Source1-url: https://github.com/itay-grudev/SingleApplication/archive/refs/tags/%version_SingleApplication.tar.gz
-Source1: SingleApplication.tar
-
-# Source2-url: https://github.com/Skycoder42/QHotkey/archive/refs/tags/%version_QHotkey.tar.gz
-Source2: QHotkey.tar
-
-# Source3-url: https://invent.kde.org/frameworks/breeze-icons/-/archive/v%version_Breeze/breeze-icons-v%version_Breeze.tar.gz
-Source3: Breeze-icon-theme.tar
-
-BuildRequires: extra-cmake-modules
-BuildRequires: libleptonica-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: kf5-kwayland-devel
-BuildRequires: tesseract-devel >= 4.0.0
-BuildRequires: libqt5-concurrent
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: libqt5-dbus
-
-BuildRequires(pre): rpm-macros-cmake
+Source1: breeze-icons.tar
+Source2: espeak-ng.tar
+Source3: qhotkey.tar
+Source4: singleapplication.tar
 
 Requires: tesseract >= 4.0.0
 Requires: icon-theme-breeze
-Requires: libqt5-svg
+Requires: libqt6-svg
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: extra-cmake-modules
+BuildRequires: libleptonica-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: tesseract-devel >= 4.0.0
+BuildRequires: libqt6-concurrent
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libqt6-dbus
+BuildRequires: qt6-scxml-devel
+BuildRequires: qt6-speech-devel
+BuildRequires: plasma6-kwayland-devel
+BuildRequires: libonnxruntime-devel
 
 %description
 A simple and lightweight translator that allows you to translate and voice text
-using Google, Yandex and Bing, written in Qt5 for KDE5.
+using Google, Yandex and Bing, written in Qt6 for KDE6.
 To make the application look native in DE built on GTK, you need to customize
-the Qt application style with plugins like qt5ct, adwaita-qt5.
+the Qt application style with plugins like qt6ct, adwaita-qt6.
 Recommended icons for the Breeze app.
 
 %description -l ru_RU.UTF-8
 Простой и легкий переводчик, позволяющий переводить и озвучивать текст с
-помощью Google, Yandex и Bing, написанный на Qt5 для KDE5.
+помощью Google, Yandex и Bing, написанный на Qt6 для KDE6.
 Чтобы приложение выглядело родным в DE, построенном на GTK, вам нужно настроить
-стиль приложения Qt с помощью плагинов, таких как qt5ct, adwaita-qt5.
+стиль приложения Qt с помощью плагинов, таких как qt6ct, adwaita-qt6.
 Рекомендуемые значки для приложения Breeze.
 
 %prep
@@ -66,23 +58,14 @@ sed -i -E "s/qOverload<([^>]*)>\(&([^:]*::)/(void(\\2*)(\\1))(\&\\2/" \
 	src/mainwindow.cpp
 %endif
 
-tar -xf %SOURCE1 -C src/3rdparty/singleapplication/ --strip-components=1
-tar -xf %SOURCE2 -C src/3rdparty/qhotkey/ --strip-components=1
-tar -xf %SOURCE3 -C data/icons/3rdparty/breeze-icons --strip-components=1
-
-# Analog of crow-2.10.0-alt-desktop.patch
-subst "s|Categories=Office;Qt;|Categories=Qt;Graphics;OCR;Scanning;|" data/org.kde.CrowTranslate.desktop.in
-
-# Fix QX11Info: No such file or directory
-subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/mainwindow.cpp
-subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/ocr/screengrabbers/abstractscreengrabber.cpp
-subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/ocr/snippingarea.cpp
-subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/xdgdesktopportal.cpp
+tar -xf %SOURCE1 -C data/icons/3rdparty/
+tar -xf %SOURCE2 -C src/3rdparty/
+tar -xf %SOURCE3 -C src/3rdparty/
+tar -xf %SOURCE4 -C src/3rdparty/
 
 %build
 %cmake \
-    -DWITH_KWAYLAND=ON
-
+    -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
 %install
@@ -90,13 +73,18 @@ subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/xdgdesktopportal.cpp
 %find_lang %name --with-qt
 
 %files -f %name.lang
-%doc README.md
+%doc *.md
 %_bindir/crow
 %_desktopdir/org.kde.CrowTranslate.desktop
+%_datadir/crow-translate
 %_datadir/metainfo/org.kde.CrowTranslate.metainfo.xml
 %_iconsdir/hicolor/*/*/org.kde.CrowTranslate*
 
 %changelog
+* Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.2-alt1
+- 3.1.0 -> 4.0.2 (ALT #55988)
+- build with Qt6
+
 * Thu Jun 19 2025 Roman Alifanov <ximper@altlinux.org> 3.1.0-alt1
 - new version 3.1.0 (with rpmrb script)
 
