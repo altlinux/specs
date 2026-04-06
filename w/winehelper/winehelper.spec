@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.10.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -64,6 +64,9 @@ install -Dm644 image/gui/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%n
 install -Dm644 image/gui/%name-symbolic.svg %buildroot%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 
+mkdir -p %buildroot%python3_sitelibdir/
+cp -rv winehelperqt %buildroot%python3_sitelibdir/
+
 %files
 %doc LICENSE LICENSE_AGREEMENT CHANGELOG COPYING THIRD-PARTY GENERAL README.md
 %_bindir/%name
@@ -77,8 +80,21 @@ install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/%{name}_gui.py
+%python3_sitelibdir/winehelperqt/
 
 %changelog
+* Mon Apr 06 2026 Mikhail Tergoev <fidel@altlinux.org> 0.12.0-alt1
+- updated to version 0.12.0
+- fixed work cpcsp_proxy when mounting home with the noexec flag
+- updated all installation scripts for ctm and ved
+
+* Mon Apr 06 2026 Mikhail Tergoev <fidel@altlinux.org> 0.11.0-alt1
+- updated to version 0.11.0
+- fixed work winehelper when mounting home with noexec flag
+- fixed Qt5 graphics mode icon
+- fixed operation of certificates for emias (thanks lav@)
+- added automatic archiving log if it is more than 10 MB
+
 * Wed Mar 18 2026 Mikhail Tergoev <fidel@altlinux.org> 0.10.0-alt1
 - updated to version 0.10.0
 - updated installation scripts: emias, ctm-service (ALT bug: 58046)
