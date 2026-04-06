@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name pika-backup
-%define ver_major 0.7
+%define ver_major 0.8
 %define xdg_name org.gnome.World.PikaBackup
 
 # cargo test failed
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: Keep your data safe
@@ -21,8 +21,8 @@ Vcs: https://gitlab.gnome.org/World/pika-backup.git
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.12.5
-%define adwaita_ver 1.4.0
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
 %define borg_ver 1.4
 
 Requires: borg >= %borg_ver
@@ -32,6 +32,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson rust-cargo yelp-tools git
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(openssl)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli /usr/bin/glib-compile-schemas desktop-file-utils}
 
 %description
@@ -81,6 +82,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
 - 0.7.6
 

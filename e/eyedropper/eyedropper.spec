@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name eyedropper
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name com.github.finefindus.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: GNOME Eyedropper
 License: GPL-3.0
@@ -26,9 +26,8 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
-%define gtk_ver 4.14
-# libadwaita-sys v0.7.2 requires
-%define adw_ver 1.7
+%define gtk_ver 4.22
+%define adw_ver 1.9
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -73,6 +72,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc CHANGELOG* README*
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt3
 - v2.1.0-29-gcb5491d (updated translations)
 
