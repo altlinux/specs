@@ -4,7 +4,7 @@
 %def_without check
 %endif
 Name: ocaml-atd
-Version: 3.0.1
+Version: 4.0.0
 Release: alt1
 Summary: Parser for the ATD data format description language
 Group: Development/ML
@@ -253,6 +253,9 @@ Development files for ocaml-atdts.
 %files -n ocaml-atdts-devel -f ocaml-files.devel.atdts
 
 %changelog
+* Sun Apr 05 2026 Anton Farygin <rider@altlinux.org> 4.0.0-alt1
+- 3.0.1 -> 4.0.0
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 3.0.1-alt1
 - 2.16.0 -> 3.0.1
 
