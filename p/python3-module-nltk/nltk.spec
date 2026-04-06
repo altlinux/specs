@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.9.4
-Release: alt1
+Release: alt2
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
@@ -19,6 +19,8 @@ Source1: %pyproject_deps_config_name
 Patch0: skip_nltk_data_tests.patch
 Patch1: %name-%version-alt.patch
 AutoReq: yes, nopython3
+# sqlite3 is subpackaged in alt
+Requires: python3-modules-sqlite3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -65,6 +67,9 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 06 2026 Stanislav Levin <slev@altlinux.org> 3.9.4-alt2
+- Added missing runtime dependency on sqlite3.
+
 * Fri Apr 03 2026 Stanislav Levin <slev@altlinux.org> 3.9.4-alt1
 - 3.9.1 -> 3.9.4.
 - (Fixes: CVE-2025-14009, CVE-2026-0846, CVE-2026-0847, CVE-2026-0848)
