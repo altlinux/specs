@@ -1,11 +1,11 @@
-%def_disable snapshot
-%define ver_major 1.35
+%def_enable snapshot
+%define ver_major 1.36
 
 %def_with mkpdf
 %def_enable check
 
 Name: gtk-doc
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -41,8 +41,8 @@ Provides: python3(gtkdoc)
 
 %add_python3_path %_datadir/%name/python/gtkdoc
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel >= %python_ver python3-module-Pygments
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson python3-devel >= %python_ver python3-module-Pygments
 BuildRequires: docbook-dtds xml-common xml-utils
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl bc
@@ -82,25 +82,17 @@ used by GTK+, GLib and GNOME.
 %prep
 %setup
 # make cmake files arch-independent
-subst 's/libdir/datadir/' buildsystems/cmake/Makefile.am
+subst 's/libdir/datadir/' buildsystems/cmake/meson.build
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
 
 %build
-%autoreconf
-%undefine _configure_target
-export PYTHON=%_bindir/python3
-export ac_cv_path_JADE=%_bindir/openjade
-export ac_cv_path_XSLTPROC=%_bindir/xsltproc
-%{?_with_mkpdf:export ac_cv_path_DBLATEX=%_bindir/dblatex}
-%configure \
-    --with-xml-catalog=%_sysconfdir/xml/catalog \
-    --docdir=%pkgdocdir
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot pkgconfigdir=%_datadir/pkgconfig install
+%meson_install
 install -d -m755 %buildroot%_datadir/gtk-doc/html
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d/
 cat <<EOF >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
@@ -110,15 +102,14 @@ EOF
 %find_lang --with-gnome gtk-doc-manual
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS ChangeLog NEWS README doc/* \
+install -p -m644 NEWS README* doc/* \
     %buildroot%pkgdocdir/
-bzip2 -9 %buildroot%pkgdocdir/ChangeLog
 ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 ln -s %_licensedir/FDL-1.1 %buildroot%pkgdocdir/COPYING-DOCS
 cp -a examples %buildroot%pkgdocdir/
 
 %check
-%make -k check VERBOSE=1
+%__meson_test
 
 %files
 %_bindir/*
@@ -130,9 +121,7 @@ cp -a examples %buildroot%pkgdocdir/
 %_datadir/cmake/GtkDoc/*.cmake
 %_sysconfdir/buildreqs/files/ignore.d/*
 %dir %pkgdocdir
-%pkgdocdir/AUTHORS
 %pkgdocdir/COPYING
-%pkgdocdir/ChangeLog.bz2
 %pkgdocdir/NEWS
 %pkgdocdir/README*
 %pkgdocdir/*.txt
@@ -149,6 +138,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- updated to 1.36.0-10-gf3424c6 (ported to Meson build system)
+
 * Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.35.1-alt1
 - 1.35.1
 
