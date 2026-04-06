@@ -2,7 +2,7 @@
 %global import_path github.com/mr-karan/doggo
 
 Name: doggo
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: Command-line DNS Client for Humans.
 License: GPL-3.0-only
@@ -53,7 +53,7 @@ mv -f %buildroot%_bindir/web %buildroot%_bindir/%name-web
 
 # Completions
 %buildroot%_bindir/%name completions bash > %name.bash
-install -Dm644 %name.bash %buildroot%_datadir/bash-completions/completions/%name
+install -Dm644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
 %buildroot%_bindir/%name completions fish > %name.fish
 install -Dm644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 %buildroot%_bindir/%name completions zsh > %name.zsh
@@ -62,7 +62,7 @@ install -Dm644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %files
 %doc *.md LICENSE
 %_bindir/%name
-%_datadir/bash-completions/completions/%name
+%_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 
@@ -71,6 +71,9 @@ install -Dm644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_bindir/%name-web
 
 %changelog
+* Mon Apr 06 2026 Pavel Shilov <zerospirit@altlinux.org> 1.1.5-alt1
+- Update to new version and close ALT #58527
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.1.4-alt1
 - 1.1.3 -> 1.1.4
 
