@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 8470
+Version: 8681
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -265,6 +265,9 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Mon Apr 06 2026 Vitaly Chikunov <vt@altlinux.org> 1:8681-alt1
+- Update to b8681 (2026-04-06).
+
 * Sun Mar 22 2026 Vitaly Chikunov <vt@altlinux.org> 1:8470-alt1
 - Update to b8470 (2026-03-22).
 
