@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 2025
+%define ver_major 2026
 %define rdn_name io.bassi.Amberol
 
 %def_enable check
@@ -23,16 +23,16 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define glib_ver 2.76
-%define gtk_ver 4.16
-%define adwaita_ver 1.5
+%define glib_ver 2.80
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 %define gst_ver 1.20
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo 
+BuildRequires: meson rust-cargo blueprint-compiler
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
@@ -81,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.1-alt1
+- 2026.1
+
 * Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.1-alt1
 - 2025.1
 
