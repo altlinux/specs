@@ -14,7 +14,7 @@
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
@@ -155,6 +155,9 @@ popd
 %files -n ocaml-%name -f generated/ocaml/ocaml-files.runtime
 
 %changelog
+* Mon Apr 06 2026 Danil Shein <dshein@altlinux.org> 0.2.4-alt1
+- new version
+
 * Mon Jan 19 2026 Danil Shein <dshein@altlinux.org> 0.2.3-alt1
 - new version
 
