@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Wayland compositor widget for GTK4
@@ -33,7 +33,7 @@ Source: %_name-%version.tar
 
 %define gtk_ver 4.14
 %define epoxy_ver 1.5
-%define wlr_api_ver 0.19
+%define wlr_api_ver 0.20
 %define wp_ver 1.22
 %define xkb_ver 1.5
 
@@ -154,6 +154,9 @@ install -pD -m755  %__sourcedir/examples/*.{py,js} \
 %endif
 
 %changelog
+* Sat Apr 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
