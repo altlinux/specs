@@ -3,8 +3,8 @@
 %define        nomen swipl
 
 Name:          swi-prolog
-Version:       9.3.25.39
-Release:       alt0.2
+Version:       10.1.5
+Release:       alt1
 Summary:       Prolog interpreter and compiler
 License:       BSD-2-Clause
 Group:         Development/Other
@@ -125,6 +125,7 @@ sed -i '/CMAKE_TRY_COMPILE_TARGET_TYPE.*STATIC_LIBRARY/d' cmake/*.cmake
    -DMULTI_THREADED=ON \
    -DBUILD_TESTING=ON \
    %nil
+
 %cmake_build
 
 %install
@@ -132,6 +133,7 @@ sed -i '/CMAKE_TRY_COMPILE_TARGET_TYPE.*STATIC_LIBRARY/d' cmake/*.cmake
 
 %check
 %ctest
+
 
 %files         -n %nomen
 %doc README.md LICENSE VERSION
@@ -141,7 +143,6 @@ sed -i '/CMAKE_TRY_COMPILE_TARGET_TYPE.*STATIC_LIBRARY/d' cmake/*.cmake
 %files         -n %nomen-stdlib
 %doc README.md LICENSE VERSION
 %_libexecdir/swipl
-%_libdir/swipl
 
 %files         -n lib%nomen
 %_libdir/lib%{nomen}.so.*
@@ -154,6 +155,9 @@ sed -i '/CMAKE_TRY_COMPILE_TARGET_TYPE.*STATIC_LIBRARY/d' cmake/*.cmake
 
 
 %changelog
+* Mon Apr 06 2026 Pavel Skrylev <majioa@altlinux.org> 10.1.5-alt1
+- ^ 9.3.25p39 -> 10.1.5
+
 * Mon Aug 18 2025 Ivan A. Melnikov <iv@altlinux.org> 9.3.25.39-alt0.2
 - NMU: avoid messing with CMAKE_TRY_COMPILE_TARGET_TYPE
   on loongarch64 and riscv64 to fix FTBFS
