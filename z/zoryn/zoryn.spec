@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,16 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Apr 06 2026 Anton Farygin <rider@altlinux.org> 0.34.0-alt1
+- task refresh: added --from flag for cross-branch sync (detect stale
+  subtasks and replace with copy from source branch)
+- task refresh: added --types flag to control which subtask types are
+  checked (copy, rebuild, build=gear+srpm, ALL)
+- task test-rebuild: added FTBFS warning and --skip-ftbfs flag
+- added TAB completion for package names via Repoteka API
+- task ls/show: fixed missing package names for delete/copy/rebuild subtasks
+- build: unified batch build logic for single and multi-builder modes
+
 * Sun Apr 05 2026 Anton Farygin <rider@altlinux.org> 0.33.0-alt1
 - task manage: added mouse text selection (click+drag, double/triple-click,
   auto-scroll, OSC 52 clipboard copy)
