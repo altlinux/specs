@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: ECMP-aware traceroute
@@ -64,6 +64,9 @@ export IGNORE_SOURCES=1
 %doc *.md docs/probe-encoding-design.md
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5
+
 * Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
