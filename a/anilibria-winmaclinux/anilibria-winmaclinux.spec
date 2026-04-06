@@ -1,36 +1,33 @@
+%define oname tv.aniliberty.AniLiberty
+
 Name: anilibria-winmaclinux
-Version: 2.2.27
+Version: 2.2.35
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
 License: GPL-3.0-only
 Group: Video
-Url: http://anilibriadesktop.reformal.ru
+Url: https://github.com/anilibria/anilibria-winmaclinux
+Vcs: https://github.com/anilibria/anilibria-winmaclinux
 
-Requires: qt5-graphicaleffects
-Requires: libqt5-multimedia
-Requires: qt5-quickcontrols2
-Requires: qt5-quickcontrols
-Requires: libqt5-quickparticles
-Requires: libqt5-svg
+Requires: libqt6-multimedia
+Requires: libqt6-quickparticles
+Requires: libqt6-svg
 
-# Source-url: https://github.com/anilibria/anilibria-winmaclinux/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: %name-1.2.4-alt-config.patch
 Patch1: %name-1.2.4-alt-fix_prefix.patch
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-graphicaleffects
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-websockets-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-websockets-devel
+BuildRequires: qt6-declarative-devel
 BuildRequires: gstreamer1.0-devel
-
-BuildRequires(pre): rpm-macros-qt5 
+BuildRequires: mpvqt6-devel
 
 %description
 Linux\Windows\Mac client for online viewing of cartoons and animated films
@@ -43,26 +40,31 @@ Linux\Windows\Mac клиент для онлайн просмотра мульт
 %prep
 %setup
 %autopatch -p1
+subst 's|/usr/local/bin/|/usr/bin/|' data/%oname.desktop
 
 %build
 pushd src
-%qmake_qt5 CONFIG+=debug
-%make_build
+%cmake
+%cmake_build
 popd
 
 %install
 pushd src
-INSTALL_ROOT=%buildroot %makeinstall_std
-mv %buildroot%_desktopdir/anilibria.desktop %buildroot%_desktopdir/tv.anilibria.AniLibria.desktop
+%cmake_install
 popd
 
 %files
 %doc *.md
-%_bindir/AniLibria
-%_desktopdir/tv.anilibria.AniLibria.desktop
-%_iconsdir/hicolor/*/apps/anilibria.png
+%_bindir/AniLiberty
+%_desktopdir/%oname.desktop
+%_iconsdir/hicolor/*/apps/aniliberty.png
 
 %changelog
+* Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.2.35-alt1
+- 2.2.27 -> 2.2.35 (ALT #47213)
+- build with Qt6
+- changed url && vcs
+
 * Fri May 30 2025 Roman Alifanov <ximper@altlinux.org> 2.2.27-alt1
 - new version 2.2.27 (with rpmrb script)
 
