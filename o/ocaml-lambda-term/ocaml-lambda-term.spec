@@ -1,7 +1,7 @@
 %define pkgname lambda-term
 Name: ocaml-%pkgname
-Version: 3.3.3
-Release: alt2
+Version: 3.4.0
+Release: alt1
 Summary: Terminal manipulation library for OCaml
 
 Group: Development/ML
@@ -52,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Apr 06 2026 Anton Farygin <rider@altlinux.org> 3.4.0-alt1
+- 3.3.3 -> 3.4.0
+
 * Sun Apr 05 2026 Anton Farygin <rider@altlinux.ru> 3.3.3-alt2
 - fixed mouse motion event decoding in X11 normal encoding (mode 1002)
 
