@@ -1,5 +1,5 @@
 Name: cfspeedtest
-Version: 2.2.0
+Version: 2.2.2
 Release: alt1
 
 Summary: CLI for Cloudflare speed test
@@ -43,6 +43,9 @@ EOF
 %_bindir/cfspeedtest
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt1
+- new version 2.2.2
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - new version 2.2.0
 
