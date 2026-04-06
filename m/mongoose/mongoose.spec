@@ -9,8 +9,8 @@
 %def_disable static
 
 Name: mongoose
-Version: 7.20
-Release: alt2
+Version: 7.21
+Release: alt1
 
 Summary: An easy-to-use self-sufficient web server
 License: MIT
@@ -112,6 +112,9 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Mon Apr 06 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 7.21-alt1
+- new version
+
 * Sat Nov 22 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.20-alt2
 - e2k build fix
 
