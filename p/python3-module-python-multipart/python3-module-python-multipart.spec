@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.22
+Version: 0.0.24
 Release: alt1
 
 Summary: A streaming multipart parser for Python
@@ -22,6 +22,8 @@ Patch0: %name-%version-alt.patch
 
 # see https://bugzilla.altlinux.org/43483 for more information
 AutoProv: nopython3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -52,13 +54,15 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md LICENSE.txt
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.24-alt1
+- Updated to 0.0.24.
+
 * Mon Jan 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.22-alt1
-- Updated to to 0.0.22 (fixes GHSA-wp53-j4wj-2cfg).
+- Updated to 0.0.22 (fixes GHSA-wp53-j4wj-2cfg).
 
 * Fri Dec 19 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.21-alt1
 - Updated to 0.0.21.
@@ -103,4 +107,3 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 
 * Sat Sep 17 2022 Anton Zhukharev <ancieg@altlinux.org> 0.0.5-alt1.gitd4831a3f
 - initial build for Sisyphus
-
