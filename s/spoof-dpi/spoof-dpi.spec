@@ -4,7 +4,7 @@
 # binary renamed in 0.11.0
 %define binary_name spoofdpi
 %define old_binary_name spoof-dpi
-%define ver_major 1.2
+%define ver_major 1.3
 %define import_path github.com/xvzc/%_name
 
 %def_disable bootstrap
@@ -27,6 +27,8 @@ Source: %_name-%version.tar
 %endif
 %{?_disable_bootstrap:Source1: %_name-%version-vendor.tar}
 
+ExcludeArch: %ix86
+
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang libpcap-devel
 
@@ -34,7 +36,7 @@ BuildRequires: golang libpcap-devel
 %{summary}.
 
 %prep
-%setup -n %_name-%version %{?_disable_bootstrap: -a1}
+%setup -n %binary_name-%version %{?_disable_bootstrap: -a1}
 %{?_enable_bootstrap:go mod vendor
 tar -cf %_sourcedir/%_name-%version-vendor.tar vendor/}
 
@@ -61,6 +63,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
