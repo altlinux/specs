@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.5
+%define major 11.6
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -953,6 +953,13 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.6.1-alt1
+- new version (11.6.1)
+- update patches to staging wine-11.6
+  - crypt32: Add CERT_STORE_NO_CRYPT_RELEASE_FLAG to CertOpenStore() flags when called from CertOpenSystemStore()
+  + include: Avoid __builtin_wmemchr with clang < 13
+  + include: Fix _LIBCPP_DEFER_NEW_TO_VCRUNTIME not being set with old clang
+
 * Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.5.1-alt1
 - new version 11.5.1
 - update patches to staging wine-11.5
