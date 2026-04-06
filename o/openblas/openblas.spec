@@ -26,7 +26,7 @@
 
 
 Name: openblas
-Version: 0.3.31
+Version: 0.3.32
 Release: alt2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
@@ -136,6 +136,7 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
     %nil
 
 %check
+export OPENBLAS_VERBOSE=3
 %make_build tests \
 	MAKE_NB_JOBS=${NPROCS:-%__nprocs} \
 	%{?oblas_target:TARGET=%oblas_target} \
@@ -158,6 +159,13 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Apr 06 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.32-alt2
+- backport upstream workaround for miscompilation of the ARM64
+  non-SVE DDOT kernel.
+
+* Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.32-alt1
+- 0.3.32.
+
 * Mon Jan 19 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.31-alt2
 - backport upstream fix for NO_LAPACK builds.
 
