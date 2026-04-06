@@ -1,6 +1,6 @@
 Name:		coccigrep
-Version:	1.20
-Release:	alt2
+Version: 1.21
+Release: alt1
 Summary:	Semantic grep for the C language based on coccinelle
 
 Group:		Development/Tools
@@ -60,6 +60,9 @@ export PYTHONPATH=./src
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.21-alt1
+- Update to v1.21 (2024-10-13).
+
 * Thu Feb 01 2024 Vitaly Chikunov <vt@altlinux.org> 1.20-alt2
 - Fix: ALT beekeeper Sisyphus/x86_64 test rebuild failed.
 
