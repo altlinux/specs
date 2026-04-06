@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.10.4
+Version: 1.10.5
 Release: alt1
 
 Summary: Pipe Viewer
@@ -54,6 +54,9 @@ popd
 %exclude %_datadir/doc
 
 %changelog
+* Mon Apr 06 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.5-alt1
+- New version
+
 * Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.4-alt1
 - New version
 
