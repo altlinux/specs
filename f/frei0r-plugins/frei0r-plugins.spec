@@ -11,7 +11,7 @@
 
 Name: frei0r-plugins
 Version: 2.5.6
-Release: alt2
+Release: alt3
 
 Summary: A free software collection of video effect plugins
 License: GPL-2.0-or-later
@@ -61,6 +61,12 @@ Frei0r plugins that use the OpenCV computer vision framework.
 %prep
 %setup
 
+%ifarch %e2k
+# error: incompatible types when assigning to type ‘__m128’ from type ‘__m128i’
+# This code doesn't compile with -msse4.1 even using GCC on x86_64.
+sed -i 's/defined(__SSE4_1__)/0/' src/filter/tint0r/tint0r.c
+%endif
+
 %build
 %cmake \
 	%{?_without_opencv:-DWITHOUT_OPENCV:BOOL=ON} \
@@ -100,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 06 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.6-alt3
+- e2k build fix
+
 * Wed Mar 25 2026 Grant Makyan <karonus@altlinux.org> 2.5.6-alt2
 - Use libgavl for non i586 build.
 
