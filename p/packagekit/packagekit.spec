@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.4
-Release:   alt1
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -147,6 +147,7 @@ sed -i -E 's|g_autofree (gchar \**)\*|g_autofree_edg(\1) |' backends/apt/*.cpp
 	-Dlocal_checkout=false \
 	-Dpython_backend=true \
 	-Ddaemon_tests=false \
+	-Dlegacy_tools=true \
 	%nil
 
 %meson_build
@@ -206,7 +207,7 @@ if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 		"$SYSTEMCTL" -q preset %name
 	else
 		# only request stop of service, don't restart it
-		"$SYSTEMCTL" is-active --quiet %name && %_bindir/pkgcli quit 2>/dev/null ||:
+		"$SYSTEMCTL" is-active --quiet %name && %_bindir/pkcon quit 2>/dev/null ||:
 	fi
 fi
 
@@ -217,7 +218,7 @@ SYSTEMCTL=systemctl
 
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 	"$SYSTEMCTL" --no-reload -q disable "$1.service"
-	%_bindir/pkgcli quit 2>/dev/null ||:
+	%_bindir/pkcon quit 2>/dev/null ||:
 fi
 
 %triggerin -- librpm7
@@ -226,7 +227,7 @@ if [ $2 -eq 2 ] ; then
 	# if librpm7 is updated, prohibit packagekit to start and ask it to quit
 	touch %_localstatedir/PackageKit/upgrade_lock
 	SYSTEMCTL=systemctl
-	sd_booted && $SYSTEMCTL is-active --quiet %name && %_bindir/pkgcli quit 2>/dev/null ||:
+	sd_booted && $SYSTEMCTL is-active --quiet %name && %_bindir/pkcon quit 2>/dev/null ||:
 fi
 :
 
@@ -250,11 +251,16 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %config(noreplace) %_sysconfdir/PackageKit/PackageKit.conf
 %config(noreplace) %_sysconfdir/PackageKit/Vendor.conf
 %config %_datadir/dbus-1/system.d/*
+%_man1dir/pkcon.1*
+%_man1dir/pkmon.1*
 %_man1dir/pkgcli.1*
 %_datadir/polkit-1/actions/*.policy
+%_datadir/bash-completion/completions/pkcon
 %_datadir/bash-completion/completions/pkgcli
 %_libexecdir/packagekitd
 %_libexecdir/packagekit-direct
+%_bindir/pkmon
+%_bindir/pkcon
 %_bindir/pkgcli
 %exclude %_libdir/libpackagekit*.so.*
 %ghost %verify(not md5 size mtime) %_localstatedir/PackageKit/transactions.db
@@ -322,6 +328,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Apr 06 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.4-alt2
+- return pkmon and pkcon
+
 * Mon Mar 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.4-alt1
 - new version
 
