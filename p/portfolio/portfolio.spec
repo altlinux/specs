@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Portfolio
 %define ver_major 1.0
@@ -12,7 +12,7 @@
 
 Name: portfolio
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: File manager for Linux mobile devices
 License: GPL-3.0-or-later
@@ -24,7 +24,7 @@ Vcs: https://github.com/tchx84/Portfolio.git
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 BuildArch: noarch
@@ -48,6 +48,8 @@ A minimalist file manager for those who want to use Linux mobile devices.
 %setup -n %_name-%version
 sed -i "s|'pytest'|'py.test-3'|
         s|'pyflakes'|'pyflakes-py3'|" tests/meson.build
+
+black src/popup.py
 
 %build
 %meson
@@ -74,6 +76,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- updated to v1.0.2-6-gb62ed1b
+
 * Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
