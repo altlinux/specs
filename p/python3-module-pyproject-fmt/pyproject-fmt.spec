@@ -4,34 +4,31 @@
 %define pypi_name pyproject-fmt
 %define mod_name pyproject_fmt
 # see for details pyproject-fmt/Cargo.toml
-#%%python3_set_limited_api 3.9
+%python3_set_limited_api 3.9
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.20.0
-Release: alt1.1
+Version: 2.21.0
+Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyproject-fmt
 VCS: https://github.com/tox-dev/pyproject-fmt.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Source2: vendor_rust.tar
 Source3: tombi_vendorer.py
 Patch: %name-%version-alt.patch
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-maturin
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-mock
-
-BuildRequires: python3-module-toml-fmt-common
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -44,15 +41,13 @@ BuildRequires: python3-module-toml-fmt-common
 mv vendor/_tombi_schemas/* ./
 mkdir .cargo
 cat < vendor_cargoconf.toml >> .cargo/config.toml
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
 cd pyproject-fmt
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 cd pyproject-fmt
@@ -76,8 +71,8 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.20.0-alt1.1
-- Demodernized packaging.
+* Mon Apr 06 2026 Stanislav Levin <slev@altlinux.org> 2.21.0-alt1
+- 2.20.0 -> 2.21.0.
 
 * Thu Mar 19 2026 Stanislav Levin <slev@altlinux.org> 2.20.0-alt1
 - 2.19.0 -> 2.20.0.
