@@ -1,8 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
-Version: 1.2.5
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -16,6 +18,7 @@ Vcs: https://invent.kde.org/office/klevernotes
 Source0: %name-%version.tar
 Source1: ru.tar
 
+#AutoProv: no
 ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(Pre): rpm-macros-cmake
@@ -48,9 +51,15 @@ tar -xf %SOURCE1 -C po/
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/locale/*/LC_MESSAGES/%name.mo
 %_datadir/metainfo/%nameU.metainfo.xml
+%exclude %_libdir/cmake
+%exclude %_includedir/md4qt
+%_libdir/libmd4qt.a
 %doc *.md 
 
 %changelog
+* Tue Apr 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
+- 1.2.5 -> 1.3.0
+
 * Tue Mar 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.5-alt2
 - added required dependencies
 
