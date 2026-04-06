@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  5
-%define _php_release_version 3
+%define _php_release_version 4
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -36,8 +36,8 @@ Source5: php-tmpfiles.conf
 Patch0: %name-%version-alt.patch
 Patch1: php-8.4.3-alt-always-link-extension-with-libphp.patch
 Patch2: php-8.4.6-shared-1.patch
-Patch3: php-8.4.3-cli-build.patch
-Patch4: php-8.4.3-alt-build-with-PIC.patch
+Patch3: php-8.5.4-cli-build.patch
+Patch4: php-8.5.4-alt-build-with-PIC.patch
 Patch5: php-8.5.1-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
 Patch8: php-8.4-cxx.patch
@@ -500,6 +500,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Sat Mar 21 2026 Anton Farygin <rider@altlinux.org> 8.5.4-alt1
+- 8.5.3 -> 8.5.4
+
 * Thu Feb 12 2026 Anton Farygin <rider@altlinux.org> 8.5.3-alt1
 - 8.5.2 -> 8.5.3
 
