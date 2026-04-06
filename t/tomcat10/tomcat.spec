@@ -22,8 +22,8 @@
 %global workdir %cachedir/work
 
 Name: tomcat10
-Version: 10.1.53
-Release: alt2_jvm17
+Version: 10.1.54
+Release: alt1_jvm17
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 License: Apache-2.0
@@ -440,6 +440,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Fri Apr 03 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.54-alt1_jvm17
+- 10.1.53 -> 10.1.54.
+
 * Thu Mar 26 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.53-alt2_jvm17
 - Replaced or removed links to local docs (closes: #58401).
 
