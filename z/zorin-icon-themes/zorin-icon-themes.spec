@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zorin-icon-themes
-Version: 4.0.6
-Release: alt2
+Version: 4.0.7
+Release: alt1
 Summary: Zorin icon themes
 
 License: CC-BY-SA-4.0
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_iconsdir
 cp -a Zorin* %buildroot%_iconsdir
 
 %changelog
+* Sun Apr 05 2026 Kirill Izmestev <felixz@altlinux.org> 4.0.7-alt1
+- New version 4.0.7.
+
 * Wed Mar 25 2026 Kirill Izmestev <felixz@altlinux.org> 4.0.6-alt2
 - Add abort the build if unpacked files.
 - Packed new themes: ZorinBrown-Dark, ZorinBrown-Light, ZorinYellow-Dark,
