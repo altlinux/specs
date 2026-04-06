@@ -1,63 +1,50 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           plexus-velocity
-Version:        1.2
-Release:        alt1_11jpp11
+Version:        2.3.0
+Release:        alt1
+
 Summary:        Plexus Velocity Component
-License:        ASL 2.0
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-velocity/
+VCS:            https://github.com/codehaus-plexus/plexus-velocity
 BuildArch:      noarch
 
-Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source:	        %name-%version.tar
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(velocity:velocity)
-Source44: import.info
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.velocity:velocity-engine-core)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 
 %description
 This package provides Plexus Velocity component - a wrapper for
 Apache Velocity template engine, which allows easy use of Velocity
 by applications built on top of Plexus container.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-find -name '*.jar' -delete
-
-cp -p %{SOURCE1} LICENSE
-
-# Make provided scope on plexus-containers
-%pom_change_dep :plexus-container-default org.codehaus.plexus:plexus-container-default::provided
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc README.md LICENSE
 
 %changelog
+* Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_11jpp11
 - update
 

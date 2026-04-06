@@ -1,69 +1,46 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-verifier
-Version:        1.7.2
-Release:        alt1_6jpp11
-Summary:        Apache Maven Verifier Component
-License:        ASL 2.0
+Version:        2.0.0
+Release:        alt0.m1
+
+Summary:        Apache Maven Verifier
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://maven.apache.org/shared/maven-verifier
-BuildArch:      noarch
+VCS:            https://github.com/apache/maven-verifier
 
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(junit:junit)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-%endif
-Source44: import.info
+
+BuildArch:  noarch
 
 %description
 Provides a test harness for Maven integration tests.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
-# This test attempts to write outside the build directory
-rm src/test/java/org/apache/maven/it/ForkedLauncherTest.java
+# requires internet connection
+rm src/test/java/org/apache/maven/shared/verifier/Embedded3xLauncherTest.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Sun Apr 05 2026 Evgeniy Serov <scala@altlinux.org> 2.0.0-alt0.m1
+- Updated to 2.0.0-M1.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.7.2-alt1_6jpp11
 - update
 

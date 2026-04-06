@@ -1,37 +1,28 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           maven-reporting-impl
-Version:        3.0.0
-Release:        alt1_7jpp11
-Summary:        Abstract classes to manage report generation
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/%{name}
-BuildArch:      noarch
+Version:        4.0.0
+Release:        alt1
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Summary:        Apache Maven Reporting Implementation
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://maven.apache.org/shared/maven-reporting-impl/
+VCS:            https://github.com/apache/maven-reporting-impl
 
-Patch0:         0001-Remove-dependency-on-junit-addons.patch
+Source0:        %name-%version.tar
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-apt)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
+
+BuildArch:      noarch
 
 %description
 Abstract classes to manage report generation, which can be run both:
@@ -41,35 +32,27 @@ Abstract classes to manage report generation, which can be run both:
 
 This is a replacement package for maven-shared-reporting-impl
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
-# integration tests try to download stuff from the internet
-# and therefore they don't work in Koji
 %pom_remove_plugin :maven-invoker-plugin
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Fri Mar 20 2026 Evgeniy Serov <scala@altlinux.org> 4.0.0-alt1
+- Udated to 4.0.0.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_7jpp11
 - java11 build
 

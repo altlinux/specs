@@ -1,44 +1,28 @@
-Epoch: 1
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           velocity
-Version:        1.7
-Release:        alt3_36jpp11
-Summary:        Java-based template engine
-License:        ASL 2.0
+Epoch:          1
+Version:        2.4.1
+Release:        alt1
+
+Summary:        Apache Velocity Engine
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://velocity.apache.org/
+VCS:            https://github.com/apache/velocity-engine
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(dom4j:dom4j)
+
+BuildRequires:  mvn(org.hsqldb:hsqldb)
+
 BuildArch:      noarch
-
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-# Remove bundled binaries which cannot be easily verified for licensing
-Source2:        generate-tarball.sh
-
-Patch1:         0001-Port-to-apache-commons-lang3.patch
-Patch2:         0002-Force-use-of-JDK-log-chute.patch
-Patch3:         0003-CVE-2020-13936.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache:apache:pom:)
-%endif
-Source44: import.info
 
 %description
 Velocity is a Java-based template engine. It permits anyone to use the
@@ -61,57 +45,42 @@ template services for the Turbine web application framework.
 Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-cp %{SOURCE1} ./pom.xml
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup
 
-find . -name '*.jar' ! -name 'test*.jar' -print -delete
-find . -name '*.class' ! -name 'Foo.class' -print -delete
+%pom_remove_parent
+%pom_xpath_inject pom:project "<groupId>org.apache.velocity</groupId>"
 
-# Disable unneeded features
-rm -r src/java/org/apache/velocity/{anakia,texen,servlet,convert}
-rm src/java/org/apache/velocity/runtime/log/{Avalon,Log4J}Log{Chute,System}.java
-rm src/java/org/apache/velocity/runtime/log/{CommonsLog,Servlet}LogChute.java
-rm src/java/org/apache/velocity/runtime/log/SimpleLog4JLogSystem.java
-rm src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
-rm src/java/org/apache/velocity/app/event/implement/Escape{Html,JavaScript,Sql,Xml,}Reference.java
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :templating-maven-plugin velocity-engine-core
+%pom_remove_plugin :maven-clean-plugin velocity-custom-parser-example
 
-%pom_remove_dep :oro
-%pom_remove_dep :jdom
-%pom_remove_dep :commons-logging
-%pom_remove_dep :log4j
-%pom_remove_dep :servlet-api
-%pom_remove_dep :logkit
-%pom_remove_dep :ant
-%pom_remove_dep :werken-xpath
+sed -i '/<classifier>${test.jdbc.driver.classifier}<\/classifier>/d' velocity-engine-core/pom.xml
+rm velocity-engine-core/src/test/java/org/apache/velocity/test/issues/Velocity952TestCase.java
 
-%mvn_alias : %{name}:%{name}
+%pom_disable_module spring-velocity-support
+
+cp velocity-engine-core/src/main/java-templates/org/apache/velocity/runtime/VelocityEngineVersion.java \
+   velocity-engine-core/src/main/java/org/apache/velocity/runtime/VelocityEngineVersion.java
+
+sed -i 's/$project.version/%version/' \
+   velocity-engine-core/src/main/java/org/apache/velocity/runtime/VelocityEngineVersion.java
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.txt
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc README.md LICENSE NOTICE
 
 %changelog
+* Sun Apr 05 2026 Evgeniy Serov <scala@altlinux.org> 1:2.4.1-alt1
+- Udated to 2.4.1.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7-alt3_36jpp11
 - update
 

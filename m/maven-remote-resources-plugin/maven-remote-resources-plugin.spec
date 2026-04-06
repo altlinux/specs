@@ -1,59 +1,25 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-remote-resources-plugin
-Version:        1.7.0
-Release:        alt1_7jpp11
-Summary:        Maven Remote Resources Plugin
-License:        ASL 2.0
+Version:        3.3.0
+Release:        alt1
+
+Summary:        Apache Maven Remote Resources Plugin
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
-BuildArch:      noarch
+VCS:            https://github.com/apache/maven-remote-resources-plugin
 
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
-Patch0:         0001-Port-to-Maven-3.patch
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.velocity:velocity)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.apache.velocity:velocity-engine-core)
+BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+
+BuildArch:      noarch
 
 %description
 Process resources packaged in JARs that have been deployed to
@@ -63,31 +29,29 @@ projects. Maven projects at Apache use this plug-in to satisfy
 licensing requirements at Apache where each project much include
 license and notice files for each release.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+
+%pom_remove_parent
+%pom_xpath_inject pom:project "<groupId>org.apache.maven.plugins</groupId>"
+
+%pom_remove_plugin :maven-dependency-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt1_7jpp11
 - update
 

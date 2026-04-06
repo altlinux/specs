@@ -1,72 +1,37 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with    itext
-%bcond_with    fop
-
 Name:           maven-doxia
-Epoch:          0
-Version:        1.9.1
-Release:        alt1_3jpp11
-Summary:        Content generation framework
-License:        ASL 2.0
+Version:        2.0.0
+Release:        alt1
 
+Summary:        Apache Maven Doxia base
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://maven.apache.org/doxia/
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/doxia/doxia/%{version}/doxia-%{version}-source-release.zip
+VCS:            https://github.com/apache/maven-doxia
 
-# Build against iText 2.x
-# https://issues.apache.org/jira/browse/DOXIA-53
-Patch1:         0001-Fix-itext-dependency.patch
+Source0:        %name-%version.tar
 
-BuildArch:      noarch
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
-BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
 BuildRequires:  mvn(org.xmlunit:xmlunit-core)
 BuildRequires:  mvn(org.xmlunit:xmlunit-matchers)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-abbreviation)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-definition)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-escaped-character)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-footnotes)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-gfm-strikethrough)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-tables)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-typographic)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-wikilink)
+BuildRequires:  mvn(com.vladsch.flexmark:flexmark-ext-yaml-front-matter)
+BuildRequires:  mvn(org.jetbrains:annotations)
 
-%if %{with fop}
-BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(commons-configuration:commons-configuration)
-BuildRequires:  mvn(log4j:log4j:1.2.12)
-BuildRequires:  mvn(org.apache.xmlgraphics:fop)
-%endif
-
-%if %{with itext}
-BuildRequires:  mvn(com.lowagie:itext)
-%endif
-
-Obsoletes:      maven-doxia-book < %{epoch}:%{version}-%{release}
-Obsoletes:      maven-doxia-maven-plugin < %{epoch}:%{version}-%{release}
-%if %{without fop}
-Obsoletes:      maven-doxia-module-fo < %{epoch}:%{version}-%{release}
-%endif
-%if %{without itext}
-Obsoletes:      maven-doxia-module-itext < %{epoch}:%{version}-%{release}
-%endif
-Obsoletes:      maven-doxia-module-markdown < %{epoch}:%{version}-%{release}
-Source44: import.info
+BuildArch:      noarch
 
 %description
 Doxia is a content generation framework which aims to provide its
@@ -75,213 +40,110 @@ content. Doxia can be used to generate static sites in addition to
 being incorporated into dynamic content generation systems like blogs,
 wikis and content management systems.
 
-%package core
-Group: Development/Java
-Summary: Core module for %{name}
+%javadoc_package
 
-%description core
-This package provides %{summary}.
+%package        core
+Summary:        Doxia core classes and interfaces
+Group:          Development/Java
 
-%package logging-api
-Group: Development/Java
-Summary: Logging-api module for %{name}
+%description    core
+%summary.
 
-%description logging-api
-This package provides %{summary}.
+%package        modules
+Summary:        Doxia modules for several markup languages
+Group:          Development/Java
 
-%package module-apt
-Group: Development/Java
-Summary: APT module for %{name}
+%description    modules
+%summary.
 
-%description module-apt
-This package provides %{summary}.
+%package        module-apt
+Summary:        Doxia APT Module
+Group:          Development/Java
 
-%package module-confluence
-Group: Development/Java
-Summary: Confluence module for %{name}
+%description    module-apt
+A Doxia module for Almost Plain Text source documents.
+APT format is supported both as source and target formats.
 
-%description module-confluence
-This package provides %{summary}.
+%package        module-fml
+Summary:        Doxia FML Module
+Group:          Development/Java
 
-%package module-docbook-simple
-Group: Development/Java
-Summary: Simplified DocBook module for %{name}
+%description    module-fml
+A Doxia module for FML source documents.
+FML format is only supported as source format.
 
-%description module-docbook-simple
-This package provides %{summary}.
+%package        module-markdown
+Summary:        Doxia Markdown Module
+Group:          Development/Java
 
-%package module-fml
-Group: Development/Java
-Summary: FML module for %{name}
+%description    module-markdown
+A Doxia module for Markdown source documents.
 
-%description module-fml
-This package provides %{summary}.
+%package        module-xdoc
+Summary:        Doxia XDoc Module
+Group:          Development/Java
 
-%if %{with fop}
-%package module-fo
-Group: Development/Java
-Summary: FO module for %{name}
+%description    module-xdoc
+A Doxia module for Xdoc source documents.
+Xdoc format is supported both as source and target formats.
 
-%description module-fo
-This package provides %{summary}.
-%endif
+%package        module-xhtml5
+Summary:        Doxia XHTML5 Module
+Group:          Development/Java
 
-%if %{with itext}
-%package module-itext
-Group: Development/Java
-Summary: iText module for %{name}
+%description    module-xhtml5
+A Doxia module for Xhtml5 source documents.
+Xhtml5 format is supported both as source and target formats.
 
-%description module-itext
-This package provides %{summary}.
-%endif
+%package        sink-api
+Summary:        Doxia Sink API
+Group:          Development/Java
 
-%package module-latex
-Group: Development/Java
-Summary: Latex module for %{name}
+%description    sink-api
+%summary.
 
-%description module-latex
-This package provides %{summary}.
+%package        test-docs
+Summary:        Doxia Test Documents
+Group:          Development/Java
 
-%package module-rtf
-Group: Development/Java
-Summary: RTF module for %{name}
-
-%description module-rtf
-This package provides %{summary}.
-
-%package modules
-Group: Development/Java
-Summary: Doxia modules for several markup languages.
-
-%description modules
-This package provides %{summary}.
-
-%package module-twiki
-Group: Development/Java
-Summary: TWiki module for %{name}
-
-%description module-twiki
-This package provides %{summary}.
-
-%package module-xdoc
-Group: Development/Java
-Summary: XDoc module for %{name}
-
-%description module-xdoc
-This package provides %{summary}.
-
-%package module-xhtml
-Group: Development/Java
-Summary: XHTML module for %{name}
-
-%description module-xhtml
-This package provides %{summary}.
-
-%package module-xhtml5
-Group: Development/Java
-Summary: XHTML5 module for %{name}
-
-%description module-xhtml5
-This package provides %{summary}.
-
-%package sink-api
-Group: Development/Java
-Summary: Sink-api module for %{name}
-
-%description sink-api
-This package provides %{summary}.
-
-%package tests
-Group: Development/Java
-Summary: Tests for %{name}
-
-%description tests
-This package provides %{summary}.
-
-%package test-docs
-Group: Development/Java
-Summary: Test-docs module for %{name}
-BuildArch: noarch
-
-%description test-docs
-This package provides %{summary}.
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%description    test-docs
+Several test documents to check syntax structures under Doxia.
 
 %prep
-%setup -q -n doxia-%{version}
+%setup
 
-find -name '*.java' -exec sed -i 's/\r//' {} +
-find -name '*.xml' -exec sed -i 's/\r//' {} +
-%patch1 -p1
-
-# we don't have clirr-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
-
-# complains
-%pom_remove_plugin :apache-rat-plugin
-
-# use java 5 generics in modello plugin
-%pom_xpath_inject "pom:plugin[pom:artifactId[text()='modello-maven-plugin']]"\
-"/pom:executions/pom:execution/pom:configuration" \
-"<useJava5>true</useJava5>" doxia-modules/doxia-module-fml/pom.xml
+%pom_remove_parent
 
 # requires network
 rm doxia-core/src/test/java/org/apache/maven/doxia/util/XmlValidatorTest.java
 
-%mvn_package :::tests: tests
+%pom_remove_plugin :maven-install-plugin doxia-modules/doxia-module-markdown
 
-%pom_disable_module doxia-module-markdown doxia-modules
-
-%if %{without itext}
-%pom_disable_module doxia-module-itext doxia-modules
-%endif
-%if %{without fop}
-%pom_disable_module doxia-module-fo doxia-modules
-%endif
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
 
 %files -f .mfiles-doxia
-%doc LICENSE NOTICE
+%doc README.md
+
 %files core -f .mfiles-doxia-core
-%files logging-api -f .mfiles-doxia-logging-api
-%doc LICENSE NOTICE
 %files module-apt -f .mfiles-doxia-module-apt
-%files module-confluence -f .mfiles-doxia-module-confluence
-%files module-docbook-simple -f .mfiles-doxia-module-docbook-simple
 %files module-fml -f .mfiles-doxia-module-fml
-%if %{with fop}
-%files module-fo -f .mfiles-doxia-module-fo
-%endif
-%if %{with itext}
-%files module-itext -f .mfiles-doxia-module-itext
-%endif
-%files module-latex -f .mfiles-doxia-module-latex
-%files module-rtf -f .mfiles-doxia-module-rtf
+%files module-markdown -f .mfiles-doxia-module-markdown
 %files modules -f .mfiles-doxia-modules
-%files module-twiki -f .mfiles-doxia-module-twiki
 %files module-xdoc -f .mfiles-doxia-module-xdoc
-%files module-xhtml -f .mfiles-doxia-module-xhtml
 %files module-xhtml5 -f .mfiles-doxia-module-xhtml5
 %files sink-api -f .mfiles-doxia-sink-api
 %files test-docs -f .mfiles-doxia-test-docs
-%files tests -f .mfiles-tests
-%doc LICENSE NOTICE
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
 
 %changelog
+* Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 2.0.0-alt1
+- Udated to 2.0.0.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.1-alt1_3jpp11
 - new version
 

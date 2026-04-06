@@ -1,84 +1,84 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global		upstream_name    scram
-%global		upstream_version 2.1
+Name:		ongres-scram
+Version:	3.2
+Release:	alt1
 
-Name:		ongres-%upstream_name
-Version:	%(echo %upstream_version | sed 's/-/~/g')
-Release:	alt1_3jpp11
-Summary:	Salted Challenge Response Authentication Mechanism (SCRAM) - Java Implementation
-License:	BSD
-URL:           https://github.com/ongres/%upstream_name
-Source0:       https://github.com/ongres/%upstream_name/archive/%upstream_version/%upstream_name-%upstream_version.tar.gz
-BuildRequires:	maven-local
-BuildRequires:  ongres-stringprep
-BuildRequires:  junit
+Summary:	SCRAM (RFC 5802) Java implementation
+License:	BSD-2-Clause
+Group:          Development/Java
+URL:            https://github.com/ongres/scram
+VCS:            https://github.com/ongres/scram
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(com.ongres.stringprep:saslprep)
+BuildRequires:  mvn(org.jetbrains:annotations)
+
 BuildArch:	noarch
-Source44: import.info
 
 %description
-This is a Java implementation of SCRAM (Salted Challenge Response
-Authentication Mechanism) which is part of the family of Simple
-Authentication and Security Layer (SASL, RFC 4422) authentication
-mechanisms. It is described as part of RFC 5802 and RFC7677.
+SCRAM (Salted Challenge Response Authentication Mechanism) is part of the
+family of Simple Authentication and Security Layer (SASL, RFC 4422)
+authentication mechanisms. It is described as part of RFC 5802 and RFC 7677.
 
-%package client
-Group: Development/Java
-Summary:	Client for %{name}
+This project provides a robust and well-tested implementation of the Salted
+Challenge Response Authentication Mechanism (SCRAM) in Java. It adheres to the
+specifications outlined in RFC 5802 and RFC 7677, ensuring secure user
+authentication.
 
-%description client
-This package contains the client for %{name}
+This SCRAM Java implementation can be used for PostgreSQL (which supports SASL
+authentication since PostgreSQL 10) through the PostgreSQL JDBC Driver and
+others projects that connect from Java.
 
-%package javadoc
-Group: Development/Java
-Summary:	Javadoc for %{name}
-BuildArch: noarch
+%javadoc_package
 
-%description javadoc
-This package contains javadoc for %{name}
+%package        client
+Group:          Development/Java
+Summary:	Client for %name
 
-%package parent
-Group: Development/Java
-Summary:	Parent POM of %{name}
+%description    client
+This package contains the client for %name
 
-%description parent
-This package contains the %{name} parent POM.
+%package        parent
+Group:          Development/Java
+Summary:        Parent POM of %name
+
+%description    parent
+This package contains the %name parent POM.
 
 %prep
-%setup -q -n %upstream_name-%upstream_version
+%setup
 
-find \( -name '*.jar' -o -name '*.class' \) -delete
-%pom_remove_plugin :nexus-staging-maven-plugin
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-dependency-plugin client
-%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin :maven-enforcer-plugin scram-parent
 
-# Retired in Fedora; not required for build
-%pom_remove_dep com.google.code.findbugs:annotations
-sed -i 's/.*SuppressFBWarnings.*//' common/src/main/java/com/ongres/scram/common/message/ServerFinalMessage.java
+%pom_xpath_inject 'pom:plugin[pom:artifactId="maven-jar-plugin"]/pom:configuration/pom:archive' '
+<manifestEntries>
+  <Multi-Release>true</Multi-Release>
+</manifestEntries>
+' scram-parent
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s
 
 %install
 %mvn_install
 
-%files -f .mfiles-common
-%doc --no-dereference LICENSE
+%files -f .mfiles-scram-common
+%doc LICENSE *.md
 
-%files client -f .mfiles-client
-%doc --no-dereference LICENSE
+%files client -f .mfiles-scram-client
+%doc LICENSE *.md
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
-%files parent -f .mfiles-parent
-%doc --no-dereference LICENSE
+%files parent -f .mfiles-scram-parent
+%doc LICENSE *.md
 
 %changelog
+* Sat Mar 21 2026 Evgeniy Serov <scala@altlinux.org> 3.2-alt1
+- Fixed FTBFS.
+- Updated to 3.2.
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_3jpp11
 - new version
 

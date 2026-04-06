@@ -1,40 +1,38 @@
-Name: gettext-maven-plugin
-Version: 2.2.0
-Release: alt1
+Name:           gettext-maven-plugin
+Version:        2.2.0
+Release:        alt2
 
-Summary: Maven plugin to provide tasks to run gettext on project
-License: Apache-2.0
-Group: Development/Java
-Url: https://github.com/cnhongwei/gettext-maven-plugin
-BuildArch: noarch
+Summary:        Maven plugin to provide tasks to run gettext on project
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://github.com/cnhongwei/gettext-maven-plugin
+VCS:            https://github.com/cnhongwei/gettext-maven-plugin
 
-Source0: https://github.com/cnhongwei/gettext-maven-plugin/archive/%name-%version.tar.gz
-Patch: gettext-plugin-alt-fixes-compilation.patch
+Source0:        %name-%version.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+Patch0:         gettext-plugin-alt-fixes-compilation.patch
 
-BuildRequires: sonatype-oss-parent
-BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:) 
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+
+BuildArch:      noarch
 
 %description
 Maven plugin to provide tasks to run gettext on project.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %name.
+%javadoc_package
 
 %prep
 %setup -n %name-%name-%version
 %patch -p1
+
+%pom_add_dep org.apache.maven:maven-core
 
 %pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
@@ -42,7 +40,7 @@ This package contains the API documentation for %name.
 %mvn_alias "io.github.cnhongwei:gettext-maven-plugin" "com.googlecode.gettext-commons:gettext-maven-plugin"
 
 %build
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -50,8 +48,9 @@ This package contains the API documentation for %name.
 %files -f .mfiles
 %doc README.md
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Mon Apr 06 2026 Evgeniy Serov <scala@altlinux.org> 2.2.0-alt2
+- Fix build with missing dep.
+
 * Mon Mar 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus.

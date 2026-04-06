@@ -1,64 +1,37 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           javacc-maven-plugin
-Version:        3.1.1
+Version:        3.2.0
 Release:        alt1
+
 Summary:        JavaCC Maven Plugin
 License:        Apache-2.0
+Group:          Development/Java
 URL:            https://www.mojohaus.org/javacc-maven-plugin
-VCS:            https://github.com/mojohaus/javacc-maven-plugin.git
-BuildArch:      noarch
+VCS:            https://github.com/mojohaus/javacc-maven-plugin
 
-Source0:        https://github.com/mojohaus/javacc-maven-plugin/archive/refs/tags/%version.tar.gz
-Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        %name-%version.tar
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(net.java.dev.javacc:javacc)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
 Maven Plugin for processing JavaCC grammar files.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q 
-cp -p %{SOURCE1} .
+%setup
 
-# Do not use jtb, which is unmaintained.  It is accessed only via reflection to
-# avoid depending on Java 1.5 for compilation.
+%pom_remove_plugin :maven-invoker-plugin
+
 %pom_remove_dep edu.ucla.cs.compilers:jtb
-
-# Disable integration tests
-%pom_remove_plugin org.apache.maven.plugins:maven-invoker-plugin
-rm -fr src/it
-
-# Disable building the web site
-rm -fr src/site
 
 %build
 %mvn_build
@@ -67,12 +40,12 @@ rm -fr src/site
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt src/main/resources/NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt src/main/resources/NOTICE
+%doc README.md src/main/resources/NOTICE
 
 %changelog
+* Fri Mar 20 2026 Evgeniy Serov <scala@altlinux.org> 3.2.0-alt1
+- Updated to 3.2.0.
+
 * Thu Sep 04 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.1.1-alt1
 - new version
 - build without jtb

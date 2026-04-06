@@ -1,145 +1,53 @@
-Epoch: 0
-Group: Databases
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-# Configuration for rpmbuild, might be specified by options
-# like e.g. 'rpmbuild --define "runselftest 0"'.
-
-# =============================================================================
-# IMPORTANT NOTE: This spec file is maintained on two places -- in native
-# Fedora repo [1] and in pgjdbc upstream [2].  Please, keep that in sync
-# (manual effort!) so both Fedora and Upstream can benefit from automatic
-# packaging CI, this is now done in [3] Copr project.
-# [1] https://src.fedoraproject.org/rpms/postgresql-jdbc
-# [2] https://github.com/pgjdbc/pgjdbc/tree/master/packaging/rpm
-# [3] https://copr.fedorainfracloud.org/coprs/g/pgjdbc/pgjdbc-travis/
-# ============================================================================
-
 %{!?runselftest:%global runselftest 0}
 
-%global section		devel
-%global source_path	pgjdbc/src/main/java/org/postgresql
-
-Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.6.2
+Version:	42.7.10
 Release:	alt1
+
+Summary:        JDBC driver for PostgreSQL
 License:	BSD-2-Clause
+Group:          Databases
 URL:		http://jdbc.postgresql.org/
 
-Source0:	https://repo1.maven.org/maven2/org/postgresql/postgresql/%{version}/postgresql-%{version}-jdbc-src.tar.gz
+Source0:	postgresql-%version-jdbc-src.tar.gz
+
 Provides:	pgjdbc = %version-%release
 
-BuildArch:	noarch
-BuildRequires:	maven-local
-BuildRequires:	maven-enforcer-plugin
-BuildRequires:	maven-plugin-bundle
-BuildRequires:	classloader-leak-test-framework
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-BuildRequires:	mvn(com.ongres.scram:client)
-BuildRequires:	mvn(org.apache.maven.plugins:maven-clean-plugin)
-BuildRequires:	mvn(org.apache.maven.surefire:surefire-junit-platform)
-BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-engine)
-BuildRequires:	mvn(org.junit.jupiter:junit-jupiter-params)
-BuildRequires:	mvn(org.junit.vintage:junit-vintage-engine)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(com.ongres.scram:scram-client)
+
+BuildArch:      noarch
 
 %if %runselftest
 BuildRequires:	postgresql15-server
 BuildRequires:	postgresql-test-rpm-macros
 %endif
 
-# gettext is only needed if we try to update translations
-#BuildRequires:	gettext
-
-Obsoletes:	%{name}-parent-poms < 42.2.2-2
-
 %description
 PostgreSQL is an advanced Object-Relational database management
 system. The postgresql-jdbc package includes the .jar files needed for
 Java programs to access a PostgreSQL database.
 
-
-%package javadoc
-Group: Development/Java
-Summary:	API docs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API Documentation for %{name}.
-
+%javadoc_package
 
 %prep
-%setup -c -q
+%setup -c
 
 mv postgresql-%{version}-jdbc-src/* .
 
 # remove any binary libs
 find -type f \( -name "*.jar" -or -name "*.class" \) | xargs rm -f
 
-# Build parent POMs in the same Maven call.
-%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-shade-plugin']"
-
 # compat symlink: requested by dtardon (libreoffice), reverts part of
 # 0af97ce32de877 commit.
-%mvn_file org.postgresql:postgresql %{name}/postgresql %{name} postgresql
+%mvn_file org.postgresql:postgresql %name/postgresql %name postgresql
 
-# For compat reasons, make Maven artifact available under older coordinates.
 %mvn_alias org.postgresql:postgresql postgresql:postgresql
 
-# remove unmet dependency
-%pom_remove_dep uk.org.webcompere:system-stubs-jupiter
-
-# remove tests that depend on the system-stubs-jupiter
-rm src/test/java/org/postgresql/test/jdbc2/DriverTest.java \
-   src/test/java/org/postgresql/util/OSUtilTest.java \
-   src/test/java/org/postgresql/jdbcurlresolver/PgServiceConfParserTest.java \
-   src/test/java/org/postgresql/jdbcurlresolver/PgPassParserTest.java \
-   src/test/java/org/postgresql/util/StubEnvironmentAndProperties.java
-
-
 %build
-# Ideally we would run "sh update-translations.sh" here, but that results
-# in inserting the build timestamp into the generated messages_*.class
-# files, which makes rpmdiff complain about multilib conflicts if the
-# different platforms don't build in the same minute.  For now, rely on
-# upstream to have updated the translations files before packaging.
-
 # Include PostgreSQL testing methods and variables.
 %if %runselftest
 %postgresql_tests_init
@@ -168,21 +76,16 @@ opts="-f"
 
 %mvn_build $opts --xmvn-javadoc
 
-
 %install
 %mvn_install
 
-
 %files -f .mfiles
-%doc --no-dereference LICENSE
-%doc README.md
-
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
+%doc LICENSE README.md
 
 %changelog
+* Mon Apr 06 2026 Evgeniy Serov <scala@altlinux.org> 42.7.10-alt1
+- Updated to 42.7.10.
+
 * Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 0:42.6.2-alt1
 - New version.
 - Securiry fix: CVE-2024-1597 (ALT #51910).

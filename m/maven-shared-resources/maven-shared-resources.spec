@@ -1,45 +1,42 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          maven-shared-resources
-Version:       2
-Release:       alt1_8jpp8
-Summary:       A collection of templates that are specific to the Maven project
-License:       ASL 2.0
+Version:       6
+Release:       alt1
+
+Summary:       Apache Maven Shared Resources
+License:       Apache-2.0
+Group:         Development/Java
 URL:           http://maven.apache.org/shared/maven-shared-resources/
-Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildRequires: maven-local
-BuildRequires: maven-remote-resources-plugin
+VCS:           https://github.com/apache/maven-shared-resources
+
+Source0:       %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires: mvn(org.apache.rat:apache-rat-plugin)
+
 BuildArch:     noarch
-Source44: import.info
 
 %description
 This is a collection of templates that are specific to the Maven project.
 They are probably not of interest to projects other than Apache Maven.
 
 %prep
-%setup -q
-
-%mvn_file :%{name} %{name}
+%setup
 
 %build
-
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Fri Mar 20 2026 Evgeniy Serov <scala@altlinux.org> 6-alt1
+- Updated to 6.
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 2-alt1_8jpp8
 - new version
 

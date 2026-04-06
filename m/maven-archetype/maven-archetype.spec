@@ -1,60 +1,33 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           maven-archetype
-Version:        3.2.0
-Release:        alt1_4jpp11
-Summary:        Maven project templating toolkit
+Version:        3.3.0
+Release:        alt1
 
-# Most of the code is under ASL 2.0, but some bundled jdom sources are
-# under ASL 1.1
-License:        ASL 2.0 and ASL 1.1
+Summary:        Apache Maven Archetype (Plugin)
+Group:          Development/Java
+License:        Apache-2.0
 URL:            https://maven.apache.org/archetype/
-Source0:        http://archive.apache.org/dist/maven/archetype/%{name}-%{version}-source-release.zip
+VCS:            https://github.com/apache/maven-archetype
 
-# We only use groovy for running a post generation script,
-# removing this continues the old behaviour of ignoring it
-Patch1: 0001-Avoid-reliance-on-groovy.patch
+Source0:        %name-%version.tar
 
-# Taken from https://github.com/apache/maven-archetype/commit/e4eed30d1c0c6eabf45c49194ff6f0d8a4e4d5a7
-Patch2: 0002-declare-dependencies.patch
+Patch0:         0001-avoid-reliance-on-groovy.patch
 
-# Port to commons-lang3
-Patch3: 0003-Port-to-commons-lang3.patch
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.jdom:jdom2)
+BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
+BuildRequires:  apache-commons-collections
+BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(org.xmlunit:xmlunit-matchers)
+BuildRequires:  mvn(com.ibm.icu:icu4j)
+BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
 
 BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(net.sourceforge.jchardet:jchardet)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
-BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
-BuildRequires:  mvn(org.apache.velocity:velocity)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
-BuildRequires:  mvn(org.jdom:jdom)
-Source44: import.info
-Provides: maven-archetype2 = %version
-Obsoletes: maven-archetype2 < %version
-
-
 
 %description
 Archetype is a Maven project templating toolkit. An archetype is
@@ -88,122 +61,72 @@ web services. Once these archetypes are created and deployed in your
 organization's repository they are available for use by all developers
 within your organization.
 
-
-%package javadoc
-Group: Development/Java
-Summary: API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
+%javadoc_package
 
 %package catalog
-Group: Development/Java
-Summary: Maven Archetype Catalog model
+Group:          Development/Java
+Summary:        Maven Archetype Catalog model
 
 %description catalog
-%{summary}.
-
-%package descriptor
-Group: Development/Java
-Summary: Maven Archetype Descriptor model
-
-%description descriptor
-%{summary}.
+%summary.
 
 %package common
-Group: Development/Java
-Summary: Maven Archetype common classes
-# Registry module was obsoleted and removed by upstream F31
-Obsoletes: %{name}-registry <= 3.1.1-1
+Group:          Development/Java
+Summary:        Maven Archetype common classes
 
 %description common
-%{summary}.
+%summary.
+
+%package descriptor
+Group:          Development/Java
+Summary:        Maven Archetype Descriptor model
+
+%description descriptor
+%summary.
 
 %package packaging
-Group: Development/Java
-Summary: Maven Archetype packaging configuration for archetypes
+Group:          Development/Java
+Summary:        Maven Archetype packaging configuration for archetypes
 
 %description packaging
-%{summary}.
+%summary.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup
+%autopatch -p1
 
-# Not needed for RPM builds
-%pom_remove_plugin -r :apache-rat-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
-
-# Add OSGI info to catalog and descriptor jars
-pushd archetype-models/archetype-catalog
-    %pom_xpath_remove "pom:project/pom:packaging"
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
-    %pom_xpath_inject "pom:build/pom:plugins" "
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <_nouses>true</_nouses>
-            <Export-Package>org.apache.maven.archetype.catalog.*</Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>"
-popd
-pushd archetype-models/archetype-descriptor
-    %pom_xpath_remove "pom:project/pom:packaging"
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
-    %pom_xpath_inject "pom:build/pom:plugins" "
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <_nouses>true</_nouses>
-            <Export-Package>org.apache.maven.archetype.metadata.*</Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>"
-popd
-
-# Remove ivy as a runtime dep
+%pom_remove_dep :groovy archetype-common
 %pom_remove_dep org.apache.ivy:ivy archetype-common
 
-# Disable processing of test resources using ant
-%pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common
+%pom_remove_plugin :apache-rat-plugin
 
-# Don't build the maven-plugin
 %pom_disable_module maven-archetype-plugin
 
-%build
 %mvn_package :archetype-models maven-archetype
-# Tests are skipped due to missing test dependencies
-%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8 -Dsource=1.8 -DdetectJavaApiLink=false
+
+%build
+# tests are disabled cause there are some problems with them
+%mvn_build -f -s
 
 %install
 %mvn_install
 
 %files -f .mfiles-maven-archetype
-%doc --no-dereference LICENSE NOTICE
+%doc NOTICE.txt README.md
 
 %files catalog -f .mfiles-archetype-catalog
 
-%files descriptor -f .mfiles-archetype-descriptor
-
 %files common -f .mfiles-archetype-common
-%doc --no-dereference LICENSE NOTICE
+%doc NOTICE.txt README.md
+
+%files descriptor -f .mfiles-archetype-descriptor
 
 %files packaging -f .mfiles-archetype-packaging
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Mon Apr 06 2026 Evgeniy Serov <scala@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_4jpp11
 - update
 

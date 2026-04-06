@@ -1,15 +1,17 @@
 Name: jacoco
 Version: 0.8.14
-Release: alt2
+Release: alt3
 
 Summary: Java Code Coverage for Eclipse
 Group: System/Libraries
 License: EPL-2.0
-Url: http://www.eclemma.org/jacoco/
+URL: http://www.eclemma.org/jacoco/
 VCS: https://github.com/jacoco/jacoco.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+
+Patch0: 0001-maven-doxia-2-repair.patch
 
 # required by wrapper script
 Requires: javapackages-tools
@@ -42,7 +44,7 @@ Summary: A Jacoco plugin for maven
 %description maven-plugin
 A Jacoco plugin for maven.
 
-%{?javadoc_package}
+%javadoc_package
 
 %package cli
 Group: Development/Tools
@@ -54,6 +56,7 @@ Jacoco binary wrapper.
 
 %prep
 %setup
+%autopatch -p1
 
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
@@ -90,6 +93,8 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
     <jacoco.runtime.package.name>org.jacoco.agent.rt.internal_fedora</jacoco.runtime.package.name>' \
       org.jacoco.build
 
+%pom_remove_plugin -r :maven-source-plugin
+
 %mvn_package ":jacoco-maven-plugin:{jar,pom}:{}:" maven-plugin
 %mvn_package ":{org.}*:{jar,pom}:runtime:"
 
@@ -97,12 +102,11 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %mvn_package :org.jacoco.build __noinstall
 
 %build
-%mvn_build -f -- -Dbuild.date=$(date +%Y/%m/%d) \
-                 -Dproject.build.sourceEncoding=UTF-8 \
-                 -Dmaven.compiler.source=1.8 \
-                 -Dmaven.compiler.target=1.8 \
-                 -Dmaven.compiler.release=8 \
-                 #
+%mvn_build -- -Dbuild.date=$(date +%Y/%m/%d) \
+              -Dproject.build.sourceEncoding=UTF-8 \
+              -Dmaven.compiler.source=1.8 \
+              -Dmaven.compiler.target=1.8 \
+              -Dmaven.compiler.release=8 \
 
 %install
 %mvn_install
@@ -124,6 +128,9 @@ echo %name %name/org.jacoco.ant objectweb-asm/asm > %buildroot%_sysconfdir/ant.d
 %_bindir/jacococli
 
 %changelog
+* Mon Apr 06 2026 Evgeniy Serov <scala@altlinux.org> 0.8.14-alt3
+- Fix build with new maven-doxia.
+
 * Mon Feb 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.8.14-alt2
 - Return jacococli.
 
