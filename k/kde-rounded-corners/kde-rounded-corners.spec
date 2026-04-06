@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde-rounded-corners
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 %K6init no_altplace
 
@@ -50,6 +50,9 @@ BuildRequires: qt6-declarative-devel
 %_K6plug/kwin/effects/plugins/kwin4_effect_shapecorners.so
 
 %changelog
+* Mon Apr 06 2026 Sergey V Turchin <zerg@altlinux.org> 0.8.7-alt1
+- New version.
+
 * Thu Dec 18 2025 Anton Kurachenko <srebrov@altlinux.org> 0.8.6-alt1
 - New version 0.8.6.
 
