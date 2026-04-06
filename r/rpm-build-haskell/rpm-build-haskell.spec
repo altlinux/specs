@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 BuildArch: noarch
@@ -105,6 +105,9 @@ install -D -m0644 %SOURCE5 \
 %_rpmmacrosdir/ghc-vendored
 
 %changelog
+* Thu Apr 02 2026 Leonid Znamenok <respublica@altlinux.org> 2.1.1-alt1
+- extra: obsolete ghc{MAJOR}-{NAME} packages (ALT#58473)
+
 * Tue Feb 17 2026 Leonid Znamenok <respublica@altlinux.org> 2.1.0-alt1
 - extra: rename subpackages from ghc{MAJOR}-{NAME} to ghc{MAJOR}-package-{NAME}
 
