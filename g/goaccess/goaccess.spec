@@ -1,7 +1,7 @@
 Name: goaccess
 
 Summary: real-time web log analyzer
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 URL: https://goaccess.io/
@@ -60,6 +60,14 @@ report on the fly.
 
 
 %changelog
+* Mon Apr 06 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.2-alt1
+- New version
+  - Added detection for Arc and Zen browsers in the HTML report
+  - Fixed a crash caused by invalid country/city parsing from the GeoIP database
+  - Fixed empty string data field crashing the HTML report on initial page load
+  - Fixed relative paths not being resolved to absolute paths
+  - Fixed to prevent corrrupted localStorage from breaking the UI
+
 * Wed Feb 18 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.1-alt1
 - New version
   - Added optional zlib support to parse compressed log files
