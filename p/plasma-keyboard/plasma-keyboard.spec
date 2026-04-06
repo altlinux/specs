@@ -1,6 +1,6 @@
 
 Name: plasma-keyboard
-Version: 0.1.0
+Version: 6.6.3
 Release: alt1
 %K6init no_altplace
 
@@ -18,6 +18,7 @@ BuildRequires: cmake extra-cmake-modules
 BuildRequires: wayland-protocols
 BuildRequires: qt6-wayland-devel qt6-virtualkeyboard-devel qt6-virtualkeyboard
 BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kcmutils-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kcrash-devel
 
 %description
 Maliit Plugins provide reference input method plugins for use with Maliit Framework.
@@ -44,5 +45,8 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Mon Apr 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Tue Nov 25 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
