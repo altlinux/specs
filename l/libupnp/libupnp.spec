@@ -1,16 +1,19 @@
-%define soname_upnp 17
+%define soname_upnp 20
 %define soname_ixml 11
 
 Name: libupnp
-Version: 1.14.30
+Version: 1.18.4
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
 Group: System/Libraries
-Url: https://github.com/pupnp/pupnp
+URL: https://pupnp.github.io/pupnp
+VCS: https://github.com/pupnp/pupnp
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+
+BuildRequires: cmake gcc-c++
 
 %define desc \
 The Linux SDK for UPnP Devices (libupnp) provides developers with an API \
@@ -50,12 +53,11 @@ applications using libupnp.
 %setup
 
 %build
-%autoreconf
-%configure --enable-ipv6 --enable-reuseaddr --disable-static
-%make_build
+%cmake -DUPNP_BUILD_STATIC=OFF
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%cmake_install
 
 %files -n libixml%soname_ixml
 %_libdir/libixml.so.*
@@ -67,9 +69,13 @@ applications using libupnp.
 %doc README.md
 %_includedir/*
 %_libdir/*.so
+%_libdir/cmake/*
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.18.4-alt1
+- 1.18.4 released
+
 * Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.14.30-alt1
 - 1.14.30 released
 

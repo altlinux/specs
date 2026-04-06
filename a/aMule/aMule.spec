@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt6
+Release:	alt7
 
 Summary:	aMule - eMule client.
 License:	GPL-2.0-or-later
@@ -18,6 +18,7 @@ Conflicts:	xmule
 Patch: amule-2.3.3-upstream-allow-autoconf_2.70.patch
 # https://sources.debian.org/data/main/a/amule/1%3A2.3.3-3/debian/patches/wx3.2.patch
 Patch1: debian-wx3.2.patch
+Patch2: 28b9384f672453dbcb40a6411cfa569c8c2bf141.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
 BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.2-devel xorg-cf-files
@@ -81,6 +82,9 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Mon Apr 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.3-alt7
+- rebuilt with pupnp-1.18
+
 * Tue Mar 05 2024 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt6
 - NMU:
   + rebuild with stable wxGTK3.2
