@@ -3,7 +3,7 @@
 %global vala_version 0.48
 
 Name: budgie-desktop-view
-Version: 10.10.1
+Version: 10.10.2
 Release: alt1
 
 Summary: Official Budgie desktop icons application / implementation
@@ -58,6 +58,9 @@ desktop-file-validate %buildroot%_desktopdir/org.buddiesofbudgie.budgie-desktop-
 %_sysconfdir/xdg/autostart/org.buddiesofbudgie.budgie-desktop-view-autostart.desktop
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.2-alt1
+- new version 10.10.2
+
 * Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.1-alt1
 - new version 10.10.1
 
