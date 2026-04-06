@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%def_enable check
+
 Name: lightdm-kde-greeter
-Version: 6.1.5
+Version: 6.1.6
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -42,6 +44,12 @@ BuildRequires: kf6-kcmutils-devel
 # deps of used stuff
 BuildRequires: kf6-kcoreaddons-devel kf6-kpackage-devel kf6-kservice-devel
 BuildRequires: kf6-networkmanager-qt-devel
+
+%if_enabled check
+BuildRequires: ctest
+BuildRequires: plasma-workspace-qml
+BuildRequires: plasma6-plasma5support
+%endif
 
 Requires: lightdm
 Requires: plasma-workspace-qml
@@ -84,6 +92,9 @@ printf '%_datadir/lightdm/greeters/lightdm-default-greeter.desktop\t%_datadir/li
 mkdir -p %buildroot%lightdm_config_dir
 cp %SOURCE1 %buildroot%lightdm_config_dir
 
+%check
+%ctest --verbose --test-dir BUILD
+
 %triggerin -- lightdm-kde-greeter < 6.0.4
 # previous versions could create files owned by root
 if [ -e "%greeter_user_home_dir" ]; then
@@ -111,6 +122,10 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Fri Apr 03 2026 Anton Golubev <golubevan@altlinux.org> 6.1.6-alt1
+- improve display of PAM messages
+- introduce tests and check section
+
 * Thu Mar 19 2026 Anton Golubev <golubevan@altlinux.org> 6.1.5-alt1
 - don't crop background image
 - update deprecated path variables
