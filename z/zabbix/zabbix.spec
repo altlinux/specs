@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		36bdd34b378
+%define svnrev		d607227714f
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.24
+Version: 7.0.25
 Release: alt1
 Epoch: 1
 
@@ -194,6 +194,14 @@ Requires: php8.4-xmlreader php8.4-curl php8.4-ldap
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
+%package phpfrontend-php8.5
+Summary: zabbix web frontend, edition for php8.5
+Group: Monitoring
+Requires: php8.5-gd php8.5-libs php8.5-mbstring php8.5-mysqli php8.5-openssl php8.5-pgsql php8.5-sockets
+Requires: php8.5-xmlreader php8.5-curl php8.5-ldap
+Requires: zabbix-phpfrontend-engine = %EVR
+BuildArch: noarch
+
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -222,6 +230,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php8.4
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.5
+Summary: Requirements for the use of apache2-mod_php8.5
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.5
 BuildArch: noarch
 
 %package phpfrontend-nginx
@@ -253,6 +269,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-nginx
 Requires: %name-phpfrontend-php8.4
 Requires: php8.4-fpm-fcgi
+BuildArch: noarch
+
+%package phpfrontend-nginx-php8.5-fpm-fcgi
+Summary: Requirements for the use of php8.5-fpm-fcgi
+Group: Monitoring
+Requires: %name-phpfrontend-nginx
+Requires: %name-phpfrontend-php8.5
+Requires: php8.5-fpm-fcgi
 BuildArch: noarch
 
 %package doc
@@ -378,6 +402,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of apache2-mod_php8.4
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php8.5
+Contains requirements for the use of apache2-mod_php8.5
+in to zabbix phpfrontend
+
 %description phpfrontend-nginx
 zabbix's nginx config files
 
@@ -393,6 +421,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of php8.4-fpm-fcgi
 in to zabbix phpfrontend
 
+%description phpfrontend-nginx-php8.5-fpm-fcgi
+Contains requirements for the use of php8.5-fpm-fcgi
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
@@ -404,6 +436,9 @@ zabbix web frontend, edition for php8.3
 
 %description phpfrontend-php8.4
 zabbix web frontend, edition for php8.4
+
+%description phpfrontend-php8.5
+zabbix web frontend, edition for php8.5
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -838,6 +873,7 @@ fi
 %files phpfrontend-php8.2
 %files phpfrontend-php8.3
 %files phpfrontend-php8.4
+%files phpfrontend-php8.5
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
@@ -845,6 +881,7 @@ fi
 %files phpfrontend-apache2-mod_php8.2
 %files phpfrontend-apache2-mod_php8.3
 %files phpfrontend-apache2-mod_php8.4
+%files phpfrontend-apache2-mod_php8.5
 
 %files phpfrontend-nginx
 %config(noreplace) %_sysconfdir/%name/%{name}_nginx.conf
@@ -852,6 +889,7 @@ fi
 %files phpfrontend-nginx-php8.2-fpm-fcgi
 %files phpfrontend-nginx-php8.3-fpm-fcgi
 %files phpfrontend-nginx-php8.4-fpm-fcgi
+%files phpfrontend-nginx-php8.5-fpm-fcgi
 
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
@@ -863,6 +901,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Apr 07 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.25-alt1
+- 7.0.25 (Fixes: CVE-2026-23919 CVE-2026-23920 CVE-2026-23921 CVE-2026-23924)
+- Add support php 8.5
+
 * Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.24-alt1
 - 7.0.24 (Fixes: CVE-2026-23925)
 - Remove Requires: zabbix-agent-sudo in zabbix-agent and zabbix-agent2 (ALT #57478)
