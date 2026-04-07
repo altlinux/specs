@@ -15,9 +15,14 @@
 %endif
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
+%define pyside_qt6_exes qmlcachegen,qmlimportscanner,qmltyperegistrar,rcc,uic
+%define pyside_qt6_bins assistant,balsam,balsamui,designer,linguist,lrelease,lupdate,qmlformat,qmlls,qmllint,qsb
+%filter_from_requires /\/qt6\/libexec\//d
+%filter_from_requires \/share\/qt6\/bin\//d
+
 Name: python3-module-%mod_name
 Version: 6.10.1
-Release: alt0.1
+Release: alt1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -165,25 +170,35 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_
 
 %cmake -G Ninja \
   -DNUMPY_INCLUDE_DIR:STRING=%python3_sitelibdir/numpy/core/include \
+  -DSHIBOKEN_PYTHON_LIBRARIES=`pkg-confif python3-embed --libs` \
   -DPYTHON_EXECUTABLE:STRING=python3 \
   -DBUILD_TESTS:BOOL=OFF \
   -DQFP_NO_STRIP:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DFORCE_LIMITED_API=no
-
-%ninja_build -C "%_cmake__builddir"
+  -DFORCE_LIMITED_API=no \
+  -DNO_QT_TOOLS=yes \
+  #
+#ninja_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6
-#cmake --install %_cmake__builddir/sources/shiboken6
+#DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6_generator
 DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/pyside6
-#cmake --install %_cmake__builddir/sources/pyside6
+#DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/pyside6/pyside-tools
 
-# Install pyside6-uic as wrapper for uic -g python
-echo -e '#!/bin/sh\n%_qt6_libexecdir/uic -g python $@' > %buildroot%_bindir/pyside6-uic
-chmod +x %buildroot%_bindir/pyside6-uic
+# Install pyside6-app as wrapper for app -g python
+for p in uic rcc ; do
+    echo -e "#!/bin/sh\n%_qt6_libexecdir/$p -g python \$@" > %buildroot%_bindir/pyside6-$p
+    chmod +x %buildroot%_bindir/pyside6-$p
+done
+
+# Add symlinks for tools used by pyside_tool.py
+mkdir -p %buildroot/%python3_sitelibdir/%pypi_name/Qt/libexec
+ln -sfr %buildroot/%_qt6_libexecdir/{%pyside_qt6_exes} %buildroot/%python3_sitelibdir/%pypi_name/Qt/libexec
+ln -sfr %buildroot/%_qt6_bindir/{%pyside_qt6_bins} %buildroot/%python3_sitelibdir/%pypi_name
 
 sed -i 's#env python$#python3#' %buildroot%_bindir/shiboken_tool.py
 
@@ -250,7 +265,7 @@ popd
 %python3_sitelibdir/PySide6-%version-*.egg-info
 
 %files devel
-%_bindir/pyside6-uic
+%_bindir/pyside6-*
 %_datadir/PySide6/
 %_includedir/PySide6/
 %_libdir/libpyside6*.so
@@ -279,6 +294,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- install tools for pyside_tool.py
+
 * Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt0.1
 - NMU: new version
 
