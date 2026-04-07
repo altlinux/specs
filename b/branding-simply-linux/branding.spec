@@ -78,7 +78,7 @@
 
 Name: branding-simply-linux
 Version: 11.1
-Release: alt1
+Release: alt2
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -340,6 +340,9 @@ cp -a /usr/share/distro-licenses/ALT_Simply_License/license.all.html.in notes/
 %ifarch %e2k
 # cf. rm#115880
 sed -i 's,#alt-simply,&-e2k,' components/indexhtml/index-*.html.in
+# avoid artifacts during menu display on Elbrus 801-PC with Radeon R5 230
+sed -i '/menu-opacity/d' \
+  xfce-settings/etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 %endif
 
 %build
@@ -508,6 +511,10 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Tue Apr 07 2026 Michael Shigorin <mike@altlinux.org> 11.1-alt2
+- E2K: skip menu-opacity setting for main menu
+  to avoid artifacts on 801-PC with Radeon R5 230
+
 * Wed Dec 10 2025 Mikhail Efremov <sem@altlinux.org> 11.1-alt1
 - system-settings: Set ligthdm gtk theme to Orchis-Light.
 - xfce-settings,system-settings: Change icon theme to Papirus-Light
