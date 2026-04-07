@@ -1,18 +1,19 @@
 %define lname libbraiding0
 
 Name: libbraiding
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Library for computations on braid groups
 
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: https://github.com/miguelmarco/libbraiding
-Vcs: git://github.com/miguelmarco/libbraiding.git
+Url: https://github.com/enriqueartal/libbraiding
+Vcs: https://github.com/enriqueartal/libbraiding
 
-Source: %url/releases/download/%version/%name-%version.tar.gz
-Patch: libbraiding-1.3.1-alt-fix-configure.patch
+# Source-url: https://github.com/enriqueartal/libbraiding/releases/download/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: libbraiding-%version-%release.patch
 
 BuildRequires: gcc-c++
 
@@ -63,6 +64,9 @@ rm -f "%buildroot/%_libdir"/*.la
 %_pkgconfigdir/libbraiding.pc
 
 %changelog
+* Tue Apr 07 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.2-alt1
+- New version 1.3.2.
+
 * Mon Nov 11 2024 Leontiy Volodin <lvol@altlinux.org> 1.3.1-alt1
 - New version 1.3.1.
 
