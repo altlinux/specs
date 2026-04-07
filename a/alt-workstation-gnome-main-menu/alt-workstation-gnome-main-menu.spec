@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-workstation-gnome-main-menu
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Default GNOME Shell main menu layout for ALT Workstation
@@ -14,17 +14,13 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: foldy
-Requires: gnome-shell
-Requires: bash
-
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 
 %description
 Default GNOME Shell main menu layout configuration for ALT Workstation.
-On first login the package automatically sets up application categories
-and positions in the GNOME Shell app picker using Foldy.
+Sets up application categories and folder layout in the GNOME Shell
+app picker using dconf database and GSchema override.
 
 %prep
 %setup
@@ -37,11 +33,20 @@ and positions in the GNOME Shell app picker using Foldy.
 %meson_install
 
 %files
-%_bindir/%name-setup
-%_datadir/%name/
-%_sysconfdir/xdg/autostart/%name.desktop
+%_sysconfdir/dconf/db/local.d/01-app-folders
+%_datadir/glib-2.0/schemas/10_%name.gschema.override
+%_datadir/desktop-directories/X-ALT-Communication.directory
+%_datadir/desktop-directories/X-ALT-Containers.directory
+%_datadir/desktop-directories/X-ALT-Creative.directory
+%_datadir/desktop-directories/X-ALT-Development.directory
+%_datadir/desktop-directories/X-ALT-Office.directory
+%_datadir/desktop-directories/X-ALT-RemoteAccess.directory
+%_datadir/desktop-directories/X-ALT-Wine.directory
 %doc README.md COPYING
 
 %changelog
-* Sun Apr 06 2026 Semen Fomchenkov <armatik@altlinux.org> 1.0.0-alt1
+* Tue Apr 07 2026 Semen Fomchenkov <armatik@altlinux.org> 1.1.0-alt1
+- Update to v1.1.0.
+
+* Mon Apr 06 2026 Semen Fomchenkov <armatik@altlinux.org> 1.0.0-alt1
 - Initial build.
