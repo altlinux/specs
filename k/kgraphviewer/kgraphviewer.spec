@@ -1,20 +1,24 @@
-%define _unpackaged_files_terminate_build 1
+%define rname kgraphviewer
 
-Name: kgraphviewer
+%define sover 0
+%define libkgraphviewer libkgraphviewer%sover
+
+Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 
-Summary: GraphViz dot graph viewer
-License: GPL-2.0
 Group: Publishing
+Summary: GraphViz dot graph viewer
+License: GPL-2.0-only
 VCS: https://invent.kde.org/graphics/kgraphviewer
 Url: https://apps.kde.org/kgraphviewer/
 
-Source: %name-%version.tar
+Requires: graphviz
+
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-svg-devel
@@ -27,8 +31,7 @@ BuildRequires: kf6-kdoctools-devel
 BuildRequires: boost-devel
 BuildRequires: pkgconfig(cups)
 BuildRequires: pkgconfig(libgvc)
-
-Requires: graphviz
+BuildRequires: desktop-file-utils
 
 %description
 KGraphViewer is a tool to display graphviz .dot graphs.
@@ -36,11 +39,10 @@ KGraphViewer is a tool to display graphviz .dot graphs.
 It is more generally a KPart able to display any graph data that
 graphviz can handle.
 
-%package -n libkgraphviewer0
+%package -n %libkgraphviewer
 Group: System/Libraries
 Summary: Graphviz dot graph file viewer (shared library)
-
-%description -n libkgraphviewer0
+%description -n %libkgraphviewer
 KGraphViewer is a tool to display graphviz .dot graphs.
 
 It is more generally a KPart able to display any graph data that
@@ -63,38 +65,44 @@ graphviz can handle.
 This package contains the development files for KGraphViewer.
 
 %prep
-%setup
-sed -i "s/Categories=.*/Categories=Qt;KDE;DataVisualization;Science;/" src/org.kde.kgraphviewer.desktop
-sed -i "/^GenericName\[/d" src/org.kde.kgraphviewer.desktop
+%setup -n %rname-%version
 
 %build
 %K6build
 
 %install
 %K6install
+desktop-file-install \
+    --mode=0644 --dir %buildroot/%_K6xdgapp \
+    --add-category=Science \
+    %buildroot/%_desktopdir/org.kde.%{rname}.desktop
 
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING COPYING.DOC README TODO
+%doc AUTHORS ChangeLog COPYING* README TODO
 %_K6bin/%name
-%_K6xdgapp/org.kde.%{name}.desktop
-%_K6icon/*/*/apps/%{name}.*
-%_K6cfg/*.kcfg
-%_K6plug/kf6/parts/*.so
-%_K6data/qlogging-categories6/*.*categories
-%_datadir/metainfo/*.xml
+%_K6xdgapp/*%{rname}*.desktop
+%_K6icon/*/*/apps/*%{rname}*.*
+%_K6cfg/*%{rname}*.kcfg
+%_K6plug/kf6/parts/*%{rname}*.so
+%_datadir/qlogging-categories6/*.*categories
+%_datadir/metainfo/*%{rname}*.xml
 
-%files -n libkgraphviewer0
+%files -n %libkgraphviewer
+%_K6lib/libkgraphviewer.so.%sover
 %_K6lib/libkgraphviewer.so.*
 
 %files devel
-%_includedir/kgraphviewer/
-%dir %_K6lib/cmake/KGraphViewerPart
-%_K6lib/cmake/KGraphViewerPart/*
+%_includedir/%{rname}/
+%_K6lib/cmake/KGraphViewerPart/
 %_K6link/lib*.so
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- move sources to tarball
+- update packageng
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
 - New version 25.12.3.
 
