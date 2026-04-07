@@ -1,11 +1,12 @@
 Name: czkawka
-Version: 8.0.0
+Version: 11.0.1
 Release: alt1
 License: MIT
 Group: File tools
 Summary: A simple, fast and free app to remove unnecessary files
 Url: https://github.com/qarmin/czkawka
 Source0: %name-%version.tar
+Source1: clear_icons-%version.tar
 
 BuildRequires: rpm-build-rust
 BuildRequires: /proc
@@ -46,8 +47,8 @@ opposite to Gtk 4 frontend which uses mostly C code.
 
 %prep
 %setup
-mkdir -p .cargo
 cat >> .cargo/config.toml << EOF
+
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -69,19 +70,23 @@ strip = false
 
 EOF
 
+tar -xf %SOURCE1 -C .
+cp -f clear_icons-%version/* krokiet/icons/
+
 %build
 cargo build %_smp_mflags --offline --release
 
 %install
 install -Dm755 target/release/%{name}_{cli,gui} -t %buildroot%_bindir
 install -Dm755 target/release/krokiet -t %buildroot%_bindir
-install -Dm644 data/icons/com.github.qarmin.czkawka{,.Devel}.svg -t %buildroot%_datadir/icons/hicolor/scalable/apps
 install -Dm644 data/icons/com.github.qarmin.czkawka-symbolic.svg -t %buildroot%_datadir/icons/hicolor/symbolic/apps
+install -Dm644 data/icons/com.github.qarmin.czkawka.svg -t %buildroot%_datadir/icons/hicolor/scalable/apps
+install -Dm644 data/icons/io.github.qarmin.krokiet.svg -t %buildroot%_datadir/icons/hicolor/scalable/apps
 install -Dm644 data/com.github.qarmin.czkawka.desktop -t %buildroot%_datadir/applications
 install -Dm644 data/com.github.qarmin.czkawka.metainfo.xml -t %buildroot%_datadir/metainfo
 
 %files
-%doc %{name}_gui/LICENSE README.md instructions/Instruction.md Changelog.md
+%doc %{name}_gui/LICENSE_* README.md instructions/Instruction.md Changelog.md
 %_bindir/%{name}_gui
 %_datadir/icons/hicolor/scalable/apps/*.svg
 %_datadir/icons/hicolor/symbolic/apps/*.svg
@@ -93,10 +98,13 @@ install -Dm644 data/com.github.qarmin.czkawka.metainfo.xml -t %buildroot%_datadi
 %_bindir/%{name}_cli
 
 %files -n %name-krokiet
-%doc krokiet/README.md
+%doc krokiet/LICENSE_* krokiet/README.md
 %_bindir/krokiet
 
 %changelog
+* Mon Apr 06 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 11.0.1-alt1
+- update version
+
 * Wed Oct 23 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 8.0.0-alt1
 - update version
 
