@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %ix86
+%define _smp_mflags -j32
+%endif
+
 Name: rustsec
 Version: 0.32.0
-Release: alt1
+Release: alt2
 
 Summary: RustSec API & Tooling
 License: Apache-2.0 or MIT
@@ -75,6 +79,9 @@ EOF
 %_bindir/cargo-lock
 
 %changelog
+* Tue Apr 07 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.32.0-alt2
+- Fix FTBFS on i586.
+
 * Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.32.0-alt1
 - New rustsec version (0.32.0).
 - New cargo-audit version (0.22.1).
