@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.16.2
+Version: 1.17
 Release: alt1
 
 Summary: Thin wrapper for pandoc
@@ -17,7 +17,7 @@ Vcs: https://github.com/JessicaTegner/pypandoc.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 python3(wheel) python3(poetry-core)
+BuildRequires(pre): rpm-build-python3 python3(wheel) python3(hatchling)
 BuildRequires: pandoc
 %{?_enable_check:BuildRequires: python3(pandocfilters) /usr/bin/pdflatex}
 
@@ -29,9 +29,7 @@ Thin wrapper for "pandoc" (MIT).
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%python3_fix_shebang ./
 
 %build
 %pyproject_build
@@ -44,15 +42,19 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 # HandshakeFailed (Error_Protocol "certificate has unknown CA" UnknownCa)
 # https://bugzilla.altlinux.org/56775
 export SYSTEM_CERTIFICATE_PATH=/usr/share/ca-certificates
-%__python3 tests.py
+%pyproject_run_pytest
 
 %files
+%_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc README.md
 
 
 %changelog
+* Tue Apr 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.17-alt1
+- 1.17
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
