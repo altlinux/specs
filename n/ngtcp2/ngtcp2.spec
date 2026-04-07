@@ -8,7 +8,7 @@
 %endif
 
 Name: ngtcp2
-Version: 1.21.0
+Version: 1.22.0
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -89,6 +89,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 1.22.0-alt1
+- 1.21.0 -> 1.22.0
+
 * Fri Feb 27 2026 Anton Farygin <rider@altlinux.org> 1.21.0-alt1
 - 1.20.0 -> 1.21.0
 
