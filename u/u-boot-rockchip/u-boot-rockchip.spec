@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
-Version: 2026.01
-Release: alt2
+Version: 2026.04
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -35,6 +35,10 @@ sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3568-generic,rk3568-inmys-smarc-evm,' \
 sed '/^CONFIG_DEFAULT_FDT_FILE/ s,powkiddy-x55,powkiddy-x35s,' \
 	< configs/powkiddy-x55-rk3566_defconfig \
 	> configs/powkiddy-x35s-rk3566_defconfig
+# ALT#58519
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3566-powkiddy-x55,rk3568-anbernic-rg-ds,' \
+	< configs/powkiddy-x55-rk3566_defconfig \
+	> configs/anbernic-rg-ds-rk3568_defconfig
 sed -i '/^CONFIG_FS_EXFAT/d' configs/*
 rm configs/generic-rk33*_defconfig
 
@@ -80,6 +84,10 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Apr 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.04-alt1
+- 2026.04 released
+- added Anbernic RG DS board (closes: 58519)
+
 * Tue Mar 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.01-alt2
 - rebuilt with vendor-supplied rk3568 bl31 (closes: 58099)
 
