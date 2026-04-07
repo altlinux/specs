@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.1.0
-Release: alt2
+Release: alt3
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -30,6 +30,7 @@ Requires: alterator-datetime
 Requires: alterator-pkg
 Requires: alterator-blivet
 Requires: alterator-notes
+Requires: installer-feature-efi-removable
 
 %description stage2
 This package contains installer configuration hopefully suitable
@@ -74,6 +75,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Apr 07 2026 Sergey Konev <darisishe@altlinux.org> 11.1.0-alt3
+- Do not skip alterator-grub step for EFI
+- Add Requires: installer-feature-efi-removable
+
 * Mon Mar 23 2026 Sergey Konev <darisishe@altlinux.org> 11.1.0-alt2
 - Add proper l10n for Grub autoinstall
 
