@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtox
-Version: 1.18.3
-Release: alt2
+Version: 1.18.4
+Release: alt1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -59,6 +59,9 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 1.18.4-alt1
+- 1.18.3 -> 1.18.4
+
 * Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.18.3-alt2
 - e2k build fix
 
