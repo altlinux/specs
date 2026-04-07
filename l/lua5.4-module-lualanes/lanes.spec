@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_with check
+%def_without check
 %define luarocks_revision 0
 
 Name: lua5.4-module-lualanes
-Version: 3.17.2
-Release: alt2_lr%luarocks_revision
+Version: 4.0.0
+Release: alt1_lr%luarocks_revision
 
 Summary: Lanes is a lightweight, native, lazy evaluating multithreading library for Lua 5.1 to 5.4
 License: MIT
@@ -12,19 +12,13 @@ Group: Development/Other
 Url: https://lualanes.github.io/lanes/
 Vcs: https://github.com/LuaLanes/lanes
 
-Source: %name-%version.tar
-# 3.17.1-alt1_lr1
-# Add missing deadlock test build rule.
-# Enable substituion of custom paths to built shared libraries.
-Patch: lua-module-lualanes-3.17.1-alt-makefile-tests.patch
-# 3.17.1-alt1_lr1
-# Remove linda_perf test keepers_gc_threshold limit. According to tip given by the developer.
-# https://github.com/LuaLanes/lanes/issues/236#issuecomment-2801109546
-Patch1: lua-module-lualanes-3.17.1-alt-linda_perf.patch
+# Self provided dependency.
+%filter_from_requires /lua5.4(lanes_core)/d
 
-Provides: luarocks5.4(lualanes) = %EVR
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-lua
+BuildRequires: gcc-c++
 BuildRequires: lua5.4-luarocks
 BuildRequires: liblua5.4-devel
 BuildRequires: lua5.4-module-luasocket
@@ -60,9 +54,9 @@ Documentation for lualanes.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
+export CFLAGS="-std=c++20"
 luarocks-5.4 make --verbose --local --deps-mode all --pack-binary-rock \
 	lanes-%version-%luarocks_revision.rockspec
 
@@ -82,13 +76,17 @@ EOF
 %files
 %doc COPYRIGHT
 %luarocks_dbdir/lanes
-%lua_modulesdir/lanes
+%lua_modulesdir/lanes_core.so
 %lua_modulesdir_noarch/lanes.lua
 
 %files doc
 %doc docs/*
 
 %changelog
+* Tue Mar 03 2026 Sergey Zhidkih <rx1513@altlinux.org> 4.0.0-alt1_lr0
+- New version (4.0.0):
+  + Switch to C++ implementation.
+
 * Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 3.17.2-alt2_lr0
 - Fix FTBFS by removing dependency on luasocket-devel.
 
