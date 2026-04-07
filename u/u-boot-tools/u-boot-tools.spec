@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2026.01
+Version: 2026.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -61,6 +61,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Tue Apr 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.04-alt1
+- 2026.04 released
+
 * Tue Jan 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.01-alt1
 - 2026.01 released
 
