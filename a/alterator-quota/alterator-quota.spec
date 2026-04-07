@@ -1,5 +1,5 @@
 Name: alterator-quota
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: alterator module for managing filesystem quotas
@@ -43,6 +43,9 @@ alterator module for managing filesystem quotas
 %_bindir/*
 
 %changelog
+* Tue Apr 07 2026 Mikhail Efremov <sem@altlinux.org> 1.6.5-alt1
+- Disable 'use ext4 internal quota' warning (closes: #57279).
+
 * Tue Oct 07 2025 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt1
 - Replace 'egrep' with 'grep -E' (Closes: 53474).
 - Clean Packager.
