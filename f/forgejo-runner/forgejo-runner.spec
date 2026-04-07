@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 12.7.2
+Version: 12.8.0
 Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
@@ -15,6 +15,10 @@ Vcs: https://code.forgejo.org/forgejo/runner.git
 Source: %name-%version.tar
 Source2: %name.service
 Source3: README-alt.md
+Source4: cache-config.yml
+Source5: %name-cache.service
+Source6: README-alt-cache.md
+
 Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
@@ -30,6 +34,15 @@ Requires: git
 
 %description
 A runner for Forgejo Actions.
+
+%package cache
+Summary: Cache server settings for forgejo runner
+Group: Other
+
+Requires: %name = %EVR
+
+%description cache
+Cache server settings for forgejo runner.
 
 %prep
 %setup
@@ -48,18 +61,21 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %install
 cp %SOURCE3 ./
+cp %SOURCE6 ./
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export IGNORE_SOURCES=1
-mkdir -p %buildroot{%_bindir,%_userunitdir,%_sysconfdir/%name,%_sharedstatedir/%name}
+mkdir -p %buildroot{%_bindir,%_userunitdir,%_sysconfdir/%name,%_sysconfdir/%name-cache,%_sharedstatedir/%name}
 
 %golang_install
 
 mv %buildroot%_bindir/runner %buildroot%_bindir/%name
 
 %buildroot%_bindir/%name generate-config > %buildroot%_sysconfdir/%name/config.yaml
+install -m 0640 %SOURCE4 %buildroot%_sysconfdir/%name-cache/config.yaml
 
 install -m 0644 %SOURCE2 %buildroot%_userunitdir/%name.service
+install -m 0644 %SOURCE5 %buildroot%_userunitdir/%name-cache.service
 
 %pre
 groupadd -r -f _%name > /dev/null 2>&1 ||:
@@ -84,9 +100,16 @@ if [ $1 -ge 1 ] &&  sd_booted; then
   user_id=$(id -u _%name)
   SYSTEMCTL=systemctl
   $SYSTEMCTL --user -M "$user_id@" enable podman.socket
-  $SYSTEMCTL --user -M "$user_id@" enable %name.service
 fi
 exit 0
+
+%post cache
+%systemd_user_post %name-cache.service
+if [ ! -f %_sysconfdir/%name-cache/secret ]; then
+  openssl rand -hex 32 > %_sysconfdir/%name-cache/secret
+  chown root:_%name %_sysconfdir/%name-cache/secret
+  chmod 640 %_sysconfdir/%name-cache/secret
+fi
 
 %preun
 %systemd_user_preun %name.service
@@ -94,15 +117,32 @@ exit 0
 %postun
 %systemd_user_postun_with_restart %name.service
 
+%preun cache
+%systemd_user_preun %name-cache.service
+
+%postun cache
+%systemd_user_postun_with_restart %name-cache.service
+
 %files
 %doc README.md LICENSE RELEASE-NOTES.md README-alt.md
-%attr(0770,root,_%name) %dir %_sysconfdir/%name
+%attr(0750,root,_%name) %dir %_sysconfdir/%name
 %attr(0640,root,_%name) %config(noreplace) %_sysconfdir/%name/config.yaml
 %attr(0770,root,_%name) %dir %_sharedstatedir/%name
 %_bindir/%name
 %_userunitdir/%name.service
 
+%files cache
+%doc README-alt-cache.md
+%attr(0750,root,_%name) %dir   %_sysconfdir/%name-cache
+%attr(0640,root,_%name) %config(noreplace) %_sysconfdir/%name-cache/config.yaml
+%_userunitdir/%name-cache.service
+
 %changelog
+* Mon Apr 06 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.8.0-alt1
+- New version 12.8.0.
+- Changed /etc/forgejo-runner permissions from 0770 to 0750.
+- Add forgejo-runner-cache subpackage (thx respublica@).
+
 * Mon Mar 16 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.7.2-alt1
 - New version 12.7.2.
 
