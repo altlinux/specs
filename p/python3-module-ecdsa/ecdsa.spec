@@ -1,7 +1,7 @@
 %define oname ecdsa
 
 Name: python3-module-%oname
-Version: 0.19.1
+Version: 0.19.2
 Release: alt1
 
 Summary: ECDSA cryptographic signature library (pure python)
@@ -51,6 +51,9 @@ rm -rfv %buildroot%python3_sitelibdir/ecdsa/test_*.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 07 2026 Alexander Danilov <admsasha@altlinux.org> 0.19.2-alt1
+- new version 0.19.2
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
 - new version 0.19.1
 
