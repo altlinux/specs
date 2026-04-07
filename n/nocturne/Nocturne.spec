@@ -1,8 +1,8 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 0.7.1
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: An Adwaita Music Player / Library Manager
 License: GPL-3.0-or-later
@@ -54,6 +54,9 @@ done
 %doc *.md
 
 %changelog
+* Tue Apr 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
+- 0.7.1 -> 0.8.0
+
 * Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt2
 - updated to git.ecc43593fd
 
