@@ -24,8 +24,8 @@
 %define Name Parted
 Name: parted
 %define lname lib%name
-Version: 3.6
-Release: alt3
+Version: 3.6.37
+Release: alt1
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.UTF-8): Универсальний інструмент для роботи з разділами диску
@@ -225,7 +225,7 @@ __MENU__
 %endif
 
 %files -n %lname-devel
-%doc doc/API doc/FAT ChangeLog.*
+%doc doc/API.md doc/FAT ChangeLog.*
 %{?_enable_shared:%_libdir/*.so}
 %_includedir/%name/
 %_pkgconfigdir/%lname.pc
@@ -238,6 +238,9 @@ __MENU__
 
 
 %changelog
+* Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 3.6.37-alt1
+- 3.6 -> 3.6.37
+
 * Thu Apr 17 2025 Sergey Konev <darisishe@altlinux.org> 3.6-alt3
 - Fixed libparted partitions naming.
   i.e. libparted treated multipath device partition
