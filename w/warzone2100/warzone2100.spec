@@ -1,5 +1,5 @@
 Name: warzone2100
-Version: 4.6.3
+Version: 4.7.0
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(protobuf)
 BuildRequires: pkgconfig(libzip)
 BuildRequires: pkgconfig(physfs)
 BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(fribidi)
@@ -86,6 +87,8 @@ touch build_tools/autorevision.cmake
 	-DWZ_FINDSDL2_NOCONFIG:BOOL=OFF \
 	-DWZ_ENABLE_WARNINGS_AS_ERRORS:BOOL=OFF \
 	-DWZ_FORCE_MINIMAL_OPUSFILE:BOOL=OFF \
+	-DWZ_USE_SYSTEM_LIBJPEG_TURBO=ON \
+	-DWZ_SKIP_ELF_SEPARATE_DEBUG=ON \
 	%nil
 
 %cmake_build
@@ -117,6 +120,9 @@ rm %buildroot%_iconsdir/net.wz2100.warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Tue Apr 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.7.0-alt1
+- 4.7.0 released
+
 * Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.3-alt1
 - 4.6.3 released
 
