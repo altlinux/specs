@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.8
+Version: 0.3.0
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -49,12 +49,33 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_bindir/%short_name
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 %_datadir/alteratorctl/scripts/completion_wrapper
+%_datadir/alteratorctl/scripts/completion_services
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/bash-completion/completions/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Fri Apr 06 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.0-alt1
+- Added:
+  + Support for displaying the status of components without categories;
+  + Printing components without categories;
+  + Supporting of hidden components (added option `--show-hidden`);
+  + The ability to call help for various commands without specifying service names;
+  + Processing of allowed operations for selected services from their descriptors;
+  + Adding mandatory parameter labels to the service module command help;
+  + Password roles supporting in services module;
+  + Info about current edition in systeminfo module.
+- Fixed:
+  + Handling an error when attempting to run a diagnostic tool that does not exist on the specified bus;
+  + Handling an error when attempting to run a diagnostic tool on a session bus as root;
+  + Component installation failing when there are conflicts with manually installed packages;
+  + Printing parameters description and comments in `services status` command.
+- Changed:
+  + More comfortable error message when a service name is incorrect;
+  + Get rid of unicode styled tables with services params in services module commands;
+  + Remove full parameter dump for showing missed params.
+
 * Wed Feb 18 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.8-alt1
 - Fixed:
   + Components list assertions.
@@ -145,59 +166,187 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 - Use as instead ay on batch interfaces of components.
 
 * Tue Aug 05 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.13-alt1
-- Increased the version of a required dependency from alterator-interface-edition and
-- alterator-backend-systeminfo
+- Added:
+  + Line breaks for better readability of components install/remove. (by nexi@)
+    --force-yes option in components module;
+  + Handling warnings in diag run command;
+  + Spliting packages apt andd components install/remove output to columns;
+  + Handling ^C during apt-get transaction;
+    components search command;
+  + Pager for components list, packages rpm list/files and packages apt list/search output;
+  + Spliting tests output in --verbose mode during diag run.
+- Fixed:
+  + Handling attempts to remove uninstalled packages and install already installed ones;
+  + Names of components removing options;
+  + Line breaks in --help option output.
+- Changed:
+  + Split target components and affected components in install and remove commands;
+  + More detailed help in the components module;
+  + Increased the version of a required dependency from alterator-interface-edition and
+    alterator-backend-systeminfo.
 
 * Sat Jul 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.12-alt1
-- Increased the version of a required dependency from alterator-backend-packages
-- Moved completions setup logic to completions/CMakeLists
+- Added:
+  + Calculating affected components for installing or removing of specified component;
+  + Packages filtering in components status, components install or components remove by exclude_arch flags;
+  + Show tests display name in diag run by default. (by nexi@)
+- Fixed:
+  + packages apt list command description; (by nexi@)
+  + Settint timeouts for dbus calls with signals.
+- Changed:
+  + Increased the version of a required dependency from alterator-backend-packages;
+  + Moved completions setup logic to completions/CMakeLists.
 
 * Fri Jul 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.11-alt1
-- Fix working bash-completions with actl symlink to alteratorctl.
+- Added:
+  + Prevent manual removal of installed packages by default in components remove and packages apt.
+- Fixed:
+  + Bash-completion working with actl symbolic link to alteratorctl;
+  + Send edition path to edition set.
 
 * Tue Jul 01 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.10-alt1
 - Fixed typos (thx Elena Mishina).
 - Added Bash and Fish completion (thx Kozyrev Yuri).
 
 * Sat May 31 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.9-alt1
-- Fixing build requires and creating symbolic link named actl
-- Renaming `--show-display-name` option of `components` module to `enable-display-name` (Closes: #57161)
+- Added:
+  + Apt-get output streaming in alteratorctl packages apt install;
+  + Apt-get output streaming in alteratorctl packages apt remove;
+  + Apt-get output streaming in alteratorctl packages apt reinstall;
+  + Apt-get output streaming in alteratorctl packages apt update;
+  + Packages apt submodule methods install, remove and reinstall output sorting;
+  + Systeminfo module output sorting in description method;
+  + Handling dbus errors from connection;
+  + Simplify checking of existance of dbus objects;
+  + Choose edition sections parameters in components module cmdl;
+  + Hide installed status markers in components module;
+  + Hide installed edition marker.
+- Fixed:
+  + alteratorctl manager getsignals fix double free signals names and memory leak;
+  + Registration of polkit-agent in tty;
+  + Components installed status with architecturally depends packages;
+  + Extra printing of specified category in components module;
+  + Fixing build requires and creating symbolic link named actl.
+- Changed:
+  + Renaming --show-display-name option to --enable-display-name in components module. (Closes: #57161)
 
 * Fri Apr 18 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.8-alt1
 - fix: fixed package list during install
 
 * Wed Apr 16 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.7-alt1
-- New version
+- Added:
+  + --verbose option in editions, diag and components usage help.
+- Fixed:
+  + Running diagnostic tools from root;
+  + Components options translation;
+  + Handling set of noexistance edition.
+- Changed:
+  + Diagnostic tool tests status names;
+  + Usage helps alignment.
 
 * Thu Apr 10 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.6-alt1
-- New version
-- Changed versions in the installation dependencies
+- Changed:
+  + Changed versions in the installation dependencies.
+- Fixed:
+  + Getting components sections while empty result;
+  + Getting components list while DE's is empty;
+  + Systeminfo desktop and locales ouptput;
+  + Double free in diag list tests;
+  + Glib warning in components components while edition doesn't set;
+  + Diag test status output;
+  + Manager getobjects and getifaces output;
+  + Remove packages filtering in components list (this functional moved to batch components backend).
 
 * Tue Apr 01 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.5-alt1
-- Add dependencies from specified required packages
-- Add LICENSE file
-- Edit summary and description
+- Added:
+  + Systeminfo desktop and locales methods;
+  + Filter components packages by languages and desktop environments;
+  + Add dependencies from specified required packages;
+  + Add LICENSE file.
+- Changed:
+  + Edit summary and description.
+- Fixed:
+  + Component packages filtering in components list.
 
 * Thu Mar 27 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.4-alt1
-- Add libpolkit-devel to build requires
+- Added:
+  + Textual authentication agent;
+  + Add libpolkit-devel to build requires.
+- Fixed:
+  + Fallback in usage polkit agent;
+  + Handling incorrect category name with --category option in components module;
+  + Memory leaks in components install/remove;
+  + Memory leaks in components list;
+  + Memory leaks in components info;
+  + Memory leaks in components printing list helper function.
 
 * Wed Mar 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.3-alt1
-- New version depending on the version of the alterator-backend-batch-components depending on the version
+- Added:
+  + Component packages filtering by arch option;
+  + Include kernel name in package name when kernel_module option is set;
+  + Components packages sorting in components status command;
+  + New version depending on the version of the alterator-backend-batch-components
+    depending on the version.
+- Fixed:
+  + Components packages installed status markers;
+  + Memory leaks;
+  + Editions ru. usage help translation;
+  + Packages submodules errors handling;
+  + Packages rpm list method name;
+  + Systeminfo description ignore unknown properties;
+  + Components apt update function;
+  + Display all components from current edition in default mode;
+  + Components installed markers position;
+  + Various segfaults and memory leaks;
+  + Handling of invalid or missing locales.
+- Removed:
+  + Warning about the absence of the current edition.
 
 * Tue Mar 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.2-alt1
-- New version
+- Added:
+  + Sorting result of editions module;
+  + Sorting result of diag list method;
+  + Sorting result of packages submodules;
+  + Components --draft and no-update options;
+  + Current edition marker in editions list.
+- Removed:
+  + Systeminfo license.
 
 * Mon Mar 17 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.1-alt1
-- New version
+- Added:
+  + Option to hide the components module legend;
+  + Selecting the license text in the systeminfo module depending on the system language;
+  + Marker for unknown installed status;
+  + Sorting in alteratorctl manager module.
+- Security:
+  + Changed the user tracking criteria for running commands that require appropriate permissions.
+- Fixed:
+  + --path-only option usage in components --list;
+  + Correct handling of missing edits.
 
 * Thu Mar 13 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.0-alt1
-- Removing unnecessary dependencies
+- Added:
+  + Installing status markers legend;
+  + Output sorting by names;
+  + Systeminfo license.
+- Changed:
+  + Simple tree output in components module;
+  + Option names;
+  + Removing unnecessary dependencies.
+- Fixed:
+  + Printing components while edition isn't valid;
+  + Check running via sudo.
 
 * Mon Mar 10 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.11-alt2
 - Adding polkit to dependencies
 
 * Fri Mar 07 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.11-alt1
-- New version
+- Added:
+  + Editions list and license;
+  + Spliting categories and components by editions sections;
+  + Adding automatic substitution of current default editions into command arguments of editions module.
+- Fixed:
+  + Editions info and description methods.
 
 * Thu Mar 06 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.10-alt1
 - Adding dependencies on backends of alteratorctl modules
