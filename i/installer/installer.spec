@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.34
+Version: 1.16.35
 Release: alt1
 
 Summary: Installer common parts
@@ -180,6 +180,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Apr 06 2026 Anton Midyukov <antohami@altlinux.org> 1.16.35-alt1
+- install: use last monitor on wayland.
+
 * Sat Dec 20 2025 Fedor Moseichuck <phobos@altlinux.org> 1.16.34-alt1
 - steps/pkg-radiogroups: fix X-Alterator-Help file parameter
 

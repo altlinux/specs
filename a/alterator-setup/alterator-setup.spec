@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -138,6 +138,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Apr 06 2026 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
+- alterator-setup-run: use last monitor on wayland.
+
 * Sat Dec 20 2025 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
 - Enable authentication for wayland vnc.
 
