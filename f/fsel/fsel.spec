@@ -2,13 +2,15 @@
 
 Name: fsel
 Version: 3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Fast TUI app launcher for GNU/Linux and *BSD 
 License: BSD-2-Clause
 Group: Development/Tools
 Url: https://github.com/Mjoyufull/fsel
 VCS: https://github.com/Mjoyufull/fsel
+
+Requires: cclip
 
 # Source-url: https://github.com/Mjoyufull/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
@@ -42,5 +44,8 @@ install -pm 644 {config,keybinds,color_examples}.toml \
 %_datadir/%name
 
 %changelog
+* Tue Apr 07 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 3.3.1-alt2
+- fixed an error when starting fsel with `--cclip` flag (closes: 58544)
+
 * Mon Mar 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 3.3.1-alt1
 - initial build for ALT Linux
