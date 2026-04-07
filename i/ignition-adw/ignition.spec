@@ -4,7 +4,7 @@
 %define real_name ignition
 
 Name: ignition-adw
-Version: 1.1.3
+Version: 2.1.2
 Release: alt1
 
 Summary: Manage startup apps and scripts
@@ -13,10 +13,14 @@ Group: System/Configuration/Boot and Init
 
 Url: https://github.com/flattool/ignition
 Vcs: https://github.com/flattool/ignition
-Source: %name-%version.tar
 
-%define gjs_ver 1.54
-%define adw_ver 1.5
+Source0: %name-%version.tar
+Source1: gi-types.tar
+
+Patch0: %name-%version.patch
+
+%define gjs_ver 1.84
+%define adw_ver 1.6
 
 Requires: libgjs >= %gjs_ver
 Requires: typelib(Gtk) = 4.0
@@ -33,6 +37,7 @@ BuildRequires: libgjs-devel
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: gtk4-update-icon-cache
+BuildRequires: node-typescript
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
@@ -46,7 +51,8 @@ and modify startup entrieson your computer.
 Ignition can add apps, scripts, and arbitrary commands to run at login.
 
 %prep
-%setup
+%setup -q -n %name-%version -a1
+%autopatch -p1
 
 %build
 %meson
@@ -72,6 +78,9 @@ rm -r %buildroot%_datadir/locale/zh_Hans
 %doc README.md
 
 %changelog
+* Tue Apr 07 2026 Vladislav Petrukhin <vladp@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
