@@ -1,6 +1,6 @@
 Name: rpm-macros-lua
 Version: 1.5.2
-Release: alt2
+Release: alt3
 Summary: RPM helper macros to build Lua packages
 Url: https://www.altlinux.org/Lua_Policy
 License: GPL-3.0-or-later
@@ -24,6 +24,9 @@ install -pD -m644 %SOURCE0 %buildroot%_rpmlibdir/macros.d/lua
 %_rpmlibdir/macros.d/lua
 
 %changelog
+* Thu Apr 02 2026 Ildar Mulyukov <ildar@altlinux.ru> 1.5.2-alt3
+- do our best fixing hashbangs to point to the exact version of Lua
+
 * Sun Apr 27 2025 Ildar Mulyukov <ildar@altlinux.ru> 1.5.2-alt2
 - copy %%_bindir files with suffix. Useful for multilua packages
 
