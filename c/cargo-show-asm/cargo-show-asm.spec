@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cargo-show-asm
-Version: 0.2.56
+Version: 0.2.57
 Release: alt1
 
 Summary: Cargo subcommand showing the assembly, LLVM-IR and MIR generated for Rust code
@@ -55,6 +55,9 @@ EOF
 %_bindir/cargo-asm
 
 %changelog
+* Tue Apr 07 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.57-alt1
+- New version (0.2.57).
+
 * Thu Feb 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.56-alt1
 - New version (0.2.56).
 
