@@ -10,10 +10,13 @@
 
 %define _libexecdir /usr/libexec
 
+# git rev-parse v1.34.7^{commit}
+%define git_commit dd7d093666b511958a4a94399f1ad175ab36f52e
+
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          34
-%define cri_o_patch          6
+%define cri_o_patch          7
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -21,7 +24,7 @@ Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
-URL: https://cri-o.io
+Url: https://cri-o.io
 VCS: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
@@ -31,17 +34,18 @@ Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 
+# Versions info from ./scripts/versions or ./dependencies.yaml
 Requires: containers-common
 Requires: crun
-Requires: cni-plugins >= 1.4.0
+Requires: cni-plugins >= 1.7.1
 Requires: conntrack-tools
 Requires: iproute2
 Requires: iptables
 Requires: socat
-Requires: conmon
+Requires: conmon >= 2.1.13
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang >= 1.24
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.24.6
 BuildRequires: glib2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libbtrfs-devel
@@ -71,6 +75,13 @@ sed -i 's/install.bin: binaries/install.bin:/' Makefile
 sed -i 's/\.gopathok//' Makefile
 sed -i 's|$(PREFIX)/lib/systemd/system|$(DESTDIR)%_unitdir|g' Makefile
 
+# Build with debuginfo.
+sed -i 's/SHRINKFLAGS = -s -w/SHRINKFLAGS = /' Makefile
+sed -i 's/TRIMPATH ?= -trimpath/TRIMPATH ?= /' Makefile
+sed -Ei 's/(\s+\$\(STRIP\) -s \$@)/#\1/' pinns/Makefile
+
+sed -Ei 's/(\s+)gitCommit := unknown/\1gitCommit := "%git_commit"/' internal/version/version.go
+
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -78,8 +89,6 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-export COMMIT_NO=%release
-export GIT_TREE_STATE=clean
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
 
@@ -134,6 +143,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Apr 06 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.7-alt1
+- 1.34.6 -> 1.34.7.
+
 * Mon Mar 30 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.6-alt1
 - 1.34.5 -> 1.34.6.
 
