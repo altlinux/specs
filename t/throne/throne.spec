@@ -2,8 +2,8 @@
 %define _cmake__builddir build
 
 Name: throne
-Version: 1.0.6
-Release: alt2
+Version: 1.1.1
+Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
@@ -45,7 +45,7 @@ Qt based cross-platform GUI proxy configuration manager
 %package sing-geosite
 Summary: Geosite Database for sing-box
 Group: System/Servers
-Conflicts: sing-geosite
+Provides: sing-geosite
 
 %description sing-geosite
 Geosite Database for sing-box
@@ -53,31 +53,14 @@ Geosite Database for sing-box
 %package sing-geoip
 Summary: Geoip Database for sing-box
 Group: System/Servers
-Conflicts: sing-geoip
+Provides: sing-geoip
 
 %description sing-geoip
 Geoip Database for sing-box
 
 %prep
-%setup -a 1
+%setup -a1
 %patch -p1
-
-mv %name-vendors-%version/protorpc-vendor core/protorpc/vendor
-mv %name-vendors-%version/server-vendor core/server/vendor
-mv %name-vendors-%version/updater-vendor core/updater/vendor
-
-install -dm 755 sing-box/rule-set
-
-mv %name-vendors-%version/sing-geosite/*.db sing-box/
-mv %name-vendors-%version/sing-geosite/rule-set/*.srs sing-box/rule-set
-
-mv %name-vendors-%version/sing-geoip/*.db sing-box/ 
-mv %name-vendors-%version/sing-geoip/rule-set/*.srs sing-box/rule-set 
-
-
-mv %name-vendors-%version/srslist.h ./
-
-rm -rf %name-vendors-%version
 
 %build
 %cmake
@@ -100,7 +83,7 @@ install -dm 755 %buildroot%_datadir/sing-box/rule-set
 
 pushd %_cmake__builddir
 install -pm 755 ./Throne %buildroot%_libexecdir/throne/Throne
-install -pm 755 ./Core %buildroot%_libexecdir/throne/Core
+install -pm 755 ./ThroneCore %buildroot%_libexecdir/throne/ThroneCore
 install -pm 755 %SOURCE2 %buildroot/%_bindir/throne
 install -pm 644 %SOURCE3 %buildroot%_datadir/applications/Throne.desktop
 popd
@@ -111,7 +94,7 @@ install -Dm755 ./sing-box/*.db %buildroot%_datadir/sing-box
 install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 
 %files
-%_libexecdir/throne/Core
+%_libexecdir/throne/ThroneCore
 %_libexecdir/throne/Throne
 %_bindir/throne
 %_datadir/applications/Throne.desktop
@@ -126,6 +109,9 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue Apr 07 2026 Andrey Kovalev <ded@altlinux.org> 1.1.1-alt1
+- Updated to upstream version 1.1.1 (closes: #57585, #56993).
+
 * Tue Sep 30 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt2
 - NMU: Build on riscv64 and loongarch64.
 
