@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: gvm-libs
-Version: 22.39.0
+Version: 22.40.0
 Release: alt1
 
 Summary: Support libraries for Greenbone Vulnerability Management Solution and OpenVAS
@@ -249,6 +249,22 @@ Requires: libgvm_cyberark%sover = %EVR
 %description -n libgvm_cyberark-devel
 %summary
 
+%package -n libgvm_security_intelligence%sover
+Summary: Greenbone Vulnerability Management Library security_intelligence
+Group: System/Libraries
+Requires: %name-common
+
+%description -n libgvm_security_intelligence%sover
+%summary
+
+%package -n libgvm_security_intelligence-devel
+Summary: Development files for the GVM security_intelligence library
+Group: Development/C
+Requires: libgvm_security_intelligence%sover = %EVR
+
+%description -n libgvm_security_intelligence-devel
+%summary
+
 %if_enabled docs
 %package devel-doc
 Summary: Documentation for %name
@@ -325,6 +341,9 @@ BuildArch: noarch
 %files -n libgvm_cyberark%sover
 %_libdir/libgvm_cyberark.so.%{sover}*
 
+%files -n libgvm_security_intelligence%sover
+%_libdir/libgvm_security_intelligence.so.%{sover}*
+
 %files -n libgvm_base-devel
 %dir %_includedir/gvm/base
 %_includedir/gvm/base/*.h
@@ -391,6 +410,12 @@ BuildArch: noarch
 %_libdir/libgvm_cyberark.so
 %_pkgconfigdir/libgvm_cyberark.pc
 
+%files -n libgvm_security_intelligence-devel
+%dir %_includedir/gvm/security_intelligence
+%_includedir/gvm/security_intelligence/*.h
+%_libdir/libgvm_security_intelligence.so
+%_pkgconfigdir/libgvm_security_intelligence.pc
+
 %if_enabled docs
 %files devel-doc
 %dir %_defaultdocdir/%name
@@ -398,6 +423,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Tue Apr 07 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 22.40.0-alt1
+- new version
+
 * Fri Mar 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 22.39.0-alt1
 - new version
 
