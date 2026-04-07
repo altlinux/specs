@@ -2,7 +2,7 @@
 
 Name: commonmark
 Version: 0.27.1
-Release: alt1
+Release: alt2
 
 Summary: Java CommonMark library for parsing and rendering Markdown text
 Group: Development/Java
@@ -23,7 +23,7 @@ BuildRequires: maven-install-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-source-plugin
-BuildRequires: autolink
+BuildRequires: autolink-java
 
 %package javadoc
 Summary: API documentation for commonmark
@@ -33,7 +33,6 @@ Group: Development/Java
 Summary: commonmark extension for autolinking
 Group: Development/Java
 Requires: commonmark
-Requires: autolink
 
 %package ext-footnotes
 Summary: commonmark extension for footnotes
@@ -156,5 +155,8 @@ CommonMark extension for YAML front matter.
 %files ext-yaml-front-matter -f .mfiles-commonmark-ext-yaml-front-matter
 
 %changelog
+* Tue Apr 07 2026 Arseniy Kostevich <faux@altlinux.org> 0.27.1-alt2
+- Fix dependency name.
+
 * Tue Mar 24 2026 Arseniy Kostevich <faux@altlinux.org> 0.27.1-alt1
 - Initial build for ALT.
