@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.8.139
+Version: 0.8.140
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -98,6 +98,13 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
 %_bindir/alt-rpmkey*
 
 %changelog
+* Tue Apr 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.140-alt1
+- Updated key: manowar@ (B9F22864; closes: #38344).
+- Added keys:
+  + dinchik@ (4AB02C40; see #57808);
+  + neko@ (B3FDCFE8; see #58313);
+  + brow@ (5CBADF63; see #58506).
+
 * Wed Apr 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.139-alt1
 - Added key: sen@ (EBA8C32C; see #57751).
 
