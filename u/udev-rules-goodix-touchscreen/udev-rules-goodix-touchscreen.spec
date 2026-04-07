@@ -1,5 +1,5 @@
 Name: udev-rules-goodix-touchscreen
-Version: 6
+Version: 7
 Release: alt1
 Summary: Fix orientation of Goodix touchscreen on number of devices
 License: GPL-2.0-or-later
@@ -46,6 +46,9 @@ rm -f %_udevrulesdir/90-goodix-*.rules
 %_presetdir/20-udev-rules-goodix-touchscreen.preset
 
 %changelog
+* Tue Apr  7 2026 Artyom Bystrov <arbars@altlinux.org> 7-alt1
+- Add Anbernic RG DS support
+
 * Fri Mar 20 2026 Artyom Bystrov <arbars@altlinux.org> 6-alt1
 - Change default path of udev rules (closes: #58220)
 
