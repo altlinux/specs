@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.8
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2376,6 +2376,11 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Mar 27 2026 Vladimir Rubanov <august@altlinux.org> 4.22.8-alt3
+- third_party:heimdal:lib:roken: allow large fragmented UDP replies (thx Ivan Korytov)
+- Add server management commands.
+- Remove replication schedule patches from dsdb.
+
 * Fri Feb 27 2026 Vladimir Rubanov <august@altlinux.org> 4.22.8-alt2
 - Fixed addition and deletion of sites to/from site-links
 
