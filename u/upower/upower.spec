@@ -1,5 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.freedesktop.UPower
+%define xdg_name1 org.freedesktop.upower
 %define namespace UPowerGlib
 %define api_ver 1.0
 
@@ -14,7 +15,7 @@
 %def_enable installed_tests
 
 Name: upower
-Version: 1.91.1
+Version: 1.91.2
 Release: alt1
 
 Summary: Power Management Service
@@ -133,7 +134,8 @@ This package provides UPower integration tests.
 %_libexecdir/%{name}d
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/dbus-1/system-services/%xdg_name.service
-%_datadir/polkit-1/actions/org.freedesktop.upower.policy
+%_datadir/polkit-1/actions/%xdg_name1.policy
+%_datadir/polkit-1/rules.d/%xdg_name1.rules
 %{?_enable_man:
 %_man1dir/%name.1*
 %_man7dir/UPower.7*
@@ -166,6 +168,9 @@ This package provides UPower integration tests.
 %endif
 
 %changelog
+* Tue Apr 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.91.2-alt1
+- 1.91.2
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.91.1-alt1
 - 1.91.1
 
