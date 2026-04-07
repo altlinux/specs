@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.5.6
-Release: alt2
+Version: 6.6.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -30,7 +30,6 @@ Conflicts: kwin < 6.4
 Requires: hwdata
 Requires: qt6-multimedia qt6-virtualkeyboard qt6-declarative
 Requires: kf6-kirigami kscreenlocker kf6-kdeclarative
-Requires: libplasmaquick6
 Requires: kwin-aurorae
 Requires(post): /sbin/setcap
 
@@ -186,6 +185,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Mon Mar 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt2
 - cleanup from wayland
 

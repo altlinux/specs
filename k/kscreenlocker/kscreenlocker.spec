@@ -7,7 +7,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 2
 %K6init
@@ -51,7 +51,7 @@ BuildRequires: libseccomp-devel
 %endif
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel
 BuildRequires: kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel
-BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel
+BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-kirigami-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-ksvg-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kidletime-devel  kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel
@@ -166,6 +166,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

@@ -9,7 +9,7 @@
 %define libknighttime libknighttime%sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -25,6 +25,7 @@ Source: %rname-%version.tar
 #BuildRequires: appstream clang-tools extra-cmake-modules glslang kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kholidays-devel kf6-ki18n-devel libGLU-devel libvulkan-devel qt6-svg-devel qt6-tools-devel qt6-wayland-devel qt6-webengine-devel tbb-devel
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-positioning-devel qt6-tools-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kholidays-devel kf6-ki18n-devel
 
@@ -87,6 +88,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKNightTime.so.%sover
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

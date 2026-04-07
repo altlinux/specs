@@ -16,8 +16,8 @@
 %define libkglobalaccelmodel libkglobalaccelmodel%sover
 
 Name: %rname
-Version: 6.5.6
-Release: alt2
+Version: 6.6.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -48,7 +48,7 @@ Patch4: alt-def-kicker.patch
 Patch5: alt-start-baloo.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-singleclick.patch
-Patch8: fbff416bdc-for-revert.patch
+#
 Patch9: alt-dont-indicate-audio-on-taskbar.patch
 Patch10: alt-def-session.patch
 Patch11: alt-def-key-numlock.patch
@@ -97,7 +97,7 @@ BuildRequires: kf6-kfilemetadata-devel kf6-kglobalaccel-devel kf6-kguiaddons-dev
 BuildRequires: kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-knewstuff-devel kf6-knotifications-devel kf6-knotifyconfig-devel kf6-kpackage-devel kf6-kparts-devel
 BuildRequires: kf6-krunner-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwallet-devel
-BuildRequires: kf6-kwidgetsaddons-devel kwin-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kwidgetsaddons-devel kwin-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-kirigami-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel
 BuildRequires: kf6-kdeclarative-devel kf6-kpeople-devel
 BuildRequires: kf6-kded-devel
@@ -170,14 +170,14 @@ SDDM breeze theme
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -R -p1
+#
 #%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
+#%patch15 -p1
 %patch16 -p1
 #
 %patch18 -p1
@@ -276,6 +276,9 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Tue Mar 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt2
 - revert commit for kdebug#513135 to fix moving panel widgets
 

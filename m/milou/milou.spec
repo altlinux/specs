@@ -4,7 +4,7 @@
 %define libmilou libmilou%milou_sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kpackage-devel
-BuildRequires: kf6-krunner-devel kf6-kservice-devel kf6-kitemmodels-devel kf6-ksvg-devel
+BuildRequires: kf6-krunner-devel kf6-kservice-devel kf6-kitemmodels-devel kf6-ksvg-devel kf6-kirigami-devel
 BuildRequires: plasma6-lib-devel
 
 %description
@@ -45,11 +45,13 @@ Search and Launch.
 %files -f %name.lang
 %doc LICENSES/*
 %_K6qml/org/kde/milou/
-%_K6data/plasma/plasmoids/org.kde.milou/
-%_datadir/metainfo/*.xml
-
+%_K6plug/plasma/applets/*milou*.so
+#%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

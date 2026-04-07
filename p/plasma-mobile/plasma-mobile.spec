@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -40,7 +40,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel qt6-wayland-devel qt6-svg-deve
 BuildRequires: qcoro6-devel libudev-devel
 BuildRequires: kf6-modemmanager-qt-devel ModemManager-devel kf6-networkmanager-qt-devel kf6-kcmutils-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kio-devel kf6-knotifications-devel
-BuildRequires: kf6-kpackage-devel kf6-kpeople-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kpackage-devel kf6-kpeople-devel kf6-kitemmodels-devel kf6-kirigami-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma-wayland-protocols
 BuildRequires: plasma6-lib-devel kwin-devel plasma-workspace-devel plasma6-libkscreen-devel plasma6-kwayland-devel
@@ -113,30 +113,26 @@ done
 %_K6qml/org/kde/plasma/private/mobileshell/
 
 %files -n plasma-settings-virtualkeyboard
-%_K6xdgapp/*keyboard*.desktop
-%_datadir/metainfo/*keyboard*.xml
 %_K6data/plasma/quicksettings/*keyboard*/
-%_K6plug/plasma/kcms/systemsettings/*keyboard*.so
+%_datadir/metainfo/*keyboard*.xml
 
 %files
+%exclude %_K6data/plasma/quicksettings/*keyboard*/
+%exclude %_datadir/metainfo/*keyboard*.xml
 %_K6bin/*plasma*mobile*
 %_K6exec/kauth/*helper
 %_K6plug/plasma/applets/*.so
-%_K6plug/plasma/kcms/systemsettings/*mobile*.so
 %_K6plug/kf6/kded/*mobile*.so
 %_K6plug/plasma/kcms/systemsettings/kcm_*.so
-%exclude %_K6plug/plasma/kcms/systemsettings/*keyboard*.so
 %_K6qml/org/kde/plasma/mm/
 %_K6qml/org/kde/plasma/quicksetting/
 %_K6qml/org/kde/plasma/mobileinitialstart
-%_K6xdgapp/*mobile*.desktop
 %_K6xdgapp/kcm_*.desktop
-%exclude %_K6xdgapp/*keyboard*.desktop
 %_K6data/plasma/look-and-feel/org.kde.breeze.mobile/
 %_K6data/plasma/quicksettings/*/
-%exclude %_K6data/plasma/quicksettings/*keyboard*/
 %_K6data/plasma/shells/org.kde.plasma.mobileshell/
 %_K6data/plasma/mobileinitialstart/
+%_K6data/plasma-mobile-device-presets/
 %_K6notif/*.notifyrc
 %if_disabled dialer
 %exclude %_K6srv/plasma-applet-org.kde.plasma.phone.desktop
@@ -150,11 +146,13 @@ done
 %_datadir/polkit-1/actions/*mobile*.policy
 %_datadir/wayland-sessions/plasma-mobile.desktop
 %_datadir/metainfo/*.xml
-%exclude %_datadir/metainfo/*keyboard*.xml
 
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

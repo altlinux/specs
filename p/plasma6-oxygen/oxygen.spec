@@ -7,7 +7,7 @@
 %define liboxygenstyleconfig5 liboxygenstyleconfig5_%sover
 
 Name: plasma6-%rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -28,7 +28,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: kf6-frameworkintegration-devel kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
-BuildRequires: kf6-kcmutils-devel kf6-frameworkintegration-devel kf6-kcolorscheme-devel kf6-kpackage-devel
+BuildRequires: kf6-kcmutils-devel kf6-frameworkintegration-devel kf6-kcolorscheme-devel kf6-kpackage-devel kf6-kirigami-devel
 BuildRequires: plasma6-lib-devel plasma6-kdecoration-devel plasma6-kwayland-devel
 #
 BuildRequires: rpm-build-kf5
@@ -87,7 +87,7 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %define _K6buildsubdir BUILD6
@@ -148,6 +148,9 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.5.6
-Release: alt3
+Version: 6.6.3
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -89,7 +89,6 @@ Patch113: alt-menueditor.patch
 Patch114: alt-menu-search-results-add-genericname.patch
 Patch115: alt-zone-map-hide.patch
 #
-Patch117: alt-klipper-help-url.patch
 Patch118: alt-session-exclude.patch
 Patch119: alt-freespace-thread-timer.patch
 Patch120: alt-desktop-plasmashell.patch
@@ -193,7 +192,8 @@ developing applications that use %name.
 Group: Graphical desktop/KDE
 Summary: Base qml-components for plasma workspace
 Requires: %name-common >= %EVR
-Requires: libkf6windowsystem kf6-kdeclarative kf6-kirigami libplasmaquick6
+Requires: libkf6windowsystem kf6-kdeclarative kf6-kirigami
+Requires: qml6(org.kde.plasma.components)
 Provides: plasma5-workspace-qml = %EVR
 Obsoletes: plasma5-workspace-qml < %EVR
 %description -n %name-qml
@@ -307,7 +307,6 @@ Requires: %name-common >= %EVR
 %patch114 -p1
 %patch115 -p1
 #
-%patch117 -p1
 %patch118 -p1
 #%patch119 -p2
 %patch120 -p1
@@ -476,7 +475,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_menudir/session
 %dir %_K6plug/plasma/
 %dir %_K6plug/plasma/*/
-%dir %_K6plug/phonon_platform/
 %_bindir/*
 %_K6libexecdir/ba*
 %_K6libexecdir/kfo*
@@ -486,7 +484,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6conf_bin/*
 %_K6plug/kf6/thumbcreator/
 %_K6plug/plasma/*/*.so
-%_K6plug/phonon_platform/*.so
 %exclude %_K6plug/kf6/packagestructure/wallpaper_images.so
 %_K6plug/kf6/kded/*.so
 %_K6plug/kf6/kio/*.so
@@ -497,7 +494,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6plug/plasma/kcms/systemsettings_qwidgets/
 %_K6plug/kf6/packagestructure/*.so
 %_K6plug/kf6/kfileitemaction/*.so
-%_K6plug/plasma5support/
 %_K6plug/kcm_freememorynotifier.so
 %_K6qml/org/kde/taskmanager/
 %_K6qml/org/kde/notificationmanager/
@@ -518,7 +514,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6data/solid/actions/*.desktop
 %dir %_K6data/timezonefiles/
 %_K6data/timezonefiles/timezones.json
-%_K6data/plasma5support/
 %_K6xdgapp/*.desktop
 %_K6start/*.desktop
 %_K6notif/*.notifyrc
@@ -594,6 +589,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.3-alt1
+- new version
+
 * Thu Mar 19 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1:6.5.6-alt3
 - reduce the size of thumbnails in notifications
 

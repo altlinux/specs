@@ -1,7 +1,7 @@
 %define rname wacomtablet
 
 Name: plasma-wacomtablet
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -27,6 +27,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kdbusaddons-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-kconfig-devel kf6-kxmlgui-devel kf6-knotifications-devel kf6-kdoctools-devel kf6-kpackage-devel
 BuildRequires: kf6-kservice-devel kf6-kcolorscheme-devel kf6-kwindowsystem-devel kf6-kcmutils-devel kf6-kio-devel
+BuildRequires: kf6-kirigami-devel
 BuildRequires: plasma6-lib-devel plasma6-plasma5support-devel
 
 %description
@@ -63,6 +64,9 @@ module.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

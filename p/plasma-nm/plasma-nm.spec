@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -36,8 +36,7 @@ Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 Patch13: alt-is-live.patch
 Patch14: alt-revert.patch
-Patch15: alt-def-sys-conns.patch
-Patch16: alt-data-cifers.patch
+Patch15: alt-data-cifers.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -51,7 +50,7 @@ BuildRequires: ModemManager-devel libopenconnect-devel
 BuildRequires: libnm-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
-BuildRequires: kf6-kdeclarative-devel
+BuildRequires: kf6-kdeclarative-devel kf6-kirigami-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
@@ -220,7 +219,6 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 %K6build \
@@ -282,6 +280,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

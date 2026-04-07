@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.5.6
-Release: alt2
+Version: 6.6.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -32,7 +32,6 @@ Requires: hwdata
 Requires: /usr/bin/Xwayland
 Requires: qt6-multimedia qt6-virtualkeyboard qt6-declarative
 Requires: kf6-kirigami kscreenlocker kf6-kdeclarative
-Requires: libplasmaquick6
 Requires: kwin-aurorae
 Requires(post): /sbin/setcap
 
@@ -45,6 +44,8 @@ Patch4: alt-def-numlock.patch
 Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 Patch6: alt-gcc13.patch
 Patch7: alt-abort-with-nvidia-driver-older-500.patch
+# upstream
+Patch1001: bc2efa2f0e848ff0a621377cfe1141294c91b1bf.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -142,6 +143,8 @@ KF6 library
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+#
+%patch1001 -p1
 
 %build
 %K6build \
@@ -205,6 +208,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Fri Mar 27 2026 Anton Golubev <golubevan@altlinux.org> 6.5.6-alt2
 - abort with nvidia driver older 500
 

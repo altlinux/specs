@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 Epoch: 1
 %K6init
@@ -17,6 +17,8 @@ License: LGPL-2.0-or-later AND GPL-2.0-or-later
 
 Provides: kde5-spectacle = %EVR
 Obsoletes: kde5-spectacle < %EVR
+
+Requires: qml6(org.kde.kquickimageeditor)
 
 Source: %rname-%version.tar
 
@@ -32,6 +34,7 @@ BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidget
 BuildRequires: kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-knewstuff-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-purpose-devel kf6-kirigami-devel kf6-kstatusnotifieritem-devel kf6-prison-devel
+BuildRequires: kde6-kquickimageeditor-devel
 BuildRequires: pipewire-libs-devel plasma6-kpipewire-devel
 BuildRequires: plasma6-libkscreen-devel plasma6-kwayland-devel plasma6-layer-shell-qt-devel
 
@@ -69,6 +72,9 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.6-alt1
 - new version
 

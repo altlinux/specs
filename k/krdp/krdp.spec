@@ -8,7 +8,7 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -22,13 +22,6 @@ Requires: /usr/bin/openssl
 Source: %rname-%version.tar
 Patch1: kdebug-503474-avc444.patch
 Patch2: alt-use_nla_security.patch
-#
-Patch1001: 0001-Fix-server-to-client-clipboard-CLIPRDR-for-RDP-clien.patch
-Patch1002: 0004-Fix-scroll-wheel-for-RDP-clients-sending-high-resolu.patch
-Patch1003: 0005-Handle-GFX-CapsAdvertise-re-advertisement-from-Windo.patch
-Patch1004: 0006-Fix-thread-safety-issues-in-VideoStream.patch
-Patch1005: 0009-Fix-potential-deadlock-in-RdpConnection-destructor.patch
-Patch1006: 0010-Fix-PortalSession-destructor-crash-and-resource-leak.patch
 
 
 BuildRequires(pre): rpm-build-kf6
@@ -73,13 +66,6 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
-#
-%patch1001 -p1
-%patch1002 -p1
-%patch1003 -p1
-%patch1004 -p1
-%patch1005 -p1
-%patch1006 -p1
 
 %build
 %K6build
@@ -117,6 +103,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

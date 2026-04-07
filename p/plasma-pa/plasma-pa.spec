@@ -5,7 +5,7 @@
 
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -29,7 +29,7 @@ BuildRequires: libpulseaudio-devel pulseaudio-qt6-devel
 BuildRequires: libGConf-devel libcanberra-devel glib2-devel libgio-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdeclarative-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-ki18n-devel kf6-kpackage-devel kf6-kservice-devel kf6-kwidgetsaddons-devel
-BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kdoctools-devel kf6-knotifications-devel
+BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kdoctools-devel kf6-knotifications-devel kf6-kirigami-devel
 BuildRequires: kf6-kcmutils-devel kf6-ksvg-devel kf6-kstatusnotifieritem-devel
 BuildRequires: plasma6-lib-devel
 
@@ -99,6 +99,9 @@ Compatibility package.
 %_K6lib/libplasma-volume.so.*
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

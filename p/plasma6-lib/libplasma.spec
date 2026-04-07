@@ -1,11 +1,11 @@
 
-%define sover 6
+%define sover 7
 %define libplasma libplasma%sover
 %define libplasmaquick libplasmaquick%sover
 
 %define rname libplasma
 Name: plasma6-lib
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -44,6 +44,7 @@ Requires: kde-common
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kf6-kirigami-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -52,6 +53,9 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+%if "%sover" != "6"
+Obsoletes: libplasma6 < %EVR
+%endif
 %description -n %libplasma
 %name library
 
@@ -59,6 +63,9 @@ Requires: %name-common >= %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+%if "%sover" != "6"
+Obsoletes: libplasmaquick6 < %EVR
+%endif
 %description -n %libplasmaquick
 %name library
 
@@ -104,6 +111,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

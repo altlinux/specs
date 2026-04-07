@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -54,13 +54,16 @@ done
 %config %_sysconfdir/opt/chrome/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/edge/native-messaging-hosts/org.kde.plasma.browser_integration.json
 /usr/lib/librewolf/native-messaging-hosts/org.kde.plasma.browser_integration.json
+/usr/lib/waterfox/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_libdir/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_K6bin/plasma-browser-integration-host
 %_K6plug/kf6/kded/browserintegration*.so
 %_K6data/krunner/dbusplugins/plasma-runner-*.desktop
 %_K6xdgapp/*browser_integration*.desktop
-
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -25,7 +25,7 @@ Source2: ksshaskpass.desktop
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libqtkeychain-qt6-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-ki18n-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
@@ -68,6 +68,9 @@ EOF
 %_K6xdgapp/*ksshaskpass*.desktop
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

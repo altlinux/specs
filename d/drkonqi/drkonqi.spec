@@ -5,7 +5,7 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -68,7 +68,7 @@ Compatibility package.
 %_K6bin/drkonqi*
 %_K6exec/drkonqi*
 %_K6libexecdir/drkonqi*
-%_K6plug/drkonqi/
+#%_K6plug/drkonqi/
 %_K6data/drkonqi/
 %_K6xdgapp/*drkonqi*.desktop
 %_sysd_unitdir/*drkonqi*
@@ -79,8 +79,12 @@ Compatibility package.
 %_datadir/polkit-1/actions/*drkonqi*.policy
 %_K6dbus_sys_srv/*drkonqi*.service
 %_K6dbus/system.d/*drkonqi*.conf
+%_K6notif/*drkonqi*.notifyrc
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

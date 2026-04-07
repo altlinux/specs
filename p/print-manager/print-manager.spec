@@ -6,7 +6,7 @@
 %define libkcups libkcups%sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -90,7 +90,7 @@ rm -f "$tmp_file"
 
 %if_enabled installer
 %else
-sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-config-printer|' CMakeLists.txt
+sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6--for-system-config-printer-install|' CMakeLists.txt
 %endif
 
 %build
@@ -126,6 +126,9 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-co
 %_K6lib/libkcups.so.*
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

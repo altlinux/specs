@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -54,19 +54,21 @@ KCM, KDED, KIO, Library and some other small applications.
 %_K6plug/plasma/kcms/systemsettings/*.so
 %_K6plug/kf6/kded/*.so
 %_K6plug/kf6/kio/*.so
+%_K6plug/plasma/applets/*bluetooth*.so
 %_K6qml/org/kde/plasma/private/bluetooth/
-%_K6data/plasma/plasmoids/org.kde.plasma.bluetooth/
+%_K6qml/org/kde/bluedevil/
 %_K6data/bluedevilwizard/
 %_K6data/remoteview/bluetooth-network.desktop
 %_K6xdgapp/*.desktop
 %_K6notif/*.notifyrc
 %_K6xdgmime/*.xml
 %_datadir/qlogging-categories6/*.*categories
-%_datadir/metainfo/*.xml
-
-
+#%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

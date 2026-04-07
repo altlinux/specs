@@ -1,7 +1,7 @@
 %define rname aurorae
 
 Name: kwin-%rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-ki18n-devel kf6-kcolorscheme-devel kf6-kcoreaddons-devel kf6-kcmutils-devel kf6-knewstuff-devel kf6-kpackage-devel
-BuildRequires: kf6-kconfig-devel kf6-attica-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kconfig-devel kf6-attica-devel kf6-kconfigwidgets-devel kf6-ksvg-devel
 BuildRequires: plasma6-kdecoration-devel
 
 %description
@@ -47,7 +47,7 @@ developing applications that use %name.
 %prep
 %setup -n %rname-%version
 
-sed -i 's|/usr/bin/bash|/bin/sh|' src/plasma-apply-aurorae.cmake
+sed -i 's|/usr/bin/bash|/bin/sh|' plasma-apply-aurorae.cmake
 
 %build
 %K6build
@@ -75,6 +75,9 @@ sed -i 's|/usr/bin/bash|/bin/sh|' src/plasma-apply-aurorae.cmake
 %_libdir/cmake/Aurorae/
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

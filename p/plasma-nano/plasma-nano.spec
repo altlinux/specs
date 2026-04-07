@@ -1,7 +1,7 @@
 %define rname plasma-nano
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: qt6-svg-devel qt6-wayland-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-ki18n-devel kf6-kpackage-devel kf6-kservice-devel kf6-kwindowsystem-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kirigami-devel
 BuildRequires: plasma6-lib-devel plasma6-kwayland-devel
 
 %description
@@ -43,6 +44,9 @@ A minimal plasma shell package intended for embedded devices.
 #%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libplasmasystemmonitortable libplasmasystemmonitortable%sover
 
 Name: %rname
-Version: 6.5.6
+Version: 6.6.3
 Release: alt1
 %K6init
 
@@ -109,6 +109,9 @@ sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" src/page/CMakeLists.txt src/table/CMa
 %_K6lib/libPlasmaSystemMonitorTable.so.*
 
 %changelog
+* Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
+- new version
+
 * Wed Mar 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.6-alt1
 - new version
 
