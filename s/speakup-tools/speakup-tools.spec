@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    speakup-tools
-Version: 20240322
+Epoch: 1
+Version: 0.0
 Release: alt1
 
 Summary: Speakup Tools
@@ -29,7 +30,7 @@ Below you will find a brief description of these tools and how to
 
 
 %files
-%doc README
+%doc README LICENSE
 %_bindir/speakup_setlocale
 %_bindir/speakupconf
 %_sbindir/talkwith
@@ -39,5 +40,9 @@ Below you will find a brief description of these tools and how to
 %_man1dir/*
 
 %changelog
+* Tue Apr 07 2026 Artem Semenov <savoptik@altlinux.org> 1:0.0-alt1
+- Updated versioning
+- Fixed licensing
+
 * Fri Dec 26 2025 Artem Semenov <savoptik@altlinux.org> 20240322-alt1
 - Initial build for Sisyphus
