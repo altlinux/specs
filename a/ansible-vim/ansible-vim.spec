@@ -1,5 +1,5 @@
 Name:    ansible-vim
-Version: 3.4
+Version: 4.0
 Release: alt1
 
 Summary: A vim plugin for syntax highlighting Ansible's common filetypes
@@ -33,6 +33,9 @@ cp -a ftdetect ftplugin indent syntax %buildroot%vim_runtime_dir
 %vim_runtime_dir/syntax/jinja2.vim*
 
 %changelog
+* Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 4.0-alt1
+- New version.
+
 * Sat Jul 06 2024 Andrey Cherepanov <cas@altlinux.org> 3.4-alt1
 - New version.
 
