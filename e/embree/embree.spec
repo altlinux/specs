@@ -19,7 +19,7 @@
 %define soname 4
 
 Name: embree
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
@@ -143,6 +143,9 @@ rm -f %buildroot%prefix/%{name}-vars.*
 %_man3dir/*
 
 %changelog
+* Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 4.4.1-alt1
+- 4.4.0 -> 4.4.1
+
 * Sat Apr 26 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt1
 - sycl: do not link with libsycl (patch from blender).
 - sycl: added xe_lpgplus devices.
