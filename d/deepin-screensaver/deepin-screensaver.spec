@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-screensaver
-Version: 6.5.6
+Version: 6.5.8
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
@@ -90,6 +90,9 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 %_libexecdir/%name/modules/
 
 %changelog
+* Tue Apr 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.8-alt1
+- New version 6.5.8.
+
 * Tue Mar 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.6-alt1
 - New version 6.5.6.
 
