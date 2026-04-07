@@ -1,6 +1,6 @@
 %global import_path github.com/fleetdm/fleet
 Name:     fleet
-Version:  4.64.2
+Version:  4.83.0
 Release:  alt1
 
 Summary:  Open-source platform for IT, security, and infrastructure teams
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Apr 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.83.0-alt1
+- New version (Fixes CVE-2026-27465 and more).
+
 * Wed Apr 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.64.2-alt1
 - NMU: new version 4.64.2 (Fixes: CVE-2025-27509)
 
