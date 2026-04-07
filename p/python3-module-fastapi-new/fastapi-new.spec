@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Create a new FastAPI project in one command
@@ -65,5 +65,8 @@ export UV_OFFLINE=true
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 07 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.6-alt1
+- Updated to 0.0.6.
+
 * Thu Mar 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.5-alt1
 - Initial build for ALT Sisyphus.
