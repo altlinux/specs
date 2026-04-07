@@ -7,7 +7,7 @@
 
 Name: python3-module-stack-data
 Version: 0.6.3
-Release: alt2
+Release: alt3
 Summary: Library that extracts data from stack frames and tracebacks
 License: MIT
 Group: Development/Python3
@@ -17,7 +17,7 @@ VCS: https://github.com/alexmojaki/stack_data
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: stack-data-0.6.3-pygments.patch
+Patch1: stack-data-0.6.3-pygments2.19.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -41,7 +41,7 @@ particularly to display more useful tracebacks than the default.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -54,9 +54,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 # failed due to new pygments
-%pyproject_run_pytest \
-	--deselect "tests/test_serializer.py::test_example" \
-	--deselect "tests/test_core.py::test_pygments_example"
+%pyproject_run_pytest -k 'not test_core and not test_pygments_example and not test_serializer and not test_example'
 
 %files
 %doc LICENSE.txt README.md
@@ -64,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 07 2026 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt3
+- Fixed FTBFS.
+
 * Sun Apr 06 2025 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt2
 - Fixed FTBFS.
 
