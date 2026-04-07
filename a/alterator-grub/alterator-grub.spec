@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.30
+Version: 0.30.1
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -46,6 +46,10 @@ alterator module to setup grub bootloader
 %install
 %makeinstall
 
+# create efi_removable.flag
+mkdir -p %buildroot%_sysconfdir/efi_removable.flag
+touch %buildroot%_sysconfdir/efi_removable.flag
+
 %files
 %_altdata_dir/applications/*
 %_altdata_dir/ui/*/
@@ -53,8 +57,13 @@ alterator module to setup grub bootloader
 %_alterator_backend3dir/*
 %dir %_libexecdir/alterator/hooks/grub.d
 %_bindir/*
+%ghost %_sysconfdir/efi_removable.flag
 
 %changelog
+* Tue Apr 07 2026 Anton Midyukov <antohami@altlinux.org> 0.30.1-alt1
+- backend3/grub: Set default item to "EFI (removable)" when
+  /etc/efi_removable.flag exist.
+
 * Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 0.30-alt1
 - backend3/grub: fix config path in turn_luks_crypto_on
 - backend3/grub: fix duplicates in grub config (closes: #56951)
