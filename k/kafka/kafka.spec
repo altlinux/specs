@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -93,6 +93,12 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt2
+- Mentioned vulnerabilities (fixes: CVE-2025-48734, CVE-2025-58057,
+  CVE-2025-48924, CVE-2026-24281, CVE-2026-24308, CVE-2024-29371,
+  CVE-2025-67030, CVE-2024-6763, CVE-2025-11143, CVE-2025-12183,
+  CVE-2025-66566).
+
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version.
 
