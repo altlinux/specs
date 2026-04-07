@@ -1,11 +1,11 @@
-%define daterev 20260218
-%define gitsnapshot c91185ebd95f4bd8356465ee8a732aa058beb745
+%define daterev 20260404
+%define gitsnapshot 14ec60f248547d4d062a1160f0fc26d742319888
 %define version_major 15
 %define version_minor 0
 
 Name: openttd
-Version: 15.2
-Release: alt2
+Version: 15.3
+Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
@@ -67,6 +67,9 @@ echo "%version" >.version
 %_man6dir/*
 
 %changelog
+* Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 15.3-alt1
+- 15.2 -> 15.3
+
 * Thu Mar 19 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 15.2-alt2
 - e2k build fix
 
