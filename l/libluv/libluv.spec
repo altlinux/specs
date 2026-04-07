@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libluv
-Version: 1.51.0.1
+Version: 1.52.1.0
 Release: alt1
 
 Summary: libuv bindings for luajit and lua.
@@ -57,6 +57,9 @@ libluv header and build tools.
 
 
 %changelog
+* Tue Apr 7 2026 Vladimir Didenko <cow@altlinux.ru> 1.52.1.0-alt1
+- new version
+
 * Wed May 21 2025 Vladimir Didenko <cow@altlinux.ru> 1.51.0.1-alt1
 - new version
 
