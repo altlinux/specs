@@ -1,6 +1,6 @@
 Name: PySolFC
-Version: 2.12.0
-Release: alt3
+Version: 3.4.1
+Release: alt1
 
 Summary: A collection of solitare card games
 
@@ -8,11 +8,11 @@ License: GPL-2.0+
 Group: Games/Cards
 Url: http://pysolfc.sourceforge.net
 
-Source0: http://downloads.sourceforge.net/pysolfc/%name-%version.tar.bz2
+# Source-url: https://github.com/shlomif/PySolFC/archive/refs/tags/pysolfc-%version.tar.gz
+Source0: %name-%version.tar
 Source1: PySol.desktop
 Source2: pysol-start-script
 
-Patch2: 06d2fd5b90c29cbfe9b938676cc85c514cbbcca1.patch
 
 Provides: pysol = 5.%version
 Requires: PySolFC-Cardsets
@@ -46,7 +46,6 @@ Supplemental python module for %name solitaire game collection
 
 %prep
 %setup
-%patch2 -p1
 # Set correct python2 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 # force skip jinus if it is installed
@@ -89,6 +88,9 @@ rm -v %buildroot%_datadir/PySolFC/themes/clearlooks/convert_imgs.sh
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Tue Apr 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
+- new version 3.4.1 (ALT bug 58292)
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt3
 - NUM: use tk interface really (kivy for tablets only) (ALT bug 40809)
 
