@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.6
-%define api_ver 29
+%define ver_major 0.7
+%define api_ver 30
 
 %def_enable python
 %def_enable opencv
@@ -27,9 +27,6 @@ Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.g
 %else
 Source: %name-%version.tar
 %endif
-# Fix build with FFmpeg 8
-# https://github.com/OpenShot/libopenshot/pull/1018
-Patch: %name-0.5.0-up-ffmpeg8.patch
 # Fix babl detection
 Patch1: %name-0.5.0-rh-fix-babl-detection.patch
 # based on http://github.com/EntityFX/libopenshot
@@ -37,7 +34,7 @@ Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: /proc cmake gcc-c++
-BuildRequires: %name-audio-devel >= %ver_major
+BuildRequires: %name-audio-devel >= 0.6
 BuildRequires: python3(setuptools._distutils)
 BuildRequires: libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
@@ -80,7 +77,6 @@ This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
 %setup
-%patch -p1 -b .ffmpeg8
 %patch1 -p1 -b .babl_detection
 
 %ifarch %e2k
@@ -119,6 +115,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
