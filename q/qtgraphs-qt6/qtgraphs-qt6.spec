@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: %_name-qt6
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Qt Graphs library for data visualization
 License: LGPL-3.0-only
@@ -108,6 +108,9 @@ This package provudes Qt Graphs examples.
 %_libdir/qt6/examples/*
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 6.10.3-alt1
+- 6.10.3
+
 * Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 6.10.2-alt1.1
 - fixed %%files after qt6-base-6.10.2-alt2
 
