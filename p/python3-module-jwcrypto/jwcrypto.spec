@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.6
-Release: alt1.1
+Version: 1.5.7
+Release: alt1
 Summary: Implementation of JOSE Web standards
 License: LGPL-3
 Group: Development/Python3
@@ -13,19 +13,15 @@ Url: https://pypi.org/project/jwcrypto/
 Vcs: https://github.com/latchset/jwcrypto
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-pytest
-
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-typing-extensions
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -41,6 +37,11 @@ RFC 7520 - Examples of Protecting Content Using JSON Object Signing and
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -60,8 +61,8 @@ rm -rv %buildroot%python3_sitelibdir/jwcrypto/tests*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.5.6-alt1.1
-- Demodernized packaging.
+* Tue Apr 07 2026 Stanislav Levin <slev@altlinux.org> 1.5.7-alt1
+- 1.5.6 -> 1.5.7.
 
 * Thu Mar 07 2024 Stanislav Levin <slev@altlinux.org> 1.5.6-alt1
 - 1.5.5 -> 1.5.6.
