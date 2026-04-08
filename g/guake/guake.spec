@@ -2,7 +2,7 @@
 
 Name:    guake
 Version: 3.10.1
-Release: alt1
+Release: alt2
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -11,6 +11,7 @@ Group:   Terminals
 URL: 	 http://guake.org/
 # VCS:	 https://github.com/Guake/guake.git
 Source0: %name-%version.tar
+Source1: guake-256.png
 
 Patch1: guake-alt-fix-ru-l10n.patch
 Patch2: guake-alt-add-glade-l10n.patch
@@ -32,6 +33,10 @@ Requires: dbus
 Requires: dconf
 Requires: libutempter
 Requires: notification-daemon
+# docs/source/contributing/packaging.rst:21
+Requires: vte3
+# guake/guake_app.py:154
+Requires: libayatana-appindicator3-gir
 
 %description
 Guake is a drop-down terminal for Gnome Desktop Environment, so you
@@ -56,6 +61,8 @@ install -Dm0644 guake/data/autostart-guake.desktop %buildroot%_sysconfdir/xdg/au
 rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %find_lang %name
 
+install -pDm644 %SOURCE1 %buildroot%_iconsdir/hicolor/256x256/apps/%name-tray.png
+
 %files -f %name.lang
 %doc COPYING NEWS.rst README.rst
 %attr(755,root,root) %_bindir/%{name}*
@@ -63,12 +70,17 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/%name
 %python3_sitelibdir/%name
 %python3_sitelibdir/%name-%version.dist-info
+%_iconsdir/hicolor/256x256/apps/%name-tray.png
 %_pixmapsdir/%name.png
 %_desktopdir/*.desktop
 %_datadir/glib-2.0/schemas/org.guake.gschema.xml
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Apr 07 2026 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt2
+- Fixed tray icon.
+- Added runtime dependency on vte (fixes ctrl+click links).
+
 * Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 3.10.1-alt1
 - New version.
 
