@@ -21,7 +21,7 @@
 %filter_from_requires \/share\/qt6\/bin\//d
 
 Name: python3-module-%mod_name
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
@@ -294,6 +294,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 
