@@ -9,10 +9,10 @@
 
 Name: python3-module-pyahocorasick
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: pyahocorasick is a fast and memory efficient library for exact or approximate multi-pattern string search.  With the ``ahocorasick.Automaton`` class, you can find multiple key string occurrences at once in some input text.  You can use it as a plain dict-like Trie or convert a Trie to an automaton for efficient Aho-Corasick search. And pickle to disk for easy reuse of large automatons. Implemented in C and tested on Python 3.6+. Works on Linux, macOS and Windows. BSD-3-Cause license.
 Group: Development/Python3
-License: BSD-3-Clause and Public-Domain
+License: BSD-3-Clause
 Url: https://pypi.org/project/pyahocorasick/
 VCS: https://github.com/WojciechMula/pyahocorasick
 AutoReq: yes, nopython3
@@ -66,6 +66,9 @@ an automaton for efficient Aho-Corasick search.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt2
+- fixed license
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt1
 - initial build for ALT Linux
 
