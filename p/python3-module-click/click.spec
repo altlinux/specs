@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.3.1
+Version: 8.3.2
 Release: alt1
 Summary: Composable command line interface toolkit
 License: BSD-3-Clause
@@ -59,11 +59,13 @@ implement an intended CLI API.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 06 2026 Stanislav Levin <slev@altlinux.org> 8.3.2-alt1
+- 8.3.1 -> 8.3.2.
+
 * Mon Nov 17 2025 Stanislav Levin <slev@altlinux.org> 8.3.1-alt1
 - 8.3.0 -> 8.3.1.
 
