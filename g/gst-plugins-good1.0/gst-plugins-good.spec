@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -42,7 +42,7 @@ BuildRequires: meson gcc-c++ orc nasm liborc-devel
 BuildRequires: bzlib-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
-BuildRequires: libshout2-devel libtag-devel libv4l-devel libwavpack-devel
+BuildRequires: libshout2-devel taglib-devel libv4l-devel libwavpack-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsoup3.0-devel
 BuildRequires: libgdk-pixbuf-devel
@@ -144,6 +144,9 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %endif
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.2-alt1
+- 1.28.2
+
 * Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
 - 1.28.1 (fixed CVE-2026-3083, CVE-2026-3085)
 
