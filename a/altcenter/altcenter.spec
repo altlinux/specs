@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.27
+Release: alt0.28
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -62,6 +62,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.28
+- Fixed bugs (ALT #58106, #58308, #58558, #58579, #58577).
+
 * Mon Apr 06 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.27
 - auditd: do not require to fill all fields (ALT #58387).
 
