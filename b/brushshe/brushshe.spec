@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: brushshe
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Painting app, written in Python, CustomTkinter and PIL
@@ -64,6 +64,9 @@ install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_datadir/Brushshe/*
 
 %changelog
+* Wed Apr 08 2026 Nikolay Strelkov <snk@altlinux.org> 2.6.0-alt1
+- New version 2.6.0.
+
 * Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 
