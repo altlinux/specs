@@ -1,5 +1,5 @@
 Name: SDL2_image
-Version: 2.8.8
+Version: 2.8.10
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
@@ -7,6 +7,7 @@ License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_image/
+Vcs: https://github.com/libsdl-org/SDL_image
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/libsdl-org/SDL_image/archive/release-%version/SDL_image-release-%version.tar.gz
@@ -74,6 +75,9 @@ to develop SDL applications.
 %_libdir/cmake/%name
 
 %changelog
+* Wed Apr 08 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.10-alt1
+- New version 2.8.10.
+
 * Tue Mar 04 2025 Nazarov Denis <nenderus@altlinux.org> 2.8.8-alt1
 - New version 2.8.8.
 
