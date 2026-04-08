@@ -6,7 +6,7 @@
 %def_with check
 
 Name:    cosign
-Version: 3.0.5
+Version: 3.0.6
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -69,6 +69,9 @@ export BUILDDIR="$PWD/.gopath"
 %_bindir/%name
 
 %changelog
+* Wed Apr 08 2026 Alexander Danilov <admsasha@altlinux.org> 3.0.6-alt1
+- New version 3.0.6 (Fixes: CVE-2026-39395).
+
 * Wed Feb 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.0.5-alt1
 - New version 3.0.5 (Fixes: CVE-2026-24122).
 
