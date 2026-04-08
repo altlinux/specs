@@ -8,8 +8,8 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.33.1
-Release: alt2
+Version: 1.33.2
+Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -164,6 +164,9 @@ and creates drbd resource files.
 %preun_systemd linstor-satellite
 
 %changelog
+* Wed Apr 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.33.2-alt1
+- 1.33.2
+
 * Wed Dec 24 2025 Andrey Cherepanov <cas@altlinux.org> 1.33.1-alt2
 - NMU: removed /etc/profile.d/javahome.sh from autorequirements.
 
