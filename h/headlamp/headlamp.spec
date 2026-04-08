@@ -2,7 +2,7 @@
 %global import_path github.com/kubernetes-sigs/headlamp
 
 Name: headlamp
-Version: 0.38.0
+Version: 0.41.0
 Release: alt1
 Summary: Headlamp is an easy-to-use and extensible Kubernetes web UI
 License: Apache-2.0
@@ -59,5 +59,8 @@ install -pDm 644 %name.service %buildroot%_user_unitdir/%name.service
 %_bindir/%name-server
 
 %changelog
+* Wed Apr 08 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 0.41.0-alt1
+- new version
+
 * Wed Dec 17 2025 Vladislav Tsarev <tyaplyapych@altlinux.org> 0.38.0-alt1
 - initial build
