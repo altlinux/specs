@@ -9,7 +9,6 @@
 %global libcurl_version 7.62.0
 %global libjcat_version 0.2.0
 %global systemd_version 249
-%global json_glib_version 1.6.0
 
 # 1.9.3: test suite fails on ppc64le
 %ifarch ppc64le
@@ -33,7 +32,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.20
+Version: 2.1.1
 Release: alt1
 
 Summary: Firmware update daemon
@@ -58,10 +57,7 @@ BuildRequires: libappstream-glib-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: libqmi-glib-devel
 BuildRequires: libmbim-glib-devel
-BuildRequires: libjson-glib-devel >= %json_glib_version
-BuildRequires: libprotobuf-c-devel
 BuildRequires: /usr/bin/protoc /usr/bin/protoc-gen-c
-BuildRequires: libarchive-devel
 BuildRequires: libcolord-devel
 BuildRequires: liblzma-devel
 BuildRequires: libcbor-devel
@@ -198,7 +194,7 @@ might have mobile broadband hardware. It is probably not required on servers.
 rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
 %endif
 
-mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
+mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd
 mv %buildroot%_docdir/fwupd %buildroot%_docdir/fwupd-devel-%version
 rm -f %buildroot%_docdir/fwupd-devel-%version/lib*
 mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
@@ -273,11 +269,11 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 %if_enabled uefi
 %config(noreplace)%_sysconfdir/grub.d/35_fwupd
-%_datadir/fwupd/uefi-capsule-ux.tar.xz
+%_datadir/fwupd/uefi-capsule-ux.zip
 %endif
 %_sysusersdir/fwupd.conf
 
-%ghost %_localstatedir/fwupd/gnupg
+%ghost %_localstatedir/fwupd
 
 %files -n libfwupd%sover
 %_libdir/libfwupd.so.%{sover}*
@@ -306,6 +302,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Mon Mar 30 2026 Egor Ignatov <egori@altlinux.org> 2.1.1-alt1
+- New version 2.1.1.
+
 * Fri Feb 27 2026 Egor Ignatov <egori@altlinux.org> 2.0.20-alt1
 - New version 2.0.20.
 

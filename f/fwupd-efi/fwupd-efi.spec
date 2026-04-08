@@ -2,7 +2,7 @@
 
 Name: fwupd-efi
 Version: 1.8
-Release: alt1
+Release: alt2
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
@@ -51,8 +51,12 @@ This package enables EFI signature verification.
 %install
 %meson_install
 
+fwupdefi="$(basename %buildroot%_libdir/efi/fwupd*.efi)"
+ln -svf "$fwupdefi" "%buildroot%_libdir/efi/$fwupdefi.signed"
+
 %files
 %attr(644, root, root) %_libdir/efi/fwupd*.efi
+%_libdir/efi/fwupd*.efi.signed
 %_libdir/pkgconfig/fwupd-efi.pc
 
 %ifnarch loongarch64 riscv64
@@ -60,6 +64,9 @@ This package enables EFI signature verification.
 %endif
 
 %changelog
+* Tue Apr 07 2026 Egor Ignatov <egori@altlinux.org> 1.8-alt2
+- added fwupd*.efi.signed symlink
+
 * Mon Oct 06 2025 Egor Ignatov <egori@altlinux.org> 1.8-alt1
 - 1.8
 
