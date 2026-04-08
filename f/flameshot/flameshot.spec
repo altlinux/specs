@@ -3,8 +3,8 @@
 %def_with wayland
 
 Name: flameshot
-Version: 13.3.0
-Release: alt1
+Version: 14.0
+Release: alt0.rc1
 
 Summary: Powerful yet simple to use screenshot software
 
@@ -74,6 +74,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Wed Apr 08 2026 Grigory Ustinov <grenka@altlinux.org> 14.0-alt0.rc1
+- Updated to 14.0.rc1 (Closes: #58341).
+
 * Thu Oct 30 2025 Grigory Ustinov <grenka@altlinux.org> 13.3.0-alt1
 - Automatically updated to 13.3.0.
 
