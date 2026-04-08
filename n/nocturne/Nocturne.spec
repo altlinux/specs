@@ -1,7 +1,7 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 0.8.0
+Version: 0.8.5
 Release: alt1
 
 Summary: An Adwaita Music Player / Library Manager
@@ -54,6 +54,9 @@ done
 %doc *.md
 
 %changelog
+* Wed Apr 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt1
+- 0.8.0 -> 0.8.5
+
 * Tue Apr 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
 - 0.7.1 -> 0.8.0
 
