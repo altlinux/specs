@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt2
+Release: alt3
 
 Group: Publishing
 Summary: GraphViz dot graph viewer
@@ -13,7 +13,7 @@ License: GPL-2.0-only
 VCS: https://invent.kde.org/graphics/kgraphviewer
 Url: https://apps.kde.org/kgraphviewer/
 
-Requires: graphviz
+Requires: /usr/bin/dot
 
 Source: %rname-%version.tar
 
@@ -99,6 +99,9 @@ desktop-file-install \
 %_K6link/lib*.so
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt3
+- update requires
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - move sources to tarball
 - update packageng
