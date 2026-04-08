@@ -1,7 +1,7 @@
 %define pg_ver 16
 
 Name: postgresql%pg_ver-timescaledb
-Version: 2.25.2
+Version: 2.26.2
 Release: alt1
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
@@ -10,7 +10,7 @@ Url: http://www.timescale.com
 Source0: %name-%version.tar
 
 BuildRequires: cmake
-BuildRequires: libssl-devel libkrb5-devel
+BuildRequires: libssl-devel libkrb5-devel libicu-devel
 BuildRequires: postgresql%pg_ver-server-devel
 
 Requires: postgresql%pg_ver-server
@@ -47,6 +47,10 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Apr 08 2026 Alexei Takaseev <taf@altlinux.org> 2.26.2-alt1
+- 2.26.2
+- Add BR libicu-devel
+
 * Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 2.25.2-alt1
 - 2.25.2 (Fixes: CVE-2026-29089)
 
