@@ -21,7 +21,7 @@
 %filter_from_requires \/share\/qt6\/bin\//d
 
 Name: python3-module-%mod_name
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
@@ -170,7 +170,7 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_
 
 %cmake -G Ninja \
   -DNUMPY_INCLUDE_DIR:STRING=%python3_sitelibdir/numpy/core/include \
-  -DSHIBOKEN_PYTHON_LIBRARIES=`pkg-confif python3-embed --libs` \
+  -DSHIBOKEN_PYTHON_LIBRARIES=`pkg-config python3-embed --libs` \
   -DPYTHON_EXECUTABLE:STRING=python3 \
   -DBUILD_TESTS:BOOL=OFF \
   -DQFP_NO_STRIP:BOOL=ON \
@@ -294,6 +294,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - install tools for pyside_tool.py
 
