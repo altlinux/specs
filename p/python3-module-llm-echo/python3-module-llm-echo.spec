@@ -2,11 +2,10 @@
 %define pypi_name llm-echo
 %define mod_name llm_echo
 
-# requires the Internet connection
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3a3
+Version: 0.4
 Release: alt1
 
 Summary: Debug plugin for LLM providing an echo model
@@ -27,7 +26,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -38,6 +38,9 @@ BuildRequires(pre): rpm-build-pyproject
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -54,5 +57,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4-alt1
+- Updated to 0.4.
+
 * Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3a3-alt1
 - Packaged for ALT Sisyphus.
