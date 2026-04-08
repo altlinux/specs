@@ -2,7 +2,7 @@
 
 Name: altsign
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Submit files for signing to altsign-agent
 License: GPL-2.0-or-later
@@ -76,12 +76,12 @@ install -d %buildroot%_localstatedir/altsign-module
 install -d %buildroot%_localstatedir/altsign-pe
 
 mkdir -p %buildroot/run/altsign-module/session/sockdir
-mksock -m666 %buildroot/run/altsign-module/control.sock
-mksock -m666 %buildroot/run/altsign-module/session/sockdir/session.sock
+touch %buildroot/run/altsign-module/control.sock
+touch %buildroot/run/altsign-module/session/sockdir/session.sock
 
 mkdir -p %buildroot/run/altsign-pe/session/sockdir
-mksock -m666 %buildroot/run/altsign-pe/control.sock
-mksock -m666 %buildroot/run/altsign-pe/session/sockdir/session.sock
+touch %buildroot/run/altsign-pe/control.sock
+touch %buildroot/run/altsign-pe/session/sockdir/session.sock
 
 %check
 %meson_test
@@ -89,14 +89,14 @@ mksock -m666 %buildroot/run/altsign-pe/session/sockdir/session.sock
 %pre -n altsign-agent-module
 getent group altsign-module >/dev/null || /usr/sbin/groupadd -r altsign-module
 getent passwd altsign-module >/dev/null || \
-    /usr/sbin/useradd -r -g altsign-module -d %_localstatedir/altsign-module -s /sbin/nologin \
+    /usr/sbin/useradd -r -g altsign-module -d %_localstatedir/altsign-module \
         -c "ALT signer module agent user" altsign-module
 getent group altsign-module-admin >/dev/null || /usr/sbin/groupadd -r altsign-module-admin
 
 %pre -n altsign-agent-pe
 getent group altsign-pe >/dev/null || /usr/sbin/groupadd -r altsign-pe
 getent passwd altsign-pe >/dev/null || \
-    /usr/sbin/useradd -r -g altsign-pe -d %_localstatedir/altsign-pe -s /sbin/nologin \
+    /usr/sbin/useradd -r -g altsign-pe -d %_localstatedir/altsign-pe \
         -c "ALT signer PE agent user" altsign-pe
 getent group altsign-pe-admin >/dev/null || /usr/sbin/groupadd -r altsign-pe-admin
 
@@ -120,7 +120,7 @@ getent group altsign-pe-admin >/dev/null || /usr/sbin/groupadd -r altsign-pe-adm
 %config(noreplace) %_sysconfdir/sysconfig/altsign-agent-module
 %attr(0700, altsign-module, root) %dir %_localstatedir/altsign-module
 %ghost %dir %attr(0750, altsign-module, altsign-module-admin) /run/altsign-module/
-%ghost %attr(0666, altsign-pe, altsign-pe) /run/altsign-module/control.sock
+%ghost %attr(0666, altsign-module, altsign-module) /run/altsign-module/control.sock
 %ghost %dir %attr(0750, altsign-module, altsign-module) /run/altsign-module/session
 %ghost %dir %attr(0755, altsign-module, altsign-module) /run/altsign-module/session/sockdir
 %ghost %attr(0666, altsign-module, altsign-module) /run/altsign-module/session/sockdir/session.sock
@@ -136,6 +136,9 @@ getent group altsign-pe-admin >/dev/null || /usr/sbin/groupadd -r altsign-pe-adm
 %ghost %attr(0666, altsign-pe, altsign-pe) /run/altsign-pe/session/sockdir/session.sock
 
 %changelog
+* Wed Apr 08 2026 Egor Ignatov <egori@altlinux.org> 0.3.0-alt2
+- Do not set /sbin/nologin shell for service users
+
 * Mon Feb 09 2026 Egor Ignatov <egori@altlinux.org> 0.3.0-alt1
 - Replaced signal handlers with signalfd+ppoll event loops
 - Fixed multiple IPC security issues (fd leaks, heap over-read,
