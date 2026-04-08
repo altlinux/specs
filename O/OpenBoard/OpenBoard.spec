@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: OpenBoard
-Version: 1.7.3
-Release: alt7
+Version: 1.7.7
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0-or-later
@@ -23,7 +23,7 @@ Source2: GeoInfo.wgt.tar.gz
 Source3: openboard.xml
 
 # https://github.com/OpenBoard-org/OpenBoard/pull/648
-Patch1: 0001-OpenBoard-1.7.3-update-russian-translations.patch
+Patch1: 0001-OpenBoard-1.7.7-update-russian-translations.patch
 Patch2: 0002-dark-background-color-set-ability-feature.patch
 # https://github.com/OpenBoard-org/OpenBoard/pull/635
 Patch3: 0003-new-icon-images.patch
@@ -59,7 +59,7 @@ Patch100: build-with-c++20.patch
 # disable update check and startup hints
 Patch101: 0100-alt-settings.patch
 
-BuildRequires(pre): rpm-macros-qt6-webengine
+BuildRequires(pre): rpm-macros-qt6 rpm-macros-qt6-webengine
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libpaper-devel
@@ -217,6 +217,9 @@ rm -r %buildroot%_libdir/%name/library/search
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Apr 08 2026 Valery Zabrovsky <brow@altlinux.org> 1.7.7-alt1
+- New version 1.7.7.
+
 * Tue Nov 25 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7.3-alt7
 - Fix the fix for erasing of dashed and dotted lines (ALT#56884).
 
