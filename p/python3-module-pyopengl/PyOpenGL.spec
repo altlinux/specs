@@ -11,8 +11,8 @@
 %endif
 
 Name: python3-module-pyopengl
-Version: 3.1.9
-Release: alt2.3
+Version: 3.1.10
+Release: alt1
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -24,7 +24,6 @@ Url: http://pyopengl.sourceforge.net
 # https://pypi.org/project/PyOpenGL-accelerate
 # https://github.com/mcfletch/pyopengl
 Source: %name-%version.tar
-Patch0: 0001-BUGFIX-Python-3.13-does-not-define-long-so-crashes-i.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
@@ -82,7 +81,6 @@ operations for slow points in PyOpenGL 3.x.
 
 %prep
 %setup
-%patch0 -p1
 
 find tests -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
@@ -125,6 +123,9 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_accelerate}/
 
 %changelog
+* Wed Apr 08 2026 Grigory Ustinov <grenka@altlinux.org> 3.1.10-alt1
+- Automatically updated to 3.1.10 (Closes: #57850).
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.9-alt2.3
 - fixed FTBFS with cython>3.1
 
