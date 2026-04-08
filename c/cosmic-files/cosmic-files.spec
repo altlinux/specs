@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.0
 %define beta %nil
 %define rdn_name com.system76.CosmicFiles
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-files
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1%beta
 
 Summary: COSMIC File Manager
@@ -68,6 +68,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Tue Feb 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
 - 1.0.8
 
