@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        146.0.7680.177
+Version:        147.0.7727.55
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -140,7 +140,7 @@ Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
 Patch066: 0066-DEBIAN-swiftshader-dependencies.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
-Patch068: 0068-DEBIAN-disable-unrar.patch
+Patch068: 0068-DEBIAN-safe-libcxx.patch
 Patch069: 0069-DEBIAN-disable-enterprise-tests.patch
 
 Patch070: 0070-DEBIAN-llvm-22-ignore-for-ubsan.patch
@@ -706,6 +706,9 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Apr 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.55-alt1
+- New version (147.0.7727.55).
+
 * Wed Apr 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.177-alt1
 - New version (146.0.7680.177).
 - Revert extensions manifest v2 support.
