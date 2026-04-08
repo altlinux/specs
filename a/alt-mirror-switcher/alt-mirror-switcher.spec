@@ -1,6 +1,6 @@
 Name: alt-mirror-switcher
-Version: 0.7.2
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: Simple local mirror switcher for ALT
 
@@ -85,6 +85,15 @@ fi
 %_bindir/ams
 
 %changelog
+* Wed Apr 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
+- cli: added FTPS support
+- gui: added FTPS support
+- gui: added automatic mirror selection for HTTP|HTTPS|FTP|FTPS protocols:
+    - for HTTP|HTTPS protocols, channel speed measurement is performed using
+    the standard method via the requests library
+    - for FTP|FTPS protocols, file download time is measured and the shortest
+    time is determined, using the standard method via the urllib.request library
+
 * Thu Mar 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.2-alt2
 - updated URL (issue#26)
 
