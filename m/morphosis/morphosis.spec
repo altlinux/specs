@@ -1,7 +1,7 @@
 %define __name Morphosis
 %define _name morphosis
 %define pypi_name %_name
-%define ver_major 49
+%define ver_major 50
 %define rdn_name garden.jamie.%__name
 
 %def_enable check
@@ -60,6 +60,9 @@ Libadwaita. Conversions are done with Pandoc.
 %doc README.*
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Tue Sep 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
