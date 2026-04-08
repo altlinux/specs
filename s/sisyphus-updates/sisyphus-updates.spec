@@ -1,5 +1,5 @@
 Name:		sisyphus-updates
-Version:	0.4
+Version:	0.5
 Release:	alt1
 
 Summary:	Simple system updater
@@ -32,6 +32,9 @@ install -dpm 755 %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Tue Apr 07 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.5-alt1
+- Fix duplicate mirrors from avahi when server uses both IPv4 and IPv6.
+
 * Thu Mar 05 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.4-alt1
 - Fix add repositories without X-Sign.
 
