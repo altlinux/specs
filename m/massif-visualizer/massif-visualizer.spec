@@ -2,13 +2,16 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt2
+Release: alt3
 
 Group: Development/Other
 Summary: Tool for visualizing memory usage recorded by Valgrind Massif
 License: GPL-2.0-or-later
 Url: https://apps.kde.org/massif_visualizer/
 VCS: https://invent.kde.org/sdk/massif-visualizer
+
+# kgraphviewer part
+Requires: kgraphviewer
 
 Source: %rname-%version.tar
 
@@ -66,6 +69,9 @@ rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 %_man1dir/%rname.*
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt3
+- fix requires
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - update packaging
 
