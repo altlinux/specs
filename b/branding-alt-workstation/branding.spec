@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt0.02
+Release: alt0.03
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -66,7 +66,7 @@ Distro-specific packages with design and texts for %distro_name.
 %package bootloader
 Group:   System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
-Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux)
 License: GPLv2+
 
 Requires(pre):    coreutils
@@ -82,7 +82,7 @@ Here you find the graphical boot logo for %distro_name.
 Suitable for both lilo and syslinux.
 
 %description bootloader -l ru_RU.UTF-8
-В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux)
 для дистрибутива %distro_name_ru.
 
 %package bootsplash
@@ -116,7 +116,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt 
+Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -146,7 +146,7 @@ Requires(post,preun): alternatives >= 0.2
 This package contains some graphics for %distro_name design.
 
 %description graphics -l ru_RU.UTF-8
-В данном пакете находится необходимые графические элементы для дистрибутива 
+В данном пакете находится необходимые графические элементы для дистрибутива
 %distro_name_ru.
 
 %define provide_list altlinux fedora redhat system altlinux
@@ -244,7 +244,7 @@ MATE settings for %distro_name
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
-Group: System/Configuration/Other 
+Group: System/Configuration/Other
 BuildArch: noarch
 %branding_add_conflicts %flavour slideshow
 
@@ -252,7 +252,7 @@ BuildArch: noarch
 Slideshow for %distro_name installer.
 
 %description slideshow -l ru_RU.UTF-8
-В данном пакете находятся изображения для организации "слайдшоу" в установщике 
+В данном пакете находятся изображения для организации "слайдшоу" в установщике
 дистрибутива %distro_name_ru.
 
 %package indexhtml
@@ -372,6 +372,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Apr 08 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.03
+- gnome-settings: use dist-extensions in ALT Panelmode instead os sys-extensions.
+
 * Sat Feb 21 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.02
 - spec: bump version to 11.2
 - gnome-settings: rename gnome-dash-app-list-favorites to gnome-dash-app-list,
