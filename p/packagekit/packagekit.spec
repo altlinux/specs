@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.4
-Release:   alt2
+Release:   alt3
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -328,6 +328,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Tue Apr 07 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.4-alt3
+- fix missing output of the source list
+
 * Mon Apr 06 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.4-alt2
 - return pkmon and pkcon
 
