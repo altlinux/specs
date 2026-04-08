@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt100
+Release: alt101
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -80,7 +80,7 @@ Requires: RPMQ(EPOCH)
 Requires: RPMQ(BUILDTIME)
 Requires: RPMQ(DISTTAG)
 # for methods.
-Requires: gzip, bzip2, xz
+Requires: gzip, bzip2, xz, zstd
 Requires: gnupg, alt-gpgkeys
 
 # Older versions of update-kernel misunderstood the @-postfix (with buildtime
@@ -609,6 +609,12 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Wed Mar 11 2026 Leonid Znamenok <respublica@altlinux.org> 0.5.15lorg2-alt101
+- acquire-item.cc: added support for zst compressed {pkg,src}lists.
+- apt-cdrom.cc: added support of xz, gz and zstd compressed {pkg,src}lists.
+- Fixes:
+  + OVE-20260322-0001 Use after free in cmdline/rpmindexcopy.cc
+
 * Sun Jan 25 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt100
 - e2k: Fixed the compilation of dependent packages with unchanged flags.
   (Restored the e2k source code adaptations; simply removing them in
