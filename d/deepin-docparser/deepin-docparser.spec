@@ -3,7 +3,7 @@
 
 Name: deepin-docparser
 Version: 1.0.25
-Release: alt1
+Release: alt2
 
 Summary: Document parser library by deepin
 Summary(ru): Библиотека синтаксического анализа документов от deepin
@@ -93,6 +93,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Wed Apr 08 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt2
+- Fixed FTBFS.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt1
 - New version 1.0.25.
 
