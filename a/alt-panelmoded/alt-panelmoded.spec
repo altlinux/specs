@@ -1,8 +1,9 @@
 %define _name alt-panelmode
 %define xdg_name org.altlinux.%_name
+%define xdg_short org.altlinux.panelmode
 
 Name: alt-panelmoded
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
@@ -45,12 +46,16 @@ with GNOME desktop enviroment.
 
 %files -f %_name.lang
 %_bindir/%_name
-%_sysconfdir/xdg/autostart/%xdg_name.desktop
-%_datadir/dbus-1/services/%xdg_name.service
+%_desktopdir/%xdg_short.desktop
+%_sysconfdir/xdg/autostart/%xdg_short.desktop
+%_datadir/dbus-1/services/%xdg_short.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/glib-2.0/schemas/45_%xdg_name.gschema.override
+%_datadir/glib-2.0/schemas/45_%xdg_short.gschema.override
 
 %changelog
+* Tue Apr 07 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.6-alt1
+- New version 0.7.6.
+
 * Tue Feb 24 2026 Semen Fomchenkov <armatik@altlinux.org> 0.7.5-alt1
 - New version 0.7.5.
 
