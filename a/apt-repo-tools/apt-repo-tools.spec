@@ -1,5 +1,5 @@
 Name: apt-repo-tools
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -47,6 +47,13 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Wed Apr 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11-alt1
+- genbasedir (thx respublica@):
+ + Add --no-compression option to generate lists without compression.
+ + Ensure that provided compression options are not mutually exclusive.
+- genpkglist: do not attempt to erase lines if the output is not a tty
+  (thx rirusha@).
+
 * Tue Dec 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.10-alt1
 - pkglist-query: Support compressed pkglists.
 
