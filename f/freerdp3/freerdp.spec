@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.23.0
+Version: 3.24.1
 Release: alt1
 
 Group: Networking/Remote access
@@ -103,6 +103,8 @@ BuildRequires: libopenh264-devel
 BuildRequires: libpkcs11-helper-devel
 BuildRequires: libswscale-devel
 BuildRequires: liburiparser-devel
+BuildRequires: libjansson-devel
+BuildRequires: libjson-c-devel
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -547,6 +549,11 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Mar 19 2026 Andrey Cherepanov <cas@altlinux.org> 3.24.1-alt1
+- New version (fixes: CVE-2026-29774, CVE-2026-29775, CVE-2026-29776,
+  CVE-2026-31806, CVE-2026-31883, CVE-2026-31884, CVE-2026-31885,
+  CVE-2026-31897).
+
 * Thu Feb 26 2026 Alexander Danilov <admsasha@altlinux.org> 3.23.0-alt1
 - New version (fixes: CVE-2026-26965, CVE-2026-26955, CVE-2026-26271,
   CVE-2026-25997, CVE-2026-25959, CVE-2026-25955, CVE-2026-25954,
@@ -554,8 +561,8 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 
 * Tue Feb 10 2026 Alexander Danilov <admsasha@altlinux.org> 3.22.0-alt1
 - New version (fixes: CVE-2026-23948, CVE-2026-24491, CVE-2026-24675,
-  CVE-2026-24676, CVE-2026-24677, CVE-2026-24678, CVE-2026-24679, 
-  CVE-2026-24680, CVE-2026-24681, CVE-2026-24682, CVE-2026-24683, 
+  CVE-2026-24676, CVE-2026-24677, CVE-2026-24678, CVE-2026-24679,
+  CVE-2026-24680, CVE-2026-24681, CVE-2026-24682, CVE-2026-24683,
   CVE-2026-24684).
 
 * Wed Jan 21 2026 Andrey Cherepanov <cas@altlinux.org> 3.21.0-alt1
