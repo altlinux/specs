@@ -1,20 +1,19 @@
-%define _unpackaged_files_terminate_build 1
+%define rname massif-visualizer
 
-Name: massif-visualizer
+Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 
+Group: Development/Other
 Summary: Tool for visualizing memory usage recorded by Valgrind Massif
 License: GPL-2.0-or-later
-Group: Development/Other
 Url: https://apps.kde.org/massif_visualizer/
 VCS: https://invent.kde.org/sdk/massif-visualizer
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-5compat-devel
@@ -24,8 +23,10 @@ BuildRequires: kf6-kio-devel
 BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kparts-devel
 BuildRequires: kde6-kdiagram-devel
+BuildRequires: kgraphviewer-devel
 BuildRequires: pkgconfig(cups)
 BuildRequires: /usr/bin/rst2man
+BuildRequires: desktop-file-utils
 
 %description
 Massif Visualizer is a tool that visualizes massif data.
@@ -35,14 +36,19 @@ the generated "massif.out.<pid>" in the visualizer. Gzip or Bzip2
 compressed massif files can also be opened transparently.
 
 %prep
-%setup
-sed -i "s|^Categories=.*|Categories=Qt;KDE;Development;Profiling;|" app/org.kde.massif-visualizer.desktop
+%setup -n %rname-%version
 
 %build
 %K6build
 
 %install
 %K6install
+
+desktop-file-install \
+    --mode=0644 --dir %buildroot/%_K6xdgapp \
+    --add-category=Profiling \
+    %buildroot/%_desktopdir/org.kde.%rname.desktop
+
 mkdir -pv %buildroot/%_man1dir/
 rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 
@@ -50,17 +56,19 @@ rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 
 %files -f %name.lang
 %doc AUTHORS COPYING README
-%_K6bin/%name
-%_man1dir/%{name}.*
-%_K6xdgapp/org.kde.%{name}.desktop
+%_K6bin/*%{rname}*
+%_K6xdgapp/*%{rname}*.desktop
 %_K6cfg/*.kcfg
-%_K6icon/*/*/apps/%{name}.*
+%_K6icon/*/*/apps/*%{rname}*.*
+%_K6data/%rname/
+%_K6xdgmime/*massif*.xml
 %_datadir/metainfo/*.xml
-%dir %_datadir/massif-visualizer
-%_datadir/massif-visualizer/*
-%_datadir/mime/packages/massif.xml
+%_man1dir/%rname.*
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- update packaging
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
 - New version 25.12.3.
 
