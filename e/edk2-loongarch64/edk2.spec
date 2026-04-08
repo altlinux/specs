@@ -22,7 +22,9 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-%target_arch
-Version: 20251114
+
+# See git for-each-ref --format="%%(creatordate:short)" refs/tags/TAGNAME
+Version: 20260213
 Release: alt1
 Summary: UEFI firmware for %target_arch virtual machines
 
@@ -134,6 +136,9 @@ install -pm 644 -t %buildroot%_datadir/qemu/firmware \
 %_datadir/qemu/firmware/*edk2-%{target_arch}*.json
 
 %changelog
+* Tue Feb 24 2026 Ivan A. Melnikov <iv@altlinux.org> 20260213-alt1
+- edk2-stable202602
+
 * Mon Nov 24 2025 Ivan A. Melnikov <iv@altlinux.org> 20251114-alt1
 - edk2-stable202511
 
