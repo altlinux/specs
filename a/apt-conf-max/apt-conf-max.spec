@@ -1,7 +1,7 @@
 Name: apt-conf-max
 Summary: Official repository of MAX
 Version: 1.0
-Release: alt1
+Release: alt2
 
 License: Public-Domain
 Group: System/Base
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Requires: apt-https
 Requires: apt-gpgkeys-pki
+Requires: libxcbutil-cursor
 
 %description
 %{summary}.
@@ -31,5 +32,8 @@ install -Dpm0644 max.asc %buildroot%_datadir/pki/apt-gpg/sources/max.asc
 %_datadir/pki/apt-gpg/sources/max.asc
 
 %changelog
+* Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
+- Required libxcbutil-cursor for max (ALT #58582).
+
 * Tue Jan 27 2026 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
