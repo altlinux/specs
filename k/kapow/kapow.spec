@@ -1,6 +1,6 @@
 %define _localstatedir %{_var}
 Name:		kapow
-Version:	1.6.4
+Version:	1.7.0
 Release:	alt1
 Summary:	Punch clock
 Group:		Office
@@ -46,6 +46,9 @@ after the last billed session.
 
 
 %changelog
+* Wed Apr 08 2026 Ilya Mashkin <oddity@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Tue May 27 2024 Ilya Mashkin <oddity@altlinux.ru> 1.6.4-alt1
 - 1.6.4
 
