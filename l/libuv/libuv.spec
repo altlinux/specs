@@ -1,7 +1,7 @@
 %def_without asserts
 Name: libuv
 Version: 1.52.1
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for NodeJS
 
@@ -40,6 +40,9 @@ libuv header and build tools.
 %patch3 -p2
 %patch4 -p2
 
+# udp_reuseport requires SO_REUSEPORT which is not available in hasher
+sed -i '/udp_reuseport/d' test/test-list.h
+
 %build
 # due option hack in autogen.sh
 #autoreconf
@@ -74,6 +77,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Wed Apr 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.52.1-alt2
+- skip udp_reuseport test (not available in hasher)
+
 * Sun Apr 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.52.1-alt1
 - new version 1.52.1 (ALT bug 58503)
 - update thread-affinity test patch for 1.52.1 (skip in hasher)
