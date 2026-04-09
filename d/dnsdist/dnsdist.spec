@@ -14,7 +14,7 @@
 
 Name: dnsdist
 Version: 2.0.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -164,6 +164,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Thu Apr 09 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1.2
+- Listed closed CVEs for older versions (backport).
+
 * Thu Apr 09 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1.1
 - Listed closed CVEs (Fixes: CVE-2026-0396, CVE-2026-0397,
   CVE-2026-24028, CVE-2026-24029, CVE-2026-24030,
@@ -179,7 +182,8 @@ exit 0
 - Enabled gnutls support.
 
 * Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
-- New version (2.0.1) with rpmgs script.
+- New version (2.0.1) with rpmgs script (Fixes: CVE-2025-4820,
+  CVE-2025-4821, CVE-2025-7054, CVE-2025-8671, CVE-2025-30187).
 
 * Wed Jul 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.0-alt1
 - New version (2.0.0) with rpmgs script.
