@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.34.0
+Version: 0.35.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,25 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Apr 09 2026 Anton Farygin <rider@altlinux.org> 0.35.0-alt1
+- added zoryn commit command (extended analogue of gear-commit)
+- rebuild: anchored SRPM filename matcher, unified on
+  Builder.find_srpm_in_path
+- up: fixed state file path for git worktree support
+- up: added auto-setup upstream remote and scheme detection via
+  merge-base
+- up: fixed scheme detection for non-standard merge messages
+- up: fixed PyPI tag lookup with decorative prefix patterns
+- check version-up: fixed spec lookup to respect .gear/rules spec:
+  directive
+- gen version-up: fixed .gear/version-up path in subdirectories
+- builder add: fixed --hasher-dir in --multi-add mode with
+  {hasher_number} template
+- task add: TAB completion now searches across all branches via
+  Repoteka API
+- gen pypi2spec: fixed VCS tag from home_page, --url override,
+  URL normalisation
+
 * Mon Apr 06 2026 Anton Farygin <rider@altlinux.org> 0.34.0-alt1
 - task refresh: added --from flag for cross-branch sync (detect stale
   subtasks and replace with copy from source branch)
