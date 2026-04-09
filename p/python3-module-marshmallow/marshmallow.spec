@@ -1,6 +1,6 @@
 Name: python3-module-marshmallow
-Version: 4.2.2
-Release: alt2
+Version: 4.3.0
+Release: alt1
 
 Summary: Simplified object serialization
 License: MIT
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra tests
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup tests
 
 %build
 %pyproject_build
@@ -42,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/marshmallow-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.0-alt1
+- 4.3.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.2-alt2
 - revert unsolicited packaging changes
 
