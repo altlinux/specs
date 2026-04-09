@@ -9,8 +9,8 @@
 
 Name: python3-module-pyahocorasick
 Version: 2.3.0
-Release: alt2
-Summary: pyahocorasick is a fast and memory efficient library for exact or approximate multi-pattern string search.  With the ``ahocorasick.Automaton`` class, you can find multiple key string occurrences at once in some input text.  You can use it as a plain dict-like Trie or convert a Trie to an automaton for efficient Aho-Corasick search. And pickle to disk for easy reuse of large automatons. Implemented in C and tested on Python 3.6+. Works on Linux, macOS and Windows. BSD-3-Cause license.
+Release: alt3
+Summary: Fast and memory efficient python library for exact or approximate multi-pattern string search
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.org/project/pyahocorasick/
@@ -36,17 +36,7 @@ ahocorasick.Automaton class, you can find multiple key string
 occurrences at once in some input text. You can use it as a plain
 dict-like Trie or convert a Trie to an automaton for efficient
 Aho-Corasick search. And pickle to disk for easy reuse of large
-automatons. Implemented in C and tested on Python 3.6+. Works on Linux,
-macOS and Windows. BSD-3-Cause license.
-
-**pyahocorasick** is a fast and memory efficient library for exact or
-approximate multi-pattern string search meaning that you can find
-multiple key strings occurrences at once in some input text. The strings
-"index" can be built ahead of time and saved (as a pickle) to disk to
-reload and reuse later. The library provides an `ahocorasick` Python
-module that you can use as a plain dict-like Trie or convert a Trie to
-an automaton for efficient Aho-Corasick search.
-
+automatons. Implemented in C and tested on Python 3.6+.
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -66,6 +56,9 @@ an automaton for efficient Aho-Corasick search.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 09 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt3
+- fixed summary and description (closes: #58596)
+
 * Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt2
 - fixed license
 
