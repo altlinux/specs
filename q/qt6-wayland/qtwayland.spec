@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Group: System/Libraries
@@ -10,7 +10,6 @@ Summary: Qt6 - Wayland platform support and QtCompositor module
 Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
-Requires: libqt6-waylandcompositor
 Requires: libqt6-waylandclient
 Requires: libqt6-waylandeglcompositorhwintegration
 Requires: libqt6-wlshellintegration
@@ -226,6 +225,9 @@ done
 %endif
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -471,6 +471,11 @@ ln -s %__python3 bin_add/python
 # don't make  module static
 sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
+%ifarch %e2k
+# as of lcc 1.29.06 (mcst#9355)
+sed -i 's/baseIndent, std::move(loc2str)/baseIndent, loc2str/' src/qmldom/qqmldomastdumper.cpp
+%endif
+
 %build
 %if_enabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
@@ -706,6 +711,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 

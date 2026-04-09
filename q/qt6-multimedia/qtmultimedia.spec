@@ -5,7 +5,7 @@
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Group: System/Libraries
@@ -187,6 +187,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 

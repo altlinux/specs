@@ -3,7 +3,7 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 Name: qt6-websockets
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Group: System/Libraries
@@ -106,6 +106,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 

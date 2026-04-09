@@ -35,8 +35,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.10.2
-Release: alt2
+Version: 6.10.3
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -389,6 +389,7 @@ OpenGL widgets library for the Qt%major toolkit
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
+Obsoletes: libqt6-waylandeglclienthwintegration < %EVR
 %description -n libqt6-waylandclient
 %summary
 
@@ -430,6 +431,9 @@ Requires: %name-common
 
 # install optflags
 %add_optflags %optflags_shared
+%ifarch %e2k
+%add_optflags -mno-sse4.2
+%endif
 sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = %optflags|" mkspecs/common/gcc-base.conf
 QMAKE_CFLAGS_OPTIMIZE_FULL=`echo %optflags | sed 's|-O[[:digit:]]||'`
 QMAKE_CFLAGS_OPTIMIZE_FULL+=" -O3"
@@ -863,6 +867,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
 - fix requires
 

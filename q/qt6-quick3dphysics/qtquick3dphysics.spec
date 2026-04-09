@@ -3,7 +3,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3dphysics
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Group: System/Libraries
@@ -58,8 +58,6 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
 %description -n libqt6-quick3dphysics
 %summary
 
@@ -67,6 +65,8 @@ Obsoletes: %name < %EVR
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quick3dphysicshelpers
 %summary
@@ -104,6 +104,8 @@ done
 %files -n libqt6-quick3dphysics
 %doc *LICENSE*
 %_qt6_libdir/libQt?Quick3DPhysics.so.*
+%dir %_qt6_qmldir/QtQuick3D/
+%dir %_qt6_qmldir/QtQuick3D/Physics/
 %_qt6_qmldir/QtQuick3D/Physics/*3dphysics*.so
 %_qt6_qmldir/QtQuick3D/Physics/plugins.qmltypes
 %_qt6_qmldir/QtQuick3D/Physics/qmldir
@@ -118,8 +120,10 @@ done
 %_qt6_headerdir/QtQuick3DPhysics/
 %_qt6_headerdir/QtQuick3DPhysicsHelpers/
 %_qt6_libdir/lib*.so
+%_qt6_libdir/lib*.a
 %_qt6_libdir/lib*.prl
 %_qt6_libdatadir/lib*.so
+%_qt6_libdatadir/lib*.a
 %_qt6_libdatadir/lib*.prl
 %_qt6_libdir/cmake/Qt?/*PhysX*.cmake
 %_qt6_libdir/cmake/Qt?*Phys*/
@@ -137,5 +141,8 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Tue Mar 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - initial build

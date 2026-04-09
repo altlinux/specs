@@ -3,7 +3,7 @@
 %global qt_module qthttpserver
 
 Name: qt6-httpserver
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Summary: Qt Extension: Qt HTTP Server
@@ -113,6 +113,9 @@ CMAKE_TOOLCHAIN_FILE=%_qt6_libdir/cmake/Qt6/qt.toolchain.cmake \
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
 - new version
 

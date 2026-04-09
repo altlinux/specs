@@ -4,8 +4,8 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.10.2
-Release: alt2
+Version: 6.10.3
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -326,6 +326,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Thu Mar 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
 - hide linguist Search and Translate action
 
