@@ -22,13 +22,14 @@
 
 Name: grub
 Version: 2.14
-Release: alt2
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL-3
 Group: System/Kernel and hardware
 
-Url: http://www.gnu.org/software/grub
+Url: https://www.gnu.org/software/grub
+VCS: https://gitlab.freedesktop.org/gnu-grub/grub.git
 
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64 loongarch64
 
@@ -81,10 +82,13 @@ BuildRequires: liblzma-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libdevmapper-devel
 
-BuildRequires: fonts-bitmap-misc
 BuildRequires: fonts-bitmap-univga
+BuildRequires: fonts-bitmap-terminus
 # Default font
 %define font /usr/share/fonts/bitmap/univga/u_vga16_9.pcf.gz
+# Large fonts for high-resolution displays
+%define font_24 /usr/share/fonts/bitmap/terminus/ter-x24b.pcf.gz
+%define font_32 /usr/share/fonts/bitmap/terminus/ter-x32b.pcf.gz
 
 Requires: gettext
 
@@ -287,6 +291,16 @@ build_efi_image() {
 		"$@"
 }
 
+# Convert fonts once, reuse for memdisk and install section
+build_fonts() {
+	local mkfont="$1"
+	[ ! -d built-fonts ] || return 0
+	mkdir -p built-fonts
+	"$mkfont" -o built-fonts/unicode.pf2 %font
+	"$mkfont" -o built-fonts/font_24.pf2 %font_24
+	"$mkfont" -o built-fonts/font_32.pf2 %font_32
+}
+
 %ifarch %ix86 x86_64
 # NB: not a fashion but the critical need to fit into 62 sectors.
 export CFLAGS="%optflags -Os"
@@ -295,6 +309,7 @@ export CXXFLAGS="%optflags -Os"
 build_grub build-pc \
 	--with-platform=pc \
 #
+build_fonts ./build-pc/grub-mkfont
 
 unset CFLAGS
 unset CXXFLAGS
@@ -304,17 +319,19 @@ unset CXXFLAGS
 build_grub build-ieee1275 \
 	--with-platform=ieee1275 \
 #
+build_fonts ./build-ieee1275/grub-mkfont
 %endif
 
 %ifarch %efi_arches
 build_grub build-efi \
 	--with-platform=efi \
 #
+build_fonts ./build-efi/grub-mkfont
 
 # create memdisk with fonts
 workdir="$(mktemp -d)"
 mkdir -p "$workdir/fonts"
-./build-efi/grub-mkfont -o "$workdir/fonts/unicode.pf2" %font
+cp built-fonts/*.pf2 "$workdir/fonts/"
 mksquashfs "$workdir" memdisk.squashfs -comp xz
 rm -rf "$workdir"
 
@@ -363,13 +380,12 @@ install -pD -m755 %SOURCE8 %buildroot%_sbindir/
 install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 install -pD -m644 %SOURCE13 %buildroot%_man8dir/grub-entries.8
 
-# TODO: drop the obsolete one (unifont.pf2)
-%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 \
-                               %_datadir/fonts/bitmap/misc/8x13.pcf.gz
-%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %font
-install -pDm644 %buildroot/boot/grub/fonts/unicode.pf2 \
-        %buildroot%_datadir/grub/unicode.pf2
+mkdir -p %buildroot%_datadir/grub/
+install -pm644 built-fonts/unicode.pf2 %buildroot%_datadir/grub/
+install -pm644 built-fonts/font_24.pf2 %buildroot%_datadir/grub/
+install -pm644 built-fonts/font_32.pf2 %buildroot%_datadir/grub/
 
+mkdir -p %buildroot/boot/grub/fonts
 mkdir -p %buildroot/boot/grub/themes
 
 install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
@@ -440,9 +456,8 @@ fi
 %dir %_datadir/grub
 %dir %_libdir/grub
 %dir /boot/grub
-/boot/grub/*.pf2
-/boot/grub/fonts/
-/boot/grub/themes/
+%dir /boot/grub/fonts
+%dir /boot/grub/themes/
 %_sysconfdir/grub.d/00_header
 %_sysconfdir/grub.d/10_linux
 %_sysconfdir/grub.d/20_linux_xen
@@ -495,6 +510,8 @@ fi
 %_bindir/grub-dumpsbat
 %_datadir/grub/grub-mkconfig_lib
 %_datadir/grub/unicode.pf2
+%_datadir/grub/font_24.pf2
+%_datadir/grub/font_32.pf2
 %_man1dir/*
 %_man8dir/*
 %exclude %_man1dir/grub-mkfont.1*
@@ -546,6 +563,12 @@ fi
 %endif
 
 %changelog
+* Tue Apr 07 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt3
+- fix flicker-free boot (closes: #58426)
+- commands/bli: do not treat non-GPT partitions as an error (closes: #58291)
+- load efi_uga only on x86 EFI platforms (closes: #58290)
+- add larger fonts for high-resolution displays
+
 * Tue Mar 17 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt2
 - fix grub-efi-install not passing target to grub-install
 - fix boot regression with btrfs on multiple devices on systems without udev
