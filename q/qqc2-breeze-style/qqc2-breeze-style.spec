@@ -1,8 +1,8 @@
 %define rname qqc2-breeze-style
 
 Name: %rname
-Version: 6.6.3
-Release: alt2
+Version: 6.6.4
+Release: alt1
 
 Summary: Breeze inspired QQC2 Style
 License: LGPL-2.0-or-later
@@ -62,6 +62,9 @@ developing applications that use %name.
 %_libdir/cmake/QQC2BreezeStyle/
 
 %changelog
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
+- new version
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt2
 - fix provides
 

@@ -20,7 +20,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma6-%rname
-Version: 6.6.3
+Version: 6.6.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -226,6 +226,9 @@ Common polkit files for %name
 
 
 %changelog
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
+- new version
+
 * Mon Mar 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
 - new version
 

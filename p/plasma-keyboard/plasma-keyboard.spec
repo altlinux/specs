@@ -1,6 +1,6 @@
 
 Name: plasma-keyboard
-Version: 6.6.3
+Version: 6.6.4
 Release: alt1
 %K6init no_altplace
 
@@ -21,8 +21,7 @@ BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kcmutils-devel kf6-kcon
 BuildRequires: kf6-kcrash-devel
 
 %description
-Maliit Plugins provide reference input method plugins for use with Maliit Framework.
-Currently it provides a single QML based keyboard plugin.
+The plasma-keyboard is a virtual keyboard based on Qt Virtual Keyboard designed for Plasma integration.
 
 %prep
 %setup -n %name-%version
@@ -45,6 +44,9 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
+- new version
+
 * Mon Apr 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.3-alt1
 - new version
 
