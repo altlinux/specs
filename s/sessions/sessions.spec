@@ -2,8 +2,8 @@
 %define import_path github.com/pojntfx/sessions
 
 Name: sessions
-Version: 0.1.15
-Release: alt2
+Version: 0.1.16
+Release: alt1
 
 Summary: Focus with timed work intervals
 License: AGPL-3.0-or-later
@@ -94,6 +94,9 @@ popd
 %doc README.md
 
 %changelog
+* Fri Apr 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.16-alt1
+- 0.1.15 -> 0.1.16
+
 * Fri Apr 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.15-alt2
 - fixed permissions for normally native work, not flatpak
 
