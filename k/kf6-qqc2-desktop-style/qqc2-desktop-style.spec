@@ -2,13 +2,16 @@
 
 Name: kf6-%rname
 Version: 6.24.0
-Release: alt1
+Release: alt3
 %K6init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Frameworks 6 visual style
 Url: http://www.kde.org
 License: LGPL-2.1-or-later
+
+Provides: qqc2-desktop-style = %EVR
+Obsoletes: qqc2-desktop-style = %EVR
 
 Source: %rname-%version.tar
 
@@ -24,6 +27,7 @@ QtQuickControls 2 style that uses QWidget's QStyle for painting
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kf6-filesystem
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -48,6 +52,12 @@ developing applications that use %name.
 
 
 %changelog
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt3
+- return prevoios package name
+
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt2
+- rename package
+
 * Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
 - new version
 
