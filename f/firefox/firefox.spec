@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 149.0
+Version: 149.0.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,15 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Apr 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0.2-alt1
+- New version (149.0.2).
+- Fixes:
+  + CVE-2026-5732: Incorrect boundary conditions, integer overflow in the Graphics: Text component
+  + CVE-2026-5733: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-5731: Memory safety bugs fixed in Firefox ESR 115.34.1, Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird 149.0.2
+  + CVE-2026-5734: Memory safety bugs fixed in Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird 149.0.2
+  + CVE-2026-5735: Memory safety bugs fixed in Firefox 149.0.2 and Thunderbird 149.0.2
+
 * Thu Mar 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0-alt1
 - New version (149.0).
 - Fixes:
