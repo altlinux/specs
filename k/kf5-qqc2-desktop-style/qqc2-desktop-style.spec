@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -12,6 +12,7 @@ License: GPLv2+ / LGPLv2+
 
 #Requires: qml(org.kde.sonnet)
 Requires: libkf5sonnetui
+Provides: qqc2-desktop-style = %EVR
 
 Source: %rname-%version.tar
 Patch: alt-test.patch
@@ -21,14 +22,6 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel 
 BuildRequires: kf5-kauth-devel kf5-kcoreaddons-devel kf5-kconfigwidgets-devel kf5-kiconthemes-devel kf5-kirigami-devel
 
 %description
-QtQuickControls 2 style that uses QWidget's QStyle for painting
-
-%package -n %rname
-Group: Graphical desktop/KDE
-Summary: KDE desktop kirigami visual style
-Provides: kf5-qqc2-desktop-style = %EVR
-Obsoletes: kf5-qqc2-desktop-style = %EVR
-%description -n %rname
 QtQuickControls 2 style that uses QWidget's QStyle for painting
 
 %package devel
@@ -51,7 +44,7 @@ developing applications that use %name.
 %find_lang %name --all-name
 %K5find_qtlang %name --append --all-name
 
-%files -n %rname
+%files
 %_K5qml/QtQuick/Controls.2/org.kde.desktop/
 %_K5qml/org/kde/qqc2desktopstyle/
 %_K5plug/kf5/kirigami/*.so
@@ -60,6 +53,9 @@ developing applications that use %name.
 %_libdir/cmake/KF5QQC2*Style/
 
 %changelog
+* Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt4
+- return previous package name
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
 - rename package
 
