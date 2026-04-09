@@ -1,5 +1,5 @@
 Name: python3-module-holidays
-Version: 0.90
+Version: 0.94
 Release: alt1
 
 Summary: Holidays calculator
@@ -46,6 +46,9 @@ scripts/l10n/generate_mo_files.py
 %python3_sitelibdir/holidays-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.94-alt1
+- 0.94 released
+
 * Fri Feb 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.90-alt1
 - 0.90 released
 
