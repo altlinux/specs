@@ -50,7 +50,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 2.2
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -107,6 +107,7 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+Patch501: 64c7eac.diff
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -123,7 +124,7 @@ Patch700: alt-700-external-project-concurrency.patch
 %add_findreq_skiplist %lodir/sdk/include
 %filter_from_requires /com[.]sun[.]/d
 %add_python3_req_skip pyuno strings officehelper uno unohelper
-
+%add_python3_req_skip usr.src.tmp.libreoffice-buildroot.usr.%_lib.libreoffice.program.wizards.ui.event.ListDataListener
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
@@ -241,6 +242,7 @@ BuildRequires: gnu-config
 
 AutoReqProv: yes, noshell, nopython
 
+Requires: %name-core = %EVR
 Provides: %name-full = %EVR
 Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
@@ -248,6 +250,14 @@ Provides: LibreOffice = %EVR
 Provides: LibreOffice-still = %EVR
 Obsoletes: LibreOffice < %EVR
 Obsoletes: LibreOffice-still < %EVR
+%if_with java
+Requires: java-headless >= 9.0.0
+Requires: pentaho-reporting-flow-engine
+%endif
+
+%package core
+Summary: Core part for LibreOffice (without Java)
+Group: Office
 # common
 Obsoletes: LibreOffice4-common
 Provides: LibreOffice-common = %EVR
@@ -255,10 +265,6 @@ Provides: LibreOffice-still-common = %EVR
 Obsoletes: LibreOffice-common < %EVR
 Obsoletes: LibreOffice-still-common < %EVR
 # Strict requirements
-%if_with java
-Requires: java-headless >= 9.0.0
-Requires: pentaho-reporting-flow-engine
-%endif
 # integrated
 Provides: LibreOffice-integrated = %EVR
 Provides: LibreOffice-still-integrated = %EVR
@@ -280,6 +286,9 @@ Obsoletes: LibreOffice4-extensions
 # Other runtime requirements
 Requires: gst-libav
 
+%description core
+%{summary}.
+
 %description
 LibreOffice is a productivity suite that is compatible with other major
 office suites.
@@ -290,12 +299,11 @@ other office packages, except of language packs and GNOME/KDE bindings.
 %package gtk3
 Summary: GTK3 GUI for %name
 Group:  Office
-Requires: %name = %EVR
+Requires: %name-core = %EVR
 Provides: LibreOffice-gtk3 = %EVR
 Provides: LibreOffice-still-gtk3 = %EVR
 Obsoletes: LibreOffice-gtk3 < %EVR
 Obsoletes: LibreOffice-still-gtk3 < %EVR
-Requires: %name = %EVR
 Provides: LibreOffice-gnome = %EVR
 Provides: %name-gnome = %EVR
 Obsoletes: %name-gnome < %EVR
@@ -305,12 +313,11 @@ GTK3 GUI for %name
 %package gtk4
 Summary: GTK4 GUI for %name
 Group:  Office
-Requires: %name = %EVR
+Requires: %name-core = %EVR
 Provides: LibreOffice-gtk4 = %EVR
 Provides: LibreOffice-still-gtk4 = %EVR
 Obsoletes: LibreOffice-gtk4 < %EVR
 Obsoletes: LibreOffice-still-gtk4 < %EVR
-Requires: %name = %EVR
 %description gtk4
 GTK4 GUI for %name
 
@@ -318,7 +325,7 @@ GTK4 GUI for %name
 %package qt
 Summary: Qt GUI for %name
 Group:  Office
-Requires: %name = %EVR
+Requires: %name-core = %EVR
 Obsoletes: LibreOffice-qt5 < %EVR
 Obsoletes: LibreOffice-qt6 < %EVR
 Obsoletes: LibreOffice-still-qt5 < %EVR
@@ -331,14 +338,13 @@ Provides:  LibreOffice-still-qt5 = %EVR
 Provides:  LibreOffice-still-qt6 = %EVR
 Provides:  libreoffice-qt5 = %EVR
 Provides:  libreoffice-qt6 = %EVR
-Requires: %name = %EVR
 %description qt
 Qt GUI for %name
 
 %package kde
 Summary: KDE GUI for %name
 Group:  Office
-Requires: %name = %EVR
+Requires: %name-core = %EVR
 Obsoletes: %name-kde4 < %EVR
 Obsoletes: %name-kde4 < %EVR
 Obsoletes: LibreOffice-kde5 < %EVR
@@ -416,7 +422,7 @@ with new functions.
 %package %{pkgname} \
 Summary: %{langname} language pack for %name \
 Group:  Office \
-Requires: %name = %EVR \
+Requires: %name-core = %EVR \
 %{-m:Requires: mythes-%lang} \
 %{-h:Requires: hyphen-%lang} \
 %{-s:Requires: hunspell-%spellname} \
@@ -453,6 +459,7 @@ tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 #patch412 -p1
 
 %patch500 -p0
+%patch501 -p1
 %patch700 -p1
 
 # TODO move officebeans to SDK or separate package
@@ -785,17 +792,33 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 mkdir -p %buildroot%_iconsdir/hicolor/symbolic/apps
 tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
-%files -f files.nolang
+# Fix shebang for python3
+find %buildroot%lodir -name "__init__.py" -size 0 -exec bash -c 'echo "#!/usr/bin/python3" > "$1"' _ {} \;
+find %buildroot%lodir -name \*.py > py.files
+cat py.files | xargs grep -l '^#!/usr/bin/python3' > py_with_shebang.files
+comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__python3'
+
+%files
+
+%files core -f files.nolang
 %exclude /gid_Module*
 %_bindir/*
 %config %conffile
-%_iconsdir/*/*/apps/libreoffice-*.*g
 %_datadir/metainfo/*.appdata.xml
 %_desktopdir/libreoffice-*.desktop
 %_iconsdir/*/*/mimetypes/*
 %_iconsdir/*/*/apps/*
 %_datadir/mime/packages/libreoffice%hversion.xml
 %_datadir/mimelnk/application/*
+%dir %lodir
+%dir %lodir/help
+%dir %lodir/program
+%dir %lodir/program/resource
+%dir %lodir/readmes
+%dir %lodir/share
+%dir %lodir/share/autotext
+%dir %lodir/share/registry
+%dir %lodir/share/registry/res
 %lodir/share/extensions/*
 %_man1dir/libreoffice.1*
 %_man1dir/unopkg.1*
@@ -850,6 +873,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt2
+- Fix some post-install unowned files (ALT #58587) (thanks andy@).
+- Exclude core part without Java (ALT #58514).
+
 * Fri Mar 27 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt1
 - New version.
 
