@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.0.2
+Version: 9.0.3
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -70,7 +70,6 @@ export TERM=xterm
 %pyproject_run -- python3 -m pytest -vra
 
 %files
-%doc CHANGELOG.rst README.rst
 %_bindir/py.test3
 %_bindir/py.test-3
 %python3_sitelibdir/%mod_name/
@@ -84,6 +83,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Wed Apr 08 2026 Stanislav Levin <slev@altlinux.org> 9.0.3-alt1
+- 9.0.2 -> 9.0.3 (fixes: CVE-2025-71176).
+
 * Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 9.0.2-alt1
 - 8.4.2 -> 9.0.2.
 
