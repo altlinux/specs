@@ -2,7 +2,7 @@
 %define import_path github.com/Gu1llaum-3/sshm
 
 Name:       sshm
-Version:    1.10.0
+Version:    1.11.0
 Release:    alt1
 
 License:    MIT
@@ -13,8 +13,8 @@ Url:        https://github.com/Gu1llaum-3/sshm
 Source:     %name-%version.tar
 Source1:    vendor.tar
 
-Patch1:     sshm-1.10.0-disable_check_for_updates.patch
-Patch2:     sshm-1.10.0-fix_output_service_completions.patch
+Patch1:     sshm-1.11.0-disable_check_for_updates.patch
+Patch2:     sshm-1.11.0-fix_output_service_completions.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -68,6 +68,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Apr 08 2026 Sergey Savelev <medovi@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+
 * Mon Jan 12 2026 Sergey Savelev <medovi@altlinux.org> 1.10.0-alt1
 - New version 1.10.0.
 
