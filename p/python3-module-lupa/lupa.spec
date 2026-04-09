@@ -2,10 +2,12 @@
 %define pypi_name lupa
 %define mod_name %pypi_name
 
+%python3_set_limited_api 3.9
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6
+Version: 2.7
 Release: alt1
 Summary: Python wrapper around Lua and LuaJIT
 License: MIT
@@ -47,7 +49,7 @@ rm -r ./third-party/*
 %pyproject_deps_resync_metadata
 
 %build
-%global build_lua_args "--no-bundle","--with-cython"
+%global build_lua_args "--no-bundle","--with-cython","--limited-api=%python3_limited_api_version"
 %ifarch ppc64le riscv64
 %global build_lua_args %build_lua_args,"--no-luajit"
 %endif
@@ -70,11 +72,13 @@ python3 -m unittest
 ENDUNITTEST
 
 %files
-%doc README.rst CHANGES.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 09 2026 Stanislav Levin <slev@altlinux.org> 2.7-alt1
+- 2.6 -> 2.7.
+
 * Fri Oct 24 2025 Stanislav Levin <slev@altlinux.org> 2.6-alt1
 - 2.5 -> 2.6.
 
