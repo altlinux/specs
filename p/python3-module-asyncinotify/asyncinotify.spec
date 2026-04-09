@@ -1,6 +1,6 @@
 Name: python3-module-asyncinotify
-Version: 4.4.0
-Release: alt2
+Version: 4.4.2
+Release: alt1
 
 Summary: A simple optionally-async python inotify library
 License: MPL-2.0
@@ -41,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/asyncinotify-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.2-alt1
+- 4.4.2 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
 - revert unsolicited packaging changes
 
