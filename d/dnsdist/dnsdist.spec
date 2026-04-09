@@ -14,7 +14,7 @@
 
 Name: dnsdist
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -22,6 +22,7 @@ License: GPL-2.0-only
 Group: Networking/DNS
 Url: https://dnsdist.org
 VCS: https://github.com/PowerDNS/pdns
+# NOTE: see https://www.dnsdist.org/changelog.html for CVEs.
 
 Source0: %name-%version.tar.xz
 Source1: dnsdist.1
@@ -163,6 +164,11 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Thu Apr 09 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1.1
+- Listed closed CVEs (Fixes: CVE-2026-0396, CVE-2026-0397,
+  CVE-2026-24028, CVE-2026-24029, CVE-2026-24030,
+  CVE-2026-27853, CVE-2026-27854).
+
 * Wed Apr 01 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1
 - New version 2.0.3.
 - Added VCS tag.
