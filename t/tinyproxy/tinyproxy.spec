@@ -1,6 +1,6 @@
 Name: tinyproxy
-Version: 1.11.1
-Release: alt2
+Version: 1.11.3
+Release: alt1
 
 Summary: A small, efficient HTTP/SSL proxy daemon
 License: GPLv2
@@ -37,7 +37,8 @@ resource intensive, or a security risk.
 %configure --enable-reverse \
 	   --enable-transparent \
 	   --enable-xtinyproxy \
-	   --enable-filter
+	   --enable-filter \
+	   --localstatedir=%_var
 
 %make_build
 
@@ -88,6 +89,9 @@ fi
 %attr(2770,root,%tinyproxy_group) %dir %tinyproxy_logdir
 
 %changelog
+* Thu Apr 09 2026 Alexander Danilov <admsasha@altlinux.org> 1.11.3-alt1
+- New version 1.11.3.
+
 * Tue May 07 2024 Nikolay Burykin <bne@altlinux.org> 1.11.1-alt2
 - Fix (CVE-2023-49606)
 
