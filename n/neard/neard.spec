@@ -1,7 +1,7 @@
 %def_without tests
 
 Name: neard
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: NFC for Linux
@@ -89,6 +89,9 @@ install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 %endif
 
 %changelog
+* Thu Apr  9 2026 Artyom Bystrov <arbars@altlinux.org> 0.20-alt1
+- 0.20
+
 * Thu Nov 14 2024 Artyom Bystrov <arbars@altlinux.org> 0.19-alt1
 - 0.19
 
