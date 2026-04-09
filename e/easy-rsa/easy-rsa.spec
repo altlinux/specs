@@ -1,5 +1,5 @@
 Name: easy-rsa
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: Simple shell based CA utility
@@ -42,6 +42,9 @@ mv easyrsa %{buildroot}%{_bindir}/
 %{_datadir}/%name
 
 %changelog
+* Thu Apr 9 2026 Vladimir Didenko <cow@altlinux.org> 3.2.6-alt1
+- new version
+
 * Thu Mar 5 2026 Vladimir Didenko <cow@altlinux.org> 3.2.5-alt1
 - new version
 
