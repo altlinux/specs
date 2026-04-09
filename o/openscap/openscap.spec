@@ -1,7 +1,7 @@
 %define with_sce 1
 
 Name: openscap
-Version: 1.3.12
+Version: 1.4.3
 Release: alt1
 
 Summary: Set of open source libraries enabling integration of the SCAP line of standards
@@ -228,6 +228,7 @@ cp AUTHORS NEWS README.md COPYING docs/oscap-scan.cron \
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %files
+%dir %{_defaultdocdir}/%{name}
 %{_defaultdocdir}/%{name}/AUTHORS
 %{_defaultdocdir}/%{name}/NEWS
 %{_defaultdocdir}/%{name}/README.md
@@ -290,11 +291,15 @@ cp AUTHORS NEWS README.md COPYING docs/oscap-scan.cron \
 %files containers
 %{_bindir}/oscap-docker
 %{_mandir}/man8/oscap-docker.8.xz
+%dir %{python3_sitelibdir_noarch}/oscap_docker_python
 %{python3_sitelibdir_noarch}/oscap_docker_python/*
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Apr 09 2026 Alexey Appolonov <alexey@altlinux.org> 1.4.3-alt1
+- New version.
+
 * Thu Oct 16 2025 Alexey Appolonov <alexey@altlinux.org> 1.3.12-alt1
 - New version.
 
