@@ -3,7 +3,7 @@
 %def_with check
 
 Name: morph-browser
-Version: 1.99.3
+Version: 1.99.4
 Release: alt1
 
 Summary: Web Browser for Lomiri
@@ -98,6 +98,9 @@ and using the Lomiri UI components.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/morph-browser.mo
 
 %changelog
+* Thu Apr 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.99.4-alt1
+- New version 1.99.4.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.99.3-alt1
 - New version 1.99.3.
 
