@@ -4,7 +4,7 @@
 %set_autoconf_version 2.60
 
 Name: liblog4cpp
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Summary: Log for C++
 Group: Development/C++
@@ -47,7 +47,7 @@ rm -rf %buildroot%_prefix/doc
 
 %files
 %_libdir/lib*.so.*
-%doc AUTHORS COPYING INSTALL NEWS README THANKS ChangeLog
+%doc AUTHORS COPYING INSTALL NEWS README.md THANKS ChangeLog
 
 %files devel
 %_includedir/*
@@ -58,6 +58,9 @@ rm -rf %buildroot%_prefix/doc
 %_datadir/aclocal/*.m4
 
 %changelog
+* Thu Apr 09 2026 Alexei Takaseev <taf@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Tue Dec 02 2025 Alexei Takaseev <taf@altlinux.org> 1.1.5-alt1
 - 1.1.5
 - use autoconf 2.60
