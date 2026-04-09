@@ -1,5 +1,5 @@
 Name: python3-module-charset-normalizer
-Version: 3.4.6
+Version: 3.4.7
 Release: alt1
 
 Summary: The Real First Universal Charset Detector
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -o addopts= tests
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.4.7-alt1
+- 3.4.7 released
+
 * Tue Mar 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.4.6-alt1
 - 3.4.6 released
 
