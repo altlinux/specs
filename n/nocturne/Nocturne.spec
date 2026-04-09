@@ -1,7 +1,7 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 0.8.5
+Version: 0.9.0
 Release: alt1
 
 Summary: An Adwaita Music Player / Library Manager
@@ -29,6 +29,8 @@ but it's capable of installing and managing it's own Navidrome instance.
 
 %prep
 %setup
+mv -v po/zh-cn.po po/zh_CN.po
+subst 's|zh-cn|zh_CN|' po/LINGUAS
 
 %build
 %meson
@@ -36,12 +38,8 @@ but it's capable of installing and managing it's own Navidrome instance.
 
 %install
 %meson_install
-for locale in de es ru; do  
- msgfmt po/${locale}.po -o po/${locale}.mo
- install -Dm 0644 po/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%name.mo
-done
 
-%find_lang %name --all-name
+%find_lang --all-name --output=%name.lang %name
 
 %files -f %name.lang
 %_bindir/%name
@@ -54,6 +52,9 @@ done
 %doc *.md
 
 %changelog
+* Fri Apr 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.0-alt1
+- 0.8.5 -> 0.9.0
+
 * Wed Apr 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt1
 - 0.8.0 -> 0.8.5
 
