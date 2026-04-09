@@ -13,7 +13,7 @@
 
 Name: libcurl4-openssl
 Version: 8.16.0
-Release: alt2
+Release: alt3
 
 Summary: libcurl library built with openssl
 
@@ -24,8 +24,6 @@ VCS: https://github.com/curl/curl
 
 # Source-url: %url/download/curl-%version.tar.xz
 Source: %name-%version.tar
-
-ExclusiveArch: x86_64
 
 BuildRequires: /usr/bin/rename
 BuildRequires: /usr/bin/patchelf
@@ -94,6 +92,9 @@ ln -s ../%libname.so.%soname %buildroot%_libdir/%name/libcurl.so.%soname
 %doc CHANGES.md README* docs/{FAQ,FEATURES.md}
  
 %changelog
+* Thu Apr 09 2026 Vitaly Lipatov <lav@altlinux.ru> 8.16.0-alt3
+- drop ExclusiveArch: x86_64 (altbug #58624)
+
 * Mon Nov 03 2025 Vitaly Lipatov <lav@altlinux.ru> 8.16.0-alt2
 - spec: pack libdir/name dir
 
