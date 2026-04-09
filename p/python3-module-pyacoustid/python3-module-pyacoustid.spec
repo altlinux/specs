@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Python3 bindings for Chromaprint acoustic fingerprinting and the Acoustid API
@@ -20,7 +20,7 @@ Requires: /usr/bin/fpcalc
 #Requires: libchromaprint.so.1 python3(audioread)
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(poetry-core)
 
 %{?_enable_check:BuildRequires: python3(pytest)
 BuildRequires: python3(audioread) python3(requests)}
@@ -49,6 +49,9 @@ py.test3
 %doc README*
 
 %changelog
+* Thu Apr 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
