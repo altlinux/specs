@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name extension-list
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 %define gettext_domain %name
 
@@ -65,6 +65,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Thu Apr 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
+- 50.1
+
 * Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt2
 - 49.0-1-g351fe7d (GNOME 50 supported)
 
