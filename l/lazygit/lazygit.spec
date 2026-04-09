@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.60.0
+Version: 0.61.0
 Release: alt1
 
 Summary: Simple terminal UI for git commands
@@ -14,7 +14,6 @@ ExclusiveArch: %go_arches
 
 #Source-url: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch3500: pty-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -43,7 +42,6 @@ ass, lazygit might be for you.
 
 %prep
 %setup
-%patch3500 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -70,6 +68,10 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Apr 09 2026 Ilya Demyanov <turbid@altlinux.org> 0.61.0-alt1
+- new version
+- drop patch fixing FTBFS on LoongArch - upstreamed in the creack/pty module
+
 * Tue Mar 31 2026 Ilya Demyanov <turbid@altlinux.org> 0.60.0-alt1
 - new version
 
