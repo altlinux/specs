@@ -1,5 +1,5 @@
 Name: python3-module-mplcursors
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Interactive data selection cursors for Matplotlib
@@ -25,12 +25,11 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 %pyproject_build
 
 %install
@@ -44,6 +43,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/mplcursors-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.1-alt1
+- 0.7.1 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7-alt1
 - 0.7 released
 
