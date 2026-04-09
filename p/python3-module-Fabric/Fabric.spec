@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.2
-Release: alt2
+Version: 3.2.3
+Release: alt1
 Summary: High level SSH command execution
 License: BSD-2-Clause
 Group: Development/Python3
@@ -19,6 +19,7 @@ Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 Conflicts: python-module-%oname
 
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -37,20 +38,6 @@ commands remotely over SSH, yielding useful Python objects in return. It builds
 on top of Invoke (subprocess command execution and command-line features) and
 Paramiko (SSH protocol implementation), extending their APIs to complement one
 another and provide additional functionality.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name
-
-%description tests
-Fabric is a high level Python (2.7, 3.4+) library designed to execute shell
-commands remotely over SSH, yielding useful Python objects in return. It builds
-on top of Invoke (subprocess command execution and command-line features) and
-Paramiko (SSH protocol implementation), extending their APIs to complement one
-another and provide additional functionality.
-
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -72,16 +59,15 @@ This package contains tests for %oname.
 %pyproject_run_pytest -k 'not fake and not fake_agent and not no_stdin'
 
 %files
-%doc README.rst
 %_bindir/fab
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%mod_name/testing
 
-%files tests
-%python3_sitelibdir/%mod_name/testing/
-
 %changelog
+* Thu Apr 09 2026 Stanislav Levin <slev@altlinux.org> 3.2.3-alt1
+- 3.2.2 -> 3.2.3.
+
 * Sat Nov 01 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.2-alt2
 - Fixed FTBFS.
 
