@@ -8,7 +8,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: Python bindings for mypy AST serialization
 License: MIT
@@ -55,5 +55,8 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 08 2026 Stanislav Levin <slev@altlinux.org> 0.1.2-alt1
+- updated from 0.1.1 to 0.1.2
+
 * Wed Apr 01 2026 Stanislav Levin <slev@altlinux.org> 0.1.1-alt1
 - Initial build for sisyphus.
