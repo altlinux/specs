@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt0.03
+Release: alt0.04
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -339,6 +339,7 @@ fi
 %_sysconfdir/*-release
 %_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%_sysconfdir/dconf/db/default.d/*
 
 %files notes
 %_datadir/alt-notes/*
@@ -372,6 +373,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 09 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.04
+- Add default edition to os-release and dconf.
+- gnome-settings: fix extra quotes in dist-extensions keys.
+
 * Wed Apr 08 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.03
 - gnome-settings: use dist-extensions in ALT Panelmode instead os sys-extensions.
 
