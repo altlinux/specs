@@ -1,5 +1,5 @@
 Name: python3-module-securetar
-Version: 2026.2.0
+Version: 2026.4.1
 Release: alt1
 
 Summary: Secure Tarfile library
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/securetar-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.4.1-alt1
+- 2026.4.1 released
+
 * Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.2.0-alt1
 - 2026.2.0 released
 
