@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.9
-Release: alt1
+Release: alt2
 
 Summary: Python Netlink library
 
@@ -24,10 +24,9 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-modules-sqlite3
 %endif
 
-%add_python3_req_skip pyroute2.bsd.rtmsocket
-%add_python3_req_skip dhclient
-%add_python3_req_skip netl
-%add_python3_req_skip mitogen.core mitogen.master
+# Optional dependencies.
+%filter_from_requires /python3(mitogen.*)/d
+%add_findreq_skiplist %python3_sitelibdir/%oname/cli/auth/*.py
 
 %description
 Pyroute2 is a pure Python3 netlink library.
@@ -58,6 +57,10 @@ so the name is pyroute2, but now it supports many netlink protocols.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.9-alt2
+- Added filters to skip optional dateutil.*, pyrad.*, keystoneauth1.* and
+  keystoneclient.* dependencies.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.7.9-alt1
 - Automatically updated to 0.7.9.
 
