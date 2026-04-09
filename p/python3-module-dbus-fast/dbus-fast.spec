@@ -1,6 +1,6 @@
 Name: python3-module-dbus-fast
-Version: 4.0.0
-Release: alt2
+Version: 4.0.4
+Release: alt1
 
 Summary: Python library for DBus
 License: MIT
@@ -46,6 +46,9 @@ dbus-launch sh -c '
 %python3_sitelibdir/dbus_fast-%version.dist-info
 
 %changelog
+* Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.4-alt1
+- 4.0.4 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt2
 - revert unsolicited packaging changes
 
