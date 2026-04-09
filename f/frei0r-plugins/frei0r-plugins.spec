@@ -10,8 +10,8 @@
 %endif
 
 Name: frei0r-plugins
-Version: 2.5.6
-Release: alt3
+Version: 3.0.0
+Release: alt1
 
 Summary: A free software collection of video effect plugins
 License: GPL-2.0-or-later
@@ -81,6 +81,10 @@ popd
 %install
 %cmake_install
 
+%check
+%make_build -C test frei0r-run PLUGINDIR=../%_cmake__builddir/src
+%make_build -C test check PLUGINDIR=../%_cmake__builddir/src
+
 %files
 %dir %_libdir/frei0r-1
 %_libdir/frei0r-1/*.so
@@ -106,6 +110,10 @@ popd
 %endif
 
 %changelog
+* Wed Apr 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.0.0-alt1
+- New version.
+- Add check section.
+
 * Mon Apr 06 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.6-alt3
 - e2k build fix
 
