@@ -1,6 +1,7 @@
+%define sover 27
 Name: baresip
-Version: 4.6.0
-Release: alt2
+Version: 4.7.0
+Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
 License: BSD-3-Clause
@@ -14,7 +15,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
 BuildRequires: libre-devel >= 4.5.0
-BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
 
 Obsoletes: %{name}-mpa < 4.3.0
 
@@ -53,6 +53,7 @@ This module provides the Advanced Audio Coding (AAC) audio codec.
 %package amr
 Summary: AMR audio codec module for baresip
 Group: Communications
+BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
 Requires: %name = %version-%release
 
 %description amr
@@ -382,7 +383,7 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.26*
+%_libdir/lib%name.so.%{sover}*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -523,6 +524,9 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Thu Apr 09 2026 Ilya Demyanov <turbid@altlinux.org> 4.7.0-alt1
+- new version 4.7.0
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.0-alt2
 - real update to 4.6.0
 - fix Source-url
