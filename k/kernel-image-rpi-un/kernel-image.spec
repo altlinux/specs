@@ -8,7 +8,7 @@ epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.12
-%define kernel_sublevel .49
+%define kernel_sublevel .79
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -441,6 +441,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Apr 07 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:6.12.79-alt1
+- Updated to 6.12.79
+- https://github.com/raspberrypi/linux.git rpi-6.12.y commit 5f23da14d91d4ba66604ec75453564e4e2afc57e
+- Baikal-M support http://git.altlinux.org/people/kernelbot/packages/kernel-image.git
+
 * Fri Oct 03 2025 Dmitry Terekhin <jqt4@altlinux.org> 1:6.12.49-alt1
 - Updated to 6.12.49 (Closes: 56059)
 - https://github.com/raspberrypi/linux.git rpi-6.12.y commit 2f4a28199c418599ba0224186e42926b482b523c
