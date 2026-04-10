@@ -14,7 +14,7 @@
 
 Name: dnsdist
 Version: 2.0.3
-Release: alt1.2
+Release: alt2
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -62,6 +62,10 @@ cd pdns/dnsdistdist
 sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' \
     dnsdist.service.in \
     dnsdist.service.meson.in
+
+# fix version detection
+sed -i "s|version: run_command.*|version: '%version',|" \
+    meson.build
 
 %build
 cd pdns/dnsdistdist
@@ -164,6 +168,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Fri Apr 10 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt2
+- Fixed version detection (ALT #58639).
+
 * Thu Apr 09 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1.2
 - Listed closed CVEs for older versions (backport).
 
