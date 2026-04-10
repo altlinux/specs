@@ -7,7 +7,7 @@
 %define go_builddir .build
 
 Name: crush
-Version: 0.39.3
+Version: 0.56.0
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Source2: example-llama.cpp-crush.json
 Source3: example-ollama-crush.json
-Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
@@ -37,16 +36,11 @@ Features:
 - LSP-Enhanced: Crush uses LSPs for additional context, just like you do
 - Extensible: add capabilities via MCPs (http, stdio, and sse)
 
-Note: Automatic provider updates are disabled and could be enabled in config or
-  CRUSH_DISABLE_PROVIDER_AUTO_UPDATE=0 env or updated manually with
-  'crush update-providers' invocation.
-
 %prep
 %setup
 %__tar xf %SOURCE1
 %__cp %SOURCE2 ./
 %__cp %SOURCE3 ./
-%patch -p1
 %__sed -i '/TestCoderAgent/a t.Skip("noNetwork")' internal/agent/agent_test.go
 
 %build
@@ -88,6 +82,9 @@ cd %go_builddir/src/%import_path/
 %_man1dir/%name.1*
 
 %changelog
+* Fri Apr 10 2026 Andrey Limachko <liannnix@altlinux.org> 0.56.0-alt1
+- Update to v0.56.0.
+
 * Sun Feb 08 2026 Andrey Limachko <liannnix@altlinux.org> 0.39.3-alt1
 - Update to v0.39.3.
 
