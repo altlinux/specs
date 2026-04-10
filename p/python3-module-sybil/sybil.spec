@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.3.0
+Version: 10.0.1
 Release: alt1
 Summary: Automated testing for the examples in your documentation
 License: MIT
@@ -22,7 +22,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -32,6 +33,9 @@ Automated testing for the examples in your documentation.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -43,11 +47,13 @@ Automated testing for the examples in your documentation.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 10.0.1-alt1
+- 9.3.0 -> 10.0.1.
+
 * Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 9.3.0-alt1
 - 9.2.0 -> 9.3.0.
 
