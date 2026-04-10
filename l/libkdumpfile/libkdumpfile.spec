@@ -3,16 +3,18 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define kdumpid_version 1.7
 Name: libkdumpfile
-Version: 0.5.4
+Version: 0.5.6
 Release: alt1
 Summary: Kernel coredump file access
 License: GPL-2.0-or-later or LGPL-3.0-or-later
 Group: System/Libraries
-Url: https://github.com/ptesarik/libkdumpfile
+Url: https://codeberg.org/ptesarik/pykdumpfile
 
 Source: %name-%version.tar
 
+BuildRequires: binutils-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libzstd-devel
@@ -25,6 +27,7 @@ BuildRequires: zlib-devel
 Summary: Example utils for %name
 Group: Development/Other
 Requires: %name = %EVR
+Requires: kdumpid = %kdumpid_version-%release%{?disttag::%disttag}
 
 %description utils
 %summary.
@@ -36,6 +39,21 @@ Requires: %name = %EVR
 
 %description devel
 %summary.
+
+%package -n kdumpid
+Summary: Identify any kernel core dump file
+Group: Development/Kernel
+Requires: %name = %EVR
+Version: %kdumpid_version
+
+%description -n kdumpid
+The kdumpid utility can be used to find out the exact kernel architecture and
+version of an unknown kernel core dump.
+
+This utility should provide a fast and reliable method to find out the most
+important information about an unknown kernel crash dump, such as the
+architecture and kernel release. Think of it as a kind of "file" utility for
+kernel dumps.
 
 %prep
 %setup
@@ -50,9 +68,8 @@ Requires: %name = %EVR
 %makeinstall_std
 
 %check
+tools/kdumpid/kdumpid --version | grep -P 'kdumpid version \Q%kdumpid_version\E$'
 %make_build check
-
-%define _customdocdir %_docdir/%name
 
 %files
 %doc README.md NEWS COPYING*
@@ -71,7 +88,14 @@ Requires: %name = %EVR
 %_pkgconfigdir/libaddrxlat.pc
 %_pkgconfigdir/libkdumpfile.pc
 
+%files -n kdumpid
+%_bindir/kdumpid
+%_man1dir/kdumpid.1*
+
 %changelog
+* Fri Apr 10 2026 Vitaly Chikunov <vt@altlinux.org> 0.5.6-alt1
+- Update to v0.5.6 (2025-11-05).
+
 * Sun Nov 19 2023 Vitaly Chikunov <vt@altlinux.org> 0.5.4-alt1
 - Update to v0.5.4 (2023-11-18).
 
