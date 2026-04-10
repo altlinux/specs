@@ -7,15 +7,17 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: A Python library for automating website interaction
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/MechanicalSoup/
+Url: https://pypi.org/project/mechanicalsoup
 Vcs: https://github.com/MechanicalSoup/MechanicalSoup
 BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,6 +31,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -49,6 +52,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
+- Fixed FTBFS (libxml2 2.14.6).
+
 * Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.2.0 -> 1.4.0.
 
