@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.57.0
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,11 +71,26 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-feature-btrfs-Add-multi-device-RAID-boot-support.patch
+Patch1: 0001-feature-btrfs-Add-multi-device-RAID-boot-support.patch     
+Patch2: 0002-clevis-add-feature-for-TPM2-based-LUKS-unlock.patch        
+Patch3: 0003-luks-try-clevis-unlock-before-prompting-for-passphra.patch 
+Patch4: 0004-clevis-auto-enable-feature-for-bound-LUKS-devices.patch    
+Patch5: 0005-testing-add-clevis-guess.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
 
+%package clevis
+Summary: TPM-2.0 support in LUKS module via clevis for %name
+Group: System/Base
+BuildArch: noarch
+Requires: %name-luks = %EVR
+Requires: clevis-luks
+Requires: clevis-pin-tpm2
+AutoReq: noshell, noshebang
+
+%description clevis
+TPM-2.0 support in LUKS module via clevis for %name.
 
 %package devmapper
 Summary: device-mapper module for %name
@@ -113,7 +128,6 @@ AutoReq: noshell, noshebang
 
 %description luks
 LUKS module for %name
-
 
 %package nfs
 Summary: NFS module for %name
@@ -327,6 +341,7 @@ fi
 %_datadir/%name
 %_man1dir/*
 %_libdir/initrd
+%exclude %_datadir/%name/features/clevis
 %exclude %_datadir/%name/features/devmapper
 %exclude %_datadir/%name/features/lvm
 %exclude %_datadir/%name/features/luks
@@ -346,6 +361,9 @@ fi
 %exclude %_datadir/%name/features/guestfs
 %{?_with_iscsi:%exclude %_datadir/%name/features/iscsi}
 %doc Documentation/*.md
+
+%files clevis
+%_datadir/%name/features/clevis
 
 %files devmapper
 %_datadir/%name/features/devmapper
@@ -408,6 +426,15 @@ fi
 %endif
 
 %changelog
+* Thu Apr 09 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt3
+- Add upstream commits:
+  + clevis: add feature for TPM2-based LUKS unlock.
+  + luks: try clevis unlock before prompting for passphrase.
+  + luks: try clevis unlock before prompting for passphrase.
+  + clevis: auto-enable feature for bound LUKS devices.
+  + testing: add clevis guess.
+- New subpackage make-initrd-clevis.
+
 * Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt2
 - Add upstream commit:
   + Add multi-device (RAID) boot support.
