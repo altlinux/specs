@@ -161,7 +161,7 @@
 # }}}
 
 Name: qemu
-Version: 10.1.4
+Version: 10.2.2
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1292,6 +1292,7 @@ done
 (
     echo "%_datadir/%name/dtb/bamboo.dtb"
     echo "%_datadir/%name/dtb/canyonlands.dtb"
+    echo "%_datadir/%name/dtb/pegasos*.dtb"
     echo "%_datadir/%name/qemu_vga.ndrv"
     echo "%_datadir/%name/pnv-pnor.bin"
     echo "%_datadir/%name/skiboot.lid"
@@ -1499,6 +1500,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Apr 02 2026 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
+- 10.2.2 (Fixes: CVE-2026-2243, CVE-2026-3842).
+
 * Fri Feb 27 2026 Alexey Shabalin <shaba@altlinux.org> 10.1.4-alt1
 - 10.1.4 (Fixes: CVE-2025-11234, CVE-2025-14876, CVE-2026-0665).
 
