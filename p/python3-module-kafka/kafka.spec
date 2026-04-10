@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
@@ -70,11 +70,13 @@ rm -r %buildroot%python3_sitelibdir/test/
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1.
+
 * Fri Nov 21 2025 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.15 -> 2.3.0.
 
