@@ -2,18 +2,6 @@
 %define mod_name pyside6
 
 %def_with check
-%ifarch loongarch64
-# The first version of LLVM which supports LoongArch targets
-%global llvm_version 16.0
-%else
-%ifarch %e2k
-# currently available
-%global llvm_version 13.0
-%else
-%global llvm_version %nil
-%endif
-%endif
-%global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 %define pyside_qt6_exes qmlcachegen,qmlimportscanner,qmltyperegistrar,rcc,uic
 %define pyside_qt6_bins assistant,balsam,balsamui,designer,linguist,lrelease,lupdate,qmlformat,qmlls,qmllint,qsb
@@ -22,7 +10,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.10.3
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -47,18 +35,18 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-packaging
 BuildRequires: python3-devel
 
-BuildRequires: llvm%{llvm_version}
-BuildRequires: llvm%{llvm_version}-devel
-BuildRequires: libmlir%{llvm_version}-devel
+BuildRequires: llvm
+BuildRequires: llvm-devel
+BuildRequires: libmlir-devel
 %ifnarch %e2k
-# missing as llvm13.0 13.0.1-alt3.E2K.5
-BuildRequires: libpolly%{llvm_version}-devel
+# missing as of llvm21.1-21.1.1-alt0.1.E2K.4
+BuildRequires: libpolly-devel
 %endif
-BuildRequires: clang%{llvm_version}-devel
-BuildRequires: clang%{llvm_version}-tools
-BuildRequires: clangd%{llvm_version}
-#BuildRequires: clang%{llvm_version}-libs
-BuildRequires: mlir%{llvm_version}-tools
+BuildRequires: clang-devel
+BuildRequires: clang-tools
+BuildRequires: clangd
+#BuildRequires: clang-libs
+BuildRequires: mlir-tools
 
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libxml2-devel
@@ -157,14 +145,7 @@ to Python, or even to get useful information to debug an application.
 sed -i 's/purelib/platlib/' sources/shiboken6/cmake/ShibokenHelpers.cmake
 
 %global optflags_lto %nil
-
-if [ -z "%{llvm_version}" ] ; then
-    export CXX=/usr/bin/clang++
-else
-    export CXX=/usr/bin/clang++-%{clang_version}
-    export ALTWRAP_LLVM_VERSION=%{llvm_version}
-fi
-
+export CXX=/usr/bin/clang++
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_LIBRARY_PATH
 
@@ -294,6 +275,12 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Fri Apr 10 2026 Michael Shigorin <mike@altlinux.org> 6.10.3-alt2
+- no special clang version anymore (thx iv@)
+
+* Wed Apr 08 2026 Michael Shigorin <mike@altlinux.org> 6.10.3-alt1.1
+- E2K: no special llvm version anymore
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
