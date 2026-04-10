@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: Zope Configuration Markup Language (ZCML)
@@ -25,7 +25,6 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -63,6 +62,9 @@ pluggable. An XML language is provided by default.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 7.1-alt1
+- 7.0 -> 7.1.
+
 * Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 7.0-alt1
 - 6.0 -> 7.0.
 
