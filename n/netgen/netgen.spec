@@ -20,7 +20,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2602
+Version: 6.2.2603
 Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
@@ -416,6 +416,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Fri Apr 10 2026 Anton Farygin <rider@altlinux.org> 6.2.2603-alt1
+- 6.2.2602 -> 6.2.2603
+
 * Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2602-alt1
 - 6.2.2406 -> 6.2.2602
 

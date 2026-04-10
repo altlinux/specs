@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2602
+Version: 6.2.2603
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -163,6 +163,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Fri Apr 10 2026 Anton Farygin <rider@altlinux.org> 6.2.2603-alt1
+- 6.2.2602 -> 6.2.2603
+
 * Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 6.2.2602-alt1
 - 6.2.2406 -> 6.2.2602
 
