@@ -3,7 +3,7 @@
 
 Name: 7-zip
 Version: 26.00
-Release: alt2
+Release: alt3
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -14,6 +14,7 @@ Patch3: uninitialized.patch
 Patch100: ALT-armh.patch
 Summary: Official 7-zip for linux, the file archiver with a high compression ratio
 Provides: 7zz = %version-%release
+Provides: 7zip = %version-%release
 
 # Replace p7zip package (ALT bug 49730)
 Provides: p7zip = %version-%release
@@ -140,6 +141,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Fri Apr 10 2026 Vitaly Lipatov <lav@altlinux.ru> 26.00-alt3
+- add Provides: 7zip
+
 * Fri Feb 27 2026 Vitaly Lipatov <lav@altlinux.ru> 26.00-alt2
 - Add /usr/bin/7z, /usr/bin/7za and provide p7zip (ALT bug 49730)
 
