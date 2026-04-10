@@ -8,7 +8,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.20.3
+Version: 1.20.4
 Release: alt1
 Epoch: 1
 
@@ -151,6 +151,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.20.4-alt1
+- 1.20.4
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.20.3-alt1
 - back to stable (ALT #57686)
 
