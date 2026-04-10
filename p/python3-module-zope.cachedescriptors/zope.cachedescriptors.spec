@@ -7,8 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0
-Release: alt1
-
+Release: alt2
 Summary: Method and property caching decorators
 License: ZPL-2.1
 Group: Development/Python3
@@ -16,6 +15,7 @@ Url: https://pypi.org/project/zope.cachedescriptors/
 Vcs: https://github.com/zopefoundation/zope.cachedescriptors
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildArch: noarch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
@@ -63,6 +63,9 @@ persistent objects.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Thu Apr 09 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt2
+- Mapped PyPI package name to the RPM one.
+
 * Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
 - 5.1 -> 6.0.
 
