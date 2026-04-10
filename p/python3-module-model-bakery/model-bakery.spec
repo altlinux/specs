@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.23.3
-Release: alt1.1
+Version: 1.23.4
+Release: alt1
 Summary: Smart object creation facility for Django
 License: Apache-2.0
 Group: Development/Python3
@@ -14,21 +14,16 @@ Url: https://pypi.org/project/model-bakery
 Vcs: https://github.com/model-bakers/model_bakery
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-uv-build
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-black
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pillow
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-django
-BuildRequires: python3-module-ruff
-BuildRequires: python3-module-ty
-
-BuildRequires: python3-module-django
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -40,6 +35,11 @@ code.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -55,8 +55,8 @@ code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.23.3-alt1.1
-- Demodernized packaging.
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 1.23.4-alt1
+- 1.23.3 -> 1.23.4.
 
 * Thu Mar 12 2026 Stanislav Levin <slev@altlinux.org> 1.23.3-alt1
 - 1.20.5 -> 1.23.3.
