@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 6.0
 Release: alt1
 Summary: StructuredText parser
 License: ZPL-2.1
@@ -52,15 +52,16 @@ which document structure is signalled primarily by identation.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests.*
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 %exclude %python3_sitelibdir/%ns_name/%mod_name/regressions/
 
 %changelog
+* Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.1 -> 6.0.
+
 * Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1.
 
