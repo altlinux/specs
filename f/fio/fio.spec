@@ -24,7 +24,7 @@
 %endif
 
 Name: fio
-Version: 3.41
+Version: 3.42
 Release: alt1
 Summary: Flexible I/O Tester
 License: GPL-2.0
@@ -231,6 +231,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Fri Apr 10 2026 Vitaly Chikunov <vt@altlinux.org> 3.42-alt1
+- Update to fio-3.42 (2026-04-06).
+
 * Sun Sep 07 2025 Vitaly Chikunov <vt@altlinux.org> 3.41-alt1
 - Update to fio-3.41 (2025-09-05).
 
