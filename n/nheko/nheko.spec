@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.12.1
-Release: alt3
+Release: alt4
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -41,8 +41,7 @@ BuildRequires: clang llvm-devel
 %endif
 
 # Additional (runtime) dependencies
-Requires: qt6-multimedia libqt6-quickparticles
-Requires: libqt6-quickdialogs2
+Requires: qt6-multimedia qt6-declarative
 
 # Additional dependencies for call
 Requires: gstreamer1.0
@@ -101,6 +100,10 @@ cp %SOURCE2 resources/langs/nheko_ru.ts
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Apr 09 2026 Paul Wolneykien <manowar@altlinux.org> 0.12.1-alt4
+- Require qt6-declarative and remove libqt6-* from runtime dependencies
+  (closes: 50671).
+
 * Mon Mar 23 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.12.1-alt3
 - Add OpenSUSE patch to fix reply rendering.
 - Add patch to fix call support.
