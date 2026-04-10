@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.22
+Version: 7.1.23
 Release: alt1
 Summary: Python library for SNMP
 License: BSD-2-Clause
@@ -67,11 +67,13 @@ engine.
     --deselect tests/hlapi/v1arch/asyncio/manager/cmdgen/test_v1arch_v1_set.py::test_v1_set_mac_address \
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 7.1.23-alt1
+- 7.1.22 -> 7.1.23.
+
 * Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 7.1.22-alt1
 - 7.1.21 -> 7.1.22.
 
