@@ -1,0 +1,51 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
+
+Name: llmfit
+Version: 0.9.3
+Release: alt1
+
+Summary: Hundreds of models & providers
+License: MIT
+Group: Sciences/Computer science
+Url: https://github.com/AlexsJones/llmfit
+VCS: https://github.com/AlexsJones/llmfit.git
+
+# Source-url: https://github.com/AlexsJones/%name/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
+Source1: vendor-%version.tar
+
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: cargo-vendor-checksum
+BuildRequires: rust-cargo
+
+%description
+One command to find what runs on your hardware.
+
+A terminal tool that right-sizes LLM models to your system's RAM, CPU,
+and GPU. Detects your hardware, scores each model across quality, speed,
+fit, and context dimensions, and tells you which ones will actually run
+well on your machine.
+
+%prep
+%setup -a1
+%rust_prep
+cargo-vendor-checksum --vendor vendor --all
+
+%build
+%rust_build
+
+%install
+%rust_install
+
+%check
+%rust_test
+
+%files
+%doc README.md API.md
+%_bindir/%name
+
+%changelog
+* Fri Apr 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.3-alt1
+- initial build for ALT Linux
