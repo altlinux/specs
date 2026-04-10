@@ -1,7 +1,7 @@
 %define repo atlasrep
 
 Name: gap-atlasrep
-Version: 2.1.9
+Version: 2.1.10
 Release: alt1
 Summary: GAP: Interface to the Atlas of Group Representations
 License: GPL-3.0+
@@ -13,12 +13,18 @@ Source: https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrep-%versio
 BuildArch: noarch
 BuildPreReq: fdupes
 BuildPreReq: rpm-macros-gap
-Requires: gap >= 4.5
-Requires: gap-gapdoc >= 1.5
-#Suggests:       gap-browse >= 1.4
+# PackageInfo.g
+Requires: gap >= 4.12
+Requires: gap-gapdoc >= 1.6.2
+Requires: gap-utils >= 0.77
+#Suggests:       gap-browse >= 1.8.3
 #Suggests:       gap-ctbllib >= 1.2
+#Suggests:       gap-ctblocks >= 1.0
 #Suggests:       gap-io >= 3.3
-#Suggests:       gap-tomlib >= 1.2.1
+#Suggests:       gap-mfer >= 1.0
+#Suggests:       gap-recog >= 1.3.1
+#Suggests:       gap-standardff >= 0.9
+#Suggests:       gap-tomlib >= 1.0
 
 %description
 AtlasRep provides an interface between GAP and the Atlas of Group
@@ -38,6 +44,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo/*
 
 %changelog
+* Fri Apr 10 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.10-alt1
+- New version 2.1.10 (with rpmgs script).
+
 * Fri Sep 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.9-alt1
 - New version 2.1.9 (with rpmgs script).
 

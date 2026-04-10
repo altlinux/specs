@@ -1,7 +1,7 @@
 %define repo polycyclic
 
 Name: gap-polycyclic
-Version: 2.17
+Version: 2.18
 Release: alt1
 Summary: GAP: Computation with polycyclic groups
 License: GPL-2.0+
@@ -16,9 +16,10 @@ Patch: polycyclic-%version-%release.patch
 BuildArch: noarch
 
 BuildPreReq: rpm-macros-gap
+# PackageInfo.g
 Requires: gap-alnuth >= 3.0
 Requires: gap-autpgrp >= 1.6
-Requires: gap >= 4.10
+Requires: gap >= 4.12
 
 %description
 The Polycyclic package provides a basis for working with polycyclic
@@ -52,6 +53,9 @@ The features of this package include
 %gap_sitelib/%repo/
 
 %changelog
+* Fri Apr 10 2026 Leontiy Volodin <lvol@altlinux.org> 2.18-alt1
+- New version 2.18.
+
 * Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 2.17-alt1
 - New version 2.17.
 - Added VCS tag.
