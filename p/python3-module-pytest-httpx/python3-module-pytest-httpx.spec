@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.36.0
+Version: 0.36.2
 Release: alt1
 
 Summary: pytest fixture to mock HTTPX
@@ -55,6 +55,9 @@ hosts are explicitly skipped).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 0.36.2-alt1
+- 0.36.0 -> 0.36.2.
+
 * Fri Mar 06 2026 Stanislav Levin <slev@altlinux.org> 0.36.0-alt1
 - 0.35.0 -> 0.36.0.
 
