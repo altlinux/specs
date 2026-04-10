@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 
 Summary: Breeze inspired QQC2 Style
 License: LGPL-2.0-or-later
@@ -10,7 +10,7 @@ Group: Graphical desktop/KDE
 Url: https://invent.kde.org/plasma/qqc2-breeze-style
 
 Provides: kf6-qqc2-breeze-style = %EVR
-Obsoletes: kf6-qqc2-breeze-style = %EVR
+Obsoletes: kf6-qqc2-breeze-style < %EVR
 
 Source: %rname-%version.tar
 
@@ -62,6 +62,9 @@ developing applications that use %name.
 %_libdir/cmake/QQC2BreezeStyle/
 
 %changelog
+* Fri Apr 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- fix obsoletes
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
