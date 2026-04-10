@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 21.2.0
-Release: alt1.1
+Version: 21.2.1
+Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
@@ -15,37 +15,20 @@ Url: https://pypi.org/project/virtualenv/
 VCS: https://github.com/pypa/virtualenv
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # system seed wheels
 Requires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-flaky
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-env
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-randomly
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-time-machine
-
-BuildRequires: python3-module-distlib
-BuildRequires: python3-module-filelock
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-python-discovery
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
 %endif
-
-%add_python3_req_skip winreg
 
 %description
 Tool to create isolated Python environments.
@@ -76,14 +59,12 @@ in newly created environment by invoking /your/dir/bin/python
 
 # remove all bundled seed wheels
 rm src/%mod_name/seed/wheels/embed/*.whl
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -102,8 +83,8 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 21.2.0-alt1.1
-- Demodernized packaging.
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 21.2.1-alt1
+- 21.2.0 -> 21.2.1.
 
 * Tue Mar 10 2026 Stanislav Levin <slev@altlinux.org> 21.2.0-alt1
 - 21.1.0 -> 21.2.0.
