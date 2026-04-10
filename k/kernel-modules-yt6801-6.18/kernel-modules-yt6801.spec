@@ -1,6 +1,6 @@
 %define module_name	yt6801
 %define module_version	1.0.31
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour 6.18
 %define karch   x86_64 loongarch64
@@ -8,7 +8,7 @@
 BuildRequires(pre): kernel-headers-modules-6.18
 %setup_kernel_module %flavour
 
-%define install_mod_dir updates
+%define install_mod_dir kernel/drivers/net/ethernet/motorcomm
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%install_mod_dir
 
 Summary: Driver for Motorcomm YT6801 ethernet adapter
@@ -57,6 +57,9 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 02 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.31-alt2
+- Move module file back to drivers/net/ethernet (ALT#58491)
 
 * Fri Mar 13 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.31-alt1
 - 1.0.31.
