@@ -7,7 +7,7 @@
 Name: libsodium
 Summary: A modern, portable, easy to use crypto library
 Version: 1.0.21
-Release: alt1
+Release: alt2
 License: ISC
 Group: System/Libraries
 Url: https://libsodium.org/
@@ -71,9 +71,6 @@ packages.
 # Adding -ffat-lto-objects is workaround to this problem:
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89147
 %global optflags_lto %optflags_lto -ffat-lto-objects
-%ifarch x86_64
-%add_optflags -fanalyzer
-%endif
 %add_optflags %(getconf LFS_CFLAGS) -Wno-unused-function -Wno-unused-variable
 %autoreconf
 %configure --disable-static
@@ -112,6 +109,9 @@ EOF
 %files checkinstall
 
 %changelog
+* Fri Apr 10 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.21-alt2
+- Update to 1.0.21-FINAL (2026-04-09).
+
 * Wed Jan 07 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.21-alt1
 - Update to 1.0.21-RELEASE-3-g3ce49ae8 (2026-01-07). (Fixes: CVE-2025-69277).
 
