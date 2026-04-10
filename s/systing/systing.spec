@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systing
-Version: 1.0.0
+Version: 1.4.0
 Release: alt1
 Summary: A libbpf based tracer to help figure out what an application is doing. 
 License: MIT
@@ -56,5 +56,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri Apr 10 2026 Pavel Shilov <zerospirit@altlinux.org> 1.4.0-alt1
+- Update to new version 1.4.0.
+
 * Wed Feb 25 2026 Pavel Shilov <zerospirit@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus

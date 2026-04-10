@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: tailspin
-Version: 5.5.0
+Version: 6.0.0
 Release: alt1
 Summary: A log file highlighter
 License: MIT
@@ -45,9 +45,11 @@ export CARGO_HOME=${PWD}/cargo
 %install
 export CARGO_HOME=${PWD}/cargo
 install -Dm 755  target/release/tspin %buildroot%_bindir/tspin
-install -Dm 755  completions/tspin.bash %buildroot%_datadir/bash-completion/%short_name
+install -Dm 755  completions/tspin.bash %buildroot%_datadir/bash-completion/completions/%short_name
 mkdir -p %buildroot%_datadir/zsh_completion.d
 install -Dm 755  completions/tspin.zsh %buildroot%_datadir/zsh_completion.d/%short_name
+mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
+install -Dm644 completions/tspin.fish %buildroot%_datadir/fish/vendor_completions.d/tspin.fish
 
 %check
 export CARGO_HOME=${PWD}/cargo
@@ -56,17 +58,21 @@ export CARGO_HOME=${PWD}/cargo
 %files
 %doc README.md
 %_bindir/tspin
-%_datadir/bash-completion/%short_name
+%_datadir/bash-completion/completions/%short_name
 %_datadir/zsh_completion.d/%short_name
+%_datadir/fish/vendor_completions.d/tspin.fish
 
 %changelog
+* Thu Apr 09 2026 Pavel Shilov <zerospirit@altlinux.org> 6.0.0-alt1
+- 5.5.0 -> 6.0.0
+
 * Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 5.5.0-alt1
 - 5.4.5 -> 5.5.0
 
 * Wed Jul 02 2025 Pavel Shilov <zerospirit@altlinux.org> 5.4.5-alt1
 - Update based on upstream
 
-* Wed Nov 14 2024 Pavel Shilov <zerospirit@altlinux.org> 3.0.2-alt2
+* Thu Nov 14 2024 Pavel Shilov <zerospirit@altlinux.org> 3.0.2-alt2
 - Update packaging for package
 - Remove requires
 
