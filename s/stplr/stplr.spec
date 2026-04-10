@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.0.31
+Version: 0.1.0
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
+Requires: apt
 Requires: sysctl-conf-userns
 # for %_bindir/%name migrate
 Requires: /proc
@@ -59,8 +60,12 @@ not in its repositories.
 %_datadir/fish/vendor_completions.d/%name.fish
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
+%_target_libdir_noarch/%name
+%_target_libdir_noarch/%name/repos.d
 %attr(0755,%builder_user,%builder_group) %_cachedir/%name
 %attr(0755,root,root) %_sysconfdir/%name
+%attr(0755,root,root) %_sysconfdir/%name/repos.d
+%attr(0755,root,root) %_sysconfdir/%name/repo-overrides.d
 %config(noreplace) %_sysconfdir/%name/%name.toml
 %config(noreplace) %_sysconfdir/%name/firejailed/global
 %_man1dir/stplr*
@@ -68,6 +73,9 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Fri Apr 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.0-alt1
+- New version 0.1.0.
+
 * Sun Mar 01 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.31-alt1
 - New version 0.0.31 (closes ALT#57989, ALT#58004).
 

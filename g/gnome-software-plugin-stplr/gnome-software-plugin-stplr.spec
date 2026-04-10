@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-software-plugin-stplr
-Version: 0.2.0
-Release: alt2
+Version: 0.3.0
+Release: alt1
 
 Summary: Stapler Support for GNOME Software
 License: GPL-3.0-or-later
@@ -12,12 +12,13 @@ Vcs: https://altlinux.space/stapler/gnome-software-plugin-stplr.git
 
 Source: %name-%version.tar
 
-Requires: stplr >= 0.0.30
+Requires: stplr >= 0.1.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala
 BuildRequires: pkgconfig(gnome-software)
 BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: libpolkit-devel
 
 # Needed by scripts/detect-gs-plugin-api-version.sh to detect unstable API.
@@ -46,6 +47,9 @@ This package provides support for install packages from Stapler via GNOME Softwa
 %doc README.md
 
 %changelog
+* Mon Apr 06 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Tue Feb 24 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.2.0-alt2
 - Add Url and Vcs tags.
 
