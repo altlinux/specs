@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
-Release: alt1.1
+Version: 1.0.0
+Release: alt1
 Summary: A library for installing Python wheels
 License: MIT
 Group: Development/Python3
@@ -13,14 +13,17 @@ Url: https://pypi.org/project/installer
 VCS: https://github.com/pypa/installer.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
+%add_pyproject_deps_check_filter pytest-xdist
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -40,6 +43,12 @@ handling wheels and installing packages from wheels.
 # don't ship `exe`s
 find -type f -name '*.exe' -delete
 
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
+
 %build
 %pyproject_build
 
@@ -50,13 +59,12 @@ find -type f -name '*.exe' -delete
 %pyproject_run_pytest -ra
 
 %files
-%doc README.md
 %python3_sitelibdir/installer/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1.1
-- Demodernized packaging.
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.7.0 -> 1.0.0.
 
 * Thu Apr 20 2023 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - 0.6.0 -> 0.7.0.
