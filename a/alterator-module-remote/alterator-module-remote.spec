@@ -1,6 +1,6 @@
 Name: alterator-module-remote
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
 License: %gpl2only
@@ -34,6 +34,9 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.1.5-alt2
+- Update secret scan action to use alterator fork (the-nexi@).
+
 * Fri Feb 27 2026 Ivan Savin <svn17@altlinux.org> 0.1.5-alt1
 - Update .clang-format and CODESTYLE.md.
 - Bringing the code to the described style.

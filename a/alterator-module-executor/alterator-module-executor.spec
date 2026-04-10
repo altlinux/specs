@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.32
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.1.32-alt2
+- Update secret scan action to use alterator fork (the-nexi@).
+
 * Mon Mar 30 2026 Ivan Savin <svn17@altlinux.org> 0.1.32-alt1
 - Make "exit_status" option enabled by default.
 

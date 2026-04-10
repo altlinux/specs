@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.33
-Release: alt2
+Release: alt3
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,9 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt3
+- Update secret scan action to use alterator fork (the-nexi@).
+
 * Wed Apr 01 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt2
 - Update docs/modules/executor(-ru).md.
 

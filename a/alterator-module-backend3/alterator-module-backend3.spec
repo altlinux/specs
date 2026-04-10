@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,9 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt2
+- Update secret scan action to use alterator fork (the-nexi@).
+
 * Thu Mar 26 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt1
 - Add support legacy boolean format in backend3 output parsing (the-nexi@).
 
