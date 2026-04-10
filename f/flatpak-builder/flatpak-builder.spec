@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: flatpak-builder
-Version: 1.4.7
+Version: 1.4.8
 Release: alt1
 Epoch:1
 
@@ -20,10 +20,11 @@ Group: Development/Other
 License: LGPL-2.1
 Url: http://flatpak.org/
 
+Vcs: https://github.com/flatpak/flatpak-builder.git
+
 %if_disabled snapshot
 Source: https://github.com/flatpak/flatpak-builder/releases/download/%version/%name-%version.tar.xz
 %else
-Vcs: https://github.com/flatpak/flatpak-builder.git
 Source: %name-%version.tar
 %endif
 
@@ -119,6 +120,9 @@ the functionality of the installed Flatpak-builder.
 %_datadir/installed-tests/%name
 
 %changelog
+* Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.8-alt1
+- 1.4.8 (fixed CVE-2026-39977)
+
 * Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.7-alt1
 - 1.4.7
 

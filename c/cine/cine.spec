@@ -2,7 +2,7 @@
 
 %define __name Cine
 %define _name cine
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name io.github.diegopvlk.%__name
 
 %def_enable check
@@ -31,7 +31,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
-%define adw_ver 1.8
+%define adw_ver 1.9
 
 Requires: python3-module-pygobject3
 Requires: dconf
@@ -41,6 +41,7 @@ Requires: libadwaita-gir >= %adw_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: /usr/bin/glib-compile-resources /usr/bin/gtk4-update-icon-cache
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
@@ -74,6 +75,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
