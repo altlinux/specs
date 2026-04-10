@@ -7,7 +7,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-desktop
-Version: 10.10.1
+Version: 10.10.2
 Release: alt1
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
@@ -69,6 +69,7 @@ BuildRequires: swayidle
 BuildRequires: swaybg
 BuildRequires: swaylock
 BuildRequires: gammastep
+BuildRequires: /usr/bin/eglinfo
 BuildRequires: gir(Gtk) = 3.0
 
 Requires: budgie-control-center
@@ -118,6 +119,7 @@ Documentation for budgie-desktop
 sed -i '/link_with: libappsys,/a \    dependencies: [dep_wnck],' src/appsys/meson.build
 
 %build
+subst 's|@libexecdirroot@/xdg-desktop-portal|/usr/libexec/xdg-desktop-portal|' src/session/budgie-desktop.in
 %meson -Dwith-hibernate=false
 %meson_build
 
@@ -149,6 +151,7 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %dir %_datadir/%name/labwc/
 %_datadir/%name/labwc/menu.xml
 %_datadir/%name/labwc/rc.xml
+%_datadir/%name/labwc/themerc-*
 %_datadir/glib-2.0/schemas/20_buddiesofbudgie.%name.notifications.gschema.override
 %_datadir/glib-2.0/schemas/20_solus-project.budgie.wm.gschema.override
 %_datadir/glib-2.0/schemas/com.solus-project.*.gschema.xml
@@ -213,6 +216,10 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.2-alt1
+- new version 10.10.2
+- fix xdg-desktop-portal path
+
 * Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.1-alt1
 - new version 10.10.1
 - add libxfce4windowing-0.vapi patch (needed until libxfce4windowing uses meson)
