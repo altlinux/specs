@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -49,8 +49,6 @@ Patch5: alt-soversion.patch
 Patch6: alt-fix-status-after-transaction.patch
 Patch7: alt-pk-disable-launch.patch
 #
-Patch9: alt-show-reboot-avail.patch
-Patch10: alt-keep-focus.patch
 Patch11: alt-hide-autoreboot.patch
 Patch12: alt-send-interactive.patch
 Patch13: alt-ghns-auth.patch
@@ -216,8 +214,6 @@ KF6 library
 %patch6 -p1
 #%patch7 -p1 -b .pk-disable-launch
 #
-#patch9 -p1 -b .show-reboot-checkbox
-%patch10 -p2
 #%patch11 -p1 -b .autoreboot
 %patch12 -p1
 %patch13 -p1
@@ -356,6 +352,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Fri Apr 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- drop alt-keep-focus.patch
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
