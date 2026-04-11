@@ -2,7 +2,7 @@
 
 Name: zuluCrypt
 Version: 7.1.0
-Release: alt1
+Release: alt2
 
 Summary: Qt GUI front-end to cryptsetup
 License: GPL-2.0-or-later
@@ -12,6 +12,7 @@ Vcs: https://github.com/mhogomchungu/zuluCrypt.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-cmake-libdir-fix.patch
+Patch1: %name-%version-alt-remove-pie-for-shared-libs.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -119,6 +120,9 @@ rm -fv %buildroot%_iconsdir/*.png
 %_libdir/pkgconfig/libzuluCrypt.pc
 
 %changelog
+* Sat Apr 11 2026 Anton Kurachenko <srebrov@altlinux.org> 7.1.0-alt2
+- Remove -pie for shared-libs zuluCrypt and zuluCrypt-exe(Fix FTBFS).
+
 * Tue Dec 03 2024 Anton Kurachenko <srebrov@altlinux.org> 7.1.0-alt1
 - New version 7.1.0.
 
