@@ -1,7 +1,7 @@
 %def_with check
 
 Name: python3-module-pydicom
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Read, modify and write DICOM files with python code
@@ -21,6 +21,7 @@ BuildRequires: python3-module-flit
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pydicom-data
+BuildRequires: python3-module-pyfakefs
 %endif
 
 %description
@@ -53,6 +54,9 @@ then you might be interested in another of our projects: pynetdicom.
 %python3_sitelibdir/pydicom-%version.dist-info
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 3.0.2-alt1
+- 3.0.1 -> 3.0.2
+
 * Tue Oct 15 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 - Built with check.
