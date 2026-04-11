@@ -3,7 +3,7 @@
 
 Name: plasma-bigscreen
 Version: 6.5.80
-Release: alt2.git.989ac8b2
+Release: alt3.git.989ac8b2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -45,7 +45,7 @@ BuildRequires: plasma6-activities-devel
 BuildRequires: plasma6-activities-stats-devel
 BuildRequires: plasma-workspace-devel
 BuildRequires: qcoro6-devel
-BuildRequires: kf6-qqc2-breeze-style-devel
+BuildRequires: qqc2-breeze-style-devel
 
 BuildRequires: kde5-plasma-wayland-protocols
 
@@ -73,7 +73,7 @@ Requires: qt6-5compat
 Requires: qt6-multimedia
 Requires: qt6-declarative
 Requires: qt6-webengine
-Requires: kf6-qqc2-breeze-style
+Requires: qqc2-breeze-style
 
 Requires: kwayland-integration
 Requires: plasma6-breeze
@@ -127,6 +127,9 @@ sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
 %_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
 
 %changelog
+* Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.5.80-alt3.git.989ac8b2
+- Depend on renamed style package - qqc2-breeze-style.
+
 * Fri Apr 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.80-alt2.git.989ac8b2
 - NMU: fix requires
 
