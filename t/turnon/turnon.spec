@@ -1,12 +1,10 @@
 %def_disable snapshot
 %define _name turnon
-%define ver_major 2.9
+%define ver_major 3.0
 %define rdn_name de.swsnr.%_name
 
-%def_disable bootstrap
-
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -22,15 +20,15 @@ Source: https://codeberg.org/swsnr/turnon/archive/v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Source1: %name-%version-cargo.tar
 
-%define rust_ver 1.89
+BuildArch: noarch
+
 %define adw_ver 1.8
 
 Requires: dconf
 
-BuildRequires(pre): rpm-macros-rust
-BuildRequires: rust-cargo >= %rust_ver just blueprint-compiler
+BuildRequires(pre): rpm-build-python3
+BuildRequires: blueprint-compiler python3(wheel) python3(hatchling)
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -39,28 +37,21 @@ A small GNOME application to send Wake On LAN (WoL) magic packets to
 devices in a network.
 
 %prep
-%setup -n %name%{?_enable_snapshot:-%version} %{?_disable_bootstrap:-a1}
-%{?_enable_bootstrap:
-[ -d .cargo ] || mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
-
-sed -i "s/\(version := \).*$/\1'%version'/" justfile
-sed -i "s/\.Devel//" justfile
-
+%setup -n %name%{?_enable_snapshot:-%version}
 # use full path for binary
 sed -i 's|\(Exec=\)\(%rdn_name\)|\1%_bindir/\2|' dbus-1/de.swsnr.turnon.service
 
 %build
-just compile
-%rust_build
+%pyproject_build
 
 %install
-just DESTPREFIX=%buildroot%_prefix install
+%pyproject_install
 %find_lang %rdn_name
 
 %files -f %rdn_name.lang
 %_bindir/%rdn_name
+%python3_sitelibdir_noarch/%_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %_name}/
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
@@ -70,6 +61,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Sat Apr 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Fri Mar 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2.9.6-alt1
 - 2.9.6
 
