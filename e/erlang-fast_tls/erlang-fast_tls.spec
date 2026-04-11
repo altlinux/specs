@@ -3,7 +3,7 @@
 %global realname fast_tls
 
 Name: erlang-%realname
-Version: 1.1.25
+Version: 1.1.26
 Release: alt1
 Summary: TLS / SSL OpenSSL-based native driver for Erlang / Elixir
 Group: Development/Erlang
@@ -45,6 +45,9 @@ It is designed for efficiency, speed and compliance.
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1.1.26-alt1
+- 1.1.25 -> 1.1.26
+
 * Tue Nov 25 2025 Ilya Sorochan <k0tran@altlinux.org> 1.1.25-alt1
 - Updated to upstream version 1.1.25.
 
