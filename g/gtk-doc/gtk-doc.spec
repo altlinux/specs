@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.36
 
 %def_with mkpdf
 %def_enable check
 
 Name: gtk-doc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -138,6 +138,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Sat Apr 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.36.1-alt1
+- 1.36.1
+
 * Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
 - updated to 1.36.0-10-gf3424c6 (ported to Meson build system)
 
