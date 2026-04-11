@@ -5,8 +5,8 @@
 %def_with check
 
 Name: bookup
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: A markdown note-taking application for Gnome
 License: GPL-3.0
@@ -85,8 +85,12 @@ sed -i "s/\%lu/\%u/" src/bookup-window.c
 %_iconsdir/hicolor/scalable/apps/%{appname}.svg
 %_iconsdir/hicolor/symbolic/apps/%{appname}-symbolic.svg
 %_datadir/metainfo/%{appname}.metainfo.xml
+%_datadir/mime/packages/%{appname}.xml
 
 %changelog
+* Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.6-alt1
+- New version 1.1.6.
+
 * Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.5-alt2
 - Enabled build on i586.
 

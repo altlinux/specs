@@ -5,7 +5,7 @@
 
 Name: treesheets
 Epoch: 1
-Version: 3056
+Version: 3066
 Release: alt1
 
 Summary: Free Form Data Organizer
@@ -76,6 +76,9 @@ cp -v %buildroot/%_datadir/doc/TreeSheets/examples/tutorial.cts %buildroot/%_dat
 %_datadir/metainfo/*%{cname}.metainfo.xml
 
 %changelog
+* Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 1:3066-alt1
+- New version 3066.
+
 * Thu Apr 09 2026 Nikolay Strelkov <snk@altlinux.org> 1:3056-alt1
 - New version 3056.
 
