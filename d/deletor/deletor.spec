@@ -2,7 +2,7 @@
 %global import_path github.com/pashkov256/deletor
 
 Name: deletor
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 Summary: Manage and delete files efficiently with an interactive TUI and scriptable CLI.
 License: MIT
@@ -50,6 +50,9 @@ rm -rf -- %buildroot%go_root
 %_bindir/%name
 
 %changelog
+* Fri Apr 10 2026 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt1
+- Update to new version 2.0.0.
+
 * Tue Feb 17 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.
 
