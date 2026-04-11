@@ -35,8 +35,8 @@
 %def_with    telescopecontrol
 
 Name: stellarium
-Version: 25.4
-Release: alt2
+Version: 26.1
+Release: alt1
 
 Summary: Astronomical Sky Simulator
 
@@ -45,9 +45,6 @@ Group: Education
 Url: http://www.stellarium.org
 
 Source: %name-%version.tar
-
-# Fix version comparison to find Qt6TextToSpeech
-Patch: 59bb230370a4242806b19106b0dc7eba4d830e54.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -58,6 +55,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-positioning-devel
+BuildRequires: qt6-svg-devel
 # Seems, that documentation is strictly nessesary=)
 BuildRequires: libmd4c-devel
 BuildRequires: perl-podlators
@@ -115,7 +113,6 @@ This package contains shared data files for Stellarium.
 
 %prep
 %setup
-%patch -p1
 
 %ifarch %e2k
 %define _optlevel s
@@ -174,6 +171,9 @@ xvfb-run %ctest -E testCalendars
 %_datadir/%name
 
 %changelog
+* Sat Apr 11 2026 Grigory Ustinov <grenka@altlinux.org> 26.1-alt1
+- Build new version.
+
 * Fri Feb 20 2026 Grigory Ustinov <grenka@altlinux.org> 25.4-alt2
 - Added rt dependency on speech-dispatcher to fix speech output support.
 
