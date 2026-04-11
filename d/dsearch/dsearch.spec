@@ -2,7 +2,7 @@
 %global import_path github.com/AvengeMedia/danksearch
 
 Name: dsearch
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Blazingly fast and efficient file system search tool
@@ -53,6 +53,9 @@ install -Dm 644 assets/dsearch.service %buildroot%_userunitdir/dsearch.service
 %_userunitdir/dsearch.service
 
 %changelog
+* Sat Apr 11 2026 Boris Yumankulov <boria138@altlinux.org> 0.2.1-alt1
+- new version 0.2.1
+
 * Fri Mar 20 2026 Boris Yumankulov <boria138@altlinux.org> 0.2.0-alt1
 - new version 0.2.0
 
