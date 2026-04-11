@@ -3,19 +3,18 @@
 %define oname sphinx-copybutton
 
 Name: python3-module-%oname
-Version: 0.4.0
+Version: 0.5.2
 Release: alt1
 Summary: A small sphinx extension to add a "copy" button to code blocks
 License: MIT
 Group: Development/Python3
 Url: https://github.com/executablebooks/sphinx-copybutton
+VCS: https://github.com/executablebooks/sphinx-copybutton.git
 
 BuildArch: noarch
 
-# https://github.com/executablebooks/sphinx-copybutton.git
 Source: %name-%version.tar
 
-# git submodules
 Source1: %name-%version-clipboard.js.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -41,6 +40,9 @@ A small sphinx extension to add a "copy" button to code blocks.
 %python3_sitelibdir/sphinx_copybutton-%version-*.egg-info
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 0.5.2-alt1
+- 0.4.0 -> 0.5.2
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.4.0-alt1
 - Updated to upstream version 0.4.0.
 
