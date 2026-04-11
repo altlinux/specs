@@ -4,7 +4,7 @@
 
 %def_with check
 
-%define soversion 0.13
+%define soversion 0.14
 
 Name: libcbor
 Version: %soversion.0
@@ -90,6 +90,9 @@ install -pD -m0644 doc/man/libcbor.3 %buildroot/%_man3dir/libcbor.3
 %_man3dir/libcbor.3*
 
 %changelog
+* Wed Apr 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
+- Updated to 0.14.0.
+
 * Mon Sep 01 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.0-alt1
 - Updated to 0.13.0.
 
