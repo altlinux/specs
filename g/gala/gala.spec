@@ -3,7 +3,7 @@
 
 Name: gala
 Version: 8.4.2
-Release: alt1
+Release: alt2
 
 Summary: Pantheon Window Manager
 License: GPL-3.0-or-later AND LGPL-3.0-or-later
@@ -38,6 +38,7 @@ BuildRequires: /usr/bin/valadoc
 
 Requires: dbus
 Requires: dconf
+Requires: mutter-gnome
 
 %description
 gala is a window & compositing manager based on libmutter. It manages the
@@ -133,5 +134,8 @@ cp -pv vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
 %_vapidir/xfixes-4.0.vapi
 
 %changelog
+* Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 8.4.2-alt2
+- Added mutter-gnome package to requires.
+
 * Tue Apr 07 2026 Nikolay Strelkov <snk@altlinux.org> 8.4.2-alt1
 - New version 8.4.2.
