@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 19.2.3
-Release: alt2
+Release: alt2.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -159,6 +159,9 @@ BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
 %{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc++-devel}
 %{?_with_system_utf8proc:BuildRequires: libutf8proc-devel >= 2.2.0}
 BuildRequires: liblmdb-devel
+%ifarch %e2k
+BuildRequires: clang llvm-devel
+%endif
 
 %ifnarch %arm
 BuildRequires: rdma-core-devel
@@ -863,15 +866,10 @@ tar -xf %SOURCE42 -C src/qatzip
 
 %patch -p1
 %ifarch %e2k
-sed -i '/CXX>:-fno-new-ttp-matching>)/d' src/CMakeLists.txt
-sed -i 's/__INTEL_COMPILER/__EDG__/' src/include/stringify.h
-sed -E -i 's/(friend class )interval_set::/\1/' src/include/interval_set.h
-sed -E -i 's/(internal_capacity_holder\(\)) = default;/\1 {}/' src/include/function2.hpp
-sed -i 's/(RadosClient/(librados::RadosClient/' src/librados/IoCtxImpl.cc
-sed -i '/extra_preargs=\[/d;/^setup(/i ext_args["extra_compile_args"].append("-iquoteL/C/C/F/I/X")' \
-	src/pybind/cephfs/setup.py
-sed -i '/#include "common\/ref\.h"/a #include "librbd/crypto/CryptoInterface.h"' \
-  src/librbd/crypto/EncryptionFormat.h
+sed -i 's/template serialize_one(/serialize_one(/;s/other\.is_value()/other.success()/' \
+	src/rgw/driver/posix/zpp_bits.h
+# disable annoying warning
+sed -i '/-Wno-unused-function/a -Wno-vla-cxx-extension' src/CMakeLists.txt
 %endif
 
 cat << __EOF__ > src/.git_version
@@ -883,6 +881,8 @@ __EOF__
 %build
 %ifarch %e2k
 %define optflags_debug -g0
+# -O3 is the default for e2k
+%global _optlevel 2
 %endif
 export NPROCS=%build_parallel_jobs
 
@@ -896,6 +896,9 @@ export CPPFLAGS="$java_inc"
 
 %cmake \
     -GNinja \
+%ifarch %e2k
+    -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+%endif
     -DCMAKE_COLOR_MAKEFILE:BOOL=OFF \
     -DBUILD_CONFIG=rpmbuild \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
@@ -1880,6 +1883,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Mar 11 2026 Michael Shigorin <mike@altlinux.org> 19.2.3-alt2.1
+- E2K: fix build with clang 19 (ilyakurdyukov@)
+
 * Sat Feb 07 2026 Alexey Shabalin <shaba@altlinux.org> 19.2.3-alt2
 - backport fixes from upstream (Fixes: CVE-2024-31884).
 
