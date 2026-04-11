@@ -5,7 +5,7 @@
 %def_with check
 
 Name: erlang-%realname
-Version: 1.0.26
+Version: 1.0.27
 Release: alt1
 Summary: Erlang Image Manipulation Process
 Group: Development/Erlang
@@ -50,6 +50,9 @@ cp priv/bin/eimp .eunit/priv/bin/
 %_erllibdir/%realname-%version
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1.0.27-alt1
+- 1.0.26 -> 1.0.27
+
 * Mon Nov 17 2025 Ilya Sorochan <k0tran@altlinux.org> 1.0.26-alt1
 - Updated to upstream version 1.0.26.
 - Enabled tests.
