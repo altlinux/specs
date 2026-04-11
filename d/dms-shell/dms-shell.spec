@@ -2,7 +2,7 @@
 %global import_path github.com/AvengeMedia/DankMaterialShell/core
 
 Name: dms-shell
-Version: 1.4.4
+Version: 1.4.4.1
 Release: alt1
 
 Summary: DankMaterialShell - Material 3 inspired shell for Wayland compositors
@@ -98,6 +98,9 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 %_iconsdir/hicolor/scalable/apps/danklogo.svg
 
 %changelog
+* Sat Apr 11 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.4.1-alt1
+- new version 1.4.4.1
+
 * Tue Mar 31 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.4-alt1
 - initial build for ALT Sisyphus
 
