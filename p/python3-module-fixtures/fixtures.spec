@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.1
+Version: 4.3.2
 Release: alt1
 
 Summary: Fixtures, reusable state for writing clean tests and more
@@ -56,6 +56,9 @@ install -D tests/helpers.py %buildroot%python3_sitelibdir/%oname/tests/helpers.p
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Apr 11 2026 Grigory Ustinov <grenka@altlinux.org> 4.3.2-alt1
+- Automatically updated to 4.3.2.
+
 * Fri Feb 27 2026 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt1
 - Automatically updated to 4.3.1.
 
