@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.26
+Version: 9.0.28
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -27,7 +27,7 @@ BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-devel
 # required libabseil-cpp built with -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 BuildRequires: libabseil-cpp-devel >= 20211102.0-alt3
-BuildRequires: /proc /usr/bin/java
+BuildRequires: /proc /dev/pts /usr/bin/java
 #BuildRequires: /usr/bin/mvn junit mockito
 %{?_enable_check:BuildRequires: ctest libgtest-devel}
 
@@ -84,6 +84,9 @@ sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Apr 09 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.28-alt1
+- 9.0.28
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.26-alt1
 - 9.0.26
 
