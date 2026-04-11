@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evisum
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 Summary: The Enlightenment system and process monitor
@@ -46,6 +46,9 @@ System and process monitor for Enlightenment.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Apr 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
