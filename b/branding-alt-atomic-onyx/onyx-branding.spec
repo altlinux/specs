@@ -15,8 +15,11 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260313
+Version: 20260401
 Release: alt1
+
+# ptyxis doesn't support i586
+ExcludeArch: i586
 
 Group: Graphics
 Summary: System/Base
@@ -55,12 +58,10 @@ Conflicts: altlinux-release-%altbranch
 Summary: %pname settings for GNOME
 Group: Graphical desktop/GNOME
 
-BuildArch: noarch
-
+Requires: ptyxis
 Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-clipboard-indicator
 Requires: nautilus-open-any-terminal
-# Requires: ptyxis
 Requires: dconf
 Requires: %name-graphics = %EVR
 Requires(post): libgio
@@ -139,6 +140,10 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Wed Apr 01 2026 Vladimir Romanov <rirusha@altlinux.org> 20260401-alt1
+- Added requires on ptyxis in gnome-settings subpackage.
+- Added ExcludeArch for i586 (because of ptyxis).
+
 * Fri Mar 13 2026 Vladimir Romanov <rirusha@altlinux.org> 20260313-alt1
 - Replaced alt-atomic-icons with icon-theme-alt-atomic-onyx in graphics.
 
