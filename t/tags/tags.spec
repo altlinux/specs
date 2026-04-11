@@ -4,7 +4,7 @@
 
 Name: tags
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Summary: A simple text tagger
 License: MIT
@@ -35,6 +35,8 @@ color scheme and hit counter.
 %setup
 sed -i "s|./data/screenshots/||" README.md
 sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.github.phastmike.tags.desktop.in
+# fix FTBFS
+sed -i "s|Gtk.DragIcon.get_for_drag|new Gtk.DragIcon.get_for_drag|" src/tag/tags-view.vala
 
 %build
 %meson
@@ -58,6 +60,9 @@ sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.gi
 %_iconsdir/hicolor/symbolic/apps/%{appname}-symbolic.svg
 
 %changelog
+* Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt2
+- Fix FTBFS.
+
 * Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt1
 - New version 2.1.
 
