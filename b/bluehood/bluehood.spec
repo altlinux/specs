@@ -1,5 +1,5 @@
 Name: bluehood
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Monitor your local neighbourhood's bluetooth activity
@@ -52,6 +52,9 @@ cp -a grafana/*.json %buildroot%_sysconfdir/grafana/dashboards/%name-dashboard/
 %_sysconfdir/grafana/dashboards/%name-dashboard/
 
 %changelog
+* Mon Apr 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
+- 0.6.0 -> 0.7.0
+
 * Sat Feb 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
 - 0.3.5 -> 0.6.0
 - added subpackage grafana-dashboards-bluehood
