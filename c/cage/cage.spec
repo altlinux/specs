@@ -1,6 +1,6 @@
 Name:    cage
-Version: 0.2.1
-Release: alt3
+Version: 0.3.0
+Release: alt1
 
 Summary: A Wayland kiosk
 License: MIT
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: scdoc
-BuildRequires: pkgconfig(wlroots-0.19)
+BuildRequires: pkgconfig(wlroots-0.20)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.14
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(xkbcommon)
@@ -42,6 +42,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Apr 11 2026 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt3
 - Upstream fixes:
   + Fix segfault when title or app_id is NULL.
