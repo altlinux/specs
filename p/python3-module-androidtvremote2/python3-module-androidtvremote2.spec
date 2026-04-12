@@ -2,7 +2,7 @@
 %define module_name androidtvremote2
 
 Name: python3-module-%module_name
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: A Python library implementing the Android TV Remote protocol v2
 License: Apache-2.0
@@ -42,6 +42,9 @@ on most Android TV devices.
 %exclude %python3_sitelibdir/__pycache__/demo.*.pyc
 
 %changelog
+* Sun Apr 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.1-alt1
+- Updated to version 0.3.1.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.0-alt1
 - Updated to version 0.3.0.
 
