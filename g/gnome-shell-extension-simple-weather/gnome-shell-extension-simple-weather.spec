@@ -3,7 +3,7 @@
 %define __name SimpleWeather
 %define git_name %__name
 %define _name simple-weather
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define uuid %_name@romanlefler.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -14,7 +14,7 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.2.0
+Version: %ver_major.0.0
 Release: alt1
 
 Summary: Weather extension for the GNOME Shell
@@ -68,6 +68,9 @@ mv %git_name-%version-npm.tar %_sourcedir/}
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0.0-alt1
+- 50.0.0
+
 * Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2.0-alt1
 - 49.2.0
 
