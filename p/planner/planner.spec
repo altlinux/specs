@@ -1,6 +1,6 @@
 Name: planner
 Version: 0.14.92
-Release: alt1
+Release: alt2
 
 Summary: Planner - project management application
 Summary(ru_RU.UTF-8): Программа управления проектами Planner
@@ -18,6 +18,8 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%name-%version.tar
 
 Patch1: %name-window.c.patch
 Patch2: %name-main.c.patch
+# for wayland
+Patch3: Fix-application-icon.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -77,6 +79,7 @@ Libraries needed to develop for planner.
 %patch1 -p0
 #patch2 -p0
 #cp -f %SOURCE1 po/ru.po
+%patch3 -p1
 
 %build
 %meson
@@ -119,6 +122,10 @@ mv %buildroot%_libdir/planner/libplanner-1.so* %buildroot%_libdir/
 %_man1dir/*
 
 %changelog
+* Sun Apr 12 2026 Anton Midyukov <antohami@altlinux.org> 0.14.92-alt2
+- NMU: applied upstream patch:
+  + data: Fix application icon display on Wayland with StartupWMClass.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.14.92-alt1
 - new version 0.14.92
 - switch to meson
