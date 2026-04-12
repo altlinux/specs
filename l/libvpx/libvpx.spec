@@ -1,4 +1,4 @@
-%define soname 11
+%define soname 12
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
@@ -22,12 +22,13 @@
 %endif
 
 Name: libvpx
-Version: 1.15.2
+Version: 1.16.0
 Release: alt1
 Summary: VP8 video codec
 Group: Video
 License: BSD
 Url: https://www.webmproject.org/
+VCS: https://chromium.googlesource.com/webm/libvpx
 
 Source0: libvpx-%version.tar
 Patch: %name-%version-%release.patch
@@ -91,6 +92,8 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 	--disable-avx2 \
 	%endif
 	--disable-install-srcs \
+	--size-limit=16384x16384 \
+	--enable-multi-res-encoding \
 	--enable-vp9-decoder \
 	--enable-vp9-encoder \
 	--enable-experimental \
@@ -115,6 +118,11 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 1.16.0-alt1
+- 1.15.2 -> 1.16.0
+- enabled multi-res encoding support (VP8 only)
+- set frame size limit to 16384x16384 to prevent excessive memory usage
+
 * Tue Jul 22 2025 Anton Farygin <rider@altlinux.com> 1.15.2-alt1
 - 1.15.1 -> 1.15.2
 
