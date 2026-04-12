@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.24.1
+Version: 3.24.2
 Release: alt1
 
 Group: Networking/Remote access
@@ -549,6 +549,11 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sun Apr 12 2026 Andrey Cherepanov <cas@altlinux.org> 3.24.2-alt1
+- New version (fixes: CVE-2026-33995, CVE-2026-33987, CVE-2026-33986,
+  CVE-2026-33985, CVE-2026-33984, CVE-2026-33983, CVE-2026-33982,
+  CVE-2026-33977, CVE-2026-33952).
+
 * Thu Mar 19 2026 Andrey Cherepanov <cas@altlinux.org> 3.24.1-alt1
 - New version (fixes: CVE-2026-29774, CVE-2026-29775, CVE-2026-29776,
   CVE-2026-31806, CVE-2026-31883, CVE-2026-31884, CVE-2026-31885,
