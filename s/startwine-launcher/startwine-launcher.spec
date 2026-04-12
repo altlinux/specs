@@ -1,11 +1,11 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v412
+%define nameVR _v420
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 412
+Version: 420
 Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
@@ -56,6 +56,32 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Mon Apr 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 420-alt1
+- 412 -> 420:
+  + Updated list of Wine versions.
+  + Updated list of dxvk and vkd3d versions.
+  + Updated default prefix backup.
+  + Updated prefix configurations.
+  + Updated winetricks dll list.
+  + Fixed the problem of loading game images.
+  + Fixed incorrect detection of some hotkeys when changing
+    the keyboard layout.
+  + Fixed incorrect termination of processes when the connection
+    was lost while downloading files.
+  + Authorization and game libraries of GOG.COM and Epic Games
+    Store services are integrated into the StartWine interface.
+  + Added virtual keyboard for gamepad.
+  + Added the StartWine RU repository for downloading and installing.
+  + Added automatic selection of a quick repository for downloading
+    and installing StartWine.
+  + Added Wine Proton EM
+  + Added WOW64 subsystem for better compability with 32
+    bit applications.
+  + Added NTSYNC option for better perfomance.
+  + Added HDR If the game supports HDR, the switch in the game
+    will be unlocked.
+  + other changes and improvements
+
 * Mon Nov 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 412-alt1
 - 411 -> 412:
   + Updated list of Wine versions.
