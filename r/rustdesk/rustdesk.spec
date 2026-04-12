@@ -1,6 +1,6 @@
 Name: rustdesk
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
 License: AGPL-3.0
@@ -50,6 +50,7 @@ BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: vcpkg
 BuildRequires: nasm
+BuildRequires: yasm
 BuildRequires: ninja-build
 BuildRequires: patchelf
 BuildRequires: zip
@@ -115,6 +116,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Sun Apr 12 2026 Anton Kurachenko <srebrov@altlinux.org> 1.4.4-alt2
+- Added yasm to BuildReq(Fix FTBFS).
+
 * Wed Nov 19 2025 Anton Kurachenko <srebrov@altlinux.org> 1.4.4-alt1
 - New version 1.4.4.
 
