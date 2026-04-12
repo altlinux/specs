@@ -1,7 +1,8 @@
 %def_with check
+%define commit a5604c4
 
 Name: pcb2gcode
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 Group: Engineering
@@ -36,6 +37,10 @@ dynamic calibration of the milling depth.
 %prep
 %setup
 
+# set upstream commit
+sed -i 's/PCB2GCODE_GIT_VERSION "unknown"/PCB2GCODE_GIT_VERSION "%commit"/' \
+	CMakeLists.txt
+
 %build
 %cmake
 %cmake_build
@@ -54,6 +59,9 @@ dynamic calibration of the milling depth.
 %doc AUTHORS README.md COPYING
 
 %changelog
+* Wed Apr 08 2026 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt1
+- New version 3.0.4.
+
 * Sun Mar 15 2026 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
 - New version 3.0.3.
 - Build with cmake.
