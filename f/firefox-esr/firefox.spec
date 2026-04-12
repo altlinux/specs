@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.9.0
+Version: 140.9.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -448,6 +448,13 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Apr 11 2026 Pavel Vasenkov <pav@altlinux.org> 140.9.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-5732 Incorrect boundary conditions, integer overflow in the Graphics: Text component
+  + CVE-2026-5731 Memory safety bugs fixed in Firefox ESR 115.34.1, Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird
+  + CVE-2026-5734 Memory safety bugs fixed in Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird 149.0.2
+
 * Fri Mar 27 2026 Pavel Vasenkov <pav@altlinux.org> 140.9.0-alt1
 - New ESR version.
 - Security fixes:
