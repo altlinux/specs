@@ -5,8 +5,8 @@
 %def_with check
 
 Name: television
-Version: 0.15.4
-Release: alt2
+Version: 0.15.5
+Release: alt1
 Summary: A fast, portable and hackable fuzzy finder for the terminal
 License: MIT
 Group: File tools
@@ -70,6 +70,9 @@ export TV_BIN_PATH=%bin_path
 %doc LICENSE
 
 %changelog
+* Sun Apr 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.5-alt1
+- Updated to version 0.15.5.
+
 * Fri Mar 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.4-alt2
 - Added missing runtime requires on bat, fd and ripgrep.
 
