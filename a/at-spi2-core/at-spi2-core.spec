@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -27,7 +27,8 @@ Url: https://wiki.gnome.org/Accessibility
 
 Vcs: https://gitlab.gnome.org/GNOME/at-spi2-core.git
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://github.com/GNOME/%name/archive/%version/%name-%version.tar.gz
 
 Requires: lib%name = %EVR
 Requires: dbus-tools-gui
@@ -266,6 +267,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.1-alt1
+- 2.60.1
+
 * Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.0-alt1
 - 2.60.0
 

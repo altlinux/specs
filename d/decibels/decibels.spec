@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: decibels
-Version: %ver_major.0
+Version: %ver_major.6.1
 Release: alt1%beta
 
 Summary: Sound Player for GNOME
@@ -80,6 +80,9 @@ The GNOME application for play sound files.
 
 
 %changelog
+* Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 49.6.1-alt1
+- 49.6.1
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

@@ -12,12 +12,13 @@
 %def_enable webdav
 %def_enable exchange
 %def_enable google
+%def_enable google_files
 %def_enable imap_smtp
 %def_enable doc
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Provide online accounts information
@@ -121,6 +122,7 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
     %{subst_enable_meson_bool backend goabackend} \
     %{subst_enable_meson_bool exchange exchange} \
     %{subst_enable_meson_bool google google} \
+    %{subst_enable_meson_bool google_files google_files} \
     %{subst_enable_meson_bool imap_smtp imap_smtp} \
     %{subst_enable_meson_bool kerberos kerberos} \
     %{subst_enable_meson_bool owncloud owncloud} \
@@ -182,6 +184,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.1-alt1
+- 3.58.1
+
 * Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
 - 3.58.0
 
