@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     bottles
-Version:  51.13
+Version:  60.0
 Release:  alt1
 Epoch:    1
 
@@ -10,9 +10,9 @@ License:  GPL-3.0
 Group:    Other
 Url:      https://github.com/bottlesdevs/Bottles
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Source:   Bottles-%version.tar
+Source: Bottles-%version.tar
+Patch0: bottles-alt-remove-flatpack.patch
+Patch1: bottles-alt-remove-fundings-request.patch
 
 BuildArch: noarch
 
@@ -41,6 +41,8 @@ Easily manage wineprefix using environments.
 
 %prep
 %setup -n Bottles-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 %meson
@@ -64,6 +66,9 @@ echo %_datadir/locale/zh_Hant/LC_MESSAGES/bottles.mo >> %name.lang
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Mon Nov 24 2025 Andrey Cherepanov <cas@altlinux.org> 1:60.0-alt1
+- New version (ALT #56984).
+
 * Sun Jul 21 2024 Andrey Cherepanov <cas@altlinux.org> 1:51.13-alt1
 - New version.
 
