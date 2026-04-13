@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-manual
-Version: 6.5.43
+Version: 6.5.48
 Release: alt1
 
 Summary: Help files for DDE
@@ -51,8 +51,6 @@ Data files for %name.
 %prep
 %setup
 %patch -p1
-sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
-  cmake/translation-generate.cmake
 
 %build
 %if_enabled qtwebengine
@@ -83,6 +81,9 @@ sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
 %endif
 
 %changelog
+* Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.48-alt1
+- New version 6.5.48.
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.43-alt1
 - New version 6.5.43.
 - Fixed build on dtk 6.7.31.
