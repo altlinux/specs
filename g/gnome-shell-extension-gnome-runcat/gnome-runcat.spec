@@ -1,8 +1,8 @@
 %define exID runcat@kolesnikov.se
 
 Name: gnome-shell-extension-gnome-runcat
-Version: 31
-Release: alt2
+Version: 32
+Release: alt1
 
 Summary: RunCat for GNOME Shell
 Summary(ru_RU.UTF-8): Бегущий кот для GNOME Shell 
@@ -35,7 +35,7 @@ Animation speed changes depending on CPU usage.
 	tar -xf %SOURCE2 -C ./
 %endif
 
-subst 's|"49"|"49", "50"|' src/metadata.json
+#subst 's|"49"|"49", "50"|' src/metadata.json
 
 %build
 %make_build
@@ -50,6 +50,9 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas/
 %doc *.md LICENSE 
 
 %changelog
+* Tue Apr 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 32-alt1
+- 31 -> 32
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 31-alt2
 - fixed for GNOME 50
 
