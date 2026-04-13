@@ -2,7 +2,7 @@
 
 %define _name Iconic
 %define binary_name folder_icon
-%define ver_major 2025.9
+%define ver_major 2026.4
 %define rdn_name nl.emphisia.icon
 
 %def_enable check
@@ -87,6 +87,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.4.1-alt1
+- 2026.4.1
+
 * Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.9.1-alt1
 - 2025.9.1
 

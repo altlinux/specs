@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.6
+%define ver_major 3.7
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
@@ -15,9 +15,6 @@ Group: System/Configuration/Other
 Url: https://gitlab.com/adhami3310/Impression
 
 Vcs: https://gitlab.com/adhami3310/Impression.git
-# hardcode ALT (not usable for >= 3.5.2)
-# see gchema.override below
-Patch2: %name-3.3.0-alt-add-alt-to-list.patch
 
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
@@ -77,8 +74,10 @@ _EOF_
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc PRESS* README*
 
-
 %changelog
+* Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
+- v3.7.0-1-g6aed634
+
 * Tue Jan 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
