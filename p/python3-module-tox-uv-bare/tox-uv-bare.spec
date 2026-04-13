@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.35.0
+Version: 1.35.1
 Release: alt1
 Summary: Integration of uv with tox (bare package, bring your own uv)
 License: MIT
@@ -58,6 +58,9 @@ export UV_OFFLINE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 13 2026 Stanislav Levin <slev@altlinux.org> 1.35.1-alt1
+- 1.35.0 -> 1.35.1.
+
 * Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 1.35.0-alt1
 - 1.34.0 -> 1.35.0.
 
