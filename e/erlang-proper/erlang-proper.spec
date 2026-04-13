@@ -3,7 +3,7 @@
 %global realname proper
 
 Name: erlang-%realname
-Version: 1.4.0.19.3bbd
+Version: 1.5.0
 Release: alt1
 Summary: A QuickCheck-inspired property-based testing tool for Erlang
 Group: Development/Erlang
@@ -46,6 +46,9 @@ export ERL_LIBS=%buildroot%_erllibdir
 %_erllibdir/%realname-%version
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
+- 1.4.0.19.3bbd -> 1.5.0
+
 * Tue Oct 25 2022 Egor Ignatov <egori@altlinux.org> 1.4.0.19.3bbd-alt1
 - Merge with upstream/master to fix build with OTP-25.1.1
 

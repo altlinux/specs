@@ -3,7 +3,7 @@
 %def_with check
 
 Name: elixir
-Version: 1.17.3
+Version: 1.19.4
 Release: alt1
 Summary: A modern approach to programming for the Erlang VM
 License: Apache-2.0
@@ -67,6 +67,9 @@ export LANG="en_US.UTF-8"
 %_mandir/man1/*
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.19.4-alt1
+- 1.17.3 -> 1.19.4
+
 * Thu Sep 19 2024 Egor Ignatov <egori@altlinux.org> 1.17.3-alt1
 - 1.17.3
 

@@ -5,7 +5,7 @@
 
 Name: rebar
 Epoch: 1
-Version: 3.24.0
+Version: 3.25.1
 Release: alt1
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: Apache-2.0
@@ -50,6 +50,9 @@ install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1:3.25.1-alt1
+- 3.24.0 -> 3.25.1
+
 * Thu Sep 19 2024 Egor Ignatov <egori@altlinux.org> 1:3.24.0-alt1
 - 3.24.0
 
@@ -87,7 +90,6 @@ install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
   + Support for custom version commands
   + Load plugins dynamically from source
 
-
 * Tue Aug 02 2011 Sergey Shilov <hsv@altlinux.org> 2.git20110801-alt1
 - 2.git20110801:
   + Fix error handling bug in {copy,In,Out} template
@@ -116,7 +118,6 @@ install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
   + Add support for command-specific env for hooks
   + Add list-deps command
   + Add file local variables where appropriate
-
 
 * Thu Apr 14 2011 Sergey Shilov <hsv@altlinux.org> 2.git20110411-alt1
 Initial build.
