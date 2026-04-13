@@ -4,7 +4,7 @@
 
 Name:          lib%nomen
 Version:       2025.05.28
-Release:       alt1
+Release:       alt1.1
 Summary:       BLAS++ the C++ wrapper around CPU and GPU BLAS library
 License:       BSD-3-Clause
 Group:         Sciences/Mathematics
@@ -17,13 +17,13 @@ BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libgomp-devel
-BuildRequires: liblapack-devel
+BuildRequires: cmake(lapack)
 # BuildRequires: libsycl-devel
 # BuildRequires: libmkl-devel
 # BuildRequires: hip-devel
 # BuildRequires: rocblas-devel
 %{?_enable_check:BuildRequires: ctest}
-%{?_enable_check:BuildRequires: libtestsweeper-devel}
+%{?_enable_check:BuildRequires: cmake(testsweeper)}
 
 %description
 BLAS++ is a C++ wrapper around CPU and GPU BLAS (basic linear algebra
@@ -109,5 +109,8 @@ This package contains development files of BLAS++.
 
 
 %changelog
+* Mon Apr 13 2026 Pavel Skrylev <majioa@altlinux.org> 2025.05.28-alt1.1
+- ! replaced direct dep to devel with cmake-like oblique dep
+
 * Fri Apr 10 2026 Pavel Skrylev <majioa@altlinux.org> 2025.05.28-alt1
 - initial build for Sisyphus

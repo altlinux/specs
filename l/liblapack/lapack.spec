@@ -1,52 +1,56 @@
-Name: lapack
-Version: 3.8.0
-Release: alt10
-Epoch: 1
+%define        _unpackaged_files_terminate_build 1
+%define        nomen lapack
+%define        bnomen blas
+%define        enomen lapacke
+%define        cnomen cblas
+%def_enable    check
+%def_without   bootstrap
+%def_without   xblas
 
-%define sover 4
-%define soname lib%name.so.%sover
-%def_without bootstrap
+Name:          lib%nomen
+Epoch:         1
+Version:       3.12.1
+Release:       alt1
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra
+License:       BSD
+Group:         System/Libraries
+Url:           https://github.com/Reference-LAPACK/lapack
+Vcs:           https://github.com/reference-lapack/lapack.git
 
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-License: BSD
-Group: Development/Other
-Url: http://www.netlib.org/
-
-Source: %name-%version.tar
-Source1: manpages.tar
-
-Patch100: CVE-2021-4048.patch
-Patch1: cmake.patch
-
-BuildRequires: cmake gcc-fortran libxblas-devel
-%{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: cmake
+BuildRequires: gcc-fortran
 BuildRequires: libopenblas-devel
+%{?_with_xblas:BuildRequires: libxblas-devel}
+%{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
 
-%package -n lib%{name}3
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-Group: System/Libraries
-
-%package -n lib%{name}3-devel
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-Group: Development/Other
-Requires: libopenblas-devel
-
-%package -n blas-man
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-Group: Development/Documentation
-BuildArch: noarch
-Conflicts: blas-man < %epoch:%version-%release
-Obsoletes: blas-goto-man
-
-%package -n lapack-man
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-Group: Development/Documentation
-Requires: blas-man = %epoch:%version-%release
-BuildArch: noarch
-Conflicts: lapack-man < %epoch:%version-%release
-Obsoletes: lapack-goto-man
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%add_optflags %optflags_shared
 
 %description
+LAPACK (Linear Algebra PACKage) is a standard library for numerical linear
+algebra. LAPACK provides routines for solving systems of simultaneous linear
+equations, least-squares solutions of linear systems of equations, eigenvalue
+problems, and singular value problems. Associated matrix factorizations (LU,
+Cholesky, QR, SVD, Schur, and generalized Schur) and related computations (i.e.,
+reordering of Schur factorizations and estimating condition numbers) are also
+included. LAPACK can handle dense and banded matrices, but not general sparse
+matrices. Similar functionality is provided for real and complex matrices in
+both single and double precision.
+
+
+%package       devel
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Other
+
+Requires:      cmake
+Requires:      gcc-fortran
+Requires:      libopenblas-devel
+%{?_with_xblas:Requires: libxblas-devel}
+Conflicts:     lib%{nomen}3-devel
+
+%description   devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -58,7 +62,12 @@ are also included. LAPACK can handle dense and banded matrices, but
 not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
-%description -n lib%{name}3
+
+%package       -n lib%bnomen
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+%description   -n lib%bnomen
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -70,7 +79,18 @@ are also included. LAPACK can handle dense and banded matrices, but
 not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
-%description -n lib%{name}3-devel
+
+%package       -n lib%bnomen-lapack-devel
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+Requires:      cmake
+Requires:      gcc-fortran
+Requires:      libopenblas-devel
+%{?_with_xblas:Requires: libxblas-devel}
+Conflicts:     libblas-devel
+
+%description   -n lib%bnomen-lapack-devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -82,7 +102,12 @@ are also included. LAPACK can handle dense and banded matrices, but
 not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
-%description -n blas-man
+
+%package       -n lib%enomen
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+%description   -n lib%enomen
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -94,7 +119,12 @@ are also included. LAPACK can handle dense and banded matrices, but
 not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
-%description -n lapack-man
+
+%package       -n lib%enomen-devel
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+%description   -n lib%enomen-devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -105,70 +135,114 @@ reordering of Schur factorizations and estimating condition numbers)
 are also included. LAPACK can handle dense and banded matrices, but
 not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
+
+
+%package       -n lib%cnomen
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+%description   -n lib%cnomen
+LAPACK (Linear Algebra PACKage) is a standard library for numerical
+linear algebra. LAPACK provides routines for solving systems of
+simultaneous linear equations, least-squares solutions of linear
+systems of equations, eigenvalue problems, and singular value
+problems. Associated matrix factorizations (LU, Cholesky, QR, SVD,
+Schur, and generalized Schur) and related computations (i.e.,
+reordering of Schur factorizations and estimating condition numbers)
+are also included. LAPACK can handle dense and banded matrices, but
+not general sparse matrices. Similar functionality is provided for
+real and complex matrices in both single and double precision.
+
+
+%package       -n lib%cnomen-devel
+Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
+Group:         Development/Documentation
+
+%description   -n lib%cnomen-devel
+LAPACK (Linear Algebra PACKage) is a standard library for numerical
+linear algebra. LAPACK provides routines for solving systems of
+simultaneous linear equations, least-squares solutions of linear
+systems of equations, eigenvalue problems, and singular value
+problems. Associated matrix factorizations (LU, Cholesky, QR, SVD,
+Schur, and generalized Schur) and related computations (i.e.,
+reordering of Schur factorizations and estimating condition numbers)
+are also included. LAPACK can handle dense and banded matrices, but
+not general sparse matrices. Similar functionality is provided for
+real and complex matrices in both single and double precision.
+
 
 %prep
-%setup -a1
-%patch100 -p1
-%patch1
+%setup
+%autopatch
 
-export LC_COLLATE=C
-ls manpages/blas/man/manl >blas.manpages
-ls manpages/man/manl >lapack.manpages
-comm -12 blas.manpages lapack.manpages >dup.manpages
-(cd manpages/man/manl; xargs -r rm -v -- ) <dup.manpages || exit 1
-rm blas.manpages lapack.manpages dup.manpages
-rm -fR BLAS
 
 %build
-%add_optflags %optflags_shared
 %cmake \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
-	-DUSE_XBLAS:BOOL=ON \
-	-DBUILD_DEPRECATED:BOOL=ON \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DBUILD_STATIC_LIBS:BOOL=OFF \
-	-DSOVER:STRING=%sover
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DBUILD_SHARED_LIBS:BOOL=ON \
+   -DLAPACKE:BOOL=ON \
+   -DCBLAS:BOOL=ON \
+%if_with xblas
+   -DUSE_XBLAS:BOOL=ON \
+%endif
+   %nil
 
 %cmake_build
+
 
 %install
 %cmake_install
 
-for f in manpages/blas/man/manl/*.l; do
-	m=$(basename "$f" .l).3f
-	install -pD -m644 $f %buildroot%_man3dir/"$m"
-	echo %_man3dir/"$m*"
-done >blas-man.files
 
-for f in manpages/man/manl/*.l; do
-	m=$(basename "$f" .l).3f
-	# some lapack pages miss .TH header
-	if grep -qs -i '^[.]TH[[:space:]]' "$f"; then
-		install -pD -m644 $f %buildroot%_man3dir/"$m"
-	else
-		echo ".TH $(echo ${m%%.3f} |sed -e 's/.*/\U&/') 3" >%buildroot%_man3dir/"$m"
-		cat "$f" >>%buildroot%_man3dir/"$m"
-	fi
-	echo %_man3dir/"$m*"
-done >lapack-man.files
-rm -rf %buildroot%_libdir/cmake
+%files
+%doc README.md
+%_libdir/%name.so.*
 
-%files -n lib%{name}3
-%define _customdocdir %_docdir/lapack-3.1
-%doc LICENSE README.md
-%_libdir/%soname
+%files         devel
+%doc README.md
+%_libdir/%name.so
+%_libdir/cmake/%nomen-*
+%_pkgconfigdir/%nomen.pc
+%_includedir/%nomen.*
 
-%files -n lib%{name}3-devel
-%_libdir/liblapack.so
+%files         -n lib%bnomen
+%doc README.md
+%_libdir/lib%bnomen.so.*
 
-%files -n blas-man -f blas-man.files
-%files -n lapack-man -f lapack-man.files
+%files         -n lib%bnomen-lapack-devel
+%doc README.md
+%_libdir/lib%bnomen.so
+%_pkgconfigdir/%bnomen.pc
+
+%files         -n lib%enomen
+%doc README.md
+%_libdir/lib%enomen.so.*
+
+%files         -n lib%enomen-devel
+%doc README.md
+%_libdir/lib%enomen.so
+%_libdir/cmake/%{enomen}-*
+%_pkgconfigdir/%{enomen}.pc
+%_includedir/%{enomen}*
+
+%files         -n lib%cnomen
+%doc README.md
+%_libdir/lib%cnomen.so.*
+
+%files         -n lib%cnomen-devel
+%doc README.md
+%_libdir/lib%cnomen.so
+%_libdir/cmake/%{cnomen}-*
+%_pkgconfigdir/%{cnomen}.pc
+%_includedir/%{cnomen}*
+
 
 %changelog
-* Mon Apr 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.8.0-alt10
-- ! fixed names to update lapack
+* Sat Apr 04 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.12.1-alt1
+- ^ 3.8.0 -> 3.12.1
+- + enabled lapacke and cblas packages (ALT #39238)
+- * rebased to upstream git
+- - droppen obsoleted man pages
 
 * Sat Jul 19 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.8.0-alt9
 - ! fixed FTBFS: raise cmake minimum requirement
@@ -238,7 +312,7 @@ rm -rf %buildroot%_libdir/cmake
 - Rebuilt with ATLAS 3.9.35
 
 * Sat Mar 26 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.0-alt4
-- Set %_libdir/lib%name.so as link
+- Set %_libdir/liblapack.so as link
 
 * Mon Mar 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.0-alt3
 - Added -g into compiler flags
@@ -292,12 +366,12 @@ rm -rf %buildroot%_libdir/cmake
 * Tue Apr 25 2006 Alexey Tourbin <at@altlinux.ru> 1:3.0-alt1
 - back to official versioning
 - use officially released tarball
-- libification: lib%name, lib%name-devel, lib%name-devel-static
-- abandon makefiles, custom %%build procedure
+- libification: liblapack, liblapack-devel, liblapack-devel-static
+- abandon makefiles, custom % procedure
 - compile with -Os to workaround g77 bugs (redhat #138447)
 - complie dcabs1.f with -O0 (redhat #143420)
 - added missing BLAS source files (drotm.f, drotmg.f, zdrot.f, etc.)
-- added manual pages to lib%name-devel
+- added manual pages to liblapack-devel
 
 * Sun Dec 01 2002 Vitaly Lugovsky <vsl@altlinux.ru> 2002-alt3
 - rebuild
