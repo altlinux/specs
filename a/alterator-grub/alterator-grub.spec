@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.30.1
-Release: alt2
+Version: 0.30.2
+Release: alt1
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -60,10 +60,18 @@ touch %buildroot%_sysconfdir/efi_removable.flag
 %ghost %_sysconfdir/efi_removable.flag
 
 %changelog
+* Mon Apr 13 2026 Egor Ignatov <egori@altlinux.org> 0.30.2-alt1
+- backend3/grub: restore backward compatibility with grub <2.14-alt1
+  (fall back to grub-install when grub-efi-install is not available).
+
 * Wed Apr 08 2026 Anton Midyukov <antohami@altlinux.org> 0.30.1-alt2
 - Fix efi_removable.flag (created as a directory by mistake).
 
 * Tue Apr 07 2026 Anton Midyukov <antohami@altlinux.org> 0.30.1-alt1
+- backend3/grub: Set default item to "EFI (removable)" when
+  /etc/efi_removable.flag exist.
+
+* Tue Apr 07 2026 Anton Midyukov <antohami@altlinux.org> 0.29-alt1.p11
 - backend3/grub: Set default item to "EFI (removable)" when
   /etc/efi_removable.flag exist.
 

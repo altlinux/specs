@@ -10,6 +10,8 @@
 # LTO crashes that fragile house of cards, so should be disabled.
 %global optflags_lto %nil
 
+%global _fontsdir %_datadir/fonts
+
 %global gnulib_version 9f48fb992a3d7e96610c4ce8be969cff2d61a01b
 
 # No need for post-processing GRUB modules and their helpers
@@ -22,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt3
+Release: alt4
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -81,14 +83,13 @@ BuildRequires: libfuse-devel
 BuildRequires: liblzma-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: libtasn1-devel
 
-BuildRequires: fonts-bitmap-univga
+# GNU Unifont is grub's buildtime FONT_SOURCE
+BuildRequires: fonts-ttf-unifont
+# ALT default font
 BuildRequires: fonts-bitmap-terminus
-# Default font
-%define font /usr/share/fonts/bitmap/univga/u_vga16_9.pcf.gz
-# Large fonts for high-resolution displays
-%define font_24 /usr/share/fonts/bitmap/terminus/ter-x24b.pcf.gz
-%define font_32 /usr/share/fonts/bitmap/terminus/ter-x32b.pcf.gz
+%define default_font terminus16b
 
 Requires: gettext
 
@@ -256,6 +257,7 @@ msgcat po/ru.po %SOURCE17 -o po/ru.po
 sed -n -e 's/\$/\\\$/' -e 's/^msgid /gettext_printf /p' %SOURCE17 > util/alt-l18n-strings.in
 
 %build
+unifont="$(find %_fontsdir/ttf/unifont -type f -name "unifont-*.ttf" -print -quit)"
 ./bootstrap --no-git --skip-po --gnulib-srcdir=./gnulib
 build_grub() {
 	local dir="$1"; shift
@@ -265,6 +267,7 @@ build_grub() {
 	%configure \
 		TARGET_LDFLAGS=-static \
 		--disable-werror \
+		--with-unifont="$unifont" \
 		"$@"
 	%make_build
 	popd
@@ -296,9 +299,13 @@ build_fonts() {
 	local mkfont="$1"
 	[ ! -d built-fonts ] || return 0
 	mkdir -p built-fonts
-	"$mkfont" -o built-fonts/unicode.pf2 %font
-	"$mkfont" -o built-fonts/font_24.pf2 %font_24
-	"$mkfont" -o built-fonts/font_32.pf2 %font_32
+	"$mkfont" -o built-fonts/terminus16b.pf2 %_fontsdir/bitmap/terminus/ter-x16b.pcf.gz
+	"$mkfont" -o built-fonts/terminus24b.pf2 %_fontsdir/bitmap/terminus/ter-x24b.pcf.gz
+	"$mkfont" -o built-fonts/terminus32b.pf2 %_fontsdir/bitmap/terminus/ter-x32b.pcf.gz
+	[ -f built-fonts/%default_font.pf2 ] || {
+		echo "build_fonts: %%default_font is '%default_font' but built-fonts/%default_font.pf2 was not produced" >&2
+		exit 1
+	}
 }
 
 %ifarch %ix86 x86_64
@@ -332,6 +339,7 @@ build_fonts ./build-efi/grub-mkfont
 workdir="$(mktemp -d)"
 mkdir -p "$workdir/fonts"
 cp built-fonts/*.pf2 "$workdir/fonts/"
+ln -s %default_font.pf2 "$workdir/fonts/unicode.pf2"
 mksquashfs "$workdir" memdisk.squashfs -comp xz
 rm -rf "$workdir"
 
@@ -354,13 +362,14 @@ gcc %optflags -D_FILE_OFFSET_BITS=64 %SOURCE16 -o grub-dumpsbat
 %install
 %ifarch %ix86 x86_64
 %makeinstall_std -C build-pc
+%endif
+
 %ifarch x86_64
 #"cherry pick" only i386 executable
 install -pDm644 build-efi-ia32/grub.efi %buildroot%_efi_bindir/grubia32.efi
 
 #install ia32 version in parallel with x64 for x86_64 platforms with ia32 EFI
 %makeinstall_std -C build-efi-ia32
-%endif
 %endif
 
 %makeinstall_std -C \
@@ -380,13 +389,19 @@ install -pD -m755 %SOURCE8 %buildroot%_sbindir/
 install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 install -pD -m644 %SOURCE13 %buildroot%_man8dir/grub-entries.8
 
-mkdir -p %buildroot%_datadir/grub/
-install -pm644 built-fonts/unicode.pf2 %buildroot%_datadir/grub/
-install -pm644 built-fonts/font_24.pf2 %buildroot%_datadir/grub/
-install -pm644 built-fonts/font_32.pf2 %buildroot%_datadir/grub/
+# Install our fonts
+mv -f %buildroot%_datadir/grub/{unicode,unifont}.pf2
+install -pDm644 built-fonts/terminus16b.pf2 %buildroot%_datadir/grub/
+install -pDm644 built-fonts/terminus24b.pf2 %buildroot%_datadir/grub/
+install -pDm644 built-fonts/terminus32b.pf2 %buildroot%_datadir/grub/
+ln -s %default_font.pf2 %buildroot%_datadir/grub/unicode.pf2
 
 mkdir -p %buildroot/boot/grub/fonts
 mkdir -p %buildroot/boot/grub/themes
+
+#FIXME: deprecated fonts, remove when mkimage fixed
+install -pDm644 built-fonts/%default_font.pf2 %buildroot/boot/grub/fonts/unicode.pf2
+install -pDm644 %buildroot%_datadir/grub/unifont.pf2 %buildroot/boot/grub/unifont.pf2
 
 install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
@@ -508,10 +523,19 @@ fi
 %_bindir/grub-script-check
 %_bindir/grub-syslinux2cfg
 %_bindir/grub-dumpsbat
+%_bindir/grub-protect
 %_datadir/grub/grub-mkconfig_lib
+%_datadir/grub/ascii.h
+%_datadir/grub/ascii.pf2
+%_datadir/grub/euro.pf2
+%_datadir/grub/widthspec.h
+%_datadir/grub/unifont.pf2
 %_datadir/grub/unicode.pf2
-%_datadir/grub/font_24.pf2
-%_datadir/grub/font_32.pf2
+%_datadir/grub/terminus16b.pf2
+%_datadir/grub/terminus24b.pf2
+%_datadir/grub/terminus32b.pf2
+/boot/grub/fonts/unicode.pf2
+/boot/grub/unifont.pf2
 %_man1dir/*
 %_man8dir/*
 %exclude %_man1dir/grub-mkfont.1*
@@ -563,6 +587,11 @@ fi
 %endif
 
 %changelog
+* Sat Apr 11 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt4
+- switch default font to terminus16b
+- bring back deprecated fonts for compatibility with mkimage (closes: #58689)
+- add grub-protect util
+
 * Tue Apr 07 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt3
 - fix flicker-free boot (closes: #58426)
 - commands/bli: do not treat non-GPT partitions as an error (closes: #58291)
