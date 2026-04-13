@@ -14,7 +14,7 @@
 
 Name: talos
 Version: 1.12.6
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -205,6 +205,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon Apr 13 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.6-alt2
+- Remove default module.sig_enforce=1.
+
 * Mon Mar 23 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.6-alt1
 - New version 1.12.6.
 
