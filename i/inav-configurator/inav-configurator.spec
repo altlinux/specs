@@ -2,7 +2,7 @@
 
 Name: inav-configurator
 Version: 9.0.1
-Release: alt1
+Release: alt2
 
 Summary: Configuration tool for the INAV flight control system
 Group: Engineering
@@ -93,5 +93,8 @@ chmod +x %buildroot%_bindir/inav-configurator
 %_iconsdir/inav-configurator.png
 
 %changelog
+* Mon Apr 13 2026 Grant Makyan <karonus@altlinux.org> 9.0.1-alt2
+- Add ERSI map and remove Yandex Maps.
+
 * Thu Feb 19 2026 Grant Makyan <karonus@altlinux.org> 9.0.1-alt1
 - First build for ALT.
