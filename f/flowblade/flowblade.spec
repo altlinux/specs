@@ -1,5 +1,5 @@
 Name: flowblade
-Version: 2.24
+Version: 2.24.1
 Release: alt1
 
 Summary: non-linear video editor
@@ -12,6 +12,7 @@ VCS: https://github.com/jliljebl/flowblade/
 
 Source: %name-%version.tar
 Patch1: flowblade_sys_path.patch
+Patch2: flowblade_fix_locales.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -23,6 +24,7 @@ BuildRequires: python3-module-chardet
 %py3_requires mlt7
 Requires: frei0r-plugins
 Requires: ladspa-swh-plugins
+Requires: ffmpeg
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Flowblade
 
@@ -42,6 +44,7 @@ To use Blender projects in Flowblade you should install Blender.
 %prep
 %setup -q
 %patch1 -p2
+%patch2 -p2
 
 # fix wrong-script-interpreter errors
 sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/python3|g' Flowblade/launch/*
@@ -65,17 +68,24 @@ chmod +x %buildroot%python3_sitelibdir/Flowblade/launch/*
 # setup of mime is already done, so for what we need this file ?
 rm -v %buildroot/usr/lib/mime/packages/flowblade
 
+mkdir -p %buildroot%_datadir/Flowblade
+mv -v %buildroot%python3_sitelibdir/Flowblade/locale %buildroot%_datadir/Flowblade
+
 %files
 %_bindir/%name
 %_man1dir/%name.1.*
 %python3_sitelibdir/Flowblade/
-%python3_sitelibdir/flowblade-%version.dist-info/*
+%python3_sitelibdir/flowblade-%version.dist-info
 %_datadir/metainfo/io.github.jliljebl.Flowblade.appdata.xml
 %_datadir/applications/io.github.jliljebl.Flowblade.desktop
 %_datadir/icons/hicolor/128x128/apps/io.github.jliljebl.Flowblade.png
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
+%_datadir/Flowblade
 
 %changelog
+* Mon Apr 13 2026 Grigory Ustinov <grenka@altlinux.org> 2.24.1-alt1
+- Automatically updated to 2.24.1.
+
 * Wed Jan 14 2026 Grigory Ustinov <grenka@altlinux.org> 2.24-alt1
 - Automatically updated to 2.24.
 
