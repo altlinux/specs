@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.5.2
+Version: 7.1.0
 Release: alt1
 Summary: Read resources from Python packages
 License: Apache-2.0
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Provides: python3-module-importlib_resources = %EVR
 BuildRequires(pre): rpm-build-pyproject
@@ -54,11 +55,13 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %pyproject_run_pytest -vra
 
 %files
-%doc README.rst
 %python3_sitelibdir/importlib_resources/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 13 2026 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
+- 6.5.2 -> 7.1.0.
+
 * Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 6.5.2-alt1
 - 6.4.5 -> 6.5.2.
 
