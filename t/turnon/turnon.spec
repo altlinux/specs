@@ -4,7 +4,7 @@
 %define rdn_name de.swsnr.%_name
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -61,6 +61,9 @@ sed -i 's|\(Exec=\)\(%rdn_name\)|\1%_bindir/\2|' dbus-1/de.swsnr.turnon.service
 %doc README*
 
 %changelog
+* Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
+- 3.0.2
+
 * Sat Apr 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
