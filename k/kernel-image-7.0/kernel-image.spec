@@ -1,6 +1,6 @@
 Name: kernel-image-7.0
-Release: alt0.rc7
-%define kernel_src_version	6.19
+Release: alt1
+%define kernel_src_version	7.0
 %define kernel_base_version	7.0
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -324,6 +324,7 @@ make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 	%make %make_target V=1
 	exit 1
 }
+%make_build scripts_gdb
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
 %endif
@@ -464,6 +465,7 @@ for f in $KbuildFiles; do
 	[ -x "$f" ] && mode=755 || mode=644
 	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
 done
+cp -a scripts/gdb -t %buildroot%kbuild_dir/scripts
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -591,6 +593,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Apr 12 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt1
+- Update to v7.0 (2026-04-12) release.
+- config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y).
+- config: Enable CONFIG_IPV6_SEG6_ options.
+
 * Mon Apr 06 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt0.rc7
 - Update to v7.0-rc7 (2026-04-05).
 
