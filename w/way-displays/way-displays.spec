@@ -1,13 +1,13 @@
 Name: way-displays
 Version: 1.15.0
-Release: alt1
+Release: alt2
 Summary: Auto Manage Your Wayland Displays
 License: MIT
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
 
-BuildRequires: libinput-devel libwlroots0.18-devel libyaml-cpp-devel gcc gcc-c++ wayland-devel libwayland-client-devel
+BuildRequires: libinput-devel libwlroots-devel libyaml-cpp-devel gcc gcc-c++ wayland-devel libwayland-client-devel
 Requires: libinput-gestures
 
 %description
@@ -29,5 +29,8 @@ mkdir -p %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/cfg.yaml
 %_man1dir/%name.1.xz
 %changelog
+* Mon Apr 13 2026 Artyom Bystrov <arbars@altlinux.org> 1.15.0-alt2
+- fix libwlroots version
+
 * Thu Apr  9 2026 Artyom Bystrov <arbars@altlinux.org> 1.15.0-alt1
 - Initial build for ALT.
