@@ -3,8 +3,8 @@
 %define java_version java
 
 Name:     davmail
-Version:  6.5.1
-Release:  alt2
+Version:  6.6.0
+Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -73,6 +73,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Apr 13 2026 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt1
+- New version.
+
 * Fri Mar 13 2026 Evgeniy Serov <scala@altlinux.org> 6.5.1-alt2
 - Disabled update check.
 
