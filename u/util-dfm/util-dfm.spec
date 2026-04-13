@@ -5,8 +5,8 @@
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.43
-Release: alt2
+Version: 1.3.51
+Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
 
@@ -22,7 +22,7 @@ Patch1: util-dfm-1.3.43-alt-pkgconfig-dqt6.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel dtk6-common-devel libdtk6core-devel liblucene++-devel
-BuildRequires: libdqt6-concurrent libdqt6-widgets vulkan-headers
+BuildRequires: libdqt6-concurrent libdqt6-widgets libdqt6-test vulkan-headers
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -185,6 +185,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.51-alt1
+- New version 1.3.51.
+
 * Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.43-alt2
 - Fixed build on shrinked dqt6.
 

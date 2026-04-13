@@ -6,8 +6,8 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.5.110
-Release: alt2
+Version: 6.5.131
+Release: alt1
 
 Summary: Deepin File Manager
 
@@ -21,7 +21,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 # Source-url: https://github.com/linuxdeepin/dde-file-manager/archive/%version/%repo-%version.tar.gz
 Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: deepin-file-manager-6.5.91-alt-fixes-paths.patch
+Patch1: deepin-file-manager-6.5.131-alt-fixes-paths.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
 # error: static assertion failed:
@@ -114,7 +114,8 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p2
 # find special polkitqt6
 sed \
   -e '/PolkitQt6_LIBRARIES/i \
@@ -182,18 +183,26 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.MountControl.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.UserShareManager.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.TPMControl.service
+%_datadir/dbus-1/system-services/org.deepin.Filemanager.OpticalShare.service
 %_datadir/dbus-1/system.d/org.deepin.filemanager.accesscontrol.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.diskencrypt.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.mountcontrol.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.usersharemanager.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.tpmcontrol.conf
+%_datadir/dbus-1/system.d/org.deepin.filemanager.opticalshare.conf
 %_userunitdir/dde-file-manager.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-file-manager.service
 %dir %_userunitdir/deepin-service-plugin@org.deepin.Filemanager.TextIndex.service.d/
 %_userunitdir/deepin-service-plugin@org.deepin.Filemanager.TextIndex.service.d/memory-limit.conf
+%_unitdir/deepin-filemanager-diskencrypt.service
+%dir %_unitdir/deepin-service-plugin@org.deepin.Filemanager.MountControl.service.d/
+%_unitdir/deepin-service-plugin@org.deepin.Filemanager.MountControl.service.d/security-hardening.conf
+%dir %_unitdir/deepin-service-plugin@org.deepin.Filemanager.UserShareManager.service.d/
+%_unitdir/deepin-service-plugin@org.deepin.Filemanager.UserShareManager.service.d/security-hardening.conf
 %dir %_sysconfdir/systemd/system/deepin-service-group@.service.d/
 %_sysconfdir/systemd/system/deepin-service-group@.service.d/dde-file-manage-service-override.conf
+%_tmpfilesdir/deepin-diskencrypt-tmpfiles.conf
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/mime/packages/dtk-dci.xml
@@ -213,6 +222,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dsg/configs/org.deepin.dde.file-manager/*.json
 %dir %_datadir/dsg/configs/org.deepin.dde.dock/
 %_datadir/dsg/configs/org.deepin.dde.dock/*.json
+%dir %_datadir/dsg/configs/overrides/
+%dir %_datadir/dsg/configs/overrides/org.deepin.dde.treeland/
+%_datadir/dsg/configs/overrides/org.deepin.dde.treeland/org.deepin.dde.treeland.app/
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
@@ -237,6 +249,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/deepin-service-manager/system/dde-filemanager-mountcontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-sharecontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-tpmcontrol.json
+%_datadir/deepin-service-manager/system/dde-filemanager-opticalshare.json
 %_datadir/deepin-service-manager/user/dde-filemanager-textindex.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
@@ -295,6 +308,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.131-alt1
+- New version 6.5.131.
+
 * Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.110-alt2
 - Fixed build on shrinked dqt6.
 
