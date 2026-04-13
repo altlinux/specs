@@ -1,6 +1,6 @@
 Name: fractal
 Version: 13
-Release: alt1
+Release: alt2
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPLv3
 Group: Networking/Instant messaging
@@ -20,7 +20,7 @@ BuildRequires: cmake xdg-desktop-portal-devel clang-devel
 BuildRequires: pkgconfig(gtk4) >= 4.16 pkgconfig(libadwaita-1) >= 1.7 pkgconfig(gstreamer-1.0) >= 1.20
 BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0 pkgconfig(lcms2) >= 2.12.0
 
-Requires: fonts-ttf-google-noto-emoji-color glycin-loaders gst-plugin-gtk4
+Requires: fonts-ttf-google-noto-emoji-color glycin-2-loaders gst-plugin-gtk4
 
 %description
 Its interface is optimized for collaboration in large groups, such as free
@@ -82,6 +82,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Apr 11 2026 Ildar Mulyukov <ildar@altlinux.ru> 13-alt2
+- fix dependency to glycin-2-loaders (ALT #58247)
+
 * Fri Mar 27 2026 Ildar Mulyukov <ildar@altlinux.ru> 13-alt1
 - new version (ALT #58247)
 
