@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 7.5.0
+Version: 7.6.0
 Release: alt1
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -54,7 +54,7 @@ files (gz, Z, bz2, lzma, xz, lz4, zstd, brotli), pdfs, docs, and more
 # can be fixed with this, but performance may be worse
 #sed -i "/<cpuid.h>/{N;s/.*/#define cpuidex __cpuidex/}" include/reflex/simd.h
 %endif
-%configure --with-bzip3
+%configure --with-bzip3 --disable-avx2
 %make_build
 
 %install
@@ -96,6 +96,9 @@ PATH=%buildroot%_bindir:$PATH
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Sun Mar 08 2026 Vitaly Chikunov <vt@altlinux.org> 7.6.0-alt1
+- Update to 7.6.0 (2026-03-05).
+
 * Wed Dec 17 2025 Vitaly Chikunov <vt@altlinux.org> 7.5.0-alt1
 - Update to 7.5.0 (2025-06-18).
 
