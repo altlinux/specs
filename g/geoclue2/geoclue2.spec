@@ -16,8 +16,8 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
@@ -211,6 +211,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
+- 2.8.1
+
 * Thu Nov 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1.1
 - require ModemManager if 3G or modem GPS sources enabled (ALT #57034)
 
