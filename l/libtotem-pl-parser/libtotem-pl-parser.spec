@@ -2,6 +2,7 @@
 
 %define _name totem-pl-parser
 %define ver_major 3.26
+%define namespace TotemPlParser
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -10,13 +11,15 @@
 %def_enable libgcrypt
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
-License: LGPL-2.0
-Url: http://www.hadess.net/%_name.php3
+License: LGPL-2.0-only
+Url: https://apps.gnome.org/Totem/
+
+Vcs: https://gitlab.gnome.org/GNOME/totem-pl-parser.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -41,7 +44,7 @@ Shared libraries that come with the Totem media player.
 %package devel
 Summary: Development files for Totem media player play list parser
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Totem is simple movie player for the Gnome desktop based on Xine.
@@ -62,7 +65,7 @@ libraries.
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Totem playlist parser library
@@ -71,7 +74,7 @@ GObject introspection data for the Totem playlist parser library
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Totem playlist parser library
@@ -104,13 +107,16 @@ GObject introspection devel data for the Totem playlist parser library
 
 %if_enabled introspection
 %files gir
-%_typelibdir/TotemPlParser-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/TotemPlParser-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.26.7-alt1
+- 3.26.7
+
 * Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 3.26.6-alt1
 - 3.26.6
 

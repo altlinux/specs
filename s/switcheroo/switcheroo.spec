@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _name Switcheroo
-%define ver_major 2.5
+%define ver_major 2.6
 %define xdg_name io.gitlab.adhami3310.Converter
 
 %def_enable check
 %def_disable bootstrap
 
 Name: switcheroo
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple App to Convert Photo Images
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
 - 2.5.2
 
