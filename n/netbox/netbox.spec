@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.6
+Version: 4.5.7
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -28,7 +28,7 @@ BuildRequires: python3-module-mkdocstrings-python >= 2.0.3
 Requires: python3-module-colorama >= 0.4.6
 Requires: python3-module-django >= 5.2.12
 Requires: python3-module-django-cors-headers >= 4.9.0
-Requires: python3-module-django-debug-toolbar >= 6.2.0
+Requires: python3-module-django-debug-toolbar >= 6.3.0
 Requires: python3-module-django-filter >= 25.2
 Requires: python3-module-django-htmx >= 1.27.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
@@ -37,21 +37,21 @@ Requires: python3-module-django-pglocks >= 1.0.4
 Requires: python3-module-django-prometheus >= 2.4.1
 Requires: python3-module-django-redis >= 6.0.0
 Requires: python3-module-django-rich >= 2.2.0
-Requires: python3-module-django-rq >= 3.2.2
+Requires: python3-module-django-rq >= 4.0.1
 Requires: python3-module-django-storages >= 1.14.6
 Requires: python3-module-django-taggit >= 6.1.0
 Requires: python3-module-django-tables2 >= 2.8.0
 Requires: python3-module-django-timezone-field >= 7.2.1
 Requires: python3-module-djangorestframework >= 3.16.1
 Requires: python3-module-drf-spectacular >= 0.29.0
-Requires: python3-module-drf-spectacular-sidecar >= 2026.3.1
+Requires: python3-module-drf-spectacular-sidecar >= 2026.4.1
 Requires: python3-module-feedparser >= 6.0.12
 Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
 Requires: python3-module-markdown >= 3.10.2
 Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.4
-Requires: python3-module-pillow >= 12.1.1
+Requires: python3-module-pillow >= 12.2.0
 Requires: python3-module-psycopg >= 3.3.3
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-requests >= 2.33.1
@@ -63,7 +63,7 @@ Requires: python3-module-strawberry-graphql >= 0.312.2
 Requires: python3-module-strawberry-django >= 0.82.1
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
-Requires: python3-module-tzdata >= 2025.3
+Requires: python3-module-tzdata >= 2026.1
 Requires: python3-module-packaging
 Requires: python3-module-django-auth-ldap
 Requires: python3-module-sentry-sdk
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Tue Apr 14 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.7-alt1
+- New 4.5.7 version.
+
 * Mon Apr 13 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.6-alt1
 - New 4.5.6 version.
 
