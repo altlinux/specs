@@ -3,15 +3,15 @@
 %define app_id org.altlinux.TunerPanel
 
 Name: tuner-panel
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Panel mode switcher
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 
-Url: https://altlinux.space/alt-gnome/TunerPanel
-Vcs: https://altlinux.space/alt-gnome/TunerPanel
+Url: https://altlinux.space/PaladinDev/TunerPanel
+Vcs: https://altlinux.space/PaladinDev/TunerPanel
 Source: %name-%version.tar
 
 Requires: alt-panelmoded
@@ -44,6 +44,9 @@ Plugin for Tuner that adds panel mode switcher to Tweaks appearance page.
 %doc README.md
 
 %changelog
+* Tue Apr 14 2026 Alexander Davydzik <paladindev@altlinux.org> 0.4.5-alt1
+- add restore sys extensions option button
+
 * Tue Jan 13 2026 Alexander Davydzik <paladindev@altlinux.org> 0.4.4-alt1
 - updated to latest tuner api
 
