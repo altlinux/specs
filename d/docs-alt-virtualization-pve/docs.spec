@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Apr 14 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt6
+- update to ALT Virtualization PVE 11.1rc4
+- small improvements (closes #58484)
+
 * Thu Mar 26 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt5
 - add migrating, replication network
 - add migration conntract (closes #58394)
