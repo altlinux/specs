@@ -1,7 +1,7 @@
-%define git_version v1.250726.0
+%define git_version v1.260327.0
 
 Name: xray-core
-Version: 26.1.23
+Version: 26.3.27
 Release: alt1
 
 Summary: Project X
@@ -9,6 +9,7 @@ License: MPL-2.0
 Group: System/Servers
 
 Url: https://xtls.github.io/
+Vcs: https://github.com/XTLS/Xray-core
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/XTLS/Xray-core/archive/v%version/Xray-core-%version.tar.gz
@@ -50,6 +51,9 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%gi
 %_unitdir/xray@.service
 
 %changelog
+* Tue Apr 14 2026 Nazarov Denis <nenderus@altlinux.org> 26.3.27-alt1
+- New version 26.3.27. (ALT #58696)
+
 * Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 26.1.23-alt1
 - New version 26.1.23.
 
