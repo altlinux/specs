@@ -1,11 +1,11 @@
 Name: pi-hole-web
-Version: 6.4.1
+Version: 6.5
 Release: alt1
 
 Summary: Pi-hole Dashboard for stats and more
 License: EUPL-1.2
 Group: Networking/WWW
-Url: https://github.com/pi-hole/pi-hole
+Url: https://github.com/pi-hole/web
 BuildArch: noarch
 # https://github.com/pi-hole/web/archive/refs/tags/v%%version.tar.gz
 Source: %name-%version.tar.gz
@@ -31,6 +31,9 @@ rm %buildroot/var/www/html/admin/package*.json
 /var/www/html/admin/
 
 %changelog
+* Tue Apr 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.5-alt1
+- 6.5
+
 * Thu Feb 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.4.1-alt1
 - 6.4.1
 
