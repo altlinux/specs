@@ -17,6 +17,7 @@
 %define Theme Workstation K
 %define smalltheme kworkstation
 %define codename Nemorosa
+%define smallcodename nemorosa
 %define brand alt
 %define Brand ALT
 %define fakebrand xalt
@@ -29,7 +30,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -296,6 +297,10 @@ done
 mkdir -p %buildroot/%prefix/lib/
 cat >>%buildroot/%prefix/lib/os-release <<__EOF__
 NAME="%Brand"
+%if "%status" != "%nil"
+RELEASE_TYPE="development"
+%endif
+VERSION_CODENAME="%smallcodename"
 VERSION="%altversion%status"
 ID=altlinux
 VARIANT="%Theme"
@@ -501,6 +506,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 14 2026 Sergey V Turchin <zerg at altlinux dot org> 11.3.0-alt2
+- add VERSION_CODENAME and RELEASE_TYPE to os-releae
+
 * Tue Mar 17 2026 Sergey V Turchin <zerg at altlinux dot org> 11.3.0-alt1
 - clear status
 
