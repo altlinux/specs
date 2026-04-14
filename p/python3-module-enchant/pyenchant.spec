@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-enchant
-Version: 3.2.2
-Release: alt2
+Version: 3.3.0
+Release: alt1
 Summary: Python bindings for the Enchant spellchecking system
 License: LGPLv2+
 Group: Development/Python3
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 # used dynamically
 Requires: libenchant
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -58,6 +59,9 @@ functionality than is available in the C API.
 %exclude %python3_sitelibdir/%mod_name/checker/*CheckerDialog*
 
 %changelog
+* Tue Apr 14 2026 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.2 -> 3.3.0.
+
 * Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 3.2.2-alt2
 - Modernized packaging.
 - Mapped PyPI name to distro's one.
