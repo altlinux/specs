@@ -8,7 +8,7 @@
 %def_with check
 
 Name: mold
-Version: 2.40.4
+Version: 2.41.0
 Release: alt1
 
 Summary: A Modern Linker
@@ -79,6 +79,9 @@ rm %buildroot%_defaultdocdir/%name/LICENSE*
 %_man1dir/*mold.1.*
 
 %changelog
+* Tue Apr 14 2026 Anton Zhukharev <ancieg@altlinux.org> 2.41.0-alt1
+- Updated to 2.41.0.
+
 * Mon Aug 18 2025 Anton Zhukharev <ancieg@altlinux.org> 2.40.4-alt1
 - Updated to 2.40.4.
 
@@ -167,4 +170,3 @@ rm %buildroot%_defaultdocdir/%name/LICENSE*
 
 * Fri Jun 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
 - Initial build for ALT Sisyphus.
-
