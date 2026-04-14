@@ -22,7 +22,7 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.14.8.0
+Version: 1.14.10.0
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -36,7 +36,8 @@ ExcludeArch: %ix86
 Source: %name-%version.tar
 Source2: %name.watch
 
-Patch: osl-alt-optix-inc.patch
+Patch0: osl-alt-optix-inc.patch
+Patch1: osl-alt-oiio-plugin-path.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libopenimageio-devel
@@ -156,7 +157,7 @@ for OptiX/GPU rendering.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_ver
@@ -180,11 +181,6 @@ export ALTWRAP_LLVM_VERSION=%llvm_ver
 
 %install
 %cmake_install
-
-# Move the OpenImageIO plugin into its default search path
-mkdir -p %buildroot%_libdir/OpenImageIO-%{oiio_major_minor_ver}
-mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major_minor_ver}/
-
 # remove examples and unused files
 rm -f %buildroot%_prefix/build-scripts/serialize-bc.py
 rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
@@ -228,6 +224,10 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Tue Apr 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.14.10.0-alt0.1
+- 1.14.10.0.
+- oiio plugin: use OIIO cmake variable for plugin path.
+
 * Thu Feb 19 2026 L.A. Kostis <lakostis@altlinux.ru> 1.14.8.0-alt0.1
 - 1.14.8.0.
 - compile w/ llvm21.1.
