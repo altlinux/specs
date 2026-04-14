@@ -6,7 +6,7 @@
 
 Name:          gem-fluentd
 Version:       1.19.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fluentd: Unified Logging Layer (project under CNCF)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -78,7 +78,7 @@ BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(strptime) >= 1.0.0
 BuildConflicts: gem(test-unit) >= 4
 BuildConflicts: gem(test-unit-rr) >= 2
-BuildConflicts: gem(timecop) >= 0.9.9
+BuildConflicts: gem(timecop) >= 1
 BuildConflicts: gem(tzinfo) >= 3.0
 BuildConflicts: gem(tzinfo-data) >= 2
 BuildConflicts: gem(uri) >= 2
@@ -91,6 +91,7 @@ BuildConflicts: gem(zstd-ruby) >= 3
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency zstd-ruby >= 2.0.6,zstd-ruby < 3
 %ruby_use_gem_dependency parallel_tests >= 3.7.0,parallel_tests < 4
+%ruby_use_gem_dependency timecop >= 0.9.10,timecop < 1
 Requires:      ruby >= 3.2
 Requires:      gem(async-http) >= 0.86
 Requires:      gem(base64) >= 0.2
@@ -144,7 +145,7 @@ infrastructure (Learn more about the Unified Logging Layer).
 
 %package       -n fluent
 Version:       1.19.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fluentd: Unified Logging Layer (project under CNCF) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета fluentd
 Group:         Other
@@ -169,7 +170,7 @@ infrastructure (Learn more about the Unified Logging Layer).
 %if_enabled    doc
 %package       -n gem-fluentd-doc
 Version:       1.19.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fluentd: Unified Logging Layer (project under CNCF) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fluentd
 Group:         Development/Documentation
@@ -195,7 +196,7 @@ infrastructure (Learn more about the Unified Logging Layer).
 %if_enabled    devel
 %package       -n gem-fluentd-devel
 Version:       1.19.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fluentd: Unified Logging Layer (project under CNCF) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fluentd
 Group:         Development/Ruby
@@ -228,7 +229,7 @@ Conflicts:     gem(rr) >= 4
 Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(test-unit) >= 4
 Conflicts:     gem(test-unit-rr) >= 2
-Conflicts:     gem(timecop) >= 0.9.9
+Conflicts:     gem(timecop) >= 1
 
 %description   -n gem-fluentd-devel
 Fluentd: Unified Logging Layer (project under CNCF) development
@@ -286,6 +287,9 @@ infrastructure (Learn more about the Unified Logging Layer).
 
 
 %changelog
+* Wed Apr 15 2026 Pavel Skrylev <majioa@altlinux.org> 1.19.2-alt1.1
+- ! fixed dep to gem timecop
+
 * Fri Mar 20 2026 Pavel Skrylev <majioa@altlinux.org> 1.19.2-alt1
 - ^ 1.18.0 -> 1.19.2
 
