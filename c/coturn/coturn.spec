@@ -9,7 +9,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:		coturn
-Version: 4.9.0
+Version: 4.10.0
 Release:	alt1
 Summary:	Coturn TURN Server
 
@@ -305,6 +305,9 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Tue Apr 14 2026 Anton Farygin <rider@altlinux.org> 4.10.0-alt1
+- 4.9.0 -> 4.10.0
+
 * Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 4.9.0-alt1
 - 4.8.0 -> 4.9.0
 
