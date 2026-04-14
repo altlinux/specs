@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: kf6-kdeclarative-devel
 BuildRequires: plasma-workspace-devel
-BuildRequires: libplasma6
+BuildRequires: libplasma7
 BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kpackage-devel
 BuildRequires: plasma6-lib-devel
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Tue Apr 14 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.3-alt1
+- improve size calculating (closes: 58674)
+
 * Tue Mar 31 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.2-alt1
 - add icons for standalone app
 
