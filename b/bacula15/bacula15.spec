@@ -15,7 +15,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.3
-Release: alt1
+Release: alt2
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -49,7 +49,7 @@ Patch2001: bacula13-alt-fix-create-pg-database.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel libpq-devel
-BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
+BuildRequires: libssl-devel libncurses-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel liblzo2-devel
 BuildRequires: dvd+rw-tools groff-base iputils bc
 
@@ -133,16 +133,6 @@ Conflicts: bacula-director-mysql
 Conflicts: bacula11-director-mysql
 Conflicts: bacula13-director-mysql
 
-%package director-sqlite3
-Summary: Network based backup program (SQLITE3 director only)
-Group: Archiving/Backup
-Requires(pre): sqlite3
-Requires(pre): %name-director-common = %EVR
-Provides: %name-dir = %EVR
-Conflicts: bacula-director-sqlite3
-Conflicts: bacula11-director-sqlite3
-Conflicts: bacula13-director-sqlite3
-
 %package director-postgresql
 Summary: Network based backup program (PostgreSQL director only)
 Group: Archiving/Backup
@@ -212,17 +202,6 @@ Requires: %{php_version}-mysqlnd
 Conflicts: baculum11-mysql
 Conflicts: baculum13-mysql
 
-%package -n baculum%{bacula_major}-sqlite3
-Summary: The baculum web interface for bacula.
-Group: Archiving/Backup
-BuildArch: noarch
-Provides: baculum%{bacula_major} = %EVR
-Requires: baculum%{bacula_major}-common = %EVR
-Requires: %name-director-sqlite3 = %EVR
-Requires: %{php_version}-pdo_sqlite
-Conflicts: baculum11-sqlite3
-Conflicts: baculum13-sqlite3
-
 %package -n baculum%{bacula_major}-postgresql
 Summary: The baculum web interface for bacula.
 Group: Archiving/Backup
@@ -289,17 +268,6 @@ The Catalog services permit the System Administrator or user to quickly
 locate and restore any desired file, since it maintains a record of all
 Volumes used, all Jobs run, and all Files saved.
 This package contains Director built for MySQL backend.
-
-%description director-sqlite3
-Bacula Director is the program that supervises all the backup, restore,
-verify and archive operations. The system administrator uses the Bacula
-Director to schedule backups and to recover files.
-Catalog services are comprised of the software programs responsible for
-maintaining the file indexes and volume databases for all files backed up.
-The Catalog services permit the System Administrator or user to quickly
-locate and restore any desired file, since it maintains a record of all
-Volumes used, all Jobs run, and all Files saved.
-This package contains Director built for SQLite3 backend.
 
 %description director-postgresql
 Bacula Director is the program that supervises all the backup, restore,
@@ -369,24 +337,6 @@ functions such as:
 - Live AJAX based statuses.
 
 %description -n baculum%{bacula_major}-mysql
-Baculum is Bacula web based interface. It enables Bacula administration
-functions such as:
-
-- Running Bacula jobs (backup, restore, verify...).
-- Two services: Baculum API and Baculum Web
-- Configuring Bacula on local and remote hosts
-- Monitoring Bacula service status.
-- Bacula console available via a Web window.
-- Multi-user interface.
-- Support for customized and restricted consoles (Console ACL function).
-- Volume management.
-- User friendly graphs and metrics.
-- Basic storage daemon operations (mount, umount, release, ...).
-- Easy to use configuration and restore wizards.
-- Multiple Director support.
-- Live AJAX based statuses.
-
-%description -n baculum%{bacula_major}-sqlite3
 Baculum is Bacula web based interface. It enables Bacula administration
 functions such as:
 
@@ -496,7 +446,6 @@ autoconf -I autoconf/ -o configure autoconf/configure.in
 	--with-sd-user=bacula \
 	--with-sd-group=bacula \
 	--with-postgresql \
-	--with-sqlite3 \
 	%{subst_enable bat } \
 	--with-mysql \
 	--with-logdir=%_logdir \
@@ -594,7 +543,6 @@ define command{
 EOF
 
 mkdir -p %buildroot/%_altdir
-echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-sqlite3-%version.so        10" > %buildroot/%_altdir/bacula-dir.sqlite3
 echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-mysql-%version.so          20" > %buildroot/%_altdir/bacula-dir.mysql
 echo "%_libdir/libbaccats-%version.so %_libdir/libbaccats-postgresql-%version.so     30" > %buildroot/%_altdir/bacula-dir.pgsql
 
@@ -681,13 +629,6 @@ gpasswd -a bacula tape >/dev/null 2>&1
 
 %post storage
 %post_service bacula-sd
-
-%post director-sqlite3
-%post_service bacula-dir
-if [ ! -s %_localstatedir/bacula/bacula.db ]; then
-    %_datadir/bacula/scripts/make_sqlite3_tables
-    chown bacula.bacula %_localstatedir/bacula/bacula.db
-fi
 
 %preun director-mysql
 %preun_service bacula-dir
@@ -868,16 +809,6 @@ rm -rf %_cachedir/baculum/runtime/*
 %_datadir/bacula/scripts/make_postgresql_tables
 %_datadir/bacula/scripts/update_postgresql_tables
 
-%files director-sqlite3
-%_altdir/bacula-dir.sqlite3
-%_libdir/libbaccats-sqlite3*.so
-%_datadir/bacula/scripts/create_sqlite3_database
-%_datadir/bacula/scripts/drop_sqlite3_database
-%_datadir/bacula/scripts/drop_sqlite3_tables
-%_datadir/bacula/scripts/grant_sqlite3_privileges
-%_datadir/bacula/scripts/make_sqlite3_tables
-%_datadir/bacula/scripts/update_sqlite3_tables
-
 %files nagios
 %_sysconfdir/nagios/commands/check_bacula.cfg
 %_libdir/nagios/plugins/check_bacula
@@ -907,8 +838,6 @@ rm -rf %_cachedir/baculum/runtime/*
 
 %files -n baculum%{bacula_major}-mysql
 
-%files -n baculum%{bacula_major}-sqlite3
-
 %files -n baculum%{bacula_major}-postgresql
 
 %files -n baculum%{bacula_major}-apache2
@@ -934,6 +863,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Tue Apr 14 2026 Alexei Takaseev <taf@altlinux.org> 15.0.3-alt2
+- Remove unsupported and unworking director-sqlite3 (OVE-20260414-0001)
+
 * Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 15.0.3-alt1
 - 15.0.3
 - Change BR postgresql-devel -> libpq-devel
