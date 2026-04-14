@@ -1,5 +1,5 @@
 Name: installer-feature-selinux
-Version: 0.14
+Version: 0.14.1
 Release: alt1
 
 Summary: Installer selinux hooks
@@ -29,6 +29,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Fri Apr 03 2026 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt1
+- Revert "Add lsm with selinux to kernel cmdline".
+
 * Mon Feb 16 2026 Anton Midyukov <antohami@altlinux.org> 0.14-alt1
 - Do not create home directory for officer.
 
