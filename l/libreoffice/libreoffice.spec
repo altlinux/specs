@@ -50,7 +50,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 2.2
 Version: %hversion.%urelease
-Release: alt2
+Release: alt3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -123,6 +123,8 @@ Patch700: alt-700-external-project-concurrency.patch
 %add_findreq_skiplist %lodir/sdk/idl
 %add_findreq_skiplist %lodir/sdk/include
 %filter_from_requires /com[.]sun[.]/d
+%filter_from_requires /open/d
+%filter_from_requires /valgrind/d
 %add_python3_req_skip pyuno strings officehelper uno unohelper
 %add_python3_req_skip usr.src.tmp.libreoffice-buildroot.usr.%_lib.libreoffice.program.wizards.ui.event.ListDataListener
 
@@ -242,7 +244,8 @@ BuildRequires: gnu-config
 
 AutoReqProv: yes, noshell, nopython
 
-Requires: %name-core = %EVR
+Provides: %name-core = %EVR
+Obsoletes: %name-core < %EVR
 Provides: %name-full = %EVR
 Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
@@ -250,14 +253,6 @@ Provides: LibreOffice = %EVR
 Provides: LibreOffice-still = %EVR
 Obsoletes: LibreOffice < %EVR
 Obsoletes: LibreOffice-still < %EVR
-%if_with java
-Requires: java-headless >= 9.0.0
-Requires: pentaho-reporting-flow-engine
-%endif
-
-%package core
-Summary: Core part for LibreOffice (without Java)
-Group: Office
 # common
 Obsoletes: LibreOffice4-common
 Provides: LibreOffice-common = %EVR
@@ -285,6 +280,14 @@ Obsoletes: LibreOffice-still-extensions < %EVR
 Obsoletes: LibreOffice4-extensions
 # Other runtime requirements
 Requires: gst-libav
+%if_with java
+Requires: java-headless >= 9.0.0
+Requires: pentaho-reporting-flow-engine
+%endif
+
+%package core
+Summary: Core part for LibreOffice (without Java)
+Group: Office
 
 %description core
 %{summary}.
@@ -798,9 +801,7 @@ find %buildroot%lodir -name \*.py > py.files
 cat py.files | xargs grep -l '^#!/usr/bin/python3' > py_with_shebang.files
 comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__python3'
 
-%files
-
-%files core -f files.nolang
+%files -f files.nolang
 %exclude /gid_Module*
 %_bindir/*
 %config %conffile
@@ -873,6 +874,10 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Apr 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt3
+- Removed open and valgrind from requirements (ALT #58645).
+- Did not split to main and core packages.
+
 * Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt2
 - Fix some post-install unowned files (ALT #58587) (thanks andy@).
 - Exclude core part without Java (ALT #58514).
