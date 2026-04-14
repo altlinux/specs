@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -14,7 +14,7 @@ Packager: Paul Wolneykien <manowar@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: bash4
+BuildRequires: bash5
 
 BuildArch: noarch
 
@@ -110,6 +110,10 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Tue Apr 14 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.2-alt1
+- Switch to bash5 (closes: 58516).
+- Added --log-stderr to the synopsis in integrity-applier(8).
+
 * Wed Feb 25 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.1-alt1
 - ima_appraise control: Don't change 'lsm' command-line option if
   'selinux' option is present (thx IVK).
