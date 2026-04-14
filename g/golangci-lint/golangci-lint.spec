@@ -2,7 +2,7 @@
 %define import_path github.com/golangci/golangci-lint
 
 Name: golangci-lint
-Version: 2.10.1
+Version: 2.11.4
 Release: alt1
 
 Summary: Fast linters Runner for Go
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/golangci-lint
 
 %changelog
+* Fri Apr 10 2026 Artem Krasovskiy <aibure@altlinux.org> 2.11.4-alt1
+- Updated to 2.11.4.
+
 * Wed Feb 18 2026 Artem Krasovskiy <aibure@altlinux.org> 2.10.1-alt1
 - Updated to 2.10.1.
 
