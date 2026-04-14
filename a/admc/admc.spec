@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.23.0
+Version: 0.23.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -125,6 +125,12 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Apr 14 2026 Semyon Knyazev <samael@altlinux.org> 0.23.1-alt1
+- Disabled the "Show Non-Container Objects in Console Tree" and
+  "Advanced Features" options for the sites subtree display.
+- Fixed a crash when changing credentials while the network is
+  disconnected. (closes: 58703)
+
 * Tue Feb 24 2026 Semyon Knyazev <samael@altlinux.org> 0.23.0-alt1
 - The Sites container has been added to the console tree.
 - Added the ability to create/delete site objects, subnets, site links,
