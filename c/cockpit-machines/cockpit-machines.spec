@@ -1,6 +1,6 @@
 Name: cockpit-machines
 Version: 342
-Release: alt1
+Release: alt2
 
 Summary: Cockpit user interface for virtual machines
 License: LGPL-2.1-or-later AND MIT
@@ -10,6 +10,7 @@ Url: https://github.com/cockpit-project/cockpit-machines
 Source0: https://github.com/cockpit-project/%name/releases/download/%version/%name-%version.tar
 Source1: node_modules.tar
 Source2: pkg.tar
+Source3: ru.po
 
 BuildArch: noarch
 
@@ -39,6 +40,7 @@ If "virt-install" is installed, you can also create new virtual machines.
 %setup -n %name-%version
 %setup -T -D -a 1
 %setup -T -D -a 2
+install -Dm0644 %SOURCE3 po/
 
 %build
 export PREFIX=%prefix
@@ -56,6 +58,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/metainfo/*
 %_datadir/metainfo/*
 
 %changelog
+* Tue Apr 14 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 342-alt2
+- add old russian translations
+
 * Thu Oct 16 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 342-alt1
 - update version
 
