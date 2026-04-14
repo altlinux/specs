@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -18,6 +18,7 @@ Source6: kafka.sysconfig
 
 Patch0: kafka-pathes.patch
 Patch1: kafka-alt-use-gradle-8.x.patch
+Patch2: kafka-alt-use-java-21.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
@@ -26,6 +27,7 @@ BuildRequires: gradle
 
 AutoReqProv: yes, noosgi-fc
 Requires: java-21-openjdk
+Requires(preun): java-21-openjdk
 Requires(post): java-21-openjdk
 # Require native library and override bad library from vendoring jar
 Requires: libzstd-jni
@@ -75,7 +77,6 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %post
 # Generate meta.properties if needed
 if [ ! -e %_logdir/%name/meta.properties ]; then
-	export JAVA_HOME=/usr/lib/jvm/java-21
 	usermod -d /var/lib/kafka kafka ||:
 	su - kafka -c '/usr/lib/kafka/bin/kafka-storage.sh format -t $(/usr/lib/kafka/bin/kafka-storage.sh random-uuid) -c /etc/kafka/server.properties --standalone'
 fi
@@ -93,6 +94,9 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Apr 14 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt4
+- Used JAVA_HOME with OpenJDK 21 in kafka-run-class.sh (ALT #58054).
+
 * Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt3
 - BR: java-21-openjdk-devel.
 
