@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: iotas
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -66,6 +66,7 @@ on sync with Nextcloud Notes.
 %build
 %meson
 %meson_build
+%meson_build %name-pot %name-update-po
 
 %install
 %meson_install
@@ -92,6 +93,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Tue Apr 14 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.6-alt1
+- 2026.6
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.4-alt1
 - 2026.4
 
