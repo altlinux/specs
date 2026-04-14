@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.19.2
-Release: alt1.1
+Version: 6.19.3
+Release: alt1
 Summary: Reliable private and pypi.org caching server
 License: MIT
 Group: Development/Python3
@@ -14,43 +14,23 @@ Url: https://pypi.org/project/devpi-server
 Vcs: https://github.com/devpi/devpi
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+# subpackaged
 Requires: python3-modules-sqlite3
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+BuildRequires(pre): rpm-build-pyproject
+# not packaged yet
+%add_pyproject_deps_build_filter setuptools-changelog-shortener
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-beautifulsoup4
-BuildRequires: python3-module-execnet
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-instafail
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-webtest
-
-BuildRequires: python3-module-argon2-cffi
-BuildRequires: python3-module-attrs
-BuildRequires: python3-module-defusedxml
-BuildRequires: python3-module-devpi-common
-BuildRequires: python3-module-httpx
-BuildRequires: python3-module-itsdangerous
-BuildRequires: python3-module-lazy
-BuildRequires: python3-module-passlib
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-pluggy
-BuildRequires: python3-module-py
-BuildRequires: python3-module-pyramid
-BuildRequires: python3-module-repoze-lru
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-ruamel-yaml
-BuildRequires: python3-module-strictyaml
-BuildRequires: python3-module-waitress
+%add_pyproject_deps_check_filter pytest-github-actions-annotate-failures
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-modules-sqlite3
 %endif
-
-%add_python3_req_skip requests.packages.urllib3.response
 
 %description
 Server for private package indexes and PyPI caching.
@@ -59,6 +39,11 @@ Server for private package indexes and PyPI caching.
 %setup
 %autopatch -p1
 cd server
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 cd server
@@ -84,8 +69,8 @@ cd server
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.19.2-alt1.1
-- Demodernized packaging.
+* Tue Apr 14 2026 Stanislav Levin <slev@altlinux.org> 6.19.3-alt1
+- 6.19.2 -> 6.19.3.
 
 * Wed Mar 18 2026 Stanislav Levin <slev@altlinux.org> 6.19.2-alt1
 - 6.19.1 -> 6.19.2.
