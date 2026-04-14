@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.46
+Version: 1.0.49
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -63,6 +63,7 @@ sed \
 %_bindir/system_upgrade_check.sh
 %dir %_libexecdir/deepin-update-ui/
 %_libexecdir/deepin-update-ui/copy-update-log.sh
+%_libexecdir/deepin-update-ui/dde-update-env.sh
 %dir %_libdir/dde-control-center/
 %dir %_libdir/dde-control-center/plugins_v1.0/
 %dir %_libdir/dde-control-center/plugins_v1.0/update/
@@ -75,6 +76,7 @@ sed \
 %dir %_datadir/dde-dock/icons/dcc-setting/
 %_datadir/dde-dock/icons/dcc-setting/dcc-plugin-update.dci
 %_unitdir/deepin-update-log-copy@.service
+%_userunitdir/dde-update-env.service
 %_datadir/polkit-1/rules.d/52-deepin-update-ui.rules
 %dir %_datadir/dde-session-shell/
 %dir %_datadir/dde-session-shell/greeters.d/
@@ -98,6 +100,9 @@ sed \
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Tue Apr 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.49-alt1
+- New version 1.0.49.
+
 * Tue Mar 17 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.46-alt1
 - New version 1.0.46.
 
