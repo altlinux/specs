@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 32.0.1
+Version: 33.0.2
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -23,7 +23,7 @@ Requires(pre): webserver-common
 Requires: php%php_version
 Requires: php%php_version-libs
 Requires: php%php_version-dom
-Requires: php%php_version-gd2
+Requires: php%php_version-gd
 Requires: php%php_version-mbstring
 Requires: php%php_version-xmlreader
 Requires: php%php_version-zip
@@ -169,6 +169,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 33.0.2-alt1
+- New version (fixes: CVE-2025-66512).
+
 * Thu Nov 20 2025 Andrey Cherepanov <cas@altlinux.org> 32.0.1-alt1
 - New version.
 
