@@ -1,8 +1,8 @@
 
 Name: kdbg
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
-%K5init no_altplace
+%K6init no_altplace
 
 Group: Development/Other
 Summary: A Graphical Debugger Interface
@@ -15,13 +15,11 @@ Source: %name-%version.tar
 
 Patch1: alt-parse-gdb-output.patch
 
-# Automatically added by buildreq on Mon Mar 11 2019 (-bi)
-# optimized out: cmake cmake-modules elfutils gcc-c++ gem-power-assert gem-setup glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kwidgetsaddons-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 rpm-build-ruby ruby ruby-bundler ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-#BuildRequires: appstream asciidoctor extra-cmake-modules gem-did-you-mean kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel libssl-devel python3-dev ruby-minitest ruby-net-telnet ruby-rubygems-update ruby-test-unit ruby-xmlrpc
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-#libssl-devel
+BuildRequires: qt6-declarative-devel qt6-5compat-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kconfig-devel kf6-kxmlgui-devel kf6-kcolorscheme-devel
 
 %description
 KDbg is a graphical user interface to gdb, the GNU debugger.
@@ -31,29 +29,32 @@ inspecting variables, and stepping through code.
 
 %prep
 %setup -q
-%patch1 -p1
-
+#%patch1 -p1
 
 %build
-%K5build
+%K6build \
+    -DBUILD_FOR_KDE_VERSION=6 \
+    #
 
 %install
-%K5install
+%K6install
 
 %find_lang --with-kde %name
 
 
 %files -f %name.lang
 %doc BUGS TODO README ReleaseNotes*
-%config(noreplace) %_K5xdgconf/kdbgrc
-%_K5bin/*
-%_datadir/kdbg
-%_K5xmlgui/kdbg/
-#
-%_K5xdgapp/kdbg.desktop
-%_iconsdir/*/*/apps/kdbg.*
+%config(noreplace) %_K6xdgconf/kdbgrc
+%_K6bin/kdbg
+%_K6data/kdbg
+%_K6data/kxmlgui?/kdbg/
+%_K6xdgapp/kdbg.desktop
+%_K6icon/*/*/apps/*kdbg*.*
 
 %changelog
+* Tue Apr 14 2026 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
+- new version
+
 * Mon Dec 18 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
 - new version
 
