@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -56,7 +56,12 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
-* Fri Apr 06 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.0-alt1
+* Mon Apr 13 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.1-alt1
+- Fixed:
+  + Incorrect behavior of the services module when services are missing (Closes: #58642);
+  + Unable to run a separate test via diag module (Closes: #58652).
+
+* Mon Apr 06 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.0-alt1
 - Added:
   + Support for displaying the status of components without categories;
   + Printing components without categories;
