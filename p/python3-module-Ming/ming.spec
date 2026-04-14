@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Bringing order to Mongo since 2009
@@ -49,6 +49,9 @@ enforcement and some facilities for schema migration.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Apr 14 2026 Anton Vyatkin <toni@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+
 * Tue Sep 09 2025 Anton Vyatkin <toni@altlinux.org> 0.16.0-alt1
 - New version 0.16.0.
 
