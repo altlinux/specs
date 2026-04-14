@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.311.3
+Version: 0.314.3
 Release: alt1
 
 Summary: A GraphQL library for Python that leverages type annotations
@@ -14,7 +14,7 @@ URL:     https://github.com/strawberry-graphql/strawberry
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -52,6 +52,7 @@ BuildRequires: python3-module-sanic-testing
 BuildRequires: python3-module-websockets
 BuildRequires: python3-module-lia-web
 BuildRequires: python3-module-cross-web
+BuildRequires: python3-module-protobuf
 %endif
 
 # Requires only for dev
@@ -70,6 +71,7 @@ Source: %pypi_name-%version.tar
 
 %prep
 %setup -n %pypi_name-%version
+sed -i 's/version = "0.314.2"/version = "%version"/' pyproject.toml
 rm -fr strawberry/litestar
 rm -fr tests/litestar
 
@@ -97,6 +99,9 @@ export DJANGO_SETTINGS_MODULE=tests.django.django_settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 13 2026 Alexander Burmatov <thatman@altlinux.org> 0.314.3-alt1
+- New version 0.314.3.
+
 * Wed Mar 18 2026 Alexander Burmatov <thatman@altlinux.org> 0.311.3-alt1
 - New version 0.311.3.
 

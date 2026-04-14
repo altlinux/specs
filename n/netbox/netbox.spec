@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -20,7 +20,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs >= 1.6.1
-BuildRequires: python3-module-mkdocs-material >= 9.7.5
+BuildRequires: python3-module-mkdocs-material >= 9.7.6
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.3
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.3
@@ -50,17 +50,17 @@ Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
 Requires: python3-module-markdown >= 3.10.2
 Requires: python3-module-netaddr >= 1.3.0
-Requires: python3-module-nh3 >= 0.3.3
+Requires: python3-module-nh3 >= 0.3.4
 Requires: python3-module-pillow >= 12.1.1
 Requires: python3-module-psycopg >= 3.3.3
 Requires: python3-module-yaml >= 6.0.3
-Requires: python3-module-requests >= 2.32.5
+Requires: python3-module-requests >= 2.33.1
 Requires: python3-module-rq >= 2.7.0
 Requires: python3-module-social-app-django >= 5.7.0
 Requires: python3-module-social-core >= 4.8.5
 Requires: python3-module-sorl-thumbnail >= 13.0.0
-Requires: python3-module-strawberry-graphql >= 0.311.3
-Requires: python3-module-strawberry-django >= 0.82.0
+Requires: python3-module-strawberry-graphql >= 0.312.2
+Requires: python3-module-strawberry-django >= 0.82.1
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2025.3
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon Apr 13 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.6-alt1
+- New 4.5.6 version.
+
 * Wed Mar 18 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.5-alt1
 - New 4.5.5 version.
 

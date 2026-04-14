@@ -1,5 +1,5 @@
 Name:    netbox-floorplan
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: A netbox plugin providing floorplan mapping capability for locations and sites
@@ -45,6 +45,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-floorplan/README
 %_defaultdocdir/netbox-floorplan/README
 
 %changelog
+* Tue Apr 14 2026 Alexander Burmatov <thatman@altlinux.org> 0.9.1-alt1
+- New 0.9.1 version.
+
 * Mon Dec 22 2025 Alexander Burmatov <thatman@altlinux.org> 0.9.0-alt1
 - New 0.9.0 version.
 
