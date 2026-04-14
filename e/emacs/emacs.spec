@@ -1,6 +1,6 @@
 Name: emacs
 Version: 30.2
-Release: alt3
+Release: alt4
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -92,6 +92,7 @@ Conflicts: app-defaults < 0.2.1-alt1
 Conflicts: emacs-base-X11 < 0.0.2
 Obsoletes: emacs-base-X11 < 0.0.2
 AutoReq: yes, nopython
+Requires: font(symbola)
 
 %package el
 Summary: The sources for Lisp programs included with GNU Emacs
@@ -373,6 +374,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Tue Apr 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 30.2-alt4
+- backported fix for emacs#79687
+
 * Fri Apr 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 30.2-alt3
 - rebuilt with recent tree-sitter
 
