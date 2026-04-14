@@ -1,18 +1,15 @@
 Name: libgpiod
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: Linux GPIO interacting library
 License: LGPL-2.1
 Group: System/Libraries
-Url: https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
+URL: https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
 
-Source0: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: autoconf-archive gcc-c++ help2man
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
 
 %package -n libgpiod2
 Summary: Linux GPIO interacting library
@@ -31,12 +28,6 @@ Summary: Linux GPIO interacting tools
 Group: System/Kernel and hardware
 Provides: libgpiod-utils = %EVR
 Obsoletes: libgpiod-utils
-
-%package -n python3-module-gpiod
-Summary: Python 3 bindings for %name
-Group: Development/Python3
-Provides: python3-module-libgpiod = %EVR
-Obsoletes: python3-module-libgpiod
 
 %define desc C library and tools for interacting with the linux GPIO \
 character device (gpiod stands for GPIO device).\
@@ -63,29 +54,17 @@ This package contains development part of libgpiod.
 %desc
 This package contains command-line tools.
 
-%description -n python3-module-gpiod
-%desc
-This package contains Python bindings for libgpiod.
-
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --disable-static --enable-tools --enable-bindings-cxx
+%configure --disable-static --enable-tools \
+    --enable-bindings-cxx --disable-bindings-python
 %make_build
-# isn't that lovely
-%pyproject_build --backend-config-settings \
-	'{"--build-option": [
-			"build_ext",
-			"--inplace",
-			"--include-dirs=../../include",
-			"--library-dirs=../../lib/.libs"]}' \
-	bindings/python
 
 %install
 %makeinstall_std
-%pyproject_install bindings/python/dist/*.whl
 
 %files -n libgpiod2
 %_libdir/libgpiod.so.*
@@ -107,11 +86,10 @@ This package contains Python bindings for libgpiod.
 %_bindir/gpio*
 %_man1dir/gpio*.1*
 
-%files -n python3-module-gpiod
-%python3_sitelibdir/gpiod
-%python3_sitelibdir/gpiod-*.dist-info
-
 %changelog
+* Tue Apr 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.4-alt2
+- built without python bindings
+
 * Fri Apr 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.4-alt1
 - 2.2.4 released
 
