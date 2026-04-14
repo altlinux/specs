@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.29.1
+Version: 1.29.2
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -8,6 +8,7 @@ License: Apache-2.0
 Group: System/Configuration/Other
 Url: https://github.com/istio/istio
 Vcs: https://github.com/istio/istio
+# NOTE: See https://istio.io/latest/news/releases for CVEs.
 
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -87,8 +88,11 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Apr 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.29.2-alt1
+- New version 1.29.2.
+
 * Wed Mar 11 2026 Leontiy Volodin <lvol@altlinux.org> 1.29.1-alt1
-- New version 1.29.1.
+- New version 1.29.1 (Fixes: CVE-2026-31837, CVE-2026-31838).
 
 * Tue Feb 17 2026 Leontiy Volodin <lvol@altlinux.org> 1.29.0-alt1
 - New version 1.29.0.
