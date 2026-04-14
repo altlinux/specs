@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.4
+Version: 2.2.0
 Release: alt1
 Summary: Deploy multiple versions of your MkDocs
 License: MIT
@@ -51,6 +51,9 @@ to creating and executing
 %_bindir/mike
 
 %changelog
+* Tue Apr 14 2026 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.4 -> 2.2.0.
+
 * Wed Mar 11 2026 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
 - 2.1.3 -> 2.1.4.
 
