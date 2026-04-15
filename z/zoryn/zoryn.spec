@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.35.0
+Version: 0.36.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,23 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 0.36.0-alt1
+- task manage: added approval/disapproval status line on task list
+- task manage: colored checkmark/cross symbols for subtask approvals
+- added persistent search history in TUI search inputs (test-rebuild,
+  up, task manage) with readline-style Ctrl+R reverse-i-search
+- build: added --section bb/ba (pkgbinary/pkgall) for short-circuit
+  repackage in existing chroot
+- build (python auto-deps): auto-fix retry reuses existing chroot via
+  hsh-rebuild
+- task rebuild: fixed --skip to work in every mode (was silently
+  ignored outside --all-subtasks)
+- up: fixed upstream fetch aborting on local/upstream tag clash
+- submit: fixed bogus --deps on tasks from a different build chain
+- build --section install: fixed by dropping unsupported --nocheck
+- build (python auto-deps): detect pyproject_deps.json drift on check
+  dependencies source change
+
 * Thu Apr 09 2026 Anton Farygin <rider@altlinux.org> 0.35.0-alt1
 - added zoryn commit command (extended analogue of gear-commit)
 - rebuild: anchored SRPM filename matcher, unified on
