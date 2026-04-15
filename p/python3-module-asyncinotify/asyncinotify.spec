@@ -1,5 +1,5 @@
 Name: python3-module-asyncinotify
-Version: 4.4.2
+Version: 4.4.4
 Release: alt1
 
 Summary: A simple optionally-async python inotify library
@@ -41,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/asyncinotify-%version.dist-info
 
 %changelog
+* Wed Apr 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.4-alt1
+- 4.4.4 released
+
 * Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.2-alt1
 - 4.4.2 released
 
