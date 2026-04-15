@@ -2,7 +2,7 @@
 
 Name: pnana
 Version: 0.0.5
-Release: alt1
+Release: alt2
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -14,6 +14,7 @@ VCS: https://github.com/Cyxuan0311/PNANA.git
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: alt-prepare-offline-build.patch
+Patch2: alt-set-correct-latest-project-version.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -39,6 +40,7 @@ sed -i 's;\(DESTINATION\s\+\)\.config/\(%name.*\);\1%_datadir/\2;' CMakeLists.tx
 
 %build
 %cmake \
+    -DPNANA_VERSION=%version \
     -DBUILD_IMAGE_PREVIEW=ON \
     -DBUILD_TREE_SITTER=ON \
     -DBUILD_LUA=ON \
@@ -75,5 +77,8 @@ mv README{_EN,}.md
 %_datadir/%name/config.json
 
 %changelog
+* Wed Apr 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt2
+- set the correct latest version of the project (closes: 58736)
+
 * Fri Apr 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt1
 - initial build for ALT Linux
