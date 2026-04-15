@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -77,6 +77,14 @@ find service-* -type f -exec shellcheck {} \+
 %_localstatedir/alterator/service/samba-ad/config-backup
 
 %changelog
+* Mon Apr 13 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.9-alt1
+- Enhance resolvconf configuration handling and improve network
+  manager checks
+- Remove admin password from global keys
+- Change parameters parser in provision function
+- Change parameters parser in join function"
+- Add password roles
+
 * Thu Feb 26 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.8-alt1
 - Fix function for getting netBios domain name
 - Add optional parameter netBiosName
