@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fsel
-Version: 3.3.1
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: Fast TUI app launcher for GNU/Linux and *BSD 
 License: BSD-2-Clause
@@ -44,6 +44,9 @@ install -pm 644 {config,keybinds,color_examples}.toml \
 %_datadir/%name
 
 %changelog
+* Wed Apr 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 3.4.0-alt1
+- new version
+
 * Tue Apr 07 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 3.3.1-alt2
 - fixed an error when starting fsel with `--cclip` flag (closes: 58544)
 
