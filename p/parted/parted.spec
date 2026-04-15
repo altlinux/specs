@@ -24,7 +24,7 @@
 %define Name Parted
 Name: parted
 %define lname lib%name
-Version: 3.6.37
+Version: 3.7
 Release: alt1
 
 Summary: Flexible partitioning tool
@@ -32,7 +32,7 @@ Summary(uk_UA.UTF-8): Универсальний інструмент для р�
 Summary(ru_RU.UTF-8): Универсальный инструмент для работы с разделами диска
 License: GPLv3
 Group: System/Configuration/Hardware
-URL: http://www.gnu.org/software/%name
+URL: https://www.gnu.org/software/parted/
 VCS: https://git.savannah.gnu.org/git/parted.git
 Source: %name-%version.tar
 Source1: %name-pam
@@ -238,6 +238,9 @@ __MENU__
 
 
 %changelog
+* Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 3.7-alt1
+- 3.6.37 -> 3.7
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 3.6.37-alt1
 - 3.6 -> 3.6.37
 
