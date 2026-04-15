@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt3
+Release: alt4
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -491,6 +491,9 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Mon Apr 13 2026 Fedor Moseichuck <phobos@altlinux.org> 11.1-alt4
+- menu: remove apps from hidden
+
 * Sat Feb 14 2026 Anton Midyukov <antohami@altlinux.org> 11.1-alt3
 - NMU: Cleanup obsoletes gfxboot and /boot/splash (fix FBFS).
 - NMU: xfce-settings: enable compositing on aarch64.
