@@ -5,7 +5,7 @@
 %define shortcommit %(c=%commit; echo ${c:0:8})
 
 Name: netbird
-Version: 0.68.2
+Version: 0.68.3
 Release: alt1
 
 Summary: Mesh VPN based on WireGuard
@@ -40,7 +40,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-export LDFLAGS="-X github.com/netbirdio/netbird/version.version=v%{version} \
+export LDFLAGS="-X github.com/netbirdio/netbird/version.version=%{version} \
     -X main.commit=%shortcommit \
     -X main.date=$(date -u +%%Y%%m%%d) -X main.builtBy=ALT"
 
@@ -82,6 +82,9 @@ install -dm750 %buildroot%_sharedstatedir/%name
 %dir %attr(0750,root,root) %_sharedstatedir/%name
 
 %changelog
+* Wed Apr 15 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.68.3-alt1
+- New version 0.68.3.
+
 * Tue Apr 14 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.68.2-alt1
 - New version 0.68.2.
 - Add /var/lib/netbird to files.
