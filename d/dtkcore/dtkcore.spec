@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 6.7.33
+Version: 6.7.39
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -75,7 +75,6 @@ Header files and libraries for %name.
 %package -n dtk6core
 Summary: Deepin tool kit core modules
 Group: Graphical desktop/Other
-Provides: dtk6core = %EVR
 
 %description -n dtk6core
 Deepin tool kit core modules.
@@ -228,6 +227,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %endif
 
 %changelog
+* Wed Apr 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.39-alt1
+- New version 6.7.39.
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
 - New version 6.7.33.
 

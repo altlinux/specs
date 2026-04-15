@@ -3,21 +3,20 @@
 %def_disable clang
 
 Name: dtk6declarative
-Version: 6.0.48
-Release: alt2
+Version: 6.7.39
+Release: alt1
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
 
 License: LGPL-3.0+
 Group: System/Configuration/Other
-Url: https://github.com/linuxdeepin/dtk6declarative
-Vcs: https://github.com/linuxdeepin/dtk6declarative
+Url: https://github.com/linuxdeepin/dtkdeclarative
+Vcs: https://github.com/linuxdeepin/dtkdeclarative
 
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -103,7 +102,6 @@ QtCreator Data files for %name.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 # FAILED: examples/exhibition/CMakeFiles/dtk-exhibition.dir/dtk-exhibition_autogen/EWIEGA46WW/qrc_assets.cpp.o
 # virtual memory exhausted: Cannot allocate memory
 %ifarch i586 armh
@@ -127,6 +125,7 @@ export READELF="llvm-readelf"
   -DLIB_INSTALL_DIR=%_lib \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
+  -DDTK5=OFF \
 #
 
 %install
@@ -140,7 +139,7 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add
 %ifnarch i586 armh
 %dir %_libdir/dtk6/
 %dir %_libdir/dtk6/DDeclarative/
-%_libdir/dtk6/DDeclarative/dtk-exhibition
+%_libdir/dtk6/DDeclarative/dtk6-exhibition
 %endif
 %dir %_dqt6_qmldir/Chameleon/
 %_dqt6_qmldir/Chameleon/*
@@ -164,6 +163,10 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Wed Apr 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.39-alt1
+- New version 6.7.39.
+- Changed url and vcs tags.
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.48-alt2
 - Fixed build on shrinked dqt6.
 

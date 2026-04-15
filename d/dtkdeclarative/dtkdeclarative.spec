@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.7.28
+Version: 6.7.39
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -17,7 +17,6 @@ VCS: https://github.com/linuxdeepin/dtkdeclarative
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtkdeclarative-5.6.28-alt-pkgconfig-find-requires.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -107,7 +106,6 @@ QtCreator Data files for %name.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 export PATH=%_dqt5_bindir:$PATH
@@ -165,9 +163,12 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtkdeclarative.pri
 
 %files -n qt-creator-data-%name
-%_datadir/qtcreator/templates/wizards/projects/qml-app-template/
+%_datadir/qtcreator/templates/wizards/projects/qml5-app-template/
 
 %changelog
+* Wed Apr 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.39-alt1
+- New version 6.7.39.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.28-alt1
 - New version 5.7.28.
 

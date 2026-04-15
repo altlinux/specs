@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 6.7.33
+Version: 6.7.39
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -130,18 +130,6 @@ Obsoletes: dtk6-widget-examples < %EVR
 DtkWidget is Deepin graphical user interface for deepin desktop development.
 Examples for dtk6widget.
 
-%if_enabled docs
-%package -n dtk6widget-doc
-Summary: dtk6widget documantation
-Group: Documentation
-BuildArch: noarch
-Provides: dtk6-widget-doc = %EVR
-Obsoletes: dtk6-widget-doc < %EVR
-
-%description -n dtk6widget-doc
-This package provides dtk6widget documantation.
-%endif
-
 %prep
 %setup
 %patch0 -p1
@@ -179,11 +167,7 @@ echo "Start DTK6 build."
 %DQ6build \
   -DDTK5=OFF \
   -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
-%if_enabled docs
-  -DBUILD_DOCS=ON \
-%else
   -DBUILD_DOCS=OFF \
-%endif
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DBUILD_PLUGINS=OFF \
@@ -248,12 +232,11 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %dir %_libdir/dtk6/DWidget/
 %_libdir/dtk6/DWidget/examples/
 
-%if_enabled docs
-%files -n dtk6widget-doc
-%_dqt6_docdir/dtkwidget.qch
-%endif
-
 %changelog
+* Wed Apr 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.39-alt1
+- New version 6.7.39.
+- Disabled docs on dtk6widget.
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.33-alt1
 - New version 6.7.33.
 
