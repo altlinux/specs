@@ -1,86 +1,54 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: rsyntaxtextarea
+Version: 3.6.2
+Release: alt1
+
+Summary: A syntax highlighting, code folding text editor for Java Swing applications
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global upname RSyntaxTextArea
+License: BSD
+Url: https://github.com/bobbylight/RSyntaxTextArea
+Vcs: https://github.com/bobbylight/RSyntaxTextArea
+BuildArch: noarch
 
-Name:           rsyntaxtextarea
-Version:        3.1.3
-Release:        alt1_2jpp11
-Summary:        A syntax highlighting, code folding text editor for Java Swing applications
+Source0: %name-%version.tar
+Patch0: %name-%version-alt-patch.patch
 
-License:        BSD
-URL:            https://github.com/bobbylight/%{upname}
-Source0:        https://github.com/bobbylight/%{upname}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Source1:        pom.xml
-
-BuildRequires:  maven-local
-
-
-# Apply workaround until gradle doesn't exists in repos
-Provides:       mvn(com.fifesoft:rsyntaxtextarea)
-Provides:       osgi(com.fifesoft.rsyntaxtextarea)
-
-BuildArch:      noarch
-Source44: import.info
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: /proc
+BuildRequires: java-17-openjdk-devel
+BuildRequires: xgradle
+BuildRequires: biz-aQute-bnd-gradle-plugins
 
 %description
-%{upname} is a customizable, syntax highlighting text component for Java
-Swing applications. Out of the box, it supports syntax highlighting for 40+
-programming languages, code folding, search and replace, and has add-on
+RSyntaxTextArea is a customizable, syntax highlighting text component for
+Java Swing applications. Out of the box, it supports syntax highlighting for
+40+ programming languages, code folding, search and replace, and has add-on
 libraries for code completion and spell checking. Syntax highlighting for
 additional languages can be added via tools such as JFlex.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{upname}
-
-%description    javadoc
-This package contains the API documentation for %{name}.
-
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{upname}-%{version}
-
-
-# Drop included jars
-find . -name "*.jar" -delete
-
-pushd %{upname}
-for file in src/main/dist/%{upname}.License.txt src/main/dist/readme.txt; do
-    sed "s|\r||g" $file > $file.new && \
-    touch -r $file $file.new && \
-    mv $file.new $file
-done
-popd
-
+%setup
+%autopatch -p1
 
 %build
-d=`mktemp -d`
-f=`find %{upname}/src/main/java -type f | grep \.java$`
-javac  -target 1.8 -source 1.8 -d $d $f
-cp -rv %{upname}/src/main/resources/* $d
-l=`pwd`
-pushd $d
-jar -cf $l/%{name}.jar *
-popd
-%mvn_artifact %{SOURCE1} %{name}.jar
+%gradle_publish -x check
 
 %install
-%mvn_install
+%gradle_register
+%gradle_register_javadoc
 
-
-
+%gradle_install
 
 %files -f .mfiles
-%doc --no-dereference %{upname}/src/main/dist/%{upname}.License.txt
-%doc %{upname}/src/main/dist/readme.txt
-%{_datadir}/java/%{name}/%{name}.jar
-
-
 
 %changelog
+* Wed Apr 15 2026 Arseniy Kostevich <faux@altlinux.org> 3.6.2-alt1
+- new version
+- fix broken pom
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3.1.3-alt1_2jpp11
 - new version
 
