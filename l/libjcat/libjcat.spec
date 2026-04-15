@@ -1,7 +1,7 @@
 %define soname 1
 Summary: Library for reading Jcat files
 Name: libjcat
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
@@ -89,6 +89,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 0.2.6-alt1
+- 0.2.5 -> 0.2.6
+
 * Tue Oct 21 2025 Anton Farygin <rider@altlinux.com> 0.2.5-alt1
 - 0.2.3 -> 0.2.5
 
