@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.9.1
-Release: alt2
+Release: alt3
 
 Summary: A hatch plugin to help build Jupyter packages
 License: BSD-3-Clause
@@ -15,7 +15,6 @@ VCS: https://github.com/jupyterlab/hatch-jupyter-builder
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch: hatch-test-nonisolated.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -33,7 +32,6 @@ with Jupyter packages.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p0
 sed -i 's/, "--color=yes"//' pyproject.toml
 
 %build
@@ -43,8 +41,8 @@ sed -i 's/, "--color=yes"//' pyproject.toml
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run_pytest -v tests/
+# Calls pip, requires internet
+%pyproject_run_pytest -v -k 'not test_hatch_build' tests/
 
 %files
 %doc *.md
@@ -53,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo hatch_jupyter_builder}
 
 %changelog
+* Wed Apr 15 2026 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt3
+- Fixed FTBFS.
+
 * Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 0.9.1-alt2
 - NMU: fixed FTBFS (pytest 9).
 
