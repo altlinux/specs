@@ -2,13 +2,13 @@
 
 %define _name buf
 %define binary_name %_name
-%define ver_major 1.67
+%define ver_major 1.68
 %define import_path github.com/bufbuild/buf
 
 %def_disable bootstrap
 
 Name: %binary_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The best way of working with Protocol Buffers.
@@ -95,6 +95,9 @@ install -vDm644 $BUILDDIR/manpages/* -t %buildroot/%_man1dir
 %doc *.md
 
 %changelog
+* Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.68.1-alt1
+- 1.68.1
+
 * Fri Apr 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.67.0-alt1
 - 1.67.0
 
