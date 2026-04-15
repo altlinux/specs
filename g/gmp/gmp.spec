@@ -4,7 +4,7 @@
 
 Name: gmp
 Version: 6.3.0
-Release: alt1
+Release: alt2
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -286,6 +286,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx && static
 
 %changelog
+* Wed Apr 15 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.0-alt2
+- Fixed build with compilers defaulting to C23 standard (gcc 15+).
+
 * Mon Aug 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.3.0-alt1
 - Updated to 6.3.0.
 - Removed redundant BuildRequires: libreadline-devel.
