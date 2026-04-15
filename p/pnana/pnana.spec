@@ -2,7 +2,7 @@
 
 Name: pnana
 Version: 0.0.5
-Release: alt2
+Release: alt3
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: alt-prepare-offline-build.patch
 Patch2: alt-set-correct-latest-project-version.patch
+Patch3: alt-fix-moving-file-by-btn.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -77,6 +78,9 @@ mv README{_EN,}.md
 %_datadir/%name/config.json
 
 %changelog
+* Wed Apr 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt3
+- fix file moving failure to target directory on F6 key press (closes: 58744)
+
 * Wed Apr 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt2
 - set the correct latest version of the project (closes: 58736)
 
