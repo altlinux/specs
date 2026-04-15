@@ -1,6 +1,6 @@
 Name: alterator-module-executor
-Version: 0.1.32
-Release: alt2
+Version: 0.1.33
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,12 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Apr 14 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt1
+- Add the ability to emit unicast signals upon request from an executable
+  file. Signals are sent to the user who called the method. The executable
+  file sends a message in JSON format to file descriptor number 3. The message
+  specifies the name and body of the signal.
+
 * Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.1.32-alt2
 - Update secret scan action to use alterator fork (the-nexi@).
 
