@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-files
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1%beta
 
 Summary: COSMIC File Manager
@@ -68,6 +68,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
+- 1.0.10
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
 - 1.0.9
 

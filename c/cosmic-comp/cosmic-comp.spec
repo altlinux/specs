@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-comp
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1%beta
 
 Summary: COSMIC Wayland Compositor
@@ -62,6 +62,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/cosmic/com.system76.CosmicSettings.WindowRules/v1/tiling_exception_defaults
 
 %changelog
+* Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
+- 1.0.10
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
 - 1.0.9
 
