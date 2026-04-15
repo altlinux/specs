@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: FIDO2/WebAuthn library for implementing clients and servers
@@ -20,11 +20,13 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra pcsc
 %pyproject_builddeps_check
 %endif
 
@@ -51,11 +53,13 @@ as well as verifying attestation and assertion signatures.
 %pyproject_run_pytest -vra --ignore=tests/device
 
 %files
-%doc README.adoc COPYING NEWS examples
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 15 2026 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Tue Jan 20 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt1
 - Updated to 2.1.1.
 
