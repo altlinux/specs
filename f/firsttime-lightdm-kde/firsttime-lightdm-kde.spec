@@ -1,5 +1,5 @@
 Name: firsttime-lightdm-kde
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Wed Apr 15 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.2-alt1
+- don't setup lightdm for old NVIDIA (kwin fixed to fail)
+
 * Tue Mar 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
 - fix editing kde-greeter-fallback.conf
 
