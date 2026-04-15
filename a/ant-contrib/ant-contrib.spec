@@ -1,22 +1,22 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global beta_number b3
-
-Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.36.b3jpp11
+Release:        alt6.b3
+
+Summary:        Collection of tasks for Ant
 License:        ASL 2.0 and ASL 1.1
+Group:          Development/Java
 URL:            http://ant-contrib.sourceforge.net/
-Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
+
+Source0:        %name-%{version}b3-src.tar.bz2
 # ASL 2.0 Licence text
 # Upstream bug at https://sourceforge.net/tracker/?func=detail&aid=3590371&group_id=36177&atid=416920
 Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch2:         %{name}-antservertest.patch
+
+Patch2:         %name-antservertest.patch
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+
 BuildRequires:  ivy-local
 BuildRequires:  junit
 BuildRequires:  ant-junit
@@ -26,31 +26,25 @@ BuildRequires:  apache-ivy
 BuildRequires:  apache-commons-httpclient
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-parent
+
 Requires:       junit
 Requires:       ant
 Requires:       xerces-j2
+
 BuildArch:      noarch
-Source44: import.info
 
 %description
 The Ant-Contrib project is a collection of tasks
 (and at one point maybe types and other tools)
 for Apache Ant.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description    javadoc
-Api documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q  -n %{name}
+%setup -n %name
 %patch2
 
-cp %{SOURCE2} LICENSE-2.0.txt
+cp %SOURCE2 LICENSE-2.0.txt
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -62,6 +56,9 @@ rm -fr src/java/net/sf/antcontrib/net/URLImportTask.java
 sed -i '/<ivy:configure /d' build.xml
 rm -f ivy-conf.xml
 
+sed -i 's/antlib:fr.jayasoft.ivy.ant/antlib:org.apache.ivy.ant/g' build.xml
+sed -i 's/org="jayasoft"/org="org.apache.ivy"/g' ivy.xml
+
 sed -i '/<info /s//&revision="1.0b3" /' ivy.xml
 %mvn_alias : ant-contrib:
 
@@ -72,21 +69,21 @@ sed -i '/^jdk\./s,1\.4,1.8,' build.properties
 %ant -Divy.mode=local dist
 
 %install
-%mvn_artifact ivy.xml target/%{name}.jar
+%mvn_artifact ivy.xml target/%name.jar
 %mvn_install -J target/docs/api
 
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
-echo "ant-contrib/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
+mkdir -p %buildroot%_sysconfdir/ant.d
+echo "ant-contrib/ant-contrib" > %buildroot%_sysconfdir/ant.d/ant-contrib
 
 %files -f .mfiles
-%{_sysconfdir}/ant.d/ant-contrib
+%_sysconfdir/ant.d/ant-contrib
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
 %doc target/docs/manual/tasks/*
 
-%files javadoc -f .mfiles-javadoc
-%doc target/docs/LICENSE.txt LICENSE-2.0.txt
-
 %changelog
+* Wed Apr 15 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt6.b3
+- Fix build with new ivy.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt5_0.36.b3jpp11
 - java11 build
 
