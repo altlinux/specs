@@ -1,7 +1,7 @@
 %define rname karchive
 
 Name: kf6-%rname
-Version: 6.24.0
+Version: 6.25.0
 Release: alt1
 %K6init altplace
 
@@ -64,16 +64,19 @@ KF6 library
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
-#%_K6inc/karchive_version.h
 %_K6inc/KArchive/
 %_K6link/lib*.so
-%_K6lib/cmake/KF6Archive
+%_K6lib/cmake/KF6Archive/
+%_pkgconfigdir/*Archive*.pc
 
 %files -n libkf6archive
 %_K6lib/libKF6Archive.so.*
 
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
 * Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.24.0
+Version: 6.25.0
 Release: alt1
 %K6init
 
@@ -12,6 +12,8 @@ License: LGPL-2.0-or-later
 
 Requires(post,preun): alternatives >= 0.2
 
+# allow to proper evolution install
+Provides: gnome-keyring = 60
 Provides: kf5-kwallet = %version-%release
 Obsoletes: kf5-kwallet < %version-%release
 
@@ -141,6 +143,9 @@ __EOF__
 
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
 * Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
 - new version
 

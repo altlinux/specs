@@ -6,8 +6,8 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.24.0
-Release: alt2
+Version: 6.25.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -151,6 +151,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
 * Fri Apr 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.24.0-alt2
 - fix corrupted screenshots on paste (closes: 58423)
 - fix reinserting image into clipboard error

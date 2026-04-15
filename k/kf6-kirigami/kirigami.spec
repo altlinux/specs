@@ -14,7 +14,7 @@
 %define libkirigamicontrols libkirigamicontrols%sover
 
 Name: kf6-kirigami
-Version: 6.24.0
+Version: 6.25.0
 Release: alt1
 %K6init altplace
 
@@ -206,6 +206,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiTemplates.so.*
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
 * Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname qqc2-desktop-style
 
 Name: kf6-%rname
-Version: 6.24.0
-Release: alt3
+Version: 6.25.0
+Release: alt1
 %K6init altplace
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,9 @@ developing applications that use %name.
 
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt3
 - return prevoios package name
 
