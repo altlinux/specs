@@ -14,7 +14,7 @@
 
 Name: talos
 Version: 1.12.6
-Release: alt2
+Release: alt3
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -22,8 +22,9 @@ Group: System/Configuration/Boot and Init
 Url: https://www.talos.dev/
 Vcs: https://github.com/siderolabs/talos.git
 
-Source: %name-%version.tar
-Patch: %name-%version.patch
+Source0: %name-%version.tar
+Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -71,7 +72,7 @@ BuildArch: noarch
 %summary.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
 
 %define go_ver %(rpm -q --qf '%%{VERSION}' golang)
@@ -205,6 +206,10 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed Apr 15 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.6-alt3
+- Move vendor to separate source.
+- Update .gear/tags/list for correct patch generation.
+
 * Mon Apr 13 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.6-alt2
 - Remove default module.sig_enforce=1.
 
