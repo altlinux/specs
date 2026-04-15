@@ -1,5 +1,5 @@
 Name:    dnsperf
-Version: 2.15.0
+Version: 2.15.1
 Release: alt1
 
 Summary: DNS Performance Testing Tools
@@ -54,6 +54,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/*
 
 %changelog
+* Wed Apr 15 2026 Andrey Cherepanov <cas@altlinux.org> 2.15.1-alt1
+- New version.
+
 * Wed Jan 21 2026 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
 - New version.
 
