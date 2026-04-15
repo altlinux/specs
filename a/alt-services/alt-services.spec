@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.16
+Version: 0.1.17
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -67,6 +67,11 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Apr 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.17-alt1
+- Added (thx Andrey Alekseev):
+  + support for password roles
+  + support for hidden parameters
+
 * Mon Mar 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.16-alt1
 - Fixed (thx Andrey Alekseev):
   + log entry headers were editable by double-click
