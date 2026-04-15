@@ -1,6 +1,6 @@
 Name:    gptokeyb
 Version: 0.2.9
-Release: alt6.gitb85b098
+Release: alt7.gitb85b098
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
 License: GPLv2
@@ -13,7 +13,6 @@ Source3: Anbernic-RG-353x.gptk
 Source4: Anbernic-RG-552.gptk
 Source5: gamepadtokeyboard
 Source6: gptokeyb.service
-Source7: 20-gptokeyb.preset
 Source8: 65-gptokeyb-uinput.rules
 Source9: gamecontrollerdb.handhelds.txt
 
@@ -52,8 +51,6 @@ install -Dm0755 %SOURCE5 %buildroot%_bindir/
 
 install -Dm0644 %SOURCE6 %buildroot%_unitdir/%name.service
 
-install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
-
 install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
 
 %post -n %name-handheld-control
@@ -74,11 +71,13 @@ install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
 %dir %_sysconfdir/%name
 %_sysconfdir/%name/Anbernic*.gptk
 %_unitdir/%name.service
-%dir %_presetdir
-%_presetdir/20-%name.preset
 %_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Wed Apr 15 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt7.gitb85b098
+- Disable packaging /usr/lib/systemd/system-preset directory
+- Remove unneded preset file (closes #58747)
+
 * Wed Apr  8 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt6.gitb85b098
 - Add Anbernic RG DS support
 
