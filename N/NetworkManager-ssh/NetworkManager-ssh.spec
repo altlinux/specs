@@ -5,7 +5,7 @@
 %def_with gtk4
 
 Name: NetworkManager-ssh
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -92,7 +92,7 @@ make check
 %doc AUTHORS README README.md
 %_libexecdir/NetworkManager/nm-ssh-service
 %_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
-%config %_sysconfdir/dbus-1/system.d/nm-ssh-service.conf
+%config %_datadir/dbus-1/system.d/nm-ssh-service.conf
 %config %_libexecdir/NetworkManager/VPN/nm-ssh-service.name
 
 %files gtk-common -f %name.lang
@@ -110,6 +110,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Apr 15 2026 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
+- Updated to 1.4.4.
+
 * Fri Oct 17 2025 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
 - Updated to 1.4.2.
 
