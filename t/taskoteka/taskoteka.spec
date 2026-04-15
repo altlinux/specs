@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,9 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
+- added approved_by and disapproved_by fields to list endpoint subtasks
+
 * Wed Apr 01 2026 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - fixed OpenAPI spec returning literal %%VERSION%% instead of actual version
 - compact GC heap after initial cache load and periodically to limit memory growth
