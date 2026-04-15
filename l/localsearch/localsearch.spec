@@ -12,7 +12,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: LocalSearch is the file search framework of the GNOME desktop
@@ -211,6 +211,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.1-alt1
+- 3.11.1
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
 - 3.11.0
 
