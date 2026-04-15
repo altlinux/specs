@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define rust_volume_name seaweedfs-volume-rust
 %global import_path github.com/seaweedfs/seaweedfs
 
 Name: seaweedfs
-Version: 4.19
+Version: 4.20
 Release: alt1
 
 Summary: Enterprise-Grade Distributed Storage with Self-Healing
@@ -19,6 +20,8 @@ Source1: %name-%version-vendor.tar
 Source2: %name-%version-rust-vendor.tar
 Source3: %name.sysconfig
 Source4: %name.service
+Source5: %rust_volume_name.service
+Source6: %rust_volume_name.sysconfig
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires(pre): rpm-build-golang
@@ -34,12 +37,12 @@ cloud tiering. Filer supports Cloud Drive, xDC replication, Kubernetes,
 POSIX FUSE mount, S3 API, S3 Gateway, Hadoop, WebDAV, encryption,
 Erasure Coding. Enterprise version is at seaweedfs.com.
 
-%package volume-rust
+%package -n %rust_volume_name
 Summary: Rust-based Volume Server for SeaweedFS
 Group: System/Servers
 Requires: %name = %version-%release
 
-%description volume-rust
+%description -n %rust_volume_name
 Drop-in replacement for the Go volume server, written in Rust.
 Binary compatible with Go server.
 Same HTTP and gRPC protocols, seamless migration from Go volume server.
@@ -86,8 +89,10 @@ install -D -p -m 0755 $PWD/seaweed-volume/target/release/weed-volume \
 # install systemd services
 install -D -p -m 0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -D -p -m 0640 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
-install -d -m 0750 %buildroot%_localstatedir/%name
-install -d -m 0750 %buildroot%_logdir/%name
+install -D -p -m 0644 %SOURCE5 %buildroot%_unitdir/%rust_volume_name.service
+install -D -p -m 0640 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%rust_volume_name
+install -d %buildroot%_localstatedir/%name
+install -d %buildroot%_logdir/%name
 
 %pre
 %_sbindir/groupadd -r -f _%name ||:
@@ -99,6 +104,12 @@ install -d -m 0750 %buildroot%_logdir/%name
 %preun
 %preun_service %name
 
+%post -n %rust_volume_name
+%post_service %rust_volume_name
+
+%preun -n %rust_volume_name
+%preun_service %rust_volume_name
+
 %files
 %doc README.md LICENSE
 %_bindir/weed
@@ -107,11 +118,18 @@ install -d -m 0750 %buildroot%_logdir/%name
 %dir %attr(750,_%name,_%name) %_localstatedir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 
-%files volume-rust
+%files -n %rust_volume_name
 %doc seaweed-volume/README.md
 %_bindir/weed-volume
+%_unitdir/%rust_volume_name.service
+%config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%rust_volume_name
 
 %changelog
+* Tue Apr 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.20-alt1
+- Updated from 4.19 to 4.20.
+- Added sysconfig file to seaweedfs-volume-rust subpackage.
+- Added systemd unit file to seaweedfs-volume-rust subpackage.
+
 * Wed Apr 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.19-alt1
 - Updated from 4.17 to 4.19.
 - Added rust-based volume server as subpackage.
