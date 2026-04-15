@@ -4,7 +4,7 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.15.1
+Version: 5.15.2
 Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
@@ -224,6 +224,12 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Thu Apr 16 2026 Ilya Mashkin <oddity@altlinux.ru> 5.15.2-alt1
+- 5.15.2
+- Fixes:
+  + GHSA-22c4-238c-m5j4 Fix coroutine confusion when determining currently running mod
+  + GHSA-g596-mf82-w8c3 Sanitize the environment of safe Lua functions
+
 * Wed Feb 11 2026 Ilya Mashkin <oddity@altlinux.ru> 5.15.1-alt1
 - 5.15.1
 
