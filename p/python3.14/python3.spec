@@ -101,7 +101,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3%{?_python3_standalone}
 Version: %{pybasever}.3
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -171,6 +171,9 @@ Patch1007: python3-sslv2-compat.patch
 
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
+
+# Fix a possible UAF, CVE-2026-6100
+Patch1012: python3-LZMA_BZ2_Zlib_decompression.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -392,6 +395,8 @@ rm -r Modules/_decimal/libmpdec || exit 1
 %patch1007 -p2
 
 %patch1011 -p2
+
+%patch1012 -p1
 
 %ifarch %e2k
 # add e2k arch
@@ -1118,6 +1123,9 @@ LD_LIBRARY_PATH="$(pwd)" \
 %endif
 
 %changelog
+* Wed Apr 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.3-alt2
+- Fixes CVE-2026-6100 (thx to @george).
+
 * Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 3.14.3-alt1
 - Updated python3 to upstream 3.14.3.
 
