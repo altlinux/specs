@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Glue between async and thread worlds
 License: Apache-2.0
@@ -64,6 +64,13 @@ Key Features:
 sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
 # Remove pytest addopts containing cov options
 sed -i '/^addopts = .*/d' pyproject.toml
+# Fix mypy type output format: newer mypy omits "builtins." prefix
+sed -i \
+    -e 's/builtins\\\.int/int/g' \
+    -e 's/builtins\\\.str/str/g' \
+    -e 's/builtins\\\.bool/bool/g' \
+    -e 's/builtins\\\.float/float/g' \
+    tests/test_type_checking.yml
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -86,6 +93,9 @@ sed -i '/^addopts = .*/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 15 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.1.1-alt2
+- Fixed type checking tests for newer mypy output (strip builtins. prefix).
+
 * Tue Mar 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.1-alt1
 - Updated to 1.1.1.
 
