@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -11,7 +11,7 @@ URL: https://altlinux.space/alterator/alterator-backend-packages
 
 Source0: %name-%version.tar
 
-BuildRequires: libpackagekit-glib-devel
+BuildRequires: libpackagekit-glib-devel, libjansson-devel
 Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
@@ -67,6 +67,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Thu Apr 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.16-alt1
+- Add CheckFullDistUpgrade method (apt).
+
 * Thu Mar 26 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.15-alt1
 - Add updatable packages to the list of installed packages (Closes: #58366).
 
