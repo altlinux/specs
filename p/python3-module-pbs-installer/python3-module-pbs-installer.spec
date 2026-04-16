@@ -1,8 +1,9 @@
 %define pypi_name pbs-installer
 %define mod_name pbs_installer
+%define short_version 2026.4.7
 
 Name:    python3-module-%pypi_name
-Version: 2024.10.16
+Version: 2026.04.07
 Release: alt1
 
 Summary: An installer for python-build-standalone
@@ -46,8 +47,11 @@ fi
 %doc *.md
 %_bindir/pbs-install
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%mod_name-%short_version.dist-info
 
 %changelog
+* Wed Apr 15 2026 Alexander Burmatov <thatman@altlinux.org> 2026.04.07-alt1
+- New 2026.04.07 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 2024.10.16-alt1
 - Initial build for Sisyphus.

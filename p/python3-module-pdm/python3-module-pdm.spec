@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.22.0
+Version: 2.26.7
 Release: alt1
 
 Summary: A modern Python package and dependency manager supporting the latest PEP standards
@@ -21,25 +21,18 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-unearth
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-resolvelib
-BuildRequires: python3-module-rich
 BuildRequires: python3-module-tomlkit
-BuildRequires: python3-module-platformdirs
 BuildRequires: python3-module-pyproject_hooks
 BuildRequires: python3-module-installer
 BuildRequires: python3-module-blinker
 BuildRequires: python3-module-pytest-httpserver
-BuildRequires: python3-module-shellingham
 BuildRequires: python3-module-findpython
 BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-python-dotenv
-BuildRequires: python3-module-first
-BuildRequires: python3-module-flaky
 BuildRequires: python3-module-pbs-installer
-BuildRequires: python3-module-httpx
 BuildRequires: python3-module-hishel
-BuildRequires: python3-module-msgpack
-BuildRequires: python3-module-filelock
-BuildRequires: python3-module-httpcore
+BuildRequires: python3-module-id
+BuildRequires: python3-module-pytest-httpx
 %endif
 
 Requires: python3-module-pdm-alt-namespace
@@ -49,12 +42,14 @@ Requires: python3-module-pdm-alt-namespace
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: support-installer-1.0.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 # setuptools_scm implements a file_finders entry point which returns all files
 # tracked by SCM.
@@ -77,9 +72,17 @@ fi
 # Requires network
 donttest="network"
 donttest="$donttest or test_build_with_no_isolation"
-donttest="$donttest or test_find_candidates_from_find_links"
-donttest="$donttest or test_find_interpreters_with_PDM_IGNORE_ACTIVE_VENV"
-donttest="$donttest or test_build_distributions"
+# Different requires python
+donttest="$donttest or test_use_remember_last_selection"
+# Old pbs installer version
+donttest="$donttest or test_project_best_match_max"
+donttest="$donttest or test_project_best_match_min"
+# Broken with installer v1
+donttest="$donttest or test_uninstall_with_console_scripts"
+donttest="$donttest or test_install_wheel_with_cache"
+donttest="$donttest or test_can_install_wheel_with_cache_in_multiple_projects"
+donttest="$donttest or test_url_requirement_is_not_cached"
+donttest="$donttest or test_install_wheel_with_data_scripts"
 %pyproject_run_pytest -k "not ($donttest)"
 
 %files
@@ -89,6 +92,9 @@ donttest="$donttest or test_build_distributions"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 15 2026 Alexander Burmatov <thatman@altlinux.org> 2.26.7-alt1
+- New 2.26.7 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 2.22.0-alt1
 - New 2.22.0 version.
 

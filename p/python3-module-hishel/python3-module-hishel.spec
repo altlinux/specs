@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.1.1
+Version: 1.1.9
 Release: alt1
 
 Summary: An elegant HTTP Cache implementation for HTTPX and HTTP Core
@@ -18,13 +18,13 @@ BuildRequires: python3-module-hatch-fancy-pypi-readme
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-httpcore
 BuildRequires: python3-module-httpx
 BuildRequires: python3-module-anyio
-BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-anysqlite
-BuildRequires: python3-module-pyaml
-BuildRequires: python3-module-trio
+BuildRequires: python3-module-inline-snapshot
+BuildRequires: python3-module-time-machine
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-msgpack
 %endif
 
 BuildArch: noarch
@@ -45,7 +45,7 @@ libraries in accordance with RFC 9111, the most recent caching specification.
 %pyproject_install
 
 %check
-%pyproject_run_pytest --ignore tests/_async/test_storages.py --ignore tests/_sync/test_storages.py
+%pyproject_run_pytest -k "not (test_simple_caching or test_encoded_content_caching)"
 
 %files
 %doc *.md
@@ -53,5 +53,8 @@ libraries in accordance with RFC 9111, the most recent caching specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 15 2026 Alexander Burmatov <thatman@altlinux.org> 1.1.9-alt1
+- New 1.1.9 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus.

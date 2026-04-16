@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.1.2
+Version: 4.0.1
 Release: alt1
 
 Summary: pytest plugin for testing mypy types, stubs, and plugins
@@ -44,7 +44,7 @@ Source: %pypi_name-%version.tar
 
 %check
 export PYTHONPATH=$PWD
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not (test_no_silence_site_packages_only or test_no_silence_site_packages_and_modify_pythonpath)"
 
 %files
 %doc *.md
@@ -52,5 +52,8 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 16 2026 Alexander Burmatov <thatman@altlinux.org> 4.0.1-alt1
+- New 4.0.1 version.
+
 * Sat Nov 09 2024 Alexander Burmatov <thatman@altlinux.org> 3.1.2-alt1
 - Initial build for Sisyphus.

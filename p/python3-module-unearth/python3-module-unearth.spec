@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.17.2
+Version: 0.18.2
 Release: alt1
 
 Summary: A utility to fetch and download python packages
@@ -19,9 +19,7 @@ BuildRequires: python3-module-pdm-backend
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-flask
-BuildRequires: python3-module-trustme
 BuildRequires: python3-module-requests-wsgi-adapter
-BuildRequires: python3-module-pytest-httpserver
 BuildRequires: python3-module-httpx
 %endif
 
@@ -29,11 +27,14 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 
+Patch1: support-packaging-26.0.patch
+
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch1 -p1
 
 # setuptools_scm implements a file_finders entry point which returns all files
 # tracked by SCM.
@@ -62,6 +63,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 16 2026 Alexander Burmatov <thatman@altlinux.org> 0.18.2-alt1
+- New 0.18.2 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.17.2-alt1
 - New 0.17.2 version.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.7.1
 Release: alt1
 
 Summary: A utility to find python versions on your system
@@ -56,6 +56,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 15 2026 Alexander Burmatov <thatman@altlinux.org> 0.7.1-alt1
+- New 0.7.1 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.6.2-alt1
 - New 0.6.2 version.
 
