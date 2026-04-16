@@ -1,5 +1,5 @@
 %define module_name ixgbe
-%define module_version 6.2.5
+%define module_version 6.3.6
 
 %define module_source %module_name.tar
 
@@ -10,6 +10,7 @@ Release: alt1
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
 License: GPL-2.0-only
+# VCS: https://github.com/intel/ethernet-linux-ixgbe.git
 URL: http://www.intel.com/network/connectivity/products/server_adapters.htm
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
@@ -33,6 +34,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Thu Apr 16 2026 Alexei Takaseev <taf@altlinux.org> 6.3.6-alt1
+- 6.3.6
+
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 6.2.5-alt1
 - 6.2.5
 

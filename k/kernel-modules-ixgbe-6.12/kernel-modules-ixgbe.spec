@@ -1,9 +1,9 @@
 %define module_name             ixgbe
-%define module_version          6.2.5
+%define module_version          6.3.6
 %define module_release          alt1
 
 %define flavour 6.12
-%define karch x86_64 aarch64 ppc64le
+%define karch x86_64 aarch64 riscv64 loongarch64
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.12
@@ -31,8 +31,6 @@ BuildRequires: kernel-headers-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name
 
 Patch1: allow-all-sfp.patch
-Patch2: fix-build-6.12.patch
-Patch3: fix-build-6.18.patch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -53,8 +51,6 @@ rm -rf %module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 pushd src
@@ -84,6 +80,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 16 2026 Alexei Takaseev <taf@altlinux.org> 6.3.6-alt1
+- 6.3.6
+- Remove fix-build-6.12.patch and fix-build-6.18.patch
 
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 6.2.5-alt1
 - 6.2.5
