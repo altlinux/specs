@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.41.5
+Version: 2.46.1
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pydantic-core
-Vcs: https://github.com/pydantic/pydantic-core
+Vcs: https://github.com/pydantic/pydantic
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -72,7 +72,7 @@ EOF
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_depgroup testing
+%pyproject_deps_resync_check_depgroup testing-extra
 %endif
 
 %build
@@ -97,6 +97,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Apr 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.46.1-alt1
+- Updated to 2.46.1.
+
 * Wed Nov 12 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.41.5-alt1
 - Updated to 2.41.5.
 

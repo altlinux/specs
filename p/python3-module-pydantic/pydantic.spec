@@ -3,7 +3,7 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.12.5
+Version: 2.13.1
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -56,13 +56,19 @@ with pydantic.
 %check
 # tests/test_docs.py: skip testing of documentation
 #
+# tests/pydantic_core: skip these tests since pydantic_core is a symbolic link
+# to the tests for pydantic-core, and they are checked when building this
+# package.
 # --benchmark-skip:
 # Skip executing tests from tests/benchmark. These tests don't have sense for
 # our check section, because of they test only pydantic work speed.
 # Also generating north_star_data.json at each test exec and comparing it with
 # expected md5sum leads to failed build, because of Faker or something else has
 # been updated.
-%pyproject_run_pytest --ignore='tests/test_docs.py' --benchmark-skip
+%pyproject_run_pytest \
+	--ignore='tests/test_docs.py' \
+	--ignore='tests/pydantic_core' \
+	--benchmark-skip
 
 %files
 %doc LICENSE *.md
@@ -70,6 +76,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.13.1-alt1
+- Updated to 2.13.1.
+
 * Tue Dec 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.12.5-alt1
 - Updated to 2.12.5.
 
