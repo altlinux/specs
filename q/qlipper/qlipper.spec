@@ -1,5 +1,5 @@
 Name: qlipper
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: Lightweight clipboard history
@@ -60,6 +60,9 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %dir %_datadir/%name/translations
 
 %changelog
+* Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 6.1.0-alt1
+- New version 6.1.0.
+
 * Sun Dec 21 2025 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
 - New version 6.0.0.
 
