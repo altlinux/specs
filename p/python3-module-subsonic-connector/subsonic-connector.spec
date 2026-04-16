@@ -1,11 +1,11 @@
 Name: python3-module-subsonic-connector
-Version: 0.3.9
+Version: 0.3.11
 Release: alt1
 
 Summary: SubSonic Connector
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/subsonic-connector
+URL: https://pypi.org/project/subsonic-connector
 VCS: https://github.com/GioF71/subsonic-connector
 
 Source0: %name-%version.tar
@@ -39,6 +39,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/subsonic_connector-%version.dist-info
 
 %changelog
+* Thu Apr 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.11-alt1
+- 0.3.11 released
+
 * Wed Dec 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.9-alt1
 - 0.3.9 released
 
