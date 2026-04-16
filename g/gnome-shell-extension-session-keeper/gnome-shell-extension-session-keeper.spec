@@ -3,15 +3,15 @@
 %define uuid %_name@altlinux.org
 
 Name: gnome-shell-extension-%_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Saving a GNOME user session
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://altlinux.space/alt-gnome/session-keeper
-Vcs: https://altlinux.space/alt-gnome/session-keeper
+URL: https://altlinux.space/alt-gnome/session-keeper
+VCS: https://altlinux.space/alt-gnome/session-keeper
 
 Source0: %name-%version.tar
 Source1: node-modules.tar
@@ -48,6 +48,10 @@ sessions.
 %_datadir/metainfo/%_name.metainfo.xml
 
 %changelog
+* Mon Mar 30 2026 David Sultaniiazov <x1z53@altlinux.org> 1.0.6-alt1
+- Update to 1.0.6.
+- Fix URL and VCS spell.
+
 * Sun Dec 07 2025 David Sultaniiazov <x1z53@altlinux.org> 1.0.5-alt1
 - Update to 1.0.5.
 
