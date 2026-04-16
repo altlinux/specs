@@ -3,7 +3,7 @@
 %def_with check
 
 Name: prek
-Version: 0.3.6
+Version: 0.3.9
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
@@ -32,15 +32,6 @@ designed to be a faster, dependency-free and drop-in alternative for it,
 while also providing some additional long-requested features.
 
 %prep
-# vendor dependencies: disable line endings conversion and remove
-# export-ignore to avoid breaking checksums
-# $ cargo-vendor-alt
-# $ grep -sq -w 'text' .gitattributes && echo '* -text' > vendor/.gitattributes
-# $ grep -rl "export-ignore" vendor | while read f; do
-#     sed -i '/export-ignore/d' "$f" &&
-#     cargo-vendor-checksum -f "${f#vendor/}"
-# done
-# $ git add -f vendor && git commit -m "Updated cargo vendor dependencies"
 %setup -a1
 %rust_prep
 
@@ -70,6 +61,9 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Apr 15 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.9-alt1
+- Updated to version 0.3.9.
+
 * Mon Mar 23 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.6-alt1
 - Initial build for ALT.
 
