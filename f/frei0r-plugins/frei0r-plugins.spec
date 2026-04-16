@@ -10,7 +10,7 @@
 %endif
 
 Name: frei0r-plugins
-Version: 3.0.0
+Version: 3.1.2
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.1.2-alt1
+- New version.
+
 * Wed Apr 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.0.0-alt1
 - New version.
 - Add check section.
