@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/crowdsecurity/crowdsec
 # git rev-parse --short v%version
-%global commit_hash eacc819
+%global commit_hash 027974f
 %global _libexecdir %_prefix/libexec
 %global cmd_path .gopath/src/%import_path/cmd
 
 Name: crowdsec
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 Summary: Security solution offering crowdsourced protection against malicious IPs
 License: MIT
@@ -144,6 +144,9 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %doc LICENSE
 
 %changelog
+* Wed Apr 15 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.7.7-alt1
+- Updated to version 1.7.7.
+
 * Sun Mar 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.6-alt1
 - Updated to version 1.7.6.
 
