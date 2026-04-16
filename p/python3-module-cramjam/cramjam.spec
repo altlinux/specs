@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.0
-Release: alt1.1
+Version: 2.12.0
+Release: alt1
 
 Summary: A collection of compression algorithms
 License: MIT
@@ -42,6 +42,8 @@ all neatly bundled in one simple installation.
 %setup -a1
 %rust_prep
 
+sed -i 's/-rc1//' pyproject.toml
+
 %build
 # enable system libraries where supported
 export ZSTD_SYS_USE_PKG_CONFIG=1
@@ -64,6 +66,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Apr 16 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.12.0-alt1
+- 2.11.0 -> 2.12.0
+
 * Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1.1
 - NMU: spec refactoring
 

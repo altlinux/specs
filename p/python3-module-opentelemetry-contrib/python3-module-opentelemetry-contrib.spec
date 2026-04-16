@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.61b0
+Version: 0.62b0
 Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
@@ -192,6 +192,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Mon Apr 13 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.62b0-alt1
+- New version.
+
 * Thu Mar 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.61b0-alt1
 - New version.
 
