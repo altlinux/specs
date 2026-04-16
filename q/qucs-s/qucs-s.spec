@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 25.2.0
+Version: 26.1.0
 Release: alt2
 
 Summary: Circuit simulator
@@ -27,6 +27,8 @@ BuildRequires: qt6-charts-devel
 BuildRequires: rpm-build-python3
 Requires: qucsator_rf >= 1.0.7
 Requires: ngspice >= 45
+Requires: rxcalc
+Requires: qucs-sspar-viewer
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
 %add_python3_path %_datadir/%name/python
@@ -70,6 +72,12 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 26.1.0-alt2
+- qucs-s.desktop: update categories.
+
+* Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 26.1.0-alt1
+- New version 26.1.0.
+
 * Sun Sep 07 2025 Anton Midyukov <antohami@altlinux.org> 25.2.0-alt2
 - Update Russian translations.
 
