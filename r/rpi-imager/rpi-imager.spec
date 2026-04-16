@@ -1,5 +1,5 @@
 Name:           rpi-imager
-Version:        2.0.6
+Version:        2.0.8
 Release:        alt1
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
@@ -15,6 +15,7 @@ BuildRequires: libarchive-devel libcurl-devel libssl-devel
 BuildRequires: libdrm-devel liblzma-devel libgnutls-devel liburing-devel
 BuildRequires: cmake gcc-c++ zlib-devel
 BuildRequires: libidn2-devel libnettle-devel
+BuildRequires: libusb-devel libudev-devel
 
 Requires: udisks2
 
@@ -41,6 +42,9 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 %_datadir/metainfo/com.raspberrypi.rpi-imager.metainfo.xml
 
 %changelog
+* Wed Apr 15 2026 Dmitry Terekhin <jqt4@altlinux.org> 2.0.8-alt1
+- Update to new release 2.0.8
+
 * Tue Mar 17 2026 Dmitry Terekhin <jqt4@altlinux.org> 2.0.6-alt1
 - Update to new release 2.0.6 (Closes: 58040)
 
