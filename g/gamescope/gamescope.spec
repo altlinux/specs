@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: gamescope
-Version: 3.16.20
-Release: alt2
+Version: 3.16.23
+Release: alt1
 
 Summary: Micro-compositor for video games on Wayland
 
@@ -20,7 +20,7 @@ Patch2: 0001-cstdint.patch
 Patch3: Allow-to-use-system-wlroots.patch
 Patch4: gamescope-3.16.19-alt-use-system-glm.patch
 Patch5: gamescope-3.16.19-alt-use-system-stb.patch
-Patch6: Update-wlroots-dependency-to-0.19.patch
+Patch6: gamescope-3.16.23-upstream-wlroots-0.19.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -121,6 +121,10 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %_datadir/%name/
 
 %changelog
+* Thu Apr 16 2026 Mikhail Tergoev <fidel@altlinux.org> 3.16.23-alt1
+- 3.16.23
+- Update wlroots-0.19 patch (thanks k0tran@)
+
 * Wed Apr 08 2026 Mikhail Tergoev <fidel@altlinux.org> 3.16.20-alt2
 - Update BR and fix build with wlroots-0.19
 
