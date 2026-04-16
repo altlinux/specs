@@ -19,7 +19,7 @@
 
 
 Name: %rname
-Version: 0.26.24
+Version: 0.26.26
 Release: alt1
 Epoch: 1
 %K5init
@@ -189,6 +189,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Thu Apr 16 2026 Sergey V Turchin <zerg@altlinux.org> 1:0.26.26-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 1:0.26.24-alt1
 - new version
 
