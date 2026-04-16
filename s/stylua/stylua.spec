@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stylua
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: A Lua code formatter
@@ -44,6 +44,9 @@ StyLua mainly follows the Roblox Lua Style Guide, with a few deviations.
 %_bindir/%name
 
 %changelog
+* Wed Apr 15 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.4.1-alt1
+- Updated to version 2.4.1.
+
 * Sun Mar 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.4.0-alt1
 - Initial build for ALT.
 
