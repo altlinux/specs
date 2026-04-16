@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.19
+%define major 22.22
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -16,23 +16,23 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.9.3
+%define npm_version 10.9.7
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 # check deps/corepack/package.json
-%define corepackver 0.29.3
+%define corepackver 0.34.6
 %def_without corepack
 
 # check deps/zlib/zlib.h
-%define zlib_version 1.3.0.1
+%define zlib_version 1.3.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.34.5
+%define c_ares_version 1.34.6
 
 # check deps/llhttp/include/llhttp.h
-%define llhttp_version 9.2.1
+%define llhttp_version 9.3.0
 # to use internal llhttp
 %def_without systemhttpparser
 
@@ -45,7 +45,7 @@
 %def_with systemgyp
 
 # check deps/uv/include/uv/version.h
-%define libuv_version 1.49.2
+%define libuv_version 1.51.0
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
@@ -83,7 +83,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.0
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -519,6 +519,26 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Wed Apr 15 2026 Vitaly Lipatov <lav@altlinux.ru> 22.22.2-alt1
+- new version 22.22.2 (with rpmrb script)
+- set npm >= 10.9.7, libuv >= 1.51.0, c-ares >= 1.34.6
+- set zlib >= 1.3.1, llhttp >= 9.3.0
+- 22.22.0 fixed CVEs:
+ + CVE-2025-59465: Add TLSSocket default error handler
+ + CVE-2025-55132: Disable futimes when permission model is enabled
+ + CVE-2025-55130: Require full read and write to symlink APIs
+ + CVE-2025-59466: Rethrow stack overflow exceptions in async_hooks
+ + CVE-2025-55131: Refactor unsafe buffer creation to remove zero-fill toggle
+ + CVE-2026-21637: Route callback exceptions through error handlers
+- 22.22.2 fixed CVEs:
+ + CVE-2026-21637: Wrap SNICallback invocation in try/catch (High)
+ + CVE-2026-21710: Use null prototype for headersDistinct/trailersDistinct (High)
+ + CVE-2026-21713: Use timing-safe comparison in Web Cryptography HMAC (Medium)
+ + CVE-2026-21714: Handle NGHTTP2_ERR_FLOW_CONTROL error code (Medium)
+ + CVE-2026-21717: Test array index hash collision (Medium)
+ + CVE-2026-21715: Add permission check to realpath.native (Low)
+ + CVE-2026-21716: Include permission check on lib/fs/promises (Low)
+
 * Mon Sep 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.19.0-alt1
 - 2025-08-28, Version 22.19.0 'Jod' (LTS), @aduh95
 - disable LTO on %%ix86 (ALT bug 56065)
