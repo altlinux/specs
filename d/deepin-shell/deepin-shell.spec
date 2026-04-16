@@ -4,8 +4,8 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.27
-Release: alt2
+Version: 2.0.37
+Release: alt1
 
 Summary: Plugins for DDE
 
@@ -21,14 +21,18 @@ Patch1: deepin-shell-2.0.3-alt-fixes-bad-symbols.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel
-BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration vulkan-headers libdqt6-test
+BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration vulkan-headers libdqt6-test libdqt6-quicktemplates2 libdqt6-wlshellintegration
 %if_with clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
 
-Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-qml = %_dqt6_version
+Requires: libdqt6-quicktemplates2 = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
+Requires: libdqt6-waylandcompositor = %_dqt6_version
 
 %description
 The dde-shell project provides a plugin system that integrates
@@ -37,7 +41,10 @@ plugins developed based on this plugin system into DDE.
 %package -n lib%repo%sover
 Summary: Library for %name
 Group: System/Libraries
-Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-quick = %_dqt6_version
+Requires: libdqt6-quicktemplates2 = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description -n lib%repo%sover
 Library for %name.
@@ -77,6 +84,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
+export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtQuickTemplates2/%_dqt6_version:$CPLUS_INCLUDE_PATH
 %DQ6build \
     -DINCLUDE_INSTALL_DIR=%_includedir/%repo \
     -DDS_BUILD_WITH_QT6:BOOL=ON \
@@ -155,6 +163,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Thu Apr 16 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.37-alt1
+- New version 2.0.37.
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.27-alt2
 - Fixed build on shrinked dqt6.
 
