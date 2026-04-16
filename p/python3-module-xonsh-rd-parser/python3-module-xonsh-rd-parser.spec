@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: A Rust based, recursive descent parser for Xonsh
 License: MIT
@@ -29,6 +29,10 @@ BuildRequires: python3-dev
 
 %if_with check
 %pyproject_builddeps_metadata
+# pytest-memray is only used in manual benchmarks (poe bench), not in the test suite.
+%add_pyproject_deps_check_filter 'pytest-memray$'
+# xonsh depends on xonsh-rd-parser, avoid circular build dependency.
+%add_pyproject_deps_check_filter 'xonsh$'
 %pyproject_builddeps_check
 %endif
 
@@ -43,13 +47,12 @@ shell syntax.  Generates optimized AST for command execution.
 
 mkdir -pv .cargo
 cat >> .cargo/config.toml <<EOF
-
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/astral-sh/ruff.git?tag=0.11.13"]
+[source."git+https://github.com/astral-sh/ruff.git?tag=0.12.8"]
 git = "https://github.com/astral-sh/ruff.git"
-tag = "0.11.13"
+tag = "0.12.8"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -76,6 +79,10 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.7.0-alt1
+- New version.
+- Drop excessive dependency on pytest-memray from build requires.
+
 * Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
 - NMU: fixed FTBFS (pytest 9).
 
