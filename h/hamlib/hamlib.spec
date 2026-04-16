@@ -2,7 +2,7 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        4.7.0
+Version:        4.7.1
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
@@ -108,7 +108,7 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 %prep
 %setup -q
 %autoreconf
-%patch0 -p1
+%autopatch -p1
 
 %build
 %undefine _configure_gettext
@@ -217,6 +217,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Thu Apr 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.1-alt1
+- New version 4.7.1.
+
 * Mon Feb 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.0-alt1
 - New version 4.7.0.
 
