@@ -7,8 +7,8 @@ BuildRequires: perl(Authen/DecHpwd.pm) perl(CPAN.pm) perl(Crypt/DES.pm) perl(Cry
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008
-Release: alt2
+Version: 0.009
+Release: alt1
 Summary: hashed passwords/passphrases as objects
 Group: Development/Perl
 License: Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/A*
 
 %changelog
+* Thu Apr 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.009-alt1
+- 0.009
+
 * Wed Aug 05 2020 Andrew A. Vasilyev <andy@altlinux.org> 0.008-alt2
 - import for Sisyphus
 
