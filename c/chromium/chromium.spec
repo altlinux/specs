@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        147.0.7727.55
+Version:        147.0.7727.101
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -236,7 +236,7 @@ BuildRequires:  pkgconfig(libusb-1.0)
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libwebp)
 ## BuildRequires:  pkgconfig(libwoff2dec)
-BuildRequires:  pkgconfig(libxslt)
+## BuildRequires:  pkgconfig(libxslt)
 BuildRequires:  pkgconfig(libzstd)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(nspr)
@@ -706,8 +706,104 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Thu Apr 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.101-alt1
+- New version (147.0.7727.101).
+- Fixes:
+  + CVE-2026-6296: Heap buffer overflow in ANGLE
+  + CVE-2026-6297: Use after free in Proxy
+  + CVE-2026-6298: Heap buffer overflow in Skia
+  + CVE-2026-6299: Use after free in Prerender
+  + CVE-2026-6358: Use after free in XR
+  + CVE-2026-6359: Use after free in Video
+  + CVE-2026-6300: Use after free in CSS
+  + CVE-2026-6301: Type Confusion in Turbofan
+  + CVE-2026-6302: Use after free in Video
+  + CVE-2026-6303: Use after free in Codecs
+  + CVE-2026-6304: Use after free in Graphite
+  + CVE-2026-6305: Heap buffer overflow in PDFium
+  + CVE-2026-6306: Heap buffer overflow in PDFium
+  + CVE-2026-6307: Type Confusion in Turbofan
+  + CVE-2026-6308: Out of bounds read in Media
+  + CVE-2026-6309: Use after free in Viz
+  + CVE-2026-6360: Use after free in FileSystem
+  + CVE-2026-6310: Use after free in Dawn
+  + CVE-2026-6311: Uninitialized Use in Accessibility
+  + CVE-2026-6312: Insufficient policy enforcement in Passwords
+  + CVE-2026-6313: Insufficient policy enforcement in CORS
+  + CVE-2026-6314: Out of bounds write in GPU
+  + CVE-2026-6315: Use after free in Permissions
+  + CVE-2026-6316: Use after free in Forms
+  + CVE-2026-6361: Heap buffer overflow in PDFium
+  + CVE-2026-6362: Use after free in Codecs
+  + CVE-2026-6317: Use after free in Cast
+  + CVE-2026-6363: Type Confusion in V8
+  + CVE-2026-6318: Use after free in Codecs
+  + CVE-2026-6319: Use after free in Payments
+  + CVE-2026-6364: Out of bounds read in Skia
+
 * Wed Apr 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.55-alt1
 - New version (147.0.7727.55).
+- Fixes:
+  + CVE-2026-5858: Heap buffer overflow in WebML
+  + CVE-2026-5859: Integer overflow in WebML
+  + CVE-2026-5860: Use after free in WebRTC
+  + CVE-2026-5861: Use after free in V8
+  + CVE-2026-5862: Inappropriate implementation in V8
+  + CVE-2026-5863: Inappropriate implementation in V8
+  + CVE-2026-5864: Heap buffer overflow in WebAudio
+  + CVE-2026-5865: Type Confusion in V8
+  + CVE-2026-5866: Use after free in Media
+  + CVE-2026-5867: Heap buffer overflow in WebML
+  + CVE-2026-5868: Heap buffer overflow in ANGLE
+  + CVE-2026-5869: Heap buffer overflow in WebML
+  + CVE-2026-5870: Integer overflow in Skia
+  + CVE-2026-5871: Type Confusion in V8
+  + CVE-2026-5872: Use after free in Blink
+  + CVE-2026-5873: Out of bounds read and write in V8
+  + CVE-2026-5874: Use after free in PrivateAI
+  + CVE-2026-5875: Policy bypass in Blink
+  + CVE-2026-5876: Side-channel information leakage in Navigation
+  + CVE-2026-5877: Use after free in Navigation
+  + CVE-2026-5878: Incorrect security UI in Blink
+  + CVE-2026-5879: Insufficient validation of untrusted input in ANGLE
+  + CVE-2026-5880: Incorrect security UI in browser UI
+  + CVE-2026-5881: Policy bypass in LocalNetworkAccess
+  + CVE-2026-5882: Incorrect security UI in Fullscreen
+  + CVE-2026-5883: Use after free in Media
+  + CVE-2026-5884: Insufficient validation of untrusted input in Media
+  + CVE-2026-5885: Insufficient validation of untrusted input in WebML
+  + CVE-2026-5886: Out of bounds read in WebAudio
+  + CVE-2026-5887: Insufficient validation of untrusted input in Downloads
+  + CVE-2026-5888: Uninitialized Use in WebCodecs
+  + CVE-2026-5889: Cryptographic Flaw in PDFium
+  + CVE-2026-5890: Race in WebCodecs
+  + CVE-2026-5891: Insufficient policy enforcement in browser UI
+  + CVE-2026-5892: Insufficient policy enforcement in PWAs
+  + CVE-2026-5893: Race in V8
+  + CVE-2026-5894: Inappropriate implementation in PDF
+  + CVE-2026-5895: Incorrect security UI in Omnibox
+  + CVE-2026-5896: Policy bypass in Audio
+  + CVE-2026-5897: Incorrect security UI in Downloads
+  + CVE-2026-5898: Incorrect security UI in Omnibox
+  + CVE-2026-5899: Incorrect security UI in History Navigation
+  + CVE-2026-5900: Policy bypass in Downloads
+  + CVE-2026-5901: Policy bypass in DevTools
+  + CVE-2026-5902: Race in Media
+  + CVE-2026-5903: Policy bypass in IFrameSandbox
+  + CVE-2026-5904: Use after free in V8
+  + CVE-2026-5905: Incorrect security UI in Permissions
+  + CVE-2026-5906: Incorrect security UI in Omnibox
+  + CVE-2026-5907: Insufficient data validation in Media
+  + CVE-2026-5908: Integer overflow in Media
+  + CVE-2026-5909: Integer overflow in Media
+  + CVE-2026-5910: Integer overflow in Media
+  + CVE-2026-5911: Policy bypass in ServiceWorkers
+  + CVE-2026-5912: Integer overflow in WebRTC
+  + CVE-2026-5913: Out of bounds read in Blink
+  + CVE-2026-5914: Type Confusion in CSS
+  + CVE-2026-5915: Insufficient validation of untrusted input in WebML
+  + CVE-2026-5918: Inappropriate implementation in Navigation
+  + CVE-2026-5919: Insufficient validation of untrusted input in WebSockets
 
 * Wed Apr 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 146.0.7680.177-alt1
 - New version (146.0.7680.177).
