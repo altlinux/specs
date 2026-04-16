@@ -2,7 +2,7 @@
 
 Name: pnana
 Version: 0.0.5
-Release: alt3
+Release: alt4
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -16,6 +16,7 @@ Source1: vendor.tar
 Patch1: alt-prepare-offline-build.patch
 Patch2: alt-set-correct-latest-project-version.patch
 Patch3: alt-fix-moving-file-by-btn.patch
+Patch4: alt-fix-copying-cache-dir.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -78,6 +79,9 @@ mv README{_EN,}.md
 %_datadir/%name/config.json
 
 %changelog
+* Thu Apr 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt4
+- fix incorrect copying of cache to pnana config dir
+
 * Wed Apr 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt3
 - fix file moving failure to target directory on F6 key press (closes: 58744)
 
