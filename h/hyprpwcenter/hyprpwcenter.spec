@@ -1,5 +1,5 @@
 Name: hyprpwcenter
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -48,5 +48,8 @@ BuildRequires: pkgconfig(libdrm)
 %_desktopdir/hyprpwcenter.desktop
 
 %changelog
+* Wed Feb 11 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
+- new version 0.1.2
+
 * Tue Oct 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.1-alt1
 - Initial build

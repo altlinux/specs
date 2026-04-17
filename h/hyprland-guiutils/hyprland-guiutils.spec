@@ -1,5 +1,5 @@
 Name: hyprland-guiutils
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -51,6 +51,9 @@ BuildRequires: pkgconfig(xkbcommon)
 %_bindir/hyprland-welcome
 
 %changelog
+* Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script)
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 

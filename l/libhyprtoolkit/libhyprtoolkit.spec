@@ -1,7 +1,7 @@
-%define soversion 4
+%define soversion 5
 
 Name: libhyprtoolkit
-Version: 0.4.1
+Version: 0.5.3
 Release: alt1
 License: BSD-3-Clause
 
@@ -14,6 +14,8 @@ Vcs: https://github.com/hyprwm/hyprtoolkit.git
 
 ExcludeArch: %ix86
 Source: %name-%version.tar
+
+Patch1: fix-cover-tile-pixels.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -59,6 +61,7 @@ This package provides development files for %name library.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -DCMAKE_CXX_COMPILER=clang++
@@ -77,6 +80,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprtoolkit.pc
 
 %changelog
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.3-alt1
+- new version 0.5.3
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.1-alt1
 - new version 0.4.1 (with rpmrb script)
 

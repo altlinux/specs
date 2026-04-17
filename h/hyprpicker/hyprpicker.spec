@@ -1,5 +1,5 @@
 Name: hyprpicker
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 License: BSD-3-Clause
 
@@ -46,9 +46,11 @@ A wlroots-compatible Wayland color picker that does not suck.
 %files
 %_man1dir/*.1.*
 %_bindir/%name
-%doc README.md LICENSE
 
 %changelog
+* Wed Feb 11 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.6-alt1
+- new version 0.4.6
+
 * Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.5-alt1
 - new version 0.4.5 (with rpmrb script)
 

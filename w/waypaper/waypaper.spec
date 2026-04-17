@@ -1,5 +1,5 @@
 Name: waypaper
-Version: 2.7
+Version: 2.8
 Release: alt1
 License: GPL-3.0
 
@@ -43,6 +43,9 @@ swaybg, swww, wallutils, hyprpaper, mpvpaper and feh.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 2.8-alt1
+- new version 2.8
+
 * Tue Sep 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.7-alt1
 - new version 2.7 (with rpmrb script)
 

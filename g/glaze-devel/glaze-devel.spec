@@ -1,5 +1,5 @@
 Name: glaze-devel
-Version: 6.1.0
+Version: 7.3.3
 Release: alt1
 License: MIT
 
@@ -11,6 +11,8 @@ Url: https://github.com/stephenberry/glaze
 Vcs: https://github.com/stephenberry/glaze.git
 
 Source: %name-%version.tar
+
+Patch1: fix-path.patch
 
 BuildArch: noarch
 
@@ -25,6 +27,7 @@ interfaces and offering incredible performance.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -DBUILD_TESTING=OFF
@@ -35,9 +38,22 @@ interfaces and offering incredible performance.
 
 %files
 %_includedir/glaze/
-%_datadir/glaze/*.cmake
+%_datadir/cmake/glaze/*.cmake
 
 %changelog
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 7.3.3-alt1
+- new version 7.3.3
+
+* Fri Mar 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 7.2.1-alt1
+- new version 7.2.1 (with rpmrb script)
+
+* Sat Feb 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 7.0.2-alt1
+- new version 7.0.2 (with rpmrb script)
+
+* Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 7.0.1-alt1
+- new version 7.0.1 (with rpmrb script)
+- fix cmake config path (fix-path.patch)
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 6.1.0-alt1
 - new version 6.1.0 (with rpmrb script)
 

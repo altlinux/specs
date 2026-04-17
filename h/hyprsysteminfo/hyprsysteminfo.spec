@@ -1,10 +1,10 @@
 Name: hyprsysteminfo
-Version: 0.1.3
-Release: alt2
+Version: 0.1.3.6abb64f
+Release: alt1
 License: BSD-3-Clause
 
-Summary: A tiny qt6/qml application to display information about the running system
-Summary(ru_RU.UTF-8): Крошечное приложение qt6/qml для отображения информации о запущенной системе
+Summary: A tiny hyprtoolkit application to display information about the running system
+Summary(ru_RU.UTF-8): Крошечное приложение hyprtoolkit для отображения информации о запущенной системе
 
 Group: Graphical desktop/Other
 
@@ -14,42 +14,49 @@ Vcs: https://github.com/hyprwm/hyprsysteminfo.git
 ExcludeArch: %ix86
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf6
+BuildRequires: cmake
 
-BuildRequires: gcc-c++ cmake
+BuildRequires: clang libstdc++-devel
 
+BuildRequires: pkgconfig(hyprtoolkit)
 BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(hyprgraphics)
+BuildRequires: pkgconfig(aquamarine)
 
-BuildRequires: pkgconfig(Qt6WaylandClient) 
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libpci)
 
-BuildRequires: extra-cmake-modules qt6-base-devel
-BuildRequires: qt6-declarative-devel qt6-tools-devel
-BuildRequires: hyprland-qt-support
-
-Requires: kf6-kirigami hyprland-qt-support
+BuildRequires: glaze-devel
 
 %description
-A tiny qt6/qml application to display information about
+A tiny hyprtoolkit application to display information about
 the running system, or copy diagnostics data, without the terminal.
 
 %description -l ru_RU.UTF-8
-Небольшое приложение qt6/qml для отображения информации о запущенной
+Небольшое приложение hyprtoolkit для отображения информации о запущенной
 системе или копирования диагностических данных без терминала.
 
 %prep
 %setup
 
 %build
-%K6build
+%cmake -DCMAKE_CXX_COMPILER=clang++
+%cmake_build
 
 %install
-%K6install
+%cmake_install
 
 %files
 %_bindir/hyprsysteminfo
 %_desktopdir/hyprsysteminfo.desktop
 
 %changelog
+* Fri Mar 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3.6abb64f-alt1
+- new version 0.1.3.6abb64f
+- rewrite entire app in hyprtoolkit
+- build with clang
+
 * Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt2
 - drop manual dependencies
 

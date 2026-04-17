@@ -1,7 +1,7 @@
-%define soversion 3
+%define soversion 4
 
 Name: libhyprgraphics
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -32,6 +32,9 @@ BuildRequires: pkgconfig(libjxl)
 BuildRequires: pkgconfig(libjxl_cms)
 BuildRequires: pkgconfig(libjxl_threads)
 BuildRequires: pkgconfig(libmagic)
+BuildRequires: pkgconfig(libdrm)
+
+BuildRequires: libglvnd-devel
 
 %description
 A small C++ library with graphics / resource related
@@ -77,6 +80,12 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprgraphics.pc
 
 %changelog
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+
+* Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
 - new version 0.4.0 (with rpmrb script)
 

@@ -3,7 +3,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.52.2
+Version: 0.54.3
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -13,14 +13,15 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
-Patch1: hyprland-0.50.1-clang.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson
+Patch1: hyprland-0.53.3-clang.patch
 
-BuildRequires: meson cmake
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires: cmake
 BuildRequires: jq
 
 %if_with clang
@@ -29,14 +30,17 @@ BuildRequires: clang libstdc++-devel
 BuildRequires: gcc-c++
 %endif
 
+BuildRequires: pkgconfig(hyprland-protocols)
 BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
 BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(hyprgraphics)
+BuildRequires: pkgconfig(hyprwire)
 BuildRequires: pkgconfig(aquamarine)
 
-BuildRequires: clang-devel libstdc++-devel
+BuildRequires: pkgconfig(muparser)
+
 BuildRequires: glslang-devel
 BuildRequires: libudis86-devel
 BuildRequires: glibc-devel
@@ -79,12 +83,7 @@ BuildRequires: pkgconfig(hwdata)
 # systemd and uwsm
 BuildRequires: pkgconfig(systemd)
 
-# plugins
-%if_with clang
-Requires: llvm
-%else
-Requires: binutils
-%endif
+Requires: xkeyboard-config
 
 %description
 Hyprland is a dynamic tiling Wayland compositor based on wlroots
@@ -93,10 +92,22 @@ that doesn't sacrifice on its looks.
 It supports multiple layouts, fancy effects, has a very flexible IPC
 model allowing for a lot of customization, and more.
 
+%package hyprpm
+Summary: Hyprland Plugin Manager
+Group: Graphical desktop/Other
+
+%if_with clang
+Requires: llvm
+%else
+Requires: binutils
+%endif
+
+%description hyprpm
+%summary.
+
 %package uwsm
 Summary: Hyprland session for uwsm
 Group: Graphical desktop/Other
-ExcludeArch: %ix86
 
 Requires: %name
 Requires: uwsm
@@ -107,31 +118,28 @@ Requires: uwsm
 %package devel
 Summary: Static library and header files for the %name
 Group: Development/C++
+Requires: pkgconfig(hyprland-protocols)
 
 %description devel
-%summary devel
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%meson \
-	-Dsystemd=enabled \
-	-Duwsm=enabled
-%meson_build
+%cmake -DCMAKE_CXX_COMPILER=clang++
+%cmake_build 
 
 %install
-%meson_install
-
-rm %buildroot%_includedir/src/version.h 
+%cmake_install
 
 %files
 %doc README.md LICENSE
 %_bindir/Hyprland
 %_bindir/hyprland
+%_bindir/start-hyprland
 %_bindir/hyprctl
-%_bindir/hyprpm
 
 %_man1dir/Hyprland.1*
 %_man1dir/hyprctl.1*
@@ -141,24 +149,39 @@ rm %buildroot%_includedir/src/version.h
 %_datadir/xdg-desktop-portal/%name-portals.conf
 
 %_datadir/bash-completion/completions/hyprctl
-%_datadir/bash-completion/completions/hyprpm
-
 %_datadir/fish/vendor_completions.d/hyprctl.fish
-%_datadir/fish/vendor_completions.d/hyprpm.fish
-
 %_datadir/zsh/site-functions/_hyprctl
+
+%files hyprpm
+%_bindir/hyprpm
+%_datadir/bash-completion/completions/hyprpm
+%_datadir/fish/vendor_completions.d/hyprpm.fish
 %_datadir/zsh/site-functions/_hyprpm
 
 %files uwsm
 %_datadir/wayland-sessions/%name-uwsm.desktop
 
 %files devel
-%_datadir/pkgconfig/%name-protocols.pc
 %_datadir/pkgconfig/%name.pc
-%_datadir/hyprland-protocols/
 %_includedir/%name
 
 %changelog
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.3-alt1
+- new version 0.54.3
+
+* Fri Mar 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.2-alt1
+- new version 0.54.2
+- add Requires xkeyboard-config (ALT bug 57412)
+
+* Sat Feb 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.0-alt1
+- new version 0.54.0
+
+* Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.53.3-alt1
+- new version 0.53.3 (with rpmrb script)
+- drop meson and use cmake
+- move hyprland-protocols to a separate package
+- move hyprpm to a separate subpackage
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.52.2-alt1
 - new version 0.52.2 (with rpmrb script)
 

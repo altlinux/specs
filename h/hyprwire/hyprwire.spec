@@ -1,7 +1,7 @@
-%define soversion 2
+%define soversion 3
 
 Name: hyprwire
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -56,6 +56,7 @@ This package provides development files for %name library.
 %install
 %cmake_install
 
+cat %buildroot%_pkgconfigdir/%name-scanner.pc
 subst "s|Version:|Version: %version|" \
     %buildroot%_pkgconfigdir/%name-scanner.pc
 
@@ -72,6 +73,9 @@ subst "s|Version:|Version: %version|" \
 %_pkgconfigdir/%name-scanner.pc
 
 %changelog
+* Sat Feb 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
 - new version 0.2.1 (with rpmrb script)
 
