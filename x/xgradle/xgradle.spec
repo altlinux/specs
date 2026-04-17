@@ -2,8 +2,8 @@
 %def_with check
 
 Name: xgradle
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Gradle plugin for system dependency resolution and offline builds
 License: Apache-2.0
@@ -173,6 +173,9 @@ install -Dm 644 rpm-macros/xgradle-fjava \
 %_rpmmacrosdir/xgradle-fjava
 
 %changelog
+* Fri Apr 17 2026 Arseniy Kostevich <faux@altlinux.org> 0.2.1-alt1
+- New version.
+
 * Wed Mar 18 2026 Ivan Khanas <xeno@altlinux.org> 0.2.0-alt2
 - Set java 11 target compilation.
 
