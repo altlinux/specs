@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.10
+Version: 6.0.11
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -347,11 +347,14 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-messenger-client-6-mix
 
 %files -n kde-display-manager-0-dummy
-%files -n kde-display-manager-5-sddm
+#%files -n kde-display-manager-5-sddm
 %files -n kde-display-manager-6-lightdmgtk
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Fri Apr 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.11-alt1
+- don't require sddm
+
 * Thu Jun 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.10-alt1
 - require neochat
 
