@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -14,7 +14,7 @@ License: GPL-2.0-or-later
 Provides: plasma5-sddm-kcm = 1:%version-%release
 Obsoletes: plasma5-sddm-kcm < 1:%version-%release
 Requires: systemsettings
-Requires: sddm
+#Requires: sddm
 
 Source: %rname-%version.tar
 
@@ -61,6 +61,9 @@ SDDM configuration module.
 
 
 %changelog
+* Fri Apr 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- don't require sddm
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
