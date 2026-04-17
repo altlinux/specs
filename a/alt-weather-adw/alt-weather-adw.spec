@@ -3,7 +3,7 @@
 
 Name: alt-weather-adw
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 # Missing alt-identify-client on i586
 ExcludeArch: i586
@@ -41,6 +41,10 @@ water temperature, magnetic activity, UV index, and sunrise and sunset times;
 
 Works only on ALT Workstation.
 
+Note: the application is intended to be used with the default package set of
+ALT Workstation. Removing system packages included in the base installation may
+affect correct operation of the application.
+
 %prep
 %setup
 
@@ -62,5 +66,8 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
+* Fri Apr 17 2026 Alexander Davydzik <paladindev@altlinux.org> 1.0.9-alt2
+- updated description
+
 * Mon Dec 15 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.9-alt1
 - initial build
