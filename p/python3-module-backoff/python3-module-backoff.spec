@@ -1,24 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name python-backoff
 %define module_name backoff
 %def_with check
 
 Name: python3-module-%module_name
-Version: 2.2.1
-Release: alt2
+Version: 2.3.1
+Release: alt1
 Summary: Python library providing function decorators for configurable backoff and retry
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/backoff
-VCS: https://github.com/litl/backoff
+Url: https://pypi.org/project/python-backoff
+VCS: https://github.com/python-backoff/backoff
 
 Source: %name-%version.tar
-Patch: alt-fix-tests.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry)
-BuildRequires: python3(poetry-core)
+BuildRequires: python3(hatchling)
 
 %if_with check
 BuildRequires: python3(requests)
@@ -37,7 +36,6 @@ dynamically polling resources for externally generated content.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -50,10 +48,14 @@ dynamically polling resources for externally generated content.
 
 %files
 %python3_sitelibdir/%module_name
-%python3_sitelibdir/%{pyproject_distinfo %module_name}
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc LICENSE
 
 %changelog
+* Fri Apr 17 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.3.1-alt1
+- Updated to version 2.3.1.
+- Switched upstream to maintained fork.
+
 * Sun Sep 14 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.2.1-alt2
 - Fixed FTBFS.
 
