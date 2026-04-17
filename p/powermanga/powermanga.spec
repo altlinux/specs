@@ -1,6 +1,6 @@
 Name: powermanga
 Version: 0.93.1
-Release: alt3
+Release: alt4
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
@@ -14,6 +14,8 @@ Source100: %name.desktop
 Source200: %name.16.png
 Source201: %name.32.png
 Source202: %name.48.png
+
+Patch: config_file-0.93.1-alt-fixes.patch
 
 Requires: %name-data
 
@@ -40,6 +42,8 @@ description). To play the game, you should install both %name and %name-data pac
 
 %prep
 %setup
+#ALTBUG 58344
+%patch -p1
 
 %build
 %autoreconf
@@ -76,6 +80,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Fri Apr 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.93.1-alt4
+- changed config resolution && disabled full screen by default (ALT #58344)
+
 * Mon Mar 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.93.1-alt3
 - fixed FTBFS
 - fixed segmentation fault (ALT #50648)
