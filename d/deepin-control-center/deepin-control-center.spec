@@ -6,8 +6,8 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.64
-Release: alt2
+Version: 6.1.81
+Release: alt1
 
 Summary: New control center for Linux Deepin
 
@@ -27,8 +27,8 @@ Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel
-BuildRequires: vulkan-headers libdqt6-concurrent libdqt6-test
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel wlr-protocols
+BuildRequires: vulkan-headers libdqt6-concurrent libdqt6-test libdqt6-wlshellintegration
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -101,7 +101,6 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/power/power.so --shr
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/defaultapp/defaultapp.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/sound/sound.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-center-plugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 
 # package translations
 %find_lang --with-qt %repo
@@ -113,13 +112,7 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
 %_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
 %dir %_libdir/%repo/
-%_libdir/%repo/*.qml
 %_libdir/%repo/plugins_v1.0/
-%dir %_libdir/%repo/org/
-%dir %_libdir/%repo/org/deepin/
-%_libdir/%repo/org/deepin/dcc/
-%_libdir/%repo/sidebar.dci
-%_libdir/%repo/reddot.dci
 %dir %_libdir/dde-grand-search-daemon/
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
@@ -139,8 +132,8 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.control-center.json
 # package outside find_lang
 %dir %_datadir/%repo/translations/
-%dir %_datadir/%repo/translations/v1.0/
-%_datadir/%repo/translations/v1.0/dde-control-center_ky@Arab.qm
+%dir %_datadir/%repo/translations/v1.1/
+%_datadir/%repo/translations/v1.1/dde-control-center_ky@Arab.qm
 
 %files -n lib%repo%sover
 %_libdir/lib%repo.so.%{sover}*
@@ -152,6 +145,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Fri Apr 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.81-alt1
+- New version 6.1.81.
+
 * Thu Feb 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.64-alt2
 - Fixed build on shrinked dqt6.
 
