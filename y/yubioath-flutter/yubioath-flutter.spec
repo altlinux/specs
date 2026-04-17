@@ -7,7 +7,7 @@
 %add_debuginfo_skiplist %yubioath_home/* %yubioath_home/lib/*
 
 Name: yubioath-flutter
-Version: 7.3.2
+Version: 7.3.3
 Release: alt1
 
 Summary: Yubico Authenticator for Desktop
@@ -122,5 +122,8 @@ sed -i %buildroot%_desktopdir/%app_id.desktop \
 %yubioath_home/
 
 %changelog
+* Fri Apr 17 2026 Anton Zhukharev <ancieg@altlinux.org> 7.3.3-alt1
+- Updated to 7.3.3.
+
 * Fri Apr 03 2026 Anton Zhukharev <ancieg@altlinux.org> 7.3.2-alt1
 - Packaged for ALT Sisyphus as a replacement for yubioath-desktop (ALT#54773).
