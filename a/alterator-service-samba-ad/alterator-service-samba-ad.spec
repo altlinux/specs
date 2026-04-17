@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.9
+Version: 0.7.10
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -77,6 +77,10 @@ find service-* -type f -exec shellcheck {} \+
 %_localstatedir/alterator/service/samba-ad/config-backup
 
 %changelog
+* Fri Apr 17 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.10-alt1
+- Refactor remove_sensitive_data to recursively strip sensitive
+  fields from JSON input
+
 * Mon Apr 13 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.9-alt1
 - Enhance resolvconf configuration handling and improve network
   manager checks
