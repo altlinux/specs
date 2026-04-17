@@ -4,7 +4,7 @@
 %define simple_name alt-packages
 
 Name: tuner-%simple_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Control system packages and repositories
@@ -47,6 +47,10 @@ Plugin for Tuner that allows controlling system packages and repositories
 %doc README.md
 
 %changelog
+* Fri Apr 17 2026 Alexander Davydzik <paladindev@altlinux.org> 1.0.5-alt1
+- added upgrade summary dialog (Closes: 58010, 58011)
+- prevent changes packages while operation running (Closes: 58027)
+
 * Thu Jan 22 2026 Alexander Davydzik <paladindev@altlinux.org> 1.0.4-alt1
 - add more info to plugin metadata
 
