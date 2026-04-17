@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qrca
-Version: 25.12.3
+Version: 26.04.0
 Release: alt1
 
 Summary: QR code scanner for Plasma and Plasma Mobile
@@ -74,6 +74,9 @@ sed -i "s|Categories=.*|Categories=Qt;KDE;Graphics;OCR;Scanning;|" org.kde.qrca.
 %_datadir/metainfo/org.kde.qrca.appdata.xml
 
 %changelog
+* Fri Apr 17 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.0-alt1
+- New version 26.04.0.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.3-alt1
 - New version 25.12.3.
 

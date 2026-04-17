@@ -5,7 +5,7 @@
 
 Name: kdevelop
 Epoch: 3
-Version: 25.12.3
+Version: 26.04.0
 Release: alt1
 
 Summary: Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
@@ -155,7 +155,7 @@ Summary: %{name} runtime libraries
 %_qt6_qmldir/org/kde/plasma/private/kdevelopsessions/qmldir
 
 %files libs
-%_K6lib/libKDev*.so.64
+%_K6lib/libKDev*.so.65
 %_K6lib/libKDev*.so.6.*
 %_K6lib/libKDevelopSessionsWatch.so
 %_K6plug/kdevplatform/
@@ -172,6 +172,9 @@ Summary: %{name} runtime libraries
 %_K6lib/kf6/devel/libKDev*.so
 
 %changelog
+* Fri Apr 17 2026 Nikolay Strelkov <snk@altlinux.org> 3:26.04.0-alt1
+- New version 26.04.0.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 3:25.12.3-alt1
 - New version 25.12.3.
 
