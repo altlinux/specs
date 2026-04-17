@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-api
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: API for Lomiri shell integration
@@ -120,6 +120,9 @@ This package contains the development files.
 %_docdir/lib%{name}/*
 
 %changelog
+* Fri Apr 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 

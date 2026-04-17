@@ -4,8 +4,8 @@
 %def_with check
 
 Name: lomiri-content-hub
-Version: 2.2.2
-Release: alt2
+Version: 2.2.3
+Release: alt1
 
 Summary: content sharing/picking service for Lomiri
 License: GPL-3.0-only and LGPL-3.0-only
@@ -201,6 +201,9 @@ echo "Categories=Development;Debugger;" >> tests/peers/sharer/lomiri-content-hub
 %endif
 
 %changelog
+* Fri Apr 17 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.3-alt1
+- New version 2.2.3.
+
 * Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.2-alt2
 - Fixed FTBFS.
 
