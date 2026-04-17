@@ -1,6 +1,6 @@
 Name: phpMyAdmin
-Version: 5.2.2
-Release: alt2
+Version: 5.2.3
+Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -68,7 +68,6 @@ Requires: %defphp-bz2
 Requires: %defphp-zip
 Requires: %defphp-gd2
 Requires: %defphp-mbstring
-Requires: %defphp-mcrypt
 
 Conflicts: %name-apache2
 
@@ -149,6 +148,10 @@ fi
 
 
 %changelog
+* Thu Apr 16 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.3-alt1
+- new version 5.2.3
+- drop obsolete php-mcrypt Requires (not needed since 4.7, blocks build due to php8.4-mcrypt absence)
+
 * Mon Feb 03 2025 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt2
 - switch to use php_defver from rpm-build-php 8.4
 
