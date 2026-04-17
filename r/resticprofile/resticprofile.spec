@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: resticprofile
-Version: 0.32.0
+Version: 0.33.1
 Release: alt1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
@@ -25,6 +25,8 @@ BuildRequires: golang
 %setup
 tar xf %SOURCE1 -C docs/themes
 %autopatch -p1
+# Non-stripping shebang causes stray dependencies to bash/fish.
+sed -i '1{/#!/d}' contrib/completion/*sh
 
 %build
 %ifnarch armh %ix86 loongarch64 riscv64
@@ -44,9 +46,10 @@ install -Dp resticprofile %buildroot%_bindir/resticprofile
 mkdir -p %buildroot%_datadir/%name
 cp -r contrib examples -t %buildroot%_datadir/%name
 pushd %buildroot%_datadir
-  mkdir -p bash-completion/completions zsh/site-functions
-  mv %name/contrib/completion/bash-completion.sh -T bash-completion/completions/%name
-  mv %name/contrib/completion/zsh-completion.sh  -T zsh/site-functions/_%name
+  mkdir -p bash-completion/completions zsh/site-functions fish/vendor_completions.d
+  mv %name/contrib/completion/bash-completion.sh   -T bash-completion/completions/%name
+  mv %name/contrib/completion/zsh-completion.sh    -T zsh/site-functions/_%name
+  mv %name/contrib/completion/fish-completion.fish -T fish/vendor_completions.d/%name.fish
   rmdir %name/contrib/completion
 popd
 
@@ -64,8 +67,12 @@ go test ./... || true
 %_datadir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Apr 17 2026 Vitaly Chikunov <vt@altlinux.org> 0.33.1-alt1
+- Update to v0.33.1 (2026-04-15).
+
 * Fri Sep 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.32.0-alt1
 - Update to v0.32.0 (2025-09-25).
 
