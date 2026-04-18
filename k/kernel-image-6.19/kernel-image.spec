@@ -2,7 +2,7 @@ Name: kernel-image-6.19
 Release: alt1
 %define kernel_src_version	6.19
 %define kernel_base_version	6.19
-%define kernel_sublevel	.12
+%define kernel_sublevel	.13
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -323,6 +323,7 @@ make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 	%make %make_target V=1
 	exit 1
 }
+%make_build scripts_gdb
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
 %endif
@@ -463,6 +464,7 @@ for f in $KbuildFiles; do
 	[ -x "$f" ] && mode=755 || mode=644
 	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
 done
+cp -a scripts/gdb -t %buildroot%kbuild_dir/scripts
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -590,6 +592,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Apr 18 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.13-alt1
+- v6.19.13 (2026-04-18).
+- config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y).
+- config: Enable CONFIG_IPV6_SEG6_ options.
+
 * Sat Apr 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.12-alt1
 - v6.19.12 (2026-04-11).
 
