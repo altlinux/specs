@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-github
-Version: 0.24.3
+Version: 0.25.3
 Release: alt1
 Summary: Binaries manager for GitHub (and Docker) releases
 License: MIT
@@ -30,10 +30,18 @@ export CGO_ENABLED=0
 go build -v -buildmode=pie -ldflags \
 	"-X main.version=%version-%release
 	 -X main.date=$(date -I)
-	 -X main.builtBy=ALT" .
+	 -X 'main.builtBy=%distribution'" .
+# Needs writable dir in PATH
+( export PATH=$TMPDIR:$PATH
+  ./bin completion bash > bin.bash
+  ./bin completion fish > bin.fish
+  ./bin completion zsh  > bin.zsh )
 
 %install
 install -Dp bin -t %buildroot%_bindir
+install -Dpm644 bin.bash %buildroot%_datadir/bash-completion/completions/bin
+install -Dpm644 bin.fish %buildroot%_datadir/fish/vendor_completions.d/bin.fish
+install -Dpm644 bin.zsh  %buildroot%_datadir/zsh/site-functions/_bin
 
 %check
 ./bin --help
@@ -42,9 +50,16 @@ install -Dp bin -t %buildroot%_bindir
 go test -v ./...
 
 %files
+%doc LICENSE README.md
 %_bindir/bin
+%_datadir/bash-completion/completions/bin
+%_datadir/fish/vendor_completions.d/bin.fish
+%_datadir/zsh/site-functions/_bin
 
 %changelog
+* Sat Apr 18 2026 Vitaly Chikunov <vt@altlinux.org> 0.25.3-alt1
+- Update to v0.25.3 (2026-04-17).
+
 * Sat Mar 21 2026 Vitaly Chikunov <vt@altlinux.org> 0.24.3-alt1
 - Update to v0.24.3 (2026-03-19).
 
