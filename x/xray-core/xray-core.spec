@@ -2,7 +2,7 @@
 
 Name: xray-core
 Version: 26.3.27
-Release: alt1
+Release: alt2
 
 Summary: Project X
 License: MPL-2.0
@@ -17,8 +17,13 @@ Source0: Xray-core-%version.tar
 # go mod vendor
 Source1: vendor.tar
 
+# Systemd service
 Source2: xray.service
 Source3: xray@.service
+
+# GeoIP and Domain lists
+Source4: https://github.com/runetfreedom/russia-blocked-geoip/releases/latest/download/geoip.dat
+Source5: https://github.com/runetfreedom/russia-blocked-geosite/releases/latest/download/geosite.dat
 
 BuildRequires: golang
 BuildRequires: python3
@@ -33,10 +38,12 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%git_version -s -w -buildid=" -v ./main
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_unitdir}
+%__mkdir_p %buildroot{%_bindir,{%_datadir,%_sysconfdir}/xray,%_unitdir}
 %__install -Dp -m0755 xray %buildroot%_bindir/
 %__install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/
 %__install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/
+%__install -Dp -m0644 %SOURCE4 %buildroot%_datadir/xray/
+%__install -Dp -m0644 %SOURCE5 %buildroot%_datadir/xray/
 
 %post
 %post_systemd_postponed xray
@@ -47,10 +54,16 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%gi
 %files
 %doc CODE_OF_CONDUCT.md README.md
 %_bindir/xray
+%dir %_datadir/xray
+%_datadir/xray/geo*.dat
+%dir %_sysconfdir/xray
 %_unitdir/xray.service
 %_unitdir/xray@.service
 
 %changelog
+* Sat Apr 18 2026 Nazarov Denis <nenderus@altlinux.org> 26.3.27-alt2
+- Added GeoIP and Domain lists
+
 * Tue Apr 14 2026 Nazarov Denis <nenderus@altlinux.org> 26.3.27-alt1
 - New version 26.3.27. (ALT #58696)
 
