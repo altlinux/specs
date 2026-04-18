@@ -2,7 +2,7 @@
 %global import_path github.com/MizuchiLabs/mantrae
 
 Name: mantrae
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 Summary: Web UI for managing Traefik
 License: MIT
@@ -73,5 +73,8 @@ mkdir -p %buildroot%_sharedstatedir/mantrae
 %doc LICENSE
 
 %changelog
+* Sat Apr 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.9-alt1
+- Updated to version 0.8.9.
+
 * Sun Mar 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.8-alt1
 - Initial build for ALT.
