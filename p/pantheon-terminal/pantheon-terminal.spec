@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 7.2
+%define ver_major 8.0
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
-%def_disable check
+%def_enable check
 
 Name: pantheon-terminal
 Version: %ver_major.0
@@ -12,7 +12,7 @@ Release: alt1
 
 Summary: Pantheon Terminal
 Group: Terminals
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Url: https://github.com/elementary/terminal
 
 Vcs: https://github.com/elementary/terminal.git
@@ -23,21 +23,22 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-%define granite_ver 6.1.0
-%define handy_ver 1.0
+%define granite_ver 7.7.0
+%define adw_ver 1.5
 %define vala_ver 0.40
-%define vte_ver 0.59
+%define vte_ver 0.76
 
 Requires: elementary-icon-theme
 Provides: %rdn_name = %EVR
 Provides: elementary-%_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson appstream desktop-file-utils xvfb-run
-BuildRequires: libgranite-devel >= %granite_ver libnotify-devel
-BuildRequires: libvte3-devel >= %vte_ver libpcre2-devel libgee0.8-devel
-BuildRequires: vala-tools >= %vala_ver libgranite-vala
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: meson vala-tools >= %vala_ver
+BuildRequires: libgranite7-devel >= %granite_ver
+BuildRequires: pkgconfig(vte-2.91-gtk4) >= %vte_ver
+BuildRequires: libpcre2-devel libgee0.8-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils xvfb-run}
 
 %description
 Pantheon Terminal (referred to simply as "Terminal" when installed) is a super
@@ -54,7 +55,6 @@ BuildArch: noarch
 
 %description vala
 This package provides Vala language bindings for the %name.
-
 
 %prep
 %setup -n %_name-%version
@@ -87,6 +87,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sat Apr 18 2026 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
+- 8.0.0 (ported to GTK4)
+
 * Mon Nov 17 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
 - 7.2.0
 
