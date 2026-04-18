@@ -5,7 +5,7 @@
 
 Name: rebar
 Epoch: 1
-Version: 3.25.1
+Version: 3.27.0
 Release: alt1
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: Apache-2.0
@@ -50,6 +50,9 @@ install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 1:3.27.0-alt1
+- 3.25.1 -> 3.27.0
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1:3.25.1-alt1
 - 3.24.0 -> 3.25.1
 
