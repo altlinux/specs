@@ -2,18 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 45
+%define majver 46
 %define sover 0
 
 Name: ngspice
-Version: %majver.2
-Release: alt2
+Version: %majver
+Release: alt1
 Summary: A mixed level/signal circuit simulator
 
 License: BSD
 Group: Engineering
-Url: http://ngspice.sourceforge.net
-Vcs: https://git.code.sf.net/p/ngspice/ngspice
+URL: http://ngspice.sourceforge.net
+VCS: https://git.code.sf.net/p/ngspice/ngspice
 
 Source: %name-%version.tar
 Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%majver/ngspice-%majver-manual.pdf
@@ -189,6 +189,9 @@ cp -a \
 %_pkgconfigdir/ngspice.pc
 
 %changelog
+* Sat Apr 18 2026 Anton Midyukov <antohami@altlinux.org> 46-alt1
+- New version 46.
+
 * Fri Oct 17 2025 Anton Midyukov <antohami@altlinux.org> 45.2-alt2
 - Build without fftw3 (Closes: 56446).
 
