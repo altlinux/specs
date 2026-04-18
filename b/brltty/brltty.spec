@@ -3,7 +3,7 @@
 %define _localstatedir %_var
 %filter_from_requires /^sudo$/d
 
-%define pkg_version 6.9
+%define pkg_version 6.9.1
 %define xdg_name org.a11y.brlapi
 %define api_ver 0.8.8
 %define _exec_prefix %nil
@@ -295,6 +295,7 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %_udevrulesdir/90-%name-uinput.rules
 %_udevrulesdir/90-%name-usb-customized.rules
 %_udevrulesdir/90-%name-usb-generic.rules
+%_udevrulesdir/90-brltty-beeper.rules
 %_tmpfilesdir/%name.conf
 %_unitdir/brltty@.service
 %_unitdir/%name-device@.service
@@ -395,6 +396,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Sat Apr 18 2026 Artem Semenov <savoptik@altlinux.org> 6.9.1-alt1
+- Updated to new version 6.9.1
+
 * Wed Feb 25 2026 Artem Semenov <savoptik@altlinux.org> 6.9-alt1
 - Updated to new version 6.9
 - Updated brlapi to new version 0.8.8
