@@ -2,8 +2,8 @@
 %define abiversion 53
 
 Name: libfilezilla
-Version: 0.54.1
-Release: alt2
+Version: 0.55.3
+Release: alt1
 Summary: Small and modern C++ library
 License: GPL-2.0-or-later
 Group: System/Libraries
@@ -126,6 +126,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 16 2026 Anton Farygin <rider@altlinux.org> 0.55.3-alt1
+- 0.54.1 -> 0.55.3
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 0.54.1-alt2
 - added common subpackage with translations to avoid conflicts during upgrade
 
