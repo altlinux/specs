@@ -1,6 +1,6 @@
 %define libname postgresql
 Name: ocaml-%libname
-Version: 5.3.2
+Version: 5.4.0
 Release: alt1
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
@@ -45,6 +45,9 @@ chrpath -d %buildroot%_libdir/ocaml/stublibs/dllpostgresql_stubs.so
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Apr 19 2026 Anton Farygin <rider@altlinux.org> 5.4.0-alt1
+- 5.3.2 -> 5.4.0
+
 * Sun Mar 01 2026 Anton Farygin <rider@altlinux.org> 5.3.2-alt1
 - 5.1.3 -> 5.3.2
 
