@@ -20,7 +20,7 @@ which can split the input signal into: \
 
 
 Name:    ZLSplitter
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: %common_summary
@@ -130,6 +130,9 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Wed Apr 08 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sun Dec 14 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
