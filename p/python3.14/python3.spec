@@ -100,8 +100,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.3
-Release: alt2
+Version: %{pybasever}.4
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -146,6 +146,9 @@ Source: python3-%version.tar
 
 # Desktop menu entry for idle3
 Source10: idle3.desktop
+
+# Find obsoletes between standalone and the main one python3
+Source11: find_obsoletes.sh
 
 #RH Patches
 
@@ -192,15 +195,7 @@ Provides: %python3_ABI_dep
 Requires: %name-base = %EVR
 
 %if 0%{?!_python3_standalone:1}
-%global __find_obsoletes \
-  case "$RPM_SUBPACKAGE_NAME" in \
-      python3|python3-*|libpython3|libpython3-debuginfo) \
-         echo "${RPM_SUBPACKAGE_NAME/python3/python3%submajor}" \
-	;; \
-      *) echo >&2 'Unexpected subpkg!' \
-	 exit 1 \
-	;; \
-  esac \
+%global __find_obsoletes %SOURCE11 %submajor \
   %{?__find_obsoletes} \
   %{?!__find_obsoletes: cat >/dev/null} # avoid broken pipe: consume the file list
 %endif
@@ -262,10 +257,6 @@ Provides: lib%name-devel = %EVR
 %{?!_python3_standalone:Requires: rpm-build-python3}
 
 Provides: python3%{?_python3_standalone:-standalone}-devel = %pybasever
-%if 0%{?_python3_standalone:1}
-Conflicts: python3-devel
-Conflicts: python3-standalone-devel <= %pybasever
-%endif
 
 %description dev
 This package contains libraries and header files used to build applications
@@ -731,17 +722,20 @@ rm -v %buildroot/%_libdir/libpython%pybasever%pyabi.a
 # To avoid duplicate provides for python3-dev and python3.%submajor-dev
     rm -rf %buildroot/%_libdir/pkgconfig/python3.pc
     rm -rf %buildroot/%_libdir/pkgconfig/python3-embed.pc
+    rm -rf %buildroot/%_libdir/libpython3.so
+    # Symlink to %buildroot/%_bindir/python3.%submajor-config
+    rm -rf %buildroot/%_bindir/python3-config
 %endif
 
 %check
 # ALT#32008:
-if head -1 %buildroot%_bindir/python3-config | fgrep -q python; then
+if head -1 %buildroot%_bindir/python3.%{submajor}-config | fgrep -q python; then
 configdir="$(
     WITHIN_PYTHON_RPM_BUILD= \
     LD_LIBRARY_PATH=$(pwd) \
-    $(pwd)/python %buildroot%_bindir/python3-config --configdir)"
+    $(pwd)/python %buildroot%_bindir/python3.%{submajor}-config --configdir)"
 else
-configdir="$(%buildroot%_bindir/python3-config --configdir)"
+configdir="$(%buildroot%_bindir/python3.%{submajor}-config --configdir)"
 fi
 [ -d %buildroot"$configdir" ]
 
@@ -1043,9 +1037,9 @@ LD_LIBRARY_PATH="$(pwd)" \
 %include_dir/cpython/*.h
 %exclude %include_dir/%_pyconfig_h
 %doc Misc/README.valgrind Misc/valgrind-python.supp
-%_bindir/python3-config
+%{?!_python3_standalone:%_bindir/python3-config}
 %_bindir/python%pybasever-config
-%_libdir/libpython3.so
+%{?!_python3_standalone:%_libdir/libpython3.so}
 %_libdir/libpython%pybasever%pyabi.so
 %{?!_python3_standalone:%_libdir/pkgconfig/python3.pc}
 %_libdir/pkgconfig/python-%pybasever.pc
@@ -1123,6 +1117,14 @@ LD_LIBRARY_PATH="$(pwd)" \
 %endif
 
 %changelog
+* Fri Apr 17 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.4-alt1
+- Updated python3 to upstream 3.13.4, fixes:
+    + CVE-2026-2297
+    + CVE-2026-3644
+    + CVE-2026-4224
+- Implemented %%find_obsoletes as a script (thx to Ivan Zakharyaschev)
+- Removed conflict between python3.X-dev and default python3-dev
+
 * Wed Apr 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.3-alt2
 - Fixes CVE-2026-6100 (thx to @george).
 

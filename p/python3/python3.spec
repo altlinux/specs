@@ -101,7 +101,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3%{?_python3_standalone}
 Version: %{pybasever}.12
-Release: alt2
+Release: alt3
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -146,6 +146,9 @@ Source: python3-%version.tar
 
 # Desktop menu entry for idle3
 Source10: idle3.desktop
+
+# Find obsoletes between standalone and the main one python3
+Source11: find_obsoletes.sh
 
 #RH Patches
 
@@ -192,15 +195,7 @@ Provides: %python3_ABI_dep
 Requires: %name-base = %EVR
 
 %if 0%{?!_python3_standalone:1}
-%global __find_obsoletes \
-  case "$RPM_SUBPACKAGE_NAME" in \
-      python3|python3-*|libpython3|libpython3-debuginfo) \
-         echo "${RPM_SUBPACKAGE_NAME/python3/python3%submajor}" \
-	;; \
-      *) echo >&2 'Unexpected subpkg!' \
-	 exit 1 \
-	;; \
-  esac \
+%global __find_obsoletes %SOURCE11 %submajor \
   %{?__find_obsoletes} \
   %{?!__find_obsoletes: cat >/dev/null} # avoid broken pipe: consume the file list
 %endif
@@ -1104,6 +1099,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri Apr 17 2026 kotopesutility <kotopesutility@altlinux.org> 3.13.12-alt3
+- Moved %%find_obsoletes to the script (thx to Ivan Zakharyaschev).
+
 * Wed Apr 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.12-alt2
 - Fixes CVE-2026-6100 (thx to @george).
 
