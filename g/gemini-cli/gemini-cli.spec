@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 04b86e8
+%global commit_hash 7f55800
 
 Name: gemini-cli
-Version: 0.34.0
+Version: 0.38.1
 Release: alt1
 Summary: AI agent that brings the power of Gemini directly into your terminal
 License: Apache-2.0
@@ -64,9 +64,11 @@ cd -
 node esbuild.config.js
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_libexecdir/%name
-install -m 0644 bundle/gemini.js %buildroot%_libexecdir/%name
+mkdir -p %buildroot%_bindir %buildroot%_libexecdir/%name/policies
+cp bundle/* %buildroot%_libexecdir/%name
+cp packages/core/src/policy/policies/*.toml %buildroot%_libexecdir/%name/policies
 install -m 0755 %SOURCE5 %buildroot%_bindir/gemini
+rm -vf %buildroot%_libexecdir/%name/getMachineId-{win,darwin,bsd}-*.js
 
 %files
 %_bindir/gemini
@@ -74,6 +76,9 @@ install -m 0755 %SOURCE5 %buildroot%_bindir/gemini
 %doc LICENSE
 
 %changelog
+* Sun Apr 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.38.1-alt1
+- Updated to version 0.38.1.
+
 * Thu Mar 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.0-alt1
 - Updated to version 0.34.0.
 
