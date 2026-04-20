@@ -1,9 +1,9 @@
 %define import_path github.com/kubevirt/kubevirt
 %define _unpackaged_files_terminate_build 1
-%global commit 50b9b4d0cf1caaf56147411a1e6765134e0e82b9
+%global commit ae865b624b443450f7aedadc30cf9223a6176015
 
 Name:          	kubevirt
-Version:       	1.7.0
+Version:       	1.8.1
 Release:       	alt1
 Summary:       	KubeVirt is a virtual machine management add-on for Kubernetes
 
@@ -17,8 +17,9 @@ ExclusiveArch: 	x86_64 aarch64
 BuildRequires: 	rpm-macros-golang
 BuildRequires: 	rpm-build-golang
 BuildRequires: 	glibc-devel-static
-BuildRequires: 	golang >= 1.19
+BuildRequires: 	golang >= 1.24
 BuildRequires: 	libvirt-devel
+BuildRequires:  libnbd-devel
 BuildRequires: 	/proc
 
 %description
@@ -322,6 +323,9 @@ install -m 0644 $BUILDDIR/tests/default-config.json %buildroot%_datadir/kube-vir
 %_datadir/kube-virt/manifests/testing
 
 %changelog
+* Fri Apr 17 2026 Nadezhda Fedorova <fedor@altlinux.org> 1.8.1-alt1
+- 1.7.0 -> 1.8.1
+
 * Thu Dec 11 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.7.0-alt1
 - 1.5.0 -> 1.7.0
 - Add subpackages sidecar-shim, synchronization-controller.
