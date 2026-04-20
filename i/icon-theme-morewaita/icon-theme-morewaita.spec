@@ -1,6 +1,6 @@
 Name: icon-theme-morewaita
 Version: 49
-Release: alt1
+Release: alt2
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
 License: GPL-3.0-or-later AND CC-BY-SA-4.0
@@ -17,11 +17,14 @@ Source1: %name-alt-%version.tar
 Requires: icon-naming-utils
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson icon-naming-utils gtk4-update-icon-cache %_bindir/gtk-encode-symbolic-svg
+BuildRequires: meson
+BuildRequires: icon-naming-utils
+BuildRequires: gtk4-update-icon-cache
+BuildRequires: %_bindir/gtk-encode-symbolic-svg
 
 %description
-An expanded Adwaita-styled companion icon theme with extra icons for popular apps to complement
-Gnome Shell's original icons.
+An expanded Adwaita-styled companion icon theme with extra icons for popular
+apps to complement Gnome Shell's original icons.
 
 %prep
 %setup
@@ -34,6 +37,12 @@ Gnome Shell's original icons.
 %meson_install
 tar -xf %SOURCE1 -C %buildroot%_iconsdir/MoreWaita/
 
+# create additional symlinks
+pushd %buildroot%_iconsdir/MoreWaita/scalable/legacy
+ln -s applications-system.svg preferences.svg
+ln -s preferences-desktop.svg preferences-desktop-default-applications.svg
+popd
+
 %files
 %_iconsdir/MoreWaita/
 %doc AUTHORS LICENSE README.md
@@ -41,6 +50,9 @@ tar -xf %SOURCE1 -C %buildroot%_iconsdir/MoreWaita/
 %exclude %_iconsdir/MoreWaita/LICENSE
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 49-alt2
+- Add preferences.svg, preferences-desktop.svg.
+
 * Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 49-alt1
 - New version 49.
 
