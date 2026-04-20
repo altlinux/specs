@@ -1,6 +1,6 @@
 
 Name: udev-rules-ioschedulers
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -30,6 +30,9 @@ install -m 0644 %SOURCE0 %buildroot/%_udevrulesdir/50-ioschedulers.rules
 %_udevrulesdir/*ioschedulers*.rules
 
 %changelog
+* Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- update rules
+
 * Fri Dec 02 2022 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - update rules
 
