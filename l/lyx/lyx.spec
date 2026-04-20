@@ -17,8 +17,8 @@
 %global unbundle_font_latex_xft       1
 
 Name: lyx
-Version: 2.5.0
-Release: alt2
+Version: 2.5.1
+Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
@@ -214,6 +214,9 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Tue Apr 21 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.1-alt1
+- 2.5.1
+
 * Sun Feb 22 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.0-alt2
 - add_python3_req_skip LyX
 
