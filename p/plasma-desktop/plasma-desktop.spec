@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -31,7 +31,8 @@ Requires: polkit-kde-plasma-desktop
 Requires: ibus-dicts
 Requires: fonts-ttf-google-noto-emoji-color
 Requires: /usr/bin/xdg-user-dir
-Requires: kf6-kirigami kf6-kirigami-addons kf6-qqc2-desktop-style plasma6-kpipewire
+Requires: kf6-kirigami kf6-kirigami-addons plasma6-kpipewire
+Requires: kf6-qqc2-desktop-style qqc2-breeze-style
 Requires: switcheroo-control
 
 Provides: plasma5-desktop = %EVR
@@ -276,6 +277,9 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- update requries
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
