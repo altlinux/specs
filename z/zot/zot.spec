@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.14
+Version: 2.1.16
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -147,6 +147,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Mon Apr 20 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.16-alt1
+- 2.1.14 -> 2.1.16.
+
 * Wed Feb 18 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.14-alt1
 - 2.1.13 -> 2.1.14
 - Fix rebuild error with system esbuild version.

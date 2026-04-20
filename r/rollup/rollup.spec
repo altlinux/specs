@@ -9,7 +9,7 @@
 %endif
 
 Name: rollup
-Version: 4.56.0
+Version: 4.60.2
 Release: alt1
 Summary: Rollup JavaScript bundler
 License: MIT
@@ -93,5 +93,8 @@ cp -a \
 %nodejs_sitelib/@%name/%name-linux-%rollup_arch-gnu/*
 
 %changelog
+* Mon Apr 20 2026 Aleksandr Gamzin <gamzin@altlinux.org> 4.60.2-alt1
+- 4.60.2.
+
 * Thu Jan 22 2026 Aleksandr Gamzin <gamzin@altlinux.org> 4.56.0-alt1
 - Initial build for Sisyphus.
