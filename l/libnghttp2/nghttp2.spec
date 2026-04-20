@@ -6,7 +6,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libnghttp2
-Version: 1.68.1
+Version: 1.69.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -83,6 +83,9 @@ Requires: %name = %EVR
 %exclude %_datadir/doc/nghttp2/README.rst
 
 %changelog
+* Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 1.69.0-alt1
+- 1.68.1 -> 1.69.0
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 1.68.1-alt1
 - 1.68.0 -> 1.68.1
 
