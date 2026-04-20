@@ -13,7 +13,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 4.2.1
+Version: 4.3.1
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -197,9 +197,6 @@ echo 'noinst_HEADERS += bn/bn_arch.h' >> crypto/Makefile.am
 echo 'noinst_HEADERS += crypto_arch.h' >> crypto/Makefile.am
 %endif
 
-# drop symlinks to non-existent manpage
-sed -i '/bn_dump[.]3/d' man/Makefile.*
-
 %build
 %autoreconf
 %configure \
@@ -321,6 +318,9 @@ done
 %_man1dir/netcat.1*
 
 %changelog
+* Mon Apr 20 2026 Ivan A. Melnikov <iv@altlinux.org> 4.3.1-alt1
+- 4.3.1
+
 * Wed Nov 05 2025 Ivan A. Melnikov <iv@altlinux.org> 4.2.1-alt1
 - Updated to 4.2.1
 
