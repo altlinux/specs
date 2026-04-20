@@ -1,11 +1,12 @@
 Name: python3-module-av
-Version: 17.0.0
+Version: 17.0.1
 Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
 License: BSD-3-Clause
 Group: Development/Python
-Url: https://pypi.org/project/av/
+URL: https://pypi.org/project/av/
+VCS: https://github.com/PyAV-Org/PyAV
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
@@ -46,6 +47,9 @@ BuildRequires: pkgconfig(libswresample)
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Mon Apr 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.0.1-alt1
+- 17.0.1 released
+
 * Thu Mar 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.0.0-alt1
 - 17.0.0 released
 
