@@ -4,15 +4,14 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           spec-version-maven-plugin
-Version:        1.5
-Release:        alt1_6jpp11
+Version:        2.2
+Release:        alt1
 Summary:        Spec Version Maven Plugin
-License:        CDDL or GPLv2 with exceptions
+License:        EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 
-# project moved to eclipse-ee4j for versions > 1.5
-# https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin
-URL:            https://github.com/javaee/spec-version-maven-plugin
-Source0:        https://github.com/javaee/spec-version-maven-plugin/archive/%{version}/%{name}-%{version}.tar.gz
+URL:            https://projects.eclipse.org/projects/ee4j.glassfish
+VCS:            https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin.git
+Source0:        https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -22,6 +21,7 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 Source44: import.info
 
 %description
@@ -38,13 +38,14 @@ This package contains javadoc for %{name}.
 
 
 %prep
-%setup -q
+%setup
 
 
 sed -i "s|mvn|mvn-rpmbuild|" src/main/resources/checkVersion.sh
 
-# Build for JDK 1.8 instead of 1.6
-sed -i 's/1\.6/1.8/g' pom.xml
+# remove spurious executable bits
+find -O3 . -type f -perm /0111 -exec chmod a-x {} +
+chmod a+x src/main/resources/checkVersion.sh
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -53,11 +54,9 @@ sed -i 's/1\.6/1.8/g' pom.xml
 %pom_remove_plugin :glassfish-copyright-maven-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 
-%mvn_file :%{name} %{name}
-
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 
 %install
@@ -65,14 +64,17 @@ sed -i 's/1\.6/1.8/g' pom.xml
 
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
+%doc --no-dereference LICENSE.md NOTICE.md
 %doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc --no-dereference LICENSE.md NOTICE.md
 
 
 %changelog
+* Fri Apr 17 2026 Anton Meleshnikov <alton@altlinux.org> 2.2-alt1
+- new version (thanks fedora for the spec)
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.5-alt1_6jpp11
 - update
 
