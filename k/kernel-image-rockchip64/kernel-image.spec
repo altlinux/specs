@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.22
+%define kernel_sublevel	.23
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -554,6 +554,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon Apr 20 2026 Alexei Takaseev <taf@altlinux.org> 6.18.23-alt1
+- v6.18.23 (2026-04-18).
+
 * Mon Apr 13 2026 Alexei Takaseev <taf@altlinux.org> 6.18.22-alt1
 - v6.18.22 (2026-04-11).
 - config: Enable CONFIG_IPV6_SEG6_ options
