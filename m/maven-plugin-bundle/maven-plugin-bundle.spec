@@ -1,6 +1,6 @@
 Name:           maven-plugin-bundle
 Version:        5.1.9
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Maven Bundle Plugin
 License:        Apache-2.0
@@ -37,11 +37,14 @@ resources and dependencies. Plus a zillion other features.
 find -name '*.jar' -delete
 
 %pom_remove_dep :org.apache.felix.bundlerepository
-
 rm -rf src/main/java/org/apache/felix/obrplugin/
 
+# doxia updated to 2.0.0
+rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
+
 %build
-%mvn_build -f -- -Dmaven.compiler.target=8
+# Tests disabled due to outdated expectations and missing test resources causing failures
+%mvn_build -f
 
 %install
 %mvn_install
@@ -50,6 +53,9 @@ rm -rf src/main/java/org/apache/felix/obrplugin/
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Apr 14 2026 Evgeniy Serov <scala@altlinux.org> 5.1.9-alt2
+- Fixed FTBFS.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 5.1.9-alt1.1
 - Cosmetic fixes.
 
