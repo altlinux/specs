@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.14
+Version: 0.6.15
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,15 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Apr 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.15-alt1
+- Fixed:
+  + error "Did not receive a reply" for CheckApply method;
+  + update the interface after deleting a edition (thx Oleg Chagaev);
+  + rebuild the component tree after its multiple updates (thx Oleg Chagaev).
+- Added:
+  + automatic selection of the component tree display mode if a
+    edition appears (thx Oleg Chagaev).
+
 * Fri Mar 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.14-alt1
 - Fix package filtering by architecture.
   Thx Semen Fomchenkov <armatik@altlinux.org>.
