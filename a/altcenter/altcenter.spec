@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.29
+Release: alt0.30
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -31,7 +31,6 @@ BuildRequires(pre): rpm-build-python3
 
 Requires: inxi
 Requires: alteratorctl
-Requires: polkit-rule-packagekit-allow-install
 
 %description
 This is the grapical plugin-based application for show information and
@@ -62,6 +61,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Apr 20 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.30
+- Removed requirements of polkit-rule-packagekit-allow-install (ALT #58807).
+
 * Thu Apr 16 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.29
 - Fixed bugs (ALT #58547, 58542, 58545, 58549, 58664, 58702, 58630, 58583,
   58384).
