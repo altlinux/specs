@@ -6,7 +6,7 @@
 %def_with check
 
 Name: %pypi_name
-Version: 1.3.1.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Connect and query your database from your terminal in seconds
@@ -64,5 +64,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Apr 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt1
+- new version
+
 * Wed Apr 08 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.1.1-alt1
 - initial build for ALT Linux
