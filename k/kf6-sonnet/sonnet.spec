@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.25.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -72,20 +72,23 @@ KF6 library
 %files devel
 %_K6bin/parsetrigrams6
 %_bindir/parsetrigrams6
+%_K6plug/designer/*.so
 %_K6inc/Sonnet*/
 %_K6link/lib*.so
 %_K6lib/cmake/KF6Sonnet
 
 %files -n libkf6sonnetcore
-%_K6plug/designer/*.so
 %_K6lib/libKF6SonnetCore.so.*
-%_K6plug/kf6/sonnet/sonnet_hunspell.so
+%_K6plug/kf6/sonnet/*sonnet*.so
 %files -n libkf6sonnetui
 %_K6lib/libKF6SonnetUi.so.*
 %_K6qml/org/kde/sonnet/
 
 
 %changelog
+* Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt2
+- package designer plugins into devel subpackage
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
 - new version
 
