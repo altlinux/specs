@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -81,6 +81,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Mon Apr 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
+- 50.1
+
 * Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
