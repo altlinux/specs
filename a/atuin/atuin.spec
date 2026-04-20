@@ -3,7 +3,7 @@
 %def_with check
 
 Name: atuin
-Version: 18.13.6
+Version: 18.15.2
 Release: alt1
 
 Summary: Magical shell history
@@ -129,6 +129,9 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Mon Apr 20 2026 Ilya Sorochan <k0tran@altlinux.org> 18.15.2-alt1
+- new version 18.15.2
+
 * Sat Apr 11 2026 Boris Yumankulov <boria138@altlinux.org> 18.13.6-alt1
 - new version 18.13.6
 
