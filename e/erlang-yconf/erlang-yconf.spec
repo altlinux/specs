@@ -3,7 +3,7 @@
 %global realname yconf
 
 Name: erlang-%realname
-Version: 1.0.22
+Version: 1.0.23
 Release: alt1
 Summary: YAML configuration processor
 Group: Development/Erlang
@@ -42,6 +42,9 @@ YAML configuration processor.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 1.0.23-alt1
+- 1.0.22 -> 1.0.23
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.0.22-alt1
 - 1.0.12 -> 1.0.22
 
