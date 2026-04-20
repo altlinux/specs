@@ -1,5 +1,5 @@
-%define git 4aa2c35
-%define soname 2.4
+%define git a3729367596c827ace086f4baa6cab89b6a7f439
+%define soname 2.5
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -8,7 +8,7 @@
 %def_enable test
 
 Name: Ptex
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 Summary: Per-Face Texture Mapping for Production Rendering
 
@@ -74,7 +74,7 @@ export FLAVOR=profile
 %cmake \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DPTEX_SHA=%{git} \
-  -DPTEX_VERSION=v%{version} \
+  -DPTEX_VER=v%{version} \
 %if_disabled static
   -DPTEX_BUILD_STATIC_LIBS=OFF \
 %endif
@@ -106,6 +106,9 @@ export FLAVOR=profile
 %_pkgconfigdir/ptex.pc
 
 %changelog
+* Mon Apr 20 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.2-alt1
+- 2.5.2.
+
 * Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 2.5.1-alt1
 - 2.4.3 -> 2.5.1
 
