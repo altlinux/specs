@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.6
+Version: 2.8.0
 Release: alt1
 
 Summary: A pytest plugin that allows multiple failures per test
@@ -48,6 +48,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Mar 31 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.8.0-alt1
+- Updated to 2.8.0.
+
 * Mon Mar 3 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.7.6-alt1
 - Updated to 2.7.6.
 
