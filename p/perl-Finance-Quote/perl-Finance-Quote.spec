@@ -6,7 +6,7 @@ Epoch: 1
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.68
+Version: 1.69
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -43,6 +43,9 @@ greater flexibility and stability.
 
 
 %changelog
+* Mon Apr 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:1.69-alt1
+- new version
+
 * Sat Dec 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:1.68-alt1
 - new version
 - NMU: fix FTBFS
