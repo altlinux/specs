@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 149.0.1
+Version: 149.0.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -38,6 +38,7 @@ Patch003: 0003-Fix-types-defination.patch
 Patch004: 0004-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch005: 0005-Correction-of-the-Russian-translation.patch
 Patch006: 0006-ALT-stop-putting-commonDialogs.properties-into-share.patch
+Patch007: 0007-Fix-OTR-query-message-split-on-newline-ALT-40934.patch
 ### End Patches
 
 Provides: mailclient
@@ -173,6 +174,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch4 -p2
 %patch5 -p1
 %patch6 -p2
+%patch7 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -361,6 +363,16 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Sat Apr 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0.2-alt1
+- New version.
+- Fix OTR query message split on newline (Closes: 40934).
+- Fixes:
+  + CVE-2026-5732: Incorrect boundary conditions, integer overflow in the Graphics: Text component
+  + CVE-2026-5733: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-5731: Memory safety bugs fixed in Firefox ESR 115.34.1, Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird 149.0.2
+  + CVE-2026-5734: Memory safety bugs fixed in Firefox ESR 140.9.1, Thunderbird ESR 140.9.1, Firefox 149.0.2 and Thunderbird 149.0.2
+  + CVE-2026-5735: Memory safety bugs fixed in Firefox 149.0.2 and Thunderbird 149.0.2
+
 * Fri Apr 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0.1-alt1
 - New version.
 
