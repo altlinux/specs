@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -45,6 +45,9 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Mon Apr 20 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.2-alt1
+- added always show log out option switch
+
 * Tue Jan 13 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.1-alt1
 - added autoclose xwayland switch
 
