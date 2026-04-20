@@ -8,7 +8,7 @@
 %define oldver 3.0
 
 Name: gimp
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -125,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.4-alt1
+- 3.2.4
+
 * Mon Mar 30 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.2-alt1
 - 3.2.2
 
