@@ -1,37 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: svgsalamander
+Version: 1.1.5.5
+Release: alt1
+
+Summary: An SVG engine for Java
 Group: Development/Other
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global gittag v1.1.2
-%global gitname svgSalamander
-# spec file for package svgsalamander
+License: LGPLv2+ or BSD
+Url: https://github.com/blackears/svgSalamander/
+Vcs: https://github.com/blackears/svgSalamander/
+BuildArch: noarch
 
-Name:           svgsalamander
-Version:        1.1.2
-Release:        alt1_9jpp11
-Summary:        An SVG engine for Java
+Source0: %name-%version.tar
+Patch0: %name-%version-alt-patch.patch
 
-License:        LGPLv2+ or BSD
-URL:            https://github.com/blackears/svgSalamander/
-Source0:        https://github.com/blackears/%{gitname}/archive/%{gittag}/%{gitname}-%{version}.tar.gz
-# Pulled from version 1.1.1
-Source1:        pom.xml
-# The interesting code changes from release to the commit 658fd1a
-# https://github.com/blackears/svgSalamander/compare/v1.1.2...658fd1a
-Patch1:         svgsalamander-master.patch
+BuildRequires(pre): rpm-build-java
+BuildRequires: /proc
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: javacc-maven-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-source-plugin
 
-BuildArch:      noarch
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-local
-BuildRequires:  javacc-maven-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  dos2unix
-BuildRequires:  ant
-
-Provides:       %{gitname}
-Source44: import.info
-
+%{?javadoc_package}
 
 %description
 SVG Salamander is an SVG engine for Java that's designed to be small, fast, 
@@ -40,53 +31,35 @@ targeted for making it easy to integrate SVG into Java games and making it
 much easier for artists to design 2D game content - from rich interactive 
 menus to charts and graphcs to complex animations.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
-%setup -q -n %{gitname}-%{version}
-# To apply patches, we need normal line endings
-find . -name '*.java' -exec dos2unix '{}' \;
-%patch1 -p1
+%setup
+%autopatch -p1
 
 find . -name '*.jar' -exec rm -f '{}' \;
 find . -name '*.class' -exec rm -f '{}' \;
 
-# Remove DOS line endings
-for file in www/docs/*.html www/docs/exampleCode/*.html; do
-  sed 's|\r||g' $file >$file.new && \
-  touch -r $file $file.new && \
-  mv $file.new $file
-done
-
+%pom_disable_module svg-example
+%pom_remove_plugin :central-publishing-maven-plugin svg-core
+%pom_remove_plugin :maven-gpg-plugin svg-core
+%pom_remove_plugin :maven-javadoc-plugin svg-core
 
 %build
-pushd svg-core
-cp %SOURCE1 pom.xml
-%mvn_file : %{name} svgSalamander svg-salamander
-%mvn_alias : com.kitfox.svg:svg-salamander
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-popd
+%mvn_build
 
 %install
-pushd svg-core
+%mvn_alias io.github.blackears:svg-salamander com.kitfox.svg:svg-salamander
+%mvn_alias io.github.blackears:svg-salamander com.formdev:svgSalamander
 %mvn_install
-popd
 
-%files -f svg-core/.mfiles
+%files -f .mfiles
 %doc www/docs/exampleCode/
 %doc www/docs/use.html
 %doc www/license/*
 
-%files javadoc -f svg-core/.mfiles-javadoc
-%doc www/license/*
-
 %changelog
+* Mon Apr 20 2026 Arseniy Kostevich <faux@altlinux.org> 1.1.5.5-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_9jpp11
 - fc34 update
 
@@ -119,4 +92,3 @@ popd
 
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1_2jpp7
 - new version
-
