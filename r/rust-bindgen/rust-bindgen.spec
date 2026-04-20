@@ -1,5 +1,5 @@
 Name: rust-bindgen
-Version: 0.72.0
+Version: 0.72.1
 Release: alt1
 
 Summary: Automatically generates Rust FFI bindings to C (and some C++) libraries
@@ -51,6 +51,9 @@ install -Dm0755 target/release/bindgen %buildroot%_bindir/
 %_bindir/bindgen
 
 %changelog
+* Mon Apr 20 2026 L.A. Kostis <lakostis@altlinux.ru> 0.72.1-alt1
+- 0.72.1.
+
 * Mon Aug 11 2025 L.A. Kostis <lakostis@altlinux.ru> 0.72.0-alt1
 - 0.72.0.
 
