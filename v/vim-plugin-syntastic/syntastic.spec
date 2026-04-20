@@ -3,7 +3,7 @@
 %define plugname syntastic
 Name:		vim-plugin-%plugname
 Version:	3.10.0
-Release:	alt4
+Release:	alt5
 Summary:	Syntax checking hacks for vim
 Group:		Editors
 License:	WTFPL
@@ -74,6 +74,9 @@ done
 %vim_runtime_dir/syntax_checkers/*
 
 %changelog
+* Mon Apr 20 2026 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt5
+- Checker bash: avoid false positive syntax errors due to extglob.
+
 * Fri Jun 20 2025 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt4
 - Apply minor patches.
 - spec: Remove dependence on Python3.
