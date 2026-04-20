@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -204,6 +204,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- update gcc-13 support
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
