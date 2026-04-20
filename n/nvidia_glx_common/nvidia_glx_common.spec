@@ -13,10 +13,10 @@
 
 # version-release
 
-%define nv_version 580
-%define nv_release 142
-%define nv_minor %nil
-%define pkg_rel alt306
+%define nv_version 595
+%define nv_release 58
+%define nv_minor 03
+%define pkg_rel alt307
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -63,6 +63,8 @@
 %add_findreq_skiplist %x11_lib_dir/*
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
+%filter_from_requires \/libnvidiacurrent\//d
+%filter_from_requires \/libnvidia32current\//d
 
 Name: nvidia_glx_common
 %if "%nv_minor" == "%nil"
@@ -73,7 +75,6 @@ Version: %nv_version.%nv_release.%nv_minor
 Release: %pkg_rel
 
 Source: set_gl_nvidia.tar
-Source1: alternate-install-present
 Source2: nvidia-install-driver
 Source3: nvidia-clean-driver
 Source4: nvidia-prime-run
@@ -81,6 +82,8 @@ Source10: nvidia-sleep.tar
 Source11: udev.rules
 Source12: device-create.tar
 Source13: kernel_module.conf
+Source100: alternate-install-present
+Source101: alternate-install-available
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libsysfs-devel
@@ -102,19 +105,6 @@ Requires(pre): libGL
 Requires: libGL
 Requires: apt-scripts-nvidia
 Requires(post): x11presetdrv
-# old
-Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
-Conflicts: nvidia_glx_169.07-169.07 <= alt40
-Conflicts: nvidia_glx_169.09-169.09 <= alt41
-Conflicts: nvidia_glx_71.86.01-71.86.01 <= alt36
-Conflicts: nvidia_glx_96.43.01-96.43.01 <= alt36
-#
-Conflicts: nvidia_glx_71.86.04-71.86.04 <= alt37
-Conflicts: nvidia_glx_71.86.06-71.86.06 <= alt38
-Conflicts: nvidia_glx_96.43.05-96.43.05 <= alt37
-Conflicts: nvidia_glx_96.43.07-96.43.07 <= alt38
-Conflicts: nvidia_glx_169.12-169.12 <= alt44
-Conflicts: nvidia_glx_173.14.12-173.14.12 <= alt47
 %description
 This is common package for NVIDIA drivers.
 %description -l ru_RU.UTF-8
@@ -189,10 +179,15 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__mkdir_p %buildroot/%x11_lib_dir/vdpau
 %__mkdir_p %buildroot/%x11_lib_dir/gbm
 #%__mkdir_p %buildroot/lib/firmware/nvidia
+%if "%_lib" != "lib"
+# add path to help find libs by internal way
+ln -sr %buildroot/%_sysconfdir/libnvidiacurrent %buildroot/%_libdir/nvidia
+%endif
 
 # prompt user to don't use nvidia-installer
 mkdir -p %buildroot/usr/lib/nvidia/
-install -m 0644 %SOURCE1 %buildroot/usr/lib/nvidia/
+install -m 0644 %SOURCE100 %buildroot/usr/lib/nvidia/
+install -m 0644 %SOURCE101 %buildroot/usr/lib/nvidia/
 mkdir -p %buildroot/%_bindir/
 install -m 0755 %SOURCE2 %buildroot/%_bindir/
 install -m 0755 %SOURCE3 %buildroot/%_bindir/
@@ -213,7 +208,7 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libnvidia-allocator.so.1
 %__ln_s `relative %x11driver_dir %_sysconfdir/libnvidiacurrent` %buildroot/%_sysconfdir/libnvidiacurrent
 %__ln_s `relative %_sysconfdir/libnvidiacurrent %nv_etclib_sym_dir/current` %buildroot/%nv_etclib_sym_dir/current
-%if "%_lib" == "lib64"
+%if "%_lib" != "lib"
 %__ln_s `relative %x11driver_dir %_sysconfdir/libnvidia32current` %buildroot/%_sysconfdir/libnvidia32current
 %__ln_s `relative %_sysconfdir/libnvidia32current %nv_lib32_sym_dir/current` %buildroot/%nv_lib32_sym_dir/current
 %endif
@@ -228,12 +223,17 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../..%nv_etclib_sym_dir/libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/libnvidia-allocator.so.1
 %__ln_s ../libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/gbm/nvidia-drm_gbm.so
 
+mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
+ln -s %_sysconfdir/libnvidiacurrent/nvidia.icd.json %buildroot/%_sysconfdir/OpenCL/vendors/nvidia.%_target_cpu.icd
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
-ln -s /dev/null %buildroot/%nv_etclib_sym_dir/nvidia_icd.json
-ln -s `relative %nv_etclib_sym_dir/nvidia_icd.json %_datadir/vulkan/icd.d/nvidia_icd.json` %buildroot/%_datadir/vulkan/icd.d/nvidia_icd.json
+ln -s %_sysconfdir/libnvidiacurrent/nvidia_icd.json %buildroot/%_datadir/vulkan/icd.d/nvidia_icd.%_target_cpu.json
 mkdir -p %buildroot/%_datadir/vulkan/implicit_layer.d/
-ln -s /dev/null %buildroot/%nv_etclib_sym_dir/nvidia_layers.json
-ln -s `relative %nv_etclib_sym_dir/nvidia_layers.json %_datadir/vulkan/implicit_layer.d/nvidia_layers.json` %buildroot/%_datadir/vulkan/implicit_layer.d/nvidia_layers.json
+ln -s %_sysconfdir/libnvidiacurrent/nvidia_layers.json %buildroot/%_datadir/vulkan/implicit_layer.d/nvidia_layers.%_target_cpu.json
+mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
+ln -s %_sysconfdir/libnvidiacurrent/nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/nvidia.%_target_cpu.json
+mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
+ln -s %_sysconfdir/libnvidiacurrent/nvidia_icd_vksc.json %buildroot/%_datadir/vulkansc/icd.d/nvidia_icd_vksc.%_target_cpu.json
+ln -s %_sysconfdir/libnvidiacurrent/nvoptix.bin %buildroot/%_datadir/nvidia/nvoptix.bin
 
 # nvidia_drv.o
 if false ; then
@@ -256,7 +256,9 @@ ln -s /bin/true %buildroot/%_bindir/nvidia-bug-report.sh
 mkdir -p %buildroot/%_sysconfdir/X11/xorg.conf.d/
 echo >%buildroot/%_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
 mkdir -p %buildroot/%_sysconfdir/ld.so.conf.d/
-echo >%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+>%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+echo "/etc/libnvidiacurrent" >>%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+echo "/etc/libnvidia32current" >>%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
 mkdir -p %buildroot/etc/modprobe.d/
 install -m 0644 %SOURCE13 %buildroot/etc/modprobe.d/nvidia_common.conf
 # setup make-initrd
@@ -295,11 +297,11 @@ fi
 %files
 %dir %module_local_dir
 #%dir /lib/firmware/nvidia/
-%dir %_datadir/nvidia/
+%_datadir/nvidia/
 %_datadir/make-initrd/features/nvidia/
 %ghost %_bindir/nvidia-bug-report.sh
 %ghost %_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
-%ghost %_sysconfdir/ld.so.conf.d/nvidia.conf
+%_sysconfdir/ld.so.conf.d/nvidia.conf
 %xdrv_pre_d/nvidia
 %xdrv_d/nvidia
 #%xdrv_d_old/nvidia
@@ -318,17 +320,18 @@ fi
 %nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
 %nv_etclib_sym_dir/libnvidia-allocator.so.?
-#%nv_etclib_sym_dir/nvidia.xinf
-%nv_etclib_sym_dir/nvidia_icd.json
-%nv_etclib_sym_dir/nvidia_layers.json
-%_datadir/vulkan/icd.d/nvidia_icd.json
-%_datadir/vulkan/implicit_layer.d/nvidia_layers.json
+%_sysconfdir/OpenCL/vendors/nvidia.%_target_cpu.icd
+%_datadir/vulkan/icd.d/nvidia_icd.%_target_cpu.json
+%_datadir/vulkan/implicit_layer.d/nvidia_layers.%_target_cpu.json
+%_datadir/glvnd/egl_vendor.d/nvidia.%_target_cpu.json
+%_datadir/vulkansc/icd.d/nvidia_icd_vksc.%_target_cpu.json
 %nv_etclib_sym_dir/current
 %_sysconfdir/libnvidiacurrent
-%if "%_lib" == "lib64"
+%if "%_lib" != "lib"
 %dir %nv_lib32_sym_dir/
 %nv_lib32_sym_dir/current
 %_sysconfdir/libnvidia32current
+%_libdir/nvidia 
 %endif
 #
 %x11_lib_dir/vdpau/libvdpau_nvidia.so
@@ -344,7 +347,7 @@ fi
 %_bindir/nvidia-clean-driver
 %_bindir/nvidia-install-driver
 %_bindir/nvidia-prime-run
-/usr/lib/nvidia/alternate-install-present
+/usr/lib/nvidia/alternate-install-*
 #
 %config(noreplace) /etc/modprobe.d/nvidia_common.conf
 /sbin/ub-device-create
@@ -356,6 +359,10 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt307
+- new version
+- switch libs via ld.so.conf
+
 * Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt306
 - new version
 

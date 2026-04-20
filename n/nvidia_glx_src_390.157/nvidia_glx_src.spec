@@ -27,23 +27,12 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt235
+%define pkg_rel alt300
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
 %endif
-%Nif_ver_gteq %ubt_id M90
-%def_enable glvnd
-%else
-%def_disable glvnd
-%endif
 %def_enable kernelsource
-%ifarch %ix86
-%def_disable package_egl_wayland
-%else
-%def_disable package_egl_wayland
-%endif
-%def_disable package_wfb
 
 %define tbver %nv_version_full
 %define module_version	%nv_version%nv_release%nv_minor
@@ -248,6 +237,11 @@ soname()
 %__mkdir_p %buildroot/%_datadir/nvidia/
 
 
+# allow package libs
+ln -sr %buildroot/%nv_lib_dir/libcuda.so.1 %buildroot/%_libdir/libcuda.so.1
+ln -sr %buildroot/%nv_lib_dir/libnvcuvid.so.1 %buildroot/%_libdir/libnvcuvid.so.1
+#ln -sr %buildroot/%nv_lib_dir/libEGL_nvidia.so %buildroot/%_libdir/libEGL_nvidia.so
+# end allow package libs
 # install libraries
 %__install -m 0644 libnvidia-glcore.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 libnvidia-eglcore.so.%tbver %buildroot/%_libdir/
@@ -256,14 +250,8 @@ soname()
 %__install -m 0644 libnvidia-compiler.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 libnvidia-fatbinaryloader.so.%tbver %buildroot/%_libdir/
 #
-%if_enabled package_egl_wayland
-%__install -m 0644 libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
-#ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
-%endif
-
-%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
-%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
 %__install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
 
 if [ -f nvidia_drv.o ] ; then
     %__install -m 0644 nvidia_drv.o  %buildroot/%nv_lib_dir/
@@ -272,34 +260,26 @@ if [ -f nvidia_drv.so ] ; then
     %__install -m 0644 nvidia_drv.so %buildroot/%nv_lib_dir/
 fi
 
-%if_enabled package_wfb
-[ -f libnvidia-wfb.so.%tbver ] && \
-%__install -m 0644 libnvidia-wfb.so.%tbver %buildroot/%nv_lib_dir/libwfb.so
-%endif
-
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
 
-%__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
-#
-%if_enabled glvnd
-%__install -m 0644 libGL.so.%gl_libver  %buildroot/%nv_lib_dir/libGL.so
-%__install -m 0644 libEGL.so.%egl_libver  %buildroot/%nv_lib_dir/libEGL.so
-%else
-%__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
-%__install -m 0644 libEGL.so.%tbver  %buildroot/%nv_lib_dir/libEGL.so
-%endif
-#
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
-%__install -m 0644 libGLESv2.so.2.1.0  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
-%__install -m 0644 libGLESv1_CM.so.1.2.0  %buildroot/%nv_lib_dir/libGLESv1_CM.so
 %__install -m 0644 libGLESv1_CM_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv1_CM_nvidia.so
-%__install -m 0644 libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
 %__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
-
 %__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %__install -m 0644 libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
+%__install -m 0644 libcuda.so.%tbver    %buildroot/%nv_lib_dir/libcuda.so
+%__install -m 0644 libnvidia-encode.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-encode.so
+%__install -m 0644 libnvidia-ml.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-ml.so
+%__install -m 0644 libnvidia-ifr.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-ifr.so
+install -m 0644 libnvidia-opencl.so.%version %buildroot/%nv_lib_dir/libnvidia-opencl.so
+install -m 0644 libnvidia-ptxjitcompiler.so.%version %buildroot/%nv_lib_dir/libnvidia-ptxjitcompiler.so
+install -m 0644 libnvcuvid.so.%version %buildroot/%nv_lib_dir/libnvcuvid.so
+install -m 0644 libnvidia-fbc.so.%version %buildroot/%nv_lib_dir/libnvidia-fbc.so
+%ifarch x86_64
+install -m 0644 libnvidia-glsi.so.%version %buildroot/%nv_lib_dir/libnvidia-glsi.so
+%endif
 /sbin/ldconfig -n %buildroot/%nv_lib_dir
 
 %__install -m 0644 nvidia-application-profiles-%version-rc \
@@ -307,17 +287,12 @@ fi
 %__install -m 0644 nvidia-application-profiles-%version-key-documentation \
     %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 
+install -m 0644 nvidia.icd %buildroot/%nv_lib_dir/nvidia.icd
 mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
-install -m 0644 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
-mkdir -p %buildroot/%_datadir/egl/egl_external_platform.d
-install -m 0644 10_nvidia_wayland.json %buildroot/%_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
+install -m 0644 10_nvidia.json %buildroot/%nv_lib_dir/nvidia.json
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
 install -m 0644 nvidia_icd.json.template %buildroot/%nv_lib_dir/nvidia_icd.json
-%if_enabled glvnd
 sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%nv_lib_dir/nvidia_icd.json
-%else
-sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%nv_lib_dir/nvidia_icd.json
-%endif
 
 # kernel-source install
 %__rm -rf kernel-source-%module_name-%module_version/
@@ -351,46 +326,13 @@ fi
 %doc LICENSE
 %doc html NVIDIA_Changelog README.txt
 #
-%_libdir/libnvidia-tls.so.%version
-%_libdir/libnvidia-glcore.so.%version
-%_libdir/libnvidia-eglcore.so.%version
-%_libdir/libnvidia-glsi.so.%version
-%_libdir/libnvidia-compiler.so.%version
-%_libdir/libnvidia-fatbinaryloader.so.%version
+%_libdir/libnvidia-*.so.%version
 %_altdir/%name
 %_bindir/nvidia-bug-report-%version.sh
-%dir %nv_lib_dir
-%nv_lib_dir/nvidia_drv.*
-%nv_lib_dir/libglx.*
-%nv_lib_dir/libGL.so*
-%nv_lib_dir/libEGL.so*
-%nv_lib_dir/libEGL_nvidia.so*
-%nv_lib_dir/libGLESv2.so*
-%nv_lib_dir/libGLESv2_nvidia.so*
-%nv_lib_dir/libGLESv1_CM.so*
-%nv_lib_dir/libGLESv1_CM_nvidia.so*
-%nv_lib_dir/libGLX_nvidia.so*
-%nv_lib_dir/libGLdispatch.so*
-%nv_lib_dir/libGLX.so*
-%nv_lib_dir/libnvidia-cfg.so*
-%nv_lib_dir/libvdpau_nvidia.so*
-%if_enabled package_wfb
-%nv_lib_dir/libwfb.so
-%nv_lib_dir/libnvidia-wfb.so*
-%endif
-%nv_lib_dir/nvidia.xinf
+%nv_lib_dir/
 %xinf_dir/nvidia-%version.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
-%_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
-%nv_lib_dir/nvidia_icd.json
-%_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
-
-%if_enabled package_egl_wayland
-%files -n %libnvidia_egl_wayland
-%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}
-%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}.*
-%endif
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -398,6 +340,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 16 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt300
+- new packaging scheme
+
 * Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt235
 - add fixes for kernel 6.17
 

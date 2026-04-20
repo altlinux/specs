@@ -18,13 +18,13 @@
 %define subd ./
 %endif
 
-%define nv_version 580
-%define nv_release 142
-%define nv_minor   %nil
+%define nv_version 595
+%define nv_release 58
+%define nv_minor   03
 %define pkg_rel alt1
-%define nv_version_full %nv_version.%nv_release
-%if "%nv_minor" != "%nil"
 %define nv_version_full %nv_version.%nv_release.%nv_minor
+%if "%nv_minor" == "%nil"
+%define nv_version_full %nv_version.%nv_release
 %endif
 Name: nvidia_glx_libs_%nv_version_full
 Version: %nv_version_full
@@ -54,23 +54,19 @@ Sources for nvidia_glx package
 Group: System/Libraries
 #BuildArch: noarch
 Summary: nvidia library
-Requires: libnvidia-opencl
-Requires: libnvidia-ptxjitcompiler
-Requires: libnvidia-ml
+Requires: nvidia_glx_common
 %description -n ocl-nvidia
 nvidia OpenCL library
 
 %package -n libnvidia-ptxjitcompiler
 Group: System/Libraries
 Summary: nvidia library
-Provides: libnvidia-ptxjitcompiler = %version-%release
 %description -n libnvidia-ptxjitcompiler
 nvidia library
 
 %package -n libnvidia-ml
 Group: System/Libraries
 Summary: nvidia library
-Provides: libnvidia-ml = %version-%release
 %description -n libnvidia-ml
 nvidia library
 
@@ -201,33 +197,16 @@ popd
 # install libraries
 mkdir -p %buildroot/%_libdir/
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-opencl.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-opticalflow.so.%version %buildroot/%_libdir/
 %ifarch x86_64
-# allow to package libnvidia-vksc-core
-install -m 0644 %subd/libnvidia-glsi.so.%version %buildroot/%_libdir/
-#
-install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%_libdir/
-mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
-install -m0644 nvidia_icd_vksc.json %buildroot/%_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
 install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%_libdir/
 %endif
 # all 64-bit
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libcudadebugger.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-api.so.%nvidia_sover %buildroot/%_libdir/libnvidia-api.so.%version
-install -m 0644 %subd/libnvidia-nvvm70.so.4 %buildroot/%_libdir/
-# install data
-mkdir -p %buildroot/%_datadir/nvidia/
-install -m 0644 %subd/nvoptix.bin %buildroot/%_datadir/nvidia/
 # install programs
 mkdir -p %buildroot/%_bindir/
 install -m 0755 nvidia-smi %buildroot/%_bindir/
@@ -244,10 +223,7 @@ fi
 mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
 install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbus.conf
 %endif
-mkdir -p  %buildroot/%_sysconfdir/OpenCL/vendors/
-install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
-# fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit and more
-for l in libcuda libnvcuvid libnvidia-encode libnvidia-ml ; do
+for l in libnvidia-ml ; do
     ln -s ${l}.so.%version %buildroot/%_libdir/${l}.so
 done
 
@@ -255,45 +231,28 @@ done
 %files -n libnvidia-ptxjitcompiler
 %_libdir/libnvidia-ptxjitcompiler.so.%version
 %_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
-%files -n libnvidia-ml
-%_libdir/libnvidia-ml.so.%version
-%_libdir/libnvidia-ml.so.%nvidia_sover
-%_libdir/libnvidia-ml.so
 %files -n libcuda
 %_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
-%_libdir/libcuda.so
-%files -n libnvidia-opencl
-%_libdir/libnvidia-opencl.so.%nvidia_sover
-%_libdir/libnvidia-opencl.so.%version
-%_sysconfdir/OpenCL/vendors/nvidia.icd
+%files -n libnvidia-ml
+%_libdir/libnvidia-ml.so
+%_libdir/libnvidia-ml.so.%version
+%_libdir/libnvidia-ml.so.%nvidia_sover
 %files -n libnvcuvid
 %_libdir/libnvcuvid.so.%nvidia_sover
 %_libdir/libnvcuvid.so.%version
-%_libdir/libnvcuvid.so
 %files -n libnvidia-encode
 %_libdir/libnvidia-encode.so.%nvidia_sover
 %_libdir/libnvidia-encode.so.%version
-%_libdir/libnvidia-encode.so
-%files -n libnvidia-nvvm
-%_libdir/libnvidia-nvvm.so.%nvvm_sover
-%_libdir/libnvidia-nvvm.so.%version
-%files -n libnvidia-fbc
-%_libdir/libnvidia-fbc.so.%nvidia_sover
-%_libdir/libnvidia-fbc.so.%version
-%files -n libnvidia-opticalflow
-%_libdir/libnvidia-opticalflow.so.%nvidia_sover
-%_libdir/libnvidia-opticalflow.so.%version
 %ifarch x86_64
-%files -n libnvidia-vksc-core
-%_libdir/libnvidia-vksc-core.so.%nvidia_sover
-%_libdir/libnvidia-vksc-core.so.%version
-%_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
 %files -n libnvidia-sandboxutils
 %_libdir/libnvidia-sandboxutils.so.%nvidia_sover
 %_libdir/libnvidia-sandboxutils.so.%version
 %endif
 %if "%_lib" != "lib"
+%files -n libnvoptix
+%_libdir/libnvoptix.so.%nvidia_sover
+%_libdir/libnvoptix.so.%version
 %files -n nvidia-smi
 %_bindir/nvidia-smi
 %_man1dir/nvidia-smi.1.*
@@ -302,24 +261,12 @@ done
 %_bindir/nvidia-powerd
 %_unitdir/nvidia-powerd.service
 %_datadir/nvidia/nvidia-powerd/
-%files -n libnvidia-ngx
-%_libdir/libnvidia-ngx.so.%nvidia_sover
-%_libdir/libnvidia-ngx.so.%version
-%files -n libnvoptix
-%_libdir/libnvoptix.so.%nvidia_sover
-%_libdir/libnvoptix.so.%version
-%_datadir/nvidia/nvoptix.bin
-%files -n libcudadebugger
-%_libdir/libcudadebugger.so.%nvidia_sover
-%_libdir/libcudadebugger.so.%version
-%files -n libnvidia-api
-%_libdir/libnvidia-api.so.%nvidia_sover
-%_libdir/libnvidia-api.so.%version
-%files -n libnvidia-nvvm70
-%_libdir/libnvidia-nvvm70.so.4
 %endif
 
 %changelog
+* Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt1
+- new version
+
 * Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt1
 - new version
 

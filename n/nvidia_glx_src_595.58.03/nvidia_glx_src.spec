@@ -19,11 +19,12 @@
 
 %define gl_libver 1.7.0
 %define egl_libver 1.1.0
+%define gbm_ver %{get_version libgbm-devel}
 
 # version-release
-%define nv_version 470
-%define nv_release 256
-%define nv_minor   02
+%define nv_version 595
+%define nv_release 58
+%define nv_minor   03
 %define pkg_rel alt300
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -86,28 +87,18 @@ Version: %nv_version_full
 Release: %pkg_rel
 
 Source0: null
-Source1: rpmfusion.tar
-Source2: joanbm.tar
-Source3: joanbm-x86-64.tar
-Source4: joanbm-aarch64.tar
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-aarch64/%tbver/NVIDIA-Linux-aarch64-%tbver.run
 
-Source100: nvidia_create_xinf
-Source101: nvidia.xinf
+Source2: nvidia.xinf
+Source3: nvidia_open.xinf
+Source100: nvidia_create_xinf.cpp
+Source101: nvidia_create_xinf.pro
 
-Patch1: alt-fix-build-kernel.patch
+Patch1: disable_fstack-clash-protection_fcf-protection.patch
 Patch2: alt-ignore-dma-remap.patch
-#
-Patch4: kernel-5.11-aarch64.patch
-Patch5: kernel-5.13-aarch64.patch
-#
-Patch7: kernel-6.0.patch
-Patch8: alt-conftest-output.patch
-#
-Patch11: disable_fstack-clash-protection_fcf-protection.patch
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt libgbm-devel
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel egl-wayland-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
@@ -127,9 +118,14 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-%ifnarch aarch64
-Requires: firmware-%module_name-%version = %version
+Requires: nvidia-modprobe
+%Nif_ver_gteq %gbm_ver 21.2
+Requires: nvidia-egl-gbm >= 0
 %endif
+Requires: nvidia-egl-wayland >= 0
+Requires: nvidia-egl-wayland2 >= 0
+Requires: nvidia-egl-x11 >= 0
+Requires: firmware-%module_name-%version = %version
 #
 Group: %myGroup
 Summary: %mySummary
@@ -150,6 +146,14 @@ License: %myLicense
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
+
+%package -n kernel-source-%module_name-open-%module_version
+Group: Development/Kernel
+Summary: Linux %module_name modules open sources
+License: %myLicense
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+%description -n kernel-source-%module_name-open-%module_version
+%module_name modules open sources for Linux kernel
 
 %package -n firmware-%module_name-%version
 Group: Development/Kernel
@@ -173,46 +177,16 @@ sh %SOURCE202 -x
 sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
-tar xvf %SOURCE1
-tar xvf %SOURCE2
-pushd joanbm
-%ifarch x86_64 %ix86
-tar xvf %SOURCE3
-%endif
-%ifarch aarch64
-tar xvf %SOURCE4
-%endif
-mv joanbm-*/*.patch ./
-popd
 
-pushd kernel
-for p in ../joanbm/*.patch; do
-    echo $p
-    patch -sp1 <$p
-done
-#%patch1 -p1
+for kmsd in kernel-open kernel ; do
+pushd $kmsd
+%patch1 -p1
 %patch2 -p1
-#
 %ifarch aarch64
-%patch4 -p1
-%patch5 -p1
-%endif
-#
-%patch7 -p1
-%patch8 -p1
-#
-%patch11 -p1
-for p in ../rpmfusion/*.patch; do
-    echo $p
-    patch -sp1 <$p
-done
-rm -rf precompiled
-%ifarch aarch64
-fgrep -rl MT_DEVICE_GRE | \
-    while read f; do sed -i 's,MT_DEVICE_GRE,MT_NORMAL_NC,' $f; done
 sed -ri '/NV_ASM_SET_MEMORY_H_PRESENT/atypedef _Bool bool;' conftest.sh
 %endif
 popd
+done
 
 %build
 
@@ -246,11 +220,10 @@ soname()
 %__mkdir_p %buildroot/%nv_workdirdir
 %__mkdir_p %buildroot/%_datadir/nvidia/
 
-
 # allow package libs
 ln -sr %buildroot/%nv_lib_dir/libcuda.so.1 %buildroot/%_libdir/libcuda.so.1
 ln -sr %buildroot/%nv_lib_dir/libnvcuvid.so.1 %buildroot/%_libdir/libnvcuvid.so.1
-ln -sr %buildroot/%nv_lib_dir/libEGL_nvidia.so %buildroot/%_libdir/libEGL_nvidia.so.0
+#ln -sr %buildroot/%nv_lib_dir/libEGL_nvidia.so %buildroot/%_libdir/libEGL_nvidia.so
 # end allow package libs
 # install libraries
 %__install -m 0644 %subd/libnvidia-glvkspirv.so.%tbver %buildroot/%_libdir/
@@ -258,17 +231,33 @@ ln -sr %buildroot/%nv_lib_dir/libEGL_nvidia.so %buildroot/%_libdir/libEGL_nvidia
 %__install -m 0644 %subd/libnvidia-eglcore.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-glsi.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-tls.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 %subd/libnvidia-gpucomp.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 %subd/libnvidia-tileiras.so.%tbver %buildroot/%_libdir/
+if [  -n "`ls -1d %subd/libnvidia-pkcs11*.so.*`" ] ; then
+%Nif_ver_gteq %ubt_id M110
+%__install -m 0644 %subd/libnvidia-pkcs11-openssl3.so.%tbver %buildroot/%_libdir/
+%else
+%__install -m 0644 %subd/libnvidia-pkcs11.so.%tbver %buildroot/%_libdir/
+%endif
+fi
 %ifnarch aarch64
-%__install -m 0644 %subd/libnvidia-compiler.so.%tbver %buildroot/%_libdir/
+#%__install -m 0644 %subd/libnvidia-compiler.so.%tbver %buildroot/%_libdir/
 %endif
 %ifnarch %ix86 armh
-%__install -m 0644 %subd/libnvidia-cbl.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-rtcore.so.%tbver %buildroot/%_libdir/
+%endif
+%ifnarch %ix86 aarch64 armh
+%__install -m 0644 %subd/libnvidia-wayland-client.so.%tbver %buildroot/%_libdir/
+%endif
+%ifarch x86_64
+%__install -m 0644 %subd/libnvidia-present.so.%tbver %buildroot/%_libdir/
 %endif
 #
 
-install -m 0644 %SOURCE101 %buildroot/%nv_lib_dir/nvidia.xinf
+install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+install -m 0644 %SOURCE3 %buildroot/%nv_lib_dir/nvidia_open.xinf
 ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
+ln -sr %buildroot/%nv_lib_dir/nvidia_open.xinf %buildroot/%xinf_dir/nvidia-%{version}_open.xinf
 
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/nvidia_drv.so %buildroot/%nv_lib_dir/
@@ -286,27 +275,36 @@ ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.x
 %__install -m 0644 %subd/libcuda.so.%tbver    %buildroot/%nv_lib_dir/libcuda.so
 %__install -m 0644 %subd/libnvidia-encode.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-encode.so
 %__install -m 0644 %subd/libnvidia-ml.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-ml.so
-%ifarch x86_64 %ix86
-%__install -m 0644 %subd/libnvidia-ifr.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-ifr.so
-%endif
-%ifarch x86_64
-install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%nv_lib_dir/libnvidia-ngx.so
-%endif
 install -m 0644 %subd/libnvidia-opencl.so.%version %buildroot/%nv_lib_dir/libnvidia-opencl.so
 install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%nv_lib_dir/libnvidia-ptxjitcompiler.so
 install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%nv_lib_dir/libnvcuvid.so
+install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%nv_lib_dir/libnvidia-nvvm.so
 install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%nv_lib_dir/libnvidia-fbc.so
 install -m 0644 %subd/libnvidia-opticalflow.so.%version %buildroot/%nv_lib_dir/libnvidia-opticalflow.so
 %if "%_lib" != "lib"
-install -m 0644 %subd/libnvidia-vulkan-producer.so.%tbver %buildroot/%nv_lib_dir/libnvidia-vulkan-producer.so
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%nv_lib_dir/libnvoptix.so
-install -m 0644 %subd/libnvidia-nvvm.so.4.0.0 %buildroot/%nv_lib_dir/libnvidia-nvvm.so
+install -m 0644 %subd/nvoptix.bin %buildroot/%nv_lib_dir/
+install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%nv_lib_dir/libnvidia-ngx.so
+install -m 0644 %subd/libcudadebugger.so.%version %buildroot/%nv_lib_dir/libcudadebugger.so
+install -m 0644 %subd/libnvidia-api.so.1 %buildroot/%nv_lib_dir/libnvidia-api.so
+install -m 0644 %subd/libnvidia-nvvm70.so.4 %buildroot/%nv_lib_dir/libnvidia-nvvm70.so
+%endif
+%ifarch x86_64
+install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%nv_lib_dir/libnvidia-vksc-core.so
+install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%nv_lib_dir/libnvidia-sandboxutils.so
+mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
+install -m0644 nvidia_icd_vksc.json %buildroot/%nv_lib_dir/nvidia_icd_vksc.json
 %endif
 %__install -m 0644 %subd/libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
 %endif
 /sbin/ldconfig -n %buildroot/%nv_lib_dir
+
+%ifarch x86_64
+mkdir -p %buildroot/%nv_lib_dir/nvidia/wine/
+install -m 0755 *nvngx*.dll %buildroot/%nv_lib_dir/nvidia/wine/
+%endif
 
 %__install -m 0644 nvidia-application-profiles-%version-rc \
     %buildroot/%_datadir/nvidia/nvidia-application-profiles-%version-rc
@@ -323,19 +321,21 @@ install -m 0644 nvidia_layers.json %buildroot/%nv_lib_dir/nvidia_layers.json
 
 %if_enabled kernelsource
 # kernel-source install
-%__rm -rf kernel-source-%module_name-%module_version/
-%__mkdir_p %buildroot/%_usrsrc/kernel/sources/ kernel-source-%module_name-%module_version/
+%__rm -rf kernel-source-%module_name{,-open}-%module_version/
+%__mkdir_p %buildroot/%_usrsrc/kernel/sources/ kernel-source-%module_name{,-open}-%module_version/
 %__cp -ar kernel/* kernel-source-%module_name-%module_version/
+%__cp -ar kernel-open/* kernel-source-%module_name-open-%module_version/
 %__cp LICENSE kernel-source-%module_name-%module_version/
+%__cp LICENSE kernel-source-%module_name-open-%module_version/
 tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
+tar -c kernel-source-%module_name-open-%module_version | bzip2 -c > \
+    %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-open-%module_version.tar.bz2
 %endif
 
 # install firmware
-%ifnarch aarch64
 mkdir -p %buildroot/lib/firmware/nvidia/%version/
 install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/%version/
-%endif
 
 # install scripts
 mkdir -p %buildroot/%_bindir
@@ -365,95 +365,184 @@ fi
 %_altdir/%name
 %_bindir/nvidia-bug-report-%version.sh
 %nv_lib_dir/
-%xinf_dir/nvidia-%version.xinf
+%xinf_dir/nvidia-%{version}*.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 
-%ifnarch aarch64
 %files -n firmware-%module_name-%version
+%dir /lib/firmware/nvidia/%version/
 /lib/firmware/nvidia/%version/gsp*.bin
-%endif
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
-%_usrsrc/*
+%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
+%files -n kernel-source-%module_name-open-%module_version
+%_usrsrc/kernel/sources/kernel-source-%module_name-open-%module_version.tar.bz2
 %endif
 
 %changelog
-* Thu Apr 16 2026 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt300
+* Tue Apr 14 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt300
 - new packaging scheme
 
-* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt259
-- using joanbm patches by default
+* Fri Mar 27 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt290
+- new version
 
-* Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt258
-- add rpmfusion patches
+* Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt289
+- new version
 
-* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt257
+* Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 580.126.09-alt288
+- new version
+
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt287
+- add fixes for 6.18 kernel
+
+* Fri Oct 10 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt285
+- new version
+- prefer open kernel module
+
+* Fri Sep 26 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.09-alt284
+- new version
+
+* Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.07-alt283
+- new version
+
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt282
+- new version
+
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt281
+- require libnvidia-ml
+
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt280
+- new version
+
+* Fri May 23 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt279
+- new version
+
+* Tue May 06 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt278
+- package open kernel module sources
+
+* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt277
 - disable kernel module stack-clash-protection
 
-* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt256
+* Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt275
+- new version
+
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt274
 - enable nvidia-drm.modeset by default
 
-* Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt255
-- add fix against kernel 6.12
-
-* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt254
-- fix compile kernel module with gcc-14
-
-* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt253
-- fix compile kernel module with gcc-14
-
-* Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt252
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt273
 - new version
 
-* Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 470.239.06-alt251
+* Tue Jan 28 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt272
+- new version
+
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 550.142-alt271
+- update supported cards list
+
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 550.142-alt270
+- new version
+
+* Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt269
+- new version
+
+* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 550.127.05-alt268
+- add fix for gcc-14
+
+* Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 550.127.05-alt267
+- new version
+
+* Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 550.120-alt266
+- new version
+
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 550.107.02-alt265
+- new version
+
+* Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.90.07-alt264
+- new version
+
+* Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt263
 - move nvidia_icd.json and nvidia_layers.json for switching
 
-* Thu Feb 29 2024 Sergey V Turchin <zerg@altlinux.org> 470.239.06-alt250
+* Fri Apr 26 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt262
 - new version
 
-* Tue Feb 06 2024 Sergey V Turchin <zerg@altlinux.org> 470.223.02-alt249
+* Mon Mar 25 2024 Sergey V Turchin <zerg@altlinux.org> 550.67-alt261
+- new version
+
+* Thu Feb 29 2024 Sergey V Turchin <zerg@altlinux.org> 550.54.14-alt260
+- new version
+
+* Tue Feb 06 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt259
 - add fix against kernel 6.7.3
 
-* Thu Nov 02 2023 Sergey V Turchin <zerg@altlinux.org> 470.223.02-alt248
+* Tue Jan 23 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt258
 - new version
 
-* Tue Sep 19 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt247
-- add fix against kernel 6.5
+* Mon Dec 25 2023 Sergey V Turchin <zerg@altlinux.org> 535.146.02-alt257
+- new version
 
-* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt246
+* Fri Nov 03 2023 Sergey V Turchin <zerg@altlinux.org> 535.129.03-alt256
+- new version
+
+* Tue Oct 10 2023 Sergey V Turchin <zerg@altlinux.org> 535.113.01-alt255
+- new version
+
+* Tue Sep 19 2023 Sergey V Turchin <zerg@altlinux.org> 535.104.05-alt254
+- new version
+
+* Wed Jul 19 2023 Sergey V Turchin <zerg@altlinux.org> 535.86.05-alt253
+- new version
+
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt252
 - fix firmware path
 
-* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt245
+* Tue Jul 11 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt251
 - package firmware
 
-* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 470.199.02-alt244
+* Thu Jun 29 2023 Sergey V Turchin <zerg@altlinux.org> 535.54.03-alt250
 - new version
 
-* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 470.182.03-alt243
-- add fix against 6.3 kernel
-
-* Thu Apr 06 2023 Sergey V Turchin <zerg@altlinux.org> 470.182.03-alt242
+* Thu May 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.116.04-alt249
 - new version
 
-* Wed Mar 29 2023 Sergey V Turchin <zerg@altlinux.org> 470.161.03-alt241
-- add fix against 6.2 kernel
-
-* Fri Nov 25 2022 Sergey V Turchin <zerg@altlinux.org> 470.161.03-alt240
+* Fri Feb 10 2023 Sergey V Turchin <zerg@altlinux.org> 525.89.02-alt248
 - new version
 
-* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 470.141.03-alt239
-- add fix against 6.0 kernel
-
-* Mon Aug 29 2022 Sergey V Turchin <zerg@altlinux.org> 470.141.03-alt238
+* Wed Jan 25 2023 Sergey V Turchin <zerg@altlinux.org> 525.85.05-alt247
 - new version
 
-* Wed Jun 15 2022 Sergey V Turchin <zerg@altlinux.org> 470.129.06-alt237
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.78.01-alt246
 - new version
 
-* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt236
+* Fri Nov 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.86.01-alt245
+- new version
+
+* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.76-alt244
+- new version
+
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt243
+- new version
+
+* Thu Jul 07 2022 Sergey V Turchin <zerg@altlinux.org> 515.57-alt242
+- new version
+
+* Fri May 06 2022 Sergey V Turchin <zerg@altlinux.org> 510.68.02-alt241
+- new version
+
+* Tue Apr 19 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt240
+- remove extra obsolete of libnvidia-compiler
+
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt239
 - fix requires
+
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt238
+- fix requires for old gbm
+
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt237
+- fix requires
+
+* Thu Apr 14 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt236
+- new version
 
 * Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt235
 - package more internal libraries
