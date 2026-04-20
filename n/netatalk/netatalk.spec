@@ -1,8 +1,8 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.4.1
-Release: alt2
+Version: 4.4.2
+Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
 
@@ -160,6 +160,9 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Tue Apr 21 2026 Ilya Mashkin <oddity@altlinux.ru> 4.4.2-alt1
+- 4.4.2
+
 * Thu Mar 05 2026 Ilya Mashkin <oddity@altlinux.ru> 4.4.1-alt2
 - Disable systemd
 
