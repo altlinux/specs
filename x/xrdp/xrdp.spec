@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.5
-Release: alt2
+Version: 0.10.6
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -70,6 +70,7 @@ BuildRequires: liblame-devel
 BuildRequires: libfdk-aac-devel
 BuildRequires: libx264-devel
 BuildRequires: libopenh264-devel
+BuildRequires: xorg-server
 
 Requires: xorg-drv-xrdp = %EVR
 Requires: xinitrc
@@ -301,6 +302,12 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sun Apr 19 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.6-alt1
+- New version (fixes: CVE-2026-32105, CVE-2026-32107, CVE-2026-32623,
+  CVE-2026-32624, CVE-2026-33145, CVE-2026-33516, CVE-2026-33689,
+  CVE-2026-35512).
+- Use /sec:tls instead of /sec:rdp (https://github.com/neutrinolabs/xrdp/security/advisories/GHSA-j2jm-c596-c5q3).
+
 * Sat Mar 14 2026 Anton Midyukov <antohami@altlinux.org> 0.10.5-alt2
 - xrdp-alt-startwm.patch: fix command runwm (Closes: 58126).
 - xrdp-alt-startwm.patch: get STARTUP from command 'runwm --print'.
