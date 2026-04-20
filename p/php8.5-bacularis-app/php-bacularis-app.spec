@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name: php%_php_suffix-%php_extension
-Version: 6.0.0
-Release: alt%php_version.%php_release
+Version: 6.1.0
+Release: alt1.%_php_release_version
 
 Summary: Main component of the Bacula programming interface
 
@@ -31,6 +31,10 @@ Requires: php%_php_suffix-bcmath
 Requires: php%_php_suffix-curl
 Requires: php%_php_suffix-dom
 Requires: php%_php_suffix-json
+
+Provides: php%_php_suffix-bacularis-api = %version
+Provides: php%_php_suffix-bacularis-common = %version
+Provides: php%_php_suffix-bacularis-web = %version
 
 %description
 Bacularis is a web interface designed to configure,
@@ -66,6 +70,11 @@ ln -s %php_moddir/%php_extension/protected/tools %buildroot%_libexecdir/baculari
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - rebuilt with php-devel = %php_version-%php_release
+
+* Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.0-alt1
+- 6.0.0 -> 6.1.0
+- built from upstream git
+- added provides to detect vendored bacularis packages
 
 * Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
 - initial build for ALT Sisyphus
