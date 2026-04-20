@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt6
+Release: alt7
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -283,7 +283,7 @@ sed -i 's,#alt-server,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ICON_THEME='%icon_theme' ALTBRANCH='%altbranch' ./configure
+THEME=%theme NAME='%Brand' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ICON_THEME='%icon_theme' ALTBRANCH='%altbranch' VARSTR='%Theme' ./configure
 make
 
 %install
@@ -398,6 +398,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Apr 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt7
+- Fix NAME and VARIANT fields in os-release
+
 * Tue Jan 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt6
 - update year for copyright to 2026
 
