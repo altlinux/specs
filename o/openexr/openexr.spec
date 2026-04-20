@@ -7,7 +7,7 @@
 %define rname OpenEXR
 %define libsover 33
 Name: openexr
-Version: 3.4.9
+Version: 3.4.10
 Release: alt1
 
 %define _cmake__builddir BUILD
@@ -163,6 +163,9 @@ cp -ar openexr-test-images/* BUILD/src/test/bin/
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 3.4.10-alt1
+- 3.4.9 -> 3.4.10
+
 * Fri Apr 10 2026 Anton Farygin <rider@altlinux.org> 3.4.9-alt1
 - 3.4.6 -> 3.4.9
 
