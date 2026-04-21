@@ -8,7 +8,7 @@
 %define rname libkscreen
 Name: plasma6-%rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: gcc13.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
 BuildRequires: libvulkan-devel
@@ -70,6 +71,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 export PATH=%_qt6_bindir:$PATH
@@ -110,6 +112,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- add gcc-13 support
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
