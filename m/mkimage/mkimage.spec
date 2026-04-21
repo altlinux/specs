@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,12 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Apr 20 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.9-alt1
+- Added support of custom run-scripts, run-image-scripts,
+  and run-image-patches targets.
+- Fixed font installation for grub >= 2.14-alt3 in mki-copy-grub-efi-chrooted
+  and mki-copy-grubpcboot (thx antohami@).
+
 * Tue Dec 10 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.8-alt1
 - mki-pack: add option '-iso-level' (by default 2) for xorriso (mkisofs)
 
