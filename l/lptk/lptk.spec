@@ -4,14 +4,14 @@
 %define _name lptk
 # since 0.10 0 renamed as rotor
 %define __name rotor
-%define ver_major 0.10
+%define ver_major 0.11
 %define rdn_name me.ogarcia.%__name
 %def_enable check
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Stateless password manager
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Apr 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 
