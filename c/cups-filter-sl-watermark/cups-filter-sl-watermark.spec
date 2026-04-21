@@ -1,6 +1,6 @@
 Name: cups-filter-sl-watermark
-Version: 0.4
-Release: alt1
+Version: 0.6
+Release: alt2
 
 Summary: SeLinux watermarking of printed documents
 License: GPL
@@ -33,6 +33,15 @@ install -pm644 cups-filter-sl-watermark.cfg %buildroot%_sysconfdir/
 %_sysconfdir/*
 
 %changelog
+* Mon May 20 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.6-alt2
+- default font size set to 10
+
+* Mon May 20 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.6-alt1
+- temp files cleanup fixed
+
+* Tue Apr 09 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.5-alt1
+- support for @PJL-ed pdfs (when cups-to-cups used)
+
 * Fri Apr 05 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.4-alt1
 - throw an exception if there is no data for field
 - don't watermark if /etc/cups-filter-sl-watermark.cfg missed or empty
