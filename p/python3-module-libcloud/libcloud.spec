@@ -2,7 +2,7 @@
 %def_without pkgtests
 
 Name: python3-module-%oname
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -95,6 +95,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Mon Apr 20 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.9.1-alt1
+- NMU: New version.
+
 * Tue Feb 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.9.0-alt1
 - NMU: New version.
 

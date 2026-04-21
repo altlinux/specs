@@ -50,7 +50,7 @@ BuildRequires: java-17-devel
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 115
+%global micro_version 117
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -571,6 +571,19 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Tue Apr 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.117-alt1
+- new version
+- security fixes:
+  + CVE-2026-24880: Request smuggling via invalid chunk extension
+  + CVE-2026-25854: Occasionally open redirect
+  + CVE-2026-29129: Configured TLS cipher preference order not preserved
+  + CVE-2026-29145: OCSP checks sometimes soft-fail even when soft-fail is disabled
+  + CVE-2026-32990: Improper Input Validation (incomplete fix of CVE-2025-66614)
+  + CVE-2026-34483: Incomplete escaping of JSON access logs
+  + CVE-2026-34486: Fix for CVE-2026-29146 allowed the bypass of the EncryptInterceptor
+  + CVE-2026-34487: Cloud membership for clustering component exposed the Kubernetes bearer token
+  + CVE-2026-34500: OCSP checks sometimes soft-fail with FFM even when soft-fail is disabled
+
 * Fri Mar 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.115-alt1
 - new version (Fixes: CVE-2026-24734)
 
