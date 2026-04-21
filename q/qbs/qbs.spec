@@ -7,8 +7,8 @@
 %def_with check
 
 Name:    qbs
-Version: 3.1.2
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Summary: Modern build tool for software projects
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
@@ -127,6 +127,9 @@ rm -rfv %buildroot%_datadir/%name/python
 %_datadir/%name/examples
 
 %changelog
+* Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 3.1.2-alt2
 - Added ABI versioning.
 - Minor specfile fixes.

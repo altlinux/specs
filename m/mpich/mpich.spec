@@ -6,7 +6,7 @@
 %def_with doc
 
 Name:    mpich
-Version: 4.3.1
+Version: 5.0.1
 Release: alt1
 
 Summary: Official MPICH Repository
@@ -202,7 +202,7 @@ EOF
 %preun_mpi_selector %name
 
 %files
-%doc COPYRIGHT CHANGES README README.envvar RELEASE_NOTES
+%doc COPYRIGHT CHANGES README README.vin 
 %dir %mpich_dir
 %dir %mpich_dir/lib
 %dir %mpich_dir/bin
@@ -239,5 +239,8 @@ EOF
 %endif
 
 %changelog
+* Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Mon Oct 13 2025 Nikita Shmatko <nash@altlinux.org> 4.3.1-alt1
 - Initial build for Sisyphus.

@@ -3,7 +3,7 @@
 %define import_path github.com/peco/peco
 
 Name:    peco
-Version: 0.5.11
+Version: 0.6.0
 Release: alt1
 
 Summary: Simplistic interactive filtering tool
@@ -50,5 +50,8 @@ install -m 0755 .gopath/src/%import_path/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Apr 21 2026 Nikita Shmatko <nash@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Mon Nov 24 2025 Nikita Shmatko <nash@altlinux.org> 0.5.11-alt1
 - Initial build for Sisyphus.

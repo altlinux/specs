@@ -3,7 +3,7 @@
 %global import_path github.com/jesseduffield/lazydocker
 
 Name:    lazydocker
-Version: 0.24.3
+Version: 0.25.2
 Release: alt1
 
 Summary: The lazier way to manage everything docker
@@ -44,6 +44,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Apr 21 2026 Nikita Shmatko <nash@altlinux.org> 0.25.2-alt1
+- New version 0.25.2.
+
 * Wed Jan 14 2026 Nikita Shmatko <nash@altlinux.org> 0.24.3-alt1
 - New version 0.24.3.
 

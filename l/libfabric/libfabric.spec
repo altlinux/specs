@@ -3,13 +3,13 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:    libfabric
-Version: 2.2.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Open Fabric Interfaces
 License: BSD-2-Clause OR GPL-2.0-only
 Group:   System/Libraries
-Url:	 https://ofiwg.github.io/libfabric/
+Url:	 https://ofiwg.github.io/libfabric
 Vcs:     https://github.com/ofiwg/libfabric.git
 
 Source: %name-%version.tar
@@ -78,5 +78,8 @@ find %buildroot -name '*.la' -print -delete
 %_mandir/man7/*.7*
 
 %changelog
+* Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 2.5.1-alt1
+- New version 2.5.1.
+
 * Wed Sep 17 2025 Nikita Shmatko <nash@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus.

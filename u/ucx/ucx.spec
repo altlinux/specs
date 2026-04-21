@@ -17,8 +17,8 @@
 %def_with mlx5
 
 Name:    ucx
-Version: 1.19.0
-Release: alt2
+Version: 1.20.0
+Release: alt1
 
 Summary: Unified Communication X  (mailing list - https://elist.ornl.gov/mailman/listinfo/ucx-group)
 License: BSD-3-Clause
@@ -307,16 +307,16 @@ Infiniband datagrams for out-of-band communications.
 
 %install
 %set_verify_elf_method relaxed
-install -d %{buildroot}%{_includedir}/ucs/sys
-install -m644 src/ucs/sys/sys.h %{buildroot}%{_includedir}/ucs/sys/
+install -d %buildroot%_includedir/ucs/sys
+install -m644 src/ucs/sys/sys.h %buildroot%_includedir/ucs/sys/
 
 %makeinstall_std
 
-rm -f %{buildroot}%{_libdir}/*.la
-rm -f %{buildroot}%{_libdir}/*.a
-rm -f %{buildroot}%{_libdir}/%name/*.la
-rm -f %{buildroot}%{_libdir}/%name/lib*.so
-rm -f %{buildroot}%{_libdir}/%name/lib*.a
+rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/*.a
+rm -f %buildroot%_libdir/%name/*.la
+rm -f %buildroot%_libdir/%name/lib*.so
+rm -f %buildroot%_libdir/%name/lib*.a
 
 %files -n lib%name%abiversion
 %doc LICENSE README AUTHORS NEWS
@@ -410,6 +410,9 @@ rm -f %{buildroot}%{_libdir}/%name/lib*.a
 %endif
 
 %changelog
+* Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 1.20.0-alt1
+- New version 1.20.0.
+
 * Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 1.19.0-alt2
 - Minor specfile fixes.
 

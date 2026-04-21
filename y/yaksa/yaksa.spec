@@ -2,8 +2,8 @@
 %define abiversion 0
 
 Name:    yaksa
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Yaksa: High-performance Noncontiguous Data Management
 License: BSD-3-Clause
@@ -64,6 +64,9 @@ rm %buildroot%_libdir/libyaksa.la
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 0.4-alt1
+- New version 0.4.
+
 * Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 0.3-alt2
 - Minor spefile fixes.
 
