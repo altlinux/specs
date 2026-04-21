@@ -1,29 +1,28 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
+
 %define _name planify
-%define ver_major 4.18
+%define ver_major 4.19
 %define rdn_name io.github.alainm23.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Planify
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://github.com/alainm23/planify
+Url: https://useplanify.com
 
 Vcs: https://github.com/alainm23/planify.git
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Source: https://github.com/alainm23/planify/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-
-# to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
-%add_debuginfo_skiplist %_bindir/%rdn_name
 
 %define gtk_ver 4.18
 %define adwaita_ver 1.7
@@ -38,7 +37,6 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: pkgconfig(webkitgtk-6.0)
 BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(libspelling-1)
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -87,8 +85,11 @@ This package contains files necessary to develop Planify plugins.
 %_bindir/%rdn_name
 %_bindir/%rdn_name.cli
 %_bindir/%rdn_name.quick-add
+%_libexecdir/%rdn_name-search-provider
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.SearchProvider.service
+%_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
@@ -103,6 +104,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Tue Apr 21 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.0-alt1
+- 4.19.0
+
 * Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 4.18.3-alt1
 - 4.18.3
 
