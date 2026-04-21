@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.11.2
-Release: alt1
+Release: alt2
 
 Summary: Extra Pydantic types
 License: MIT
@@ -65,6 +65,9 @@ See https://github.com/pydantic/pydantic/issues/5012 for more info.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 21 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.11.2-alt2
+- Fixed FTBFS: adjusted test_json_schema() for Pydantic 2.13.
+
 * Wed Apr 15 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.11.2-alt1
 - Updated to 2.11.2.
 
