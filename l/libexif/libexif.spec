@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: libexif
-Version: 0.6.25
+Version: 0.6.26
 Release: alt1
 
 Summary: libexif is a library for parsing, editing, and saving EXIF data
@@ -76,6 +76,9 @@ linked against %name library.
 %endif
 
 %changelog
+* Tue Apr 21 2026 Alexander Danilov <admsasha@altlinux.org> 0.6.26-alt1
+- 0.6.26 (fixes: CVE-2026-40386, CVE-2026-40385, CVE-2026-32775).
+
 * Fri Jan 24 2025 Dmitriy Khanzhin <jinn@altlinux.org> 0.6.25-alt1
 - 0.6.25
 
