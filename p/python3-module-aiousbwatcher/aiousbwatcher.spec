@@ -1,11 +1,11 @@
 Name: python3-module-aiousbwatcher
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Asyncio usb device watcher
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/aiousbwatcher/
+URL: https://pypi.org/project/aiousbwatcher
 VCS: https://github.com/bluetooth-devices/aiousbwatcher
 
 Source0: %name-%version.tar
@@ -43,5 +43,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiousbwatcher-%version.dist-info
 
 %changelog
+* Tue Apr 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.2-alt1
+- 1.1.2 released
+
 * Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
 - 1.1.1 released
