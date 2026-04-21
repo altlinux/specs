@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -85,19 +85,22 @@ Requires: lxqt-wallet >= 4.0.0
 %files regular
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
-- new version 2.3.0
+- New version 2.3.0.
 
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
-- new version 2.2.0
+- New version 2.2.0.
 
 * Wed Nov 13 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
-- mini: add dependency on lxqt-qtplugin-qt5 (Closes: 51971)
-- mini: replace dependency on lxqt-qtplugin with lxqt-qtplugin-qt6
+- mini: add dependency on lxqt-qtplugin-qt5 (Closes: 51971).
+- mini: replace dependency on lxqt-qtplugin with lxqt-qtplugin-qt6.
 
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
-- new version 2.1.0
-- mini: add dependency on screengrab
+- New version 2.1.0.
+- mini: add dependency on screengrab.
 
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 2.0-alt2
 - mini: add dependency on qt6-translations

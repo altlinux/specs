@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     xdg-desktop-portal-lxqt
-Version:  1.3.0
+Version:  1.4.0
 Release:  alt1
 
 Summary:  A backend implementation for xdg-desktop-portal
@@ -45,6 +45,9 @@ BuildRequires: libfm-qt6-devel
 %_user_unitdir/xdg-desktop-portal-lxqt.service
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 

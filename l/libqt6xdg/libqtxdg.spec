@@ -4,7 +4,7 @@
 %define sover 4
 
 Name: libqt6xdg
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
@@ -13,6 +13,7 @@ Group: System/Libraries
 
 Url: https://github.com/lxqt/libqtxdg
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
@@ -36,6 +37,7 @@ which implements functions of the XDG Specifications in Qt.
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %endif
@@ -61,6 +63,13 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_datadir/cmake/qt6xdg*/
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 4.4.0-alt1
+- New version 4.4.0.
+
+* Sun Feb 08 2026 Anton Midyukov <antohami@altlinux.org> 4.3.0-alt2
+- Add upstream fix:
+  + Fix FTBFS dev utils with Qt >= 6.10.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 4.3.0-alt1
 - New version 4.3.0.
 

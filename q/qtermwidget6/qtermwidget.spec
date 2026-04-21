@@ -4,7 +4,7 @@
 %define sover 2
 
 Name: qtermwidget6
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Unicode-enabled, embeddable Qt6 terminal widget
@@ -88,6 +88,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/%name/
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 

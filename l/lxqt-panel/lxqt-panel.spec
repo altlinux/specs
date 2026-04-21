@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: Desktop panel
@@ -98,6 +98,9 @@ QtWayland::org_kde_plasma_window_management::show_desktop/" \
 %_includedir/*/*.h
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Thu Apr 02 2026 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt1
 - New version 2.3.3.
 

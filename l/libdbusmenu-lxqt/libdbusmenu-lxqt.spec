@@ -4,7 +4,7 @@
 %define sover 0
 
 Name: libdbusmenu-lxqt
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: This library provides a Qt implementation of the DBusMenu protocol
@@ -54,6 +54,9 @@ Development files for %name.
 %_pkgconfigdir/dbusmenu-lxqt.pc
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 

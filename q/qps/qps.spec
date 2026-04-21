@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.12.0
+Version: 2.13.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPL-2.0-or-later
@@ -16,7 +16,6 @@ BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
 BuildRequires: liblxqt-devel >= 2.0.0
 BuildRequires: kf6-kwindowsystem-devel
-BuildRequires: /usr/bin/convert
 
 %description
 Qps is a perfect visual process manager, an X11 version of "top" or "ps" that
@@ -52,11 +51,6 @@ Qps can
 %install
 %cmake_install
 
-# Icons
-mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
-convert -resize 32x32 icon/%name.png %buildroot%_niconsdir/%name.png
-convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
-
 %files
 %dir %_datadir/%name
 %doc CHANGELOG COPYING README.md
@@ -65,11 +59,12 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_datadir/%name
 %_datadir/metainfo/org.lxqt.Qps.appdata.xml
 %_desktopdir/%name.desktop
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.13.0-alt1
+- New version 2.13.0.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.12.0-alt1
 - New version 2.12.0.
 
