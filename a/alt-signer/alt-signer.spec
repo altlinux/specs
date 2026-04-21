@@ -1,5 +1,5 @@
 Name: alt-signer
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: A service for remote kernel module signing
@@ -47,5 +47,10 @@ streams payloads through pesign.
 %config(noreplace) %attr(640,root,alt-signer-keyring) /etc/openssh/authorized_keys/alt-signer-keyring
 
 %changelog
+* Tue Apr 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1-alt1
+- Changed the keygen script to:
+  + Generate RSA4096 keys;
+  + Added O= and OU= fields to the default cert subject prefix.
+
 * Thu Jan 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1
 - Initial build.
