@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define git_commit a718a92cc9a94955a5a550b6fdec1378c247ec50
+%define git_commit 3ec076b3b6714ec2f1a10533cf18d5605a6de637
 %define __nprocs 8
 %def_enable embedded_yajl
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.27
+Version: 1.27.1
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -86,6 +86,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Tue Apr 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.27.1-alt1
+- 1.27.1
+
 * Wed Mar 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.27-alt1
 - 1.27 (Fixes: CVE-2026-30892)
 
