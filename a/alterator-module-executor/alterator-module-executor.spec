@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.33
+Version: 0.1.34
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -37,6 +37,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Apr 21 2026 Ivan Savin <svn17@altlinux.org> 0.1.34-alt1
+- Fix forced process termination and its child processes. Before this fix,
+  when the spawned process was forcefully terminated, its child processes were
+  not terminated.
+
 * Tue Apr 14 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt1
 - Add the ability to emit unicast signals upon request from an executable
   file. Signals are sent to the user who called the method. The executable
