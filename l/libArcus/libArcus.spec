@@ -2,34 +2,35 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
-Version: 5.3.0
+Version: 5.11.1
 Release: alt1
 
 Summary: Communication library between internal components for Ultimaker software
-License: LGPLv3+
+License: LGPL-3.0-or-later
 Group: Development/Other
 Url: https://github.com/Ultimaker/libArcus
 
-# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+# Upstream stopped tagging their versions; we have to get it by SHA. Ew!
+%define libArcus_sha 50173cc681e9c331374c2648c64bc2544cb881c4
+# Source-url: https://github.com/Ultimaker/%name/archive/%libArcus_sha.tar.gz
 Source: %name-%version.tar
 
 # Python bits
-# Source1-url: https://github.com/Ultimaker/pyArcus/archive/%version.tar.gz
+%define pyArcus_sha 367c69730567141168a8de6eb94f4eb4d6bb45c4
+# Source1-url: https://github.com/Ultimaker/pyArcus/archive/%pyArcus_sha.tar.gz
 Source1: pyArcus-%version.tar
 
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2: FindSIP.cmake
-Source3: SIPMacros.cmake
-Source4: CMakeLists.txt
-Source5: CPackConfig.cmake
-Source6: ArcusConfig.cmake.in
-Source7: COPYING-CMAKE-SCRIPTS
+# CMake bits taken from 5.0.0, before upstream went nuts with conan
+Source2: COPYING-CMAKE-SCRIPTS
+Source3: FindSIP.cmake
+Source4: FindSIP.py
+Source5: SIPMacros.cmake
+Source6: CMakeBuilder.py
+Source7: StandardProjectSettings.cmake
+Source8: CMakeLists.txt
+Source9: ArcusConfig.cmake.in
+Source10: pyproject.toml.in
 
-Patch: fix_find_sip.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1601917
-Patch1: libArcus-3.10.0-PyQt6.sip.patch
- 
 # Actually export symbols
 Patch2: libArcus-5.2.2-actually-export-symbols.patch
 
@@ -39,7 +40,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(protobuf)
 BuildRequires: protobuf-compiler
-BuildRequires: python3-module-sip-devel
+BuildRequires: python3-module-sip6
 BuildRequires: python3-module-PyQt6-sip
 
 %description
@@ -47,6 +48,8 @@ BuildRequires: python3-module-PyQt6-sip
 
 %package devel
 Summary: Development files for %name
+# The cmake scripts are BSD
+License: LGPL-3.0-or-later AND BSD-3-Clause
 Group:   Development/Other
 Requires: %name = %EVR
 
@@ -58,30 +61,36 @@ Summary: Communication library between internal components for Ultimaker softwar
 Group:   Development/Python3
 %py3_provides Arcus
 Requires: %name = %EVR
-Requires: python3-module-PyQt5-sip
+Requires: python3-module-PyQt6-sip
 
 %description -n python3-module-Arcus
 Communication library between internal components for Ultimaker software
 
 %prep
 %setup -n libArcus-%{version} -a 1
- 
+
 cp -a pyArcus-%version/python .
+cp -a pyArcus-%version/src/PythonMessage.cpp python/
 cp -a pyArcus-%version/include/pyArcus include
 mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE7 cmake/
-rm CMakeLists.txt
-cp -a %SOURCE4 %SOURCE5 %SOURCE6 .
-cp -a pyArcus-%version/src/PythonMessage.cpp python/
+cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 cmake/
+rm -rf CMakeLists.txt
+cp -a %SOURCE8 %SOURCE9 %SOURCE10 .
 
 %autopatch -p1
 
-# https://github.com/Ultimaker/libArcus/pull/94#issuecomment-505376760
-sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
-
 %build
-%cmake -DBUILD_EXAMPLES:BOOL=OFF \
-       -DCMAKE_SKIP_RPATH:BOOL=ON
+# Decode PyQt6.sip ABI version from bytewise value
+export PyQt6_SIP_ABI_VERSION=$(python3 <<EOF
+from PyQt6.sip import SIP_ABI_VERSION as abi
+print(f'{abi >> 16}.{abi >> 8 & 0xff}')
+EOF
+)
+
+%cmake \
+    -DBUILD_EXAMPLES:BOOL=OFF \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DPyQt6_SIP_ABI_VERSION=$PyQt6_SIP_ABI_VERSION
 %cmake_build
 
 %install
@@ -98,8 +107,14 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 
 %files -n python3-module-Arcus
 %python3_sitelibdir/pyArcus.so
+%python3_sitelibdir/pyArcus.pyi
 
 %changelog
+* Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.1-alt1
+- New version 5.11.1.
+- Port to sip6 and PyQt6.sip.
+- Update license.
+
 * Sat Nov 18 2023 Anton Midyukov <antohami@altlinux.org> 5.3.0-alt1
 - new version (5.3.0) with rpmgs script
 

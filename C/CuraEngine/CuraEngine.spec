@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 5.4.0
+Version: 5.12.1
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -29,8 +29,16 @@ Source6: CPackConfig.cmake
 # Source7-url: https://github.com/Ultimaker/Scripta_public/archive/%{scripta_version}/Scripta_public-%{scripta_version}.tar.gz
 Source7: Scripta_public.tar
 
+# Header-only libraries for basic geometric operations:
+# unions, intersections, differences, and XORs.
+# Distributed under BSL-1.0.
+# Source8-url: https://github.com/mapbox/geometry.hpp/archive/refs/tags/v2.0.3.tar.gz
+Source8: mapbox-geometry.tar
+# Source9-url: https://github.com/mapbox/wagyu/archive/refs/tags/0.5.0.tar.gz
+Source9: mapbox-wagyu.tar
+
 Patch2: %name-static-libstdcpp.patch
-Patch3: %name-5.4.0-fmt10.patch
+Patch3: CuraEngine-5.12.1-i586-min.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -46,6 +54,9 @@ BuildRequires: libspdlog-devel
 BuildRequires: boost-devel-headers
 BuildRequires: librange-v3-devel
 BuildRequires: boost-polygon-devel
+BuildRequires: boost-geometry-devel
+BuildRequires: tbb-devel
+BuildRequires: libpng-devel
 
 %description
 CuraEngine is a powerful, fast and robust engine for processing 3D
@@ -67,6 +78,11 @@ cp -a %SOURCE5 %SOURCE6 .
 
 tar xf %SOURCE7
 mv Scripta_public/include/scripta/ include
+
+tar xf %SOURCE8
+mv mapbox-geometry/include/mapbox/ include
+tar xf %SOURCE9
+mv mapbox-wagyu/include/mapbox/geometry/wagyu/ include/mapbox/geometry
 
 %autopatch -p1
 
@@ -95,6 +111,9 @@ rm -rf libs
 %doc README.md
 
 %changelog
+* Fri Apr 17 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.12.1-alt1
+- New version 5.12.1.
+
 * Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt1
 - new version (5.4.0) with rpmgs script
 

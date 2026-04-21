@@ -2,34 +2,40 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libsavitar
-Version: 5.3.0
-Release: alt1
+Version: 5.11.0
+Release: alt0.alpha0.1
 Summary: C++ implementation of 3mf loading with SIP Python bindings
-License: LGPLv3+
+License: LGPL-3.0-or-later
 Group: Development/Other
 Url: https://github.com/Ultimaker/libSavitar
 
-# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
+# Upstream stopped tagging their versions; we have to get it by SHA. Ew!
+%define libSavitar_sha 031a70a89e0945e823619be83771cba46e5f5141
+# Source-url: https://github.com/Ultimaker/libSavitar/archive/%libSavitar_sha.tar.gz
 Source: %name-%version.tar
 
 # Python bits
-# Source1-url: https://github.com/Ultimaker/pySavitar/archive/%version.tar.gz
+%define pySavitar_sha 53fe14b35d561f4ff8dc2b0e80cb2d2dee2b20a8
+# Source1-url: https://github.com/Ultimaker/pySavitar/archive/%pySavitar_sha.tar.gz
 Source1: pySavitar-%version.tar
 
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2: FindSIP.cmake
-Source3: SIPMacros.cmake
-Source4: CMakeLists.txt
-Source5: SavitarConfig.cmake.in
-Source6: COPYING-CMAKE-SCRIPTS
- 
+# CMake bits taken from 5.0.0, before upstream went nuts with conan
+Source2: COPYING-CMAKE-SCRIPTS
+Source3: FindSIP.cmake
+Source4: FindSIP.py
+Source5: SIPMacros.cmake
+Source6: CMakeBuilder.py
+Source7: StandardProjectSettings.cmake
+Source8: CMakeLists.txt
+Source9: SavitarConfig.cmake.in
+Source10: pyproject.toml.in
+
 # Actually export symbols into the shared lib
 Patch0: libsavitar-5.2.2-export-fix.patch
 
-Patch1: find-sip3.patch
-
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: cmake dos2unix gcc-c++ libpugixml-devel python3-devel python3-module-sip-devel %_bindir/sip3
+BuildRequires: cmake dos2unix gcc-c++ libpugixml-devel
+BuildRequires: python3-devel python3-module-sip6 python3-module-PyQt6-sip
 
 %description
 Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
@@ -38,7 +44,7 @@ Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
 %package devel
 Summary: Development files for libsavitar
 # The cmake scripts are BSD
-License: AGPLv3+ and BSD
+License: LGPL-3.0-or-later AND BSD-3-Clause
 Group: Development/Other
 Requires: %name = %EVR
 
@@ -53,7 +59,7 @@ Summary: Python 3 libSavitar bindings
 Group: Development/Python3
 Requires: %name = %EVR
 %py3_provides Savitar
-Requires: python3-module-PyQt5-sip
+Requires: python3-module-PyQt6-sip
 
 %description -n python3-module-savitar
 Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
@@ -66,20 +72,26 @@ The Python bindings.
 
 cp -a pySavitar-%version/python .
 mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE6 cmake/
+cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 cmake/
 rm -rf CMakeLists.txt
-cp -a %SOURCE4 %SOURCE5 .
+cp -a %SOURCE8 %SOURCE9 %SOURCE10 .
 %autopatch -p1
 
 # Wrong end of line encoding
 dos2unix README.md
 
-# https://github.com/Ultimaker/libSavitar/pull/18
-sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
-
 %build
+# Decode PyQt6.sip ABI version from bytewise value
+export PyQt6_SIP_ABI_VERSION=$(python3 <<EOF
+from PyQt6.sip import SIP_ABI_VERSION as abi
+print(f'{abi >> 16}.{abi >> 8 & 0xff}')
+EOF
+)
+
 %add_optflags '-Wl,--as-needed'
-%cmake -DCMAKE_SKIP_RPATH:BOOL=ON
+%cmake \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DPyQt6_SIP_ABI_VERSION=$PyQt6_SIP_ABI_VERSION
 %cmake_build
 
 %install
@@ -99,8 +111,14 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %files -n python3-module-savitar
 %doc README.md
 %python3_sitelibdir/pySavitar.so
+%python3_sitelibdir/pySavitar.pyi
 
 %changelog
+* Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.0-alt0.alpha0.1
+- New version 5.11.0-alpha.0.
+- Port to sip6 and PyQt6.sip.
+- Fix license.
+
 * Sat Nov 18 2023 Anton Midyukov <antohami@altlinux.org> 5.3.0-alt1
 - new version (5.3.0) with rpmgs script
 

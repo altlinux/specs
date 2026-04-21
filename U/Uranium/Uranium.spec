@@ -10,8 +10,8 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 5.4.0
-Release: alt6
+Version: 5.12.1
+Release: alt1
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -37,6 +37,7 @@ BuildRequires:  python3-module-shapely
 BuildRequires:  python3-module-twisted-web
 BuildRequires:  python3-modules-sqlite3
 BuildRequires:  python3-module-pyclipper
+BuildRequires:  python3-module-pyUvula
 %endif
 
 BuildArch: noarch
@@ -57,13 +58,14 @@ Patch: Uranium-4.7.1-set-default-languages.patch
 
 # from Fedora
 Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
-# Fix asserts for called once in Python 3.12
-# https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
-Patch3: Uranium-5.3.0-python3.12.patch
-# https://github.com/Ultimaker/Uranium/commit/e86d717035af317dab5d62851181873ec3c38ebe.patch
-Patch4: upstream-Replace-deprecated-imp.patch
 # https://github.com/Ultimaker/Uranium/issues/1030
 Patch5: Uranium-5.4.0-tests-replace-deprecated-path-parameter-for-pytest_i.patch
+# Fix asserts for called once in Python 3.12
+# https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
+Patch6: Uranium-5.12.1-python3.12.patch
+
+# https://github.com/Ultimaker/Uranium/issues/984
+Patch7: numpy-pad-fix.patch
 
 %description
 %summary
@@ -130,6 +132,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Thu Apr 16 2026 Valery Zabrovsky <brow@altlinux.org> 5.12.1-alt1
+- New version 5.12.1.
+
 * Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 5.4.0-alt6
 - NMU: fixed FTBFS (pytest 9).
 

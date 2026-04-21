@@ -6,8 +6,8 @@
 
 Name: cura
 Epoch: 1
-Version: 5.4.0
-Release: alt4
+Version: 5.12.1
+Release: alt1
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
 
@@ -16,6 +16,9 @@ Url: https://github.com/Ultimaker/Cura
 
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+# Source1-url: https://github.com/Ultimaker/cura-binary-data/archive/refs/tags/%version.tar.gz
+Source1: %name-resources-%version.tar
 
 # Cmake bits taken from 4.13.1, before upstream went nuts with conan
 Source2: mod_bundled_packages_json.py
@@ -26,18 +29,15 @@ Source6: CMakeLists.txt
 Source7: CuraVersion.py.in
 Source8: com.ultimaker.cura.appdata.xml
 
-# PATCH-FIX-OPENSUSE -- avoid bad UI layout and crash in preview
-Patch4: 0001-Avoid-crash-caused-by-KDE-qqc2-desktop-style.patch
+Patch4: gtk-qt-theme.patch
+Patch5: about-dialog-credits.patch
 
 # Fedora patch
 # Skip forced loading SentryLogger to avoid an error on startup
 Patch10: 028e7f7.patch
-# Fix asserts for called once in Python 3.12
-# https://github.com/Ultimaker/Cura/pull/16103.patch
-Patch11: 16103.patch
-# Avoid "KeyError: material_name" crash
-# https://github.com/Ultimaker/Cura/pull/17642.patch
-Patch12: 17642.patch
+
+Patch11: cura-buildtype-fix.patch
+Patch12: cura-5.12.1-marketplace-crash-fix.patch
 
 BuildArch: noarch
 
@@ -46,15 +46,14 @@ BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
-BuildRequires: dos2unix
 BuildRequires: python3-devel
-BuildRequires: Uranium >= 5.4.0
+BuildRequires: Uranium >= %version
 BuildRequires: python3-module-pynest2d
 # Tests
 %if 0%{?with_check}
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
-BuildRequires: python3-module-savitar >= 5.3.0
+BuildRequires: python3-module-savitar >= 5.11.0
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-keyring >= 21
 BuildRequires: python3-module-dbus
@@ -65,7 +64,8 @@ BuildRequires: python3-module-numpy libnumpy-py3-devel python3-module-numpy-test
 %py3_requires serial zeroconf
 %py3_requires stl
 Requires: python3-module-savitar
-Requires: Uranium = 5.4.0
+Requires: python3-module-pyDulcificum
+Requires: Uranium = %version
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials
 Requires: 3dprinter-udev-rules
@@ -94,14 +94,14 @@ needs. As it's open source, our community helps enrich it even more.
 %setup
 %autopatch1 -p1
 
+tar xf %SOURCE1
+cp -a cura-resources-%version/cura/resources .
+
 mkdir cmake
 cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
 rm -rf CMakeLists.txt
 cp -a %SOURCE5 %SOURCE6 %SOURCE8 .
 cp -a %SOURCE7 cura
-
-# Wrong end of line encoding
-dos2unix docs/How_to_use_the_flame_graph_profiler.md
 
 # Wrong shebang
 %__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
@@ -142,6 +142,8 @@ rm -r %buildroot%_prefix/lib/cura/plugins/{SentryLogger,UFPReader,UFPWriter}
 
 %check
 %if 0%{?with_check}
+# Temporary copy of the generated version file
+cp %_cmake__builddir/CuraVersion.py cura
 %__python3 -m pip freeze
 %__python3 -m pytest -v
 %endif
@@ -160,6 +162,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.12.1-alt1
+- New version 5.12.1.
+
 * Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 1:5.4.0-alt4
 - NMU: add numpy modules in BuildRequires
 
