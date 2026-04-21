@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 3
+%define minor_version 4
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -159,6 +159,15 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Mon Apr 20 2026 Vladimir Romanov <rirusha@altlinux.org> 7.4-alt1
+- New version: 7.4.
+- New `send` API in `Session` with `Soup.Session` compatibility.
+- Added managing multiple base URLs with automatic failover.
+- Improved serialization: case-insensitive enum parsing, UTC timezone
+  for DateTime, INT64 -> DateTime conversion.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.4
+
 * Sun Mar 29 2026 Vladimir Romanov <rirusha@altlinux.org> 7.3-alt1
 - New version: 7.3.
 - Removed assert on wrong request type in `add_content`.
