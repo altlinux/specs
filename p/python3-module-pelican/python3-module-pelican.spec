@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.11.0
-Release: alt3
+Version: 4.12.0
+Release: alt1
 Summary: Static site generator that supports Markdown and reST syntax
 License: AGPL-3.0
 Group: Development/Python3
@@ -14,7 +14,6 @@ Url: http://getpelican.com/
 Vcs: https://github.com/getpelican/pelican
 BuildArch: noarch
 Source: %pypi_name-%version.tar
-Patch: pelican-4.11.0-docutils-fix.patch
 
 Requires: python3-module-beautifulsoup4
 Requires: python3-module-markdown
@@ -101,7 +100,6 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -145,6 +143,9 @@ and not test_custom_locale_generation_works"
 %files -n %pypi_name
 
 %changelog
+* Tue Apr 21 2026 Anton Vyatkin <toni@altlinux.org> 4.12.0-alt1
+- New version 4.12.0.
+
 * Tue Dec 02 2025 Anton Vyatkin <toni@altlinux.org> 4.11.0-alt3
 - Fix FTBFS (docutils).
 
