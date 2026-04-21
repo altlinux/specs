@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.9
+Version:  2.10
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -43,6 +43,9 @@ install -pDm644 windows.layout \
 %_datadir/mate-panel/layouts/windows.layout
 
 %changelog
+* Tue Apr 21 2026 Anton Midyukov <antohami@altlinux.org> 2.10-alt1
+- gsettings override org.mate.screensaver lock-enabled=true.
+
 * Fri Feb 27 2026 Anton Midyukov <antohami@altlinux.org> 2.9-alt1
 - Replace mate-menu with compact menu.
 
