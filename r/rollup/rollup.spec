@@ -1,16 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch x86_64
-%define rollup_arch x64
-%endif
-
-%ifarch aarch64
-%define rollup_arch arm64
-%endif
+%define rollup_arch %nodejs_native_arch
 
 Name: rollup
 Version: 4.60.2
-Release: alt1
+Release: alt2
 Summary: Rollup JavaScript bundler
 License: MIT
 Group: Development/Other
@@ -21,7 +15,8 @@ Source: %name-%version.tar
 Source1: node-modules-%version.tar
 Source2: vendor.tar
 
-BuildRequires(pre): rpm-macros-nodejs rpm-macros-rust
+BuildRequires(pre): rpm-macros-nodejs >= 0.20.7-alt4
+BuildRequires(pre): rpm-macros-rust
 BuildRequires: npm
 BuildRequires: rust-cargo
 BuildRequires: gcc-c++
@@ -34,7 +29,7 @@ Rollup is a JavaScript module bundler for Node.js.
 Summary: Native bindings for Rollup
 Group: Development/Other
 Requires: %name = %EVR
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86
 
 %description native
 Native N-API bindings for Rollup.
@@ -51,6 +46,12 @@ export RUSTC_BOOTSTRAP=1
 
 %ifarch aarch64
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=gcc
+%endif
+%ifarch loongarch64
+export CARGO_TARGET_LOONGARCH64_UNKNOWN_LINUX_GNU_LINKER=gcc
+%endif
+%ifarch riscv64
+export CARGO_TARGET_RISCV64GC_UNKNOWN_LINUX_GNU_LINKER=gcc
 %endif
 
 npm run build:napi -- --release
@@ -93,6 +94,9 @@ cp -a \
 %nodejs_sitelib/@%name/%name-linux-%rollup_arch-gnu/*
 
 %changelog
+* Tue Apr 21 2026 Ivan A. Melnikov <iv@altlinux.org> 4.60.2-alt2
+- NMU: build on riscv64 and loongarch64.
+
 * Mon Apr 20 2026 Aleksandr Gamzin <gamzin@altlinux.org> 4.60.2-alt1
 - 4.60.2.
 
