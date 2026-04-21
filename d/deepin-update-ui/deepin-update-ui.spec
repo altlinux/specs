@@ -2,7 +2,7 @@
 
 Name: deepin-update-ui
 Version: 1.0.49
-Release: alt1
+Release: alt2
 
 Summary: DDE UI collection for updating functions
 
@@ -23,7 +23,7 @@ ExcludeArch: i586
 # prevent hasher_priv error
 %filter_from_requires /\/usr\/bin\/kwin_wayland/d
 
-BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdde-control-center-devel dde-dock-devel libwayland-client-devel
+BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdde-control-center-devel dde-dock-devel libwayland-client-devel libdqt6-qmlcompiler
 BuildRequires: libdqt6-concurrent vulkan-headers
 
 %description
@@ -94,12 +94,15 @@ sed \
 %_datadir/deepin-update-ui/translations/dde-update_ky@Arab.qm
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
-%dir %_datadir/dde-control-center/translations/v1.0/
+%dir %_datadir/dde-control-center/translations/v1.1/
 %dir %_datadir/dock-update-plugin/
 %dir %_datadir/dock-update-plugin/translations/
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Tue Apr 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.49-alt2
+- Fixed build on dde-control-center 6.1.81.
+
 * Tue Apr 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.49-alt1
 - New version 1.0.49.
 
