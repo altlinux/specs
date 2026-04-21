@@ -1,6 +1,6 @@
 %set_compress_method none
 
-%define gcc_branch 14
+%define gcc_branch 15
 %define psuffix -%gcc_branch
 
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
@@ -9,7 +9,6 @@
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le loongarch64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64 loongarch64
 %define libquadmath_arches	%ix86 x86_64 ppc64le
-%define libvtv_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
 %define libhwasan_arches	x86_64 aarch64
 %define liblsan_arches		x86_64 aarch64 ppc64le riscv64 loongarch64
@@ -69,7 +68,7 @@ Conflicts: gcc5 < 5.3.1-alt5
 Conflicts: gcc6 < 6.3.1-alt3
 
 %description -n gcc
-This is metapackage for the default GNU C compiler.
+This is a metapackage for the default GNU C compiler.
 
 %package -n gcc-c++
 Summary: Dependency package for GNU C++ compiler
@@ -89,7 +88,7 @@ Conflicts: gcc5-c++ < 5.3.1-alt5
 Conflicts: gcc6-c++ < 6.3.1-alt3
 
 %description -n gcc-c++
-This is metapackage for the default GNU C++ compiler.
+This is a metapackage for the default GNU C++ compiler.
 
 %package -n gcc-gdc
 Summary: Dependency package for GNU D compiler
@@ -98,7 +97,7 @@ Requires: gcc = %EVR
 Requires: gcc%gcc_branch-gdc
 
 %description -n gcc-gdc
-This is metapackage for the default GNU D compiler.
+This is a metapackage for the default GNU D compiler.
 
 %package -n gcc-fortran
 Summary: Dependency package for GNU Fortran compiler
@@ -118,7 +117,7 @@ Conflicts: gcc5-fortran < 5.3.1-alt5
 Conflicts: gcc6-fortran < 6.3.1-alt3
 
 %description -n gcc-fortran
-This is metapackage for the default GNU Fortran compiler.
+This is a metapackage for the default GNU Fortran compiler.
 
 %package -n gcc-go
 Summary: Dependency package for GNU Go compiler
@@ -132,7 +131,7 @@ Conflicts: gcc5-go < 5.3.1-alt5
 Conflicts: gcc6-go < 6.3.1-alt3
 
 %description -n gcc-go
-This is metapackage for the default GNU Go compiler.
+This is a metapackage for the default GNU Go compiler.
 
 %package -n gcc-gnat
 Summary: Dependency package for GNU Ada compiler
@@ -151,7 +150,7 @@ Conflicts: gcc5-gnat < 5.3.1-alt5
 Conflicts: gcc6-gnat < 6.3.1-alt3
 
 %description -n gcc-gnat
-This is metapackage for the default GNU Ada compiler.
+This is a metapackage for the default GNU Ada compiler.
 
 %global do_package() \
 %if 0%{3} \
@@ -161,7 +160,7 @@ Group: Development/C \
 Requires: %{1}%gcc_branch-%{2}\
 %{4}BuildArch: noarch \
 %description -n %{1}-%{2} \
-This is metapackage for %{1}-%{2}. \
+This is a metapackage for %{1}-%{2}. \
 %files -n %{1}-%{2} \
 %endif
 
@@ -215,9 +214,6 @@ This is metapackage for %{1}-%{2}. \
 %endif
 %ifarch %libubsan_arches
 %do_package libubsan devel-static 1 #
-%endif
-%ifarch %libvtv_arches
-%do_package libvtv devel-static 1 #
 %endif
 
 %install
@@ -347,6 +343,9 @@ ln_bin \
 %endif
 
 %changelog
+* Tue Apr 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15-alt1
+- Changed the default compiler to gcc15.
+
 * Tue Oct 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14-alt1
 - Changed the default compiler to gcc14.
 

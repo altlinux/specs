@@ -1,225 +1,44 @@
-%define binutils_sourcedir /usr/src/binutils-source
-
-Name: binutils
-Version: 2.46
-Release: alt1
+Name: libsframe1
+Version: 2.43
+Release: alt2
 Epoch: 1
 
-Summary: GNU Binary Utility Development Utilities
+Summary: This package contains libsframe1 shared library
 License: GPLv3+
-Group: Development/Other
+Group: System/Legacy libraries
 Url: http://sourceware.org/binutils/
 
-# http://git.altlinux.org/gears/b/binutils.git
-Source: binutils-%version-%release.tar
-
-%def_enable pgo_lto
-%def_with debuginfod
-
-# List of architectures worthy to care about test results.
-%define check_arches x86_64 %ix86 ppc64le aarch64
-%def_with check
-
-Conflicts: libbfd
-# due to c++filt
-Conflicts: gcc-common < 0:1.2.1-alt4
+Source: libsframe1-%version-%release.tar
 
 BuildRequires: flex makeinfo perl-Pod-Parser zlib-devel
 BuildRequires: gcc-c++ libstdc++-devel-static
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, glibc-devel-static, zlib-devel-static, bc, /proc, /dev/pts}}
-%if_with debuginfod
-BuildRequires: libdebuginfod-devel
-%endif
-
-%package -n libctf-nobfd0
-Summary: Compact C Type Format library (no BFD dependency)
-Group: System/Libraries
-
-%package -n libsframe3
-Summary: This package includes the libsframe shared library
-Group: System/Libraries
-
-%package devel
-Summary: Development files for development with BFD, opcodes and libiberty libraries
-Group: Development/C
-Requires: zlib-devel-static
-Provides: libiberty-devel = %epoch:%version-%release
-Provides: libbfd-devel = %epoch:%version-%release
-Obsoletes: libiberty-devel
-Obsoletes: libbfd-devel
-
-%package source
-Summary: Binutils sources
-Group: Development/Other
-BuildArch: noarch
 
 %description
-Binutils is a collection of binary utilities, including:
-+ addr2line: converting addresses to file and line;
-+ ar: creating modifying and extracting from archives;
-+ nm: listing symbols from object files;
-+ objcopy: copying and translating object files;
-+ objdump: displaying information from object files;
-+ ranlib: generating an index for the contents of an archive;
-+ size: listing the section sizes of an object or archive file;
-+ strings: listing printable strings from files;
-+ strip: discarding symbols.
-
-%description -n libctf-nobfd0
-This package includes the libctf-nobfd shared library.  The Compact C Type
-Format (CTF) is a way of representing information about a binary program.
-
-%description -n libsframe3
-This package includes the libsframe3 shared library.  SFrame stands for
-Simple Frame format.  SFrame format keeps track of the minimal necessary
-information needed for generating stack traces.
-
-%description devel
-This package contains include files, dynamic and static libraries needed
-for development software based on Binary File Descriptor library and
-libiberty.
-
-%description source
-This package contains source code of GNU Binutils.
+This package contains the libsframe1 shared library.  SFrame stands for Simple
+Frame format.  SFrame format keeps track of the minimal necessary information
+needed for generating stack traces.
 
 %prep
 %setup -n %name-%version-%release
 
 %build
-%define _configure_target --host=%_target_platform --build=%_target_platform
-%undefine __libtoolize
-ADDITIONAL_TARGETS=
-%ifarch %ix86 x86_32
-ADDITIONAL_TARGETS="--enable-64-bit-bfd"
-%endif
-%ifarch ia64 x86_64
-ADDITIONAL_TARGETS="--enable-targets=i386-alt-linux"
-%endif
-%ifarch ppc
-ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --enable-64-bit-bfd"
-%endif
-%{?optflags_lto:%global optflags_lto %nil}
 %configure \
-%if_enabled pgo_lto
-	--enable-pgo-build=lto \
-%endif
-	%{subst_with debuginfod} \
-	--with-system-zlib \
 	--enable-shared \
 	--with-pic \
-	--disable-werror \
-	--disable-gprofng \
-	--enable-plugins \
-	--with-bugurl=http://bugzilla.altlinux.org/ \
-	--enable-gold=yes --enable-ld=default \
-	--with-stage1-ldflags=' ' \
-	--with-boot-ldflags=' ' \
-%ifnarch mipsel mips64el
-	--enable-default-hash-style=gnu \
-%endif
-	--enable-relro \
-	--enable-textrel-check=warning \
-	--enable-warn-rwx-segments \
-	--enable-warn-execstack \
-	--disable-default-execstack \
-	--enable-deterministic-archives \
-	$ADDITIONAL_TARGETS
+	#
 
-%make_build MAKEINFOFLAGS=--no-split tooldir=%_prefix
+%make_build tooldir=%_prefix all-libsframe
 
 %install
-%makeinstall_std tooldir=%_prefix install-info
-
-# Remove static libctf libraries.
-rm %buildroot%_libdir/libctf*.a
+%makeinstall_std tooldir=%_prefix -C libsframe install
 
 # Remove static libsframe library.
 rm %buildroot%_libdir/libsframe*.a
 
-# Install ld.default and ld wrapper.
-ln -snf ld.bfd %buildroot%_bindir/ld.default
-install -pm755 alt/ld.sh %buildroot%_bindir/ld
-
-# Install PIC version of the libiberty.a
-install -pm644 libiberty/pic/libiberty.a %buildroot%_libdir/
-
-# Remove unrelated manpages.
-find %buildroot%_man1dir -type f |while read f; do
-	n="${f##*/}"
-	n="${n%%.1*}"
-
-	[ -f "%buildroot%_bindir/$n" ] || rm -v "$f"
-done
-
-%ifarch %ix86 x86_32 ppc
-# Sanity check --enable-64-bit-bfd really works.
-grep -Fqsx '#define BFD_ARCH_SIZE 64' %buildroot%_prefix/include/bfd.h
-%endif
-
-# Generate .so linker scripts for dependencies; imported from glibc/Makerules:
-
-# Remove symlinks
-rm -f %buildroot%_libdir/lib{bfd,opcodes}.so
-
-# This fragment of linker script gives the OUTPUT_FORMAT statement
-# for the configuration we are building.
-OUTPUT_FORMAT="\
-/* Ensure this .so library will not be used by a link for a different format
-   on a multi-architecture system.  */
-$(gcc $CFLAGS $LDFLAGS -shared -x c /dev/null -o /dev/null -Wl,--verbose -v 2>&1 |
-	sed -n -f "alt/output-format.sed")"
-
-cat >%buildroot%_libdir/libbfd.so <<EOF
-/* GNU ld script */
-
-$OUTPUT_FORMAT
-
-/* The -lz and -ldl dependencies are unexpected by legacy build scripts.  */
-INPUT ( %_libdir/libbfd.a AS_NEEDED( -lsframe -liberty -ldl -lz ) )
-EOF
-
-cat >%buildroot%_libdir/libopcodes.so <<EOF
-/* GNU ld script */
-
-$OUTPUT_FORMAT
-
-INPUT ( %_libdir/libopcodes.a -lbfd )
-EOF
-
-# Relocate include files.
-pushd %buildroot%_includedir
-	mkdir bfd
-	for f in *.h; do
-		mv "$f" bfd/
-		ln -s bfd/"$f" .
-	done
-popd
-
-# Cleanup config.h remnants
-sed -i '/PR 14072:/,/^#endif/d' %buildroot%_includedir/bfd/bfd.h
-sed -i '/HAVE_STDINT_H/,/^#endif/d; /#include <sys\/types.h>/i#include <stdint.h>' \
-	%buildroot%_includedir/bfd/plugin-api.h
-
-# Workaround multilib issues
-wordsize=$(printf '%%s\n%%s' '#include <bits/wordsize.h>' '__WORDSIZE' | gcc -E -P -)
-mv %buildroot%_includedir/bfd/bfd{,-$wordsize}.h
-install -pm644 alt/bfd.h %buildroot%_includedir/bfd/
-
-# Add more include files.
-install -pm644 include/libiberty.h %buildroot%_includedir/
-install -pm644 bfd/{elf-bfd,lib*}.h %buildroot%_includedir/bfd/
-cp -a include/{coff,elf} %buildroot%_includedir/bfd/
-rm %buildroot%_includedir/bfd/{*in.h,*/ChangeLog*}
-
-# Install NEWS.
-for n in binutils gas ld; do
-	install -pm644 $n/NEWS NEWS-$n
-done
-
-mkdir -p %buildroot%binutils_sourcedir
-cp %SOURCE0 %buildroot%binutils_sourcedir/
-
-%find_lang binutils bfd gas gold gprof ld opcodes --append --output files.lst
+rm %buildroot%_includedir/sframe*.h
+rm %buildroot%_libdir/libsframe.so
+rm %buildroot%_infodir/sframe*.info*
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -229,64 +48,18 @@ cp %SOURCE0 %buildroot%binutils_sourcedir/
 unset SOURCE_DATE_EPOCH
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
 # testsuite requires gcc to be able to print path to liblto_plugin.so
-GCC_PFN_LTO=$(gcc -print-file-name=liblto_plugin.so)
-GCC_PPN_LTO=$(gcc -print-prog-name=liblto_plugin.so)
-[ "$GCC_PFN_LTO" != 'liblto_plugin.so' -o "$GCC_PPN_LTO" != 'liblto_plugin.so' ] || exit
 RUNTESTFLAGS=
 XFAIL_TESTS=
 
-%make_build -k check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
-	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
-%ifnarch %check_arches
-    || : \
-%endif
-    #
+%make_build -k -C libsframe check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
+	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
 
-# gold linker is currently unsupported.
-# see https://sourceware.org/bugzilla/show_bug.cgi?id=19041
-%make_build -k check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
-	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
-	check-gold ||:
-
-%files -f files.lst
-%_bindir/*
-%_prefix/lib/ldscripts/
-%_mandir/man?/*
-%dir %_libdir/bfd-plugins
-%_libdir/bfd-plugins/libdep.so
-%_libdir/libopcodes-*.so
-%_libdir/libbfd-*.so
-%_libdir/libctf.so.0*
-%_infodir/*.info*
-%exclude %_infodir/bfd.info*
-%doc NEWS*
-
-%files -n libctf-nobfd0
-%_libdir/libctf-nobfd.so.0*
-
-%files -n libsframe3
-%_libdir/libsframe.so.3*
-
-%files devel
-%_libdir/*.a
-%_libdir/libbfd.so
-%_libdir/libopcodes.so
-%_libdir/libctf-nobfd.so
-%_libdir/libctf.so
-%_libdir/libsframe.so
-%_includedir/bfd/
-%_includedir/*.h
-%_infodir/bfd.info*
-
-%files source
-%binutils_sourcedir
+%files
+%_libdir/libsframe.so.1*
 
 %changelog
-* Mon Apr 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.46-alt1
-- Updated to 2.46.
-
-* Thu Jan 16 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.43.1.179.e0648d13bfd-alt1
-- Updated to 2.43.1 20250111 (binutils-2_43_1-179-ge0648d13bfd).
+* Tue Apr 14 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.43-alt2
+- Built as a separate libsframe1 package.
 
 * Tue Oct 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.43-alt1
 - Updated to 2.43 20241025.

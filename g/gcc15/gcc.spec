@@ -1,10 +1,10 @@
 %set_autoconf_version 2.60
 
-%define gcc_branch 14
+%define gcc_branch 15
 
 Name: gcc%gcc_branch
-Version: 14.3.1
-Release: alt4
+Version: 15.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20251017
+%define snapshot 20260409
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -54,7 +54,6 @@ Url: https://gcc.gnu.org/
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le loongarch64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64 loongarch64
 %define libquadmath_arches	%ix86 x86_64 ppc64le
-%define libvtv_arches		%ix86 x86_64
 
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
 %define libhwasan_arches	x86_64 aarch64
@@ -89,11 +88,6 @@ Url: https://gcc.gnu.org/
 %def_with libsanitizer
 %endif
 
-%ifarch %libvtv_arches
-# We desided to allow libvtv to use "__fortify_fail@GLIBC_PRIVATE".
-%filter_from_requires /^libc.so.6(GLIBC_PRIVATE)/d
-%endif
-
 %set_compress_method xz
 %ifarch %arm
 %set_verify_elf_method textrel=relaxed
@@ -113,7 +107,7 @@ Url: https://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64 loongarch64
@@ -143,7 +137,7 @@ Url: https://gcc.gnu.org/
 
 %def_without pdf
 %def_disable doxygen
-%def_disable check
+%def_enable check
 
 %define buildtarget obj-%gcc_target_platform
 
@@ -470,26 +464,6 @@ Requires: libubsan1 %REQ %EVR
 This package contains Undefined Behavior Sanitizer static runtime library.
 
 ####################################################################
-# VTable Verification library
-
-%package -n libvtv0
-Summary: The VTable Verification library
-Group: System/Libraries
-Requires: libgcc1 %REQ %EVR
-
-%description -n libvtv0
-This package contains the GNU Transactional Memory library
-which is a GCC transactional memory support runtime library.
-
-%package -n libvtv%gcc_branch-devel-static
-Summary: The GNU Transactional Memory static library
-Group: Development/C
-Requires: libvtv0 %REQ %EVR
-
-%description -n libvtv%gcc_branch-devel-static
-This package contains GNU Transactional Memory static libraries.
-
-####################################################################
 # Preprocessor
 
 %package -n cpp%gcc_branch
@@ -601,18 +575,18 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # D Runtime
 
-%package -n libgdruntime5
+%package -n libgdruntime6
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgdruntime5
+%description -n libgdruntime6
 This package contains DRuntime shared library which is the
 low-level runtime library backing the D programming language.
 
 %package -n libgdruntime%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgdruntime5 = %EVR
+Requires: libgdruntime6 = %EVR
 
 %description -n libgdruntime%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -620,24 +594,24 @@ This package contains development files for DRuntime library.
 %package -n libgdruntime%gcc_branch-devel-static
 Summary: Static DRuntime library
 Group: Development/Other
-Requires: libgdruntime5 = %EVR
+Requires: libgdruntime6 = %EVR
 Requires: libgdruntime%gcc_branch-devel = %EVR
 
 %description -n libgdruntime%gcc_branch-devel-static
 This package contains static DRuntime library.
 
-%package -n libgphobos5
+%package -n libgphobos6
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgphobos5
+%description -n libgphobos6
 This packages contains the standard library for the D Programming
 Language which is needed to run D dynamically linked programs.
 
 %package -n libgphobos%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgphobos5 = %EVR
+Requires: libgphobos6 = %EVR
 
 %description -n libgphobos%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -898,12 +872,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo23
+%package -n libgo24
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo23
+%description -n libgo24
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -912,7 +886,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo23 %REQ %EVR
+Requires: libgo24 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -1175,10 +1149,10 @@ CONFIGURE_OPTS="\
 	--with-linker-hash-style=gnu \
 %endif
 %ifarch %ix86
-	--with-arch=%_target_cpu --with-tune=generic \
+	--with-arch=i686 --with-tune=generic \
 %endif
 %ifarch x86_64
-	--with-arch_32=i586 --with-tune_32=generic \
+	--with-arch_32=i686 --with-tune_32=generic \
 	--with-multilib-list=m64,m32,mx32 \
 %endif
 %ifarch ppc ppc64 ppc64le
@@ -1227,9 +1201,6 @@ CONFIGURE_OPTS="\
 %configure \
 	$CONFIGURE_OPTS \
 	--with-gcc-major-version-only \
-%ifarch %libvtv_arches
-	--enable-vtable-verify \
-%endif
 %if_enabled bootstrap
 	--enable-bootstrap \
 %ifarch x86_64
@@ -1504,9 +1475,6 @@ for n in \
 %ifarch %libubsan_arches
     libubsan-devel-static \
 %endif
-%ifarch %libvtv_arches
-    libvtv-devel-static \
-%endif
     libgomp-devel libgomp-devel-static \
     gcc-c++ libstdc++-devel libstdc++-devel-static \
     %{?_with_fortran:gcc-fortran libgfortran-devel libgfortran-devel-static} \
@@ -1610,6 +1578,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 
 %ifarch aarch64
 %gcc_target_libdir/include/arm_neon_sve_bridge.h
+%gcc_target_libdir/include/arm_private_fp8.h
+%gcc_target_libdir/include/arm_private_neon_types.h
 %gcc_target_libdir/include/arm_sme.h
 %gcc_target_libdir/include/arm_sve.h
 %endif
@@ -1701,9 +1671,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %ifarch %libubsan_arches
 %gcc_target_libdir/libubsan.so
 %endif
-%ifarch %libvtv_arches
-%gcc_target_libdir/libvtv.so
-%endif
 %if_with libsanitizer
 %gcc_target_libdir/libsanitizer.spec
 %dir %gcc_target_libdir/include/sanitizer/
@@ -1780,12 +1747,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libquadmath0
 %_libdir/libquadmath.so.0*
 %endif
-%endif #compat
 
-%ifarch %libvtv_arches
-%files -n libvtv0
-%_libdir/libvtv.so.0*
-%endif
+%endif #compat
 
 %files plugin-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-plugin-devel
@@ -1876,13 +1839,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libubsan.a
 %endif
 
-%ifarch %libvtv_arches
-%files -n libvtv%gcc_branch-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/libvtv%gcc_branch-devel-static
-%dir %gcc_target_libdir/
-%gcc_target_libdir/libvtv.a
-%endif
-
 %files -n cpp%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/cpp%gcc_branch
 %_bindir/cpp%psuffix
@@ -1904,6 +1860,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_doc_dir/
 %gcc_doc_dir/libstdc++
 %_includedir/c++/*
+%_libdir/libstdc++.modules.json
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libstdc++.so
 %gcc_target_libdir/libsupc++.a
@@ -1928,14 +1885,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_man1dir/g++%psuffix.*
 %gcc_target_libdir/cc1plus
 %gcc_target_libdir/g++-mapper-server
-%ifarch %libvtv_arches
-%gcc_target_libdir/vtv_*.o
-%gcc_target_libdir/include/vtv_*.h
-%endif
 
 %if_enabled d
-%files -n libgphobos5
-%_libdir/libgphobos.so.5*
+%files -n libgphobos6
+%_libdir/libgphobos.so.6*
 
 %files -n libgphobos%gcc_branch-devel
 %gcc_target_libdir/include/d
@@ -1945,8 +1898,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgphobos%gcc_branch-devel-static
 %gcc_target_libdir/libgphobos.a
 
-%files -n libgdruntime5
-%_libdir/libgdruntime.so.5*
+%files -n libgdruntime6
+%_libdir/libgdruntime.so.6*
 
 %files -n libgdruntime%gcc_branch-devel
 %gcc_target_libdir/libgdruntime.so
@@ -2084,8 +2037,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo23
-%_libdir/libgo.so.23*
+%files -n libgo24
+%_libdir/libgo.so.24*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2155,11 +2108,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Tue Apr 14 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt4
-- Rebuilt in gcc14 compatibility mode.
-
-* Mon Apr 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt3
-- Rebuilt in precompat mode to prepare for gcc15 build.
+* Tue Apr 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.2.1-alt1
+- Updated to 15.2.1.
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-15-branch
+  commit 226e8310eed1ce10784f98f199e1aa4b12ca86b7;
+  + releases/gcc-15 (snapshot 20260409)
+  commit r15-11064-g8d311e1c37b30bb0a2766c7d2e040be79f884d93.
 
 * Wed Oct 22 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt2
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
