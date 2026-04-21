@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 
 Summary: Parse Python docstrings in various flavors
@@ -51,6 +51,9 @@ and Epydoc docstrings.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 21 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.18.0-alt1
+- Updated to 0.18.0.
+
 * Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.0-alt1
 - Updated to 0.17.0.
 

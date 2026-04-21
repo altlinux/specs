@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.46.1
+Version: 2.46.3
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -16,7 +16,8 @@ Vcs: https://github.com/pydantic/pydantic
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Source2: crates.tar
+Source2: cargo-vendor-config.py
+Source3: crates.tar
 Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
@@ -45,29 +46,9 @@ Pydantic-core is currently around 17x faster than pydantic V1. See
 tests/benchmarks/ for details.
 
 %prep
-%setup -a2
+%setup -a3
 %autopatch -p1
-mkdir -p .cargo
-cat << EOF > .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
-
-[profile.release]
-strip = false
-EOF
+%SOURCE2 --root "%buildroot%prefix"
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -97,6 +78,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Apr 21 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.46.3-alt1
+- Updated to 2.46.3.
+
 * Thu Apr 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.46.1-alt1
 - Updated to 2.46.1.
 
