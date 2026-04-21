@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.79
+Version: 2.0.88
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -20,15 +20,17 @@ Patch: %name-%version-%release.patch
 # deepin-control-center
 ExcludeArch: i586
 
-BuildPreReq: rpm-build-kf6 rpm-macros-dqt6 patchelf
+Requires: libdqt6-qml = %_dqt6_version
+
+BuildRequires(pre): rpm-build-kf6 rpm-macros-dqt6 patchelf
 %if_with clang
-BuildPreReq: clang-devel
+BuildRequires: clang-devel
 %else
-BuildPreReq: gcc-c++
+BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-qt6-devel libwayland-client-devel
+BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-dqt6-devel libwayland-client-devel libdqt6-qmlcompiler libcurl-devel vulkan-headers
 
 %description
 Deepin desktop-environment - network core files.
@@ -67,10 +69,7 @@ export CPLUS_INCLUDE_PATH=%_includedir/glib-2.0:%_libdir/glib-2.0/include:%_incl
 %DQ6build \
   -DLIB_DESTINATION=%_lib \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
-  -DCMAKE_EXE_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
-  -DCMAKE_MODULE_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
-  -DCMAKE_SHARED_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
-  -DCMAKE_LIBRARY_PATH='%_K6link;%_K6lib;/%_lib' \
+  -DCMAKE_MODULE_LINKER_FLAGS='-L%_dqt6_libdir -L%_K6lib -L%_K6link' \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -117,7 +116,7 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 # package translations outside %%find_lang
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
-%dir %_datadir/dde-control-center/translations/v1.0/
+%dir %_datadir/dde-control-center/translations/v1.1/
 %dir %_datadir/dde-network-core/
 %dir %_datadir/dde-network-core/translations/
 %_datadir/dde-network-core/translations/dde-network-core.qm
@@ -144,6 +143,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Apr 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.88-alt1
+- New version 2.0.88.
+- Built on separate gsettings-qt6 (no system qt6).
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.79-alt1
 - New version 2.0.79.
 - Fixed build on dtk 6.7.31.
