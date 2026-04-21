@@ -5,7 +5,7 @@
 %def_enable prebuilded_frontend
 
 Name: grafana
-Version: 12.3.2
+Version: 12.3.6
 Release: alt1
 Summary: Metrics dashboard and graph editor
 
@@ -29,7 +29,7 @@ Source17: %name.tmpfiles
 # error Command failed with signal "SIGXCPU"
 ExclusiveArch: x86_64 aarch64 loongarch64 mipsel riscv64
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
-BuildRequires: rpm-build-golang golang >= 1.24.4
+BuildRequires: rpm-build-golang golang >= 1.25.8
 %if_disabled prebuilded_frontend
 BuildRequires: npm
 BuildRequires: node >= 18 node-devel node-gyp
@@ -207,6 +207,16 @@ fi
 %_datadir/%name
 
 %changelog
+* Tue Apr 21 2026 Alexey Shabalin <shaba@altlinux.org> 12.3.6-alt1
+- 12.3.6+security-01
+- Fixes:
+  + CVE-2026-27876
+  + CVE-2026-27877
+  + CVE-2026-27879
+  + CVE-2026-27880
+  + CVE-2026-28375
+  + CVE-2026-33375
+
 * Fri Jan 30 2026 Alexey Shabalin <shaba@altlinux.org> 12.3.2-alt1
 - 12.3.2 (Fixes: CVE-2026-21720, CVE-2026-21721).
 
