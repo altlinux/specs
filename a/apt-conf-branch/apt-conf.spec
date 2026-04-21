@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Fri Mar 13 2026 Ivan A. Melnikov <iv@altlinux.org> 11.0-alt2
+- Add keys for loongarch64 port.
+
 * Thu May 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.0-alt1
 - Built for p11 branch.
 - Added [p11] key to the vendor.list.

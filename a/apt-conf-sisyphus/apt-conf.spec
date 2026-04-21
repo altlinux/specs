@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 10.96
-Release: alt2
+Release: alt3
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -47,6 +47,10 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Tue Apr 21 2026 Ivan A. Melnikov <iv@altlinux.org> 10.96-alt3
+- vendors.list.d/alt.list: add keys for p11 (thx glebfm@)
+  and p11-loongarch64.
+
 * Tue Oct 03 2023 Ivan A. Melnikov <iv@altlinux.org> 10.96-alt2
 - vendors.list.d/alt.list: add sisyphus-loongarch64 key pseudonym
 
