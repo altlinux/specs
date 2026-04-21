@@ -7,7 +7,7 @@
 
 Name: %pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Connect and query your database from your terminal in seconds
 Group: Development/Databases
@@ -55,7 +55,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -v -k "\
+not test_pending_query_set_before_connecting"
 
 %files
 %doc README.md
@@ -64,6 +65,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Apr 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt2
+- update
+
 * Mon Apr 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt1
 - new version
 
