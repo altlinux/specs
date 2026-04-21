@@ -1,5 +1,5 @@
 Name: sympa
-Version: 6.2.76
+Version: 6.2.78
 Release: alt1
 
 %def_without authorcheck
@@ -106,7 +106,7 @@ Patch20: sympa-6.2.70-conf-alt-fhs.patch
 
 # install & check
 BuildRequires: perl-devel perl-ldap
-BuildRequires: perl(Archive/Zip.pm)
+BuildRequires: perl(Archive/Zip/SimpleZip.pm)
 BuildRequires: perl(CGI/Cookie.pm)
 BuildRequires: perl(CGI/Fast.pm)
 BuildRequires: perl(CGI/Util.pm)
@@ -157,6 +157,7 @@ BuildRequires: perl(Unicode/UTF8.pm)
 BuildRequires: perl(URI.pm)
 BuildRequires: perl(URI/Escape.pm)
 BuildRequires: perl(XML/LibXML.pm)
+BuildRequires: perl(URI/Find/Schemeless.pm)
 
 %if %{with authorcheck}
 BuildRequires: perl(Test/Fixme.pm)
@@ -759,6 +760,9 @@ fi
 %static_content
 
 %changelog
+* Tue Apr 21 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.78-alt1
+- 6.2.78.
+
 * Tue Feb 04 2025 L.A. Kostis <lakostis@altlinux.ru> 6.2.76-alt1
 - 6.2.76.
 
