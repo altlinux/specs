@@ -27,7 +27,7 @@
 Name:    arduino
 Epoch:   1
 Version: 1.8.19
-Release: alt1_1jpp11
+Release: alt2_1jpp11
 Summary: An IDE for Arduino-compatible electronics prototyping platforms
 
 License: GPL-2.0+ and LGPL-2.1+ and CC-BY-SA-3.0
@@ -68,6 +68,7 @@ Patch5: arduino-add-to-groups.patch
 Patch6: arduino-fix-path-to-builder.patch
 Patch7: arduino-fix-fresh-rsyntaxtextarea.patch
 Patch8: arduino-add-libraries.patch
+Patch9: arduino-loongarch64-support.patch
 
 BuildRequires: ant
 BuildRequires: desktop-file-utils
@@ -202,6 +203,7 @@ tar -xvf %{SOURCE10} -C hardware
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 cp %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE17} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} build/
 cp %{SOURCE50} %{SOURCE51} build/shared/
@@ -365,6 +367,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 
 
 %changelog
+* Tue Apr 21 2026 Ilya Sorochan <k0tran@altlinux.org> 1:1.8.19-alt2_1jpp11
+- NMU: introduce loongarch64 support
+
 * Sat Jan 28 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.8.19-alt1_1jpp11
 - New version (ALT #38099).
 - Packaged bundled libraries.
