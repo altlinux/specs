@@ -1,7 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable test
 
 Name: directx-headers
-Version: 1.619.0
+Version: 1.619.1
 Release: alt1
 
 Summary: Official DirectX headers available under an open source license
@@ -36,6 +37,8 @@ find . -type f -exec dos2unix {} \;
  %nil
 %endif
 %meson_build -v
+
+%install
 %meson_install
 
 %files
@@ -48,6 +51,9 @@ find . -type f -exec dos2unix {} \;
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 21 2026 L.A. Kostis <lakostis@altlinux.ru> 1.619.1-alt1
+- Update to 1.619.1.
+
 * Tue Mar 03 2026 L.A. Kostis <lakostis@altlinux.ru> 1.619.0-alt1
 - Update to 1.619.0.
 
