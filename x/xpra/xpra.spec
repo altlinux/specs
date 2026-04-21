@@ -3,7 +3,7 @@
 
 Name: xpra
 Version: 6.4.3
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 License: GPL-2.0-or-later AND LicenseRef-Callaway-BSD AND LGPL-3.0-or-later AND LicenseRef-Callaway-MIT
@@ -51,18 +51,13 @@ Requires: python3-module-OpenGL python3-module-OpenGL_accelerate
 
 BuildRequires: python3-module-Pillow python3-module-websockify
 
-%ifarch %e2k
-# no libv8/node so far => --without-minify;
-# it's java actually
-BuildRequires: python3-module-yuicompressor
-BuildRequires: /proc
-%else
 BuildRequires: /usr/bin/uglifyjs
-%endif
 
 BuildRequires: xorg-server brotli
 
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
 BuildRequires: python3-module-Cython >= 0.20
@@ -107,12 +102,6 @@ Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4 pyt
 Requires: libgtk+3-gir
 
 Requires: cert-sh-functions
-
-%ifarch %e2k
-%define py_flags --without-mdns --without-html5 --without-minify
-%else
-%define py_flags --without-mdns
-%endif
 
 %description
 Xpra is 'screen for X': it allows you to run X programs,
@@ -170,11 +159,11 @@ export CFLAGS="${CFLAGS:-%optflags} $(pkg-config --cflags pygobject-3.0)"
 	--with-vpx \
 	--with-Xdummy \
 	--with-Xdummy_wrapper \
-	%py_flags \
+	--without-mdns \
 	%_smp_mflags
 
 %install
-%python3_install %py_flags
+%python3_install --without-mdns
 
 move_if_not_there () {
   local source="$1" destdir="$2"
@@ -220,7 +209,9 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 /usr/libexec/%name/
 #_datadir/parti/
 #_datadir/wimpiggy/
+%ifnarch %e2k
 %_docdir/%name/
+%endif
 %_datadir/xpra/
 %_tmpfilesdir/xpra.conf
 %_datadir/metainfo/xpra.appdata.xml
@@ -242,6 +233,12 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Tue Apr 21 2026 Michael Shigorin <mike@altlinux.org> 6.4.3-alt2
+- E2K:
+  + revert the uglifyjs/yuicompressor change done
+    in 4.0.6-alt1.1 following availability changes
+  + no pandoc so far
+
 * Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.3-alt1
 - new version 6.4.3
 - add libXcursor-devel to BuildRequires
