@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 1.11.2
-Release: alt1.1
+Version: 1.12.0
+Release: alt1
 
 Summary: A drop-in replacement for xpyb based on cffi
 License: Apache-2.0
@@ -67,6 +67,9 @@ sed -i "s/__version__ = .*/__version__ = \"%version\"/" xcffib/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Apr 22 2026 Leonid Znamenok <respublica@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
 * Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 1.11.2-alt1.1
 - Fixed FTBFS with ghc-1:9.6.7-alt2.
 
