@@ -1,19 +1,24 @@
-%define _unpackaged_files_terminate_build 1
+%define rname yakuake
 
-Name:    yakuake
+Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
+%K6init
 
-Summary: Very powerful Quake style Konsole for KF5
+Summary: Very powerful Quake style terminal emulator
 License: GPL-2.0 or GPL-3.0
 Group: Terminals
 Url: http://yakuake.kde.org/
 
+Requires: konsole
+
+Provides: kde5-yakuake = %EVR
+Obsoletes: kde5-yakuake < %EVR
+
 # Download from https://download.kde.org/stable/release-service//$pkgver/src/yakuake-$pkgver.tar.xz
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-karchive-devel
 BuildRequires: kf6-kauth-devel
@@ -51,21 +56,13 @@ BuildRequires: plasma6-kwayland-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-svg-devel
 
-Requires: konsole
-
-Provides:  kde5-%name = %version-release
-Obsoletes: kde5-%name < %version-release 
-
 %description
-A KDE konsole which looks like those found in Quake.
-
-This version is built with KF5.
+Yakuake is a drop-down terminal emulator based on KDE Konsole technology.
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
-%K6init no_altplace
 %K6build
 
 %install
@@ -73,17 +70,20 @@ This version is built with KF5.
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS README.md TODO
-%_K6bin/*
-%_K6xdgapp/*.desktop
-%_K6icon/*/*/apps/*
-%_datadir/%name
-%_K6notif/%name.notifyrc
-%_K6dbus_srv/*.service
-%_datadir/knsrcfiles/%name.knsrc
-%_datadir/metainfo/*.appdata.xml
+%doc AUTHORS README.md TODO LICENSES/*
+%_K6bin/%rname
+%_K6xdgapp/*%{rname}*.desktop
+%_K6icon/*/*/apps/*%{rname}*
+%_K6data/%rname
+%_K6notif/%rname.notifyrc
+%_K6dbus_srv/*%{rname}*.service
+%_K6data/knsrcfiles/%rname.knsrc
+%_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Tue Apr 21 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- udpate packaging
+
 * Mon Mar 09 2026 Andrey Cherepanov <cas@altlinux.org> 25.12.3-alt1
 - New version.
 
@@ -319,4 +319,4 @@ This version is built with KF5.
 - new version
 
 * Thu Oct 13 2005 Nick S. Grechukh <gns@altlinux.org> 2.6-alt1
-- initial build 
+- initial build
