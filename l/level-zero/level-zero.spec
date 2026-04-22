@@ -1,6 +1,6 @@
 %define soversion 1
 Name: level-zero
-Version: 1.28.0
+Version: 1.28.4
 Release: alt1
 
 Summary: OneAPI Level Zero Specification Headers and Loader
@@ -8,7 +8,7 @@ License: MIT
 Group: Development/C
 
 Url: https://github.com/oneapi-src/level-zero
-# Source-url: https://github.com/oneapi-src/level-zero/archive/refs/tags/v%version.tar.gz
+VCS:https://github.com/oneapi-src/level-zero.git
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
@@ -74,6 +74,9 @@ developing applications that use libze.
 %_pkgconfigdir/level-zero.pc
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 1.28.4-alt1
+- 1.28.0 -> 1.28.4 (Closes: #58817)
+
 * Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 1.28.0-alt1
 - 1.28.0.
 
