@@ -2,7 +2,7 @@
 %define soversion 10
 
 Name: gz-sim
-Version: 10.1.0
+Version: 10.1.1
 Release: alt1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
@@ -99,6 +99,7 @@ Requires: gz-rendering
 Requires: gz-transport
 Requires: sdformat
 Requires: gz-tools
+Requires: qt6-5compat
 
 %description
 Gazebo simulates multiple robots in a 3D environment
@@ -1058,6 +1059,10 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-sim*.pc
 
 %changelog
+* Tue Apr 21 2026 Pavel Petrykin <silverducks@altlinux.org> 10.1.1-alt1
+- New version.
+- Fix segfault due to missing dependency on GNOME (ALT 46849).
+
 * Mon Feb 2 2026 Pavel Petrykin <silverducks@altlinux.org> 10.1.0-alt1
 - New version.
 - Fix save world file dialog (ALT 57554).
