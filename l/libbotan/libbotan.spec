@@ -2,11 +2,11 @@
 %ifarch armh
 %def_without test
 %endif
-%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 0
 
 Name: libbotan
 Version: 2.19.1
-Release: alt2.5
+Release: alt3
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -16,6 +16,7 @@ Url: http://botan.randombit.net
 
 # Source-url: https://github.com/randombit/botan/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch1: alt_fix_gcc15_build.patch
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: rpm-build-python3
@@ -31,33 +32,18 @@ cryptographic operations, including encryption, authentication, and
 X.509v3 certificates and CRLs. A wide variety of algorithms is
 supported, including RSA, DSA, DES, AES, MD5, and SHA-1.
 
-%package devel
-Summary: Headers for %name
-Group: Development/C
-Requires: %name = %EVR
-Conflicts: libbotan1.11-devel
+#%package devel
+#Summary: Headers for %name
+#Group: Development/C
+#Requires: %name = %EVR
+#Conflicts: libbotan1.11-devel
 
-%description devel
-Headers for building software that uses %name
-
-%package doc
-Summary: Documentation for %name
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-%summary
-
-%package -n python3-module-botan
-Summary: Python extensions for botan
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description -n python3-module-botan
-Python extensions for botan
+#%description devel
+#Headers for building software that uses %name
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 # The patch is correct, but there's a new ICE in the compiler.
@@ -98,21 +84,18 @@ LD_LIBRARY_PATH=. ./botan-test
 %files
 %_libdir/*.so.*
 
-%files devel
-%_bindir/*
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_man1dir/botan.1*
+#%files devel
+#%_bindir/*
+#%_includedir/*
+#%_libdir/*.so
+#%_pkgconfigdir/*.pc
+#%_man1dir/botan.1*
 
-%files doc
-%doc %_defaultdocdir/botan-%version
-
-%files -n python3-module-botan
-%python3_sitelibdir/*.py
-%python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Apr 21 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.19.1-alt3
+- stop package devel/doc and python-module
+
 * Sat Mar 02 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.19.1-alt2.5
 - Fixed build for Elbrus
 
