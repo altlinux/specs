@@ -6,7 +6,7 @@
 
 Name: SDL
 Version: 1.2.15
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: LGPL
@@ -91,6 +91,9 @@ autoconf
 %_mandir/man?/*
 
 %changelog
+* Wed Apr 22 2026 Valery Sinelnikov <greh@altlinux.org> 1.2.15-alt2
+- Fixed FTBFS with modern GCC: proper prototypes in Xext forward decls.
+
 * Fri Jan 30 2026 Valery Sinelnikov <greh@altlinux.org> 1.2.15-alt1
 - 1.2.15
 
