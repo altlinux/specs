@@ -1,13 +1,14 @@
 %define soversion 2
 Name: libcupsfilters
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Summary: Library for developing printing filters
 License: Apache-2.0 WITH LLVM-exception
 Group: System/Libraries
 Url: https://github.com/OpenPrinting/libcupsfilters
 Source0: %name-%version.tar
 Source1: default-testpage.pdf
+Patch0: %name-%version-%release.patch
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: gcc-c++
@@ -56,6 +57,7 @@ Development files for OpenPrinting cupsfilters library.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -116,6 +118,10 @@ rm -rf %buildroot/usr/share/doc/libcupsfilters
 %_libdir/pkgconfig/libcupsfilters.pc
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 2.1.1-alt2
+- applied security fixes from upstream git (Fixes: CVE-2025-57812,
+  CVE-2025-64503)
+
 * Wed Feb 19 2025 Anton Farygin <rider@altlinux.ru> 2.1.1-alt1
 - 2.1.1
 

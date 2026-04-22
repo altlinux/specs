@@ -3,23 +3,20 @@
 
 Name: cups-filters
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: OpenPrinting CUPS filters and backends
 License: GPLv2 and GPLv2+ and GPLv3 and MIT
 Group: System/Servers
 
-Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
-Source0: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
+Url: https://github.com/openprinting/cups-filters
+VCS: https://github.com/openprinting/cups-filters.git
+Source0: cups-filters-%version.tar
 Source1: %name.watch
 Patch0: %name-alt.patch
+Patch1: %name-%version-%release.patch
 Conflicts: cups < 1.6.1-alt1
-Conflicts: ghostscript-cups
-Obsoletes: ghostscript-cups
-Provides: ghostscript-cups
-Obsoletes: foomatic-filters
-Provides: foomatic-filters
-Conflicts: foomatic-filters
+Provides: foomatic-filters = %EVR
 
 Requires: poppler-utils
 Requires: /usr/bin/gs
@@ -36,10 +33,10 @@ Apple Inc. In addition it contains additional filters developed
 independently of Apple, especially filters for the PDF-centric printing
 workflow introduced by OpenPrinting.
 
-
 %prep
 %setup
 %patch0 -p2
+%patch1 -p1
 
 %build
 ./autogen.sh
@@ -86,6 +83,14 @@ mkdir -p %buildroot/%_datadir/cups/data/
 %_datadir/man/man*/*
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 2.0.1-alt2
+- applied upsream fix for infinite loop caused by
+  crafted file (Fixes: CVE-2025-64524)
+- fixed build with gcc-15
+- removed legacy ghostscript-cups and
+  foomatic-filters Provides/Obsoletes/Conflicts
+- updated URL and VCS tags
+
 * Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
 - 2.0.0 -> 2.0.1
 
