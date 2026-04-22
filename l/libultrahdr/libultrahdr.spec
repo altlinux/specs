@@ -2,7 +2,7 @@
 %define libname libultrahdr%sover
 Name: libultrahdr
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Library for handling Ultra HDR image format
 License: Apache-2.0
 Group: System/Libraries
@@ -77,5 +77,8 @@ rm -f %buildroot/%_libdir/*.a
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt2
+- fixed build with gcc 15
+
 * Mon Mar 17 2025 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - initial build for ALT Linux
