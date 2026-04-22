@@ -1,15 +1,15 @@
 Name: gtick
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 Summary: GTick is a GTK+ 2 metronome
 License: GPL-3.0+ and LGPL-2.1+
 Group: Sound
-Url: http://www.antcom.de/%name
+Url: http://www.antcom.de/gtick
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: https://www.antcom.de/%name/download/%name-%version.tar.gz
+Source: https://www.antcom.de/gtick/download/%name-%version.tar.gz
 Source1: %name-48x48.xpm
 Source2: %name-32x32.xpm
 Source3: %name-16x16.xpm
@@ -27,6 +27,8 @@ and OSS (ALSA compatible).
 %setup -q
 
 %build
+# gcc15
+%add_optflags -std=gnu17
 %configure --disable-rpath
 
 %make_build
@@ -69,6 +71,9 @@ install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
 %doc AUTHORS ChangeLog NEWS THANKS README TODO
 
 %changelog
+* Wed Apr 22 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt2
+- Fixed build on gcc15.
+
 * Wed Feb 17 2021 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt1
 - 0.5.5
 
