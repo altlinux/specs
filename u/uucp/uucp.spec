@@ -1,6 +1,6 @@
 Name: uucp
 Version: 1.07
-Release: alt7
+Release: alt8
 
 Summary: The %name utility for copying files between systems
 License: GPLv2
@@ -51,6 +51,7 @@ find -type f |
 	xargs -r perl -pi -e "s/^''' /"'.\\" /'
 
 %build
+%add_optflags -std=gnu17
 export uucp_cv_c_void=yes uucp_cv_c_unsigned_char=yes
 %autoreconf
 %configure --with-user=%name --with-newconfigdir=/etc/uucp \
@@ -132,6 +133,9 @@ chmod go-rwx %_logdir/%name/Debug
 %_man1dir/cu.1*
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.07-alt8
+- fixed build with gcc15
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.07-alt7
 - fixed build with gcc14
 
