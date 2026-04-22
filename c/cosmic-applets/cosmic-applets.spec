@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-applets
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1%beta
 
 Summary: COSMIC Panel Applets
@@ -24,6 +24,9 @@ Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
+
+# for battery applet
+Requires: upower
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -85,6 +88,9 @@ just rootdir=%buildroot install
 #%doc README*
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt1
+- 1.0.11
+
 * Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
 - 1.0.10
 
