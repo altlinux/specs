@@ -4,7 +4,7 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	34.0.0
+%define min_version	34.2.0
 %define max_version	34.9.*
 
 %define bname		newmoon
@@ -14,7 +14,7 @@
 
 Name: palemoon-ru
 
-Version: 34.0.0
+Version: 34.2.0
 Release: alt1
 
 ExcludeArch: armh
@@ -33,7 +33,7 @@ Source2: searchplugins.tar
 #Patch:   %name-31.1.0-search.patch
 #Patch2:	 %name-27.3.0-advanced.patch
 
-Requires: palemoon >= 34.0.0
+Requires: palemoon >= 34.2.0
 Requires: hunspell-ru
 Requires: palemoon-searchplugins
 
@@ -125,6 +125,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Wed Apr 22 2026 Hihin Ruslan <ruslandh@altlinux.ru> 34.2.0-alt1
+- Version 34.2.0
+
 * Thu Jan 22 2026 Hihin Ruslan <ruslandh@altlinux.ru> 34.0.0-alt1
 - Version 34.0.0
 
