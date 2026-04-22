@@ -1,36 +1,25 @@
-%set_automake_version 1.10
-%set_autoconf_version 2.60
-
 %def_without libs
 
 Name: fuse-encfs
 Summary: Encrypted pass-thru filesystem for Linux
 Version: 1.9.5
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 
 Source: %name.tar
 Url: https://vgough.github.io/encfs/
+VCS: https://github.com/vgough/encfs
 
 Patch1: encfs.link.patch
 Patch2: encfs.static.char.patch
 Patch3: 0001-boost-serialization-version-workaround.patch
 
-# Automatically added by buildreq on Mon Mar 20 2017
-# optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base
 BuildRequires: cmake gcc-c++ libattr-devel libfuse-devel libssl-devel libtinyxml2-devel perl-Pod-Usage
-
-BuildRequires: cvs
 
 BuildRequires: libfuse-devel >= 2.1
 BuildRequires: boost-devel boost-filesystem-devel
-
 Requires: fuse
-Requires: libssl >= 0.7.9g
-
-Provides: encfs
-Obsoletes: encfs
 
 %description
 EncFS implements an encrypted filesystem in userspace using FUSE.  FUSE
@@ -41,11 +30,6 @@ it does not use NFS.
 
 %prep
 %setup -c %name-%version
-## applied in upstream
-#patch1 -p1
-#patch2 -p2
-## do we need it anymore???
-#patch3 -p2
 
 %build
 mkdir -p build
@@ -74,6 +58,11 @@ cd build
 %endif
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 1.9.5-alt2
+- added VCS tag
+- cleaned up spec
+- dropped obsoleted build requirements
+
 * Thu Oct 08 2020 Anton Farygin <rider@altlinux.ru> 1.9.5-alt1
 - 1.9.5
 
