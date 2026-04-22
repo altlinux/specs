@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt9.1
+Release: alt10
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -238,7 +238,10 @@ cp -pvf /usr/share/gnu-config/config.{sub,guess} lang/sql/sqlite/
 %build
 %add_optflags -fno-strict-aliasing -DBDBSQL_FILE_PER_TABLE=1
 %add_optflags -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_RTREE=1
-%add_optflags -Wno-implicit-function-declaration -Wno-int-conversion
+%add_optflags -Wno-error=implicit-function-declaration
+%add_optflags -Wno-error=int-conversion
+%add_optflags -Wno-error=incompatible-pointer-types
+%add_optflags -std=gnu17
 %define _configure_script ../dist/configure
 
 pushd dist
@@ -409,6 +412,9 @@ done
 %endif
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 6.1.19-alt10
+- Fixed FTBFS after gcc 15
+
 * Mon Mar 17 2025 Artem Semenov <savoptik@altlinux.org> 6.1.19-alt9.1
 - NMU: Fixed build with gcc-14
 
