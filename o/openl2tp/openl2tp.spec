@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt11
+Release: alt12
 
 Summary: L2TP (RFC2661) server/client
 License: GPLv2
@@ -45,6 +45,7 @@ sed -i 's,-Werror ,,' Makefile
 %add_optflags -Wno-strict-aliasing -Wno-unused-but-set-variable
 %add_optflags -Wno-error=address-of-packed-member -Wno-error=stringop-overflow
 %add_optflags -Wno-error=array-bounds -Wno-error=address
+%add_optflags -std=gnu17
 make OPT_CFLAGS='%optflags -I%_includedir/tirpc' SYS_LIBDIR=%_libdir
 
 %install
@@ -87,6 +88,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8-alt12
+- fixed build with gcc15
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8-alt11
 - rebuilt with gcc14
 
