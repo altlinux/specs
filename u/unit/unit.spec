@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.35.0
-Release: alt2
+Release: alt3
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -101,6 +101,8 @@ sed -i "/NXT_PHP_LIB=/s/\"-lphp.*\"/$LIBPHP_LDFLAGS/" auto/modules/php
 #   %%define optflags_lto %nil
 #   %%add_optflags -fanalyzer -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-malloc-leak -Wno-analyzer-use-of-uninitialized-value
 # Last one is certainly worrisome.
+
+%add_optflags -Wno-error=unterminated-string-initialization
 
 %ifarch %e2k
 # lcc 1.25.12 found some perl/php interpreter header glitches missed by gcc
@@ -245,6 +247,9 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.35.0-alt3
+- Fix build with gcc-15.
+
 * Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 1.35.0-alt2
 - Fix build with php 8.5 (upstream commit ad736f9).
 
