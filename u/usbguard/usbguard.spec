@@ -10,7 +10,7 @@
 
 Name: usbguard
 Version: 1.1.4
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -40,6 +40,11 @@ BuildRequires: libprotobuf-devel protobuf-compiler libqb-devel
 BuildRequires: libumockdev-devel
 %if_enabled dbus
 BuildRequires: libdbus-glib-devel libgio-devel libpolkit-devel
+%endif
+%ifarch %e2k
+BuildRequires: clang
+# -O3 is the default for e2k
+%global _optlevel 2
 %endif
 
 %description
@@ -114,6 +119,10 @@ done
 %endif
 
 %build
+%ifarch %e2k
+export CC=clang
+export CXX=clang++
+%endif
 %configure \
     --disable-static \
     --enable-shared \
@@ -191,6 +200,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Wed Apr 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1.4-alt2
+- e2k build fix
+
 * Mon Feb 09 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
 - new version
 
