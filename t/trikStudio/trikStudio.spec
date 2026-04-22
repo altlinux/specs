@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2025.4
-Release: alt1
+Release: alt1.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -222,6 +222,9 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.*.so.*'
 %endif
 
 %changelog
+* Fri Apr 17 2026 Fedor Moseichuck <phobos@altlinux.org> 2025.4-alt1.1
+- NMU: changed desktop file comment to differ from trikStudioJunior
+
 * Mon Nov 17 2025 Valentin Sokolov <sova@altlinux.org> 2025.4-alt1
 - Update to 2025.4
 

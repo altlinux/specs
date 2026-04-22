@@ -6,7 +6,7 @@
 
 Name: trikStudioJunior
 Version: 2021.3
-Release: alt1.1
+Release: alt1.2
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -134,6 +134,9 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Fri Apr 17 2026 Fedor Moseichuck <phobos@altlinux.org> 2021.3-alt1.2
+- NMU: changed desktop file comment to differ from trikStudio
+
 * Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 2021.3-alt1.1
 - NMU: don't use gold on loongarch64 and riscv64 (fixes build
   on these architectures).
@@ -154,4 +157,3 @@ done
 
 * Tue Jun 23 2020 Valery Sinelnikov <greh@altlinux.org> 2020.2-alt1
 - Initial build for Sisyphus
-
