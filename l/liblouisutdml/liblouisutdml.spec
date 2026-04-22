@@ -4,7 +4,7 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt5
+Release: alt6
 Summary: Braille transcription library for UTDML documents
 License: LGPL-3.0-or-later
 Group: Accessibility
@@ -74,14 +74,10 @@ provided by %name-utils.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%autopatch1 -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure --disable-static --disable-java-bindings
 %make_build
@@ -117,6 +113,9 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_infodir/%name.info.*
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt6
+- Fixed FTBFS after gcc 15
+
 * Mon Jan 19 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt5
 - Fixed FTBFS after libxml2 update to 2.14.6
 
