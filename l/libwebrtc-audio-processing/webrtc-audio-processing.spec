@@ -2,7 +2,7 @@
 
 Name: lib%rname
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: WebRTC Audio Processing library
 License: BSD
@@ -13,6 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %url/%rname-%version.tar.gz
 Patch: webrtc-fix-typedefs-on-other-arches.patch
+Patch1: webrtc-alt-gcc15-cstdint.patch
 Patch2000: webrtc-e2k.patch
 
 BuildRequires: gcc-c++ meson libabseil-cpp-devel
@@ -34,6 +35,7 @@ develop programs which make use of %rname
 %prep
 %setup -n %rname-%version
 %patch -p1
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -41,7 +43,7 @@ develop programs which make use of %rname
 %build
 %add_optflags -Wno-return-type
 %ifarch %ix86
-%add_optflags -march=native
+%add_optflags -msse
 %endif
 %ifarch %e2k
 cat > c++ << "EOF"
@@ -70,6 +72,10 @@ export CXX=$(pwd)/c++
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt3
+- Fixed FTBFS with gcc 15.
+- %%ix86: build with -msse instead of -march=native.
+
 * Wed Oct 18 2023 Michael Shigorin <mike@altlinux.org> 1.3-alt2
 - E2K: ftbfs workaround (ilyakurdyukov@)
 - minor spec cleanup
