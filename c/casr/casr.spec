@@ -3,7 +3,7 @@
 
 Name: casr
 Version: 2.13.0
-Release: alt1
+Release: alt2
 
 Summary: Collect crash (or UndefinedBehaviorSanitizer error) reports, triage, and estimate severity.
 License: Apache-2.0
@@ -17,8 +17,8 @@ BuildRequires(pre): rpm-build-rust
 %if_with check
 BuildRequires: java-devel-default
 BuildRequires: python3-devel
-BuildRequires: clang15.0
-BuildRequires: llvm15.0
+BuildRequires: clang16.0
+BuildRequires: llvm16.0
 BuildRequires: gcc-c++
 BuildRequires: lua5.4
 BuildRequires: /proc
@@ -136,6 +136,9 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
 %_bindir/*
 
 %changelog
+* Wed Apr 22 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.13.0-alt2
+- Fix FTBFS with usage of llvm16 instead of llvm15.
+
 * Fri Aug 15 2025 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.13.0-alt1
 - Update to version 2.13.0.
 
