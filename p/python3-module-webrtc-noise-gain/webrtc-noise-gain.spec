@@ -1,6 +1,6 @@
 Name: python3-module-webrtc-noise-gain
 Version: 1.2.3
-Release: alt2
+Release: alt3
 
 Summary: Python interface to the WebRTC
 License: MIT
@@ -38,6 +38,9 @@ noise suppression and auto gain only.
 %python3_sitelibdir/webrtc_noise_gain-%version.dist-info
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.3-alt3
+- fixed build with gcc15
+
 * Sat Jun 08 2024 Michael Shigorin <mike@altlinux.org> 1.2.3-alt2
 - E2K: ftbfs workaround (ilyakurdyukov@)
 
