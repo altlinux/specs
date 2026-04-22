@@ -1,8 +1,6 @@
-%def_disable static
-
 Name: linux-atm
 Version: 2.5.1
-Release: alt8
+Release: alt9
 
 Summary: Asynchronous Transfer Mode tools
 License: GPLv2
@@ -60,8 +58,9 @@ This package contains libatm static library.
 %setup
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
-%configure %{subst_enable static}
+%configure --disable-static
 make
 
 %install
@@ -89,6 +88,9 @@ bzip2 -9k ChangeLog
 %endif
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.1-alt9
+- fixed build with gcc15
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.1-alt8
 - rebuilt with gcc14
 
