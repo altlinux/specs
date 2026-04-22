@@ -1,6 +1,6 @@
 Name: evrouter
 Version: 0.4
-Release: alt3
+Release: alt4
 Summary: An input layer event router for Linux
 License: GPLv2
 Group: System/Configuration/Hardware
@@ -8,7 +8,7 @@ Url: http://www.bedroomlan.org/projects/evrouter
 Packager: Egor Glukhov <kaman@altlinux.org>
 
 Source0: %name-%version.tar
-Patch: evrouter-0.4-gcc10.patch
+Patch: evrouter-0.4-archlinux-gcc15.patch
 Patch1: evrouter-0.4-autoconf2.71.patch
 
 BuildRequires: gcc-c++ libICE-devel libXtst-devel
@@ -21,7 +21,7 @@ commands.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 %patch1 -p1
 
 %build
@@ -38,6 +38,9 @@ commands.
 %_man1dir/*
 
 %changelog
+* Wed Apr 22 2026 Leontiy Volodin <lvol@altlinux.org> 0.4-alt4
+- Fixed build with gcc15 (thanks archlinux for the patch).
+
 * Wed Aug 02 2023 Leontiy Volodin <lvol@altlinux.org> 0.4-alt3
 - Fixed build with autoconf 2.71.
 
