@@ -5,7 +5,7 @@
 
 Name: bitchx
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Nostalgic IRC client
 License: BSD-3-Clause
 Group: Networking/Chat
@@ -32,7 +32,7 @@ sed -i '/internal_version\[\] =/s/\(".*\)\("\)/\1+%release\2/' source/irc.c
 
 %build
 %define optflags_lto %nil
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -std=gnu17
 %autoreconf
 %configure --enable-ipv6
 %make_build
@@ -53,5 +53,8 @@ sed -i '/internal_version\[\] =/s/\(".*\)\("\)/\1+%release\2/' source/irc.c
 %_man1dir/BitchX.1.*
 
 %changelog
+* Wed Apr 22 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
+- Workaround FTPBS with gcc15.
+
 * Tue May 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
 - First import 1.2.1-2019-20-geaf6456 (2019-12-28).
