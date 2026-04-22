@@ -19,7 +19,7 @@
 
 Name: libgtk+2
 Version: %ver_major.33
-Release: alt2
+Release: alt3
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: LGPL-2.0
@@ -230,7 +230,7 @@ bzip2 -9k NEWS
 sed -i 's|\(#\!/usr/bin/env python\)|\13|' gtk/gtk-builder-convert
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -std=gnu99
 %if_enabled snapshot
 NOCONFIGURE=1 ./autogen.sh
 %else
@@ -373,6 +373,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.24.33-alt3
+- rebuild with gcc-15 and -std=gnu99
+
 * Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.24.33-alt2
 - fixed CVE-2024-6655
 - fixed build with gcc-14

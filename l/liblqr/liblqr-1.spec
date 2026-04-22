@@ -1,10 +1,11 @@
+%def_enable snapshot
 %define api_ver 1
 
 %def_enable man
 
 Name: liblqr
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: LiquidRescale library
 Group: System/Libraries
@@ -13,8 +14,12 @@ Url: https://liblqr.wikidot.com/
 
 Vcs: https://github.com/carlobaldassi/liblqr.git
 
+%if_disabled snapshot
 Source: https://github.com/carlobaldassi/liblqr/archive/v%version/%name-%version.tar.gz
 #Source: http://liblqr.wikidot.com/local--files/en:download-page/%name-%api_ver-%version.tar.bz2
+%else
+Source: %name-%version.tar
+%endif
 
 BuildRequires: gcc-c++ glib2-devel
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
@@ -58,6 +63,9 @@ needed to develop applications with liblqr.
 %{?_enable_man:%_man3dir/*}
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt2
+- updated to v0.4.3-4-gce26710 (fixed build with gcc-15)
+
 * Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
