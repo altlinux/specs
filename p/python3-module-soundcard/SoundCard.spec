@@ -1,7 +1,7 @@
 %define nameD soundcard
 
 Name: python3-module-%nameD
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: A Pure-Python Real-Time Audio Library
@@ -43,6 +43,9 @@ the native audio libraries of Linux, Windows and macOS.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.4.6-alt1
+- 0.4.5 -> 0.4.6
+
 * Tue Sep 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.5-alt1
 - 0.4.4 -> 0.4.5
 
