@@ -6,7 +6,7 @@
 %define polkit_qt6_core_major 1
 
 Name: polkit-qt6
-Version: 0.175.0
+Version: 0.201.1
 Release: alt1
 
 Summary: Qt 6 bindings for PolicyKit
@@ -18,11 +18,9 @@ Url: https://invent.kde.org/libraries/polkit-qt-1
 Source: polkit-qt-1-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules cmake
 BuildRequires: libpolkit1-devel
 BuildPreReq: qt6-base-devel
-BuildPreReq: kde-common-devel
 
 %description
 Polkit-qt6 is a library that lets developers use the PolicyKit API
@@ -99,5 +97,8 @@ rm -fv html/installdox
 %_libdir/cmake/PolkitQt6-1/
 
 %changelog
+* Wed Apr 22 2026 Sergey V Turchin <zerg@altlinux.org> 0.201.1-alt1
+- new version
+
 * Thu Nov 16 2023 Anton Midyukov <antohami@altlinux.org> 0.175.0-alt1
 - Initial build
