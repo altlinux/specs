@@ -2,7 +2,7 @@
 
 Name: freeplane-twemoji
 Version: 12.1.4
-Release: alt1
+Release: alt2
 
 Summary: Emoji package
 License: CC-BY-4.0
@@ -40,5 +40,8 @@ BuildRequires: jpackage-default
 %files -f .mfiles
 
 %changelog
+* Wed Apr 22 2026 Arseniy Kostevich <faux@altlinux.org> 12.1.4-alt2
+- Include emojilist.txt in jar.
+
 * Mon Apr 20 2026 Arseniy Kostevich <faux@altlinux.org> 12.1.4-alt1
 - Initial build for ALT.
