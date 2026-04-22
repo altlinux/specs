@@ -1,9 +1,9 @@
 Name: mpack
 Version: 1.6
-Release: alt3
+Release: alt4
 
 Summary: %name and munpack MIME e-mail utilities
-Copyright: Distributable
+License: Distributable
 Group: File tools
 Url: https://github.com/league/mpack
 Vcs: https://github.com/league/mpack
@@ -28,6 +28,7 @@ ln -s /usr/share/automake-1.16/compile compile
 ln -s /usr/share/automake-1.16/depcomp depcomp
 
 %build
+%add_optflags -std=gnu17
 %__aclocal -I cmulocal
 %__autoconf
 %__automake
@@ -45,6 +46,9 @@ ln -s /usr/share/automake-1.16/depcomp depcomp
 %doc README.unix
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6-alt4
+- Fixed FTBFS.
+
 * Sun Dec 08 2024 Aleksandr Shamaraev <shad@altlinux.org> 1.6-alt3
 - removed patch
 - fix CVE-2011-4919
