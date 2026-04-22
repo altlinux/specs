@@ -3,8 +3,8 @@
 %define nameS org.gnome.shell.extensions.mediacontrols
 
 Name: gnome-shell-extension-media-controls
-Version: 2.4.4
-Release: alt2
+Version: 2.4.5
+Release: alt1
 
 Summary: A mpris client for the Gnome shell
 
@@ -35,7 +35,7 @@ Show controls and information of the currently playing media in the panel.
 rm pnpm-lock.yaml
 sed -i 's/pnpm/npm/g' package.json
 
-subst 's|"49"|"49", "50"|' src/metadata.json
+#subst 's|"49"|"49", "50"|' src/metadata.json
 
 %build
 npm run build
@@ -60,6 +60,9 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.5-alt1
+- 2.4.4 -> 2.4.5
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.4-alt2
 - fixed for GNOME 50
 
