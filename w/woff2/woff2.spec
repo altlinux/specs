@@ -1,6 +1,6 @@
 Name: woff2
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: WOFF2 compress/decompress tools
 License: MIT
@@ -88,6 +88,9 @@ cp -a %_cmake__builddir/woff2_* %buildroot%_bindir/
 
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt4
+- updated to v1.0.2-12-g1c69169 (fixed build with gcc-15)
+
 * Mon Jun 27 2022 Michael Shigorin <mike@altlinux.org> 1.0.2-alt3
 - E2K: ftbfs fix (cf. gentoo#661942)
 
