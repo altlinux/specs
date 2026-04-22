@@ -2,7 +2,7 @@
 %define import_path github.com/ahmetb/kubectx
 
 Name: kubectx
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: Fast utilities to switch kubectl contexts and namespaces
@@ -37,6 +37,7 @@ them for kubectl) easily.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export LDFLAGS="-X main.version=%version"
 
 %golang_prepare
 cd .build/src/%import_path
@@ -58,6 +59,9 @@ export IGNORE_SOURCES=1
 %_bindir/kubens
 
 %changelog
+* Wed Apr 08 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.11.0-alt1
+- Updated to new version v0.11.0.
+
 * Wed Mar 25 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.10.2-alt1
 - Updated to new version v0.10.2.
 
