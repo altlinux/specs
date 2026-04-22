@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt4
+Release: alt5
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -491,6 +491,10 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt5
+- Scale installer background image (Closes: 49314) (thanks to zerg).
+- Align the os-release with current ALT wiki format recommendations.
+
 * Mon Apr 13 2026 Fedor Moseichuck <phobos@altlinux.org> 11.1-alt4
 - menu: remove apps from hidden
 
