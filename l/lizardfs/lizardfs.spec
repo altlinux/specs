@@ -19,7 +19,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc4.1.1
+Release: alt0.rc4.1.2
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -201,6 +201,7 @@ done
 
 %build
 %cmake	\
+	-DCMAKE_CXX_FLAGS:STRING="%optflags -std=gnu++17 -fpermissive -Wno-template-body" \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DENABLE_TESTS=NO \
 	-DCMAKE_INSTALL_PREFIX=/ \
@@ -447,6 +448,9 @@ rm -f %buildroot%_libdir/*.a
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc4.1.2
+- FTBFS: fix build with c++15
+
 * Sun Mar 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc4.1.1
 - rename nobody to _nobody99 to fit new crazy changes in verify-unit.brp
 
