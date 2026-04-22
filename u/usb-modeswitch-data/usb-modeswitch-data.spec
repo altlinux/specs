@@ -1,12 +1,9 @@
 Name:    usb-modeswitch-data
 Version: 20251207
-Release: alt1
+Release: alt2
 
 Summary: Data and udev-rules for usb-modeswitch
 License: GPL-2.0-or-later
-
-%define _udevdir 	/lib/udev
-%define bname 		usb-modeswitch
 
 Group:   System/Configuration/Hardware
 Url:     http://www.draisberghof.de/usb_modeswitch/
@@ -26,7 +23,8 @@ Data and udev-rules for usb-modeswitch
 %setup -n %name-%version
 
 %install
-%makeinstall_std
+%makeinstall_std \
+	RULESDIR=%buildroot%_udevdir/rules.d
 
 %files
 %doc ChangeLog README
@@ -35,6 +33,9 @@ Data and udev-rules for usb-modeswitch
 
 
 %changelog
+* Wed Apr 22 2026 Mikhail Efremov <sem@altlinux.org> 1:20251207-alt2
+- Fixed udev rules directory.
+
 * Wed Apr 22 2026 Mikhail Efremov <sem@altlinux.org> 1:20251207-alt1
 - New version.
 
