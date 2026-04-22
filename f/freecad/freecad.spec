@@ -17,19 +17,18 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 7
 %endif
-%define git_rev 2fcc5317fe
-%define git_date 18.11.2024
+%define git_rev 34a9716668
+%define git_date 24.03.2026
 
-Name:    freecad
-Version: 1.0.2
-Release: alt3
-Epoch:   1
+Name: freecad
+Version: 1.1.1
+Release: alt1
+Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
-Group:   Graphics
-Url:     http://free-cad.sourceforge.net/
-# VCS:   https://github.com/FreeCAD/FreeCAD
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Group: Graphics
+URL: http://free-cad.sourceforge.net/
+VCS: https://github.com/FreeCAD/FreeCAD
 
 Source: %name-%version.tar
 Source1: freecad.1
@@ -38,16 +37,14 @@ Source2: submodules.tar
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
 %endif
-Patch2: freecad-0.19.2-alt-boost-link.patch
+Patch2: freecad-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-alt-python-modules-path.patch
-Patch6: freecad-1.0.0-alt-version-check.patch
-Patch8: 0001-Port-plugins-to-PySide6.QtWidgets.patch
 # https://forum.freecad.org/viewtopic.php?p=812867#p812867
 # https://bugzilla.altlinux.org/show_bug.cgi?id=54082
 Patch9: freecad-1.0.0-upstream-findocc.patch
 Patch10: freecad-1.0.0-alt-print-attributes.patch
-Patch11: eigen3.patch
+Patch11: freecad-1.1.1-alt-revert-github-pr-25825.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -126,6 +123,10 @@ BuildRequires: libmicrosoft-gsl-devel
 BuildRequires: libGL-devel
 BuildRequires: openmpi-devel
 BuildRequires: libfmt-devel
+# 1.1.0
+BuildRequires: libfreetype-devel
+BuildRequires: libcups-devel
+BuildRequires: libgomp-devel
 
 #%%py3_requires matplotlib.backends.backend_qt6
 %py3_requires pivy
@@ -179,8 +180,6 @@ tar xf %SOURCE2
 %if_without bundled_pycxx
 rm -rf src/CXX
 %endif
-%patch6 -p1
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
@@ -311,7 +310,7 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_iconsdir/hicolor/scalable/*/*.svg
 %_man1dir/*
 %_xdgdatadir/mime/packages/*
-%_pixmapsdir/%name.xpm
+%_pixmapsdir/%name.svg
 %_datadir/metainfo/*.metainfo.xml
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 %python3_sitelibdir/%name
@@ -321,6 +320,12 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Mon Apr 20 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.1-alt1
+- New version.
+
+* Mon Mar 30 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.1.0-alt1
+- New version.
+
 * Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 1:1.0.2-alt3
 - Add fix to find eigen3
 
