@@ -1,5 +1,5 @@
 Name:    usb-modeswitch-data
-Version: 20191128
+Version: 20251207
 Release: alt1
 
 Summary: Data and udev-rules for usb-modeswitch
@@ -35,6 +35,9 @@ Data and udev-rules for usb-modeswitch
 
 
 %changelog
+* Wed Apr 22 2026 Mikhail Efremov <sem@altlinux.org> 1:20251207-alt1
+- New version.
+
 * Mon Feb 10 2020 Sergey Y. Afonin <asy@altlinux.org> 1:20191128-alt1
 - New version (ALT #33492)
 - used date as %%version again
