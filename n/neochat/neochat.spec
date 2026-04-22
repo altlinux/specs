@@ -1,8 +1,8 @@
 %define rname neochat
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.0
+Release: alt1
 %K6init
 
 Group: Networking/Chat
@@ -69,6 +69,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Wed Apr 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.0-alt1
+- new version
+
 * Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - fix hide send location button
 
