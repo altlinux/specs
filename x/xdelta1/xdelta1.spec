@@ -1,17 +1,18 @@
 Name: xdelta1
 Version: 1.1.4
-Release: alt5
+Release: alt6
 
 %define _includedir %_usr/include/%name
 %define srcname xdelta-%version
 %define	lib_name libxdelta
 %define lib_major 2
 
+%set_gcc_version 14
+
 Summary: A binary delta generator
 License: GPL-1.0
 Group: File tools
 Url: http://www.xdelta.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ttp://xdelta.googlecode.com/files/xdelta-1.1.4.tar.gz
 Source: %srcname.tar
@@ -22,10 +23,11 @@ Patch4: xdelta-1.1.4-rh-glib2.patch
 Patch5: xdelta-1.1.3-rh-alt-pkgconfig.patch
 Patch6: xdelta-1.1.4-alt-oom.patch
 Patch7: xdelta-1.1.4-alt-pointer-types.patch
+Patch8: xdelta-1.1.4-alt-gcc15.patch
 
 Requires: %lib_name%lib_major = %version-%release
 Provides: xdelta = %version
-Obsoletes: xdelta
+Obsoletes: xdelta < %EVR
 
 BuildRequires: glib2-devel zlib-devel
 
@@ -54,7 +56,7 @@ Summary: Development libraries and include files for development with XDelta
 Group: Development/C
 Requires: %lib_name%lib_major = %version-%release
 Provides: xdelta-devel = %version-%release
-Obsoletes: xdelta-devel
+Obsoletes: xdelta-devel < %EVR
 
 %package -n %lib_name%lib_major-devel-static
 Summary: Static libraries and header files for development with XDelta
@@ -77,7 +79,8 @@ applications using Xdelta.
 %autopatch -p1
 
 %build
-%add_optflags -fno-strict-aliasing
+export CC=gcc
+%add_optflags -fno-strict-aliasing -Wno-incompatible-pointer-types
 autoreconf -fisv
 %configure %{subst_enable static}
 %make_build all
@@ -106,6 +109,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.1.4-alt6
+- NMU: fix FTBFS with gcc15.
+
 * Sat Apr 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.1.4-alt5
 - NMU: fix FTBFS with gcc14.
 
