@@ -2,7 +2,7 @@
 %define sover 6
 
 Name:    bobcat
-Version: 6.12.00
+Version: 6.12.01
 Release: alt1
 
 Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
@@ -107,6 +107,9 @@ rm -v %buildroot%_libdir/lib%name.a
 %_man7dir/*
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 6.12.01-alt1
+- Updated to new version 6.12.01
+
 * Wed Apr 15 2026 Artem Semenov <savoptik@altlinux.org> 6.12.00-alt1
 - Updated to new version 6.12.00
 
