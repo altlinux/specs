@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 Name: ifuse
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Filesystem access for the iPhone and iPod Touch
@@ -54,6 +54,9 @@ echo %version > .tarball-version
 %doc AUTHORS README*
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
