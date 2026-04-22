@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.30
+Release: alt0.31
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Apr 22 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.31
+- Useful Information: QtWebEngine has been converted to QTextBrowser.
+- Policies: added a condition for displaying the policy.
+- Added an explanation to the console.
+- Policies: added policy exception.
+- Exit "Expert mode" after 20 minutes.
+
 * Mon Apr 20 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.30
 - Removed requirements of polkit-rule-packagekit-allow-install (ALT #58807).
 
