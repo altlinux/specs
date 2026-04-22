@@ -5,7 +5,7 @@
 
 Name: csound
 Version: 6.18.1
-Release: alt3
+Release: alt4
 
 Summary: A sound synthesis language and library
 License: LGPL-2.1
@@ -82,6 +82,11 @@ applications that use Csound.
 
 %build
 %add_optflags -Wno-error=incompatible-pointer-types
+%add_optflags -Wno-error=template-body
+%ifarch i586
+%add_optflags -msse
+%endif
+
 %cmake \
 %if "%_lib" == "lib64"
     -DUSE_LIB64=ON \
@@ -124,6 +129,9 @@ mv -v %buildroot%_libdir/*.jar %buildroot%_javadir/
 %_javadir/csnd6.jar
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt4
+- Fixed FTBFS after GCC 15
+
 * Tue Jan 27 2026 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt3
 - Optemised build requires
 - Packaged locales
