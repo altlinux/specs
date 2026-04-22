@@ -1,14 +1,12 @@
 Name: rust-toolchain-common
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Common files and directories for any rust toolchain
 License: ALT-Public-Domain
 Group: Development/Other
 
 Source0: produce-rust-toolchain-common-macros.sh
-
-Requires: rust-toolchain
 
 %description
 %summary.
@@ -69,6 +67,10 @@ export RUST_HOST_TRIPLE="%rust_host_triple"
 %_rpmmacrosdir/rust-toolchain
 
 %changelog
+* Thu Mar 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.1.1-alt2
+- Remove circular dependency on rust-toolchain as apt-rpm is unable to deduce
+  the correct order of deletion leaving unowned directories behind.
+
 * Thu Mar 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.1.1-alt1
 - Fix macros subpackage being arch independent.
 

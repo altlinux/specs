@@ -4,19 +4,27 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%define llvm_version 21.1
+%define llvm_version 22.1
 %define r_ver 1.76.0
 
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 94
-%define v_patch 1
+%define v_minor 95
+%define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
 %define rust_toolchain_short_name alt
-%define rust_toolchain_name %rust_toolchain_short_name-%v_majmin
+
+%define rust_channel stable
+%if "%rust_channel" == "stable"
+%define rust_toolchain_suffix %v_majmin
+%else
+%define rust_toolchain_suffix %rust_channel-%v_majmin
+%endif
+
+%define rust_toolchain_name %rust_toolchain_short_name-%rust_toolchain_suffix
 
 Name: rust
 Version: %v_full
@@ -37,7 +45,7 @@ Source1: bootstrap.toml.d.tar
 Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
 # Replace shipped rust-lld with system's lld.
 # https://github.com/rust-lang/rust/issues/140473
-Patch002: rust-1.93.0-fedora_alt-use_system_lld.patch
+Patch002: rust-1.95.0-fedora_alt-use_system_lld.patch
 # https://github.com/rust-lang/rust/issues/114940
 Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
 
@@ -111,25 +119,36 @@ manager cargo and C compiler gcc required for some crates.
 
 %package toolchain
 Group: Development/Other
-Summary: The Rust programming language stable toolchain
-# Meta-package required for common toolchain.
-Provides: rust-toolchain
-Requires(postun): rust-toolchain-common
-Requires: %rust_toolchain_name-component
+Summary: The Rust programming language %rust_channel toolchain
+Requires: rust-toolchain-common >= 0.1.1-alt2
 
 %description toolchain
-This package contains a directory containing any component from stable
-rust toolchain.
+This package contains directories with %rust_channel rust toolchain
+components.
 
 Removing this package will result in uninstallation of all toolchain
 components.
 
+%package full
+Group: Development/Other
+Summary: Complete development kit for the Rust programming language
+Requires: rust
+Requires: clippy
+Requires: rust-gdb
+Requires: rust-doc
+Requires: rustfmt
+Requires: rust-analyzer
+# Required to view std code and doc commentary through lsp support.
+Requires: rust-src
+
+%description full
+%summary.
+
 %package -n rustc
 Group: Development/Tools
 Summary: The Rust programming language compiler
-Provides: %rust_toolchain_name-component
 Requires: /proc
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rust-%rust_host_triple-target
 
 %description -n rustc
@@ -138,8 +157,7 @@ Requires: rust-%rust_host_triple-target
 %package gdb
 Group: Development/Other
 Summary: Run rust compiler under gdb
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rustc
 Requires: gdb
 AutoReq: nopython,nopython3
@@ -151,8 +169,7 @@ AutoProv: nopython,nopython3
 %package doc
 Summary: Documentation for Rust
 Group: Development/Documentation
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 # NOT BuildArch: noarch
 # Note, while docs are mostly noarch, some things do vary by target_arch.
 
@@ -164,8 +181,7 @@ its standard library.
 Summary: The Rust package manager
 License: Apache-2.0 and MIT and GPLv2 and Zlib and LGPLv2.1 and BSD-3-Clause and Unlicense and OpenSSL and SSLeay-standalone and curl and GPLv2+ with linking exception
 Group: Development/Tools
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 # Backward compatibility: some packages used rust-cargo to install everything from rust meta-package.
 Requires: rust
 
@@ -176,8 +192,7 @@ and ensure that you'll always get a repeatable build.
 %package -n rustfmt
 Summary: Tool to find and fix Rust formatting issues
 Group: Development/Tools
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rust-cargo = %EVR
 
 %description -n rustfmt
@@ -186,9 +201,8 @@ A tool for formatting Rust code according to style guidelines.
 %package analyzer
 Summary: A Rust compiler front-end for IDEs
 Group: Development/Tools
-Provides: %rust_toolchain_name-component
 Requires: rustc
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Obsoletes: rls <= 1:1.71.0-alt1
 
 %description analyzer
@@ -200,8 +214,7 @@ for Rust.
 Summary: Lints to catch common mistakes and improve your Rust code
 License: Apache-2.0 or MIT
 Group: Development/Tools
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rust
 Requires: rust-cargo
 
@@ -211,8 +224,7 @@ A collection of lints to catch common mistakes and improve your Rust code.
 %package src
 Summary: Sources for the Rust standard library
 Group: Development/Other
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 AutoReq: no
 AutoProv: no
 
@@ -224,8 +236,7 @@ useful as a reference for code completion tools in various editors.
 Summary: Static libraries for native Rust compiler support
 Url: https://doc.rust-lang.org/rustc/platform-support.html
 Group: Development/Other
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rustc
 
 %description %rust_host_triple-target
@@ -235,8 +246,7 @@ Requires: rustc
 Summary: Static libraries for wasm32-unknown-unknown target support
 Url: https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html
 Group: Development/Other
-Provides: %rust_toolchain_name-component
-Requires(postun): %name-toolchain = %EVR
+Requires: %name-toolchain = %EVR
 Requires: rustc
 Requires: lld
 
@@ -306,18 +316,22 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 # Build configuration.
 cat > bootstrap.toml <<EOF
-change-id = 148795
+change-id = 148671
 include = [
         "bootstrap.toml.d/llvm-fork-build.toml"
     ]
 
 [build]
-target = ["%rust_host_triple", "wasm32-unknown-unknown"]
+# Order matters. When installing docs last target replaces previous target docs
+# removing compiler docs.
+# TODO: Make github issue.
+target = ["wasm32-unknown-unknown", "%rust_host_triple"]
 cargo = "%cargo"
 rustc = "%rustc"
 python = "python3"
 submodules = false
 docs = true
+compiler-docs = true
 verbose = 2
 vendor = true
 extended = true
@@ -396,17 +410,17 @@ mv -v %buildroot%rust_docdir/docs %buildroot%rust_docdir/rust
 
 %ln_content %rust_bindir %_bindir
 %ln_content %rust_libexecdir %prefix/libexec
-%ln_content %rust_docdir %_docdir "-%v_majmin"
+%ln_content %rust_docdir %_docdir "-%rust_toolchain_suffix"
 %ln_content %rust_sysconfdir/bash_completion.d %_sysconfdir/bash_completion.d
 %ln_content %rust_datadir/zsh/site-functions %_datadir/zsh/site-functions
 
-mv -v %buildroot%_docdir/rust-%v_majmin %buildroot%_docdir/rust-docs-%v_majmin
+mv -v %buildroot%_docdir/rust-%rust_toolchain_suffix %buildroot%_docdir/rust-docs-%rust_toolchain_suffix
 
 # Apply compression before creating symlinks, otherwise comperssion
 # is applied afterward, thus breaking link.
 /usr/lib/rpm/compress_files %buildroot%rust_man1dir/*
 
-%ln_content %rust_man1dir %_man1dir "-%v_majmin"
+%ln_content %rust_man1dir %_man1dir "-%rust_toolchain_suffix"
 
 ln -srv %buildroot%rust_toolchain_dir %buildroot%rust_toolchain_home/%rust_toolchain_short_name
 
@@ -421,6 +435,13 @@ find %buildroot%rust_libdir \
 %endif
 
 export LD_LIBRARY_PATH="%buildroot%rust_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
+rustc_version="$(%buildroot%rust_bindir/rustc -V | awk '{print $2}')"
+if [ "$rustc_version" != "%v_full" ]; then
+    echo "rustc version and package version differ:"
+    echo "rustc ($rustc_version) and %name (%v_full)"
+    exit 1
+fi
 
 # https://rustc-dev-guide.rust-lang.org/tests/intro.html
 failed=
@@ -465,11 +486,12 @@ rm -rf %rustdir
 %endif
 
 %files
+%files full
 # Meta-package.
 
 %files toolchain
 %dir %rust_toolchain_dir
-%rust_toolchain_home/alt
+%rust_toolchain_home/%rust_toolchain_short_name
 %dir %rust_bindir
 %dir %rust_libdir
 %dir %rust_rustlib
@@ -492,13 +514,13 @@ rm -rf %rustdir
 %rust_sysconfdir/target-spec-json-schema.json
 %rust_man1dir/rustc.*
 %rust_man1dir/rustdoc.*
-%_docdir/rustc-%v_majmin
+%_docdir/rustc-%rust_toolchain_suffix
 %_bindir/rustc
 %_bindir/rustdoc
 %_libdir/librustc*.so
 %prefix/libexec/rust-analyzer-proc-macro-srv
-%_man1dir/rustc-%v_majmin.*
-%_man1dir/rustdoc-%v_majmin.*
+%_man1dir/rustc-%rust_toolchain_suffix.*
+%_man1dir/rustdoc-%rust_toolchain_suffix.*
 
 %files gdb
 %rust_bindir/rust-gdb
@@ -512,7 +534,7 @@ rm -rf %rustdir
 
 %files doc
 %rust_docdir/rust
-%_docdir/rust-docs-%v_majmin
+%_docdir/rust-docs-%rust_toolchain_suffix
 
 %files cargo
 %rust_docdir/cargo
@@ -520,7 +542,7 @@ rm -rf %rustdir
 %rust_man1dir/cargo*.1*
 %rust_sysconfdir/bash_completion.d/cargo
 %rust_datadir/zsh/site-functions/_cargo
-%_docdir/cargo-%v_majmin
+%_docdir/cargo-%rust_toolchain_suffix
 %_bindir/cargo
 %_man1dir/cargo*.1*
 %_sysconfdir/bash_completion.d/cargo
@@ -530,21 +552,21 @@ rm -rf %rustdir
 %rust_docdir/rustfmt
 %rust_bindir/rustfmt
 %rust_bindir/cargo-fmt
-%_docdir/rustfmt-%v_majmin
+%_docdir/rustfmt-%rust_toolchain_suffix
 %_bindir/rustfmt
 %_bindir/cargo-fmt
 
 %files analyzer
 %rust_docdir/rust-analyzer
 %rust_bindir/rust-analyzer
-%_docdir/rust-analyzer-%v_majmin
+%_docdir/rust-analyzer-%rust_toolchain_suffix
 %_bindir/rust-analyzer
 
 %files -n clippy
 %rust_docdir/clippy
 %rust_bindir/cargo-clippy
 %rust_bindir/clippy-driver
-%_docdir/clippy-%v_majmin
+%_docdir/clippy-%rust_toolchain_suffix
 %_bindir/cargo-clippy
 %_bindir/clippy-driver
 
@@ -558,6 +580,13 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Fri Apr 17 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.95.0-alt1
+- New version (1.95.0).
+- Add rust-full subpackage, which installs everything required for
+  development (Closes: 49831).
+- Enable rustc documentation compilation (Closes: 58420).
+- Raise the llvm version to 22.1.
+
 * Thu Mar 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.94.1-alt1
 - New version (1.94.1).
 - Security fixes:
