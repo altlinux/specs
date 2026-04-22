@@ -1,13 +1,11 @@
 Name: xdelta1
 Version: 1.1.4
-Release: alt6
+Release: alt7
 
 %define _includedir %_usr/include/%name
 %define srcname xdelta-%version
 %define	lib_name libxdelta
 %define lib_major 2
-
-%set_gcc_version 14
 
 Summary: A binary delta generator
 License: GPL-1.0
@@ -79,8 +77,8 @@ applications using Xdelta.
 %autopatch -p1
 
 %build
-export CC=gcc
 %add_optflags -fno-strict-aliasing -Wno-incompatible-pointer-types
+%add_optflags -std=gnu17
 autoreconf -fisv
 %configure %{subst_enable static}
 %make_build all
@@ -109,6 +107,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.1.4-alt7
+- NMU: build with gcc15.
+
 * Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.1.4-alt6
 - NMU: fix FTBFS with gcc15.
 
