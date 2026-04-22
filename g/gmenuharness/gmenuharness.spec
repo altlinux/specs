@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gmenuharness
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: GMenu harness library
@@ -96,5 +96,8 @@ This package contains the gmenuharness header files for development.
 %_pkgconfigdir/libgmenuharness.pc
 
 %changelog
+* Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.5-alt1
+- New version 0.1.5.
+
 * Fri Jul 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.4-alt1
 - Initial build for Sisyphus
