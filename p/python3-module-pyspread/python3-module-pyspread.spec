@@ -3,7 +3,7 @@
 %define pypi_name pyspread
 
 Name: python3-module-%pypi_name
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 Summary: cross-platform Python spreadsheet application
@@ -77,6 +77,9 @@ cp -v AUTHORS %buildroot%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%pypi_name-%version-*.egg-info/
 
 %changelog
+* Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 2.4.5-alt1
+- New version 2.4.5.
+
 * Wed Apr 08 2026 Nikolay Strelkov <snk@altlinux.org> 2.4.4-alt1
 - New version 2.4.4.
 

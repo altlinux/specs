@@ -3,7 +3,7 @@
 %define appname org.upnproutercontrol.UPnPRouterControl
 
 Name: upnp-router-control
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Access some parameters of the router and manage port forwarding
@@ -54,5 +54,8 @@ sed -i "s|Categories=.*|Categories=GTK;Network;RemoteAccess;|" data/org.upnprout
 %_datadir/metainfo/%{appname}.appdata.xml
 
 %changelog
+* Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.6-alt1
+- New version 0.3.6.
+
 * Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.5-alt1
 - Initial build for Sisyphus

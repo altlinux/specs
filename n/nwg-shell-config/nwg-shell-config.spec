@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nwg-shell-config
-Version: 0.5.63
+Version: 0.5.64
 Release: alt1
 
 Summary: nwg-shell configuration utility
@@ -57,6 +57,9 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.64-alt1
+- New version 0.5.64.
+
 * Fri Apr 03 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.63-alt1
 - New version 0.5.63.
 
