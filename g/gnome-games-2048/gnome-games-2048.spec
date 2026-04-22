@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A 2048 clone for GNOME
@@ -26,7 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 %else
 Source: %__name-%version.tar
 %endif
-Source1: %name-%version-cargo.tar
+Source1: %__name-%version-cargo.tar
 
 Provides:  %__name = %EVR
 
@@ -49,7 +49,7 @@ Move the tiles until you obtain the 2048 tile.
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1 (ported to Rust/Libadwaita)
 

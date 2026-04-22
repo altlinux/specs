@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.10
+%define ver_major 1.11
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,8 +12,8 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -140,6 +140,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Tue Apr 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt1
+- 1.11.1
+
 * Thu Mar 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1.1
 - meson.macros:
   added %%__meson_test_timeout_multiplier to %%__meson_test (iv@)

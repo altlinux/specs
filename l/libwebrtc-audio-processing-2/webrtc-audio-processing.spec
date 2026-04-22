@@ -1,10 +1,12 @@
+%def_enable snapshot
+
 %define _name webrtc-audio-processing
 %define ver_major 2
 %define api_ver 2
 
 Name: lib%_name-%api_ver
 Version: %ver_major.1
-Release: alt1.1
+Release: alt2
 
 Summary: WebRTC Audio Processing library
 License: BSD-3-Clause
@@ -13,7 +15,11 @@ Url: https://freedesktop.org/software/pulseaudio/%_name/
 
 Vcs: https://anongit.freedesktop.org/git/pulseaudio/webrtc-audio-processing
 
+%if_disabled snapshot
 Source: %url/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 Patch2000: webrtc-e2k.patch
 
 BuildRequires(pre): rpm-macros-meson
@@ -65,6 +71,9 @@ develop programs which make use of %_name
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt2
+- updated to v2.1-7-gd0569cf (fixed build with abseil-cpp-202508/gcc-15)
+
 * Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1.1
 - fixed build for E2K (ilyakurdyukov@)
 

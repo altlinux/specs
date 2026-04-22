@@ -3,7 +3,7 @@
 %define app_id com.toolstack.Folio
 
 Name: folio
-Version: 25.02
+Version: 26.01
 Release: alt1
 
 Summary: A beautiful markdown note-taking app for GNOME
@@ -17,13 +17,14 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %define gtksource_api_ver 5
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gtksourceview-%gtksource_api_ver)
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: gir(GtkSource) = %gtksource_api_ver
 %if_enabled check
@@ -80,6 +81,9 @@ Some features include:
 %doc README.md
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 26.01-alt1
+- 26.01
+
 * Mon May 12 2025 Yuri N. Sedunov <aris@altlinux.org> 25.02-alt1
 - updated to 25.02-3-g175fcde
 
