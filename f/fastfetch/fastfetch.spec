@@ -1,5 +1,5 @@
 Name: fastfetch
-Version: 2.61.0
+Version: 2.62.0
 Release: alt1
 
 Summary: Like neofetch, but much faster because written in c
@@ -85,6 +85,9 @@ BuildArch: noarch
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.62.0-alt1
+- 2.61.0 -> 2.62.0
+
 * Sun Mar 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.61.0-alt1
 - 2.60.0 -> 2.61.0
 
