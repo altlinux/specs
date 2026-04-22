@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt4
+Release: alt5
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -53,6 +53,7 @@ This package includes rsyncd daemon functionality.
 %setup -n %name-%version-%release
 
 %build
+%add_optflags -std=gnu17
 ./prepare-source
 %add_optflags -fno-strict-aliasing
 %configure \
@@ -120,6 +121,10 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt5
+- Rebuilt with -std=gnu17 flag to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Tue Sep 30 2025 Arseny Maslennikov <arseny@altlinux.org> 3.2.7-alt4
 - Apply upstream commit 797e17fc4a6f. (Fixes: CVE-2025-10158)
 - Fixed a feature test to work with gcc 14. (Closes: 55855)
