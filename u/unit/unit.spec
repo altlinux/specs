@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.35.0
-Release: alt3
+Release: alt4
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -247,8 +247,11 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Wed Apr 22 2026 Vitaly Chikunov <vt@altlinux.org> 1.35.0-alt4
+- Fix FTBFS with gcc15
+
 * Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.35.0-alt3
-- Fix build with gcc-15.
+- Workaround build error with gcc-15.
 
 * Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 1.35.0-alt2
 - Fix build with php 8.5 (upstream commit ad736f9).
