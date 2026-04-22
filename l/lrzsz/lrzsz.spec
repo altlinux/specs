@@ -1,6 +1,6 @@
 Name: lrzsz
 Version: 0.12.20
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Programs for communicating over Z-, Y- & X-modem protocols.
@@ -32,6 +32,7 @@ program that uses it. Minicom is an example of such a program.
 %patch2 -p1
 
 %build
+%add_optflags -std=gnu17
 %configure \
 	--disable-pubdir \
 	--enable-syslog \
@@ -47,6 +48,9 @@ program that uses it. Minicom is an example of such a program.
 %_man1dir/*
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.12.20-alt4
+- fixed build with gcc15
+
 * Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.12.20-alt3
 - fixed FTBFS
 
