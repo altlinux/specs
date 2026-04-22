@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sniffnet
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Application to comfortably monitor your network traffic
@@ -12,6 +12,7 @@ Vcs: https://github.com/GyulyVGC/sniffnet
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+Source2: cargo-vendor-config.py
 
 Requires(post,preun): libcap-utils
 
@@ -30,37 +31,17 @@ BuildRequires: desktop-file-utils
 
 %prep
 %setup -a1
-mkdir .cargo
-cat << EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%prefix"
-
-[build]
-%ifarch i586
-rustflags = ["-Copt-level=1", "-Cdebuginfo=0", "--cfg=rustix_use_libc"]
-%else
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
-%endif
-
-[profile.release]
-strip = false
+# Disable LTO entirely to avoid LLVM "out of memory" error on 32-bit
+# machines (even thin LTO is too much for the limited address space).
+%SOURCE2 --root "%buildroot%prefix" \
 %ifarch i586 armh
-# Use less optimisation otherwise it causes "out of memory" error on 32-bit
-# machines.
-lto = "thin"
-codegen-units = 16
+    --opt-level=0 \
+    --debuginfo=0 \
+    --lto=false \
+    --codegen-units=16 \
+    --panic=abort \
 %endif
-EOF
+    %nil
 
 # allow patching vendored rust code
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
@@ -92,6 +73,9 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Wed Apr 22 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Tue Oct 07 2025 Andrey Kovalev <ded@altlinux.org> 1.4.1-alt1
 - Updated to 1.4.1.
 
