@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.15
-Release: alt1
+Release: alt2
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -311,6 +311,9 @@ Requires: gnuplot-qt
 Requires: qt-creator
 Requires: qt-creator-doc
 %endif
+%ifnarch %ix86
+Requires: projectlibre
+%endif
 Requires: cmake
 Requires: ninja-build
 Requires: qt5-base-devel
@@ -319,7 +322,6 @@ Requires: qt5-base-doc
 #Requires: Texmacs
 Requires: logisim
 Requires: fritzing
-Requires: projectlibre
 Requires: python3-tools
 Requires: python3-module-pygame
 Requires: python3-module-pygame-doc
@@ -360,6 +362,9 @@ Requires: swi-prolog
 %ifnarch ppc64le
 Requires: wxMaxima
 %endif
+%ifnarch %ix86
+Requires: projectlibre
+%endif
 Requires: octave
 Requires: gnuplot-qt
 %ifnarch %e2k
@@ -373,7 +378,6 @@ Requires: qgis
 Requires: qgis-grass
 Requires: qgis-python
 %endif
-Requires: projectlibre
 Requires: openmpi
 Requires: fritzing
 Requires: python3-tools
@@ -664,6 +668,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Apr 22 2026 Ivan Khanas <xeno@altlinux.org> 1.7.15-alt2
+- Exclude %ix86 for projectlibre.
+
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 1.7.15-alt1
 - server-apps: removed alterator-ulogd and ejabberd.
 

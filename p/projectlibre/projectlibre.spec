@@ -1,30 +1,57 @@
-%define java_version 1.8
+%define java_version 21
 
 Name:    projectlibre
-Version: 1.9.1
-Release: alt2
+Version: 1.9.8
+Release: alt1
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
-
 License: CPAL
 Group:   Office
 Url:     https://sourceforge.net/projects/projectlibre/
-# VCS:   git://git.code.sf.net/p/projectlibre/code
+VCS:     git://git.code.sf.net/p/projectlibre/code
+ExclusiveArch: %java_arches
 
 Source:  %name-%version.tar
 Source1: %name.watch
-Patch1:  %name-1.6.2-mga-l10n-dialogs.patch
-Patch2:  %name-1.6.2-alt-fix-path-in-executable.patch
-Patch3:  %name-alt-fix-help-browser-list.patch
+Patch0: %name-%version-alt-patch.patch
 
-Packager: Danil Mikhailov <danil@altlinux.org>
-
-Requires: java >= 1.6.0
-
-BuildArch: noarch
-BuildPreReq: rpm-build-compat
+BuildRequires(pre): rpm-macros-java
 BuildRequires: ant
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: ant-antlr
+BuildRequires: ant-contrib
+BuildRequires: apache-ivy
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-cli
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-collections4
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-pool
+BuildRequires: apache-poi
+BuildRequires: bsf
+BuildRequires: bsh
+BuildRequires: itext
+BuildRequires: ivy-local
+BuildRequires: jakarta-activation
+BuildRequires: jasperreports
+BuildRequires: jaxb-api
+BuildRequires: jaxb-core
+BuildRequires: jaxb-runtime
+BuildRequires: jcommon
+BuildRequires: jfreechart
+BuildRequires: jgoodies-common
+BuildRequires: jgoodies-forms
+BuildRequires: java-21-openjdk-devel
+BuildRequires: junit
+BuildRequires: nachocalendar
+BuildRequires: proguard
+BuildRequires: radiance-animation
+BuildRequires: radiance-common
+BuildRequires: rtfparserkit
+BuildRequires: xalan-j2
+BuildRequires: xstream
+Requires: java-21-openjdk-devel
 
 %define projectlibredir %_libexecdir/%name
 
@@ -46,9 +73,8 @@ added key features:
 
 %prep
 %setup
-#patch2 -p1
-#patch1 -p1
-%patch3 -p1
+%autopatch0 -p1
+
 # Set Java version
 subst 's/\(source\|target\)="[0-9.]\+"/\1="%java_version"/g' `find . -name build.xml`
 # Replace hard-coded library path by default JRE path
@@ -57,6 +83,9 @@ subst 's|/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib
 %build
 #Set the file encoding for source files
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=cp1252
+
+ant -f buildScripts/resolve-deps.xml -Divy.mode=local resolve-system-libs
+
 cd projectlibre_build/
 ant clean
 ant
@@ -92,6 +121,12 @@ install -Dm0644 projectlibre_build/resources/%name.png %buildroot%_pixmapsdir/%n
 %_pixmapsdir/*
 
 %changelog
+* Mon Apr 20 2026 Ivan Khanas <xeno@altlinux.org> 1.9.8-alt1
+- Replace bundled upstream jars with system Java libraries where available.
+- Add explicit BuildRequires for ant/java dependencies.
+- Add ivy metadata files for local/offline dependency resolution.
+- New version 1.9.1 -> 1.9.8.
+
 * Wed Jun 05 2019 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt2
 - Fix browser detection for help.
 
