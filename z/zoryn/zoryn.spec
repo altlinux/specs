@@ -2,12 +2,12 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.36.0
+Version: 0.37.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
 License: GPL-2.0-or-later
-Url: https://altlinux.space/rider/zoryn
+Url: https://rider.altlinux.team/zoryn/
 VCS: https://altlinux.space/rider/zoryn
 Source0: %name-%version.tar
 Patch0: %name-%version-dev.patch
@@ -17,6 +17,7 @@ BuildRequires: libcurl-devel
 BuildRequires: dune >= 3.0
 BuildRequires: ocaml-cmdliner-devel >= 2.1.0
 BuildRequires: ocaml-re-devel >= 1.10.0
+BuildRequires: ocaml-yaml-devel >= 3.0.0
 BuildRequires: ocaml-yojson-devel >= 1.7.0
 BuildRequires: ocaml-curl-devel >= 0.9.0
 BuildRequires: ocaml-toml-devel
@@ -103,6 +104,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 0.37.0-alt1
+- up: added unsandboxed hooks prompt with full script listing
+- up: refused symlinks under .gear/{up,merge-up}.d/ (BREAKING)
+- up: added [tarball] subdir config field and mozilla changelog parser
+- task manage: added full mouse text selection with OSC 52 copy
+- task manage: fixed ghost characters on subtask and deps headers
+- task manage: fixed mouse selection leaks across screens and refreshes
+- task approve/disapprove all: delegated to gyle in a single SSH call
+- task refresh: fixed stale snapshot selection on girar
+- added project website with bilingual MkDocs documentation
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 0.36.0-alt1
 - task manage: added approval/disapproval status line on task list
 - task manage: colored checkmark/cross symbols for subtask approvals
