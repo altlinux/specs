@@ -1,7 +1,7 @@
 %def_disable snapshot
 # experimental
 %def_enable gimp_plugin
-%{?_enable_gimp_plugin:%define gimpplugindir %(gimptool-3.0 --gimpplugindir)}
+%{?_enable_gimp_plugin:%define gimpplugindir %(gimptool-3 --gimpplugindir)}
 %define gimpplugindir %_libdir/gimp/3.0
 %def_enable zart
 %ifarch %e2k
@@ -15,12 +15,12 @@
 # no tags
 %define zart_ver d014169
 # https://github.com/GreycLab/gmic-qt
-%define gmic_qt_ver v.3.5.0-9-gf9ead5b
+%define gmic_qt_ver v.3.5.0-12-g6e59612
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-432-gc77b5de6
+%define gmic_comm_ver gmic-3.4.3-478-g77d6bb0a
 
 Name: gmic
-Version: 3.7.2
+Version: 3.7.4
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -39,6 +39,7 @@ Source: %name-%version.tar
 Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
+Patch10: https://src.fedoraproject.org/rpms/gmic/raw/rawhide/f/gmic-gimptool.patch
 
 #ExcludeArch: %ix86
 
@@ -124,6 +125,7 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
+%patch10 -p1
 %if_disabled openmp
 sed -i "s|-fopenmp -Dcimg_use_openmp||;s|-lgomp||" src/Makefile
 sed -i "s|cimg_use_openmp||;s|-fopenmp||" gmic-qt/gmic_qt.pro zart/zart.pro
@@ -225,6 +227,12 @@ popd
 %gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.4-alt1
+- 3.7.4
+
+* Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt1
+- 3.7.3
+
 * Fri Feb 27 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.2-alt1
 - 3.7.2
 

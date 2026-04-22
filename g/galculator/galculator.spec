@@ -1,9 +1,9 @@
 Name: galculator
 Version: 2.1.4
-Release: alt2
+Release: alt3
 
 Summary: GTK3 based scientific calculator
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sciences/Mathematics
 
 Url: http://galculator.mnim.org
@@ -23,6 +23,7 @@ Galculator is a GTK3 based scientific RPN calculator
 %patch1 -b .gcc10
 
 %build
+%add_optflags -std=gnu11
 %configure
 %make_build
 
@@ -30,11 +31,11 @@ Galculator is a GTK3 based scientific RPN calculator
 %makeinstall_std
 %find_lang --with-gnome %name
 install -pD pixmaps/%name.svg \
-		%buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+    %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 install -pD pixmaps/%name.png \
-		%buildroot%_liconsdir/%name.png
+    %buildroot%_liconsdir/%name.png
 install -pD pixmaps/%name.xpm \
-		%buildroot%_liconsdir/%name.xpm
+    %buildroot%_liconsdir/%name.xpm
 rm -rf %buildroot%_pixmapsdir/
 
 %files -f %name.lang
@@ -52,6 +53,9 @@ rm -rf %buildroot%_pixmapsdir/
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt3
+- fixed build with gcc-15
+
 * Sat Dec 05 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt2
 fixed build with gcc10/-fno-common
 

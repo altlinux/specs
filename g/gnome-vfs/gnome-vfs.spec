@@ -33,7 +33,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt14
+Release: alt15
 Epoch: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -266,6 +266,7 @@ This package contains command line tools for GNOME VFS.
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
 gtkdocize --copy
+%add_optflags -std=gnu17
 %autoreconf
 export LIBS="$LIBS `%_bindir/libgcrypt-config --libs`"
 %configure \
@@ -379,6 +380,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt15
+- fixed build with gcc-15
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt14
 - fixed build with newer automake
 
