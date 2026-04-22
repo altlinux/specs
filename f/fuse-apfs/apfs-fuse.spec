@@ -2,17 +2,20 @@
 
 Name:    fuse-apfs
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
 Summary: FUSE driver for APFS (Apple File System)
 License: GPL-2.0
 Group:   Other
 Url:     https://github.com/sgan81/apfs-fuse
+VCS:     https://github.com/sgan81/apfs-fuse.git
+
 Provides: apfs-fuse = %EVR
 Obsoletes: apfs-fuse < %EVR
 
 Source: %name-%version.tar
-Patch:  %name-%version-alt.patch
+Patch0:  %name-%version-build-without-submodule.patch
+Patch1:  %name-%version-fix-gcc15.patch
 
 BuildRequires: fuse
 BuildRequires: libfuse3-devel
@@ -29,7 +32,7 @@ BuildRequires: zlib-devel
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %cmake
@@ -43,6 +46,9 @@ BuildRequires: zlib-devel
 %_bindir/*
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 0.1.0-alt4
+- Fixed FTBFS after gcc 15
+
 * Tue Jul 02 2024 Artem Semenov <savoptik@altlinux.org> 0.1.0-alt3
 - rename package
 
