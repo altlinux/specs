@@ -20,7 +20,7 @@
 
 Name: gdcm
 Version: 3.2.5
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform DICOM implementation
 License: BSD-3-Clause
@@ -287,7 +287,7 @@ rm -rf \
   -DGDCM_PDF_DOCUMENTATION:BOOL=OFF \
   -DGDCM_USE_JPEGLS:BOOL=ON \
   -DGDCM_USE_PARAVIEW:BOOL=OFF \
-  -DGDCM_USE_PVRG:BOOL=ON \
+  -DGDCM_USE_PVRG:BOOL=OFF \
   -DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
   -DGDCM_USE_SYSTEM_EXPAT:BOOL=ON \
   -DGDCM_USE_SYSTEM_JSON:BOOL=ON \
@@ -395,6 +395,11 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 3.2.5-alt2
+- disabled PVRG JPEG codec: unbuildable with gcc-15 (C23 default),
+  upstream is abandoned and declares it broken; IJG codec covers
+  the standard cases.
+
 * Fri Apr 03 2026 Anton Farygin <rider@altlinux.org> 3.2.5-alt1
 - 3.2.2 -> 3.2.5
 
