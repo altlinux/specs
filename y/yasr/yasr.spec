@@ -2,7 +2,7 @@
 
 Name: yasr
 Version: 0.6.9
-Release: alt2
+Release: alt3
 
 Summary: %name - yet another screen reader
 License: GPL-2.0-only
@@ -32,6 +32,8 @@ the user be able to access the tts device).
 %setup
 
 %build
+%add_optflags -Wno-error=incompatible-pointer-types
+%add_optflags -std=gnu17
 %autoreconf
 %configure
 %make
@@ -44,17 +46,20 @@ install -D -m 0664 %buildroot%_datadir/%name/%name.conf %buildroot%_sysconfdir/%
 rm -v %buildroot%_datadir/%name/%name.conf
 ln -s %_sysconfdir/%name.conf %buildroot%_datadir/%name/%name.conf
 
-# remove locales
-rm -rv %buildroot%_datadir/locale
+%find_lang %name
 
-%files
+%files -f %name.lang
 %config(noreplace) %_sysconfdir/%name.conf
 %_bindir/%name
 %_datadir/%name/%name.conf
 %_man1dir/%name.1.xz
-%doc ChangeLog BUGS CREDITS NEWS README TODO
+%doc ChangeLog BUGS CREDITS NEWS README TODO README-*
 
 %changelog
+* Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 0.6.9-alt3
+- Packaged locales
+- Fixed FTBFS after gcc 15
+
 * Wed Oct 30 2024 Artem Semenov <savoptik@altlinux.org> 0.6.9-alt2
 - Fixed config location
 
