@@ -5,7 +5,7 @@
 %def_without cracklib
 
 Name: deepin-pw-check
-Version: 6.0.7
+Version: 6.0.8
 Release: alt1
 
 Summary: Verify the validity of the password for DDE
@@ -16,6 +16,7 @@ Url: https://github.com/linuxdeepin/deepin-pw-check
 
 # Source-url: https://github.com/linuxdeepin/deepin-pw-check/archive/%version/%name-%version.tar.gz
 Source0: %name-%version.tar
+# go mod vendor -o ../vendor
 Source1: vendor.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-pw-check-6.0.2-alt-libdir.patch
@@ -128,6 +129,9 @@ export GO111MODULE=on
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Wed Apr 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.8-alt1
+- New version 6.0.8.
+
 * Wed Dec 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Applied usrmerge.
