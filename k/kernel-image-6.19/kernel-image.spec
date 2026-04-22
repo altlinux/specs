@@ -2,7 +2,7 @@ Name: kernel-image-6.19
 Release: alt1
 %define kernel_src_version	6.19
 %define kernel_base_version	6.19
-%define kernel_sublevel	.13
+%define kernel_sublevel	.14
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -289,6 +289,9 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 %ifarch %ix86 armh
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
+
+c=.gear/signing-%flavour.pem
+[ -s $c ] && cp $c certs/trusted.pem
 
 %conf
 banner build
@@ -592,6 +595,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Apr 22 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.14-alt1
+- v6.19.14 (2026-04-22).
+- config,spec: Install out-of-tree modules signing certificate.
+
 * Sat Apr 18 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.13-alt1
 - v6.19.13 (2026-04-18).
 - config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y).
