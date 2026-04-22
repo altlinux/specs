@@ -3,7 +3,7 @@
 
 Name: libArcus
 Version: 5.11.1
-Release: alt1
+Release: alt2
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPL-3.0-or-later
@@ -33,6 +33,9 @@ Source10: pyproject.toml.in
 
 # Actually export symbols
 Patch2: libArcus-5.2.2-actually-export-symbols.patch
+
+# Fix for gcc-15
+Patch3: Add-cstdint-includes-where-needed.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3-dev
@@ -110,6 +113,9 @@ EOF
 %python3_sitelibdir/pyArcus.pyi
 
 %changelog
+* Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.1-alt2
+- Fix build with GCC 15.
+
 * Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.1-alt1
 - New version 5.11.1.
 - Port to sip6 and PyQt6.sip.

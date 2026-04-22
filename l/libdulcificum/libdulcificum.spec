@@ -3,7 +3,7 @@
 
 Name: libdulcificum
 Version: 5.10.2
-Release: alt1
+Release: alt2
 
 Summary: Translation between the dialects of 3D printer commands
 License: LGPL-3.0-only
@@ -49,6 +49,7 @@ Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 
 %build
 %cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DDULCIFICUM_VERSION=%version \
     -DENABLE_TESTS=OFF \
     -DWITH_APPS=OFF
@@ -70,5 +71,8 @@ Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 %python3_sitelibdir/pyDulcificum.*.so
 
 %changelog
+* Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.2-alt2
+- Enable debuginfo for pyDulcificum.
+
 * Sun Apr 19 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.2-alt1
 - Initial build for ALT Sisyphus.

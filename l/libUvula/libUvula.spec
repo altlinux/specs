@@ -3,7 +3,7 @@
 
 Name: libUvula
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: UV-unwrapper for potentially big meshes
 License: LGPL-3.0-only
@@ -49,6 +49,7 @@ on a texture.
 
 %build
 %cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DUVULA_VERSION=%version
 %cmake_build
 
@@ -67,5 +68,8 @@ on a texture.
 %python3_sitelibdir/pyUvula.*.so
 
 %changelog
+* Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 1.0.1-alt2
+- Enable debuginfo for pyUvula.
+
 * Mon Apr 13 2026 Valery Zabrovsky <brow@altlinux.org> 1.0.1-alt1
 - Initial build for ALT Sisyphus.

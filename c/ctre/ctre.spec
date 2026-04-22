@@ -4,7 +4,7 @@
 
 Name: ctre
 Version: 3.10.0
-Release: alt1
+Release: alt2
 Summary: Compile Time Regular Expression in C++
 License: Apache-2.0
 Group: Development/C++
@@ -83,5 +83,8 @@ sphinx-build docs doc
 %doc doc/*
 
 %changelog
+* Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.0-alt2
+- Fix noarch-ness issue when other modules try to find ctre.
+
 * Mon Apr 20 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.0-alt1
 - Initial build for ALT Sisyphus.
