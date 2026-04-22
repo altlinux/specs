@@ -2,7 +2,7 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: Secure secrets and encryption management system
@@ -88,8 +88,22 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+%changelog
+* Wed Apr 22 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.3-alt1
+- Updated to new version 2.5.3.
+- Fixes:
+  + CVE-2026-39388: prevent token renewal with different-but-valid certificate (auth/cert)
+  + CVE-2026-40264: prevent cross-namespace token renewal, revocation by accessor (auth/token)
+  + CVE-2026-5807: disallow unauthenticated cancellation of sys/generate-root/* (core)
+  + CVE-2026-3605: forbid request path traversal using . and .. segments (core)
+  + CVE-2026-39396: validate and restrict downloaded plugin binary size from OCI images (core/plugins).
+  + CVE-2026-39946: correctly quote schema name in revoke statement (database/postgresql)
+
 * Wed Apr 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.2-alt1
 - Updated to new version v2.5.2.
+- Fixes:
+  + CVE-2026-33758: prevent XSS via error_description parameter in callback_mode=direct (auth/jwt)
+  + CVE-2026-33757: prompt for confirmation during direct callback mode (auth/jwt)
 
 * Wed Mar 25 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt2
 - Fixed LDFLAGS to set correct version information (Closes: #58272).
@@ -97,6 +111,9 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 * Tue Feb 24 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.1-alt1
 - Updated to new version v2.5.1.
 - Added openbao.env configuration file.
+- Fixes:
+  + CVE-2025-68121: vulnerability in Go runtime could lead to unspecified impact
+  + CVE-2026-24051: openTelemetry Go SDK vulnerability in telemetry handling
 
 * Wed Jan 21 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.4.4-alt2
 - Added systemd service file support.
@@ -104,6 +121,8 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 * Mon Dec 29 2025 Maxim Tulskiy <tulskijms@altlinux.org> 2.4.4-alt1
 - Updated to new version v2.4.4.
 - Support building package with bundled web ui (Closes: #56797).
+- Fixes:
+  + CVE-2025-64761: correctly lowercase policy names on identity groups to prevent root policy assignment (core/identity)
 
 * Sun Jun 08 2025 Maxim Tulskiy <tulskijms@altlinux.org> 2.2.2-alt1
 - Initial build for ALT Sisyphus.
