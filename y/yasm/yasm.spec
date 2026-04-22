@@ -1,6 +1,6 @@
 Name: yasm
 Version: 1.3.0
-Release: alt3
+Release: alt4
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
@@ -37,6 +37,7 @@ sed -i '/^TESTS/d' modules/objfmts/macho/tests/nasm64/Makefile.inc
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%add_optflags -std=gnu17
 %autoreconf
 %configure
 make
@@ -63,6 +64,9 @@ make check
 %_libdir/*.a
 
 %changelog
+* Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt4
+- fixed build with gcc15
+
 * Tue Jul 09 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt3
 - updated to v1.3.0-87-g121ab150
 - fixed: CVE-2023-37732, CVE-2023-31975, CVE-2021-33454
