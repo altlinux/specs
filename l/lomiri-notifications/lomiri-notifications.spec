@@ -3,8 +3,8 @@
 %def_with check
 
 Name: lomiri-notifications
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: Lomiri Notifications
 License: GPL-3.0-only
@@ -24,6 +24,7 @@ BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(lomiri-shell-notifications)
+BuildRequires: pkgconfig(lomiri-shell-api)
 
 %if_with check
 BuildRequires: ctest
@@ -61,6 +62,8 @@ sending or receiving notifications. It is QML only.
 %install
 %cmake_install
 
+mv -v %buildroot/Lomiri/Notifications/qmldir %buildroot%_libdir/lomiri/qml/Lomiri/Notifications/qmldir
+
 %check
 %ctest -j1 -VV
 
@@ -72,6 +75,9 @@ sending or receiving notifications. It is QML only.
 %_libdir/lomiri/qml/Lomiri/Notifications/qmldir
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
+- New version 1.3.2.
+
 * Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
 - Fixed FTBFS.
 
