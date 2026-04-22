@@ -5,7 +5,7 @@ Name: readline
 %define rl_patch .10
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt1
+Release: alt2
 
 Summary: A library for editing typed in command lines
 License: GPL-3.0-or-later
@@ -75,6 +75,7 @@ rm examples/*.tar*
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
+%add_optflags -std=gnu17
 
 # Link with libtinfo unconditionally.
 export bash_cv_termcap_lib=libtinfo
@@ -145,6 +146,10 @@ popd
 %_libdir/*.a
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.10-alt2
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.10-alt1
 - Updated to 8.2.10.
 

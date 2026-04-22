@@ -1,6 +1,6 @@
 Name: gawk
 Version: 5.1.0.0.213.d04f
-Release: alt1
+Release: alt2
 
 %define _libexecdir %prefix/libexec
 # Documentation build requirements are insane.
@@ -44,6 +44,7 @@ text processing utility.
 %setup -n %name-%version-%release
 
 %build
+%add_optflags -std=gnu17
 ./bootstrap.sh
 rm awkgram.c command.c doc/*.info awklib/stamp-eg
 %configure --bindir=/bin --without-libsigsegv-prefix
@@ -103,6 +104,10 @@ rm %buildroot/etc/profile.d/gawk.*sh
 %endif
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.1.0.0.213.d04f-alt2
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Mon Nov 16 2020 Dmitry V. Levin <ldv@altlinux.org> 5.1.0.0.213.d04f-alt1
 - gawk-4.2.1-170-gdc189dc6. -> gawk-5.1.0-213-gd04f08bb (closes: #38430).
 

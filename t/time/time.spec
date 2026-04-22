@@ -1,6 +1,6 @@
 Name: time
 Version: 1.7
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: The GNU time program for measuring system resource usage
@@ -30,6 +30,7 @@ printf-style format string to include various resource measurements.
 %patch -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure
 %make_build
@@ -43,6 +44,10 @@ printf-style format string to include various resource measurements.
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.7-alt5
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Thu Dec 10 2015 Dmitry V. Levin <ldv@altlinux.org> 1:1.7-alt4
 - Synced Debian patchset with 1.7-25.
 

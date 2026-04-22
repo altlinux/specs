@@ -2,7 +2,7 @@ Name: bash5
 %define bash_version 5.2
 %define bash_patchlevel .37
 Version: %bash_version%bash_patchlevel
-Release: alt1
+Release: alt2
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -128,6 +128,7 @@ sed -i "/^\\.TH /s/\".*/$th/" doc/builtins.1 doc/rbash.1
 mv po/bash.pot po/%name.pot
 
 %build
+%add_optflags -std=gnu17
 autoconf
 
 export \
@@ -300,12 +301,16 @@ make -k check -C build-bash
 %_libexecdir/%name/*.h
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.37-alt2
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Thu Nov 28 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.37-alt1
 - 5.2.26 -> 5.2.37.
 - Cleaned up the default value of BASH_LOADABLES_PATH variable.
 - Fixed BASH_LOADABLES_PATH which was broken due to sh -> sh5; bash -> bash5
   rename (ALT#52156).
-- bash5: Reenable net-redirections (ALT#52222).
+- bash5: Reenabled net-redirections (ALT#52222).
 
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.26-alt1
 - 5.2.15 -> 5.2.26.

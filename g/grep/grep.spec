@@ -1,6 +1,6 @@
 Name: grep
 Version: 3.11.0.20.dd8f
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -113,6 +113,9 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.0.20.dd8f-alt2
+- Backported upstream fix to fix build with gcc 15+.
+
 * Fri Sep 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.11.0.20.dd8f-alt1
 - grep: v3.6-18-g7051705 -> v3.11-20-gdd8f04957.
 - gnulib BR: v0.1-5193-g8fa9898afa -> v0.1-6720-g7b430a277a.

@@ -1,6 +1,6 @@
 Name: texinfo
 Version: 7.1
-Release: alt1
+Release: alt2
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPL-3.0-or-later
@@ -112,6 +112,7 @@ This packages contains new RPM macros for packaging texinfo files.
 install -pm755 %_sourcedir/texi2pdf util/
 
 %build
+%add_optflags -std=gnu17
 rm po/*.gmo po/stamp*
 find -name configure.ac -printf '%%h\n' |while read dir; do
 	pushd "$dir"
@@ -220,6 +221,10 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1-alt2
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1-alt1
 - 7.0.3 -> 7.1.
 

@@ -4,7 +4,7 @@ Name: bash3
 %define bash_version 3.2
 %define bash_patchlevel 57
 Version: %bash_version.%bash_patchlevel
-Release: alt5
+Release: alt6
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -133,6 +133,7 @@ sed -n '/^\.SH SEE ALSO/,$p' doc/rbash.1 >>rbash.1
 mv rbash.1 doc/rbash.1
 
 %build
+export CC="cc -std=gnu17"
 autoconf
 
 export \
@@ -273,6 +274,10 @@ EOF
 %_includedir/*
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.57-alt6
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Wed Dec 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.57-alt5
 - Fixed build with gcc 14.
 

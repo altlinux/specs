@@ -2,7 +2,7 @@ Name: bash4
 %define bash_version 4.4
 %define bash_patchlevel .23
 Version: %bash_version%bash_patchlevel
-Release: alt2
+Release: alt3
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -128,6 +128,7 @@ sed -i "/^\\.TH /s/\".*/$th/" doc/builtins.1 doc/rbash.1
 mv po/bash.pot po/%name.pot
 
 %build
+%add_optflags -std=gnu17
 autoconf
 
 export \
@@ -298,6 +299,10 @@ make -k check -C build-bash
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4.23-alt3
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Wed Dec 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4.23-alt2
 - Fixed build with gcc 14.
 - bash4: Reenabled net-redirections (ALT#52405).
