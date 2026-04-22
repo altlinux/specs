@@ -9,7 +9,7 @@
 
 Name: dhcp
 Version: 4.4.3.P1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -86,6 +86,8 @@ Patch0036: 0036-dhclient-Don-t-hang-before-returning.patch
 Patch0037: 0037-dhcrelay-fix-relaying-of-return-packets.patch
 Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
+Patch0040: 0040-Fixed-len-4-bug.patch
+Patch0041: 0041-Fix-function-pointers-declaration.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -239,6 +241,8 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
+%patch0040 -p2
+%patch0041 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -258,7 +262,7 @@ find server -type f -not -name Makefile\* -print0 |
 %add_optflags -fpie -fno-strict-aliasing -Wno-unused -Wno-error=stringop-overflow -Dlint
 %ifnarch %e2k
 # lcc: omapi.c:854: -Werror=array-bounds
-%add_optflags -Werror
+%add_optflags -Werror -Wno-error=old-style-definition
 %endif
 
 cp configure.ac+lt configure.ac
@@ -572,6 +576,11 @@ fi
 # }}}
 
 %changelog
+* Wed Apr 22 2026 Mikhail Efremov <sem@altlinux.org> 1:4.4.3.P1-alt3
+- Fixed build with gcc15.
+- Patch from upstream git:
+  + Fixed len < 4 bug.
+
 * Tue Oct 31 2023 Aleksei Kalinin <kaa@altlinux.org> 1:4.4.3.P1-alt2
 - Added functionality for switching chroot mode (closes: #36509).
   + Changes based on Alex Moskalenko <mav@elserv.msk.su>.
