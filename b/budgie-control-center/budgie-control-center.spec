@@ -8,7 +8,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-control-center
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: A fork of GNOME Control Center for the Budgie 10 Series
@@ -71,8 +71,8 @@ BuildRequires: pkgconfig(krb5)
 
 #BuildRequires: rpm-build-cmake
 
-#BuildRequires: pkgconfig(gnome-bluetooth-3.0) >= 3.34.0
-#BuildRequires: pkgconfig(gnome-bluetooth-ui-3.0)
+BuildRequires: pkgconfig(gnome-bluetooth-3.0)
+BuildRequires: pkgconfig(gnome-bluetooth-ui-3.0)
 BuildRequires: pkgconfig(libwacom)
 
 #Requires: cheese-libs%{?_isa} >= %cheese_version
@@ -153,7 +153,6 @@ This package contains architecture-agnostic common assets for ${name}
 
 %build
 %meson \
-    -Dbluetooth=false \
     -Ddark_mode_distributor_logo=%_pixmapsdir/system-logo-white.png \
     -Ddocumentation=true \
     -Dmalcontent=true
@@ -216,6 +215,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.buddiesof
 %_datadir/sounds/budgie/default/alerts/*.ogg
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1
+- enable bluetooth support
+
 * Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0
 - add introduction.template to files
