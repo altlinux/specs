@@ -1,5 +1,5 @@
 Name: qownnotes
-Version: 23.8.2
+Version: 26.4.19
 Release: alt1
 License: GPLv2
 Group: Office
@@ -7,15 +7,13 @@ Summary: Note-taking app and todo list manager with ownCloud/Nextcloud integrati
 Url: http://www.qownnotes.org/
 
 BuildRequires: gcc gcc-c++ fdupes libbotan-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-websockets-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-websockets-devel
 BuildRequires: desktop-file-utils
-Requires: libqt5-svg
+Requires: libqt6-svg
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: %name-%version.tar.xz
@@ -38,22 +36,19 @@ that handles them well. Out of this need QOwnNotes was born.
 %setup
 
 %build
-mkdir build
-pushd build
-%qmake_qt5 \
-    USE_SYSTEM_BOTAN=1 \
-    ..
-popd
+lrelease-qt6 src/QOwnNotes.pro
 
-pushd build
-%make_build
+pushd src/
+%qmake_qt6 \
+    PREFIX=%_prefix \
+    USE_SYSTEM_BOTAN=ON \
+    QON_QT6_BUILD=ON
 popd
+%make_build -C src/
 
 %install
-# install application
-pushd build
+pushd src/
 install -D -m 0755 QOwnNotes %buildroot%_bindir/QOwnNotes
-popd
 
 # install visuals
 install -D -m 0644 PBE.QOwnNotes.desktop %buildroot%_desktopdir/QOwnNotes.desktop
@@ -64,20 +59,23 @@ for format in {16x16,24x24,32x32,48x48,64x64,96x96,128x128,256x256,512x512}; do
 
 install -D -m644 "images/icons/scalable/apps/QOwnNotes.svg" "%buildroot%_iconsdir/hicolor/scalable/apps/QOwnNotes.svg"
 
-# install languages
-install -d "%buildroot/%_datadir/QOwnNotes/languages/"
-install -D -m644 languages/*.qm "%buildroot/%_datadir/QOwnNotes/languages/"
+install -d "%buildroot/%_qt6_translationdir/"
+install -D -m644 languages/*.qm "%buildroot/%_qt6_translationdir/"
+popd
 
 %files
-%doc LICENSE README.md CHANGELOG.md shortcuts.md
+%doc LICENSE README.md CHANGELOG.md
 %_bindir/QOwnNotes
-%_datadir/QOwnNotes/languages/QOwnNotes_*.qm
+%_qt6_translationdir/QOwnNotes_*.qm
 %_desktopdir/QOwnNotes.desktop
 %_iconsdir/hicolor/*/apps/QOwnNotes.png
 %_iconsdir/hicolor/scalable/apps/QOwnNotes.svg
 %_pixmapsdir/QOwnNotes.png
 
 %changelog
+* Thu Apr 23 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 26.4.19-alt1
+- new version
+
 * Wed Aug 30 2023 Ivan A. Melnikov <iv@altlinux.org> 23.8.2-alt1
 - new version (by samael@).
 
