@@ -1,6 +1,6 @@
 Name: libpcl
 Version: 1.12
-Release: alt2.1
+Release: alt3
 
 Summary: Portable Coroutine Library (PCL)
 License: GPLv2+
@@ -37,6 +37,7 @@ Development headers and libraries for Portable Co-routine Library (PCL).
 
 # Note that --disable static is not given because make check requires the static libs
 %build
+%add_optflags -std=gnu17
 %configure
 %make_build
 
@@ -58,6 +59,9 @@ rm -f %buildroot/%_libdir/*.a
 %_man3dir/*
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.12-alt3
+- Fixed FTBFS.
+
 * Tue Nov 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.12-alt2.1
 - FTBFS:fix: implicit declaration of functions.
 
