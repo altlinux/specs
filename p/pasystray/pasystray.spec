@@ -1,16 +1,17 @@
-Name:		pasystray
-Version:	0.8.2
-Release:	alt1
+Name: pasystray
+Version: 0.8.2
+Release: alt2
 
-Summary:	a replacement for the deprecated padevchooser
-License:	GPLv2.1
-Group:		Sound
-Url:		https://github.com/christophgysin/pasystray
+Summary: a replacement for the deprecated padevchooser
+License: LGPL-2.1
+Group: Sound
+URL: https://github.com/christophgysin/pasystray
+VCS: https://github.com/christophgysin/pasystray
 
 # packaged sources from upstream git repo tag
-Source:		%name-%version.tar
+Source:	%name-%version.tar
 # http://git.altlinux.org/gears/p/pasystray.git
-Patch1:		%name-%version-%release.patch
+Patch1:	%name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: libavahi-glib-devel libnotify-devel libpulseaudio-devel
@@ -23,7 +24,6 @@ A replacement for the deprecated padevchooser.
 pasystray allows setting the default PulseAudio source/sink and moving
 streams on the fly between sources/sinks without restarting the client
 applications.
-
 
 %prep
 %setup
@@ -57,6 +57,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt2
+- Fix build with gcc15.
+
 * Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt1
 - new version 0.8.2
 - build with pkgconfig(ayatana-appindicator3-0.1)
