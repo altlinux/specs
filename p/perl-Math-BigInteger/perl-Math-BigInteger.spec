@@ -19,7 +19,7 @@ Summary:	Math::BigInteger - arbitrary length integer extension module for Perl
 Summary(pl.UTF-8):	Math::BigInteger - moduł rozszerzenia liczb całkowitych dowolnej długości
 Name:		perl-Math-BigInteger
 Version:	1.01
-Release:	alt4.2
+Release:	alt4.3
 # if used in a product, Systemics should be given attribution
 License:	Artistic-1.0
 Group:		Development/Perl
@@ -43,7 +43,7 @@ Younga. Jest to szybsza alternatywa dla biblioteki Math::BigInt.
 %patch0 -p0
 
 %build
-%add_optflags -Wno-error=int-conversion -Wno-error=implicit-function-declaration
+%add_optflags -Wno-error=int-conversion -Wno-error=implicit-function-declaration -std=gnu17
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir \
 	INSTALLDIRS=vendor
 %{__make} \
@@ -65,6 +65,9 @@ Younga. Jest to szybsza alternatywa dla biblioteki Math::BigInt.
 %{perl_vendor_archlib}/auto/Math/BigInteger/BigInteger.*
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.01-alt4.3
+- NMU: fix FTBFS with gcc15
+
 * Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.01-alt4.2
 - NMU: fix FTBFS with gcc14
 
