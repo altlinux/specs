@@ -1,6 +1,6 @@
 Name:           rpi-imager
 Version:        2.0.8
-Release:        alt1
+Release:        alt2
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
 
@@ -34,14 +34,19 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 %install
 %cmakeinstall_std
+install -pD -m644 doc/man/%name.1 %buildroot%_man1dir/%name.1
 
 %files
 %_bindir/%name
 %_datadir/applications/com.raspberrypi.rpi-imager.desktop
 %_datadir/icons/hicolor/*/apps/%name.svg
 %_datadir/metainfo/com.raspberrypi.rpi-imager.metainfo.xml
+%_man1dir/*
 
 %changelog
+* Thu Apr 23 2026 Dmitry Terekhin <jqt4@altlinux.org> 2.0.8-alt2
+- Add a manual file (Closes: 58444)
+
 * Wed Apr 15 2026 Dmitry Terekhin <jqt4@altlinux.org> 2.0.8-alt1
 - Update to new release 2.0.8
 
