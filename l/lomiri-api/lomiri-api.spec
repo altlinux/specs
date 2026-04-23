@@ -5,7 +5,7 @@
 
 Name: lomiri-api
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 Summary: API for Lomiri shell integration
 License: LGPL-3.0
@@ -120,6 +120,9 @@ This package contains the development files.
 %_docdir/lib%{name}/*
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt2
+- Disable JoinPaths cmake macros as we build only for Qt5.
+
 * Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
 - New version 0.3.2.
 

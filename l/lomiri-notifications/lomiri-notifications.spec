@@ -4,7 +4,7 @@
 
 Name: lomiri-notifications
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Lomiri Notifications
 License: GPL-3.0-only
@@ -62,8 +62,6 @@ sending or receiving notifications. It is QML only.
 %install
 %cmake_install
 
-mv -v %buildroot/Lomiri/Notifications/qmldir %buildroot%_libdir/lomiri/qml/Lomiri/Notifications/qmldir
-
 %check
 %ctest -j1 -VV
 
@@ -75,6 +73,9 @@ mv -v %buildroot/Lomiri/Notifications/qmldir %buildroot%_libdir/lomiri/qml/Lomir
 %_libdir/lomiri/qml/Lomiri/Notifications/qmldir
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt2
+- Follow changes in lomiri-api 0.3.2-alt2 package.
+
 * Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
 - New version 1.3.2.
 
