@@ -1,6 +1,6 @@
 Name: telnet
 Version: 3.0
-Release: alt12
+Release: alt13
 
 Summary: The client program for the telnet remote login protocol
 License: BSD-4-Clause-UC
@@ -53,7 +53,7 @@ support remote logins into the host machine.
 install -pm644 %_sourcedir/telnetd.eps .
 
 %build
-export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
+export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS) -std=gnu17"
 %make_build
 
 %install
@@ -85,6 +85,9 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.0-alt13
+- NMU: fixed FTBFS with gcc15.
+
 * Tue Apr 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.0-alt12
 - Real fix for implicit-int.
 
