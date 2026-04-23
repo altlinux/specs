@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_48
+Release:        alt2_49
 Summary:        Space shooter in 3D
 # Automatically converted from old format: GPLv2+ - review is highly recommended.
 License:        GPL-2.0-or-later
@@ -83,6 +83,7 @@ popd
 
 %build
 export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
+export CFLAGS="%optflags -std=gnu17"
 pushd src/Linux
 
 %configure --enable-sound=sdl_mixer --disable-opengl
@@ -123,6 +124,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.00-alt2_49
+- NMU: fix FTBFS with gcc15
+
 * Sat Mar 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.00-alt2_48
 - NMU: fix FTBFS
 
