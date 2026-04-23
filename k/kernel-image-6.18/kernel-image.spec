@@ -1,8 +1,8 @@
 Name: kernel-image-6.18
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.23
+%define kernel_sublevel	.24
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -289,6 +289,9 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 %ifarch %ix86 armh
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
+
+c=.gear/signing-%flavour.pem
+[ -s $c ] && cp $c certs/trusted.pem
 
 %conf
 banner build
@@ -592,6 +595,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 23 2026 Vitaly Chikunov <vt@altlinux.org> 6.18.24-alt2
+- config: Disable CONFIG_MTD_TESTS.
+
+* Thu Apr 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.24-alt1
+- v6.18.24 (2026-04-22).
+- config,spec: Install out-of-tree modules signing certificate.
+
 * Sat Apr 18 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.23-alt1
 - v6.18.23 (2026-04-18).
 - config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y) (ALT#57931).
