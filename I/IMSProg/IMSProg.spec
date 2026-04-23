@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -67,12 +67,21 @@ pushd IMSProg_programmer
 %cmake_build
 popd
 
+pushd IMSProg_database_update
+%cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
+%cmake_build
+popd
+
 %install
 pushd IMSProg_editor
 %cmake_install
 popd
 
 pushd IMSProg_programmer
+%cmake_install
+popd
+
+pushd IMSProg_database_update
 %cmake_install
 popd
 
@@ -102,6 +111,11 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Thu Apr 23 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.3-alt1
+- New version 1.8.3.
+- Add Qt6 support for IMSProg_database_update.
+- Fix programmer main window displaying issues.
+
 * Wed Apr 08 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.2-alt1
 - New version 1.8.2.
 
