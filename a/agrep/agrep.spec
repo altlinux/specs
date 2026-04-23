@@ -1,6 +1,6 @@
 Name: agrep
 Version: 3.41.5
-Release: alt1
+Release: alt2
 
 Summary: Approximate grep
 License: ISC
@@ -37,7 +37,7 @@ przybli¿one.
 %setup
 
 %build
-%make_build CFLAGS="%optflags -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion -D__APPLE__ -DHAVE_DIRENT_H"
+%make_build CFLAGS="%optflags -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion -D__APPLE__ -DHAVE_DIRENT_H -std=gnu17"
 
 %install
 install -pD -m755 agrep %buildroot%_bindir/agrep
@@ -49,6 +49,9 @@ install -pD -m644 agrep.1 %buildroot%_man1dir/agrep.1
 %_man1dir/*
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.41.5-alt2
+- fix FTBFS with gcc15
+
 * Tue Jan 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.41.5-alt1
 - new version
 - change building scheme
