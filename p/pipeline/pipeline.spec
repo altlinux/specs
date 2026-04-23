@@ -2,14 +2,14 @@
 
 %define _name pipeline
 %define binary_name tubefeeder
-%define ver_major 3.3
+%define ver_major 4.0
 %define rdn_name de.schmidhuberj.%binary_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Follow your favorite video creators
@@ -84,6 +84,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Thu Apr 23 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
