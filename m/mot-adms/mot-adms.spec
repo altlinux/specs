@@ -9,17 +9,19 @@
 
 Name: mot-adms
 Version: %majver.7
-Release: alt1
+Release: alt2
 Summary: An electrical compact device models converter
 
 Group: Engineering
-License: GPLv3+
-Url: https://github.com/Qucs/ADMS
+License: GPL-3.0-or-later
+URL: https://github.com/Qucs/ADMS
+VCS: https://github.com/Qucs/ADMS
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
-Source: adms-%version.tar
 # Source-url: https://github.com/Qucs/ADMS/archive/release-%version/adms-%version.tar.gz
+Source: adms-%version.tar
+
+# https://github.com/Qucs/ADMS/issues/115
+Patch: gcc15.patch
 
 BuildRequires: gcc-c++
 BuildRequires: flex perl-XML-LibXML
@@ -33,6 +35,7 @@ transforms Verilog-AMS code into other target languages.
 
 %prep
 %setup -n adms-%version
+%autopatch -p1
 
 %build
 %autoreconf
@@ -46,7 +49,6 @@ transforms Verilog-AMS code into other target languages.
 %make_build
 
 %install
-#make INSTALL="%_bindir/install -p" install DESTDIR=%buildroot
 %makeinstall_std
 
 # Remove libtool archives and static libs
@@ -63,10 +65,13 @@ find %buildroot -type l -name '*.so' -delete
 %dir %_includedir/adms
 %_includedir/adms/*.vams
 
-%_man1dir/admsCheck.1*
-%_man1dir/admsXml.1*
+%_man1dir/admsCheck.1.*
+%_man1dir/admsXml.1.*
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.3.7-alt2
+- Fix build with gcc15.
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 2.3.7-alt1
 - New version 2.3.7
 - Fix License Tag
