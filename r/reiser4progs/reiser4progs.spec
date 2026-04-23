@@ -7,7 +7,7 @@
 
 Name: reiser4progs
 Version: 1.2.1
-Release: alt4
+Release: alt5
 Summary: Utilities for reiser4 filesystems
 License: GPLv2
 Group: System/Kernel and hardware
@@ -69,6 +69,7 @@ Development libraries and headers for developing minimal reiser4 tools.
 sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.{am,in}
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure \
 	--sbindir=/sbin \
@@ -135,6 +136,9 @@ mv %buildroot{/%_lib/*.so,%_libdir/}
 %endif
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt5
+- Fixed FTBFS.
+
 * Thu Dec 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt4
 - FTBFS: use autoconf 2.60
 
