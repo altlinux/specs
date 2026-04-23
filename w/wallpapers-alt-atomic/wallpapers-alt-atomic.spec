@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wallpapers-alt-atomic
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Background images for the ALT Atomic
@@ -57,5 +57,9 @@ Wallpapers are placed in the KDE standard path.
 %_datadir/wallpapers/alt-atomic-*
 
 %changelog
+* Sat Apr 18 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.2-alt1
+- New version: 0.1.2.
+- Atomic logo made bigger.
+
 * Mon Mar 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.1-alt1
 - Initial build.
