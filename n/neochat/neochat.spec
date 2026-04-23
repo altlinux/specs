@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.04.0
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Networking/Chat
@@ -14,7 +14,9 @@ Requires: qml6(QtLocation)
 Requires: qml6(QtTextToSpeech)
 Requires: qml6(org.kde.desktop)
 Requires: kf6-kirigami kf6-purpose kf6-kquickcharts kf6-kconfig
-Requires: libkf6prison libkf6prisonscanner
+Requires: qml6(org.kde.plasma.components.MobileCursor)
+Requires: qqc2-desktop-style
+Requires: libkf6prison libkf6prisonscanner libkf6sonnetui
 Requires: kf6-kirigami-addons
 Requires: kde6-kquickimageeditor
 Requires: kunifiedpush
@@ -69,6 +71,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.0-alt3
+- fix requires
+
 * Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.0-alt2
 - fix hide send location button
 
