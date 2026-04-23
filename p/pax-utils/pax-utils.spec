@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pax-utils
-Version: 1.3.8
+Version: 1.3.10
 Release: alt1
 
 Summary: ELF utils that can check files for security relevant properties
@@ -61,6 +61,9 @@ sed -i -e 's|/usr/bin/env python|/usr/bin/python3|' lddtree.py
 %_man1dir/*
 
 %changelog
+* Wed Feb 11 2026 Matvey Pyanov <sen@altlinux.org> 1.3.10-alt1
+- New version 1.3.10.
+
 * Wed Mar 19 2025 Egor Ignatov <egori@altlinux.org> 1.3.8-alt1
 - new version 1.3.8
 
