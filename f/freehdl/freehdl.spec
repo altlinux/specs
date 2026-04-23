@@ -7,7 +7,7 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt8
+Release: alt9
 License: GPL-2.0
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -57,7 +57,8 @@ VHDL simulator.
 
 %build
 sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
-%autoreconf -fisv
+%add_optflags -Wno-template-body
+%autoreconf
 %configure
 %make_build
 
@@ -128,6 +129,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 0.0.8-alt9
+- Fix build with gcc15.
+
 * Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 0.0.8-alt8
 - Fix build with gcc14
 - cleanup Packager
