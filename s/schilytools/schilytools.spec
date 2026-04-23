@@ -5,7 +5,7 @@
 %define btcflash_major 1.1
 %define cdr_name cdrtools
 %define minor %nil
-%define alt_rel alt3
+%define alt_rel alt4
 %def_with bootstrap
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -216,6 +216,9 @@ find . -name "*.c" -o -name "*.h" -o -name "*README*" -type f |xargs recode ISO-
 rm -f lib*/*_p.mk
 
 %build
+# https://codeberg.org/schilytools/schilytools/issues/120
+# this code really uses very old syntax so gnu89 is most appropriate case
+%add_optflags -std=gnu89
 %if_with bootstrap
 export MAKEPROG=gmake
 %else
@@ -663,6 +666,9 @@ __EOF__
 %_man1dir/readcd-classic.*
 
 %changelog
+* Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 7:2024.03.21-alt4
+- build: use -std=gnu89 with recent gcc (upstream issue #120).
+
 * Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 7:2024.03.21-alt3
 - Added patches:
   + cdda2wav: fix CDDB lookups via gnudb.org (upstream issue #121)
