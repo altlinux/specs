@@ -8,7 +8,7 @@
 
 Name: airspyone-host
 Version: 1.0.10
-Release: alt2
+Release: alt3
 
 Summary: AirSpy - tiny and efficient software defined radio receiver
 License: GPL-2.0 and MIT and BSD
@@ -72,6 +72,7 @@ This package contains development files.
 %patch -p1
 
 %build
+%add_optflags -std=gnu17
 %cmake \
        -DINSTALL_UDEV_RULES=ON \
        -Wno-dev
@@ -101,6 +102,9 @@ find %buildroot -name "*.a" -delete -print
 %_includedir/lib%{shortname}/*.h
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.10-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.10-alt2
 - Applied repocop fix for sisyphus_check
 

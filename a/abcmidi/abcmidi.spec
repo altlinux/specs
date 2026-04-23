@@ -2,7 +2,7 @@
 
 Name: abcmidi
 Version: 2026.02.24
-Release: alt1
+Release: alt2
 
 Summary: Converter from ABC to MIDI format and back
 License: GPL-2.0
@@ -34,6 +34,7 @@ PostScript code together with the ABC parser from the abcmidi package.
 %setup
 
 %build
+%add_optflags -std=gnu17
 %configure
 %make_build
 
@@ -47,6 +48,9 @@ PostScript code together with the ABC parser from the abcmidi package.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 2026.02.24-alt2
+- Fixed FTBFS caused by gcc15.
+
 * Wed Feb 25 2026 Nikolay Strelkov <snk@altlinux.org> 2026.02.24-alt1
 - New version 2026.02.24.
 

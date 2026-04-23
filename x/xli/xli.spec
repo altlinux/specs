@@ -2,7 +2,7 @@
 
 Name: xli
 Version: 1.17.0
-Release: alt11
+Release: alt12
 Summary: X11 Image Loading Utility
 License: MIT
 Group: Graphics
@@ -81,7 +81,7 @@ PC Paintbrush Image, GEM Bit Image, MacPaint Image, X Pixmap, X Bitmap.
 %build
 %add_optflags -Werror=implicit-function-declaration
 xmkmf -a
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -std=gnu17"
 for i in xli xlito; do
 	install -pm644 $i.man $i.1
 done
@@ -115,6 +115,9 @@ chmod 644 README*
 # - look at 2006-11-10 snapshot?
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt12
+- Fixed FTBFS caused by gcc15.
+
 * Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt11
 - Fix FTBFS by adding zlib build dependency.
 

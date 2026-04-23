@@ -2,7 +2,7 @@
 
 Name: stickynotes
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Summary: Program that simulates the Sticky Notes for the MATE Desktop
 License: GPL-2.0
@@ -20,7 +20,7 @@ BuildRequires: rpm-build-python3
 
 %description
 This is a program that simulates the Sticky Notes for the Mate Desktop
-Environment. From the user's perspective, it works the same way as the 
+Environment. From the user's perspective, it works the same way as the
 MATE applet: it allows you to create, view, and maintain sticky notes on your desktop. However, under the hood, there are some changes:
 
 - independent on MATE Desktop;
@@ -35,6 +35,7 @@ MATE applet: it allows you to create, view, and maintain sticky notes on your de
 sed -i 's|^Categories=.*|Categories=GTK;Utility;TextTools;|' data/stickynotes.desktop.in
 
 %build
+sed -i "s/-Wno-deprecated-declarations/-Wno-deprecated-declarations -std=gnu17/" Makefile.in
 ./autogen.sh
 %configure \
             --prefix=%buildroot/%_prefix \
@@ -54,6 +55,9 @@ sed -i 's|^Categories=.*|Categories=GTK;Utility;TextTools;|' data/stickynotes.de
 %_datadir/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.1-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.1-alt2
 - Applied repocop fix for freedesktop-categories
 

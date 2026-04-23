@@ -3,7 +3,7 @@
 
 Name: ayatana-indicator-printers
 Version: 23.10.1
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator showing active print jobs
 License: GPLv3
@@ -39,6 +39,7 @@ indicator to the user.
 %setup
 
 %build
+%add_optflags -std=gnu17
 %cmake \
   -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
   -Denable_tests=Off \
@@ -74,6 +75,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 23.10.1-alt2
+- Fixed FTBFS caused by gcc15.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 23.10.1-alt1
 - New version 23.10.1.
 

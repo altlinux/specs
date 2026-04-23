@@ -2,7 +2,7 @@
 
 Name: gxcapindicator
 Version: 1.2
-Release: alt2
+Release: alt3
 
 Summary: Simple and universal Cap/Num lock key indicator in the tray
 License: GPL-3.0
@@ -46,6 +46,9 @@ Features
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.2-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Sun Mar 16 2025 Nikolay Strelkov <snk@altlinux.org> 1.2-alt2
 - Added upstream mirror URL, corrected license.
 

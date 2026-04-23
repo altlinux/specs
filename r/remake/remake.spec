@@ -4,7 +4,7 @@
 
 Name: remake
 Version: 4.3+dbg1.6
-Release: alt2
+Release: alt3
 
 Summary: GNU make fork with improved error reporting and debugging
 License: GPL-3.0
@@ -33,7 +33,7 @@ a debugger. Some of the features of the debugger are:
 patch -p1 < debian/patches/disable-doc-build.patch
 
 %build
-export CFLAGS="%{optflags} -fcommon"
+export CFLAGS="%{optflags} -fcommon -std=gnu17"
 %autoreconf
 %configure --disable-nls --enable-maintainer-mode
 %make_build
@@ -51,6 +51,9 @@ export CFLAGS="%{optflags} -fcommon"
 %exclude %_includedir/gnuremake.h
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 4.3+dbg1.6-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Sat Jun 28 2025 Nikolay Strelkov <snk@altlinux.org> 4.3+dbg1.6-alt2
 - Disabled check to prevent FTBFS because of timeouts on the serverside
 

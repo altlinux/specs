@@ -2,7 +2,7 @@
 
 Name: iconoscope
 Version: 0.9.9
-Release: alt2
+Release: alt3
 
 Summary: Explore the system's icon theme database
 License: GPL-3.0
@@ -24,6 +24,7 @@ BuildRequires: pkgconfig(gtk+-3.0)
 sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' data/iconoscope.desktop
 
 %build
+sed -i "s/{C_FLAGS}/{C_FLAGS} -std=gnu17/" pymk.py
 ./pymk.py iconoscope
 
 %install
@@ -37,6 +38,9 @@ sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' data/iconoscope.deskt
 %_datadir/metainfo/*%{name}.appdata.xml
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.9-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9-alt2
 - Applied repocop fix for freedesktop-categories
 

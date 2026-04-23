@@ -3,7 +3,7 @@
 
 Name: limesuite
 Version: 23.11.0
-Release: alt2
+Release: alt3
 
 Summary: Driver and GUI for LMS7002M-based SDR platforms
 License: Apache-2.0
@@ -46,6 +46,7 @@ sed -i 's|MODE="660"|MODE="666"|g' udev-rules/64-limesuite.rules
 sed -i 's|^Categories=.*|Categories=Development;Debugger;|' Desktop/lime-suite.desktop
 
 %build
+%add_optflags -std=gnu17
 %cmake \
        -Wno-dev \
        -DCMAKE_BUILD_TYPE=Release \
@@ -95,6 +96,9 @@ sed -i 's|^Categories=.*|Categories=Development;Debugger;|' Desktop/lime-suite.d
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 23.11.0-alt3
+- Fixed FTBFS caused by gcc15.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 23.11.0-alt2
 - Applied repocop fix for sisyphus_check, freedesktop-categories
 
