@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 58
 %define nv_minor 03
-%define pkg_rel alt307
+%define pkg_rel alt308
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -101,6 +101,7 @@ Provides: %virtual_pkg_name = %version-%release
 Obsoletes: %virtual_pkg_name < %version-%release
 #
 Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
+Conflicts: libnvoptix < %version
 Requires(pre): libGL
 Requires: libGL
 Requires: apt-scripts-nvidia
@@ -230,7 +231,7 @@ ln -s %_sysconfdir/libnvidiacurrent/nvidia_icd.json %buildroot/%_datadir/vulkan/
 mkdir -p %buildroot/%_datadir/vulkan/implicit_layer.d/
 ln -s %_sysconfdir/libnvidiacurrent/nvidia_layers.json %buildroot/%_datadir/vulkan/implicit_layer.d/nvidia_layers.%_target_cpu.json
 mkdir -p %buildroot/%_datadir/glvnd/egl_vendor.d/
-ln -s %_sysconfdir/libnvidiacurrent/nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/nvidia.%_target_cpu.json
+ln -s %_sysconfdir/libnvidiacurrent/nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/10_nvidia.%_target_cpu.json
 mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
 ln -s %_sysconfdir/libnvidiacurrent/nvidia_icd_vksc.json %buildroot/%_datadir/vulkansc/icd.d/nvidia_icd_vksc.%_target_cpu.json
 ln -s %_sysconfdir/libnvidiacurrent/nvoptix.bin %buildroot/%_datadir/nvidia/nvoptix.bin
@@ -323,7 +324,7 @@ fi
 %_sysconfdir/OpenCL/vendors/nvidia.%_target_cpu.icd
 %_datadir/vulkan/icd.d/nvidia_icd.%_target_cpu.json
 %_datadir/vulkan/implicit_layer.d/nvidia_layers.%_target_cpu.json
-%_datadir/glvnd/egl_vendor.d/nvidia.%_target_cpu.json
+%_datadir/glvnd/egl_vendor.d/10_nvidia.%_target_cpu.json
 %_datadir/vulkansc/icd.d/nvidia_icd_vksc.%_target_cpu.json
 %nv_etclib_sym_dir/current
 %_sysconfdir/libnvidiacurrent
@@ -359,6 +360,10 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt308
+- fix glvnd/egl_vendor.d ICD order
+- convlict with old libnvoptix
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt307
 - new version
 - switch libs via ld.so.conf
