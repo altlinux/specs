@@ -1,12 +1,15 @@
 %def_enable selinux
 # "setuid" or "none"
 %define priv_mode none
+%def_disable support_setuid
+
 %if %priv_mode == "setuid"
 %def_disable userns
+%def_enable support_setuid
 %endif
 
 Name: bubblewrap
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -46,7 +49,8 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %build
 %meson \
     %{subst_enable_meson_feature selinux selinux} \
-    %{subst_enable_meson_bool userns require_userns}
+    %{subst_enable_meson_bool userns require_userns} \
+    %{subst_enable_meson_bool support_setuid support_setuid}
 %nil
 %meson_build
 
@@ -64,6 +68,9 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Thu Apr 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2 (fixed CVE-2026-41163)
+
 * Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
