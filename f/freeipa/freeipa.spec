@@ -2,6 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define bash_completions_dir %_datadir/bash-completion/completions
 
+%def_with dogtag_pki
 %ifarch %ix86 armh
 %def_with only_client
 %def_without modern_ui
@@ -66,7 +67,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.1
-Release: alt4
+Release: alt5
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -148,7 +149,9 @@ BuildRequires: python3(dbus)
 BuildRequires: python3(gssapi)
 BuildRequires: python3(pysss_murmur)
 BuildRequires: python3(lxml)
+%if_with dogtag_pki
 BuildRequires: python3-module-pki-base >= %pki_version
+%endif
 BuildRequires: python3-module-ldap >= %python_ldap_version
 BuildRequires: python3(polib)
 BuildRequires: python3(pytest)
@@ -217,9 +220,6 @@ Requires: %name-client = %EVR
 Requires: acl
 Requires: gssproxy >= %gssproxy_version
 Requires: sssd-dbus >= %sssd_version
-Requires: pki-ca >= %pki_version
-Requires: pki-kra >= %pki_version
-Requires: pki-acme >= %pki_version
 Requires: certmonger >= %certmonger_version
 Requires: 389-ds-base >= %ds_version
 # https://pagure.io/freeipa/issue/8632
@@ -244,6 +244,12 @@ Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-gssapi
 Requires: python3-module-systemd
 Requires: slapi-nis >= %slapi_nis_version
+%if_with dogtag_pki
+Requires: python3-module-pki-base >= %pki_version
+Requires: pki-ca >= %pki_version
+Requires: pki-kra >= %pki_version
+Requires: pki-acme >= %pki_version
+%endif
 
 # Versions of nss-pam-ldapd < 0.8.4 require a mapping from uniqueMember to
 # member.
@@ -254,6 +260,8 @@ Conflicts: nss-ldapd < 0.8.4
 # not public packages and modules
 %filter_from_provides /python3(wsgi\(\..*\)\?)/d
 %filter_from_provides /python3(migration\(\..*\)\?)/d
+# manually manage dependency on python-pki
+%filter_from_requires /python3(pki\(\..*\)\?)/d
 
 %description server
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -274,7 +282,6 @@ Requires: python3-module-gssapi
 Requires: python3-module-ipaclient = %EVR
 Requires: python3-module-kdcproxy
 Requires: python3-module-ldap >= %python_ldap_version
-Requires: python3-module-pki-base >= %pki_version
 Requires: python3-module-sssdconfig >= %sssd_version
 Requires: python3-module-samba
 Requires: python3-module-psutil
@@ -1218,6 +1225,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt5
+- Added build-time support for Dogtag-less environments (closes: #58740).
+
 * Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt4
 - Fixed FTBFS (nss 3.122).
 
