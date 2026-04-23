@@ -1,6 +1,6 @@
 Name: cups-filter-sl-watermark
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: SeLinux watermarking of printed documents
 License: GPL
@@ -8,6 +8,8 @@ Group: System/Configuration/Printing
 BuildArch: noarch
 BuildRequires: rpm-build-python3
 Source: %name-%version.tar
+
+Requires: cups
 
 %description
 Special CUPS filter adding security level watermarks
@@ -26,6 +28,11 @@ install -pm644 watermark.{pdf,odt} %buildroot%cupsdir/data/
 install -pm644 sl-watermark.{convs,types} %buildroot%cupsdir/mime/
 install -pm644 cups-filter-sl-watermark.cfg %buildroot%_sysconfdir/
 
+%post
+if [ "$1" -eq 1 ]; then
+	sed -i 's/JobPrivateValues default/JobPrivateValues none/' /etc/cups/cupsd.conf
+fi
+
 %files
 %_libexecdir/cups/filter/*
 %cupsdir/data/*
@@ -33,6 +40,10 @@ install -pm644 cups-filter-sl-watermark.cfg %buildroot%_sysconfdir/
 %_sysconfdir/*
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 0.6-alt3
+- Set JobPrivateValues to none in /etc/cups/cupsd.conf.
+- Add runtime dependency on cups.
+
 * Mon May 20 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.6-alt2
 - default font size set to 10
 
