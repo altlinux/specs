@@ -3,7 +3,7 @@
 
 Name: libffi%soname
 Version: 3.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -48,6 +48,10 @@ make -k check
 %_libdir/*.so.*
 
 %changelog
+* Thu Apr 23 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.3-alt3
+- Backported upstream commit v3.4.7~9 to fix ftbfs with gcc 15+
+  (thx Joseph Myers).
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 1:3.3-alt2
 - renamed to libffi7
 - removed devel and devel-static packages
