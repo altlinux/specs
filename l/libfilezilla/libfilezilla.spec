@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 53
+%define abiversion 57
 
 Name: libfilezilla
-Version: 0.55.3
+Version: 0.55.4
 Release: alt1
 Summary: Small and modern C++ library
 License: GPL-2.0-or-later
@@ -126,6 +126,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 23 2026 Anton Farygin <rider@altlinux.org> 0.55.4-alt1
+- 0.55.3 -> 0.55.4
+
 * Thu Apr 16 2026 Anton Farygin <rider@altlinux.org> 0.55.3-alt1
 - 0.54.1 -> 0.55.3
 

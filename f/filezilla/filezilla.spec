@@ -3,7 +3,7 @@
 %define oname FileZilla
 
 Name: filezilla
-Version: 3.69.6
+Version: 3.70.4
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -13,12 +13,12 @@ Url: https://filezilla-project.org/
 Source: %oname-%version.tar
 Source999: watch
 
-Patch1: filezilla-3.69.3-alt-system-pugixml.patch
-Patch2: filezilla-3.64.0-i586-FTBFS.patch
+Patch1: filezilla-3.70.4-alt-system-pugixml.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libdbus-devel
 BuildRequires: libfilezilla-devel
+BuildRequires: libfzssh-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libnettle-devel
 BuildRequires: libpugixml-devel
@@ -34,7 +34,6 @@ of useful features and an intuitive interface
 %prep
 %setup -n %oname-%version
 %patch1 -p2
-%patch2 -p2
 
 %build
 %autoreconf
@@ -64,6 +63,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 3.70.4-alt1
+- 3.69.6 -> 3.70.4
+
 * Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 3.69.6-alt1
 - 3.69.5 -> 3.69.6
 
