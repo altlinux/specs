@@ -21,7 +21,7 @@
 %define nv_version 595
 %define nv_release 58
 %define nv_minor   03
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -194,8 +194,10 @@ popd
 
 %build
 %install
-# install libraries
 mkdir -p %buildroot/%_libdir/
+# install fake libraries
+ln -s libnvidianull.so %buildroot/%_libdir/libnvidia-ml.so
+# install libraries
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
@@ -223,9 +225,6 @@ fi
 mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
 install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbus.conf
 %endif
-for l in libnvidia-ml ; do
-    ln -s ${l}.so.%version %buildroot/%_libdir/${l}.so
-done
 
 %files -n ocl-nvidia
 %files -n libnvidia-ptxjitcompiler
@@ -241,9 +240,9 @@ done
 %files -n libnvcuvid
 %_libdir/libnvcuvid.so.%nvidia_sover
 %_libdir/libnvcuvid.so.%version
-%files -n libnvidia-encode
-%_libdir/libnvidia-encode.so.%nvidia_sover
-%_libdir/libnvidia-encode.so.%version
+#%files -n libnvidia-encode
+#%_libdir/libnvidia-encode.so.%nvidia_sover
+#%_libdir/libnvidia-encode.so.%version
 %ifarch x86_64
 %files -n libnvidia-sandboxutils
 %_libdir/libnvidia-sandboxutils.so.%nvidia_sover
@@ -264,6 +263,10 @@ done
 %endif
 
 %changelog
+* Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt2
+- package fake libnvidia-ml.so
+- don't package libnvidia-encode
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt1
 - new version
 
