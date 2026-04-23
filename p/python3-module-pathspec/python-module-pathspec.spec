@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -39,6 +40,9 @@ gitignore files.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -54,6 +58,9 @@ gitignore files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.4 -> 1.1.0.
+
 * Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
 - 0.12.1 -> 1.0.4.
 
