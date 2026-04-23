@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 26.0
-Release: alt1.1
+Version: 26.1
+Release: alt1
 Summary: Core utilities for Python packages
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/Python3
@@ -14,16 +14,16 @@ Url: https://pypi.org/project/packaging/
 VCS: https://github.com/pypa/packaging
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
+Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-pretend
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tomli-w
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -31,6 +31,11 @@ Core utilities for Python packages.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -42,13 +47,12 @@ Core utilities for Python packages.
 %pyproject_run_pytest
 
 %files
-%doc CHANGELOG.rst README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 26.0-alt1.1
-- Demodernized packaging.
+* Wed Apr 15 2026 Stanislav Levin <slev@altlinux.org> 26.1-alt1
+- 26.0 -> 26.1.
 
 * Fri Jan 23 2026 Stanislav Levin <slev@altlinux.org> 26.0-alt1
 - 25.0 -> 26.0.
