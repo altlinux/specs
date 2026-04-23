@@ -1,5 +1,5 @@
 Name: tree-sitter-c
-Version: 0.24.1
+Version: 0.24.2
 Release: alt1
 
 Summary: C grammar for tree-sitter
@@ -22,6 +22,7 @@ gcc -shared %optflags %optflags_shared -Isrc src/parser.c -o c.so
 install -pm0644 -D c.so %buildroot%_libdir/libtree-sitter-c.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-c/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-c
+cp -a queries %buildroot%_libdir/tree-sitter-c
 
 %files
 %doc LICENSE README*
@@ -29,6 +30,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-c
 %_libdir/tree-sitter-c
 
 %changelog
+* Thu Apr 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.2-alt1
+- 0.24.2 released
+
 * Mon May 26 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.1-alt1
 - 0.24.1 released
 
