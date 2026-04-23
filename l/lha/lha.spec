@@ -1,6 +1,6 @@
 Name: lha
 Version: 1.14i
-Release: alt4
+Release: alt5
 Epoch: 2
 
 %define addver -ac20211125p5
@@ -32,7 +32,7 @@ be read on the Amiga or DOS.
 
 %build
 %define _optlevel 3
-%add_optflags %optflags_notraceback
+%add_optflags %optflags_notraceback -std=gnu17
 %autoreconf
 %configure
 %make_build OPTIMIZE="%optflags"
@@ -44,6 +44,9 @@ install -pDm755 src/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2:1.14i-alt5
+- fix FTBFS with gcc15
+
 * Fri Feb 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 2:1.14i-alt4
 - update to 20211125
 
