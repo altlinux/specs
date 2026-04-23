@@ -1,5 +1,5 @@
 Name:    altcenter-education
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Manage plugins and component list for Alt Center
@@ -27,6 +27,9 @@ install -Dm 0644 list-components %buildroot%_sysconfdir/altcenter/list-component
 %config(noreplace) %_sysconfdir/altcenter/*
 
 %changelog
+* Thu Apr 23 2026 Ilya Muhamadeev <nicourced@altlinux.org> 1.2-alt1
+- Add scan utilities.
+
 * Thu Feb 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 1.1-alt1
 - Remove yandex from list-components.
 
