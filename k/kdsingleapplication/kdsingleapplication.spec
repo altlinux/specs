@@ -1,22 +1,27 @@
+%def_enable tests
 %def_enable qt5
 
 %define ver_major 1.2
 
 Name: kdsingleapplication
-Version: %ver_major.0
-Release: alt3
+Version: 1.2.1
+Release: alt1
 
 Summary: KDAB's helper class for single-instance policy applications
 
 License: MIT
 Group: System/Libraries
 Url: https://github.com/KDAB/KDSingleApplication
-VCS: https://github.com/KDAB/KDSingleApplication.git
+VCS: https://github.com/KDAB/KDSingleApplication
 
-Source: %url/archive/v%version/KDSingleApplication-%version.tar.gz
+# Source-url: https://github.com/KDAB/KDSingleApplication/archive/v%version/KDSingleApplication-%version.tar.gz
+Source: KDSingleApplication-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
+%if_enabled tests
+BuildRequires(pre): ctest
+%endif
 BuildRequires: gcc-c++ cmake qt6-base-devel libvulkan-devel
 %if_enabled qt5
 BuildRequires: qt5-base-devel
@@ -88,6 +93,9 @@ export LC_ALL=C.UTF-8
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
  -DKDSingleApplication_QT6=OFF \
  -DECM_MKSPECS_INSTALL_DIR=%_libdir/qt5/mkspecs/modules \
+%if_enabled tests
+ -DKDSingleApplication_TESTS=ON \
+%endif
 #
 cmake --build "build5" -j%__nprocs
 %endif
@@ -96,6 +104,9 @@ cmake --build "build5" -j%__nprocs
  -GNinja \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
  -DKDSingleApplication_QT6=ON \
+%if_enabled tests
+ -DKDSingleApplication_TESTS=ON \
+%endif
  -DINSTALL_DOC_DIR=%_docdir/%name-%version \
 #
 cmake --build "build6" -j%__nprocs
@@ -107,6 +118,14 @@ cmake --install "build5" --verbose
 rm -rf %buildroot%_docdir/KDSingleApplication/
 %endif
 cmake --install "build6" --verbose
+
+%if_enabled tests
+%check
+%if_enabled qt5
+%ctest --test-dir "build5"
+%endif
+%ctest --test-dir "build6"
+%endif
 
 %files -n lib%name-common
 %dir %_docdir/%name-%version/
@@ -148,6 +167,10 @@ cmake --install "build6" --verbose
 %_libdir/qt6/mkspecs/modules/qt_KDSingleApplication.pri
 
 %changelog
+* Thu Apr 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+- Enabled tests.
+
 * Fri Nov 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt3
 - Fixed file conflicts when installing common subpackage.
 
