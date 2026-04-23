@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,11 @@ done
 %_destdir
 
 %changelog
+* Fri Apr 17 2026 Valentin Sokolov <sova@altlinux.org> 0.8.0-alt1
+- Added INI file configuration policies (special characters, unquoted commas, empty sections)
+- Added a policy to force disabling secure permissions and ownership for files
+- Removed unnecessary notes from the screensaver policy presentation block
+
 * Mon Feb 09 2026 Valentin Sokolov <sova@altlinux.org> 0.7.2-alt1
 - Improved LAPS_PasswordEncryptedPrincipal policy description
 - Fixed translations in Polkit/Udisk2

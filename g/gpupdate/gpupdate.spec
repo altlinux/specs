@@ -37,9 +37,14 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 %add_python3_req_skip util.ipacreds
 %add_python3_req_skip frontend.appliers.ini_file
+%add_python3_req_skip util.gpp_lifecycle
+%add_python3_req_skip storage.gpp_state
+%add_python3_req_skip util.check_filters
+%add_python3_req_skip util.secure_paths
+
 
 Name: gpupdate
-Version: 0.14.2
+Version: 0.15.0
 Release: alt1
 
 Summary: GPT applier
@@ -211,6 +216,23 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Apr 15 2026 Valery Sinelnikov <greh@altlinux.org> 0.15.0-alt1
+- Added:
+  GPP lifecycle management (applyOnce, removePolicy, disabled)
+  Targeting filters for GPP preferences (computer, domain, user, group, date)
+  Secure permissions and ownership for sensitive paths
+  INI file special characters policy support
+  INI file edit without section support
+  Skip writing INI values that already match target
+- Changed:
+  Optimized Windows variable expansion (closes:55948)
+  Refactored filter checking with caching and thread safety
+- Fixed:
+  Persist applyOnce flag to dconf so it works across GPOA runs
+  Fix systemd unit enabling after unmask (closes:56049, 55954)
+  Fix user-dirs.dirs for non-C locales (closes:54590)
+  Fix gpupdate-setup help text typo (closes:56674)
+
 * Thu Feb 26 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.14.2-alt1
 - Fix username resolution for trusted domain users
 
