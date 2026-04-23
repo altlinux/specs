@@ -3,17 +3,25 @@
 
 Name: lib3mf
 Version: 2.2.0
-Release: alt5
+Release: alt6
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
 Group: Graphics
-Url: https://github.com/3MFConsortium/lib3mf
-Vcs: https://github.com/3MFConsortium/lib3mf.git
+URL: https://github.com/3MFConsortium/lib3mf
+VCS: https://github.com/3MFConsortium/lib3mf.git
 
 # Source-url: https://github.com/3MFConsortium/lib3mf/archive/v%version/lib3mf-%version.tar.gz
 Source: %name-%version.tar
-Patch: lib3mf-2.2.0-unbundled_zip.patch
+Patch0: lib3mf-2.2.0-unbundled_zip.patch
+
+# don't strip the library (breaks debuginfo)
+# https://github.com/3MFConsortium/lib3mf/pull/290.patch
+Patch1: not-to-strip-binaries.patch
+
+# Fix build with GCC 15, #include <cstdint> for uint64_t definition
+# https://github.com/3MFConsortium/lib3mf/pull/407.patch
+Patch2: gcc15.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -41,7 +49,9 @@ This is a 3D printing standard for representing geometry as meshes.
 
 %prep
 %setup
-%patch -p2
+%patch0 -p2
+%patch1 -p1
+%patch2 -p1
 
 # Set version
 %__subst 's|@PROJECT_VERSION@|%version|' lib3mf.pc.in 
@@ -77,7 +87,7 @@ sed -i -e 's|Libraries/libzip/zip.h|zip.h|' \
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Also include the other headers
 cp -a Include/* %buildroot%_includedir/%name/
@@ -111,6 +121,10 @@ ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt6
+- Fix build with gcc15.
+- Fix debuginfo.
+
 * Sat Mar 14 2026 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt5
 - Fix FTBFS.
 
