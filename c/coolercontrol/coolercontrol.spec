@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 3.1.1
+Version: 4.2.1
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -82,16 +82,6 @@ cat > .cargo/config.toml << EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/codifryed/nvml-wrapper?branch=coolercontrol-2-0"]
-git = "https://github.com/codifryed/nvml-wrapper"
-branch = "coolercontrol-2-0"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/codifryed/tower-governor?branch=0.7"]
-git = "https://github.com/codifryed/tower-governor"
-branch = "0.7"
-replace-with = "vendored-sources"
-
 [source.vendored-sources]
 directory = "vendor"
 
@@ -149,6 +139,12 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 4.2.1-alt1
+- 4.2.1.
+
+* Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt1
+- 4.1.0.
+
 * Mon Feb 02 2026 L.A. Kostis <lakostis@altlinux.ru> 3.1.1-alt1
 - 3.1.1.
 - BR: added protobuf-compiler (for daemon).
