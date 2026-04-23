@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: A small application for viewing images
@@ -12,7 +12,7 @@ Vcs: https://altlinux.space/shad/minivi
 
 Source: %name-%version.tar
 
-Requires: libwebp-tools ImageMagick-tools
+Requires: libwebp-tools ImageMagick-tools libcanberra-gtk2
 
 BuildRequires: lazarus
 
@@ -22,7 +22,7 @@ Everything is minimalistic.
 Functionality:
 	- closing the application by pressing Esc / Q / Ctrl + Q
 	- opening images, both when associating files and from the application by pressing Ctrl + O / O
-	= setting an image as a desktop background by pressing W
+	- setting an image as a desktop background by pressing W
 	- information about the image I
 	- deleting an image by pressing Del / D
 	- calling help by pressing F1
@@ -47,6 +47,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt1
+- 0.13.0 -> 0.14.0
+
 * Tue Mar 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.13.0-alt1
 - 0.12.2 -> 0.13.0
 
