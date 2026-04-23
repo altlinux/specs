@@ -1,7 +1,7 @@
 Name: morse
 Summary: Morse Classic morse trainer program
 Version: 2.7
-Release: alt1
+Release: alt2
 License: BSD
 Group: Communications
 Url: http://catb.org/~esr/morse/
@@ -32,6 +32,7 @@ Morse-code beeps.
 %prep
 %setup
 %autopatch -p1
+sed -i -e 's!-Wno-unused-parameter!-Wno-unused-parameter -Wno-error=old-style-definition -std=gnu17!' */Makefile
 
 %build
 rm -f morse.1
@@ -54,6 +55,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_bindir/QSO
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.7-alt2
+- fix FTBFS with gcc15
+
 * Tue Mar 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.7-alt1
 - 2.7
 
