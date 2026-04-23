@@ -2,7 +2,7 @@
 
 Name: gkrellm-%plugin
 Version: 1.05
-Release: alt3.1
+Release: alt4
 
 Summary: GKrellM xkb plugin
 License: GPL-2.0-or-later
@@ -12,6 +12,7 @@ Url: http://sweb.cz/tripie/gkrellm/xkb/
 Source: http://sweb.cz/tripie/gkrellm/xkb/dist/%name-%version.tar.gz
 
 Patch0: gkrellm-xkb-1.05-alt-flag.patch
+Patch1: gkrellm-xkb-alt-gcc15.patch
 
 Requires: gkrellm >= 2.0
 
@@ -27,6 +28,7 @@ available.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 subst 's|^FLAGS =.*|\0 %optflags|' Makefile
 
 %build
@@ -41,6 +43,9 @@ install -m755 %plugin.so %buildroot%_libdir/gkrellm2/plugins/%plugin.so
 %_libdir/gkrellm2/plugins/%plugin.so
 
 %changelog
+* Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt4
+- Fix FTBFS with gcc15.
+
 * Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt3.1
 - Enable debuginfo.
 - License: use SPDX tag.
