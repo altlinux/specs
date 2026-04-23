@@ -1,18 +1,18 @@
 Name: dhcp_probe
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Summary: Tool for discover DHCP and BootP servers
 License: %bsdstyle
 Group: Networking/Other
-URL: http://www.net.princeton.edu/software/dhcp_probe/
+URL: https://www.net.princeton.edu/software/dhcp_probe/
 
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: dhcp_probe-1.3.1-alt-fix-strerror-declaration.patch
+Source999: watch
 
 AutoReqProv: yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Apr 12 2009
 BuildRequires: libnet2-devel libpcap-devel
 
 %description
@@ -21,7 +21,7 @@ A network administrator can use this tool to locate unauthorized DHCP and BootP 
 
 %prep
 %setup
-%patch0 -p1
+%patch0 -p2
 
 %build
 %configure
@@ -43,6 +43,9 @@ install -m 644 -D extras/dhcp_probe.cf.sample %buildroot%_sysconfdir/dhcp_probe.
 %_man5dir/*
 
 %changelog
+* Thu Apr 23 2026 Anton Farygin <rider@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1
+
 * Tue Aug  2 2016 Terechkov Evgenii <evg@altlinux.org> 1.3.0-alt2
 - Sync with Debian patches to make it work on x86_64
 
