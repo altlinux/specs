@@ -8,7 +8,7 @@
 
 Name: TiMidity++
 Version: 2.15.0
-Release: alt1.4
+Release: alt1.5
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -108,7 +108,7 @@ cp -a INSTALL INSTALL.orig
 %build
 %add_optflags -DUSE_INTERP_RESULT -DSTDC_HEADERS
 %define _optlevel 3
-export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notraceback"
+export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notraceback -std=gnu17 -Wno-incompatible-pointer-types"
 %configure \
     --program-prefix="" \
     --enable-interface=xaw,ncurses,gtk,tcltk,%{?_with_emacs:emacs,}slang \
@@ -164,6 +164,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.15.0-alt1.5
+- NMU: fix FTBFS with gcc15
+
 * Thu Dec 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.15.0-alt1.4
 - NMU: add systemd service file.
 
