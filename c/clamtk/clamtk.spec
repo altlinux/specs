@@ -1,6 +1,6 @@
 Name: clamtk
 Version: 6.18
-Release: alt1
+Release: alt2
 
 Summary: Easy to use front-end for ClamAV
 Summary(ru_RU.UTF-8): Простой в использовании интерфейс для антивируса ClamAV
@@ -16,7 +16,7 @@ BuildArch: noarch
 # Note! This is a release tarball, not source code tarball
 # Source-url: https://github.com/dave-theunsub/clamtk/releases/download/v%version/clamtk-%version.tar.xz
 Source: %name-%version.tar
-Patch: %name-gtk.patch
+Patch: alt-ru-mirrors.patch
 
 Requires: clamav >= 0.95
 Requires: gnome-icon-theme gnome-icon-theme-extras libcanberra-gtk3
@@ -40,7 +40,7 @@ ClamTk - графический интерфейс для ClamAV, разрабо
 
 %prep
 %setup
-#patch -p2
+%autopatch -p1
 
 %install
 install -D -m755 %name %buildroot%_bindir/%name
@@ -66,6 +66,10 @@ done
 %_man1dir/*
 
 %changelog
+* Thu Apr 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 6.18-alt2
+- Delete unused patch;
+- Add available in Russia mirrors.
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 6.18-alt1
 - new version 6.18 (with rpmrb script)
 
