@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Wraps pyOpenSSL for quick and easy PKI
@@ -43,5 +43,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 23 2026 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt1
+- New version.
+
 * Wed Jan 29 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus.
