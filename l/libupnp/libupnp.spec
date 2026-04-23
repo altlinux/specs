@@ -2,7 +2,7 @@
 %define soname_ixml 11
 
 Name: libupnp
-Version: 1.18.4
+Version: 1.18.5
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
@@ -73,6 +73,9 @@ applications using libupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Thu Apr 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.18.5-alt1
+- 1.18.5 (fixes: CVE-2026-41682)
+
 * Mon Apr 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.18.4-alt1
 - 1.18.4 released
 
