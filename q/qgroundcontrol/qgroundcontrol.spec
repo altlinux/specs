@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.0.8
-Release: alt3
+Release: alt5
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -19,8 +19,11 @@ Patch3: alt-source.patch
 Patch4: alt-add-find-locationprivate.patch
 Patch5: alt-add-elapsedtimer.patch
 Patch6: alt-add-types-workaround.patch
+Patch7: alt-esri-stadia-maptiler.patch
+Patch8: alt-libcurl-tile-download.patch
 
 Requires: qt6-charts
+Requires: libOpenGL
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -39,8 +42,13 @@ BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-wayland-devel
 BuildRequires: qt6-connectivity-devel
 BuildRequires: qt6-quick3d-devel
+BuildRequires: qt6-quick3d
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-shadertools-devel
+BuildRequires: qt6-sql-interbase
+BuildRequires: qt6-sql-postgresql
+BuildRequires: qt6-sql-odbc
+BuildRequires: qt6-sql-mysql
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: gst-plugins-good1.0-qt6
@@ -85,6 +93,7 @@ BuildRequires: parameterrepository
 BuildRequires: gamecontrollerdb
 BuildRequires: gpsdrivers
 BuildRequires: c_library_v2
+BuildRequires: libcurl-devel
 BuildRequires: /proc
 
 %description
@@ -136,13 +145,23 @@ install -Dm 755 build/Release/QGroundControl %buildroot%_bindir/QGroundControl
 mkdir -pv %buildroot%_datadir/applications
 install -Dm 644 build/org.mavlink.qgroundcontrol.desktop %buildroot%_datadir/applications/org.mavlink.qgroundcontrol.desktop
 
+install -Dm 644 resources/icons/qgroundcontrol.png %buildroot/%_datadir/icons/hicolor/128x128/apps/QGroundControl.png
+
 %find_lang --without-mo --with-qt qgc
 
 %files -f qgc.lang
 %_bindir/QGroundControl
 %_datadir/applications/org.mavlink.qgroundcontrol.desktop
+%_datadir/icons/hicolor/128x128/apps/QGroundControl.png
 
 %changelog
+* Thu Apr 23 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt5
+- Replace Yandex Tiles with Esri, MapTiler, Stadia providers;
+- Add libcurl tile downloader.
+
+* Sat Apr 4 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt4
+- Use Yandex Maps as online maps provider.
+
 * Tue Mar 24 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt3
 - Remove SDL version hardening, update QGC hardcoded version.
 
