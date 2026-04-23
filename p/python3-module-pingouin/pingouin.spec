@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.5.5
-Release: alt2
+Version: 0.6.1
+Release: alt1
 Summary: A python statistical library based on Pandas
 Group: Development/Python3
 License: GPL-3.0
@@ -48,13 +48,7 @@ statistical functions.
 %pyproject_install
 
 %check
-%pyproject_run -- python3 -m pytest -v -k "not (TestRegression \
-                                        and test_logistic_regression) \
-                                        and not (TestRegression \
-                                        and test_linear_regression) \
-                                        and not (TestCorrelation and test_corr) \
-                                        and not (TestPairwise \
-                                        and test_pairwise_corr)"
+%pyproject_run -- python3 -m pytest -v -k "not (TestRegression and test_linear_regression)"
 					
 %files
 %doc README.rst CODE_OF_CONDUCT.md LICENSE
@@ -62,6 +56,9 @@ statistical functions.
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Wed Apr 22 2026 Polina Poidenko <polipoki@altlinux.org> 0.6.1-alt1
+- New version 0.6.1.
+
 * Wed Feb 11 2026 Polina Poidenko <polipoki@altlinux.org> 0.5.5-alt2
 - New snapshot for fix build test with python3-module-scipy >= 1.17.0.
 
