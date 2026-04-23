@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+%set_verify_elf_method strict,lint=relaxed
 
 %define oname grpcio-tools
 
 Name: python3-module-%oname
-Version: 1.64.0
-Release: alt2
+Version: 1.80.0
+Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/grpcio-tools
 
 Source: %oname-%version.tar
+Source999: watch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libprotobuf-devel
@@ -43,9 +44,13 @@ export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 
 %files
 %doc README.rst
+%_bindir/python-grpc-tools-protoc
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 23 2026 Anton Farygin <rider@altlinux.org> 1.80.0-alt1
+- 1.64.0 -> 1.80.0
+
 * Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 1.64.0-alt2
 - Disabled check (see #50996).
 
