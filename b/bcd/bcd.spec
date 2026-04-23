@@ -3,6 +3,7 @@
 %global date0 20180610
 %global optflags_lto %nil
 %global soname 0
+%global gcc_ver 14
 
 %ifarch x86_64 aarch64
 %def_with cuda
@@ -11,7 +12,7 @@
 
 Name: bcd
 Version: 1.1
-Release: alt4.%{?date0}git%{?shortcommit0}
+Release: alt5.%{?date0}git%{?shortcommit0}
 Summary: Bayesian Collaborative Denoiser for Monte-Carlo Rendering
 Group: Graphics
 # BSD: main program
@@ -54,6 +55,7 @@ BuildRequires: zlib-devel
 BuildRequires: libgomp-devel
 %if_with cuda
 BuildRequires: nvidia-cuda-devel
+BuildRequires: gcc%{gcc_ver}-c++ libgomp%{gcc_ver}-devel
 %endif
 
 %description
@@ -115,6 +117,7 @@ developing applications that use %name.
 %add_optflags -Wno-return-type
 export CXXFLAGS="%optflags $(pkg-config --cflags eigen3) -I%_includedir/nlohmann"
 export LDFLAGS="$(pkg-config --libs eigen3)"
+%{?_with_cuda: export GCC_VERSION=%gcc_ver}
 %cmake \
   -Wno-dev \
   -DBCD_BUILD_GUI=OFF \
@@ -154,6 +157,9 @@ cp -pr include/* %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt5.20180610gitd94c9fa
+- gcc: downgrade to 14 due cuda requires.
+
 * Wed Jan 07 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt4.20180610gitd94c9fa
 - Fix FTBFS with new OpenEXR.
 - aarch64: enable cuda.
