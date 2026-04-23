@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.23
+Version: 7.1.25
 Release: alt1
 Summary: Python library for SNMP
 License: BSD-2-Clause
@@ -71,6 +71,9 @@ engine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 7.1.25-alt1
+- 7.1.23 -> 7.1.25.
+
 * Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 7.1.23-alt1
 - 7.1.22 -> 7.1.23.
 
