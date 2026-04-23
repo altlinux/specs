@@ -1,5 +1,5 @@
 Name: tree-sitter-erlang
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Erlang grammar for tree-sitter
@@ -23,6 +23,7 @@ gcc -shared %optflags %optflags_shared -Isrc src/parser.c src/scanner.c -o erlan
 install -pm0644 -D erlang.so %buildroot%_libdir/libtree-sitter-erlang.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-erlang/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-erlang
+cp -a queries %buildroot%_libdir/tree-sitter-erlang
 
 %files
 %doc LICENSE README*
@@ -30,6 +31,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-erlang
 %_libdir/tree-sitter-erlang
 
 %changelog
+* Thu Apr 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.0-alt1
+- 0.16.0 released
+
 * Fri Dec 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.15.0-alt1
 - 0.15.0 released
 
