@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 Summary: A fast pixel-level image comparison python library
 Group: Development/Python3
@@ -50,5 +50,8 @@ screenshots in tests. Now with additional support of PIL.
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Thu Apr 23 2026 Polina Poidenko <polipoki@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Tue Dec 23 2025 Polina Poidenko <polipoki@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus.
