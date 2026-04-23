@@ -1,7 +1,7 @@
 %define pypi_name pyradio
 
 Name: %pypi_name
-Version: 0.9.3.11.29
+Version: 0.9.3.11.30
 Release: alt1
 
 Summary: Command line internet radio player
@@ -58,6 +58,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Apr 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.30-alt1
+- 0.9.3.11.29 -> 0.9.3.11.30
+
 * Sun Mar 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.29-alt1
 - 0.9.3.11.28 -> 0.9.3.11.29
 
