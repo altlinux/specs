@@ -1,54 +1,31 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+Name:            httpcomponents-client
+Version:         4.5.14
+Release:         alt2
 
-Name:              httpcomponents-client
-Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.5.14
-Release:           alt1
-License:           Apache-2.0
-URL:               http://hc.apache.org/
-Source0:           https://www.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
-BuildArch:         noarch
+Summary:         HTTP agent implementation based on httpcomponents HttpCore
+License:         Apache-2.0
+Group:           Development/Java
+URL:             http://hc.apache.org/
+VCS:             https://github.com/apache/httpcomponents-client
 
-Patch0:            0001-Use-system-copy-of-effective_tld_names.dat.patch
-Patch1:            0002-Port-to-mockito-2.patch
-Patch2:            0003-Port-to-Mockito-5.patch
+Source0:         %name-%version-src.tar.gz
 
-BuildRequires:     maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:     mvn(commons-codec:commons-codec)
-BuildRequires:     mvn(commons-logging:commons-logging)
-BuildRequires:     mvn(junit:junit)
-BuildRequires:     mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:     mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
-BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:     mvn(org.mockito:mockito-core)
-%endif
+Patch0:          0001-Use-system-copy-of-effective_tld_names.dat.patch
+Patch1:          0002-Port-to-mockito-2.patch
+Patch2:          0003-Port-to-Mockito-5.patch
 
-%if %{without bootstrap}
-BuildRequires:     publicsuffix-list
-%endif
-Requires:          publicsuffix-list
-Source44: import.info
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-Obsoletes: hc-httpclient < 4.1.1
-Provides: hc-httpclient = %version
+BuildRequires:  mvn(org.apache.httpcomponents:httpcomponents-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(commons-logging:commons-logging)
+
+BuildArch:      noarch
+
+Requires:       publicsuffix-list
 
 %description
 HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on
@@ -58,36 +35,36 @@ management. HttpComponents Client is a successor of and replacement
 for Commons HttpClient 3.x. Users of Commons HttpClient are strongly
 encouraged to upgrade.
 
-%{?javadoc_package}
+%javadoc_package
+
+%package -n     fluent-hc
+Summary:        Apache HttpClient Fluent API
+Group:          Development/Java
+
+%description -n fluent-hc
+Apache HttpComponents Client fluent API.
+
+%package -n     httpmime
+Summary:        Apache HttpClient Mime
+Group:          Development/Java
+
+%description -n httpmime
+Apache HttpComponents HttpClient - MIME coded entities.
 
 %prep
-%setup -q -n %{name}-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -n %name-%version
+%autopatch -p1
 
 %mvn_package :::tests: __noinstall
 
 # Change scope of commons-logging to provided
 %pom_change_dep :commons-logging :::provided httpclient
 
-# Remove optional build deps not available in Fedora
-%pom_disable_module httpclient-osgi
-%pom_disable_module httpclient-win
-%pom_disable_module fluent-hc
-%pom_disable_module httpmime
-%pom_disable_module httpclient-cache
-%pom_remove_plugin :docbkx-maven-plugin
-%pom_remove_plugin :clirr-maven-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
-
-# Fails due to strict crypto policy - uses DSA in test data
-rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
-
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :download-maven-plugin httpclient
 
 %pom_xpath_inject "pom:archive" "
@@ -128,22 +105,39 @@ rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
 </pluginManagement>
 " httpclient
 
+# Fails due to strict crypto policy - uses DSA in test data
+rm httpclient/src/test/java/org/apache/http/conn/ssl/TestSSLSocketFactory.java
 # requires network
 rm httpclient/src/test/java/org/apache/http/client/config/TestRequestConfig.java
 
-%build
+# requires ehcache
+%pom_disable_module httpclient-cache
+# no need
+%pom_disable_module httpclient-win
+%pom_disable_module httpclient-osgi
+
+%mvn_package :fluent-hc fluent-hc
+%mvn_package :httpmime httpmime
+
 %mvn_file ":{*}" httpcomponents/@1
 
-%mvn_build -- -Dmaven.compiler.release=8
+%build
+%mvn_build
 
 %install
 %mvn_install
 
-%files -n %{?module_prefix}%{name} -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 %doc README.txt RELEASE_NOTES.txt
 
+%files -n fluent-hc -f .mfiles-fluent-hc
+%files -n httpmime -f .mfiles-httpmime
+
 %changelog
+* Tue Apr 21 2026 Evgeniy Serov <scala@altlinux.org> 4.5.14-alt2
+- Re-enabled modules (fluent-hc, httpmime).
+
 * Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.14-alt1
 - fixed FTBFS: new version
 - added patch to fix tests with Mockito (thx CentOS Stream)
