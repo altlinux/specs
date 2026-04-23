@@ -1,29 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%def_without docs
+
+%def_with docs
+
+%ifarch %ix86
 %def_without check
+%else
+%def_with check
+%endif
 
-# TODO: enable system libtiff when it will support BigTiff (from 4.0?)
-%def_without libtiff
-%def_without geotiff
-
-%define sover 37
+%global soversion 38
 
 Name: gdal
-Version: 3.11.4
+Version: 3.12.2
 Release: alt1
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 License: MIT
 Group: Sciences/Geosciences
+Url: http://www.gdal.org
+Vcs: https://github.com/OSGeo/gdal.git
 
-URL: http://www.gdal.org
-# https://gdal.org/en/stable/download.html#source-code
 Source: %name-%version.tar
-Patch: %name-2.2.3-alt-mysql8-transition.patch
+Patch0: %name-2.2.3-alt-mysql8-transition.patch
+# Thnx @glebfm
+# See https://bugzilla.altlinux.org/58766
+Patch1: %name-3.12.2-alt-build-docs-x86_64.patch
 
-%define libname lib%name
-
-BuildRequires(pre): rpm-build-ninja
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel
 BuildRequires: libexpat-devel libgeos-devel libgif-devel libhdf5-devel
 BuildRequires: libjpeg-devel libpng-devel libsqlite3-devel
@@ -33,7 +35,7 @@ BuildRequires: chrpath libnetcdf-devel
 BuildRequires: libproj-devel
 BuildRequires: libxerces-c-devel
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: cmake ninja-build
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -49,16 +51,28 @@ BuildRequires: libopenjpeg2.0-devel libpoppler-devel
 BuildRequires: libarmadillo-devel
 %endif
 %if_with docs
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: doxygen graphviz
 BuildRequires: python3-module-breathe
-BuildRequires: python3-module-sphinx-bootstrap-theme
+BuildRequires: python3-module-fsspec
+BuildRequires: python3-module-myst_nb
+BuildRequires: python3-module-ipykernel
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-autobuild
+BuildRequires: python3-module-sphinx-tabs
+BuildRequires: python3-module-sphinxcontrib-bibtex
+BuildRequires: python3-module-sphinxcontrib-jquery
 BuildRequires: python3-module-sphinxcontrib-spelling
-BuildRequires: python3-module-recommonmark
+BuildRequires: python3-module-sphinx_rtd_theme
 %endif
 %if_with check
-BuildRequires: ctest
+BuildRequires: pytest3
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-benchmark
+BuildRequires: python3-module-pytest-env
+BuildRequires: python3-module-pytest-sugar
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-filelock
 BuildRequires: python3-module-numpy-testing
 BuildRequires: /proc
 %endif
@@ -83,51 +97,46 @@ This package contains documentation for the GDAL/OGR library
 and utilities.
 %endif
 
-%package plugins
-Summary: Plugins for GDAL
-Group: Sciences/Geosciences
-Conflicts: libgdal < 3.9.0
-
-%description plugins
-This package contains various pluginsfor GDAL.
-
 %package scripts
 Summary: Scripts for GDAL
 Group: Sciences/Geosciences
 BuildArch: noarch
 
 %description scripts
-This package contains various scripts for GDAL (written in python)
+This package contains various scripts for GDAL (written in python).
 
-%package -n %libname%sover
+%package -n lib%name%soversion
 Summary: Libraries required for the GDAL library
-Group: Sciences/Geosciences
-Requires: %name-plugins = %EVR
+Group: System/Libraries
+Provides: lib%name = %EVR
 Obsoletes: libgdal < 3.9.0
+Obsoletes: gdal-plugins
 
-%description -n %libname%sover
-Libraries required for the GDAL library
+%description -n lib%name%soversion
+%summary.
 
-%package -n %libname-devel
+%package -n lib%name-devel
 Summary: Development files for using the GDAL library
 Group: Development/C
+Requires: lib%name%soversion
+Requires: %name
 
 %description -n lib%name-devel
-Development files for using the GDAL library
+%summary.
 
 %package -n python3-module-%name
 Summary: The Python bindings for the GDAL library
 Group: Development/Python3
-Requires: %libname%sover = %version
+Requires: lib%name%soversion
 Requires: %name
-Provides: python3-module-osgeo = %version
+Provides: python3-module-osgeo
 
 %description -n python3-module-%name
 Python module for %name.
 
 %prep
 %setup
-%patch -p0
+%autopatch
 %ifarch %e2k
 # mcst#9339 as of 3.10.x vs lcc 1.29.06
 sed -i '/large_power_of_5\[\] =/s/\[\]/[5]/' third_party/fast_float/bigint.h
@@ -139,60 +148,58 @@ sed -i -E 's/(m_anArrow.*)\{\};/\1={};/' ogr/ogrsf_frmts/generic/ograrrowarrayhe
 %build
 %add_optflags -fno-strict-aliasing
 %cmake -GNinja \
-    -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir/%name \
-    -DGDAL_USE_EXTERNAL_LIBS=ON \
-    -DGDAL_USE_CFITSIO=OFF \
-    -DGDAL_USE_CURL=ON \
-    -DGDAL_USE_EXPAT=ON \
-    -DGDAL_USE_FREEXL=ON \
-    -DGDAL_USE_GEOS=ON \
-    -DGDAL_USE_GIF=ON \
-    -DGDAL_USE_HDF5=ON \
-    -DGDAL_USE_HEIF=ON \
-    -DGDAL_USE_JPEG=ON \
-    -DGDAL_USE_JSONC_INTERNAL=ON \
-    -DGDAL_USE_LIBLZMA=ON \
-    -DGDAL_USE_LIBXML2=ON \
-    -DGDAL_USE_MYSQL=ON \
-    -DGDAL_USE_NETCDF=ON \
-    -DGDAL_USE_ODBC=ON \
-    -DGDAL_USE_OGDI=OFF \
-    -DGDAL_USE_OPENCL=ON \
-    -DGDAL_USE_OPENJPEG=ON \
-    -DGDAL_USE_PCRE=ON \
-    -DGDAL_USE_PCRE2=ON \
-    -DGDAL_USE_PNG=ON \
-    -DGDAL_USE_POPPLER=ON \
-    -DGDAL_USE_POSTGRESQL=ON \
-    -DGDAL_USE_QHULL=ON \
-    -DGDAL_USE_SHAPELIB=OFF \
-    -DGDAL_USE_SPATIALITE=ON \
-    -DGDAL_USE_TIFF=ON \
-    -DGDAL_USE_WEBP=ON \
-    -DGDAL_USE_XERCESC=ON \
-    -DGDAL_USE_ZLIB=ON \
-    -DGDAL_USE_ZSTD=ON \
-    -DOGR_BUILD_OPTIONAL_DRIVERS=ON \
-    -DBUILD_TESTING=OFF
+	-DBUILD_DOCS=%{with docs} \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir/%name \
+	-DINSTALL_PLUGIN_DIR=%_libdir/%{name}plugins-%{soversion} \
+	-DGDAL_USE_EXTERNAL_LIBS=ON \
+	-DGDAL_USE_CFITSIO=OFF \
+	-DGDAL_USE_CURL=ON \
+	-DGDAL_USE_EXPAT=ON \
+	-DGDAL_USE_FREEXL=ON \
+	-DGDAL_USE_GEOS=ON \
+	-DGDAL_USE_GIF=ON \
+	-DGDAL_USE_HDF5=ON \
+	-DGDAL_USE_HEIF=ON \
+	-DGDAL_USE_JPEG=ON \
+	-DGDAL_USE_JSONC_INTERNAL=ON \
+	-DGDAL_USE_LIBLZMA=ON \
+	-DGDAL_USE_LIBXML2=ON \
+	-DGDAL_USE_MYSQL=ON \
+	-DGDAL_USE_NETCDF=ON \
+	-DGDAL_USE_ODBC=ON \
+	-DGDAL_USE_OGDI=OFF \
+	-DGDAL_USE_OPENCL=ON \
+	-DGDAL_USE_OPENJPEG=ON \
+	-DGDAL_USE_PCRE=ON \
+	-DGDAL_USE_PCRE2=ON \
+	-DGDAL_USE_PNG=ON \
+	-DGDAL_USE_POPPLER=ON \
+	-DGDAL_USE_POSTGRESQL=ON \
+	-DGDAL_USE_QHULL=ON \
+	-DGDAL_USE_SHAPELIB=OFF \
+	-DGDAL_USE_SPATIALITE=ON \
+	-DGDAL_USE_TIFF=ON \
+	-DGDAL_USE_WEBP=ON \
+	-DGDAL_USE_XERCESC=ON \
+	-DGDAL_USE_ZLIB=ON \
+	-DGDAL_USE_ZSTD=ON \
+	-DOGR_BUILD_OPTIONAL_DRIVERS=ON \
+	-DBUILD_TESTING=OFF
 
-%ninja_build -C "%_cmake__builddir"
+%cmake_build
+
 %if_with docs
-export LD_LIBRARY_PATH="$PWD/%_cmake__builddir"
-export PYTHONPATH="$PWD/%_cmake__builddir/swig/python"
-# latexmk isn't available to make gdal.pdf
-sed -i \
-    "s|ln -sf ../latex/gdal.pdf build/html|#ln -sf ../latex/gdal.pdf build/html|" \
-    doc/Makefile
-make SPHINXBUILD="sphinx-build-3" -C doc html
-make SPHINXBUILD="sphinx-build-3" -C doc man
+%cmake_build --target doxygen_html
+%cmake_build --target man
 %endif
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
+
 %if_with docs
 mkdir -p %buildroot%_man1dir
-install -m 644 doc/build/man/*.1 %buildroot%_man1dir
+install -Dpm 0644 %_cmake__builddir/doc/build/man/*.1 %buildroot%_man1dir
 %endif
 
 %check
@@ -200,52 +207,104 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:%buildroot%_libdir
 export GDAL_DATA=%buildroot%_datadir/%name
 export PYTHONPATH=%buildroot%python3_sitelibdir
 export GDAL_DOWNLOAD_TEST_DATA=0
-pushd %_cmake__builddir/autotest
-py.test-3 -v
+pushd autotest
+pytest3 -vv gcore
 popd
 
 %files
-%_datadir/%name
-%_bindir/pct2rgb
-%_bindir/rgb2pct
-%_bindir/ogr*
-%_bindir/gdal*
-%_bindir/nearblack
+%_bindir/%name
+%_bindir/%{name}2tiles
+%_bindir/%{name}2xyz
+%_bindir/%{name}_calc
+%_bindir/%{name}_contour
+%_bindir/%{name}_create
+%_bindir/%{name}_edit
+%_bindir/%{name}_fillnodata
+%_bindir/%{name}_footprint
+%_bindir/%{name}_grid
+%_bindir/%{name}_merge
+%_bindir/%{name}_pansharpen
+%_bindir/%{name}_polygonize
+%_bindir/%{name}_proximity
+%_bindir/%{name}_rasterize
+%_bindir/%{name}_retile
+%_bindir/%{name}_sieve
+%_bindir/%{name}_translate
+%_bindir/%{name}_viewshed
+%_bindir/%{name}addo
+%_bindir/%{name}attachpct
+%_bindir/%{name}buildvrt
+%_bindir/%{name}compare
+%_bindir/%{name}dem
+%_bindir/%{name}enhance
+%_bindir/%{name}info
+%_bindir/%{name}locationinfo
+%_bindir/%{name}manage
+%_bindir/%{name}mdiminfo
+%_bindir/%{name}mdimtranslate
+%_bindir/%{name}move
+%_bindir/%{name}srsinfo
+%_bindir/%{name}tindex
+%_bindir/%{name}transform
+%_bindir/%{name}warp
 %_bindir/gnmanalyse
 %_bindir/gnmmanage
+%_bindir/nearblack
+%_bindir/ogr2ogr
+%_bindir/ogr_layer_algebra
+%_bindir/ogrinfo
+%_bindir/ogrlineref
+%_bindir/ogrmerge
+%_bindir/ogrtindex
+%_bindir/pct2rgb
+%_bindir/rgb2pct
 %_bindir/sozip
-%exclude %_bindir/gdal-config
-%exclude %_bindir/*.py
+%_datadir/%name
 %_datadir/bash-completion/completions/*
-%_libdir/cmake/%name/*.cmake
-%_man1dir/*
-%exclude %_man1dir/gdal-config.1*
+%exclude %_datadir/bash-completion/completions/*.py
+%exclude %_datadir/bash-completion/completions/%{name}-config
+%if_with docs
+%_man1dir/*.1.xz
+%exclude %_man1dir/%{name}-config.1.xz
+%endif
 
 %if_with docs
 %files doc
-%doc *.md *.txt doc/build/html
+%doc %_cmake__builddir/doc/build/html_extra/doxygen/*
 %endif
-
-%files plugins
-%_libdir/gdalplugins/drivers.ini
 
 %files scripts
 %_bindir/*.py
+%_datadir/bash-completion/completions/*.py
 
-%files -n %libname%sover
-%_libdir/*.so.%{sover}*
+%files -n lib%name%soversion
+%_libdir/lib%name.so.%{soversion}*
+%_libdir/%{name}plugins-%{soversion}
 
-%files -n %libname-devel
-%_bindir/gdal-config
-%_libdir/*.so
+%files -n lib%name-devel
+%_bindir/%{name}-config
+%_libdir/lib%name.so
 %_includedir/%name
-%_pkgconfigdir/gdal.pc
-%_man1dir/gdal-config.1*
+%_pkgconfigdir/%name.pc
+%_libdir/cmake/%name
+%if_with docs
+%_man1dir/%{name}-config.1.xz
+%endif
+%_datadir/bash-completion/completions/%{name}-config
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
+%python3_sitelibdir/GDAL-%version-py3.13.egg-info
+%python3_sitelibdir/osgeo
+%python3_sitelibdir/osgeo_utils
 
 %changelog
+* Tue Apr 21 2026 Ulysses Apokin <ulysses@altlinux.org> 3.12.2-alt1
+- New version.
+- Fixed to comply with Shared Libs Policy.
+- Fixed documentation build.
+- Fixed test suite.
+- The gdal-plugins package has been merged with libgdal.
+
 * Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
 - New version.
 
