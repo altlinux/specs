@@ -1,6 +1,6 @@
 Name: docbook-to-man
 Version: 2.0.0
-Release: alt1.qa3
+Release: alt1.qa4
 
 Summary: Converter from DocBook SGML into roff man macros
 License: MIT
@@ -48,9 +48,10 @@ modifications by David Bolen with Debian changes.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+sed -i -e 's!/usr/local!/usr!' Makefile */Makefile */Imakefile Instant/tptregexp/Makefile
 
 %build
-%make_build CFLAGS="-Wall -fcommon -Wno-error=implicit-function-declaration"
+%make_build CFLAGS="-Wall -fcommon -Wno-error=implicit-function-declaration -std=gnu17"
 
 %install
 install -d %buildroot%_bindir %buildroot/usr/share/sgml
@@ -61,6 +62,9 @@ install -d %buildroot%_bindir %buildroot/usr/share/sgml
 %_datadir/sgml/transpec
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0.0-alt1.qa4
+- NMU: fix FTBFS with gcc15
+
 * Wed Apr 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0.0-alt1.qa3
 - NMU: fix FTBFS with gcc14
 
