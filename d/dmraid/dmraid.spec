@@ -2,7 +2,7 @@
 
 Name: dmraid
 Version: 1.0.0.rc16
-Release: alt4
+Release: alt5
 
 Summary: dmraid (Device-mapper RAID tool and library)
 Group: System/Base
@@ -71,7 +71,7 @@ RAID set activation and display of properties for ATARAID volumes.
 %patch24 -p1
 
 %build
-%add_optflags -Wno-error=implicit-int -Wno-error=return-mismatch
+%add_optflags -Wno-error=implicit-int -Wno-error=return-mismatch -std=gnu17
 %define opt %{subst_enable debug} --sbindir=/sbin
 %configure  %opt --enable-static_link
 # SMP incompatible build
@@ -103,6 +103,9 @@ rm -f %buildroot/%_libdir/lib%name.a
 %_libdir/lib%name-events-isw.so
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0.rc16-alt5
+- NMU: fix FTBFS with gcc15
+
 * Wed Mar 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0.rc16-alt4
 - NMU: fix FTBFS with gcc14
 
