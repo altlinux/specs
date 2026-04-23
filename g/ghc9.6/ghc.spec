@@ -23,7 +23,7 @@
 
 Name: ghc%ghc_major
 Version: %build_ghc_version
-Release: alt2
+Release: alt3
 
 Epoch: 1
 
@@ -44,6 +44,8 @@ Source10: get_libs_versions.sh
 Patch15: ghc9.2-alt-docs_disable_failing_on_undefined_reference.patch
 
 Patch20: ghc9.0-debian-no_missing_haddock_file_warning.patch
+
+Patch30: ghc9.6-backport-fix_build_of_hp2ps_with_gcc15.patch
 
 Requires: libffi-devel libgmp-devel
 
@@ -207,6 +209,8 @@ This is a meta-package for all the development library packages in GHC
 %patch15 -p1
 
 %patch20 -p1
+
+%patch30 -p1
 
 # https://github.com/haskell/directory/pull/184
 rm libraries/directory/directory.buildinfo
@@ -387,6 +391,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Wed Apr 22 2026 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt3
+- Backported patch to fix building with gcc 15
+
 * Fri Mar 06 2026 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt2
 - Rebuilt with rpm-build-haskell-extra-2.0.2
 
