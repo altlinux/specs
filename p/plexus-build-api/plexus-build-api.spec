@@ -1,71 +1,50 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           plexus-build-api
+Epoch:          0
 Version:        0.0.7
-Release:        alt3_36jpp11
+Release:        alt4
+
 Summary:        Plexus Build API
 License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-build-api
-BuildArch:      noarch
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/plexus-build-api/
+VCS:            https://github.com/codehaus-plexus/plexus-build-api
 
-Source0:        https://github.com/codehaus-plexus/plexus-build-api/archive/refs/tags/plexus-build-api-0.0.7.tar.gz
+Source0:        %name-%version.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
-# Forwarded upstream: https://github.com/sonatype/sisu-build-api/pull/2
-Patch0:         %{name}-migration-to-component-metadata.patch
+Patch0:         %name-migration-to-component-metadata.patch
 Patch1:         0000-Port-to-plexus-utils-3.3.0.patch
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
-Plexus Build API
+This API allows IDEs to integrate with Maven deeper than it would be possible
+by just using regular Maven/Mojo API.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n plexus-build-api-plexus-build-api-0.0.7
-cp -p %{SOURCE1} .
+%setup -n %name-%name-%version
+%autopatch -p1
 
-%patch0 -p1
-%patch1 -p1
+cp -p %SOURCE1 .
 
 %pom_remove_parent
-# From upstream commit: https://github.com/codehaus-plexus/plexus-build-api/commit/6566292a7d85e275b824857bdf92d6504bc4824e
+
 %pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.8
 
-%mvn_file : plexus/%{name}
+%mvn_file : plexus/%name
 
 # Install plexus-build-api-tests as well
 %mvn_package :
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -73,10 +52,10 @@ cp -p %{SOURCE1} .
 %files -f .mfiles
 %doc LICENSE-2.0.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
-
 %changelog
+* Mon Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 0:0.0.7-alt4
+- Fix build with new sisu and plexus-containers.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_36jpp11
 - update
 

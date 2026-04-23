@@ -1,59 +1,24 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           plexus-containers
-Version:        2.1.1
-Release:        alt2
-Summary:        Containers for Plexus
-# Most of the files are either under ASL 2.0 or MIT
-# The following files are under xpp:
-# plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/Driver.java
-# plexus-component-metadata/src/main/java/org/codehaus/plexus/metadata/merge/MXParser.java
-License:        ASL 2.0 and MIT and xpp
+Version:        2.2.0
+Release:        alt1
+
+Summary:        Plexus Containers
+License:        Apache-2.0 and MIT and xpp
+Group:          Development/Java
 URL:            https://github.com/codehaus-plexus/plexus-containers
-BuildArch:      noarch
+VCS:            https://github.com/codehaus-plexus/plexus-containers
 
-Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Source2:        LICENSE.MIT
+Source0:        %name-%version.tar
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.xbean:xbean-reflect)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.jdom:jdom2)
-BuildRequires:  mvn(org.ow2.asm:asm)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+
+BuildArch:      noarch
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -63,87 +28,41 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
+%javadoc_package
+
 %package component-metadata
-Group: Development/Java
-Summary:        Component metadata from %{name}
+Group:          Development/Java
+Summary:        Component metadata from %name
 
 %description component-metadata
-%{summary}.
+%summary.
 
 %package component-annotations
-Group: Development/Java
-Summary:        Component API from %{name}
+Group:          Development/Java
+Summary:        Component API from %name
 
-%description -n %{?module_prefix}%{name}-component-annotations
-%{summary}.
-
-%package container-default
-Group: Development/Java
-Summary:        Default Container from %{name}
-
-%description container-default
-%{summary}.
-
-%{?javadoc_package}
+%description component-annotations
+%summary.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-cp %{SOURCE1} .
-cp %{SOURCE2} .
-
-%pom_remove_plugin -r :maven-site-plugin
-
-# Generate OSGI info
-%pom_xpath_inject "pom:project" "
-    <packaging>bundle</packaging>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <extensions>true</extensions>
-          <configuration>
-            <instructions>
-              <_nouses>true</_nouses>
-              <Export-Package>org.codehaus.plexus.component.annotations.*</Export-Package>
-            </instructions>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>" plexus-component-annotations
-
-# plexus-component-api has been merged into plexus-container-default
-%mvn_alias ":plexus-container-default" "org.codehaus.plexus:containers-component-api"
-
-# keep compat symlink for maven's sake
-%mvn_file ":plexus-component-annotations" %{name}/plexus-component-annotations plexus/containers-component-annotations
-
-# remove some broken tests
-rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/merge/ComponentsXmlMergerTest.java
-rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultComponentDescriptorWriterTest.java
+%setup
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s
 
 %install
 %mvn_install
-subst '/jar<\/path>$/a <extension>jar</extension>' %buildroot%_datadir/maven-metadata/plexus-containers-plexus-container-default.xml
-
-# plexus-containers pom goes into main package
-%files -f .mfiles-plexus-containers
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %files component-annotations -f .mfiles-plexus-component-annotations
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
-
-%files container-default -f .mfiles-plexus-container-default
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
+%doc *.md
 
 %files component-metadata -f .mfiles-plexus-component-metadata
-%doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
+%doc *.md
 
 %changelog
+* Sun Mar 29 2026 Evgeniy Serov <scala@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Tue Jul 29 2025 Andrey Cherepanov <cas@altlinux.org> 0:2.1.1-alt2
 - Added extension jar for plexus-container-default.
 

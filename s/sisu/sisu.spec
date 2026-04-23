@@ -1,108 +1,79 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           sisu
 Epoch:          2
-Version:        0.3.5
-Release:        alt1_2jpp11
+Version:        0.9.0.M3
+Release:        alt1
+
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0, the bundled asm is BSD
 License:        EPL-1.0 and BSD
+Group:          Development/Java
 URL:            https://eclipse.org/sisu/
-BuildArch:      noarch
+VCS:            https://github.com/eclipse-sisu/sisu-project
 
-Source0:        https://github.com/eclipse/sisu.inject/archive/refs/tags/releases/%{version}.tar.gz#/org.eclipse.sisu.inject-%{version}.tar.gz
-Source1:        https://github.com/eclipse/sisu.plexus/archive/refs/tags/releases/%{version}.tar.gz#/org.eclipse.sisu.plexus-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-Source100:      sisu-parent.pom
-Source101:      sisu-inject.pom
-Source102:      sisu-plexus.pom
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-Patch0:         sisu-OSGi-import-guava.patch
-Patch2:         sisu-ignored-tests.patch
-Patch3:         sisu-osgi-api.patch
-Patch4:         0001-Remove-dependency-on-glassfish-servlet-api.patch
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
+BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
 BuildRequires:  mvn(com.google.inject.extensions:guice-servlet)
-BuildRequires:  mvn(com.google.inject:guice::no_aop:)
-BuildRequires:  mvn(javax.annotation:javax.annotation-api)
-BuildRequires:  mvn(javax.enterprise:cdi-api)
-BuildRequires:  mvn(javax.inject:javax.inject)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.osgi:osgi.core)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.testng:testng)
-%endif
+Buildrequires:  mvn(org.testng:testng)
+BuildRequires:  mvn(com.google.inject.extensions:guice-assistedinject)
+BuildRequires:  mvn(cglib:cglib)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
-Provides:       %{name}-inject = %{epoch}:%{version}-%{release}
-Provides:       %{name}-plexus = %{epoch}:%{version}-%{release}
-Provides:       bundled(objectweb-asm)
-Source44: import.info
-
-Obsoletes:      %{name}-inject < 1:0.3.4-alt1_6
-Conflicts:      %{name}-inject < 1:0.3.4-alt1_6
-Obsoletes:      %{name}-plexus < 1:0.3.4-alt1_6
-Conflicts:      %{name}-plexus < 1:0.3.4-alt1_6
+BuildArch:      noarch
 
 %description
 Java dependency injection framework with backward support for plexus and bean
 style dependency injection.
 
-%{?javadoc_package}
+%javadoc_package
+
+%package        maven-plugin
+Summary:        Sisu plugin for Apache Maven
+Group:          Development/Java
+Obsoletes:      sisu-mojos < 1:0.9.0~M3
+
+%description    maven-plugin
+The Sisu Plugin for Maven provides mojos to generate
+META-INF/sisu/javax.inject.Named index files for the Sisu container.
 
 %prep
-%setup -q -c -T
-tar xf %{SOURCE0} && mv sisu.inject-releases-* sisu-inject
-tar xf %{SOURCE1} && mv sisu.plexus-releases-* sisu-plexus
+%setup
 
-cp %{SOURCE100} pom.xml
-cp %{SOURCE101} sisu-inject/pom.xml
-cp %{SOURCE102} sisu-plexus/pom.xml
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-clean-plugin
 
-%patch0
-%patch2
-%patch3
-%patch4 -p1
+find . -name pom.xml -type f -exec sed -i '/<classifier>classes<\/classifier>/d' {} +
 
-%pom_remove_dep :servlet-api sisu-inject
+%mvn_alias :org.eclipse.sisu.inject :::no_asm:
+%mvn_alias :org.eclipse.sisu.plexus org.sonatype.sisu:sisu-inject-plexus org.codehaus.plexus:plexus-container-default
 
-%pom_xpath_set -r /pom:project/pom:version %{version}
-
-%mvn_file ":{*}" @1
-%mvn_package ":*{inject,plexus}"
-%mvn_package : __noinstall
-%mvn_alias :org.eclipse.sisu.plexus org.sonatype.sisu:sisu-inject-plexus
+%mvn_package :sisu-maven-plugin maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
+ln -s sisu/org.eclipse.sisu.inject.jar %buildroot%_javadir/org.eclipse.sisu.inject.jar
+ln -s sisu/org.eclipse.sisu.plexus.jar %buildroot%_javadir/org.eclipse.sisu.plexus.jar
+echo %_javadir/org.eclipse.sisu.inject.jar >> .mfiles
+echo %_javadir/org.eclipse.sisu.plexus.jar >> .mfiles
 
 %files -f .mfiles
-%doc --no-dereference sisu-inject/LICENSE.txt
+%doc LICENSE.txt README.md
+
+%files maven-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Sat Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 2:0.9.0.M3-alt1
+- Updated to 0.9.0.M3.
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2:0.3.5-alt1_2jpp11
 - update
 

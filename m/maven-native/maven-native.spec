@@ -1,74 +1,53 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 1.0
 %global namedreltag  -alpha-8
-%global namedversion %{version}%{?namedreltag}
-%global dotreltag    %(echo %{namedreltag} | tr - .)
+%global namedversion %version%namedreltag
 
-Name:          maven-native
-Version:       1.0
-Release:       alt2
-Summary:       Compile c and c++ source under Maven
-License:       Apache-2.0 and MIT
-Group:         Development/Java
-Url:           http://www.mojohaus.org/plugins.html
-# Source code available @ https://github.com/mojohaus/maven-native
-Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/natives/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
+Name:           maven-native
+Version:        1.0
+Release:        alt3
 
-BuildRequires: maven-local
-BuildRequires: mojo-parent
-BuildRequires: mvn(aopalliance:aopalliance)
-BuildRequires: mvn(bcel:bcel)
-BuildRequires: mvn(commons-lang:commons-lang)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.sf.cglib:cglib)
-BuildRequires: mvn(org.apache.maven:maven-artifact)
-BuildRequires: mvn(org.apache.maven:maven-model)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven:maven-compat)
-BuildRequires: mvn(org.apache.maven:maven-core)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires: mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires: mvn(org.codehaus.plexus:plexus-component-api)
-BuildRequires: mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+Summary:        Compile c and c++ source under Maven
+License:        Apache-2.0 and MIT
+Group:          Development/Java
+Url:            http://www.mojohaus.org/plugins.html
+VCS:            https://github.com/mojohaus/maven-native.git
+Source0:        %name-%namedversion-source-release.zip
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+Buildrequires:  unzip
+
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(bcel:bcel)
+
+BuildArch:      noarch
 
 %description
 Maven Native - compile C and C++ source under Maven
 with compilers such as GCC, MSVC, GCJ etc ...
 
+%javadoc_package
+
 %package components
-Group: Development/Java
-Summary:       Maven Native Components
+Group: 	        Development/Java
+Summary:        Maven Native Components
 
 %description components
-%{summary}.
+%summary.
 
 %package -n native-maven-plugin
-Group: Development/Java
-Summary:       Native Maven Plugin
+Group:          Development/Java
+Summary:        Native Maven Plugin
 
 %description -n native-maven-plugin
-%{summary}.
-
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-
-%description javadoc
-This package contains javadoc for %{name}.
+%summary.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -n %name-%namedversion
 %pom_add_dep org.apache.maven.plugin-tools:maven-plugin-annotations:3.9.0:compile
 
 for d in LICENSE ; do
@@ -91,14 +70,14 @@ sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
 %pom_add_dep aopalliance:aopalliance::test native-maven-plugin
 %pom_add_dep net.sf.cglib:cglib::test native-maven-plugin
 
-%mvn_package ":%{name}" %{name}
-%mvn_package ":%{name}-api" %{name}
-%mvn_package ":%{name}-components" components
-%mvn_package ":%{name}-bcc" components
-%mvn_package ":%{name}-generic-c" components
-%mvn_package ":%{name}-javah" components
-%mvn_package ":%{name}-manager" components
-%mvn_package ":%{name}-msvc" components
+%mvn_package ":%name" %name
+%mvn_package ":%name-api" %name
+%mvn_package ":%name-components" components
+%mvn_package ":%name-bcc" components
+%mvn_package ":%name-generic-c" components
+%mvn_package ":%name-javah" components
+%mvn_package ":%name-manager" components
+%mvn_package ":%name-msvc" components
 %mvn_package ":native-maven-plugin" native-maven-plugin
 
 %build
@@ -117,20 +96,20 @@ sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}
-%dir %{_javadir}/%{name}
-%doc --no-dereference LICENSE.txt
+%files -f .mfiles-%name
+%dir %_javadir/%name
+%doc LICENSE.txt
 
 %files components -f .mfiles-components
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt
 
 %files -n native-maven-plugin -f .mfiles-native-maven-plugin
-%doc --no-dereference LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt
 
 %changelog
+* Mon Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt3
+- Fix build with new sisu and plexus-containers.
+
 * Mon Dec 08 2025 Ivan Khanas <xeno@altlinux.org> 1.0-alt2
 - Return to the Sisyphus repository.
 
