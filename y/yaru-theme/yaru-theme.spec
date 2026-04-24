@@ -4,7 +4,7 @@
 %def_enable xfwm4
 
 Name: yaru-theme
-Version: 26.04.3
+Version: 26.04.5
 Release: alt1
 
 Summary: Ubuntu Yaru theme suite
@@ -157,6 +157,9 @@ popd
 %_datadir/folder-color-switcher/colors.d/Yaru.json
 
 %changelog
+* Sun Apr 19 2026 Alexander Kovalev <alexvk@altlinux.org> 26.04.5-alt1
+- New version 26.04.5.
+
 * Sun Mar 22 2026 Alexander Kovalev <alexvk@altlinux.org> 26.04.3-alt1
 - New version 26.04.3.
 
