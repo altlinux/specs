@@ -2,10 +2,10 @@ Name: kernel-image-7.0
 Release: alt1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.0
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -290,6 +290,9 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 %ifarch %ix86 armh
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
+
+c=.gear/signing-%flavour.pem
+[ -s $c ] && cp $c certs/trusted.pem
 
 %conf
 banner build
@@ -593,6 +596,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 23 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.1-alt1
+- v7.0.1 (2026-04-22).
+- config,spec: Install out-of-tree modules signing certificate.
+- config-aarch64: CONFIG_VIDEO_ROCKCHIP_CIF=m.
+- config-aarch64: enable SoC Cix CD8180/CD8160 support.
+
 * Sun Apr 12 2026 Vitaly Chikunov <vt@altlinux.org> 7.0.0-alt1
 - Update to v7.0 (2026-04-12) release.
 - config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y).
