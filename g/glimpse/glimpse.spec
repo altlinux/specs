@@ -2,7 +2,7 @@
 
 Name: glimpse
 Version: 4.18.7
-Release: alt1
+Release: alt2
 Summary: Powerful file indexing and query system
 
 License: ISC
@@ -28,7 +28,7 @@ for large data collections.
 %build
 autoconf
 %configure
-sed -i '/^DEFS/s/$/ -Wno-error=return-mismatch -Wno-error=implicit-int -Wno-error=implicit-function-declaration/' agrep/Makefile compress/Makefile dynfilters/Makefile index/Makefile libtemplate/util/Makefile Makefile
+sed -i '/^DEFS/s/$/ -Wno-error=return-mismatch -Wno-error=implicit-int -Wno-error=implicit-function-declaration -std=gnu17/' agrep/Makefile compress/Makefile dynfilters/Makefile index/Makefile libtemplate/util/Makefile Makefile
 
 # Parallel make breaks it
 make DEBUGFLAGS="" OTHERLIBS=""
@@ -53,6 +53,9 @@ rm -v %buildroot%_bindir/agrep %buildroot%_man1dir/agrep.1*
 
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.18.7-alt2
+- Fix FTBFS with gcc15.
+
 * Mon Feb 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.18.7-alt1
 - Update version.
 
