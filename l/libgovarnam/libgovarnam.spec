@@ -11,7 +11,7 @@ GoVarnam is a near-Go port of libvarnam.
 
 Name: libgovarnam
 Version: 1.9.1
-Release: alt2
+Release: alt3
 
 Summary: GoVarnam is a cross-platform transliteration library
 License: GPL-3.0-or-later
@@ -71,6 +71,7 @@ export BUILDDIR=$PWD/.build
 export IMPORT_PATH=%import_path
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
+export CGO_CFLAGS="-std=gnu17"
 %golang_prepare
 cd .build/src/%import_path
 %make_build PREFIX=%prefix \
@@ -99,6 +100,9 @@ cd .build/src/%import_path
 %_bindir/%{sname}cli
 
 %changelog
+* Thu Apr 23 2026 Ulysses Apokin <ulysses@altlinux.org> 1.9.1-alt3
+- Fixed FTBFS.
+
 * Mon Sep 08 2025 Ulysses Apokin <ulysses@altlinux.org> 1.9.1-alt2
 - Fixed wrong prefix and libdir in pc-file (ALT #54897).
 - Used vendoring go modules.
