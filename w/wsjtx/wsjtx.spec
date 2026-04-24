@@ -1,16 +1,17 @@
 Name: wsjtx
 Version: 3.0.0
-Release: alt0.rc1
-Summary: WSJT-X is a computer program used for weak-signal radio communication
+Release: alt1
+Summary: Weak-signal communication for Amateur Radio using digital protocols
 License: GPL-3.0
 Group: Engineering
 Url: https://wsjt.sourceforge.io/wsjtx.html
 
-# Source-url: https://sourceforge.net/projects/wsjt/files/%name-%version-rc1/%name-%version-rc1.tgz
+# Source-url: https://github.com/WSJTX/wsjtx/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Patch0: %name-%version-rc1-alt-fix-ru-translation.patch
-# move ALLCALL7.TXT and /sounds to the data directory
-Patch1: %name-%version-rc1-alt-move-data-to-datadir.patch
+Patch0: %name-%version-alt-translation-ru-fix.patch
+# Fedora patch for ALLCALL7.TXT and sounds/* files
+# https://src.fedoraproject.org/rpms/wsjtx/blob/rawhide/f/wsjtx-3.0.0-path-fix.patch
+Patch1: %name-%version-fedora-path-fix.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires(pre): rpm-macros-qt5
@@ -29,7 +30,6 @@ BuildRequires: pkgconfig(Qt5Multimedia)
 BuildRequires: pkgconfig(Qt5SerialPort)
 BuildRequires: pkgconfig(Qt5WebSockets)
 BuildRequires: ImageMagick-tools
-BuildRequires: dos2unix
 BuildRequires: asciidoctor
 BuildRequires: asciidoc-a2x
 
@@ -72,42 +72,20 @@ including programmable "band-hopping".
 
 %prep
 %setup
-
-# remove bundled hamlib
-rm -v src/hamlib*
-tar -xzf src/%name.tgz
-
-# remove archive
-rm -v src/%name.tgz*
-
 %autopatch -p1
-
-# fix ALLCALL7.TXT and /sounds paths
-# after patch that moved them to the data directory
-sed -i "s|file='ALLCALL7.TXT'|file='%_datadir/%name/ALLCALL7.TXT'|" %name/lib/ft8var/cwfilter.f90
-sed -i 's|AllCall7File {"ALLCALL7.TXT"}|AllCall7File {"%_datadir/%name/ALLCALL7.TXT"}|' %name/widgets/mainwindow.cpp
-sed -i 's|binPath + "/sounds|"%_datadir/%name/sounds|' %name/widgets/{displaytext,mainwindow}.cpp
-
-pushd %name
-# convert CR + LF to LF
-find . -type f -exec dos2unix {} \;
 
 # fix desktop file
 sed -i 's|Name=wsjtx|Name=WSJT-X|' wsjtx.desktop
-popd
 
 %build
 %define optflags_lto %nil
 %add_optflags -Wl,-z,noexecstack
 
-pushd %name
 %cmake \
     -DCMAKE_Fortran_FLAGS:STRING='%optflags -frecursive'
 %cmake_build
-popd
 
 %install
-pushd %name
 %cmake_install
 
 for x in 16 32 48; do
@@ -124,9 +102,7 @@ mkdir -p %buildroot%_qt5_translationdir
 install -p -m 0644 -t %buildroot%_qt5_translationdir %_target_platform/wsjtx_*.qm
 %find_lang --with-qt %name
 
-popd
-
-%files -f %name/%name.lang
+%files -f %name.lang
 %_bindir/*
 %_desktopdir/*.desktop
 %_man1dir/*
@@ -138,6 +114,11 @@ popd
 %_docdir/%name
 
 %changelog
+* Sun Apr 19 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.0-alt1
+- new version 3.0.0
+- update summary and source URL
+- add patch to fix path of data files (thanks Fedora)
+
 * Mon Feb 23 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.0-alt0.rc1
 - new version 3.0.0-rc1
 - update patch to fix some typos in russian translation
