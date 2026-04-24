@@ -1,6 +1,8 @@
+%set_gcc_version      14
+
 Name: aspell
-Version: 0.60.8
-Release: alt2
+Version: 0.60.8.1
+Release: alt1
 
 Summary: An Open Source interactive spelling checker program
 License: LGPL-2.1
@@ -10,10 +12,8 @@ Url: http://%name.net/
 Source: http://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source101: %name-ispell.alternatives
 
-Patch1: CVE-2019-25051-objstack-assert-that-the-alloc-size-will-fit-within-.patch
-
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: gcc-c++ libncursesw-devel
+BuildRequires: gcc14-c++ libncursesw-devel
 Requires: lib%name = %version-%release
 
 %def_disable static
@@ -70,9 +70,11 @@ Static library needed to build statically linked applications with %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
+export CC=%__cc
+export CXX=%__cxx
+
 %autoreconf
 %configure %{subst_enable static} \
 	--enable-pkgdatadir=%_datadir/%name \
@@ -127,6 +129,11 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_man1dir/*.1.*
 
 %changelog
+* Fri Apr 24 2026 Alexei Takaseev <taf@altlinux.org> 0.60.8.1-alt1
+- 0.60.8.1
+- Fix FTBS use gcc 14
+- Drop patch CVE-2019-25051-objstack-assert-that-the-alloc-size-will-fit-within-.patch (fix in upstream)
+
 * Fri Oct 14 2022 Alexander Danilov <admsasha@altlinux.org> 0.60.8-alt2
 - fixes CVE-2019-25051
 
