@@ -8,13 +8,13 @@
 %add_python3_req_skip gpresult.Preferences.Preferences.Shortcut
 
 Name: gpresult
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 
 Summary: Display applied policies
 License: GPLv3+
 Group: Other
-Url: https://gitlab.basealt.space/alt/gpresult
+Url: https://altlinux.space/alt-domain/gpresult
 BuildArch: noarch
 
 BuildRequires: rpm-build-python3
@@ -44,6 +44,14 @@ The utility allows you to display a list of domain  (GPO) policies that apply to
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Apr 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.0.7-alt1
+- Added (thx Valery Sinelnikov):
+  + disabled and Remove policy fields to preference output
+  + display boolean values as translatable Yes/No
+  + lifecycle info display for preferences
+- Changed:
+  + move project to altlinux.space
+
 * Wed Jan 28 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.0.6-alt1
 - Fixed interpretation of '\' as an escape sequence (Closes: #57582)
 - Compilation of translation files now runs at build time
