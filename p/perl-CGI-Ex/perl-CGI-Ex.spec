@@ -5,7 +5,7 @@
 
 Name: perl-CGI-Ex
 Version: 2.55
-Release: alt1
+Release: alt2
 
 Summary: CGI utility suite
 
@@ -22,6 +22,7 @@ BuildArch: noarch
 
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
+BuildPreReq: perl-devel
 
 # Automatically added by buildreq on Sun Aug 09 2020
 # optimized out: perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON perl-JSON-PP perl-JSON-XS perl-Parse-CPAN-Meta perl-Types-Serialiser perl-XML-Simple perl-common-sense perl-devel perl-parent python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
@@ -66,6 +67,9 @@ This package sample application and examples for CGI::Ex.
 %doc samples
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.55-alt2
+- NMU: add BR on perl-devel.
+
 * Wed May 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.55-alt1
 - New version
 
