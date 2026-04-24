@@ -1,12 +1,13 @@
 %def_disable german
+%set_gcc_version 14
+
 Name: ispell
 Version: 3.2.06
-Release: alt15
+Release: alt16
 Epoch: 1
 
 Summary: The GNU interactive spelling checker program
 License: BSD-like
-Packager: Igor Vlasenko <viy@altlinux.ru>
 Group: Text tools
 URL: http://ficus-www.cs.ucla.edu/ficus-members/geoff/ispell.html
 
@@ -39,6 +40,8 @@ Patch17: ispell-3.2.06.epa7-alt-tmp.patch
 
 Patch18: ispell-3.2.06-alt-fix-munchlist.patch
 Patch19: ispell-3.2.06-alt-gcc44-system-getline.patch
+
+Patch20: ispell-3.20-main.patch
 
 PreReq: alternatives >= 0:0.3.0
 Requires: mktemp >= 1:1.3.1
@@ -106,10 +109,12 @@ This package has the German dictionary files for ispell.
 %patch17 -p1
 %patch18 -p0
 %patch19 -p1
+%patch20 -p1
 
 %build
+export CC=%__cc
 cat >>./local.h <<\__EOF__
-#define CC "gcc"
+#define CC "%__cc"
 #define CFLAGS "%optflags"
 #define BINDIR "%_bindir"
 #define LIBDIR "%_libdir/%name"
@@ -194,6 +199,9 @@ rm %buildroot%_libdir/%name/german.hash
 %endif
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:3.2.06-alt16
+- NMU: fix FTBFS with gcc15
+
 * Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:3.2.06-alt15
 - NMU: fix FTBFS with gcc14
 
