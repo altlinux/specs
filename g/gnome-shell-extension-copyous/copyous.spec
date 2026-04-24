@@ -4,8 +4,8 @@
 %define xdg_name org.gnome.shell.extensions.%_name
 
 Name: gnome-shell-extension-%_name
-Version: 1.3.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 Summary: Modern Clipboard Manager for GNOME
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
@@ -26,6 +26,9 @@ Requires: libgsound-gir
 
 BuildRequires: node
 BuildRequires: gnome-shell
+BuildRequires: git
+BuildRequires: sqlite3
+BuildRequires: jq
 
 %description
 Modern clipboard manager for GNOME Shell. Supports storing and browsing 
@@ -58,6 +61,9 @@ rm -vr %buildroot%_datadir/gnome-shell/extensions/%uuid/schemas
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Fri Apr 24 2026 Vladislav Petrukhin <vladp@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Tue Feb 24 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.3.0-alt2
 - Fix install gsettings schemas
 
