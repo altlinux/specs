@@ -10,7 +10,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 32.1.1
+Version: 32.1.2
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
@@ -218,6 +218,9 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 32.1.2-alt1
+- New version 32.1.2.
+
 * Sun Apr 05 2026 Anton Midyukov <antohami@altlinux.org> 32.1.1-alt1
 - New version 32.1.1.
 - Update websocket to 5.8.3.
