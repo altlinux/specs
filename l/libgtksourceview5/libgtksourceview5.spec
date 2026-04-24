@@ -5,7 +5,7 @@
 %define api_ver 5
 
 %def_disable static
-%def_disable doc
+%def_enable doc
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
@@ -22,7 +22,7 @@
 
 Name: lib%{_name}%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GtkSourceView text widget library
 License: LGPL-2.1-or-later
@@ -152,7 +152,7 @@ dbus-run-session xvfb-run %__meson_test
 
 %if_enabled doc
 %files devel-doc
-%_datadir/doc/%_name-%api_ver/
+%_datadir/doc/%_name%api_ver/
 %endif
 
 %if_enabled introspection
@@ -172,6 +172,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 5.20.0-alt1.1
+- enabled docs
+
 * Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 5.20.0-alt1
 - 5.20.0
 

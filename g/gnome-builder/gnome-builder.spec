@@ -11,7 +11,7 @@
 %def_enable sysprof
 %def_enable flatpak
 %def_enable manuals
-%def_disable docs
+%def_enable docs
 %def_enable help
 %def_enable autotools
 # disabled by default
@@ -19,7 +19,7 @@
 
 Name: gnome-builder
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Builder - Develop software for GNOME
 License: GPL-3.0-or-later
@@ -202,6 +202,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1.1
+- enabled docs
+
 * Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
