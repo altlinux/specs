@@ -1,14 +1,12 @@
 Name: expect
 Version: 5.45.4
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: A tcl extension for simplifying program-script interaction
 License: BSD
 Group: Development/Tcl
 Url: http://core.tcl.tk/expect
-
-Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
 
 # fossil export
 Source0: %name-%version-%release.tar
@@ -146,7 +144,7 @@ autoconf
 (cd testsuite && aclocal -I .. && autoconf)
 export ac_cv_c_tclconfig=%_libdir
 export ac_cv_c_tclh=%_includedir/tcl
-%add_optflags -Wno-error=incompatible-pointer-types
+%add_optflags -Wno-error=incompatible-pointer-types -std=gnu17
 %configure --disable-rpath
 %make_build all
 
@@ -192,6 +190,9 @@ make test
 %exclude %_man1dir/autoexpect.*
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:5.45.4-alt6
+- NMU: fix FTBFS with gcc15
+
 * Thu Mar 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:5.45.4-alt5
 - NMU: fix FTBFS with gcc14
 
