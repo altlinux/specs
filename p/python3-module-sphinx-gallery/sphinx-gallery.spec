@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 Summary: Sphinx extension for automatic generation of an example gallery
 License: BSD-3-Clause
@@ -15,7 +15,6 @@ Vcs: https://github.com/sphinx-gallery/sphinx-gallery.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -43,7 +42,6 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -53,7 +51,7 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 
 %check
 # some tests need jupyterlite_sphinx which not packaged yet
-%pyproject_run_pytest --durations=5 -ra \
+%pyproject_run_pytest -o addopts='' --durations=5 -ra \
  --deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data \
  --deselect=sphinx_gallery/tests/test_full.py \
  --deselect=sphinx_gallery/tests/test_full_noexec.py \
@@ -69,6 +67,9 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 %exclude %python3_sitelibdir/sphinx_gallery/tests
 
 %changelog
+* Fri Apr 24 2026 Anton Vyatkin <toni@altlinux.org> 0.21.0-alt1
+- New version 0.21.0.
+
 * Fri Dec 05 2025 Anton Vyatkin <toni@altlinux.org> 0.20.0-alt1
 - New version 0.20.0.
 
