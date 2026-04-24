@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt300
+%define pkg_rel alt301
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -75,6 +75,7 @@
 #add_findreq_skiplist %nv_lib_dir/
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
+%filter_from_requires /^libnvcuvid\.so\./d
 
 Name: nvidia_glx_src_%nv_version_full
 Version: %nv_version_full
@@ -340,6 +341,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt301
+- drop requires to libnvcuvid
+
 * Thu Apr 16 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt300
 - new packaging scheme
 
