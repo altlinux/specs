@@ -9,7 +9,7 @@
 %endif
 
 Name: highway
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -103,6 +103,9 @@ Documentation for Highway libraries.
 %doc g3doc hwy/examples
 
 %changelog
+* Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Thu Aug 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
