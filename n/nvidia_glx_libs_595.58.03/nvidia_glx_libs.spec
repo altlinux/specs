@@ -21,7 +21,7 @@
 %define nv_version 595
 %define nv_release 58
 %define nv_minor   03
-%define pkg_rel alt2
+%define pkg_rel alt3
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -61,6 +61,7 @@ nvidia OpenCL library
 %package -n libnvidia-ptxjitcompiler
 Group: System/Libraries
 Summary: nvidia library
+BuildArch: noarch
 %description -n libnvidia-ptxjitcompiler
 nvidia library
 
@@ -98,6 +99,7 @@ nvidia OpenCL library
 Group: System/Libraries
 Summary: nvidia library
 Provides: libnvidia-nvcuvid = %version-%release
+#BuildArch: noarch
 %description -n libnvcuvid
 nvidia library
 
@@ -153,6 +155,7 @@ nvidia library
 %package -n libnvidia-sandboxutils
 Group: System/Libraries
 Summary: nvidia library
+#BuildArch: noarch
 %description -n libnvidia-sandboxutils
 nvidia library
 
@@ -199,12 +202,15 @@ mkdir -p %buildroot/%_libdir/
 ln -s libnvidianull.so %buildroot/%_libdir/libnvidia-ml.so
 # install libraries
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
+#install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
-install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
+#install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
+%ifarch %ix86
+ln -s libnvidianull.so %buildroot/%_libdir/libnvcuvid.so
+%endif
+#install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
 %ifarch x86_64
-install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%_libdir/
+#install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%_libdir/
 %endif
 # all 64-bit
 %if "%_lib" != "lib"
@@ -228,8 +234,8 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 
 %files -n ocl-nvidia
 %files -n libnvidia-ptxjitcompiler
-%_libdir/libnvidia-ptxjitcompiler.so.%version
-%_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
+#%_libdir/libnvidia-ptxjitcompiler.so.%version
+#%_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
 %files -n libcuda
 %_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
@@ -238,15 +244,18 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %_libdir/libnvidia-ml.so.%version
 %_libdir/libnvidia-ml.so.%nvidia_sover
 %files -n libnvcuvid
-%_libdir/libnvcuvid.so.%nvidia_sover
-%_libdir/libnvcuvid.so.%version
+%ifarch %ix86
+%_libdir/libnvcuvid.so
+%endif
+#%_libdir/libnvcuvid.so.%nvidia_sover
+#%_libdir/libnvcuvid.so.%version
 #%files -n libnvidia-encode
 #%_libdir/libnvidia-encode.so.%nvidia_sover
 #%_libdir/libnvidia-encode.so.%version
 %ifarch x86_64
 %files -n libnvidia-sandboxutils
-%_libdir/libnvidia-sandboxutils.so.%nvidia_sover
-%_libdir/libnvidia-sandboxutils.so.%version
+#%_libdir/libnvidia-sandboxutils.so.%nvidia_sover
+#%_libdir/libnvidia-sandboxutils.so.%version
 %endif
 %if "%_lib" != "lib"
 %files -n libnvoptix
@@ -263,6 +272,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt3
+- package empty libnvidia-ptxjitcompiler, libnvcuvid and libnvidia-sandboxutils
+
 * Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt2
 - package fake libnvidia-ml.so
 - don't package libnvidia-encode
