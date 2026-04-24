@@ -4,7 +4,7 @@
 
 Name: dyninst
 Version: %major_ver.0.0
-Release: alt3
+Release: alt4
 
 Summary: Tools for binary instrumentation, analysis, and modification
 License: LGPL-2.1-or-later
@@ -115,6 +115,9 @@ done <<<$(find . -type d -name 'doc')
 %_defaultdocdir/%name
 
 %changelog
+* Fri Apr 24 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 13.0.0-alt4
+- fix ftbfs
+
 * Wed Feb 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 13.0.0-alt3
 - fix failure when forking mutatee process (closes: 58006)
 
