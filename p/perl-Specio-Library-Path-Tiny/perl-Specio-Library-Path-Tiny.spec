@@ -2,7 +2,7 @@
 
 Name: perl-Specio-Library-Path-Tiny
 Version: 0.05
-Release: alt1
+Release: alt2
 Summary: Path::Tiny types and coercions for Specio
 License: ASL-2.0
 Group: Development/Perl
@@ -10,6 +10,7 @@ Url: https://metacpan.org/release/Specio-Library-Path-Tiny
 Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/Specio-Library-Path-Tiny-%{version}.tar.gz
 BuildArch: noarch
 
+BuildRequires: perl-Test-Specio
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/Fatal.pm) perl(Specio.pm) perl-devel perl(File/pushd.pm) perl(Path/Tiny.pm) perl(Test/More.pm)
 
 %description
@@ -31,6 +32,9 @@ other modules.
 %perl_vendorlib/*
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 0.05-alt2
+- NMU: fix BR.
+
 * Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
 - automated CPAN update
 

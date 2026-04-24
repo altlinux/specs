@@ -1,20 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Specio
 Version: 0.50
-Release: alt1
+Release: alt2
 
 Summary: Type constraints and coercions for Perl
 Group: Development/Perl
 License: Artistic-2
 
-Url: %CPAN Specio
+URL: %CPAN Specio
 Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) perl(parent.pm) perl(MooseX/Clone.pm) perl(Eval/Closure.pm) perl-devel perl(List/AllUtils.pm) perl(Sub/Name.pm) perl(Devel/PartialDump.pm) perl(Test/Fatal.pm) perl(Throwable/Error.pm) perl(Params/Util.pm) perl(Lingua/EN/Inflect.pm) perl(MooseX/SemiAffordanceAccessor.pm) perl(Moose.pm) perl(namespace/autoclean.pm) perl(Class/Load.pm) perl(MooseX/Params/Validate.pm) perl(Devel/StackTrace.pm) perl(Test/Requires.pm) perl(Test/Needs.pm) perl(Clone.pm)
 
 %description
-%summary
+%summary.
+
+%package -n perl-Test-Specio
+Summary: Testing Module for Specio Implementations
+Group: Development/Perl
+Requires: %name = %EVR
+
+%description  -n perl-Test-Specio
+Testing Module for Specio Implementations.
 
 %prep
 %setup -q
@@ -28,10 +36,15 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 %files
 %doc TODO.md README.md Changes CONTRIBUTING.md
 %perl_vendor_privlib/Specio*
-%perl_vendor_privlib/Test/Specio*
 %doc Changes README* TODO*
 
+%files -n perl-Test-Specio
+%perl_vendor_privlib/Test/Specio*
+
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 0.50-alt2
+- NMU: Separate new subpackage with tests.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.50-alt1
 - automated CPAN update
 
