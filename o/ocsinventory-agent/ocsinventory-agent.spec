@@ -1,5 +1,5 @@
 Name: ocsinventory-agent
-Version: 2.10.4
+Version: 2.10.5
 Release: alt1
 Epoch: 1
 
@@ -28,6 +28,7 @@ BuildRequires: perl-Pod-Parser
 BuildRequires: perl-IO-Socket-SSL
 BuildRequires: perl-Parse-EDID
 BuildRequires: perl-File-FcntlLock
+BuildRequires: perl-XML-Parser
 
 Requires: perl-MouseX-App-Cmd
 
@@ -102,6 +103,9 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/lib/%name
 
 %changelog
+* Fri Apr 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.10.5-alt1
+- New version.
+
 * Wed Oct 30 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.10.4-alt1
 - New version.
 
