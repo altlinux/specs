@@ -10,11 +10,12 @@
 %def_without bootstrap
 %def_disable speech_tools_test
 %define festival_libexec_dir /usr/lib/festival
+%define optflags_lto %nil
 
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt0.6
+Release:	alt0.7
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs el file is GPL+, there is one TCL licensed source file, and
@@ -399,7 +400,7 @@ echo "PROJECT_LIBRARY_USES_estools = estbase tinfo" >> config/project.mak
 %build
 # Build Edinburgh Speech Tools
 cd $RPM_BUILD_DIR/speech_tools
-%add_optflags -Wno-non-template-friend
+%add_optflags -Wno-non-template-friend -std=gnu17 -Wno-incompatible-pointer-types
 cp -pv /usr/share/gnu-config/* .
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
@@ -408,7 +409,7 @@ sed -i 's,^CXXFLAGS.*$,& -std=c++11,' config/compilers/gcc_defaults.mak
 ./configure
 #-------------
 # parallel build fails, so bare make
-make MAKE_SHARED_LIB="g++ -shared -o XXX -Wl,--as-needed -Wl,-soname -Wl,YYY"
+make MAKE_SHARED_LIB="g++ -shared -o XXX -Wl,--as-needed -Wl,-soname -Wl,YYY" CFLAGS="%optflags -fPIC"
 
 # whether links are created depends on patches applied
 pushd lib
@@ -448,7 +449,7 @@ EOF
 echo "PROJECT_LIBRARY_NEEDS_SYSLIBS_Festival = 1" >> config/project.mak
 echo "PROJECT_LIBRARY_USES_Festival = estbase eststring" >> config/project.mak
 
-make  CXXFLAGS="-fpermissive -Wno-non-template-friend -fPIC" CFLAGS="-fpermissive -Wno-non-template-friend -O3 -fPIC"
+make  CXXFLAGS="-fpermissive -Wno-non-template-friend -fPIC" CFLAGS="-fpermissive -Wno-non-template-friend -Wno-incompatible-pointer-types -std=gnu17 -O3 -fPIC"
 
 # Force fixed %%CreationDate in ps files created by dvips (for a Reproducible Build)
 export FORCE_SOURCE_DATE=1
@@ -742,6 +743,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.5-alt0.7
+- NMU: fix FTBFS with gcc15
+
 * Thu Apr 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.5-alt0.6
 - add R: mbrola (ALT #33495, #40140, #45257)
 
