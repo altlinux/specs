@@ -20,7 +20,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -346,6 +346,17 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Sat Apr 25 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.6-alt1
+- 6.0.6
+- Fixes:
+  + CVE-2026-35328 - Fixed a vulnerability in libtls related to the processing of the supported_versions extension in TLS that can result in an infinite loop.
+  + CVE-2026-35329 - Fixed a vulnerability in libstrongswan and the pkcs7 plugin related to the processing of encrypted PKCS#7 containers that can result in a crash.
+  + CVE-2026-35330 - Fixed a vulnerability in libsimaka related to the processing of certain EAP-SIM/AKA attributes that can result in an infinite loop or a heap-based buffer overflow and potentially remote code execution.
+  + CVE-2026-35331 - Fixed a vulnerability in the constraints plugin related to the processing of X.509 name constraints that can allow authentication with certificates that violate the constraints.
+  + CVE-2026-35332 - Fixed a vulnerability in libtls related to the processing of ECDH public values in TLS < 1.3 that can result in a crash.
+  + CVE-2026-35333 - Fixed a vulnerability in libradius related to the processing of RADIUS attributes that can result in an infinite loop or an out-of-bounds read that may cause a crash
+  + CVE-2026-35334 - Fixed a vulnerability in the gmp plugin related to RSA decryption that can result in a crash.
+
 * Wed Mar 25 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.5-alt1
 - 6.0.5
 - Fixed a vulnerability in the eap-ttls plugin related to processing EAP-TTLS AVPs that can lead to resource exhaustion or a crash. (Fixes: CVE-2026-25075)
