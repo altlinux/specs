@@ -1,6 +1,6 @@
 Name:           google-guice
 Version:        5.1.0
-Release:        alt3
+Release:        alt4
 
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires:  mvn(com.google.truth:truth)
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(aopalliance:aopalliance)
 
 AutoReq: yes,noosgi
 
@@ -182,6 +183,9 @@ ln -s %_javadir/guice/google-guice.jar \
 %files -n guice-bom -f .mfiles-guice-bom
 
 %changelog
+* Fri Apr 24 2026 Ivan Khanas <xeno@altlinux.org> 5.1.0-alt4
+- Add missing aopalliance dep.
+
 * Sat Feb 28 2026 Evgeniy Serov <scala@altlinux.org> 5.1.0-alt3
 - Fixed build with new guava.
 - Enabled tests.
