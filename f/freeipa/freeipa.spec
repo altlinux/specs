@@ -8,12 +8,7 @@
 %def_without modern_ui
 %else
 %def_without only_client
-# fails: Cannot find module '@rollup/rollup-linux-arm64-gnu'
-%ifarch aarch64
-%def_without modern_ui
-%else
 %def_with modern_ui
-%endif
 %endif
 
 # skip packaging of
@@ -67,7 +62,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.1
-Release: alt5
+Release: alt6
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -111,6 +106,11 @@ BuildRequires: /usr/bin/npm
 BuildRequires: python3(rjsmin)
 BuildRequires: python3-module-argcomplete
 %endif # only_client
+
+%if_with modern_ui
+BuildRequires: esbuild
+BuildRequires: rollup-native
+%endif
 
 # python
 BuildRequires: python3-module-lesscpy
@@ -604,7 +604,21 @@ git add .
 git commit -am 'with our changes'
 %endif
 
-%if_without modern_ui
+%if_with modern_ui
+pushd install/freeipa-webui
+
+# use native rollup
+mv node_modules/rollup node_modules/rollup.bak
+cp -a %_prefix/lib/node_modules/rollup node_modules
+cp -a %_prefix/lib/node_modules/@rollup/rollup-*-gnu node_modules/@rollup
+
+# prepare to use native esbuild
+local_esbuild=$(npm ls -l -p esbuild | cut -d@ -f2 | sed 's/[.]/\\&/g')
+distro_esbuild=%{get_version esbuild}
+find node_modules/esbuild -name '*.js' | xargs sed -i "s,$local_esbuild,$distro_esbuild,g"
+
+popd
+%else
 touch install/freeipa-webui/Makefile.am
 %endif
 
@@ -620,7 +634,10 @@ fi
 # prebuild modern webui otherwise it will try `npm clean-install`
 # which requires internet.
 pushd install/freeipa-webui
-npm run build
+
+# Use system esbuild. Note that /usr/bin/esbuild cannot be used
+# because eslint module specifically checks for such path.
+ESBUILD_BINARY_PATH=/bin/esbuild npm run build
 popd
 %endif
 
@@ -1225,6 +1242,12 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 24 2026 Ivan A. Melnikov <iv@altlinux.org> 4.13.1-alt6
+- NMU: cross-platform modern UI build
+  + employ rollup-native and esbuild from repository to build freeipa-webui
+    (fixes FTBFS on loongarch64 and riscv64);
+  + enable building the modern UI on aarch64.
+
 * Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt5
 - Added build-time support for Dogtag-less environments (closes: #58740).
 
