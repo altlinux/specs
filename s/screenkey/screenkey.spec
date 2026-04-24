@@ -1,6 +1,6 @@
 Name: screenkey
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: A screen-cast tool to show your keys and based on key-mon project
 License: GPLv3+
@@ -43,6 +43,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/screenkey-stop.desktop
 %exclude %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Apr 23 2026 Fedor Moseichuck <phobos@altlinux.org> 1.5-alt2
+- hide screenkey from KDE Wayland
+
 * Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 1.5-alt1
 - screenkey 1.5
 
