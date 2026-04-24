@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.46.3
-Release: alt2
+Version: 0.47.0
+Release: alt1
 Summary: Command line tool for manipulating wheel files
 License: MIT
 Group: Development/Python3
@@ -22,7 +22,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -38,6 +39,9 @@ PEP 427. It contains the following functionality:
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -60,6 +64,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 0.47.0-alt1
+- 0.46.3 -> 0.47.0.
+
 * Thu Jan 29 2026 Stanislav Levin <slev@altlinux.org> 0.46.3-alt2
 - Made tests compatible with packaging < 26.0.
 
