@@ -1,6 +1,6 @@
 Name: qbe
 Version: 1.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Group: Development/C
 Source: %name-%version.tar
@@ -23,7 +23,7 @@ trivial integration and great flexibility.
 
 %build
 make CC=gcc
-make CC=gcc -C minic clean minic
+make CC=gcc CFLAGS='-std=c99' -C minic clean minic
 
 %install
 install -D %name %buildroot%_bindir/%name
@@ -37,6 +37,9 @@ install -D minic/minic %buildroot%_bindir/%name-minic
 make check
 
 %changelog
+* Thu Apr 23 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.2-alt2
+- Fixed FTBFS.
+
 * Thu Jan 30 2025 Ulysses Apokin <ulysses@altlinux.org> 1:1.2-alt1
 - New version.
 
