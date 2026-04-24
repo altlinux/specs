@@ -1,8 +1,8 @@
 Name: kernel-image-rt
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.82
+%define kernel_sublevel	.83
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -290,6 +290,9 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
 
+c=.gear/signing-%flavour.pem
+[ -s $c ] && cp $c certs/trusted.pem
+
 %build
 banner build
 export ARCH=%base_arch
@@ -321,6 +324,7 @@ make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 	%make %make_target V=1
 	exit 1
 }
+%make_build scripts_gdb
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
 %endif
@@ -461,6 +465,7 @@ for f in $KbuildFiles; do
 	[ -x "$f" ] && mode=755 || mode=644
 	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
 done
+cp -a scripts/gdb -t %buildroot%kbuild_dir/scripts
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -487,6 +492,8 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %endif
+
+%brp_strip_debug %modules_dir/kernel/lib/crypto/libcurve25519.ko
 
 %check
 banner check
@@ -588,6 +595,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 23 2026 Vitaly Chikunov <vt@altlinux.org> 6.12.83-alt2
+- config: Disable CONFIG_MTD_TESTS.
+- spec: Workaround brp-related eu-strip problems.
+
+* Thu Apr 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.83-alt1
+- v6.12.83 (2026-04-22).
+- config,spec: Install out-of-tree modules signing certificate.
+- config: Install gdb scripts (CONFIG_GDB_SCRIPTS=y).
+
 * Sat Apr 18 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.82-alt1
 - v6.12.82 (2026-04-18).
 
