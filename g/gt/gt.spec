@@ -3,7 +3,7 @@ Group: Sound
 %define _localstatedir %{_var}
 Name:           gt
 Version:        0.4
-Release:        alt1_42
+Release:        alt1_43
 Summary:        Modified Timidity which supportes enhanced gus format patches
 License:        GPLv2+
 URL:            http://alsa.opensrc.org/GusSoundfont
@@ -54,7 +54,7 @@ cp -p src/README README.timidity
 
 
 %build
-%add_optflags -Wno-error=implicit-int -Wno-error=implicit-function-declaration
+%add_optflags -Wno-error=implicit-int -Wno-error=implicit-function-declaration -std=gnu17
 %global build_type_safety_c 0
 %configure
 make
@@ -84,6 +84,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.4-alt1_43
+- NMU: fix FTBFS with gcc15
+
 * Tue Apr 08 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.4-alt1_42
 - NMU: fix FTBFS with gcc14
 
