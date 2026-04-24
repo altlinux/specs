@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.18
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -57,7 +57,7 @@ Patch112: Ubuntu-9100-ppd-cache-add-auto-presets.patch
 Patch501: ALT-build_po.patch
 Patch502: ALT-remove_BSD.patch
 Patch504: ALT-1.6.2-lpd-utf8.patch
-Patch506: ALT-2.4.8-lspp-SE.patch
+Patch506: ALT-2.4.18-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
 Patch508: ALT-644.patch
 Patch509: ALT-1.7.2-local_ipv6.patch
@@ -372,7 +372,7 @@ fi
 %_altdir/%name
 
 %_iconsdir/hicolor/*/apps/*.png
-%_desktopdir/%name.desktop
+%exclude %_desktopdir/%name.desktop
 
 %exclude %prefix/*/*/*/ipptool*
 %exclude %prefix/*/*/ipptool*
@@ -405,6 +405,11 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.4.18-alt2
+- NMU:
+  + Update selinux mls support.
+  + spec: exclude cups.desktop (Closes: 58837).
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 2.4.18-alt1
 - 2.4.17 -> 2.4.18
 
