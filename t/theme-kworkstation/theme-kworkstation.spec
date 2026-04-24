@@ -1,6 +1,6 @@
 Name: theme-kworkstation
-Version: 0.2.2
-Release: alt3
+Version: 0.2.3
+Release: alt1
 
 Summary: Workstation K theme
 Group: Graphics
@@ -40,6 +40,9 @@ done
 %_datadir/plasma/desktoptheme/altos-*/icons/*alt*.*
 
 %changelog
+* Fri Apr 24 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.3-alt1
+- update distro logo
+
 * Tue Mar 17 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt3
 - fix package description
 
