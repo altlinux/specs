@@ -2,7 +2,7 @@
 
 Name: flatlaf
 Version: 3.7.1
-Release: alt1
+Release: alt2
 
 Summary: Flat Look and Feel
 Group: Development/Java
@@ -117,12 +117,18 @@ gradle :flatlaf-natives-linux:build-natives -Prelease -Dtoolchain=11 -Ddisable.x
 %mvn_package :flatlaf-fonts-roboto-mono flatlaf-fonts
 %mvn_package :flatlaf-intellij-themes flatlaf-intellij-themes
 
+%mvn_file :flatlaf flatlaf %_javadir/flatlaf
+
 %gradle_install
 
 %files core -f .mfiles-flatlaf-core
 %files extras -f .mfiles-flatlaf-extras
 %files fonts -f .mfiles-flatlaf-fonts
 %files intellij-themes -f .mfiles-flatlaf-intellij-themes
+
 %changelog
+* Fri Apr 24 2026 Arseniy Kostevich <faux@altlinux.org> 3.7.1-alt2
+- Add core symlink to javadir.
+
 * Fri Apr 17 2026 Arseniy Kostevich <faux@altlinux.org> 3.7.1-alt1
 - Initial build for ALT.

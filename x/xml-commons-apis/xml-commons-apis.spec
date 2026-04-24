@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_38jpp11
+Release:       alt4
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -76,8 +76,8 @@ iconv -f iso8859-1 -t utf-8 LICENSE.dom-software.txt > \
 cp %{SOURCE3} %{SOURCE4} .
 sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 
-%mvn_file :xml-apis xml-commons-apis jaxp13 jaxp xml-commons-jaxp-1.3-apis
-%mvn_file :xml-apis-ext xml-commons-apis-ext
+%mvn_file :xml-apis xml-apis xml-commons-apis jaxp13 jaxp xml-commons-jaxp-1.3-apis
+%mvn_file :xml-apis-ext xml-apis-ext xml-commons-apis-ext
 %mvn_alias :xml-apis-ext xerces:dom3-xml-apis
 
 %build
@@ -108,6 +108,9 @@ rm -rf build/docs/javadoc
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Apr 22 2026 Arseniy Kostevich <faux@altlinux.org> 1.4.01-alt4
+- fix jar symlinks
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_38jpp11
 - update
 
