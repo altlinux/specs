@@ -4,7 +4,7 @@
 
 Name: perl-Pod-Elemental-Transformer-List
 Version: 0.102001
-Release: alt1
+Release: alt2
 
 Summary: Perl module to transform :list regions in POD
 
@@ -20,6 +20,7 @@ Source: %real_name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
+BuildRequires: perl-Test-Fatal
 
 # Automatically added by buildreq on Sun Jan 22 2017
 # optimized out: perl perl-Algorithm-Diff perl-B-Hooks-EndOfScope perl-Carp-Clan perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Encode perl-Eval-Closure perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Runtime perl-Moose perl-MooseX-Types perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-PerlIO-utf8_strict perl-Pod-Eventual perl-String-RewritePrefix perl-String-Truncate perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Text-Diff perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3-base
@@ -43,6 +44,9 @@ regions into =over/=back to save typing.
 %perl_vendor_privlib/Pod/Elemental/Transformer/List*
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 0.102001-alt2
+- NMU: fix BR.
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.102001-alt1
 - New version
 
