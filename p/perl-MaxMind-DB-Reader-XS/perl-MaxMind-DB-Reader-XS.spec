@@ -3,7 +3,7 @@
 
 Name: perl-%module_name
 Version: 1.000009
-Release: alt1
+Release: alt2
 Summary: Fast XS implementation of MaxMind DB reader
 Group: Development/Perl
 License: %artistic_license_v2
@@ -18,6 +18,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators libmaxminddb-devel perl-
 BuildRequires: perl-MaxMind-DB-Common perl-MaxMind-DB-Reader perl-Moo perl-Module-Build perl-Net-Works
 # for tests
 BuildRequires: perl-Net-Works perl-Path-Class perl-Test-Number-Delta perl-Test-Requires
+BuildRequires: perl-Test-Fatal
 
 # 64-bit only
 ExcludeArch: %ix86 armh
@@ -45,5 +46,8 @@ See MaxMind::DB::Reader for API details.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 1.000009-alt2
+- NMU: fix BR.
+
 * Fri Mar 10 2023 L.A. Kostis <lakostis@altlinux.ru> 1.000009-alt1
 - initial build for ALTLinux.
