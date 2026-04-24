@@ -1,34 +1,38 @@
 %def_with pulse
-%def_with qt5
-%def_without bootstrap
+%def_with qt6
+
+%global soversion 1
 
 Name: openal
-Version: 1.22.2
-Release: alt2
+Version: 1.25.1
+Release: alt1
 
-Summary: Open Audio Library
-
-License: LGPLv2
+Summary: OpenAL Soft is a software implementation of the OpenAL 3D audio API
+License: LGPL-2.0-or-later
 Group: Sound
-Url: http://kcat.strangesoft.net/openal.html
+Url: https://github.com/kcat/openal-soft
+Vcs: https://github.com/kcat/openal-soft.git
 
-# Source-url: https://github.com/kcat/openal-soft/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-Patch0: openal-soft-1.17-alt-config.patch
-Patch1: openal-soft-arm_neon-only-for-32bit.patch
+BuildRequires(Pre): rpm-build-cmake
 
-BuildRequires: gcc-c++ cmake
-
+BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
-%{?_with_qt5:BuildRequires: qt5-base-devel}
+BuildRequires: libjack-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libavdevice-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
+BuildRequires: libSDL2-devel
+BuildRequires: libSDL2_mixer-devel
+BuildRequires: libSDL_sound-devel
+BuildRequires: libdbus-devel
+BuildRequires: libpostproc-devel
+BuildRequires: libsndfile-devel
+BuildRequires: pipewire-libs-devel
+%{?_with_qt6:BuildRequires: qt6-base-devel}
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
-%if_without bootstrap
-BuildRequires: libjack-devel libportaudio2-devel
-BuildRequires: libavdevice-devel libswresample-devel libswscale-devel
-BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL_sound-devel
-BuildRequires: libdbus-devel libpostproc-devel libsndfile-devel pipewire-libs-devel
-%endif
 
 %description
 OpenAL Soft is a cross-platform software implementation of the OpenAL 3D
@@ -41,29 +45,39 @@ absorption, low-pass filters, and reverb, are available through the
 EFX extension. It also facilitates streaming audio, multi-channel buffers,
 and audio capture.
 
-%package -n lib%{name}1
+%package -n lib%name%soversion
 Summary: Main library for OpenAL, a free 3D sound library
-Group: Sound
+Group: System/Libraries
+Requires: lib%{name}-common
 
-%description -n lib%{name}1
+%description -n lib%name%soversion
 This package contains the library needed to run programs dynamically
 linked with OpenAL.
 
-%package -n lib%name-devel
+%package -n lib%{name}-common
+Summary: Common files for OpenAL
+Group: System/Libraries
+BuildArch: noarch
+
+%description -n lib%{name}-common
+This package contains the common files for OpenAL library and applications.
+
+%package -n lib%{name}-devel
 Summary: Headers for developing programs that will use OpenAL
 Group: Development/C
-Requires: lib%{name}1 = %version-%release
-Obsoletes: lib%{name}1-devel < %version
-Provides: lib%{name}1-devel = %version-%release
+Requires: lib%name%soversion
+Requires: %{name}-tools
+Provides: lib%name%{soversion}-devel
+Obsoletes: lib%name%{soversion}-devel < %EVR
 
-%description -n lib%name-devel
+%description -n lib%{name}-devel
 This package contains the headers that programmers will need to develop
 applications which will use OpenAL, a free 3D audio library.
 
 %package qt
 Summary: Qt frontend for configuring OpenAL Soft
 Group: Sound
-Requires: lib%{name}1 = %EVR
+Requires: lib%name%soversion
 
 %description qt
 The %{name}-qt package contains alsoft-config, a Qt-based tool
@@ -72,7 +86,7 @@ for configuring OpenAL features.
 %package tools
 Summary: OpenAL Soft cli tools
 Group: Sound
-Requires: lib%{name}1 = %EVR
+Requires: lib%name%soversion
 
 %description tools
 The %{name}-tools package contains various OpenAL command line tools.
@@ -88,65 +102,61 @@ sed -i "/[{]_mm/{s|[{]_mm|=_mm|;:x;/[}]/!{N;bx};s|[}]||}" \
 %endif
 
 %build
-%cmake_insource \
+%cmake \
 	-DALSOFT_REQUIRE_OSS=OFF \
 	-DALSOFT_CONFIG=ON \
 	-DALSOFT_INSTALL_EXAMPLES=ON \
 %ifarch %e2k
 	-DALSOFT_CPUEXT_NEON=OFF \
 %endif
-	#
+%nil
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
-#rm -f %buildroot%_bindir/%name-info
+%cmakeinstall_std
 mkdir -p %buildroot%_sysconfdir/%name/
-install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
+install -Dpm 0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 
-%files -n lib%{name}1
-%_bindir/openal-info
+%files -n lib%name%soversion
+%_libdir/lib%name.so.%{soversion}*
+
+%files -n lib%{name}-common
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/alsoft.conf
 %_datadir/%name/
-%_libdir/*.so.1
-%_libdir/*.so.1.*.*
 
-%if_without bootstrap
 %files tools
-#/usr/bin/alffplay
-/usr/bin/alhrtf
-/usr/bin/allatency
-/usr/bin/alloopback
-/usr/bin/almultireverb
-/usr/bin/alplay
-/usr/bin/alreverb
-/usr/bin/alstream
-
-%_bindir/altonegen
+%_bindir/aldebug
+%_bindir/aldirect
+%_bindir/alhrtf
+%_bindir/allafplay
+%_bindir/allatency
+%_bindir/almultireverb
+%_bindir/alplay
 %_bindir/alrecord
-#_bindir/makehrtf
-#_bindir/bsincgen
-%endif
+%_bindir/alreverb
+%_bindir/alstream
+%_bindir/altonegen
+%_bindir/openal-info
 
 %files -n lib%name-devel
 %_includedir/AL/
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_libdir/cmake/OpenAL/OpenALConfig.cmake
-%_libdir/cmake/OpenAL/OpenALTargets-relwithdebinfo.cmake
-%_libdir/cmake/OpenAL/OpenALTargets.cmake
+%_libdir/lib%name.so
+%_libdir/cmake/OpenAL
+%_pkgconfigdir/%name.pc
 
-%if_with qt5
+%if_with qt6
 %files qt
 %_bindir/alsoft-config
 %endif
 
-# TODO:
-# - alrecord, altonegen not packaged (really needed?)
-
 %changelog
+* Fri Apr 24 2026 Ulysses Apokin <ulysses@altlinux.org> 1.25.1-alt1
+- new version 1.25.1
+- fix FTBFS
+- fix to comply with shared libs policy
+
 * Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.22.2-alt2
 - rebuild
 
