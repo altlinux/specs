@@ -26,8 +26,8 @@
 
 
 Name: openblas
-Version: 0.3.32
-Release: alt2
+Version: 0.3.33
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -159,6 +159,9 @@ export OPENBLAS_VERBOSE=3
 %exclude %_libdir/*.a
 
 %changelog
+* Thu Apr 23 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.33-alt1
+- 0.3.33.
+
 * Mon Apr 06 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.32-alt2
 - backport upstream workaround for miscompilation of the ARM64
   non-SVE DDOT kernel.
