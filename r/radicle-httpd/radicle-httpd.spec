@@ -1,11 +1,12 @@
 Name: radicle-httpd
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
 License: MIT Apache-2.0
 Group: System/Servers
-Url: https://radicle.xyz/
+URL: https://radicle.dev/
+VCS: https://seed.radicle.xyz/z4V1sjrXqjvFdnCUbxPFqd5p4DtH5
 
 Requires: radicle-seed-node
 
@@ -31,7 +32,7 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=bd3b660b
+export GIT_HEAD=5a3337de
 cargo install %_smp_mflags --offline --no-track --path . --root=%buildroot%_prefix
 
 mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
@@ -45,6 +46,9 @@ asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_ma
 %_unitdir/radicle-httpd.service
 
 %changelog
+* Fri Apr 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.0-alt1
+- 0.25.0 released
+
 * Mon Mar 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.0-alt1
 - 0.24.0 released
 
