@@ -2,9 +2,7 @@
 
 Name: tcptrace
 Version: 6.6.7
-Release: alt4
-
-Packager: Victor Forsiuk <force@altlinux.org>
+Release: alt5
 
 Summary: Tool for analysis of TCP dump files
 License: GPLv2+
@@ -28,13 +26,13 @@ number of graphs for further analysis.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %configure
 # Needed define was not added on x86_64 due to naive libc version check
 # (test for file in /lib (sic!) directory). Just add this define explicitly:
-%make_build CCOPT="-D_BSD_SOURCE %optflags"
+%make_build CCOPT="-D_DEFAULT_SOURCE %optflags -std=gnu17"
 
 %install
 install -d %buildroot%_bindir
@@ -47,6 +45,9 @@ install -pD -m644 tcptrace.man %buildroot%_man1dir/tcptrace.1
 %_man1dir/*
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.6.7-alt5
+- NMU: fix FTBFS with gcc15
+
 * Wed Nov 03 2021 Andrew A. Vasilyev <andy@altlinux.org> 6.6.7-alt4
 - NMU: build without LTO
 
