@@ -1,9 +1,10 @@
 %define libname libtuxclocker
 %global __find_debuginfo_files %nil
+%filter_from_requires /^libnvidia-ml\.so\./d
 
 Name:    tuxclocker
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Qt overclocking tool for GNU/Linux
 License: GPL-3.0
@@ -20,8 +21,8 @@ BuildRequires: libssl-devel boost-devel libdrm-devel hwdata-devel
 BuildRequires: python3-module-hwdata python3-dev libnvidia-ml libXext-devel
 BuildRequires: libxnvctrl-devel qt5-base-devel qt5-tools qt5-charts-devel
 BuildRequires: boost-filesystem-devel boost-signals-devel
-Requires: libqt5-charts
-Requires: libnvidia-ml
+
+Requires: qml(QtCharts)
 Requires: dbus
 Requires: icon-theme-hicolor
 
@@ -33,14 +34,18 @@ TuxClocker consists of a DBus daemon and a Qt GUI that uses the daemon.
 
 %prep
 %setup -a1
+ln -s %_libdir/libnvidia-ml.so.1 ./libnvidia-ml.so
 
 %build
+export LIBRARY_PATH=$PWD
+%add_optflags -L$PWD
 %meson \
     -Dplugins=true \
     -Ddaemon=true \
     -Drequire-nvidia=true \
     -Drequire-amd=true \
-    -Drequire-python-hwdata=true
+    -Drequire-python-hwdata=true \
+    #
 %meson_build
 
 %install
@@ -62,6 +67,11 @@ TuxClocker consists of a DBus daemon and a Qt GUI that uses the daemon.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt2
+- fix requires
+- fix to build with new libnvidia-ml
+- drop requires libnvidia-ml
+
 * Wed Feb 26 2025 Sergey Palcheh <minergenon@altlinux.org> 1.5.1-alt1
 - Initial build for Sisyphus
 
