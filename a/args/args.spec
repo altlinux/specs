@@ -1,5 +1,5 @@
 Name: args
-Version: 6.4.11
+Version: 6.4.12
 Release: alt1
 
 Summary: A simple header-only C++ argument parser library
@@ -47,6 +47,9 @@ subst 's|DESTINATION lib/|DESTINATION %_libdir/|' CMakeLists.txt
 %_datadir/cmake/%name
 
 %changelog
+* Sat Apr 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.4.12-alt1
+- 6.4.11 -> 6.4.12
+
 * Fri Apr 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.4.11-alt1
 - 6.4.10 -> 6.4.11
 
