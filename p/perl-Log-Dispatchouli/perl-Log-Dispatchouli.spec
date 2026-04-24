@@ -2,7 +2,7 @@
 
 Name: perl-Log-Dispatchouli
 Version: 3.013
-Release: alt1
+Release: alt2
 
 Summary: a simple wrapper around Log::Dispatch
 
@@ -17,7 +17,9 @@ BuildArch: noarch
 Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
-BuildRequires(pre): rpm-build-licenses perl-devel
+BuildRequires(pre): rpm-build-licenses
+BuildPreReq: perl-devel
+BuildRequires: perl-Test-Fatal
 
 # Automatically added by buildreq on Sat Dec 10 2022
 # optimized out: libgpg-error perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Cpanel-JSON-XS perl-Data-OptList perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exception-Class perl-JSON-MaybeXS perl-JSON-PP perl-Log-Dispatch perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Test-Fatal perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-modules python2-base python3-base sh4
@@ -51,6 +53,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Fmt.pm
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 3.013-alt2
+- NMU: fix BR.
+
 * Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 3.013-alt1
 - New version
 - Update package URL
