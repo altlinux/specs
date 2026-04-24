@@ -7,9 +7,9 @@
 %global build_parallel_jobs %__nprocs
 %endif
 # New llvm leads to intensive swapping with max_jobs >= 48
-%global max_jobs 42
+%global max_jobs 21
 
-%global llvm_version 21.1
+%global llvm_version 22.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        147.0.7727.101
+Version:        147.0.7727.116
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -98,7 +98,7 @@ Patch020: 0020-ALT-swiftshader-fix-llvm.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-ALT-block-error-from-google.patch
 Patch023: 0023-Add-missing-headers.patch
-# Patch024:
+Patch024: 0024-ALT-chromium-147-rust-1.95-bytemuck.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch027: 0027-DEBIAN-disable-tests-swiftshader.patch
@@ -148,7 +148,7 @@ Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
-Patch076: 0076-DEBIAN-fixes-bytemuck.patch
+Patch076: 0076-DEBIAN-Fix-GL-native-pixmap-import-support-reset-in-GpuInit.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -706,6 +706,13 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.116-alt1
+- New version (147.0.7727.116).
+- Fixes:
+  + CVE-2026-6919: Use after free in DevTools
+  + CVE-2026-6920: Out of bounds read in GPU
+  + CVE-2026-6921: Race in GPU
+
 * Thu Apr 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.101-alt1
 - New version (147.0.7727.101).
 - Fixes:
