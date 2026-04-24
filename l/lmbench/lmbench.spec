@@ -2,7 +2,7 @@
 
 Name: lmbench
 Version: 3.0a9
-Release: alt3
+Release: alt4
 Summary: Suite of simple, portable benchmarks
 
 License: GPL-2.0-or-later
@@ -17,7 +17,7 @@ Patch0: 0003-config-run-set-OUTPUT-as-dev-null.patch
 Patch1: 0004-Fix-errors-of-fstat-stat-open-in-lat_syscall.patch
 Patch2: 0008-Create-s.ChangeSet.patch
 Patch3: lmbench-3.0a9-alt-add-libtirpc-support.patch
-Patch4: lmbench-3.0a9-alt-fix-gcc14-build.patch
+Patch4: lmbench-3.0a9-alt-fix-gcc15-build.patch
 
 BuildRequires: libtirpc-devel
 
@@ -48,6 +48,7 @@ read latency; Miscellanious Processor clock rate calculation.
 %patch4 -p2
 
 %build
+%add_optflags -std=gnu17
 %make_build
 
 %install
@@ -101,6 +102,9 @@ popd
 %_sbindir/lmbench*
 
 %changelog
+* Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 3.0a9-alt4
+- NMU: fix FTBFS.
+
 * Mon Jun 23 2025 Anton Midyukov <antohami@altlinux.org> 3.0a9-alt3
 - NMU: add prefix 'lmbench_' to name of binaries (Closes: 54340)
 
