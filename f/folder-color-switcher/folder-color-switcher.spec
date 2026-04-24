@@ -1,6 +1,6 @@
 Name: folder-color-switcher
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Folder Color Switcher extensions
 
@@ -8,8 +8,6 @@ License: GPL-3.0
 Group: Graphical desktop/MATE
 URL: https://github.com/linuxmint/folder-color-switcher
 VCS: https://github.com/linuxmint/folder-color-switcher.git
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -30,6 +28,8 @@ Group: Graphical desktop/MATE
 Summary: Folder Color Switcher extension for Caja
 Group: Graphical desktop/MATE
 Requires: %name-common = %EVR
+Requires: python3-module-caja
+Requires: /usr/bin/caja
 %description -n caja-%name
 Allows you to change folder colors from the context menu under supported icon themes.
 
@@ -64,6 +64,9 @@ cp -a usr %buildroot/
 %_datadir/nemo-python/extensions/nemo-%name.py
 
 %changelog
+* Wed Apr 22 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.1-alt2
+- Added requires for Caja extension.
+
 * Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 
