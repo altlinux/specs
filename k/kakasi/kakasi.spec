@@ -1,6 +1,6 @@
 Name: kakasi
 Version: 2.3.6
-Release: alt2
+Release: alt3
 
 Summary: A Japanese character set conversion filter
 Summary(ru_RU.UTF-8): Преобразователь японского текста
@@ -49,6 +49,7 @@ set filter.
 %patch4 -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure --disable-static
 %make
@@ -77,6 +78,9 @@ install -pD -m644 man/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
 %_libdir/libkakasi.so
 
 %changelog
+* Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.3.6-alt3
+- NMU: fix FTBFS with gcc15
+
 * Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.6-alt2
 - NMU: fix FTBFS with gcc14 (THNX OpenSUSE)
 
