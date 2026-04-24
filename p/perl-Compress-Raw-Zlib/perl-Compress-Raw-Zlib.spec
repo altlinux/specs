@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Zlib
 Name: perl-%dist
-Version: 2.213
+Version: 2.222
 Release: alt1
 
 Summary: Low-level interface to the zlib compression library
@@ -54,6 +54,9 @@ export ZLIB_INCLUDE=%{_includedir}
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Apr 24 2026 Alexander Danilov <admsasha@altlinux.org> 2.222-alt1
+- 2.213 -> 2.222
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 2.213-alt1
 - automated CPAN update
 
