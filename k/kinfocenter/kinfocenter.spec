@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -24,10 +24,11 @@ Source: %rname-%version.tar
 Source10: ansi2html.sh
 Source20: add-ru.po
 Patch2: alt-mark-usb-drives.patch
-Patch3: alt-no-aha-tool.patch
+Patch3: alt-no-aha-firmware.patch
 Patch4: alt-use-pretty-name.patch
 Patch5: alt-symlink.patch
 Patch6: alt-dmidecode-path.patch
+Patch7: alt-no-aha-network.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
@@ -121,6 +122,7 @@ KF6 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
  && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 6)' >>src/CMakeLists.txt \
@@ -171,6 +173,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
+- fix network info
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 
