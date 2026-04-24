@@ -2,7 +2,7 @@
 
 Name: perl-Code-TidyAll
 Version: 0.85
-Release: alt1
+Release: alt2
 Summary: Test::Code::TidyAll - Check that all your files are tidy and valid according to tidyall
 License: GPL-1.0+  or Artistic-1.0-Perl
 Group: Development/Perl
@@ -10,6 +10,8 @@ Url: https://metacpan.org/pod/Test::Code::TidyAll
 Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/Code-TidyAll-%{version}.tar.gz
 BuildArch: noarch
 
+BuildPreReq: perl-devel
+BuildRequires: perl-Test-Fatal
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(lib/relative.pm) perl(Test/Most.pm) perl(Path/Tiny.pm) perl(Test/Class/Most.pm) perl(Capture/Tiny.pm) perl(Digest/SHA.pm) perl(autodie.pm) perl(Specio/Library/Path/Tiny.pm) perl(Moo.pm) perl(Config/INI/Reader.pm) perl(File/Which.pm) perl(IPC/Run3.pm) perl(Date/Format.pm) perl(File/pushd.pm) perl(List/SomeUtils.pm) perl(Time/Duration/Parse.pm) perl(IPC/System/Simple.pm) perl(Encode.pm) perl(Test/Warnings.pm) perl(Pod/Man.pm) perl(Log/Any.pm) perl(Scope/Guard.pm) perl(JSON/MaybeXS.pm) perl(Mason/Tidy/App.pm) perl(Perl/Tidy/Sweetened.pm) perl(Pod/Checker.pm) perl(Pod/Spell.pm) perl(Pod/Tidy.pm) perl(SVN/Look.pm) perl(List/Compare.pm)
 BuildRequires: subversion-server-common
 
@@ -38,6 +40,9 @@ When invoking Code::TidyAll, we pass mode => 'test' by default; see modes.
 %_man1dir/*
 
 %changelog
+* Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 0.85-alt2
+- NMU: fix BR.
+
 * Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.85-alt1
 - automated CPAN update
 
