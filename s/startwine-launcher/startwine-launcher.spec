@@ -1,11 +1,11 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v420
+%define nameVR _v421
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 420
+Version: 421
 Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
@@ -56,6 +56,14 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Sun Apr 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 421-alt1
+- 420 -> 421:
+  + Fixed update installed application data.
+  + Fixed display of shortcut images.
+  + Fixed a progress bar freeze when downloading games from GOG and Epic Games.
+  + Added the function to terminate running StartWine processes before installation.
+  + other changes and improvements
+
 * Mon Apr 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 420-alt1
 - 412 -> 420:
   + Updated list of Wine versions.
