@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.13.0
-Release: alt2
+Version: 1.15.1
+Release: alt1
 
 Summary: Boot and upgrade via container images
 License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
@@ -94,6 +94,9 @@ fi
 %_bindir/system-reinstall-%name
 
 %changelog
+* Sat Apr 18 2026 Vladimir Romanov <rirusha@altlinux.org> 1.15.1-alt1
+- New version: 1.15.1.
+
 * Mon Mar 23 2026 Vladimir Romanov <rirusha@altlinux.org> 1.13.0-alt2
 - Added runtime dependency on bubblewrap.
 
