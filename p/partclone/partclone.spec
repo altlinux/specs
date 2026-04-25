@@ -1,66 +1,103 @@
-%def_enable xfs
+%define _unpackaged_files_terminate_build 1
+
+# This need to be repaired:
+# configure: checking for JFS Library files ... ...
+# checking for ujfs_get_superblk in -ljfs -luuid... no
+# configure: error: *** jfs depend library (libjfs) not found
 %def_disable jfs
-%def_enable exfat
-%def_disable apfs
-%ifarch loongarch64 %mips ppc64le
-# raiserfs4 does not work with 16k kernel pages
+
+# raiserfs no longer supported by the Linux Kernel
+%def_disable reiserfs
+
+# raiser4 no longer supported by the Linux Kernel
 %def_disable reiser4
-%else
-%def_enable reiser4
-%endif
+
+%def_enable xfs
+%def_enable fuse
+%def_enable apfs
+%def_enable exfat
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.32
-Release: alt2
+Version: 0.3.47
+Release: alt1
 
 Summary: File System Clone Utilities
 License: GPLv2+
 Group: Archiving/Backup
 
-Url: http://partclone.org
-# Upstream: git://github.com/Thomas-Tsai/partclone.git
-Source: http://download.sourceforge.net/%name/%name-%version.tar
-Patch1: partclone-0.3.6-no_fail_mbr.patch
-Patch2: partclone-0.3.20-checkfs.patch
-Patch3: partclone-0.3.32-build.patch
+Url: https://partclone.org/
+Vcs: git://github.com/Thomas-Tsai/partclone.git
+# Upstream: http://sf.net/projects/partclone/files/
+Source: https://github.com/Thomas-Tsai/partclone/archive/%{version}/%{name}-%{version}.tar.gz
 
-# Automatically added by buildreq on Fri Dec 04 2015
-# optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
-BuildRequires: libblkid-devel libe2fs-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libuuid-devel
+BuildRequires: libblkid-devel
+BuildRequires: libe2fs-devel
+BuildRequires: libnilfs-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libntfs-3g-devel
+BuildRequires: libuuid-devel
 BuildRequires: libssl-devel
+BuildRequires: libxxhash-devel
+BuildRequires: libisal-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
+BuildRequires: xsltproc
+BuildRequires: docbook-style-xsl
+
 %if_enabled xfs
 BuildRequires: libxfs-devel
+BuildRequires: libuserspace-rcu-devel
 %endif
+
 %if_enabled jfs
 BuildRequires: jfsutils
 %endif
+
+%if_enabled fuse
+BuildRequires: libfuse3-devel
+%endif
+
+%if_enabled reiserfs
+BuildRequires: libprogsreiserfs-devel
+%endif
+
 %if_enabled reiser4
 BuildRequires: libreiser4-devel
 %endif
 
 # Checkfs requires
 %if_enabled checkfs
-BuildRequires: /dev/kvm
-BuildRequires: rpm-build-vm
-BuildRequires: e2fsprogs btrfs-progs dosfstools reiserfsprogs hfsprogs ntfs-3g
+BuildRequires: e2fsprogs
+BuildRequires: btrfs-progs
+BuildRequires: dosfstools
+BuildRequires: f2fs-tools
+BuildRequires: reiserfsprogs
+BuildRequires: hfsprogs
+BuildRequires: ntfs-3g
+
 %if_enabled xfs
 BuildRequires: xfsprogs
 %endif
+
 %if_enabled exfat
 BuildRequires: exfatprogs
 %endif
+
+%if_enabled reiserfs
+BuildRequires: progsreiserfs
+%endif
+
 %if_enabled reiser4
 BuildRequires: reiser4progs
 %endif
 %endif
 
-# TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils), apfs
+# TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
 
 %description
-A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}%{?_enable_jfs: jfs,}
-reiserfs,%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,}%{?_enable_exfat: exfat,} btrfs, ntfs,
-fat and hfs+ file systems.
+A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}%{?_enable_jfs: jfs,} nilfs,
+minix, f2fs,%{?_enable_reiserfs: reiserfs,}%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,}%{?_enable_exfat: exfat,} btrfs, ntfs, fat and hfs+ file systems.
 
 %prep
 %setup
@@ -76,11 +113,16 @@ echo '#define git_version "%version"' > src/version.h
 	%{?_enable_checkfs: --enable-fs-test} \
 	--enable-btrfs \
 	--enable-extfs \
-	--enable-reiserfs \
 	--enable-hfsp \
 	--enable-fat \
 	--enable-ntfs \
+	--enable-f2fs \
+	--disable-ufs \
 	--disable-vmfs \
+	--enable-minix \
+	--enable-nilfs2 \
+	%{subst_enable fuse} \
+	%{subst_enable reiserfs} \
 	%{subst_enable reiser4} \
 	%{subst_enable exfat} \
 	%{subst_enable apfs} \
@@ -92,29 +134,24 @@ echo '#define git_version "%version"' > src/version.h
 %install
 %makeinstall_std
 %find_lang %name
+mv -f %buildroot%_datadir/bash-completion/completions/%name{-completion,}
 
 %check
 %if_enabled checkfs
 pushd tests
-make check || {
-	for fname in *.log; do
-		if [ "$fname" != "test-suite.log" ]; then
-			echo "*** ${fname%%.log} results ***"
-			cat -- "$fname"
-			echo "******************************"
-			echo
-		fi
-	done
-	false
-}
+make check
 popd
 %endif
 
 %files -f %name.lang
 %_sbindir/*
 %_man8dir/*
+%_datadir/bash-completion/completions/%name
 
 %changelog
+* Sun Apr 26 2026 Leonid Krivoshein <klark@altlinux.org> 0.3.47-alt1
+- 0.3.47 (closes: #58849)
+
 * Sun Sep 14 2025 Leonid Krivoshein <klark@altlinux.org> 0.3.32-alt2
 - Rebuilt with new reiser4 libraries.
 
