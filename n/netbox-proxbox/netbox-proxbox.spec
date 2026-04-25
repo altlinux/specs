@@ -1,21 +1,22 @@
 Name:    netbox-proxbox
-Version: 0.0.5
+Version: 0.0.11
 Release: alt1
 
 Summary: Netbox Plugin for integration between Proxmox and Netbox
 License: Apache-2.0
 Group:   Networking/WWW
-URL:     https://github.com/netdevopsbr/netbox-proxbox
+URL:     https://github.com/emersonfelipesp/netbox-proxbox
 
 AutoReqProv: yes, nopython
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-poetry
-Requires: netbox
-Requires: python3-module-pynetbox
-Requires: python3-module-proxmoxer
+Requires: netbox >= 4.5.0
+Requires: python3-module-pydantic
+Requires: python3-module-requests
+Requires: python3-module-websockets
+Conflicts: netbox > 4.5.99
 
 BuildArch: noarch
 
@@ -43,5 +44,11 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-proxbox/README
 %_defaultdocdir/netbox-proxbox/README
 
 %changelog
+* Fri Apr 17 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.11-alt1
+- New 0.0.11 version.
+
+* Fri May 16 2025 Alexander Burmatov <thatman@altlinux.org> 0.0.5-alt2
+- Add compatable Netbox versions.
+
 * Thu Nov 09 2023 Alexander Burmatov <thatman@altlinux.org> 0.0.5-alt1
 - Initial build for Sisyphus.
