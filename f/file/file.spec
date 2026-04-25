@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.47
-Release: alt1
+Release: alt2
 Summary: File type guesser
 License: BSD-2-Clause
 Group: File tools
@@ -130,6 +130,10 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 5.47-alt2
+- Fix regression in magic_buffer (PR/725) that was affecting libmagic users
+  (such as yara).
+
 * Fri Feb 27 2026 Vitaly Chikunov <vt@altlinux.org> 5.47-alt1
 - Update to FILE5_47 (2026-02-26).
 
