@@ -3,7 +3,7 @@
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Atomic Package Manager 
@@ -71,11 +71,26 @@ done
 %_datadir/polkit-1/actions/%service_id.policy
 %_sysconfdir/apt/apt.conf.d/99-apm-update.conf
 %_datadir/apt/scripts/update-apm.lua
+%_datadir/%name/grpconf.d
 %doc README.en.md
 %doc README.md
 %doc README.ru.md
 
 %changelog
+* Sat Apr 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.0-alt1
+- New version: 0.5.0.
+- Added altfiles module for nss-altfiles support: split/merge /etc/passwd and
+  /etc/group, patch nsswitch.conf, sync groups from YAML configs.
+- Added lint module: analyze and auto-generate tmpfiles.d/sysusers.d configs,
+  detect unexpected files in /run and /tmp.
+- Added CLI commands: `apm system image lint`, `fix-nss`, `sync-groups`.
+- Fixed LC_ALL=C env for distrobox commands (Alt/Arch/Ubuntu providers)
+  to ensure consistent output parsing.
+- Added APT config overrides support via `--option` / `Options` field.
+- Auto-update package database if empty before install operations.
+- Fixed format-type CLI flag name (was format_type).
+- Added grpconf.d config directory installation.
+
 * Sat Mar 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 - Added HTTP API server (Swagger UI, WebSocker, auth via token).
