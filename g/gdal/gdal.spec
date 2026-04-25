@@ -11,7 +11,7 @@
 %global soversion 38
 
 Name: gdal
-Version: 3.12.2
+Version: 3.12.4
 Release: alt1
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
@@ -298,6 +298,9 @@ popd
 %python3_sitelibdir/osgeo_utils
 
 %changelog
+* Sat Apr 25 2026 Andrey Cherepanov <cas@altlinux.org> 3.12.4-alt1
+- New version.
+
 * Tue Apr 21 2026 Ulysses Apokin <ulysses@altlinux.org> 3.12.2-alt1
 - New version.
 - Fixed to comply with Shared Libs Policy.
