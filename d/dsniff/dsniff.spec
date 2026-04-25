@@ -1,7 +1,7 @@
 Name: dsniff
 Version: 2.4
 %define beta_ver b1
-Release: alt0.14.b1.1
+Release: alt0.14.b1.2
 
 Summary: Network audit tools
 License: BSD
@@ -59,7 +59,7 @@ Patch140: 40_fix-ftbfs-with-gcc-14.patch
 
 # Automatically added by buildreq on Tue Apr 13 2021
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXt-devel libgpg-error libnet2-devel libpcap-devel python2-base sh4 xorg-proto-devel
-BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libnsl2-devel libssl-devel libtirpc-devel rpcgen xorg-cf-files
+BuildRequires: imake libXmu-devel libdb4-devel libnids-devel libnsl2-devel libssl-devel libtirpc-devel rpcgen xorg-cf-files gcc14
 
 %package X11
 Summary: Network audit tools for X11
@@ -91,6 +91,7 @@ you to monitor and redirect network traffic so you can analyze it:
 + webspy - display sniffed URLs in Netscape in real-time.
 
 %prep
+%set_gcc_version 14
 %setup -q
 install -pm644 %_sourcedir/dsniff-faq.html faq.html
 
@@ -102,6 +103,7 @@ sed -i 's/dn_expand/__&/g' configure.in
 
 %build
 #set_autoconf_version 2.13
+export CC=%__cc
 %autoreconf
 %add_optflags -I%_includedir/nsl
 %add_optflags -I%_includedir/tirpc
@@ -125,6 +127,9 @@ sed -i 's,[[:space:]]\+-\(I/usr/include\|L/usr/lib\)\([[:space:]]\|$\),\2,g' Mak
 %_mandir/man?/webspy.*
 
 %changelog
+* Sat Apr 25 2026 Fr. Br. George <george@altlinux.org> 2.4-alt0.14.b1.2
+- Fixed FTBFS
+
 * Fri May 09 2025 Fr. Br. George <george@altlinux.org> 2.4-alt0.14.b1.1
 - Ressurrected from FTBFS
 - Patches updated from Debian build
