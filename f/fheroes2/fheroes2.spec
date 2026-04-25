@@ -3,14 +3,12 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 1.1.7
-#define rev 20210604
-#Release: alt1.%rev
-Release: alt1
+Version: 1.1.15
+Release: alt2
 Summary: Free implementation of Heroes of the Might and Magic II engine
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Games/Strategy
-Url: https://github.com/ihhub/fheroes2
+URL: https://github.com/ihhub/fheroes2
 VCS: https://github.com/ihhub/fheroes2
 
 %add_findreq_skiplist %_docdir/%name
@@ -20,7 +18,8 @@ Source2: %name.sh
 Source3: %name.png
 Source4: fheroes2-data.spec
 Source5: README.ALT
-Patch0: fheroes2-1.1.7-random-skills.patch
+Patch0: %name-%version-%release.patch
+Patch1: fheroes2-1.1.7-random-skills.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -45,8 +44,8 @@ You need to copy files from data and maps directories from original game
 into your /usr/share/games/fheroes2/{maps,data} directories respectively
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%autopatch -p1
 
 %build
 export LANG=en_US.UTF-8
@@ -113,6 +112,16 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Sat Apr 25 2026 Anton Midyukov <antohami@altlinux.org> 2:1.1.15-alt2
+- Revert "Use engine-generated Russian fonts and buttons even if Russian
+  assets are present (#9950)" to fix russian fonts.
+
+* Sat Apr 18 2026 Anton Midyukov <antohami@altlinux.org> 2:1.1.15-alt1
+- New version 1.1.15.
+
+* Tue Mar 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 2:1.1.14-alt1
+- NMU: new version (Closes: #58265)
+
 * Tue Apr 01 2025 Igor Vlasenko <viy@altlinux.org> 2:1.1.7-alt1
 - new version
 
