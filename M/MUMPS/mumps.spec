@@ -1,12 +1,13 @@
 Name: MUMPS
 Version: 1.71
-Release: alt1
+Release: alt2
 Summary: Massachusetts General Hospital Utility Multi-Programming System
 Group: Development/Other
 License: BSD
 
 Source: mumps-%version-src.tar.gz
 Source1: http://mumps.sourceforge.net/docs.html
+Patch: gcc-15.patch
 
 %description
 MUMPS (Massachusetts General Hospital Utility Multi-Programming System)
@@ -20,6 +21,9 @@ to the variables used by most languages to access main memory.
 %prep
 %setup -n mumps
 cp %SOURCE1 .
+%patch -p1
+
+%build
 %make_build
 
 %install
@@ -32,6 +36,9 @@ install -D utils %buildroot%_datadir/mumps/utils
 %_datadir/mumps
 
 %changelog
+* Sat Apr 25 2026 Fr. Br. George <george@altlinux.org> 1.71-alt2
+- Fix gcc-15 build
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.71-alt1
 - Autobuild version bump to 1.71
 
