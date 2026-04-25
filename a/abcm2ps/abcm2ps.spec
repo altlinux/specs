@@ -1,10 +1,11 @@
 Name: abcm2ps
-Version: 8.14.13
+Version: 8.14.15
 Release: alt1
 Summary: a program to typeset abc tunes into Postscript
 License: GPLv3
 Url: http://moinejf.free.fr
 Group: File tools
+Patch: abcm2ps-gcc15.patch
 
 Source: v%version.tar.gz
 
@@ -17,6 +18,7 @@ language that make it suitable for classical music.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure --enable-a4
@@ -36,6 +38,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Sat Apr 25 2026 Fr. Br. George <george@altlinux.org> 8.14.15-alt1
+- Autobuild version bump to 8.14.15
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 8.14.13-alt1
 - Autobuild version bump to 8.14.13
 
