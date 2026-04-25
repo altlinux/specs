@@ -6,8 +6,8 @@
 %define sover 26
 Name: libsodium
 Summary: A modern, portable, easy to use crypto library
-Version: 1.0.21
-Release: alt2
+Version: 1.0.22
+Release: alt1
 License: ISC
 Group: System/Libraries
 Url: https://libsodium.org/
@@ -109,6 +109,9 @@ EOF
 %files checkinstall
 
 %changelog
+* Tue Apr 21 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.22-alt1
+- Update to 1.0.22-RELEASE-1-g33cc75ab (2026-04-16).
+
 * Fri Apr 10 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.21-alt2
 - Update to 1.0.21-FINAL (2026-04-09).
 
