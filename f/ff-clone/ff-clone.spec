@@ -1,14 +1,14 @@
 Name: ff-clone
-Version: 1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Get all (mostly two) fishes out
-License: Public domain
+License: GPLv2
 Group: Games/Puzzles
 Url: http://www.olsak.net/mirek/ff-clone/index_en.html
 Source: %name-%version.tgz
 # wget -nH -r -np http://www.olsak.net/mirek/ff-clone/manual_en.html
 Source1: %name-docs.tar.gz
-Patch: ff-clone-gcc10.patch
+Patch: ff-clone-gcc15.patch
 
 # Automatically added by buildreq on Fri Sep 02 2011
 # optimized out: fontconfig libX11-devel pkg-config xorg-xproto-devel
@@ -53,6 +53,9 @@ mkdir -p %buildroot%_gamesbindir %buildroot%_gamesdatadir/%name
 %_gamesbindir/%name
 
 %changelog
+* Sat Apr 25 2026 Fr. Br. George <george@altlinux.org> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+
 * Tue Apr 06 2021 Fr. Br. George <george@altlinux.ru> 1.2-alt2
 - Fix gcc10 build
 
