@@ -5,7 +5,7 @@
 
 Name: sbsigntools
 Version: 0.9.5
-Release: alt3
+Release: alt4
 Summary: Signing utility for UEFI secure boot
 License: GPL-3.0-or-later
 Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
@@ -42,7 +42,10 @@ Tools to add signatures to EFI binaries and drivers.
 %makeinstall_std
 
 %check
-%make_build check
+%make_build check || {
+	cat tests/test-suite.log
+	exit 1
+}
 
 %files
 %doc README AUTHORS LICENSE.GPLv3 COPYING ChangeLog NEWS
@@ -55,6 +58,9 @@ Tools to add signatures to EFI binaries and drivers.
 %_man1dir/*.1*
 
 %changelog
+* Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt4
+- Fix FTBFS with binutils 2.46 and gnu-efi 4.0.4.
+
 * Tue May 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.5-alt3
 - NMU: support LoongArch 64-bit PE/COFF images.
 
