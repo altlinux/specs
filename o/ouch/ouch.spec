@@ -1,7 +1,11 @@
+%ifarch i586
+%def_without check
+%else
 %def_with check
+%endif
 
 Name: ouch
-Version: 0.6.1
+Version: 0.7.1
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
@@ -12,10 +16,11 @@ VCS: https://github.com/ouch-org/ouch
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-rust
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: clang-devel
+BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: rust-cargo
 
 %if_with check
 BuildRequires: git-core
@@ -27,14 +32,7 @@ to help you compress and decompress files of several formats.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -43,13 +41,16 @@ EOF
 %rust_install
 
 %check
-%rust_test
+%rust_test -- --test-threads=1
 
 %files
 %_bindir/%name
 %doc README.md LICENSE
 
 %changelog
+* Sat Apr 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.1-alt1
+- Updated to version 0.7.1.
+
 * Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.1-alt1
 - Updated to version 0.6.1.
 
