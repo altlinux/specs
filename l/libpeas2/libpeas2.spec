@@ -17,7 +17,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -31,6 +31,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+# https://gitlab.gnome.org/GNOME/libpeas/-/issues/65
+Patch: https://src.fedoraproject.org/rpms/libpeas/raw/rawhide/f/libpeas-fix-py-wrapper-refcount-test.patch
 
 %define mozjs_ver_major 140
 
@@ -127,6 +129,7 @@ This package contains %name demonstration programs.
 
 %prep
 %setup -n %_name-%version
+%patch -p1 -b .pygobject
 
 %build
 %meson \
@@ -196,6 +199,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Sat Apr 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1.1
+- fixed tests for pygobject >= 3.55.3
+
 * Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 

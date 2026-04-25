@@ -20,7 +20,7 @@
 
 Name: libpeas
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -32,6 +32,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version%beta.tar
 %endif
+# https://gitlab.gnome.org/GNOME/libpeas/-/issues/65
+Patch: https://src.fedoraproject.org/rpms/libpeas/raw/rawhide/f/libpeas-fix-py-wrapper-refcount-test.patch
 
 %define glib_ver 2.85.0
 
@@ -149,6 +151,7 @@ This package contains %name demonstration programs
 
 %prep
 %setup -n %name-%version%beta
+%patch -p1 -b .pygobject
 
 %build
 %meson \
@@ -224,6 +227,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Apr 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1.1
+- fixed tests for pygobject >= 3.55.3
+
 * Wed Feb 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
 - 1.38.1 (soname bumped)
 
