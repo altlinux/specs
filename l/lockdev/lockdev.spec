@@ -1,9 +1,9 @@
 Name: lockdev
 Version: 1.0.3
-Release: alt3.2
+Release: alt4
 
 Summary: A library and a command-line tool for locking devices
-License: LGPL
+License: LGPL-2.1-only
 Group: System/Libraries
 
 URL: http://packages.debian.org/unstable/source/lockdev
@@ -122,6 +122,10 @@ cd LockDev
 %endif
 
 %changelog
+* Sat Apr 25 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.3-alt4
+- fixed build error: old-style function definition
+- fixed ambiguous license name for LGPL-2.1-only
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt3.2
 - rebuild with new perl 5.28.1
 
