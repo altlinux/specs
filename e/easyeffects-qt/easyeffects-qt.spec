@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -26,7 +26,7 @@ ExcludeArch: %ix86
 Conflicts: %_name < 8.0.0
 
 %define pw_api_ver 0.3
-%define pw_ver 0.3.58
+%define pw_ver 1.6
 %define lv2_ver 1.18.2
 %define lilv_ver 0.22
 %define calf_ver 0.90.1
@@ -44,6 +44,8 @@ Requires: ladspa-deepfilternet-plugins
 Requires: kf6-kirigami-addons
 Requires: xdg-desktop-portal-kde
 Requires: libqtgraphs-qt6
+# https://bugzilla.altlinux.org/58803
+Requires: kf6-qqc2-desktop-style libkf6sonnetui
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ extra-cmake-modules
@@ -114,6 +116,9 @@ KDE/Kirigami frameworks.
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.1-alt1
+- 8.2.1
+
 * Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.0-alt1
 - 8.2.0
 
