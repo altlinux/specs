@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -7,7 +9,8 @@
 %def_with orcus
 # Uncompatible with zxing-cpp >= 2.2.1
 %def_with zxing
-%def_without openssl
+# check
+%def_with openssl
 
 # Attention! Use only one UI: kde5 or kde6
 # enable kde5 UI
@@ -50,7 +53,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 2.2
 Version: %hversion.%urelease
-Release: alt3
+Release: alt4
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -233,6 +236,7 @@ BuildRequires: libzstd-devel
 # 26.2
 BuildRequires: libmd4c-devel
 BuildRequires: libfast_float-devel
+BuildRequires: perl-Time-Piece
 
 %if_without python
 BuildRequires: python3-dev
@@ -244,8 +248,6 @@ BuildRequires: gnu-config
 
 AutoReqProv: yes, noshell, nopython
 
-Provides: %name-core = %EVR
-Obsoletes: %name-core < %EVR
 Provides: %name-full = %EVR
 Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
@@ -272,17 +274,22 @@ Provides: LibreOffice-still-mimetypes = %EVR
 Obsoletes: LibreOffice-mimetypes < %EVR
 Obsoletes: LibreOffice-still-mimetypes < %EVR
 Obsoletes: LibreOffice4-mimetypes
-# extensions
-Provides: LibreOffice-extensions = %EVR
-Provides: LibreOffice-still-extensions = %EVR
-Obsoletes: LibreOffice-extensions < %EVR
-Obsoletes: LibreOffice-still-extensions < %EVR
-Obsoletes: LibreOffice4-extensions
 # Other runtime requirements
 Requires: gst-libav
 %if_with java
 Requires: java-headless >= 9.0.0
 Requires: pentaho-reporting-flow-engine
+
+%package extensions
+Summary: Java extensions for LibreOffice
+Group: Office
+Requires: java-headless >= 9.0.0
+Provides: LibreOffice-still-extensions = %EVR
+Obsoletes: LibreOffice-still-extensions < %EVR
+Obsoletes: LibreOffice4-extensions
+
+%description extensions
+%{summary}.
 %endif
 
 %package core
@@ -579,7 +586,11 @@ export ac_cv_prog_LO_CLANG_CC=""
         --disable-openssl \
 %endif
         --disable-pdfium \
+%ifarch %ix86
+        --disable-skia \
+%else
         --enable-skia \
+%endif
         --enable-evolution2 \
         --enable-introspection \
         --enable-odk \
@@ -658,8 +669,7 @@ export ac_cv_prog_LO_CLANG_CC=""
 export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%make build AR=/usr/bin/ar RANLIB=/usr/bin/ranlib
-#      verbose=true
+%make build AR=/usr/bin/ar RANLIB=/usr/bin/ranlib verbose=true
 
 # Generate typelib files
 ## TODO us
@@ -706,7 +716,11 @@ find %buildroot%lodir -name "*qt6*"   | sed 's@^%buildroot@@' > files.qt6
 find %buildroot%lodir -name "*_kf6*" | sed 's@^%buildroot@@' > files.kde6
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.gtk4 files.kde5 files.qt5 files.kde6 files.qt6; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+%define nolang_remove /share/extensions/.|%lodir/sdk/.|share/Scripts/java/.|/program/classes/.
+{ cat %buildroot/gid_* | sort -u
+  cat *.lang files.gtk3 files.gtk4 files.kde5 files.qt5 files.kde6 files.qt6
+  echo %lodir/program/liblibreofficekitgtk.so
+} | sort | uniq -u | egrep -v '~$|%nolang_remove' > files.nolang
 
 # Return Oxygen icon theme from LibreOffice 5.3 (see https://bugs.documentfoundation.org/show_bug.cgi?id=110353 for details)
 install -D %SOURCE400 %buildroot%lodir/share/config/images_oxygen.zip
@@ -801,7 +815,13 @@ find %buildroot%lodir -name \*.py > py.files
 cat py.files | xargs grep -l '^#!/usr/bin/python3' > py_with_shebang.files
 comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__python3'
 
-%files -f files.nolang
+%files
+%if_with java
+%lodir/share/Scripts/java
+%lodir/program/classes
+%endif
+
+%files core -f files.nolang
 %exclude /gid_Module*
 %_bindir/*
 %config %conffile
@@ -811,18 +831,13 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_iconsdir/*/*/apps/*
 %_datadir/mime/packages/libreoffice%hversion.xml
 %_datadir/mimelnk/application/*
-%dir %lodir
-%dir %lodir/help
-%dir %lodir/program
-%dir %lodir/program/resource
-%dir %lodir/readmes
-%dir %lodir/share
-%dir %lodir/share/autotext
-%dir %lodir/share/registry
-%dir %lodir/share/registry/res
-%lodir/share/extensions/*
 %_man1dir/libreoffice.1*
 %_man1dir/unopkg.1*
+
+%files extensions
+%if_with java
+%lodir/share/extensions
+%endif
 
 %files sdk
 %lodir/sdk
@@ -874,6 +889,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Apr 24 2026 Fr. Br. George <george@altlinux.org> 26.2.2.2-alt4
+- Split to main and Java-free core packages.
+
 * Mon Apr 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt3
 - Removed open and valgrind from requirements (ALT #58645).
 - Did not split to main and core packages.
