@@ -3,10 +3,9 @@
 
 Name: clines
 Version: 1.0.4
-Release: alt4
+Release: alt5
 
 Summary: Curses-based Lines game
-Summary(ru_RU.CP1251): Игра Линии, написанная на библиотеке curses
 
 License: GPL-2
 Group: Games/Other
@@ -22,11 +21,6 @@ BuildRequires: libgpm-devel libncurses-devel
 %description
 Console Lines is a "Lines" game for the Unix terminal. After install
 this program read README file about rules and scores.
-
-%description -l ru_RU.CP1251
-Консольный вариант игры Линии для Unix терминалов. После установки
-этой программы вы можете ознакомиться с правилами игры и начислением
-очков в файле README.
 
 %prep
 %setup
@@ -60,6 +54,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Apr 25 2026 Fr. Br. George <george@altlinux.org> 1.0.4-alt5
+- Fix gcc15 build
+
 * Thu Jun 07 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt4
 - Fix gcc4.6 build
 
