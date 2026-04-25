@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.15
-Release: alt2
+Release: alt3
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -486,6 +486,7 @@ Requires: altcenter-education
 Summary(ru_RU.UTF-8): Среда KDE для Альт Образование
 Summary: KDE for Alt Education
 Group: Education
+Requires: kinfocenter-maxi
 Requires: kde-network-manager-nm
 Requires: kde
 Requires: krfb
@@ -668,6 +669,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sat Apr 25 2026 Ivan Khanas <xeno@altlinux.org> 1.7.15-alt3
+- Add kinfocenter-maxi to unlock systeminfo/graphics features.
+
 * Wed Apr 22 2026 Ivan Khanas <xeno@altlinux.org> 1.7.15-alt2
 - Exclude %ix86 for projectlibre.
 
