@@ -20,16 +20,17 @@
 
 Name: partclone
 Version: 0.3.47
-Release: alt1
+Release: alt2
 
 Summary: File System Clone Utilities
 License: GPLv2+
 Group: Archiving/Backup
 
 Url: https://partclone.org/
-Vcs: git://github.com/Thomas-Tsai/partclone.git
+Vcs: https://github.com/Thomas-Tsai/partclone.git
 # Upstream: http://sf.net/projects/partclone/files/
 Source: https://github.com/Thomas-Tsai/partclone/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0: partclone-0.3.47-build.patch
 
 BuildRequires: libblkid-devel
 BuildRequires: libe2fs-devel
@@ -106,6 +107,7 @@ echo '#define git_version "%version"' > src/version.h
 
 %build
 %autoreconf
+sed -i -E 's/\r$//g' IMAGE_FORMATS.md
 # NB: Due to buggy configure checks --disable-somefeature options does not
 # switch off configure requirement for correspondent devel packages and
 # configure will fail as if --enable-somefeature was in effect.
@@ -138,17 +140,20 @@ mv -f %buildroot%_datadir/bash-completion/completions/%name{-completion,}
 
 %check
 %if_enabled checkfs
-pushd tests
-make check
-popd
+cd tests && make check
 %endif
 
 %files -f %name.lang
 %_sbindir/*
 %_man8dir/*
 %_datadir/bash-completion/completions/%name
+%doc AUTHORS CONTRIBUTORS ChangeLog README.md IMAGE_FORMATS.md SECURITY_TESTING.md
 
 %changelog
+* Sun Apr 26 2026 Leonid Krivoshein <klark@altlinux.org> 0.3.47-alt2
+- switch to upstream git sources
+- packaging documentation
+
 * Sun Apr 26 2026 Leonid Krivoshein <klark@altlinux.org> 0.3.47-alt1
 - 0.3.47 (closes: #58849)
 
