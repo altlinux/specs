@@ -1,6 +1,6 @@
 Name: evhz
-Version: 2012
-Release: alt2
+Version: 2026
+Release: alt1
 
 Summary: Measure mouse polling rate
 
@@ -26,7 +26,7 @@ Inspired by code written by Alan Kivlin.
 %setup
 
 %build
-gcc -o %name %name.c
+gcc %optflags -o %name %name.c
 
 %install
 install %name -D %buildroot%_sbindir/%name
@@ -35,6 +35,10 @@ install %name -D %buildroot%_sbindir/%name
 %_sbindir/%name
 
 %changelog
+* Sun Apr 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2026-alt1
+- fix build with gcc 15
+- use optflags for gcc
+
 * Fri Dec 13 2024 Vitaly Lipatov <lav@altlinux.ru> 2012-alt2
 - fix build
 
