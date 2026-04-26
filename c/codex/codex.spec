@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.116.0
+Version: 0.125.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -53,17 +53,16 @@ lto = false
 codegen-units = 16
 EOF
 # Disable OOB updates.
-for i in codex-rs/tui/src/updates.rs codex-rs/tui_app_server/src/updates.rs; do
-	perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
-		END { die unless $x }' $i
-done
+perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
+	END { die unless $x }' codex-rs/tui/src/updates.rs
 
 %build
 RUST_BACKTRACE=full \
 cargo build \
 	--config=.cargo/vendor-config.toml \
 	--manifest-path=codex-rs/Cargo.toml \
-	%_smp_mflags --offline --release
+	%_smp_mflags --offline --release \
+	-p codex-cli
 
 %install
 install -Dp %name-rs/target/release/%name -t %buildroot%_bindir
@@ -95,6 +94,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 0.125.0-alt1
+- Update to rust-v0.125.0 (2026-04-24).
+
 * Tue Mar 24 2026 Vitaly Chikunov <vt@altlinux.org> 0.116.0-alt1
 - Update to rust-v0.116.0 (2026-03-19).
 
