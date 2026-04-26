@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt4
+Release: alt5
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -112,7 +112,7 @@ sed -i "s/#ifdef HAVE_EMMINTRIN_H/#if 0/" testcases/cve/meltdown.c
 # lto1: fatal error: errors during merging of translation units
 %define optflags_lto %nil
 # From LTP's travis.
-%add_optflags -Werror=implicit-function-declaration -fno-common
+%add_optflags -Werror=implicit-function-declaration -fno-common -std=gnu17
 # Just reduce amount of warnings for too old code.
 %add_optflags -Wno-unused-parameter -Wno-unused-result -Wno-old-style-declaration
 
@@ -199,6 +199,9 @@ fi
 %files testsuite-checkinstall
 
 %changelog
+* Sun Apr 26 2026 Vitaly Chikunov <vt@altlinux.org> 20220930-alt5
+- spec: Workaround FTBFS and add compatibility with gcc15.
+
 * Fri Sep 15 2023 Vitaly Chikunov <vt@altlinux.org> 20220930-alt4
 - spec: Fix false-positive vm-run call on unsupported architectures
   (ALT#47599).
