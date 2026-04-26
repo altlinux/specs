@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: annotator
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Image annotation for Elementary OS
@@ -79,6 +79,9 @@ Annotate your images and let a picture say 1000 words.
 %doc AUTHORS* README* TODO
 
 %changelog
+* Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Tue Feb 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 

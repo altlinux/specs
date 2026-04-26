@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 7.2
+%define ver_major 7.3
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -53,6 +53,7 @@ BuildRequires: libgit2-glib-devel
 BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: pkgconfig(libportal)
 BuildRequires: pkgconfig(libportal-gtk3)
+BuildRequires: pkgconfig(poppler-glib)
 %{?_enable_check:BuildRequires: elementary-icon-theme}
 
 %description
@@ -117,6 +118,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
+- 7.3.0
+
 * Mon Dec 08 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
 - 7.2.0
 

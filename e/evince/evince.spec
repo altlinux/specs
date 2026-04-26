@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
@@ -19,7 +19,7 @@
 
 Name: evince
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A document viewer
 Group: Office
@@ -139,6 +139,8 @@ using Evince library.
 %setup -n %name-%version%beta
 
 %build
+# too old texlive
+%add_optflags -std=gnu17
 %meson \
     -Dpdf=enabled \
     -Dtiff=enabled \
@@ -150,8 +152,7 @@ using Evince library.
     %{subst_enable_meson_feature xps xps} \
     %{subst_enable_meson_feature ps ps} \
     %{subst_enable_meson_bool introspection introspection} \
-    %{subst_enable_meson_bool nautilus nautilus} \
-#    %{?_enable_multimedia:-Dmultimedia=enabled} \
+    %{subst_enable_meson_bool nautilus nautilus}
 %nil
 %meson_build
 
@@ -168,7 +169,6 @@ using Evince library.
 %doc AUTHORS NEWS* README.md
 
 %files data -f %name.lang
-#%{?_enable_dbus:%_datadir/dbus-1/services/%xdg_name.Daemon.service}
 %{?_enable_dbus:%_datadir/dbus-1/services/org.gnome.evince.Daemon.service}
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -230,6 +230,9 @@ using Evince library.
 
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt2
+- updated to 48.1-6-gb99027d8
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
