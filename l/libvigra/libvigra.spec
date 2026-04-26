@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 
 Summary: Generic Programming for Computer Vision
@@ -126,6 +126,9 @@ sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
 
 %changelog
+* Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
+- 1.12.4
+
 * Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 

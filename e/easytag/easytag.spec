@@ -6,7 +6,7 @@
 
 Name: easytag
 Version: %ver_major.3
-Release: alt6
+Release: alt6.1
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 %else
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-#Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-gnome intltool gcc-c++
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
@@ -53,11 +52,11 @@ Monkey's звуковых файлов.
 
 %prep
 %setup
-#%patch -p1
 sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+# id3lib C interface uses int bool, not compatible with C23
+%add_optflags %(getconf LFS_CFLAGS) -std=gnu11
 %autoreconf
 %configure \
     --disable-appdata-validate \
@@ -91,6 +90,9 @@ sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt6.1
+- rebuilt with gcc-15 and -std=gnu11
+
 * Thu Mar 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt6
 - easytag-2.4.3-171-g2d70038 (updated russian translation)
 
