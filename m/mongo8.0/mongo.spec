@@ -4,7 +4,7 @@
 
 Name: mongo8.0
 Version: 8.0.12
-Release: alt2
+Release: alt3
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -20,7 +20,15 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires: /proc gcc-c++ gcc python3-module-pymongo python3-module-pkg_resources
+%ifarch %e2k
+BuildRequires: gcc-c++
+%else
+%set_gcc_version      13
+%define __cc  gcc-%_gcc_version
+%define __cxx g++-%_gcc_version
+BuildRequires: gcc%_gcc_version-c++
+%endif
+BuildRequires: /proc python3-module-pymongo python3-module-pkg_resources
 BuildRequires: libssl-devel libreadline-devel libpcrecpp-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -123,8 +131,7 @@ MongoDB instance.
        --linker=gold \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-python3 src/third_party/scons-4.9.1/scons.py %build_opts
-
+python3 src/third_party/scons-4.9.1/scons.py CC=%__cc CXX=%__cxx %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -208,6 +215,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Sat Apr 25 2026 Alexei Takaseev <taf@altlinux.org> 8.0.12-alt3
+- Fix FTBS use gcc 13
+
 * Thu Jul 31 2025 Alexei Takaseev <taf@altlinux.org> 8.0.12-alt2
 - Add BR python3-module-zstandard
 
