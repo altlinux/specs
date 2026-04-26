@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.19
+Version: 7.0
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -106,6 +106,9 @@ rm "$img"
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Sun Apr 26 2026 Dmitry V. Levin <ldv@altlinux.org> 7.0-alt1
+- v6.19 -> v7.0.
+
 * Tue Feb 10 2026 Dmitry V. Levin <ldv@altlinux.org> 6.19-alt1
 - v6.18 -> v6.19.
 
