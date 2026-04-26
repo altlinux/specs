@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: privacybrowser
-Version: 0.8
-Release: alt2
+Version: 0.9
+Release: alt1
 
 Summary: web browser that respects your privacy
 License: GPL-3.0-or-later
@@ -85,6 +85,9 @@ by default but are easy to automatically enable on-the-fly or by domain.
 %_datadir/doc/HTML/en/privacybrowser/privacybrowser.png
 
 %changelog
+* Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.9-alt1
+- New version 0.9.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.8-alt2
 - Exclude riscv64 arch as not buildable.
 

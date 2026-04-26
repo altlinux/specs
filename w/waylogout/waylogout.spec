@@ -2,7 +2,7 @@
 
 Name: waylogout
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Graphical logout/suspend/reboot/shutdown dialog for wayland
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(scdoc)
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
-BuildRequires: libgomp15-devel
+BuildRequires: libgomp-devel
 
 %description
 %summary
@@ -46,6 +46,9 @@ BuildRequires: libgomp15-devel
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.3-alt3
+- Use libgomp-devel instead of libgomp15-devel.
+
 * Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.3-alt2
 - Fixed FTBFS caused by gcc15.
 

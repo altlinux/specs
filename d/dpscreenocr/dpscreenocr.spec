@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dpscreenocr
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Summary: Program to recognize text on screen
 License: Zlib
@@ -52,6 +52,9 @@ sed -i 's|^Categories=.*|Categories=Graphics;OCR;Scanning;|' data/dpscreenocr.de
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt2
 - Applied repocop fix for freedesktop-desktop
 
