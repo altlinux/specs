@@ -8,7 +8,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt12
+Release: alt13
 
 %define package_name		%real_name
 %define weight			1001
@@ -793,6 +793,7 @@ find -type f -print0 |
 xz -9k Misc/{HISTORY,NEWS,cheatsheet}
 
 %build
+%add_optflags -std=gnu17
 rm -rf ../build-static
 mkdir -p ../build-static
 export OPT="$RPM_OPT_FLAGS -fwrapv"
@@ -1229,8 +1230,12 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Sun Apr 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.18-alt13
+- Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
+  (gcc 15+).
+
 * Mon May 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.18-alt12
-- Backported the upstream fix addressing the failing test_ftplib
+- Backported the upstream fix addressing the failing test_ftplib test
   (thx Victor Stinner).
 
 * Sun Jul 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.18-alt11
