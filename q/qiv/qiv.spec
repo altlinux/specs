@@ -1,5 +1,5 @@
 Name: qiv
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 Epoch: 1
 
@@ -43,6 +43,9 @@ xz Changelog
 %_man1dir/*
 
 %changelog
+* Sun Apr 26 2026 Ilya Mashkin <oddity@altlinux.ru> 1:3.0.4-alt1
+- 3.0.4
+
 * Wed Mar 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1:3.0.3-alt1
 - 3.0.3
 
