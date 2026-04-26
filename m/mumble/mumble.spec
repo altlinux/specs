@@ -8,7 +8,7 @@
 Name: mumble
 %define build_number 287
 Version: 1.4.287
-Release: alt2.3
+Release: alt2.4
 
 Summary: Low latency encrypted VoIP client
 
@@ -117,6 +117,7 @@ the game to control Mumble.
 %patch4 -p1
 
 %build
+%add_optflags -std=gnu17
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -Dpackaging:BOOL=ON \
@@ -219,6 +220,9 @@ mkdir -p %buildroot%_logdir/murmur
 %_bindir/%name-overlay
 
 %changelog
+* Sun Apr 26 2026 Alexei Takaseev <taf@altlinux.org> 1.4.287-alt2.4
+- NMU: Fix FTBS with gcc15
+
 * Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.287-alt2.3
 - NMU: QtAv is not required for build
 
