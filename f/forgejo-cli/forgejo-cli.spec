@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-cli
-Version: 0.4.1
-Release: alt2
+Version: 0.5.0
+Release: alt1
 Url: https://codeberg.org/forgejo-contrib/forgejo-cli
 Vcs: https://codeberg.org/forgejo-contrib/forgejo-cli.git
 Summary: CLI tool for interacting with Forgejo
@@ -41,6 +41,9 @@ BuildRequires: rpm-build-rust libssl-devel
 %_datadir/fish/vendor_completions.d/fj.fish
 
 %changelog
+* Sun Apr 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Thu Mar 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.4.1-alt2
 - Add completions (closes: #58281).
 
