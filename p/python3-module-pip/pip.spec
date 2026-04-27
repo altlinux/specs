@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 26.0.1
+Version: 26.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -92,9 +92,6 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-# drop deprecated ntlm support
-rm -v %buildroot%python3_sitelibdir/%mod_name/_vendor/urllib3/contrib/ntlmpool.py
-
 # package a built wheel (will be used within venv created by virtualenv)
 built_wheel=$(cat ./dist/.wheeltracker) || \
         { echo Make sure you built a pyproject ; exit 1 ; }
@@ -119,7 +116,6 @@ export NO_LATEST_WHEELS=YES
 %bash_completions_dir/pip
 
 %files
-%doc README.*
 %_bindir/pip3
 %bash_completions_dir/pip3
 %python3_sitelibdir/%mod_name/
@@ -129,6 +125,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Mon Apr 27 2026 Stanislav Levin <slev@altlinux.org> 26.1-alt1
+- 26.0.1 -> 26.1.
+
 * Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 26.0.1-alt1
 - 26.0 -> 26.0.1.
 
