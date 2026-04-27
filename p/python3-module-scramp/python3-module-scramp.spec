@@ -3,14 +3,14 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.4.5
+Version: 1.4.8
 Release: alt1
 
 Summary: Python implementation of the SCRAM protocol
 License: MIT-0
 Group:   Development/Python3
 URL:     https://pypi.org/project/scramp/
-VCS:     https://github.com/tlocke/scramp
+VCS:     https://codeberg.org/tlocke/scramp
 
 Source: %oname-%version.tar
 
@@ -48,6 +48,10 @@ sed -i '9a version = "%version"' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Apr 27 2026 Anton Vyatkin <toni@altlinux.org> 1.4.8-alt1
+- New version 1.4.8.
+- Update upstream url.
+
 * Sun Apr 14 2024 Anton Vyatkin <toni@altlinux.org> 1.4.5-alt1
 - New version 1.4.5.
 
