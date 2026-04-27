@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 149.0.2
+Version: 150.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -37,6 +37,7 @@ Patch005: 0005-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch006: 0006-ALT-fix-double_t-redefinition.patch
 Patch007: 0007-build-Disable-Werror.patch
 Patch008: 0008-Add-dbus-cflags.patch
+Patch009: 0009-MOZ-bug-2033279-encoding_rs-Rust-1.95.patch
 ### End Patches
 
 Provides: webclient
@@ -388,6 +389,51 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-6746: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-6747: Use-after-free in the WebRTC component
+  + CVE-2026-6748: Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6749: Information disclosure due to uninitialized memory in the Graphics: Canvas2D component
+  + CVE-2026-6750: Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-6751: Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6752: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6753: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6754: Use-after-free in the JavaScript Engine component
+  + CVE-2026-6755: Mitigation bypass in the DOM: postMessage component
+  + CVE-2026-6756: Mitigation bypass in Firefox for Android
+  + CVE-2026-6757: Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-6758: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-6759: Use-after-free in the Widget: Cocoa component
+  + CVE-2026-6760: Mitigation bypass in the Networking: Cookies component
+  + CVE-2026-6761: Privilege escalation in the Networking component
+  + CVE-2026-6762: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-6763: Mitigation bypass in the File Handling component
+  + CVE-2026-6764: Incorrect boundary conditions in the DOM: Device Interfaces component
+  + CVE-2026-6765: Information disclosure in the Form Autofill component
+  + CVE-2026-6766: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6767: Other issue in the Libraries component in NSS
+  + CVE-2026-6768: Mitigation bypass in the Networking: Cookies component
+  + CVE-2026-6769: Privilege escalation in the Debugger component
+  + CVE-2026-6770: Other issue in the Storage: IndexedDB component
+  + CVE-2026-6771: Mitigation bypass in the DOM: Security component
+  + CVE-2026-6772: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6773: Denial-of-service due to integer overflow in the Graphics: WebGPU component
+  + CVE-2026-6774: Mitigation bypass in the DOM: Security component
+  + CVE-2026-6775: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6776: Incorrect boundary conditions in the WebRTC: Networking component
+  + CVE-2026-6777: Other issue in the Networking: DNS component
+  + CVE-2026-6778: Invalid pointer in the Audio/Video: Playback component
+  + CVE-2026-6779: Other issue in the JavaScript Engine component
+  + CVE-2026-6780: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-6781: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-6782: Information disclosure in the IP Protection component
+  + CVE-2026-6783: Incorrect boundary conditions, integer overflow in the Audio/Video: Playback component
+  + CVE-2026-6784: Memory safety bugs fixed in Firefox 150 and Thunderbird 150
+  + CVE-2026-6785: Memory safety bugs fixed in Firefox ESR 115.35, Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+  + CVE-2026-6786: Memory safety bugs fixed in Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+
 * Wed Apr 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0.2-alt1
 - New version (149.0.2).
 - Fixes:

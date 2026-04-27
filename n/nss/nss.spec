@@ -1,17 +1,27 @@
-Summary:	Netscape Network Security Services(NSS)
-Name:		nss
-Version:	3.122
-Release:	alt1
-License:	MPL-2.0
-Group:		System/Libraries
-Url:		http://www.mozilla.org/projects/security/pki/nss
+%define _unpackaged_files_terminate_build 1
+%define _libexecdir %prefix/libexec
+%define unsupported_bindir %_libexecdir/nss
 
-Source0:	nss-%version.tar
-Source1:	nss.pc.in
-Source2:	nss-config.in
-Source4:	nss-db-%version.tar
-Source5:	setup-nsssysinit.sh
-Source6:	system-pkcs11.txt
+# disable LTO to avoid ssl_gtest failure
+# see https://bugzilla.mozilla.org/show_bug.cgi?id=1890188
+%define optflags_lto %nil
+
+Name: nss
+Version: 3.123
+Release: alt1
+
+Summary: Netscape Network Security Services(NSS)
+License: MPL-2.0
+Group: System/Libraries
+Url: https://firefox-source-docs.mozilla.org/security/nss/index.html
+Vcs: https://github.com/nss-dev/nss.git
+
+Source0: %name-%version.tar
+Source1: nss.pc.in
+Source2: nss-config.in
+Source4: nss-db-%version.tar
+Source5: setup-nsssysinit.sh
+Source6: system-pkcs11.txt
 
 ### Start Patches
 Patch001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
@@ -19,21 +29,15 @@ Patch002: 0002-ALT-Disable-flaky-tests.patch
 Patch003: 0003-Disable-ssl_policy_pkix_ocsp-test.patch
 ### End Patches
 
-BuildRequires:  gcc-c++
-BuildRequires:  chrpath zlib-devel libsqlite3-devel
-BuildRequires:  rpm-macros-alternatives
-BuildRequires:  python3
-BuildRequires:  gyp
-BuildRequires:  ninja-build
-BuildRequires:  libnspr-devel
-
-%define _unpackaged_files_terminate_build 1
-%define _libexecdir %_prefix/libexec
-%global unsupported_bindir %_libexecdir/nss
-
-# disable LTO to avoid ssl_gtest failure
-# see https://bugzilla.mozilla.org/show_bug.cgi?id=1890188
-%define optflags_lto %nil
+BuildRequires: gcc-c++
+BuildRequires: chrpath
+BuildRequires: zlib-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: rpm-macros-alternatives
+BuildRequires: python3
+BuildRequires: gyp
+BuildRequires: ninja-build
+BuildRequires: libnspr-devel
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -43,19 +47,17 @@ and v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12, S/MIME,
 X.509 v3 certificates, and other security standards.  See:
 http://www.mozilla.org/projects/security/pki/nss/overview.html
 
-%package -n lib%name
-Summary:	Netscape Network Security Services(NSS)
-Group:		System/Libraries
+%package -n libnss
+Summary: Netscape Network Security Services(NSS)
+Group: System/Libraries
 
-Provides:	%name = %version-%release
+Provides: nss = %EVR
+Provides: nss-sysinit
+Provides: nss-system-init
+Provides: libnss-sysinit = %EVR
+Obsoletes: libnss-sysinit
 
-Provides:	%name-sysinit
-Provides:	%name-system-init
-
-Provides:	lib%name-sysinit = %version-%release
-Obsoletes:	lib%name-sysinit
-
-%description -n lib%name
+%description -n libnss
 Network Security Services (NSS) is a set of libraries designed
 to support cross-platform development of security-enabled server
 applications. Applications built with NSS can support SSL v2
@@ -63,51 +65,51 @@ and v3, TLS, PKCS #5, PKCS #7, PKCS #11, PKCS #12, S/MIME,
 X.509 v3 certificates, and other security standards.  See:
 http://www.mozilla.org/projects/security/pki/nss/overview.html
 
-%package -n lib%name-devel
-Summary:	NSS development kit
-Group:		Development/C
-Requires:	lib%name = %version-%release
+%package -n libnss-devel
+Summary: NSS development kit
+Group: Development/C
+Requires: libnss = %EVR
 
-Provides:	%name-devel        = %version-%release
-Provides:	%name-pkcs11-devel = %version-%release
+Provides: nss-devel        = %EVR
+Provides: nss-pkcs11-devel = %EVR
 
-%description -n lib%name-devel
+%description -n libnss-devel
 NSS development kit
 
-%package -n lib%name-devel-static
-Summary:	NSS static libraries
-Group:		Development/C
-Requires:	lib%name-devel = %version-%release
+%package -n libnss-devel-static
+Summary: NSS static libraries
+Group: Development/C
+Requires: libnss-devel = %EVR
 
-Provides:	%name-devel-static        = %version-%release
-Provides:	%name-pkcs11-devel-static = %version-%release
+Provides: nss-devel-static        = %EVR
+Provides: nss-pkcs11-devel-static = %EVR
 
-%description -n lib%name-devel-static
+%description -n libnss-devel-static
 NSS development kit (static libs)
 
-%package -n lib%name-nssckbi-checkinstall
+%package -n libnss-nssckbi-checkinstall
 Summary: Check p11-kit-trust.so and libnssckbi.so compatibility
 Group: Security/Networking
 Requires: p11-kit-checkinstall
 
-%description -n lib%name-nssckbi-checkinstall
+%description -n libnss-nssckbi-checkinstall
 During installation check that p11-kit-trust.so and libnssckbi.so are
 compatible with each other.
 This package intedent to be used in the install check step in the build
 system only and should not be installed in the real systems.
 
-%package -n %name-utils
-Summary:	Netscape Network Security Services Utilities
-Group:		Development/Other
-Requires:	lib%name = %version-%release
+%package -n nss-utils
+Summary: Netscape Network Security Services Utilities
+Group: Development/Other
+Requires: libnss = %EVR
 
-Provides:	%name-tools
+Provides: nss-tools
 
-%description -n %name-utils
+%description -n nss-utils
 Netscape Network Security Services Utilities
 
 %prep
-%setup -q
+%setup
 cd nss
 %autopatch -p1
 %ifarch %e2k
@@ -178,26 +180,26 @@ rm -f -- %buildroot%_libdir/*.TOC
 install -Dt %buildroot%_includedir/nss/ -m644 public/nss/*.h
 
 # Copy some freebl include files we also want
-mkdir -p -- %buildroot/%_includedir/%name/private
+mkdir -p -- %buildroot/%_includedir/nss/private
 
 for n in blapi.h alghmac.h cmac.h; do
-    cp -aL private/nss/$n %buildroot/%_includedir/%name/private/$n
+    cp -aL private/nss/$n %buildroot/%_includedir/nss/private/$n
 done
 
 # Install NSS utils
 mkdir -p -- %buildroot%_libdir/pkgconfig
 
 sed -e "s,@libdir@,%_libdir,g" \
-    -e "s,@prefix@,%_prefix,g" \
-    -e "s,@exec_prefix@,%_prefix,g" \
+    -e "s,@prefix@,%prefix,g" \
+    -e "s,@exec_prefix@,%prefix,g" \
     -e "s,@includedir@,%_includedir/nss,g" \
     -e "s,@NSPR_VERSION@,$NSPR_VERSION,g" \
     -e "s,@NSS_VERSION@,%version,g" \
     %SOURCE1 > %buildroot/%_libdir/pkgconfig/nss.pc
 
 sed -e "s,@libdir@,%_libdir,g" \
-    -e "s,@prefix@,%_prefix,g" \
-    -e "s,@exec_prefix@,%_prefix,g" \
+    -e "s,@prefix@,%prefix,g" \
+    -e "s,@exec_prefix@,%prefix,g" \
     -e "s,@includedir@,%_includedir/nss,g" \
     -e "s,@MOD_MAJOR_VERSION@,$NSS_VMAJOR,g" \
     -e "s,@MOD_MINOR_VERSION@,$NSS_VMINOR,g" \
@@ -234,7 +236,7 @@ mkdir -p -- %buildroot/%_libdir/nss
 mv -- %buildroot/%_libdir/libnssckbi.so %buildroot/%_libdir/nss/libnssckbi.so
 
 mkdir -p -- %buildroot/%_altdir
-cat >%buildroot/%_altdir/libnssckbi-%name <<EOF
+cat >%buildroot/%_altdir/libnssckbi-nss <<EOF
 %_libdir/libnssckbi.so	%_libdir/nss/libnssckbi.so	10
 EOF
 
@@ -243,14 +245,14 @@ pushd nss/tests
 ./all.sh
 popd
 
-%files -n %name-utils
+%files -n nss-utils
 %_bindir/*
 %unsupported_bindir
 %exclude %_bindir/setup-nsssysinit.sh
-%exclude %_bindir/%name-config
+%exclude %_bindir/nss-config
 
-%files -n lib%name
-%_altdir/libnssckbi-%name
+%files -n libnss
+%_altdir/libnssckbi-nss
 %_libdir/*.so*
 %_libdir/*.chk
 %_libdir/nss
@@ -263,18 +265,38 @@ popd
 %config(noreplace) %_sysconfdir/pki/nssdb/pkcs11.txt
 %_bindir/setup-nsssysinit.sh
 
-%files -n lib%name-devel
-%_bindir/%name-config
-%dir %_includedir/%name
-%_includedir/%name
+%files -n libnss-devel
+%_bindir/nss-config
+%dir %_includedir/nss
+%_includedir/nss
 %_libdir/pkgconfig/*
 
-%files -n lib%name-devel-static
+%files -n libnss-devel-static
 %_libdir/*.a
 
-%files -n lib%name-nssckbi-checkinstall
+%files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.123-alt1
+- New version (3.123).
+- Certificate Authority Changes:
+  + Remove CN=AffirmTrust Commercial
+  + Remove CN=AffirmTrust Networking
+  + Remove CN=AffirmTrust Premium ECC
+  + Remove CN=AffirmTrust Premium
+  + Remove CN=FIRMAPROFESIONAL CA ROOT-A WEB,OID.2.5.4.97=VATES-A62634068
+  + Remove CN=GLOBALTRUST 2020
+  + Remove CN=Secure Global CA
+  + Remove CN=SecureTrust CA
+  + Remove CN=TeliaSonera Root CA v1
+  + Remove CN=Trustwave Global Certification Authority
+  + Remove CN=Trustwave Global ECC P256 Certification Authority
+  + Remove CN=Trustwave Global ECC P384 Certification Authority
+  + Add CN=TWCA Global Root CA,OU=Root CA
+  + Remove CN=TWCA Global Root CA,OU=Root CA
+  + Remove CN=XRamp Global Certification Authority
+  + Remove OU=certSIGN ROOT CA
+
 * Thu Mar 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.122-alt1
 - New version (3.122).
 
@@ -970,4 +992,3 @@ popd
 
 * Wed Nov 23 2005 Eugene Ostapets <eostapets@altlinux.ru> 3.10-alt1
 - initial build for ALT Linux.
-
