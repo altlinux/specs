@@ -1,5 +1,5 @@
 Name: hackbrowserdata
-Version: 0.4.6
+Version: 1.0.0
 Release: alt1
 
 Summary: Command-line tool for decrypting and exporting browser data
@@ -40,6 +40,9 @@ install -m755 cmd/hack-browser-data/hack-browser-data  %buildroot/%_bindir/hack-
 %_bindir/hack-browser-data
 
 %changelog
+* Mon Apr 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt1
+- v1.0.0
+
 * Wed Jul 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.4.6-alt1
 - v0.4.6
 
