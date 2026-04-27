@@ -3,8 +3,8 @@
 %define _customdocdir %_docdir/%name
 
 Name: dillo
-Version: 3.2.0
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: a small FLTK-based web browser
 License: GPL-3.0-or-later
@@ -19,6 +19,7 @@ Patch: dillo-3.2.0-alt-russian-desktop.patch
 
 BuildRequires: fontconfig-devel
 BuildRequires: gcc-c++
+BuildRequires: libbrotli-devel
 BuildRequires: libfltk-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
@@ -77,6 +78,7 @@ install -Dm0644 -- %SOURCE2 %buildroot%_niconsdir/dillo.png
 %config(noreplace) %_sysconfdir/dillo/hsts_preload
 
 %_bindir/dillo
+%_bindir/dilloc
 %_bindir/dillo-install-hyphenation
 %_bindir/dpid
 %_bindir/dpidc
@@ -87,6 +89,10 @@ install -Dm0644 -- %SOURCE2 %buildroot%_niconsdir/dillo.png
 %_man1dir/dillo.1*
 
 %changelog
+* Mon Apr 27 2026 Ivan A. Melnikov <iv@altlinux.org> 3.3.0-alt1
+- New version.
+- Build and package dilloc (dillo remote-control CLI).
+
 * Tue Feb 18 2025 Ivan A. Melnikov <iv@altlinux.org> 3.2.0-alt2
 - Package hsh-preload.
 - Minor cleanup in %%files section.
