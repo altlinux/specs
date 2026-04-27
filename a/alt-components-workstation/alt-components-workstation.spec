@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: alt-components-workstation
-Version: 11.2.1
-Release: alt2
+Version: 11.2.2
+Release: alt1
 Summary: ALT Workstation edition and components
 Group: System/Configuration/Other
 License: GPL-3.0-or-later
@@ -62,9 +62,12 @@ Provides the edition configuration for the alterator component manager.
 %_alterator_datadir/components/categories/virtualization/
 
 %files -n alt-edition-workstation
-%_alterator_datadir/editions/edition_workstation/
+%_alterator_datadir/editions/workstation/
 
 %changelog
+* Mon Apr 27 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2.2-alt1
+- editions: rename edition_workstation to workstation
+
 * Tue Apr 08 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2.1-alt2
 - spec: remove shared dir ownership, list categories explicitly
 
