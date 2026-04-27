@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -27,6 +27,8 @@ BuildRequires: pkgconfig(Qt6WaylandClient)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: pkgconfig(Qt6Xdg)
 BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: qt6-wayland-devel
+BuildRequires: libwayland-egl-devel
 BuildRequires: libqt6xdg-devel
 BuildRequires: plasma6-layer-shell-qt-devel
 BuildRequires: libpng-devel
@@ -74,6 +76,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %doc CHANGELOG COPYING README.md AUTHORS
 
 %changelog
+* Mon Apr 27 2026 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - New version 3.1.0.
 
