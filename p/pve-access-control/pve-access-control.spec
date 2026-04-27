@@ -6,7 +6,7 @@
 Name: pve-access-control
 Summary: PVE access control library
 Version: 9.0.5
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -71,6 +71,9 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Thu Apr 09 2026 Sergey Konev <darisishe@altlinux.org> 9.0.5-alt2
+- Add support UTF-8 in ADDC to groupname
+
 * Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 9.0.5-alt1
 - 9.0.5
 
