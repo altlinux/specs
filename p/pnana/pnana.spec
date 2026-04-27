@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pnana
-Version: 0.0.5
-Release: alt4
+Version: 0.0.6
+Release: alt1
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -14,7 +14,6 @@ VCS: https://github.com/Cyxuan0311/PNANA.git
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: alt-prepare-offline-build.patch
-Patch2: alt-set-correct-latest-project-version.patch
 Patch3: alt-fix-moving-file-by-btn.patch
 Patch4: alt-fix-copying-cache-dir.patch
 
@@ -25,6 +24,7 @@ BuildRequires: libcurl-devel
 BuildRequires: libftxui-devel
 BuildRequires: libtree-sitter-devel
 BuildRequires: lua-devel
+BuildRequires: chafa-devel
 
 # ffmpeg libs
 BuildRequires: libavformat-devel
@@ -68,8 +68,6 @@ config_dir="\$HOME/.config/%name"
 EOF
 chmod 755 %buildroot%_bindir/%name
 
-mv README{_EN,}.md
-
 %files
 %doc README.md
 %dir %_libdir/%name
@@ -79,6 +77,9 @@ mv README{_EN,}.md
 %_datadir/%name/config.json
 
 %changelog
+* Mon Apr 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.6-alt1
+- new version
+
 * Thu Apr 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.5-alt4
 - fix incorrect copying of cache to pnana config dir
 
