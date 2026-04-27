@@ -5,7 +5,7 @@
 %define app_name PasswordChecker
 
 Name:    password-checker
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Password expiry notification application
@@ -97,6 +97,9 @@ EOF
 %_datadir/glib-2.0/schemas/org.altlinux.%daemon_name.gschema.xml
 
 %changelog
+* Mon Apr 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Fixes conflicting types error during build.
+
 * Mon Jul 14 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
 - Rename package: PasswordCheckerSettings to password-checker
 - Add processing if the password never expires
