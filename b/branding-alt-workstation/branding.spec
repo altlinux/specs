@@ -2,9 +2,10 @@
 %define Brand ALT
 %define theme workstation
 %define Theme Workstation
+%define variant Workstation
 %define codename Prometheus
-%define status beta
-%define status_en beta
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define icon_theme AltWorkstation
@@ -25,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt0.04
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -290,7 +291,7 @@ cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' BRANCH='%altbranch' ./configure
+THEME=%theme VARIANT='%variant' NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -373,6 +374,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Apr 27 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt1
+- systemd: align os-release with os-release(5) spec.
+- systemd: rename edition to workstation to match VARIANT_ID.
+
 * Thu Apr 09 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt0.04
 - Add default edition to os-release and dconf.
 - gnome-settings: fix extra quotes in dist-extensions keys.
