@@ -6,8 +6,8 @@
 
 %define rname getfem
 Name: getfemxx
-Version: 5.4.2
-Release: alt2
+Version: 5.4.4
+Release: alt1
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -18,19 +18,19 @@ Provides: %rname = %EVR
 Obsoletes: %rname < %EVR
 
 Source0: getfem-%version.tar
-# Python 3.13 support
-Patch: 24c096f938f335048d2df8efc8601b93dfd2c90e.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel python3-devel
-BuildRequires: libnumpy-py3-devel python3-module-scipy python3-module-mpi4py
-BuildRequires:python3-module-setuptools
+BuildRequires: libnumpy-py3-devel python3-module-numpy python3-module-scipy python3-module-mpi4py
+BuildRequires: python3-module-setuptools
 %ifnarch %{arm} aarch64 ppc64le
 #BuildRequires: scilab
 %endif
 BuildPreReq: libmuparser-devel
 %if_enabled mumps
 BuildPreReq: libmumps-devel
+%else
+BuildRequires: libsuperlu-devel
 %endif
 BuildPreReq: liblapack-devel
 #libsuperlu-devel
@@ -60,7 +60,6 @@ Python bindings to %name
 
 %prep
 %setup -n %rname-%version
-%patch -p1
 %ifarch %e2k
 # broken lib64 test
 #sed -i 's/|sparc64|/&e2k|/' m4/ax_boost_base.m4
@@ -87,7 +86,8 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 	--with-blas=openblas \
 	--with-pic \
 	--with-matlab-toolbox-dir=%_datadir/getfem_toolbox \
-	--enable-python3 \
+	--enable-python \
+	--with-python_prefix=%_prefix \
 	#
 #	--enable-qhull \
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
@@ -97,14 +97,14 @@ CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[
 %makeinstall_std
 
 %if "%python3_sitelibdir_noarch/getfem" != "%python3_sitelibdir/getfem"
-mv %buildroot%python3_sitelibdir_noarch/getfem/* \
-	%buildroot%python3_sitelibdir/getfem/
+mv %buildroot/%python3_sitelibdir_noarch/getfem/* \
+	%buildroot/%python3_sitelibdir/getfem/
 %endif
 
-mkdir -p %buildroot%__python3_dynlibdir
+mkdir -p %buildroot/%__python3_dynlibdir
 install -m 0644 \
     interface/src/python/_getfem.cpython*.so \
-    %buildroot%python3_sitelibdir/
+    %buildroot/%python3_sitelibdir/
 
 %files
 %doc NEWS AUTHORS
@@ -123,6 +123,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Mon Apr 27 2026 Sergey V Turchin <zerg@altlinux.org> 5.4.4-alt1
+- new version
+
 * Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
 - build without mumps
 
