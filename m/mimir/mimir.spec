@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: mimir
-Version: 3.0.5
+Version: 3.0.6
 Release: alt1
 
 Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
@@ -115,6 +115,9 @@ usermod -a -G proc %name ||:
 %_bindir/metaconvert
 
 %changelog
+* Mon Apr 27 2026 Anton Meleshnikov <alton@altlinux.org> 3.0.6-alt1
+- New version 3.0.6.
+
 * Fri Apr 03 2026 Anton Meleshnikov <alton@altlinux.org> 3.0.5-alt1
 - New version 3.0.5 (Fixes: CVE-2026-33186).
 
