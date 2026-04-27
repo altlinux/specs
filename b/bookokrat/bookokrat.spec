@@ -3,8 +3,8 @@
 %def_with check
 
 Name: bookokrat
-Version: 0.3.9
-Release: alt2
+Version: 0.3.10
+Release: alt1
 
 Summary: A terminal EPUB / PDF Book Reader
 License: AGPL-3.0-or-later
@@ -55,6 +55,9 @@ export SNAPSHOTS=overwrite
 %_bindir/%name
 
 %changelog
+* Mon Apr 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.10-alt1
+- new version
+
 * Mon Apr 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.9-alt2
 - fixes the missing display of opened from kitty when launched from another
   terminal (closes: 58767)
