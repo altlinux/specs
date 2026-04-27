@@ -53,7 +53,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 2.2
 Version: %hversion.%urelease
-Release: alt4
+Release: alt5
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -279,11 +279,14 @@ Requires: gst-libav
 %if_with java
 Requires: java-headless >= 9.0.0
 Requires: pentaho-reporting-flow-engine
+Requires: %name-extensions = %EVR
 
 %package extensions
 Summary: Java extensions for LibreOffice
 Group: Office
 Requires: java-headless >= 9.0.0
+Provides: LibreOffice-extensions = %EVR
+Obsoletes: LibreOffice-extensions < %EVR
 Provides: LibreOffice-still-extensions = %EVR
 Obsoletes: LibreOffice-still-extensions < %EVR
 Obsoletes: LibreOffice4-extensions
@@ -889,6 +892,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Apr 27 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt5
+- libreoffice: require libreoffice-extension to avoid missing parts on update.
+
 * Fri Apr 24 2026 Fr. Br. George <george@altlinux.org> 26.2.2.2-alt4
 - Split to main and Java-free core packages.
 
