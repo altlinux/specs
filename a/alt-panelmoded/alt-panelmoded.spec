@@ -3,7 +3,7 @@
 %define xdg_short org.altlinux.panelmode
 
 Name: alt-panelmoded
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
@@ -28,6 +28,7 @@ Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-copyous
 Requires: gnome-shell-extension-add-to-desktop
+Requires: gnome-shell-extension-no-overview-at-startup
 
 %description
 Used for panelmode on operating systems of the Alt family
@@ -53,6 +54,10 @@ with GNOME desktop enviroment.
 %_datadir/glib-2.0/schemas/45_%xdg_short.gschema.override
 
 %changelog
+* Wed Apr 22 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.7-alt1
+- New version 0.7.7.
+- Add missing extension to Requires.
+
 * Tue Apr 07 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.6-alt1
 - New version 0.7.6.
 
