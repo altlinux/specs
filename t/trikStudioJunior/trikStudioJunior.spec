@@ -6,7 +6,7 @@
 
 Name: trikStudioJunior
 Version: 2021.3
-Release: alt1.2
+Release: alt2
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -134,6 +134,9 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Mon Apr 27 2026 Ivan Khanas <xeno@altlinux.org> 2021.3-alt2
+- Fix opening log dir for legacy .config paths.
+
 * Fri Apr 17 2026 Fedor Moseichuck <phobos@altlinux.org> 2021.3-alt1.2
 - NMU: changed desktop file comment to differ from trikStudio
 
