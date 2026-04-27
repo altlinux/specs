@@ -1,8 +1,8 @@
 Name: kernel-image-6.18
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.24
+%define kernel_sublevel	.25
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -595,6 +595,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Apr 27 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.25-alt1
+- v6.18.25 (2026-04-27).
+- Kernel 6.18 support for the Baikal-M SoC.
+- net: stmmac: dwmac-baikal: add another compatible string.
+
 * Thu Apr 23 2026 Vitaly Chikunov <vt@altlinux.org> 6.18.24-alt2
 - config: Disable CONFIG_MTD_TESTS.
 
