@@ -1,7 +1,7 @@
 %define macrosname moodle
 
 Name: rpm-macros-%macrosname
-Version: 5.1
+Version: 5.2
 Release:alt1
 
 Summary: RPM helper macros and dependency utils to build Mooodle packages
@@ -26,6 +26,9 @@ install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%macrosname
 %_rpmmacrosdir/%macrosname
 
 %changelog
+* Sat Apr 25 2026 Andrey Cherepanov <cas@altlinux.org> 5.2-alt1
+- Adapted macros to Moodle 5.2 (ALT #58352).
+
 * Mon Oct 20 2025 Andrey Cherepanov <cas@altlinux.org> 5.1-alt1
 - Adapted macros to Moodle 5.1.
 
