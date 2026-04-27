@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerOSInfo
 
 Name: tuner-osinfo
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Plugin for Tuner that adds "About System" page
@@ -40,18 +40,17 @@ BuildRequires: pkgconfig(tuner-1) gir(Tuner)
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_pluginsdir/i18n.py
 %_pluginsdir/osinfo.gresource
 %_pluginsdir/osinfo.plugin
 %_pluginsdir/osinfo.py
-%_pluginsdir/storage_parse.py
-%_pluginsdir/system_info.py
-%_pluginsdir/udisks_parse.py
-%_pluginsdir/ui_widgets.py
 %_pluginsdir/__pycache__/*.pyc
+%_pluginsdir/tuner_osinfo/
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Apr 27 2026 Semen Fomchenkov <armatik@altlinux.org> 0.2.0-alt1
+- v0.2.0
+
 * Fri Feb 13 2026 Semen Fomchenkov <armatik@altlinux.org> 0.1.1-alt1
 - v0.1.1
 
