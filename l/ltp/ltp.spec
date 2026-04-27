@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt5
+Release: alt6
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -199,6 +199,9 @@ fi
 %files testsuite-checkinstall
 
 %changelog
+* Mon Apr 27 2026 Vitaly Chikunov <vt@altlinux.org> 20220930-alt6
+- {,f}setxattr02: Adapt test for kernel 7.1.0+ socket xattr support.
+
 * Sun Apr 26 2026 Vitaly Chikunov <vt@altlinux.org> 20220930-alt5
 - spec: Workaround FTBFS and add compatibility with gcc15.
 
