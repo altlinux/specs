@@ -2,10 +2,10 @@ Name: kernel-image-7.0
 Release: alt1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.0
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	latest1
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -596,6 +596,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Apr 27 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.2-alt1
+- v7.0.2 (2026-04-27).
+- config: Disable CONFIG_MTD_TESTS.
+
 * Thu Apr 23 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.1-alt1
 - v7.0.1 (2026-04-22).
 - config,spec: Install out-of-tree modules signing certificate.
