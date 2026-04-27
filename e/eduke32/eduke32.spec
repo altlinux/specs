@@ -1,10 +1,11 @@
 Name: eduke32
-Version: 20230123.10167
-Release: alt2
+Version: 20260203.10664
+Release: alt1
 Summary: Source port of Duke Nukem 3D
 License: GPL-2.0-only
 Group: Games/Arcade
 Url: https://www.eduke32.com/
+Vcs: https://dukeworld.duke4.net/eduke32/synthesis/latest/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: eduke32-%version.tar.xz
@@ -72,12 +73,10 @@ sed -i 's/ -save-temps=obj / /g' GNUmakefile
 
 %build
 export CFLAGS='%optflags -Wno-format'
-make PACKAGE_REPOSITORY=1 \
-     PRETTY_OUTPUT=1 \
+make PRETTY_OUTPUT=1 \
      RELEASE=1 \
      SDL_TARGET=2 \
      BASECFLAGS="%{optflags}" \
-%{?_smp_mflags} \
      VC_REV=%version
 
 dos2unix source/build/buildlic.txt
@@ -114,6 +113,9 @@ install -Dm 0644 %{name}_128x128.png %buildroot%_iconsdir/hicolor/128x128/apps/%
 %_bindir/mapster32
 
 %changelog
+* Fri Apr 24 2026 Artyom Bystrov <arbars@altlinux.org> 20260203.10664-alt1
+- update to new version
+
 * Sun Nov 16 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20230123.10167-alt2
 - e2k build fix
 

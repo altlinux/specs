@@ -1,7 +1,7 @@
 Summary: CaPriCe32 - Amstrad CPC Emulator
 Name: caprice32
 Version: 4.6.0
-Release: alt1
+Release: alt2
 #v2, except for cpc roms, which just are just allowed be distributed
 License: GPLv2+
 Group: Emulators
@@ -15,6 +15,7 @@ Source2: %name
 
 Patch0: caprice32-4.6.0-iostream.patch
 Patch1: caprice32-4.6.0-string.patch
+Patch2: caprice32-4.6.0-cstdint.patch
 
 BuildRequires: gcc-c++ make
 BuildRequires: ImageMagick-tools
@@ -34,6 +35,7 @@ included documentation.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 
@@ -75,6 +77,9 @@ EOF
 %_man6dir/cap32.6*
 
 %changelog
+* Thu Apr 23 2026 Artyom Bystrov <arbars@altlinux.org> 4.6.0-alt2
+- Fix build on GCC15
+
 * Wed Apr 26 2023 Artyom Bystrov <arbars@altlinux.org> 4.6.0-alt1
 - initial build for ALT Sisyphus
 

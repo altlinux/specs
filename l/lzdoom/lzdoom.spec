@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: lzdoom
-Version: 4.11.4
+Version: 4.14.3a
 Release: alt2
 
 Summary: Enhanced Doom engine - version for old systems
@@ -11,6 +11,7 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
+ExcludeArch: %ix86
 Source: %name-%version.tar
 Source1: ico_%name.png
 
@@ -38,7 +39,7 @@ LZDoom - ответвление от  GZDoom 4.12pre (до этого - 3.3), с
 %prep
 %setup -n %name-%version
 
-%patch1 -p1
+#%%patch1 -p1
 
 %build
 %cmake_insource \
@@ -81,11 +82,21 @@ done
 %_docdir/%name
 %_datadir/doom
 %_desktopdir/%name.desktop
-%_gamesdatadir/doom/fm_banks/*
-%_gamesdatadir/doom/soundfonts/lzdoom.sf2
+%_gamesdatadir/%name/fm_banks/*
+%_gamesdatadir/%name/soundfonts/lzdoom.sf2
 %_iconsdir/hicolor/*/apps/%name.png
+%_datadir/applications/org.zdoom.LZDoom.desktop
+%_iconsdir/hicolor/scalable/apps/org.zdoom.LZDoom.svg
+%_datadir/metainfo/org.zdoom.LZDoom.metainfo.xml
+%_datadir/mime/packages/org.zdoom.LZDoom-mime.xml
 
 %changelog
+* Mon Apr 27 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.3a-alt2
+- disable build for x86 arch
+
+* Tue Jan 13 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.3a-alt1
+- update to new version
+
 * Mon Oct  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.11.4-alt2
 - Fix build on i586
 

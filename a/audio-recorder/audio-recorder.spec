@@ -2,7 +2,7 @@
 
 Name:		audio-recorder
 Version:	3.3.4
-Release:	alt1
+Release:	alt2
 
 Summary:	Audio recorder application for the GNOME 3
 
@@ -52,6 +52,7 @@ your loudspeakers you can record it.
 %patch5 -p1
 
 %build
+export CFLAGS="$CFLAGS %optflags -std=gnu17"
 autoreconf -vfi
 %configure
 %make_build
@@ -72,6 +73,9 @@ autoreconf -vfi
 %_mandir/man1/%name.1*
 
 %changelog
+* Thu Apr 23 2026 Artyom Bystrov <arbars@altlinux.org>  3.3.4-alt2
+- Fix build with GCC15
+
 * Mon Sep 11 2023 Artyom Bystrov <arbars@altlinux.org>  3.3.4-alt1
 - Update to new version
 - Update translation patch

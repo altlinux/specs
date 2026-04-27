@@ -1,6 +1,6 @@
 Name: panzerchasm
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: Free software reconstruction of game "Chasm: The Rift"
 License: GPL-3.0-only
@@ -18,6 +18,9 @@ Patch0: in_udp_port.patch
 # Adding <limits> to headers in map_bsp_tree.cpp, thanks to:
 # https://github.com/onnx/onnx-tensorrt/issues/474
 Patch1: add_limits.patch
+Patch2: 0001-Fix-build-with-GCC15.patch
+
+
 BuildRequires(pre): ImageMagick-tools
 
 BuildRequires: cmake rpm-macros-cmake
@@ -41,6 +44,7 @@ You have to put them under '~/.config/panzerchasm/'.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 mkdir BUILD
@@ -76,6 +80,9 @@ install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Apr 23 2026 Artyom Bystrov <arbars@altlinux.org> 0.3-alt4
+- Fix build with GCC15
+
 * Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 0.3-alt3
 - Fix build.
 

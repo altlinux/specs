@@ -1,6 +1,6 @@
 Name: wrath
 Version: rev20140513
-Release: alt1
+Release: alt2
 
 Summary: Fork of DarkPlaces Quake engine for WRATH: Aeon of Ruin
 License: GPL
@@ -10,6 +10,10 @@ Url: https://github.com/KillPixelGames/wrath-darkplaces
 Packager: %packager
 Source: %name-%version.tar
 Source1: run_wrath.sh
+
+#https://build.opensuse.org/projects/games/packages/wrath-darkplaces/files/fix-gcc15.patch?expand=1
+#Just changed standart from c11 to gnu17
+Patch0: fix-gcc15.patch
 
 ExclusiveArch: x86_64 %ix86 %e2k
 
@@ -34,6 +38,7 @@ with this version of the engine.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 
@@ -74,6 +79,9 @@ EOF
 %docdir/COPYING
 
 %changelog
+* Mon Apr 27 2026 Artyom Bystrov <arbars@altlinux.org> rev20140513-alt2
+- Fix build with GCC15
+
 * Tue May 9 2023 Artyom Bystrov <arbars@altlinux.org> rev20140513-alt1
 - Initial release for Sisyphus.
 

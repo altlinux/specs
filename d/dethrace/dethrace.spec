@@ -1,5 +1,5 @@
 Name: dethrace
-Version: 0.6.0
+Version: 0.10.1
 Release: alt1
 Summary: Source port of the vehicular combat video game Carmageddon
 ### dethrace is GPL-3.0+, but uses glad (MIT license) and miniaudio (MIT)
@@ -31,8 +31,8 @@ https://github.com/dethrace-labs/dethrace#game-content
 %prep
 %setup
 # unbundle libsmacker
-%patch0 -p1
-rm -r lib/libsmacker/
+#patch0 -p1
+#rm -r lib/libsmacker/
 
 %build
 echo %version > VERSION
@@ -53,6 +53,9 @@ install -Dm0755 %SOURCE2 %buildroot%_bindir/dethrace
 %_libexecdir/dethrace-bin
 
 %changelog
+* Fri Apr 24 2026 Artyom Bystrov <arbars@altlinux.org> 0.10.1-alt1
+- Update to new version
+
 * Tue May 30 2023 Artyom Bystrov <arbars@altlinux.org> 0.6.0-alt1
 - initial build for ALT Sisyphus
 
