@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 9.0.1
+Version: 9.0.2
 Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
@@ -113,6 +113,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 9.0.2-alt1
+- Update to 9.0.2 (2026-04-24).
+
 * Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.1-alt1
 - Update to 9.0.1 (2025-11-20).
 
