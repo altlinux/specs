@@ -10,8 +10,8 @@
 %def_with faketime
 
 Name: sssd
-Version: 2.9.8
-Release: alt3
+Version: 2.12.0
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -47,6 +47,7 @@ Patch: %name-%version-alt.patch
 %define gpocachepath %sssdstatedir/gpo_cache
 %define deskprofilepath %sssdstatedir/deskprofile
 %define dotcachepath %sssdstatedir/.cache
+%define secdbpath %sssdstatedir/secrets
 
 %define sssd_user _sssd
 
@@ -90,6 +91,7 @@ BuildRequires: libcheck-devel
 BuildRequires: doxygen
 BuildRequires: libselinux-devel
 BuildRequires: libsemanage-devel
+BuildRequires: libcap-devel
 BuildRequires: bind-utils
 BuildRequires: libkeyutils-devel
 BuildRequires: libnl-devel
@@ -291,15 +293,17 @@ project, although the MIT Kerberos library also provides client side support for
 the KCM credential cache.
 
 %package idp
-Summary: Kerberos plugins and OIDC helper for external identity providers.
+Summary: The IdP back end of the SSSD, Kerberos plugins and OIDC helper
 Group: System/Servers
 License: GPLv3+
 Requires: %name = %version-%release
 
 %description idp
-This package provides Kerberos plugins that are required to enable
-authentication against external identity providers. Additionally a helper
-program to handle the OAuth 2.0 Device Authorization Grant is provided.
+Provides the Identity Provider (IdP) back end that the SSSD can utilize to fetch
+identity data from and authenticate against an IdP like Keycloak or Entra ID
+server. Additionally this package provides Kerberos plugins that are required to
+enable authentication against external identity providers, if the KDC supports
+it, and a helper program to handle the OAuth 2.0 Device Authorization Grant.
 
 %package -n libsss_idmap
 Summary: FreeIPA Idmap library
@@ -475,9 +479,14 @@ Provides python3 programs with sssd analyze tools
 ## Disable pam-srv-tests due it not works (one by one only).
 sed -i -e '/^\s\+pam-srv-tests\s\+\\$/d' Makefile.am
 
+## Set changed SSSD_USER to default allowed uids as SSSD_NON_ROOT_USER.
+sed -i -e 's/^\(#define DEFAULT_ALLOWED_UIDS "0,\).*/\1 %sssd_user"/' src/responder/pac/pacsrv.c
+
 %build
 %autoreconf
 %configure \
+    --with-sssd-user=%sssd_user \
+    --runstatedir=%_runstatedir \
     --with-db-path=%dbpath \
     --with-pipe-path=%pipepath \
     --with-pubconf-path=%pubconfpath \
@@ -498,6 +507,8 @@ sed -i -e '/^\s\+pam-srv-tests\s\+\\$/d' Makefile.am
     --enable-pac-responder \
     --enable-sss-default-nss-plugin \
     --with-sssd-user=%sssd_user \
+    --with-conf-service-user-support \
+    --with-ssh-known-hosts-proxy \
     --disable-rpath \
     --disable-static \
     %{subst_with kcm} \
@@ -505,6 +516,7 @@ sed -i -e '/^\s\+pam-srv-tests\s\+\\$/d' Makefile.am
     %{subst_with samba} \
     %{?!_enable_systemtap:--disable-systemtap} \
     --without-python2-bindings \
+    --with-allow-remote-domain-local-groups \
     #
 
 %make_build all
@@ -515,8 +527,8 @@ for f in \
     src/tools/sss_obfuscate \
     src/tools/analyzer/sss_analyze;
 do
-    sed -i -e 's:/usr/bin/python:/usr/bin/python3:' \
-           -e 's:/usr/bin/env\s*python\s*:/usr/bin/python3:' \
+    sed -i -e 's:/usr/bin/python.*:/usr/bin/python3:' \
+           -e 's:/usr/bin/env\s\+python.*:/usr/bin/python3:' \
         "$f"
 done
 
@@ -529,11 +541,6 @@ install -D -m600 %SOURCE8 %buildroot%_sysconfdir/%name/%name.conf
 
 # Copy default logrotate file
 install -D -m644 src/examples/logrotate %buildroot%_sysconfdir/logrotate.d/%name
-
-touch %buildroot%mcpath/passwd
-touch %buildroot%mcpath/group
-touch %buildroot%mcpath/initgroups
-touch %buildroot%mcpath/sid
 
 install -D -m755 %SOURCE2 %buildroot%_initdir/%name
 install -D -m644 %SOURCE3 %buildroot%_pamdir/system-auth-sss
@@ -559,6 +566,7 @@ cp %buildroot%_datadir/sssd/krb5-snippets/sssd_enable_idp %buildroot%_sysconfdir
 
 # Enable krb5 passkey plugins by default (when sssd-passkey package is installed)
 cp %buildroot%_datadir/sssd/krb5-snippets/sssd_enable_passkey %buildroot%_sysconfdir/krb5.conf.d/sssd_enable_passkey
+install -D -p -m 0644 contrib/90-sssd-token-access.rules %buildroot%_udevrulesdir/90-sssd-token-access.rules
 
 # krb5 configuration snippet
 cp %buildroot%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir %buildroot%_sysconfdir/krb5.conf.d/enable_sssd_conf_dir
@@ -578,6 +586,12 @@ rm -f %buildroot/%_mandir/*/man5/sssd-systemtap.5*
 # Clean manpages l10n of deprecated files provider
 rm -f %buildroot/%_mandir/*/man5/sssd-files.5*
 
+# tmpfiles.d config
+install -D -m 0644 contrib/sssd-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
+
+# adjust sssd-shadowutils for pam_tcb
+sed 's/pam_unix\.so/pam_tcb.so/g' %buildroot/%_sysconfdir/pam.d/sssd-shadowutils
+
 %check
 export CK_TIMEOUT_MULTIPLIER=10
 %make check VERBOSE=yes
@@ -589,10 +603,24 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %post
 chown root:root %_sysconfdir/sssd/sssd.conf
+setcap "cap_dac_read_search=p" %_libexecdir/%name/sssd_pam
 %post_systemd_postponed %name.service sssd-nss.socket sssd-pam.socket sssd-ssh.socket
 
 %preun
 %preun_systemd %name.service sssd-nss.socket sssd-pam.socket sssd-ssh.socket
+
+%postun
+rm -f %mcpath/passwd
+rm -f %mcpath/group
+rm -f %mcpath/initgroups
+rm -f %mcpath/sid
+
+%post ipa
+setcap "cap_setuid,cap_setgid=p" %_libexecdir/%name/selinux_child
+
+%post krb5-common
+setcap "cap_dac_read_search=p" %_libexecdir/%name/ldap_child
+setcap "cap_dac_read_search,cap_setuid,cap_setgid=p" %_libexecdir/%name/krb5_child
 
 %post pac
 %post_systemd_postponed sssd-pac.socket
@@ -631,6 +659,18 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 #triggerpostun -- %name < 1.14.2-alt5
 #_bindir/gpasswd -a %sssd_user _keytab
 
+%triggerpostun -- %name < 2.10.0-alt1
+rm -f %mcpath/passwd
+rm -f %mcpath/group
+rm -f %mcpath/initgroups
+rm -f %mcpath/sid
+chown -f %sssd_user:%sssd_user %dbpath/* || true
+chown -f -R root:%sssd_user %_sysconfdir/sssd || true
+chmod -f -R g+r root:%sssd_user %_sysconfdir/sssd || true
+chown -f %sssd_user:%sssd_user %_var/log/%name/*.log || true
+chown -f %sssd_user:%sssd_user %secdbpath/*.ldb || true
+chown -f -R %sssd_user:%sssd_user %gpocachepath/ || true
+
 %files -f sssd.lang
 %doc COPYING
 %doc $RPM_SOURCE_DIR/sssd-example.conf
@@ -639,17 +679,19 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/%name.service
 %_unitdir/sssd-nss.service
 %_unitdir/sssd-nss.socket
-%_unitdir/sssd-pam-priv.socket
 %_unitdir/sssd-pam.service
 %_unitdir/sssd-pam.socket
 %_unitdir/sssd-ssh.service
 %_unitdir/sssd-ssh.socket
 
+%_tmpfilesdir/%name.conf
+
 %dir %_libexecdir/%name
 %_libexecdir/%name/sssd_be
 %_libexecdir/%name/sssd_check_socket_activated_responders
 %_libexecdir/%name/sssd_nss
-%_libexecdir/%name/sssd_pam
+#attr(0750,root,%sssd_user) %%caps(cap_dac_read_search=p) %_libexecdir/%name/sssd_pam
+%attr(0750,root,%sssd_user) %_libexecdir/%name/sssd_pam
 %_libexecdir/%name/sssd_autofs
 %_libexecdir/%name/sssd_ssh
 %_libexecdir/%name/sssd_sudo
@@ -667,7 +709,6 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/%name/libsss_krb5_common.so
 %_libdir/%name/libsss_ldap_common.so
 %_libdir/%name/libsss_util.so
-%_libdir/%name/libsss_semanage.so
 %_libdir/%name/libsss_sbus.so
 %_libdir/%name/libsss_sbus_sync.so
 %_libdir/%name/libsss_iface.so
@@ -680,31 +721,30 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %ldb_modulesdir/memberof.so
 %_bindir/sss_ssh_authorizedkeys
+%_bindir/sss_ssh_knownhosts
 %_bindir/sss_ssh_knownhostsproxy
 %_sbindir/sss_cache
 %_libexecdir/%name/sss_signal
 
 %dir %sssdstatedir
 %dir %_localstatedir/cache/krb5rcache
-%attr(700,%sssd_user,%sssd_user) %dir %dbpath
-%attr(755,%sssd_user,%sssd_user) %dir %mcpath
-%attr(700,%sssd_user,%sssd_user) %dir %deskprofilepath
-%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
-%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
-%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
-%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/sid
-%attr(755,%sssd_user,%sssd_user) %dir %pipepath
-%attr(750,%sssd_user,root) %dir %pipepath/private
-%attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
-%attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
+%attr(770,%sssd_user,%sssd_user) %dir %dbpath
+%attr(775,%sssd_user,%sssd_user) %dir %mcpath
+%attr(770,%sssd_user,%sssd_user) %dir %secdbpath
+%attr(771,%sssd_user,%sssd_user) %dir %deskprofilepath
+%attr(775,%sssd_user,%sssd_user) %dir %pipepath
+%attr(770,%sssd_user,%sssd_user) %dir %pipepath/private
+%attr(770,%sssd_user,%sssd_user) %dir %gpocachepath
+%attr(775,%sssd_user,%sssd_user) %dir %pubconfpath
 %attr(755,%sssd_user,%sssd_user) %dir %dotcachepath
 %attr(770,root,%sssd_user) %dir %_logdir/%name
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd/conf.d
-%attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
-%dir %_sysconfdir/systemd/system/sssd.service.d
+%attr(750,root,%sssd_user) %dir %_sysconfdir/sssd/pki
+%attr(0640,root,%sssd_user) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
 %dir %_datadir/%name
+%attr(775,%sssd_user,%sssd_user) %dir %_runstatedir/sssd
 %_sysconfdir/pam.d/sssd-shadowutils
 %dir %_libdir/%name/conf
 %_libdir/%name/conf/sssd.conf
@@ -718,7 +758,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd.conf.5*
 %_mandir/*/man5/sssd.conf.5*
 %_man5dir/sssd-simple.5*
-#_mandir/*/man5/sssd-simple.5*
+%_mandir/*/man5/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
 %_mandir/*/man5/sssd-sudo.5*
 %_man5dir/sssd-session-recording.5*
@@ -747,8 +787,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 
 %files krb5-common
 %attr(755,%sssd_user,%sssd_user) %dir %pubconfpath/krb5.include.d
-%attr(4710,root,%sssd_user) %_libexecdir/%name/ldap_child
-%attr(4710,root,%sssd_user) %_libexecdir/%name/krb5_child
+#attr(0750,root,%sssd_user) %%caps(cap_dac_read_search=p) %_libexecdir/%name/ldap_child
+#attr(0750,root,%sssd_user) %%caps(cap_dac_read_search,cap_setuid,cap_setgid=p) %_libexecdir/%name/krb5_child
+%attr(0750,root,%sssd_user) %_libexecdir/%name/ldap_child
+%attr(0750,root,%sssd_user) %_libexecdir/%name/krb5_child
 
 %files krb5
 %_libdir/%name/libsss_krb5.so
@@ -765,9 +807,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_unitdir/sssd-pac.socket
 
 %files ipa
-%attr(700,%sssd_user,%sssd_user) %dir %keytabdir
+%attr(770,%sssd_user,%sssd_user) %dir %keytabdir
 %_libdir/%name/libsss_ipa.so
-%attr(4710,root,%sssd_user) %_libexecdir/%name/selinux_child
+#attr(0750,root,%sssd_user) %%caps(cap_setuid,cap_setgid=p) %_libexecdir/%name/selinux_child
+%attr(0750,root,%sssd_user) %_libexecdir/%name/selinux_child
 %_man5dir/sssd-ipa*
 %_mandir/*/man5/sssd-ipa*
 %_datadir/%name/sssd.api.d/sssd-ipa.conf
@@ -886,6 +929,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %endif
 
 %files idp
+%_libdir/%name/libsss_idp.so
+%_man5dir/sssd-idp*
+%_mandir/*/man5/sssd-idp*
+
 %_libexecdir/%name/oidc_child
 %_libdir/%name/modules/sssd_krb5_idp_plugin.so
 %_datadir/sssd/krb5-snippets/sssd_enable_idp
@@ -895,6 +942,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libexecdir/%name/passkey_child
 %_libdir/%name/modules/sssd_krb5_passkey_plugin.so
 %_datadir/sssd/krb5-snippets/sssd_enable_passkey
+%_udevrulesdir/90-sssd-token-access.rules
 %config(noreplace) %_sysconfdir/krb5.conf.d/sssd_enable_passkey
 
 %files winbind-idmap
@@ -935,6 +983,26 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Apr 07 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.12.0-alt1
+- Update to latest 2.12 release.
+- New features and improvements:
+  + Passkey (WebAuthn/FIDO2) support - authentication using security keys,
+    integrated with PAM and Kerberos preauthentication.
+  + OIDC/IdP provider - new identity provider supporting OAuth2/OIDC
+    authentication flows (sssd-idp package) for Entra ID and Keycloak.
+  + DoT (DNS over TLS) support for dynamic DNS updates.
+  + Plasma Login Manager support as a PAM service.
+  + sss_ssh_knownhosts - improved tool replacing legacy sss_ssh_knownhostsproxy.
+  + IPA provider now supports IPA subdomains, enabling IPA-IPA Trust.
+  + IPv6 fallback: automatically switch to secondary IP family if the
+    primary is blocked by firewall.
+  + Kerberos: automatic creation of krb5 configuration snippet on startup.
+- Security hardening:
+  + SSSD services can now run fully unprivileged using file capabilities
+    instead of SUID bits (including p11_child).
+  + Changed 'ldap_id_use_start_tls' default value to true to prevent
+    unintentional plaintext communication.
+
 * Thu Apr 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt3
 - Update to latest 2.9 LTM release with additional upstream patches.
 - Performance optimizations:
