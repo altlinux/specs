@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.57.0
-Release: alt3
+Version: 2.58.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,11 +71,6 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch1: 0001-feature-btrfs-Add-multi-device-RAID-boot-support.patch     
-Patch2: 0002-clevis-add-feature-for-TPM2-based-LUKS-unlock.patch        
-Patch3: 0003-luks-try-clevis-unlock-before-prompting-for-passphra.patch 
-Patch4: 0004-clevis-auto-enable-feature-for-bound-LUKS-devices.patch    
-Patch5: 0005-testing-add-clevis-guess.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -426,6 +421,28 @@ fi
 %endif
 
 %changelog
+* Mon Apr 27 2026 Anton Midyukov <antohami@altlinux.org> 2.58.0-alt1
+- Feature nvmf:
+  + Added initial NVMe over Fabrics root support.
+  + Added support for NVMe/TCP discovery and connection from the kernel
+    command line.
+  + Added support for NBFT, static nvme-cli configuration, Fibre Channel
+    autodiscovery, RDMA, FC, and VLAN-related boot setups.
+  + Moved NVMe fabrics guessing into the NVMf feature so fabrics roots
+    enable the runtime feature automatically.
+  + Added common NVMe/FC HBA drivers and event handling for FC discovery.
+- Feature runtime:
+  + Added delayed uevent queue events.
+  + Added queue timer helper APIs for retry and timeout handling.
+  + Switched Btrfs and mdraid member discovery delays to the common queue
+    timeout API.
+  + Added ueventctl for inspecting and controlling uevent queue state.
+- Documentation:
+  + Added missing feature documentation.
+  + Added uevent queue design rules.
+- Tools:
+  + Unified fake command overrides for guess scripts and replay fixtures.
+
 * Thu Apr 09 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt3
 - Add upstream commits:
   + clevis: add feature for TPM2-based LUKS unlock.
