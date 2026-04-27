@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	580.142
+%define package_version	595.58.03
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -23,6 +23,12 @@
 %if "%xorg_ver" == ""
 %define xorg_ver %{get_version xorg-x11-server}
 %endif
+
+%define legacy8 %nil
+%nvIF_ver_lt %xorg_ver 99
+%define legacy8 580.142
+%endif
+%define legacy8_src %(echo %legacy8 | tr -d .)
 
 %define legacy7 %nil
 %nvIF_ver_lt %xorg_ver 99
@@ -67,6 +73,8 @@
 %define legacy1_src %(echo %legacy1 | tr -d .)
 
 %ifarch %ix86 armh
+# legacy6 main here
+%define legacy8 %nil
 %define legacy7 %nil
 %define legacy6 %nil
 %endif
@@ -78,7 +86,7 @@
 %define legacy2 %nil
 %define legacy1 %nil
 %endif
-%define mod_ver_list %module_version %legacy7 %legacy6 %legacy5 %legacy4 %legacy3 %legacy2 %legacy1
+%define mod_ver_list %module_version %legacy8 %legacy7 %legacy6 %legacy5 %legacy4 %legacy3 %legacy2 %legacy1
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -108,6 +116,9 @@ BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_srcver
 %ifnarch %ix86 armh
 BuildRequires: kernel-source-%module_name-open-%module_srcver
+%endif
+%if "%legacy8" != "%nil"
+BuildRequires: kernel-source-%module_name-%legacy8_src
 %endif
 %if "%legacy7" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy7_src
@@ -140,6 +151,9 @@ Conflicts: modutils < 2.4.27-alt4
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
 Requires:       nvidia_glx_%module_version
+%if "%legacy8" != "%nil"
+Requires:       nvidia_glx_%legacy8
+%endif
 %if "%legacy7" != "%nil"
 Requires:       nvidia_glx_%legacy7
 %endif
@@ -309,6 +323,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 16 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt1
+- new release (595.58.03)
+- new legacy (580.142)
 
 * Mon Mar 16 2026 Sergey V Turchin <zerg at altlinux dot org> 580.142-alt1
 - new release (580.142)
