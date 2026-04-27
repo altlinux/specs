@@ -4,15 +4,15 @@
 
 Name: libbonobo
 Version: %ver_major.1
-Release: alt5
+Release: alt5.1
 
 Summary: Bonobo component system
-License: LGPL
+License: LGPL-2.0-only
 Group: System/Libraries
-Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: http://www.gnome.org
 
-# VCS: https://gitlab.gnome.org/Archive/libbonobo.git
+Vcs: https://gitlab.gnome.org/Archive/libbonobo.git
+
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 
 Patch: %name-2.3.2-alt-tests_makefile.patch
@@ -26,9 +26,9 @@ Patch6: %name-2.32.1-alt-samples_makefile.patch
 Obsoletes: bonobo-activation
 Obsoletes: libbonobo-activation
 Obsoletes: libbonobo2 < 2.15.0
-Provides: bonobo-activation = %version-%release
-Provides: libbonobo-activation = %version-%release
-Provides: libbonobo2 = %version-%release
+Provides: bonobo-activation = %EVR
+Provides: libbonobo-activation = %EVR
+Provides: libbonobo2 = %EVR
 
 # From configure.in
 %define ORBit_ver 2.11.2
@@ -38,14 +38,13 @@ Provides: libbonobo2 = %version-%release
 %define intltool_ver 0.35
 %define gtk_doc_ver 1.0
 
-BuildPreReq: gnome-common
-BuildPreReq: rpm-build-gnome
-BuildPreReq: intltool >= %intltool_ver
-BuildPreReq: ORBit2-devel >= %ORBit_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libpopt-devel >= %popt_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
+BuildRequires(pre): gnome-common rpm-build-gnome
+BuildRequires: intltool >= %intltool_ver
+BuildRequires: ORBit2-devel >= %ORBit_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libpopt-devel >= %popt_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: flex
 
 # for check
@@ -57,12 +56,12 @@ Bonobo is a component system based on CORBA, used by the GNOME desktop.
 %package devel
 Summary: Libraries and headers for libbonobo
 Group: Development/GNOME and GTK+
-License: GPL/LGPL
-Requires: libbonobo = %version-%release
+License: GPL-2.0-only and LGPL-2.0-only
+Requires: libbonobo = %EVR
 Obsoletes: bonobo-activation-devel
 Obsoletes: libbonobo2-devel < 2.15.0
-Provides: bonobo-activation-devel = %version-%release
-Provides: libbonobo2-devel = %version-%release
+Provides: bonobo-activation-devel = %EVR
+Provides: libbonobo2-devel = %EVR
 Conflicts: bonobo-devel < 1.0.8
 
 %description devel
@@ -74,7 +73,7 @@ use Bonobo.
 Summary: Development documentation for Bonobo
 Group: Development/GNOME and GTK+
 Obsoletes: libbonobo2-devel-doc < 2.15.0
-Provides: libbonobo2-devel-doc = %version-%release
+Provides: libbonobo2-devel-doc = %EVR
 Conflicts: %name < %version-%release
 BuildArch: noarch
 
@@ -96,17 +95,17 @@ This package contains development documentation for Bonobo.
 %patch5 -p1
 %patch6 -b .echo
 
-%__subst 's,\${prefix}/lib,%_libdir,;s,\${prefix}/etc,%_sysconfdir,' \
+sed -i 's,\${prefix}/lib,%_libdir,;s,\${prefix}/etc,%_sysconfdir,' \
     activation-server/bonobo-activation-server.1
 
 rm -f samples/echo/Bonobo_Sample_Echo{-{common,skels,stubs}.c,.h}
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
-
 %configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+    %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 
 # SMP-incompatible build
 %make
@@ -115,7 +114,7 @@ rm -f samples/echo/Bonobo_Sample_Echo{-{common,skels,stubs}.c,.h}
 #%%make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name-2.0
 
@@ -155,6 +154,9 @@ rm -f samples/echo/Bonobo_Sample_Echo{-{common,skels,stubs}.c,.h}
 %_gtk_docdir/*
 
 %changelog
+* Mon Apr 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt5.1
+- rebuild with gcc-15 and -std=gnu17
+
 * Sun Apr 14 2019 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt5
 - samples/echo/Makefile.am: fixed for automake-1.16
 

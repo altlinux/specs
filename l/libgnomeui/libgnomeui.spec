@@ -1,21 +1,20 @@
 %def_enable snapshot
+%define _unpackaged_files_terminate_build 1
 
 %define ver_major 2.24
 %def_disable static
 %def_enable gtk_doc
 
-# For some reason, the above construct doesn't work is some places of the spec.
-#define _disable_static --disable-static
-%define _unpackaged_files_terminate_build 1
-
 Name: libgnomeui
 Version: %ver_major.5
-Release: alt3
+Release: alt3.1
 
 Summary: GNOME base GUI library
-License: LGPL
+License: LGPL-2.0-only
 Group: System/Libraries
-Url: ftp://ftp.gnome.org
+Url: http://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/Archive/libgnomeui.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
@@ -38,30 +37,29 @@ Patch: libgnomeui-2.24.5-alt-gtk-doc.patch
 %define glade_ver 2.0.0
 %define gnome_keyring_ver 0.4
 
-
 Obsoletes: %name-utils
 Provides: %name-utils = %version-%release
 
-BuildPreReq: rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome
 # From configure.in
-BuildPreReq: libxml2-devel >= %libxml_ver
-BuildPreReq: libgnome-devel >= %libgnome_ver
-BuildPreReq: libgnomecanvas-devel >= %libgnomecanvas_ver
-BuildPreReq: libbonoboui-devel >= %libbonoboui_ver
-BuildPreReq: libGConf2-devel >= %GConf_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildPreReq: gnome-vfs2-devel >= %gnome_vfs_ver
-BuildPreReq: libgnome-keyring-devel >= %gnome_keyring_ver
-BuildPreReq: intltool >= 0.35
-BuildPreReq: gnome-common
-BuildPreReq: libX11-devel libXt-devel libSM-devel libICE-devel
-BuildPreReq: libjpeg-devel
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: libpopt-devel
-BuildPreReq: libgio-devel >= %gio_ver
-BuildPreReq: libglade-devel >= %glade_ver
+BuildRequires: libxml2-devel >= %libxml_ver
+BuildRequires: libgnome-devel >= %libgnome_ver
+BuildRequires: libgnomecanvas-devel >= %libgnomecanvas_ver
+BuildRequires: libbonoboui-devel >= %libbonoboui_ver
+BuildRequires: libGConf2-devel >= %GConf_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk+2-devel >= %gtk_ver
+BuildRequires: gnome-vfs2-devel >= %gnome_vfs_ver
+BuildRequires: libgnome-keyring-devel >= %gnome_keyring_ver
+BuildRequires: intltool >= 0.35
+BuildRequires: gnome-common
+BuildRequires: libX11-devel libXt-devel libSM-devel libICE-devel
+BuildRequires: libjpeg-devel
+BuildRequires: gtk-doc >= 1.0
+BuildRequires: libpopt-devel
+BuildRequires: libgio-devel >= %gio_ver
+BuildRequires: libglade-devel >= %glade_ver
 BuildRequires: gcc-c++ imake perl-XML-Parser xorg-cf-files
 
 %description
@@ -123,7 +121,7 @@ if you just want to use the GNOME desktop environment.
 %patch
 
 %build
-%add_optflags -Wno-error=format-nonliteral
+%add_optflags -Wno-error=format-nonliteral -std=gnu17
 %autoreconf
 export DATADIRNAME=share
 %configure \
@@ -164,6 +162,9 @@ bzip2 -9f ChangeLog
 %exclude %_libdir/libglade/*/*.la
 
 %changelog
+* Mon Apr 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt3.1
+- rebuild with gcc-15 and -std=gnu17
+
 * Fri Feb 23 2018 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt3
 - rebuilt with gcc7
 
