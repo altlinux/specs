@@ -1,7 +1,7 @@
 %def_with clang
 
 Name: deepin-movie
-Version: 6.5.34
+Version: 6.5.45
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -112,6 +112,9 @@ export CXX=g++
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Mon Apr 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.45-alt1
+- New version 6.5.45.
+
 * Fri Feb 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.34-alt1
 - New version 6.5.34.
 
