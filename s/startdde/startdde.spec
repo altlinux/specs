@@ -1,8 +1,8 @@
-%def_disable clang
+%def_enable clang
 
 Name: startdde
 Version: 6.1.6
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Starter of deepin desktop environment
@@ -10,9 +10,10 @@ Summary: Starter of deepin desktop environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/startdde
-Vcs: https://github.com/linuxdeepin/startdde.git
+Vcs: https://github.com/linuxdeepin/startdde
 
-Source0: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/startdde/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
@@ -64,6 +65,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
 
 %changelog
+* Mon Apr 27 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt4
+- Built via clang (failed on gcc15).
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt3
 - Removed subpackage: lightdm-deepin-greeter-settings.
 
