@@ -4,10 +4,11 @@
 %def_enable python
 %def_with selinux
 %def_with audit
+%def_with check
 
 Name: sudo
-Version: 1.9.17p1
-Release: alt1
+Version: 1.9.17p2
+Release: alt2
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -40,6 +41,7 @@ BuildRequires: /usr/bin/nroff
 BuildRequires: libcap-devel
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
+%{?_with_check:BuildRequires: /proc}
 
 BuildRequires: python3-dev
 
@@ -95,6 +97,14 @@ plugins that use %name.
 %setup
 %patch -p1
 
+%if_with check
+# Disable not works python regression fuzzing tests
+sed -i \
+    -e 's/\(RUN_TEST(check_example_group_plugin_is_able_to_debug());\)/\/\/\1/' \
+    -e 's/\(RUN_TEST(check_example_policy_plugin_validate_invalidate());\)/\/\/\1/' \
+    plugins/python/regress/check_python_examples.c
+%endif
+
 %build
 ./autogen.sh
 export ac_cv_prog_NROFFPROG=nroff
@@ -147,6 +157,11 @@ rm sudo.lang sudoers.lang
 rm -f %buildroot%_libdir/sudo/*.la %buildroot%_libdir/*.so
 
 mv %buildroot%_sysconfdir/sudoers.dist %buildroot%_datadir/doc/%name-%version/
+
+%check
+%if_with check
+%_make_bin check
+%endif
 
 %pre
 %pre_control sudo
@@ -266,6 +281,19 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Tue Apr 28 2026 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.17p2-alt2
+- Security release (fixes: CVE-2026-35535):
+ + Privilege escalation via ignored setuid/setgid/setgroups failures during
+   mailer privilege drop (sudo before 3e474c2).
+- Add check section with make check to run test suite during package build.
+
+* Wed Oct 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.17p2-alt1
+- Update to latest stable bugfix release:
+- Major fixes from upstream:
+ + Fixed a rare bug causing system-wide SIGHUP signals (GitHub#458).
+ + Fixed a crash when using 'intercept' options with large arguments or
+   environment (GitHub#453).
+
 * Tue Jul 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.17p1-alt1
 - Update to latest stable bugfix and security release
   (upstream fix of CVE-2025-32462, CVE-2025-32463 applied in 1.9.16p2-alt3):
