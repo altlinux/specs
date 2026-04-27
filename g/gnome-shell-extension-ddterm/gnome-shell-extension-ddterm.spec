@@ -1,10 +1,11 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 62
+%define ver_major 63
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
+%define gti_ver c4dfd4a
 
 %def_enable check
 
@@ -30,13 +31,14 @@ Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 %else
 Source: %_name-%version%beta.tar
 %endif
+# https://github.com/ddterm/gjs-typelib-installer.git
+Source1: gjs-typelib-installer-%gti_ver.tar
 
 %define meson_ver 1.8.0
 
 Requires: gnome-shell >= 47
 Requires: typelib(Adw) = 1 typelib(Vte) = 3.91
 Requires: typelib(GnomeDesktop)
-#Requires: typelib(Handy) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver xvfb-run
@@ -49,7 +51,8 @@ BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/gapplication xsltproc
 %summary
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta -a1
+mv gjs-typelib-installer-%gti_ver subprojects/gjs-typelib-installer
 
 %build
 %meson
@@ -71,6 +74,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Mon Apr 27 2026 Yuri N. Sedunov <aris@altlinux.org> 63.0.0-alt1
+- 63.0.0 (GNOME 50 supported)
+
 * Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 62.0.0-alt1
 - 62.0.0
 
