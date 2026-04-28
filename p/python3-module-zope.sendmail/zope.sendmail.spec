@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0
-Release: alt1.1
+Version: 7.1
+Release: alt1
 Summary: Zope sendmail
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,26 +15,19 @@ Url: https://pypi.org/project/zope.sendmail/
 Vcs: https://github.com/zopefoundation/zope.sendmail.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-transaction
-BuildRequires: python3-module-zope-component
-BuildRequires: python3-module-zope-configuration
-BuildRequires: python3-module-zope-i18nmessageid
-BuildRequires: python3-module-zope-interface
-BuildRequires: python3-module-zope-schema
-BuildRequires: python3-module-zope-security
-BuildRequires: python3-module-zope-testing
-BuildRequires: python3-module-zope-testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -42,6 +35,8 @@ zope.sendmail is a package for email sending from Zope 3 applications.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -53,15 +48,14 @@ zope.sendmail is a package for email sending from Zope 3 applications.
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %_bindir/*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1.1
-- Demodernized packaging.
+* Mon Apr 27 2026 Stanislav Levin <slev@altlinux.org> 7.1-alt1
+- 7.0 -> 7.1.
 
 * Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 7.0-alt1
 - 6.2 -> 7.0.
