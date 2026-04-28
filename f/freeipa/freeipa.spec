@@ -2,7 +2,6 @@
 %define _unpackaged_files_terminate_build 1
 %define bash_completions_dir %_datadir/bash-completion/completions
 
-%def_with dogtag_pki
 %ifarch %ix86 armh
 %def_with only_client
 %def_without modern_ui
@@ -62,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.1
-Release: alt6
+Release: alt7
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -149,9 +148,6 @@ BuildRequires: python3(dbus)
 BuildRequires: python3(gssapi)
 BuildRequires: python3(pysss_murmur)
 BuildRequires: python3(lxml)
-%if_with dogtag_pki
-BuildRequires: python3-module-pki-base >= %pki_version
-%endif
 BuildRequires: python3-module-ldap >= %python_ldap_version
 BuildRequires: python3(polib)
 BuildRequires: python3(pytest)
@@ -201,20 +197,24 @@ BuildRequires: python3(pycodestyle)
 BuildRequires: python3(docker)
 BuildRequires: python3(sphinx)
 BuildRequires: python3-module-paramiko
+BuildRequires: python3-module-pki-base >= %pki_version
 %endif
 
-%description
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
+%global desc_common \
+IPA is an integrated solution to provide centrally managed Identity (users, \
+hosts, services), Authentication (SSO, 2FA), and Authorization \
+(host access control, SELinux user roles, services). The solution provides \
+features for further integration with Linux based clients (SUDO, automount) \
 and integration with Active Directory based infrastructures (Trusts).
+
+%description
+%desc_common
 
 ###############################################################################
 
 %if_without only_client
-%package server
-Summary: The IPA authentication server
+%package server-core
+Summary: The IPA authentication server, core functionality
 Group: System/Base
 Requires: %name-client = %EVR
 Requires: acl
@@ -244,16 +244,12 @@ Requires: python3-module-ldap >= %python_ldap_version
 Requires: python3-module-gssapi
 Requires: python3-module-systemd
 Requires: slapi-nis >= %slapi_nis_version
-%if_with dogtag_pki
-Requires: python3-module-pki-base >= %pki_version
-Requires: pki-ca >= %pki_version
-Requires: pki-kra >= %pki_version
-Requires: pki-acme >= %pki_version
-%endif
 
 # Versions of nss-pam-ldapd < 0.8.4 require a mapping from uniqueMember to
 # member.
 Conflicts: nss-ldapd < 0.8.4
+# handles server split to server + server-core
+Conflicts: freeipa-server <= 4.13.1-alt6
 
 %add_python3_path %_datadir/ipa/
 %add_python3_compile_exclude %_datadir/ipa/
@@ -263,12 +259,27 @@ Conflicts: nss-ldapd < 0.8.4
 # manually manage dependency on python-pki
 %filter_from_requires /python3(pki\(\..*\)\?)/d
 
+%description server-core
+%desc_common
+If you are installing an IPA server without extra dependencies, you need
+to install this package.
+
+What is NOT installed:
+- Dogtag PKI
+
+###############################################################################
+
+%package server
+Summary: The IPA authentication server
+Group: System/Base
+Requires: %name-server-core
+Requires: python3-module-pki-base >= %pki_version
+Requires: pki-ca >= %pki_version
+Requires: pki-kra >= %pki_version
+Requires: pki-acme >= %pki_version
+
 %description server
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If you are installing an IPA server, you need to install this package.
 
 ###############################################################################
@@ -293,11 +304,7 @@ Obsoletes: python3-module-ipaserver-ntp < %EVR
 Provides: python3-module-ipaserver-ntp = %EVR
 
 %description -n python3-module-ipaserver
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If you are installing an IPA server, you need to install this package.
 
 ###############################################################################
@@ -309,11 +316,7 @@ Requires: %name-client-common = %EVR
 Requires: apache2-base >= %apache_version
 
 %description server-common
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If you are installing an IPA server, you need to install this package.
 
 ###############################################################################
@@ -321,7 +324,7 @@ If you are installing an IPA server, you need to install this package.
 %package server-dns
 Summary: IPA integrated DNS server with support for automatic DNSSEC signing
 Group: System/Base
-Requires: %name-server = %EVR
+Requires: %name-server-core
 Requires: bind-dyndb-ldap >= %bind_dyndb_ldap_version
 Requires: bind >= %bind_version
 Requires: bind-utils >= %bind_version
@@ -347,7 +350,7 @@ Provides support for enabling DNS over TLS in the IPA integrated DNS server.
 %package server-trust-ad
 Summary: Virtual package to install packages required for Active Directory trusts
 Group: System/Base
-Requires: %name-server = %EVR
+Requires: %name-server-core
 Requires: %name-common = %EVR
 # see https://bugzilla.altlinux.org/50444
 # deps: ipaserver/install/adtrustinstance.py:check_inst
@@ -394,11 +397,7 @@ Obsoletes: %name-admintool < 4.4.1
 Provides: %name-admintools = %EVR
 
 %description client
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 This package provides command-line tools for IPA administrators.
@@ -456,11 +455,7 @@ Requires: sssd-nfs-idmap
 Requires: nfs-clients
 
 %description client-automount
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If your network uses IPA for authentication and you would like to use
 Automount, this package should be installed.
 
@@ -476,11 +471,7 @@ Obsoletes: python3-module-ipaclient-ntp < %EVR
 Provides: python3-module-ipaclient-ntp = %EVR
 
 %description -n python3-module-ipaclient
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 
@@ -492,11 +483,7 @@ Group: System/Base
 Requires: ca-trust
 
 %description client-common
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 
@@ -531,11 +518,7 @@ Requires: python3-module-packaging
 %py3_provides ipaplatform._importhook
 
 %description -n python3-module-freeipa
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If you are using IPA with Python 3, you need to install this package.
 
 ###############################################################################
@@ -545,11 +528,7 @@ Summary: Common files used by IPA
 Group: System/Libraries
 
 %description common
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 If you are using IPA, you need to install this package.
 
 ###############################################################################
@@ -574,11 +553,7 @@ Requires: python3-module-packaging
 %filter_from_provides /python3(ipatests\(\..*\)\?)/d
 
 %description -n python3-module-ipatests
-IPA is an integrated solution to provide centrally managed Identity (users,
-hosts, services), Authentication (SSO, 2FA), and Authorization
-(host access control, SELinux user roles, services). The solution provides
-features for further integration with Linux based clients (SUDO, automount)
-and integration with Active Directory based infrastructures (Trusts).
+%desc_common
 This package contains tests that verify IPA functionality under Python 3.
 
 ###############################################################################
@@ -782,7 +757,7 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 
 %if_without only_client
 
-%post server
+%post server-core
 /bin/systemctl daemon-reload 2>&1 ||:
 # upgrade
 if [ $1 -gt 1 ] ; then
@@ -794,7 +769,7 @@ fi
 
 systemd-tmpfiles --create ipa.conf >/dev/null 2>&1 ||:
 
-%preun server
+%preun server-core
 # removal
 if [ $1 -eq 0 ]; then
     /bin/systemctl -q --no-reload disable ipa.service ||:
@@ -804,7 +779,7 @@ if [ $1 -eq 0 ]; then
         oddjobd ||:
 fi
 
-%pre server
+%pre server-core
 # Stop ipa_kpasswd if it exists before upgrading so we don't have a
 # zombie process when we're done.
 if [ -e /usr/sbin/ipa_kpasswd ]; then
@@ -951,6 +926,8 @@ fi
 
 %if_without only_client
 %files server
+
+%files server-core
 %_sbindir/ipa-backup
 %_sbindir/ipa-restore
 %_sbindir/ipa-ca-install
@@ -1242,6 +1219,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Apr 27 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt7
+- Made dogtag-less mode the package-based option.
+
 * Fri Apr 24 2026 Ivan A. Melnikov <iv@altlinux.org> 4.13.1-alt6
 - NMU: cross-platform modern UI build
   + employ rollup-native and esbuild from repository to build freeipa-webui
