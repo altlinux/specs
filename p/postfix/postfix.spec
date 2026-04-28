@@ -1,6 +1,6 @@
 Name: postfix
-Version: 3.8.6
-Release: alt2
+Version: 3.8.15
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -662,6 +662,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Sun Apr 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.15-alt1
+- 3.8.6 -> 3.8.15 (fixes ftbfs with gcc 15+).
+
 * Tue Jan 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:3.8.6-alt2
 - NMU: fix build with SASL and gcc-14.
 
