@@ -6,8 +6,8 @@
 %define libraw_r libraw_r%sover
 
 Name: libraw0
-Version: 0.22.0
-Release: alt10
+Version: 0.22.1
+Release: alt1
 
 Summary: Library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -52,7 +52,7 @@ Group: System/Libraries
 
 %prep
 %setup -n %rname-%version
-sed -i 's|LIBRAW_SHLIB_CURRENT.*|LIBRAW_SHLIB_CURRENT %sover|' libraw/libraw_version.h
+#sed -i 's|LIBRAW_SHLIB_CURRENT.*|LIBRAW_SHLIB_CURRENT %sover|' libraw/libraw_version.h
 %ifarch %e2k
 sed -i 's/default(none)//' src/preprocessing/raw2image.cpp
 %endif
@@ -102,6 +102,9 @@ __EOF__
 %_pkgconfigdir/libraw*.pc
 
 %changelog
+* Tue Apr 28 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.1-alt1
+- new version
+
 * Fri Feb 13 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.0-alt10
 - build according Shared Libs Policy
 
