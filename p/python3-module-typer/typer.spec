@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.24.1
+Version: 0.25.0
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -119,6 +119,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Tue Apr 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.25.0-alt1
+- Updated to 0.25.0.
+
 * Tue Feb 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.1-alt1
 - Updated to 0.24.1.
 
