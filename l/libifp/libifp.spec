@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libifp
-Version:        1.0.0.2
-Release:        alt3
+Version:        1.0.1.0
+Release:        alt1
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -14,15 +14,12 @@ URL:            http://ifp-driver.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/project/ifp-driver/%{name}/%{version}-stable/%{name}-%{version}.tar.gz
 Source1:        libifp.hotplug
 Source2:        10-libifp.rules
-# autoconf-2.69 breaks configure.in (likely configure.in is the broken part)
-# Upstream is dead, so fix it here:
-Patch0:         libifp-1.0.0.2-fix-broken-configure.in.diff
-Patch1:         libifp-1.0.0.2-fix-broken-configure-again.diff
 
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
 BuildRequires:  doxygen
 BuildRequires:  libtool-common
+BuildRequires:  libusb-devel
 BuildRequires:  libusb-compat-devel
 BuildRequires:  journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
 Source44: import.info
@@ -44,13 +41,12 @@ libifp.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p1
 
 %build
 %add_optflags -Wno-incompatible-pointer-types
 autoreconf -fiv
 %configure --with-libusb --disable-static
+sed -i -e '/^LDFLAGS/ s/$/ -lusb/' src/Makefile examples/Makefile
 %make_build
 
 %install
@@ -60,13 +56,13 @@ install -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/sbin/libifp-hotplug
 install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_udevrulesdir}/10-libifp.rules
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
-	chrpath -d $i ||:
+    chrpath -d $i ||:
 done
 
 %files
 %doc COPYING
 %doc ChangeLog README TODO
-%{_bindir}/*
+%_bindir/*
 %{_libdir}/*.so.*
 /sbin/*
 %{_udevrulesdir}/*libifp.rules
@@ -77,6 +73,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1.0-alt1
+- NMU: update to new release
+
 * Thu Jun 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0.2-alt3
 - NMU: fix FTBFS with gcc 14
 
