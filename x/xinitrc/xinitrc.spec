@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt4
+Release: alt5
 
 Summary: The default startup scripts for the X Window System
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Tue Apr 28 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt5
+- Xsession: add workaround for restore xkb settings with selinux.
+
 * Mon Sep 30 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.47-alt4
 - Fix FTBFS: moved systemd unit to /usr/lib (usrmerge).
 
