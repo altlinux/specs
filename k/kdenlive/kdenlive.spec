@@ -6,7 +6,7 @@
 
 Name: kdenlive
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -130,6 +130,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/qlogging-categories?/*.*categories
 
 %changelog
+* Tue Apr 28 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- update russian translation
+
 * Tue Mar 17 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
