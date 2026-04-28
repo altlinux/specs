@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt8
+Release: alt9
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -17,7 +17,6 @@ Patch2: barnyard2-1.11-alt-default_output.patch
 Patch3: barnyard2-1.13-alt-sguild-padding.patch
 Patch4: barnyard2-1.13-alt-mysql8-transition.patch
 Patch5: barnyard2-1.13-alt-fix-libpcap-typedef-collision.patch
-Patch6: barnyard2-2.1.13-alt-fix-build-gcc14.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: tcl-devel
@@ -52,9 +51,12 @@ barnyard2 binary compiled with mysql support.
 %patch3 -p1
 %patch4 -p0
 %patch5 -p0
-%patch6
+
+sed -i "/#include <errno.h>/a #include <stdlib.h>" \
+src/output-plugins/spo_alert_unixsock.c
 
 %build
+%add_optflags "-std=gnu17"
 %autoreconf
 ./autogen.sh
 %configure 					\
@@ -90,6 +92,9 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Tue Apr 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.1.13-alt9
+- Fix FTBFS: gcc15 compilation errors (added -std=gnu17)
+
 * Fri Feb 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.1.13-alt8
 - Fix FTBFS: built with gcc14
 

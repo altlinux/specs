@@ -4,7 +4,7 @@
 
 Name: openmotif
 Version: 2.3.8
-Release: alt2
+Release: alt3
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -133,6 +133,7 @@ for i in $(find demos/programs -name 'Makefile.*'); do
 done
 
 %build
+%add_optflags "-std=gnu17"
 %{expand:%%add_optflags %(getconf LFS_CFLAGS)}
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 libtoolize --copy --force
@@ -216,6 +217,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Tue Apr 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.8-alt3
+- NMU: fixed gcc15 compilation errors (added -std=gnu17)
+
 * Mon Mar 03 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.8-alt2
 - NMU: Fixed FTBFS.
 

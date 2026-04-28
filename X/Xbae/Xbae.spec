@@ -2,7 +2,7 @@
 
 Name: Xbae
 Version: 4.60.4
-Release: alt2.qa3
+Release: alt2.qa4
 
 Summary: The Motif matrix and caption widgets
 License: MIT
@@ -90,6 +90,7 @@ for useful examples if developing with %name.
 %patch -p1
 
 %build
+%add_optflags "-std=gnu17"
 autoconf
 CFLAGS="%optflags" \
 %configure --enable-shared %{subst_enable static}
@@ -116,6 +117,9 @@ rm -rf %buildroot%_datadir/%name/
 %doc doc/[^M]*
 
 %changelog
+* Tue Apr 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.60.4-alt2.qa4
+- NMU: fixed gcc15 compilation errors (added -std=gnu17)
+
 * Wed Aug 06 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.60.4-alt2.qa3
 - NMU: turned back package (closes: #54903)
 - fixed gcc14 compilation errors
