@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -104,6 +104,9 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %doc CHANGELOG* README*
 
 %changelog
+* Tue Apr 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.19.2-alt1
+- 2.19.2
+
 * Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.19.1-alt1
 - 2.19.1
 
