@@ -3,7 +3,7 @@
 
 Name: sessions
 Version: 0.1.17
-Release: alt1
+Release: alt2
 
 Summary: Focus with timed work intervals
 License: AGPL-3.0-or-later
@@ -18,6 +18,7 @@ Source0: %name-%version.tar
 Source1: %name-vendor.tar
 Patch: %name-%version-alt.patch
 Patch1: sessions-0.1.15-alt-build.patch
+Patch2: sessions-0.1.16-upstream-purego-backport-riscv64.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -51,6 +52,14 @@ It enables you to:
 %setup -a 1
 %patch -p 1
 %patch1 -p0
+
+%ifarch riscv64
+pushd ./vendor/codeberg.org/puregotk/purego
+%patch2 -p1
+# Go gives error about unreachable (for this arch) function call - so we remove it
+sed -i '/placeRegisters/d' func.go
+popd
+%endif
 
 %build
 go generate ./...
@@ -94,6 +103,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Apr 28 2026 Ilya Sorochan <k0tran@altlinux.org> 0.1.17-alt2
+- fix FTBFS on riscv64
+
 * Fri Apr 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.17-alt1
 - 0.1.16 -> 0.1.17
 
