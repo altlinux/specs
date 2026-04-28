@@ -1,6 +1,6 @@
 Name: e2fsprogs
-Version: 1.47.1.0.10.ad56
-Release: alt2
+Version: 1.47.4.0.2.a9f48
+Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
 License: GPL-2.0-only
@@ -400,6 +400,9 @@ vm-run --kvm=cond --ext4 --sbin %make_build -k check V=1
 %endif # libuuid
 
 %changelog
+* Sun Apr 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.47.4.0.2.a9f48-alt1
+- v1.47.1-10-gad56ccaa -> v1.47.4-2-ga9f482e5 (fixes ftbfs with gcc 15+).
+
 * Wed Nov 27 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.47.1.0.10.ad56-alt2
 - e2fsprogs: Modified e2scrub* scripts to avoid the dependency on the
   systemd package, resolving a regression introduced by the package update and
