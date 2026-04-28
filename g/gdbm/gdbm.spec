@@ -1,6 +1,6 @@
 Name: gdbm
 Version: 1.8.3
-Release: alt10
+Release: alt11
 
 Summary: A GNU set of database routines which use extensible hashing
 License: GPLv2+
@@ -18,6 +18,7 @@ Patch12: gdbm-1.8.3-deb-zero-headers.patch
 Patch13: gdbm-1.8.3-deb-man.patch
 Patch14: gdbm-1.8.3-rh-GDBM_FILE.patch
 Patch15: gdbm-1.8.3-deb-texinfo-null.patch
+Patch16: gdbm-1.8.3-alt-c23-fatal_func-type.patch
 
 %def_disable static
 
@@ -78,6 +79,7 @@ the gdbm database.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 rm aclocal.m4
 
 %build
@@ -111,6 +113,9 @@ ln -s gdbm/gdbm.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Tue Apr 28 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.3-alt11
+- Fixed FTBFS and gdbm.h header for gcc15 C17 -> C23 standard change.
+
 * Sat Feb 06 2016 Michael Shigorin <mike@altlinux.org> 1.8.3-alt10
 - Fixed FTBFS:
   + BR: makeinfo;
