@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.18
-Release: alt2
+Version: 2.4.19
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue Apr 28 2026 Anton Farygin <rider@altlinux.org> 2.4.19-alt1
+- 2.4.18 -> 2.4.19
+
 * Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.4.18-alt2
 - NMU:
   + Update selinux mls support.
