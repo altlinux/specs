@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 26.1
+Version: 26.2
 Release: alt1
 Summary: Core utilities for Python packages
 License: Apache-2.0 or BSD-2-Clause
@@ -51,6 +51,9 @@ Core utilities for Python packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 27 2026 Stanislav Levin <slev@altlinux.org> 26.2-alt1
+- 26.1 -> 26.2.
+
 * Wed Apr 15 2026 Stanislav Levin <slev@altlinux.org> 26.1-alt1
 - 26.0 -> 26.1.
 
