@@ -1,5 +1,5 @@
 Name: ccnet
-Version: 7.1.1
+Version: 7.1.5
 Release: alt1
 
 Summary: Framework for writing networked applications in C
@@ -75,6 +75,9 @@ Ccnet python module.
 %__subst 's/(DESTDIR)//' libccnet.pc.in
 # since MySQL 8.0
 %__subst "s|my_bool|bool|" net/common/ccnet-db.c
+# gcc 15: implementation took (const char *) but is called with () - drop unused arg to match header
+%__subst "s|ccnet_server_session_new \\(const char \\*config_dir_r\\)|ccnet_server_session_new (void)|" net/server/server-session.c
+%__subst "s|^ccnet_server_session_new (const char \\*config_dir_r)|ccnet_server_session_new (void)|" net/server/server-session.c
 
 %build
 %autoreconf
@@ -109,6 +112,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Mon Apr 27 2026 Vitaly Lipatov <lav@altlinux.ru> 7.1.5-alt1
+- new version 7.1.5
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 7.1.1-alt1
 - new version 7.1.1 (with rpmrb script)
 - python3 fix
