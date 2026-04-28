@@ -5,7 +5,7 @@
 %define	TDSVER 7.4
 %define	name freetds
 %define	release alt1
-%define	version 1.5.16
+%define	version 1.5.17
 
 Name:		%name
 Version:	%version
@@ -170,6 +170,9 @@ useful utilities.
 
 
 %changelog
+* Tue Apr 28 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.5.17-alt1
+- New version
+
 * Mon Apr 06 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.5.16-alt1
 - New version
 
