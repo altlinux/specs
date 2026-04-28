@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.17
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the XML Security Library
 
@@ -14,6 +14,9 @@ URL: https://pypi.org/project/xmlsec
 VCS: https://github.com/mehcode/python-xmlsec
 
 Source: %name-%version.tar
+
+# xmlsec 1.3.11 support
+Patch: 5e8b4e6aa133c358b8aaf8e17ceb5b3b7fea78e8.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libxmlsec1-openssl-devel
@@ -27,6 +30,7 @@ BuildRequires: python3-module-lxml
 
 %prep
 %setup
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -46,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.17-alt3
+- Fixed tests with xmlsec 1.3.11.
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.17-alt2
 - Built with check.
 

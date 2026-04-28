@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: libxmlsec1
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
@@ -106,6 +106,7 @@ Libraries, includes, etc. for developing XML Security applications with NSS.
 %autoreconf
 %configure --disable-static --enable-gost2012 --with-gcrypt
 %make_build
+%make -C man docs
 
 ## positively ugly but only sane way to get around #192756
 ## sed 's+/lib64+/$archlib+g' < xmlsec1-config | sed 's+/lib+/$archlib+g' | sed 's+ -DXMLSEC_NO_SIZE_T++' > xmlsec1-config.$$ && mv xmlsec1-config.$$ xmlsec1-config
@@ -125,7 +126,7 @@ rm -f %buildroot%_libdir/*.la
 true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 
 %files
-%doc AUTHORS ChangeLog NEWS README.md
+%doc AUTHORS.md ChangeLog NEWS README.md
 %doc %_mandir/man1/xmlsec1.1*
 %_libdir/libxmlsec1.so.*
 %_bindir/xmlsec1
@@ -175,6 +176,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Wed Apr 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.11-alt1
+- new version 1.3.11
+
 * Sun Apr 05 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.10-alt1
 - new version 1.3.10
 
