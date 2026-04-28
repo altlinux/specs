@@ -12,7 +12,7 @@
 
 Name: gdal
 Version: 3.12.4
-Release: alt1
+Release: alt2
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 License: MIT
@@ -293,11 +293,14 @@ popd
 %_datadir/bash-completion/completions/%{name}-config
 
 %files -n python3-module-%name
-%python3_sitelibdir/GDAL-%version-py3.13.egg-info
+%python3_sitelibdir/GDAL-%version-py3.*.egg-info
 %python3_sitelibdir/osgeo
 %python3_sitelibdir/osgeo_utils
 
 %changelog
+* Tue Apr 28 2026 Sergey V Turchin <zerg@altlinux.org> 3.12.4-alt2
+- NMU: fix package with non-3.13 python
+
 * Sat Apr 25 2026 Andrey Cherepanov <cas@altlinux.org> 3.12.4-alt1
 - New version.
 
