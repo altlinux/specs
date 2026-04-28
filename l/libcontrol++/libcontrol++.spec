@@ -1,6 +1,6 @@
 Name: libcontrol++
 Version: 0.35.0
-Release: alt1
+Release: alt2
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,9 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Apr 24 2026 Alexey Appolonov <alexey@altlinux.org> 0.35.0-alt2
+- A much better looking makefile.
+
 * Sun Oct 05 2025 Alexey Appolonov <alexey@altlinux.org> 0.35.0-alt1
 - Slightly modified API (Keys >> GetKeys, KeysV >> GetKeysV).
 

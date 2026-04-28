@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.24.0
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -117,6 +117,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Apr 24 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.0-alt2
+- A much better looking makefile.
+
 * Tue Jun 18 2024 Alexey Appolonov <alexey@altlinux.org> 0.24.0-alt1
 - Validation of mode names (mode names should contain only letters of the
   English alphabet, numbers and underscores);
