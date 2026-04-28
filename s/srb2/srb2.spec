@@ -1,13 +1,13 @@
 Name: srb2
 Summary: Sonic Robo Blast 2
-Version: 2.2.13
-Release: alt1
+Version: 2.2.15
+Release: alt2
 License: GPL2
 Group: Games/Arcade
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-Source1: SRB2-v2213-Full.zip
+Source1: SRB2-v2215-Full.zip
 
 Patch0: 0001-Offline-build.patch
 
@@ -25,7 +25,7 @@ BuildRequires: libopenmpt-devel
 BuildRequires: libpng-devel
 BuildRequires: libSDL2-devel
 BuildRequires: zlib-devel
-BuildRequires: libupnp-devel
+BuildRequires: libupnp-devel libminiupnpc-devel
 Requires: %name-data = %version
 
 %description
@@ -46,7 +46,7 @@ mkdir -p assets/installer
 unzip %SOURCE1 -d assets/installer
 
 find . -name *.c -exec sed -i 's|%prefix/games/SRB2|%_datadir/srb2|g' {} \;
-%patch0 -p1
+#patch0 -p1
 
 
 %build
@@ -58,7 +58,7 @@ find . -name *.c -exec sed -i 's|%prefix/games/SRB2|%_datadir/srb2|g' {} \;
 %install
 install -D -m 0775 %_cmake__builddir/bin/lsdlsrb2 %buildroot/%_bindir/srb2
 install -d %buildroot/%_datadir/srb2/
-install -m 0644 assets/installer/*.{dta,pk3} %buildroot/%_datadir/srb2/
+install -m 0644 assets/installer/*.pk3 %buildroot/%_datadir/srb2/
 
 # install menu entry
 mkdir -p %buildroot%_desktopdir
@@ -86,16 +86,15 @@ done
 
 %files data
 %_datadir/srb2
-%dir %_iconsdir/hicolor/64x64
-%_iconsdir/hicolor/64x64/apps/%name.png
-%dir %_iconsdir/hicolor/64x64/apps
-%_iconsdir/hicolor/64x64/apps/%name.png
-%dir %_iconsdir/hicolor/128x128
-%_iconsdir/hicolor/128x128/apps/%name.png
-%dir %_iconsdir/hicolor/128x128/apps
-%_iconsdir/hicolor/128x128/apps/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Apr 28 2026 Artyom Bystrov <arbars@altlinux.org> 2.2.15-alt2
+- update path for app icons
+
+* Thu Jan 15 2026 Artyom Bystrov <arbars@altlinux.org> 2.2.15-alt1
+- update to new version
+
 * Fri Sep 20 2024 Artyom Bystrov <arbars@altlinux.org> 2.2.13-alt1
 - update to new version
 
