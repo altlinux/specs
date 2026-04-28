@@ -1,11 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
+%define _name enigmatic
+%define libname lib%_name
 
 Name: evisum
-Version: 1.2.3
+Version: 2.0.0
 Release: alt1
 
-Summary: The Enlightenment system and process monitor
+Summary: Evisum - An Enlightened System Monitor
 Group: Graphical desktop/Enlightenment
 License: ISC
 Url: https://enlightenment.org
@@ -15,17 +17,40 @@ Vcs: https://git.enlightenment.org/enlightenment/evisum.git
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %else
-Vcs: https://git.enlightenment.org/apps/evisum.git
 Source: %name-%version.tar
 %endif
 
-%define efl_ver 1.26.0
+%define efl_ver 1.27.0
+Requires: %_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libelementary-devel >= %efl_ver
 
 %description
 System and process monitor for Enlightenment.
+
+%package -n %_name
+Summary: Enigmatic client
+Group: System/Libraries
+Requires: %libname = %EVR
+
+%description -n %_name
+This package contains Enigmatic client required Evisum to work.
+
+%package -n %libname
+Summary: Enigmatic shared library
+Group: System/Libraries
+
+%description -n %libname
+This package contains shared library required Evisum to work.
+
+%package -n %libname-devel
+Summary: Development files for Enigmatic library
+Group: Development/C
+Requires: %libname = %EVR
+
+%description -n %libname-devel
+This package contains development files for Enigmatic shared library.
 
 %prep
 %setup
@@ -45,7 +70,24 @@ System and process monitor for Enlightenment.
 %_iconsdir/hicolor/*/apps/*.png
 %doc AUTHORS NEWS README*
 
+%files -n enigmatic
+%_bindir/%_name
+%_bindir/%{_name}_client
+%_bindir/%{_name}_start
+
+%files -n %libname
+%_libdir/%{libname}_client.so.*
+
+%files -n %libname-devel
+%_includedir/%_name/
+%_libdir/%{libname}_client.so
+%_pkgconfigdir/%{_name}_client.pc
+
+
 %changelog
+* Tue Apr 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Mon Apr 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
