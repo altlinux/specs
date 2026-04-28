@@ -15,8 +15,8 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 149.0.2
-Release: alt2
+Version: 150.0
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -24,12 +24,13 @@ Group: Networking/Mail
 URL: https://www.thunderbird.net
 ExclusiveArch: %thunderbird_arches
 
-Source0: %name-%version.tar
+Source0: %name-%version.tar.zst
 Source1: thunderbird.cpp
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
 Source6: l10n.tar
+Source999: watch
 
 ### Start Patches
 Patch001: 0001-thunderbird-115-add-loongarch-support.patch
@@ -365,6 +366,50 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-6746: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-6747: Use-after-free in the WebRTC component
+  + CVE-2026-6748: Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6749: Information disclosure due to uninitialized memory in the Graphics: Canvas2D component
+  + CVE-2026-6750: Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-6751: Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6752: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6753: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6754: Use-after-free in the JavaScript Engine component
+  + CVE-2026-6755: Mitigation bypass in the DOM: postMessage component
+  + CVE-2026-6757: Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-6758: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-6759: Use-after-free in the Widget: Cocoa component
+  + CVE-2026-6760: Mitigation bypass in the Networking: Cookies component
+  + CVE-2026-6761: Privilege escalation in the Networking component
+  + CVE-2026-6762: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-6763: Mitigation bypass in the File Handling component
+  + CVE-2026-6764: Incorrect boundary conditions in the DOM: Device Interfaces component
+  + CVE-2026-6765: Information disclosure in the Form Autofill component
+  + CVE-2026-6766: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6767: Other issue in the Libraries component in NSS
+  + CVE-2026-6768: Mitigation bypass in the Networking: Cookies component
+  + CVE-2026-6769: Privilege escalation in the Debugger component
+  + CVE-2026-6770: Other issue in the Storage: IndexedDB component
+  + CVE-2026-6771: Mitigation bypass in the DOM: Security component
+  + CVE-2026-6772: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6773: Denial-of-service due to integer overflow in the Graphics: WebGPU component
+  + CVE-2026-6774: Mitigation bypass in the DOM: Security component
+  + CVE-2026-6775: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6776: Incorrect boundary conditions in the WebRTC: Networking component
+  + CVE-2026-6777: Other issue in the Networking: DNS component
+  + CVE-2026-6778: Invalid pointer in the Audio/Video: Playback component
+  + CVE-2026-6779: Other issue in the JavaScript Engine component
+  + CVE-2026-6780: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-6781: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-6782: Information disclosure in the IP Protection component
+  + CVE-2026-6783: Incorrect boundary conditions, integer overflow in the Audio/Video: Playback component
+  + CVE-2026-6784: Memory safety bugs fixed in Firefox 150 and Thunderbird 150
+  + CVE-2026-6785: Memory safety bugs fixed in Firefox ESR 115.35, Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+  + CVE-2026-6786: Memory safety bugs fixed in Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+
 * Mon Apr 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 149.0.2-alt2
 - Apply upstream fix for broken disabled state
   of tasks context menu (Closes: 58704).
@@ -1034,7 +1079,6 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
   + CVE-2023-5728 Improper object tracking during GC in the JavaScript engine could have led to a crash.
   + CVE-2023-5730 Memory safety bugs fixed in Firefox 119, Firefox ESR 115.4, and Thunderbird 115.4.1
 
-
 * Mon Oct 16 2023 Pavel Vasenkov <pav@altlinux.org> 115.3.1-alt2
 - Fix check dependencies error for GLIBC_PRIVATE
 
@@ -1242,7 +1286,6 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
   + CVE-2022-3032 Remote content specified in an HTML document that was nested inside an iframe's srcdoc attribute was not blocked
   + CVE-2022-3034 An iframe element in an HTML email could trigger a network request
   + CVE-2022-36059 Matrix SDK bundled with Thunderbird vulnerable to denial-of-service attack
-
 
 * Wed Aug 24 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.0-alt1
 - New version.
