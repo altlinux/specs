@@ -1,5 +1,5 @@
 Name: raze
-Version: 1.11.0
+Version: 1.11.0b
 Release: alt1
 
 Summary: Raze is a fork of Build engine games backed by GZDoom tech
@@ -32,6 +32,7 @@ It is also capable of playing Nam and WW2 GI.
 
 %build
 %cmake_insource \
+    -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_EXTENSIONS=ON \
    -D CMAKE_BUILD_TYPE=RelWithDebInfo \
    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -ffile-prefix-map=\"$PWD\"=. -DSHARE_DIR=\\\"%_datadir/raze\\\"" \
    -D DYN_GTK=OFF \
@@ -74,6 +75,9 @@ done
 %_datadir/%name/%name.pk3
 
 %changelog
+* Tue Apr 28 2026 Artyom Bystrov <arbars@altlinux.org> 1.11.0b-alt1
+- Update to new version
+
 * Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 1.11.0-alt1
 - Update to new version
 

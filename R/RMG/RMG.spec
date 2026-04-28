@@ -1,8 +1,8 @@
 %define _metainfodir %_datadir/metainfo
 
 Name:    RMG
-Version: 0.6.5
-Release: alt2
+Version: 0.8.9
+Release: alt1
 Epoch: 1
 Summary: Rosalie's Mupen GUI 
 Group: Emulators
@@ -13,22 +13,23 @@ Source0: %name-%version.tar.gz
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires: pkgconfig(SDL_ttf)
+BuildRequires: libSDL3_ttf-devel
 BuildRequires: pkgconfig(lirc)
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(glu)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(libpng)
-BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(sdl3)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: boost-devel
 BuildRequires: gzip libminizip-devel libspeexdsp-devel
 BuildRequires: pkgconfig(glew)
 BuildRequires: binutils nasm
 BuildRequires: cmake gcc-c++ boost-filesystem-devel
-BuildRequires: qt6-base-devel qt6-svg-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-websockets-devel
 BuildRequires: libhidapi-devel
 BuildRequires: libvulkan-devel
+BuildRequires: libusb-devel
 
 %description
 Rosalie's Mupen GUI is a free and open-source mupen64plus front-end written in C++
@@ -56,6 +57,9 @@ chmod +x %{buildroot}/usr/lib64/RMG/*/*/*.so
 %_metainfodir/com.github.Rosalie241.RMG.metainfo.xml
 
 %changelog
+* Tue Apr 28 2026 Artyom Bystrov <arbars@altlinux.org> 1:0.8.9-alt1
+- Update to new version
+
 * Tue Aug 27 2024 Artyom Bystrov <arbars@altlinux.org> 1:0.6.5-alt2
 - increase release
 

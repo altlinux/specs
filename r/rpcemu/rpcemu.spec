@@ -1,6 +1,6 @@
 Name: rpcemu
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Summary: Acorn RiscPC Emulator
 License: GPL-2.0-only
 Group: Emulators
@@ -49,6 +49,9 @@ chmod -x riscos-progs/HostFS/hostfs*
 %dir %_datadir/rpcemu
 
 %changelog
+* Tue Apr 28 2026 Artyom Bystrov <arbars@altlinux.org> 0.9.4-alt2
+- Fix build with GCC15
+
 * Wed Apr 26 2023 Artyom Bystrov <arbars@altlinux.org> 0.9.4-alt1
 - initial build for ALT Sisyphus
 

@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: PsyDoom
-Version: 1.1.1
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Port Doom from PSOne to PC
 License: GPLv2+
@@ -65,6 +65,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Apr 27 2026 Artyom Bystrov <arbars@altlinux.org> 1.2.0-alt1
+- Update to the latest state of develop branch
+
 * Sat Nov  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.1.1-alt2
 - Fix build with GCC14
 
