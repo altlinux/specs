@@ -1,7 +1,7 @@
 %define soname 23
 
 Name: sleuthkit
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -21,6 +21,7 @@ Patch: sleuthkit-adapt-for-new-libewf.diff
 # Automatically added by buildreq on Sun Aug 04 2013
 # optimized out: bouncycastle bouncycastle-mail cppunit ecj gcc-java gnu-config libgcj4.7-jar libstdc++-devel python3-base zlib-devel
 BuildRequires: cppunit-devel gcc-c++ glibc-devel libaff-devel libewf-devel zlib-devel sharutils
+BuildRequires: autoconf-archive libsqlite3-devel
 
 %description
 The Sleuth Kit (previously known as TASK) is a collection of UNIX-based command
@@ -154,6 +155,10 @@ install -m755 mac-robber %buildroot%_bindir/
 %_pkgconfigdir/tsk.pc
 
 %changelog
+* Mon Apr 27 2026 Vitaly Lipatov <lav@altlinux.ru> 4.15.0-alt1
+- new version 4.15.0
+- build: add autoconf-archive and libsqlite3-devel to BuildRequires
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.14.0-alt1
 - new version 4.14.0
 - rename libtsk to libtsk23 per Shared Libs Policy (soname 23)
