@@ -4,7 +4,7 @@
 %define cid	addon@darkreader.org
 
 Name:		%firefox_name-%rname
-Version:	4.9.123
+Version:	4.9.124
 Release:	alt1
 
 Summary:	Dark Reader Firefox extension
@@ -49,6 +49,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Mon Apr 27 2026 Nikolay A. Fetisov <naf@altlinux.org> 4.9.124-alt1
+- New version
+
 * Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 4.9.123-alt1
 - New version
 
