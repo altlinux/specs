@@ -1,6 +1,6 @@
 Name: domino-chain
 Version: 1.2
-Release: alt0_dev
+Release: alt1
 
 Url: https://domino-chain.gitlab.io
 Vcs: https://gitlab.com/domino-chain/domino-chain.gitlab.io
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 Patch: tools-1.2-alt-build.patch
 
 Obsoletes: pushover pushover-themes
+
+Requires: fonts-ttf-gnu-freefont-sans
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_ttf-devel lua-devel libpng-devel
@@ -77,6 +79,9 @@ sed -i 's/truetype/ttf/g' Makefile
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Apr 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt1
+- added fonts-ttf-gnu-freefont-sans dependency
+
 * Mon Apr 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt0_dev
 - 0.0.5 -> 1.2~dev
 - renamed package
