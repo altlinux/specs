@@ -2,7 +2,7 @@
 
 Name: ggz-gtk-games
 Version: 0.0.14.1
-Release: alt3
+Release: alt4
 
 Summary: GGZ Games for GTK+ user interface
 License: GPL-2.0+
@@ -35,6 +35,7 @@ Tic-Tac-Toe
 %patch0 -p2
 
 %build
+%add_optflags -std=gnu17
 %configure \
 	--disable-debug
 %make_build
@@ -91,6 +92,9 @@ fi
 %_datadir/ggz/
 
 %changelog
+* Tue Apr 28 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.14.1-alt4
+- Fixed build with gcc15.
+
 * Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.14.1-alt3
 - Fixed build with gcc10.
 
