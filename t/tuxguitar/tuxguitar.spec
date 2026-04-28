@@ -1,5 +1,5 @@
 Name: tuxguitar
-Version: 1.6.6
+Version: 2.0.1
 Release: alt1
 
 Summary: A multitrack guitar tablature editor and player
@@ -47,10 +47,11 @@ With TuxGuitar, you will be able to compose music using the following features:
 %prep
 %setup -n vendors-%version -b 1
 %setup -n %name-%version
+find . \( -name "*.xml" -or -name "*.gradle"  -or -name "*.properties" -or -name "*.html" -or -name control -or -name Info.plist -or -name CHANGES \) -and -not -path "./website/*" -and -type f -exec sed -i -e "s/9.99-SNAPSHOT/%version/" '{}' \;
 
 %build
 pushd desktop/build-scripts/tuxguitar-linux-swt
-mvn -P native-modules package -Dmaven.repo.local=../../../vendors/m2-repository
+mvn -o -P native-modules package -Dmaven.repo.local=../../../vendors/m2-repository
 popd
 
 %install
@@ -60,9 +61,9 @@ mkdir -p %buildroot/%_libdir/%name-%version/
 
 install -pm 755 %SOURCE2 %buildroot/%_bindir/tuxguitar
 
-cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-linux-swt/dist/ %buildroot/%_datadir/%name-%version/
-cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-linux-swt/share/ %buildroot/%_datadir/%name-%version/
-cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-linux-swt/lib/ %buildroot/%_libdir/%name-%version/
+cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-%version-linux-swt/dist/ %buildroot/%_datadir/%name-%version/
+cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-%version-linux-swt/share/ %buildroot/%_datadir/%name-%version/
+cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-%version-linux-swt/lib/ %buildroot/%_libdir/%name-%version/
 
 # desktop files
 install -dm 755 %buildroot/%_datadir/applications
@@ -70,19 +71,19 @@ sed 's/Icon=tuxguitar/Icon=\/usr\/share\/icons\/hicolor\/96x96\/apps\/tuxguitar.
 
 # icon
 install -dm 755 %buildroot/%_iconsdir/hicolor/96x96/apps/
-install -pm 644 desktop/TuxGuitar/share/skins/Lavender/icon.png %buildroot/%_iconsdir/hicolor/96x96/apps/tuxguitar.png
+install -pm 644 desktop/TuxGuitar/share/skins/Breeze/icon.png %buildroot/%_iconsdir/hicolor/96x96/apps/tuxguitar.png
 
 # mime-type icons
 install -dm 755 %buildroot/%_iconsdir/hicolor/96x96/mimetypes
-install -pm 644 desktop/TuxGuitar/share/skins/Lavender/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-tuxguitar.png
-install -pm 644 desktop/TuxGuitar/share/skins/Lavender/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-gtp.png
-install -pm 644 desktop/TuxGuitar/share/skins/Lavender/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-ptb.png
+install -pm 644 desktop/TuxGuitar/share/skins/Breeze/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-tuxguitar.png
+install -pm 644 desktop/TuxGuitar/share/skins/Breeze/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-gtp.png
+install -pm 644 desktop/TuxGuitar/share/skins/Breeze/icon.png %buildroot/%_iconsdir/hicolor/96x96/mimetypes/audio-x-ptb.png
 
 desktop-file-install --dir %buildroot/%_datadir/applications --delete-original %buildroot/%_datadir/applications/tuxguitar.desktop
 
 # mime-type file
 install -dm 755 %buildroot/%_datadir/mime/packages
-install -pm 644 desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-linux-swt/share/mime/packages/tuxguitar.xml %buildroot/%_datadir/mime/packages/
+install -pm 644 desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-%version-linux-swt/share/mime/packages/tuxguitar.xml %buildroot/%_datadir/mime/packages/
 
 %pretrans -p <lua>
 path = "%{_iconsdir}/hicolor/96x96/apps/tuxguitar.png"
@@ -104,6 +105,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Tue Apr 28 2026 Andrey Kovalev <ded@altlinux.org> 2.0.1-alt1
+- update to 2.0.1
+
 * Fri Jan 24 2025 Andrey Kovalev <ded@altlinux.org> 1.6.6-alt1
 - update to 1.6.6
 
