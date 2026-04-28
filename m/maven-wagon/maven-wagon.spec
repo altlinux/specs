@@ -1,6 +1,6 @@
 Name:           maven-wagon
 Version:        3.5.3
-Release:        alt2.1
+Release:        alt3
 
 Summary:        Tools to manage artifacts and deployment
 License:        Apache-2.0
@@ -48,14 +48,13 @@ following providers:
 %pom_disable_module wagon-webdav-jackrabbit wagon-providers
 %pom_disable_module wagon-tck-http wagon-tcks
 
+%mvn_package org.apache.maven.wagon:wagon-http:jar:shaded:%version
+
 %mvn_file :wagon-{*} %name/@1
 %mvn_package :wagon
 
 %build
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
-# Maven requires Wagon HTTP with classifier "shaded"
-%mvn_alias :wagon-http :::shaded:
 
 %install
 %mvn_install
@@ -64,6 +63,9 @@ following providers:
 %doc LICENSE NOTICE DEPENDENCIES *.md
 
 %changelog
+* Mon Apr 27 2026 Arseniy Kostevich <faux@altlinux.org> 3.5.3-alt3
+- Include shaded jar (Closes: #58906).
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.5.3-alt2.1
 - Cosmetic fixes.
 
@@ -135,4 +137,3 @@ following providers:
 * Sun Mar 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
-
