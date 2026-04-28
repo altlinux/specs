@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: 7-zip
-Version: 26.00
-Release: alt3
+Version: 26.01
+Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -141,6 +141,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Wed Apr 29 2026 Vitaly Lipatov <lav@altlinux.ru> 26.01-alt1
+- new version 26.01 (ALT #58910)
+
 * Fri Apr 10 2026 Vitaly Lipatov <lav@altlinux.ru> 26.00-alt3
 - add Provides: 7zip
 
