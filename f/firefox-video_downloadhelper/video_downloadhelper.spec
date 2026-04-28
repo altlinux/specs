@@ -4,7 +4,7 @@
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 
 Name:		%firefox_name-%rname
-Version:	10.2.5.2
+Version:	10.2.26.2
 Release:	alt1
 
 Summary:	Video DownloadHelper plugin for Firefox
@@ -42,6 +42,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Mon Apr 27 2026 Nikolay A. Fetisov <naf@altlinux.org> 10.2.26.2-alt1
+- New version
+
 * Mon Mar 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 10.2.5.2-alt1
 - New version
 
