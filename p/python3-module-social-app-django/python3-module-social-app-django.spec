@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.7.0
+Version: 5.8.0
 Release: alt1
 
 Summary: Python Social Auth - Application - Django
@@ -48,6 +48,9 @@ export DJANGO_SETTINGS_MODULE=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo social_auth_app_django}
 
 %changelog
+* Tue Apr 28 2026 Alexander Burmatov <thatman@altlinux.org> 5.8.0-alt1
+- New version 5.8.0.
+
 * Wed Dec 24 2025 Alexander Burmatov <thatman@altlinux.org> 5.7.0-alt1
 - New version 5.7.0.
 
