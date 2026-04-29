@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.7.0
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -19,6 +19,12 @@ Patch3: scribus-1.7.0-fix-compiling-with-qt-6.9.0.patch
 Patch4: 8dcf8d777bd85a0741c455961f2de382e3ed47ec.patch
 Patch5: ff6c6abfa8683028e548a269dee6a859b6f63335.patch
 Patch6: alt-qt-6.10.patch
+# https://bugzilla.altlinux.org/56338 — fix build with poppler 25.09 / 25.10 / 26.01
+# Upstream cherry-picks from svn://scribus.net/trunk/Scribus
+Patch7: scribus-poppler-25.09.0.patch
+Patch8: scribus-poppler-25.10.0.patch
+# Minimal local adaptation: wrap imgStr/mskStr->reset() for poppler 26.1 rewind() API
+Patch9: scribus-poppler-26.01.0-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -142,6 +148,9 @@ BuildArch: noarch
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 # hack to ignore new broken checking
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
@@ -216,6 +225,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Apr 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt7
+- fix build with poppler 25.09 / 25.10 / 26.01 (Closes: #56338)
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 1:1.7.0-alt6
 - NMU: fix to build with Qt 6.10
 
