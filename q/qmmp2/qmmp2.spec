@@ -8,7 +8,7 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
@@ -258,6 +258,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:2.3.2-alt1
+- new version
+
 * Thu Feb 05 2026 Sergey V Turchin <zerg@altlinux.org> 1:2.3.1-alt1
 - new version
 
