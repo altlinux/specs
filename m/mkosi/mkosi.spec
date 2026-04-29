@@ -3,7 +3,7 @@
 %def_with check
 
 Name: mkosi
-Version: 25.3
+Version: 26
 Release: alt1
 
 Summary: Build Bespoke OS Images
@@ -133,5 +133,8 @@ install -Dm 644 mkosi.zsh %buildroot/%_datadir/zsh/site-functions/_mkosi
 %ghost %dir %_sysconfdir/mkosi-addon
 
 %changelog
+* Wed Apr 15 2026 Egor Ignatov <egori@altlinux.org> 26-alt1
+- New version 26.
+
 * Tue Apr 15 2025 Egor Ignatov <egori@altlinux.org> 25.3-alt1
 - First build for ALT.
