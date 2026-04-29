@@ -5,7 +5,7 @@
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.51
+Version: 1.3.53
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
@@ -84,11 +84,13 @@ Group: Development/Other
 %description -n libdfm6-burn-devel
 This package provides development files for libdfm-burn.
 
-%package -n dfm6-search-client
+%package -n dfm-searcher
 Summary: dfm6-search-client by %name
 Group: Graphical desktop/Other
+Provides: dfm6-search-client = %EVR
+Obsoletes: dfm6-search-client < %EVR
 
-%description -n dfm6-search-client
+%description -n dfm-searcher
 This package provides dfm6-search-client aka dfm-search.
 
 %package -n libdfm6-search%sover
@@ -169,8 +171,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_libdir/cmake/dfm6-burn/
 %_libdir/cmake/dfm6-burn/dfm6-burnConfig.cmake
 
-%files -n dfm6-search-client
-%_libexecdir/dfm6-search-client
+%files -n dfm-searcher
+%_bindir/dfm-searcher
 
 %files -n libdfm6-search%sover
 %_libdir/libdfm6-search.so.%sover
@@ -185,6 +187,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Wed Apr 29 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.53-alt1
+- New version 1.3.53.
+- Renamed: dfm6-search-client -> dfm-searcher.
+
 * Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.51-alt1
 - New version 1.3.51.
 
