@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 %K6init no_altplace
 
@@ -11,7 +11,8 @@ URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
 BuildArch: noarch
 
-Requires: kde6-runtime kwin
+Requires: kde6-runtime kwin plasma6-layer-shell-qt
+#Requires: plasma-keyboard
 Provides: installer-feature-webterminal-setup = 0.5
 Obsoletes: installer-feature-webterminal-setup < 0.5
 
@@ -27,28 +28,38 @@ Apply WEB-Terminal application for kiosk mode.
 
 %install
 mkdir -p %buildroot/%_bindir/
-ln -srf %buildroot/%_sysconfdir/webterminal-session/start-webterminal %buildroot/%_bindir/
-mkdir -p %buildroot/%_sysconfdir/webterminal-session/
-install -m 0755 start-webterminal %buildroot/%_sysconfdir/webterminal-session/
-mkdir -p %buildroot/%_datadir/xsessions/
-install -m 0755 webterminal.desktop %buildroot/%_datadir/xsessions/
-mkdir -p %buildroot/%_x11sysconfdir/wmsession.d/
-install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
+install -m 0755 start-webterminal %buildroot/%_bindir/
+install -m 0755 webterminal-application %buildroot/%_bindir/
+mkdir -p %buildroot/%_sysconfdir/sysconfig/
+install -m 0644 webterminal %buildroot/%_sysconfdir/sysconfig/
+mkdir -p %buildroot/%_datadir/wayland-sessions/
+install -m 0644 webterminal.desktop %buildroot/%_datadir/wayland-sessions/
 mkdir -p %buildroot/%_sysconfdir/alterator/kiosk/profiles/
 install -m 0644 kiosk-webterminal-addon %buildroot/%_sysconfdir/alterator/kiosk/profiles/webterminal-addon
 mkdir -p %buildroot/%_sysconfdir/firsttime.d/
 install -m 0755 firsttime-setup.sh %buildroot/%_sysconfdir/firsttime.d/webterminal-setup.sh
+mkdir -p %buildroot/%_userunitdir/{webterminal-session.target.d,webterminal-session.target.wants}
+install -m 0644 webterminal-session.target %buildroot/%_userunitdir
+install -m 0644 webterminal-gui.service %buildroot/%_userunitdir
 
 %files
-%dir %_sysconfdir/webterminal-session/
-%config(noreplace) %_sysconfdir/webterminal-session/start-webterminal
+%config(noreplace) %_sysconfdir/sysconfig/webterminal
 %config(noreplace) %_sysconfdir/alterator/kiosk/profiles/webterminal-addon
 %_sysconfdir/firsttime.d/*.sh
 %_bindir/start-webterminal
-%_x11sysconfdir/wmsession.d/*WEBTERMINAL*
-%_datadir/xsessions/webterminal.desktop
+%_bindir/webterminal-application
+%_datadir/wayland-sessions/webterminal.desktop
+%dir %_userunitdir/webterminal-session.target.d/
+%dir %_userunitdir/webterminal-session.target.wants/
+%_userunitdir/webterminal-session.target
+%_userunitdir/webterminal-gui.service
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.0-alt1
+- switch to wayland
+- switch to systemd user session
+- setup sound
+
 * Wed Oct 08 2025 Sergey V Turchin <zerg at altlinux dot org> 0.6.0-alt1
 - setup kiosk on first start
 
