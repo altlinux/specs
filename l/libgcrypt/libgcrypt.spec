@@ -1,6 +1,6 @@
 Name: libgcrypt
-Version: 1.10.2
-Release: alt2
+Version: 1.10.4
+Release: alt1
 
 Group: System/Libraries
 Summary: The GNU crypto library
@@ -129,6 +129,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Tue Apr 28 2026 Alexander Danilov <admsasha@altlinux.org> 1.10.4-alt1
+- New version 1.10.4 (fixes: CVE-2026-41989).
+
 * Tue Oct 03 2023 Alexey Gladkov <legion@altlinux.ru> 1.10.2-alt2
 - Remove -unknown suffix from version (ALT#47806).
 
