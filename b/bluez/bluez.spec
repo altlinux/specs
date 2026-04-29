@@ -18,7 +18,7 @@
 
 Name: bluez
 Version: 5.86
-Release: alt2
+Release: alt3
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -281,6 +281,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 29 2026 Valery Inozemtsev <shrek@altlinux.ru> 5.86-alt3
+- revert e73bf58, see https://github.com/bluez/bluez/issues/1896
+
 * Tue Mar 10 2026 L.A. Kostis <lakostis@altlinux.ru> 5.86-alt2
 - Added btmgmt (closes #58160).
 
