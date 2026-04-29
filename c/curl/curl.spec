@@ -31,12 +31,12 @@
 %endif
 
 Name: curl
-Version: 8.19.0
+Version: 8.20.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
-License: MIT
+License: curl
 Group: Networking/File transfer
 Url: https://curl.se/
 VCS: https://github.com/curl/curl
@@ -232,6 +232,18 @@ popd
 %endif
  
 %changelog
+* Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 8.20.0-alt1
+- 8.19.0 -> 8.20.0
+- Fixes:
+  * CVE-2026-7168: cross-proxy Digest auth state leak
+  * CVE-2026-7009: OCSP stapling bypass with Apple SecTrust
+  * CVE-2026-6429: netrc credential leak with reused proxy connection
+  * CVE-2026-6276: stale custom cookie host causes cookie leak
+  * CVE-2026-6253: proxy credentials leak over redirect-to proxy
+  * CVE-2026-5773: wrong reuse of SMB connection
+  * CVE-2026-5545: wrong reuse of HTTP Negotiate connection
+  * CVE-2026-4873: connection reuse ignores TLS requirement
+
 * Wed Mar 11 2026 Anton Farygin <rider@altlinux.org> 8.19.0-alt1
 - 8.18.0 -> 8.19.0
 - Fixes:
