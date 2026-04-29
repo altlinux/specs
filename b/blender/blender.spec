@@ -66,7 +66,7 @@
 %endif
 
 Name: blender
-Version: 4.5.8
+Version: 4.5.9
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -199,6 +199,14 @@ BuildRequires: OpenUSD-devel
 
 %if_with cuda
 BuildRequires: nvidia-cuda-devel
+# CUDA 12.x nvcc cannot parse GCC 15 <type_traits> (new __is_pointer
+# and __is_volatile builtins). Fall back to gcc-14 as the CUDA host
+# compiler on Sisyphus (GCC 15); older branches keep the default GCC.
+# %_priority_distbranch lives in /usr/lib/rpm/macros (read by rpm 4.13)
+# but legacy rpmbuild 4.0.4 does not load it; shell out to `rpm --eval`.
+%if "%(rpm --eval '%%_priority_distbranch' 2>/dev/null)" == "sisyphus"
+BuildRequires: gcc14-c++
+%endif
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %add_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
@@ -211,6 +219,8 @@ BuildRequires: openimagedenoise-devel
 %if_with mold
 BuildRequires: mold
 %endif
+
+Requires: python3-module-numpy
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -396,6 +406,9 @@ export ALTWRAP_LLVM_VERSION=rocm
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
 	-DWITH_CYCLES_CUDA_BUILD_SERIAL:BOOL=ON \
+%if "%(rpm --eval '%%_priority_distbranch' 2>/dev/null)" == "sisyphus"
+	-DCUDA_HOST_COMPILER=%_bindir/gcc-14 \
+%endif
 %endif #cuda
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
@@ -532,6 +545,12 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Mon Apr 27 2026 Anton Farygin <rider@altlinux.org> 4.5.9-alt1
+- 4.5.8 -> 4.5.9
+- use gcc-14 as CUDA host compiler on Sisyphus
+  (nvcc 12.x is incompatible with GCC 15 type_traits)
+- added python3-module-numpy dependency (Closes: #58817)
+
 * Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 4.5.8-alt1
 - 4.5.7 -> 4.5.8
 
