@@ -25,8 +25,8 @@
 
 
 Name:    ZLEqualizer2
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: %common_summary
 License: AGPL-3.0
@@ -71,6 +71,18 @@ BuildRequires: pkgconfig(xrender)
 %description
 %common_description
 
+
+%package standalone
+Summary: %common_summary -- Standalone
+Group:   Sound
+
+%description standalone
+%common_description
+
+This package contains ZL Equalizer 2 built as a standalone
+application, capable of working with Jack or ALSA.
+
+
 %package -n lv2-%name-plugin
 Summary: %common_summary -- LV2
 Group:   Sound
@@ -102,6 +114,8 @@ sh -eux "%SOURCE2"
 # for the nested cmake that builds juceaid
 export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
 
+%add_optflags -DJUCE_JACK=1 -DNDEBUG
+
 %cmake \
   -DCMAKE_BUILD_TYPE=%zl_build_type \
   -DCMAKE_C_COMPILER=clang \
@@ -113,8 +127,10 @@ export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
 %ifarch x86_64
   -DKFR_ARCHS="sse2;sse41;avx;avx2" \
 %endif
-  -DZL_JUCE_FORMATS="VST3;LV2" \
+  -DZL_JUCE_FORMATS="VST3;LV2;Standalone" \
   -DZL_JUCE_COPY_PLUGIN=FALSE \
+  -DCMAKE_CXX_FLAGS_RELWITHDEBINFO='%optflags' \
+  -DCMAKE_C_FLAGS_RELWITHDEBINFO='%optflags' \
   %nil
 
 %cmake_build
@@ -122,11 +138,16 @@ export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
 %install
 cd %_cmake__builddir/*_artefacts/%zl_build_type
 
+install -Dm755 Standalone/ZL\ Equalizer\ 2 \
+    %buildroot%_bindir/ZL\ Equalizer\ 2
 mkdir -p %buildroot%_libdir/lv2
 cp -a LV2/*.lv2 %buildroot%_libdir/lv2
 mkdir -p %buildroot%_libdir/vst3
 cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
+
+%files standalone
+%_bindir/*
 
 %files -n lv2-%name-plugin
 %doc README.md
@@ -138,6 +159,10 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1
+- 1.1.1
+- build standalone plugin
+
 * Sun Dec 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt2
 - 1.1.0 retagged
 
