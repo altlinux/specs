@@ -2,7 +2,7 @@
 %define soname 4.15
 
 Name: gmsh
-Version: 4.15.0
+Version: 4.15.2
 Release: alt1
 
 Summary: 3D finite element mesh generator
@@ -166,6 +166,9 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 4.15.2-alt1
+- updated from 4.15.0 to 4.15.2
+
 * Mon Oct 27 2025 Constantin Sunzow <protvin@altlinux.org> 4.15.0-alt1
 - Python module bump to 3 version.
 - New version.
