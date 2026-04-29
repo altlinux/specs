@@ -5,12 +5,12 @@
 %define sover 0
 
 Name: profanity
-Version: 0.15.0
-Release: alt1
+Version: 0.18.0
+Release: alt2
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
-Source: %version.tar.gz
+Source: %name-%version.tar.gz
 # wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
 Patch: no_acx_pthread.patch
@@ -19,9 +19,18 @@ Url: http://www.profanity.im
 
 # Automatically added by buildreq on Thu Jul 02 2020
 # optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python2-base sh4 xorg-proto-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel 
 BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libreadline-devel libsqlite3-devel libstrophe-devel libsignal-protocol-c-devel libqrencode-devel libgpgme-devel
+BuildRequires:  gcc
+BuildRequires:  meson rpm-macros-meson cmake
+BuildRequires:  doxygen git texinfo 
+BuildRequires:  libgtk+3-devel libenchant2-devel python3-module-sphinx python3-module-docutils
+
 
 BuildRequires: libcmocka-devel
+
+Obsoletes: %name-X11
 
 # libmesode vs libstrophe
 
@@ -43,12 +52,6 @@ BuildRequires: libcmocka-devel
 | ||_/|_|  \___/|_|  \_||_|_| |_|_|\___)__  |
 |_|                                   (____/
 
-%package X11
-Group: Networking/Instant messaging
-Summary: A console based jabber client inspired by irssi (X11 support)
-Requires: %name = %version-%release
-%description X11
-XScrnSaver and notify support for %name
 
 %package devel
 Group: Development/C
@@ -65,62 +68,100 @@ Group: Development/C
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 #patch1 -p1
 cp %SOURCE1 profrc.exmaple2
 
+
+
+# Output docbook instead of HTML
+sed -i "s/GENERATE_HTML          = YES/GENERATE_HTML          = NO/g" apidocs/c/c-prof.conf
+sed -i "s/GENERATE_DOCBOOK       = NO/GENERATE_DOCBOOK       = YES/g" apidocs/c/c-prof.conf
+sed -i "s/DOCBOOK_PROGRAMLISTING = NO/DOCBOOK_PROGRAMLISTING = YES/g" apidocs/c/c-prof.conf
+
 %build
-%autoreconf
-# App for %%name-X11
-%configure\
-                --with-libxml2\
-                --enable-notifications\
-                --enable-otr\
-                --enable-omemo\
-                --enable-omemo-qrcode\
-                --enable-pgp
+%meson -Dnotifications=enabled \
+       -Dpython-plugins=enabled \
+       -Dc-plugins=enabled \
+       -Dotr=enabled \
+       -Dpgp=enabled \
+       -Domemo=enabled \
+       -Domemo-backend=libsignal \
+       -Domemo-qrcode=enabled \
+       -Dspellcheck=enabled \
+       -Dicons-and-clipboard=enabled \
+       -Dgdk-pixbuf=enabled \
+       -Dxscreensaver=enabled \
+       -Dtests=true
+%meson_build
 
-%make_build LDFLAGS=-pthread
-mv %name %name.app
+# Build HTML documentation
+pushd apidocs/c/
+doxygen c-prof.conf  # results are in apidocs/c/docbook/
+popd
+pushd apidocs/python/
+sphinx-apidoc -f -o . src
+make texinfo  # results are in apidocs/python/_build/texinfo
+pushd _build
+pushd texinfo
+makeinfo --docbook ProfanityPythonPluginsAPI.texi
+popd
+popd
+popd
 
-# App for %%name
-make distclean
-%configure\
-    --with-libxml2\
-    --enable-otr\
-    --without-xscreensaver\
-    --enable-omemo\
-    --enable-omemo-qrcode\
-    --enable-pgp\
-    --enable-notifications
-
-%make_build LDFLAGS=-pthread
 
 %install
-%makeinstall
-install %name.app %buildroot%_bindir/%name.app
+%meson_install
+# Remove libprofanity.la generated
+rm -f %{buildroot}%{_libdir}/libprofanity.la
+
+# Install docbook documentation for the doc subpackage
+mkdir -p %{buildroot}%{_datadir}/help/en/profanity/
+for file in apidocs/c/docbook/*.xml;
+do
+  install -m644 ${file} \
+    %{buildroot}%{_datadir}/help/en/profanity
+done
+install -m644 apidocs/python/_build/texinfo/ProfanityPythonPluginsAPI.xml \
+  %{buildroot}%{_datadir}/help/en/profanity
+
+# Install example config file
+cp -a profrc.example %{buildroot}%{_datadir}/%{name}/
+
 
 %check
-LC_ALL=C.UTF8 make check
+%meson_test "unittests"
+
+#LC_ALL=C.UTF8 make check
 
 %files
 %doc themes profrc.example* CHANGELOG README.md
 %_bindir/%name
 %_man1dir/*
 %_datadir/%name
+%dir %{_docdir}/profanity
+%{_docdir}/profanity/profrc.example
+%{_docdir}/profanity/theme_template
+%dir  %{_datadir}/help/en
+%lang(en) %{_datadir}/help/en/profanity
+
 
 %files -n lib%name%sover
 %_libdir/*.so.%sover.*
 %_libdir/*.so.%sover
-
-%files X11
-%_bindir/%name.app
 
 %files devel
 %_includedir/*
 %_libdir/*.so
 
 %changelog
+* Wed Apr 29 2026 Ilya Mashkin <oddity@altlinux.ru> 0.18.0-alt2
+- Fix build path
+
+* Tue Apr 28 2026 Ilya Mashkin <oddity@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+- Build with meson
+
 * Fri May 02 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 0.15.0-alt1
 - Update to upstream 0.15.0
 
