@@ -7,7 +7,7 @@
 
 Name: libraw0
 Version: 0.22.1
-Release: alt1
+Release: alt2
 
 Summary: Library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -30,6 +30,7 @@ This package contains shared library.
 %package devel
 Group: Development/C
 Summary: library for reading RAW files
+Provides: libraw-devel = %version
 Conflicts: libraw-devel
 %description devel
 LibRaw is a library for reading RAW files from digital photo cameras
@@ -102,6 +103,9 @@ __EOF__
 %_pkgconfigdir/libraw*.pc
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.1-alt2
+- update provides
+
 * Tue Apr 28 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.1-alt1
 - new version
 
