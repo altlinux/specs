@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 26.1.0
-Release: alt2
+Version: 26.1.1
+Release: alt1
 
 Summary: Circuit simulator
 License: GPL-2.0-or-later
@@ -72,6 +72,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Wed Apr 29 2026 Polina Poidenko <polipoki@altlinux.org> 26.1.1-alt1
+- New version 26.1.1.
+
 * Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 26.1.0-alt2
 - qucs-s.desktop: update categories.
 

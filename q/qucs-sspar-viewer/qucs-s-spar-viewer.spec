@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-sspar-viewer
-Version: 2026.04.10
+Version: 2026.04.14
 Release: alt1
 Summary: Qucs-S S-parameter and RF Circuit Synthesis Tool
 
@@ -52,6 +52,9 @@ rm -rf docs/help/source
 %_liconsdir/*.png
 
 %changelog
+* Wed Apr 29 2026 Polina Poidenko <polipoki@altlinux.org> 2026.04.14-alt1
+- New version 2026.04.14.
+
 * Fri Apr 10 2026 Polina Poidenko <polipoki@altlinux.org> 2026.04.10-alt1
 - Initial build for Sisyphus.
 
