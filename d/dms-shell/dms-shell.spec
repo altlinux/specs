@@ -2,7 +2,7 @@
 %global import_path github.com/AvengeMedia/DankMaterialShell/core
 
 Name: dms-shell
-Version: 1.4.4.1
+Version: 1.4.6
 Release: alt1
 
 Summary: DankMaterialShell - Material 3 inspired shell for Wayland compositors
@@ -81,6 +81,8 @@ rm -f %buildroot%_datadir/quickshell/dms/.gitignore
 rm -rf %buildroot%_datadir/quickshell/dms/.github
 rm -rf %buildroot%_datadir/quickshell/dms/distro
 rm -f %buildroot%_datadir/quickshell/dms/scripts/i18nsync.py
+rm -f %buildroot%_datadir/quickshell/dms/scripts/spam-notifications.sh
+rm -f %buildroot%_datadir/quickshell/dms/scripts/verify-notifications.sh
 rm -f %buildroot%_datadir/quickshell/dms/translations/extract_settings_index.py
 rm -f %buildroot%_datadir/quickshell/dms/translations/extract_translations.py
 rm -f %buildroot%_datadir/quickshell/dms/translations/replace_qstr.py
@@ -98,6 +100,10 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 %_iconsdir/hicolor/scalable/apps/danklogo.svg
 
 %changelog
+* Wed Apr 29 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.6-alt1
+- new version 1.4.6
+- delete notification dev scripts from package
+
 * Sat Apr 11 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.4.1-alt1
 - new version 1.4.4.1
 
