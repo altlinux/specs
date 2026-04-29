@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.17
+Version: 0.2.18
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -67,6 +67,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Wed Apr 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.18-alt1
+- Add the ShowManual method to the apt1 interface.
+
 * Fri Apr 17 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.2.17-alt1
 - LPE over rpm backend (fixes: OVE-20260416-0001).
 
