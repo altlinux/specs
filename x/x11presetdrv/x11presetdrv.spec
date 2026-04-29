@@ -1,7 +1,7 @@
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -63,6 +63,9 @@ __EOF__
 %_presetdir/??-%name.preset
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.5-alt1
+- update service launch priority
+
 * Thu Mar 13 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.4-alt1
 - add timeout for service startup (closes: 53440)
 
