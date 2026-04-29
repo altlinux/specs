@@ -1,6 +1,6 @@
 Name: t1lib
 Version: 5.1.2
-Release: alt8
+Release: alt9
 
 Summary: Type 1 font rasterizer
 License: LGPL
@@ -87,6 +87,7 @@ It also contains the "t1libconfig" script used to configure %name.
 %patch5 -p1
 
 %build
+%add_optflags -std=gnu17
 autoconf
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
 %configure %{subst_enable static}
@@ -140,6 +141,9 @@ install -pm644 Changes README.t* doc/t1lib_doc.pdf.bz2 %buildroot%docdir/
 # - merge type1afm.1 manpage from debian patch
 
 %changelog
+* Wed Apr 29 2026 Artyom Bystrov <arbars@altlinux.org> 5.1.2-alt9
+- Fix build on GCC15
+
 * Fri Nov 15 2024 Artyom Bystrov <arbars@altlinux.org> 5.1.2-alt8
 - Switch to multi-thread build
 - Fix to build on GCC14
