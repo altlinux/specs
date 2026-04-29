@@ -1,8 +1,8 @@
 %global import_path github.com/juicedata/juicefs
 
 Name: juicefs
-Version: 1.3.1
-Release: alt1
+Version: 1.4.0
+Release: alt0.beta1
 
 Summary: Distributed POSIX file system built on top of Redis and S3
 License: Apache-2.0
@@ -45,6 +45,9 @@ ln -s juicefs %buildroot%_bindir/mount.juicefs
 %_bindir/*
 
 %changelog
+* Wed Apr 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt0.beta1
+- v1.4.0-beta1
+
 * Tue Dec 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.3.1-alt1
 - v1.3.1
 
