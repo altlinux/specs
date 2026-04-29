@@ -1,6 +1,6 @@
 Name: bristol
 Version: 0.60.11
-Release: alt6
+Release: alt7
 Summary: Synthesizer emulator
 Group: Sound
 License: GPLv2+
@@ -49,7 +49,7 @@ sed -i 's/-msse -mfpmath=sse //g' bristol/Makefile.in
 %endif
 
 %build
-%add_optflags -fcommon
+%add_optflags -fcommon -std=gnu17
 %configure --enable-static=no --disable-version-check
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -81,6 +81,9 @@ desktop-file-install \
 %_libdir/lib*.so
 
 %changelog
+* Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt7
+- build with -std=gnu17 to fix FTBFS with gcc15
+
 * Fri Nov 01 2024 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt6
 - apply patch from Debian to fix build with gcc 14
 
