@@ -1,5 +1,5 @@
 Name: clusterssh
-Version: 4.18.09
+Version: 4.19
 Release: alt1
 
 Summary: Run commands on multiple servers over ssh
@@ -56,6 +56,9 @@ mv  %buildroot/%_bindir/clusterssh_bash_completion.dist \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 4.19-alt1
+- 4.18.09 -> 4.19
+
 * Tue Mar 31 2026 Anton Farygin <rider@altlinux.org> 4.18.09-alt1
 - 4.18.06 -> 4.18.09
 
