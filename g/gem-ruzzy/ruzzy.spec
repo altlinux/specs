@@ -5,7 +5,7 @@
 %def_without check
 
 Name: gem-%name_orig
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: A coverage-guided fuzzer for pure Ruby code and Ruby C extensions
 License: AGPL-3.0-only
@@ -60,5 +60,8 @@ ruby -Ilib -e 'require "ruzzy"; puts Ruzzy::VERSION'
 %doc LICENSE README.md
 
 %changelog
+* Tue Apr 28 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Fri Jan 30 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.7.0-alt1
 - Initial built for ALT Sisyphus.
