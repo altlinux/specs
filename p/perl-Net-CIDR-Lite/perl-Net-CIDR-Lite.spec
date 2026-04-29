@@ -2,7 +2,7 @@
 %define module Net-CIDR-Lite
 
 Name: perl-%module
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Perl extension for merging IPv4 or IPv6 CIDR addresses
@@ -34,6 +34,9 @@ Perl extension for merging IPv4 or IPv6 CIDR addresses.
 %perl_vendor_privlib/Net
 
 %changelog
+* Wed Apr 29 2026 Alexander Danilov <admsasha@altlinux.org> 0.23-alt1
+- New version 0.23 (Fixes: CVE-2026-40198, CVE-2026-40199).
+
 * Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 0.22-alt1
 - automated CPAN update
 
