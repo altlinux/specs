@@ -2,7 +2,7 @@
 %define soname 14
 
 Name:     kiwix-lib
-Version:  14.1.1
+Version: 14.2.0
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
@@ -70,6 +70,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_man1dir/*.1*
 
 %changelog
+* Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 14.2.0-alt1
+- 14.1.1 -> 14.2.0
+
 * Sat Dec 06 2025 Constantin Sunzow <protvin@altlinux.org> 14.1.1-alt1
 - New version.
 
