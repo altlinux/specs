@@ -33,7 +33,7 @@
 
 Name: dqt5-webengine
 Version: 5.15.18
-Release: alt0.dde.2
+Release: alt0.dde.3
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -78,6 +78,7 @@ Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 Patch107: alt-js-check-size.patch
 Patch108: alt-libre2-11.patch
+Patch200: alt-gcc15.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -241,6 +242,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %if_enabled system_re2
 %patch108 -p1
 %endif
+%patch200 -p2
 
 # delete all "toolprefix = " lines from build/toolchain/linux/BUILD.gn, as we
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
@@ -471,6 +473,9 @@ done
 %_dqt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Apr 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.3
+- fix build on gcc15
+
 * Fri Feb 20 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.2
 - enable dqml provides
 - fix build on shrinked dqt5
