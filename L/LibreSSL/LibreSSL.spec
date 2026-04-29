@@ -14,7 +14,7 @@
 
 Name: LibreSSL
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -198,6 +198,14 @@ echo 'noinst_HEADERS += crypto_arch.h' >> crypto/Makefile.am
 %endif
 
 %build
+%ifarch i586
+%add_optflags -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64
+
+# Hack: disable detection of -fcf-protection on i586, as it's
+# incorrectly detected as supported, which breaks the build.
+# See https://github.com/libressl/portable/issues/1268
+sed -i "/fcf-protection/d" m4/check-hardening-options.m4
+%endif
 %autoreconf
 %configure \
 	--disable-static \
@@ -318,6 +326,11 @@ done
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 4.3.1-alt2
+- i586 imporvements:
+  + force usage of 64-bit time_t
+  + fix FTBFS with gcc 15
+
 * Mon Apr 20 2026 Ivan A. Melnikov <iv@altlinux.org> 4.3.1-alt1
 - 4.3.1
 
