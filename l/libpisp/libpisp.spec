@@ -2,10 +2,11 @@
 
 %def_disable logging
 %def_disable examples
+%def_disable gstreamer
 %def_enable check
 
 Name: libpisp
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: A helper library to generate run-time configuration for the Raspberry Pi ISP (PiSP) 
@@ -23,9 +24,16 @@ Source: %name-%version.tar
 
 #ExclusiveArch: aarch64
 
+%define gst_api_ver 1.0
+%define gst_ver 1.14
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++
 BuildRequires: pkgconfig(nlohmann_json)
+%{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
+BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-video-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)}
 %{?_enable_logging:BuildRequires: boost-log-devel)}
 %{?_enable_examples:BuildRequires: pkgconfig(cxxopts)}
 
@@ -48,7 +56,8 @@ that are needed to write applications that use %name.
 %build
 %meson \
     %{subst_enable_meson_feature logging logging} \
-    %{subst_enable_meson_bool examples examples}
+    %{subst_enable_meson_bool examples examples} \
+    %{subst_enable_meson_feature gstreamer gstreamer}
 %nil
 %meson_build
 
@@ -60,6 +69,7 @@ that are needed to write applications that use %name.
 
 %files
 %_libdir/%name.so.*
+%{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgstpispconvert.so}
 %dir %_datadir/%name
 %_datadir/%name/backend_default_config.json
 %doc README*
@@ -70,6 +80,9 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Oct 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

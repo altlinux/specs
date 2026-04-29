@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 Epoch: 1
 
@@ -39,7 +39,7 @@ BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
 %ifarch aarch64
-BuildRequires: pkgconfig(libpisp) >= 1.3.0
+BuildRequires: pkgconfig(libpisp) >= 1.4.0
 %endif
 %if_enabled qcam
 BuildRequires: qt6-tools-devel
@@ -128,6 +128,7 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %files
 %{?_enable_test:%_libexecdir/%name/vimc_ipa_proxy}
 %_bindir/libcamerify
+%_bindir/%name-bug-report
 %ifarch %ix86 x86_64
 %_libexecdir/%name/ipu3_ipa_proxy
 %endif
@@ -168,6 +169,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
 
 %changelog
+* Wed Apr 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.1-alt1
+- 0.7.1
+
 * Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.0-alt1
 - 0.7.0
 
