@@ -4,7 +4,7 @@
 %define build_type Release
 
 Name:    CloudReverb
-Version: 0.4.1
+Version: 0.5
 Release: alt1
 
 Summary: Algorithmic reverb plugin based on CloudSeed
@@ -109,6 +109,9 @@ cp -a "VST3/CloudReverb.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5-alt1
+- 0.5
+
 * Sat Jan 03 2026 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
