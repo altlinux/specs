@@ -3,7 +3,7 @@
 
 Name:    blueman
 Version: 2.4.6
-Release: alt2
+Release: alt3
 
 Summary: Blueman is a GTK+ Bluetooth Manager
 License: GPL-3.0-or-later
@@ -104,6 +104,9 @@ echo 'enable blueman-mechanism.service' >%buildroot%_presetdir/80-blueman.preset
 %_sysconfdir/xdg/autostart/blueman.desktop
 
 %changelog
+* Wed Apr 29 2026 Ivan Khanas <xeno@altlinux.org> 2.4.6-alt3
+- Fix(blueman-adapters): show actionable no-adapter dialog.
+
 * Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 2.4.6-alt2
 - /etc/xdg/autostart/blueman.desktop: add "NotShowIn=KDE;GNOME;"
 
