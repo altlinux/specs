@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: %rname
-Version: 3.8.0
+Version: 3.8.2
 Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
@@ -25,15 +25,16 @@ Requires: xplanet
 
 Source: %rname-%version.tar
 Source1: docs-ru.tar
-Patch1: alt-ftbfs.patch
+Patch1: alt-check-indiless.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel qt6-svg-devel qt6-websockets-devel
 BuildRequires: qt6-datavis3d-devel
 BuildRequires: /usr/bin/sqlite3
 BuildRequires: libsecret-devel libqtkeychain-qt6-devel
-BuildRequires: eigen3 libGLU-devel zlib-devel libcurl-devel
+BuildRequires: eigen3 libGLU-devel zlib-devel libcurl-devel libcups-devel
 BuildRequires: libcfitsio-devel stellarsolver-devel wcslib-devel libraw-devel libgsl-devel
+BuildRequires: libopencv-devel
 %if_enabled indi
 BuildRequires: libindi-devel
 %endif
@@ -90,6 +91,9 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.2-alt1
+- new version
+
 * Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.8.0-alt1
 - new version
 
