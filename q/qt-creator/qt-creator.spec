@@ -24,7 +24,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 19.0.0
+Version: 19.0.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -32,8 +32,7 @@ License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and
 Group:   Development/Tools
 
 URL: http://qt-project.org/wiki/Category:Tools::QtCreator
-VCS: git://code.qt.io/qt-creator/qt-creator.git
-Packager: Andrey Cherepanov <cas@altlinux.org>
+VCS: https://code.qt.io/qt-creator/qt-creator.git
 
 ExcludeArch: %ix86 armh
 
@@ -227,6 +226,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Apr 29 2026 Andrey Cherepanov <cas@altlinux.org> 19.0.1-alt1
+- New version.
+
 * Sun Mar 15 2026 Andrey Cherepanov <cas@altlinux.org> 19.0.0-alt1
 - New version.
 
