@@ -6,7 +6,7 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 5.3.0
+Version: 5.10.0
 Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
@@ -15,8 +15,7 @@ Url: https://qalculate.github.io/
 
 # libqalculate support invoking /usr/bin/gnuplot
 Requires: /usr/bin/gnuplot
-
-# https://github.com/Qalculate/qalculate-gtk.git
+VCS: https://github.com/Qalculate/qalculate-gtk.git
 Source: %name-%version.tar
 # bug#42143
 Patch1: dontshowuaflag.patch
@@ -67,6 +66,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 5.10.0-alt1
+- 5.3.0 -> 5.10.0
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
@@ -156,5 +158,4 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 * Wed Dec 20 2006 Alexey Morsov <swi@altlinux.ru> 0.9.5-alt1
 - initial build for sisyphus
-
 
