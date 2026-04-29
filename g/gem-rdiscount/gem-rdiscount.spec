@@ -5,7 +5,7 @@
 %define        gemname rdiscount
 
 Name:          gem-rdiscount
-Version:       2.2.7.3
+Version:       2.2.7.5
 Release:       alt1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rdiscount) = 2.2.7.3
+Provides:      gem(rdiscount) = 2.2.7.5
 
 
 %description
@@ -29,14 +29,14 @@ passes the Markdown 1.0 test suite.
 
 
 %package       -n rdiscount
-Version:       2.2.7.3
+Version:       2.2.7.5
 Release:       alt1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdiscount
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rdiscount) = 2.2.7.3
+Requires:      gem(rdiscount) = 2.2.7.5
 
 %description   -n rdiscount
 Discount (For Ruby) Implementation of John Gruber's Markdown
@@ -52,14 +52,14 @@ passes the Markdown 1.0 test suite.
 
 %if_enabled    doc
 %package       -n gem-rdiscount-doc
-Version:       2.2.7.3
+Version:       2.2.7.5
 Release:       alt1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdiscount
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rdiscount) = 2.2.7.3
+Requires:      gem(rdiscount) = 2.2.7.5
 
 %description   -n gem-rdiscount-doc
 Discount (For Ruby) Implementation of John Gruber's Markdown documentation
@@ -76,14 +76,14 @@ passes the Markdown 1.0 test suite.
 
 %if_enabled    devel
 %package       -n gem-rdiscount-devel
-Version:       2.2.7.3
+Version:       2.2.7.5
 Release:       alt1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdiscount
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rdiscount) = 2.2.7.3
+Requires:      gem(rdiscount) = 2.2.7.5
 Conflicts:     libsexpr-devel
 Conflicts:     libbobpp-devel
 Conflicts:     libdiscount-devel
@@ -140,6 +140,9 @@ passes the Markdown 1.0 test suite.
 
 
 %changelog
+* Wed Apr 29 2026 Alexander Danilov <admsasha@altlinux.org> 2.2.7.5-alt1
+- ^ 2.2.7.3 -> 2.2.7.5
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 2.2.7.3-alt1
 - ^ 2.2.0.2 -> 2.2.7.3
 
