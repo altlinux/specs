@@ -2,7 +2,7 @@
 %define nameU vinyl-player
 
 Name: vinyl
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Simple adwaita audio player
@@ -65,6 +65,9 @@ install -Dm 644 data/hicolor/scalable/apps/%oname.svg \
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Wed Apr 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1
+
 * Fri Apr 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
 - 1.2.2 -> 1.3.0
 
