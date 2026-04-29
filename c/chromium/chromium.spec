@@ -7,7 +7,7 @@
 %global build_parallel_jobs %__nprocs
 %endif
 # New llvm leads to intensive swapping with max_jobs >= 48
-%global max_jobs 21
+%global max_jobs 42
 
 %global llvm_version 22.1
 
@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        147.0.7727.116
+Version:        147.0.7727.137
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -584,6 +584,9 @@ fi
 
 n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
+%ifarch aarch64
+  n=25
+%endif
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
@@ -706,6 +709,40 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Apr 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.137-alt1
+- New version (147.0.7727.137).
+- Fixes:
+  + CVE-2026-7363: Use after free in Canvas
+  + CVE-2026-7361: Use after free in iOS
+  + CVE-2026-7344: Use after free in Accessibility
+  + CVE-2026-7343: Use after free in Views
+  + CVE-2026-7333: Use after free in GPU
+  + CVE-2026-7360: Insufficient validation of untrusted input in Compositing
+  + CVE-2026-7359: Use after free in ANGLE
+  + CVE-2026-7358: Use after free in Animation
+  + CVE-2026-7334: Use after free in Views
+  + CVE-2026-7357: Use after free in GPU
+  + CVE-2026-7356: Use after free in Navigation
+  + CVE-2026-7354: Out of bounds read and write in Angle
+  + CVE-2026-7353: Heap buffer overflow in Skia
+  + CVE-2026-7352: Use after free in Media
+  + CVE-2026-7351: Race in MHTML
+  + CVE-2026-7350: Use after free in WebMIDI
+  + CVE-2026-7349: Use after free in Cast
+  + CVE-2026-7348: Use after free in Codecs
+  + CVE-2026-7335: Use after free in media
+  + CVE-2026-7336: Use after free in WebRTC
+  + CVE-2026-7337: Type Confusion in V8
+  + CVE-2026-7347: Use after free in Chromoting
+  + CVE-2026-7346: Inappropriate implementation in Tint
+  + CVE-2026-7345: Insufficient validation of untrusted input in Feedback
+  + CVE-2026-7338: Use after free in Cast
+  + CVE-2026-7342: Use after free in WebView
+  + CVE-2026-7341: Use after free in WebRTC
+  + CVE-2026-7339: Heap buffer overflow in WebRTC
+  + CVE-2026-7340: Integer overflow in ANGLE
+  + CVE-2026-7355: Use after free in Media
+
 * Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.116-alt1
 - New version (147.0.7727.116).
 - Fixes:
