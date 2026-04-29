@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 150.0
+Version: 150.0.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -389,6 +389,14 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Apr 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-7320: Information disclosure due to incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-7322: Memory safety bugs fixed in Firefox ESR 115.35.1, Firefox ESR 140.10.1 and Firefox 150.0.1
+  + CVE-2026-7323: Memory safety bugs fixed in Firefox ESR 140.10.1 and Firefox 150.0.1
+  + CVE-2026-7324: Memory safety bugs fixed in Firefox 150.0.1
+
 * Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0-alt1
 - New version.
 - Fixes:
