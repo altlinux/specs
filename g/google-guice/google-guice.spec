@@ -1,6 +1,6 @@
 Name:           google-guice
 Version:        5.1.0
-Release:        alt4
+Release:        alt5
 
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        Apache-2.0
@@ -26,12 +26,9 @@ BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(aopalliance:aopalliance)
+BuildRequires:  mvn(javax.servlet:servlet-api)
 
 AutoReq: yes,noosgi
-
-# Needed for bootstrap maven
-#Provides: mvn(com.google.inject:guice::no_aop:)
-#Provides: mvn(org.sonatype.sisu:sisu-guice::no_aop:)
 
 %description
 Put simply, Guice alleviates the need for factories and the use of new
@@ -128,6 +125,10 @@ and above. This package provides Bill of Materials module for Guice.
 
 %prep
 %setup
+# Needed for bootstrap maven
+%java_remove_annotations core/src/ \
+  -p ^com.google.common.annotations. \
+  -p ^com.google.errorprone.annotations.
 
 %pom_remove_parent
 
@@ -157,21 +158,20 @@ rm extensions/servlet/test/com/google/inject/servlet/ServletTest.java
 rm extensions/servlet/test/com/google/inject/servlet/AllTests.java
 
 %mvn_alias :guice :::classes:
+%mvn_alias :guice org.sonatype.sisu:sisu-guice::no_aop:
 
 %build
 %mvn_file  ":guice-{*}"  guice/guice-@1
-%mvn_file  ":guice" guice/%{name} %{name}
+%mvn_file  ":guice" guice/%{name} guice/guice %{name}
+# Needed for bootstrap maven
+%mvn_file  ":guice" guice/%{name}-no_aop %{name}-no_aop
 %mvn_build -s
 
 %install
 %mvn_install
 install -Dpm0644 %SOURCE2 %buildroot%_datadir/maven-metadata/google-guice-guice.xml
 
-ln -s %_javadir/guice/google-guice.jar \
-  %buildroot%_javadir/guice/guice.jar
-
 %files -n %{?module_prefix}%{name} -f .mfiles-guice
-%_javadir/guice/guice.jar
 %files -n guice-parent -f .mfiles-guice-parent
 %files -n guice-assistedinject -f .mfiles-guice-assistedinject
 %files -n guice-extensions -f .mfiles-extensions-parent
@@ -183,6 +183,9 @@ ln -s %_javadir/guice/google-guice.jar \
 %files -n guice-bom -f .mfiles-guice-bom
 
 %changelog
+* Tue Apr 28 2026 Arseniy Kostevich <faux@altlinux.org> 5.1.0-alt5
+- Add no_aop symlinks for reverse compatibility.
+
 * Fri Apr 24 2026 Ivan Khanas <xeno@altlinux.org> 5.1.0-alt4
 - Add missing aopalliance dep.
 
