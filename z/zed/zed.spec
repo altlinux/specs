@@ -11,7 +11,7 @@
 %define webrtc_dir %webrtc_basedir/linux-x64-release
 
 Name: zed
-Version: 0.227.1
+Version: 1.0.0
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -35,10 +35,16 @@ BuildRequires: rust-cargo
 BuildRequires: cargo-about
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libgit2-devel libssh2-devel libssl-devel
-BuildRequires: libzstd-devel zlib-devel bzip2-devel
+BuildRequires: libgit2-devel
+BuildRequires: libssh2-devel
+BuildRequires: libssl-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
+BuildRequires: bzip2-devel
 BuildRequires: libalsa-devel
-BuildRequires: glib2-devel libgio-devel libexpat-devel
+BuildRequires: glib2-devel
+BuildRequires: libgio-devel
+BuildRequires: libexpat-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
@@ -46,9 +52,15 @@ BuildRequires: libX11-devel
 BuildRequires: fontconfig-devel
 BuildRequires: python3
 BuildRequires: unzip
-BuildRequires: /usr/bin/protoc libprotobuf-devel
-BuildRequires: libvulkan-devel vulkan-validation-layers vulkan-headers
-BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-server-devel libwayland-egl-devel
+BuildRequires: /usr/bin/protoc
+BuildRequires: libprotobuf-devel
+BuildRequires: libvulkan-devel
+BuildRequires: vulkan-validation-layers
+BuildRequires: vulkan-headers
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: libwayland-egl-devel
 
 %description
 Code at the speed of thought - Zed is a high-performance, multiplayer code
@@ -108,6 +120,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Apr 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
+- Updated to 1.0.0 (ALT#58946).
+
 * Thu Mar 12 2026 Alexey Shabalin <shaba@altlinux.org> 0.227.1-alt1
 - updated from 0.225.10 to 0.227.1
 
