@@ -7,7 +7,7 @@
 %define rdn_name org.rncbc.qjackctl
 
 Name: qjackctl
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
@@ -79,6 +79,9 @@ sed -i 's/JACK_LIBDIR/JACK_LIBRARY_DIRS/' CMakeLists.txt
 %doc ChangeLog README
 
 %changelog
+* Thu Apr 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Mon Feb 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
