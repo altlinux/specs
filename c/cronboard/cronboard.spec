@@ -1,7 +1,7 @@
 %def_without check
 
 Name: cronboard
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: A terminal-based dashboard for managing cron jobs locally and on servers
@@ -28,6 +28,7 @@ BuildRequires: python3-module-textual-autocomplete
 BuildRequires: python3-module-cron-descriptor
 BuildRequires: python3-module-paramiko
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
 %endif
 
 %description
@@ -51,6 +52,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.4-alt1
+- 0.5.2 -> 0.5.4
+
 * Mon Apr 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.2-alt1
 - 0.5.1 -> 0.5.2
 
