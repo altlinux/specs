@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.60
+Version: %ver_major.61
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -30,14 +30,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 Patch: gnumeric-1.12.56-alt-desktop.patch
+# remove no more existent applix_write
+Patch1: gnumeric-1.12.61-alt-applix.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %EVR
 
-%define gsf_ver 1.14.51
+%define gsf_ver 1.14.57
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.57
+%define goffice_ver 0.10.61
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -127,6 +129,7 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
+%patch1 -b .applix
 
 # prevent linking against libpython3.x.a
 sed -i s'@\-L\$PY_LIB_DIR@@' configure.ac
@@ -196,6 +199,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_pkgconfigdir/*
 
 %changelog
+* Thu Apr 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.61-alt1
+- 1.12.61
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.60-alt1
 - 1.12.60
 

@@ -14,7 +14,7 @@
 %def_enable gtk_doc
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.60
+Version: %ver_major.61
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -32,7 +32,7 @@ Source: %_name-%version.tar
 
 %define glib_ver 2.28.0
 %define gsf_ver 1.14.47
-%define gtk_ver 3.0.0
+%define gtk_ver 3.20
 %define cairo_ver 1.10.0
 %define lasem_ver 0.4.1
 
@@ -153,6 +153,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Thu Apr 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.61-alt1
+- 0.10.61
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.60-alt1
 - 0.10.60
 
