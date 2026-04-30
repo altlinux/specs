@@ -3,7 +3,7 @@
 %def_with check
 
 Name: prek
-Version: 0.3.9
+Version: 0.3.11
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
@@ -61,6 +61,9 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Apr 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.11-alt1
+- Updated to version 0.3.11.
+
 * Wed Apr 15 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.9-alt1
 - Updated to version 0.3.9.
 
