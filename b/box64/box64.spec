@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: box64
-Version: 0.4.0
+Version: 0.4.2
 Release: alt1
 
 Summary: Linux Userspace x86_64 Emulator with a twist
@@ -74,6 +74,15 @@ tar -xvf %SOURCE2 -C %buildroot%sysroot --strip-components=1
 %sysroot
 
 %changelog
+* Mon Apr 27 2026 Ivan A. Melnikov <iv@altlinux.org> 0.4.2-alt1
+- 0.4.2
+- hack: restore png_set_longjmp_fn mapping for libpng16 from v0.4.0
+  (workaround for https://github.com/ptitSeb/box64/issues/3800;
+  use emulated libpng16 in case of crashes)
+
+* Fri Apr 24 2026 Dmitry Terekhin <jqt4@altlinux.org> 0.4.0-alt2
+- Update some our own bundeled libraries
+
 * Mon Jan 12 2026 Ivan A. Melnikov <iv@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
