@@ -1,6 +1,6 @@
 Name: tvheadend
 Version: 4.2.8
-Release: alt6
+Release: alt7
 
 Summary: Tvheadend TV streaming server
 License: GPLv3
@@ -27,7 +27,7 @@ through a modern web interface.
 
 %build
 export TVHEADEND_FILE_CACHE=${PWD}/.gear
-CFLAGS="%optflags -fcommon -Wno-format-truncation" PYTHON=%__python \
+CFLAGS="%optflags -fcommon -Wno-format-truncation -std=gnu17" PYTHON=%__python \
 sh configure --bindir=%_sbindir --libdir=%_libdir \
 	     --mandir=%_mandir --datadir=%_datadir \
 	     --disable-libav --disable-ffmpeg_static
@@ -72,6 +72,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Thu Apr 30 2026 Artyom Bystrov <arbars@altlinux.org> 4.2.8-alt7
+- Fix build on GCC15
+
 * Wed Sep 20 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.8-alt6
 - Switch to ffmpeg6
 
