@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -174,6 +174,12 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Apr 29 2026 Andrey Limachko <liannnix@altlinux.org> 0.50-alt1
+- Provide ability to check if computer name is already used. (thx Ivan Korytov)
+- Enable automatic ticket renewal on sssd. (thx Ivan Korytov)
+- Require workgroup name to be filled in. (thx Ivan Korytov)
+- Fix role group mapping for ad. (thx Ivan Korytov)
+
 * Sun Apr 05 2026 Andrey Cherepanov <cas@altlinux.org> 0.49-alt1
 - Removed LDAP domain in GUI interface, added ALT Domain and ALD Pro support.
 - 90-auth: renamed domain only if their scheme is ldap or krb5 and server role
