@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 2026.1
+%define ver_major 2026.3
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.5
+Version: %ver_major.27
 Release: alt1
 
 Summary: Quick and efficient download manager
@@ -21,6 +21,7 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+Patch1: %name-2026.3.27-alt-fix-icons-install.patch
 
 %define adw_ver 1.6
 
@@ -54,6 +55,7 @@ stream downloads.
 
 %prep
 %setup
+%patch1 -b .icons
 
 %build
 %meson
@@ -74,12 +76,15 @@ stream downloads.
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
-%_iconsdir/io.github.giantpinkrobots.bootqt.png
+%_iconsdir/apps/io.github.giantpinkrobots.bootqt.png
 %_xdgmimedir/packages/%rdn_name.mime.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Fri May 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.3.27-alt1
+- 2026.3.27
+
 * Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.1.5-alt1
 - 2026.1.5
 
