@@ -3,7 +3,7 @@
 %def_with check
 
 Name: usage
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: A specification for CLIs
@@ -70,6 +70,9 @@ export PATH="%buildroot%_bindir:$PATH"
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Apr 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.2.1-alt1
+- Updated to version 3.2.1.
+
 * Thu Apr 09 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.2.0-alt1
 - Initial build for ALT.
 

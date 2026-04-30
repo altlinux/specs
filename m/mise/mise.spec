@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mise
-Version: 2026.4.5
+Version: 2026.4.27
 Release: alt1
 
 Summary: The front-end to your dev env
@@ -84,6 +84,9 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Apr 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.4.27-alt1
+- Updated to version 2026.4.27.
+
 * Thu Apr 09 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.4.5-alt1
 - Initial build for ALT.
 
