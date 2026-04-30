@@ -17,7 +17,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt1
+Release: alt2
 License: None
 Group: Development/Other
 
@@ -171,6 +171,7 @@ This is a metapackage for %{1}-%{2}. \
 %do_package gcc objc 1 %nil
 %do_package gcc objc++ 1 %nil
 %do_package gcc plugin-devel 1 %nil
+%do_package libgcc devel 1 %nil
 %do_package libgccjit devel 1 %nil
 %do_package libgfortran devel 1 %nil
 %do_package libgfortran devel-static 1 %nil
@@ -343,6 +344,9 @@ ln_bin \
 %endif
 
 %changelog
+* Thu Apr 30 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15-alt2
+- Added libgcc-devel subpackage.
+
 * Tue Apr 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15-alt1
 - Changed the default compiler to gcc15.
 

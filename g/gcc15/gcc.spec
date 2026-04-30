@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 15.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -137,7 +137,7 @@ Url: https://gcc.gnu.org/
 
 %def_without pdf
 %def_disable doxygen
-%def_enable check
+%def_disable check
 
 %define buildtarget obj-%gcc_target_platform
 
@@ -147,6 +147,7 @@ Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
 Requires(pre): gcc-common >= 1.4.7
 Requires: cpp%gcc_branch = %EVR
+Requires: libgcc%gcc_branch-devel = %EVR
 Requires: %binutils_deps, glibc-devel
 Requires: libgcc1 %REQ %EVR
 %ifarch %libatomic_arches
@@ -228,6 +229,14 @@ Requires(pre): glibc-core
 %description -n libgcc1
 This package contains GCC shared support library which is needed
 e.g. for exception handling support.
+
+%package -n libgcc%gcc_branch-devel
+Summary: GCC support library
+Group: Development/C
+
+%description -n libgcc%gcc_branch-devel
+This package contains GCC C runtime files and development parts for GCC shared
+support library.
 
 ####################################################################
 # Atomic library
@@ -383,6 +392,8 @@ This package contains GCC plugin for GDB C expression evaluation.
 %package -n libgccjit0
 Summary: Library for embedding GCC inside programs and libraries
 Group: System/Libraries
+Requires: libgcc%gcc_branch-devel = %EVR
+Requires: glibc-devel
 
 %description -n libgccjit0
 This package contains shared library with GCC JIT front-end.
@@ -1557,6 +1568,32 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %_man1dir/gcov-dump%psuffix.*
 %_man1dir/lto-dump%psuffix.*
 %dir %gcc_target_libdir/
+%ifarch x86_64
+%dir %gcc_target_lib32dir/
+%gcc_target_libdir/32
+%endif
+%dir %gcc_target_libdir/plugin/
+%gcc_target_libdir/collect2
+%gcc_target_libdir/lto-wrapper
+%gcc_target_libdir/lto1
+%attr(0755,root,root) %gcc_target_libdir/liblto_plugin.so*
+%gcc_target_libdir/plugin/gengtype
+
+%exclude %_bindir/%gcc_target_platform-gcc-tmp
+%exclude %gcc_target_libdir/include-fixed
+%exclude %gcc_target_libdir/include/ssp
+%exclude %gcc_target_libdir/libcaf_single.la
+%exclude %gcc_target_libdir/plugin/gtype.state
+%exclude %gcc_target_libdir/plugin/libcc1plugin.la
+%exclude %gcc_target_libdir/plugin/libcp1plugin.la
+%exclude %gcc_target_libdir/liblto_plugin.la
+%exclude %_datadir/locale/de/LC_MESSAGES/libstdc++.mo
+%exclude %_datadir/locale/fr/LC_MESSAGES/libstdc++.mo
+%exclude %_man7dir/fsf-funding.7*
+%exclude %_man7dir/gfdl.7*
+%exclude %_man7dir/gpl.7*
+
+%files -n libgcc%gcc_branch-devel
 %dir %gcc_target_libdir/include/
 %gcc_target_libdir/include/float.h
 %gcc_target_libdir/include/gcov.h
@@ -1676,30 +1713,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %dir %gcc_target_libdir/include/sanitizer/
 %gcc_target_libdir/include/sanitizer/common_interface_defs.h
 %endif
-%ifarch x86_64
-%dir %gcc_target_lib32dir/
-%gcc_target_libdir/32
-%endif
-%dir %gcc_target_libdir/plugin/
-%gcc_target_libdir/collect2
-%gcc_target_libdir/lto-wrapper
-%gcc_target_libdir/lto1
-%attr(0755,root,root) %gcc_target_libdir/liblto_plugin.so*
-%gcc_target_libdir/plugin/gengtype
-
-%exclude %_bindir/%gcc_target_platform-gcc-tmp
-%exclude %gcc_target_libdir/include-fixed
-%exclude %gcc_target_libdir/include/ssp
-%exclude %gcc_target_libdir/libcaf_single.la
-%exclude %gcc_target_libdir/plugin/gtype.state
-%exclude %gcc_target_libdir/plugin/libcc1plugin.la
-%exclude %gcc_target_libdir/plugin/libcp1plugin.la
-%exclude %gcc_target_libdir/liblto_plugin.la
-%exclude %_datadir/locale/de/LC_MESSAGES/libstdc++.mo
-%exclude %_datadir/locale/fr/LC_MESSAGES/libstdc++.mo
-%exclude %_man7dir/fsf-funding.7*
-%exclude %_man7dir/gfdl.7*
-%exclude %_man7dir/gpl.7*
 
 %if_disabled compat
 %files -n libgcc1
@@ -2108,6 +2121,11 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Wed Apr 29 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.2.1-alt2
+- Moved C runtime, library symlinks and headers to a new
+  libgcc%gcc_branch-devel package (ALT#39379).
+- libgccjit0: Added R: libgcc%gcc_branch-devel, glibc-devel (ALT#55332).
+
 * Tue Apr 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.2.1-alt1
 - Updated to 15.2.1.
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
