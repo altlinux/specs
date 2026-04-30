@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: commonmark
-Version: 0.27.1
-Release: alt2
+Version: 0.28.0
+Release: alt1
 
 Summary: Java CommonMark library for parsing and rendering Markdown text
 Group: Development/Java
@@ -32,47 +32,42 @@ Group: Development/Java
 %package ext-autolink
 Summary: commonmark extension for autolinking
 Group: Development/Java
-Requires: commonmark
 
 %package ext-footnotes
 Summary: commonmark extension for footnotes
 Group: Development/Java
-Requires: commonmark
+
+%package ext-gfm-alerts
+Summary: commonmark extension for alerts
+Group: Development/Java
 
 %package ext-gfm-strikethrough
 Summary: commonmark extension for strikethrough
 Group: Development/Java
-Requires: commonmark
 
 %package ext-gfm-tables
 Summary: commonmark extension for tables
 Group: Development/Java
-Requires: commonmark
 
 %package ext-heading-anchor
 Summary: commonmark extension for adding id attributes to h tags
 Group: Development/Java
-Requires: commonmark
 
 %package ext-image-attributes
 Summary: commonmark extension for adding attributes to images
 Group: Development/Java
-Requires: commonmark
 
 %package ext-ins
 Summary: commonmark extension for <ins>; using ++.
 Group: Development/Java
-Requires: commonmark
 
 %package ext-task-list-items
 Summary: commonmark extension for task list items
 Group: Development/Java
-Requires: commonmark
 
 %package ext-yaml-front-matter
 Summary: commonmark extension for YAML front matter
 Group: Development/Java
-Requires: commonmark
 
 %description
 Java library for parsing and rendering Markdown text according to the
@@ -88,6 +83,10 @@ CommonMark extension for turning plain URLs and email addresses into links.
 
 %description ext-footnotes
 CommonMark extension for footnotes using [^1] syntax.
+
+%description ext-gfm-alerts
+Commonmark extension for GFM alerts (admonition blocks) using [!TYPE]
+syntax (GitHub Flavored Markdown).
 
 %description ext-gfm-strikethrough
 CommonMark extension for GFM strikethrough using ~~ (GitHub Flavored Markdown).
@@ -140,6 +139,8 @@ CommonMark extension for YAML front matter.
 
 %files ext-footnotes -f .mfiles-commonmark-ext-footnotes
 
+%files ext-gfm-alerts -f .mfiles-commonmark-ext-gfm-alerts
+
 %files ext-gfm-strikethrough -f .mfiles-commonmark-ext-gfm-strikethrough
 
 %files ext-gfm-tables -f .mfiles-commonmark-ext-gfm-tables
@@ -155,6 +156,10 @@ CommonMark extension for YAML front matter.
 %files ext-yaml-front-matter -f .mfiles-commonmark-ext-yaml-front-matter
 
 %changelog
+* Thu Apr 30 2026 Arseniy Kostevich <faux@altlinux.org> 0.28.0-alt1
+- New version.
+- Add package ext-gfm-alerts.
+
 * Tue Apr 07 2026 Arseniy Kostevich <faux@altlinux.org> 0.27.1-alt2
 - Fix dependency name.
 
