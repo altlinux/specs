@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules openexr-devel qt5-base-devel
 BuildRequires: zlib-devel
 BuildRequires: libavif-devel
-BuildRequires: libraw-devel
+BuildRequires: libraw0-devel
 %if_enabled heif
 BuildRequires: libheif-devel
 %endif
@@ -69,6 +69,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- build with libraw0-devel
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
