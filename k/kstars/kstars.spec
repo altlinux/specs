@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 3.8.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init no_altplace appdata
 
@@ -33,7 +33,7 @@ BuildRequires: qt6-datavis3d-devel
 BuildRequires: /usr/bin/sqlite3
 BuildRequires: libsecret-devel libqtkeychain-qt6-devel
 BuildRequires: eigen3 libGLU-devel zlib-devel libcurl-devel libcups-devel
-BuildRequires: libcfitsio-devel stellarsolver-devel wcslib-devel libraw-devel libgsl-devel
+BuildRequires: libcfitsio-devel stellarsolver-devel wcslib-devel libraw0-devel libgsl-devel
 BuildRequires: libopencv-devel
 %if_enabled indi
 BuildRequires: libindi-devel
@@ -91,6 +91,9 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 
 
 %changelog
+* Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.2-alt2
+- build with libraw0-devel
+
 * Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.2-alt1
 - new version
 
