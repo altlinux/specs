@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.25.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ BuildRequires: zlib-devel
 BuildRequires: libcups-devel
 BuildRequires: openexr-devel
 BuildRequires: libavif-devel
-BuildRequires: libraw-devel
+BuildRequires: libraw0-devel
 BuildRequires: libheif-devel
 BuildRequires: libjasper-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
@@ -77,6 +77,9 @@ developing applications that use %name.
 %_libdir/cmake/KF6ImageFormats/
 
 %changelog
+* Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt2
+- build with libraw0-devel
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
 - new version
 
