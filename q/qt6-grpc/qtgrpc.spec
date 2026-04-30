@@ -4,7 +4,7 @@
 
 Name: qt6-grpc
 Version: 6.10.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Grpc component
@@ -15,7 +15,8 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-declarative-devel
-BuildRequires: libgrpc-devel libgrpc++-devel libprotobuf-devel libprotobuf-c-devel libcares-devel libre2-devel
+BuildRequires: libgrpc-devel libgrpc++-devel /usr/bin/grpc_cpp_plugin
+BuildRequires: libprotobuf-devel libprotobuf-c-devel libcares-devel libre2-devel
 
 %description
 Support for CAN and potentially other serial buses.
@@ -166,6 +167,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- fix build requires
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
