@@ -2,7 +2,7 @@
 
 Name: freeplane
 Version: 1.13.2
-Release: alt2
+Release: alt3
 
 Summary: Application for Mind Mapping
 Group: Office
@@ -52,6 +52,13 @@ alternative to Xmind, Mindmeister, and similar mind mapping software.
 %prep
 %setup
 %autopatch -p1
+# Needed for correct launch with split installation.
+cat >> freeplane_framework/script/freeplane.policy <<'EOF'
+
+grant codeBase "file:%_javadir/freeplane/-" {
+        permission java.security.AllPermission;
+};
+EOF
 
 %build
 gradle dist \
@@ -70,9 +77,9 @@ install -Dpm 0644 -t %buildroot%_datadir/freeplane/resources/ortho BIN/resources
 install -Dpm 0644 -t %buildroot%_datadir/freeplane/resources/templates BIN/resources/templates/*
 install -Dpm 0644 -t %buildroot%_datadir/freeplane/resources/xml BIN/resources/xml/*
 install -Dpm 0644 -t %buildroot%_datadir/freeplane/resources/xslt BIN/resources/xslt/*
+install -Dpm 0644 -t %buildroot%_datadir/freeplane BIN/*.policy
+install -Dpm 0644 -t %buildroot%_datadir/freeplane BIN/*.xargs
 install -Dpm 0644 -t %buildroot%_javadir/freeplane BIN/*.jar
-install -Dpm 0644 -t %buildroot%_javadir/freeplane BIN/*.policy
-install -Dpm 0644 -t %buildroot%_javadir/freeplane BIN/*.xargs
 install -Dpm 0644 -t %buildroot%_javadir/freeplane/plugins/org.freeplane.plugin.bugreport/META-INF BIN/plugins/org.freeplane.plugin.bugreport/META-INF/*
 install -Dpm 0644 -t %buildroot%_javadir/freeplane/plugins/org.freeplane.plugin.svg/META-INF BIN/plugins/org.freeplane.plugin.svg/META-INF/*
 install -Dpm 0644 -t %buildroot%_javadir/freeplane/core/org.freeplane.core/META-INF BIN/core/org.freeplane.core/META-INF/*
@@ -106,6 +113,9 @@ ln -s %_javadir/freeplane/freeplanelauncher.jar %buildroot%_datadir/freeplane/fr
 %_iconsdir/hicolor/scalable/apps/freeplane.svg
 
 %changelog
+* Thu Apr 30 2026 Arseniy Kostevich <faux@altlinux.org> 1.13.2-alt3
+- Fix docs runtime search
+
 * Wed Apr 29 2026 Arseniy Kostevich <faux@altlinux.org> 1.13.2-alt2
 - Fix files location (Closes: #58900).
 
