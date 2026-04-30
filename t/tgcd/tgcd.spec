@@ -2,7 +2,7 @@
 
 Name: tgcd
 Version: 1.0.4
-Release: alt1.1
+Release: alt2
 Summary: TGC is the TCP Gender Changer 
 License: GPL-2.0
 Group: Networking/Remote access
@@ -27,7 +27,7 @@ testing and analyze the security of their network.
 %build
 %autoreconf
 %configure
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -std=gnu17" 
 
 %install
 %makeinstall_std
@@ -38,6 +38,9 @@ testing and analyze the security of their network.
 %_man1dir/%name.*
 
 %changelog
+* Thu Apr 30 2026 Pavel Shilov <zerospirit@altlinux.org> 1.0.4-alt2
+- Fix build by explicitly setting GCC standard.
+
 * Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.4-alt1.1
 - Update based on upstream.
 

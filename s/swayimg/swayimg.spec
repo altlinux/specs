@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayimg
-Version: 5.0
+Version: 5.2
 Release: alt1
 Summary: Image viewer for Wayland.
 License: MIT
@@ -42,7 +42,7 @@ BuildRequires: pkgconfig(libjxl)
 BuildRequires: pkgconfig(libheif)
 BuildRequires: pkgconfig(libavif)
 BuildRequires: pkgconfig(libsixel)
-BuildRequires: pkgconfig(libraw)
+BuildRequires: libraw0-devel
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: libluajit-devel
 BuildRequires: openexr-devel
@@ -83,6 +83,9 @@ rm -v %buildroot/%_datadir/licenses/%name/LICENSE
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Apr 30 2026 Pavel Shilov <zerospirit@altlinux.org> 5.2-alt1
+- Update to new version and fix buildrequires to close (ALT #58952).
+
 * Wed Mar 18 2026 Pavel Shilov <zerospirit@altlinux.org> 5.0-alt1
 - Update to new version 5.0.
 
