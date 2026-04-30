@@ -7,7 +7,7 @@
 %define go_builddir .build
 
 Name: crush
-Version: 0.56.0
+Version: 0.64.0
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -18,9 +18,6 @@ Vcs: https://github.com/charmbracelet/crush
 ExcludeArch: %ix86
 
 Source: %name-%version.tar
-Source1: vendor.tar
-Source2: example-llama.cpp-crush.json
-Source3: example-ollama-crush.json
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
@@ -38,9 +35,6 @@ Features:
 
 %prep
 %setup
-%__tar xf %SOURCE1
-%__cp %SOURCE2 ./
-%__cp %SOURCE3 ./
 %__sed -i '/TestCoderAgent/a t.Skip("noNetwork")' internal/agent/agent_test.go
 
 %build
@@ -74,7 +68,7 @@ cd %go_builddir/src/%import_path/
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE.md README.md
-%doc example-*-%name.json
+%doc .gear/example-*-%name.json
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -82,6 +76,9 @@ cd %go_builddir/src/%import_path/
 %_man1dir/%name.1*
 
 %changelog
+* Thu Apr 30 2026 Andrey Limachko <liannnix@altlinux.org> 0.64.0-alt1
+- Update to v0.64.0.
+
 * Fri Apr 10 2026 Andrey Limachko <liannnix@altlinux.org> 0.56.0-alt1
 - Update to v0.56.0.
 
