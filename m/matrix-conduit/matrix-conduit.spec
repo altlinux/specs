@@ -4,7 +4,7 @@
 
 Name: matrix-conduit
 Version: 0.10.12
-Release: alt1
+Release: alt2
 
 Summary: A simple, fast and reliable Matrix homeserver written in Rust
 
@@ -24,6 +24,10 @@ ExcludeArch: %ix86
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust /proc
 BuildRequires: gcc-c++ clang-devel
+%ifarch loongarch64
+# need to rebuild aws-lc-sys
+BuildRequires: cmake
+%endif
 
 %description
 Conduit is a lightweight open-source server implementation of the Matrix
@@ -78,6 +82,10 @@ install -Dm 644 %SOURCE5 %buildroot%_sysconfdir/%name/conduit.toml
 %doc LICENSE
 
 %changelog
+* Thu Apr 30 2026 Ilya Sorochan <k0tran@altlinux.org> 0.10.12-alt2
+- fix FTBFS caused by sisyphus gcc update (gcc15)
+- fix FTBFS on loongarch64
+
 * Fri Apr 10 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10.12-alt1
 - initial build for ALT Sisyphus
 
