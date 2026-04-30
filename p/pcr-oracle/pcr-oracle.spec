@@ -9,18 +9,20 @@
 %endif
 
 Name: pcr-oracle
-Version: 0.5.4
+Version: 0.6.0
 Release: alt1
 
 Summary: Predict TPM PCR values for future boot
 License: GPL-2.0
 Group: System/Configuration/Boot and Init
 
-Url: https://github.com/okirch/pcr-oracle
-VCS: https://github.com/okirch/pcr-oracle
+Url: https://github.com/openSUSE/pcr-oracle
+VCS: https://github.com/openSUSE/pcr-oracle
 Source: %name-%version.tar
 
+BuildRequires: libelf-devel
 BuildRequires: libssl-devel
+BuildRequires: libfdisk-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libtpm2-tss-devel
 
@@ -92,5 +94,8 @@ EOF
 %_man8dir/pcr-oracle.*
 
 %changelog
+* Fri Apr 24 2026 Egor Ignatov <egori@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Mon Apr 20 2026 Egor Ignatov <egori@altlinux.org> 0.5.4-alt1
 - First build for ALT.
