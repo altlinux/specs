@@ -13,7 +13,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		6.18
 %define karch x86_64 aarch64
 
@@ -119,6 +119,9 @@ BuildRequires: kernel-source-%module_name-open-%module_srcver
 %endif
 %if "%legacy8" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy8_src
+%ifnarch %ix86 armh
+BuildRequires: kernel-source-%module_name-open-%legacy8_src
+%endif
 %endif
 %if "%legacy7" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy7_src
@@ -323,6 +326,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 30 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt2
+- fix to build closed module for 580.142
 
 * Thu Apr 16 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt1
 - new release (595.58.03)
