@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.84
+%define kernel_sublevel	.85
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -595,6 +595,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 30 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.85-alt1
+- v6.12.85 (2026-04-30).
+
 * Mon Apr 27 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.84-alt1
 - v6.12.84 (2026-04-27).
 - net: stmmac: dwmac-baikal: add another compatible string.
