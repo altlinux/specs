@@ -1,5 +1,5 @@
 Name: ktls-utils
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: TLS handshake utilities for in-kernel TLS consumers
@@ -14,6 +14,7 @@ BuildRequires: pkgconfig(libkeyutils)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-genl-3.0)
+BuildRequires: pkgconfig(yaml-0.1)
 
 %description
 In-kernel TLS consumers need a mechanism to perform TLS handshakes on a
@@ -29,7 +30,7 @@ parameters are passed back to the kernel via standard kTLS socket options.
 
 %build
 %autoreconf
-%configure --with-systemd
+%configure --with-systemd --enable-session-tags
 %make_build
 
 %install
@@ -38,13 +39,19 @@ parameters are passed back to the kernel via standard kTLS socket options.
 %files
 %doc AUTHORS COPYING NEWS README
 %dir %_sysconfdir/tlshd
+%dir %_sysconfdir/tlshd/tags.d
+%_sysconfdir/tlshd/tags.d/tags.example
 %config(noreplace) %_sysconfdir/tlshd/config
 %_sbindir/tlshd
 %_unitdir/tlshd.service
 %_man5dir/tlshd.conf.5*
+%_man7dir/tls-session-tags.7*
 %_man8dir/tlshd.8*
 
 %changelog
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
+- 1.4.0 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
 - 1.3.0 released
 
