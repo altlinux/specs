@@ -2,7 +2,7 @@
 
 Name: pnana
 Version: 0.0.6
-Release: alt1
+Release: alt2
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: alt-prepare-offline-build.patch
 Patch3: alt-fix-moving-file-by-btn.patch
-Patch4: alt-fix-copying-cache-dir.patch
+Patch4: alt-dont-remove-userhome-cache.patch
+Patch5: alt-change-cache-savepath.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -77,6 +78,9 @@ chmod 755 %buildroot%_bindir/%name
 %_datadir/%name/config.json
 
 %changelog
+* Thu Apr 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.6-alt2
+- save local cache in ~/.cache (closes: 58909)
+
 * Mon Apr 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.6-alt1
 - new version
 
