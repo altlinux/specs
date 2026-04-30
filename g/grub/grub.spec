@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt4
+Release: alt5
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -587,6 +587,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 28 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt5
+- fix duplicating OS name in boot entries
+
 * Sat Apr 11 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt4
 - switch default font to terminus16b
 - bring back deprecated fonts for compatibility with mkimage (closes: #58689)
