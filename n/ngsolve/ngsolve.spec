@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2603
+Version: 6.2.2604
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -18,7 +18,6 @@ Source: %name-%version.tar
 
 Patch1: %name-alt-version-detection.patch
 Patch2: %name-alt-return-type.patch
-Patch3: ngsolve-6.2.2406-alt-pybind11-tuple-type.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -102,7 +101,6 @@ This package contains development documentation for NGSolve.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 echo -n v%version > version.txt
 
@@ -163,6 +161,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Fri May 01 2026 Anton Farygin <rider@altlinux.org> 6.2.2604-alt1
+- 6.2.2603 -> 6.2.2604
+
 * Fri Apr 10 2026 Anton Farygin <rider@altlinux.org> 6.2.2603-alt1
 - 6.2.2602 -> 6.2.2603
 
