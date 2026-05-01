@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.25
+%define kernel_sublevel	.26
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -554,6 +554,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri May 01 2026 Alexei Takaseev <taf@altlinux.org> 6.18.26-alt1
+- v6.18.26 (2026-04-30).
+
 * Tue Apr 28 2026 Alexei Takaseev <taf@altlinux.org> 6.18.25-alt1
 - v6.18.25 (2026-04-27).
 - config: Disable CONFIG_MTD_TESTS.
