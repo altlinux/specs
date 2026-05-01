@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt5
+Release: alt6
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -587,6 +587,10 @@ fi
 %endif
 
 %changelog
+* Fri May 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.14-alt6
+- Backported a couple of upstream commit reverts to fix issues in grub-pc
+  triggered by the new binutils 2.46 (ALT#58959).
+
 * Tue Apr 28 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt5
 - fix duplicating OS name in boot entries
 
