@@ -18,6 +18,7 @@
 %def_enable clickhouse
 %def_enable opcua
 %def_enable js
+%def_enable st2js
 
 %ifarch %ix86
 %def_enable com485f
@@ -28,8 +29,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.44.4
-Release: alt2
+Version: 2.45.1
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -88,6 +89,14 @@ BuildRequires: libopen62541-devel >= 1.4.14-alt1 libopen62541pp-devel >= 0.20.0-
 
 %if_enabled js
 BuildRequires: quickjs-devel quickjs-devel-static
+%endif
+
+%if_enabled st2js
+BuildRequires: python3-dev
+BuildRequires: python3-module-blark
+BuildRequires: python3-module-lark
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-pytest
 %endif
 
 %if_enabled netdata
@@ -434,6 +443,25 @@ JavaScript runner for %{name} (supported opcua)
 %endif
 %endif
 
+%if_enabled st2js
+%package extension-st2js
+Group: Development/Tools
+Summary: IEC 61131-3 Structured Text to JavaScript converter for %{name}
+Requires: %name-extension-js = %version-%release
+Requires: python3
+Requires: python3-module-blark
+Requires: python3-module-lark
+Requires: python3-module-yaml
+
+%description extension-st2js
+Converts IEC 61131-3 Structured Text (ST) programs to JavaScript
+for execution on %{name} JScript runtime (QuickJS).
+
+Supports PROGRAM/FUNCTION_BLOCK, standard FBs (TON, TOF, TP, CTU, CTD,
+CTUD, RS, SR, R_TRIG, F_TRIG), STRUCT, ARRAY, IEC data types, YAML
+sensor mapping, PLCopen XML and TwinCAT XML input formats.
+%endif
+
 %package extension-launcher
 Group: Development/C++
 Summary: Process lifecycle manager for UniSet2 distributed systems
@@ -487,7 +515,7 @@ quickjs_with=
 quickjs_with="--with-quickjs=/usr/lib/quickjs"
 %endif
 
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua} ${quickjs_with}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua} %{subst_enable st2js} ${quickjs_with}
 %make_build
 
 %install
@@ -708,6 +736,16 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %endif
 
 
+%if_enabled st2js
+%files extension-st2js
+%_bindir/%oname-st2js
+%dir %_datadir/%oname/st2js/
+%_datadir/%oname/st2js/pyproject.toml
+%_datadir/%oname/st2js/README.md
+%dir %_datadir/%oname/st2js/st2js/
+%_datadir/%oname/st2js/st2js/*.py
+%endif
+
 %if_enabled api
 %if_enabled uresolver
 %files extension-uresolver
@@ -765,6 +803,11 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Fri May 01 2026 Pavel Vainerman <pv@altlinux.ru> 2.45.1-alt1
+- (jscript): supported IEC61131
+- (jscript): jscript): add IEC61131 ST converter and debug UI
+- (launcher): some fixes
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 2.44.4-alt2
 - fixed build with gcc 15 / libstdc++ 15: add missing <sstream> includes
 
