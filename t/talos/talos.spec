@@ -3,6 +3,7 @@
 %global commit      91c63991eb669602e379ff653ecc20212834390e
 %global shortcommit %(c=%commit; echo ${c:0:7})
 %global altkernel 6.18.18-talos
+%global latest_distro_tag v11.0
 %define _libexecdir %prefix/libexec
 %define alt_registry registry.altlinux.org
 %define alt_orchestra_registry altlinux.space/alt-orchestra
@@ -14,7 +15,7 @@
 
 Name: talos
 Version: 1.12.7
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -143,6 +144,7 @@ export CGO_ENABLED=0
 
 export NAME="ALT Orchestra"
 export SHA=%shortcommit
+export LATEST_DISTRO_TAG="%latest_distro_tag"
 #TODO: switch to registry.altlinux.org
 export USERNAME=alt-orchestra
 export REGISTRY=altlinux.space
@@ -158,6 +160,7 @@ echo -n ${REGISTRY} > pkg/machinery/gendata/data/registry
 #echo -n ${PKGS} > pkg/machinery/gendata/data/pkgs
 echo -n ${TAG} > pkg/machinery/gendata/data/tag
 #echo -n ${ARTIFACTS} > pkg/machinery/gendata/data/artifacts
+echo -n ${LATEST_DISTRO_TAG} > pkg/machinery/gendata/data/latest-distro-tag
 
 #protoc -Iapi -Iapi/vendor/ -I/usr/include \
 #  --go_out=paths=source_relative:api --go-grpc_out=paths=source_relative:api \
@@ -206,6 +209,15 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Thu Apr 30 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.7-alt2
+- Display correct OS name in version command and dashboard
+- Add LatestDistroTag and use it in gen config and talos-bundle commands
+- Add DistroVersion field to profile
+- Add ability to specify Version and DistroVersion from imager cli
+- Use version.Name for reset option in grub
+- Use DistroVersion for ISO label
+- Add version.Name and DistroVersion to OutputPath
+
 * Mon Apr 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.7-alt1
 - New version 1.12.7.
 
