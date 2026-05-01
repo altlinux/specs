@@ -15,7 +15,7 @@ American Institute of Aeronautics and Astronautics (AIAA) Recommended \
 Practice.
 
 Name: cgns
-Version: 4.5.1
+Version: 4.5.2
 Release: alt1
 Summary: CFD General Notation System
 Group: Sciences/Mathematics
@@ -116,6 +116,9 @@ This package contains development files of CGNS.
 %_libdir/*.a
 
 %changelog
+* Fri May 01 2026 Anton Farygin <rider@altlinux.org> 4.5.2-alt1
+- 4.5.1 -> 4.5.2
+
 * Tue Dec 30 2025 Anton Farygin <rider@altlinux.org> 4.5.1-alt1
 - 4.5.0 -> 4.5.1
 
