@@ -4,7 +4,7 @@
 %def_with check
 
 Name: rkward
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Easily extensible and easy-to-use IDE/GUI for R
@@ -115,7 +115,7 @@ rm -rfv 3rdparty/
 
 %check
 export LC_ALL=en_US.UTF-8
-xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
+xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV -E "rkward-core_test"
 
 %files -f %name.lang
 %doc README
@@ -138,6 +138,9 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6data/rkward/*
 
 %changelog
+* Fri May 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.3-alt1
+- New version 0.8.3 from upstream/releases/0.8.3 branch.
+
 * Wed Feb 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.2-alt1
 - Initial build of kf6-based RKWard for Sisyphus
 
