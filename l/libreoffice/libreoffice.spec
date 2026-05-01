@@ -51,9 +51,9 @@
 
 Name: libreoffice
 %define hversion 26.2
-%define urelease 2.2
+%define urelease 3.2
 Version: %hversion.%urelease
-Release: alt5
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -82,7 +82,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: libreoffice-%version-ru.tar
+#Source4: libreoffice-%version-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -453,7 +453,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
+#tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -892,6 +892,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt1
+- New version.
+
 * Mon Apr 27 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt5
 - libreoffice: require libreoffice-extension to avoid missing parts on update.
 
