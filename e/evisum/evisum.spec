@@ -4,7 +4,7 @@
 %define libname lib%_name
 
 Name: evisum
-Version: 2.0.0
+Version: 2.0.4
 Release: alt1
 
 Summary: Evisum - An Enlightened System Monitor
@@ -85,6 +85,9 @@ This package contains development files for Enigmatic shared library.
 
 
 %changelog
+* Fri May 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Tue Apr 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

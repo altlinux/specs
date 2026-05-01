@@ -17,10 +17,10 @@
 # https://github.com/GreycLab/gmic-qt
 %define gmic_qt_ver v.3.5.0-12-g6e59612
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-478-g77d6bb0a
+%define gmic_comm_ver gmic-3.4.3-558-g9820260a
 
 Name: gmic
-Version: 3.7.4
+Version: 3.7.5
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -125,7 +125,7 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version -a1 -a2 -a3
-%patch10 -p1
+#%%patch10 -p1
 %if_disabled openmp
 sed -i "s|-fopenmp -Dcimg_use_openmp||;s|-lgomp||" src/Makefile
 sed -i "s|cimg_use_openmp||;s|-fopenmp||" gmic-qt/gmic_qt.pro zart/zart.pro
@@ -227,6 +227,9 @@ popd
 %gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Fri May 01 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.5-alt1
+- 3.7.5
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.4-alt1
 - 3.7.4
 
