@@ -20,9 +20,8 @@
 # See: https://bugzilla.redhat.com/show_bug.cgi?id=1520879
 %global _find_debuginfo_opts -g
 
-# With LTO flags enabled, debuginfo checks fail for some reason. Disable
-# LTO for a passing build. This really needs to be looked at.
-%define _lto_cflags %{nil}
+# Disable LTO as this causes build failures at the moment.
+%define optflags_lto %nil
 
 # note: parametrized macros are order-sensitive (unlike not-parametrized) even with normal macros
 # also necessary when passing it as parameter to other macros. If not macro, then it is considered a switch
@@ -278,9 +277,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 18
+%global updatever 19
 %global patchver 0
-%global buildver 8
+%global buildver 10
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -364,7 +363,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2020,6 +2019,11 @@ fi
 %endif
 
 %changelog
+* Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.19.0.10-alt1
+- New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
+  CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
+  CVE-2026-34268).
+
 * Tue Jan 27 2026 Ivan A. Melnikov <iv@altlinux.org> 0:17.0.18.0.8-alt2
 - Update loongarch64 patch to fix FTBFS.
 
