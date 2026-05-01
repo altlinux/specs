@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id io.github.kolunmi.Bazaar
 %define _name bazaar
+%define libname bge
 
 Name: bazaar-software
-Version: 0.7.5
+Version: 0.7.15
 Release: alt1
 
 Summary: Discover and install applications
@@ -32,6 +33,11 @@ BuildRequires: pkgconfig(md4c)
 BuildRequires: pkgconfig(webkitgtk-6.0)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(blueprint-compiler)
+BuildRequires: pkgconfig(libproxy-1.0)
+BuildRequires: pkgconfig(malcontent-0)
+BuildRequires: python3(babel)
+
+Requires: flatpak
 
 ExcludeArch: i586
 
@@ -42,6 +48,20 @@ applications and addons from Flatpak remotes, particularly Flathub.
 It emphasizes supporting the developers who make the Linux desktop possible.
 Bazaar features a "curated" tab that can be configured by distributors to allow
 for a more localized experience.
+
+%package -n lib%libname
+Summary: Bazaar GTK Extensions
+Group: Development/C++
+
+%description -n lib%libname
+%summary.
+
+%package -n lib%libname-devel
+Summary: Headers for %name
+Group: Development/C++
+
+%description -n lib%libname-devel
+%summary.
 
 %prep
 %setup
@@ -68,6 +88,18 @@ for a more localized experience.
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
 
+%files -n lib%libname
+%_bindir/%libname-demo
+%_libdir/lib%libname-%version.so
+
+%files -n lib%libname-devel
+%_includedir/%libname
+%_pkgconfigdir/%libname-%version.pc
+
 %changelog
+* Tue Apr 28 2026 David Sultaniiazov <x1z53@altlinux.org> 0.7.15-alt1
+- 0.7.15.
+- Add flatpak requirement.
+
 * Mon Jan 19 2026 David Sultaniiazov <x1z53@altlinux.org> 0.7.5-alt1
 - Initial build.
