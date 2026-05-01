@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.13
+Release: alt0.14
 Epoch: 1
 Url: https://altsp.su
 
@@ -377,6 +377,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri May 01 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.14
+- browser-qt: update from ALT Workstation.
+
 * Tue Mar 17 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.13
 - mate-settings: Add dependency on lightdm-conf-greeter-hide-users.
 - os-release: fix NAME, add VARIANT.
