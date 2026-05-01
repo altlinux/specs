@@ -31,9 +31,8 @@
 # See: https://bugzilla.redhat.com/show_bug.cgi?id=1520879
 %global _find_debuginfo_opts -g
 
-# With LTO flags enabled, debuginfo checks fail for some reason. Disable
-# LTO for a passing build. This really needs to be looked at.
-%define _lto_cflags %{nil}
+# Disable LTO as this causes build failures at the moment.
+%define optflags_lto %nil
 
 # note: parametrized macros are order-sensitive (unlike not-parametrized) even with normal macros
 # also necessary when passing it as parameter to other macros. If not macro, then it is considered a switch
@@ -290,9 +289,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 10
+%global updatever 11
 %global patchver 0
-%global buildver 7
+%global buildver 10
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -1990,6 +1989,11 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.11.0.10-alt1
+- New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
+  CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
+  CVE-2026-34268).
+
 * Thu Jan 22 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.10.0.7-alt1
 - New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
   CVE-2026-21945).
