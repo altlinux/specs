@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.482.b08
+%define version 1.8.0.492.b09
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -155,7 +155,7 @@ BuildRequires: /proc rpm-build-java
 # We filter out -O flags so that the optimization of HotSpot is not lowered from O3 to O2
 # We replace it with -Wformat (required by -Werror=format-security) and -Wno-cpp to avoid FORTIFY_SOURCE warnings
 # We filter out -fexceptions as the HotSpot build explicitly does -fno-exceptions and it's otherwise the default for C++
-%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat -Wno-cpp|' | sed -r -e 's|-O[0-9]*||')
+%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat -Wno-cpp -Wno-error=incompatible-pointer-types -std=gnu++17|' | sed -r -e 's|-O[0-9]*||')
 %global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||')
 %global ourldflags %{__global_ldflags}
 
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u482-b08
+%global shenandoah_revision jdk8u492-b09
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -384,7 +384,7 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b08
+Version: %{javaver}.%{updatever}.b09
 Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
@@ -410,7 +410,7 @@ Group:   Development/Other
 # The test code includes copies of NSS under the Mozilla Public License v2.0
 # The PCSClite headers are under a BSD with advertising license
 # The elliptic curve cryptography (ECC) source code is licensed under the LGPLv2.1 or any later version
-License:  ASL 1.1 and ASL 2.0 and BSD and BSD with advertising and GPL+ and GPLv2 and GPLv2 with exceptions and IJG and LGPLv2+ and MIT and MPLv2.0 and Public Domain and W3C and zlib
+License:  Apache-1.1 and Apache-2.0 and BSD and BSD with advertising and GPL-2.0 and GPL-2.0 with exceptions and IJG and LGPL-2.0+ and MIT and MPL-2.0 and ALT-Public-Domain and W3C and Zlib and ISC and FTL and RSA-MD
 URL:      http://openjdk.java.net/
 
 # Shenandoah HotSpot
@@ -560,6 +560,9 @@ Patch201: jdk8043805-allow_using_system_installed_libjpeg.patch
 
 # minimalistic E2K support by Ilya Kurdyukov
 Patch2000: java-1.8.0-openjdk-e2k.patch
+
+# fix build with GCC 15
+Patch2001: java-1.8.0-openjdk-alt-gcc15.patch
 
 #############################################
 #
@@ -1066,7 +1069,7 @@ sh %{SOURCE12}
 #patch107
 
 # x86 fixes
-%patch105
+%patch105 -p1 -d jdk8
 
 # Upstreamable fixes
 %patch502
@@ -1088,6 +1091,8 @@ sh %{SOURCE12}
 %ifarch %e2k
 %patch2000 -p2 -d jdk8
 %endif
+
+%patch2001 -p1 -d jdk8
 
 # Shenandoah patches
 
@@ -2142,6 +2147,11 @@ fi
 %endif
 
 %changelog
+* Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.492.b09-alt1
+- New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
+  CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
+  CVE-2026-34268).
+
 * Mon Jan 26 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.482.b08-alt1
 - New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
   CVE-2026-21945).
