@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libqofono
-Version: 0.128
+Version: 0.129
 Release: alt1
 
 Summary: Qt 5 library for Ofono
@@ -110,6 +110,9 @@ mv -v %buildroot%_datadir/libqofono-qt5/ofonotest %buildroot%_libexecdir/libqofo
 %_libexecdir/libqofono-qt5/*
 
 %changelog
+* Fri May 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.129-alt1
+- New version 0.129.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 0.128-alt1
 - new version 0.128 (with rpmrb script)
 
