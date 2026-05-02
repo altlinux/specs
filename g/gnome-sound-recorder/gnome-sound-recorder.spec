@@ -8,17 +8,18 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major
-Release: alt0.6%beta
+Release: alt0.7%beta
 
 Summary: Sound Recorder for GNOME
 Group: Sound
 License: LGPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/SoundRecorder
 
+Vcs: https://gitlab.gnome.org/World/vocalis
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/World/vocalis
 Source: %name-%version%beta.tar
 %endif
 
@@ -30,9 +31,9 @@ Provides:  gnome-media-grecord = %EVR
 Provides:  %binary_name = %EVR
 
 %define glib_ver 2.44
-%define gtk_ver 4.4.0
+%define gtk_ver 4.16
 %define gjs_ver 1.54
-%define adwaita_ver 1.2.0
+%define adwaita_ver 1.6.0
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
@@ -84,6 +85,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Sat May 02 2026 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.7.beta
+- updated to 43.beta-132-g195d7e3
+
 * Fri May 10 2024 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.6.beta
 - 43.beta-85-g809aa25 (renamed to vocalis, updated translations)
 - spec: provides vocalis, fixed License, Url tags
