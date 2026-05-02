@@ -16,7 +16,7 @@
 
 Name: bluez-alsa
 Version: 4.3.1
-Release: alt1
+Release: alt1.1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -84,6 +84,10 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 %autopatch -p1
 
 %build
+
+# https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=281920
+%add_optflags -DHAVE_STDARG_H
+
 %autoreconf
 %configure \
 	%{subst_enable aac} \
@@ -148,6 +152,9 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.1-alt1.1
+- fix FTBFS with new gcc15.
+
 * Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.1-alt1
 - 4.3.1.
 
