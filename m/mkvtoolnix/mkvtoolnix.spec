@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 97.0
+Version: 98.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -108,7 +108,8 @@ export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_incl
     %{subst_with dvdread} \
     %nil
 
-rake V=1
+# see https://codeberg.org/mbunkus/mkvtoolnix/issues/2474
+LC_ALL=C.UTF-8 rake V=1
 
 %install
 rake DESTDIR=%buildroot install
@@ -161,6 +162,10 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 98.0-alt1
+- 98.0.
+- apply build workaround for non-utf8 locales.
+
 * Mon Feb 23 2026 L.A. Kostis <lakostis@altlinux.ru> 97.0-alt1
 - 97.0.
 
