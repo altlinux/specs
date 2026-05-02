@@ -385,7 +385,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.b09
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1092,7 +1092,9 @@ sh %{SOURCE12}
 %patch2000 -p2 -d jdk8
 %endif
 
+%if "%__gcc_version_major" > "14"
 %patch2001 -p1 -d jdk8
+%endif
 
 # Shenandoah patches
 
@@ -2147,6 +2149,9 @@ fi
 %endif
 
 %changelog
+* Fri May 01 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.492.b09-alt2
+- Patched source of gcc >= 15.
+
 * Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.492.b09-alt1
 - New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
   CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
