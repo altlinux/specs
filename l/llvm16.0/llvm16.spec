@@ -37,10 +37,6 @@
 AutoReq: nopython
 AutoProv: nopython
 
-# mold needs additional ldflags
-# which pollute llvm-config --ldflags output
-%def_without mold
-
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
 %define optflags_debug -g0
@@ -93,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt9
+Release: alt10
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -123,6 +119,10 @@ Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch21: 0001-lld-Pass-random.randint-stop-parameter-as-int.patch
 Patch22: clang-D142199.patch
+Patch23: llvm-gcc15-build.patch
+Patch24: mlir-gcc15-build.patch
+Patch25: gtest-gcc15-build.patch
+Patch26: compiler-rt-gcc15-build.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
@@ -168,17 +168,14 @@ BuildRequires: pkgconfig(libxml-2.0)
 #BuildRequires: pkgconfig(lua)
 BuildRequires: swig-devel
 BuildRequires: python3-module-sphinx-automodapi
+%endif
 %if_with lldb_python
 BuildRequires: python3-devel
-%endif
 %endif
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
-%endif
-%if_with mold
-BuildRequires: mold
 %endif
 
 %define requires_filesystem Requires: %name-filesystem = %EVR
@@ -677,6 +674,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch20 -p1 -b .clang-rocm-device-path
 %patch21 -p1
 %patch22 -p1 -b .recommonmark
+%patch23 -p2 -b .llvm-gcc15-build
+%patch24 -p2 -b .mlir-gcc15-build
+%patch25 -p2 -b .gtest-gcc15-build
+%patch26 -p2 -b .compiler-rt-gcc15-build
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
@@ -753,12 +754,7 @@ fi
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
 	-DLLVM_ENABLE_LTO=Thin \
-	%if_with mold
-	-DLLVM_USE_LINKER=mold \
-	-DCMAKE_CXX_LINK_FLAGS="-Wl,--thinlto-jobs=all" \
-	%else
 	-DLLVM_ENABLE_LLD:BOOL=ON \
-	%endif
 	%else
 	-DLLVM_ENABLE_LTO=Off \
 	%ifnarch riscv64 loongarch64
@@ -1295,6 +1291,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt10
+- Fix FTBFS with gcc15.
+
 * Sun Mar 15 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt9
 - Apply clang patches from intel opencl-clang v16.0.9.
 - Built only host targets.
