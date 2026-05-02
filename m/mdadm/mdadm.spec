@@ -6,13 +6,13 @@
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
-Version: 4.4
-Release: alt3
+Version: 4.6
+Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
 Group: System/Configuration/Hardware
-Url: https://raid.wiki.kernel.org/index.php/Linux_Raid
+Url: https://github.com/md-raid-utilities/mdadm
 
 Vcs: https://git.kernel.org/pub/scm/utils/mdadm/mdadm.git
 Source: %name-%version.tar
@@ -116,6 +116,9 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %doc alt/README*
 
 %changelog
+* Sat May 02 2026 Alexey Shabalin <shaba@altlinux.org> 4.6-alt1
+- updated from 4.4 to 4.6
+
 * Thu Mar 20 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt3
 - Revert "Fix memory leak in file mdadm" (ALT#53454)
 
@@ -265,7 +268,7 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 - patch for ignoring asprintf result (yes, I know that's dirty..)
 
 * Sat Sep  2 2006 Ilya Evseev <evseev@altlinux.ru> 2.5.3-alt2
-- fixed dietlibc-related problems (#9939) on x86_64
+- fixed dietlibc-related problems (ALT #9939) on x86_64
 - added optional disabling of dietlibc usage
 
 * Tue Aug  8 2006 Ilya Evseev <evseev@altlinux.ru> 2.5.3-alt1
