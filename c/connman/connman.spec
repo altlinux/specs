@@ -7,13 +7,14 @@
 %define dns_backend_type internal
 
 Name: connman
-Version: 1.45
+Version: 2.0
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: GPL-2.0-only
 Group: Networking/Other
-Url: http://connman.net/
+Url: https://git.kernel.org/pub/scm/network/connman/connman.git
+Vcs: git://git.kernel.org/pub/scm/network/connman/connman.git
 
 Source: %name-%version.tar
 Source1: connmand.init
@@ -166,9 +167,12 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 
 %files -n %name-devel
 %_pkgconfigdir/*.pc
-%_includedir/*
+#%%_includedir/*
 
 %changelog
+* Sat May 02 2026 Alexey Shabalin <shaba@altlinux.org> 2.0-alt1
+- updated from 1.45 to 2.0
+
 * Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 1.45-alt1
 - New version 1.45.
 
