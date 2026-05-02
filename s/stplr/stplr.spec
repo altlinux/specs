@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -45,13 +45,21 @@ not in its repositories.
 
 %install
 %makeinstall_std PREFIX=%_prefix POST_INSTALL=0
+touch %buildroot%_cachedir/%name/db
 
 %pre
 %_sbindir/groupadd -r -f %builder_user
 %_sbindir/useradd -M -r -d %_cachedir/%name -s /sbin/nologin -c "Stapler Builder" -g %builder_group %builder_user >/dev/null 2>&1 ||:
 
 %post
-%_bindir/%name migrate
+if [ $1 -eq 2 ]; then
+    # upgrade from < 0.1.1
+    # https://bugzilla.altlinux.org/58950
+    if [ -f %_cachedir/%name/db ]; then
+        chown %builder_user:%builder_group %_cachedir/%name/db ||:
+    fi
+    /usr/bin/stplr migrate ||:
+fi
 
 %files
 %_bindir/%name
@@ -63,6 +71,7 @@ not in its repositories.
 %_target_libdir_noarch/%name
 %_target_libdir_noarch/%name/repos.d
 %attr(0755,%builder_user,%builder_group) %_cachedir/%name
+%ghost %_cachedir/%name/db
 %attr(0755,root,root) %_sysconfdir/%name
 %attr(0755,root,root) %_sysconfdir/%name/repos.d
 %attr(0755,root,root) %_sysconfdir/%name/repo-overrides.d
@@ -73,6 +82,13 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Sat May 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.1-alt1
+- New version 0.1.1.
+- Fix db created with wrong ownership (closes ALT#58950)
+  + Do not run migrate on fresh install, only on upgrade
+  + Fix db ownership for upgrades from <= 0.1.0
+  + Package db as ghost
+
 * Fri Apr 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.0-alt1
 - New version 0.1.0.
 
