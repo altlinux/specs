@@ -1,6 +1,6 @@
 Name:    postprocessd
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: The raw picture to jpg processor
 License: GPL-3.0+
@@ -15,7 +15,7 @@ BuildRequires(pre): meson
 BuildRequires: cmake
 BuildRequires: ninja-build
 BuildRequires: gcc-c++
-BuildRequires: libraw-devel
+BuildRequires: libraw0-devel
 BuildRequires: libtiff-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libexif-devel
@@ -44,5 +44,8 @@ that aims to improve the image quality.
 %_datadir/megapixels/postprocessor.d/postprocessd*
 
 %changelog
+* Sat May 02 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt2
+- Rebuilt with libraw0-devel (ALT #58954).
+
 * Tue Apr 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus.
