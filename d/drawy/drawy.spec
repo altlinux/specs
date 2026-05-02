@@ -1,10 +1,11 @@
 %define oname org.kde.drawy
-%define apiversion 1.0.40
+%define apiversion 1.0.0
 %define soname 0
 
 Name: drawy
-Version: 20260425
+Version: 1.0.0
 Release: alt1
+Epoch: 1
 
 Summary: Drawy is a work-in-progress infinite whiteboard tool
 License: GPL-3.0-or-later
@@ -79,6 +80,7 @@ Summary: %name library
 %_datadir/metainfo/%oname.metainfo.xml
 %_datadir/qlogging-categories?/%name.categories
 %_datadir/mime/packages/*.xml
+%_datadir/config.kcfg/*.kcfg
 
 %files devel
 %_libdir/kf?/devel/*.so
@@ -97,6 +99,9 @@ Summary: %name library
 %_libdir/libstandardformplugin.so.%apiversion
 
 %changelog
+* Sat May 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1.0.0-alt1
+- Release 1.0.0.
+
 * Sun Apr 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260425-alt1
 - updated to git.3d7621bf7a
 
