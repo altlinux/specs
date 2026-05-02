@@ -5,7 +5,7 @@
 
 Name: fossology-nomos
 Version: 4.6.0
-Release: alt1
+Release: alt2
 Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -29,10 +29,7 @@ FOSSology open source license compliance software system and toolkit.
 %setup
 
 %build
-%ifarch x86_64
-%add_optflags -fanalyzer -Werror
-%endif
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -std=gnu17
 make -C src/nomos/agent -f Makefile.nomossa.altlinux \
        CFLAGS='%optflags -DVERSION_S=\"%version\" -DCOMMIT_HASH_S=\"%release\"'
 
@@ -57,6 +54,9 @@ nomossa -d LICENSES
 %_bindir/nomossa
 
 %changelog
+* Sat May 02 2026 Vitaly Chikunov <vt@altlinux.org> 4.6.0-alt2
+- Workaround gcc15 FTBFS with -std=gnu17.
+
 * Wed Nov 26 2025 Vitaly Chikunov <vt@altlinux.org> 4.6.0-alt1
 - Update to 4.6.0 (2025-11-25).
 
