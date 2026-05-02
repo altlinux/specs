@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.6
 
 Name: wireshark
-Version: 4.6.4
+Version: 4.6.5
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -235,6 +235,48 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Sat May 02 2026 Anton Farygin <rider@altlinux.org> 4.6.5-alt1
+- 4.6.4 -> 4.6.5
+- Fixes:
+  * CVE-2026-5409: Monero dissector crash
+  * CVE-2026-5408: BT-DHT dissector crash
+  * CVE-2026-5406: FC-SWILS dissector crash
+  * CVE-2026-5407: SMB2 dissector infinite loop
+  * CVE-2026-5299: ICMPv6 dissector crash
+  * CVE-2026-5401: AFP dissector crash
+  * CVE-2026-5402: TLS dissector crash and possible code execution
+  * CVE-2026-5404: K12 RF5 file parser crash
+  * CVE-2026-5403: SBC codec crash and possible code execution
+  * CVE-2026-5405: RDP dissector crash and possible code execution
+  * CVE-2026-5654: AMR-NB codec crash
+  * CVE-2026-5655: SDP dissector crash
+  * CVE-2026-5657: iLBC audio codec crash
+  * CVE-2026-5656: Profile import crash and possible code execution
+  * CVE-2026-5653: DCP-ETSI protocol dissector crash
+  * CVE-2026-6538: BEEP protocol dissector crash
+  * CVE-2026-6537: ZigBee protocol dissector crash
+  * CVE-2026-6536: DLMS/COSEM protcol dissector infinite loop
+  * CVE-2026-6535: Dissection engine zlib decompression crash
+  * CVE-2026-6534: USB HID protocol dissector infinite loop
+  * CVE-2026-6533: Dissection engine LZ77 decompression crash
+  * CVE-2026-6532: Kismet protocol dissector crash
+  * CVE-2026-6531: SANE protocol dissector infinite loop
+  * CVE-2026-6530: DCP-ETSI protocol dissector crash
+  * CVE-2026-6529: iLBC audio codec crash
+  * CVE-2026-6528: TLS dissector infinite loop
+  * CVE-2026-6527: ASN.1 PER protocol dissector crash
+  * CVE-2026-6526: RTSP protocol dissector crash
+  * CVE-2026-6525: IEEE 802.11 protocol dissector crash
+  * CVE-2026-6524: MySQL protocol dissector crash
+  * CVE-2026-6523: GNW protocol dissector infinite loop
+  * CVE-2026-6521: OpenFlow v5 protocol dissector infinite loops
+  * CVE-2026-6520: OpenFlow v6 protocol dissector infinite loop
+  * CVE-2026-6519: MBIM dissector infinite loop
+  * CVE-2026-6522: RPKI-Router protocol dissector infinite loop
+  * CVE-2026-6870: GSM RP protocol dissector crash
+  * CVE-2026-6869: WebSocket protocol dissector crash
+  * CVE-2026-6868: HTTP protocol dissector crash
+
 * Thu Feb 26 2026 Anton Farygin <rider@altlinux.org> 4.6.4-alt1
 - 4.6.3 -> 4.6.4
 - Fixes:
