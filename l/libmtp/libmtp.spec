@@ -2,11 +2,11 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.22
+Version: 1.1.23
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
-Summary: a library for accessing Media Transfer Protocol devices
+Summary: A library for accessing Media Transfer Protocol devices
 
 License: LGPLv2.1+
 Group: System/Libraries
@@ -18,9 +18,8 @@ Patch1: %name-%version-%release.patch
 BuildRequires: libusb-devel libgcrypt-devel rpm-macros-systemd
 
 %package -n %name%sover
-Summary: a library for accessing Media Transfer Protocol devices
+Summary: A library for accessing Media Transfer Protocol devices
 Group: System/Libraries
-Provides: %name = %version-%release
 
 %package -n %name-devel
 Summary: %name development environment
@@ -74,8 +73,6 @@ touch config.rpath
 %install
 %makeinstall_std
 
-rm -rf %buildroot%_docdir/%name-%version/html
-
 %files -n %name%sover
 %_libdir/*.so.*
 %_udevhwdbdir/*
@@ -97,6 +94,10 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Sun May 03 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.23-alt1
+- 1.1.23
+- drop unneeded Provides
+
 * Wed Nov 27 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.22-alt1
 - 1.1.22
 
