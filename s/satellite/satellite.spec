@@ -3,11 +3,14 @@
 
 Name: satellite
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Check your GPS reception and save your tracks
 License: GPL-3.0-only
 Group: Sciences/Geosciences
+
+URL: https://codeberg.org/tpikonen/satellite
+VCS: https://codeberg.org/tpikonen/satellite
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -51,5 +54,8 @@ save GPX-tracks.
 %exclude %python3_sitelibdir_noarch/data/%name.desktop
 
 %changelog
+* Sun May 03 2026 David Sultaniiazov <x1z53@altlinux.org> 0.9.2-alt2
+- Add URL and VCS.
+
 * Mon Apr 27 2026 David Sultaniiazov <x1z53@altlinux.org> 0.9.2-alt1
 - Initial build.
