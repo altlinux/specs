@@ -1,5 +1,5 @@
 Name: kernel-image-7.1
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	7.0
 %define kernel_base_version	7.1
 %define kernel_sublevel	.0
@@ -598,6 +598,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun May 03 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc2
+- Update to v7.1-rc2 (2026-05-03).
+- config: Disable CONFIG_CRYPTO_USER_API.
+
 * Mon Apr 27 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc1
 - Rebase to v7.1-rc1 (2026-04-26).
 
