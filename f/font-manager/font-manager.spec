@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define rdn_name com.github.FontManager.FontManager
@@ -9,7 +9,7 @@
 
 Name: font-manager
 Version: 0.9.4
-Release: alt1
+Release: alt2
 
 Summary: A font management application for the GNOME desktop
 License: GPL-3.0-or-later
@@ -23,6 +23,8 @@ Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar
 %else
 Source: %name-%version.tar
 %endif
+# https://github.com/FontManager/font-manager/pull/468
+Patch10: %name-0.9.4-up-vala-0.56.19.patch
 
 Requires: yelp
 
@@ -57,6 +59,7 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
+%patch10 -p1
 
 %build
 %meson \
@@ -90,6 +93,10 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt2
+- updated to 0.9.4-20-gff593362
+- fixed build with vala-0.56.19
+
 * Sat Mar 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4
 
