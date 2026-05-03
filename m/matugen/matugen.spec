@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: matugen
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
-Summary: A material you color generation tool
+Summary: A cross-platform material you and base16 color generation tool
 License: GPL-2.0
 Group: Other
 Url: https://crates.io/crates/matugen
@@ -16,7 +16,13 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 
 %description
-A material you color generation tool with templates.
+A cross-platform material you and base16 color generation tool.
+Features:
+- Templating engine built with Chumsky (designed for colors)
+- Generate / Export Material You and base16 color palettes
+- Keyword Filters
+- Custom Keywords / Colors
+- Palette Customization
 
 %prep
 %setup -a 1
@@ -34,6 +40,9 @@ echo >> .cargo/config.toml
 %doc LICENSE
 
 %changelog
+* Sun May 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.1.0-alt1
+- Updated to version 4.1.0.
+
 * Wed Mar 11 2026 Vladislav Eliseev <general@altlinux.org> 4.0.0-alt1
 - Updated to version 4.0.0.
 
