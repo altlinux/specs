@@ -1,5 +1,5 @@
 Name: an-anime-game-launcher
-Version: 3.18.0
+Version: 3.19.1
 Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
@@ -23,7 +23,6 @@ BuildRequires: libssl-devel
 BuildRequires: protobuf-compiler
 Requires: git-core
 Requires: p7zip
-Requires: libwebp-tools
 
 %description
 %summary.
@@ -35,14 +34,19 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.36.3"]
+[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.38.0"]
 git = "https://github.com/an-anime-team/anime-game-core"
-tag = "1.36.3"
+tag = "1.38.0"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.32.0"]
+[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.35.1"]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.32.0"
+tag = "1.35.1"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/dawn-winery/sophon-tools.git?tag=v0.1.5"]
+git = "https://github.com/dawn-winery/sophon-tools.git"
+tag = "v0.1.5"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -88,6 +92,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Sun May 03 2026 Anton Kurachenko <srebrov@altlinux.org> 3.19.1-alt1
+- New version 3.19.1.
+
 * Sat Nov 15 2025 Anton Kurachenko <srebrov@altlinux.org> 3.18.0-alt1
 - New version 3.18.0.
 
