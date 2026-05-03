@@ -2,7 +2,7 @@
 
 Name: gnome-shell-extension-transparent-window-moving
 Version: 18
-Release: alt5
+Release: alt6
 
 Summary: Makes window transparent while moving
 
@@ -25,7 +25,7 @@ GNOME Shell Extension. Makes window transparent while moving on the desktop.
 %prep
 %setup
 
-subst 's|"49"|"49", "50"|' src/metadata.json
+#subst 's|"49"|"49", "50"|' src/metadata.json
 
 subst "s|~/.local/share/gnome-shell/extensions|%buildroot%_datadir/gnome-shell/extensions/|" Makefile
 
@@ -41,6 +41,9 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas/
 %doc *.md LICENSE 
 
 %changelog
+* Mon May 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 18-alt6
+- update to git.1ba412c
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 18-alt5
 - fixed for GNOME 50
 
