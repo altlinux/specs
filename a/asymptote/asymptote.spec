@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 3.06
+Version: 3.09
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -38,6 +38,8 @@ BuildRequires: texi2dvi
 %add_python3_path %_datadir/%name/GUI/
 %add_python3_lib_path %_datadir/%name/GUI/
 %add_python3_req_skip configs determine_pkg_info
+%add_python3_req_skip xasyqtui.custMatTransform xasyqtui.labelTextEditor xasyqtui.setCustomAnchor
+%add_python3_req_skip xasyqtui.widg_addLabel xasyqtui.widg_addPolyOpt xasyqtui.widg_editBezier xasyqtui.window1
 %add_python3_self_prov_path %buildroot%_datadir/asymptote/GUI/xasyqtui/
 
 %description
@@ -98,6 +100,10 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.09-alt1
+- new version 3.09
+- skip self-deps on xasyqtui auto-generated modules
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.06-alt1
 - new version 3.06
 - use system libgc headers directly (fix FTBFS)
