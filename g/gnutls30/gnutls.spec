@@ -9,7 +9,7 @@
 %define libzstd_soname 1
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.12
+Version: 3.8.13
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -249,6 +249,7 @@ check_lib_soname() {
 	--without-brotli \
 	--without-zstd \
 %endif
+	--disable-hpke \
 	--docdir=%_docdir/gnutls-%version/
 
 %if_enabled certcompress
@@ -333,6 +334,13 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Mon May 04 2026 Mikhail Efremov <sem@altlinux.org> 3.8.13-alt1
+- Updated patches.
+- Updated to 3.8.13 (fixes: CVE-2026-33846, CVE-2026-42009,
+  CVE-2026-33845, CVE-2026-42010, CVE-2026-3833, CVE-2026-42011,
+  CVE-2026-42012, CVE-2026-42013, CVE-2026-42014, CVE-2026-5260,
+  CVE-2026-42015, CVE-2026-3832, CVE-2026-5419).
+
 * Wed Feb 11 2026 Mikhail Efremov <sem@altlinux.org> 3.8.12-alt1
 - Dropped obsoleted patch.
 - Updated to 3.8.12 (fixes: CVE-2026-1584, CVE-2025-14831).
