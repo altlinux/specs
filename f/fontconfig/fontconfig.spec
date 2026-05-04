@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.17.1
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -71,8 +71,8 @@ documentation required for development of fontconfig-based software.
 	--with-default-fonts=%_datadir/fonts \
 	--with-cache-dir=%_var/cache/%name \
 	--docdir=%docdir \
-	--with-default-hinting=full \
-	--with-default-sub-pixel-rendering=rgb \
+	--with-default-hinting=slight \
+	--with-default-sub-pixel-rendering=none \
 	#
 
 %make PDF_FILES=
@@ -147,16 +147,16 @@ fi
 %_sysconfdir/fonts/conf.d/[2-9]*.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-yes-antialias.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-none.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
 %ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
-%ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-full.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-medium.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-none.conf
-%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-none.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-bgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vbgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vrgb.conf
@@ -193,6 +193,10 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Mon May 04 2026 Semen Fomchenkov <armatik@altlinux.org> 2.17.1-alt3
+- switch default hinting style from full to slight
+- disable sub-pixel rendering by default
+
 * Wed Sep 03 2025 Sergey V Turchin <zerg@altlinux.org> 2.17.1-alt2
 - don't reject bitmap fonts (closes: 55780)
 
