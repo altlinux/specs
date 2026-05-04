@@ -5,7 +5,7 @@
 
 Name: kde6-%rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: Graphical desktop/KDE
@@ -16,10 +16,10 @@ License: GPL-2.0-or-later
 Source: %rname-%version.tar
 Patch1: alt-libraw-ver.patch
 
-BuildRequires: extra-cmake-modules libraw-devel qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel
-BuildRequires: libraw-devel
+BuildRequires: libraw0-devel
 
 %description
 %summary
@@ -76,6 +76,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- build with libraw0-devel
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
