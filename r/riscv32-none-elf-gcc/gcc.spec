@@ -1,5 +1,5 @@
 Name: riscv32-none-elf-gcc
-Version: 15.2.0
+Version: 16.1.0
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -9,7 +9,7 @@ Url: https://gcc.gnu.org/
 
 Requires: riscv32-none-elf-newlib
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen
 BuildRequires: riscv32-none-elf-binutils >= 2.44
@@ -83,7 +83,7 @@ mkdir obj-%target; cd obj-%target
             --enable-multilib \
             --with-abi=ilp32d \
             --with-arch=rv32gc \
-            --with-multilib-generator='rv32i-ilp32--;rv32iac-ilp32--;rv32im-ilp32--;rv32imac-ilp32--;rv32imafc-ilp32--' \
+            --with-multilib-generator='rv32i-ilp32--;rv32iac-ilp32--;rv32im-ilp32--;rv32imac-ilp32--;rv32imafc-ilp32--;rv32ima_zicsr_zifencei_zba_zbb_zbs_zbkb_zca_zcb-ilp32--' \
             --with-gmp \
             --with-mpfr \
             --with-mpc \
@@ -126,6 +126,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.1.0-alt1
+- 16.1.0 released
+
 * Wed Sep 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2.0-alt1
 - 15.2.0 released
 
