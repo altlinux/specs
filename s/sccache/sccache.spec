@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    sccache
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: sccache is ccache with cloud storage
@@ -43,14 +43,7 @@ tar -xf %SOURCE1
 # use system libzstd
 sed -ir 's/^zstd = \(.*\)/zstd = { version = \1, features = ["pkg-config"] }/' Cargo.toml
 
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build \
@@ -67,6 +60,10 @@ EOF
 %doc README.md docs
 
 %changelog
+* Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.15.0-alt1
+- 0.15.0
+- switch to using %%rust_prep to enable debuginfo
+
 * Tue Feb 10 2026 Ivan A. Melnikov <iv@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
