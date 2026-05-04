@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 58
 %define nv_minor 03
-%define pkg_rel alt308
+%define pkg_rel alt310
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -259,12 +259,14 @@ echo >%buildroot/%_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
 mkdir -p %buildroot/%_sysconfdir/ld.so.conf.d/
 >%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
 echo "/etc/libnvidiacurrent" >>%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+%if "%_lib" != "lib"
 echo "/etc/libnvidia32current" >>%buildroot/%_sysconfdir/ld.so.conf.d/nvidia.conf
+%endif
 mkdir -p %buildroot/etc/modprobe.d/
 install -m 0644 %SOURCE13 %buildroot/etc/modprobe.d/nvidia_common.conf
 # setup make-initrd
 mkdir -p %buildroot/%_datadir/make-initrd/features/nvidia/
-echo "BLACKLIST_MODULES += nvidia nvidia-drm nvidia-modeset" >%buildroot/%_datadir/make-initrd/features/nvidia/config.mk
+echo "BLACKLIST_MODULES += nvidia nvidia-drm nvidia-modeset nvidia-peermem" >%buildroot/%_datadir/make-initrd/features/nvidia/config.mk
 # nvidia-sleep
 install -Dpm 0644 nvidia-sleep/nvidia-sleep-tmpfiles.conf %buildroot/lib/tmpfiles.d/nvidia-sleep.conf
 mkdir -p %buildroot/%_unitdir/
@@ -360,9 +362,15 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon May 04 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt310
+- exclude nvidia-peermem from initrd
+
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt309
+- dont use /etc/libnvidia32current in ld.so.conf on 32-bit systems
+
 * Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt308
 - fix glvnd/egl_vendor.d ICD order
-- convlict with old libnvoptix
+- conflict with old libnvoptix
 
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt307
 - new version
