@@ -9,7 +9,7 @@
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.70.2
+Version: 1.80.0
 Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
@@ -18,6 +18,7 @@ Url: https://pypi.org/project/grpcio
 VCS: https://github.com/grpc/grpc
 
 Source: %name-%version.tar
+Patch0: grpcio-1.80.0-alt-unbundle-absl-log.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ zlib-devel libcares-devel
@@ -31,6 +32,7 @@ HTTP/2-based RPC framework.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 # EDG frontend fails at this
 sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
@@ -76,6 +78,9 @@ export GRPC_PYTHON_BUILD_SYSTEM_ABSL=1
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 13 2026 Anton Farygin <rider@altlinux.org> 1.80.0-alt1
+- 1.70.2 -> 1.80.0
+
 * Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 1.70.2-alt1
 - 1.66.0 -> 1.70.2 (closes: #58336)
 

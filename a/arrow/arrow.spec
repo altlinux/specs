@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define sover 2300
 
 %def_enable flight
 %def_disable flight_sql
@@ -14,15 +15,15 @@
 %endif
 
 Name: arrow
-Version: 12.0.0
-Release: alt2.6
+Version: 23.0.1
+Release: alt1
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
 
 License: Apache-2.0
 Url: https://arrow.apache.org/
+VCS: https://github.com/apache/arrow.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-meson rpm-build-vala rpm-build-gir rpm-macros-python3
@@ -37,9 +38,10 @@ BuildRequires: gcc-c++
 BuildRequires: libgflags-devel
 BuildRequires: git
 BuildRequires: libglog-devel
-BuildRequires: libgrpc++-devel grpc-plugins
+BuildRequires: libgrpc-devel grpc-plugins
 BuildRequires: jsoncpp-devel
 BuildRequires: bzlib-devel
+BuildRequires: libmimalloc-devel
 BuildRequires: libzstd-devel
 BuildRequires: liblz4-devel
 BuildRequires: zlib-devel
@@ -62,24 +64,24 @@ BuildRequires: ncurses-devel
 %endif
 
 BuildRequires: gobject-introspection-devel rpm-build-gir
-BuildRequires: gtk-doc
+BuildRequires: gi-docgen
 BuildRequires: vala vala-tools rpm-build-vala
 
 %description
 Apache Arrow is a data processing library for analysis.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Runtime libraries for Apache Arrow C++
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%sover
 This package contains the libraries for Apache Arrow C++.
 
 %package devel
 Summary: Libraries and header files for Apache Arrow C++
 Group: Development/C++
 Provides: lib%name-devel = %EVR
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Requires: libbrotli-devel
 Requires: bzlib-devel
 Requires: libcares-devel
@@ -100,108 +102,108 @@ Requires: zlib-devel
 %description devel
 Libraries and header files for Apache Arrow C++.
 
-%package -n lib%name-acero
+%package -n lib%name-acero%sover
 Summary: C++ library to execute a query in streaming
 Group: System/Libraries
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
-%description -n lib%name-acero
+%description -n lib%name-acero%sover
 This package contains the libraries for Apache Arrow Acero.
 
 %package -n lib%name-acero-devel
 Summary: Libraries and header files for Apache Arrow Acero
 Group: Development/C++
-Requires: lib%name-acero = %EVR
+Requires: lib%name-acero%sover = %EVR
 Requires: %name-devel = %EVR
 
 %description -n lib%name-acero-devel
 Libraries and header files for Apache Arrow Acero.
 
-%package -n lib%name-dataset
+%package -n lib%name-dataset%sover
 Summary: C++ library to read and write semantic datasets stored in different locations and formats
 Group: System/Libraries
-Requires: lib%name = %EVR
-Requires: lib%name-acero = %EVR
+Requires: lib%name%sover = %EVR
+Requires: lib%name-acero%sover = %EVR
 
-%description -n lib%name-dataset
+%description -n lib%name-dataset%sover
 This package contains the libraries for Apache Arrow dataset.
 
 %package -n lib%name-dataset-devel
 Summary: Libraries and header files for Apache Arrow dataset
 Group: Development/C++
-Requires: lib%name-dataset = %EVR
+Requires: lib%name-dataset%sover = %EVR
 Requires: lib%name-acero-devel = %EVR
 Requires: %name-devel = %EVR
 
 %description -n lib%name-dataset-devel
 Libraries and header files for Apache Arrow dataset.
 
-%package -n lib%name-flight
+%package -n lib%name-flight%sover
 Summary: C++ library for fast data transport
 Group: System/Libraries
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Requires: c-ares
 Requires: openssl
 
-%description -n lib%name-flight
+%description -n lib%name-flight%sover
 This package contains the libraries for Apache Arrow Flight.
 
 %package -n lib%name-flight-devel
 Summary: Libraries and header files for Apache Arrow Flight
 Group: Development/C++
-Requires: lib%name-flight = %EVR
+Requires: lib%name-flight%sover = %EVR
 Requires: %name-devel = %EVR
 
 %description -n lib%name-flight-devel
 Libraries and header files for Apache Arrow Flight.
 
-%package -n lib%name-flight-sql
+%package -n lib%name-flight-sql%sover
 Summary: C++ library for interacting with SQL databases
 Group: System/Libraries
-Requires: lib%name-flight = %EVR
+Requires: lib%name-flight%sover = %EVR
 
-%description -n lib%name-flight-sql
+%description -n lib%name-flight-sql%sover
 This package contains the libraries for Apache Arrow Flight SQL.
 
 %package -n lib%name-flight-sql-devel
 Summary: Libraries and header files for Apache Arrow Flight SQL
 Group: Development/C++
-Requires: lib%name-flight-sql = %EVR
+Requires: lib%name-flight-sql%sover = %EVR
 Requires: %name-devel = %EVR
 
 %description -n lib%name-flight-sql-devel
 Libraries and header files for Apache Arrow Flight SQL.
 
-%package -n libgandiva
+%package -n libgandiva%sover
 Summary: C++ library for compiling and evaluating expressions on Apache Arrow data
 Group: System/Libraries
 
-%description -n libgandiva
+%description -n libgandiva%sover
 This package contains the libraries for Gandiva.
 
 %package -n libgandiva-devel
 Summary: Libraries and header files for Gandiva
 Group: Development/C++
 Requires: %name-devel = %EVR
-Requires: libgandiva = %EVR
+Requires: libgandiva%sover = %EVR
 
 %description -n libgandiva-devel
 Libraries and header files for Gandiva.
 
-%package -n libparquet
+%package -n libparquet%sover
 Summary: Runtime libraries for Apache Parquet C++
 Group: System/Libraries
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Requires: openssl
 
-%description -n libparquet
+%description -n libparquet%sover
 This package contains the libraries for Apache Parquet C++.
 
 %package -n libparquet-devel
 Summary: Libraries and header files for Apache Parquet C++
 Group: Development/C++
 Requires: %name-devel = %EVR
-Requires: libparquet = %EVR
+Requires: libparquet%sover = %EVR
 Requires: zlib-devel
 
 %description -n libparquet-devel
@@ -210,23 +212,23 @@ Libraries and header files for Apache Parquet C++.
 %package -n parquet-tools
 Summary: Tools for Apache Parquet C++
 Group: Development/Other
-Requires: libparquet = %EVR
+Requires: libparquet%sover = %EVR
 
 %description -n parquet-tools
 Tools for Apache Parquet C++.
 
-%package -n lib%name-glib
+%package -n lib%name-glib%sover
 Summary: Runtime libraries for Apache Arrow GLib
 Group: System/Libraries
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
-%description -n lib%name-glib
+%description -n lib%name-glib%sover
 This package contains the libraries for Apache Arrow GLib.
 
 %package -n lib%name-glib-gir
 Summary: GObject introspection data for the for Apache Arrow GLib
 Group: System/Libraries
-Requires: lib%name-glib = %EVR
+Requires: lib%name-glib%sover = %EVR
 
 %description -n lib%name-glib-gir
 GObject introspection data for the for Apache Arrow GLib.
@@ -235,7 +237,7 @@ GObject introspection data for the for Apache Arrow GLib.
 Summary: Libraries and header files for Apache Arrow GLib
 Group: Development/C
 Requires: %name-devel = %EVR
-Requires: lib%name-glib = %EVR lib%name-glib-gir = %EVR
+Requires: lib%name-glib%sover = %EVR lib%name-glib-gir = %EVR
 Requires: gobject-introspection-devel
 
 %description -n lib%name-glib-devel
@@ -248,19 +250,19 @@ Group: Development/Documentation
 %description glib-doc
 Documentation for Apache Arrow GLib.
 
-%package -n lib%name-dataset-glib
+%package -n lib%name-dataset-glib%sover
 Summary: Runtime libraries for Apache Arrow Dataset GLib
 Group: System/Libraries
-Requires: lib%name-dataset = %EVR
-Requires: lib%name-glib = %EVR
+Requires: lib%name-dataset%sover = %EVR
+Requires: lib%name-glib%sover = %EVR
 
-%description -n lib%name-dataset-glib
+%description -n lib%name-dataset-glib%sover
 This package contains the libraries for Apache Arrow Dataset GLib.
 
 %package -n lib%name-dataset-glib-gir
 Summary: GObject introspection data for the Apache Arrow Dataset GLib
 Group: System/Libraries
-Requires: lib%name-dataset-glib = %EVR
+Requires: lib%name-dataset-glib%sover = %EVR
 
 %description -n lib%name-dataset-glib-gir
 GObject introspection data for the Apache Arrow Dataset GLib.
@@ -268,7 +270,7 @@ GObject introspection data for the Apache Arrow Dataset GLib.
 %package -n lib%name-dataset-glib-devel
 Summary: Libraries and header files for Apache Arrow Dataset GLib
 Group: Development/C
-Requires: lib%name-dataset-glib = %EVR lib%name-dataset-glib-gir = %EVR
+Requires: lib%name-dataset-glib%sover = %EVR lib%name-dataset-glib-gir = %EVR
 Requires: lib%name-dataset-devel = %EVR
 Requires: lib%name-glib-devel = %EVR
 Requires: gobject-introspection-devel
@@ -284,19 +286,19 @@ BuildArch: noarch
 %description dataset-glib-doc
 Documentation for Apache Arrow dataset GLib.
 
-%package -n lib%name-flight-glib
+%package -n lib%name-flight-glib%sover
 Summary: Runtime libraries for Apache Arrow Flight GLib
 Group: System/Libraries
-Requires: lib%name-flight = %EVR
-Requires: lib%name-glib = %EVR
+Requires: lib%name-flight%sover = %EVR
+Requires: lib%name-glib%sover = %EVR
 
-%description -n lib%name-flight-glib
+%description -n lib%name-flight-glib%sover
 This package contains the libraries for Apache Arrow Flight GLib.
 
 %package -n lib%name-flight-glib-gir
 Summary: GObject introspection data for Apache Arrow Flight GLib
 Group: System/Libraries
-Requires: lib%name-flight-glib = %EVR
+Requires: lib%name-flight-glib%sover = %EVR
 
 %description -n lib%name-flight-glib-gir
 GObject introspection data for Apache Arrow Flight GLib.
@@ -312,7 +314,7 @@ Documentation for Apache Arrow Flight GLib.
 %package -n lib%name-flight-glib-devel
 Summary: Libraries and header files for Apache Arrow Flight GLib
 Group: Development/C
-Requires: lib%name-flight-glib = %EVR lib%name-flight-glib-gir = %EVR
+Requires: lib%name-flight-glib%sover = %EVR lib%name-flight-glib-gir = %EVR
 Requires: lib%name-flight-devel = %EVR
 Requires: lib%name-glib-devel = %EVR
 Requires: gobject-introspection-devel
@@ -320,19 +322,19 @@ Requires: gobject-introspection-devel
 %description -n lib%name-flight-glib-devel
 Libraries and header files for Apache Arrow Flight GLib.
 
-%package -n lib%name-flight-sql-glib
+%package -n lib%name-flight-sql-glib%sover
 Summary: Runtime libraries for Apache Arrow Flight SQL GLib
 Group: System/Libraries
-Requires: lib%name-flight-sql = %EVR
-Requires: lib%name-flight-glib = %EVR
+Requires: lib%name-flight-sql%sover = %EVR
+Requires: lib%name-flight-glib%sover = %EVR
 
-%description -n lib%name-flight-sql-glib
+%description -n lib%name-flight-sql-glib%sover
 This package contains the libraries for Apache Arrow Flight SQL GLib.
 
 %package -n lib%name-flight-sql-glib-gir
 Summary: GObject introspection data for Apache Arrow Flight SQL GLib
 Group: System/Libraries
-Requires: lib%name-flight-sql-glib = %EVR
+Requires: lib%name-flight-sql-glib%sover = %EVR
 
 %description -n lib%name-flight-sql-glib-gir
 GObject introspection data for Apache Arrow Flight SQL GLib.
@@ -340,7 +342,7 @@ GObject introspection data for Apache Arrow Flight SQL GLib.
 %package -n lib%name-flight-sql-glib-devel
 Summary: Libraries and header files for Apache Arrow Flight SQL GLib
 Group: Development/C
-Requires: lib%name-flight-sql-glib = %EVR lib%name-flight-sql-glib-gir = %EVR
+Requires: lib%name-flight-sql-glib%sover = %EVR lib%name-flight-sql-glib-gir = %EVR
 Requires: lib%name-flight-sql-devel = %EVR
 Requires: lib%name-flight-glib-devel = %EVR
 Requires: gobject-introspection-devel
@@ -356,19 +358,19 @@ BuildArch: noarch
 %description flight-sql-glib-doc
 Documentation for Apache Arrow Flight SQL GLib.
 
-%package -n libgandiva-glib
+%package -n libgandiva-glib%sover
 Summary: Runtime libraries for Gandiva GLib
 Group: System/Libraries
-Requires: lib%name-glib = %EVR
-Requires: libgandiva = %EVR
+Requires: lib%name-glib%sover = %EVR
+Requires: libgandiva%sover = %EVR
 
-%description -n libgandiva-glib
+%description -n libgandiva-glib%sover
 This package contains the libraries for Gandiva GLib.
 
 %package -n libgandiva-glib-gir
 Summary: GObject introspection data for Gandiva GLib
 Group: System/Libraries
-Requires: libgandiva-glib = %EVR
+Requires: libgandiva-glib%sover = %EVR
 
 %description -n libgandiva-glib-gir
 GObject introspection data for Gandiva GLib.
@@ -377,7 +379,7 @@ GObject introspection data for Gandiva GLib.
 Summary: Libraries and header files for Gandiva GLib
 Group: Development/C
 Requires: lib%name-glib-devel = %EVR
-Requires: libgandiva-glib = %EVR libgandiva-glib-gir = %EVR
+Requires: libgandiva-glib%sover = %EVR libgandiva-glib-gir = %EVR
 Requires: libgandiva-devel = %EVR
 Requires: gobject-introspection-devel
 
@@ -392,19 +394,19 @@ BuildArch: noarch
 %description -n gandiva-glib-doc
 Documentation for Gandiva GLib.
 
-%package -n libparquet-glib
+%package -n libparquet-glib%sover
 Summary: Runtime libraries for Apache Parquet GLib
 Group: System/Libraries
-Requires: lib%name-glib = %EVR
-Requires: libparquet = %EVR
+Requires: lib%name-glib%sover = %EVR
+Requires: libparquet%sover = %EVR
 
-%description -n libparquet-glib
+%description -n libparquet-glib%sover
 This package contains the libraries for Apache Parquet GLib.
 
 %package -n libparquet-glib-gir
 Summary: GObject introspection data for Apache Parquet GLib
 Group: System/Libraries
-Requires: libparquet-glib = %EVR
+Requires: libparquet-glib%sover = %EVR
 
 %description -n libparquet-glib-gir
 GObject introspection data for Apache Parquet GLib.
@@ -413,7 +415,7 @@ GObject introspection data for Apache Parquet GLib.
 Summary: Libraries and header files for Apache Parquet GLib
 Group: Development/C
 Requires: lib%name-glib-devel = %EVR
-Requires: libparquet-glib = %EVR libparquet-glib-gir = %EVR
+Requires: libparquet-glib%sover = %EVR libparquet-glib-gir = %EVR
 Requires: libparquet-devel = %EVR
 Requires: gobject-introspection-devel
 
@@ -456,7 +458,6 @@ Development files for python3-pyarrow
 
 %prep
 %setup
-%patch -p1
 %ifarch %e2k
 sed -i '/Unknown system processor/c set(ARROW_CPU_FLAG "e2k")' \
 	cpp/cmake_modules/SetupCxxFlags.cmake
@@ -471,17 +472,19 @@ sed -i 's/_Py_IsFinalizing()/Py_IsFinalizing()/g' python/pyarrow/src/arrow/pytho
 %build
 pushd cpp
 %cmake \
-  -DCMAKE_CXX_STANDARD=17 \
   %{?_enable_flight:-DARROW_FLIGHT:BOOL=ON} \
   %{?_enable_flight_sql:-DARROW_FLIGHT_SQL:BOOL=ON} \
   %{?_enable_gandiva:-DARROW_GANDIVA:BOOL=ON} \
-  %{?_enable_mimalloc:-DARROW_MIMALLOC:BOOL=ON} \
+  -DARROW_MIMALLOC:BOOL=%{?_enable_mimalloc:ON}%{!?_enable_mimalloc:OFF} \
   %{?_enable_orc:-DARROW_ORC:BOOL=ON} \
   -DARROW_PARQUET:BOOL=ON \
   -DARROW_PYTHON:BOOL=ON \
   %{?_enable_utils:-DARROW_BUILD_UTILITIES:BOOL=ON} \
   -DARROW_JEMALLOC:BOOL=OFF \
   -DARROW_SIMD_LEVEL:STRING='NONE' \
+%ifarch %ix86
+  -DARROW_RUNTIME_SIMD_LEVEL:STRING='NONE' \
+%endif
   -Dxsimd_SOURCE="SYSTEM" \
   %{?_enable_s3:-DARROW_S3:BOOL=ON} \
   -DARROW_WITH_BROTLI:BOOL=ON \
@@ -509,7 +512,7 @@ pushd c_glib
 %meson \
   -Darrow_cpp_build_dir=../cpp/%_cmake__builddir \
   -Darrow_cpp_build_type=relwithdebinfo \
-  -Dgtk_doc=true \
+  -Ddoc=true \
   -Dvapi=true
 
 %meson_build
@@ -552,9 +555,12 @@ pushd cpp
 popd
 
 rm -rf %buildroot%_docdir/%name
+rm -f %buildroot%_datadir/arrow-glib/LICENSE.txt
+rm -f %buildroot%_datadir/arrow-glib/README.md
 
-%files -n lib%name
-%_libdir/lib%name.so.*
+%files -n lib%name%sover
+%_libdir/lib%name.so.%{sover}*
+%_libdir/lib%{name}_compute.so.%{sover}*
 
 %files devel
 %doc README.md
@@ -570,6 +576,8 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/cmake/Arrow/arrow*.cmake
 %exclude %_libdir/cmake/Arrow/Find*
 %_libdir/libarrow.so
+%_libdir/libarrow_compute.so
+%_libdir/cmake/ArrowCompute
 %_pkgconfigdir/arrow-compute.pc
 %_pkgconfigdir/arrow-csv.pc
 %_pkgconfigdir/arrow-filesystem.pc
@@ -586,8 +594,8 @@ rm -rf %buildroot%_docdir/%name
 %_bindir/arrow-*
 %endif
 
-%files -n lib%name-acero
-%_libdir/libarrow_acero.so.*
+%files -n lib%name-acero%sover
+%_libdir/libarrow_acero.so.%{sover}*
 
 %files -n lib%name-acero-devel
 %_includedir/arrow/acero
@@ -595,8 +603,8 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libarrow_acero.so
 %_pkgconfigdir/arrow-acero.pc
 
-%files -n lib%name-dataset
-%_libdir/libarrow_dataset.so.*
+%files -n lib%name-dataset%sover
+%_libdir/libarrow_dataset.so.%{sover}*
 
 %files -n lib%name-dataset-devel
 %_includedir/arrow/dataset
@@ -605,8 +613,8 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/arrow-dataset.pc
 
 %if_enabled flight
-%files -n lib%name-flight
-%_libdir/libarrow_flight.so.*
+%files -n lib%name-flight%sover
+%_libdir/libarrow_flight.so.%{sover}*
 
 %files -n lib%name-flight-devel
 %_includedir/arrow/flight
@@ -618,8 +626,8 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/arrow-flight.pc
 
 %if_enabled flight_sql
-%files -n lib%name-flight-sql
-%_libdir/libarrow_flight_sql.so.*
+%files -n lib%name-flight-sql%sover
+%_libdir/libarrow_flight_sql.so.%{sover}*
 
 %files -n lib%name-flight-sql-devel
 %_includedir/arrow/flight/sql
@@ -630,8 +638,8 @@ rm -rf %buildroot%_docdir/%name
 %endif
 
 %if_enabled gandiva
-%files -n libgandiva
-%_libdir/libgandiva.so.*
+%files -n libgandiva%sover
+%_libdir/libgandiva.so.%{sover}*
 
 %files -n libgandiva-devel
 %_includedir/gandiva
@@ -640,8 +648,8 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/gandiva.pc
 %endif
 
-%files -n libparquet
-%_libdir/libparquet.so.*
+%files -n libparquet%sover
+%_libdir/libparquet.so.%{sover}*
 
 %if_enabled utils
 %files -n parquet-tools
@@ -654,8 +662,8 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/libparquet.so
 %_pkgconfigdir/parquet.pc
 
-%files -n lib%name-glib
-%_libdir/libarrow-glib.so.*
+%files -n lib%name-glib%sover
+%_libdir/libarrow-glib.so.%{sover}*
 
 %files -n lib%name-glib-gir
 %_typelibdir/Arrow-*.typelib
@@ -673,10 +681,9 @@ rm -rf %buildroot%_docdir/%name
 
 %files glib-doc
 %_docdir/arrow-glib
-%_datadir/gtk-doc/html/arrow-glib
 
-%files -n lib%name-dataset-glib
-%_libdir/libarrow-dataset-glib.so.*
+%files -n lib%name-dataset-glib%sover
+%_libdir/libarrow-dataset-glib.so.%{sover}*
 
 %files -n lib%name-dataset-glib-gir
 %_typelibdir/ArrowDataset-*.typelib
@@ -689,11 +696,11 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/arrow-dataset-glib.pc
 
 %files dataset-glib-doc
-%_datadir/gtk-doc/html/arrow-dataset-glib
+%_docdir/arrow-dataset-glib
 
 %if_enabled flight
-%files -n lib%name-flight-glib
-%_libdir/libarrow-flight-glib.so.*
+%files -n lib%name-flight-glib%sover
+%_libdir/libarrow-flight-glib.so.%{sover}*
 
 %files -n lib%name-flight-glib-gir
 %_typelibdir/ArrowFlight-*.typelib
@@ -706,11 +713,11 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/arrow-flight-glib.pc
 
 %files flight-glib-doc
-%_datadir/gtk-doc/html/arrow-flight-glib
+%_docdir/arrow-flight-glib
 
 %if_enabled flight_sql
-%files -n lib%name-flight-sql-glib
-%_libdir/libarrow-flight-sql-glib.so.*
+%files -n lib%name-flight-sql-glib%sover
+%_libdir/libarrow-flight-sql-glib.so.%{sover}*
 
 %files -n lib%name-flight-sql-glib-gir
 %_typelibdir/ArrowFlightSQL-*.typelib
@@ -723,13 +730,13 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/arrow-flight-sql-glib.pc
 
 %files flight-sql-glib-doc
-%_datadir/gtk-doc/html/arrow-flight-sql-glib
+%_docdir/arrow-flight-sql-glib
 %endif
 %endif
 
 %if_enabled gandiva
-%files -n libgandiva-glib
-%_libdir/libgandiva-glib.so.*
+%files -n libgandiva-glib%sover
+%_libdir/libgandiva-glib.so.%{sover}*
 
 %files -n libgandiva-glib-gir
 %_typelibdir/Gandiva-*.typelib
@@ -742,11 +749,11 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/gandiva-glib.pc
 
 %files -n gandiva-glib-doc
-%_datadir/gtk-doc/html/gandiva-glib
+%_docdir/gandiva-glib
 %endif
 
-%files -n libparquet-glib
-%_libdir/libparquet-glib.so.*
+%files -n libparquet-glib%sover
+%_libdir/libparquet-glib.so.%{sover}*
 
 %files -n libparquet-glib-gir
 %_typelibdir/Parquet-*.typelib
@@ -759,7 +766,7 @@ rm -rf %buildroot%_docdir/%name
 %_pkgconfigdir/parquet-glib.pc
 
 %files -n parquet-glib-doc
-%_datadir/gtk-doc/html/parquet-glib
+%_docdir/parquet-glib
 
 %files -n python3-module-pyarrow
 %python3_sitelibdir/pyarrow
@@ -772,6 +779,9 @@ rm -rf %buildroot%_docdir/%name
 %python3_sitelibdir/pyarrow/include
 
 %changelog
+* Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 23.0.1-alt1
+- updated from 12.0.0 to 23.0.1
+
 * Thu Sep 25 2025 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt2.6
 - NMU: fixed build with python3.13.
 

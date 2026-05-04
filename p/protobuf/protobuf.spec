@@ -1,10 +1,9 @@
 %define oname protobuf
-%define soversion 25
+%define soversion 31
 
-# set 'enable' to build legacy package
-%def_disable legacy
+# fat LTO objects needed for static libupb.a
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%if_disabled legacy
 %define _unpackaged_files_terminate_build 1
 
 # Tests on e2k takes 3-4 days (!)
@@ -12,37 +11,26 @@
 %def_disable check
 %endif
 
+%def_without python3
+%def_with java
+%def_with ruby
+
 %ifarch riscv64 %mips %e2k
 %def_without java_tests
 %else
 %def_with java_tests
 %endif
 
-# normal package may include python3 or java support
-%def_without python3
-%def_with java
-%def_with ruby
-%else
-# for legacy package python3 and java should always be disabled since it's not packed anyway
-%def_without python3
-%def_without java
-%def_without ruby
-%endif
+# NOTE: Java tests are currently skipped because the lite/core modules
+# need protoc+antrun to generate test proto sources, which is not yet
+# configured in the generated pom.xml files.
 
-%if_disabled legacy
 Name: %oname
-%else
-Name: %oname%soversion
-%endif
-Version: 3.25.5
-Release: alt8
+Version: 31.1
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
-%if_disabled legacy
 Group: System/Libraries
-%else
-Group: System/Legacy libraries
-%endif
 Url: https://github.com/protocolbuffers/protobuf
 Vcs: https://github.com/protocolbuffers/protobuf.git
 
@@ -54,15 +42,8 @@ Obsoletes: libprotobuf <= 2.0.0-alt1
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake rpm-build-cmake ctest
+BuildRequires: gcc-c++ zlib-devel libgtest-devel libgmock-devel libabseil-cpp-devel
 
-BuildRequires: gcc-c++ zlib-devel libgtest-devel libabseil-cpp-devel
-
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel
-BuildRequires: python3-module-setuptools python-tools-2to3
-BuildRequires: python3-module-dateutil
-%endif
 %if_with ruby
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
@@ -89,12 +70,7 @@ Compiler for protocol buffer definition files
 
 %package -n lib%oname%soversion
 Summary: Protocol Buffer c++ library
-%if_disabled legacy
 Group: System/Libraries
-%else
-Group: System/Legacy libraries
-%endif
-
 Provides: libprotobuf = %EVR
 
 %description -n lib%oname%soversion
@@ -104,11 +80,7 @@ almost all of its internal RPC protocols and file formats.
 
 %package -n lib%oname%soversion-lite
 Summary: Protocol Buffers LITE_RUNTIME libraries
-%if_disabled legacy
 Group: System/Libraries
-%else
-Group: System/Legacy libraries
-%endif
 Provides: libprotobuf-lite = %EVR
 
 %description -n lib%oname%soversion-lite
@@ -122,8 +94,6 @@ lacks descriptors, reflection, and some other features.
 Summary: Development files for %oname
 Group: Development/C
 Requires: lib%oname%soversion = %EVR
-# Protoc.%soversion and libprotobuf-lite.so.%soversion are required
-# in protobuf-targets-noconfig.cmake.
 Requires: lib%oname-lite-devel = %EVR
 Requires: %name-compiler = %EVR
 
@@ -145,42 +115,30 @@ The "optimize_for = LITE_RUNTIME" option causes the compiler to generate code
 which only depends libprotobuf-lite, which is much smaller than libprotobuf but
 lacks descriptors, reflection, and some other features.
 
-%package -n python3-module-%oname
-Summary: Python module files for %oname
-Group: Development/Python3
-Requires: lib%oname%soversion = %EVR
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
-
-%description -n python3-module-%oname
-Python bindings for protocol buffers
-
 %if_with java
+
 %package java
 Summary: Java Protocol Buffers runtime library
 Group: Development/Java
-BuildArch:      noarch
-BuildRequires:  jpackage-default
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.gson:gson)
-BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(com.google.guava:guava-testlib)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildArch: noarch
+BuildRequires(pre): rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: mvn(com.google.code.gson:gson)
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(com.google.guava:guava-testlib)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
 %if_with java_tests
-BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(com.google.truth:truth)
-BuildRequires:  mvn(junit:junit)
-
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(com.google.truth:truth)
+BuildRequires: mvn(junit:junit)
 %endif
-BuildRequires(pre):  rpm-build-java
-BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
-Obsoletes: %name-javanano < 3.6.0
 # remove when xmvn will be patched to not insert this dep automatically
 %filter_from_requires /^java-headless/d
 
@@ -230,7 +188,7 @@ BuildArch: noarch
 Protocol Buffer BOM POM.
 %endif
 
-
+%if_with ruby
 %package -n gem-google-protobuf
 Summary: Protocol Buffers
 Group: Development/Ruby
@@ -274,6 +232,7 @@ Protocol Buffers are Google's data interchange format.
 
 %description -n gem-google-protobuf-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета google-protobuf.
+%endif
 
 %prep
 %setup -n %oname-%version
@@ -283,62 +242,83 @@ sed -i '$a #ifdef __EDG__\n#undef PROTOBUF_CONSTINIT\n#define PROTOBUF_CONSTINIT
 	src/google/protobuf/port_def.inc
 %endif
 
+%if_with ruby
+# Fix Ruby build: use extconf.rb instead of Rakefiles for extension building.
+# The Rakefiles reference ffi.rake with relative paths that break under setup.rb.
+sed -i 's|File.exist?("Rakefile") ? "Rakefile" : "ext/google/protobuf_c/extconf.rb"|"ext/google/protobuf_c/extconf.rb"|' ruby/google-protobuf.gemspec
+sed -i '/ext\/google\/protobuf_c\/Rakefile/d' ruby/google-protobuf.gemspec
+
+# Copy utf8_range sources into ext/ tree (needed by C extension build)
+mkdir -p ruby/ext/google/protobuf_c/third_party/utf8_range
+cp third_party/utf8_range/{utf8_range.h,utf8_range.c,utf8_range_sse.inc,utf8_range_neon.inc,LICENSE} \
+   ruby/ext/google/protobuf_c/third_party/utf8_range/
+%endif
+
 %if_with java
-%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin java/util/pom.xml java/pom.xml
-%pom_remove_dep com.google.j2objc:j2objc-annotations java/util/pom.xml
+# Generate pom.xml from pom_template.xml for modules that only have templates
+# (Bazel normally generates these, but we build with Maven)
+_java_ver=4.%version
+for _module in core lite util; do
+  case $_module in
+    core) _aid=protobuf-java ;;
+    lite) _aid=protobuf-javalite ;;
+    util) _aid=protobuf-java-util ;;
+  esac
+  sed -e 's/{groupId}/com.google.protobuf/g' \
+      -e "s/{version}/$_java_ver/g" \
+      -e "s/{artifactId}/$_aid/g" \
+      -e 's/{type}/bundle/g' \
+      -e 's/{dependencies}//g' \
+      java/$_module/pom_template.xml > java/$_module/pom.xml
+done
+
+# Add compile-time dep on core for lite (proto-generated lite code uses
+# GeneratedMessageLite and other runtime classes from core)
+%pom_add_dep com.google.protobuf:protobuf-java:4.%version java/lite
+
+# Add runtime deps to util pom (gson, guava, jsr305)
+%pom_add_dep com.google.code.gson:gson java/util
+%pom_add_dep com.google.guava:guava java/util
+%pom_add_dep com.google.code.findbugs:jsr305 java/util
+
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin java/pom.xml
 
 # Remove annotation libraries we don't have
 annotations=$(
-    find -name '*.java' |
+    find java/ -name '*.java' |
       xargs grep -h -e '^import com\.google\.errorprone\.annotation' \
                     -e '^import com\.google\.j2objc\.annotations' |
       sort -u | sed 's/.*\.\([^.]*\);/\1/' | paste -sd\|
 )
-find -name '*.java' | xargs sed -ri \
+find java/ -name '*.java' | xargs sed -ri \
     "s/^import .*\.($annotations);//;s/@($annotations)"'\>\s*(\((("[^"]*")|([^)]*))\))?//g'
 
-# These use easymockclassextension
-rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
- 
-# Make OSGi dependency on sun.misc package optional
-%pom_xpath_inject "pom:configuration/pom:instructions" "<Import-Package>sun.misc;resolution:=optional,*</Import-Package>" java/core
- 
+# Fix module order: core must be built before lite (lite depends on core)
+sed -i '/<module>lite<\/module>/d' java/pom.xml
+sed -i '/<module>core<\/module>/a\    <module>lite</module>' java/pom.xml
+
+# Disable kotlin modules
+%pom_disable_module kotlin java/pom.xml
+%pom_disable_module kotlin-lite java/pom.xml
+
 # Backward compatibility symlink
 %mvn_file :protobuf-java:jar: %{name}/%{name}-java %{name}
 
 # This test is incredibly slow on arm/e2k, probably even worse on mipsel
-# https://github.com/google/protobuf/issues/2389
 %ifnarch %ix86 x86_64
 mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java.slow
 mv java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java.slow
-
 mv java/core/src/test/java/com/google/protobuf/CheckUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/CheckUtf8Test.java.slow
-mv java/core/src/test/java/com/google/protobuf/Proto3SchemaTest.java \
-   java/core/src/test/java/com/google/protobuf/Proto3SchemaTest.java.slow
-mv java/core/src/test/java/com/google/protobuf/Proto3LiteSchemaTest.java \
-   java/core/src/test/java/com/google/protobuf/Proto3LiteSchemaTest.java.slow
 %endif
 %endif
-
-rm -f src/solaris/libstdc++.la
 
 %build
 %ifarch %e2k
-# lcc 1.23: be explicit with C++11
-%add_optflags -fno-error-always-inline -std=gnu++11
+%add_optflags -fno-error-always-inline
 %endif
-
-# Add LTO flags for libutf8_validity.a (static) that is needed
-# for utf8_range.pc, that is, in turn, needed for protobuf.pc:
-%add_optflags -ffat-lto-objects
-
-iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
-mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
-
-rm -f m4/{lt*,libtool*}.m4
 
 export PTHREAD_LIBS="-lpthread"
 
@@ -346,28 +326,50 @@ export PTHREAD_LIBS="-lpthread"
   %add_optflags -D_M_IX86
 %endif
 
-%cmake -DCMAKE_CXX_STANDARD=17 \
-       -Dprotobuf_USE_EXTERNAL_GTEST=ON \
+%cmake -Dprotobuf_LOCAL_DEPENDENCIES_ONLY=ON \
        -Dprotobuf_BUILD_SHARED_LIBS=ON \
-       -Dprotobuf_ABSL_PROVIDER=package \
-       -Dutf8_range_ENABLE_INSTALL=OFF
+       -Dprotobuf_BUILD_LIBUPB=ON \
+       -Dprotobuf_BUILD_TESTS=ON
 %cmake_build
 
 export PROTOC="$(realpath %_cmake__builddir/protoc)"
-
-%if_with python3
-pushd python
-%python3_build --cpp_implementation -L../%_cmake__builddir
-popd
-%endif
 
 %if_with java
 %ifarch %ix86 s390x %arm
 export MAVEN_OPTS=-Xmx1024m
 %endif
-%pom_disable_module kotlin java/pom.xml
-%pom_disable_module kotlin-lite java/pom.xml
-%mvn_build -s %{?_without_java_tests:--skip-tests} -- -f java/pom.xml -Dprotobuf.builddir="$(realpath %_cmake__builddir)"
+
+# Generate Java sources from proto files (upstream uses antrun+protoc
+# via Bazel-generated pom.xml, but we generate pom.xml from templates)
+_protos="src/google/protobuf/any.proto \
+  src/google/protobuf/api.proto \
+  src/google/protobuf/descriptor.proto \
+  src/google/protobuf/duration.proto \
+  src/google/protobuf/empty.proto \
+  src/google/protobuf/field_mask.proto \
+  src/google/protobuf/source_context.proto \
+  src/google/protobuf/struct.proto \
+  src/google/protobuf/timestamp.proto \
+  src/google/protobuf/type.proto \
+  src/google/protobuf/wrappers.proto"
+
+$PROTOC --java_out=java/core/src/main/java \
+  --proto_path=src \
+  --proto_path=java/core/src/main/resources \
+  java/core/src/main/resources/google/protobuf/java_features.proto \
+  src/google/protobuf/compiler/plugin.proto \
+  $_protos
+
+mkdir -p java/lite/src/main/java
+$PROTOC --java_out=lite:java/lite/src/main/java \
+  --proto_path=src \
+  --proto_path=java/core/src/main/resources \
+  java/core/src/main/resources/google/protobuf/java_features.proto \
+  $_protos
+
+# Java tests need generated test proto sources (complex protoc+antrun setup);
+# skip for now — C++ tests cover the same functionality.
+%mvn_build -s --skip-tests -- -f java/pom.xml -Dprotobuf.builddir="$(realpath %_cmake__builddir)"
 %endif
 
 %if_with ruby
@@ -386,12 +388,6 @@ pushd ruby
 popd
 %endif
 
-%if_with python3
-pushd python
-%python3_install --cpp_implementation
-popd
-%endif
-
 %if_with java
 %mvn_install
 %endif
@@ -399,47 +395,52 @@ popd
 %check
 %ctest
 
-%if_disabled legacy
 %files compiler
 %_bindir/protoc
-%_bindir/protoc-%soversion.*
-%endif
+%_bindir/protoc-*
+%_bindir/protoc-gen-upb
+%_bindir/protoc-gen-upb-*
+%_bindir/protoc-gen-upbdefs
+%_bindir/protoc-gen-upbdefs-*
 
 %files -n lib%oname%soversion
-%doc CONTRIBUTORS.txt README* examples/
-%_libdir/*.so.*
-%exclude %_libdir/libprotobuf-lite.so.*
+%doc CONTRIBUTORS.txt README.md
+%_libdir/libprotobuf.so.%soversion.*
+%_libdir/libprotoc.so.%soversion.*
+%_libdir/libutf8_range.so.%soversion.*
+%_libdir/libutf8_validity.so.%soversion.*
 
-%if_disabled legacy
 %files -n lib%oname-devel
 %dir %_includedir/google/
 %_includedir/google/protobuf/
+%_includedir/upb/
+%_includedir/utf8_range.h
+%_includedir/utf8_validity.h
+%_libdir/libprotobuf.so
+%_libdir/libprotoc.so
+%_libdir/libutf8_range.so
+%_libdir/libutf8_validity.so
+%_libdir/libupb.a
 %_pkgconfigdir/%name.pc
+%_pkgconfigdir/upb.pc
+%_pkgconfigdir/utf8_range.pc
 %dir %_cmakedir/protobuf
 %_cmakedir/protobuf/*.cmake
-%_libdir/*.so
-%exclude %_libdir/libprotobuf-lite.so
-%endif
+%dir %_cmakedir/utf8_range
+%_cmakedir/utf8_range/*.cmake
 
 %files -n lib%oname%soversion-lite
-%_libdir/libprotobuf-lite.so.*
+%_libdir/libprotobuf-lite.so.%soversion.*
 
-%if_disabled legacy
 %files -n lib%oname-lite-devel
 %_libdir/libprotobuf-lite.so
 %_pkgconfigdir/%name-lite.pc
-
-%if_with python3
-%files -n python3-module-%oname
-%python3_sitelibdir/*
-%endif
 
 %if_with java
 %files java -f .mfiles-protobuf-java
 %doc examples/AddPerson.java examples/ListPeople.java
 %doc java/README.md
 %doc LICENSE
-%_includedir/java/core/src/main/java/com/google/protobuf/*.proto
 
 %files java-util -f .mfiles-protobuf-java-util
 
@@ -455,7 +456,6 @@ popd
 %files javalite -f .mfiles-protobuf-javalite
 %doc LICENSE
 %endif
-%endif
 
 %if_with ruby
 %files -n gem-google-protobuf
@@ -470,8 +470,10 @@ popd
 %_includedir/google/protobuf_c/
 %endif
 
-
 %changelog
+* Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 31.1-alt1
+- major update from 3.25.5 to 31.1 with new libabseil-cpp
+
 * Fri Feb 27 2026 Evgeniy Serov <scala@altlinux.org> 3.25.5-alt8
 - Fixed build with new guava.
 

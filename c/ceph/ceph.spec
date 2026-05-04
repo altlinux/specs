@@ -58,12 +58,13 @@
 
 Name: ceph
 Version: 19.2.3
-Release: alt2.1
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
 License: LGPL-2.1 and LGPL-3.0 and CC-BY-SA-3.0 and GPL-2.0 and BSL-1.0 and BSD-3-Clause and MIT
-Url: http://ceph.com/
+Url: https://ceph.com/en
+VCS: https://github.com/ceph/ceph
 
 ExcludeArch: %ix86 %arm %mips32 ppc
 
@@ -102,6 +103,11 @@ Source41: qatlib.tar
 Source42: qatzip.tar
 
 Patch: %name-%version.patch
+# https://github.com/ceph/s3select/pull/169
+Patch1: ceph-19.2.3-alt-s3select-arrow20-api.patch
+# Backport of upstream zpp_bits.h fixes for GCC 15 (commits 830925f0,
+# 9b8d72f1, 3fcd3536); not yet on squid branch as of 19.2.3.
+Patch2: ceph-19.2.3-alt-zpp-bits-gcc15.patch
 
 # cmake/ninja need /proc to correctly estimate system
 # resources and run several build jobs in parallel
@@ -156,7 +162,7 @@ BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
 %{?_with_zbd:BuildRequires: libzbd-devel}
 %{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel libdaxctl-devel >= 63 libndctl-devel >= 63}
 %{?_with_grafana:BuildRequires: jsonnet}
-%{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc++-devel}
+%{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc-devel}
 %{?_with_system_utf8proc:BuildRequires: libutf8proc-devel >= 2.2.0}
 BuildRequires: liblmdb-devel
 %ifarch %e2k
@@ -865,8 +871,10 @@ tar -xf %SOURCE41 -C src/qatlib
 tar -xf %SOURCE42 -C src/qatzip
 
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 %ifarch %e2k
-sed -i 's/template serialize_one(/serialize_one(/;s/other\.is_value()/other.success()/' \
+sed -i 's/template serialize_one(/serialize_one(/' \
 	src/rgw/driver/posix/zpp_bits.h
 # disable annoying warning
 sed -i '/-Wno-unused-function/a -Wno-vla-cxx-extension' src/CMakeLists.txt
@@ -1883,6 +1891,13 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Sat Apr 25 2026 Anton Farygin <rider@altlinux.org> 19.2.3-alt3
+- fix build with gcc 15: backport upstream zpp_bits.h fixes
+  (ceph commits 830925f0, 9b8d72f1, 3fcd3536)
+- updated BR (libgrpc++devel -> libgrpc-devel)
+- fix build against system Apache Arrow >= 20 (s3select parquet
+  decryptor API, cherry-picked from ceph/s3select PR #169)
+
 * Wed Mar 11 2026 Michael Shigorin <mike@altlinux.org> 19.2.3-alt2.1
 - E2K: fix build with clang 19 (ilyakurdyukov@)
 

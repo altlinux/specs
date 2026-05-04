@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name:          common-protos-ruby
 Version:       20230122
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated
 License:       Apache-2.0
 Group:         Other
@@ -11,11 +11,11 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch1:        common-protos-ruby-20230122-alt-protobuf-upper-bound.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(google-protobuf) >= 3.14
 BuildRequires: gem(grpc) >= 1.27
-BuildConflicts: gem(google-protobuf) >= 4
 BuildConflicts: gem(grpc) >= 2
 %endif
 
@@ -33,7 +33,7 @@ Common Protos repository.
 
 %package       -n gem-grpc-google-iam-v1
 Version:       1.2.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -42,7 +42,6 @@ Requires:      gem(googleapis-common-protos) >= 1.3.12
 Requires:      gem(google-protobuf) >= 3.14
 Requires:      gem(grpc) >= 1.27
 Conflicts:     gem(googleapis-common-protos) >= 2.0
-Conflicts:     gem(google-protobuf) >= 4
 Conflicts:     gem(grpc) >= 2
 Provides:      gem(grpc-google-iam-v1) = 1.2.0
 
@@ -52,7 +51,7 @@ Common protos and gRPC services for Google IAM.
 
 %package       -n grpc-google-iam-v1-doc
 Version:       1.2.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grpc-google-iam-v1
 Group:         Development/Documentation
@@ -71,7 +70,7 @@ Common protos and gRPC services for Google IAM.
 
 %package       -n grpc-google-iam-v1-devel
 Version:       1.2.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета grpc-google-iam-v1
 Group:         Development/Ruby
@@ -90,14 +89,13 @@ Common protos and gRPC services for Google IAM.
 
 %package       -n gem-google-cloud-common
 Version:       1.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used in Google Cloud APIs
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(google-protobuf) >= 3.14
 Requires:      gem(googleapis-common-protos-types) >= 1.2
-Conflicts:     gem(google-protobuf) >= 4
 Conflicts:     gem(googleapis-common-protos-types) >= 2
 Provides:      gem(google-cloud-common) = 1.1.0
 
@@ -107,7 +105,7 @@ Common protocol buffer types used by Google Cloud APIs
 
 %package       -n google-cloud-common-doc
 Version:       1.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used in Google Cloud APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-common
 Group:         Development/Documentation
@@ -127,7 +125,7 @@ Common protocol buffer types used by Google Cloud APIs
 
 %package       -n google-cloud-common-devel
 Version:       1.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used in Google Cloud APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-cloud-common
 Group:         Development/Ruby
@@ -147,7 +145,7 @@ Common protocol buffer types used by Google Cloud APIs
 
 %package       -n gem-google-apps-script-type
 Version:       0.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used by Google Apps Script related client libraries
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -155,7 +153,6 @@ BuildArch:     noarch
 Requires:      gem(googleapis-common-protos-types) >= 1.4
 Requires:      gem(google-protobuf) >= 3.14
 Conflicts:     gem(googleapis-common-protos-types) >= 2
-Conflicts:     gem(google-protobuf) >= 4
 Provides:      gem(google-apps-script-type) = 0.1.0
 
 %description   -n gem-google-apps-script-type
@@ -164,7 +161,7 @@ Common protocol buffer types used by Google Apps Script related client libraries
 
 %package       -n google-apps-script-type-doc
 Version:       0.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used by Google Apps Script related client libraries documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apps-script-type
 Group:         Development/Documentation
@@ -182,7 +179,7 @@ documentation files.
 
 %package       -n google-apps-script-type-devel
 Version:       0.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Common protocol buffer types used by Google Apps Script related client libraries development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apps-script-type
 Group:         Development/Ruby
@@ -200,7 +197,7 @@ development package.
 
 %package       -n gem-googleapis-common-protos
 Version:       1.4.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -209,7 +206,6 @@ Requires:      gem(googleapis-common-protos-types) >= 1.2
 Requires:      gem(google-protobuf) >= 3.14
 Requires:      gem(grpc) >= 1.27
 Conflicts:     gem(googleapis-common-protos-types) >= 2
-Conflicts:     gem(google-protobuf) >= 4
 Conflicts:     gem(grpc) >= 2
 Provides:      gem(googleapis-common-protos) = 1.4.0
 
@@ -219,7 +215,7 @@ Common gRPC and protocol buffer classes used in Google APIs.
 
 %package       -n googleapis-common-protos-doc
 Version:       1.4.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета googleapis-common-protos
 Group:         Development/Documentation
@@ -238,7 +234,7 @@ Common gRPC and protocol buffer classes used in Google APIs.
 
 %package       -n googleapis-common-protos-devel
 Version:       1.4.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета googleapis-common-protos
 Group:         Development/Ruby
@@ -257,13 +253,12 @@ Common gRPC and protocol buffer classes used in Google APIs.
 
 %package       -n gem-googleapis-common-protos-types
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(google-protobuf) >= 3.14
-Conflicts:     gem(google-protobuf) >= 4
 Provides:      gem(googleapis-common-protos-types) = 1.5.0
 
 %description   -n gem-googleapis-common-protos-types
@@ -272,7 +267,7 @@ Common protocol buffer types used by Google APIs
 
 %package       -n googleapis-common-protos-types-doc
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета googleapis-common-protos-types
 Group:         Development/Documentation
@@ -291,7 +286,7 @@ Common protocol buffer types used by Google APIs
 
 %package       -n googleapis-common-protos-types-devel
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета googleapis-common-protos-types
 Group:         Development/Ruby
@@ -310,7 +305,7 @@ Common protocol buffer types used by Google APIs
 
 %package       -n common-protos-ruby-devel
 Version:       20230122
-Release:       alt1
+Release:       alt2
 Summary:       Ruby protocol buffer classes generated development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета common-protos-ruby
 Group:         Development/Ruby
@@ -335,6 +330,7 @@ Common Protos repository.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %ruby_build
@@ -411,6 +407,10 @@ Common Protos repository.
 
 
 %changelog
+* Thu Apr 30 2026 Anton Farygin <rider@altlinux.org> 20230122-alt2
+- drop upper bound on google-protobuf to allow building/installing
+  with google-protobuf 4+
+
 * Thu Jan 26 2023 Pavel Skrylev <majioa@altlinux.org> 20230122-alt1
 - ^ 20210531 -> 20230122
 

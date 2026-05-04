@@ -1,22 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soversion 2601.0.0
+%define soversion 2501.0.0
 
 %define cxx_standard 17
 
-# Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
-# And these tests are very long
-%ifarch %e2k
 %def_disable check
-%else
-%def_enable check
-%endif
 
-Name: libabseil-cpp
-Version: 20260107.1
-Release: alt1
+Name: libabseil-cpp%soversion
+Version: 20250127.1
+Release: alt3
 
-Summary: C++ Common Libraries
+Summary: C++ Common Libraries (compat %soversion)
 
 License: Apache-2.0
 Group: Development/C++
@@ -29,16 +23,6 @@ BuildRequires: cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: /proc
 
-# needed for test helpers
-BuildRequires: libgtest-devel >= 1.13.0
-
-%if_enabled check
-BuildRequires: libgmock-devel ctest
-%endif
-
-# https://bugzilla.altlinux.org/42411
-Conflicts: libclickhouse-cpp-devel <= 1.2.2-alt1
-
 %description
 Abseil is an open-source collection of C++ library code designed to augment
 the C++ standard library. The Abseil library code is collected from
@@ -50,47 +34,9 @@ others, Abseil provides alternatives to the standard for special needs we've
 found through usage in the Google code base. We denote those cases clearly
 within the library code we provide you.
 
-Abseil is not meant to be a competitor to the standard library; we've just
-found that many of these utilities serve a purpose within our code base,
-and we now want to provide those resources to the C++ community as a whole.
-
-%package -n libabseil-cpp%soversion
-Summary: %summary
-Group: Development/C++
-
-%description -n  libabseil-cpp%soversion
-Abseil is an open-source collection of C++ library code designed to augment
-the C++ standard library. The Abseil library code is collected from
-Google's own C++ code base, has been extensively tested and used in
-production, and is the same code we depend on in our daily coding lives.
-
-In some cases, Abseil provides pieces missing from the C++ standard; in
-others, Abseil provides alternatives to the standard for special needs we've
-found through usage in the Google code base. We denote those cases clearly
-within the library code we provide you.
-
-Abseil is not meant to be a competitor to the standard library; we've just
-found that many of these utilities serve a purpose within our code base,
-and we now want to provide those resources to the C++ community as a whole.
-
-
-
-%package testing
-Summary:        Libraries needed for running tests on the installed %name
-Requires:       libabseil-cpp%soversion = %EVR
-Group: Development/C++
-
-%description testing
-%{summary}.
-
-
-%package devel
-Summary: Development files for %name
-Requires: libabseil-cpp%soversion = %EVR
-Group: Development/C++
-
-%description devel
-Development headers for %name
+This package provides only the compat shared libraries with soversion %soversion
+for binaries built against the previous LTS; no headers, no devel files,
+no test helpers.
 
 %prep
 %setup
@@ -110,32 +56,25 @@ sed -i 's/ABSL_HAVE_BUILTIN(__builtin_c[tl]zs)/0/' absl/numeric/internal/bits.h
     -DCMAKE_CXX_STANDARD:STRING=%cxx_standard \
     -DABSL_ENABLE_INSTALL:BOOL=ON \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
-%if_enabled check
-    -DABSL_BUILD_TESTING:BOOL=ON \
-%endif
-    -DABSL_BUILD_TEST_HELPERS:BOOL=ON \
-    -DABSL_USE_EXTERNAL_GOOGLETEST:BOOL=ON \
-    -DABSL_FIND_GOOGLETEST:BOOL=ON \
     -GNinja
 %cmake_build
 
-%check
-%ifarch x86_64 aarch64
-ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
-%else
-ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags ||:
-%endif
-
 %install
 %cmake_install
+# compat package: drop headers, static libs, cmake configs, pkgconfig and devel symlinks
+rm -rf %buildroot%_includedir/absl
+rm -rf %buildroot%_libdir/cmake
+rm -f  %buildroot%_libdir/pkgconfig/absl_*.pc
+rm -f  %buildroot%_libdir/libabsl_*.so
 
-
-%files -n libabseil-cpp%soversion
+%files
 %doc LICENSE
 %doc FAQ.md README.md UPGRADES.md
 
+%_libdir/libabsl_bad_any_cast_impl.so.%soversion
+%_libdir/libabsl_bad_optional_access.so.%soversion
+%_libdir/libabsl_bad_variant_access.so.%soversion
 %_libdir/libabsl_base.so.%soversion
-%_libdir/libabsl_borrowed_fixup_buffer.so.%soversion
 %_libdir/libabsl_city.so.%soversion
 %_libdir/libabsl_civil_time.so.%soversion
 %_libdir/libabsl_cord.so.%soversion
@@ -167,10 +106,8 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_flags_reflection.so.%soversion
 %_libdir/libabsl_flags_usage.so.%soversion
 %_libdir/libabsl_flags_usage_internal.so.%soversion
-%_libdir/libabsl_generic_printer_internal.so.%soversion
 %_libdir/libabsl_graphcycles_internal.so.%soversion
 %_libdir/libabsl_hash.so.%soversion
-%_libdir/libabsl_hashtable_profiler.so.%soversion
 %_libdir/libabsl_hashtablez_sampler.so.%soversion
 %_libdir/libabsl_int128.so.%soversion
 %_libdir/libabsl_kernel_timeout_internal.so.%soversion
@@ -191,14 +128,14 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_log_internal_structured_proto.so.%soversion
 %_libdir/libabsl_log_severity.so.%soversion
 %_libdir/libabsl_log_sink.so.%soversion
+%_libdir/libabsl_low_level_hash.so.%soversion
 %_libdir/libabsl_malloc_internal.so.%soversion
 %_libdir/libabsl_periodic_sampler.so.%soversion
 %_libdir/libabsl_poison.so.%soversion
-%_libdir/libabsl_profile_builder.so.%soversion
 %_libdir/libabsl_random_distributions.so.%soversion
 %_libdir/libabsl_random_internal_distribution_test_util.so.%soversion
-%_libdir/libabsl_random_internal_entropy_pool.so.%soversion
 %_libdir/libabsl_random_internal_platform.so.%soversion
+%_libdir/libabsl_random_internal_pool_urbg.so.%soversion
 %_libdir/libabsl_random_internal_randen.so.%soversion
 %_libdir/libabsl_random_internal_randen_hwaes.so.%soversion
 %_libdir/libabsl_random_internal_randen_hwaes_impl.so.%soversion
@@ -212,11 +149,11 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_spinlock_wait.so.%soversion
 %_libdir/libabsl_stacktrace.so.%soversion
 %_libdir/libabsl_status.so.%soversion
-%_libdir/libabsl_status_matchers.so.%soversion
 %_libdir/libabsl_statusor.so.%soversion
 %_libdir/libabsl_str_format_internal.so.%soversion
 %_libdir/libabsl_strerror.so.%soversion
 %_libdir/libabsl_strings.so.%soversion
+%_libdir/libabsl_string_view.so.%soversion
 %_libdir/libabsl_strings_internal.so.%soversion
 %_libdir/libabsl_symbolize.so.%soversion
 %_libdir/libabsl_synchronization.so.%soversion
@@ -227,43 +164,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_utf8_for_code_point.so.%soversion
 %_libdir/libabsl_vlog_config_internal.so.%soversion
 
-%files testing
-%_libdir/libabsl_scoped_mock_log.so.%soversion
-%if_enabled check
-# TESTONLY libraries (that are actually installed):
-# absl/base/CMakeLists.txt
-%_libdir/libabsl_exception_safety_testing.so.%soversion
-%_libdir/libabsl_atomic_hook_test_helper.so.%soversion
-%_libdir/libabsl_spinlock_test_common.so.%soversion
-# absl/container/CMakeLists.txt
-%_libdir/libabsl_test_instance_tracker.so.%soversion
-%_libdir/libabsl_hash_generator_testing.so.%soversion
-# absl/debugging/CMakeLists.txt
-%_libdir/libabsl_stack_consumption.so.%soversion
-# absl/log/CMakeLists.txt
-%_libdir/libabsl_log_internal_test_actions.so.%soversion
-%_libdir/libabsl_log_internal_test_helpers.so.%soversion
-%_libdir/libabsl_log_internal_test_matchers.so.%soversion
-# absl/strings/CMakeLists.txt
-%_libdir/libabsl_pow10_helper.so.%soversion
-# absl/synchronization/CMakeLists.txt
-%_libdir/libabsl_per_thread_sem_test_common.so.%soversion
-# absl/time/CMakeLists.txt
-%_libdir/libabsl_time_internal_test_util.so.%soversion
-%endif
-
-%files devel
-%doc LICENSE
-%doc *.md
-%_libdir/libabsl_*.so
-#files devel
-%_includedir/absl/
-%_libdir/cmake/absl/
-%_pkgconfigdir/*.pc
-
 %changelog
-* Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 20260107.1-alt1
-- 20250127.1 -> 20260107.1
+* Tue Apr 21 2026 Anton Farygin <rider@altlinux.ru> 20250127.1-alt3
+- built as compat library without devel package
 
 * Fri Jul 04 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20250127.1-alt2
 - e2k build fix

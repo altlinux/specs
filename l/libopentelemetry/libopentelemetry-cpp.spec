@@ -10,7 +10,7 @@
 
 Name:          lib%oname
 Version:       1.22.0
-Release:       alt1
+Release:       alt2
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -34,7 +34,7 @@ BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libre2-devel
 BuildRequires: libabseil-cpp-devel
-BuildRequires: libgrpc++-devel
+BuildRequires: libgrpc-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libssh2-devel
 BuildRequires: libnghttp2-devel
@@ -76,7 +76,7 @@ Requires:      libssl-devel
 Requires:      zlib-devel
 Requires:      libre2-devel
 Requires:      libabseil-cpp-devel
-Requires:      libgrpc++-devel
+Requires:      libgrpc-devel
 Requires:      libprotobuf-devel
 Requires:      libssh2-devel
 Requires:      libnghttp2-devel
@@ -144,6 +144,9 @@ The OpenTelemetry C++ Client.
 
 
 %changelog
+* Sat May 02 2026 Anton Farygin <rider@altlinux.org> 1.22.0-alt2
+- libgrpc++-devel merged with libgrpc-devel according ALT bug #58350
+
 * Wed Jul 16 2025 Pavel Skrylev <majioa@altlinux.org> 1.22.0-alt1
 - ^ 1.21.0 -> 1.22.0
 - * enable proto, prometeus, grpc, elasticsearch, nlohmann json, gsl, and tests
