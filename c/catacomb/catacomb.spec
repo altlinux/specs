@@ -1,5 +1,5 @@
 Name: catacomb
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Wayland mobile compositor
@@ -37,9 +37,9 @@ cat <<EOF >> .cargo/config
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/smithay/smithay?rev=4a21f22ee96831376b5c4fef5bd1876433853963"]
+[source."git+https://github.com/smithay/smithay?rev=dba255cd18c1a808c85a1d1144ad48e0b3f44b8f"]
 git = "https://github.com/smithay/smithay"
-rev = "4a21f22ee96831376b5c4fef5bd1876433853963"
+rev = "dba255cd18c1a808c85a1d1144ad48e0b3f44b8f"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/catacombing/catacomb_common?rev=512e9cadfbec50d60dc7f64415383526ff3e6a9f"]
@@ -70,6 +70,9 @@ install -Dpm644 session/catacomb.desktop %buildroot%_datadir/wayland-sessions/ca
 %_datadir/wayland-sessions/catacomb.desktop
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0
 
