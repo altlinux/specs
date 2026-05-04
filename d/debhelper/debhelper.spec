@@ -1,5 +1,5 @@
 Name: debhelper
-Version: 13.30
+Version: 13.31
 Release: alt1
 
 Summary: Tools for Debian Packages
@@ -64,6 +64,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 13.31-alt1
+- new version 13.31
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 13.30-alt1
 - new version 13.30
 - add missing build dependencies for tests
