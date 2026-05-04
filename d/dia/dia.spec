@@ -1,36 +1,48 @@
 # INFO: For update, do git merge -s ours with new tag from upstream repo
 # TODO: build new release with poppler for PDF import (experimental)
 
+%define appid org.gnome.Dia
+
 Name: dia
-Version: 0.97.4
-Release: alt0.9.1
+Version: 0.98.0
+Release: alt0.01.2
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
 
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Office
-Url: https://wiki.gnome.org/Apps/Dia
+URL: https://wiki.gnome.org/Apps/Dia
+VCS: https://gitlab.gnome.org/GNOME/dia
 
 Obsoletes: %name-gnome %name-python
 
-# Source-git: https://gitlab.gnome.org/GNOME/dia.git
 Source: %name-%version.tar
-Source2: ru.po
 
-#Patch: %name-%version-%release.patch
-Patch: alt-dia-fix-help.patch
-Patch2: alt-dia-improve-translation.patch
-Patch3: CVE-2019-19451-adapted-fix.patch
-Patch4: dia-0.97.3-get_data_size.patch
-Patch5: dia-configure-c99.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(libxml-2.0) pkgconfig(libart-2.0)
-BuildRequires: gcc-c++ libfreetype-devel libpng-devel
-BuildRequires: intltool gettext
-# for HTML doc
-BuildRequires: docbook-utils docbook-style-dsssl docbook-style-xsl xsltproc
+%add_python3_path %_datadir/%name
+AutoProv: nopython3
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-gir
+BuildRequires: meson
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libxslt)
+BuildRequires: pkgconfig(poppler)
+BuildRequires: pkgconfig(poppler-cpp)
+BuildRequires: pkgconfig(graphene-1.0)
+BuildRequires: pkgconfig(xpm-pixbuf)
+BuildRequires: %_bindir/appstreamcli
+BuildRequires: python3-dev
+BuildRequires: rpm-build-python3
+# for HTML doc
+BuildRequires: docbook-style-xsl
+BuildRequires: xsltproc
 
 %ifnarch %e2k %mips
 BuildRequires: libEMF-devel
@@ -56,63 +68,49 @@ PostScript(TM), SVG, CGM или PNG.
 
 %prep
 %setup
-%patch -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
-cp -f %SOURCE2 po/ru.po
-
-install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
-
-# fixes from Fedora:
-sed -i 's|libdia_la_LDFLAGS = -avoid-version|libdia_la_LDFLAGS = -avoid-version $(shell pkg-config --libs gtk+-2.0 libxml-2.0 libart-2.0)|' \
-  lib/Makefile.*
-chmod -x `find objects/AADL -type f`
-iconv -f WINDOWS-1252 -t UTF8 doc/en/usage-layers.xml > usage-layers.xml.UTF-8
-mv usage-layers.xml.UTF-8 doc/en/usage-layers.xml
+%autopatch -p1
 
 %build
-# TODO: remove autoreconf when will build from a tarball
-%autoreconf
-%configure  \
-	--enable-db2html \
-	--with-hardbooks \
-	--disable-gnome \
-	--without-python \
-%ifarch x86_64 %e2k %mips
-	--disable-libemf \
-%endif
-	--disable-static
-%make_build
+%meson -Ddoc=true
+%meson_build
 
 %install
-%makeinstall_std
-rm -rf %buildroot%_libdir/dia/*.la
+%meson_install
+
+# fix shebang
+sed -i 's|^#!/usr/bin/env python|\#!%__python3|' %buildroot%_datadir/%name/python/*.py
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Graphics \
 	--add-category=Office \
 	--add-category=Chart \
-	%buildroot%_desktopdir/dia.desktop
+	%buildroot%_desktopdir/%appid.desktop
+
+# create unexististing help/ru
+ln -s en %buildroot%_datadir/%name/help/ru
 
 %files -f %name.lang
-%doc README TODO NEWS AUTHORS
-%_docdir/dia/
-%docdir %_docdir/dia/
+%doc README.md TODO NEWS AUTHORS
+%doc %__builddir/doc/*
 %_bindir/%name
 %dir %_libdir/%name
 %_libdir/%name/*.so
 %_datadir/%name/
-%_datadir/mime-info/*
-%_desktopdir/*.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%_man1dir/*
-%_mandir/fr/man1/*
+%_desktopdir/%appid.desktop
+%_datadir/metainfo/%appid.metainfo.xml
+%_datadir/thumbnailers/%appid.thumbnailer
+%_iconsdir/hicolor/scalable/apps/%appid.svg
+%_iconsdir/hicolor/symbolic/apps/%appid-symbolic.svg
+%_man1dir/%name.1.*
 
 %changelog
+* Fri May 01 2026 Anton Midyukov <antohami@altlinux.org> 0.98.0-alt0.01.2
+- New snapshot from commit ad68cc37.
+
+* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 0.98.0-alt0.01.1
+- New snapshot from commit 52b4ebbb.
+
 * Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.97.4-alt0.9.1
 - NMU: fix FTBFS
 
