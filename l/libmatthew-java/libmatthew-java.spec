@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt2_23jpp8
+Release:        alt3
 Summary:        A few useful Java libraries
 License:        MIT
 
@@ -72,7 +72,6 @@ sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1
 
 
 %build
-export JAVA_HOME=%{java_home}
 %make_build \
     CFLAGS='%{optflags}'\
     GCJFLAGS='%{optflags}' \
@@ -105,6 +104,9 @@ make install \
 
 
 %changelog
+* Mon May 04 2026 Arseniy Kostevich <faux@altlinux.org> 0.8-alt3
+- Fix FTBFS: remove obsolete macro %%java_home.
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_23jpp8
 - fc update
 
