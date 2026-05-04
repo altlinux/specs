@@ -2,7 +2,7 @@
 
 Name: inav-configurator
 Version: 9.0.1
-Release: alt3
+Release: alt4
 
 Summary: Configuration tool for the INAV flight control system
 Group: Engineering
@@ -93,6 +93,10 @@ chmod +x %buildroot%_bindir/inav-configurator
 %_iconsdir/inav-configurator.png
 
 %changelog
+* Mon May 04 2026 Grant Makyan <karonus@altlinux.org> 9.0.1-alt4
+- Fix height of top section in landing tab (fix: #58935).
+- Remove community links from landing tab.
+
 * Tue Apr 14 2026 Grant Makyan <karonus@altlinux.org> 9.0.1-alt3
 - Remove world transportation layer from ERSI map.
 
