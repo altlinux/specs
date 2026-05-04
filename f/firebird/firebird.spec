@@ -5,7 +5,7 @@
 # LTO causes errors, disable it
 %global optflags_lto %nil
 
-%define major 5.0.3
+%define major 5.0.4
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -395,6 +395,11 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Mon May 04 2026 Anton Farygin <rider@altlinux.org> 5.0.4-alt1
+- 5.0.3 -> 5.0.4 (Fixes: CVE-2026-40342, CVE-2026-35215, CVE-2026-34232,
+- CVE-2026-33337, CVE-2026-28224, CVE-2026-27890, CVE-2026-28214, CVE-2026-28212,
+- CVE-2025-65104)
+
 * Wed Jan 22 2026 Anton Farygin <rider@altlinux.com> 5.0.3-alt1
 - 4.0.6 -> 5.0.3
 - removed patches applied upstream: c++17, noexcept, loongarch
