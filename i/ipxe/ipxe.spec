@@ -21,12 +21,12 @@
   1af41000:virtio \\\
   808610d3:e1000e
 
-%define date 20250122
-%define hash c2f21a21
+%define date 20260501
+%define hash ae8defc2
 
 Name: ipxe
 Version: %date
-Release: alt2.git%{hash}
+Release: alt1.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -118,6 +118,9 @@ cd src
 # make sense anyways
 # http://lists.ipxe.org/pipermail/ipxe-devel/2012-March/001290.html
 rm -rf drivers/net/ath/ath9k
+
+# ath5k drivers are also too big for an Option ROM (~133 KB vs 130 KB limit)
+rm -rf drivers/net/ath/ath5k
 
 make_ipxe() {
     %make_build \
@@ -225,6 +228,9 @@ done
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 1:20260501-alt1.gitae8defc2
+- Update to latest upstream snapshot.
+
 * Mon Feb 03 2025 Alexey Shabalin <shaba@altlinux.org> 1:20250122-alt2.gitc2f21a21
 - Use util/catrom.pl for merge combined roms.
 - Enable NFS support.
