@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: ocrmypdf
-Version: 17.3.0
+Version: 17.4.2
 Release: alt1
 
 Summary: Add an OCR text layer to scanned PDF files
@@ -116,6 +116,9 @@ k="${k-}${k+ and }not test_tesseract_config_invalid"
 %endif
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 17.4.2-alt1
+- new version 17.4.2
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 17.3.0-alt1
 - new version 17.3.0 (ALT bug 58121)
 - build with pi-heif
