@@ -3,7 +3,7 @@
 %define libdnf5_dir %_sharedstatedir/libdnf5
 
 Name: dnf5
-Version: 5.4.0.0
+Version: 5.4.2.0
 Release: alt1
 
 Summary: Command-line package manager
@@ -11,6 +11,9 @@ Summary: Command-line package manager
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
 Group: System/Configuration/Packaging
 URL: https://github.com/rpm-software-management/dnf5
+
+# 32-bit time_t narrowing in libdnf5/base/transaction.cpp
+ExcludeArch: %ix86
 # Source-url: https://github.com/rpm-software-management/dnf5/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
@@ -272,6 +275,7 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %dir %_libdir/libdnf5/plugins
 %_datadir/bash-completion/completions/dnf5
 %_datadir/bash-completion/completions/dnf
+%_datadir/zsh/site-functions/_dnf5
 %_unitdir/dnf5-offline-transaction.service
 %_unitdir/dnf5-offline-transaction-cleanup.service
 
@@ -367,6 +371,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.0-alt1
+- new version 5.4.2.0
+- pack zsh completion
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.0.0-alt1
 - initial build for ALT Sisyphus
 - add Conflicts: dnf < 5 for libdnf5 (dnf.conf), dnf-automatic for plugin-automatic
