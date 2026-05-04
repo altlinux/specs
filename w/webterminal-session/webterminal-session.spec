@@ -1,16 +1,17 @@
 
 Name: webterminal-session
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/Other
-Summary: Apply WEB-Terminal application
+Summary: WEB-Terminal session
 License: GPL-2.0-only
 URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
 BuildArch: noarch
 
+Requires: webterminal-application > 0
 Requires: kde6-runtime kwin plasma6-layer-shell-qt
 #Requires: plasma-keyboard
 Provides: installer-feature-webterminal-setup = 0.5
@@ -21,7 +22,13 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-kf6
 
 %description
-Apply WEB-Terminal application for kiosk mode.
+Apply WEB-Terminal application for kiosk mode session.
+
+%package -n webterminal-application
+Group: Graphical desktop/Other
+Summary: Application for WEB-Terminal session
+%description -n webterminal-application
+Application for WEB-Terminal session.
 
 %prep
 %setup
@@ -31,7 +38,7 @@ mkdir -p %buildroot/%_bindir/
 install -m 0755 start-webterminal %buildroot/%_bindir/
 install -m 0755 webterminal-application %buildroot/%_bindir/
 mkdir -p %buildroot/%_sysconfdir/sysconfig/
-install -m 0644 webterminal %buildroot/%_sysconfdir/sysconfig/
+install -m 0644 webterminal-app %buildroot/%_sysconfdir/sysconfig/
 mkdir -p %buildroot/%_datadir/wayland-sessions/
 install -m 0644 webterminal.desktop %buildroot/%_datadir/wayland-sessions/
 mkdir -p %buildroot/%_sysconfdir/alterator/kiosk/profiles/
@@ -43,18 +50,24 @@ install -m 0644 webterminal-session.target %buildroot/%_userunitdir
 install -m 0644 webterminal-gui.service %buildroot/%_userunitdir
 
 %files
-%config(noreplace) %_sysconfdir/sysconfig/webterminal
+#%config(noreplace) %_sysconfdir/sysconfig/webterminal
 %config(noreplace) %_sysconfdir/alterator/kiosk/profiles/webterminal-addon
 %_sysconfdir/firsttime.d/*.sh
 %_bindir/start-webterminal
-%_bindir/webterminal-application
 %_datadir/wayland-sessions/webterminal.desktop
 %dir %_userunitdir/webterminal-session.target.d/
 %dir %_userunitdir/webterminal-session.target.wants/
 %_userunitdir/webterminal-session.target
 %_userunitdir/webterminal-gui.service
 
+%files -n webterminal-application
+%config(noreplace) %_sysconfdir/sysconfig/webterminal-app
+%_bindir/webterminal-application
+
 %changelog
+* Mon May 04 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.1-alt1
+- separate webterminal-application
+
 * Wed Apr 29 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.0-alt1
 - switch to wayland
 - switch to systemd user session
