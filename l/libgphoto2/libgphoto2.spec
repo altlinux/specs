@@ -4,7 +4,7 @@
 
 Name: libgphoto2
 Version: 2.5.33
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -35,8 +35,6 @@ Summary: Library to access to digital cameras
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 License: LGPLv2+
 Requires: %name-common = %EVR
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
 
 %description -n %name-%sover
 The %name library can be used by applications to access various digital
@@ -62,6 +60,7 @@ Summary: Common files for %name
 Summary (ru_RU.UTF-8): Общие файлы для библиотеки libgphoto2
 License: LGPLv2+
 BuildArch: noarch
+Obsoletes: %{name}-6 < 2.5.33-alt1
 
 %description common
 Common files for %name.
@@ -117,7 +116,7 @@ against %name library.
 Библиотека libgphoto2 используется приложениями для доступа к различным моделям
 цифровых камер, посредством стандартных протоколов, таких как USB-накопитель
 и PTP, или специфических протоколов производителей.
-Этот пакет ссодержит исполняемый код для доступа к портам.
+Этот пакет содержит исполняемый код для доступа к портам.
 
 %description common -l ru_RU.UTF-8
 Общие файлы для библиотеки libgphoto2.
@@ -181,10 +180,7 @@ cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
 
 %pre common
 # create group
-groupadd -fr camera || :
-
-%triggerpostun -- %name <= 2.4.0
-ldconfig
+groupadd -f -r camera || :
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
@@ -237,6 +233,10 @@ ldconfig
 %endif
 
 %changelog
+* Mon May 04 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.33-alt2
+- moved Obsoletes to %name-common
+- drop unneeded %%triggerpostun
+
 * Mon Oct 20 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.33-alt1
 - 2.5.33
 - moved common files to %name-common package
