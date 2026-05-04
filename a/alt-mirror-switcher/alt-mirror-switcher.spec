@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Mon May 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.4-alt1
+- gui: shortened time: mirror speed tests
+
 * Fri Apr 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3-alt1
 - gui: fixed: work with locale
 - gui: fixed: lock autocheck
