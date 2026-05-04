@@ -2,12 +2,12 @@
 %define webname com.arrowdl.extension
 
 Name: arrowdl
-Version: 4.2.1
-Release: alt3
+Version: 4.2.2
+Release: alt1
 
 Summary: ArrowDL (Arrow Downloader) is a download manager
 
-License: LGPL-2.1-or-later
+License: LGPL-3.0-only
 Group: Networking/File transfer
 
 Url: https://www.arrow-dl.com
@@ -101,6 +101,10 @@ install -Dm644 web-extension/launcher/unix/launcher-manifest-firefox.json \
 %_sysconfdir/chromium/native-messaging-hosts/%webname.json
 
 %changelog
+* Tue May 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.2-alt1
+- 4.2.1 -> 4.2.2
+- changed license
+
 * Sat Mar 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.1-alt3
 - fixed: path for registry database
 - remove update check from UI
