@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwts
-Version: 23.07.00
+Version: 26.03.00
 Release: alt1
 
 Summary: Firmware Test Suite
@@ -12,11 +12,9 @@ License: GPLv2 and LGPLv2 and (GPLv2 or Intel-ACPI)
 Group: System/Base
 
 Url: https://wiki.ubuntu.com/FirmwareTestSuite
-#git: https://git.launchpad.net/fwts
+Vcs: https://github.com/fwts/fwts.git
 
 Source0: %name-%version.tar
-
-Patch1: 0001-fix-build-on-i586-arch.patch
 
 BuildRequires: libgio-devel
 BuildRequires: flex
@@ -83,6 +81,9 @@ fi
 %_man1dir/%name-frontend-text.1*
 
 %changelog
+* Fri May 01 2026 Vasiliy Kovalev <kovalev@altlinux.org> 26.03.00-alt1
+- 23.07.00 -> 26.03.00
+
 * Fri Jul 07 2023 Vasiliy Kovalev <kovalev@altlinux.org> 23.07.00-alt1
 - 23.05.00 -> 23.07.00
 
