@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gcc
-Version: 15.2.0
+Version: 16.1.0
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -9,7 +9,7 @@ Url: https://gcc.gnu.org/
 
 Requires: arm-none-eabi-newlib
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen
 BuildRequires: arm-none-eabi-binutils >= 2.41
@@ -137,6 +137,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.1.0-alt1
+- 16.1.0 released
+
 * Wed Sep 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2.0-alt1
 - 15.2.0 released
 
