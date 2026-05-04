@@ -7,17 +7,15 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt8
+Release: alt9
 Summary: Linux Native KVM Tool
 License: GPL-2.0
 Group: Emulators
-Url: https://git.kernel.org/cgit/linux/kernel/git/will/kvmtool.git
+Url: https://git.kernel.org/pub/scm/linux/kernel/git/will/kvmtool.git
+Vcs: https://git.kernel.org/pub/scm/linux/kernel/git/will/kvmtool.git 
 Source: %name-%version.tar
 
-# Do not build on architectures where kvmtool definitely does not work.
-#   armh:    Error: '/dev/kvm' KVM driver not available.
-#   ppc64le: Warning: Host CPU unsupported by kvmtool
-ExcludeArch: armh
+ExclusiveArch: x86_64 %ix86 aarch64 riscv64 ppc64le
 
 BuildRequires: binutils-devel
 BuildRequires: glibc-devel-static
@@ -61,7 +59,7 @@ uuidgen > uuid
 # x86 cannot handle a lot of memory causing "Fatal: Failed to read initrd" error
 # on girar due to EFAULT, but all can handle around 1G.
 timeout 60 \
-./lkvm sandbox -m 1024 -i initrd.img -d test -n mode=none -- bash -xc "cat /host/$PWD/uuid; sleep 1" |& tee boot.log
+./lkvm sandbox -c 2 -m 1024 -i initrd.img -d test -n mode=none -- bash -xc "cat /host/$PWD/uuid; sleep 1" |& tee boot.log
 grep -f uuid boot.log
 %endif
 
@@ -72,6 +70,9 @@ grep -f uuid boot.log
 %_man1dir/lkvm.1*
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt9
+- Update to git commit eb915c76 (2026-03-19).
+
 * Tue Mar 25 2025 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt8
 - Update to git commit e48563f (2025-01-27).
 
