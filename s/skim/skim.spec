@@ -1,5 +1,5 @@
 Name:    skim
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1
 
 Summary: Fuzzy Finder in rust
@@ -85,6 +85,9 @@ SK=%buildroot%_bindir/sk
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Mon May 04 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.6.2-alt1
+- new version 4.6.2
+
 * Mon Apr 27 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.6.1-alt1
 - new version 4.6.1
 
