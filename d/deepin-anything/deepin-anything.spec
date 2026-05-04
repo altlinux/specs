@@ -1,7 +1,8 @@
 %define _sysusersdir %_prefix/lib/sysusers.d
+%define _libexecdir %_prefix/libexec
 
 Name: deepin-anything
-Version: 7.0.23
+Version: 7.0.39
 Release: alt1
 
 Summary: The lightning-fast filename search for Deepin
@@ -9,13 +10,15 @@ Summary: The lightning-fast filename search for Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-anything
-Vcs: git://github.com/linuxdeepin/deepin-anything.git
+VCS: https://github.com/linuxdeepin/deepin-anything
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+# Source-url: https://github.com/linuxdeepin/deepin-anything/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: %name-7.0.7-alt-gcc15.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-kernel
-BuildRequires: cmake glib2-devel libgio-devel libdtk6core-devel libmount-devel libnl-devel libpcre-devel libudisks2-qt6-devel boost-devel libspdlog-devel liblucene++-devel dqt6-base-devel
+BuildRequires: cmake glib2-devel libgio-devel libdtk6core-devel libmount-devel libnl-devel libpcre-devel libudisks2-qt6-devel boost-devel libspdlog-devel liblucene++-devel dqt6-base-devel libstdc++-devel-static
 
 %description
 %summary.
@@ -31,7 +34,10 @@ This is the source of the kernel %name module.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%if "%(rpmquery --qf '%%{VERSION}' gcc-c++)" >= "15"
+%patch1 -p2
+%endif
 
 %build
 %DQ6build \
@@ -46,11 +52,13 @@ tar -cJhf %name-0.0.tar.xz %name-0.0/
 rm -rf %name-0.0/
 
 %files
-%doc README.md LICENSE CHANGELOG.md
-%_bindir/deepin-anything-daemon
-%_bindir/deepin-anything-server
+%doc README.md LICENSE debian/changelog
 %_bindir/deepin-anything-searcher
+%_libexecdir/deepin-anything-daemon
+%_libexecdir/deepin-anything-server
+%_libexecdir/deepin-anything-logger
 %_userunitdir/deepin-anything-daemon.service
+%_unitdir/deepin-anything-logger.service
 %_sysusersdir/*.conf
 %_sysconfdir/modules-load.d/anything.conf
 %dir %_datadir/deepin-anything-server/
@@ -59,12 +67,17 @@ rm -rf %name-0.0/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.anything/
 %_datadir/dsg/configs/org.deepin.anything/org.deepin.anything.json
+%_datadir/dsg/configs/org.deepin.anything/org.deepin.anything.logger.json
 
 %files -n kernel-source-%name
 %dir %_usrsrc/kernel/
 %_usrsrc/kernel/*
 
 %changelog
+* Mon May 04 2026 Leontiy Volodin <lvol@altlinux.org> 7.0.39-alt1
+- New version 7.0.39.
+- Fixed build on gcc15.
+
 * Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.23-alt1
 - New version 7.0.23.
 - Enabled build on i586.
