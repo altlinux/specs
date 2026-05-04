@@ -1,7 +1,7 @@
 %define pypi_name git-machete
 
 Name: %pypi_name
-Version: 3.39.0
+Version: 3.40.1
 Release: alt1
 
 Summary: Git repository organizer and rebase/merge workflow automation tool
@@ -59,6 +59,9 @@ install -Dm644 docs/man/git-machete.1 %buildroot%_man1dir/git-machete.1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.40.1-alt1
+- new version 3.40.1
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.39.0-alt1
 - new version 3.39.0
 
