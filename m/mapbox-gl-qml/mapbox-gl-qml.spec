@@ -1,5 +1,5 @@
 Name: mapbox-gl-qml
-Version: 3.0.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Mapbox GL Native QML plugin
@@ -40,5 +40,8 @@ QML plugin for Maplibre GL Native, Mapbox GL Native fork.
 %_qt5_qmldir/MapboxMap/
 
 %changelog
+* Wed Apr 29 2026 Egor Shestakov <ved@altlinux.org> 3.2.1-alt1
+- New version.
+
 * Wed Oct 15 2025 Egor Shestakov <ved@altlinux.org> 3.0.0-alt1
 - Initial build.

@@ -8,7 +8,7 @@
 ExcludeArch: armh ppc64le i586
 
 Name: pure-maps
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Maps and navigation
@@ -100,5 +100,10 @@ rm -rf %buildroot/%_iconsdir/hicolor/108x108/
 %_liconsdir/%revname.png
 
 %changelog
+* Mon May 04 2026 Egor Shestakov <ved@altlinux.org> 3.5.0-alt1
+- Add support for HERE v3 API maps.
+- Update MapTiler maps (from 3.4.2).
+- Fix Stadia API (from 3.4.2).
+
 * Fri Oct 17 2025 Egor Shestakov <ved@altlinux.org> 3.4.1-alt1
 - Initial build.

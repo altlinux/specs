@@ -9,7 +9,7 @@
 
 Name: libmaplibre-native-qt
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: MapLibre Native Qt bindings
 License: BSD-2-Clause
@@ -18,6 +18,7 @@ URL: https://maplibre.org
 VCS: https://github.com/maplibre/maplibre-native-qt.git
 
 Source0: %name-%version.tar
+Patch0: libmaplibre-native-qt-3.0.0-upstream-fix-gcc15.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -52,13 +53,14 @@ Development libraries and headers for %name.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %cmake \
     -DMLN_QT_WITH_LOCATION=OFF \
     -DMLN_QT_WITH_WIDGETS=OFF \
     -DBUILD_TESTING=OFF \
-%nil
+    %nil
 %cmake_build
 
 %install
@@ -75,5 +77,8 @@ Development libraries and headers for %name.
 %_libdir/cmake/QMapLibre/
 
 %changelog
+* Wed Apr 29 2026 Egor Shestakov <ved@altlinux.org> 3.0.0-alt2
+- Fix build with gcc15.
+
 * Tue Oct 14 2025 Egor Shestakov <ved@altlinux.org> 3.0.0-alt1
 - Initial build.
