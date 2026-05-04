@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.16.1
+Version: 1.17.0
 Release: alt1
 Epoch: 1
 
@@ -15,10 +15,11 @@ Source500: %name.unused
 ## Ubuntu patches
 Patch101: Ubuntu-manpages.patch
 Patch102: Ubuntu-dot-config.patch
-Patch104: Ubuntu-avoid-compass.patch
 Patch107: Ubuntu-libatomic.patch
 Patch108: Ubuntu-reproducible_manpages.patch
-Patch109: Ubuntu-sass_fix.patch
+
+# https://github.com/doxygen/doxygen/pull/12117
+Patch109: doxygen-1.17.0-upstream-fix-tagfile-test.patch
 
 ## ALT patches
 
@@ -32,7 +33,6 @@ BuildRequires: perl
 BuildRequires: texlive-collection-basic texlive-dist
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: sassc node-uglify-js
 
 # graphviz uses pango as the default backend. pango needs some font and
 # a properly configured fontconfig to produce something sane.
@@ -76,26 +76,9 @@ pdf formats.
 ## Remove junk
 find * -name "*._*" -delete
 
-## Ubuntu apply patches
-%patch101 -p1
-%patch102 -p1
-%patch104 -p1
-%patch107 -p1
-%patch108 -p1
-%patch109 -p1
-
-## ALT apply patches
+%autopatch -p1
 
 %build
-%ifnarch %ix86
-# node and/or uglifyjs are broken on i586, see
-# - https://bugzilla.altlinux.org/55012
-# - https://bugzilla.altlinux.org/54577
-%make_build -C deps/jquery \
-	UGLIFYJS=uglifyjs \
-	install
-%endif
-
 %define _cmake__builddir BUILD
 %cmake -G "Unix Makefiles" \
 	-Dbuild_doc=ON -Dbuild_wizard=ON -Dbuild_xmlparser=ON \
@@ -128,6 +111,9 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Mon May 04 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.17.0-alt1
+- 1.17.0
+
 * Tue Jan 13 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.16.1-alt1
 - 1.16.1
 
