@@ -1,5 +1,5 @@
 Name: copyq
-Version: 14.0.0
+Version: 15.0.0
 Release: alt1
 
 Summary: CopyQ - Advanced clipboard manager
@@ -12,7 +12,6 @@ Url: https://github.com/hluk/CopyQ/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
-Patch1: alt-qt6.10.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake, extra-cmake-modules, gcc-c++
@@ -30,7 +29,6 @@ support for image formats, command line control and more.
 
 %prep
 %setup
-%patch1 -p1
 %__subst '/DQT_RESTRICTED_CAST_FROM_ASCII/d' CMakeLists.txt
 
 %build
@@ -61,9 +59,15 @@ support for image formats, command line control and more.
 %dir %_datadir/%name/
 %dir %_datadir/%name/locale/
 %_datadir/%name/themes/
+%_datadir/gnome-shell/extensions/copyq-clipboard@hluk.github.com/
 %_man1dir/%name.1.*
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 15.0.0-alt1
+- new version 15.0.0
+- drop alt-qt6.10.patch (fixed in upstream)
+- pack gnome-shell extension
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 14.0.0-alt1
 - new version 14.0.0
 - build with qca-qt6, qt6keychain, miniaudio support
