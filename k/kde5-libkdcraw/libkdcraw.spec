@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,10 +15,10 @@ Patch1: alt-libraw-ver.patch
 
 # Automatically added by buildreq on Tue Jan 12 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
-BuildRequires: extra-cmake-modules libraw-devel qt5-base-devel
+BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: libraw-devel
+BuildRequires: libraw0-devel
 
 %description
 %summary
@@ -70,6 +70,9 @@ KF5 library
 %_K5lib/libKF5KDcraw.so.*
 
 %changelog
+* Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
+- build with libraw0-devel
+
 * Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
 - new version
 
