@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name editorconfig
 %define srcname %_name-core-c
 %def_enable docs
@@ -7,8 +7,8 @@
 %def_disable check
 
 Name: %_name
-Version: 0.12.10
-Release: alt0.1
+Version: 0.12.11
+Release: alt1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
@@ -101,6 +101,9 @@ This package contains files needed for development EditorConfig plugins.
 %doc %_cmake__builddir/doc/html}
 
 %changelog
+* Sun May 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.12.11-alt1
+- 0.12.11
+
 * Sun Jun 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt0.1
 - updated to v0.12.9-13-gc8e2d77
 

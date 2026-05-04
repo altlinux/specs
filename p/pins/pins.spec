@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name Pins
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: pins
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Create and edit app shortcuts
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Sun May 03 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt1
+- 2.4.6
+
 * Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
 - 2.4.5
 
