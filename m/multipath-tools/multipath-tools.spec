@@ -9,8 +9,8 @@
 %filter_from_requires /systemctl/d
 
 Name: multipath-tools
-Version: 0.11.1
-Release: alt3
+Version: 0.14.3
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -213,6 +213,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 0.14.3-alt1
+- 0.14.3
+
 * Tue Apr 29 2025 Anton Midyukov <antohami@altlinux.org> 0.11.1-alt3
 - NMU: filter runtime dependency on systemctl (Closes: 54047)
 
