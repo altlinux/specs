@@ -1,5 +1,5 @@
 Name: deja-dup
-Version: 49.3
+Version: 50.1
 Release: alt1
 
 Summary: Simple backup tool and frontend for duplicity
@@ -90,6 +90,9 @@ desktop-file-validate %buildroot/%_sysconfdir/xdg/autostart/org.gnome.DejaDup.Mo
 #_datadir/help/*
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 50.1-alt1
+- new version 50.1
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 49.3-alt1
 - new version 49.3
 - add blueprint-compiler to BuildRequires
