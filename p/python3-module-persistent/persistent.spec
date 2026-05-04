@@ -5,8 +5,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.5
-Release: alt2
+Version: 6.6
+Release: alt1
 
 Summary: Translucent persistent objects
 License: ZPL-2.1
@@ -122,6 +122,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Mon May 04 2026 Anton Vyatkin <toni@altlinux.org> 6.6-alt1
+- New version 6.6.
+
 * Mon Mar 16 2026 Anton Vyatkin <toni@altlinux.org> 6.5-alt2
 - Fix FTBFS.
 
