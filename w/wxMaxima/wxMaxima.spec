@@ -1,6 +1,6 @@
 %undefine __cmake_in_source_build
 Name: wxMaxima
-Version: 26.01.0
+Version: 26.05.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -109,6 +109,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Tue May 05 2026 Ilya Mashkin <oddity@altlinux.ru> 26.05.0-alt1
+- 26.05.0
+
 * Tue Jan 06 2026 Ilya Mashkin <oddity@altlinux.ru> 26.01.0-alt1
 - 26.01.0
 
