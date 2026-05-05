@@ -1,51 +1,65 @@
-%define sover 7
-
-Name: libgif
-Version: 6.1.3
-Release: alt1
+Name: libgif4
+Version: 4.1.6
+Release: alt5
 
 Summary: A library for manipulating GIF format image files
-Group: System/Libraries
+Group: System/Legacy libraries
 License: MIT
-Url: https://giflib.sourceforge.net
-Vcs: https://git.code.sf.net/p/giflib/code
+Url: http://sourceforge.net/projects/giflib/
 
-BuildRequires: xmlto
-
-Source: %name-%version-%release.tar
+# http://downloads.sourceforge.net/giflib/giflib-%version.tar.bz2
+Source: giflib-%version.tar
+Patch1: libgif-4.1.6-alt-tmp.patch
+Patch2: libgif-4.1.6-alt-fixes.patch
+Patch3: libgif-4.1.6-alt-vers.patch
+Patch4: libgif-4.1.6-deb-cve.patch
+Patch5: libgif-4.1.6-deb-doc-fixes.patch
+Patch6: libgif-4.1.6-deb-spelling-fixes.patch
+Patch7: libgif-4.1.6-alt-include-header-stdlib.patch
 
 %def_disable static
 
-%package -n libgif%sover
+Provides: libungif = %version-%release
+Obsoletes: libungif < %version-%release
+
+%package -n libgif
 Summary: A library for manipulating GIF format image files
-Group: System/Libraries
-Provides: libgiflib_7 = %EVR
-Obsoletes: libgiflib_7 = %EVR
+Group: System/Legacy libraries
+Provides: libungif = %version-%release
+Obsoletes: libungif < %version-%release
 
 %package devel
 Summary: Development tools for programs which will use the %name library
 Group: Development/C
-Requires: %name%sover = %EVR
-Provides: libungif-devel = %EVR
-Provides: giflib-devel = %EVR
+Requires: %name = %version-%release
+Provides: libungif-devel = %version-%release
+Obsoletes: libungif-devel < %version-%release
 
 %package devel-static
 Summary: Static %name library
 Group: Development/C
-Requires: %name-devel = %EVR
+Requires: %name-devel = %version-%release
+Provides: libungif-devel-static = %version-%release
+Obsoletes: libungif-devel-static < %version-%release
 
 %package utils
 Summary: Programs for manipulating GIF format image files
 Group: Graphics
-Requires: %name%sover = %EVR
+Requires: %name = %version-%release
+Provides: libungif-progs = %version-%release
+Obsoletes: libungif-progs < %version-%release
 
 %description
 This package contains a shared library of functions for loading and
-saving GIF format image files.
+saving GIF format image files.  The %name library can load any GIF file,
+but it will save GIFs only in uncompressed format (i.e., it won't use
+the patented LZW compression used to save "normal" compressed GIF files).
 
-%description -n libgif%sover
+%description -n libgif
 This package contains a shared library of functions for loading and
-saving GIF format image files.
+saving GIF format image files.  The %name library can load any GIF file,
+but it will save GIFs only in uncompressed format (i.e., it won't use
+the patented LZW compression used to save "normal" compressed GIF files).
 
 %description devel
 This package contains development files and documentation necessary for
@@ -62,53 +76,49 @@ This package contains various programs for manipulating GIF format
 image files.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n giflib-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+# fix format warnings
+sed -i 's/fprintf(stderr, VersionStr)/fprintf(stderr, "%%s", VersionStr)/' util/*.c
 bzip2 -9fk ChangeLog
 
 %build
-%add_optflags -fPIC
-%make_build CFLAGS='%optflags'
+%autoreconf
+%configure %{subst_enable static} --disable-x11
+%make_build
+s="$(readelf -d lib/.libs/libgif.so.%version |
+	sed -n 's/.*(SONAME).*\[[^.]\+\(.\+\)\].*/\1/p')"
+echo '{ local: *; };' >libungif.vers
+%__cc %optflags -shared -Wl,-soname,libungif$s,--version-script,libungif.vers,-no-as-needed \
+	-Llib/.libs -lgif -o libungif.so.%version
 
 %install
-make install-bin install-include install-shared-lib install-man \
-	DESTDIR=%buildroot LIBDIR=%_libdir PREFIX=%_prefix
+%makeinstall_std
+install -pm644 libungif.so.%version %buildroot%_libdir/
+ln -s libgif.so %buildroot%_libdir/libungif.so
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm644 ChangeLog.bz2 \
-	COPYING NEWS TODO \
-	doc/*.html \
+install -pm644 AUTHORS BUGS ChangeLog.bz2 \
+	COPYING DEVELOPERS NEWS ONEWS README TODO \
+	doc/*.{png,html,txt} util/{giffiltr,gifspnge}.c \
 	%buildroot%docdir/
 
-%check
-%make_build check
-
-%files -n libgif%sover
-%_libdir/*.so.%{sover}*
+%files -n libgif
+%_libdir/*.so.*
 %dir %docdir
 %docdir/[A-Z][A-Z]*
 %docdir/*.bz2
 
-%files utils
-%_bindir/*
-%_man1dir/*
-%dir %docdir
-%docdir/*.html
-
-%files devel
-%_libdir/*.so
-%_includedir/*
-%dir %docdir
-%_man7dir/*
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
-* Thu Apr 30 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.3-alt1
-- 4.1.6 -> 6.1.3.
+* Fri May 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.6-alt5
+- Rebuilt as a legacy library.
 
 * Mon May 05 2025 Constantin Sunzow <protvin@altlinux.org> 4.1.6-alt4
 - Fix FTBFS: implicit declaration of function (compatibility with GCC 14).
