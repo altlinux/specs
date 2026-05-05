@@ -1,10 +1,10 @@
-# git commit feaa937834238a5e19d476b5ca48f1be89f31df3
+# git commit 9210d7e55836f239e7b9bb4e7f8b77b431b27bbf
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 34.2.0
+Version: 34.2.2
 
 Release: alt1
 
@@ -501,6 +501,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Tue May 05 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:34.2.2-alt1
+- Version 34.2.2 
+
 * Wed Apr 08 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:34.2.0-alt1
 - Version 34.2.0  (CVE-2026-4707, CVE-2026-4690, CVE-2026-4727)
 
