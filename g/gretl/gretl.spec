@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2023c
+Version: 2025c
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -76,6 +76,11 @@ This package contains the binary openmpi files for %name.
 
 %prep
 %setup
+
+# GCC 15: implicit-function-declaration is now an error;
+# LIMIT_THREADS code calls omp_set_num_threads() but omp.h is only included
+# when _OPENMP is defined, so guard this code by _OPENMP too.
+%__subst 's|^#if LIMIT_THREADS$|#if LIMIT_THREADS \&\& defined(_OPENMP)|' lib/src/gretl_matrix.c
 
 CC=mpicc
 CXX=mpic++
@@ -157,6 +162,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2025c-alt1
+- new version 2025c
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2023c-alt1
 - new version 2023c (with rpmrb script)
 
