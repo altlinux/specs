@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -93,7 +93,6 @@ developing applications that use %name.
 %files
 %_docdir/%name-%version/
 %_bindir/zoryn
-%_bindir/zoryn_config_fix
 %_man1dir/zoryn*.1*
 %_datadir/bash-completion/completions/zoryn
 %_datadir/zsh/site-functions/_zoryn
@@ -104,6 +103,22 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue May 05 2026 Anton Farygin <rider@altlinux.org> 0.38.0-alt1
+- added task refresh --run/--commit/--test-only/-m to chain task run.
+- added web_regex parser for upstream HTML release notes (Wireshark and similar).
+- removed legacy INI config support (the migration utility, INI parser, auto-detection).
+- fixed task delete/approve/disapprove/log: pkg.git=tag now picks the
+  matching subtask instead of the first one sharing the git repo (closes #74).
+- fixed bash completion: TAB after pkg.git=tag prefix no longer stalls or
+  duplicates the prefix.
+- fixed config: invalid TOML in any user config now fails loudly instead
+  of silently falling back to defaults.
+- fixed up: scheme detection falls back to tarball-watch when only a watch
+  file is present.
+- fixed up: tarball-watch + PyPI Url uses PyPI for the version and the watch
+  file only for the tarball download URL.
+- fixed test_cmd_gen_watch flakiness against live upstream endpoints.
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 0.37.0-alt1
 - up: added unsandboxed hooks prompt with full script listing
 - up: refused symlinks under .gear/{up,merge-up}.d/ (BREAKING)
