@@ -2,7 +2,7 @@
 
 Name: spacefm
 Version: 1.0.6
-Release: alt5
+Release: alt6
 Summary: Multi-panel tabbed file and desktop manager
 License: GPLv3+ and LGPLv3+
 Group: File tools
@@ -46,6 +46,7 @@ alike for its stability, speed, convenience and flexibility.
 %patch7 -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure \
   --with-preferable-sudo=%_bindir/xdg-su \
@@ -74,6 +75,9 @@ install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 %_datadir/mime/packages/%name-mime.xml
 
 %changelog
+* Tue May 05 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.6-alt6
+- Fixed build with gcc15 using -std=gnu17
+
 * Sun Dec 08 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.6-alt5
 - Fixed build with gcc14
 - Added some patches from Debian

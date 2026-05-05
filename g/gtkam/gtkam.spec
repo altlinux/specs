@@ -7,7 +7,7 @@
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
 Version: 1.1
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Graphics
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
@@ -51,6 +51,7 @@ Languages support for GTKam.
 %patch1 -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure \
 	%{subst_with gimp} \
@@ -85,6 +86,9 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 %files -n %name-i18n -f %name.lang
 
 %changelog
+* Tue May 05 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.1-alt3
+- Fixed FTBFS with GCC-15 using -std=gnu17
+
 * Tue Feb 11 2025 Dmitriy Khanzhin <jinn@altlinux.org> 1.1-alt2
 - Disabled gimp plugin build
 

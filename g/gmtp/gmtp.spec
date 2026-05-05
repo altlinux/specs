@@ -1,6 +1,6 @@
 Name: gmtp
 Version: 1.3.11
-Release: alt2
+Release: alt3
 
 Summary: A basic media player client
 License: BSD-3-Clause
@@ -30,7 +30,7 @@ upload/download of files.
 %setup
 
 %build
-%add_optflags -fcommon
+%add_optflags -fcommon -std=gnu17
 %configure
 %make_build
 
@@ -48,6 +48,9 @@ upload/download of files.
 %doc AUTHORS COPYING ChangeLog README
 
 %changelog
+* Tue May 05 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.11-alt3
+- Fixed build with gcc15 using -std=gnu17
+
 * Tue Jan 05 2021 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.11-alt2
 - Package name converted to lowercase
 - Fixed build with gcc10
