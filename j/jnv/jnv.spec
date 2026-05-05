@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jnv
-Version: 0.6.2
+Version: 0.7.1
 Release: alt1
 Summary: JSON filter using jq with interactive features
 License: MIT
@@ -34,5 +34,8 @@ and editing JSON.
 %_bindir/jnv
 
 %changelog
+* Tue May 05 2026 Alexey Rodygin <alehandro@altlinux.org> 0.7.1-alt1
+- Updated to new version 0.7.1
+
 * Tue Mar 17 2026 Alexey Rodygin <alehandro@altlinux.org> 0.6.2-alt1
 - Initial build for ALT Linux
