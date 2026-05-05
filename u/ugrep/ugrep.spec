@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 7.6.0
+Version: 7.8.1
 Release: alt1
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -54,7 +54,7 @@ files (gz, Z, bz2, lzma, xz, lz4, zstd, brotli), pdfs, docs, and more
 # can be fixed with this, but performance may be worse
 #sed -i "/<cpuid.h>/{N;s/.*/#define cpuidex __cpuidex/}" include/reflex/simd.h
 %endif
-%configure --with-bzip3 --disable-avx2
+%configure --with-bzip3 --disable-avx512
 %make_build
 
 %install
@@ -83,7 +83,7 @@ PATH=%buildroot%_bindir:$PATH
   zstd -k README.md
 %valgrind ugrep-indexer -I -v -z | grep -w '5 new files indexed'
 %valgrind ugrep -r -z -I -l 'std::chrono' --stats
-%valgrind ugrep -r -z -I -l 'std::chrono' --stats --index | grep -w '1 matching' # src/ugrep.cpp
+%valgrind ugrep -r -z -I -l 'std::chrono' --stats --index | grep -w '2 matching' # src/{query,ugrep}.cpp
 %valgrind ugrep-indexer -d
 
 %files
@@ -96,8 +96,13 @@ PATH=%buildroot%_bindir:$PATH
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Sun May 03 2026 Vitaly Chikunov <vt@altlinux.org> 7.8.1-alt1
+- Update to 7.8.1 (2026-05-03).
+- AVX2 optimizations are re-enabled, but AVX512 optimizations still disabled.
+
 * Sun Mar 08 2026 Vitaly Chikunov <vt@altlinux.org> 7.6.0-alt1
 - Update to 7.6.0 (2026-03-05).
+- Disabled AVX2 optimizations to workaround AVX512 bugs.
 
 * Wed Dec 17 2025 Vitaly Chikunov <vt@altlinux.org> 7.5.0-alt1
 - Update to 7.5.0 (2025-06-18).
