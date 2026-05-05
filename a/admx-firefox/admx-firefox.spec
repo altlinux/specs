@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 7.9.1
+Version: 7.10
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -48,6 +48,9 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Tue May 05 2026 Valentin Sokolov <sova@altlinux.org> 7.10-alt1
+- Update Policy templates for Firefox 150 and Firefox ESR 140.10
+
 * Mon Apr 13 2026 Valentin Sokolov <sova@altlinux.org> 7.9.1-alt1
 - Update Policy templates for Firefox 149.0.2
 
