@@ -1,9 +1,8 @@
 %define oname org.kde.drawy
-%define apiversion 1.0.0
 %define soname 0
 
 Name: drawy
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Epoch: 1
 
@@ -76,7 +75,7 @@ Summary: %name library
 %_bindir/%name
 %_libdir/qt?/plugins/drawypluginforms/*.so
 %_datadir/applications/%oname.desktop
-%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*
 %_datadir/metainfo/%oname.metainfo.xml
 %_datadir/qlogging-categories?/%name.categories
 %_datadir/mime/packages/*.xml
@@ -88,17 +87,20 @@ Summary: %name library
 
 %files -n lib%{name}gui%soname
 %_libdir/lib%{name}gui.so.%soname
-%_libdir/lib%{name}gui.so.%apiversion
+%_libdir/lib%{name}gui.so.%version
 
 %files -n lib%{name}widgets%soname
 %_libdir/lib%{name}widgets.so.%soname
-%_libdir/lib%{name}widgets.so.%apiversion
+%_libdir/lib%{name}widgets.so.%version
 
 %files -n libstandardformplugin%soname
 %_libdir/libstandardformplugin.so.%soname
-%_libdir/libstandardformplugin.so.%apiversion
+%_libdir/libstandardformplugin.so.%version
 
 %changelog
+* Wed May 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1.0.1-alt1
+- 1.0.0 -> 1.0.1
+
 * Sat May 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1.0.0-alt1
 - Release 1.0.0.
 
