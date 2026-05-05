@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define php_version %php_defver
 %def_without pam
 
 Name: moodle
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPL-3.0+
@@ -234,6 +235,8 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %dir %attr(775,root,%webserver_group) %moodle_moddir
 %dir %attr(775,root,%webserver_group) %moodle_themedir
 %dir %attr(775,root,%webserver_group) %moodle_enroldir
+%dir %attr(775,root,%webserver_group) %moodle_langdir
+%moodle_langdir/*
 
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
@@ -251,6 +254,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Tue May 05 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt2
+- Package localization (ALT #58352).
+
 * Sun Apr 19 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
 - New version.
 
