@@ -13,7 +13,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt2
+%define module_release	alt3
 %define flavour		6.12
 %define karch x86_64 aarch64
 
@@ -97,7 +97,7 @@
 %define module_ext .o
 %endif
 
-Summary:	nVidia video card drivers
+Summary:	NVIDIA video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%package_version
 Release:	%module_release.%kcode.%kbuildrelease
@@ -180,8 +180,7 @@ Requires:       nvidia_glx_%legacy1
 %endif
 
 %description
-nVidia video card drivers that provide 3d and 2d graphics support for XFree86
-Xserver.
+NVIDIA video card drivers that provide 3d and 2d graphics support.
 
 
 %prep
@@ -276,11 +275,11 @@ ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%peermemmodule_name
-ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
-ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%module_version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
-ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%module_version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
-ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
-ln -s `relative %module_local_dir/peermem-%kversion-%flavour-%krelease-%module_version     %module_dir/%peermemmodule_name%module_ext` %buildroot/%module_dir/%peermemmodule_name%module_ext
+ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%{module_version}_open         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
+ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%{module_version}_open %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
+ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%{module_version}_open %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
+ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%{module_version}_open     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
+ln -s `relative %module_local_dir/peermem-%kversion-%flavour-%krelease-%{module_version}_open     %module_dir/%peermemmodule_name%module_ext` %buildroot/%module_dir/%peermemmodule_name%module_ext
 
 
 %post
@@ -326,6 +325,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue May 05 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt3
+- using open kernel module by default
 
 * Thu Apr 30 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt2
 - fix to build closed module for 580.142
