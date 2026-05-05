@@ -1,14 +1,13 @@
-%define soversion 215
+%define soversion 216
 Name: x265
-Version: 4.1
-Release: alt2
+Version: 4.2
+Release: alt1
 Summary: H.265/HEVC encoder
 License: GPLv2
 Group: Video
 Url: https://www.x265.org/
 VCS: https://bitbucket.org/multicoreware/x265_git.git
 Source: %name-%version.tar
-Patch0: x265-%version-%release.patch
 BuildRequires: cmake gcc-c++ nasm libnuma-devel
 BuildRequires: /proc
 
@@ -33,7 +32,6 @@ Development files of H.265/HEVC encoder library
 
 %prep
 %setup
-%patch0 -p1
 
 sed -i	-e '/X265_VERSION / s,unknown,%version,' \
 	-e '/X265_LATEST_TAG / s,0\.0,%version,' \
@@ -123,6 +121,9 @@ test/TestBench || :
 %_pkgconfigdir/*
 
 %changelog
+* Sun Apr 26 2026 Anton Farygin <rider@altlinux.org> 4.2-alt1
+- 4.1 -> 4.2
+
 * Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 4.1-alt2
 - built libx265 with 8-bit depth as default
 - disabled HDR10+ headers and shared libs
