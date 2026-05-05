@@ -1,5 +1,5 @@
 Name: wavetable
-Version: 1.0.26
+Version: 1.0.32
 Release: alt1
 
 Summary: Wavetable synth
@@ -64,6 +64,9 @@ cp -av %_cmake__builddir/*/VST3/*.vst3 %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Tue May 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.32-alt1
+- 1.0.32 released
+
 * Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.26-alt1
 - 1.0.26 released
 
