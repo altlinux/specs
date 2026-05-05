@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-bsnes
 Version:	20260127
-Release:	alt2
+Release:	alt3
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -46,9 +46,9 @@ libretro API and that's it - we take care of the rest.
 This set of cores based on Beetle SNES emulator
 
 %ifnarch %e2k
-%define bsnesX bsnes bsnes2014_accuracy bsnes2014_balanced bsnes2014_performance bsnes_cplusplus98 bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_mercury_performance
+%define bsnesX bsnes bsnes2014_accuracy bsnes2014_balanced bsnes2014_performance bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_mercury_performance
 %else
-%define bsnesX bsnes2014_accuracy bsnes2014_balanced bsnes2014_performance bsnes_cplusplus98 bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_mercury_performance
+%define bsnesX bsnes2014_accuracy bsnes2014_balanced bsnes2014_performance bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_mercury_performance
 %endif
 %{expand:%(\
     for bsnesl in %{bsnesX}; do \
@@ -66,7 +66,7 @@ This set of cores based on Beetle SNES emulator
 
 %build
 
-for core in bsnes_accuracy bsnes_balanced bsnes_performance bsnes_mercury_performance bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_hd_beta bsnes_cplusplus98; do
+for core in bsnes_accuracy bsnes_balanced bsnes_performance bsnes_mercury_performance bsnes_mercury_accuracy bsnes_mercury_balanced bsnes_hd_beta; do
 ./libretro-build.sh $core
 done
 
@@ -79,6 +79,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt3
+- Disable bsnes98 package
+
 * Tue Mar  3 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
 - Add workaroun for libretro-bsnes on E2K
 

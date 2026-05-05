@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-computers
 Version:	20260127
-Release:	alt2
+Release:	alt3
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -52,7 +52,7 @@ writing input/video/audio drivers - all of that is supplied to him by
 RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
-%define computers 81 atari800 bk bluemsx cap32 dosbox dosbox_pure dosbox_svn fmsx fuse hatari minivmac nekop2 oberon puae puae2021 quasi88 theodore uzem vaporspec vemulator x1
+%define computers 81 atari800 bk bluemsx cap32 dosbox dosbox_pure dosbox_svn fmsx fuse hatari minivmac nekop2 oberon puae puae2021 theodore uzem vaporspec vemulator x1
 %{expand:%(\
     for computer in %{computers}; do \
         echo -e "%%package ${computer}\n";\
@@ -89,7 +89,7 @@ export CXX=%__cxx
 %set_verify_elf_method textrel=relaxed
 %endif
 
-for core in 81 atari800 bk bluemsx cap32 fmsx fuse hatari minivmac nekop2 oberon puae puae2021 px68k quasi88 theodore uzem vaporspec vemulator x1; do
+for core in 81 atari800 bk bluemsx cap32 fmsx fuse hatari minivmac nekop2 oberon puae puae2021 px68k theodore uzem vaporspec vemulator x1; do
 ./libretro-build.sh $core
 done
 
@@ -120,6 +120,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt3
+- Disable quasi88
+
 * Mon Feb 16 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
 - Switch to stock GCC
 - Remove libstdc++-devel from BR

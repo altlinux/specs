@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-handhelds
 Version:	20260127
-Release:	alt2
+Release:	alt3
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -40,7 +40,7 @@ writing input/video/audio drivers - all of that is supplied to him by
 RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
-%define handhelds crocods fixgb gambatte gearboy gpsp gw handy melonds mgba pocketcdg pokemini potator sameboy sameduck vbam vba_next
+%define handhelds crocods gambatte gearboy gpsp gw handy melonds mgba pocketcdg pokemini potator sameboy sameduck vbam vba_next
 %{expand:%(\
     for handheld in %{handhelds}; do \
         echo -e "%%package ${handheld}\n";\
@@ -83,7 +83,7 @@ done
 ./libretro-build.sh $core
 %endif
 
-for core in crocods fixgb gambatte gearboy gpsp gw handy melonds mgba pocketcdg pokemini potator sameboy sameduck swanstation vbam vba_next; do
+for core in crocods gambatte gearboy gpsp gw handy melonds mgba pocketcdg pokemini potator sameboy sameduck swanstation vbam vba_next; do
 ./libretro-build.sh $core
 done
 
@@ -102,6 +102,9 @@ done
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt3
+- Disable fixgb
+
 * Mon Feb 16 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
 - Switch to stock GCC
 - Remove libstdc++-devel from BR
