@@ -2,7 +2,7 @@
 
 Name: hamr
 Version: 1.0.22
-Release: alt1
+Release: alt2
 
 Summary: Instant access to apps, calculations, clipboard history, and files
 License: MIT
@@ -13,6 +13,13 @@ Vcs: https://github.com/Stewart86/hamr
 Source: %name-%version.tar
 Source1: vendor.tar
 Source2: systemd_daemon_config.tar
+
+%filter_from_requires /^niri$/d
+%filter_from_requires /^hyprland$/d
+%filter_from_requires /^swaybg$/d
+
+Requires: hamr-daemon
+Requires: hamr-gtk
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-python3
 BuildRequires: rpm-build-rust rpm-build-python3
@@ -95,5 +102,8 @@ install -Dm 0644 systemd_daemon_config/hamr-gtk.service %buildroot%_userunitdir/
 %_bindir/hamr-tui
 
 %changelog
+* Mon May 04 2026 Dina Tagantseva <dinchik@altlinux.org> 1.0.22-alt2
+- Fixed requires (Closes: 58737)
+
 * Tue Apr 07 2026 Dina Tagantseva <dinchik@altlinux.org> 1.0.22-alt1
 - Initial build for Sisyphus
