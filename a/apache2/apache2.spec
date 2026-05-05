@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.66
+Version: 2.4.67
 Release: alt1
 Epoch: 1
 
@@ -1434,6 +1434,21 @@ exit 0
 %_mandir/man8/suexec*
 
 %changelog
+* Tue May 05 2026 Anton Farygin <rider@altlinux.org> 1:2.4.67-alt1
+- 2.4.66 -> 2.4.67
+- Fixes:
+  * CVE-2026-34059: mod_proxy_ajp: Heap Over-Read and memory disclosure in ajp_parse_data()
+  * CVE-2026-34032: mod_proxy_ajp: Heap Buffer Over-Read Due to Missing Null-Termination Check (ajp_msg_get_string)
+  * CVE-2026-33857: Off-by-one OOB reads in AJP getter functions
+  * CVE-2026-33523: multiple modules: HTTP response splitting forwarding malicious status line
+  * CVE-2026-33007: mod_authn_socache crash
+  * CVE-2026-33006: mod_auth_digest timing attack
+  * CVE-2026-29169: mod_dav_lock indirect lock crash
+  * CVE-2026-29168: mod_md unrestricted OCSP response
+  * CVE-2026-28780: buffer overflow in mod_proxy_ajp via ajp_msg_check_header()
+  * CVE-2026-24072: mod_rewrite elevation of privileges via ap_expr
+  * CVE-2026-23918: http2: double free and possible RCE on early reset
+
 * Sat Dec 06 2025 Anton Farygin <rider@altlinux.com> 1:2.4.66-alt1
 - 2.4.65 -> 2.4.66 (Fixes: CVE-2025-66200, CVE-2025-65082, CVE-2025-59775,
 			CVE-2025-58098, CVE-2025-55753)
@@ -1604,7 +1619,6 @@ exit 0
 - removed TimeoutStartSec in httpd.service (closes: #27925)
 - save to log remoteip instead of remote hostname for fix of work with
   mod_remoteip module (closes: #34974)
-
 
 * Mon Oct 15 2018 Anton Farygin <rider@altlinux.ru> 1:2.4.35-alt2
 - removed ubt tag
@@ -2252,7 +2266,6 @@ exit 0
   + fix widely reported in the a2chkconfig (#11274)
   + fix messages from a2{en,dis}{mod,site,port,extra} (#11247)
 
-
 * Thu Mar 29 2007 Aleksey Avdeev <solo@altlinux.ru> 2.2.4-alt15
 - Update *-debian.conf-*.patch to apache2-2.2.4-alt-debian.conf-0.8.patch
   + Fix #11247
@@ -2368,7 +2381,6 @@ exit 0
   + %%name-libdb = %%n_dbver
 - modufy auto update in %%pre:
   + update %%a_sysconfdir/httpd2{,.worker}.conf only
-
 
 * Tue Feb 20 2007 Aleksey Avdeev <solo@altlinux.ru> 2.2.4-alt4
 - use apache2-2.2.4-alt-conf.in-0.2.patch:
