@@ -1,7 +1,7 @@
 %define oname ada
 
 Name: libada
-Version: 3.2.4
+Version: 3.4.4
 Release: alt1
 
 Summary: WHATWG-compliant and fast URL parser written in modern C++
@@ -66,6 +66,9 @@ developing applications that use %oname.
 %_includedir/ada_c.h
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.4-alt1
+- new version 3.4.4
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 3.2.4-alt1
 - new version 3.2.4 (with rpmrb script)
 
