@@ -12,7 +12,7 @@
 %def_with bootstrap
 
 Name:           lib%oname
-Version: 3.0.17.0
+Version: 3.0.18.1
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -49,7 +49,7 @@ BuildRequires:  libhdf5-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libjasper-devel
 BuildRequires:  libpugixml-devel
-BuildRequires:  libraw-devel
+BuildRequires:  libraw0-devel
 BuildRequires:  librobin-map-devel
 BuildRequires:  pybind11-devel
 BuildRequires:  libsquish-devel
@@ -221,6 +221,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue May 05 2026 Anton Farygin <rider@altlinux.org> 3.0.18.1-alt1
+- 3.0.17.0 -> 3.0.18.1
+
 * Sun Apr 05 2026 Anton Farygin <rider@altlinux.org> 3.0.17.0-alt1
 - 3.0.16.0 -> 3.0.17.0
 
