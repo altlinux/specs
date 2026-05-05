@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mate-indicator-applet
-Version: 1.28.0
+Version: 1.28.1
 Release: alt1
 
 Summary: MATE panel indicator applet
@@ -59,6 +59,9 @@ rm -fv %buildroot%_datadir/locale/zh-Hans/LC_MESSAGES/%name.mo
 %_datadir/mate-panel/applets/org.mate.applets.IndicatorComplete.mate-panel-applet
 
 %changelog
+* Wed May 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.28.1-alt1
+- New version 1.28.1.
+
 * Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.28.0-alt1
 - 1.28.0
 

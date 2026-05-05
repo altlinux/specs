@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: reco
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 
 Summary: An audio recorder focused on being concise and simple to use
@@ -69,9 +69,13 @@ sed -i 's|^Categories=Audio;AudioVideo;Utility;Recorder;|Categories=GNOME;GTK;Au
 %_bindir/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/glib-2.0/schemas/*.gschema.xml
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Tue May 05 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 5.1.1-alt1
 - Initial build for Sisyphus
