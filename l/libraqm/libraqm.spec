@@ -1,5 +1,5 @@
 Name: libraqm
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: Complex Textlayout Library
@@ -74,6 +74,9 @@ This package contains documentation files for raqm.
 %_datadir/gtk-doc/html/raqm
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10.5-alt1
+- new version 0.10.5
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10.4-alt1
 - new version 0.10.4
 
