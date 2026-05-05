@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20250808
+Version: 20260201
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -164,22 +164,22 @@ mkdir -p AAVMF
 
 # Build with a verbose debug mask first, and stash the binary.
 build ${ARM_FLAGS} ${VERBOSE_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.verbose.fd
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-pflash.raw
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/QEMU_VARS.fd
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/vars-template-pflash.raw
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.verbose.fd
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-pflash.raw
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_VARS.fd AAVMF/QEMU_VARS.fd
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_VARS.fd AAVMF/vars-template-pflash.raw
 truncate --size 64m AAVMF/QEMU_EFI-pflash.raw
 truncate --size 64m AAVMF/vars-template-pflash.raw
 
 # Build with a silent (errors only) debug mask.
 build ${ARM_FLAGS} ${SILENT_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.silent.fd
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-silent-pflash.raw
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.silent.fd
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-silent-pflash.raw
 truncate --size 64m AAVMF/QEMU_EFI-silent-pflash.raw
 
 # Build with a silent (errors only) debug mask and without TPM
 build ${ARM_FLAGS} ${SILENT_FLAGS} ${NO_TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.kernel.fd
+cp -a Build/ArmVirtQemu-AArch64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.kernel.fd
 
 for raw in AAVMF/*.raw; do
     qcow2="${raw%%.raw}.qcow2"
@@ -210,6 +210,9 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 20260201-alt1
+- edk2-stable202602
+
 * Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
 - edk2-stable202508
 - build with openssl-3.5.2

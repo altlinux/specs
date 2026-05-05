@@ -2,7 +2,7 @@
 %define tool_chain_tag GCC
 %def_disable skip_enroll
 
-%define DBXDATE 20250610
+%define DBXDATE 20250902
 
 %ifndef _priority_distbranch
 # We have it defined in macros but not in buildmacros.
@@ -12,7 +12,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20250808
+Version: 20260201
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -31,10 +31,6 @@ Source4: libfdt.tar
 Source10: Logo.bmp
 
 # json description files
-Source30: 30-edk2-ovmf-ia32-sb-enrolled.json
-Source31: 40-edk2-ovmf-ia32-sb.json
-Source32: 50-edk2-ovmf-ia32-nosb.json
-
 Source40: 30-edk2-ovmf-4m-qcow2-x64-sb-enrolled.json
 Source41: 31-edk2-ovmf-2m-raw-x64-sb-enrolled.json
 Source42: 40-edk2-ovmf-4m-qcow2-x64-sb.json
@@ -46,7 +42,6 @@ Source47: 60-edk2-ovmf-x64-amdsev.json
 Source48: 60-edk2-ovmf-x64-inteltdx.json
 
 Source90: DBXUpdate-%DBXDATE.x64.bin
-Source91: DBXUpdate-%DBXDATE.ia32.bin
 
 Patch1: %name-%version.patch
 
@@ -83,18 +78,6 @@ Requires: seavgabios
 %description ovmf
 EFI Development Kit II
 Open Virtual Machine Firmware
-
-%package ovmf-ia32
-Summary: Open Virtual Machine Firmware
-Group: Emulators
-License: BSD-2-Clause and OpenSSL
-BuildArch: noarch
-Requires: ipxe-roms-qemu
-Requires: seavgabios
-
-%description ovmf-ia32
-EFI Development Kit II
-Open Virtual Machine Firmware (ia32)
 
 %package efi-shell
 Summary: EFI Development Kit II
@@ -156,7 +139,7 @@ mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
 mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 
 cp -a -- \
-    %SOURCE90 %SOURCE91 \
+    %SOURCE90 \
     .
 
 %build
@@ -275,7 +258,6 @@ cp -p Build/IntelTdx/*/FV/OVMF.fd OVMF/OVMF.inteltdx.fd
 
 # build shell
 build ${OVMF_2M_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
-build ${OVMF_2M_FLAGS} -a IA32 -p ShellPkg/ShellPkg.dsc
 
 # build ovmf (x64) shell iso with EnrollDefaultKeys
 #cp Build/Ovmf3264/*/X64/Shell.efi OVMF/
@@ -317,33 +299,6 @@ done
 build ${OVMF_4M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
 cp -p Build/MicrovmX64/*/FV/MICROVM.fd OVMF
 
-# build ovmf-ia32
-mkdir -p ovmf-ia32
-build ${OVMF_2M_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
-cp -p Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/
-cp -p Build/OvmfIa32/*/FV/OVMF_VARS.fd ovmf-ia32/
-rm -rf Build/OvmfIa32
-# build ovmf-ia32 with secure boot
-build ${OVMF_2M_FLAGS} ${OVMF_SB_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
-cp -p Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/OVMF_CODE.secboot.fd
-# build ovmf-ia32 shell iso with EnrollDefaultKeys
-build ${OVMF_2M_FLAGS} -a IA32 -p ShellPkg/ShellPkg.dsc
-cp -p Build/Shell/*/IA32/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi ovmf-ia32/Shell.efi
-cp -p Build/OvmfIa32/*/IA32/EnrollDefaultKeys.efi ovmf-ia32/EnrollDefaultKeys.efi
-%if_disabled skip_enroll
-virt-fw-vars --input ovmf-ia32/OVMF_VARS.fd \
-             --output ovmf-ia32/OVMF_VARS.secboot.fd \
-             --set-dbx DBXUpdate-%DBXDATE.ia32.bin  \
-             --secure-boot --enroll-altlinux --distro-keys altlinux
-%else
-# This isn't going to actually give secureboot, but makes json files happy
-# if we need to test disabling ovmf-vars-generator
-cp -p ovmf-ia32/OVMF_VARS.fd ovmf-ia32/OVMF_VARS.secboot.fd
-%endif
-
-build_iso ovmf-ia32
-cp DBXUpdate-%DBXDATE.ia32.bin ovmf-ia32/
-
 %install
 # For distro-provided firmware packages, the specification
 # (https://git.qemu.org/?p=qemu.git;a=blob;f=docs/interop/firmware.json)
@@ -364,9 +319,6 @@ ln %buildroot%_datadir/OVMF/OVMF_VARS_4M.secboot.fd %buildroot%_datadir/OVMF/OVM
 
 ln -r -s %buildroot%_datadir/OVMF %buildroot%_datadir/edk2/ovmf
 
-cp -a ovmf-ia32 %buildroot%_datadir/edk2/
-ln %buildroot%_datadir/edk2/ovmf-ia32/OVMF_VARS.secboot.fd %buildroot%_datadir/edk2/ovmf-ia32/OVMF_VARS.ms.fd
-
 for f in %_sourcedir/*edk2-ovmf*.json; do
     install -pm 644 $f %buildroot%_datadir/qemu/firmware
 done
@@ -384,15 +336,15 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_datadir/edk2/ovmf
 %_datadir/qemu/firmware/*edk2-ovmf*-x64*.json
 
-%files ovmf-ia32
-%doc OvmfPkg/License.txt
-%_datadir/edk2/ovmf-ia32
-%_datadir/qemu/firmware/*edk2-ovmf-ia32*.json
-
 %files efi-shell
 %_prefix/share/efi/shellx64.efi
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 20260201-alt1
+- edk2-stable202602
+- build with openssl-3.5.6
+- drop ovmf-ia32 subpackage: OvmfPkgIa32.dsc removed in upstream
+
 * Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
 - edk2-stable202508
 - build with openssl-3.5.2

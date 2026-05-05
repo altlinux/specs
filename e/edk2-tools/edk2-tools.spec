@@ -2,8 +2,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20250808
-Release: alt2
+Version: 20260201
+Release: alt1
 Summary: EFI Development Kit II Tools
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -182,6 +182,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 20260201-alt1
+- edk2-stable202602
+
 * Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt2
 - NMU: build on riscv64
 
