@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt2
+%define rel alt1
 
 Name: qbittorrent
-Version: 5.1.4
+Version: 5.2.0
 Epoch: 1
 Release: %rel
 
@@ -12,7 +12,7 @@ License: GPLv2+
 Group: Networking/File transfer
 Url: http://qbittorrent.org
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar.xz
 Patch3500: ax_boost_base-loongarch64.patch
 
 BuildPreReq: desktop-file-utils
@@ -134,6 +134,9 @@ desktop-file-install \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 05 2026 Ilya Mashkin <oddity@altlinux.ru> 1:5.2.0-alt1
+- 5.2.0
+
 * Sat Dec 13 2025 Ilya Mashkin <oddity@altlinux.ru> 1:5.1.4-alt2
 - Mans packed with %%_mandir macros
 
