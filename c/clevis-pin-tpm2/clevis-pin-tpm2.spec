@@ -1,5 +1,5 @@
 Name: clevis-pin-tpm2
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Clevis PIN for unlocking with TPM2 supporting Authorized Policies
@@ -44,6 +44,9 @@ ln -s %_bindir/%name %buildroot%_bindir/clevis-decrypt-tpm2plus
 %_bindir/clevis-decrypt-tpm2plus
 
 %changelog
+* Tue May 05 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.5-alt1
+- New version 0.5.5.
+
 * Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.4-alt1
 - New version 0.5.4.
 - Added VCS tag.
