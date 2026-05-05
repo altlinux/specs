@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libgit2
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: linkable library for Git
@@ -85,6 +85,9 @@ sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
+- 1.9.3
+
 * Sun Dec 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - 1.9.2
 
