@@ -1,6 +1,6 @@
 %def_with postgresql
 Name: gnunet
-Version: 0.25.2
+Version: 0.26.2
 Release: alt1
 
 Summary: Peer-to-peer framework
@@ -260,6 +260,9 @@ rm -rv %buildroot%_infodir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.2-alt1
+- new version 0.26.2
+
 * Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 0.25.2-alt1
 - new version 0.25.2 (with rpmrb script)
 - switch to meson build
