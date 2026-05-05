@@ -6,7 +6,7 @@
 %endif
 
 Name: wasmtime
-Version: 35.0.0
+Version: 43.0.0
 Release: alt1
 Summary: Wasmtime is a standalone runtime for WebAssembly, WASI, and the Component Model by the Bytecode Alliance.
 License: Apache-2.0
@@ -130,6 +130,14 @@ cp -a examples %buildroot%_datadir/%name/
 %_libdir/libwasmtime.a
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 43.0.0-alt1
+- new version 43.0.0
+- (GHSA-hc7m-r6v8-hg9q, CVE-2025-64345) SECURITY: fix in versions 36-38
+- (GHSA-4h67-722j-5pmc, CVE-2025-62711) SECURITY: fix in v38.0.3
+- (GHSA-xjhv-v822-pf94) SECURITY: fix in v40.0.4/v41.0.4
+- (GHSA-852m-cvvp-9p4w) SECURITY: fix in v42.0.0
+- (GHSA-243v-98vx-264h) SECURITY: fix in v42.0.0
+
 * Mon Jul 28 2025 Korney Gedert <kiper@altlinux.org> 35.0.0-alt1
 - New version 35.0.0.
 - fix: wasmtime-examples=34.0.1-alt1 post-install unowned files
