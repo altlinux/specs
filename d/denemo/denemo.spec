@@ -6,7 +6,7 @@
 
 Name:          denemo
 Version:       2.6.4.9
-Release:       alt1
+Release:       alt1.1
 Summary:       WYSIWYG musical score editor, and frontend for Lilypond
 Summary(ru_RU.UTF-8): Нотный редактор с поддержкой Lilypond
 Group:         Sound
@@ -33,15 +33,15 @@ BuildRequires: librubberband-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libfftw3-devel
 BuildRequires: libportmidi-devel
-%{?!_disable_jack:BuildRequires: jackit-devel}
+%{?!_disable_jack:BuildRequires: jackit-devel jackd}
 %{?!_disable_fluidsynth:BuildRequires: libfluidsynth-devel}
 %{?!_disable_lash:BuildRequires: liblash-devel}
 %{?!_disable_guile_2_2:BuildRequires: guile guile-devel}
 Requires:      lilypond
 Requires:      TiMidity++
-%{?!_disable_jack:BuildRequires: jackd}
 
-%add_optflags -L/%_lib -lm
+%add_optflags -L/%_lib -lm -std=gnu17 -Wno-implicit-int -Wno-implicit-function-declaration
+%add_optflags -Wno-unused-function -Wno-unused-variable -Wno-incompatible-pointer-types
 
 %description
 Denemo is a music notation program for Linux and Windows that lets you rapidly
@@ -117,11 +117,14 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS ChangeLog* LICENSE_OFL.txt NEWS README*
 
 %changelog
+* Sat May 02 2026 Pavel Skrylev <majioa@altlinux.org> 2.6.4.9-alt1.1
+- ! fixed FTBFS enabling build with warnings
+
 * Thu Nov 07 2024 Pavel Skrylev <majioa@altlinux.org> 2.6.4.9-alt1
 - ^ 2.6.0 -> 2.6.4p9
 
 * Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
-- ^ 2.4.0 -> 2.6.0
+- ^ 2.5.0 -> 2.6.0
 - ! fixed compilation without explicitly defined math (-lm) library
 
 * Mon Mar 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1

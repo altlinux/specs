@@ -5,8 +5,8 @@
 %define        devel_name poisson-recon
 
 Name:          %{devel_name}-ffi
-Version:       6.13
-Release:       alt2
+Version:       6.13.1
+Release:       alt0.2
 Summary:       Poisson Surface Reconstruction
 License:       BSD-Source-beginning-file and BSD-3-Clause license
 Group:         Sciences/Mathematics
@@ -33,8 +33,8 @@ evolved to support more general adaptive finite-elements systems:
 
 
 %package       -n lib%{devel_name}
-Version:       6.13
-Release:       alt2
+Version:       6.13.1
+Release:       alt0.2
 Summary:       Poisson Surface Reconstruction development package
 Summary(ru_RU.UTF-8): Файлы для разработки буковины poisson-recon
 Group:         Development/C
@@ -56,8 +56,8 @@ evolved to support more general adaptive finite-elements systems:
 
 %if_enabled    devel
 %package       -n lib%{devel_name}-devel
-Version:       6.13
-Release:       alt2
+Version:       6.13.1
+Release:       alt0.2
 Summary:       Poisson Surface Reconstruction library development package
 Summary(ru_RU.UTF-8): Файлы для разработки буковины poisson-recon
 Group:         Development/C
@@ -78,8 +78,8 @@ evolved to support more general adaptive finite-elements systems:
 
 
 %package       -n %{name}-devel
-Version:       6.13
-Release:       alt2
+Version:       6.13.1
+Release:       alt0.2
 Summary:       Poisson Surface Reconstruction core development package
 Summary(ru_RU.UTF-8): Файлы для разработки пакета poisson-recon
 Group:         Development/C
@@ -137,6 +137,11 @@ evolved to support more general adaptive finite-elements systems:
 
 
 %changelog
+* Tue May 05 2026 Pavel Skrylev <majioa@altlinux.org> 6.13.1-alt0.2
+- !NBTFS:
+ + build in c++ template for SparseMatrix and Octree codes with if clauses
+ + code for Ply header
+
 * Wed May 07 2025 Pavel Skrylev <majioa@altlinux.org> 6.13-alt2
 - ! [NMU] fixed poisson-recon lib config variables settings
 - ! [NMU] fixed deps in spec

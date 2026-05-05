@@ -2,7 +2,7 @@
 %define sover %somver.3.2
 Name: spai
 Version: 3.2
-Release: alt9
+Release: alt9.1
 Summary: SParse Approximate Inverse Preconditioner
 License: GPLv2
 Group: Sciences/Mathematics
@@ -15,6 +15,8 @@ Requires: lib%name = %version-%release
 
 BuildPreReq: gcc-fortran openmpi-devel
 BuildPreReq: liblapack-devel
+
+%add_optflags -std=gnu17 -Wno-incompatible-pointer-types
 
 %description
 Given a sparse matrix A the SPAI Algorithm computes a sparse approximate inverse
@@ -133,6 +135,9 @@ find %buildroot -name '*.a' -exec rm -f {} ';'
 %_docdir/%name
 
 %changelog
+* Sun May 03 2026 Pavel Skrylev <majioa@altlinux.org> 3.2-alt9.1
+- ! fixed FTBFS for 21 c++ standard
+
 * Wed Sep 22 2021 Grigory Ustinov <grenka@altlinux.org> 3.2-alt9
 - Fixed FTBFS.
 

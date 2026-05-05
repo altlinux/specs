@@ -3,7 +3,7 @@
 
 Name:          lib%{oname}
 Version:       1.3.0
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       C-language library of routines for performing matrix computations
 License:       Freely redistributable without restriction
 Group:         Sciences/Mathematics
@@ -14,6 +14,8 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+
+%add_optflags -std=gnu17 -Wno-incompatible-pointer-types
 
 %description
 Meschach is a C-language library of routines for performing matrix
@@ -57,6 +59,9 @@ vectors and matrices and sparse matrices.
 
 
 %changelog
+* Sun May 03 2026 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt0.1.1
+- !FTBFS fixed compilation for gcc15
+
 * Tue Feb 11 2025 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt0.1
 - ^ 1.2b -> 1.3.0 (pre)
 - * rename to lib%oname

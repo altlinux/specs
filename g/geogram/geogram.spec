@@ -1,8 +1,8 @@
 %define        _unpackaged_files_terminate_build 1
 
 Name:          geogram
-Version:       1.9.1.2
-Release:       alt1
+Version:       1.9.9.21.2
+Release:       alt0.1
 Summary:       Geogram library by INRIA
 License:       BSD-3-Clause
 Group:         Sciences/Mathematics
@@ -43,6 +43,7 @@ BuildRequires: libxatlas-devel
 BuildRequires: libtetgen-devel
 BuildRequires: libtriangle-devel
 BuildRequires: zlib-devel
+BuildRequires: libopennl-devel
 
 %description
 Geogram is a programming library of geometric algorithms. It includes a simple
@@ -225,8 +226,11 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %_libdir/lib%{name}_gfx*.so
 
 %changelog
+* Mon May 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.9.9.21.2-alt0.1
+- ^ 1.9.1p2 -> 1.9.9p21.2
+
 * Fri Nov 22 2024 Pavel Skrylev <majioa@altlinux.org> 1.9.1.2-alt1
-- 1.7.9 -> 1.9.1p2
+- ^ 1.7.9 -> 1.9.1p2
 
 * Mon Jan 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.9-alt2
 - NMU: fixed FTBFS on LoongArch:

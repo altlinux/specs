@@ -4,7 +4,7 @@
 
 Name:          perl-%dist
 Version:       804.036.28
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Perl modules providing the Tk graphics library
 License:       Artistic-1.0 or GPL-2.0-or-later
 Group:         Development/Perl
@@ -88,6 +88,7 @@ mv "$f" "Tk.$f"
 done
 cd -
 
+%build
 %perl_vendor_build %{?_with_xft:XFT=1} X11LIB=%_x11libdir
 
 %install
@@ -136,6 +137,9 @@ xvfb-run -a make test
 
 
 %changelog
+* Sun May 03 2026 Pavel Skrylev <majioa@altlinux.org> 804.036.28-alt0.3
+- !FTBFS fixed old style functionn def and invalid pointer
+
 * Mon Sep 15 2025 Pavel Skrylev <majioa@altlinux.org> 804.036.28-alt0.2
 - ! fixed provides/obsolete deps for packages
 

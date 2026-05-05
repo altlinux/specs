@@ -8,7 +8,7 @@
 
 Name:          micmac
 Version:       1.1.1
-Release:       alt2
+Release:       alt2.1
 Summary:       MicMac is a free open-source photogrammetric suite
 License:       CECILL-B
 Group:         Graphics
@@ -39,6 +39,7 @@ BuildRequires: pkgconfig(qpbo)
 BuildRequires: pkgconfig(Qt5Widgets)
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%add_optflags -std=gnu17 -Wno-template-body
 
 %description
 MicMac is a free open-source (Cecill-B licence) photogrammetric suite that can
@@ -242,6 +243,9 @@ opens the fields of metrology and site surveying.
 
 
 %changelog
+* Sun May 03 2026 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt2.1
+- !FTBFS fixed compilation for gcc15
+
 * Wed May 07 2025 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt2
 - + libelise package with shared lib for the main package
 - ! fixed FTBFS, along with many internal errors

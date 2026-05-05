@@ -1,18 +1,17 @@
 %define        _unpackaged_files_terminate_build 1
 
 Name:          mytetra
-Version:       1.44.161
+Version:       1.44.232.3
 Release:       alt0.1
 
 Summary:       Simple cross-platform manager for data collecting
-Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
+Summary(ru_RU.UTF-8): несложный многоархитектурный урядник накопления сведений
 License:       GPLv3
 Group:         Office
 Url:           http://webhamster.ru/site/page/index/articles/projectcode/105
-Vcs:           https://github.com/xintrea/mytetra_dev
+Vcs:           https://github.com/xintrea/mytetra_dev.git
 
 Source:        %name-%version.tar
-Patch:         fix-compilation-1.4.161.patch
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
@@ -28,20 +27,21 @@ is to provide a natural, intuitive interface for writing notes and provide
 the ability to quickly navigate through the tree and convenient search.
 
 %description -l ru_RU.UTF-8
-Программа MyTetra — это открытый и кроссплатформенный менеджер накопления
-информации. Программа предназначена для хранения статей и заметок.
-Все записи организуются в древовидную структуру (обычно по «основному»
-признаку), а так же снабжаются ключевыми словами-тегами. Основная задача
+Программа MyTetra — это открытый и многоархитектурный урядник накопления
+сведений. Программа предназначена для хранения статей и заметок.
+Все записи организуются в древовидную структуру (обычно по «основному
+признаку»), а так же снабжаются ключевыми словами-метами. Основная задача
 MyTetra — предоставить естественный, интуитивно-понятный интерфейс для
 написания заметок, обеспечить возможность быстрой навигации по дереву и
 удобный поиск.
+
 
 %prep
 %setup
 %autopatch
 echo "QMAKE_CXXFLAGS = %optflags" >> %name.pro
-subst 's/^TARGET_OS=.*$/TARGET_OS=ANY_OS/' app/*.pro
-subst 's|/usr/local/bin|%_bindir|' app/*.pro
+subst 's/^TARGET_OS=.*$/TARGET_OS=ANY_OS/' %name.pro
+subst 's|/usr/local/bin|%_bindir|' %name.pro
 
 %build
 qmake-qt5 %name.pro
@@ -60,7 +60,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 
+
 %changelog
+* Tue May 05 2026 Pavel Skrylev <majioa@altlinux.org> 1.44.232.3-alt0.1
+- ^ 1.44.161 -> 1.44.232p3
+
 * Thu Oct 19 2023 Pavel Skrylev <majioa@altlinux.org> 1.44.161-alt0.1
 - ^ 1.44.160 -> 1.44[.161]
 - ! fixed compilation to avoid incompatible types bug

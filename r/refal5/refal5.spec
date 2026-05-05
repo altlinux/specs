@@ -2,7 +2,7 @@
 
 Name:          refal5
 Version:       230918.1
-Release:       alt1
+Release:       alt2
 Summary:       Refal-5 is a dialect of Refal developed at the City College of New York
 License:       Unlicense
 Group:         Development/Other
@@ -37,5 +37,8 @@ install -D -m755 -t %buildroot%_bindir/ crefal refc refgo reftr
 %_bindir/*
 
 %changelog
+* Sat May 02 2026 Pavel Skrylev <majioa@altlinux.org> 230918.1-alt2
+- !FTBFS fixed too many arguments and conflicting types for sysfun.c
+
 * Tue Apr 07 2026 Pavel Skrylev <majioa@altlinux.org> 230918.1-alt1
 - + packaged gem with Ruby Policy 2.0
