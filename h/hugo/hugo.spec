@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hugo
-Version: 0.150.1
+Version: 0.161.1
 Release: alt1
 
 Summary: Configurable static site generator
@@ -9,7 +9,6 @@ License: Apache-2.0
 Group: Development/Other
 Url: https://gohugo.io
 Vcs: https://github.com/gohugoio/hugo
-Packager: Michael Chernigin <chernigin@altlinux.ru>
 
 Source0: %name-%version.tar
 ExclusiveArch: %go_arches
@@ -63,6 +62,9 @@ install -Dm 0644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Apr 30 2026 Egor Ignatov <egori@altlinux.org> 0.161.1-alt1
+- New version 0.161.1.
+
 * Wed Oct 01 2025 Egor Ignatov <egori@altlinux.org> 0.150.1-alt1
 - Update to v0.150.1 from upstream.
 
