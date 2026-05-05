@@ -1,5 +1,5 @@
 Name: streamvbyte
-Version: 1.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Fast integer compression in C using the StreamVByte codec
@@ -55,6 +55,9 @@ subst 's|"lib/cmake/streamvbyte"|"%_lib/cmake/streamvbyte"|g' CMakeLists.txt
 %_cmakedir/streamvbyte/
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- new version 3.0.0
+
 * Tue Mar 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
