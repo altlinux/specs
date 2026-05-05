@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: gala
-Version: 8.4.2
-Release: alt2
+Version: 8.5.0
+Release: alt1
 
 Summary: Pantheon Window Manager
 License: GPL-3.0-or-later AND LGPL-3.0-or-later
@@ -134,6 +134,9 @@ cp -pv vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
 %_vapidir/xfixes-4.0.vapi
 
 %changelog
+* Tue May 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.5.0-alt1
+- New version 8.5.0.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 8.4.2-alt2
 - Added mutter-gnome package to requires.
 
