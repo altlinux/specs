@@ -1,11 +1,11 @@
 Name: python3-module-bleak
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bleak
+URL: https://pypi.org/project/bleak
 VCS: https://github.com/hbldh/bleak
 
 Source0: %name-%version.tar
@@ -30,7 +30,7 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_poetry test
+%pyproject_deps_resync_check_depgroup test
 # requires actual bt hardware
 rm -fr tests/integration
 
@@ -48,6 +48,9 @@ rm -fr tests/integration
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Tue May 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.2-alt1
+- 3.0.2 released
+
 * Wed Apr 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.1-alt1
 - 3.0.1 released
 
