@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.17.0
+Version: 2.18.0
 Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
@@ -81,6 +81,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 05 2026 Anton Vyatkin <toni@altlinux.org> 2.18.0-alt1
+- New version 2.18.0.
+
 * Fri Aug 22 2025 Anton Vyatkin <toni@altlinux.org> 2.17.0-alt1
 - New version 2.17.0.
 
