@@ -1,5 +1,5 @@
 Name: hddfancontrol
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Control system fan speed by monitoring hard drive temperature
@@ -50,6 +50,11 @@ sed -i 's|/etc/conf.d/|/etc/sysconfig/|' %buildroot%_unitdir/hddfancontrol.servi
 %config(noreplace) %_sysconfdir/sysconfig/hddfancontrol
 
 %changelog
+* Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1
+- fix Version: 2.1.0-alt1 actually shipped 2.1.1 sources due to rpmgs
+  cloning HEAD instead of v%version tag; now spec and sources match
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version (2.1.0) via gear-uupdate
 - rewrite spec for Rust build system (upstream switched from Python to Rust)
