@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: calico
-Version: 3.31.5
+Version: 3.32.0
 Release: alt1
 Summary: Cloud native networking and network security
 License: Apache-2.0
@@ -142,6 +142,9 @@ mv %buildroot/%_sysconfdir/nsswitch.conf %buildroot/%_sysconfdir/calico-nsswitch
 %doc LICENSE.md README.md
 
 %changelog
+* Tue May 5 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.32.0-alt1
+- Updated to 3.32.0.
+
 * Tue Apr 21 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.31.5-alt1
 - Updated to 3.31.5.
 
