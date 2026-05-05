@@ -1,5 +1,5 @@
 Name: hydra
-Version: 9.6
+Version: 9.7
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -11,7 +11,7 @@ URL:            https://github.com/vanhauser-thc/thc-hydra
 #Source0:        https://github.com/vanhauser-thc/thc-hydra/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source: %name-%version.tar.gz
+Source: thc-%name-%version.tar.gz
 Source1: x%name.desktop
 Source2: xhydra.png
 Patch0: hydra-5.4-open-fix.patch
@@ -33,7 +33,7 @@ Provides: hydra = %version-%release
 Requires: hydra-common hydra-gtk hydra-pwinspector 
 
 # Automatically added by buildreq on Wed Jun 08 2005
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils gcc
+BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libgtk+3-devel libpango-devel libssl-devel pkgconfig gcc-c++ libssh-devel desktop-file-utils gcc
 #libpq-devel
 
 
@@ -157,6 +157,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Tue May 05 2026 Ilya Mashkin <oddity@altlinux.ru> 9.7-alt1
+- 9.7
+
 * Fri Sep 05 2025 Ilya Mashkin <oddity@altlinux.ru> 9.6-alt1
 - 9.6
 
