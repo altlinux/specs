@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: APT Lua scripts for NVIDIA driver
@@ -43,6 +43,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Tue May 05 2026 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
+- don't force to install i586-nvidia_glx_common (closes: 58999)
+
 * Thu Jun 20 2024 Sergey V Turchin <zerg@altlinux.org> 0.6.2-alt1
 - using i586-glibc-core instead of i586-libX11 for 32-bit repo avalibility check
 
