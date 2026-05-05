@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -174,6 +174,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue May 05 2026 Andrey Limachko <liannnix@altlinux.org> 0.51-alt1
+- Adjust winbind idmap range to avoid local UID
+  conflicts.
+
 * Wed Apr 29 2026 Andrey Limachko <liannnix@altlinux.org> 0.50-alt1
 - Provide ability to check if computer name is already used. (thx Ivan Korytov)
 - Enable automatic ticket renewal on sssd. (thx Ivan Korytov)
