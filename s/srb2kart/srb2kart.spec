@@ -1,7 +1,7 @@
 Name: srb2kart
 Summary: Sonic Robo Blast 2 Kart racing game
 Version: 1.6
-Release: alt1
+Release: alt2
 License: GPL2
 Group: Games/Arcade
 Packager:  Artyom Bystrov <arbars@altlinux.org>
@@ -74,5 +74,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> 1.6-alt2
+- Fix build with GCC15
+
 * Sun Jan 29 2023 Artyom Bystrov <arbars@altlinux.org> 1.6-alt1
 - initial build for ALT Sisyphus
