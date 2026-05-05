@@ -1,7 +1,7 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 0.9.7
+Version: 1.0.0
 Release: alt1
 
 Summary: An Adwaita Music Player / Library Manager
@@ -50,6 +50,9 @@ but it's capable of installing and managing it's own Navidrome instance.
 %doc *.md
 
 %changelog
+* Tue May 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.9.7 -> 1.0.0
+
 * Thu Apr 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.7-alt1
 - 0.9.6 -> 0.9.7
 
