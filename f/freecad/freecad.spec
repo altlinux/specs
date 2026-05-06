@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %add_python3_path %_libdir/freecad/Mod %_libdir/freecad/Ext/*
 %add_python3_req_skip FreeCADGui FreeCAD
+%add_python3_req_skip PySide
 %ifnarch %qt6_qtwebengine_arches
 %add_python3_req_skip PySide6.QtWebEngineCore PySide6.QtWebEngineWidgets
 %endif
@@ -22,7 +23,7 @@
 
 Name: freecad
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -142,6 +143,14 @@ Requires: python3-module-pyside6-devel
 Requires: python3-module-GitPython
 Requires: netgen
 Requires: libredwg
+#1.1.1
+# for AddonManager
+Requires: pip
+# for CAM Workbench
+Requires: python3-module-yaml
+# for FEM Workbench
+Requires: python3-module-vtk
+Requires: gmsh
 
 Provides:  free-cad-docs = %version-%release
 Obsoletes: free-cad-docs < %version-%release
@@ -277,12 +286,6 @@ rm -rf %buildroot%_prefix/Ext
 # fix python shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' %buildroot%_libdir/freecad/Mod)
 
-# fix import PySide6 python module
-subst 's|PySide|&6|g' $(find %buildroot%_libdir/freecad -name \*.py) %buildroot%python3_sitelibdir/freecad/UiTools.py
-subst 's|PySide66|PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
-subst 's|PySide6Uic|PySideUic|g' $(find %buildroot%_libdir/freecad -name \*.py)
-subst 's|import PySide6 as PySide|import PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
-
 # remove static libraries
 rm -f %buildroot%_libdir/freecad/lib/*.a
 
@@ -320,6 +323,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Tue May 05 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.1-alt2
+- Fix import PySide6 python module (ALT #58888).
+
 * Mon Apr 20 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.1-alt1
 - New version.
 
