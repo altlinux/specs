@@ -3,9 +3,11 @@
 
 %def_without docs
 %def_without examples
+# due broken rapidjson tests
+%def_without tests
 
 Name: assimp
-Version: 6.0.4
+Version: 6.0.5
 Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
@@ -31,6 +33,9 @@ Patch0: assimp-6.0.2-alt-unbundle.patch
 
 BuildRequires: boost-complete
 BuildRequires: cmake
+%if_with tests
+BuildRequires: ctest
+%endif
 BuildRequires: pkgconfig(gtest)
 BuildRequires: pkgconfig(minizip)
 BuildRequires: pkgconfig(poly2tri)
@@ -113,14 +118,23 @@ rm -rf contrib/zlib
 %else
   -DASSIMP_BUILD_SAMPLES:BOOL=OFF \
 %endif
+%if_with tests
+  -DASSIMP_BUILD_TESTS=ON \
+%else
+  -DASSIMP_BUILD_TESTS=OFF \
+%endif
   -DASSIMP_BUILD_ZLIB:BOOL=OFF \
-  -DASSIMP_BUILD_ASSIMP_TOOLS:BOOL=ON \
-  -DASSIMP_BUILD_TESTS:BOOL=OFF
+  -DASSIMP_BUILD_ASSIMP_TOOLS:BOOL=ON
 
 %cmake_build
 
 %install
 %cmake_install
+
+%if_with tests
+%check
+%ctest
+%endif
 
 %files
 %_bindir/%name
@@ -137,6 +151,9 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> 6.0.5-alt1
+- 6.0.5.
+
 * Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 6.0.4-alt1
 - 6.0.4.
 
