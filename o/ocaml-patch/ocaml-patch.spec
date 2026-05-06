@@ -1,6 +1,6 @@
 %def_with check
 Name: ocaml-patch
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 Summary: Patch library purely in OCaml
 Group: Development/ML
@@ -48,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed May 06 2026 Anton Farygin <rider@altlinux.org> 3.1.1-alt1
+- 3.1.0 -> 3.1.1
+
 * Thu Dec 25 2025 Anton Farygin <rider@altlinux.org> 3.1.0-alt1
 - Initial build for ALT Linux.
 
