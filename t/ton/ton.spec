@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2026.02
+Version: 2026.04
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -43,7 +43,6 @@ Source8: %name-libraptorq-%version.tar
 
 Source9: %name-secp256k1-%version.tar
 
-Patch1: 0001-Fix-error-control-reaches-end-of-non-void-function.patch
 Patch2: ton-use-system-libs.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -75,8 +74,7 @@ BuildRequires: libbacktrace-devel
 # TODO: use instead of embedded crc32c
 #BuildRequires: libcrc32c-devel
 
-# TODO: use instead of embedded
-#BuildRequires: libabseil-devel
+BuildRequires: libabseil-cpp-devel
 
 %description
 TON - The Open Network.
@@ -151,11 +149,16 @@ storage-daemon-cli
 
 %prep
 %setup -a4 -a5 -a6 -a7 -a8 -a9
-%patch1 -p1
 %patch2 -p1
 
+# Use system abseil instead of bundled subdirectory build
+%__subst 's|add_subdirectory(third-party/abseil-cpp EXCLUDE_FROM_ALL)|find_package(absl REQUIRED)|' CMakeLists.txt
+
+# disambiguate co_return {} for Task<Unit> with newer GCC
+find adnl overlay -name '*.cpp' -o -name '*.h' | xargs -r %__subst 's|co_return {};|co_return td::Unit{};|'
+
 %build
-%cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=OFF -DUSE_QUIC=OFF
+%cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=ON -DUSE_QUIC=OFF
 %cmake_build --target rldp-http-proxy
 %cmake_build --target generate-random-id
 %cmake_build --target lite-client
@@ -217,6 +220,11 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.04-alt1
+- new version 2026.04
+- enable libabseil-cpp-devel (now required by upstream)
+- drop Patch1 (already applied upstream)
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.02-alt1
 - new version 2026.02 (with rpmrb script)
 - add -DUSE_QUIC=OFF (disable bundled ngtcp2/openssl QUIC)
