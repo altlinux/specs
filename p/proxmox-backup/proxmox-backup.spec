@@ -12,8 +12,8 @@
 %endif
 
 Name: proxmox-backup
-Version: 4.0.14.1
-Release: alt3
+Version: 4.2.0.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -31,7 +31,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd rpm-macros-javascript
 BuildRequires: rpm-build-rust clang-devel
 BuildRequires: libapt-devel gcc-c++
-BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
+BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel libnettle-devel
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
 BuildRequires: rsync jq
@@ -48,10 +48,12 @@ Summary: Proxmox Backup Server daemon with tools and GUI
 Group: Archiving/Backup
 Requires(pre): shadow-utils
 Requires: %name-client = %EVR pve-xtermjs >= 4.12.0  pbs-i18n %name-docs
-Requires: javascript-common javascript-extjs javascript-qrcodejs proxmox-widget-toolkit proxmox-mini-journalreader
+Requires: javascript-common javascript-extjs javascript-qrcodejs
+Requires: proxmox-widget-toolkit >= 5.1.1 proxmox-mini-journalreader proxmox-termproxy >= 2.0.3
 Requires: lvm2 zfs-utils sg3_utils smartmontools gdisk
 Requires: openssh-server
 Requires: update-kernel
+Requires: dmidecode iproute2 pciutils
 Provides: pve-backup-server = %EVR
 Obsoletes: pve-backup-server < %EVR
 
@@ -244,6 +246,9 @@ fi
 %_datadir/doc/%name
 
 %changelog
+* Wed May 06 2026 Sergey Konev <darisishe@altlinux.org> 1:4.2.0.1-alt1
+- 4.2.0-1
+
 * Thu Feb 05 2026 Sergey Konev <darisishe@altlinux.org> 1:4.0.14.1-alt3
 - File Restore Daemon: use ntfs-3g in case of ntfs3 failure
 

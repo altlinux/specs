@@ -3,8 +3,8 @@
 %define cachedir /var/cache/proxmox-backup
 
 Name: proxmox-backup-restore-image
-Version: 4.0.14.1
-Release: alt2
+Version: 4.2.0.1
+Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
 License: GPL-2.0-or-later
@@ -29,6 +29,9 @@ install -p -D -m 0644 %imagedir/initramfs.img %buildroot%cachedir/file-restore-i
 %cachedir/file-restore-initramfs.img
 
 %changelog
+* Wed May 06 2026 Sergey Konev <darisishe@altlinux.org> 4.2.0.1-alt1
+- 4.2.0-1
+
 * Thu Feb 05 2026 Sergey Konev <darisishe@altlinux.org> 4.0.14.1-alt2
 - Rebuild with ntfs-3g as ntfs3 fallback
 
