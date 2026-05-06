@@ -1,6 +1,6 @@
 Name: metrics-server
-Version: 0.8.0
-Release: alt3
+Version: 0.8.1
+Release: alt1
 
 Summary:  Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines
 Group: Development/Other
@@ -54,6 +54,9 @@ make test-unit ARCH=$(go env GOARCH)
 
 
 %changelog
+* Tue Apr 21 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 0.8.1-alt1
+- Updated from 0.8.0 to 0.8.1.
+
 * Tue Jan 20 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.0-alt3
 - Temporary remove `-race` flag for riscv64.
 
