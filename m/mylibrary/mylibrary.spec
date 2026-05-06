@@ -1,16 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
-# temporary disabled tests as they fail on Gyle for i586, but run normally locally
-%def_without check
+%def_with check
 
-Name:    mylibrary
-Version: 4.3
+Name: mylibrary
+Version: 5.0
 Release: alt1
 
 Summary: Home librarian
 License: GPL-3.0
-Group:   Office
-Url:     https://github.com/ProfessorNavigator/mylibrary
+Group: Office
+Url: https://github.com/ProfessorNavigator/mylibrary
 
 Source: %name-%version.tar
 
@@ -20,10 +19,12 @@ BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(gtkmm-4.0)
-BuildRequires: pkgconfig(poppler-cpp)
-BuildRequires: pkgconfig(libarchive)
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: qt6-tools-devel
+BuildRequires: libudb-devel
 BuildRequires: pkgconfig(libgcrypt)
+BuildRequires: pkgconfig(libarchive)
+BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: pkgconfig(ddjvuapi)
 BuildRequires: pkgconfig(Magick++)
 BuildRequires: doxygen
@@ -34,13 +35,32 @@ BuildRequires: ctest
 %endif
 
 %description
-MyLibrary is a simple program for managing .fb2, .epub, .pdf and .djvu
-e-book file collections. It can also work with same formats packed in
-zip, 7z, jar, cpio, iso, tar, tar.gz, tar.bz2, tar.xz, rar (see notes)
-archives itself or  packed in same types of archives with .fbd files
-(epub, djvu and pdf books).
-MyLibrary creates own database and does not change files content, names
-or location.
+MyLibrary is a simple program designed to manage e-book collections. 
+It supports following types of books: .fb2, .epub, .pdf, .djvu, .odt,
+.txt, .md and .fbd (fbd can be used for any types of files, not just
+books). MyLibrary also supports same types of books, packed in archives.
+Supported archive types are: zip, 7z, jar, cpio, iso, tar, tar.gz, 
+tar.bz2, tar.xz, rar. 
+
+Additionally MyLibrary supports inpx collections. Program creates own
+databases, e-book files will not be moved or edited.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description devel
+Development files for %name.
+
+%package doc
+Summary: Documentation files for %name
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+This package includes the documentation files for the %name
+development.
 
 %prep
 %setup
@@ -51,20 +71,17 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
 %build
 %cmake -D CMAKE_BUILD_TYPE=None \
        -W no-dev \
-       -D USE_OPENMP=OFF \
-       -D USE_PLUGINS=ON \
-       -D CREATE_HTML_DOCS_MLBOOKPROC=ON \
-       -D CREATE_HTML_DOCS_PLUGINIFC=ON \
-       -D CREATE_HTML_DOCS_XMLPARSERCPP=ON
+       -D BUILD_MLPLUGIN_DOCS=ON \
+       -D CREATE_DOCS_XMLPARSERCPP=ON \
+       -D BUILD_MLBOOKPROC_DOCS=ON
 %cmake_build
 
 %if_with check
-%cmake_build --target test
+%ctest
 %endif
 
 %install
 %cmake_install
-rm -v %buildroot%_datadir/MyLibrary/COPYING
 
 %find_lang %name --all-name
 
@@ -72,36 +89,47 @@ rm -v %buildroot%_datadir/MyLibrary/COPYING
 %ctest
 
 %files -f %name.lang
-%doc COPYING *.md
-%_bindir/%name
-%dir %_datadir/MyLibrary/
-%_datadir/MyLibrary/*
-%_datadir/applications/ru.mail.bobilev_yury.MyLibrary.desktop
-%_datadir/icons/hicolor/*/apps/%{name}.*
+%doc COPYING README.md README_RU.md
+%_bindir/MyLibrary
+%_desktopdir/ru.mail.bobilev_yury.MyLibrary.desktop
+%_iconsdir/hicolor/scalable/apps/mylibrary.svg
+%_libdir/libMLBookProc.so.2
+%_libdir/libMLBookProc.so.2.0
+%_libdir/libMLPlugin.so.1
+%_libdir/libMLPlugin.so.1.0
+%_libdir/libXMLParserCPP.so.1
+%_libdir/libXMLParserCPP.so.1.1
+
+%files devel
 %dir %_includedir/MLBookProc
 %_includedir/MLBookProc/*
-%dir %_includedir/MLPluginIfc
-%_includedir/MLPluginIfc/*
+%dir %_includedir/MLPlugin
+%_includedir/MLPlugin/*
 %dir %_includedir/XMLParserCPP/
 %_includedir/XMLParserCPP/*
 %dir %_libdir/cmake/MLBookProc
 %_libdir/cmake/MLBookProc/*
-%dir %_libdir/cmake/MLPluginIfc
-%_libdir/cmake/MLPluginIfc/*
+%dir %_libdir/cmake/MLPlugin
+%_libdir/cmake/MLPlugin/*
 %dir %_libdir/cmake/XMLParserCPP/
 %_libdir/cmake/XMLParserCPP/*
-%_libdir/libml*.so*
-%_libdir/libXMLParserCPP.so*
-%dir %_datadir/MLBookProc
-%_datadir/MLBookProc/*
+%_libdir/libMLBookProc.so
+%_libdir/libMLPlugin.so
+%_libdir/libXMLParserCPP.so
+
+%files doc
 %dir %_datadir/doc/MLBookProc
 %_datadir/doc/MLBookProc/*
-%dir %_datadir/doc/MLPluginIfc
-%_datadir/doc/MLPluginIfc/*
+%dir %_datadir/doc/MLPlugin
+%_datadir/doc/MLPlugin/*
 %dir %_datadir/doc/XMLParserCPP
 %_datadir/doc/XMLParserCPP/*
+%_man3dir/*
 
 %changelog
+* Wed May 06 2026 Nikolay Strelkov <snk@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 4.3-alt1
 - New version 4.3.
 
