@@ -1,6 +1,6 @@
 %global import_path github.com/semaphoreui/semaphore
 Name:     semaphore
-Version:  2.17.39
+Version:  2.18.1
 Release:  alt1
 
 Summary:  Open Source alternative to Ansible Tower
@@ -68,6 +68,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed May 06 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.18.1-alt1
+- new version 2.18.1
+
 * Mon May 04 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.17.39-alt1
 - new version 2.17.39
 
