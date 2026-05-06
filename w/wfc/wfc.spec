@@ -1,6 +1,8 @@
+%define gcc_ver 14
+
 Name: wfc
 Version: R2304
-Release: alt1
+Release: alt1.1
 
 Summary: Wire Format Compiler
 License: GPLv3+
@@ -13,7 +15,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ mercurial flex xxd
+BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel mercurial flex xxd
 
 %description
 Wire Format Compiler (WFC) is a tool that generates C++ code from data
@@ -28,6 +30,7 @@ restoring the data structures from a byte stream in memory.
 
 %build
 %autoreconf
+export GCC_VERSION=%gcc_ver
 %configure
 # smp incompatible build
 make
@@ -43,6 +46,9 @@ make install PREFIX=%buildroot%_prefix
 %_man1dir/%{name}*
 
 %changelog
+* Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> R2304-alt1.1
+- downgrade gcc to 14.0 (to FTBFS with gcc15).
+
 * Thu May 04 2023 L.A. Kostis <lakostis@altlinux.ru> R2304-alt1
 - R2304.
 
