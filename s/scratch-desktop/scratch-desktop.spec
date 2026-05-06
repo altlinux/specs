@@ -3,7 +3,7 @@
 
 Name: scratch-desktop
 Version: 3.30.5
-Release: alt2
+Release: alt3
 
 Group: Education
 License: BSD-3-Clause
@@ -101,8 +101,8 @@ install -D -m644 src/icon/ScratchDesktop.svg %buildroot%_iconsdir/hicolor/scalab
 install -D -m755 %name %buildroot%_bindir/%name
 install -D -m755 app.asar %buildroot%scratch_installdir/app.asar
 install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
-mkdir -p %buildroot%_libdir/electron4/resources/static/
-cp -a static/* %buildroot%_libdir/electron4/resources/static/
+mkdir -p %buildroot%_libdir/electron%electron_version/resources/static/
+cp -a static/* %buildroot%_libdir/electron%electron_version/resources/static/
 
 # Create the mime-type for *.sb3
 install -Dm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%name.xml
@@ -113,12 +113,15 @@ install -Dm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%name.xml
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
-%_libdir/electron4/resources/static
-%exclude %dir %_libdir/electron4
-%exclude %dir %_libdir/electron4/resources
+%_libdir/electron%electron_version/resources/static
+%exclude %dir %_libdir/electron%electron_version
+%exclude %dir %_libdir/electron%electron_version/resources
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Wed May 06 2026 Arseniy Kostevich <faux@altlinux.org> 3.30.5-alt3
+- Fixed location of static assets for Electron resources.
+
 * Tue Nov 28 2023 Andrey Cherepanov <cas@altlinux.org> 3.30.5-alt2
 - Added MIME type for Scratch Desktop projects *.sb3.
 - Added pass opened file name to application desktop file.
