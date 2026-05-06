@@ -11,7 +11,7 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.19
+Version: 2.19.1
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -22,7 +22,8 @@ Url: http://www.littlecms.com
 Vcs: https://github.com/mm2/Little-CMS.git
 
 %if_disabled snapshot
-Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
+#Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
+Source: https://github.com/mm2/Little-CMS/releases/download/lcms%version/%rname-%version.tar.gz
 %else
 Source: %rname-%version.tar
 %endif
@@ -117,6 +118,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2.19.1-alt1
+- 2.19.1
+
 * Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.19-alt1
 - 2.19 (fixed CVE-2026-41254)
 
