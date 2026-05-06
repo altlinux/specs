@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           lk-jwt-service
-Version:        0.4.1
+Version: 0.4.4
 Release:        alt1
 Summary:        Minimal service to issue LiveKit JWTs for MatrixRTC
 License:        AGPL-3.0
@@ -66,5 +66,8 @@ mkdir -p %buildroot%_localstatedir/%name
 %dir %attr(0750,_%name,_%name) %_localstatedir/%name
 
 %changelog
+* Wed May 06 2026 Alexey Shabalin <shaba@altlinux.org> 0.4.4-alt1
+- updated from 0.4.1 to 0.4.4
+
 * Mon Mar 23 2026 Alexey Shabalin <shaba@altlinux.org> 0.4.1-alt1
 - Initial build.
