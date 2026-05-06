@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.3
-Release: alt4
+Release: alt5
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -211,6 +211,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Wed May 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt5
+- fixed build with recent libgif
+
 * Wed Jan 28 2026 Michael Shigorin <mike@altlinux.org> 21.3-alt4
 - E2K: use whatever java is available
 
