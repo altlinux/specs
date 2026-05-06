@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%def_disable check
 
 Name:    tuwunel
-Version: 1.5.1
-Release: alt4
+Version: 1.6.1
+Release: alt1
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
 Group:   System/Servers
@@ -14,7 +15,6 @@ ExcludeArch: %ix86
 Source:  %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: config.toml
-Source3: %name.sysusers
 Patch1:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
@@ -36,30 +36,34 @@ fully implementing the Matrix Specification for all but the most niche uses.
 %patch1 -p1
 %rust_prep
 cat %SOURCE2 >> .cargo/config.toml
-sed 's/PrivateUsers/#PrivateUsers/' -i rpm/%name.service
+sed 's|/usr/sbin/nologin|/sbin/nologin|' -i rpm/sysusers
 
 %build
 %rust_build
+# Pre-compile test binaries so %check can run them without recompilation.
+%if_enabled check
+%rust_test --no-run --workspace --offline
+%endif
+
+%install
+%rust_install -t %_sbindir
+install -Dm 644 rpm/tuwunel.service %buildroot%_unitdir/%name.service
+install -Dm 644 rpm/sysusers %buildroot%_sysusersdir/%name.conf
+install -Dm 644 %name-example.toml %buildroot%_sysconfdir/%name/%name.toml
+mkdir -p %buildroot%_localstatedir/%name
 
 %check
 export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
-%rust_test -- --skip smoke --skip smoke_async --skip smoke_shutdown
+%rust_test --workspace --exclude tuwunel
 
 %pre
-%sysusers_create_package %name %SOURCE3
+%sysusers_create_package %name rpm/sysusers
 
 %post
 %post_systemd %name.service
 
 %preun
 %preun_systemd %name.service
-
-%install
-%rust_install -t %_sbindir
-install -Dm 644 rpm/tuwunel.service %buildroot%_unitdir/%name.service
-install -Dm 644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
-install -Dm 644 %name-example.toml %buildroot%_sysconfdir/%name/%name.toml
-mkdir -p %buildroot%_localstatedir/%name
 
 %files
 %_sbindir/%name
@@ -71,6 +75,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %doc LICENSE README.md
 
 %changelog
+* Tue May 05 2026 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
+- 1.6.1.
+
 * Fri Mar 20 2026 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt4
 - Add support MAS (PR#342) realy.
 - Not add tuwunel user to uucp group.
