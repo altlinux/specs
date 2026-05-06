@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        147.0.7727.137
+Version:        148.0.7778.96
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -108,7 +108,7 @@ Patch030: 0030-DEBIAN-disable-rustc-allow-features.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
-Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
+Patch034: 0034-FRDORA-chromium-148-autodarkmode-workaround.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 # Support extension manifest v2
@@ -145,10 +145,14 @@ Patch069: 0069-DEBIAN-disable-enterprise-tests.patch
 
 Patch070: 0070-DEBIAN-llvm-22-ignore-for-ubsan.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
-Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
+# Patch072:
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
+Patch074: 0074-FEDORA-chromium-147-widevine-on-arm64.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
-Patch076: 0076-DEBIAN-Fix-GL-native-pixmap-import-support-reset-in-GpuInit.patch
+Patch076: 0076-DEBIAN-llvm-19-iota.patch
+Patch077: 0077-DEBIAN-llvm-19-raw-ref-map-find.patch
+Patch078: 0078-DEBIAN-revert-v8-sanitize.patch
+Patch079: 0079-DEBIAN-turboshaft.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -366,6 +370,10 @@ mkdir -p third_party/devtools-frontend/src/third_party/esbuild
 ln -sf %_bindir/esbuild third_party/devtools-frontend/src/third_party/esbuild/esbuild
 %endif
 
+# gperf
+mkdir -p third_party/gperf/cipd/bin/
+cp /usr/bin/gperf third_party/gperf/cipd/bin/
+
 # unpack rollup binary for aarch64
 %ifarch aarch64
 tar xf %SOURCE300 && mv package third_party/devtools-frontend/src/node_modules/@rollup/rollup-linux-arm64-gnu
@@ -377,6 +385,7 @@ ln -sf %_bindir/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
 mkdir -p third_party/rust-toolchain/bin
 ln -sf %_bindir/bindgen third_party/rust-toolchain/bin/bindgen
 ln -sf %_bindir/rustfmt third_party/rust-toolchain/bin/rustfmt
+ln -sf %_bindir/rustc third_party/rust-toolchain/bin/rustc
 
 rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
@@ -532,6 +541,7 @@ gn_arg+=( use_system_libtiff=false )
 gn_arg+=( safe_browsing_use_unrar=false )
 gn_arg+=( build_dawn_tests=false )
 gn_arg+=( webnn_use_tflite=false )
+gn_arg+=( webnn_use_litert=false )
 gn_arg+=( enable_perfetto_unittests=false )
 gn_arg+=( skia_enable_skshaper_tests=false )
 gn_arg+=( tint_build_unittests=false )
@@ -586,6 +596,8 @@ n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
 %ifarch aarch64
   n=25
+%else
+  n=%max_jobs
 %endif
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
@@ -709,6 +721,137 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed May 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.96-alt1
+- New version (148.0.7778.96).
+- Fixes:
+  + CVE-2026-7896: Integer overflow in Blink
+  + CVE-2026-7897: Use after free in Mobile
+  + CVE-2026-7898: Use after free in Chromoting
+  + CVE-2026-7899: Out of bounds read and write in V8
+  + CVE-2026-7900: Heap buffer overflow in ANGLE
+  + CVE-2026-7901: Use after free in ANGLE
+  + CVE-2026-7902: Out of bounds memory access in V8
+  + CVE-2026-7903: Integer overflow in ANGLE
+  + CVE-2026-7904: Out of bounds read in Fonts
+  + CVE-2026-7905: Insufficient validation of untrusted input in Media
+  + CVE-2026-7906: Use after free in SVG
+  + CVE-2026-7907: Use after free in DOM
+  + CVE-2026-7908: Use after free in Fullscreen
+  + CVE-2026-7909: Inappropriate implementation in ServiceWorker
+  + CVE-2026-7910: Use after free in Views
+  + CVE-2026-7911: Use after free in Aura
+  + CVE-2026-7912: Integer overflow in GPU
+  + CVE-2026-7913: Insufficient policy enforcement in DevTools
+  + CVE-2026-7914: Type Confusion in Accessibility
+  + CVE-2026-7915: Insufficient data validation in DevTools
+  + CVE-2026-7916: Insufficient data validation in InterestGroups
+  + CVE-2026-7917: Use after free in Fullscreen
+  + CVE-2026-7918: Use after free in GPU
+  + CVE-2026-7919: Use after free in Aura
+  + CVE-2026-7920: Use after free in Skia
+  + CVE-2026-7921: Use after free in Passwords
+  + CVE-2026-7922: Use after free in ServiceWorker
+  + CVE-2026-7923: Out of bounds write in Skia
+  + CVE-2026-7924: Uninitialized Use in Dawn
+  + CVE-2026-7925: Use after free in Chromoting
+  + CVE-2026-7926: Use after free in PresentationAPI
+  + CVE-2026-7927: Type Confusion in Runtime
+  + CVE-2026-7928: Use after free in WebRTC
+  + CVE-2026-7929: Use after free in MediaRecording
+  + CVE-2026-7930: Insufficient validation of untrusted input in Cookies
+  + CVE-2026-7931: Insufficient validation of untrusted input in iOS
+  + CVE-2026-7932: Insufficient policy enforcement in Downloads
+  + CVE-2026-7933: Out of bounds read in WebCodecs
+  + CVE-2026-7934: Insufficient validation of untrusted input in Popup Blocker
+  + CVE-2026-7935: Inappropriate implementation in Speech
+  + CVE-2026-7936: Object lifecycle issue in V8
+  + CVE-2026-7937: Insufficient policy enforcement in DevTools
+  + CVE-2026-7938: Use after free in CSS
+  + CVE-2026-7939: Inappropriate implementation in SanitizerAPI
+  + CVE-2026-7940: Use after free in V8
+  + CVE-2026-7941: Insufficient validation of untrusted input in Mobile
+  + CVE-2026-7942: Integer overflow in ANGLE
+  + CVE-2026-7943: Insufficient validation of untrusted input in ANGLE
+  + CVE-2026-7944: Insufficient validation of untrusted input in Persistent Cache
+  + CVE-2026-7945: Insufficient validation of untrusted input in COOP
+  + CVE-2026-7946: Insufficient policy enforcement in WebUI
+  + CVE-2026-7947: Insufficient validation of untrusted input in Network
+  + CVE-2026-7948: Race in Chromoting
+  + CVE-2026-7949: Out of bounds read in Skia
+  + CVE-2026-7950: Out of bounds read and write in GFX
+  + CVE-2026-7951: Out of bounds write in WebRTC
+  + CVE-2026-7952: Insufficient policy enforcement in Extensions
+  + CVE-2026-7953: Insufficient validation of untrusted input in Omnibox
+  + CVE-2026-7954: Race in Shared Storage
+  + CVE-2026-7955: Uninitialized Use in GPU
+  + CVE-2026-7956: Use after free in Navigation
+  + CVE-2026-7957: Out of bounds write in Media
+  + CVE-2026-7958: Inappropriate implementation in ServiceWorker
+  + CVE-2026-7959: Inappropriate implementation in Navigation
+  + CVE-2026-7960: Race in Speech
+  + CVE-2026-7961: Insufficient validation of untrusted input in Permissions
+  + CVE-2026-7962: Insufficient policy enforcement in DirectSockets
+  + CVE-2026-7963: Inappropriate implementation in ServiceWorker
+  + CVE-2026-7964: Insufficient validation of untrusted input in FileSystem
+  + CVE-2026-7965: Insufficient validation of untrusted input in DevTools
+  + CVE-2026-7966: Insufficient validation of untrusted input in SiteIsolation
+  + CVE-2026-7967: Insufficient validation of untrusted input in Navigation
+  + CVE-2026-7968: Insufficient validation of untrusted input in CORS
+  + CVE-2026-7969: Integer overflow in Network
+  + CVE-2026-7970: Use after free in TopChrome
+  + CVE-2026-7971: Inappropriate implementation in ORB
+  + CVE-2026-7972: Uninitialized Use in GPU
+  + CVE-2026-7973: Integer overflow in Dawn
+  + CVE-2026-7974: Use after free in Blink
+  + CVE-2026-7975: Use after free in DevTools
+  + CVE-2026-7976: Use after free in Views
+  + CVE-2026-7977: Inappropriate implementation in Canvas
+  + CVE-2026-7978: Inappropriate implementation in Companion
+  + CVE-2026-7979: Inappropriate implementation in Media
+  + CVE-2026-7980: Use after free in WebAudio
+  + CVE-2026-7981: Out of bounds read in Codecs
+  + CVE-2026-7982: Uninitialized Use in WebCodecs
+  + CVE-2026-7983: Out of bounds read in Dawn
+  + CVE-2026-7984: Use after free in ReadingMode
+  + CVE-2026-7985: Use after free in GPU
+  + CVE-2026-7986: Insufficient policy enforcement in Autofill
+  + CVE-2026-7987: Use after free in WebRTC
+  + CVE-2026-7988: Type Confusion in WebRTC
+  + CVE-2026-7989: Insufficient data validation in DataTransfer
+  + CVE-2026-7990: Insufficient validation of untrusted input in Updater
+  + CVE-2026-7991: Use after free in UI
+  + CVE-2026-7992: Insufficient validation of untrusted input in UI
+  + CVE-2026-7993: Insufficient validation of untrusted input in Payments
+  + CVE-2026-7994: Inappropriate implementation in Chromoting
+  + CVE-2026-7995: Out of bounds read in AdFilter
+  + CVE-2026-7996: Insufficient validation of untrusted input in SSL
+  + CVE-2026-7997: Insufficient validation of untrusted input in Updater
+  + CVE-2026-7998: Insufficient validation of untrusted input in Dialog
+  + CVE-2026-7999: Inappropriate implementation in V8
+  + CVE-2026-8000: Insufficient validation of untrusted input in ChromeDriver
+  + CVE-2026-8001: Use after free in Printing
+  + CVE-2026-8002: Use after free in Audio
+  + CVE-2026-8003: Insufficient validation of untrusted input in TabGroups
+  + CVE-2026-8004: Insufficient policy enforcement in DevTools
+  + CVE-2026-8005: Insufficient validation of untrusted input in Cast
+  + CVE-2026-8006: Insufficient policy enforcement in DevTools
+  + CVE-2026-8007: Insufficient validation of untrusted input in Cast
+  + CVE-2026-8008: Inappropriate implementation in DevTools
+  + CVE-2026-8009: Inappropriate implementation in Cast
+  + CVE-2026-8010: Insufficient validation of untrusted input in SiteIsolation
+  + CVE-2026-8011: Insufficient policy enforcement in Search
+  + CVE-2026-8012: Inappropriate implementation in MHTML
+  + CVE-2026-8013: Insufficient validation of untrusted input in FedCM
+  + CVE-2026-8014: Inappropriate implementation in Preload
+  + CVE-2026-8015: Inappropriate implementation in Media
+  + CVE-2026-8016: Use after free in WebRTC
+  + CVE-2026-8017: Side-channel information leakage in Media
+  + CVE-2026-8018: Insufficient policy enforcement in DevTools
+  + CVE-2026-8019: Insufficient policy enforcement in WebApp
+  + CVE-2026-8020: Uninitialized Use in GPU
+  + CVE-2026-8021: Script injection in UI
+  + CVE-2026-8022: Inappropriate implementation in MHTML
+
 * Wed Apr 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 147.0.7727.137-alt1
 - New version (147.0.7727.137).
 - Fixes:
