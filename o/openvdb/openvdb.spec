@@ -1,4 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+# on %%x86 build fails with 
+# -o CMakeFiles/openvdb_shared.dir/instantiations/GridOperators.cc.o -c /usr/src/RPM/BUILD/openvdb-13.0.0/i586-alt-linux/openvdb/openvdb/instantiations/GridOperators.cc
+# [i586] virtual memory exhausted: Cannot allocate memory
+%define gcc_ver 14
 
 # enable LTO/full debuginfo only on verified arches due resource constrains
 %ifnarch x86_64 ppc64le aarch64
@@ -21,7 +25,7 @@
 
 Name: openvdb
 Version: 13.0.0
-Release: alt2
+Release: alt2.1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: Apache-2.0
@@ -51,6 +55,7 @@ BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
 BuildRequires: python3-module-nanobind
+BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel
 %if_with cuda
 BuildRequires: nvidia-cuda-devel-static libnccl-devel
 %endif
@@ -125,6 +130,7 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 cp -f %SOURCE1 cmake/CPM.cmake
 
 %build
+export GCC_VERSION=%gcc_ver
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -179,6 +185,10 @@ cp -f %SOURCE1 cmake/CPM.cmake
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt2.1
+- downgrade gcc version to 14 (to compile cuda and fix memory alloc errors on
+  %%ix86).
+
 * Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt2
 - aarch64: enable cuda.
 - nanovdb: use system nccl and cccl.
