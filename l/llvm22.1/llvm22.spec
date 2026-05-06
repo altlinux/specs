@@ -8,7 +8,7 @@
 
 %global v_major 22
 %global v_majmin %v_major.1
-%global v_full %v_majmin.3
+%global v_full %v_majmin.4
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -124,7 +124,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.4
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1608,6 +1608,9 @@ ninja -C %builddir check-all || :
 %endif
 
 %changelog
+* Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.4-alt0.1
+- 22.1.4.
+
 * Thu Apr 30 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.3-alt0.4
 - omptarget: harmonize build flags between omptarget/gpu libc.
 - fix cases if libomp disabled.
