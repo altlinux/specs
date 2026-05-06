@@ -2,7 +2,7 @@
 %global import_path github.com/siderolabs/talos
 %global commit      91c63991eb669602e379ff653ecc20212834390e
 %global shortcommit %(c=%commit; echo ${c:0:7})
-%global altkernel 6.18.18-talos
+%global altkernel 6.18.26-talos
 %global latest_distro_tag v11.0
 %define _libexecdir %prefix/libexec
 %define alt_registry registry.altlinux.org
@@ -15,7 +15,7 @@
 
 Name: talos
 Version: 1.12.7
-Release: alt2
+Release: alt3
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -209,6 +209,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon May 04 2026 Alexander Stepchenko <geochip@altlinux.org> 1.12.7-alt3
+- Update DefaultKernelVersion to 6.18.26.
+
 * Thu Apr 30 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.7-alt2
 - Display correct OS name in version command and dashboard
 - Add LatestDistroTag and use it in gen config and talos-bundle commands
