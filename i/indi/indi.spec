@@ -32,8 +32,8 @@ data acquisition, monitoring, and a lot more.
 %global soversion 2
 
 Name: indi
-Version: 2.1.9
-Release: alt3
+Version: 2.2.1.1
+Release: alt1
 
 Summary: Instrument Neutral Distributed Interface
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later and BSD-3-Clause AND ISC AND MIT AND CFITSIO
@@ -167,7 +167,10 @@ popd
 %_bindir/%{name}_alluna_tcs2
 %_bindir/%{name}_alpaca_ccd
 %_bindir/%{name}_alpaca_dome
+%_bindir/%{name}_alpaca_filterwheel
+%_bindir/%{name}_alpaca_focuser
 %_bindir/%{name}_alpaca_server
+%_bindir/%{name}_alpaca_telescope
 %_bindir/%{name}_alto
 %_bindir/%{name}_arduinost4
 %_bindir/%{name}_astrolink4
@@ -176,6 +179,7 @@ popd
 %_bindir/%{name}_astromechfoc
 %_bindir/%{name}_astrometry
 %_bindir/%{name}_astrotrac_telescope
+%_bindir/%{name}_avalon_upas
 %_bindir/%{name}_baader_dome
 %_bindir/%{name}_camelot_rotator
 %_bindir/%{name}_celestron_dewpower
@@ -210,6 +214,7 @@ popd
 %_bindir/%{name}_getdevice
 %_bindir/%{name}_giotto
 %_bindir/%{name}_gpusb
+%_bindir/%{name}_hakos_roof
 %_bindir/%{name}_hitecastrodc_focus
 %_bindir/%{name}_hitech_weather
 %_bindir/%{name}_iafscaa_focus
@@ -228,6 +233,7 @@ popd
 %_bindir/%{name}_lakeside_focus
 %_bindir/%{name}_lx200_10micron
 %_bindir/%{name}_lx200_16
+%_bindir/%{name}_lx200_esp32go
 %_bindir/%{name}_lx200_OnStep
 %_bindir/%{name}_lx200_OpenAstroTech
 %_bindir/%{name}_lx200_TeenAstro
@@ -250,6 +256,7 @@ popd
 %_bindir/%{name}_manual_wheel
 %_bindir/%{name}_mbox_weather
 %_bindir/%{name}_meta_weather
+%_bindir/%{name}_mlastro_rpa
 %_bindir/%{name}_microtouch_focus
 %_bindir/%{name}_moonlite_focus
 %_bindir/%{name}_moonlitedro_focus
@@ -297,7 +304,9 @@ popd
 %_bindir/%{name}_scopedome_dome
 %_bindir/%{name}_script_dome
 %_bindir/%{name}_script_telescope
+%_bindir/%{name}_seestar_ccd
 %_bindir/%{name}_sestosenso2_focus
+%_bindir/%{name}_sestosenso3_focus
 %_bindir/%{name}_sestosenso_focus
 %_bindir/%{name}_setprop
 %_bindir/%{name}_siefs_focus
@@ -311,6 +320,7 @@ popd
 %_bindir/%{name}_simulator_lightpanel
 %_bindir/%{name}_simulator_receiver
 %_bindir/%{name}_simulator_rotator
+%_bindir/%{name}_simulator_pac
 %_bindir/%{name}_simulator_sqm
 %_bindir/%{name}_simulator_telescope
 %_bindir/%{name}_simulator_weather
@@ -343,12 +353,14 @@ popd
 %_bindir/%{name}_usbfocusv3_focus
 %_bindir/%{name}_v4l2_ccd
 %_bindir/%{name}_vantage_weather
+%_bindir/%{name}_wake_on_lan
 %_bindir/%{name}_wanderer_cover
 %_bindir/%{name}_wanderer_dew_terminator
 %_bindir/%{name}_wanderer_eclipse
 %_bindir/%{name}_wanderer_lite_rotator
 %_bindir/%{name}_wanderer_rotator_lite_v2
 %_bindir/%{name}_wanderer_rotator_mini
+%_bindir/%{name}_wanderer_snowflake_wheel
 %_bindir/%{name}_wandererbox_plus_v3
 %_bindir/%{name}_wandererbox_pro_v3
 %_bindir/%{name}_wanderercover_v4_ec
@@ -394,6 +406,9 @@ popd
 %_libdir/lib%{name}AlignmentClient.a
 
 %changelog
+* Tue May 05 2026 Ulysses Apokin <ulysses@altlinux.org> 2.2.1.1-alt1
+- New version.
+
 * Wed Apr 01 2026 Ulysses Apokin <ulysses@altlinux.org> 2.1.9-alt3
 - Used the default linker instead of the bfd linker on all arches.
 
