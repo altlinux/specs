@@ -1,17 +1,15 @@
-
 Name: pg_top
-Version: 3.7.0
+Version: 4.1.3
 Release: alt1
-License: BSD
-
 Summary: 'top' for PostgreSQL process
 Group: Databases
-
+License: BSD
+Url: https://gitlab.com/pg_top/pg_top.git
 Source: %name-%version.tar
-Url: http://pgfoundry.org/projects/ptop
-
 Patch: %name-%version-%release.patch
-BuildRequires: libelf-devel libncurses-devel postgresql-devel
+
+BuildRequires: cmake python3-module-docutils
+BuildRequires: libncurses-devel libpq-devel libbsd-devel
 
 %description
 pg_top is 'top' for PostgreSQL processes. See running queries,
@@ -22,19 +20,25 @@ query plans, issued locks, and table and index statistics.
 %patch -p1
 
 %build
-%autoreconf
-%configure
+%cmake_insource
+
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
 %files
-%doc FAQ HISTORY INSTALL LICENSE README TODO Y2K
-%_bindir/%name
+%doc HISTORY.rst INSTALL.rst LICENSE README.rst TODO Y2K
+%_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed May 06 2026 Alexei Takaseev <taf@altlinux.org> 4.1.3-alt1
+- 4.1.3
+- Use cmake for build
+- Change BR postgresql-devel -> libpq-devel
+- Change URL
+
 * Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 
