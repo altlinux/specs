@@ -3,7 +3,7 @@
 %global git_build    224
 
 Name: nomacs
-Version: 3.22.0
+Version: 3.22.1
 Release: alt1
 
 License: GPLv3+ and CC-BY
@@ -25,7 +25,7 @@ Patch3:         quazip1_cmake_remove_after_new_version.diff
 Patch5:		nomacs-not-update-version.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake rpm-macros-qt6 gcc-c++ libexiv2-devel libgomp-devel
-BuildRequires: libtiff-devel libopencv-devel-static libraw-devel libgomp-devel
+BuildRequires: libtiff-devel libopencv-devel-static libraw0-devel libgomp-devel
 BuildRequires: zlib-devel libwebp-devel libtbb-devel libtiffxx-devel
 BuildRequires: qt6-linguist qt6-designer qt6-base-devel qt6-svg-devel qt6-tools-devel libopencv-devel
 #BuildRequires: libqtsingleapplication-qt5-devel
@@ -120,6 +120,10 @@ sed -i -e 's|Image Lounge|Image?Lounge|g' %{name}.lang
 
 
 %changelog
+* Thu May 07 2026 Ilya Mashkin <oddity@altlinux.ru> 3.22.1-alt1
+- 3.22.1
+- Build with libraw0-devel (Closes: #58955)
+
 * Sat Jan 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.22.0-alt1
 - 3.22.0
 
