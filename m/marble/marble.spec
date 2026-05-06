@@ -12,7 +12,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -186,6 +186,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Wed May 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 25.12.3-alt2
+- strip country from reverse-geocoded address
+
 * Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
