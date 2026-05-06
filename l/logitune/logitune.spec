@@ -4,7 +4,7 @@
 %def_with check
 
 Name: logitune
-Version: 0.2.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Configure Logitech devices on Linux (Options+ clone)
@@ -38,6 +38,7 @@ UI matching Logitech Options+.
 Summary: GNOME Shell extension for %name
 Group: Graphical desktop/GNOME
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description -n gnome-shell-extension-%name
 This package contains GNOME Shell extension for %name.
@@ -46,24 +47,26 @@ This package contains GNOME Shell extension for %name.
 %setup
 
 %build
-%cmake
+export LC_ALL="C.UTF-8"
+%cmake -DLOGITUNE_VERSION=%version
 %cmake_build
 
 %install
 %cmake_install
 
-# move autostart file to correct place
-mkdir -p %buildroot%_sysconfdir/xdg/autostart
-mv %buildroot%_prefix/etc/xdg/autostart/%name.desktop $_
+# let user decide whether to enable autostart
+rm %buildroot%_sysconfdir/xdg/autostart/%name.desktop
 
 %check
+export LC_ALL="C.UTF-8"
+export XDG_DATA_DIRS="%buildroot%_datadir:$XDG_DATA_DIRS"
 xvfb-run %ctest
 
 %files
 %doc README.md
 %_bindir/%name
-%_sysconfdir/xdg/autostart/%name.desktop
-%_udevdir/rules.d/*.rules
+%_udevrulesdir/*-%name.rules
+%_datadir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%app_id.svg
 
@@ -71,6 +74,9 @@ xvfb-run %ctest
 %_datadir/gnome-shell/extensions/%name-focus@%name.com
 
 %changelog
+* Wed May 06 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.4-alt1
+- Updated to version 0.3.4.
+- Removed autostart desktop file.
+
 * Sun Apr 12 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.2.3-alt1
 - Initial build for ALT.
-
