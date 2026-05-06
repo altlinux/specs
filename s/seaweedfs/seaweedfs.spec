@@ -3,7 +3,7 @@
 %global import_path github.com/seaweedfs/seaweedfs
 
 Name: seaweedfs
-Version: 4.20
+Version: 4.23
 Release: alt1
 
 Summary: Enterprise-Grade Distributed Storage with Self-Healing
@@ -125,6 +125,9 @@ install -d %buildroot%_logdir/%name
 %config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%rust_volume_name
 
 %changelog
+* Wed May 06 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.23-alt1
+- New version (4.23).
+
 * Tue Apr 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.20-alt1
 - Updated from 4.19 to 4.20.
 - Added sysconfig file to seaweedfs-volume-rust subpackage.
