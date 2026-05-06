@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.37
+Version: 6.5.39
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -15,7 +15,7 @@ VCS: https://github.com/linuxdeepin/dde-calendar
 # Source-url: https://github.com/linuxdeepin/dde-calendar/archive/%version/%repo-%version.tar.gz
 Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
+Patch1: deepin-calendar-6.5.39-alt-fix-GNUInstallDirs.patch
 
 Requires: icon-theme-hicolor
 
@@ -28,7 +28,8 @@ Calendar for Deepin Desktop Environment.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 %DQ6build \
@@ -81,6 +82,9 @@ Calendar for Deepin Desktop Environment.
 %_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.calendar.json
 
 %changelog
+* Wed May 06 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.39-alt1
+- New version 6.5.39.
+
 * Fri Apr 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.37-alt1
 - New version 6.5.37.
 - Built on dqt6 again (by upstream).
