@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.29
+Version: 9.0.30
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -82,6 +82,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.30-alt1
+- 9.0.30
+
 * Thu Apr 23 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.29-alt1
 - 9.0.29
 - fixed build with gcc-15, abseil-cpp-20260107.1
