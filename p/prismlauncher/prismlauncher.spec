@@ -1,6 +1,6 @@
 %define oname PrismLauncher
 Name: prismlauncher
-Version: 9.4
+Version: 11.0.2
 Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
@@ -33,6 +33,8 @@ BuildRequires: libtomlplusplus-devel libghc_filesystem-devel quazip-qt6-devel
 
 # Check https://bugzilla.altlinux.org/47223
 BuildRequires: cmark-devel cmark
+BuildRequires: libqrencode-devel
+BuildRequires: libarchive-devel
 
 Requires: qt6-svg qt6-imageformats
 
@@ -59,6 +61,7 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %doc COPYING.md
 %_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
+%_iconsdir/hicolor/*/apps/*.png
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
 %dir %_datadir/%oname/
@@ -67,10 +70,13 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %_datadir/%oname/JavaCheck.jar
 %_datadir/%oname/qtlogging.ini
 %_man6dir/*
-%_datadir/mime/packages/modrinth-mrpack-mime.xml
+%_datadir/mime/packages/org.prismlauncher.PrismLauncher.xml
 %_datadir/qlogging-categories6/
 
 %changelog
+* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.2-alt1
+- new version
+
 * Sat May 10 2025 Vitaly Lipatov <lav@altlinux.ru> 9.4-alt1
 - new version 9.4 (with rpmrb script)
 
