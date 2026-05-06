@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: MPV-based Video Player for Linux
@@ -25,7 +25,6 @@ Source: https://github.com/diegopvlk/%__name/archive/v%version/%__name-%version.
 %else
 Source: %__name-%version.tar
 %endif
-Patch10: %__name-1.0.8-alt-fix-metadata.patch
 
 BuildArch: noarch
 
@@ -51,7 +50,6 @@ deliver a seamless viewing experience.
 
 %prep
 %setup -n %__name-%version
-%patch10 -b .fix-metadata
 
 %build
 %meson
@@ -75,6 +73,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Fri May 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

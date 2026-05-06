@@ -3,7 +3,7 @@
 %define _name emoji-copy
 %define old_name emoji-selector
 # from metadata.json
-%define ego_ver 33
+%define ego_ver 34
 %define git_ver %ego_ver
 %define beta %nil
 %define uuid emoji-copy@felipeftn
@@ -81,6 +81,9 @@ popd
 %doc README.md
 
 %changelog
+* Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 34-alt1
+- 34 (GNOME 50 supported)
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 33-alt1
 - 33
 

@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: COSMIC Tasks
@@ -62,6 +62,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Mon May 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
