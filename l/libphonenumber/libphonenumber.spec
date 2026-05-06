@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.28
+Version: 9.0.29
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -54,11 +54,9 @@ developing applications that use %name.
 sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %endif
 
-# gtest > 1.13 requires >= C++14
-# libabseil compiled with -std=gnu++17
-sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
-
 %build
+# since abseil-cpp-20260107.1
+%add_optflags -Wno-error=deprecated-declarations
 %cmake \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
     -DBUILD_SHARED_LIBS=ON \
@@ -84,6 +82,10 @@ sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Apr 23 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.29-alt1
+- 9.0.29
+- fixed build with gcc-15, abseil-cpp-20260107.1
+
 * Thu Apr 09 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.28-alt1
 - 9.0.28
 
