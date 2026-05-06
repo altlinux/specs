@@ -1,7 +1,7 @@
 # stalled, check 14.01.2009
 Name: libbinio
-Version: 1.4
-Release: alt3.qa2.1
+Version: 1.5
+Release: alt1
 
 Summary: Binary I/O stream class library
 
@@ -11,8 +11,8 @@ Url: http://libbinio.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/libbinio/%name-%version.tar.bz2
-Patch0: %name-infopage.patch
+# Source-url: https://github.com/adplug/libbinio/releases/download/%name-%version/%name-%version.tar.bz2
+Source: %name-%version.tar
 Patch1: %name.patch
 
 # Automatically added by buildreq on Sun Jan 14 2007
@@ -46,7 +46,6 @@ Static libbinio library.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1
 
 %build
@@ -71,6 +70,10 @@ Static libbinio library.
 #%_libdir/lib*.a
 
 %changelog
+* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version 1.5
+- drop infopage patch (incorporated upstream)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3.qa2.1
 - NMU: added BR: texinfo
 
