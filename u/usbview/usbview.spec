@@ -1,5 +1,5 @@
 Name: usbview
-Version: 2.0
+Version: 3.1
 Release: alt1
 Epoch: 1
 
@@ -7,12 +7,10 @@ Summary: USB topology and device viewer
 Group: System/Kernel and hardware
 License: GPL
 Url: http://www.kroah.com/linux-usb
-Packager: Igor Vlasenko <viy@altlinux.ru>
 
-Source: %url/%name-%version.tar
-Source1: %name-icons.tar
+Source: https://github.com/gregkh/usbview/archive/refs/tags/v3.1.tar.gz#/%name-%version.tar.gz
 
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-devel /usr/bin/convert
 
 
 %description
@@ -25,39 +23,25 @@ properly or not.
 %setup -q
 
 %build
-#autoreconf -fisv
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall
 
-pushd %buildroot
-tar xf %SOURCE1
-popd
-
-mkdir -p $RPM_BUILD_ROOT%_desktopdir
-cat > $RPM_BUILD_ROOT%_desktopdir/%{name}.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=UsbView
-GenericName=USB viewver
-Comment=USB topology and device viewer
-Icon=%{name}
-Exec=%{name}
-Terminal=false
-Categories=GTK;Settings;HardwareSettings;
-EOF
-
 %files
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog* README*
 %_bindir/*
 %_desktopdir/*
-%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*
 %_man8dir/usbview.8*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Sun May 03 2026 Ildar Mulyukov <ildar@altlinux.ru> 1:3.1-alt1
+- new version
+
 * Sun Jun 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1
 - new version
 
