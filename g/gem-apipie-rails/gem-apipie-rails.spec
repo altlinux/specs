@@ -1,4 +1,4 @@
-%define        _unpackaged_files_terminate_build 1
+%define        _unpackaged_files_terminate_build 0
 %def_enable    check
 %def_enable    doc
 %def_enable    devel
@@ -6,7 +6,7 @@
 
 Name:          gem-apipie-rails
 Version:       1.5.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails API documentation tool
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -16,9 +16,8 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+Patch:         no-dummy.patch
+BuildRequires(pre): rpm-build-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(RedCloth) >= 0
 BuildRequires: gem(actionpack) >= 7.1.0
@@ -34,7 +33,7 @@ BuildRequires: gem(rubocop-performance) >= 0
 BuildRequires: gem(rubocop-rails) >= 0
 BuildRequires: gem(rubocop-rspec) >= 0
 BuildRequires: gem(rubocop-rspec_rails) >= 0
-#BuildRequires: gem(rubocop_challenger) >= 0
+BuildRequires: gem(rubocop_challenger) >= 0
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(sqlite3) >= 0
 BuildConflicts: gem(actionpack) >= 7.2
@@ -75,71 +74,6 @@ markup language agnostic, and even provides an API for reusing the documentation
 data in JSON.
 
 
-%package       -n gem-test-engine
-Version:       0.0.1
-Release:       alt1
-Summary:       Test Engine
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(test_engine) >= 0
-Provides:      gem(test_engine) = 0.0.1
-
-%description   -n gem-test-engine
-Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
-of traditional use of #comments, Apipie lets you describe the code, through the
-code. This brings advantages like:
-
-* No need to learn yet another syntax, you already know Ruby, right?
-* Possibility of reusing the docs for other purposes (such as validation)
-* Easier to extend and maintain (no string parsing involved)
-* Possibility of reusing other sources for documentation purposes (such as
-routes etc.)
-
-The documentation is available from within your app (by default under the
-/apipie path.) In development mode, you can see the changes as you go. It's
-markup language agnostic, and even provides an API for reusing the documentation
-data in JSON.
-
-
-%if_enabled    doc
-%package       -n gem-test-engine-doc
-Version:       0.0.1
-Release:       alt1
-Summary:       Test Engine documentation files
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test_engine
-Group:         Development/Documentation
-BuildArch:     noarch
-
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(test_engine) = 0.0.1
-
-%description   -n gem-test-engine-doc
-Test Engine documentation files.
-
-Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
-of traditional use of #comments, Apipie lets you describe the code, through the
-code. This brings advantages like:
-
-* No need to learn yet another syntax, you already know Ruby, right?
-* Possibility of reusing the docs for other purposes (such as validation)
-* Easier to extend and maintain (no string parsing involved)
-* Possibility of reusing other sources for documentation purposes (such as
-routes etc.)
-
-The documentation is available from within your app (by default under the
-/apipie path.) In development mode, you can see the changes as you go. It's
-markup language agnostic, and even provides an API for reusing the documentation
-data in JSON.
-
-%description   -n gem-test-engine-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета test_engine.
-%endif
-
-
 %if_enabled    doc
 %package       -n gem-apipie-rails-doc
 Version:       1.5.0
@@ -149,8 +83,6 @@ Summary(ru_RU.UTF-8): Файлы сведений для самоцвета apip
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(apipie-rails) = 1.5.0
 
 %description   -n gem-apipie-rails-doc
@@ -185,8 +117,6 @@ Summary(ru_RU.UTF-8): Файлы для разработки самоцвета 
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(apipie-rails) = 1.5.0
 Requires:      gem(RedCloth) >= 0
 Requires:      gem(json-schema) >= 2.8
@@ -226,6 +156,7 @@ data in JSON.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ruby_build
@@ -241,15 +172,6 @@ data in JSON.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n gem-test-engine
-%ruby_gemspecdir/test_engine-0.0.1.gemspec
-%ruby_gemslibdir/test_engine-0.0.1
-
-%if_enabled    doc
-%files         -n gem-test-engine-doc
-%ruby_gemsdocdir/test_engine-0.0.1
-%endif
-
 %if_enabled    doc
 %files         -n gem-apipie-rails-doc
 %doc APACHE-LICENSE-2.0 CHANGELOG.md MIT-LICENSE README.md
@@ -263,6 +185,9 @@ data in JSON.
 
 
 %changelog
+* Thu Apr 30 2026 Pavel Skrylev <majioa@altlinux.org> 1.5.0-alt1.1
+- ! fixed to ignore fake package, and enable dep
+
 * Wed Nov 05 2025 Pavel Skrylev <majioa@altlinux.org> 1.5.0-alt1
 - ^ 1.4.2p5 -> 1.5.0
 

@@ -5,7 +5,7 @@
 %define        gemname fog-libvirt
 
 Name:          gem-fog-libvirt
-Version:       0.13.2
+Version:       0.15.0
 Release:       alt1
 Summary:       libvirt provider for fog
 License:       MIT
@@ -16,14 +16,17 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
 BuildRequires: gem(fog-core) >= 1.27.4
 BuildRequires: gem(fog-json) >= 0
 BuildRequires: gem(fog-xml) >= 0.1.1
 BuildRequires: gem(json) >= 0
 BuildRequires: gem(minitest) >= 5.0
-BuildRequires: gem(mocha) >= 1.11.2
+BuildRequires: gem(mocha) >= 1.15
 BuildRequires: gem(net-ssh) >= 0
+BuildRequires: gem(netrc) >= 0
+BuildRequires: gem(octokit) >= 0
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rubocop) >= 0
@@ -33,16 +36,12 @@ BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(yard) >= 0
 BuildConflicts: gem(fog-xml) >= 0.2
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(mocha) >= 3
+BuildConflicts: gem(mocha) >= 4
 BuildConflicts: gem(shindo) >= 0.4
-%if_enabled check
-BuildRequires: gem(netrc) >= 0
-BuildRequires: gem(octokit) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mocha >= 1.11.2,mocha < 2
 Requires:      ruby >= 2.7
 Requires:      gem(fog-core) >= 1.27.4
 Requires:      gem(fog-json) >= 0
@@ -52,8 +51,7 @@ Requires:      gem(ruby-libvirt) >= 0.7.0
 Conflicts:     gem(fog-xml) >= 0.2
 Obsoletes:     ruby-fog-libvirt < %EVR
 Provides:      ruby-fog-libvirt = %EVR
-Provides:      fog-libvirt = %EVR
-Provides:      gem(fog-libvirt) = 0.13.2
+Provides:      gem(fog-libvirt) = 0.15.0
 
 %description
 fog-libvirt is a libvirt provider for fog.
@@ -61,14 +59,14 @@ fog-libvirt is a libvirt provider for fog.
 
 %if_enabled    doc
 %package       -n gem-fog-libvirt-doc
-Version:       0.13.2
+Version:       0.15.0
 Release:       alt1
 Summary:       libvirt provider for fog documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-libvirt
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(fog-libvirt) = 0.13.2
+Requires:      gem(fog-libvirt) = 0.15.0
 
 %description   -n gem-fog-libvirt-doc
 libvirt provider for fog documentation files.
@@ -82,19 +80,17 @@ fog-libvirt is a libvirt provider for fog.
 
 %if_enabled    devel
 %package       -n gem-fog-libvirt-devel
-Version:       0.13.2
+Version:       0.15.0
 Release:       alt1
 Summary:       libvirt provider for fog development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-libvirt
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(fog-libvirt) = 0.13.2
+Requires:      gem(fog-libvirt) = 0.15.0
 Requires:      gem(minitest) >= 5.0
-Requires:      gem(mocha) >= 1.11.2
+Requires:      gem(mocha) >= 1.15
 Requires:      gem(net-ssh) >= 0
-Requires:      gem(netrc) >= 0
-Requires:      gem(octokit) >= 0
 Requires:      gem(pry) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rubocop) >= 0
@@ -102,7 +98,7 @@ Requires:      gem(shindo) >= 0.3.4
 Requires:      gem(simplecov) >= 0
 Requires:      gem(yard) >= 0
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(mocha) >= 3
+Conflicts:     gem(mocha) >= 4
 Conflicts:     gem(shindo) >= 0.4
 
 %description   -n gem-fog-libvirt-devel
@@ -145,6 +141,9 @@ fog-libvirt is a libvirt provider for fog.
 
 
 %changelog
+* Wed Apr 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
+- ^ 0.13.2 -> 0.15.0
+
 * Mon Jan 13 2025 Pavel Skrylev <majioa@altlinux.org> 0.13.2-alt1
 - ^ 0.9.0.1 -> 0.13.2
 

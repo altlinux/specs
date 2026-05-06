@@ -1,6 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
+
 Name:          foreman
-Version:       3.13.0
-Release:       alt2
+Version:       3.18.1
+Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -22,33 +27,17 @@ Source9:       foreman.po
 Source10:      public.tar
 Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
+Patch7:        rails7.1.patch
 Patch6:        rails_6.patch
 Patch5:        asciidoctor-doc.patch
 Patch3:        invalid_premission.patch
 Patch2:        fast_gettext-2.3.0.patch
 Patch1:        alt.patch
-Patch:         %name-%version-%release.patch
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(bootsnap) >= 0
-BuildRequires: gem(bullet) >= 6.1.0
-BuildRequires: gem(bundler) >= 1.3
-BuildRequires: gem(byebug) >= 0
-BuildRequires: gem(gettext) >= 3.2.1
-BuildRequires: gem(graphiql-rails) >= 1.7
-BuildRequires: gem(immigrant) >= 0.1
-BuildRequires: gem(maruku) >= 0.7
-BuildRequires: gem(pry) >= 0
-BuildRequires: gem(pry-byebug) >= 0
-BuildRequires: gem(pry-doc) >= 0
-BuildRequires: gem(pry-rails) >= 0
-BuildRequires: gem(pry-remote) >= 0
-BuildRequires: gem(pry-stack_explorer) >= 0
-BuildRequires: gem(rainbow) >= 2.2.1
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(spring) >= 4.0
 BuildRequires: gem(activerecord-nulldb-adapter) >= 0
 BuildRequires: gem(activerecord-session_store) >= 2.0.0
+BuildRequires: gem(amazing_print) >= 2.0
 BuildRequires: gem(ancestry) >= 4.0
 BuildRequires: gem(apipie-dsl) >= 2.6.2
 BuildRequires: gem(apipie-rails) >= 0.8.0
@@ -56,10 +45,12 @@ BuildRequires: gem(as_deprecation_tracker) >= 1.6
 BuildRequires: gem(audited) > 5.1.0
 BuildRequires: gem(bcrypt) >= 3.1
 BuildRequires: gem(benchmark-ips) >= 2.8.2
+BuildRequires: gem(bootsnap) >= 0
+BuildRequires: gem(bullet) >= 6.1.0
+BuildRequires: gem(byebug) >= 0
 BuildRequires: gem(capybara) >= 3.33
-BuildRequires: gem(compass) >= 0
 BuildRequires: gem(daemons) >= 0
-BuildRequires: gem(database_cleaner) >= 2.0
+BuildRequires: gem(database_cleaner) >= 1.3
 BuildRequires: gem(deacon) >= 1.0
 BuildRequires: gem(deep_cloneable) >= 3
 BuildRequires: gem(dynflow) >= 1.6.5
@@ -69,32 +60,42 @@ BuildRequires: gem(fast_gettext) >= 2.1
 BuildRequires: gem(fog-core) >= 2.1
 BuildRequires: gem(friendly_id) >= 5.4.1
 BuildRequires: gem(get_process_mem) >= 0
+BuildRequires: gem(gettext) >= 3.2.1
 BuildRequires: gem(gettext_i18n_rails) >= 1.8
+BuildRequires: gem(graphiql-rails) >= 1.7
 BuildRequires: gem(graphql) >= 1.9.6
 BuildRequires: gem(graphql-batch) >= 0
+BuildRequires: gem(immigrant) >= 0.1
 BuildRequires: gem(jwt) >= 2.2.1
 BuildRequires: gem(launchy) >= 2.4
-BuildRequires: gem(ldap_fluff) >= 0.7.0
+BuildRequires: gem(ldap_fluff) >= 0.9.0
 BuildRequires: gem(logging) >= 1.8.0
 BuildRequires: gem(mail) >= 2.7
+BuildRequires: gem(maruku) >= 0.7
 BuildRequires: gem(minitest) >= 5.1
 BuildRequires: gem(minitest-reporters) >= 1.4
 BuildRequires: gem(minitest-retry) >= 0.0
 BuildRequires: gem(minitest-spec-rails) >= 7.1
 BuildRequires: gem(minitest_reporters_github) >= 1.0
-BuildRequires: gem(mocha) >= 1.11.2
+BuildRequires: gem(mocha) >= 2.1
 BuildRequires: gem(net-ldap) >= 0.16.0
 BuildRequires: gem(net-ping) >= 0
 BuildRequires: gem(net-scp) >= 0
 BuildRequires: gem(net-ssh) >= 0
 BuildRequires: gem(oauth) >= 1.0
 BuildRequires: gem(parallel_tests) >= 0
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(pry-doc) >= 0
+BuildRequires: gem(pry-rails) >= 0
+BuildRequires: gem(pry-remote) >= 0
+BuildRequires: gem(pry-stack_explorer) >= 0
 BuildRequires: gem(puma) >= 5.1
 BuildRequires: gem(rabl) >= 0.15.0
 BuildRequires: gem(rack-cors) >= 1.1
-BuildRequires: gem(rails) >= 7.1
+BuildRequires: gem(rails) >= 7.0.3
 BuildRequires: gem(rails-controller-testing) >= 1.0
 BuildRequires: gem(rails-i18n) >= 7.0
+BuildRequires: gem(rainbow) >= 2.2.1
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(responders) >= 3.0
 BuildRequires: gem(rest-client) >= 2.0.0
@@ -103,26 +104,21 @@ BuildRequires: gem(roadie-rails) >= 3.0
 BuildRequires: gem(robottelo_reporter) >= 0.1
 BuildRequires: gem(rss) >= 0
 BuildRequires: gem(safemode) >= 1.4
-BuildRequires: gem(sass) >= 3.2
-BuildRequires: gem(sass-rails) >= 0
 BuildRequires: gem(scoped_search) >= 4.1.9
 BuildRequires: gem(secure_headers) >= 6.3
 BuildRequires: gem(selenium-webdriver) >= 0
 BuildRequires: gem(shoulda-context) >= 1.2
-BuildRequires: gem(shoulda-matchers) >= 4.5.1
+BuildRequires: gem(shoulda-matchers) >= 5.0
 BuildRequires: gem(show_me_the_cookies) >= 6.0
+BuildRequires: gem(spring) = 4.2.1
 BuildRequires: gem(sprockets) >= 4.0
 BuildRequires: gem(sprockets-rails) >= 3.0
 BuildRequires: gem(sshkey) >= 2.0
+BuildRequires: gem(statsd-instrument) >= 3.0
 BuildRequires: gem(theforeman-rubocop) >= 0.1.2
 BuildRequires: gem(validates_lengths_from_database) >= 0.5
 BuildRequires: gem(webmock) >= 0
 BuildRequires: gem(will_paginate) >= 3.3
-BuildConflicts: gem(gettext) >= 4.0.0
-BuildConflicts: gem(graphiql-rails) >= 2
-BuildConflicts: gem(immigrant) >= 1
-BuildConflicts: gem(maruku) >= 1
-BuildConflicts: gem(spring) >= 5
 BuildConflicts: gem(activerecord-session_store) >= 3
 BuildConflicts: gem(ancestry) >= 5
 BuildConflicts: gem(apipie-rails) >= 2
@@ -132,19 +128,23 @@ BuildConflicts: gem(capybara) >= 4
 BuildConflicts: gem(database_cleaner) >= 3
 BuildConflicts: gem(deacon) >= 2
 BuildConflicts: gem(deep_cloneable) >= 4
-BuildConflicts: gem(dynflow) >= 2.0.0
+BuildConflicts: gem(dynflow) >= 3.0.0
 BuildConflicts: gem(facterdb) >= 2
 BuildConflicts: gem(factory_bot_rails) >= 7
 BuildConflicts: gem(fast_gettext) >= 3
 BuildConflicts: gem(fog-core) >= 3
 BuildConflicts: gem(friendly_id) >= 6
+BuildConflicts: gem(gettext) >= 4.0.0
 BuildConflicts: gem(gettext_i18n_rails) >= 2
+BuildConflicts: gem(graphiql-rails) >= 2
 BuildConflicts: gem(graphql) >= 2
+BuildConflicts: gem(immigrant) >= 1
 BuildConflicts: gem(jwt) >= 3
 BuildConflicts: gem(launchy) >= 3
 BuildConflicts: gem(ldap_fluff) >= 1.0
 BuildConflicts: gem(logging) >= 3.0.0
 BuildConflicts: gem(mail) >= 3
+BuildConflicts: gem(maruku) >= 1
 BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(minitest-retry) >= 1
@@ -154,7 +154,7 @@ BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(oauth) >= 2
 BuildConflicts: gem(puma) >= 7
 BuildConflicts: gem(rabl) >= 1
-BuildConflicts: gem(rack-cors) >= 3
+BuildConflicts: gem(rack-cors) >= 4
 BuildConflicts: gem(rails) >= 8
 BuildConflicts: gem(rails-controller-testing) >= 2
 BuildConflicts: gem(rails-i18n) >= 8
@@ -164,145 +164,41 @@ BuildConflicts: gem(rfauxfactory) >= 1
 BuildConflicts: gem(roadie-rails) >= 4
 BuildConflicts: gem(robottelo_reporter) >= 1
 BuildConflicts: gem(safemode) >= 2
-BuildConflicts: gem(sass-rails) >= 7
 BuildConflicts: gem(scoped_search) >= 5
-BuildConflicts: gem(secure_headers) >= 7
+BuildConflicts: gem(secure_headers) >= 8
 BuildConflicts: gem(shoulda-context) >= 3
-BuildConflicts: gem(shoulda-matchers) >= 6
+BuildConflicts: gem(shoulda-matchers) >= 7
 BuildConflicts: gem(show_me_the_cookies) >= 7
 BuildConflicts: gem(sprockets) >= 5
 BuildConflicts: gem(sprockets-rails) >= 4
 BuildConflicts: gem(sshkey) >= 3
-BuildConflicts: gem(theforeman-rubocop) >= 0.2
+BuildConflicts: gem(theforeman-rubocop) >= 1
 BuildConflicts: gem(validates_lengths_from_database) >= 1
 BuildConflicts: gem(will_paginate) >= 5
 %endif
+
 Autoprov:      yes,nopython3,nopython,noshell
 Autoreq:       yes,nopython3,nopython,noshell
-
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency amazing_print >= 2.0.0,amazing_print < 3
+%ruby_use_gem_dependency statsd-instrument >= 3.0.0,statsd-instrument < 4
+%ruby_use_gem_dependency rack-cors >= 3.0.0,rack-cors < 4
+%ruby_use_gem_dependency will_paginate >= 4.0.0,will_paginate < 5
+%ruby_use_gem_dependency sidekiq >= 7.3.8,sidekiq < 8
+%ruby_use_gem_dependency redis >= 6.0.0,redis < 7
+%ruby_use_gem_dependency jwt >= 2.2.1,jwt < 3
+%ruby_use_gem_dependency audited >= 5.0.1,audited < 6
 %ruby_use_gem_dependency rails >= 7.1,rails < 8
-%ruby_use_gem_dependency will_paginate >= 4.0,will_paginate < 5
-Requires:      gem(activerecord-nulldb-adapter) >= 0
-Requires:      gem(activerecord-session_store) >= 2.0.0
-Requires:      gem(ancestry) >= 4.0
-Requires:      gem(apipie-dsl) >= 2.6.2
-Requires:      gem(apipie-rails) >= 0.8.0
-Requires:      gem(audited) > 5.1.0
-Requires:      gem(bcrypt) >= 3.1
-Requires:      gem(daemons) >= 0
-Requires:      gem(deacon) >= 1.0
-Requires:      gem(deep_cloneable) >= 3
-Requires:      gem(dynflow) >= 1.6.5
-Requires:      gem(fast_gettext) >= 2.1
-Requires:      gem(fog-core) >= 2.1
-Requires:      gem(terser) >= 0
-Requires:      gem(sidekiq) >= 7.0
-Requires:      gem(psych) >= 5.0
-Requires:      gem(minitest_reporters_github) >= 0
-Requires:      gem(font-awesome-sass) >= 6.5
-Requires:      gem(font-awesome-rails) >= 4.7.0.8
-Requires:      gem(foreman_templates) >= 10.0
-Requires:      gem(foreman_remote_execution) >= 14.0
-Requires:      gem(foreman_discovery) >= 24.0
-Requires:      gem(foreman_ansible) >= 15.0
-Requires:      gem(foreman-tasks) >= 10.0
-Requires:      gem(foreman_default_hostgroup) >= 7.0
-Requires:      gem(foreman_puppet) >= 8.0
-Requires:      gem(foreman_setup) >= 8.0.1
-Requires:      gem(foreman_maintain) >= 1.7.5
-Requires:      gem(foreman_chef) >= 0.10.0
-Requires:      gem(foreman_hooks) >= 0.3.17
-Requires:      gem(foreman_api_client) >= 1.0.2
-Requires:      gem(foreman_monitoring) >= 3.2.0
-Requires:      gem(foreman_cert_revoke_host) >= 0.1.2
-Requires:      gem(foreman_webhooks) >= 4.0
-Requires:      gem(friendly_id) >= 5.4.2
-Requires:      gem(get_process_mem) >= 0
-Requires:      gem(gettext_i18n_rails) >= 1.8
-Requires:      gem(graphql) >= 1.13.0
-Requires:      gem(graphql-batch) >= 0
-Requires:      gem(gridster-rails) >= 0.5
-Requires:      gem(jwt) >= 2.2.2
-Requires:      gem(ldap_fluff) >= 0.7.0
-Requires:      gem(logging) >= 1.8.0
-Requires:      gem(mail) >= 2.7
-Requires:      gem(net-ldap) >= 0.16.0
-Requires:      gem(net-ping) >= 0
-Requires:      gem(net-scp) >= 0
-Requires:      gem(net-ssh) >= 0
-Requires:      gem(oauth) >= 1.0
-Requires:      gem(rabl) >= 0.15.0
-Requires:      gem(rack-cors) >= 1.1
-Requires:      gem(rails) >= 7.1
-Requires:      gem(rails-i18n) >= 7.0
-Requires:      gem(rdoc) >= 0
-Requires:      gem(responders) >= 3.0
-Requires:      gem(rest-client) >= 2.0.0
-Requires:      gem(roadie-rails) >= 3.0
-Requires:      gem(rss) >= 0
-Requires:      gem(safemode) >= 1.4
-Requires:      gem(sass) >= 3.2
-Requires:      gem(scoped_search) >= 4.1.10
-Requires:      gem(secure_headers) >= 6.3
-Requires:      gem(sprockets) >= 4.0
-Requires:      gem(sprockets-rails) >= 3.0
-Requires:      gem(sshkey) >= 2.0
-Requires:      gem(validates_lengths_from_database) >= 0.5
-Requires:      gem(will_paginate) >= 3.3
-Requires:      gem(redis) >= 5
-Requires:      gem(database_cleaner) >= 2
-Requires:      gem(database_cleaner-core) >= 2.0
-Requires:      gem(database_cleaner-active_record) >= 2.0
-Requires:      gem(factory_bot_rails) >= 6
-Requires:      gem(shoulda-matchers) >= 6
-Requires:      gem(shoulda-context) >= 2
-Requires:      gem(rbvmomi) >= 3
-Requires:      gem(uniform_notifier) >= 1.16
-Requires:      gem(pry-rails) >= 0
-Requires:      gem(pry-doc) >= 1.5
-Requires:      gem(pry-stack_explorer) >= 0
-Requires:      gem(pry-remote) >= 0
-Conflicts:     gem(activerecord-session_store) >= 3
-Conflicts:     gem(ancestry) >= 5
-Conflicts:     gem(apipie-rails) >= 2
-Conflicts:     gem(audited) >= 6
-Conflicts:     gem(bcrypt) >= 4
-Conflicts:     gem(deacon) >= 2
-Conflicts:     gem(deep_cloneable) >= 4
-Conflicts:     gem(dynflow) >= 2.0.0
-Conflicts:     gem(fast_gettext) >= 3
-Conflicts:     gem(fog-core) >= 3
-Conflicts:     gem(friendly_id) >= 6
-Conflicts:     gem(gettext_i18n_rails) >= 2
-Conflicts:     gem(graphql) >= 1.14
-Conflicts:     gem(jwt) >= 3.0
-Conflicts:     gem(ldap_fluff) >= 1.0
-Conflicts:     gem(logging) >= 3.0.0
-Conflicts:     gem(mail) >= 3
-Conflicts:     gem(oauth) >= 2
-Conflicts:     gem(rabl) >= 1
-Conflicts:     gem(rack-cors) >= 3
-Conflicts:     gem(rails) >= 8
-Conflicts:     gem(rails-i18n) >= 8
-Conflicts:     gem(responders) >= 4
-Conflicts:     gem(rest-client) >= 3
-Conflicts:     gem(roadie-rails) >= 4
-Conflicts:     gem(safemode) >= 2
-Conflicts:     gem(scoped_search) >= 5
-Conflicts:     gem(secure_headers) >= 7
-Conflicts:     gem(sprockets) >= 5
-Conflicts:     gem(sprockets-rails) >= 4
-Conflicts:     gem(sshkey) >= 3
-Conflicts:     gem(validates_lengths_from_database) >= 1
-Conflicts:     gem(will_paginate) >= 5
-Conflicts:     gem(redis) >= 6
-Conflicts:     gem(database_cleaner) >= 3
-Conflicts:     gem(factory_bot_rails) >= 7
-Conflicts:     gem(shoulda-matchers) >= 7
-Conflicts:     gem(shoulda-context) >= 3
-Conflicts:     gem(rbvmomi) >= 4
+%ruby_use_gem_dependency graphql >= 1.9.6,graphql < 2
+%ruby_use_gem_dependency patternfly-sass >= 3.59.5,patternfly-sass < 4
+%ruby_use_gem_dependency scoped_search >= 4.1.9,scoped_search < 5
+%ruby_use_gem_dependency friendly_id >= 5.4.1,friendly_id < 6
+%ruby_use_gem_dependency database_cleaner >= 2.0.1,database_cleaner < 3
+%ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
+%ruby_use_gem_dependency shoulda-matchers >= 6.4.0,shoulda-matchers < 7
+%ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
+%ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
 Requires:      rake
 Requires:      wget
 Requires:      vixie-cron
@@ -310,10 +206,188 @@ Requires:      postgresql-server
 Requires:      dynflow
 Requires:      node
 Requires:      nginx
-Requires:      railsctl >= 1.0.1-alt2
+Requires:      railsctl >= 1.0.1-alt1
 Requires:      ruby >= 3.1.2
-Obsoletes:     foreman-addons
+Requires:      gem(activerecord-nulldb-adapter) >= 0
+Requires:      gem(activerecord-session_store) >= 2.0.0
+Requires:      gem(amazing_print) >= 2.0
+Requires:      gem(ancestry) >= 4.0
+Requires:      gem(apipie-dsl) >= 2.6.2
+Requires:      gem(apipie-rails) >= 0.8.0
+Requires:      gem(as_deprecation_tracker) >= 1.6
+Requires:      gem(audited) > 5.1.0
+Requires:      gem(bcrypt) >= 3.1
+Requires:      gem(benchmark-ips) >= 2.8.2
+Requires:      gem(bootsnap) >= 0
+Requires:      gem(bullet) >= 6.1.0
+Requires:      gem(byebug) >= 0
+Requires:      gem(capybara) >= 3.33
+Requires:      gem(daemons) >= 0
+Requires:      gem(database_cleaner) >= 1.3
+Requires:      gem(deacon) >= 1.0
+Requires:      gem(deep_cloneable) >= 3
+Requires:      gem(dynflow) >= 1.6.5
+Requires:      gem(facterdb) >= 1.7
+Requires:      gem(factory_bot_rails) >= 5.0
+Requires:      gem(fast_gettext) >= 2.1
+Requires:      gem(fog-core) >= 2.1
+Requires:      gem(friendly_id) >= 5.4.1
+Requires:      gem(get_process_mem) >= 0
+Requires:      gem(gettext) >= 3.2.1
+Requires:      gem(gettext_i18n_rails) >= 1.8
+Requires:      gem(graphiql-rails) >= 1.7
+Requires:      gem(graphql) >= 1.9.6
+Requires:      gem(graphql-batch) >= 0
+Requires:      gem(immigrant) >= 0.1
+Requires:      gem(jwt) >= 2.2.1
+Requires:      gem(launchy) >= 2.4
+Requires:      gem(ldap_fluff) >= 0.9.0
+Requires:      gem(logging) >= 1.8.0
+Requires:      gem(mail) >= 2.7
+Requires:      gem(maruku) >= 0.7
+Requires:      gem(minitest) >= 5.1
+Requires:      gem(minitest-reporters) >= 1.4
+Requires:      gem(minitest-retry) >= 0.0
+Requires:      gem(minitest-spec-rails) >= 7.1
+Requires:      gem(minitest_reporters_github) >= 1.0
+Requires:      gem(mocha) >= 2.1
+Requires:      gem(net-ldap) >= 0.16.0
+Requires:      gem(net-ping) >= 0
+Requires:      gem(net-scp) >= 0
+Requires:      gem(net-ssh) >= 0
+Requires:      gem(oauth) >= 1.0
+Requires:      gem(parallel_tests) >= 0
+Requires:      gem(pry) >= 0
+Requires:      gem(pry-doc) >= 0
+Requires:      gem(pry-rails) >= 0
+Requires:      gem(pry-remote) >= 0
+Requires:      gem(pry-stack_explorer) >= 0
+Requires:      gem(puma) >= 5.1
+Requires:      gem(rabl) >= 0.15.0
+Requires:      gem(rack-cors) >= 1.1
+Requires:      gem(rails) >= 7.0.3
+Requires:      gem(rails-controller-testing) >= 1.0
+Requires:      gem(rails-i18n) >= 7.0
+Requires:      gem(rainbow) >= 2.2.1
+Requires:      gem(rdoc) >= 0
+Requires:      gem(responders) >= 3.0
+Requires:      gem(rest-client) >= 2.0.0
+Requires:      gem(rfauxfactory) >= 0.1.5
+Requires:      gem(roadie-rails) >= 3.0
+Requires:      gem(robottelo_reporter) >= 0.1
+Requires:      gem(rss) >= 0
+Requires:      gem(safemode) >= 1.4
+Requires:      gem(scoped_search) >= 4.1.9
+Requires:      gem(secure_headers) >= 6.3
+Requires:      gem(selenium-webdriver) >= 0
+Requires:      gem(shoulda-context) >= 1.2
+Requires:      gem(shoulda-matchers) >= 5.0
+Requires:      gem(show_me_the_cookies) >= 6.0
+Requires:      gem(spring) = 4.2.1
+Requires:      gem(sprockets) >= 4.0
+Requires:      gem(sprockets-rails) >= 3.0
+Requires:      gem(sshkey) >= 2.0
+Requires:      gem(statsd-instrument) >= 3.0
+Requires:      gem(theforeman-rubocop) >= 0.1.2
+Requires:      gem(validates_lengths_from_database) >= 0.5
+Requires:      gem(webmock) >= 0
+Requires:      gem(will_paginate) >= 3.3
+Requires:      gem(gridster-rails) >= 0
+Requires:      gem(spice-html5-rails) >= 0
+Requires:      gem(font-awesome-rails) >= 0
+Requires:      gem(foreman_templates) >= 0
+Requires:      gem(foreman_remote_execution) >= 0
+Requires:      gem(foreman_discovery) >= 0
+Requires:      gem(foreman_ansible) >= 0
+Requires:      gem(foreman_default_hostgroup) >= 0
+Requires:      gem(foreman_puppet) >= 0
+Requires:      gem(foreman_setup) >= 0
+Requires:      gem(foreman_maintain) >= 0
+Requires:      gem(foreman_chef) >= 0
+Requires:      gem(foreman_hooks) >= 0
+Requires:      gem(foreman_api_client) >= 0
+Requires:      gem(foreman_monitoring) >= 0
+Requires:      gem(foreman_cert_revoke_host) >= 0
+Requires:      gem(foreman_webhooks) >= 0
+Requires:      gem(rbvmomi) >= 0
+Requires:      gem(font-awesome-sass) >= 0
+Requires:      gem(patternfly-sass) >= 0
+Requires:      gem(gettext_i18n_rails_js) >= 0
+Requires:      gem(terser) >= 0
+Requires:      gem(sass-rails) >= 0
+Requires:      gem(wirb) >= 0
+Requires:      gem(sidekiq) >= 0
+Requires:      gem(gitlab-sidekiq-fetcher) >= 0
+Requires:      gem(fog-aws) >= 0
+Requires:      gem(logging-journald) >= 0
+Requires:      gem(rack-jsonp) >= 0
+Requires:      gem(fog-libvirt) >= 0
+Requires:      gem(rack-openid) >= 0
+Requires:      gem(fog-openstack) >= 0
+Requires:      gem(pg) >= 0
+Requires:      gem(redis) >= 0
+Requires:      gem(sd_notify) >= 0
+Requires:      gem(prometheus-client) >= 0
+Requires:      gem(fog-vsphere) >= 0
+Requires:      gem(ruby_engine) >= 2.0.0.3
+Conflicts:     gem(activerecord-session_store) >= 3
+Conflicts:     gem(ancestry) >= 5
+Conflicts:     gem(apipie-rails) >= 2
+Conflicts:     gem(as_deprecation_tracker) >= 2
+Conflicts:     gem(bcrypt) >= 4
+Conflicts:     gem(capybara) >= 4
+Conflicts:     gem(database_cleaner) >= 3
+Conflicts:     gem(deacon) >= 2
+Conflicts:     gem(deep_cloneable) >= 4
+Conflicts:     gem(dynflow) >= 3.0.0
+Conflicts:     gem(facterdb) >= 2
+Conflicts:     gem(factory_bot_rails) >= 7
+Conflicts:     gem(fast_gettext) >= 3
+Conflicts:     gem(fog-core) >= 3
+Conflicts:     gem(friendly_id) >= 6
+Conflicts:     gem(gettext) >= 4.0.0
+Conflicts:     gem(gettext_i18n_rails) >= 2
+Conflicts:     gem(graphiql-rails) >= 2
+Conflicts:     gem(graphql) >= 2
+Conflicts:     gem(immigrant) >= 1
+Conflicts:     gem(jwt) >= 3
+Conflicts:     gem(launchy) >= 3
+Conflicts:     gem(ldap_fluff) >= 1.0
+Conflicts:     gem(logging) >= 3.0.0
+Conflicts:     gem(mail) >= 3
+Conflicts:     gem(maruku) >= 1
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest-reporters) >= 2
+Conflicts:     gem(minitest-retry) >= 1
+Conflicts:     gem(minitest-spec-rails) >= 8
+Conflicts:     gem(minitest_reporters_github) >= 2
+Conflicts:     gem(mocha) >= 3
+Conflicts:     gem(oauth) >= 2
+Conflicts:     gem(puma) >= 7
+Conflicts:     gem(rabl) >= 1
+Conflicts:     gem(rack-cors) >= 4
+Conflicts:     gem(rails) >= 8
+Conflicts:     gem(rails-controller-testing) >= 2
+Conflicts:     gem(rails-i18n) >= 8
+Conflicts:     gem(responders) >= 4
+Conflicts:     gem(rest-client) >= 3
+Conflicts:     gem(rfauxfactory) >= 1
+Conflicts:     gem(roadie-rails) >= 4
+Conflicts:     gem(robottelo_reporter) >= 1
+Conflicts:     gem(safemode) >= 2
+Conflicts:     gem(scoped_search) >= 5
+Conflicts:     gem(secure_headers) >= 8
+Conflicts:     gem(shoulda-context) >= 3
+Conflicts:     gem(shoulda-matchers) >= 7
+Conflicts:     gem(show_me_the_cookies) >= 7
+Conflicts:     gem(sprockets) >= 5
+Conflicts:     gem(sprockets-rails) >= 4
+Conflicts:     gem(sshkey) >= 3
+Conflicts:     gem(theforeman-rubocop) >= 1
+Conflicts:     gem(validates_lengths_from_database) >= 1
+Conflicts:     gem(will_paginate) >= 5
 Conflicts:     foreman-addons
+Obsoletes:     foreman-addons < %EVR
 
 %ruby_on_build_rake_tasks build
 
@@ -331,17 +405,19 @@ API which enables you to build higher level business logic on top of a solid
 foundation.
 
 
+%if_enabled    doc
 %package       -n foreman-doc
-Version:       3.13.0
-Release:       alt2
-Summary:       An application that automates the lifecycle of servers documentation files
+Version:       3.18.1
+Release:       alt1
+Summary:       An application that automates the lifecycle of servers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      foreman = 3.13.0
+Requires:      foreman = 3.18.1-alt1
 
 %description   -n foreman-doc
-An application that automates the lifecycle of servers documentation files.
+An application that automates the lifecycle of servers documentation
+files.
 
 Foreman is a free open source project that gives you the power to easily
 automate repetitive tasks, quickly deploy applications, and proactively manage
@@ -354,12 +430,39 @@ on-premise with VMs and bare-metal or in the cloud. Foreman provides
 comprehensive, interaction facilities including a web frontend, CLI and RESTful
 API which enables you to build higher level business logic on top of a solid
 foundation.
+%endif
+
+
+%if_enabled    devel
+%package       -n foreman-devel
+Version:       3.18.1
+Release:       alt1
+Summary:       An application that automates the lifecycle of servers
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      foreman = 3.18.1-alt1
+
+%description   -n foreman-devel
+Foreman is a free open source project that gives you the power to easily
+automate repetitive tasks, quickly deploy applications, and proactively manage
+your servers lifecyle, on-premises or in the cloud. From provisioning and
+configuration to orchestration and monitoring, Foreman integrates with your
+existing infrastructure to make operations easier. Using Puppet, Ansible, Chef,
+Salt and Foreman's smart proxy architecture, you can easily automate repetitive
+tasks, quickly deploy applications, and proactively manage change, both
+on-premise with VMs and bare-metal or in the cloud. Foreman provides
+comprehensive, interaction facilities including a web frontend, CLI and RESTful
+API which enables you to build higher level business logic on top of a solid
+foundation.
+%endif
 
 
 %prep
-%setup
 %setup -a 10
 %autopatch -p1
+
+rm -rf ./extras/jumpstart ./tmp/cache
 install -Dm0755 %SOURCE9 ./locale/ru/foreman.po
 
 %build
@@ -453,6 +556,8 @@ do
 done
 popd
 
+rm -rf %buildroot%_libexecdir/ruby
+
 %check
 %ruby_test
 
@@ -490,7 +595,6 @@ railsctl cleanup %name
 %preun_service foreman
 %preun_service foreman-jobs
 
-
 %files
 %doc README* CONTRIBUTING.md LICENSE
 %_sbindir/%name-rake
@@ -511,6 +615,7 @@ railsctl cleanup %name
 %attr(770,_foreman,foreman) %_spooldir/%name/tmp
 %attr(770,_foreman,foreman) %_cachedir/%name/Gemfile.lock
 %dir %attr(770,_foreman,foreman) %_localstatedir/%name
+%dir %attr(770,_foreman,foreman) %_localstatedir/%name/public
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/.bundle
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/openid-store
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/apipie-cache
@@ -520,12 +625,21 @@ railsctl cleanup %name
 %dir %attr(770,_foreman,foreman) %_spooldir/%name
 # %_man8dir/*.8*
 
+%if_enabled    doc
 %files         -n foreman-doc
 %doc README.md
 %ruby_sitedocdir/foreman
+%endif
+
+%if_enabled    devel
+%files         -n foreman-devel
+%endif
 
 
 %changelog
+* Fri Apr 24 2026 Pavel Skrylev <majioa@altlinux.org> 3.18.1-alt1
+- ^ 3.13.0 -> 3.18.1
+
 * Wed Feb 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.13.0-alt2
 - * moved public to a signle level up in %%datadir
 
