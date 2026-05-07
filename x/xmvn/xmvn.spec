@@ -1,48 +1,51 @@
 #%%global mbi 1
 
-Name:    xmvn
-Version: 4.2.0
-Release: alt2
-Summary: Local Extensions for Apache Maven
-License: Apache-2.0
-Group:   Development/Java
-URL:     https://fedora-java.github.io/xmvn/
-BuildArch: noarch
+Name:           xmvn
+Version:        4.2.0
+Release:        alt3
 
-Source0: https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
+Summary:        Local Extensions for Apache Maven
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://fedora-java.github.io/xmvn/
+VCS:            https://github.com/fedora-java/xmvn
 
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(aopalliance:aopalliance)
-BuildRequires: mvn(com.beust:jcommander)
-BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(com.google.inject:guice)
-BuildRequires: mvn(org.apache.commons:commons-compress)
-BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-api)
-BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-util)
-BuildRequires: mvn(org.apache.maven:maven-artifact)
-BuildRequires: mvn(org.apache.maven:maven-core)
-BuildRequires: mvn(org.apache.maven:maven-model)
-BuildRequires: mvn(org.apache.maven:maven-model-builder)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires: mvn(org.easymock:easymock)
-BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
-BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires: mvn(org.ow2.asm:asm)
-BuildRequires: mvn(org.slf4j:slf4j-api)
-BuildRequires: mvn(org.slf4j:slf4j-simple)
-BuildRequires: mvn(org.xmlunit:xmlunit-assertj3)
+Source0:        xmvn-%version.tar.xz
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(aopalliance:aopalliance)
+BuildRequires:  mvn(com.beust:jcommander)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(com.google.inject:guice)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-model-builder)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(org.xmlunit:xmlunit-assertj3)
 # Maven home is used as template for XMvn home
-BuildRequires: maven
+BuildRequires:  maven
 
-Requires: %{name}-minimal = %{version}-%{release}
+BuildArch:      noarch
+
+Requires: %name-minimal = %version-%release
 Requires: maven >= 3.6.1
 
 %description
@@ -54,7 +57,7 @@ creating RPM packages containing Maven artifacts.
 %package minimal
 Group: Development/Java
 Summary: Dependency-reduced version of XMvn
-Requires: %{name}-core = %{version}-%{release}
+Requires: %name-core = %version-%release
 Requires: apache-commons-cli
 Requires: apache-commons-lang3
 Requires: atinject
@@ -127,7 +130,7 @@ This package provides various XMvn tools:
 * XMvn Subst, which is a tool that can substitute Maven artifact files
   with symbolic links to corresponding files in artifact repository.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
 %setup
@@ -162,13 +165,13 @@ cp -a "${maven_home}" target/dependency/apache-maven-$mver
 
 version=4.2.0
 tar --delay-directory-restore -xvf target/xmvn-*-bin.tar.gz
-chmod -R +rwX %{name}-${version}*
+chmod -R +rwX %name-${version}*
 # These are installed as doc
-rm -f %{name}-${version}*/{AUTHORS-XMVN,README-XMVN.md,LICENSE,NOTICE,NOTICE-XMVN}
+rm -f %name-${version}*/{AUTHORS-XMVN,README-XMVN.md,LICENSE,NOTICE,NOTICE-XMVN}
 # Not needed - we use JPackage launcher scripts
-rm -Rf %{name}-${version}*/lib/{installer,resolver,subst}/
+rm -Rf %name-${version}*/lib/{installer,resolver,subst}/
 # Irrelevant Maven launcher scripts
-rm -f %{name}-${version}*/bin/*
+rm -f %name-${version}*/bin/*
 
 %install
 %mvn_install
@@ -176,16 +179,16 @@ rm -f %{name}-${version}*/bin/*
 version=4.2.0
 maven_home=$(realpath $(dirname $(realpath $(%{?jpb_env} which mvn)))/..)
 
-install -d -m 755 %{buildroot}%{_datadir}/%{name}
-cp -r%{?mbi:L} %{name}-${version}*/* %{buildroot}%{_datadir}/%{name}/
+install -d -m 755 %buildroot%_datadir/%name
+cp -r%{?mbi:L} %name-${version}*/* %buildroot%_datadir/%name/
 
 for cmd in mvn mvnDebug; do
-    cat <<EOF >%{buildroot}%{_datadir}/%{name}/bin/$cmd
+    cat <<EOF >%buildroot%_datadir/%name/bin/$cmd
 #!/bin/sh -e
-export _FEDORA_MAVEN_HOME="%{_datadir}/%{name}"
-exec %{_datadir}/maven/bin/$cmd "\${@}"
+export _FEDORA_MAVEN_HOME="%_datadir/%name"
+exec %_datadir/maven/bin/$cmd "\${@}"
 EOF
-    chmod 755 %{buildroot}%{_datadir}/%{name}/bin/$cmd
+    chmod 755 %buildroot%_datadir/%name/bin/$cmd
 done
 
 # helper scripts
@@ -194,28 +197,28 @@ done
 %jpackage_script org.fedoraproject.xmvn.tools.subst.SubstCli "" "" xmvn/xmvn-subst:xmvn/xmvn-api:xmvn/xmvn-core:beust-jcommander xmvn-subst
 
 # copy over maven boot and lib directories
-cp -r%{?mbi:L} ${maven_home}/boot/* %{buildroot}%{_datadir}/%{name}/boot/
-cp -r%{?mbi:L} ${maven_home}/lib/* %{buildroot}%{_datadir}/%{name}/lib/
+cp -r%{?mbi:L} ${maven_home}/boot/* %buildroot%_datadir/%name/boot/
+cp -r%{?mbi:L} ${maven_home}/lib/* %buildroot%_datadir/%name/lib/
 
 # possibly recreate symlinks that can be automated with xmvn-subst
 %if !0%{?mbi}
-%{name}-subst -s -R %{buildroot} %{buildroot}%{_datadir}/%{name}/
+%name-subst -s -R %buildroot %buildroot%_datadir/%name/
 %endif
 
 # /usr/bin/xmvn
-ln -s %{_datadir}/%{name}/bin/mvn %{buildroot}%{_bindir}/%{name}
+ln -s %_datadir/%name/bin/mvn %buildroot%_bindir/%name
 
 # mvn-local symlink
-ln -s %{name} %{buildroot}%{_bindir}/mvn-local
+ln -s %name %buildroot%_bindir/mvn-local
 
 # make sure our conf is identical to maven so yum won't freak out
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf/
-cp -P ${maven_home}/conf/settings.xml %{buildroot}%{_datadir}/%{name}/conf/
-cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
+install -d -m 755 %buildroot%_datadir/%name/conf/
+cp -P ${maven_home}/conf/settings.xml %buildroot%_datadir/%name/conf/
+cp -P ${maven_home}/bin/m2.conf %buildroot%_datadir/%name/bin/
 
 # Make sure javapackages config is not bundled
-rm -rf %{buildroot}%{_datadir}/%{name}/{configuration.xml,config.d/,conf/toolchains.xml,maven-metadata/}
-for rpm404_ghost in %{_datadir}/%{name}/conf/logging.rpmmoved
+rm -rf %buildroot%_datadir/%name/{configuration.xml,config.d/,conf/toolchains.xml,maven-metadata/}
+for rpm404_ghost in %_datadir/%name/conf/logging.rpmmoved
 do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
@@ -225,10 +228,12 @@ done
 subst 's/commons-compress/& commons-io/' %{buildroot}%{_bindir}/%{name}-install
 
 # End of bootstrap guice-5.1.0
-rm %buildroot/usr/share/%{name}/lib/guice*.jar
-ln -s %_javadir/google-guice.jar %buildroot/usr/share/%{name}/lib/guice-5.1.0.jar
-ln -s %_javadir/aopalliance.jar %buildroot/usr/share/%{name}/lib/aopalliance-1.0.jar
-ln -s %_javadir/objectweb-asm/asm.jar %buildroot/usr/share/%{name}/lib/asm-9.2.jar
+rm -f %buildroot/usr/share/%name/lib/guice*.jar
+rm -f %buildroot/usr/share/%name/lib/aopalliance-1.0.jar
+rm -f %buildroot/usr/share/%name/lib/asm-9.2.jar
+ln -s %_javadir/google-guice.jar %buildroot/usr/share/%name/lib/guice-5.1.0.jar
+ln -s %_javadir/aopalliance.jar %buildroot/usr/share/%name/lib/aopalliance-1.0.jar
+ln -s %_javadir/objectweb-asm/asm.jar %buildroot/usr/share/%name/lib/asm-9.2.jar
 
 %pre minimal
 oldpath=/usr/share/xmvn/conf/logging
@@ -243,22 +248,22 @@ fi
 # Workaround for rpm bug 447156 - rpm fails to change directory to symlink
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/Directory_Replacement/
 %files
-%{_bindir}/mvn-local
+%_bindir/mvn-local
 
 %files minimal -f .mfiles-xmvn
-%{_bindir}/%{name}
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/bin
-%dir %{_datadir}/%{name}/lib
-%{_datadir}/%{name}/lib/*.jar
-%{_datadir}/%{name}/lib/ext
-%{_datadir}/%{name}/lib/jansi-native
-%{_datadir}/%{name}/bin/m2.conf
-%{_datadir}/%{name}/bin/mvn
-%{_datadir}/%{name}/bin/mvnDebug
-%{_datadir}/%{name}/boot
-%{_datadir}/%{name}/conf
-%ghost %{_datadir}/%{name}/conf/logging.rpmmoved
+%_bindir/%name
+%dir %_datadir/%name
+%dir %_datadir/%name/bin
+%dir %_datadir/%name/lib
+%_datadir/%name/lib/*.jar
+%_datadir/%name/lib/ext
+%_datadir/%name/lib/jansi-native
+%_datadir/%name/bin/m2.conf
+%_datadir/%name/bin/mvn
+%_datadir/%name/bin/mvnDebug
+%_datadir/%name/boot
+%_datadir/%name/conf
+%ghost %_datadir/%name/conf/logging.rpmmoved
 
 %files core -f .mfiles-core
 %doc --no-dereference LICENSE NOTICE
@@ -267,11 +272,14 @@ fi
 %files mojo -f .mfiles-mojo
 
 %files tools -f .mfiles-tools
-%{_bindir}/%{name}-install
-%{_bindir}/%{name}-resolve
-%{_bindir}/%{name}-subst
+%_bindir/%name-install
+%_bindir/%name-resolve
+%_bindir/%name-subst
 
 %changelog
+* Tue Apr 28 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt3
+- Fixed FTBFS.
+
 * Fri Aug 01 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt2
 - End of bootstrap guice-5.1.0.
 
