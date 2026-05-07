@@ -8,18 +8,19 @@
 
 Name: sv
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Public domain cross-platform semantic versioning in c99
 License: Unlicense
 Group: System/Libraries
+
 Url: https://github.com/uael/sv
 VCS: https://github.com/uael/sv
-
 Source: %name-%version.tar
 Patch: %name-%version-bump-minor-version-cmake.patch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 
 %if_with check
 BuildRequires: ctest
@@ -70,6 +71,9 @@ uses %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 07 2026 Michael Shigorin <mike@altlinux.org> 1.2-alt2
+- Fix build --without check.
+
 * Tue Apr 14 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.2-alt1
 - Initial build for ALT.
 
