@@ -1,6 +1,6 @@
 Name: ocsinventory-agent
 Version: 2.10.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Hardware and software inventory tool (Agent)
@@ -8,12 +8,11 @@ Group: System/Servers
 License: GPL-2.0+ or Artistic-1.0
 Url: http://www.ocsinventory-ng.org/
 
-Packager: Pavel Zilke <zidex at altlinux dot org>
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: README.ALT
+Patch0: ocsinventory-agent-alt-locale.conf.patch
 
 Requires: smartmontools nmap pciutils perl-XML-Simple perl-libwww perl-Net-IP perl-Net-SSLeay
 
@@ -46,6 +45,7 @@ This package contains the 'Agent' part.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -103,6 +103,9 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/lib/%name
 
 %changelog
+* Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.10.5-alt2
+- Fixed path to locale file (ALT #59024).
+
 * Fri Apr 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.10.5-alt1
 - New version.
 
