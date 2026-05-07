@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: yelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
@@ -144,6 +144,9 @@ Yelp.
 %endif
 
 %changelog
+* Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
