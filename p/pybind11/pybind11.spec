@@ -4,7 +4,7 @@
 
 Name: pybind11
 Version: 3.0.2
-Release: alt2
+Release: alt3
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -66,6 +66,8 @@ This package contains the Python 3 files.
 %prep
 %setup
 %patch1 -p1
+# tests/exo_planet_c_api.cpp needs -fno-exceptions
+sed -i 's/GNU|Intel/LCC|&/' tests/CMakeLists.txt
 
 # Dropped dependency on distutils (for python3.12)
 sed -i 's/distutils.ccompiler/setuptools._distutils.ccompiler/' pybind11/setup_helpers.py
@@ -115,6 +117,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Thu May 07 2026 Michael Shigorin <mike@altlinux.org> 3.0.2-alt3
+- spec: -fno-exceptions for lcc as well (ilyakurdyukov@)
+
 * Sat Mar 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt2
 - fix shared_ptr downcast with virtual inheritance (GCC 14, upstream PR 6014)
 
