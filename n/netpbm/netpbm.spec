@@ -1,6 +1,6 @@
 Name: netpbm
 Version: 10.86.48
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
 License: BSD-like AND GPL-2.0-only AND LGPL-2.1
@@ -66,6 +66,8 @@ subst "s| atob| a= atob|" converter/other/anytopnm
 #sed -i 's/\<getline\>/ppm_&/g' converter/ppm/xpmtoppm.c
 
 %build
+%add_optflags -std=c17
+
 cat <<__EOF__ >lib/compile.h
 #define COMPILE_TIME "The same time"
 #define COMPILED_BY "%packager, %vendor"
@@ -157,6 +159,9 @@ test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 %endif
 
 %changelog
+* Thu May 07 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.48-alt1.1
+- Fix FTBFS with gcc15.
+
 * Fri Feb 20 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.48-alt1
 - 10.86.48.
 - License: update to SPDX + added more licenses from doc/
