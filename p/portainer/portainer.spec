@@ -3,7 +3,7 @@
 # Only for the test tasks (pocket).
 
 Name: portainer
-Version: 2.39.1
+Version: 2.39.2
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -36,7 +36,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.8"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.9"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -119,6 +119,16 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu May 07 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.2-alt1
+- New LTS version 2.39.2 (Fixes: CVE-2026-35469, CVE-2026-32280,
+  CVE-2026-32281, CVE-2026-32283, CVE-2026-32282, CVE-2026-32289,
+  CVE-2026-32288, CVE-2026-32285, CVE-2026-39883, CVE-2026-39882,
+  GHSA-xmrv-pmrh-hhx2, CVE-2026-32952, CVE-2026-34165, CVE-2026-33762,
+  GHSA-3xc5-wrhm-f963, CVE-2026-35206, CVE-2026-31789, CVE-2026-28387,
+  CVE-2026-28388, CVE-2026-28390, CVE-2026-31790, CVE-2026-28389,
+  CVE-2026-2673, CVE-2026-40200, CVE-2026-6042, CVE-2026-22184,
+  CVE-2026-27171).
+
 * Mon Mar 23 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.1-alt1
 - New LTS version 2.39.1 (Fixes: CVE-2026-25679, CVE-2026-27142,
   CVE-2026-27139, CVE-2026-24051, CVE-2026-33186, GO-2026-4550,
