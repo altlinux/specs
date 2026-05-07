@@ -33,7 +33,7 @@
 
 Name: fwupd
 Version: 2.1.2
-Release: alt1
+Release: alt2
 
 Summary: Firmware update daemon
 License: LGPL-2.1+
@@ -114,6 +114,9 @@ BuildRequires: polkit
 %endif
 
 Requires: bubblewrap
+
+# See https://bugzilla.altlinux.org/59016
+Requires: udisks2
 
 Obsoletes: fwupd-labels <= %EVR
 
@@ -302,6 +305,10 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Thu May 07 2026 Egor Ignatov <egori@altlinux.org> 2.1.2-alt2
+- Add udisks2 dependency (closes: #59016)
+- Fix dbxtool "no path set for sysfsdir-fw" (closes: #59017)
+
 * Fri Apr 24 2026 Egor Ignatov <egori@altlinux.org> 2.1.2-alt1
 - New version 2.1.2.
 
