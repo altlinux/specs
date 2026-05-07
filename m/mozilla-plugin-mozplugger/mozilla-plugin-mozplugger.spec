@@ -1,19 +1,20 @@
 %define rname mozplugger
 %define name mozilla-plugin-%rname
 %define version 2.1.6
-%define release alt1
+%define release alt1.1
 
 Name: %name
 Version: %version
 Release: %release
 
 Summary: A generic mozilla plug-in
-License: GPL
+License: GPL-2.0
 Group: Networking/WWW
 
 Url: http://mozplugger.mozdev.org
 Source: %rname-%version.tar
-Patch: %rname-alt-install.patch
+Patch0: %rname-alt-install.patch
+Patch1: %rname-alt-gcc15.patch
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Requires: browser-plugins-npapi, m4
@@ -37,9 +38,10 @@ MozPlugger - это универсальный плагин для браузе�
 
 %prep
 %setup -n %rname-%version
-%patch -p2
+%autopatch -p2
 
 %build
+export XCFLAGS="%optflags"
 %configure
 %make_build
 
@@ -54,6 +56,11 @@ MozPlugger - это универсальный плагин для браузе�
 %doc README ChangeLog COPYING
 
 %changelog
+* Thu May 07 2026 L.A. Kostis <lakostis@altlinux.ru> 2.1.6-alt1.1
+- Fix FTBFS with gcc15.
+- Fix License.
+- Enable debuginfo.
+
 * Sun Jan 14 2018 Michael Shigorin <mike@altlinux.org> 2.1.6-alt1
 - 2.1.6
 - spec cleanup
