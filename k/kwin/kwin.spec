@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.6.4
-Release: alt4
+Release: alt5
 %K6init
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,8 @@ Patch118: 0037-backends-drm-don-t-attempt-multi-GPU-copies-with-uns.patch
 Patch119: 0038-backends-drm-drop-dmabuf-import-modes.patch
 Patch120: 0040-rules-make-checkGeometrySafe-actually-safe.patch
 Patch121: 0042-backends-drm-only-update-outputs-on-GPUs-that-actual.patch
+Patch122: 0046-Temporarily-reference-Windows-during-compositing.patch
+Patch123: 0047-backends-x11-Fix-interactive-output-resizing.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -221,6 +223,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Thu May 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt5
+- update upstream fixes
+
 * Tue May 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt4
 - update upstream fixes
 
