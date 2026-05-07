@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-notifications
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1%beta
 
 Summary: COSMIC Notifications Service
@@ -52,12 +52,16 @@ just rootdir=%buildroot install
 
 %files
 %_bindir/%name
-%_desktopdir/%rdn_name.desktop
-%_iconsdir/hicolor/*/*/*.svg
-%_datadir/metainfo/%rdn_name.metainfo.xml
+# removed in 1.0.12
+#%_desktopdir/%rdn_name.desktop
+#%_iconsdir/hicolor/*/*/*.svg
+#%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
+- 1.0.12
+
 * Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt1
 - 1.0.11
 

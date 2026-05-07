@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1%beta
 
 Summary: COSMIC Workspaces
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%git_name-%version%beta-cargo.tar .cargo/ vendor/}
 #%doc README*
 
 %changelog
+* Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
+- 1.0.12
+
 * Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt1
 - 1.0.11
 
