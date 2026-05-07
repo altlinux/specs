@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: elementary-portals
-Version: 8.1.0
+Version: 8.2.0
 Release: alt1
 
 Summary: Flatpak portals for Pantheon
@@ -26,6 +26,8 @@ BuildRequires: vala-tools
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(pantheon-wayland-1)
+BuildRequires: pkgconfig(accountsservice)
+BuildRequires: pkgconfig(libadwaita-1)
 
 %description
 An implementation of XDG Flatpak portals for elementary OS and
@@ -58,6 +60,9 @@ Pantheon
 %exclude %_datadir/locale/zh_HANT/LC_MESSAGES/xdg-desktop-portal-pantheon.mo
 
 %changelog
+* Thu May 07 2026 Nikolay Strelkov <snk@altlinux.org> 8.2.0-alt1
+- New version 8.2.0.
+
 * Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
 - New version 8.1.0.
 
