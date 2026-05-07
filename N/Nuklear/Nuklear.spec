@@ -1,5 +1,5 @@
 Name: Nuklear
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 Summary: Immediate-mode graphical user interface toolkit
 License: MIT
@@ -38,5 +38,8 @@ install -m644 Readme.md %buildroot%_docdir/Readme.md
 %_includedir/nuklear.h
 
 %changelog
+* Thu May  7 2026 Artyom Bystrov <arbars@altlinux.org> 4.13.3-alt1
+- Update to new version
+
 * Thu Apr  9 2026 Artyom Bystrov <arbars@altlinux.org> 4.13.2-alt1
-- Initial build for ALT.
+- Initial build for ALT
