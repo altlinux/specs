@@ -1,13 +1,17 @@
 
 Name: libodfgen
 Version: 0.1.8
-Release: alt1
+Release: alt2
 Summary: An ODF generator library
 Group: System/Libraries
 License: LGPLv2+ or MPLv2.0+
 URL: http://sourceforge.net/projects/libwpd/
 # git-vcs git://git.code.sf.net/p/libwpd/libodfgen
 Source: %name-%version.tar
+Patch0001: 0001-Avoid-a-division-by-zero-for-empty-elliptical-arc.patch
+Patch0002: 0002-paragraph-style-retrieve-style-writing-mode-s-proper.patch
+Patch0003: 0003-Missing-include.patch
+Patch0004: 0004-const-up-libodfgen.patch
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
@@ -31,6 +35,10 @@ developing applications that use %name.
 
 %prep
 %setup -q
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
 
 %build
 mkdir -p m4
@@ -53,6 +61,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 07 2026 Alexey Shabalin <shaba@altlinux.org> 0.1.8-alt2
+- add patches from upstream
+
 * Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.1.8-alt1
 - new version 0.1.8
 
