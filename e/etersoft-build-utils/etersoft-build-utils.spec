@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,27 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.2-alt1
+- rpmgs: vendor Go deps from submodule go.mod into top-level vendor (Closes #4)
+- rpmgs: add zig vendoring (Closes #6)
+- rpmgs: use Cargo.toml for detect rust vendor
+- rpmcs: avoid partial Req replacement
+- po/Makefile: fix xgettext to extract only translatable strings
+- po: update Russian translation
+- rpmgs: add pnpm support for vendoring node_modules
+- rpmgs: search for yarn.lock/package.json in source subdir and subdirectories
+- rpmgs: use only first root go.mod for Go vendoring, disable workspace
+- gitask: disable API for get_last, use ssh task ls directly
+- rpmgs: preserve parent directory when KEEP_DIRS contains subdir paths
+- gitask: fix subtask replacement for repo.git=tag format
+- gitask: fix get_subtask fallback to avoid substring matches
+- gitask: show srpm/copy subtask names in gita show
+- gitask: show srpm version in gita ls for copy/rebuild subtasks
+- gitask: accept package name in 'approve' subcommand
+- rpmgs: download_any_tarball: use cached tarball with return, not continue
+- rpmgs: git_to_tarball: checkout tag matching spec Version
+- rpmgs: capture cargo vendor source override config to .gear/config.toml
+
 * Sat Mar 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
 - gita: add test as alias for run --test-only, always use run with --test-only by default
 - gitask: add -m support for approve command
