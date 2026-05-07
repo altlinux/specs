@@ -7,7 +7,7 @@
 %define optflags_lto %nil
 
 Name: krita-gmic
-Version: 3.5.0.1
+Version: 3.6.4.1
 Release: alt1
 
 Group: Graphics
@@ -15,9 +15,11 @@ Summary: GREYC's Magic Image Converter for Krita
 License: CECILL-2.0 and GPL-3.0
 Url: https://files.kde.org/krita/build/dependencies/
 
+ExcludeArch: %ix86 %arm
+
 #Requires: gmic
 
-Source: gmic-patched-%version.tar
+Source: gmic-%version.tar
 
 BuildRequires: libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libjpeg-devel libopencv-devel libpng-devel
@@ -35,7 +37,9 @@ macros whose goal is to convert, manipulate and visualize generic 1D/2D/3D
 multi-spectral image datasets.
 
 %prep
-%setup -n gmic-patched-%version
+%setup -n gmic-%version
+
+sed -i 's|NAMES Qt6 Qt5|NAMES Qt5|' gmic-qt/CMakeLists.txt
 
 %build
 pushd gmic-qt
@@ -44,6 +48,8 @@ pushd gmic-qt
     -DENABLE_SYSTEM_GMIC:BOOL=OFF \
     -DENABLE_LTO:BOOL=ON \
     #
+#    -DQT_VERSION_MAJOR=5 \
+#    -DQT_MAJOR_VERSION=5 \
 popd
 
 %install
@@ -57,6 +63,9 @@ popd
 %doc gmic-qt/README*
 
 %changelog
+* Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 3.6.4.1-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 3.5.0.1-alt1
 - new version
 
