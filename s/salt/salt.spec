@@ -2,15 +2,14 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3007.13
+Version: 3006.24
 Release: alt1
+Epoch: 1
 License: Apache-2.0
 Group: System/Configuration/Other
 URL: http://saltstack.org
 VCS: https://github.com/saltstack/salt
 # CVE track from release notes: https://docs.saltproject.io/en/latest/topics/releases/3007.6.html
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
@@ -38,11 +37,11 @@ BuildRequires: python3-module-importlib-metadata
 
 # Control module version for 3006.6
 BuildRequires: python3-module-cryptography >= 41.0.7
-BuildRequires: python3-module-urllib3 >= 2.0.6
+BuildRequires: python3-module-urllib3 >= 1.6.17
 BuildRequires: python3-module-pycryptodome >= 3.19.1
 BuildRequires: python3-module-pycryptodomex >= 3.19.1
 BuildRequires: python3-module-GitPython >= 3.1.41
-BuildRequires: python3-module-jinja2 >= 3.1.4
+BuildRequires: python3-module-jinja2
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects requests.packages.urllib3.util.ssl_
 
@@ -260,6 +259,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-proxy
 
 %changelog
+* Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 1:3006.24-alt1
+- New LTS version.
+
 * Sat Feb 14 2026 Andrey Cherepanov <cas@altlinux.org> 3007.13-alt1
 - New version.
 
