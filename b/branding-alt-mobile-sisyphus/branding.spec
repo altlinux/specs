@@ -9,10 +9,10 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2025.04
-Release: alt3
+Version: 2026.05
+Release: alt1
 
-Url: https://www.altlinux.org/ALT_Mobile
+Url: https://altmobile.org
 
 BuildRequires(pre): rpm-macros-branding
 
@@ -235,6 +235,10 @@ subst "s/Theme=.*/Theme=spinner-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Fri May 08 2026 Andrew Savchenko <bircoph@altlinux.org> 2026.05-alt1
+- Update version for new release
+- Update os-info wrt wiki guidelines
+
 * Mon Jul 28 2025 David Sultaniiazov <x1z53@altlinux.org> 2025.04-alt3
 - release: change logo to altlinux
 - plymouth:
