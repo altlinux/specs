@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 21
+%define oname libwebsockets
+%define abiversion 19
 
 %def_without evlib_plugins
 %if_with evlib_plugins
@@ -8,18 +9,18 @@
 %define _evlib_plugins OFF
 %endif
 
-Name: libwebsockets
-Version: 4.5.2
-Release: alt1
+Name: %oname%abiversion
+Version: 4.3.5
+Release: alt2
 
-Summary: A lightweight C library for Websockets
+Summary: A lightweight C library for Websockets (legacy)
 
 License: MIT and Apache-2.0 and BSD-3-Clause and Zlib and CC0
-Group: Development/C
+Group: System/Legacy libraries
 Url: http://libwebsockets.org
 
-# Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
-Source: %name-%version.tar
+# Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
 Patch: libwebsockets-4.3.2-alt-upstream-gcc13.patch
 
@@ -35,40 +36,20 @@ BuildRequires: glib2-devel
 BuildRequires: libcap-devel
 
 %description
-This is the libwebsockets C library for lightweight websocket clients and
-servers.
+Legacy version of libwebsockets shared library (soname %abiversion).
 
-%package -n %name%abiversion
-Summary: Shared libraries of %name
-Group: System/Libraries
-# https://fedoraproject.org/wiki/Bundled_Libraries
+%package -n %oname
+Summary: A lightweight C library for Websockets (legacy)
+Group: System/Legacy libraries
 Provides: bundled(sha1-hollerbach)
 Provides: bundled(base64-decode)
 Provides: bundled(ssl-http2)
 
-%description -n %name%abiversion
-This package contains the shared libraries of libwebsockets,
-a lightweight websocket library for C clients and servers.
-
-%package devel
-Group: Development/C
-Summary: Headers for developing programs that will use %name
-Requires: %name%abiversion = %EVR
-
-%description devel
-This package contains the header files needed for developing
-%name applications.
-
-%package tests
-Group: Development/C
-Summary: Tests to use with %name
-Requires: %name%abiversion = %EVR
-
-%description tests
-This package contains the tests for %name applications.
+%description -n %oname
+Legacy version of libwebsockets shared library (soname %abiversion).
 
 %prep
-%setup
+%setup -n %oname-%version
 #patch -p1
 
 %build
@@ -84,8 +65,7 @@ This package contains the tests for %name applications.
 %ifarch %e2k
     -DDISABLE_WERROR=ON \
 %endif
-    -DLWS_WITH_STATIC=OFF \
-    -DLWS_WITH_MINIMAL_EXAMPLES=OFF
+    -DLWS_WITH_STATIC=OFF
 %cmake_build
 
 %install
@@ -94,37 +74,25 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name '*.a' -exec rm -f {} ';'
 find %buildroot -name '*.cmake' -exec rm -f {} ';'
 find %buildroot -name '*_static.pc' -exec rm -f {} ';'
-
-%files -n %name%abiversion
-%doc README.md changelog
-%doc LICENSE
-%_libdir/%name.so.%abiversion
+# remove devel files and test apps - they are provided by main libwebsockets package
+rm -rv %buildroot%_includedir
+rm -v %buildroot%_libdir/%oname.so
+rm -rv %buildroot%_pkgconfigdir
+rm -rv %buildroot%_bindir
+rm -rv %buildroot%_datadir/%oname-test-server
 %if_with evlib_plugins
-%_libdir/%name-evlib_ev.so
-%_libdir/%name-evlib_glib.so
-%_libdir/%name-evlib_uv.so
+# evlib plugins are unversioned and conflict with main libwebsockets%abiversion package; not packaged in legacy
+rm -v %buildroot%_libdir/%oname-evlib_*.so
 %endif
 
-%files devel
-%doc READMEs/README.coding.md READMEs/ changelog
+%files -n %oname
+%doc README.md changelog
 %doc LICENSE
-%_includedir/%name.h
-%_includedir/lws_config.h
-%_includedir/%name
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
-
-%files tests
-%doc READMEs/README.coding.md READMEs/README.test-apps.md
-%doc LICENSE
-%_bindir/%name-test-*
-%_datadir/%name-test-server/
+%_libdir/%oname.so.%abiversion
 
 %changelog
-* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.2-alt1
-- new version 4.5.2
-- disable minimal examples build (link error)
-- build according to Shared Libs Policy: rename binary subpackage to libwebsockets21
+* Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.5-alt2
+- build legacy package for libwebsockets.so.19
 - disable evlib_plugins build by default (unversioned plugin .so conflicts
   between ABI versions); enable with --with evlib_plugins
 
