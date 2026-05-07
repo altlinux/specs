@@ -1,6 +1,6 @@
 Name:           maven-assembly-plugin
-Version:        3.7.1
-Release:        alt1.1
+Version:        3.8.0
+Release:        alt1
 
 Summary:        Maven Assembly Plugin
 License:        Apache-2.0
@@ -17,6 +17,8 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
+# TODO: switch to mvn() prov, after fixing mockito bug
+BuildRequires:  osgi(org.mockito.junit-jupiter)
 BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(jaxen:jaxen)
 
@@ -41,6 +43,10 @@ dependencies etc. from flexible assembly descriptors.
 %doc README.md
 
 %changelog
+* Fri Apr 24 2026 Evgeniy Serov <scala@altlinux.org> 3.8.0-alt1
+- Updated to 3.8.0.
+- Fixed FTBFS.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.7.1-alt1.1
 - Cosmetic fixes.
 
