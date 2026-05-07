@@ -6,7 +6,7 @@
 
 Name: tbox
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: A glib-like multi-platform c library
 License: Apache-2.0
@@ -72,6 +72,10 @@ uses %name.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+sed -i '/error unknown arch/d' src/tbox/prefix/arch.h
+%endif
+
 cat > %name.pc << EOF
 prefix=%_prefix
 exec_prefix=\${prefix}
@@ -115,6 +119,9 @@ install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 07 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.0-alt2
+- e2k build fix
+
 * Tue Apr 14 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.0-alt1
 - Initial build for ALT.
 
