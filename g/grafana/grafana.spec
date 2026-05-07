@@ -4,9 +4,14 @@
 %define _runtimedir /run
 %def_enable prebuilded_frontend
 
+%ifarch loongarch64
+# avoid "relocation R_LARCH_B26 overflow" error in cgo-compiled object files
+%add_optflags -mcmodel=medium
+%endif
+
 Name: grafana
 Version: 12.3.6
-Release: alt1
+Release: alt2
 Summary: Metrics dashboard and graph editor
 
 Group: Development/Other
@@ -64,6 +69,9 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
+export CGO_CFLAGS="%optflags"
+export CGO_CXXFLAGS="%optflags"
+export CGO_LDFLAGS="%optflags"
 export npm_config_devdir="$PWD/node_modules/.node-gyp"
 export VERSION=%version
 export COMMIT=%release
@@ -207,6 +215,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu May 07 2026 Ilya Sorochan <k0tran@altlinux.org> 12.3.6-alt2
+- Fix FTBFS on loongarch64.
+
 * Tue Apr 21 2026 Alexey Shabalin <shaba@altlinux.org> 12.3.6-alt1
 - 12.3.6+security-01
 - Fixes:
