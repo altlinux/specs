@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.85
+%define kernel_sublevel	.86
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -297,10 +297,11 @@ c=.gear/signing-%flavour.pem
 banner build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
+export KBUILD_BUILD_USER=$(echo %buildhost | sed 's/[-.].*//')
+export KBUILD_BUILD_HOST='%{?disttag}%{!?disttag:%buildhost}'
+export KBUILD_BUILD_TIMESTAMP="$(LC_ALL=C date -ud @$SOURCE_DATE_EPOCH)"
 KernelVer=%kversion-%flavour-%krelease
-
 echo "Building Kernel $KernelVer"
-
 %make_build mrproper
 make -s kernelversion | grep -Fx '%kversion-%flavour-%krelease'
 
@@ -595,6 +596,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 07 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.86-alt1
+- v6.12.86 (2026-05-07).
+- config: Enable platform and machine keyrings.
+- config: Disable CONFIG_AX25.
+
 * Thu Apr 30 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.85-alt1
 - v6.12.85 (2026-04-30).
 
