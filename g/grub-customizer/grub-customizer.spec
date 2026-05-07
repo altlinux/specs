@@ -1,6 +1,6 @@
 Name:    grub-customizer
-Version: 5.2.5
-Release: alt1.1
+Version: 5.2.6
+Release: alt1
 Summary: Grub Customizer is a graphical interface to configure the grub2/burg settings
 
 License: GPL-3.0
@@ -84,6 +84,9 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 %_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
 %changelog
+* Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.6-alt1
+- New version.
+
 * Mon Feb 24 2025 Ivan A. Melnikov <iv@altlinux.org> 5.2.5-alt1.1
 - NMU: Build for riscv64.
 
