@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.5.2
-Release: alt2
+Release: alt3
 
 Summary: The PPP daemon and documentation
 License: BSD-3-Clause AND LGPL-2.1-or-later AND GPL-2.0-or-later
@@ -201,6 +201,9 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/%name/radius/
 
 %changelog
+* Thu May 07 2026 Alexey Shabalin <shaba@altlinux.org> 2.5.2-alt3
+- Backport fixes from upstream.
+
 * Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.2-alt2
 - Fix system CA path.
 
