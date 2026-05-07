@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.7.5
+Version: 1.8.0
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -40,6 +40,9 @@ Goverlay makes everything accessible in just a few clicks.
 /usr/libexec/goverlay
 
 %changelog
+* Fri May 08 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Thu Mar 05 2026 Ilya Mashkin <oddity@altlinux.ru> 1.7.5-alt1
 - 1.7.5
 
