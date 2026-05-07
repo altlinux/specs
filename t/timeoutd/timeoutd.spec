@@ -1,7 +1,7 @@
 Summary: Automatically logout users by idle timeouts
 Name: timeoutd
-Version: 1.5.3
-Release: alt1.1
+Version: 1.5.4
+Release: alt1
 License: GPL
 Group: System/Base
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -41,6 +41,9 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %_unitdir/%name.*
 
 %changelog
+* Thu May 07 2026 Paul Wolneykien <manowar@altlinux.org> 1.5.4-alt1
+- Version 1.5.4 (compilation fix release).
+
 * Fri Nov 21 2025 Paul Wolneykien <manowar@altlinux.org> 1.5.3-alt1.1
 - Rebuild to reflect fixes since the broken version v1.5-alt2.1
   (Fixes: OVE-20251121-0001).
