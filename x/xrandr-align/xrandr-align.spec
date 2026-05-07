@@ -1,5 +1,5 @@
 Name: xrandr-align
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 Summary: Utility to keep the proper alignment between the screen and an X input device
 License: MIT/X11
@@ -86,6 +86,9 @@ chmod a+x %buildroot%_rpmlibdir/%name.filetrigger
 %_sysconfdir/%name/eGalax.monitor
 
 %changelog
+* Thu May 07 2026 Paul Wolneykien <manowar@altlinux.org> 0.3.7-alt1
+- Fixed print_version() bug found by GCC 15.
+
 * Wed Nov 13 2024 Paul Wolneykien <manowar@altlinux.org> 0.3.6-alt1
 - Version: 0.3.6
 - Fixed gravitate.c: Include common.h. That fixes building
