@@ -6,17 +6,23 @@
 # symbols end up in .dynsym with non-default visibility, which eu-elflint rejects
 %add_verify_elf_skiplist %python3_sitelibdir/grpc/_cython/cygrpc.cpython-*.so
 
+%ifarch %e2k
+# lcc 1.29.15: error: cpio archive too big - 4156M
+%define optflags_debug -g0
+%endif
+
 %define oname grpcio
 
 Name: python3-module-%oname
 Version: 1.80.0
-Release: alt1
+Release: alt2
+
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
+
 Url: https://pypi.org/project/grpcio
 VCS: https://github.com/grpc/grpc
-
 Source: %name-%version.tar
 Patch0: grpcio-1.80.0-alt-unbundle-absl-log.patch
 
@@ -33,11 +39,6 @@ HTTP/2-based RPC framework.
 %prep
 %setup
 %patch0 -p1
-%ifarch %e2k
-# EDG frontend fails at this
-sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
-sed -i "s/defined(__has_builtin)/0/" src/core/lib/gprpp/debug_location.h
-%endif
 
 # remove some bundled libraries. TODO: try unbundling all libraries.
 rm -rf third_party/zlib
@@ -78,6 +79,12 @@ export GRPC_PYTHON_BUILD_SYSTEM_ABSL=1
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 27 2026 Michael Shigorin <mike@altlinux.org> 1.80.0-alt2
+- E2K (thx ilyakurdyukov@):
+  + disable oversized debuginfo;
+  + drop obsolete ftbfs workaround (mcst#9362).
+- Minor spec cleanup.
+
 * Mon Apr 13 2026 Anton Farygin <rider@altlinux.org> 1.80.0-alt1
 - 1.70.2 -> 1.80.0
 
