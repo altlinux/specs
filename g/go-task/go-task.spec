@@ -1,14 +1,12 @@
 %global import_path github.com/go-task/task
 Name:     go-task
-Version:  3.48.0
+Version:  3.50.0
 Release:  alt1
 
 Summary:  A task runner / simpler Make alternative written in Go
 License:  MIT
 Group:    Other
 Url:      https://github.com/go-task/task
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source0:   %name-%version.tar
 Source1:   vendor.tar
@@ -47,6 +45,9 @@ install -Dm 644 completion/zsh/_task %buildroot/%_datadir/zsh/site-functions/_ta
 %_datadir/zsh/site-functions/_task
 
 %changelog
+* Thu May 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.50.0-alt1
+- New version 3.50.0.
+
 * Wed Jan 28 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.48.0-alt1
 - 3.48.0 (closes: #57437)
 
