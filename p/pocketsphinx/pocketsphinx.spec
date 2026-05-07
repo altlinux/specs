@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name:    pocketsphinx
-Version: 5.0.4
+Version: 5.1.0
 Release: alt1
 
 Summary: A small speech recognizer
@@ -59,5 +59,8 @@ Group: Development/C
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+
 * Sun Oct 19 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt1
 - Initial build for Sisyphus.
