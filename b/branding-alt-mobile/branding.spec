@@ -9,10 +9,10 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 11.0
-Release: alt4
+Version: 11.0.1
+Release: alt1
 
-Url: https://www.altlinux.org/ALT_Mobile
+Url: https://www.basealt.ru/alt-mobile
 
 BuildRequires(pre): rpm-macros-branding
 
@@ -242,6 +242,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Fri May 08 2026 Andrew Savchenko <bircoph@altlinux.org> 11.0.1-alt1
+- Update version for the bugfix release
+- Update os-release wrt wiki guidelines
+
 * Fri Jan 16 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
 - Remove phosh-settings/50-camera-privacy-disabled.gschema.override.
 
