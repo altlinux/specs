@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.4.2
+Version:        1.4.3
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -28,7 +28,7 @@ BuildRequires:  ffmpeg libavcodec-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libgif-devel libopencv-devel  libgomp-devel libopenmpt-devel libheif-devel libffms2-devel libavformat-devel libswscale-devel  libswresample-devel
 BuildRequires:  intltool
-BuildRequires:  libappstream-glib libgtksourceview4-devel libjxl-devel libxisf-devel libgit2-devel
+BuildRequires:  libappstream-glib libgtksourceview4-devel libjxl-devel libxisf-devel libgit2-devel libraw0-devel
 BuildRequires:  meson
 BuildRequires:  pkgconfig(cfitsio)
 BuildRequires:  pkgconfig(exiv2)
@@ -39,7 +39,7 @@ BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libconfig)
 BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(libpng)
-BuildRequires:  pkgconfig(libraw)
+#BuildRequires:  pkgconfig(libraw)
 BuildRequires:  pkgconfig(libtiff-4)
 #BuildRequires:  pkgconfig(rtprocess)
 #BuildRequires:  pkgconfig(opencv)
@@ -113,6 +113,10 @@ desktop-file-install \
 
 
 %changelog
+* Fri May 08 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.3-alt1
+- 1.4.3
+- Build with libraw0-devel (Closes: #58953)
+
 * Wed Feb 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
