@@ -2,7 +2,7 @@
 
 Name: libgif
 Version: 6.1.3
-Release: alt1
+Release: alt2
 
 Summary: A library for manipulating GIF format image files
 Group: System/Libraries
@@ -20,7 +20,7 @@ Source: %name-%version-%release.tar
 Summary: A library for manipulating GIF format image files
 Group: System/Libraries
 Provides: libgiflib_7 = %EVR
-Obsoletes: libgiflib_7 = %EVR
+Obsoletes: libgiflib_7 < %EVR
 
 %package devel
 Summary: Development tools for programs which will use the %name library
@@ -107,6 +107,9 @@ install -pm644 ChangeLog.bz2 \
 %endif
 
 %changelog
+* Thu May 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.3-alt2
+- libgif7: fixed Obsolete: for libgiflib_7 (ALT#59020).
+
 * Thu Apr 30 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.3-alt1
 - 4.1.6 -> 6.1.3.
 
