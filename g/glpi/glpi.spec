@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 11.0.5
+Version: 11.0.7
 Release: alt1
 
 Summary: IT and asset management software
@@ -176,8 +176,18 @@ fi
 %files php8.4
 
 %changelog
+* Sat May 09 2026 Pavel Zilke <zidex@altlinux.org> 11.0.7-alt1
+- New version 11.0.7
+- Security fixes:
+ + CVE-2026-32312 : Unauthorized export of form structure
+ + CVE-2026-42320 : Arbitrary files access
+ + CVE-2026-5385 : Stored XSS in knowledge base
+ + CVE-2026-40108 : Stored XSS in ITIL Costs
+ + CVE-2026-42318 : Arbitrary item deletion via planning
+ + CVE-2026-42317 : Arbitrary files deletion by technician
+
 * Tue Feb 03 2026 Pavel Zilke <zidex@altlinux.org> 11.0.5-alt1
-- New version 11.0.4
+- New version 11.0.5
 - Security fixes:
  + CVE-2026-23624 : Session stealing on externally authenticated user change
  + CVE-2026-22248 : Remote Code Execution via malicious upload
