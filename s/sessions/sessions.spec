@@ -2,8 +2,8 @@
 %define import_path github.com/pojntfx/sessions
 
 Name: sessions
-Version: 0.1.17
-Release: alt2
+Version: 0.1.18
+Release: alt1
 
 Summary: Focus with timed work intervals
 License: AGPL-3.0-or-later
@@ -103,6 +103,9 @@ popd
 %doc README.md
 
 %changelog
+* Fri May 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.18-alt1
+- 0.1.17 -> 0.1.18
+
 * Tue Apr 28 2026 Ilya Sorochan <k0tran@altlinux.org> 0.1.17-alt2
 - fix FTBFS on riscv64
 
