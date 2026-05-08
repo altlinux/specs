@@ -3,8 +3,8 @@
 %define soversion %(cmake -P %SOURCE1 %SOURCE2 2>&1)
 
 Name:          lib%_name
-Version:       0.1.0
-Release:       alt2
+Version:       0.1.1
+Release:       alt1
 Group:         System/Libraries
 Summary:       Library for alterator objects
 License:       LGPLv3+
@@ -67,7 +67,15 @@ Library for alterator objects development files.
 %_girdir/Alterator-1.0.gir
 %_vapidir/%_name.vapi
 
+%check
+cd src/tests
+../../%_cmake__builddir/src/tests/libalterator-glib-tests
+
 %changelog
+* Fri May 08 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Update version to 0.1.1.
+- Add test execution.
+
 * Sat Mar 14 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt2
 - Initial build for Sisyphus in accordance with shared libraries policy.
 - The project has been moved to the alterator organization on altlinux.space.
