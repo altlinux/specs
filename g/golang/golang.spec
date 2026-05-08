@@ -50,12 +50,12 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.26.2
+Version: 1.26.3
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
-URL:     http://golang.org/
+URL:     http://go.dev/
 
 Source0: golang-%version.tar
 Source1: golang-gdbinit
@@ -161,7 +161,7 @@ AutoReqProv: no
 Summary:   Golang compiler source tree
 Group:     Development/Other
 BuildArch: noarch
-AutoReq: noshell, noshebang
+AutoReq: noshell, noshebang, nocpp
 
 %description src
 %summary.
@@ -377,6 +377,22 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri May 08 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.3-alt1
+- updated from 1.26.2 to 1.26.3.
+- Fixes:
+  + CVE-2026-27142
+  + CVE-2026-33811
+  + CVE-2026-33814
+  + CVE-2026-39817
+  + CVE-2026-39819
+  + CVE-2026-39820
+  + CVE-2026-39823
+  + CVE-2026-39825
+  + CVE-2026-39826
+  + CVE-2026-39836
+  + CVE-2026-42499
+  + CVE-2026-42501
+
 * Fri Apr 10 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.2-alt1
 - updated from 1.26.1 to 1.26.2.
 - Fixes:
@@ -418,7 +434,8 @@ popd
 - 1.25.3.
 
 * Tue Oct 07 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.2-alt1
-- 1.25.2. Security Fixes:
+- 1.25.2.
+- Fixes:
   + CVE-2025-47912
   + CVE-2025-58183
   + CVE-2025-58185
@@ -878,7 +895,7 @@ popd
 * Fri Jun 14 2013 Alexey Gladkov <legion@altlinux.ru> 1.1-alt1
 - First build for ALTLinux.
 
-* Sat May 25 2013 Dan Horák <dan[at]danny.cz> - 1.1-3
+* Sat May 25 2013 Dan Horak <dan[at]danny.cz> - 1.1-3
 - set ExclusiveArch
 
 * Fri May 24 2013 Adam Goode <adam@spicenitz.org> - 1.1-2
