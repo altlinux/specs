@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri May 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.1-alt1
+- Add static license ALT_Server_License/11.2
+
 * Tue Oct 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt1
 - Prepare licenses for new product releases.
 - Fix typos in licenses (thx Alexey Ossotoff):
