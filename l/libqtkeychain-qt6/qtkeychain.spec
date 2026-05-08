@@ -1,5 +1,5 @@
 Name: libqtkeychain-qt6
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 %define _cmake__builddir BUILD
@@ -77,6 +77,9 @@ make -C BUILD install DESTDIR=%buildroot
 %_qt6_archdatadir/mkspecs/qt_Qt6Keychain.pri
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 0.16.0-alt1
+- new version
+
 * Wed Apr 23 2025 Sergey V Turchin <zerg@altlinux.org> 0.15.0-alt1
 - new version
 
