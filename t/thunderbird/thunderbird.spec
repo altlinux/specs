@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 150.0
+Version: 150.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -41,6 +41,7 @@ Patch005: 0005-Correction-of-the-Russian-translation.patch
 Patch006: 0006-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch007: 0007-Fix-OTR-query-message-split-on-newline-ALT-40934.patch
 Patch008: 0008-Fix-tasks-context-menu-disabled-state-ALT-58704.patch
+Patch009: 0009-Fix-FTBFS-encoding_rs-Rust-1.95.patch
 ### End Patches
 
 Provides: mailclient
@@ -178,6 +179,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch6 -p2
 %patch7 -p2
 %patch8 -p2
+%patch9 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -366,6 +368,14 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Fri May 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-7320: Information disclosure due to incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-7322: Memory safety bugs fixed in Thunderbird ESR 140.10.1 and Thunderbird 150.0.1
+  + CVE-2026-7323: Memory safety bugs fixed in Thunderbird ESR 140.10.1 and Thunderbird 150.0.1
+  + CVE-2026-7324: Memory safety bugs fixed in Thunderbird 150.0.1
+
 * Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0-alt1
 - New version.
 - Fixes:
