@@ -1,7 +1,8 @@
-%def_disable check
+%def_disable snapshot
+%def_enable check
 
 Name: gcovr
-Version: 5.2
+Version: 8.6
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
@@ -9,7 +10,13 @@ License: BSD-3-Clause
 Group: Development/Tools
 Url: https://pypi.python.org/pypi/gcovr
 
+Vcs: https://github.com/gcovr/gcovr.git
+
+%if_disabled snapshot
 Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -17,9 +24,14 @@ Requires: /usr/bin/gcov
 Requires: python3-module-jinja2 python3-module-Pygments
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: /usr/bin/gcov python3-module-pytest
-BuildRequires: python3-module-jinja2 python3-module-Pygments}
+BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling) python3(hatch-vcs) python3(hatch-fancy-pypi-readme)
+%{?_enable_check:
+BuildRequires: python3(pytest) python3(pytest_timeout) python3(pytest_cov)
+BuildRequires: python3(pytest_env) python3(pytest_check) python3(xdist) python3(nox)
+BuildRequires: /usr/bin/gcov gcc-c++ make cmake ninja-build
+BuildRequires: python3(lxml) python3(yaxmldiff)
+BuildRequires: python3(jinja2) python3(Pygments)}
 
 %description
 Gcovr provides a utility for managing the use of the GNU gcov utility
@@ -29,6 +41,7 @@ Python.
 
 %prep
 %setup
+#sed -i 's/--timeout=120//' pyproject.toml
 
 %build
 %pyproject_build
@@ -37,15 +50,17 @@ Python.
 %pyproject_install
 
 %check
-py.test-3
+%pyproject_run_pytest
 
 %files
-%_bindir/gcovr
+%_bindir/%name
 %python3_sitelibdir_noarch/%name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
-%doc README.rst PKG-INFO
 
 %changelog
+* Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 8.6-alt1
+- 8.6
+
 * Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
 - 5.2
 - ported to %%pyproject* macros
