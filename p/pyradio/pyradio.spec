@@ -2,7 +2,7 @@
 
 Name: %pypi_name
 Version: 0.9.3.11.31
-Release: alt1
+Release: alt2
 
 Summary: Command line internet radio player
 
@@ -21,7 +21,10 @@ Patch1: main-0.9.3.11.16-alt-fixes.patch
 Patch2: win-0.9.3.11.22-alt-linux.patch
 Patch3: config-0.9.3.11.16-alt-fixes.patch
 
-Requires: python3-module-psutil python3-module-dns mpv 
+Requires: python3-module-psutil python3-module-dns mpv
+# added dependencies for TTS funtion
+# https://bugzilla.altlinux.org/59027
+Requires: speech-dispatcher speech-dispatcher-utils espeak
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -58,6 +61,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat May 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.31-alt2
+- added dependencies for TTS funtion (ALT #59027)
+
 * Tue May 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.31-alt1
 - 0.9.3.11.30 -> 0.9.3.11.31
 
