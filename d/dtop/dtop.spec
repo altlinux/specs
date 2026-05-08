@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dtop
-Version: 0.7.2
+Version: 0.7.6
 Release: alt1
 Summary: Terminal dashboard for Docker monitoring across multiple hosts with Dozzle integration.
 License: MIT
@@ -45,6 +45,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri May 08 2026 Pavel Shilov <zerospirit@altlinux.org> 0.7.6-alt1
+- 0.7.2 -> 0.7.6
+
 * Fri Apr 10 2026 Pavel Shilov <zerospirit@altlinux.org> 0.7.2-alt1
 - 0.7.0 -> 0.7.2
 

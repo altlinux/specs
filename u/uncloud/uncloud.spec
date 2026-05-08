@@ -2,7 +2,7 @@
 %global import_path github.com/psviderski/uncloud
 
 Name: uncloud
-Version: 0.17.1
+Version: 0.19.0
 Release: alt1
 Summary: A lightweight tool for deploying and managing containerised applications across a network of Docker hosts.
 License: Apache-2.0
@@ -44,6 +44,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri May 08 2026 Pavel Shilov <zerospirit@altlinux.org> 0.19.0-alt1
+- 0.17.1 -> 0.19.0
+
 * Thu Mar 12 2026 Pavel Shilov <zerospirit@altlinux.org> 0.17.1-alt1
 - 0.16.0 -> 0.17.1
 
