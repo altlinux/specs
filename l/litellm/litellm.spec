@@ -1,11 +1,14 @@
 %global _unpackaged_files_terminate_build 1
 %define pypi_name litellm
 
-%def_with check
+# needs fsspec>=2023.5.0
+%def_without check
+
+%def_without proxy-extras
 
 Name: litellm
 Version: 1.81.13
-Release: alt1
+Release: alt2
 
 Summary: LiteLLM CLI and AI Gateway (Proxy Server) utilities
 Group: Development/Other
@@ -19,19 +22,26 @@ Requires: python3-module-%{pypi_name} = %version-%release
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_runtime_filter azure-storage-blob
+%add_pyproject_deps_runtime_filter litellm-enterprise
+%add_pyproject_deps_runtime_filter litellm-proxy-extras
+%add_pyproject_deps_runtime_filter mangum
+%add_pyproject_deps_runtime_filter polars
+%add_pyproject_deps_runtime_filter pyroscope-io
+%add_pyproject_deps_runtime_filter semantic-router
+%pyproject_runtimedeps_metadata_extra proxy
 
+BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%add_pyproject_deps_check_filter fastapi-sso
-%add_pyproject_deps_check_filter mangum
-%add_pyproject_deps_check_filter polars
-%add_pyproject_deps_check_filter semantic-router
-%add_pyproject_deps_check_filter litellm
+%add_pyproject_deps_check_filter fastapi-offline
+%add_pyproject_deps_check_filter langfuse
+%add_pyproject_deps_check_filter opentelemetry-exporter-otlp
+%add_pyproject_deps_check_filter pytest-postgresql
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-BuildRequires: python3-module-pyyaml
+BuildRequires: python3-module-huggingface-hub
 %endif
 
 %description
@@ -42,40 +52,64 @@ AI Gateway for a team or organization.
 Summary: Python SDK for unified integration with LLM providers
 Group: Development/Python3
 AutoReq: yes, nopython3
-AutoProv: yes
-%add_pyproject_deps_runtime_filter fastapi-sso
-%add_pyproject_deps_runtime_filter mangum
-%add_pyproject_deps_runtime_filter polars
-%add_pyproject_deps_runtime_filter semantic-router
 %pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra caching
 
 %description -n python3-module-%{pypi_name}
 LiteLLM Python SDK provides a single interface for 100+ LLM providers
 (OpenAI, Anthropic, Gemini, Bedrock, Azure, etc.) via OpenAI format.
 Use it for direct library integration in Python applications.
 
+%if_with proxy-extras
+%package proxy-extras
+Summary: Additional files for the LiteLLM Proxy
+Group: Development/Python3
+AutoReq: yes, nopython3
+
+%add_pyproject_deps_runtime_filter a2a-sdk
+%add_pyproject_deps_runtime_filter google-cloud-iam
+%add_pyproject_deps_runtime_filter google-cloud-kms
+%add_pyproject_deps_runtime_filter prisma
+%add_pyproject_deps_runtime_filter redisvl
+%add_pyproject_deps_runtime_filter resend
+%pyproject_runtimedeps_metadata_extra extra-proxy
+
+%description proxy-extras
+Additional files for the proxy. Reduces the size of the main litellm package.
+Currently, only stores the migration.sql files for litellm-proxy
+%endif
+
 %prep
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
 
+%if_with proxy-extras
+pushd litellm-proxy-extras
+%pyproject_build
+popd
+%endif
+
 %install
 %pyproject_install
+
+%if_with proxy-extras
+pushd litellm-proxy-extras
+%pyproject_install
+popd
+%endif
+
 # Exclude enterprise sources from OSS package payload.
 rm -rf %{buildroot}%{python3_sitelibdir}/enterprise
 
 %check
-%if_with check
-cd %{_builddir}/%name-%{version}
-# Upstream suite has many provider/integration tests requiring network
-# and external credentials. Run stable offline unit tests only.
-%pyproject_run_pytest -v -l --tb=short --maxfail=1 \
-    tests/test_litellm/test_uuid_helper.py \
-    tests/test_litellm/test_exception_exports.py
-%endif
+%tox_check_pyproject
 
 %files
 %doc README.md LICENSE ARCHITECTURE.md security.md
@@ -83,9 +117,18 @@ cd %{_builddir}/%name-%{version}
 %_bindir/litellm-proxy
 
 %files -n python3-module-%{pypi_name}
-%python3_sitelibdir/litellm/
+%python3_sitelibdir/litellm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
+%if_with proxy-extras
+%files proxy-extras
+%python3_sitelibdir/litellm_proxy_extras
+%python3_sitelibdir/litellm_proxy_extras-*.dist-info
+%endif
+
 %changelog
-* Tue Apr 02 2026 Matvey Pyanov <sen@altlinux.org> 1.81.13-alt1
+* Fri May 08 2026 Egor Ignatov <egori@altlinux.org> 1.81.13-alt2
+- Fix build and runtime dependencies (closes: #59002)
+
+* Thu Apr 02 2026 Matvey Pyanov <sen@altlinux.org> 1.81.13-alt1
 - Initial build for ALT Linux.
