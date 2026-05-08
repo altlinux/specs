@@ -2,7 +2,7 @@
 
 Name: botan
 Version: 3.11.1
-Release: alt1
+Release: alt2
 
 Summary: A C++ Crypto Library
 License: BSD-2-Clause
@@ -19,6 +19,9 @@ BuildRequires: gcc-c++
 BuildRequires: liblzma-devel bzlib-devel libtrousers-devel libtpm2-tss-devel zlib-devel libsqlite3-devel
 BuildRequires: boost-asio-devel boost-beast-devel
 BuildRequires: %_bindir/sphinx-build %_bindir/rst2man
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 Conflicts: libbotan-devel < 3
 
@@ -59,11 +62,17 @@ Python extensions for botan
 
 %prep
 %setup -n Botan-%version
+%ifarch %e2k
+touch src/build-data/arch/generic.txt
+%endif
 
 %build
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
 
 python3 ./configure.py \
+%ifarch %e2k
+	--cpu=generic --cc=clang \
+%endif
 	--prefix=%prefix \
 	--libdir=%_libdir \
 	--docdir=%_defaultdocdir \
@@ -112,6 +121,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Fri May 08 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.11.1-alt2
+- e2k build fix
+
 * Tue Apr 21 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 3.11.1-alt1
 - Initial build.
 
