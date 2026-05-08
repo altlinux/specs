@@ -4,14 +4,14 @@
 %define _name %__name-applet
 %define binary_name cosmic-applet-%__name
 %define rdn_name io.github.cosmic_utils.%_name
-%define ver_major 1.0
+%define ver_major 1.1
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Minimon COSMIC Applet
@@ -72,6 +72,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
