@@ -2,25 +2,25 @@
 
 %global _unpackaged_files_terminate_build 1
 
-Name:		telegraf
-Version:	1.35.3
-Release:	alt1
-Summary:	The plugin-driven server agent for collecting and reporting metrics
+Name: telegraf
+Version: 1.38.3
+Release: alt1
+Summary: The plugin-driven server agent for collecting and reporting metrics
 
-Group:		Development/Other
-License:	MIT
-URL:		https://github.com/influxdata/telegraf
+Group: Development/Other
+License: MIT
+URL: https://github.com/influxdata/telegraf
 
-Source0:	%name-%version.tar
+Source0: %name-%version.tar
 
 Source101: telegraf.logrotate
 Source102: telegraf.init
 Source103: telegraf.service
 Source104: telegraf.tmpfiles
 
-ExclusiveArch:  %go_arches
+ExcludeArch: %arm %ix86 %mips32
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.0
+BuildRequires: rpm-build-golang golang >= 1.26.0
 
 %description
 Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics.
@@ -52,20 +52,15 @@ export INTERNAL_PKG=%import_path/internal
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
-%ifarch %ix86
-export CGO_ENABLED=1
-%else
 export CGO_ENABLED=0
-%endif
+export GOFLAGS="-p=4"
 
-go install -ldflags " \
+go install \
+    -ldflags " \
     -X $INTERNAL_PKG.Version=$VERSION \
     -X $INTERNAL_PKG.Commit=$COMMIT \
     -X $INTERNAL_PKG.Branch=$BRANCH \
-%ifarch %arm %ix86 %mips32
-    -w -s \
-%endif
-    " -a ./cmd/telegraf
+    " ./cmd/telegraf
 popd
 
 $BUILDDIR/bin/telegraf config > etc/telegraf.conf
@@ -119,6 +114,10 @@ usermod -a -G proc telegraf ||:
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu May 07 2026 Alexey Shabalin <shaba@altlinux.org> 1.38.3-alt1
+- updated from 1.35.3 to 1.38.3.
+- exclude 32 bit arches.
+
 * Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 1.35.3-alt1
 - 1.35.3.
 
