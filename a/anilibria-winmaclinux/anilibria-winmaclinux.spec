@@ -1,11 +1,11 @@
 %define oname tv.aniliberty.AniLiberty
 
 Name: anilibria-winmaclinux
-Version: 2.2.35
+Version: 2.2.36
 Release: alt1
 
-Summary: AniLibria online video player for desktop platforms
-Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
+Summary: AniLiberty.Qt cross platform desktop client
+Summary(ru_RU.UTF-8): AniLiberty.Qt — кроссплатформенный настольный клиент
 License: GPL-3.0-only
 Group: Video
 Url: https://github.com/anilibria/anilibria-winmaclinux
@@ -31,11 +31,11 @@ BuildRequires: mpvqt6-devel
 
 %description
 Linux\Windows\Mac client for online viewing of cartoons and animated films
-from a group of well-known fandabers AniLibria.
+from a group of well-known fandabers AniLiberty.
 
 %description -l ru_RU.UTF-8
 Linux\Windows\Mac клиент для онлайн просмотра мультфильмов и анимационных
-фильмов от группы известных фандаберов AniLibria.
+фильмов от группы известных фандаберов AniLiberty.
 
 %prep
 %setup
@@ -60,6 +60,10 @@ popd
 %_iconsdir/hicolor/*/apps/aniliberty.png
 
 %changelog
+* Fri May 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.2.36-alt1
+- 2.2.35 -> 2.2.36
+- changed summary && description
+
 * Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.2.35-alt1
 - 2.2.27 -> 2.2.35 (ALT #47213)
 - build with Qt6
