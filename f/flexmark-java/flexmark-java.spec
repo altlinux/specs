@@ -1,12 +1,6 @@
-%global with_tests %nil
-
-%ifarch %ix86
-%global with_tests -f
-%endif
-
 Name:           flexmark-java
 Version:        0.64.6
-Release:        alt1
+Release:        alt2
 
 Summary:        CommonMark/Markdown Java parser with source level AST
 License:        BSD-2-Clause
@@ -454,7 +448,9 @@ rm flexmark-integration-test/src/test/java/com/vladsch/flexmark/integration/test
 %pom_remove_dep :flexmark-pdf-converter flexmark-all
 
 %build
-%mvn_build -s %with_tests
+# Deep recursion is called in the tests, so We have to
+# increase the stack size to avoid StackOverFlow on i586
+MAVEN_OPTS="-Xss2m" %mvn_build -s
 
 %install
 %mvn_install
@@ -576,5 +572,8 @@ done
 %files youtrack-converter -f .mfiles-flexmark-youtrack-converter
 
 %changelog
+* Thu May 07 2026 Arseniy Kostevich <faux@altlinux.org> 0.64.6-alt2
+- Fixed FTBFS: Increased stack size and enabled tests for all arches.
+
 * Sun Apr 05 2026 Evgeniy Serov <scala@altlinux.org> 0.64.6-alt1
 - Initial build for Sisyphus.
