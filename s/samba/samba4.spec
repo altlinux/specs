@@ -128,8 +128,8 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.22.8
-Release: alt3
+Version: 4.22.9
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2376,6 +2376,15 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri May 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.9-alt1
+- Update to security release of Samba 4.22
+- Major changes from upstream:
+  + Kerberos Authentication: Fixed a critical regression from version 4.22.8
+    where use-kerberos=desired failed, causing authentication errors for Windows
+    clients.
+  + Memory Management: Prevented unbounded memory growth in rpc_worker by
+    assigning unique in-memory keytabs per client during long-lived connections.
+
 * Fri Mar 27 2026 Vladimir Rubanov <august@altlinux.org> 4.22.8-alt3
 - third_party:heimdal:lib:roken: allow large fragmented UDP replies (thx Ivan Korytov)
 - Add server management commands.
