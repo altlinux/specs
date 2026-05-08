@@ -2,7 +2,7 @@
 %def_with check
 
 Name: nwg-look
-Version: 1.0.6
+Version: 1.1.1
 Release: alt1
 
 Summary: GTK3 settings editor adapted to work in the wlroots environment
@@ -53,6 +53,9 @@ rm %buildroot%_datadir/licenses/nwg-look/LICENSE
 %_pixmapsdir/nwg-look.svg
 
 %changelog
+* Fri May 08 2026 Egor Ignatov <egori@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Wed Jun 25 2025 Egor Ignatov <egori@altlinux.org> 1.0.6-alt1
 - New version 1.0.6.
 
