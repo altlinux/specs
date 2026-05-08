@@ -3,7 +3,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: hubble-ui
-Version: 0.13.3
+Version: 0.13.5
 Release: alt1
 Summary: Hubble UI is an open-source user interface for Cilium Hubble
 License: Apache-2.0
@@ -65,5 +65,8 @@ mv -f %buildroot%_bindir/backend %buildroot%_bindir/%name-backend
 %_bindir/%name-backend
 
 %changelog
+* Wed Apr 29 2026 Nadezhda Fedorova <fedor@altlinux.org> 0.13.5-alt1
+- 0.13.3 -> 0.13.5.
+
 * Thu Oct 30 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.13.3-alt1
 - Initial build.
