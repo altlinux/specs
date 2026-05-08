@@ -1,5 +1,5 @@
 Name: accel-ppp
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
@@ -7,7 +7,6 @@ License: GPLv2
 Url: https://accel-ppp.org/
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-AutoProv: yes
 
 BuildRequires: cmake libpcre2-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
@@ -38,7 +37,6 @@ BuildArch: noarch
 
 %description -n kernel-source-%name
 Provide accel-ppp ipoe kernel module
-
 
 %prep
 %setup
@@ -72,8 +70,7 @@ install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
 install -pDm0644 alt-linux/%name.sysconfig	%buildroot%_sysconfdir/sysconfig/%name
 install -pDm0755 alt-linux/%name.init		%buildroot%_initdir/%name
 install -pDm0644 alt-linux/%name.logrotate	%buildroot%_sysconfdir/logrotate.d/%name
-install -pDm0644 contrib/accel-ppp.service	%buildroot%systemd_unitdir/%name.service
-mkdir -p %buildroot%_runtimedir/accel-ppp
+install -pDm0644 contrib/accel-ppp.service	%buildroot%_unitdir/%name.service
 
 mkdir -p %kernel_srcdir
 install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
@@ -88,23 +85,27 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %doc COPYING README CHANGELOG.md accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt docs/ipoe_radius.md docs/pppoe_radius.md
 %config(noreplace) %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
+%config %_sysconfdir/accel-ppp.conf.dist
 %config %_sysconfdir/logrotate.d/*
-%config(noreplace) %_tmpfilesdir/*
-%config(noreplace) %_sysconfdir/accel-ppp.conf.dist
-%systemd_unitdir/%name.service
-%_bindir/accel-cmd
-%_sbindir/accel-pppd
-%_libdir/%name
-%_datadir/accel-ppp/
-%_mandir/man1/accel-cmd*
-%_mandir/man5/accel-ppp.conf.5*
-%_runtimedir/accel-ppp/
-%_logdir/accel-ppp/
+%_tmpfilesdir/*
+%_unitdir/*
+%_bindir/*
+%_sbindir/*
+%_libdir/accel-ppp
+%_datadir/accel-ppp
+%_man1dir/*
+%_man5dir/*
+%_logdir/*
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri May 08 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt1
+- 1.14.1
+- /var/run/accel-ppp -> /run/accel-ppp
+- Cleanup spec
+
 * Mon Jan 26 2026 Alexei Takaseev <taf@altlinux.org> 1.14.0-alt1
 - 1.14.0
 

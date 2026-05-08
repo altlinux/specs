@@ -1,9 +1,9 @@
 %define module_name             accel-ppp
-%define module_version          1.14.0
+%define module_version          1.14.1
 %define module_release          alt1
 
 %define flavour		6.18
-%define karch	%ix86 x86_64 aarch64 ppc64le armh
+%define karch	%ix86 x86_64 aarch64 riscv64 loongarch64
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.18
@@ -65,6 +65,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 08 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt1
+- 1.14.1
 
 * Mon Jan 26 2026 Alexei Takaseev <taf@altlinux.org> 1.14.0-alt1
 - 1.14.0
