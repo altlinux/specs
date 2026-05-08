@@ -2,11 +2,11 @@
 %define nameL org.kde.kjournaldbrowser
 
 Name: kjournald
-Version: 26.04.0
+Version: 26.04.1
 Release: alt1
 
 Summary: Framework for interacting with systemd-journald
-License: CC0-1.0 and MIT and BSD-3-Clause and LGPL-2.1-or-later
+License: CC0-1.0 and MIT and BSD-3-Clause and LGPL-2.1-or-later and LGPL-3.0-or-later
 Group: Graphical desktop/KDE
 
 Url: https://apps.kde.org/ru/kjournaldbrowser
@@ -45,6 +45,10 @@ BuildRequires: kf6-kconfig-devel kf6-kirigami-devel kf6-kirigami-addons-devel
 %_datadir/qlogging-categories?/%name.categories
 
 %changelog
+* Fri May 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.04.1-alt1
+- 26.04.0 -> 26.04.1
+- changed license
+
 * Fri Apr 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.04.0-alt1
 - 25.12.3 -> 26.04.0
 
