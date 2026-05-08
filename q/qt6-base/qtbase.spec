@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.3
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -68,6 +68,7 @@ Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
 Patch202: qtbase-wayland-optimize-scroll-operations.patch
 Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
 Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
+Patch205: QTBUG-145310.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -414,6 +415,7 @@ Requires: %name-common
 %patch202 -p1
 %patch203 -p1
 %patch204 -p1
+%patch205 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -867,6 +869,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- add fix against QTBUG-145310
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
