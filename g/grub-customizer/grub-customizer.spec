@@ -1,5 +1,5 @@
 Name:    grub-customizer
-Version: 5.2.6
+Version: 5.2.8
 Release: alt1
 Summary: Grub Customizer is a graphical interface to configure the grub2/burg settings
 
@@ -13,16 +13,14 @@ Source2: %name-ru.po
 Patch1:  grub-customizer-alt-desktop-l10n.patch
 Patch2:  grub-customizer-alt-complete-i18n.patch
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 BuildRequires(pre): cmake
-BuildRequires:  ctest
-BuildRequires:  gcc-c++
-BuildRequires:  libgtkmm3-devel
-BuildRequires:  gettext
-BuildRequires:  libssl-devel
-BuildRequires:  libarchive-devel
-BuildRequires:  desktop-file-utils
+BuildRequires: ctest
+BuildRequires: gcc-c++
+BuildRequires: libgtkmm3-devel
+BuildRequires: gettext
+BuildRequires: libssl-devel
+BuildRequires: libarchive-devel
+BuildRequires: desktop-file-utils
 
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le loongarch64 riscv64
 
@@ -84,6 +82,9 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 %_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
 %changelog
+* Fri May 08 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.8-alt1
+- New version.
+
 * Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.6-alt1
 - New version.
 
