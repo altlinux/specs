@@ -4,7 +4,7 @@
 %define rdn_name io.github.lincity_ng.lincity-ng
 
 Name: lincity-ng
-Version: 2.14.2
+Version: 2.15.0
 Release: alt1
 
 Summary: LinCity-NG is a city simulation game
@@ -21,21 +21,23 @@ Source: https://github.com/lincity-ng/lincity-ng/archive/refs/tags/%name-%versio
 Source: %name-%version%prerel.tar
 %endif
 
+ExcludeArch: %ix86 armh
+
+%define sdl_ver 3.2.0
+
 Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: pkgconfig(sdl2)
-BuildRequires: pkgconfig(SDL2_gfx)
-BuildRequires: pkgconfig(SDL2_image)
-BuildRequires: pkgconfig(SDL2_mixer)
-BuildRequires: pkgconfig(SDL2_ttf)
+BuildRequires: pkgconfig(sdl3) >= %sdl_ver
+BuildRequires: pkgconfig(sdl3-image)
+BuildRequires: pkgconfig(sdl3-mixer)
+BuildRequires: pkgconfig(sdl3-ttf)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: libtiff-devel
-BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(physfs)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libxslt) xsltproc
@@ -100,18 +102,22 @@ subst 's/\.wav/.ogg/' %buildroot/%_datadir/%name/sounds/sounds.xml
 
 %find_lang %name
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_desktopdir/*
 
 %files data
 %_datadir/%name/*
+%_datadir/%name/locale/
 %_iconsdir/hicolor/*x*/apps/%rdn_name.*
 %_man6dir/%name.6*
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc %_pkgdocdir/
 
 %changelog
+* Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.15.0-alt1
+- 2.15.0 (ported to SDL3)
+
 * Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.14.2-alt1
 - 2.14.2
 

@@ -48,7 +48,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -261,6 +261,7 @@ sed -i "/package_c_args,/a '-O2'," src/bin/edje/epp/meson.build
 subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
 
 %build
+%add_optflags -std=gnu17
 %meson \
 	%{subst_enable_meson_bool x11 x11} \
 	%{subst_enable_meson_bool wayland wl} \
@@ -462,6 +463,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1.1
+- rebuilt with gcc-15 & -std=gnu17
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
 - 1.28.1
 

@@ -1,17 +1,19 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name glib-testing
 %define api_ver 0
 
 %def_enable check
 
 Name: lib%_name
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: GLib-based test library
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/pwithnall/libglib-testing
+
+Vcs: https://gitlab.gnome.org/pwithnall/libglib-testing.git
 
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.bz2
@@ -19,7 +21,7 @@ Source: %url/-/archive/%version/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.54
+%define glib_ver 2.84
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson pkgconfig(gio-2.0) >= %glib_ver gtk-doc
@@ -59,8 +61,7 @@ This package contains development documentation for the %name.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -75,6 +76,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - 0.1.1-4-g366dab0
 
