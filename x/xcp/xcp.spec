@@ -1,7 +1,7 @@
 %def_with check
 
 Name: xcp
-Version: 0.24.2
+Version: 0.24.8
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
@@ -53,6 +53,9 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %_bindir/%name
 
 %changelog
+* Sat May 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.8-alt1
+- Updated to version 0.24.8.
+
 * Sat Oct 25 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.2-alt1
 - Updated to version 0.24.2.
 
