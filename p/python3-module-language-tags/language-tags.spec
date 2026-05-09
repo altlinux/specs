@@ -1,9 +1,9 @@
 %define oname language_tags
 
-%def_without check
+%def_with check
 
 Name: python3-module-language-tags
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: This project is a Python version of the language-tags Javascript project
@@ -17,6 +17,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-fancy-pypi-readme
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 This Python API offers a way to validate and lookup languages tags.
@@ -28,19 +33,25 @@ registry.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat May 09 2026 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+- migrate to pyproject macros
+- build with check
+
 * Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
