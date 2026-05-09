@@ -5,7 +5,7 @@
 
 Name: xtail
 Version: 2.1
-Release: alt2
+Release: alt3
 Summary: Like "tail -f", but works on truncated files, directories, more
 Group: System/Base
 License: MIT
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -D_FORTIFY_SOURCE=3 -fstack-protector-strong -fstack-clash-protection
+%add_optflags %(getconf LFS_CFLAGS) -ftrivial-auto-var-init=zero
 %autoreconf
 %configure
 %make_build
@@ -38,6 +38,9 @@ mkdir -p %buildroot%_bindir %buildroot%_man1dir
 %_man1dir/xtail.*
 
 %changelog
+* Sat May 09 2026 Vitaly Chikunov <vt@altlinux.org> 2.1-alt3
+- spec: Fix FTBFS with gcc-15.
+
 * Wed Dec 25 2024 Vitaly Chikunov <vt@altlinux.org> 2.1-alt2
 - Update to debian/2.1-11 (2024-12-25) which only fixes compilation warnings.
 
