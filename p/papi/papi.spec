@@ -5,7 +5,7 @@
 %define optflags_lto %nil
 
 Name: papi
-Version: 7.1.0
+Version: 7.2.0
 Release: alt1
 Summary: Performance Application Programming Interface
 License: BSD-3-Clause
@@ -66,11 +66,14 @@ This package contains development files of PAPI.
 %ifarch %e2k
 %patch2000 -p2
 %endif
+find -name '*.py' -print0 | xargs -0t sed -i '1s|#!.*/bin/env python.*|#!%__python3|'
 
 %build
 cd src
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
+# Misdetects gfortran if left with x86_64-alt-linux-gfortran.
+export F77=gfortran
 %configure \
 	--with-components="appio coretemp infiniband io lmsensors net powercap rapl sde stealtime" \
 	--with-perf-events \
@@ -141,6 +144,11 @@ set -x
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat May 09 2026 Vitaly Chikunov <vt@altlinux.org> 7.2.0-alt1
+- Update to papi-7-2-0-t (2025-06-25).
+- This update also fixes FTBFS with gcc-15.
+- spec: ALT spec is moved into .gear/papi.spec out of the upstream way.
+
 * Sun Dec 22 2024 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt1
 - Update to papi-7-1-0-t (2023-12-20).
 - spec: Change packaging from tar import to git.
