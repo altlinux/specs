@@ -3,13 +3,12 @@
 
 Name: libsndfile
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://libsndfile.github.io/libsndfile
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Vcs: https://github.com/libsndfile/libsndfile.git
 
@@ -19,6 +18,10 @@ Source: https://github.com/libsndfile/libsndfile/releases/download/%version/%nam
 Source: %name-%version.tar
 %endif
 Patch0: libsndfile-1.1.0+-fc-system-gsm.patch
+# tests failed with opus >= 1.6
+# https://github.com/libsndfile/libsndfile/issues/1107
+# https://src.fedoraproject.org/rpms/libsndfile/blob/rawhide/f/libsndfile-1.2.2-tests-opus.patch
+Patch10: libsndfile-1.2.2-fc-tests-opus.patch
 
 BuildRequires: gcc-c++ autogen python3
 BuildRequires: libalsa-devel libflac-devel libsqlite3-devel
@@ -57,6 +60,7 @@ This package contains utilities for %name
 %prep
 %setup
 %patch0 -p1 -b .system-gsm
+%patch10 -p1
 rm -r src/GSM610
 
 %build
@@ -96,6 +100,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*.1*
 
 %changelog
+* Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
+- updated to 1.2.2-53-g68f6c16f
+- avoid tests failed with opus-1.6
+
 * Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - updated to 1.2.2-50-gea9ff560 (fixed CVE-2022-33065)
 

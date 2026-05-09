@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -30,17 +30,17 @@ ExcludeArch: %ix86 armh
 %define gtk_ver 4.10.0
 %define adw_ver 1.2
 %define pw_ver 0.3.83
-%define wp_ver 0.4.16
+%define wp_ver 0.5.11
 
 Requires: wireplumber >= %wp_ver
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo
+BuildRequires: meson rust-cargo blueprint-compiler
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libpipewire-0.3)
-BuildRequires: pkgconfig(wireplumber-0.4)
+BuildRequires: pkgconfig(wireplumber-0.5)
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
 
 # for bindgen
@@ -88,6 +88,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
