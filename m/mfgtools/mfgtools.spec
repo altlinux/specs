@@ -1,12 +1,12 @@
 Name: mfgtools
-Version: 1.5.179
+Version: 1.5.243
 Release: alt1
 
 Summary: Freescale/NXP I.MX Chip image deploy tools
 License: BSD
 Group: System/Kernel and hardware
 
-Url: https://github.com/nxp-imx/mfgtools
+Url: https://github.com/NXPmicro/mfgtools
 Source: %name.tar
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
@@ -60,6 +60,9 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="014b", TAG+="uacce
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="014e", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0159", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="015d", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="015c", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0027", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0028", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0076", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0054", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0061", TAG+="uaccess"
@@ -93,6 +96,11 @@ EOT
 %_udevrulesdir/*
 
 %changelog
+* Sat May 09 2026 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.243-alt1
+- updated to 1.5.243
+- upstream URL update
+- udev rules update
+
 * Wed Apr 24 2024 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.179-alt1
 - updated to 1.5.179
 
