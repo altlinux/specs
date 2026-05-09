@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.86
+%define kernel_sublevel	.87
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -596,6 +596,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri May 08 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.87-alt1
+- v6.12.87 (2026-05-08).
+
 * Thu May 07 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.86-alt1
 - v6.12.86 (2026-05-07).
 - config: Enable platform and machine keyrings.
