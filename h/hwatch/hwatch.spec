@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: hwatch
-Version: 0.4.0
+Version: 0.4.2
 Release: alt1
 Summary: Alternative watch command
 License: MIT
@@ -43,5 +43,8 @@ install -Dm 0644 completion/zsh/_hwatch %buildroot/%_datadir/zsh/site-functions/
 %doc LICENSE
 
 %changelog
+* Sat May 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.2-alt1
+- Updated to version 0.4.2.
+
 * Sun Apr 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.0-alt1
 - Initial build for ALT.
