@@ -1,7 +1,7 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.6.9
+Version: 0.7.1
 Release: alt1
 
 Summary: An open-source Shazam client for Linux.
@@ -45,9 +45,9 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/RustAudio/cpal.git?rev=509e5bb"]
+[source."git+https://github.com/RustAudio/cpal.git?rev=bce156d"]
 git = "https://github.com/RustAudio/cpal.git"
-rev = "509e5bb"
+rev = "bce156d"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -67,7 +67,7 @@ install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.s
 install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
 install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
-for locale in fr_FR nl it pl es ja ca cs_CZ de_DE ko_KR sk_SK pt_BR ru ar tr; do
+for locale in fr_FR nl it pl es ja ca cs_CZ de_DE ko_KR sk_SK pt_BR ru ar tr oc; do
  install -Dm 0644 translations/locale/${locale}/LC_MESSAGES/%name.mo \
  %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%name.mo
 done
@@ -82,6 +82,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Sun May 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
+- 0.6.9 -> 0.7.1
+
 * Mon Apr 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt1
 - 0.6.8 -> 0.6.9
 
