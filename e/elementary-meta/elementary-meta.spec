@@ -1,6 +1,6 @@
 Name: elementary-meta
 Version: 1.565
-Release: alt1
+Release: alt2
 
 Summary: Seeds and Metapackages used in elementary OS
 License: GPL-2.0-or-later
@@ -387,7 +387,8 @@ Requires: /usr/bin/io.elementary.dock
 Requires: /usr/bin/touchegg
 
 # # deb Recommends from noble git-branch
-# Requires: # deb: slingshot-launcher # TODO, FIXME - FTBFS
+# Requires: # deb: slingshot-launcher
+Requires: elementary-applications-menu
 
 %description -n pantheon-shell
 Pantheon Shell is a modern and modular DE-independent desktop shell
@@ -539,5 +540,8 @@ elementary OS.
 %files -n elementary-sdk
 
 %changelog
+* Sat May 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.565-alt2
+- Require elementary-applications-menu.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.565-alt1
 - Initial build for Sisyphus
