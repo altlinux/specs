@@ -6,7 +6,7 @@
 
 Name:		rr
 Version: 5.9.0
-Release: alt1
+Release: alt2
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -129,6 +129,9 @@ file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug
 %files checkinstall
 
 %changelog
+* Sat May 09 2026 Vitaly Chikunov <vt@altlinux.org> 5.9.0-alt2
+- Fix FTBFS with gcc-15.
+
 * Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 5.9.0-alt1
 - Update to 5.9.0 (2025-02-13).
 
