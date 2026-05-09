@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 8.4.2
+%define grass_version 8.5.0
 %def_enable grass
 %def_enable python
 %def_enable devel
@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -430,6 +430,9 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %endif
 
 %changelog
+* Sat May 09 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt2
+- Rebuilt with grass 8.5.0.
+
 * Fri May 01 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt1
 - New version.
 

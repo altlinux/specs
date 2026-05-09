@@ -1,9 +1,9 @@
-%define shortver 84
-%define libver 8.4
+%define shortver 85
+%define libver 8.5
 
 Name:    grass
-Version: 8.4.2
-Release: alt2
+Version: 8.5.0
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -328,6 +328,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat May 09 2026 Andrey Cherepanov <cas@altlinux.org> 8.5.0-alt1
+- New version.
+
 * Tue Mar 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 8.4.2-alt2
 - Update demolocation map.
 
