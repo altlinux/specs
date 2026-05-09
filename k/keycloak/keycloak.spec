@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.5.7
+Version: 26.6.1
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -24,6 +24,8 @@ Patch3: 0001-Exclude-base-theme-from-settings.patch
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-devel
 BuildRequires: maven-local
+# For kiota
+BuildRequires: libicu
 
 Requires: java-21-openjdk
 Requires(post): cert-sh-functions
@@ -40,12 +42,18 @@ fine-grained authorization, and more.
 test -d ~/.m2 && rm -rf ~/.m2
 test -d js/node_modules && rm -rf js/{node,node_modules}
 tar xf %SOURCE2 -C ~
-tar xf %SOURCE3
 %pom_disable_module test-framework
 %pom_disable_module tests
+# Unpack node modules
+tar xf %SOURCE3
+mkdir -p js/libs/keycloak-admin-client/.kiota/v1.31.1
+cp js/kiota-binary/kiota js/libs/keycloak-admin-client/.kiota/v1.31.1
 
 %build
 #mvn -pl quarkus/deployment,quarkus/dist -am -DskipTests clean install
+#export KIOTA_SKIP_VERSION_CHECK=true
+#export KIOTA_DOWNLOAD_DIR="$PWD/js/kiota-binary"
+export KIOTA_VERSION=v1.31.1
 pushd quarkus
 mvn -f ../pom.xml clean install -am -DskipTestsuite -DskipExamples -DskipTests -DskipProtoLock=true
 popd
@@ -105,6 +113,12 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Mon Apr 20 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.1-alt1
+- New version (fixes: CVE-2026-4366, CVE-2026-4633).
+
+* Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.0-alt1
+- New version.
+
 * Fri Apr 03 2026 Andrey Cherepanov <cas@altlinux.org> 26.5.7-alt1
 - New version (fixes: CVE-2025-14083, CVE-2026-1002, CVE-2026-3429,
   CVE-2026-4634, CVE-2026-4636, CVE-2026-3872, CVE-2026-4282).
