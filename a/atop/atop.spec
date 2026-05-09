@@ -6,12 +6,15 @@
 
 Name: atop
 Version: 2.12.1
-Release: alt1
+Release: alt2
+
 Summary: AT Computing's System & Process Monitor
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Monitoring
-URL: https://www.atoptool.nl
-# Source-url: https://www.atoptool.nl/download/atop-%version.tar.gz
+
+Url: https://www.atoptool.nl
+Vcs: https://github.com/Atoptool/atop.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -40,7 +43,6 @@ format for long-term analysis.
 # fix build with glib2-devel
 export C_INCLUDE_PATH=%_libdir/glib-2.0/include:%_includedir/glib-2.0/glib:%_includedir/glib-2.0:%_includedir/json-c:$C_INCLUDE_PATH
 %make_build CFLAGS="%optflags"
-gzip -c9 ChangeLog > ChangeLog.gz
 
 %install
 mkdir -p %buildroot/usr/lib/pm-utils/sleep.d %buildroot%_sysconfdir/default
@@ -56,7 +58,7 @@ done
 %preun_service %name ||:
 
 %files
-%doc ChangeLog.* README
+%doc README README.md AUTHORS
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
 %config(noreplace) %_sysconfdir/default/%name
 %_bindir/*
@@ -75,6 +77,9 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Fri May 08 2026 Ulysses Apokin <ulysses@altlinux.org> 2.12.1-alt2
+- Fix Time-of-Check to Time-of-Use error.
+
 * Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.12.1-alt1
 - atop 2.12.1
 
