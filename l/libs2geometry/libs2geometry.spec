@@ -19,7 +19,7 @@ ExcludeArch: i586
 %def_enable check
 
 Name: libs2geometry
-Version: 0.12.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Computational geometry and spatial indexing on the sphere
@@ -29,7 +29,8 @@ URL: http://s2geometry.io
 VCS: https://github.com/google/s2geometry.git
 
 Source: %name-%version.tar
-Patch0: libs2geometry-0.12.0-alt-use-external-gtest.patch
+Patch0: libs2geometry-0.14.0-alt-use-external-gtest.patch
+Patch1: libs2geometry-0.14.0-alt-update-version-num.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -40,6 +41,7 @@ BuildRequires: libssl-devel
 %if_enabled check
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
+BuildRequires: libbenchmark-devel
 BuildRequires: ctest
 %endif
 
@@ -73,6 +75,7 @@ Development libraries and headers for %name.
 %setup
 %if_enabled check
 %patch0 -p1
+%patch1 -p1
 %endif
 
 %build
@@ -88,6 +91,8 @@ Development libraries and headers for %name.
 
 %install
 %cmake_install
+
+rm %buildroot%_libdir/libs2testing.a
 
 %check
 ctest --test-dir %_cmake__builddir \
@@ -105,5 +110,8 @@ ctest --test-dir %_cmake__builddir \
 %_datadir/s2/
 
 %changelog
+* Fri May 08 2026 Egor Shestakov <ved@altlinux.org> 0.14.0-alt1
+- Fix linkage with a new libabseil-cpp.
+
 * Tue Oct 14 2025 Egor Shestakov <ved@altlinux.org> 0.12.0-alt1
 - Initial build (thnx thatman@ for prototype).
