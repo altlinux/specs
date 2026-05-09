@@ -11,7 +11,7 @@
 
 Name: manifold
 Version: 3.3.2
-Release: alt1
+Release: alt2
 Summary: Geometry library for topological robustness
 License: Apache-2.0
 Group: System/Libraries
@@ -96,7 +96,7 @@ Python3 module for %name
 %if_with python
 	-DMANIFOLD_PYBIND=ON \
 %endif
-%ifarch %ix86
+%ifarch %ix86 %e2k
 	-DMANIFOLD_STRICT=OFF \
 %endif
 	-DMANIFOLD_DOWNLOADS=OFF \
@@ -122,6 +122,9 @@ Python3 module for %name
 %endif
 
 %changelog
+* Sat May 09 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.2-alt2
+- e2k build fix
+
 * Thu Nov 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt1
 - 3.3.2.
 - enable python bindings.
