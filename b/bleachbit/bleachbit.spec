@@ -1,17 +1,16 @@
-Name:     bleachbit
-Version:  5.1.0
-Release:  alt1
+Name:    bleachbit
+Version: 6.0.0
+Release: alt1
 
-Summary:  Remove unnecessary files, free space, and maintain privacy
-License:  GPL-3.0+
-Group:    Archiving/Other
-URL:      http://www.bleachbit.org/
+Summary: Remove unnecessary files, free space, and maintain privacy
+License: GPL-3.0+
+Group:   Archiving/Other
+URL:     http://www.bleachbit.org/
+VCS:     https://github.com/bleachbit/bleachbit/
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Source0:  %name-%version.tar
-Patch1:   %name-apt-rpm-specific.patch
-Patch2:   %name-alt-reasonable-config.patch
+Source0: %name-%version.tar
+Patch1:  %name-apt-rpm-specific.patch
+Patch2:  %name-alt-reasonable-config.patch
 
 BuildArch: noarch
 
@@ -73,6 +72,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Sat May 09 2026 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
 - New version.
 
