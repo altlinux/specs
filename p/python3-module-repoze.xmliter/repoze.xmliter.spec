@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0
+Version: 2.0
 Release: alt1
 
 Summary: Wrapper for lxml trees which serializes to string upon iteration
@@ -15,7 +15,6 @@ Vcs: https://github.com/repoze/repoze.xmliter
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -43,7 +42,6 @@ needless XML parsing and serialization.
 
 %install
 %pyproject_install
-%python3_prune
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -54,13 +52,16 @@ rm -fv %buildroot%python3_sitelibdir/repoze/xmliter/tests.py
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m unittest discover -v
+python3 -m unittest src/repoze/xmliter/tests.py
 
 %files
 %doc *.txt
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 09 2026 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
+- new version 2.0
+
 * Fri Oct 31 2025 Anton Vyatkin <toni@altlinux.org> 1.0-alt1
 - new version 1.0
 
