@@ -1,5 +1,5 @@
 Name: nedit
-Version: 5.7
+Version: 5.8
 #%%define rc_ver RC2
 Release: alt1
 %define srcname %name-%version%{?rc_ver:%rc_ver}%{?!rc_ver:-src}
@@ -41,7 +41,7 @@ who needs to edit text.
 %prep
 %setup %{?rc_ver:-n %srcname}
 %patch0 -p1 -b .security
-%patch1 -p1 -b .c89
+#patch1 -p1 -b .c89
 %patch2 -p1 -b .makefiles
 %patch3 -p1 -b .utf8
 %patch5 -p1 -b .nc-manfix
@@ -95,6 +95,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %doc README ReleaseNotes doc/NEdit.ad doc/*
 
 %changelog
+* Sun May 10 2026 Ilya Mashkin <oddity@altlinux.ru> 5.8-alt1
+- 5.8
+
 * Sat Mar 13 2021 Ilya Mashkin <oddity@altlinux.ru> 5.7-alt1
 - 5.7
 
