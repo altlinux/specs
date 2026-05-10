@@ -3,7 +3,7 @@
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: KleverNotes is a note taking and management application
@@ -51,12 +51,12 @@ tar -xf %SOURCE1 -C po/
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/locale/*/LC_MESSAGES/%name.mo
 %_datadir/metainfo/%nameU.metainfo.xml
-%exclude %_libdir/cmake
-%exclude %_includedir/md4qt
-%_libdir/libmd4qt.a
 %doc *.md 
 
 %changelog
+* Mon May 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1
+
 * Tue Apr 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
 - 1.2.5 -> 1.3.0
 
