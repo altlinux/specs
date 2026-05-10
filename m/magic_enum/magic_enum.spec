@@ -1,5 +1,5 @@
 Name: magic_enum
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Magic Enum C++
@@ -50,5 +50,8 @@ anyenum type without any macro or boilerplate code.
 %_datadir/%name
 
 %changelog
+* Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.8-alt1
+- New version 0.9.8.
+
 * Fri Jul 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.9.7-alt1
 - Initial build for ALT Linux
