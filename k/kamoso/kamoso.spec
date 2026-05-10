@@ -1,7 +1,7 @@
 %define rname kamoso
 
 Name:    %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 
 Group:   Video
@@ -78,6 +78,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_K6notif/%rname.notifyrc
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

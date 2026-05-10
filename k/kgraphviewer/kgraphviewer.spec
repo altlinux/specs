@@ -4,8 +4,8 @@
 %define libkgraphviewer libkgraphviewer%sover
 
 Name: %rname
-Version: 25.12.3
-Release: alt3
+Version: 26.04.1
+Release: alt1
 
 Group: Publishing
 Summary: GraphViz dot graph viewer
@@ -99,6 +99,9 @@ desktop-file-install \
 %_K6link/lib*.so
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt3
 - update requires
 

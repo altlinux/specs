@@ -1,8 +1,8 @@
 %define rname yakuake
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.1
+Release: alt1
 %K6init
 
 Summary: Very powerful Quake style terminal emulator
@@ -52,9 +52,9 @@ BuildRequires: kf6-kxmlgui-devel
 BuildRequires: kf6-purpose-devel
 BuildRequires: kf6-solid-devel
 BuildRequires: kf6-sonnet-devel
-BuildRequires: plasma6-kwayland-devel
-BuildRequires: qt6-declarative-devel
-BuildRequires: qt6-svg-devel
+BuildRequires: plasma6-kwayland-devel plasma-wayland-protocols
+BuildRequires: qt6-declarative-devel qt6-svg-devel
+BuildRequires: libxcbutil-devel
 
 %description
 Yakuake is a drop-down terminal emulator based on KDE Konsole technology.
@@ -81,6 +81,9 @@ Yakuake is a drop-down terminal emulator based on KDE Konsole technology.
 %_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Tue Apr 21 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - udpate packaging
 

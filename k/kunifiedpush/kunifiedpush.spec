@@ -8,7 +8,7 @@
 %define libkunifiedpush libkunifiedpush%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel qt6-websockets-devel
 BuildRequires: kf6-kcmutils-devel kf6-kcolorscheme-devel kf6-kconfigwidgets-devel kf6-ki18n-devel kf6-kservice-devel kf6-solid-devel
+BuildRequires: kf6-kcrash-devel
 
 %description
 UnifiedPush client library and service.
@@ -93,6 +94,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKUnifiedPush.so.*
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname massif-visualizer
 
 Name: %rname
-Version: 25.12.3
-Release: alt3
+Version: 26.04.1
+Release: alt1
 
 Group: Development/Other
 Summary: Tool for visualizing memory usage recorded by Valgrind Massif
@@ -69,6 +69,9 @@ rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 %_man1dir/%rname.*
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Wed Apr 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt3
 - fix requires
 
