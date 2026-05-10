@@ -2,10 +2,11 @@
 %def_enable unicode
 %def_enable taskstats
 %def_enable sensors
+%def_enable hwloc
 
 Name: htop
-Version: 3.4.1
-Release: alt1
+Version: 3.5.1
+Release: alt5
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -19,7 +20,8 @@ Patch: htop-3.0.5-alt-colorscheme.patch
 BuildRequires: libncursesw-devel
 BuildRequires: python3
 BuildRequires: /proc
-BuildRequires: libsensors3-devel 
+BuildRequires: libsensors3-devel libcap-devel libnl-devel libtool libhwloc-devel
+BuildRequires: gcc libnvidia-ml libdrm-devel
 %{?!_with_bootstrap:BuildRequires: ImageMagick-tools}
 
 %define rman1dir %_mandir/ru/man1
@@ -68,12 +70,19 @@ Dektop files for %name
 #sed -i 's|#!/usr/bin/env python|#!/usr/bin/python2|' scripts/MakeHeader.py
 
 %build
-%autoreconf
-%configure -C \
+
+./autogen.sh
+#autoreconf -vfi
+
+%configure \
 	%{subst_enable openvz} \
 	%{subst_enable unicode} \
 	%{subst_enable taskstats} \
-	%{subst_enable sensors}
+	%{subst_enable hwloc} \
+	%{subst_enable sensors} \
+	--enable-delayacct \
+	--enable-capabilities
+
 %make_build
 
 %install
@@ -102,6 +111,30 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Sun May 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt5
+- Add missing man
+
+* Sun May 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt4
+- Cleanup source tree
+
+* Sun May 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt3
+- Fix build
+
+* Wed Apr 29 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt2
+- GPU monitoring added
+
+* Wed Apr 29 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt1
+- 3.5.1
+
+* Thu Apr 16 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt3
+- Enable hwloc
+
+* Fri Apr 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt2
+- Update Reqs
+
+* Fri Apr 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt1
+- 3.5.0
+
 * Sun Apr 13 2025 Ilya Mashkin <oddity@altlinux.ru> 3.4.1-alt1
 - 3.4.1
 
