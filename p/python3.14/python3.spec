@@ -22,6 +22,11 @@
 # Grenka, unset this macro (remove the line bellow) if you build the main one python3
 %define _python3_standalone .%submajor
 
+# Convert standalone name to the main one
+# List of subpackages to be checked
+%global _check_list %{nil}
+%global extend_check_list() %global _check_list %{_check_list} %*
+
 
 %global pyabi %nil
 
@@ -101,7 +106,11 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3%{?_python3_standalone}
 Version: %{pybasever}.4
-Release: alt1
+Release: alt2
+
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name
+%endif
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -238,6 +247,9 @@ Obsoletes: %python3_sitebasename-site-packages
 # Make sure that a matching rpm-build-python3 is installed if installed.
 # (After 3.6.8-alt1, the actual Requires is present only in the dev subpkg.)
 Conflicts: rpm-build-python3 < 0.1.9
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-base
+%endif
 
 %description base
 This package contains files used to embed Python 3 into applications.
@@ -258,6 +270,10 @@ Provides: lib%name-devel = %EVR
 
 Provides: python3%{?_python3_standalone:-standalone}-devel = %pybasever
 
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-dev
+%endif
+
 %description dev
 This package contains libraries and header files used to build applications
 with and native libraries for Python 3
@@ -266,6 +282,10 @@ with and native libraries for Python 3
 Summary: Python3 shared library
 Group: Development/Python3
 Requires: %name-base = %EVR
+
+%if 0%{?_python3_standalone:1}
+    %extend_check_list libpython3%{?_python3_standalone}
+%endif
 
 %description -n libpython3%{?_python3_standalone}
 This package contains Python3 shared library
@@ -279,6 +299,10 @@ Requires: %name-modules-curses = %EVR
 
 %add_python3_self_prov_path %buildroot%tool_dir/clinic/libclinic
 
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-tools
+%endif
+
 %description tools
 This package contains several tools included with Python 3
 
@@ -289,6 +313,10 @@ Provides: %name-modules-idlelib = %EVR
 Obsoletes: %name-modules-idlelib < 3.3.1-alt4
 Requires: tk tcl-tix
 
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-modules-tkinter
+%endif
+
 %description modules-tkinter
 The Tkinter (Tk interface) program is an graphical user interface for
 the Python scripting language.
@@ -296,6 +324,10 @@ the Python scripting language.
 %package modules-sqlite3
 Summary: DB-API 2.0 interface for SQLite databases
 Group: Development/Python3
+
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-modules-sqlite3
+%endif
 
 %description modules-sqlite3
 SQLite is a C library that provides a lightweight disk-based database
@@ -308,6 +340,10 @@ code to a larger database such as PostgreSQL or Oracle.
 %package modules-curses
 Summary: Python3 "curses" module
 Group: Development/Python3
+
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-modules-curses
+%endif
 
 %description modules-curses
 An interface to the curses library, providing portable terminal
@@ -335,6 +371,10 @@ Requires: %name-tools = %EVR
 %add_python3_req_skip setuptools
 %endif
 
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-test
+%endif
+
 %description test
 The test modules from the main %name package.
 These are in a separate package to save space, as they are almost never used
@@ -349,6 +389,10 @@ Summary: Documentation for the Python 3 programming language
 Group: Documentation
 BuildArch: noarch
 
+%if 0%{?_python3_standalone:1}
+    %extend_check_list %name-doc
+%endif
+
 %description doc
 Documentation for the Python 3 programming language, interpreter,
 and bundled module library in the HTML format.
@@ -360,6 +404,7 @@ and bundled module library in the HTML format.
 
 %prep
 %setup -n python3-%version
+
 
 # Ensure that we're using the system copy of various libraries, rather than
 # copies shipped by upstream in the tarball:
@@ -1116,7 +1161,80 @@ LD_LIBRARY_PATH="$(pwd)" \
 %doc html/*
 %endif
 
+%if 0%{?_python3_standalone:1}
+%package checkinstall
+Summary: Check if standalone python3 can be installed without the main one
+Group: Development/Python3
+BuildArch: noarch
+Requires: %_check_list
+
+%description checkinstall
+%summary.
+
+%files checkinstall
+
+%post checkinstall
+echo "Installed non-standalone python3 packages:" 1>&2
+rpm -qa \*python3\* | grep -v macro | grep -v %name && echo "ERROR" && exit 1 || echo "None"
+echo "SUCCESS"
+
+
+%package together-checkinstall
+Summary: Check if standalone python3 can be installed with the main one
+Group: Development/Python3
+BuildArch: noarch
+Requires: %_check_list
+Requires: %(echo %_check_list | sed "s@%pybasever@3@g")
+
+%description together-checkinstall
+%summary.
+
+%files together-checkinstall
+
+%post together-checkinstall
+echo "Installed non-standalone python3 packages:" 1>&2
+rpm -qa \*python3\* | grep -v macro | grep -v %name && echo "SUCCESS" && exit 0 || echo "None"
+exit 1
+
+%package dev-checkinstall
+Summary: Checks if standalone python3-dev can be used in venv
+Group: Development/Python3
+BuildArch: noarch
+Requires: python3%_python3_standalone-dev ninja-build
+Requires: python3-dev-checkinstall-wheels = 3%{_python3_standalone}
+Requires: gcc libcrypt-devel
+Requires: checkinstall-helper-sh-safely
+
+%description dev-checkinstall
+%summary. Install wheels without deps and build wheel from tar
+
+%files dev-checkinstall
+
+%post dev-checkinstall -p %_sbindir/sh-safely
+set -ex
+# To skip deps
+VENV=venv # local
+ACTIVATE="$VENV"/bin/activate
+PIP="pip3" # from venv
+WORKDIR=%tool_dir/wheels_for_checkinstall-%pybasever
+
+/usr/bin/python3%_python3_standalone -m venv "$VENV"
+source "$ACTIVATE"
+cd "$WORKDIR"
+
+# Check that we can build wheel
+# Install BRs
+"$PIP" --no-cache-dir install pyproject_metadata*whl packaging*whl meson-*whl meson_python*.whl
+# Now build
+"$PIP" --no-cache-dir install --no-build-isolation pyxcrypt*.tar.gz
+# Just use it
+python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRocks')"
+%endif
+
 %changelog
+* Wed May 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.4-alt2
+- Implement checkinstall subpackages
+
 * Fri Apr 17 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.4-alt1
 - Updated python3 to upstream 3.13.4, fixes:
     + CVE-2026-2297
