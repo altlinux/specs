@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.9.2
-Release: alt4
+Version: 0.10.5
+Release: alt1
 
 Summary: Music player built around customisation
 License: GPL-3.0
@@ -78,6 +78,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Sun May 10 2026 Anton Kurachenko <srebrov@altlinux.org> 0.10.5-alt1
+- New version 0.10.5.
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt4
 - NMU: fix build requires
 
