@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-clipboard-indicator
-Version: 69
-Release: alt2
+Version: 71
+Release: alt1
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -44,17 +44,21 @@ mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/lo
 find %buildroot%_datadir/locale \
 	-name *.po -exec rm {} \;
 
-# remove docs from directory of extension
-rm %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/*.rst
-
 %find_lang clipboard-indicator
 
 %files -f clipboard-indicator.lang
 %_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com
 %_datadir/glib-2.0/schemas/*.xml
-%doc README.rst LICENSE.rst
+%doc README.md LICENSE.rst
 
 %changelog
+* Sun May 10 2026 Anton Midyukov <antohami@altlinux.org> 71-alt1
+- New version 71.
+
+* Tue May 05 2026 Anton Midyukov <antohami@altlinux.org> 70-alt1
+- New version 70.
+- Update Russian translations.
+
 * Sat Mar 21 2026 Anton Midyukov <antohami@altlinux.org> 69-alt2
 - metadata.json: add gnome-shell 50 support.
 
