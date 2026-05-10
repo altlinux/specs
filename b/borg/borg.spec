@@ -1,5 +1,5 @@
 Name: borg
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
@@ -20,6 +20,7 @@ BuildRequires: python3-module-setuptools-wheel python3-module-setuptools_scm pyt
 BuildRequires: liblz4-devel libzstd-devel libb2-devel libxxhash-devel
 
 Requires: python3-module-zmq python3-module-msgpack
+Requires: python3-module-pyfuse3
 
 %description
 BorgBackup (short: Borg) is a deduplicating backup program.
@@ -71,6 +72,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Thu Mar 19 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.4-alt1
+- 1.4.4 release
+
 * Sun Jan 18 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.3-alt1
 - 1.4.3 release
 
