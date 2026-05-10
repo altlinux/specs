@@ -1,5 +1,5 @@
 Name: an-anime-game-launcher
-Version: 3.19.1
+Version: 3.19.3
 Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
@@ -34,14 +34,14 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.38.0"]
+[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.38.2"]
 git = "https://github.com/an-anime-team/anime-game-core"
-tag = "1.38.0"
+tag = "1.38.2"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.35.1"]
+[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.35.4"]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.35.1"
+tag = "1.35.4"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/dawn-winery/sophon-tools.git?tag=v0.1.5"]
@@ -92,6 +92,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Sun May 10 2026 Anton Kurachenko <srebrov@altlinux.org> 3.19.3-alt1
+- New version 3.19.3.
+
 * Sun May 03 2026 Anton Kurachenko <srebrov@altlinux.org> 3.19.1-alt1
 - New version 3.19.1.
 
