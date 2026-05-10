@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.2.1
+Version: 8.2.2
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -38,6 +38,7 @@ Requires: calf calf-plugins >= %calf_ver
 Requires: lv2-lsp-plugins >= %lsp_ver
 Requires: lv2-mda-plugins
 Requires: lv2-zam-plugins
+Requires: lv2-x42-plugins
 %ifnarch %ix86
 Requires: ladspa-deepfilternet-plugins
 %endif
@@ -116,6 +117,9 @@ KDE/Kirigami frameworks.
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sun May 10 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.2-alt1
+- 8.2.2
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.1-alt1
 - 8.2.1
 
