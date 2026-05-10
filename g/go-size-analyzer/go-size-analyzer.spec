@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    go-size-analyzer
-Version: 1.11.0
+Version: 1.12.6
 Release: alt1
 
 Summary: A tool for analyzing the size of compiled Go binaries, offering cross-platform support, detailed breakdowns, and multiple output formats
@@ -17,7 +17,8 @@ Source1: %name-%version-vendor.tar
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang
+BuildRequires: rpm-build-golang
+BuildRequires: golang >= 1.25
 BuildRequires: /proc
 
 %description
@@ -36,6 +37,7 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="-X %import_path.version=%version"
+export GOEXPERIMENT=jsonv2
 
 %golang_prepare
 
@@ -52,6 +54,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sun May 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.6-alt1
+- New version 1.12.6.
+
 * Wed Mar 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 
