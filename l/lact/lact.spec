@@ -1,7 +1,8 @@
+%define git_commit_short 454a6e2
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -19,15 +20,15 @@ Source0: LACT-%version.tar
 # cargo vendor
 Source1: crates.tar
 
-Source2: config
+Source2: config.toml
 
 Patch1: lact-0.7.3-alt-loongarch-define.patch
 
 BuildRequires(pre): clang-devel
 
-BuildRequires: libgtk4-devel
+BuildRequires: alt-os-release
+BuildRequires: libadwaita-devel
 BuildRequires: llvm-devel
-BuildRequires: ocl-icd-devel
 BuildRequires: rust-cargo
 
 %description
@@ -56,6 +57,7 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %autopatch -p1
 
 %build
+export VERGEN_GIT_SHA=%git_commit_short
 export CARGO_HOME=${PWD}/cargo
 cargo build --release --offline
 
@@ -78,6 +80,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Sun Jan 25 2026 Nazarov Denis <nenderus@altlinux.org> 0.8.4-alt1
 - New version 0.8.4.
 
