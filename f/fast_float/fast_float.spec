@@ -1,5 +1,5 @@
 Name: fast_float
-Version: 8.2.4
+Version: 8.2.5
 Release: alt1
 
 Summary: Fast & exact implementation of C++ from_chars for float/double
@@ -29,6 +29,7 @@ from existing C++ standard libraries.
 %package -n lib%name-devel
 Summary: Fast & exact implementation of C++ from_chars for float/double
 Group: Development/C++
+Requires: libgcc15-devel
 
 %description -n lib%name-devel
 The %name library provides fast header-only implementations for the C++
@@ -58,6 +59,9 @@ fi
 %_datadir/cmake/FastFloat
 
 %changelog
+* Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 8.2.5-alt1
+- New version 8.2.5.
+
 * Tue Apr 14 2026 Nazarov Denis <nenderus@altlinux.org> 8.2.4-alt1
 - New version 8.2.4.
 
