@@ -4,8 +4,8 @@
 %define libkdcrawqt libkdcrawqt6_%sover
 
 Name: kde6-%rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.1
+Release: alt1
 %K6init altplace
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - build with libraw0-devel
 

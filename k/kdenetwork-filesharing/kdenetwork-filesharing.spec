@@ -2,7 +2,7 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -71,13 +71,16 @@ rm -f po/ru/kfileshare.po.old
 %_K6plug/kf6/propertiesdialog/*amba*.so
 #
 %_K6dbus_sys_srv/org.kde.filesharing.samba.service
-%_K6exec/kauth/authhelper
+%_K6exec/kauth/sambausershareplugin_authhelper
 %_K6dbus/system.d/org.kde.filesharing.samba.conf
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

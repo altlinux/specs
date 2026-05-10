@@ -1,7 +1,7 @@
 %define rname kwalletmanager
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -44,9 +44,7 @@ cp -ar po/ru/docs/kwalletmanager po/ru/docs/kwalletmanager5
 %doc LICENSES/*
 %_bindir/kwalletmanager*
 %_K6bin/kwalletmanager*
-%_K6icon/*/*/apps/kwalletmanager.*
-%_K6icon/*/*/apps/kwalletmanager2.*
-%_K6icon/*/*/actions/wallet-*.*
+%_K6icon/*/*/*/*wallet*
 %_K6exec/kauth/kcm_kwallet_helper*
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*kwallet*.so
 %_datadir/dbus-1/services/*kwallet*.service
@@ -58,6 +56,9 @@ cp -ar po/ru/docs/kwalletmanager po/ru/docs/kwalletmanager5
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

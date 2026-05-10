@@ -1,7 +1,7 @@
 %define rname filelight
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -61,7 +61,7 @@ Requires: %name-common
 
 %files -f %name.lang
 %doc LICENSES/*
-%config(noreplace) %_K6xdgconf/filelightrc
+#%config(noreplace) %_K6xdgconf/filelightrc
 %_K6bin/filelight
 %_K6data/kio/servicemenus/*filelight*.desktop
 %_K6xdgapp/org.kde.filelight.desktop
@@ -71,6 +71,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

@@ -1,13 +1,13 @@
 %define rname kdeconnect-kde
 
-%define sover 25
+%define sover 26
 %define libkdeconnectcore libkdeconnectcore%sover
 %define libkdeconnectpluginkcm libkdeconnectpluginkcm%sover
 
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -37,7 +37,7 @@ BuildRequires: qt6-declarative-devel qt6-multimedia-devel qt6-connectivity-devel
 BuildRequires: qt6-declarative-devel qt6-wayland-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: libdbus-devel
-BuildRequires: libgio-devel libxkbcommon-devel
+BuildRequires: libgio-devel libxkbcommon-devel libei-devel
 BuildRequires: pulseaudio-qt6-devel
 BuildRequires: libfakekey-devel libqca-qt6-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
@@ -147,6 +147,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

@@ -1,6 +1,3 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
-
 %define rname konsole
 
 %define sover 6
@@ -8,7 +5,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init no_altplace
 
@@ -144,18 +141,18 @@ __EOF__
 #%attr(2711,root,utempter) %_K6bin/konsole
 %_K6bin/konsole
 %_K6bin/konsoleprofile
-%_K6plug/kf6/parts/*konsole*.so
-%_K6plug/konsoleplugins/
 %_K6xdgapp/org.kde.konsole.desktop
-%_datadir/konsole/
 #%_K6conf_bin/*konsole*
 #%_K6conf_up/*konsole*
 %_K6data/kio/servicemenus/konsolerun.desktop
-#
-%_K6notif/*
+%_K6notif/*konsole*
 %_K6data/kglobalaccel/*konsole*
 %_datadir/metainfo/*konsole*
-%_datadir//zsh/site-functions/*konsole*
+%_datadir/zsh/site-functions/*konsole*
+#files core
+%_K6plug/kf6/parts/*konsole*.so
+%_K6plug/konsoleplugins/
+%_K6data/konsole/
 
 %files -n %libkonsoleprivate
 %_K6lib/libkonsoleprivate.so.*
@@ -167,6 +164,9 @@ __EOF__
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

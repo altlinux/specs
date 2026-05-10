@@ -1,7 +1,7 @@
 %define rname kgpg
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -12,7 +12,7 @@ License: GPL-2.0-or-later
 
 Provides: kde5-kgpg = %EVR
 Obsoletes: kde5-kgpg < %EVR
-Requires: xli
+#Requires: xli
 
 Source: %rname-%version.tar
 Patch1: alt-gpg-bin.patch
@@ -63,6 +63,9 @@ Graphical GPG frontend.
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

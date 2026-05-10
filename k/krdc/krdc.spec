@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
 BuildRequires: libvncserver-devel libssh-devel libfuse3-devel
 BuildRequires: libfreerdp3-devel /usr/bin/winpr-makecert
+BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcompletion-devel kf6-kdnssd-devel
 BuildRequires: kf6-kdoctools-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-knotifications-devel
 BuildRequires: kf6-kservice-devel kf6-kwallet-devel kf6-kxmlgui-devel kf6-knotifyconfig-devel
@@ -101,6 +102,9 @@ mv %buildroot/%_datadir/mime/packages/org.kde.krdc{,6}-mime.xml
 
 
 %changelog
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
