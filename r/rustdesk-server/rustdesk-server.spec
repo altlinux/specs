@@ -1,5 +1,5 @@
 Name: rustdesk-server
-Version: 1.1.14
+Version: 1.1.15
 Release: alt1
 
 Summary: RustDesk Server Program
@@ -7,8 +7,6 @@ License: AGPL-3.0
 Group: Networking/Other
 Url: https://rustdesk.com/
 Vcs: https://github.com/rustdesk/rustdesk-server.git
-
-ExcludeArch: ppc64le
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -64,6 +62,9 @@ install -D systemd/rustdesk-hbbs.service -t %buildroot%_unitdir/
 %_logdir/%name
 
 %changelog
+* Sun May 10 2026 Anton Kurachenko <srebrov@altlinux.org> 1.1.15-alt1
+- New version 1.1.15.
+
 * Sun Jan 26 2025 Anton Kurachenko <srebrov@altlinux.org> 1.1.14-alt1
 - New version 1.1.14.
 
