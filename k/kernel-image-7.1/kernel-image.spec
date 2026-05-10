@@ -1,5 +1,5 @@
 Name: kernel-image-7.1
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	7.0
 %define kernel_base_version	7.1
 %define kernel_sublevel	.0
@@ -320,6 +320,9 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 %build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
+export KBUILD_BUILD_USER=$(echo %buildhost | sed 's/[-.].*//')
+export KBUILD_BUILD_HOST='%{?disttag}%{!?disttag:%buildhost}'
+export KBUILD_BUILD_TIMESTAMP="$(LC_ALL=C date -ud @$SOURCE_DATE_EPOCH)"
 KernelVer=%kversion-%flavour-%krelease
 echo "Building Kernel $KernelVer"
 make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
@@ -598,6 +601,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun May 10 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc3
+- Update to v7.1-rc3 (2026-05-10).
+- config: Enable platform and machine keyrings.
+
 * Sun May 03 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc2
 - Update to v7.1-rc2 (2026-05-03).
 - config: Disable CONFIG_CRYPTO_USER_API.
