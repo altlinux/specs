@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 150.0.1
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -368,6 +368,10 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Sat May 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.1-alt2
+- Gate the encoding_rs core::simd::Select import on Rust >= 1.95 so the
+  FTBFS workaround keeps the package buildable with Rust 1.94 toolchains.
+
 * Fri May 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.1-alt1
 - New version.
 - Fixes:
