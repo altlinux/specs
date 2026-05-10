@@ -1,8 +1,8 @@
 %define rname kclock
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -85,6 +85,9 @@ developing applications that use %name.
 
 
 %changelog
+* Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - improve countries filter
 
