@@ -1,6 +1,8 @@
+%define soname 11
+
 Name: netpbm
-Version: 10.86.48
-Release: alt1.1
+Version: 10.86.49
+Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
 License: BSD-like AND GPL-2.0-only AND LGPL-2.1
@@ -10,12 +12,12 @@ Url: http://netpbm.sourceforge.net
 
 Source: %name-%version.tar
 
-Requires: lib%{name}11 = %EVR
+Requires: lib%name%soname = %EVR
 
 BuildRequires: flex libjasper-devel libjbig-devel >= 2.0
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel libX11-devel zlib-devel
 
-%package -n lib%{name}11
+%package -n lib%name%soname
 Summary: A library for handling different graphics file formats
 Group: System/Libraries
 Requires: xorg-x11-rgb
@@ -24,7 +26,7 @@ Provides: libnetpbm = %version-%release
 %package -n lib%name-devel
 Summary: A library for handling different graphics file formats
 Group: Development/C
-Requires: lib%{name}11 = %EVR
+Requires: lib%name%soname = %EVR
 
 %package -n lib%name-devel-static
 Summary: A library for handling different graphics file formats
@@ -36,7 +38,7 @@ The netpbm package contains programs for handling various graphics file
 formats, including .pbm (portable bitmaps), .pgm (portable graymaps),
 .pnm (portable anymaps), .ppm (portable pixmaps) and others.
 
-%description -n lib%{name}11
+%description -n lib%name%soname
 This package contains a library of functions which support programs for
 handling various graphics file formats, including .pbm (portable bitmaps),
 .pgm (portable graymaps), .pnm (portable anymaps), .ppm (portable pixmaps)
@@ -137,9 +139,9 @@ grep -E '@[A-Z]+@' %buildroot%_bindir/netpbm-config && exit 1
 chmod +x %buildroot%_bindir/netpbm-config
 test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 
-%files -n lib%{name}11
-%_libdir/lib%name.so.11
-%_libdir/lib%name.so.11.*
+%files -n lib%name%soname
+%_libdir/lib%name.so.%soname
+%_libdir/lib%name.so.%soname.*
 %doc doc/copyright_summary doc/COPYRIGHT.PATENT README
 
 %files -n lib%name-devel
@@ -159,6 +161,9 @@ test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 %endif
 
 %changelog
+* Mon May 11 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.49-alt1
+- 10.86.49.
+
 * Thu May 07 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.48-alt1.1
 - Fix FTBFS with gcc15.
 
