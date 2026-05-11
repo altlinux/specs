@@ -15,8 +15,8 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 150.0.1
-Release: alt2
+Version: 150.0.2
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -39,9 +39,9 @@ Patch003: 0003-Fix-types-defination.patch
 Patch004: 0004-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch005: 0005-Correction-of-the-Russian-translation.patch
 Patch006: 0006-ALT-stop-putting-commonDialogs.properties-into-share.patch
-Patch007: 0007-Fix-OTR-query-message-split-on-newline-ALT-40934.patch
-Patch008: 0008-Fix-tasks-context-menu-disabled-state-ALT-58704.patch
-Patch009: 0009-Fix-FTBFS-encoding_rs-Rust-1.95.patch
+Patch007: 0007-Fix-OTR-query-message-split-on-newline.patch
+Patch008: 0008-Fix-tasks-context-menu-broken-disabled-state-after-b.patch
+Patch009: 0009-Fix-FTBFS-import-core-simd-Select-for-encoding_rs-un.patch
 ### End Patches
 
 Provides: mailclient
@@ -368,6 +368,13 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Mon May 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.2-alt1
+- New version.
+- Fixes:
+  + CVE-2026-8090: Use-after-free in the DOM: Networking component
+  + CVE-2026-8092: Memory safety bugs fixed in Thunderbird ESR 140.10.2 and Thunderbird 150.0.2
+  + CVE-2026-8093: Memory safety bugs fixed in Thunderbird 150.0.2
+
 * Sat May 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.1-alt2
 - Gate the encoding_rs core::simd::Select import on Rust >= 1.95 so the
   FTBFS workaround keeps the package buildable with Rust 1.94 toolchains.
