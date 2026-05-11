@@ -7,7 +7,7 @@
 
 Name: nvtop
 Version: 3.3.2
-Release: alt2
+Release: alt3
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
 Group: Monitoring
@@ -26,11 +26,6 @@ BuildRequires: gcc-c++ libsystemd-devel libudev-devel libdrm-devel libncurses-de
 BuildRequires: libgtest-devel ctest
 %endif
 
-# nvidia gpu information rely on libnvidia-ml library
-%ifarch %ix86 x86_64 aarch64
-Requires: libnvidia-ml
-%endif
-
 %description
 Nvtop stands for Neat Videocard TOP, a (h)top like task monitor for AMD, Intel
 and NVIDIA GPUs. It can handle multiple GPUs and print information about them in
@@ -42,11 +37,7 @@ a htop familiar way.
 
 %build
 %_cmake \
-%ifarch %ix86 x86_64 aarch64
 	-DNVIDIA_SUPPORT=ON \
-%else
-	-DNVIDIA_SUPPORT=OFF \
-%endif
 	-DAMDGPU_SUPPORT=ON \
 %if_enabled tests
 	-DBUILD_TESTING=ON \
@@ -73,6 +64,9 @@ popd
 %_datadir/metainfo/io.github.syllo.%name.metainfo.xml
 
 %changelog
+* Mon May 11 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt3
+- Drop libnvidia-ml requirement (closes #59079).
+
 * Tue Mar 03 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt2
 - Enable debuginfo.
 - Enable tests.
