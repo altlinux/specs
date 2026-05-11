@@ -1,10 +1,11 @@
 %define compat_name minizip
 %define sover 4
+%define ppmd_version 26.00
 
 %filter_from_provides /^pkgconfig(%compat_name)/d
 
 Name: %compat_name-ng
-Version: 4.1.0
+Version: 4.2.1
 Release: alt1
 Epoch: 1
 
@@ -16,9 +17,9 @@ Url: https://github.com/zlib-ng/%name/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/zlib-ng/%name/archive/%version/%name-%version.tar.gz
-Source: %name-%version.tar
-
-Patch0: %name-soversion-alt.patch
+Source0: %name-%version.tar
+# https://github.com/ip7z/7zip/archive/%ppmd_version/7zip-%ppmd_version.tar.gz
+Source1: 7zip-%ppmd_version.tar
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake >= 3.13
@@ -140,8 +141,12 @@ The package contains libraries and header files for
 developing applications that use %compat_name.
 
 %prep
-%setup
-%patch0 -p1
+%setup -b 1
+
+sed \
+    -e '/set(SOVERSION "1")/d' \
+    -e '/clone_repo(ppmd https:\/\/github.com\/ip7z\/7zip "%ppmd_version")/d' \
+    -i CMakeLists.txt
 
 %build
 
@@ -152,7 +157,8 @@ developing applications that use %compat_name.
 %cmake \
 	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
-	-DMZ_COMPAT:BOOL=FALSE
+	-DMZ_COMPAT:BOOL=FALSE \
+	-DPPMD_SOURCE_DIR:PATH=../7zip-%ppmd_version
 %cmake_build
 
 # Build compat versions
@@ -162,7 +168,8 @@ developing applications that use %compat_name.
 %cmake \
 	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
-	-DMZ_COMPAT:BOOL=TRUE
+	-DMZ_COMPAT:BOOL=TRUE \
+	-DPPMD_SOURCE_DIR:PATH=../7zip-%ppmd_version
 %cmake_build
 
 %install
@@ -171,6 +178,8 @@ developing applications that use %compat_name.
 
 %define _cmake__builddir %_target_platform-compat
 %cmakeinstall_std
+
+%__rm -f %buildroot%_libdir/libppmd.a
 
 %files -n lib%name%sover
 %doc LICENSE README.md
@@ -197,6 +206,9 @@ developing applications that use %compat_name.
 %_libdir/lib%compat_name.so
 
 %changelog
+* Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 1:4.2.1-alt1
+- New version 4.2.1.
+
 * Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 1:4.1.0-alt1
 - New version 4.1.0.
 
