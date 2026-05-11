@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: deepseek-tui
-Version: 0.8.20
+Version: 0.8.29
 Release: alt1
 
 Summary: Coding agent for DeepSeek models that runs in your terminal
@@ -45,6 +45,9 @@ install -vpD -m0755 target/release/deepseek-app-server -t %buildroot%_bindir
 %_bindir/deepseek-app-server
 
 %changelog
+* Mon May 11 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.29-alt1
+- Updated to 0.8.29.
+
 * Fri May 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.20-alt1
 - Updated to 0.8.20.
 
