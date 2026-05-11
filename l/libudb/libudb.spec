@@ -3,7 +3,7 @@
 %def_with check
 
 Name: libudb
-Version: 1.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Universal database library
@@ -34,7 +34,7 @@ Group: Development/C++
 Requires: %name = %version-%release
 
 %description devel
-This library is suitable for UDB format databases managing (see 
+This library is suitable for UDB format databases managing (see
 include/UDBase.h or documentation for format description).
 
 %package doc
@@ -43,7 +43,7 @@ Group: Documentation
 BuildArch: noarch
 
 %description doc
-This library is suitable for UDB format databases managing (see 
+This library is suitable for UDB format databases managing (see
 include/UDBase.h or documentation for format description).
 
 This package includes the documentation files for the %name
@@ -66,7 +66,7 @@ development.
 %files
 %doc COPYING README.md README_RU.md
 %_libdir/libudb*.so.1
-%_libdir/libudb*.so.1.0
+%_libdir/libudb*.so.1.0.1
 
 %files devel
 %dir %_includedir/LibUDB
@@ -84,5 +84,8 @@ development.
 %_man3dir/UDBase.3.*
 
 %changelog
+* Mon May 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.1-alt1
+- New version 1.0.1.
+
 * Wed May 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus

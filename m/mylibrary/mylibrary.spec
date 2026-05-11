@@ -3,7 +3,7 @@
 %def_with check
 
 Name: mylibrary
-Version: 5.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Home librarian
@@ -35,12 +35,12 @@ BuildRequires: ctest
 %endif
 
 %description
-MyLibrary is a simple program designed to manage e-book collections. 
+MyLibrary is a simple program designed to manage e-book collections.
 It supports following types of books: .fb2, .epub, .pdf, .djvu, .odt,
 .txt, .md and .fbd (fbd can be used for any types of files, not just
 books). MyLibrary also supports same types of books, packed in archives.
-Supported archive types are: zip, 7z, jar, cpio, iso, tar, tar.gz, 
-tar.bz2, tar.xz, rar. 
+Supported archive types are: zip, 7z, jar, cpio, iso, tar, tar.gz,
+tar.bz2, tar.xz, rar.
 
 Additionally MyLibrary supports inpx collections. Program creates own
 databases, e-book files will not be moved or edited.
@@ -94,7 +94,7 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
 %_desktopdir/ru.mail.bobilev_yury.MyLibrary.desktop
 %_iconsdir/hicolor/scalable/apps/mylibrary.svg
 %_libdir/libMLBookProc.so.2
-%_libdir/libMLBookProc.so.2.0
+%_libdir/libMLBookProc.so.2.0.1
 %_libdir/libMLPlugin.so.1
 %_libdir/libMLPlugin.so.1.0
 %_libdir/libXMLParserCPP.so.1
@@ -127,6 +127,9 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
 %_man3dir/*
 
 %changelog
+* Mon May 11 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Wed May 06 2026 Nikolay Strelkov <snk@altlinux.org> 5.0-alt1
 - New version 5.0.
 
