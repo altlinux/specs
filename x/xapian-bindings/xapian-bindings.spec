@@ -3,7 +3,6 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,unresolved=normal
 
-%def_with python
 %def_with python3
 %ifarch %e2k
 # needs thorough update, esp. rpm-macros-ruby
@@ -15,7 +14,7 @@
 
 Name: xapian-bindings
 Version: 1.4.31
-Release: alt1
+Release: alt2
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
 Group: Development/Databases
@@ -33,9 +32,6 @@ BuildRequires: libxapian-devel = %version
 BuildRequires(pre): rpm-macros-ruby
 BuildRequires: gem(test-unit)
 BuildRequires: rpm-build-ruby
-%endif
-%if_with python
-%setup_python_module %name
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -55,20 +51,6 @@ It has built-in support for several families of weighting models
 and also supports a rich set of boolean query operators.
 
 This package contains programming language bindings.
-
-%package -n python-module-xapian
-Summary: Python bindings for Xapian search engine
-Group: Development/Python
-Requires: %libxapianEVR
-
-%description -n python-module-xapian
-Xapian is a highly adaptable toolkit which allows developers to easily
-add advanced indexing and search facilities to their own applications.
-It has built-in support for several families of weighting models
-and also supports a rich set of boolean query operators.
-
-This package provides the files needed for developing Python scripts
-which use Xapian.
 
 %package -n python3-module-xapian
 Summary: Python 3 bindings for Xapian search engine
@@ -118,7 +100,7 @@ sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
 export RUBY_LIB=%ruby_vendorlibdir
 export RUBY_LIB_ARCH=%ruby_vendorarchdir
 export RDOC=$(PATH=/usr/lib/ruby/bin:$PATH type -p rdoc)
-%configure %{subst_with python} %{subst_with python3} %{subst_with ruby}
+%configure %{subst_with python3} %{subst_with ruby}
 %make_build
 
 %install
@@ -130,22 +112,13 @@ rm -rf %buildroot%_defaultdocdir/%name/
   ruby -Iruby -Iruby/.libs -rxapian -e '(p Xapian.version_string) == "%version"'
   make -C ruby check VERBOSE=1
 %endif
-%if_with python
-  make -C python check VERBOSE=1
-%endif
 %if_with python3
   make -C python3 check VERBOSE=1
 %endif
 
-%if_with python
-%files -n python-module-xapian
-%doc README python/docs/*
-%python_sitelibdir/*
-%endif
-
 %if_with python3
 %files -n python3-module-xapian
-%doc README python/docs/*
+%doc README python3/docs/*
 %python3_sitelibdir/*
 %endif
 
@@ -157,6 +130,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Mon May 11 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.31-alt2
+- Do not package Python2's python-module-xapian (ALT#59081).
+
 * Tue Feb 24 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.31-alt1
 - Update to 1.4.31 (2026-02-23).
 
