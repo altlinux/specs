@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Junction
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name re.sonny.Junction
 
@@ -22,7 +22,7 @@ Source: https://github.com/sonnyp/%_name/archive/v%version/%name-%version%beta.t
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-1.9-alt-no_flatpak.patch
+Patch: %name-1.12-alt-no_flatpak.patch
 
 BuildArch: noarch
 
@@ -32,6 +32,7 @@ Requires: libgjs >= %gjs_ver /usr/bin/gjs
 # grep -h gi:// -r *|sort -u
 Requires: typelib(Adw) = 1
 Requires: typelib(Gtk) = 4.0
+Requires: typelib(Soup) = 3.0
 Requires: typelib(Xdp)
 Requires: typelib(XdpGtk4)
 
@@ -56,6 +57,7 @@ Junction lets you choose the application to open files and links.
 %find_lang --with-gnome --output=%name.lang %_name %rdn_name
 
 %files -f %name.lang
+%_bindir/%name
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%rdn_name/
@@ -68,6 +70,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Mon May 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
+- 1.12
+
 * Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
 - 1.11
 

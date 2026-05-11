@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Guide a worm around a maze
@@ -79,6 +79,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Mon May 11 2026 Yuri N. Sedunov <aris@altlinux.org> 4.5.2-alt1
+- 4.5.2
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 4.5.1-alt1
 - 4.5.1
 
