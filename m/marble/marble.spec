@@ -11,8 +11,8 @@
 %endif
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.1
+Release: alt1
 %K6init
 
 Group: Education
@@ -27,6 +27,9 @@ Source: %rname-%version.tar
 Source2: naturalearth.tar
 Patch1: alt-astro-static.patch
 Patch2: alt-remove-country-data.patch
+Patch3: alt-always-request-Russian-results.patch
+Patch4: alt-dont-build-postal-code-plugin.patch
+Patch5: alt-remove-address-details.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-positioning-devel qt6-svg-devel qt6-tools-devel qt6-serialport-devel qt6-5compat-devel
@@ -93,6 +96,9 @@ tar -xvf %SOURCE2 naturalearth/
 popd
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
 # disable krunners by default
@@ -186,6 +192,14 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
+* Mon May 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 25.12.3-alt3
+- don't build the postal-code plugin
+- always request Russian results
+- remove the Address Details context-menu entry
+
 * Wed May 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 25.12.3-alt2
 - strip country from reverse-geocoded address
 

@@ -4,7 +4,7 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -16,6 +16,8 @@ License: GPL-2.0-or-later
 Provides:  kde5-minuet = %EVR
 Obsoletes: kde5-minuet < %EVR
 
+Requires: kf6-kirigami
+
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
@@ -23,7 +25,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-declarative-devel q
 BuildRequires: libvulkan-devel
 BuildRequires: drumstick-devel libalsa-devel libfluidsynth-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
-BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel  kf6-kdoctools-devel kf6-ki18n-devel kf6-kio-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel  kf6-kdoctools-devel kf6-ki18n-devel kf6-kio-devel kf6-kirigami kf6-kirigami-devel
 BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kxmlgui-devel kf6-solid-devel
 
@@ -57,7 +59,7 @@ Requires: %name-common
 %prep
 %setup -n %rname-%version
 
-sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth.cmake
+#sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth.cmake
 
 %build
 %K6build \
@@ -92,6 +94,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
