@@ -4,12 +4,13 @@
 %set_verify_elf_method strict
 
 Name: httpdirfs
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 Summary: FUSE mount for HTTP
 License: GPL-3.0-or-later
 Group: Networking/File transfer
 Url: https://github.com/fangfufu/httpdirfs/
+Requires: /usr/bin/fusermount3
 
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
@@ -50,5 +51,8 @@ sed -i /_FORTIFY_SOURCE/d meson.build
 %_man1dir/httpdirfs.1*
 
 %changelog
+* Sun May 10 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.8-alt1
+- Update to 1.2.8 (2026-05-10).
+
 * Wed Jan 07 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.7-alt1
 - First import 1.2.7-41-g2ebd190 (2025-12-13).
