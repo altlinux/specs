@@ -1,6 +1,6 @@
 Name:           snakeyaml
 Version:        2.5
-Release:        alt1.1
+Release:        alt2
 
 Summary:        YAML parser and emitter for Java
 License:        Apache-2.0
@@ -14,7 +14,6 @@ BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
@@ -47,6 +46,7 @@ SnakeYAML features:
 %pom_remove_dep :velocity-engine-core
 %pom_remove_dep :joda-time
 %pom_remove_dep :lombok
+%pom_remove_dep :jackson-dataformat-yaml
 
 rm -rf src/test/java/examples/jodatime
 rm src/test/java/org/yaml/snakeyaml/reader/ReaderBomTest.java
@@ -82,6 +82,16 @@ rm -rf src/test/resources/fuzzer/
 # Test using the jpeg data removed above
 rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
 
+# This tests uses jackson-dataformats-text. jackson-dataformats-text has been updated
+# from version 2.9.8 to 2.20.1 in Sisyphus. jackson-dataformats-text-2.9.8
+# has been removed from older repositories due to incompatibility with newer
+# versions of jackson, and the new jackson-dataformats-text cannot be built
+# without updating snakeyaml, which cannot be updated without updating
+# jackson-dataformats-text. This causes problems during backporting.
+rm -f src/test/java/org/yaml/snakeyaml/issues/issue1100/JacksonTest.java
+rm -f src/test/java/org/yaml/snakeyaml/issues/issue1100/YamlRoot.java
+
+
 %build
 %mvn_build
 
@@ -92,6 +102,9 @@ rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
 %doc LICENSE.txt
 
 %changelog
+* Mon May 11 2026 Arseniy Kostevich <faux@altlinux.org> 2.5-alt2
+- Build without jackson-dataformats-text.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.5-alt1.1
 - Cosmetic fixes.
 
