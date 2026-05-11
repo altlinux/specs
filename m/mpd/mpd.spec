@@ -68,7 +68,7 @@
 %define  Name MPD
 
 Name:    mpd
-Version: 0.24.8
+Version: 0.24.10
 Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
@@ -130,7 +130,7 @@ BuildRequires: meson gcc-c++ zlib-devel libfmt-devel
 %{?_enable_pcre:BuildRequires: libpcre2-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 %{?_enable_nlohmann_json:BuildRequires: nlohmann-json-devel}
-%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink}
+%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme python3-module-sphinx-sphinx-build-symlink}
 %if %zeroconf == avahi
 BuildRequires: libavahi-glib-devel libdbus-devel
 %endif
@@ -282,6 +282,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Mon May 11 2026 L.A. Kostis <lakostis@altlinux.ru> 0.24.10-alt1
+- 0.24.10.
+
 * Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 0.24.8-alt1
 - 0.24.8.
 
