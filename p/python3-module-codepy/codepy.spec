@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2019.1
-Release: alt2
+Version: 2025.1
+Release: alt1
 
 Summary: C metaprogramming toolkit for Python
 License: MIT
@@ -14,18 +14,19 @@ Url: https://documen.tician.de/codepy/
 VCS: https://github.com/inducer/codepy
 
 Source: %name-%version.tar
-Patch: prefer_platformdirs.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytools
 BuildRequires: gcc-c++
 BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-cgen
+BuildRequires: boost-python3-devel
 %endif
 
 Requires: gcc-c++
@@ -47,7 +48,6 @@ supported in Linux with the GNU toolchain.
 
 %prep
 %setup
-%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -59,8 +59,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-py.test-3
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst
@@ -69,6 +68,9 @@ py.test-3
 
 
 %changelog
+* Tue May 12 2026 Anton Vyatkin <toni@altlinux.org> 2025.1-alt1
+- New version 2025.1.
+
 * Mon Jan 06 2025 Anton Vyatkin <toni@altlinux.org> 2019.1-alt2
 - replace appdirs with platformdirs
 
