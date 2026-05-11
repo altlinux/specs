@@ -2,7 +2,7 @@
 %global import_path codeberg.org/git-pages/git-pages
 
 Name:    git-pages
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Summary: Scalable static site server for Git forges (like GitHub Pages or Netlify)
@@ -67,6 +67,9 @@ useradd -r -g %name -c 'git-pages daemon' \
 %_unitdir/%name.service
 
 %changelog
+* Mon May 11 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Tue Apr 28 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 - Add sysconfig file (closes ALT#58846).
