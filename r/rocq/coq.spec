@@ -1,6 +1,6 @@
 Name: rocq
 Version: 9.2.0
-Release: alt1
+Release: alt2
 
 Summary: Proof management system
 
@@ -32,7 +32,6 @@ BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-zarith-devel
 
 BuildRequires(pre): rpm-build-ocaml
-BuildRequires: rpm-build-python
 BuildRequires: rpm-build-xdg
 BuildRequires: adwaita-icon-theme
 BuildRequires: libappstream-glib
@@ -70,6 +69,8 @@ Requires: %name = %EVR
 
 Provides:  coq-core = %EVR
 Obsoletes: coq-core < 9.0.0
+
+AutoReqProv: nopython
 
 %description core
 This package includes the rocq core binaries, plugins, and tools, but not
@@ -244,6 +245,9 @@ ln -s ../../coq/coq_style.xml %buildroot%_datadir/gtksourceview-3.0/styles
 %_mandir/man1/coq*
 
 %changelog
+* Mon May 11 2026 Leonid Znamenok <respublica@altlinux.org> 9.2.0-alt2
+- Dropped dependency on python2-base (Closes: 59080).
+
 * Fri Apr 10 2026 Leonid Znamenok <respublica@altlinux.org> 9.2.0-alt1
 - New Version 9.2.0.
 - Renamed coq -> rocq.
