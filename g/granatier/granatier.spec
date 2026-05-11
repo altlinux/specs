@@ -1,7 +1,7 @@
 %define rname granatier
 
 Name: %rname
-Version: 25.12.2
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -50,6 +50,9 @@ Bomberman game.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 

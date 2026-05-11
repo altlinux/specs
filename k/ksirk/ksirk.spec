@@ -4,7 +4,7 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: %rname
-Version: 25.12.2
+Version: 26.04.1
 Release: alt1
 %K6init
 
@@ -63,6 +63,9 @@ with your armies.
 
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
