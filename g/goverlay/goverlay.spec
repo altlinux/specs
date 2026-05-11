@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -38,8 +38,20 @@ Goverlay makes everything accessible in just a few clicks.
 %_iconsdir/hicolor/*/apps/*%name.png
 %_man1dir/%name.1*
 /usr/libexec/goverlay
+%dir %_datadir/%name/assets/icons/
+%_datadir/%name/assets/icons/*
+%dir %_datadir/%name/data/icons/
+%dir %_datadir/%name/data/icons/128x128/
+%dir %_datadir/%name/data/icons/256x256/
+%dir %_datadir/%name/data/icons/512x512/
+%dir %_datadir/%name/data/icons/buttons/
+%dir %_datadir/%name/data/icons/system/
+%_datadir/%name/data/icons/*/*
 
 %changelog
+* Mon May 11 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Fri May 08 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
