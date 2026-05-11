@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon May 11 2026 Anton Midyukov <antohami@altlinux.org> 1.9.3-alt1
+- containers: initial feature for pack directory with containers to iso
+- chksum: initial feature for add chksum directory
+- tar2fs: use option -t for mount
+
 * Tue Mar 31 2026 Anton Midyukov <antohami@altlinux.org> 1.9.2-alt1
 - kernel: Set default KFLAVOURS to 6.18 for sisyphus_riscv64
   and sisyphus_loongarch64 too
