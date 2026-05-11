@@ -1,5 +1,5 @@
 Name: unvanquished
-Version: 0.56.1
+Version: 0.56.2
 Release: alt1
 
 Summary: An FPS/RTS hybrid game powered by the Daemon engine (a combination of ioq3 and XreaL)
@@ -148,6 +148,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %doc *.md *.txt
 
 %changelog
+* Tue May 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.2-alt1
+- 0.56.1 -> 0.56.2
+
 * Thu Mar 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.1-alt1
 - 0.55.5 -> 0.56.1
 
