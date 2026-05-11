@@ -2,7 +2,7 @@
 
 Name: distro-licenses
 Version: 1.4.1
-Release: alt1
+Release: alt2
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon May 11 2026 Dmitry Terekhin <jqt4@altlinux.org> 1.4.1-alt2
+- Add the ALT_Server_License/11.2 installation
+
 * Fri May 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.1-alt1
 - Add static license ALT_Server_License/11.2
 
