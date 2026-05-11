@@ -4,7 +4,7 @@
 
 Name: ufoai
 Version: 2.5
-Release: alt6
+Release: alt7
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
 Group: Games/Strategy
@@ -18,7 +18,7 @@ Patch4: debian-segfault-reactionfire-mode-bug-861979.patch
 Patch5: ufoai-uforadiant-link.patch
 
 BuildRequires: gcc-c++ zlib-devel libcurl-devel libjpeg-devel libpng-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libogg-devel libvorbis-devel
-BuildRequires: libtheora-devel libgtk+2-devel libgtkglext-devel libxml2-devel libgtksourceview-devel libopenal-devel texlive-latex-extra
+BuildRequires: libtheora-devel libxml2-devel libopenal-devel texlive-latex-extra
 
 Requires: %name-data = %EVR
 
@@ -86,13 +86,11 @@ export CXXFLAGS="${CXXFLAGS:-%optflags}"
 	--prefix=%{_prefix} \
 	--libdir=%{_libdir} \
 	--bindir=%{_bindir} \
-	--datadir=%{_datadir} \
-	--enable-uforadiant
+	--datadir=%{_datadir}
 
-%make
-%make uforadiant
-%make lang
-%make manual
+%make_build
+%make_build lang
+%make_build manual
 
 %install
 # For core
@@ -125,19 +123,6 @@ install -m 755 -pD ufo2map %buildroot%_gamesbindir/
 install -m 755 -pD ufomodel %buildroot%_gamesbindir/
 install -m 644 -pD src/tools/blender/md2tag_export.py %buildroot%_datadir/blender/scripts/blender/md2tag_export.py
 install -m 644 -pD debian/ufo2map.6 %buildroot%_man6dir/
-install -m 755 -d %buildroot%_gamesdatadir/uforadiant/bitmaps/
-install -m 644 -pD radiant/bitmaps/* %buildroot%_gamesdatadir/uforadiant/bitmaps/
-install -m 755 -d %buildroot%_gamesdatadir/uforadiant/i18n/
-cp -r radiant/i18n/* %buildroot%_gamesdatadir/uforadiant/i18n/
-install -m 755 -d %buildroot%_gamesdatadir/uforadiant/sourceviewer/
-install -m 644 -pD radiant/sourceviewer/* %buildroot%_gamesdatadir/uforadiant/sourceviewer/
-install -m 755 -d %buildroot%_gamesdatadir/uforadiant/prefabs/
-cp -r radiant/prefabs/* %buildroot%_gamesdatadir/uforadiant/prefabs/
-install -m 755 -pD radiant/uforadiant %buildroot%_libexecdir/%_gamesdir/uforadiant/uforadiant
-install -m 755 -pD debian/uforadiant %buildroot%_gamesbindir/uforadiant
-install -m 644 -pD debian/uforadiant.xpm %buildroot%_pixmapsdir/uforadiant.xpm
-install -m 644 -pD debian/uforadiant.desktop %buildroot%_desktopdir/uforadiant.desktop
-install -m 644 -pD debian/uforadiant.6 %buildroot%_man6dir
 
 %files
 %doc README COPYING debian/changelog debian/copyright
@@ -154,12 +139,6 @@ install -m 644 -pD debian/uforadiant.6 %buildroot%_man6dir
 %_gamesbindir/ufomodel
 %_datadir/blender/scripts/blender/md2tag_export.py
 %_man6dir/ufo2map.6*
-%_gamesdatadir/uforadiant
-%_libexecdir/%_gamesdir/uforadiant/uforadiant
-%_gamesbindir/uforadiant
-%_pixmapsdir/uforadiant.xpm
-%_desktopdir/uforadiant.desktop
-%_man6dir/uforadiant.6*
 
 %files server
 %_libexecdir/%_gamesdir/%name/ufoded
@@ -175,6 +154,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot%_man6dir
 %_docdir/ufoai-data/ufo-manual_EN.pdf
 
 %changelog
+* Mon May 11 2026 Anton Midyukov <antohami@altlinux.org> 2.5-alt7
+- NMU: rebuild without gtk2 (disable build uforadiant).
+
 * Tue Oct 05 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.5-alt6
 - Fixed build with gcc-11.
 
