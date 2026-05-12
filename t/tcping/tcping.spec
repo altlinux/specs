@@ -1,10 +1,10 @@
-%define _unpackaged_files_terminate_build 12.7.1
+%define _unpackaged_files_terminate_build 1
 %global import_path github.com/pouriyajamshidi/tcping
 %global debug_package %nil
 
 Name: tcping
-Version: 2.7.1
-Release: alt2
+Version: 2.8.0
+Release: alt1
 Summary: Ping TCP ports using tcping. Inspired by Linux's ping utility. Written in Go
 License: MIT
 Group: Networking/Other
@@ -72,6 +72,9 @@ mkdir -p %buildroot%_datadir/%name
 %_bindir/%name
 
 %changelog
+* Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 2.8.0-alt1
+- Update to new version 2.8.0.
+
 * Fri Aug 15 2025 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt2
 - Fix flaky TestSaveHostname by stabilizing time-dependent table name generation
 

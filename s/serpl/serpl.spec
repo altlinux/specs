@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: serpl
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 Summary: A simple terminal UI for search and replace.
 License: MIT
@@ -43,5 +43,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 0.3.5-alt1
+- Update to new version 0.3.5.
+
 * Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus.

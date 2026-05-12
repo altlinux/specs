@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: somo
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary: A human-friendly alternative to netstat for socket and port monitoring
 License: MIT
@@ -61,6 +61,9 @@ install -Dm 0644 target/%name.1.* %buildroot%_man1dir/
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 1.3.3-alt1
+- 1.3.2 -> 1.3.3
+
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.3.2-alt1
 - 1.3.1 -> 1.3.2
 
