@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name: SDL2_mixer
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
@@ -83,6 +83,9 @@ libraries.
 %_libdir/cmake/%name
 
 %changelog
+* Tue May 12 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.2-alt1
+- New version 2.8.2.
+
 * Sat Feb 08 2025 Nazarov Denis <nenderus@altlinux.org> 2.8.1-alt1
 - New version 2.8.1.
 
