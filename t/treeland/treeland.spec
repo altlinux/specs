@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -28,6 +28,8 @@ BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++ 
 %endif
+
+Requires: libdqt6-qml = %_dqt6_version
 
 %add_findprov_lib_path %_dqt6_libdir
 
@@ -55,6 +57,7 @@ This package provides wayland files for %name.
 Summary: Wallpaper factory tool for %name
 Group: System/Configuration/Other
 Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-quick = %_dqt6_version
 Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description wallpaper-factory
@@ -65,6 +68,7 @@ Summary: Library for %name
 Group: System/Libraries
 Requires: libdqt6-core = %_dqt6_version
 Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-qml = %_dqt6_version
 Requires: libdqt6-quick = %_dqt6_version
 
 %description -n libtreeland%sover
@@ -90,8 +94,8 @@ Summary: waylibserver library for %name
 Group: System/Libraries
 Requires: libdqt6-core = %_dqt6_version
 Requires: libdqt6-gui = %_dqt6_version
-Requires: libdqt6-quick = %_dqt6_version
 Requires: libdqt6-qml = %_dqt6_version
+Requires: libdqt6-quick = %_dqt6_version
 
 %description -n libdwaylibserver%sover
 This package provides waylibserver library for %name.
@@ -106,6 +110,7 @@ This package provides development files for waylibserver.
 %package -n libdqwlroots%sover
 Summary: qwlroots library for %name
 Group: System/Libraries
+Requires: libdqt6-core = %_dqt6_version
 
 %description -n libdqwlroots%sover
 This package provides qwlroots library for %name.
@@ -233,6 +238,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Tue May 12 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.6-alt1
+- New version 0.8.6.
+
 * Fri Mar 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.5-alt1
 - New version 0.8.5.
 
