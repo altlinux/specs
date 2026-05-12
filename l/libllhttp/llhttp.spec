@@ -2,7 +2,7 @@
 %define project_name llhttp
 
 Name: lib%project_name
-Version: 9.3.1
+Version: 9.4.1
 Release: alt1
 Summary: Port of http_parser to llparse
 License: MIT
@@ -57,6 +57,9 @@ cd release
 %_cmakedir/%project_name/*.cmake
 
 %changelog
+* Tue May 12 2026 Stanislav Levin <slev@altlinux.org> 9.4.1-alt1
+- 9.3.1 -> 9.4.1.
+
 * Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 9.3.1-alt1
 - 9.3.0 -> 9.3.1.
 
