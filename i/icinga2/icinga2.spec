@@ -37,7 +37,7 @@ License:        GPL-2.0-or-later
 Group:          Monitoring
 
 Name:           icinga2
-Version:        2.14.6
+Version:        2.16.0
 Release:        alt1
 URL:            https://www.icinga.com/
 Vcs:            https://github.com/Icinga/icinga2.git
@@ -50,6 +50,7 @@ Patch1:         icinga2-vim_syntax.patch
 Patch2:         icinga2-fix-unitdir-alt.patch
 Patch3:         icinga2-fix-plugin-loader-path.patch
 Patch4:         icinga2-global-commands-zone.patch
+Patch100:       %name-%version-alt.patch
 
 Requires:       %name-common = %version-%release
 Requires:       vim-%name = %version-%release
@@ -89,6 +90,8 @@ BuildRequires:  logrotate
 
 BuildRequires:  libmariadb-devel
 BuildRequires:  postgresql-devel
+
+BuildRequires:  libprotobuf-lite-devel
 
 %description
 Meta package for Icinga 2 Core and DB IDO.
@@ -149,6 +152,7 @@ Provides Nano syntax highlighting for icinga2.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch100 -p1
 
 %ifarch %e2k
 # compiler bug workaround
@@ -362,6 +366,12 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Tue May 12 2026 Paul Wolneykien <manowar@altlinux.org> 2.16.0-alt1
+- New version 2.16.0.
+
+* Tue Aug 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.15.0-alt1
+- New version 2.15.0.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.14.6-alt1
 - New version 2.14.6 (fixes: CVE-2025-48057, CVE-2024-49369).
 
