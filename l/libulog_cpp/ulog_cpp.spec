@@ -3,7 +3,7 @@
 
 Name: libulog_cpp
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Streamed C++ ULog reader and writer library
 License: MIT
@@ -17,6 +17,9 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): cmake gcc-c++
 BuildRequires(pre): doctest-devel
 BuildRequires: /proc
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 %description
 Streamed C++ ULog reader and writer library.
@@ -43,6 +46,10 @@ Shared libraries for ulog_cpp.
        -DBUILD_SHARED_LIBS=ON \
        -DCMAKE_INSTALL_LIBDIR=%_libdir \
        -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
+%ifarch %e2k
+       -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+       -DCMAKE_C{,XX}_FLAGS_RELWITHDEBINFO="-O2 -g -DNDEBUG" \
+%endif
        #
 
 %cmake_build
@@ -74,5 +81,8 @@ Shared libraries for ulog_cpp.
 %_libdir/libulog_cpp.so.%abiversion.0.0
 
 %changelog
+* Tue May 12 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.1-alt2
+- e2k build fix
+
 * Tue Jan 13 2026 Ilya Muhamadeev <nicourced@altlinux.org> 1.0.1-alt1
 - Initial build.
