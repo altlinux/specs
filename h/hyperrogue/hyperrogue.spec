@@ -1,12 +1,13 @@
 Name: hyperrogue
-Version: 112d
+Version: 13.1l
 Release: alt1
 Source: v%version.tar.gz
+Source1: %name.sh
 Url: http://www.roguetemple.com/z/hyper.php
 License: GPLv2
 Group: Games/Adventure
 Summary: Roguelike in non-euclidian world
-Epoch: 1
+Epoch: 2
 
 BuildPreReq: rpm-macros-fonts
 
@@ -14,7 +15,7 @@ Requires: fonts-ttf-dejavu
 
 # Automatically added by buildreq on Tue Oct 15 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
-BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel
+BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel libGLEW-devel zlib-devel
 Requires: %name-music = %version
 
 %description
@@ -41,19 +42,16 @@ to teleport back to the Euclidean world to survive by pressing Escape
 Buildarch: noarch
 Summary: Music for %summary
 Group: Games/Adventure
-License: CC BY-SA 3.0
+License: CC-BY-SA-3.0
 
 %description music
 Music for %name
 
 %prep
 %setup
-sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' graph.cpp
+#sed -i 's@"DejaVuSans-Bold.ttf"@"%_ttffontsdir/dejavu/DejaVuSans-Bold.ttf"@g' *.cpp
+# sed -i 's@"sounds/"@"%_datadir/%name/sounds/"@g' *.cpp
 
-%define sizes 16 24 32 48 64 96
-for s in %sizes; do
-	convert hr-icon.ico $s.png
-done
 cat > %name.desktop <<@@@
 [Desktop Entry]
 Type=Application
@@ -64,24 +62,40 @@ Icon=ImageMagick
 Exec=%name
 Terminal=false
 Categories=Game;RolePlaying;
-Comment[ru]=Roguelike-ÉÇÒÁ × ÎÅÅ×ËÌÉÄÏ×ÏÍ ÐÒÏÓÔÒÁÎÓÔ×Å
+Comment[ru]=Roguelike-игра в неевклидовом пространстве
 @@@
 
 %build
-%autoreconf
-%configure
-%make_build LDFLAGS=-lm CXXFLAGS="-O0 -g"
+## autoreconf
+## configure
+## %make_build LDFLAGS=-lm CXXFLAGS="-O0 -g"
+%make_build
+%define sizes 16 24 32 48 64 96
+for s in %sizes; do
+	magick hr-icon.ico $s.png
+done
 
 %install
-%makeinstall
+#makeinstall
+install -D %SOURCE1 %buildroot%_bindir/%name
+install %name %buildroot%_bindir/%name.bin
+install -d %buildroot%_datadir/%name
+for s in honeycombs hyperrogue-music.txt music sounds tessellations; do
+        cp -a "$s" %buildroot%_datadir/%name/
+done
 for s in %sizes; do
 	install -D $s.png %buildroot%_iconsdir/hicolor/${s}x${s}/apps/%name.png
 done
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
+# sounds
+# music
+# music/hyperrogue-music.txt
+# tessellations
+
 %files
-%doc %_defaultdocdir/%name
-%_bindir/%name
+%doc *.txt */*.txt
+%_bindir/%{name}*
 %_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
 
@@ -89,6 +103,12 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Tue May 12 2026 Fr. Br. George <george@altlinux.org> 2:13.1l-alt1
+- Autobuild version bump to 13.1l
+
+* Thu Apr 24 2025 Fr. Br. George <george@altlinux.org> 2:13.0w-alt1
+- Autobuild version bump to 13.0w
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1:112d-alt1
 - Autobuild version bump to 112d
 
