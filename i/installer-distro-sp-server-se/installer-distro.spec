@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt10
+Release: alt11
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -63,13 +63,15 @@ Summary: Cliff installer stage3 files
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
-%description net-eth-stage3
 Requires: installer-common-stage3
 Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: alterator-net-vlan
 Requires: installer-feature-nfs-server-stage3
+
+%description net-eth-stage3
+Cliff installer stage3 files.
 
 %prep
 %setup
@@ -101,6 +103,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Tue May 12 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt11
+- net-eth-stage3: fix dependencies.
+
 * Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt10
 - pkg-preinstall.d/00-pve.sh: fix for case when no group is selected.
 
