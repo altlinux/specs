@@ -5,7 +5,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.25.0
+Version: 6.26.0
 Release: alt1
 %K6init altplace
 
@@ -19,7 +19,7 @@ Patch1: alt-kreslimit-integration.patch
 Patch2: alt-smb-share.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: libudev-devel
+BuildRequires: libudev-devel libmount-devel
 %if_enabled python
 BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt6-devel
@@ -140,6 +140,9 @@ sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmi
 
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
+- new version
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kcalendarcore
 
 Name: kf6-%rname
-Version: 6.25.0
+Version: 6.26.0
 Release: alt1
 %K6init altplace
 
@@ -56,7 +56,9 @@ KF6 library
 %setup -n %rname-%version
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -78,6 +80,9 @@ KF6 library
 %_K6qml/org/kde/calendarcore/
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
+- new version
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
 - new version
 

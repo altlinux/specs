@@ -1,8 +1,8 @@
 %define rname kimageformats
 
 Name: kf6-%rname
-Version: 6.25.0
-Release: alt2
+Version: 6.26.0
+Release: alt1
 %K6init altplace
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ developing applications that use %name.
 %_libdir/cmake/KF6ImageFormats/
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
+- new version
+
 * Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt2
 - build with libraw0-devel
 

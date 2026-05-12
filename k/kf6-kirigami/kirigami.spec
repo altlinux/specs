@@ -12,9 +12,13 @@
 %define libkirigamipolyfill libkirigamipolyfill%sover
 %define libkirigamitemplates libkirigamitemplates%sover
 %define libkirigamicontrols libkirigamicontrols%sover
+%define libkirigamiforms libkirigamiforms%sover
+%define libkirigamiformsprivatecards libkirigamiformsprivatecards%sover
+%define libkirigamiformsprivateflat libkirigamiformsprivateflat%sover
+%define libkirigamiformsprivatetemplates libkirigamiformsprivatetemplates%sover
 
 Name: kf6-kirigami
-Version: 6.25.0
+Version: 6.26.0
 Release: alt1
 %K6init altplace
 
@@ -143,6 +147,34 @@ Requires: %name-common >= %EVR
 %description -n %libkirigamicontrols
 %name library
 
+%package -n %libkirigamiformsprivatetemplates
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiformsprivatetemplates
+%name library
+
+%package -n %libkirigamiforms
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiforms
+%name library
+
+%package -n %libkirigamiformsprivatecards
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiformsprivatecards
+%name library
+
+%package -n %libkirigamiformsprivateflat
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiformsprivateflat
+%name library
+
 %prep
 %setup -n %rname-%version
 %ifarch %e2k
@@ -204,8 +236,23 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigamitemplates
 %_K6lib/libKirigamiTemplates.so.%sover
 %_K6lib/libKirigamiTemplates.so.*
+%files -n %libkirigamiforms
+%_K6lib/libKirigamiForms.so.%sover
+%_K6lib/libKirigamiForms.so.*
+%files -n %libkirigamiformsprivatecards
+%_K6lib/libKirigamiFormsPrivateCards.so.%sover
+%_K6lib/libKirigamiFormsPrivateCards.so.*
+%files -n %libkirigamiformsprivateflat
+%_K6lib/libKirigamiFormsPrivateFlat.so.%sover
+%_K6lib/libKirigamiFormsPrivateFlat.so.*
+%files -n %libkirigamiformsprivatetemplates
+%_K6lib/libKirigamiFormsPrivateTemplates.so.%sover
+%_K6lib/libKirigamiFormsPrivateTemplates.so.*
 
 %changelog
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
+- new version
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
 - new version
 
