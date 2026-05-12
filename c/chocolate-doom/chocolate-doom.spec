@@ -1,6 +1,6 @@
 Name: chocolate-doom
-Version: 3.0.1
-Release: alt2
+Version: 3.1.1
+Release: alt1
 Group: Games/Arcade
 Summary: Historically compatible Doom engine
 License: GPLv2+
@@ -92,7 +92,7 @@ To do this, put the file into %_gamesdatadir/doom.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 
 %build
 autoreconf -fi
@@ -288,6 +288,9 @@ EOF
 %_man6dir/chocolate-strife-setup.6.*
 
 %changelog
+* Tue May 12 2026 Artyom Bystrov <arbars@altlinux.org> 3.1.1-alt1
+- update to new version
+
 * Thu Feb 04 2021 Artyom Bystrov <arbars@altlinux.org> 3.0.1-alt2
 - enable build to number of packages (thanks to ROSA Team!)
 
