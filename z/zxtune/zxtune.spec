@@ -1,6 +1,7 @@
+%set_gcc_version 14
 Name:    zxtune
 Version: r5075
-Release: alt1.git44be56a
+Release: alt2.git44be56a
 
 Summary: Crossplatform chiptune player
 License: GPL
@@ -12,7 +13,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(Pre): rpm-macros-qt5
-BuildRequires: qt5-base-devel qt5-tools qt5-wayland-devel make gcc-c++ boost-devel boost-interprocess-devel boost-program_options-devel boost-locale-devel zlib-devel libalsa-devel libpulseaudio-devel zip unzip
+BuildRequires: qt5-base-devel qt5-tools qt5-wayland-devel make gcc14-c++ boost-devel boost-interprocess-devel boost-program_options-devel boost-locale-devel zlib-devel libalsa-devel libpulseaudio-devel zip unzip
 
 %description
 %summary
@@ -25,7 +26,8 @@ sed -i 's/defined(__LCC__)/0/' 3rdparty/curl/curlbuild.h
 %endif
 
 %build
-%make_build qt.includes=/usr/include/qt5 tools.uic=uic-qt5 tools.moc=moc-qt5 tools.rcc=rcc-qt5 system.zlib=1 release=1 -C ./apps platform=linux
+%add_optflags -std=gnu17 -fPIC
+%make_build CFLAGS="-std=gnu17" qt.includes=/usr/include/qt5 tools.uic=uic-qt5 tools.moc=moc-qt5 tools.rcc=rcc-qt5 system.zlib=1 release=1 -C ./apps platform=linux
 
 %install
 mkdir -p %buildroot{%_bindir,%_datadir/%name,%_desktopdir,%_iconsdir}
@@ -48,6 +50,9 @@ install -Dpm0644 ./apps/zxtune123/dist/dingux/zxtune.png %buildroot%_iconsdir/%n
 %_iconsdir/%name.png
 
 %changelog
+* Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> r5075-alt2.git44be56a
+- Set GCC14 by default
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> r5075-alt1.git44be56a
 - Update to new version
 
