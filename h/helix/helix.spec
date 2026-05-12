@@ -3,7 +3,7 @@
 
 Name: helix
 Version: 25.07.1
-Release: alt1
+Release: alt2
 
 Summary: A post-modern modal text editor written in Rust
 License: MPL-2.0
@@ -16,12 +16,14 @@ Source: %name-%version.tar
 Source1: vendor-%version.tar
 Source2: grammars-%version.tar
 Patch1: alt-use-local-grammar-sources.patch
-Patch2: alt-fix-build-x86-arch.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: cargo-vendor-checksum
 BuildRequires: rust-cargo
 BuildRequires: gcc-c++
+%ifarch %ix86
+BuildRequires: clang
+%endif
 
 %description
 A kakoune/neovim inspired modal text editor with built-in LSP and
@@ -37,10 +39,7 @@ Requires: %name >= %EVR
 
 %prep
 %setup -a1 -a2
-%patch1 -p1
-%ifarch %ix86
-%patch2 -p1
-%endif
+%autopatch -p1
 %__rm -rf runtime/grammars
 %__mv grammars runtime/
 
@@ -57,16 +56,14 @@ cargo-vendor-checksum --vendor vendor --all
 
 %build
 export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
-%rust_build \
 %ifarch %ix86
-    --no-default-features \
+export CC=clang
+export CXX=clang++
 %endif
-    #
+%rust_build
 
-%if_with check
 %check
 %rust_test
-%endif
 
 %install
 %__rm -rf ./runtime/grammars/sources
@@ -108,6 +105,9 @@ export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Tue May 12 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 25.07.1-alt2
+- fix ftbfs
+
 * Wed Sep 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.07.1-alt1
 - new version
 - exclude the gitcommit grammar when building for the x86 architecture
