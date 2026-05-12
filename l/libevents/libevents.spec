@@ -3,7 +3,7 @@
 
 Name: libevents
 Version: 2026.01.13
-Release: alt1
+Release: alt2
 
 Summary: Events interface project by MAVLink
 License: BSD-3-Clause
@@ -52,6 +52,9 @@ Shared libraries for libevents.
 %prep
 %setup -q
 %autopatch -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' libs/cpp/{parse,tests}/CMakeLists.txt
+%endif
 
 %build
 pushd libs/cpp
@@ -79,5 +82,8 @@ popd
 %_libdir/libevents_parser.so.%abiversion
 
 %changelog
+* Tue May 12 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2026.01.13-alt2
+- e2k build fix
+
 * Tue Jan 13 2026 Ilya Muhamadeev <nicourced@altlinux.org> 2026.01.13-alt1
 - Initial build.
