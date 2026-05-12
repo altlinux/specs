@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 5.040
+Version: 5.048
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -21,7 +21,7 @@ BuildRequires: perl-podlators tex(dehypht.tex) help2man
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-distro
-BuildRequires: gdb /proc
+BuildRequires: gdb /proc /dev/pts
 
 %description
 Verilator is the fastest free Verilog HDL simulator, and beats most commercial
@@ -74,6 +74,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Tue May 12 2026 Andrey Kovalev <ded@altlinux.org> 5.048-alt1
+- new version 5.048
+
 * Tue Sep 16 2025 Andrey Kovalev <ded@altlinux.org> 5.040-alt1
 - new version 5.040
 
