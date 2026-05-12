@@ -2,7 +2,7 @@
 %global bin_name difft
 
 Name: difftastic
-Version: 0.68.0
+Version: 0.69.0
 Release: alt1
 
 Summary: A structural diff that understands syntax
@@ -39,6 +39,9 @@ Difftastic is a structural diff tool that compares files based on their syntax.
 %_bindir/%bin_name
 
 %changelog
+* Fri May 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.69.0-alt1
+- Updated to version 0.69.0.
+
 * Wed Apr 15 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.68.0-alt1
 - Updated to version 0.68.0.
 
