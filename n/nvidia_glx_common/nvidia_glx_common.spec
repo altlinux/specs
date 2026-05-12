@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 58
 %define nv_minor 03
-%define pkg_rel alt310
+%define pkg_rel alt311
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri May 08 2026 Anton Golubev <golubevan@altlinux.org> 595.58.03-alt311
+- remove SimpleDRM device when nvidia-drm loads via udev rule
+
 * Mon May 04 2026 Sergey V Turchin <zerg@altlinux.org> 595.58.03-alt310
 - exclude nvidia-peermem from initrd
 
