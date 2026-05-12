@@ -1,5 +1,5 @@
 Name: unvanquished-data
-Version: 0.56.1
+Version: 0.56.2
 Release: alt1
 
 Summary: Data files for Unvanquished
@@ -33,6 +33,9 @@ cp -r pkg/* %buildroot%_datadir/unvanquished/pkg/
 %_datadir/unvanquished/pkg/
 
 %changelog
+* Wed May 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.2-alt1
+- 0.56.1 -> 0.56.2
+
 * Thu Mar 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.1-alt1
 - 0.55.5 -> 0.56.1
 
