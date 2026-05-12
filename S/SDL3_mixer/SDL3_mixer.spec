@@ -1,5 +1,5 @@
 Name: SDL3_mixer
-Version: 3.2.0
+Version: 3.2.2
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
@@ -79,5 +79,8 @@ libraries.
 %_libdir/cmake/%name
 
 %changelog
+* Tue May 12 2026 Nazarov Denis <nenderus@altlinux.org> 3.2.2-alt1
+- New version 3.2.2.
+
 * Tue Mar 10 2026 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1
 - Initial build for ALT Linux (ALT #54137)
