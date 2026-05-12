@@ -1,5 +1,5 @@
 Name: libXt
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: X Toolkit Library
 License: MIT/X11
@@ -50,6 +50,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Tue May 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
