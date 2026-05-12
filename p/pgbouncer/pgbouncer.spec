@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.25.1
+Version:    1.25.2
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
@@ -116,8 +116,11 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Tue May 12 2026 Alexei Takaseev <taf@altlinux.org> 1.25.2-alt1
+- 1.25.2 (Fixes: CVE-2026-6664, CVE-2026-6665, CVE-2026-6666, CVE-2026-6667)
+
 * Thu Dec 04 2025 Alexei Takaseev <taf@altlinux.org> 1.25.1-alt1
-- 1.25.0 (Fixes: CVE-2025-12819)
+- 1.25.1 (Fixes: CVE-2025-12819)
 - Drop pgbouncer-1.25.0-Fix-build-on-i586.patch (Fix upstream)
 
 * Mon Nov 10 2025 Alexei Takaseev <taf@altlinux.org> 1.25.0-alt1
