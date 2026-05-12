@@ -8,12 +8,12 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	595.58.03
+%define package_version	595.71.05
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt3
+%define module_release	alt1
 %define flavour		6.12
 %define karch x86_64 aarch64
 
@@ -325,6 +325,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue May 12 2026 Sergey V Turchin <zerg at altlinux dot org> 595.71.05-alt1
+- new version (595.71.05)
 
 * Tue May 05 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt3
 - using open kernel module by default

@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 595
-%define nv_release 58
-%define nv_minor 03
-%define pkg_rel alt311
+%define nv_release 71
+%define nv_minor 05
+%define pkg_rel alt312
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -266,7 +266,7 @@ mkdir -p %buildroot/etc/modprobe.d/
 install -m 0644 %SOURCE13 %buildroot/etc/modprobe.d/nvidia_common.conf
 # setup make-initrd
 mkdir -p %buildroot/%_datadir/make-initrd/features/nvidia/
-echo "BLACKLIST_MODULES += nvidia nvidia-drm nvidia-modeset nvidia-peermem" >%buildroot/%_datadir/make-initrd/features/nvidia/config.mk
+echo "BLACKLIST_MODULES += nvidia nvidia-uvm nvidia-drm nvidia-modeset nvidia-peermem" >%buildroot/%_datadir/make-initrd/features/nvidia/config.mk
 # nvidia-sleep
 install -Dpm 0644 nvidia-sleep/nvidia-sleep-tmpfiles.conf %buildroot/lib/tmpfiles.d/nvidia-sleep.conf
 mkdir -p %buildroot/%_unitdir/
@@ -362,6 +362,10 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt312
+- new version
+- exclude nvidia-uvm from initrd
+
 * Fri May 08 2026 Anton Golubev <golubevan@altlinux.org> 595.58.03-alt311
 - remove SimpleDRM device when nvidia-drm loads via udev rule
 
