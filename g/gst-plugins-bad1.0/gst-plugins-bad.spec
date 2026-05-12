@@ -46,7 +46,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -245,6 +245,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue May 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.3-alt1
+- 1.28.3
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.2-alt1
 - 1.28.2
 
