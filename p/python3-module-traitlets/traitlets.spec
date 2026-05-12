@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.14.3
-Release: alt2
+Version: 5.15.0
+Release: alt1
 
 Summary: Traitlets Python config system
 
@@ -54,11 +54,7 @@ sed -i 's/"--color=yes",//' pyproject.toml
 %pyproject_install
 
 %check
-# https://github.com/ipython/traitlets/issues/925
-%pyproject_run_pytest -v --ignore tests/test_typing.py -k "\
-not test_complete_simple_app \
-and not test_complete_custom_completers \
-and not test_complete_subcommands_subapp1"
+%pyproject_run_pytest -v
 
 %files
 %doc README.*
@@ -70,6 +66,9 @@ and not test_complete_subcommands_subapp1"
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat May 09 2026 Anton Vyatkin <toni@altlinux.org> 5.15.0-alt1
+- new version 5.15.0
+
 * Wed Oct 22 2025 Anton Vyatkin <toni@altlinux.org> 5.14.3-alt2
 - fixed ftbfs
 
