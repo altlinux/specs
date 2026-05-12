@@ -8,7 +8,7 @@ epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.12
-%define kernel_sublevel .79
+%define kernel_sublevel .86
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -26,7 +26,7 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	10
+%define kgcc_version	%__gcc_version_base
 
 #Remove oss
 %def_disable oss
@@ -441,6 +441,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon May 11 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:6.12.86-alt1
+- Updated to 6.12.86
+- https://github.com/raspberrypi/linux.git rpi-6.12.y commit 725b41be77c69541becda6f1f86b5fc5c0b9104e
+- Baikal-M support http://git.altlinux.org/people/kernelbot/packages/kernel-image.git
+- Use the default gcc version (Closes: 59040)
+
 * Tue Apr 07 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:6.12.79-alt1
 - Updated to 6.12.79
 - https://github.com/raspberrypi/linux.git rpi-6.12.y commit 5f23da14d91d4ba66604ec75453564e4e2afc57e
