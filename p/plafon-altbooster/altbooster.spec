@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.6.9
-Release: alt1
+Release: alt2
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -45,6 +45,9 @@ install -d %buildroot
 %_bindir/%%oname
 
 %changelog
+* Wed May 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.9-alt2
+- updated to git.aada969bcb
+
 * Tue Mar 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.9-alt1
 - 5.6.8 -> 5.6.9
 
