@@ -3,25 +3,22 @@
 %def_with check
 
 Name: ctre
-Version: 3.10.0
-Release: alt2
+Version: 3.11.0
+Release: alt1
 Summary: Compile Time Regular Expression in C++
 License: Apache-2.0
 Group: Development/C++
 URL: https://compile-time.re
 VCS: https://github.com/hanickadot/compile-time-regular-expressions
 
-# Source-url: https://github.com/hanickadot/compile-time-regular-expressions/archive/refs/tags/v%version.tar.gz
+# Source-url: %vcs/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch: ctre-3.10.0-noarch.patch
-Patch2: docs-theme-fix.patch
-# https://github.com/hanickadot/compile-time-regular-expressions/issues/253
-Patch3: unsigned-char-test-fix.patch
+Patch: ctre-3.11.0-noarch.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
-BuildRequires: %_bindir/python3 python3-module-sphinx
+BuildRequires: cmake %_bindir/python3
+BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
 # Tests
 %if_with check
 BuildRequires: gcc-c++
@@ -83,6 +80,10 @@ sphinx-build docs doc
 %doc doc/*
 
 %changelog
+* Tue May 12 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt1
+- New version 3.11.0.
+- Minor spec cleanup.
+
 * Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.0-alt2
 - Fix noarch-ness issue when other modules try to find ctre.
 
