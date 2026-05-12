@@ -3,16 +3,18 @@
 %define _name ddterm
 %define ver_major 63
 %define beta %nil
+# too many names since 63.0.1
 %define uuid %_name@amezin.github.com
-%define xdg_name com.github.amezin.%_name
-%define gti_ver c4dfd4a
+%define rdn_name com.github.amezin.%_name
+%define xdg_name org.gnome.shell.extensions.%_name
+%define gti_ver 41079b27
 
 %def_enable check
 
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.0.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 %define gettext_domain %name
@@ -66,14 +68,17 @@ xvfb-run %meson_build
 xvfb-run %__meson_test
 
 %files -f %gettext_domain.lang
-%_bindir/%xdg_name
-%_desktopdir/%xdg_name.desktop
-%_datadir/dbus-1/services/%xdg_name.service
+%_bindir/%rdn_name
+%_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/gnome-shell/extensions/%uuid/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %doc README.md
 
 %changelog
+* Tue May 12 2026 Yuri N. Sedunov <aris@altlinux.org> 63.0.1-alt1
+- 63.0.1
+
 * Mon Apr 27 2026 Yuri N. Sedunov <aris@altlinux.org> 63.0.0-alt1
 - 63.0.0 (GNOME 50 supported)
 
