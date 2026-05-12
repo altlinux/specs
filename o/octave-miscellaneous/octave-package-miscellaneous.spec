@@ -5,17 +5,19 @@ BuildRequires: makeinfo
 %define octpkg miscellaneous
 Epoch: 4
 Name: octave-%octpkg
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Summary: Miscellaneous functions
 
 Group: Sciences/Mathematics
-License: GPLv3+
+License: GPL-3.0-or-later
 URL: http://octave.sf.net
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch: octave-miscellaneous-python.patch
 
 BuildRequires(pre): rpm-build-octave
+BuildRequires: rpm-build-python3
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -39,8 +41,7 @@ Miscellaneous tools that don't fit somewhere else.
 
 %prep
 %setup -q -n %{octpkg}-%{version}
-# Fix shebang for python script
-subst 's,/usr/bin/python,%__python,' inst/physical_constant.py
+%patch -p2
 
 %build
 %octave_build
@@ -56,6 +57,10 @@ subst 's,/usr/bin/python,%__python,' inst/physical_constant.py
 %endif
 
 %changelog
+* Tue May 12 2026 Anton Midyukov <antohami@altlinux.org> 4:1.3.1-alt1
+- New version 1.3.1.
+- Add patch to python3 support.
+
 * Wed May 19 2021 Igor Vlasenko <viy@altlinux.org> 4:1.3.0-alt2
 - fixed build
 
