@@ -1,6 +1,6 @@
 
 Name: qdmr
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 
 Summary: GUI application and command-line-tool to program DMR radios
@@ -19,6 +19,7 @@ BuildRequires: libusb-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-location-devel
+BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-tools-devel
 
@@ -86,6 +87,9 @@ with libdmrconf. It is not required for QDMR users.
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Tue May 12 2026 Ivan A. Melnikov <iv@altlinux.org> 0.15.0-alt1
+- v0.15.0.
+
 * Tue Apr 07 2026 Ivan A. Melnikov <iv@altlinux.org> 0.14.1-alt1
 - v0.14.1.
 
