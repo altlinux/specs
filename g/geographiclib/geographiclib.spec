@@ -3,7 +3,7 @@
 
 Name: geographiclib
 Version: 2.7
-Release: alt1
+Release: alt2
 
 Summary: Small geodesic and triaxial ellipsoid computation library
 License: MIT
@@ -51,6 +51,9 @@ GeographicLib library.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+%endif
 
 %build
 %cmake -DBUILD_SHARED_LIBS=ON \
@@ -111,5 +114,8 @@ GeographicLib library.
 %doc %_defaultdocdir/GeographicLib-dev
 
 %changelog
+* Tue May 12 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.7-alt2
+- e2k build fix
+
 * Tue Jan 13 2026 Ilya Muhamadeev <nicourced@altlinux.org> 2.7-alt1
 - Initial build.
