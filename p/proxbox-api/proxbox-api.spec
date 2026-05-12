@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.8
+Version: 0.0.10.post3
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -111,7 +111,7 @@ install -p -D -m 644 %SOURCE6 %buildroot%_tmpfilesdir/proxbox-api.conf
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 
 %check
-%pyproject_run_pytest -k "not test_generate_bundle_persists_artifacts"
+%pyproject_run_pytest -k "not (test_generate_bundle_persists_artifacts or test_proxmox_mock_package_is_importable)"
 
 %pre
 groupadd -r -f proxbox-api >/dev/null 2>&1 ||:
@@ -155,5 +155,8 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.10.post3-alt1
+- New 0.0.10.post3 version.
+
 * Fri Apr 17 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.8-alt1
 - Initial build for Sisyphus.

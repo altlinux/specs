@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.10
+Version: 4.6.0
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -24,9 +24,10 @@ BuildRequires: python3-module-mkdocs-material >= 9.7.6
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.4
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.3
+BuildRequires: python3-module-zensical >= 0.0.37
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 5.2.13
+Requires: python3-module-django >= 6.0.4
 Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 6.3.0
 Requires: python3-module-django-filter >= 25.2
@@ -34,7 +35,7 @@ Requires: python3-module-django-htmx >= 1.27.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
 Requires: python3-module-django-mptt >= 0.18
 Requires: python3-module-django-pglocks >= 1.0.4
-Requires: python3-module-django-prometheus >= 2.4.1
+Requires: python3-module-django-prometheus >= 2.4.0
 Requires: python3-module-django-redis >= 6.0.0
 Requires: python3-module-django-rich >= 2.2.0
 Requires: python3-module-django-rq >= 4.1.0
@@ -42,7 +43,7 @@ Requires: python3-module-django-storages >= 1.14.6
 Requires: python3-module-django-taggit >= 6.1.0
 Requires: python3-module-django-tables2 >= 2.8.0
 Requires: python3-module-django-timezone-field >= 7.2.1
-Requires: python3-module-djangorestframework >= 3.16.1
+Requires: python3-module-djangorestframework >= 3.17.1
 Requires: python3-module-drf-spectacular >= 0.29.0
 Requires: python3-module-drf-spectacular-sidecar >= 2026.5.1
 Requires: python3-module-feedparser >= 6.0.12
@@ -118,8 +119,7 @@ find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
 
 %build
 %if_with docs
-export PYTHONPATH=$PWD/netbox
-mkdocs build
+zensical build
 %endif
 
 %install
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu May 07 2026 Alexander Burmatov <thatman@altlinux.org> 4.6.0-alt1
+- New 4.6.0 version.
+
 * Tue May 05 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.10-alt1
 - New 4.5.10 version.
 

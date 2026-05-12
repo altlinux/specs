@@ -1,5 +1,5 @@
 Name:    netbox-proxbox
-Version: 0.0.11
+Version: 0.0.14
 Release: alt1
 
 Summary: Netbox Plugin for integration between Proxmox and Netbox
@@ -12,11 +12,11 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.5.0
+Requires: netbox >= 4.5.8
 Requires: python3-module-pydantic
 Requires: python3-module-requests
 Requires: python3-module-websockets
-Conflicts: netbox > 4.5.99
+Conflicts: netbox > 4.6.99
 
 BuildArch: noarch
 
@@ -44,6 +44,12 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-proxbox/README
 %_defaultdocdir/netbox-proxbox/README
 
 %changelog
+* Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.14-alt1
+- New 0.0.14 version.
+
+* Tue Apr 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.12-alt1
+- New 0.0.12 version.
+
 * Fri Apr 17 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.11-alt1
 - New 0.0.11 version.
 

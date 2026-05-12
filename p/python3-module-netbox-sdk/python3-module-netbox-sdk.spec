@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.7.post6
+Version: 0.0.8.post1
 Release: alt1
 
 Summary: Modern NetBox toolkit with an SDK, CLI and TUI (terminal UI) for faster automation
@@ -87,6 +87,9 @@ Django model browser and developer tools TUI.
 %python3_sitelibdir/netbox_tui
 
 %changelog
+* Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.8.post1-alt1
+- New 0.0.8.post1 version.
+
 * Fri Apr 24 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.7.post6-alt1
 - New 0.0.7.post6 version.
 

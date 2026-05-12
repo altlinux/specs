@@ -1,5 +1,5 @@
 Name:    netbox-ip-monitor
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Visual representation of IP addresses
@@ -13,7 +13,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 Requires: netbox >= 4.3.0
-Conflicts: netbox > 4.5.99
 
 BuildArch: noarch
 
@@ -41,6 +40,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %_defaultdocdir/%name/README
 
 %changelog
+* Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.1.5-alt1
+- Update version to 0.1.5.
+
 * Thu Feb 19 2026 Alexander Burmatov <thatman@altlinux.org> 0.1.4-alt1
 - Update version to 0.1.4.
 

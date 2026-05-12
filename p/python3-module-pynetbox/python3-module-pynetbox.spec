@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 7.6.1
+Version: 7.7.0
 Release: alt1
 
 Summary: Python API client library for Netbox
@@ -48,6 +48,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 7.7.0-alt1
+- New 7.7.0 version.
+
 * Wed Feb 04 2026 Alexander Burmatov <thatman@altlinux.org> 7.6.1-alt1
 - New 7.6.1 version.
 
