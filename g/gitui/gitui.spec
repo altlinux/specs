@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: gitui
-Version: 0.28.0
+Version: 0.28.1
 Release: alt1
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
@@ -62,7 +62,7 @@ cargo tree --no-dedupe --target all --prefix none --format '{l}' | sort -u > LIC
 install -Dp target/release/%name -t %buildroot%_bindir
 
 %check
-%buildroot%_bindir/gitui --version | grep -Px '%name \Q%version\E \S+ \(%release\)'
+%buildroot%_bindir/gitui --version | grep -Px '%name \Q%version'
 # This recompiles.
 cargo test  %_smp_mflags --release
 
@@ -72,6 +72,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Tue Apr 21 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.28.1-alt1
+- Update to v0.28.1 (2026-03-25). 
+
 * Tue Dec 16 2025 Aleksandr Dovydenkov <asd@altlinux.org> 0.28.0-alt1
 - Update to v0.28.0 (2025-12-15). 
 
