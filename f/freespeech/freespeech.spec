@@ -2,15 +2,33 @@
 
 Name:    freespeech
 Version: r1.0m.21
-Release: alt1
+Release: alt2
 
 Summary: English text preprocessor for MBROLA speech synthesizer
 License: GPL
 Group:   Other
 Url:     https://github.com/poretsky/freespeech
+VCS:     https://github.com/poretsky/freespeech.git
 
 Source: %name-%version.tar
-Patch0: Alt.patch
+
+# debian patches
+Patch000: 0001-Typo-fix.patch
+Patch001: 0002-Corrected-path-to-the-perl-interpreter.patch
+Patch002: 0003-C-library-regexp-support.patch
+Patch003: 0004-Berkeley-DB-instead-of-GDBM.patch
+Patch004: 0005-New-lexical-database-holding-utility.patch
+Patch005: 0006-Dictionary-enhancement.patch
+Patch006: 0007-Freephone-compilation.patch
+Patch007: 0008-Exclude-unused-code.patch
+Patch008: 0009-Minor-freephone-fixes.patch
+Patch009: 0010-Segmentation-fault-fix.patch
+Patch010: 0011-Memory-allocation-fix.patch
+Patch011: 0012-Numeric-values-pronunciation-fix.patch
+Patch012: 0013-Speak-leading-zeros-in-numbers.patch
+Patch013: 0014-General-Makefile.patch
+Patch014: 0015-Freed-memory-pointer-usage-fix.patch
+Patch015: hardening
 
 BuildRequires: libgdbm-devel
 BuildRequires: perl
@@ -23,7 +41,7 @@ freephone converts English text to phonemes.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %make_build
@@ -45,6 +63,9 @@ install -m644 debian/freephone.1 debian/lexholder-en.1 %buildroot%_man1dir/
 %_datadir/doc/enlex-data
 
 %changelog
+* Wed May 13 2026 Artem Semenov <savoptik@altlinux.org> r1.0m.21-alt2
+- Applied debian patches
+
 * Tue Aug 27 2024 Artem Semenov <savoptik@altlinux.org> r1.0m.21-alt1
 - Rebuild from new repo (ALT bug: 51043)
 
