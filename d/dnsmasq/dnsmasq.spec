@@ -6,7 +6,7 @@
 Name: dnsmasq
 Version: 2.92
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -20,6 +20,15 @@ Source4: %name.service
 Source5: %name@.service
 Source6: dbus.conf
 Patch: %name-%version-%release.patch
+
+# Patches from upstream.
+# Should be dropped when new versioan will be released.
+Patch100: CVE-2026-2291.diff
+Patch101: CVE-2026-4890.dnsmasq-2.92.diff
+Patch102: CVE-2026-4891.diff
+Patch103: CVE-2026-4892.diff
+Patch104: CVE-2026-4893.diff
+Patch105: CVE-2026-5172.diff
 
 BuildRequires: glibc-kernheaders
 
@@ -77,6 +86,13 @@ query/remove a DHCP server's leases.
 %prep
 %setup
 %patch -p1
+
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
@@ -175,6 +191,10 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Wed May 13 2026 Mikhail Efremov <sem@altlinux.org> 2.92-alt2
+- Patches from upstream (fixes: CVE-2026-2291, CVE-2026-4890,
+  CVE-2026-4891, CVE-2026-4892, CVE-2026-4893, CVE-2026-5172).
+
 * Wed Jan 21 2026 Mikhail Efremov <sem@altlinux.org> 2.92-alt1
 - Fixed build with -Werror on 32bit systems.
 - Driopped obsoleted patch.
