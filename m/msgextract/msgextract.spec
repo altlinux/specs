@@ -1,13 +1,13 @@
 Name: msgextract
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: Easily extract the contents of MSG or EML email files
 
 License: GPLv2
 Group: File tools
-Url: https://github.com/AlexanderShad/msgextract
-Vcs: https://github.com/AlexanderShad/msgextract
+Url: https://altlinux.space/shad/msgextract
+Vcs: https://altlinux.space/shad/msgextract
 
 Source: %name-%version.tar
 
@@ -29,6 +29,9 @@ install -Dm755 %name.sh %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu May 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt2
+- changed Url && Vcs
+
 * Mon Jan 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt1
 - Added extraction directly from EML file.
 
