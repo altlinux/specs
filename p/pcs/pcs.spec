@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pyagentx_version 0.4.pcs.2
+%define gemname pcsd
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.11.6
-Release:       alt3
+Version:       0.12.2
+Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -17,15 +18,7 @@ Source1:       pyagentx-v%pyagentx_version.tar.gz
 Source2:       pcsd
 Source3:       known-hosts
 Source4:       pcsd.gemspec
-Patch:         compat.patch
-Patch1:        disable-ruby-build.patch
-Patch2:        use-rackup-webrick.patch
-
-%add_python3_req_skip pyagentx
-Requires:      python3-module-pcs = %version
-Requires:      python3-module-snmp = %version
-Obsoletes:     pcs-pcsd < %EVR
-Provides:      pcs-pcsd = %EVR
+Patch:         ruby-install.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
@@ -47,12 +40,37 @@ BuildRequires: python3-module-tornado >= 6.0.0
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
+BuildRequires: gem(backports)
+BuildRequires: gem(childprocess)
+BuildRequires: gem(ethon)
+BuildRequires: gem(ffi)
+BuildRequires: gem(mustermann)
+BuildRequires: gem(nio4r)
+BuildRequires: gem(puma)
+BuildRequires: gem(rack-protection)
+BuildRequires: gem(rack-test)
+BuildRequires: gem(sinatra)
+BuildRequires: gem(tilt)
+BuildRequires: gem(bundler)
+BuildRequires: gem(io-console)
+BuildRequires: gem(json)
+BuildRequires: gem(power_assert)
+BuildRequires: gem(rexml)
+BuildRequires: gem(test-unit)
+BuildRequires: gem(rackup)
 
-%ruby_alias_names pcsd,pcs
+%add_python3_req_skip pyagentx
+Requires:      python3-module-pcs = %version
+Requires:      python3-module-snmp = %version
+Requires:      gem(pcsd) = 0.12.2
+Obsoletes:     pcs-pcsd < %EVR
+Provides:      pcs-pcsd = %EVR
+
+%ruby_ignore_names pcs
 
 %description
-Pacemaker/Corosync configuration system with remote access
-Pacemaker/Corosync gui/cli configuration system and daemon
+Pacemaker/Corosync configuration system with remote access.
+Pacemaker/Corosync gui/cli configuration system and daemon.
 
 %package       -n python3-module-pcs
 Summary:       Python module for pacemaker/corosync gui/cli configuration system and daemon
@@ -63,6 +81,7 @@ Requires:      pacemaker >= 2.0.3-alt2
 
 %description   -n python3-module-pcs
 Python module for pacemaker/corosync gui/cli configuration system and daemon
+
 
 %package       -n python3-module-snmp
 Group:         Development/Python3
@@ -77,6 +96,81 @@ Provides:      pcs-snmp = %EVR
 %description   -n python3-module-snmp
 SNMP agent that provides information about pacemaker cluster to the master
 agent (snmpd).
+
+
+%package       -n gem-pcsd
+Version:       0.12.2
+Release:       alt1
+Summary:       Pacemaker/Corosync configuration system service
+Group:         Development/Ruby
+
+Provides:      gem(pcsd) = 0.12.2
+Requires:      gem(backports)
+Requires:      gem(childprocess)
+Requires:      gem(ethon)
+Requires:      gem(ffi)
+Requires:      gem(mustermann)
+Requires:      gem(nio4r)
+Requires:      gem(puma)
+Requires:      gem(rack-protection)
+Requires:      gem(sinatra)
+Requires:      gem(tilt)
+Requires:      gem(rackup)
+
+%description   -n gem-pcsd
+Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
+
+
+%if_enabled    doc
+%package       -n gem-pcsd-doc
+Version:       0.12.2
+Release:       alt1
+Summary:       Pacemaker/Corosync configuration system service documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pcsd
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(pcsd) = 0.12.2
+
+%description   -n gem-pcsd-doc
+Pacemaker/Corosync configuration system service documentation files.
+
+Pacemaker/Corosync configuration system with remote access.
+Pacemaker/Corosync gui/cli configuration system and daemon.
+
+%description   -n gem-pcsd-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета pcsd.
+%endif
+
+
+%if_enabled    devel
+%package       -n gem-pcsd-devel
+Version:       0.12.2
+Release:       alt1
+Summary:       Pacemaker/Corosync configuration system service development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pcsd
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(pcsd) = 0.12.2
+Requires:      gem(bundler)
+Requires:      gem(io-console)
+Requires:      gem(json)
+Requires:      gem(power_assert)
+Requires:      gem(rexml)
+Requires:      gem(test-unit)
+Requires:      gem(rack-test)
+
+%description   -n gem-pcsd-devel
+Pacemaker/Corosync configuration system service development package.
+
+Pacemaker/Corosync configuration system with remote access.
+Pacemaker/Corosync gui/cli configuration system and daemon.
+
+%description   -n gem-pcsd-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета pcsd.
+%endif
+
 
 %prep
 %setup
@@ -96,6 +190,7 @@ export PATH=/sbin:$PATH
     --enable-local-build \
     --enable-use-local-cache-only \
     --enable-individual-bundling \
+    --disable-install-ruby-code \
     PYTHON=%__python3 \
     ENABLE_DOWNLOAD=false \
     INSTALL_EMBEDDED_GEMS=false \
@@ -121,6 +216,8 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/pcs/pcs_bundled/packages/
 # Remove wrong placed documentation
 rm -f %buildroot%_defaultdocdir/pcs/*.md
 
+%ruby_install
+
 %check
 %ruby_test
 
@@ -138,6 +235,7 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 
 %files
 %doc CHANGELOG.md COPYING README.md
+%_bindir/pcsd
 %_sbindir/pcs
 %_man8dir/*.*
 %exclude %_man8dir/pcs_snmp_agent.*
@@ -158,6 +256,11 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %systemd_unitdir/pcsd.service
 %systemd_unitdir/pcsd-ruby.service
 %_localstatedir/pcsd/known-hosts
+%_pkgconfigdir/%{name}.pc
+
+%files -n gem-pcsd
+%ruby_gemspec
+%ruby_gemlibdir
 
 %files -n python3-module-pcs
 %python3_sitelibdir_noarch/*
@@ -171,6 +274,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2-alt1
+- ^ 0.11.6 -> 0.12.2
+
 * Mon May 19 2025 Pavel Skrylev <majioa@altlinux.org> 1:0.11.6-alt3
 - > use webrick rackup handler for new rack 3.x (ALT #54154)
 
