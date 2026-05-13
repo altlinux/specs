@@ -1,22 +1,25 @@
+#Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define sover 4
 %define oname shapelib
+%def_enable check
+
 Name: libshape
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
-Summary: API in "C" for Shapefile handling
+Summary: The Shapefile C Library and Utilities
+
+License: LGPL-2.0-or-later OR MIT
 Group: Development/C
-# No version of the LGPL is given.
-License: LGPLv2+ or MIT
-Url: http://shapelib.maptools.org/
 
-Source: http://download.osgeo.org/shapelib/%oname-%version.tar
-BuildRequires: gcc-c++ libproj-devel
+URL: http://shapelib.maptools.org/
+VCS: https://github.com/OSGeo/shapelib
 
-%package devel
-Summary: Development files for shapelib
-Group: Development/Other
-Requires: %name = %EVR
+# Source-url: http://download.osgeo.org/shapelib/%oname-%version.tar
+Source: %oname-%version.tar
+
+BuildRequires: gcc-c++
 
 %description
 The Shapefile C Library provides the ability to write
@@ -24,14 +27,35 @@ simple C programs for reading, writing and updating (to a
 limited extent) ESRI Shapefiles, and the associated
 attribute file (.dbf).
 
+%package utils
+Summary: The ShapeLib Utilities
+Group: Other
+Obsoletes: libshape < %EVR
+
+%description utils
+These utilities for demonstrate the capabilities of the Shapefile C Library.
+
+%package -n libshp%sover
+Summary: The Shapefile C Library
+Group: System/Libraries
+Conflicts: libshape < %EVR
+
+%description -n libshp%sover
+%summary.
+
+%package devel
+Summary: Development files for Shapefile C Library
+Group: Development/C
+Requires: libshp%sover = %EVR
+
 %description devel
-This package contains libshp and the appropriate header files.
+This package provides include files and libraries
+for Shapefile C Library functions.
 
 %prep
 %setup -n %oname-%version
 
 %build
-%add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %autoreconf
 %configure --disable-static
 %make_build
@@ -39,18 +63,30 @@ This package contains libshp and the appropriate header files.
 %install
 %makeinstall_std
 
-%files
-%doc README README.tree ChangeLog web/*.html
+%check
+%make_build check
+
+%files utils
+%doc LICENSE-LGPL LICENSE-MIT README README.tree ChangeLog web/*.html
 %doc contrib/doc/
 %_bindir/*
-%_libdir/*.so.*
 
 %files devel
-%_includedir/*
+%_includedir/*.h
 %_libdir/*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/*.pc
+
+%files -n libshp%sover
+%_libdir/libshp.so.%sover
+%_libdir/libshp.so.%sover.*
 
 %changelog
+* Tue May 12 2026 Polina Poidenko <polipoki@altlinux.org> 1.6.3-alt1
+- New version 1.6.3.
+- Separate subpackage libshp4 in accordance with Shared Libs Policy.
+- Separate subpackage libshape-utils.
+- Rebuild without libproj.
+
 * Mon Nov 24 2025 Alexander Danilov <admsasha@altlinux.org> 1.6.2-alt1
 - New version 1.6.2 (Fixes: CVE-2022-0699).
 
