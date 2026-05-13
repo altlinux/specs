@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.7
+%define ver_major 0.8
 %define beta %nil
 %define _name mini-eq
 %define pypi_name mini_eq
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Mini EQ is a small parametric equalizer for PipeWire desktops
@@ -31,15 +31,17 @@ Source: %_name-%version%beta.tar
 BuildArch: noarch
 
 %define shell_ver 50
+%define pwg_ver 0.3.7
 
 Requires: pipewire wireplumber libebur128
 Requires: python3-module-pygobject3 python3(numpy)
+Requires: pipewire-gobject-gir >= %pwg_ver
 
 BuildRequires(pre):rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: python3(wheel) python3(setuptools)
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 %{?_enable_check:BuildRequires: python3(pytest)  python3(pytest-cov)
-BuildRequires: python3(numpy) python3(cairo) python3-module-pygobject3
+BuildRequires: git python3(numpy) python3(cairo) python3-module-pygobject3
 BuildRequires: typelib(Pwg) typelib(Adw) = 1}
 
 %description
@@ -92,6 +94,9 @@ cp -a extensions/gnome-shell/%uuid/* \
 %doc extensions/gnome-shell/README*
 
 %changelog
+* Wed May 13 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon May 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
 - first build for Sisyphus
 
