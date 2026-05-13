@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.2
+Version: 4.1.0
 Release: alt1
 
 Summary: The SQL Linter for Humans
@@ -36,7 +36,7 @@ SQLFluff is an open source, dialect-flexible and configurable SQL linter.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check 
+%if_with check
 %pyproject_deps_resync_check_pipreqfile requirements_dev.txt
 %endif
 
@@ -48,7 +48,7 @@ SQLFluff is an open source, dialect-flexible and configurable SQL linter.
 
 %check
 # deselect some tests due to incorect plugin registration
-%pyproject_run_pytest -vra test \
+%pyproject_run_pytest -n auto -vra test \
     --deselect='test/core/plugin_test.py::test__plugin_default_config_read[Example_L001-forbidden_columns]' \
     --deselect='test/core/plugin_test.py::test__plugin_example_rules_returned[Rule_Example_L001]' \
     --deselect='test/core/plugin_test.py::test__plugin_manager_registers_example_plugin'
@@ -60,6 +60,9 @@ SQLFluff is an open source, dialect-flexible and configurable SQL linter.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 13 2026 Anton Vyatkin <toni@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Tue Jul 15 2025 Anastasia Doronina <swaggyglice@altlinux.org> 3.4.2-alt1
 - Update to 3.4.2.
 
