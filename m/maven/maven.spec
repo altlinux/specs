@@ -23,7 +23,7 @@ BuildRequires: jpackage-default
 Name:           maven
 Epoch:          1
 Version:        3.8.8
-Release:        alt4
+Release:        alt5
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
 # bundled slf4j is MIT
@@ -149,6 +149,7 @@ sed -i 's:\r::' apache-maven/src/conf/settings.xml
 rm apache-maven/src/main/appended-resources/META-INF/LICENSE.vm
 
 # Disable plugins which are not useful for us
+%pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 %pom_remove_plugin -r :apache-rat-plugin
 %pom_remove_plugin -r :maven-site-plugin
@@ -268,6 +269,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Mon May 11 2026 Evgeniy Serov <scala@altlinux.org> 1:3.8.8-alt5
+- Removed maven-enforcer-plugin from build.
+
 * Thu Aug 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8.8-alt4
 - Added aopalliance and asm to libraries.
 

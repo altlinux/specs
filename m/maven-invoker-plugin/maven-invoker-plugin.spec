@@ -1,104 +1,61 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with     groovy
-
 Name:           maven-invoker-plugin
 Version:        3.9.0
-Release:        alt1
-Summary:        Maven Invoker Plugin
+Release:        alt2
+
+Summary:        Apache Maven Invoker Plugin
 License:        Apache-2.0
-URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
-BuildArch:      noarch
+Group:          Development/Java
+URL:            https://maven.apache.org/plugins/maven-invoker-plugin/
+VCS:            https://github.com/apache/maven-invoker-plugin
 
-Source0:        https://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version-source-release.zip
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-beanutils:commons-beanutils)
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(javax.inject:javax.inject)
-BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+BuildRequires:  unzip
+
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildREquires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildREquires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildREquires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
-BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
-BuildRequires:  mvn(org.assertj:assertj-core)
-%if %{with groovy}
-BuildRequires:  mvn(org.apache.groovy:groovy)
-BuildRequires:  mvn(org.apache.groovy:groovy-bom)
-BuildRequires:  mvn(org.apache.groovy:groovy-json)
-BuildRequires:  mvn(org.apache.groovy:groovy-xml)
-%endif
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
-BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-params)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
-Source44: import.info
+BuildREquires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildREquires:  mvn(org.apache.maven.shared:maven-script-interpreter)
+buildRequires:  mvn(org.mockito:mockito-core)
+# TODO: switch to mvn() prov, after fixing mockito bug
+BuildRequires:  osgi(org.mockito.junit-jupiter)
+
+BuildARch:      noarch
 
 %description
-The Maven Invoker Plugin is used to run a set of Maven projects. The plugin
-can determine whether each project execution is successful, and optionally
-can verify the output generated from a given project execution.
+The Invoker Plugin is used to run a set of Maven projects. The plugin can
+determine whether each project execution is successful, and optionally can
+verify the output generated from a given project execution.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
+This plugin is in particular handy to perform integration tests for other Maven
+plugins. The Invoker Plugin can be employed to run a set of test projects that
+have been designed to assert certain features of the plugin under test.
 
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q 
+%setup
 
-%if %{without groovy}
 %pom_remove_dep org.apache.groovy:
-%endif
 
 %build
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc LICENSE NOTICE
 
 %changelog
+* Sun May 10 2026 Evgeniy Serov <scala@altlinux.org> 3.9.0-alt2
+- Cleanup spec and rebuild with new maven-parent.
+
 * Mon Sep 08 2025 Anton Meleshnikov <alton@altlinux.org> 3.9.0-alt1
 - new version
 

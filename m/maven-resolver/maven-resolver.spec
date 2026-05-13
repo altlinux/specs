@@ -1,7 +1,7 @@
 Name:           maven-resolver
 Epoch:          1
 Version:        1.6.3
-Release:        alt3
+Release:        alt4
 
 License:        Apache-2.0
 Summary:        Apache Maven Artifact Resolver library
@@ -31,6 +31,8 @@ artifact transports and artifact resolution.
 
 %prep
 %setup
+
+%pom_remove_plugin :maven-enforcer-plugin
 
 %pom_disable_module maven-resolver-synccontext-redisson
 
@@ -68,6 +70,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Tue May 12 2026 Evgeniy Serov <scala@altlinux.org> 1:1.6.3-alt4
+- Removed maven-enforcer-plugin from build.
+
 * Sun Apr 05 2026 Evgeniy Serov <scala@altlinux.org> 1:1.6.3-alt3
 - Cleanup spec.
 - Enabled previously disabled modules.

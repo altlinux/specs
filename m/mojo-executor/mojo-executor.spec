@@ -1,101 +1,62 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# Testing note: this package relies on an old version of mockito.  Compilation
-# of the tests fails with the version of mockito currently in Fedora.  Porting
-# to the new version is needed.
-
 Name:           mojo-executor
-Version:        2.4.0
-Release:        alt1_1jpp11
-Summary:        Execute other plugins within a maven plugin
+Version:        2.4.1
+Release:        alt1
 
-License:        ASL 2.0
-URL:            https://mojo-executor.github.io/mojo-executor/
-Source0:        https://github.com/mojo-executor/mojo-executor/archive/%{name}-parent-%{version}.tar.gz
-# Remove dependency on ant-contrib, which no longer builds successfully
-Patch0:         %{name}-ant-contrib.patch
-# Fix a javadoc comment
-Patch1:         %{name}-javadoc.patch
+Summary:        Execute other plugins within a maven plugin
+License:        Apache-2.0
+Group:          Development/Java
+URL:            http://mojo-executor.github.io/mojo-executor/
+VCS:            https://github.com/mojo-executor/mojo-executor
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 
 BuildArch:      noarch
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.mockito:mockito-core)
-Source44: import.info
 
 %description
 The Mojo Executor provides a way to to execute other Mojos (plugins)
 within a Maven plugin, allowing you to easily create Maven plugins that
 are composed of other plugins.
 
-%package parent
-Group: Development/Java
-Summary:        Parent POM for mojo-executor
+%javadoc_package
 
-%description parent
-%{summary}.
-
-%package maven-plugin
-Group: Development/Java
+%package        maven-plugin
+Group:          Development/Java
 Summary:        Maven plugin for mojo-executor
 
-%description maven-plugin
-%{summary}.
-
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains %{summary}.
+%description    maven-plugin
+%summary.
 
 %prep
-%setup -q -n %{name}-%{name}-parent-%{version}
-%patch0 -p1
-%patch1 -p1
+%setup
 
-
-# sonatype-oss-parent is deprecated in Fedora
-%pom_remove_parent
-
-# We do not need jacoco since we do not run the tests
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :jacoco-maven-plugin
 
-# maven-release is not needed
-%pom_remove_plugin :maven-release-plugin
-
-# Modernize the junit dependency
-%pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project/pom.xml
-%pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-no-plugin-version/pom.xml
-%pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-null-maven-project/pom.xml
-%pom_change_dep :junit-dep :junit mojo-executor-maven-plugin/src/it/mojo-executor-test-project-quiet/pom.xml
+%mvn_package :%name-parent __noinstall
 
 %build
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -f
 
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}
-%doc --no-dereference LICENSE.txt
-%doc README.md
+%files -f .mfiles-mojo-executor
+%doc LICENSE.txt README.md
 
-%files parent -f .mfiles-%{name}-parent
-
-%files maven-plugin -f .mfiles-%{name}-maven-plugin
-
-%files javadoc -f .mfiles-javadoc
+%files maven-plugin -f .mfiles-mojo-executor-maven-plugin
 
 %changelog
+* Tue May 12 2026 Evgeniy Serov <scala@altlinux.org> 2.4.1-alt1
+- Updated to 2.4.1.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.4.0-alt1_1jpp11
 - new version
 

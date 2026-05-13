@@ -1,65 +1,53 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-parent
-Version:        39
+Version:        48
 Release:        alt1
-Summary:        Apache Maven parent POM
+
+Summary:        Apache Maven Project Parent POMs
 License:        Apache-2.0
-URL:            https://maven.apache.org
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Group:          Development/Java
+URL:            https://maven.apache.org/pom/maven/
+VCS:            https://github.com/apache/maven-parent
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-%endif
-Source44: import.info
-
 %description
-Apache Maven parent POM file used by other Maven projects.
+This POM is the common parent of all of the Maven components in the Apache Maven
+project. Most of its contents are pinning down version numbers of plugins. It
+does provide minimal dependencyManagement for plexus-component and plugin-tools
+annotations.
 
 %prep
-%setup -q
-%pom_disable_module apache-resource-bundles
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin -r :maven-scm-publish-plugin
-%pom_remove_plugin :spotless-maven-plugin
+%setup
 
-%pom_xpath_remove "pom:execution[pom:id='generate-helpmojo']" maven-plugins
+%pom_remove_plugin -r :maven-site-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-dependency-plugin
+%pom_remove_plugin -r :maven-checkstyle-plugin
+%pom_remove_plugin -r :apache-rat-plugin
+%pom_remove_plugin -r :maven-scm-publish-plugin
+%pom_remove_plugin -r :spotless-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc LICENSE README.md
 
 %changelog
+* Fri May 08 2026 Evgeniy Serov <scala@altlinux.org> 48-alt1
+- New version 48.
+
 * Mon May 05 2025 Anton Meleshnikov <alton@altlinux.org> 39-alt1
 - New version 39.
 

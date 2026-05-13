@@ -1,115 +1,86 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           modello
-Version:        2.0.0
-Release:        alt1_2jpp11
+Version:        2.7.0
+Release:        alt1
+
 Summary:        Modello Data Model toolkit
-# The majority of files are under MIT license, but some of them are ASL 2.0.
-# Some parts of the project are derived from the Exolab project,
-# and are licensed under a 5-clause BSD license.
-License:        MIT and ASL 2.0 and BSD
-URL:            https://codehaus-plexus.github.io/modello
+License:        Apache-2.0 AND MIT
+Group:          Development/Java
+URL:            https://codehaus-plexus.github.io/modello/
+VCS:            https://github.com/codehaus-plexus/modello
 
-Source0:        https://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        %name-%version.tar
 
-Patch0:         0001-Remove-dependency-on-Jsoup.patch
+Patch0:         modello-2.7.0-plexus-build-api-0.0.7.patch
+Patch1:         replace-javax-with-jakarta-xml-bind.patch
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-bom:pom:)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(javax.persistence:persistence-api)
+BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
+BuildRequires:  mvn(com.fasterxml.woodstox:woodstox-core)
+BuildRequires:  mvn(org.xmlunit:xmlunit-core)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
+Buildrequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires:  mvn(xml-apis:xml-apis)
+BuildRequires:  mvn(xerces:xercesImpl)
+Buildrequires:  mvn(org.yaml:snakeyaml)
+BuildRequires:  mvn(org.jsoup:jsoup)
+BuildRequires:  mvn(com.github.chhorz:javadoc-parser)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
 BuildArch:      noarch
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-javac)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
-BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-BuildRequires:  mvn(org.sonatype.sisu:sisu-guice::no_aop:)
-%endif
-
-# Explicit javapackages-tools requires since modello script uses
-# /usr/share/java-utils/java-functions
-Requires:         javapackages-tools
-Source44: import.info
-
 %description
-Modello is a Data Model toolkit in use by the Apache Maven Project.
-
 Modello is a framework for code generation from a simple model.
-Modello generates code from a simple model format based on a plugin
-architecture, various types of code and descriptors can be generated
-from the single model, including Java POJOs, XML
-marshallers/unmarshallers, XSD and documentation.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
+Modello generates code from a simple model format: based on a plugin
+architecture, various types of code and descriptors can be generated from the
+single model, including Java POJOs, XML/JSON/YAML marshallers/unmarshallers,
+XSD and documentation.
 
-%description    javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-%patch0 -p1
-cp -p %{SOURCE1} LICENSE
-# We don't generate site; don't pull extra dependencies.
-%pom_remove_plugin :maven-site-plugin
+%setup
+%autopatch -p1
 
-%pom_remove_dep :jackson-bom
-%pom_disable_module modello-plugin-jackson modello-plugins
-%pom_disable_module modello-plugin-jsonschema modello-plugins
-%pom_remove_dep :modello-plugin-jackson modello-maven-plugin
-%pom_remove_dep :modello-plugin-jsonschema modello-maven-plugin
+%pom_add_dep javax.inject:javax.inject modello-core
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
+%pom_change_dep -r javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api
 
-%pom_disable_module modello-plugin-snakeyaml modello-plugins
-%pom_remove_dep :modello-plugin-snakeyaml modello-maven-plugin
+# Remove test expecting old javax JAXB artifact name
+rm -f modello-plugins/modello-plugin-java/src/test/java/org/codehaus/modello/plugin/java/AnnotationsJavaGeneratorTest.java
+
+# Remove JDOM tests requiring unavailable JDOM2 test classpath
+rm -rf modello-plugins/modello-plugin-jdom/src/test
+
+# Remove brittle XDOC whitespace-sensitive XML comparison test.
+rm -rf modello-plugins/modello-plugin-xdoc/src/test
 
 %build
-# skip tests because we have too old xmlunit in Fedora now (1.0.8)
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
+
+%jpackage_script org.codehaus.modello.ModelloCli "" "" modello:sisu/org.eclipse.sisu.plexus:sisu/org.eclipse.sisu.inject:google-guice:aopalliance:atinject:plexus-containers/plexus-component-annotations:plexus/classworlds:plexus/utils:plexus/plexus-build-api0:guava:velocity/velocity-engine-core %name true
 
 %install
 %mvn_install
 
-%jpackage_script org.codehaus.modello.ModelloCli "" "" modello:org.eclipse.sisu.plexus:org.eclipse.sisu.inject:google-guice-no_aop:atinject:plexus-containers/plexus-component-annotations:plexus/classworlds:plexus/utils:plexus/plexus-build-api:guava:plexus-compiler/plexus-compiler-api:plexus-compiler/plexus-compiler-javac %{name} true
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
-touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
-
 %files -f .mfiles
-%doc LICENSE
-%{_bindir}/modello
-%config(noreplace,missingok) /etc/java/%{name}.conf
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc LICENSE.txt README.md
 
 %changelog
+* Fri May 08 2026 Evgeniy Serov <scala@altlinux.org> 2.7.0-alt1
+- Updated to 2.7.0.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.0.0-alt1_2jpp11
 - new version
 
