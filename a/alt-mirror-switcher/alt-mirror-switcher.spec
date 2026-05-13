@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.9.5
+Version: 0.10.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -42,7 +42,7 @@ Additional mirrors for %name.
 Summary: A terminal simple local mirror switcher for ALT
 Group: Other
 BuildArch: noarch
-BuildRequires: perl-String-Util
+BuildRequires: perl-String-Util perl-Date-Calc
 %description cli
 A terminal simple local mirror switcher for ALT.
 
@@ -85,6 +85,11 @@ fi
 %_bindir/ams
 
 %changelog
+* Thu May 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.0-alt1
+- cli: added set Sisyphus archive date
+- cli: added show version number
+- cli: splitted into several execution commands (use: ams --help)
+
 * Tue May 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.5-alt1
 - 0.9.4 -> 0.9.5
 
