@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.19.1
+Version: 1.19.3
 Release: alt1
 
 Summary: A memory profiler for Python
@@ -77,6 +77,9 @@ sed -i "s/\"textual\" *: *\"[0-9.]*\"/\"textual\": \"$TEXTUAL_VER\"/" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 13 2026 Ivan Khanas <xeno@altlinux.org> 1.19.3-alt1
+- New version.
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 1.19.1-alt1
 - Build new version.
 
