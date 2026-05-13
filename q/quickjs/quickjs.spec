@@ -1,5 +1,5 @@
 Name: quickjs
-Version: 2025.04.26
+Version: 2025.09.13.2
 Release: alt1
 
 Summary: small and embeddable Javascript engine
@@ -7,7 +7,7 @@ License: MIT
 Group: Development/Tools
 
 Url: https://bellard.org/quickjs/
-# repacked https://bellard.org/quickjs/quickjs-2025-04-26.tar.xz
+# repacked https://bellard.org/quickjs/quickjs-2025-09-13-2.tar.xz
 Source0: %name-%version.tar
 
 %define common_description \
@@ -83,5 +83,8 @@ sed -i 's|/usr/local|/usr|g' Makefile
 %doc doc/*
 
 %changelog
+* Wed May 13 2026 Nikolay Burykin <bne@altlinux.org> 2025.09.13.2-alt1
+- 2025.09.13.2
+
 * Wed Jul 01 2025 Nikolay Burykin <bne@altlinux.org> 2025.04.26-alt1
 - Initial build for ALT
