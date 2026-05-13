@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.10.3
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -326,6 +326,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed May 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- hide qdbusviewer from menu (closes: 59114)
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
