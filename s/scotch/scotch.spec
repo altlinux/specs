@@ -1,49 +1,129 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
+# Scotch links against either scotcherr or scotcherrexit,
+# symbols are left undefined; the end user is to choose
+%set_verify_elf_method unresolved=relaxed
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define sover 0
+%define sover 7.0
 
 Name: scotch
-Version: 5.1.12b
-Release: alt7.svn20110910
+Version: 7.0.11
+Release: alt1
 
 Summary: Package and libraries for sequential and parallel graph partitioning
-License: CeCILL-C
+License: CECILL-C
 Group: Sciences/Mathematics
 
-Url: http://www.labri.fr/perso/pelegrin/scotch/
+URL: http://www.labri.fr/perso/pelegrin/scotch
+VCS: https://gitlab.inria.fr/scotch/scotch
 
-# svn://scm.gforge.inria.fr/svn/scotch
-Source0: %{name}_%version.tar.gz
-Source1: %{name}_%{version}_esmumps.tar.gz
-Source2: Makefile.inc
-Source3: Makefile.inc.esmumps
-Source4: %name.pc
+# Source-url: %vcs/-/archive/v%version/%name-v%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: gcc-fortran libgfortran-devel bison flex chrpath
-BuildRequires: libibverbs-devel libibumad-devel zlib-devel
+Patch: disable-scotchmetisv3.patch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-fortran libgfortran-devel bison flex cmake
+BuildRequires: zlib-devel bzlib-devel liblzma-devel
 BuildRequires: glibc-devel %mpiimpl-devel
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 Scotch is a software package and libraries for sequential and parallel graph
 partitioning, static mapping, and sparse matrix block ordering, and sequential
 mesh and hypergraph partitioning.
 
-%package -n lib%name
+%package -n libscotch%sover
 Summary: Shared libraries of Scotch
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libscotch%sover
 Scotch is a software package and libraries for sequential and parallel graph
 partitioning, static mapping, and sparse matrix block ordering, and sequential
 mesh and hypergraph partitioning.
 
 This package contains shared libraries of Scotch.
 
+%package -n libesmumps%sover
+Summary: MUMPS interface component for Scotch
+Group: System/Libraries
+Requires: libscotch%sover = %EVR
+
+%description -n libesmumps%sover
+Scotch is a software package and libraries for sequential and parallel graph
+partitioning, static mapping, and sparse matrix block ordering, and sequential
+mesh and hypergraph partitioning.
+
+This package contains MUMPS interface component for Scotch.
+
+%package -n libscotchmetis%sover
+Summary: MeTiS compatibility library for Scotch
+Group: System/Libraries
+Requires: libscotch%sover = %EVR
+
+%description -n libscotchmetis%sover
+Scotch is a software package and libraries for sequential and parallel graph
+partitioning, static mapping, and sparse matrix block ordering, and sequential
+mesh and hypergraph partitioning.
+
+This package contains MeTiS compatibility library for Scotch.
+
+%package -n libptscotch%sover
+Summary: Shared libraries of PT-Scotch
+Group: System/Libraries
+Requires: libscotch%sover = %EVR
+
+%description -n libptscotch%sover
+Scotch is a software package and libraries for sequential and parallel graph
+partitioning, static mapping, and sparse matrix block ordering, and sequential
+mesh and hypergraph partitioning.
+
+This package contains shared libraries of PT-Scotch, the parallelized version
+of Scotch.
+
+%package -n libptesmumps%sover
+Summary: MUMPS interface component for PT-Scotch
+Group: System/Libraries
+Requires: libptscotch%sover = %EVR
+
+%description -n libptesmumps%sover
+Scotch is a software package and libraries for sequential and parallel graph
+partitioning, static mapping, and sparse matrix block ordering, and sequential
+mesh and hypergraph partitioning.
+
+This package contains MUMPS interface component for PT-Scotch, the parallelized
+version of Scotch.
+
+%package -n libptscotchparmetis%sover
+Summary: ParMeTiS compatibility library for PT-Scotch
+Group: System/Libraries
+Requires: libptscotch%sover = %EVR
+
+%description -n libptscotchparmetis%sover
+Scotch is a software package and libraries for sequential and parallel graph
+partitioning, static mapping, and sparse matrix block ordering, and sequential
+mesh and hypergraph partitioning.
+
+This package contains ParMeTiS compatibility library for PT-Scotch,
+the parallelized version of Scotch.
+
 %package -n lib%name-devel
 Summary: Development files of Scotch
 Group: Development/Other
-Requires: lib%name = %version-%release
+Provides: %name-devel = %EVR
+Requires: libscotch%sover = %EVR
+Requires: libesmumps%sover = %EVR
+Requires: libscotchmetis%sover = %EVR
+Requires: libptscotch%sover = %EVR
+Requires: libptesmumps%sover = %EVR
+Requires: libptscotchparmetis%sover = %EVR
 
 %description -n lib%name-devel
 Scotch is a software package and libraries for sequential and parallel graph
@@ -52,21 +132,11 @@ mesh and hypergraph partitioning.
 
 This package contains development files of Scotch.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of Scotch
-Group: Development/Other
-
-%description -n lib%name-devel-static
-Scotch is a software package and libraries for sequential and parallel graph
-partitioning, static mapping, and sparse matrix block ordering, and sequential
-mesh and hypergraph partitioning.
-
-This package contains static libraries of Scotch.
-
 %package -n lib%name-devel-doc
 Summary: Development documentation and example source code for Scotch
 Group: Development/Other
 BuildArch: noarch
+Provides: %name-doc = %EVR
 
 %description -n lib%name-devel-doc
 Scotch is a software package and libraries for sequential and parallel graph
@@ -77,7 +147,7 @@ This package contains development documentation and example source code
 for Scotch.
 
 %package data
-Summary: grf files for Scotch
+Summary: GRF and TGT files for Scotch
 Group: Development/Other
 BuildArch: noarch
 
@@ -90,91 +160,24 @@ This package contains GRF and TGT files for Scotch.
 
 %prep
 %setup
-tar -xzf %SOURCE1
-install -pm644 %SOURCE2 %SOURCE3 %SOURCE4 .
+%autopatch -p1
 
-%if "%_lib" == "lib64"
-LIB64=64
-%endif
-sed -i "s|@64@|$LIB64|g" %name.pc
+iconv -f windows-1252 -t utf-8 doc/CeCILL-C_V1-en.txt -o CeCILL-C_V1-en.txt
 
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
-
-pushd src
-export MPIDIR=%mpidir
-export datarootdir=%_datadir
-ln -s ../Makefile.inc .
-%make_build
-%make_build ptscotch
-popd
-
-pushd esmumps/src
-ln -s ../../Makefile.inc.esmumps Makefile.inc
-%make_build
-popd
+%cmake \
+	-DBUILD_SHARED_LIBS=ON \
+	-DCMAKE_INSTALL_INCLUDEDIR=%_includedir/%name
+%cmake_build
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+%cmake_install
 
-pushd src
-install -d %buildroot%_bindir
-install -d %buildroot%_includedir
-install -d %buildroot%_libdir
-install -d %buildroot%_pkgconfigdir
-install -d %buildroot%_man1dir
-install -d %buildroot%_docdir/%name
-install -d %buildroot%_datadir/%name/grf
-install -d %buildroot%_datadir/%name/tgt
-%makeinstall
-popd
-
-install esmumps/lib/libesmumps.a %buildroot%_libdir
-
-install -p -m644 grf/* %buildroot%_datadir/%name/grf
-install -p -m644 esmumps/tgt/* %buildroot%_datadir/%name/tgt
-install -p -m644 esmumps/src/esmumps/esmumps.h %buildroot%_includedir
-
-%ifarch x86_64
-install -m644 lib/* %buildroot%_libdir
-%endif
-
-sed -i 's|@VERSION@|%version|' %name.pc
-install -m644 %name.pc %buildroot%_pkgconfigdir
-
-# shared libraries
-pushd %buildroot%_libdir
-for i in $(ls *.a|sed 's|\.a||'); do
-	case $i in
-		libscotcherr)
-			ADDLIB=
-			;;
-		libscotch)
-			ADDLIB="-lscotcherr -lpthread"
-			;;
-		libptscotchparmetis)
-			ADDLIB="-lptscotch -lscotch -lscotcherr"
-			;;
-		libptscotch)
-			ADDLIB="-lscotch -lscotcherr -lpthread"
-			;;
-		*)
-			ADDLIB="-lscotch -lscotcherr"
-			;;
-	esac
-	ar x $i.a
-	mpicc -shared *.o -L. $ADDLIB -lz -lm -lrt \
-		-Wl,-R%mpidir/lib \
-		-Wl,-soname,$i.so.%sover -o $i.so.%sover
-	ln -s $i.so.%sover $i.so
-	chrpath -r %mpidir/lib $i.so
-	rm -f *.o
-done
-popd
-rm -f %buildroot%_libdir/*.a
+install -pD -m644 -t %buildroot%_datadir/%name/grf grf/*
+install -pD -m644 -t %buildroot%_datadir/%name/tgt tgt/*
 
 # fix binary file names
 pushd %buildroot%_bindir
@@ -187,31 +190,56 @@ rename "" scotch_ *
 sed -i 's|^.so man1/|.so man1/scotch_|' scotch_*
 popd
 
-install esmumps/src/esmumps/main_esmumps %buildroot%_bindir/scotch_main_esmumps
+install -pD -m644 -t %buildroot%_docdir/%name doc/*.pdf doc/scotch_example.f
 
-pushd examples
-mpif77 -g -I../src/libscotch -c scotch_example_1.f -o scotch_example_1.o
-mpif77 -o scotch_example_1 scotch_example_1.o -Wl,-R%_libdir/%mpiimpl/lib \
-	-L../lib -lscotchmetis -lscotcherrexit -lscotch -lscotcherr
-install -m755 scotch_example_1 %buildroot%_bindir
-install -p -m644 ../doc/ptscotch_user5.1.pdf ../doc/scotch_user5.1.pdf \
-	scotch_example_1.f \
-	%buildroot%_docdir/%name
-popd
+%check
+%if_with check
+# Force intranode communication
+export OMPI_MCA_plm_rsh_agent=false OMPI_MCA_btl=^tcp
+%ctest
+%endif
 
 %files
-%doc LICENSE_en.txt doc/CeCILL-C_V1-en.txt
+%doc LICENSE_en.txt CeCILL-C_V1-en.txt
 %_bindir/scotch_*
 %_man1dir/scotch_*
-%dir %_datadir/%name
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n libscotch%sover
+%_libdir/libscotch.so.%sover
+%_libdir/libscotch.so.%version
+%_libdir/libscotcherr.so.%sover
+%_libdir/libscotcherr.so.%version
+%_libdir/libscotcherrexit.so.%sover
+%_libdir/libscotcherrexit.so.%version
+
+%files -n libesmumps%sover
+%_libdir/libesmumps.so.%sover
+%_libdir/libesmumps.so.%version
+
+%files -n libscotchmetis%sover
+%_libdir/libscotchmetisv5.so.%sover
+%_libdir/libscotchmetisv5.so.%version
+
+%files -n libptscotch%sover
+%_libdir/libptscotch.so.%sover
+%_libdir/libptscotch.so.%version
+%_libdir/libptscotcherr.so.%sover
+%_libdir/libptscotcherr.so.%version
+%_libdir/libptscotcherrexit.so.%sover
+%_libdir/libptscotcherrexit.so.%version
+
+%files -n libptesmumps%sover
+%_libdir/libptesmumps.so.%sover
+%_libdir/libptesmumps.so.%version
+
+%files -n libptscotchparmetis%sover
+%_libdir/libptscotchparmetisv3.so.%sover
+%_libdir/libptscotchparmetisv3.so.%version
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*
+%_includedir/%name/
+%_cmakedir/%name/
 
 %files -n lib%name-devel-doc
 %_docdir/%name
@@ -222,6 +250,13 @@ popd
 %_datadir/%name/tgt
 
 %changelog
+* Tue May 12 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.11-alt1
+- New version 7.0.11 (Closes: 43103).
+- Split libscotch into packages with optional libraries.
+- Transfer to CMake build system.
+- Add check section.
+- Add new aliases for devel and doc packages for future rename.
+
 * Mon Jun 23 2025 Anton Midyukov <antohami@altlinux.org> 5.1.12b-alt7.svn20110910
 - NMU: add prefix 'scotch_' to name of binaries (Closes: 54343)
 
