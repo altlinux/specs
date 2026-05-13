@@ -4,7 +4,7 @@ without parsing/unpacking it first, while still having great forwards/backwards 
 compatibility.
 
 Name: flatbuffers
-Version: 25.9.23
+Version: 25.12.19
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
@@ -104,6 +104,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 13 2026 Nazarov Denis <nenderus@altlinux.org> 25.12.19-alt1
+- New version 25.12.19.
+
 * Wed Sep 24 2025 Nazarov Denis <nenderus@altlinux.org> 25.9.23-alt1
 - New version 25.9.23.
 
