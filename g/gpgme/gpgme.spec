@@ -15,16 +15,16 @@
 %def_disable beta
 
 %add_python3_req_skip _gpgme
-%add_python_req_skip _gpgme
 
 Name: gpgme
 Version: 1.24.3
-Release: alt1
+Release: alt2
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.gnupg.org/related_software/gpgme/index.html
+Vcs: git://git.gnupg.org/gpgme.git
 
 Conflicts: libgpgme-devel < 1.7
 Requires: %gpg_bin_path
@@ -44,7 +44,7 @@ Patch15: alt-revision.patch
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires(pre): python-devel python3-devel python3(setuptools)
+BuildRequires(pre): python3-devel python3(setuptools)
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
 BuildRequires: swig
@@ -113,12 +113,6 @@ Obsoletes: libgpgme1-devel-static < %version-%release
 Summary: Python GpgME pindings
 Group: Development/Python
 %description -n python3-module-gpg
-Python GpgME pindings
-
-%package -n python-module-gpg
-Summary: Python GpgME pindings
-Group: Development/Python
-%description -n python-module-gpg
 Python GpgME pindings
 
 %description
@@ -223,7 +217,6 @@ popd
 
 # Keep only PKG-INFO and *.txt files in egg-info dirs.
 find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
-     %buildroot%python_sitelibdir/gpg-%version-py*egg-info \
      -mindepth 1 -maxdepth 1 \
      ! -name  'PKG-INFO' -a ! -name '*.txt' \
      -delete
@@ -249,11 +242,6 @@ popd
 %python3_sitelibdir/gpg-%version-py*egg-info
 %dir %python3_sitelibdir/gpg
 %python3_sitelibdir/gpg/*
-
-%files -n python-module-gpg
-%python_sitelibdir/gpg-%version-py*egg-info
-%dir %python_sitelibdir/gpg
-%python_sitelibdir/gpg/*
 
 %files -n lib%name-devel
 %_bindir/gpgme-config
@@ -290,6 +278,11 @@ popd
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
 
 %changelog
+* Wed May 13 2026 Paul Wolneykien <manowar@altlinux.org> 1.24.3-alt2
+- Drop Python 2 modules (closes: 59083).
+- Drop random, mixed and unmaitained local changes.
+- Added 'VCS' tag to the spec.
+
 * Sat Sep 20 2025 Paul Wolneykien <manowar@altlinux.org> 1.24.3-alt1
 - New version 1.24.3.
 
