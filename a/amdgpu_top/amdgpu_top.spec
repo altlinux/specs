@@ -2,8 +2,8 @@
 %define git %nil
 
 Name: amdgpu_top
-Version: 0.11.2
-Release: alt2
+Version: 0.11.4
+Release: alt1
 
 Summary: Tool that display AMD GPU utilization
 Group: System/Configuration/Hardware
@@ -30,9 +30,9 @@ cat > .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=02aec00249416c762122bdff582fe6ce5053a4ce"]
+[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=7714cb3f810342d22c56154cf8501d072759709a"]
 git = "https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs"
-rev = "02aec00249416c762122bdff582fe6ce5053a4ce"
+rev = "7714cb3f810342d22c56154cf8501d072759709a"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -58,6 +58,9 @@ install -pm644 docs/%name.1 %buildroot%_man1dir/
 %_man1dir/%name.1*
 
 %changelog
+* Wed May 13 2026 L.A. Kostis <lakostis@altlinux.ru> 0.11.4-alt1
+- 0.11.4.
+
 * Tue Feb 10 2026 Ivan A. Melnikov <iv@altlinux.org> 0.11.2-alt2
 - NMU: Replace ExclusiveArch with ExcludeArch to build on
   loongarch64 and riscv64.
