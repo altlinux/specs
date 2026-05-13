@@ -1,11 +1,12 @@
 Name: ardour
-Version: 9.2
+Version: 9.3
 Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
 Group: Sound
 URL: http://ardour.org/
+VCS: https://github.com/ardour/ardour
 
 Source:  %name-%version-%release.tar
 
@@ -23,6 +24,7 @@ BuildRequires: pkgconfig(hidapi-hidraw)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(liblo)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libudev)
@@ -131,6 +133,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Wed May 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.3-alt1
+- 9.3 released
+
 * Tue Feb 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.2-alt1
 - 9.2 released
 
