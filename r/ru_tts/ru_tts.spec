@@ -2,7 +2,7 @@
 %define sover 7
 
 Name:    ru_tts
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 Epoch: 1
 
@@ -10,8 +10,7 @@ Summary: Compact and portable Russian speech synthesizer
 License: MIT
 Group:   Sound
 Url:     https://github.com/poretsky/ru_tts
-
-Requires: sox
+VCS:     https://github.com/poretsky/ru_tts.git
 
 Source: %name-%version.tar
 
@@ -76,6 +75,10 @@ Requires: librutts = %EVR
 %_libdir/librutts.so
 
 %changelog
+* Wed May 13 2026 Artem Semenov <savoptik@altlinux.org> 1:6.2.4-alt1
+- Updated to new version 6.2.4
+- Removed requires to sox
+
 * Thu Aug 08 2024 Artem Semenov <savoptik@altlinux.org> 1:6.2.3-alt1
 - Build new version and change license (ALT bug: 51041)
 
