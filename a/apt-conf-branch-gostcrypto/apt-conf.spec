@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro-gostcrypto
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed May 13 2026 Ivan A. Melnikov <iv@altlinux.org> 11.0-alt2
+- Add keys for loongarch64 repostories to vendor.list.
+
 * Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 11.0-alt1
 - Built for p11 branch. (closes: 50481)
 - Added [p11] key to the vendor.list.
