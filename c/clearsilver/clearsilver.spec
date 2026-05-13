@@ -1,6 +1,6 @@
 Name: clearsilver
 Version: 0.10.5
-Release: alt1.3
+Release: alt2
 
 Summary: Neotonic ClearSilver
 License: Open Source - Neotonic ClearSilver License (Apache 1.1 based)
@@ -11,7 +11,6 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: http://www.clearsilver.net/downloads/%name.tar
 
 BuildPreReq: zlib-devel
-BuildPreReq: python-devel >= %__python_version
 
 %def_disable static
 #set_verify_elf_method strict
@@ -38,29 +37,10 @@ Group: Development/Python
 This package contains Neotonic ClearSilver development files.
 %endif
 
-%package -n python-module-%name
-Summary: Neotonic ClearSilver Python Module
-Group: Development/Python
-#Requires: %name = %version-%release
-Provides: python%__python_version(neo_cgi)
-Provides: python%__python_version(neo_cs)
-Provides: python%__python_version(neo_util)
-Provides: %name-python
-Obsoletes: %name-python
-
-%description -n python-module-%name
-The clearsilver-python package provides a python interface to the
-clearsilver CGI kit and templating system.
-
 %prep
 %setup -q -n %name
-sed -i 's/LIBRARIES = inserted + LIBRARIES/LIBRARIES = LIBRARIES + inserted/' \
-	python/setup.py
-# Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %build
-#__subst 's,python_versions=".*",python_versions="%__python_version",' configure.in
 #__autoconf
 %configure \
 	--disable-wdb \
@@ -70,8 +50,7 @@ subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 	--disable-java \
 	--disable-csharp \
 	--enable-gettext \
-	--enable-python \
-	--with-python=%__python \
+	--disable-python \
 	%{subst_enable static}
 
 %add_optflags %optflags_shared
@@ -80,7 +59,7 @@ subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 
 %install
 mkdir -p %buildroot{%python_sitelibdir,%_docdir/%name-%version}
-%makeinstall PYTHON_SITE=%buildroot%python_sitelibdir install
+%makeinstall install
 
 %if_disabled static
 rm -rf %buildroot{%_libdir/*.a,%_includedir/*,%_man3dir/*}
@@ -96,10 +75,10 @@ rm -rf %buildroot{%_libdir/*.a,%_includedir/*,%_man3dir/*}
 %_man3dir/*
 %endif
 
-%files -n python-module-%name
-%python_sitelibdir/neo_cgi.so
-
 %changelog
+* Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 0.10.5-alt2
+- NMU: rebuild without python2.
+
 * Wed Jun 03 2020 Andrey Cherepanov <cas@altlinux.org> 0.10.5-alt1.3
 - FTBFS: fix build without forbidden requirement of python-base
 
