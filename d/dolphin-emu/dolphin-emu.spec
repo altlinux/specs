@@ -1,4 +1,4 @@
-%define git_commit d8558142ead21b3fa39809c4aedb982fbfc85feb
+%define git_commit 5e7cc91d8c9a43ca189b288937f65c9763af9c22
 
 %define enet_version 1.3.18
 %define implot_commit 3da8bd34299965d3b0ab124df743fe3e076fa222
@@ -11,7 +11,7 @@
 %define mgba_commit 0b40863f64d0940f333fa1c638e75f86f8a26a33
 
 Name: dolphin-emu
-Version: 2603
+Version: 2603a
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -147,6 +147,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Wed May 13 2026 Nazarov Denis <nenderus@altlinux.org> 2603a-alt1
+- Version 2603a
+
 * Tue Mar 17 2026 Nazarov Denis <nenderus@altlinux.org> 2603-alt1
 - Version 2603
 
