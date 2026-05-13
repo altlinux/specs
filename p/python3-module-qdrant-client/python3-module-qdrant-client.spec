@@ -3,7 +3,7 @@
 %define pypi_name_snake qdrant_client
 
 Name: python3-module-%pypi_name
-Version: 1.17.1
+Version: 1.18.0
 Release: alt1
 
 Summary: Client library for the Qdrant vector search engine
@@ -45,6 +45,9 @@ methods for frequently required operations, e.g. initial collection uploading.
 %doc README.md
 
 %changelog
+* Wed May 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.18.0-alt1
+- Updated to version 1.18.0.
+
 * Sat Mar 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.1-alt1
 - Updated to version 1.17.1.
 
