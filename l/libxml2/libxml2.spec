@@ -7,7 +7,7 @@
 
 Name: libxml2
 Version: 2.14.6
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -16,7 +16,7 @@ Group: System/Libraries
 Url: https://gitlab.gnome.org/GNOME/libxml2
 Vcs: https://gitlab.gnome.org/GNOME/libxml2.git
 
-%def_with python2
+%def_without python2
 %def_disable static
 %def_without legacy
 %def_without icu
@@ -255,6 +255,9 @@ rm -rf %buildroot%_defaultdocdir/%rname
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 1:2.14.6-alt4
+- NMU: rebuild without python2 module (Closes: 59086).
+
 * Mon Mar 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 1:2.14.6-alt3
 - Add missing xml-common dependency to xml-utils subpackage (closes #57732).
 
