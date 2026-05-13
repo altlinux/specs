@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        148.0.7778.96
+Version:        148.0.7778.167
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -145,7 +145,9 @@ Patch069: 0069-DEBIAN-disable-enterprise-tests.patch
 
 Patch070: 0070-DEBIAN-llvm-22-ignore-for-ubsan.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
-# Patch072:
+# Disable Glic ("Gemini Live in Chrome"), ScreenAI, and associated AI-based
+# features.
+Patch072: 0072-DEBIAN-disable-ai.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
 Patch074: 0074-FEDORA-chromium-147-widevine-on-arm64.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
@@ -372,7 +374,7 @@ ln -sf %_bindir/esbuild third_party/devtools-frontend/src/third_party/esbuild/es
 
 # gperf
 mkdir -p third_party/gperf/cipd/bin/
-cp /usr/bin/gperf third_party/gperf/cipd/bin/
+ln -sf %_bindir/gperf third_party/gperf/cipd/bin/gperf
 
 # unpack rollup binary for aarch64
 %ifarch aarch64
@@ -721,6 +723,11 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed May 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.167-alt1
+- New version (148.0.7778.167).
+- Disable Glic ("Gemini Live in Chrome"), ScreenAI, and associated AI-based
+  features.
+
 * Wed May 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.96-alt1
 - New version (148.0.7778.96).
 - Fixes:
