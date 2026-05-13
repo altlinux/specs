@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.49
-Release: alt2
+Version: 1.0.52
+Release: alt1
 
 Summary: DDE UI collection for updating functions
 
@@ -36,7 +36,8 @@ BuildRequires: libdqt6-concurrent vulkan-headers
 %patch2 -p2
 sed \
  -e '/LIBRARY DESTINATION/s|lib/|${LIB_DESTINATION}/|' \
- -i src/dock-update-plugin/CMakeLists.txt
+ -i src/dock-update-plugin/CMakeLists.txt \
+ -i src/private-lastore-tray/CMakeLists.txt
 
 
 %build
@@ -49,7 +50,7 @@ sed \
 
 %install
 %DQ6install
-%find_lang --with-qt --output=%name.lang %name dde-control-center dock-update-plugin
+%find_lang --with-qt --output=%name.lang %name dde-control-center dock-update-plugin private-lastore-tray
 
 %files -f %name.lang
 %doc README*.md LICENSE debian/changelog
@@ -71,10 +72,12 @@ sed \
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libdock-update-plugin.so
+%_libdir/dde-dock/plugins/libprivate-lastore-tray.so
 %dir %_datadir/dde-dock/
 %dir %_datadir/dde-dock/icons/
 %dir %_datadir/dde-dock/icons/dcc-setting/
 %_datadir/dde-dock/icons/dcc-setting/dcc-plugin-update.dci
+%_datadir/dde-dock/icons/dcc-setting/private-lastore*.svg
 %_unitdir/deepin-update-log-copy@.service
 %_userunitdir/dde-update-env.service
 %_datadir/polkit-1/rules.d/52-deepin-update-ui.rules
@@ -95,11 +98,16 @@ sed \
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
 %dir %_datadir/dde-control-center/translations/v1.1/
+%dir %_datadir/private-lastore-tray/
+%dir %_datadir/private-lastore-tray/translations/
 %dir %_datadir/dock-update-plugin/
 %dir %_datadir/dock-update-plugin/translations/
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Wed May 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.52-alt1
+- New version 1.0.52.
+
 * Tue Apr 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.49-alt2
 - Fixed build on dde-control-center 6.1.81.
 
