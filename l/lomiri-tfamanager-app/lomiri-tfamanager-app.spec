@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lomiri-tfamanager-app
-Version: 1.7.3
+Version: 1.7.5
 Release: alt1
 
 Summary: 2-Factor-Authentication Manager App for Lomiri Operating Environment
@@ -70,5 +70,8 @@ This package provides a 2FA Manager App for Lomiri.
 
 
 %changelog
+* Wed May 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.5-alt1
+- New version 1.7.5.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.3-alt1
 - Initial build for Sisyphus
