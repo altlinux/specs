@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: libpostal
-Version: 1.1
+Version: 1.1.4
 Release: alt1
 
 Summary: A C library for parsing/normalizing street addresses
@@ -90,5 +90,8 @@ rm -f %buildroot%_libdir/libpostal.a
 %_pkgconfigdir/libpostal.pc
 
 %changelog
+* Wed May 13 2026 Ivan Khanas <xeno@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Fri Jun 06 2025 Ivan Khanas <xeno@altlinux.org> 1.1-alt1
 - First build for ALT.
