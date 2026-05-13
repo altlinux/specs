@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-game
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
@@ -52,6 +52,9 @@ It is built on the FLARE engine (Free/Libre Action Roleplaying Engine).
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 13 2026 Mikhail Efremov <sem@altlinux.org> 1.15-alt1
+- Updated to 1.15.
+
 * Sun Dec 11 2022 Mikhail Efremov <sem@altlinux.org> 1.14-alt1
 - Updated Url tag.
 - Updated to 1.14.

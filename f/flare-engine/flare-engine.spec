@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
@@ -46,6 +46,9 @@ the common, reusable code.
 %_man6dir/*
 
 %changelog
+* Wed May 13 2026 Mikhail Efremov <sem@altlinux.org> 1.15-alt1
+- Updated to 1.15.
+
 * Sun Dec 11 2022 Mikhail Efremov <sem@altlinux.org> 1.14-alt1
 - Updated Url tag.
 - Updated to 1.14.
