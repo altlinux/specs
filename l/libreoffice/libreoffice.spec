@@ -53,7 +53,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 3.2
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -134,7 +134,7 @@ Patch700: alt-700-external-project-concurrency.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 BuildRequires: mdds-devel >= 3.0.0
-BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
+BuildRequires: libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
 %if_with openssl
 BuildRequires: libssl-devel
 %endif
@@ -892,6 +892,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed May 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt2
+- Removed python2.7(distutils) from build requirements (ALT #59084).
+
 * Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt1
 - New version.
 
