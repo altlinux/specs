@@ -8,7 +8,7 @@ BuildRequires: chrpath
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_42
+Release:        alt4_42.1
 License:        GPLv2
 URL:            http://www.mushware.com/
 Source0:        http://www.mushware.com/files/%{name}-1.2.5.tar.gz
@@ -57,6 +57,7 @@ Shading Language.
 
 
 %build
+export CFLAGS="$CFLAGS -std=c11"
 %configure
 %make_build
 
@@ -107,6 +108,9 @@ done
 
 
 %changelog
+* Wed May 13 2026 Artyom Bystrov <arbars@altlinux.org> 1.2.5-alt4_42.1
+- Fix build by set C standart to 11
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt4_42
 - update to new release by fcimport
 
