@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.6.1
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -110,9 +110,13 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %doc %_sysconfdir/%name/README.md
 %_libexecdir/%name
 %attr(0750,keycloak,keycloak) %dir %_libexecdir/%name/data
+%attr(0750,keycloak,keycloak) %dir %_libexecdir/%name/lib/quarkus
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Wed May 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.1-alt2
+- Made /usr/lib/keycloak/lib/quarkus writeable for user keycloak.
+
 * Mon Apr 20 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.1-alt1
 - New version (fixes: CVE-2026-4366, CVE-2026-4633).
 
