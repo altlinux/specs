@@ -1,6 +1,6 @@
 Name: python3-module-propcache
-Version: 0.4.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 Summary: Fast implementation of cached properties
 License: Apache-2.0
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/propcache-%version.dist-info
 
 %changelog
+* Wed May 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.2-alt1
+- 0.5.2 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.1-alt2
 - revert unsolicited packaging changes
 
