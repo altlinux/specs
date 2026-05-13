@@ -1,11 +1,11 @@
 Name: python3-module-ulid-transform
-Version: 1.5.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Fast ULID transformations
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/uld-transform
+URL: https://pypi.org/project/ulid-transform
 VCS: https://github.com/bluetooth-devices/ulid-transform
 
 Source0: %name-%version.tar
@@ -38,14 +38,14 @@ BuildRequires(pre): rpm-build-pyproject
 %check
 %pyproject_run_pytest -o addopts= tests
 
-# extension built against limited API, drop versioned ABI req
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %python3_sitelibdir/ulid_transform
 %python3_sitelibdir/ulid_transform-%version.dist-info
 
 %changelog
+* Mon Apr 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.0-alt1
+- 2.2.0 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.2-alt1
 - 1.5.2 released
 
