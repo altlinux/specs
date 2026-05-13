@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    cilium
-Version: 1.18.2
-Release: alt2
+Version: 1.19.3
+Release: alt1
 
 Summary: eBPF-based Networking, Security, and Observability
 License: Apache-2.0
@@ -13,8 +13,12 @@ Url:     https://github.com/cilium/cilium
 ExclusiveArch: x86_64 aarch64 ppc64le
 Source: %name-%version.tar
 
+#add skip require, it's present within the project
+%add_python3_req_skip pkt_defs
+
 BuildRequires: rpm-macros-golang
 BuildRequires: rpm-build-golang
+BuildRequires: rpm-build-python3
 BuildRequires: golang > 1.21
 BuildRequires: /proc
 BuildRequires: buf, protobuf-go, gcc, binutils, glibc-devel, coreutils
@@ -148,6 +152,9 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_localstatedir/%name/etcd-config.yaml
 
 %changelog
+* Thu Apr 23 2026 Nadezhda Fedorova <fedor@altlinux.org> 1.19.3-alt1
+- 1.18.2 -> 1.19.3
+
 * Fri Jan 23 2026 Alexander Stepchenko <geochip@altlinux.org> 1.18.2-alt2
 - Build using latest available gcc instead of gcc14.
 

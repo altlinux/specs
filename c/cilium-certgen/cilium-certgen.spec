@@ -1,6 +1,6 @@
 %global import_path github.com/cilium/certgen
 Name:    cilium-certgen
-Version: 0.2.4
+Version: 0.4.3
 Release: alt1
 
 Summary: A convenience tool to generate and store certificates for Hubble Relay mTLS
@@ -11,7 +11,7 @@ URL:     https://github.com/cilium/certgen
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.0
+BuildRequires: rpm-build-golang golang >= 1.26.0
 BuildRequires: /proc
 
 %description
@@ -42,5 +42,8 @@ install -m 0755 .build/src/%import_path/bin/%name %buildroot%_bindir/
 %_bindir/%name
 
 %changelog
+* Thu Apr 30 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.4.3-alt1
+- 0.4.3.
+
 * Mon Oct 27 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.2.4-alt1
 - Initial build for Sisyphus
