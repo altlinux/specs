@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt91
+Release: alt92
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Apr 08 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt92
+- new commit procedure
+- LUKS: allow wrting objects underneath container
+
 * Thu Feb 12 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt91
 - btrfs: fix crash when unmkfs'ing
 

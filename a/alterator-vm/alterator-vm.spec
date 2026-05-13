@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.49
-Release: alt2
+Version: 0.4.50
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Apr 08 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.50-alt1
+- don't create LUKS volume after placing container
+
 * Fri Mar 27 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.49-alt2
 - fix typo in changelog
 
