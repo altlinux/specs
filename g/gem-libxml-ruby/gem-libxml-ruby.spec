@@ -5,7 +5,7 @@
 %define        gemname libxml-ruby
 
 Name:          gem-libxml-ruby
-Version:       5.0.2
+Version:       6.0.0
 Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
 License:       MIT
@@ -15,21 +15,21 @@ Vcs:           https://github.com/xml4r/libxml-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         libxml-ruby-original-source.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb libruby-devel
 BuildRequires: libxml2-devel
-BuildRequires: zlib-devel
 %if_enabled check
-BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(logger) >= 0
 BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(rdoc) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 3.2
 Obsoletes:     libxml-ruby < %EVR
 Provides:      libxml-ruby = %EVR
-Provides:      gem(libxml-ruby) = 5.0.2
-
+Provides:      gem(libxml-ruby) = 6.0.0
 
 %description
 The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2
@@ -38,14 +38,14 @@ XML toolkit.
 
 %if_enabled    doc
 %package       -n gem-libxml-ruby-doc
-Version:       5.0.2
+Version:       6.0.0
 Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libxml-ruby
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(libxml-ruby) = 5.0.2
+Requires:      gem(libxml-ruby) = 6.0.0
 Obsoletes:     libxml-ruby-doc < %EVR
 Provides:      libxml-ruby-doc = %EVR
 
@@ -59,16 +59,18 @@ Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files.
 
 %if_enabled    devel
 %package       -n gem-libxml-ruby-devel
-Version:       5.0.2
+Version:       6.0.0
 Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libxml-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(libxml-ruby) = 5.0.2
-Requires:      gem(rake-compiler) >= 0
+Requires:      gem(libxml-ruby) = 6.0.0
+Requires:      gem(logger) >= 0
 Requires:      gem(minitest) >= 0
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(rdoc) >= 0
 
 %description   -n gem-libxml-ruby-devel
 Ruby language bindings for the GNOME Libxml2 XML toolkit development package.
@@ -81,7 +83,6 @@ Ruby language bindings for the GNOME Libxml2 XML toolkit development package.
 %prep
 %setup
 %autopatch
-rm -rf log
 
 %build
 %ruby_build
@@ -93,25 +94,28 @@ rm -rf log
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-libxml-ruby-doc
-%doc README.rdoc
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-libxml-ruby-devel
-%doc README.rdoc
+%doc CHANGELOG.md LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt1
+- ^ 5.0.2 -> 6.0.0
+
 * Thu Jul 25 2024 Pavel Skrylev <majioa@altlinux.org> 5.0.2-alt1
 - ^ 4.1.1 -> 5.0.2
 
