@@ -5,7 +5,7 @@
 
 Name: pkcs11-provider
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
 Group: System/Libraries
@@ -27,6 +27,7 @@ BuildRequires: softhsm
 BuildRequires: opensc
 BuildRequires: openssl
 BuildRequires: expect
+BuildRequires: kryoptic
 %endif
 
 %description
@@ -55,6 +56,9 @@ compatible to previous versions as well.
 %modulesdir/pkcs11.so
 
 %changelog
+* Wed May 13 2026 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
+- Enabled testing against kryoptic.
+
 * Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
