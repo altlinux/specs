@@ -2,7 +2,7 @@
 %define shortname edition
 
 Name: alterator-backend-%{shortname}
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Alterator backend for edition
@@ -34,7 +34,7 @@ Group: System/Configuration/Other
 Summary: Scripts for alterator-backend-%{shortname}
 Group: System/Configuration/Other
 
-Requires: alterator-entry >= 0.2.0
+Requires: alterator-entry >= 0.4.10
 Requires: distro-licenses
 Requires: dconf
 
@@ -78,6 +78,13 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.2-alt1
+- Change (thx Ajrat Makhmutov):
+  + the VARIANT key value in /etc/os-release from the edition's
+  display_name.en value to the edition's variant value.
+- Add:
+  + translate polkit action messages.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
 - Add 'exit_status = true' for new version of executor.
 

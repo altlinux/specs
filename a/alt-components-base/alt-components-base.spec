@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.8
+BuildRequires: alterator-entry >= 0.4.10
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -24,11 +24,21 @@ Obsoletes: alterator-components-base < 0.2.0
 %description
 %summary.
 
+%package -n alt-editions-common
+Summary: Common information package for editions
+Group: System/Configuration/Other
+
+Requires: libshell
+
+%description -n alt-editions-common
+%summary.
+
 %package -n alt-editions-server
 Summary: Editions of BaseALT distribution ALT Server
 Group: System/Configuration/Other
 
 Requires: alt-components-base = %version-%release
+Requires: alt-editions-common
 
 %description -n alt-editions-server
 %summary.
@@ -38,6 +48,7 @@ Summary: Editions of BaseALT distribution ALT Education
 Group: System/Configuration/Other
 
 Requires: alt-components-base = %version-%release
+Requires: alt-editions-common
 
 %description -n alt-editions-education
 %summary.
@@ -137,15 +148,23 @@ for edition_dir in editions/edition_*/; do
     done
 done
 
+install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libexecdir/alt-components-base-editions.sh
+
 %check
 # check Components and Editions
 ./scripts/validate_categories.py
+
+%triggerpostun -- alt-editions-server < 0.10.4-alt1, alt-editions-education < 0.10.4-alt1
+./usr/lib/alt-components-base-editions.sh
 
 %files -f install.base_components.list
 %dir %_alterator_datadir/components
 %dir %_alterator_datadir/components/categories
 
 %files -n alt-components-vendors -f install.vendors_components.list
+
+%files -n alt-editions-common
+%_libexecdir/alt-components-base-editions.sh
 
 %files -n alt-editions-server
 %dir %_alterator_datadir/editions
@@ -157,6 +176,19 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.4-alt1
+- Fix:
+  + package errors in the alt-server-gnome-environment component:
+    remove alterator-pkg and remove architecture restrictions for
+    branding-alt-server-indexhtml (thx Dmitriy Terekhin)
+  + components for loongarch64 support (thx Dmitriy Terekhin and Ivan A. Melnikov)
+- Add:
+  + kernel-modules-yt6801 component (thx Dmitriy Terekhin)
+  + variant field to edition_domain, edition_server, edition_education editions
+    (thx Ajrat Makhmutov)
+  + VARIANT update in /etc/os-release when updating legacy editions
+    (update script moved to alt-editions-common package)
+
 * Wed Mar 25 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.3-alt1
 - components: remove beesu legacy package from alt-server-gnome-environment
 - editions,components: remove alt-csp-cryptopro component at all

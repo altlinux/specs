@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,17 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.10-alt1
+- Fix (doc):
+  + Edition specification (thx Sergey Savelev)
+  + Links, typos, formatting (thx Andrey Alekseev)
+- Fix (alterator_entry.py):
+  + Quoted TOML keys in dotted paths (thx Artem Kudyakov)
+- Add:
+  + password_role key to Service (thx Andrey Alekseev)
+  + hidden_in_actions key to Service (thx Evgenii Sozonov)
+  + variant key to Edition
+
 * Tue Feb 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.9-alt1
 - Add internal components support in editions2packages
   (thx Dmitriy Terekhin).
