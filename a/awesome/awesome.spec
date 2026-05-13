@@ -1,7 +1,7 @@
 %define  nomen awesome
 Name: %nomen
 Version: 4.3
-Release: alt6
+Release: alt6.1
 Group: Graphical desktop/Other
 License: %gpl2plus
 
@@ -14,11 +14,12 @@ Patch1:cmakefile.patch
 Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoctor cmake gcc-c++ gperf
-BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5.3-devel
+BuildRequires: lgi5.4
+BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5.4-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
-BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
-BuildRequires: lua5.3 libpango-gir libgdk-pixbuf-gir libcairo-gobject
+BuildRequires: libXdmcp-devel libgdk-pixbuf-devel
+BuildRequires: lua5.4 libpango-gir libgdk-pixbuf-gir libcairo-gobject
 BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
 
 BuildRequires: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
@@ -30,7 +31,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: libpcre2-devel
 
 Requires: libstartup-notification >= 0.10-alt1
-Requires: lgi >= 0.9.1
+Requires: lgi5.4 >= 0.9.1
 Requires: libpango-gir
 Requires: libcairo-gobject
 Requires: libgdk-pixbuf-gir
@@ -52,7 +53,7 @@ extremely fast, small, dynamic and awesome.
    -DCOMPRESS_MANPAGES=OFF \
    -DXDG_CONFIG_DIR=%_xdgconfigdir \
    %nil
-%cmake_build
+AWESOME_IGNORE_LGI=1 %cmake_build
 
 %install
 %cmake_install
@@ -83,6 +84,10 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE README.md
 
 %changelog
+* Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 4.3-alt6.1
+- * moved build to lua5.4
+- - disabled LGI to fix FTBFS
+
 * Sat Jul 19 2025 Pavel Skrylev <majioa@altlinux.org> 4.3-alt6
 - ! fixed FTBFS
 - * cleanup spec
