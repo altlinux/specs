@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-initial-setup
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1%beta
 
 Summary: COSMIC Initial Setup
@@ -72,6 +72,9 @@ just rootdir=%buildroot install
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 
 %changelog
+* Wed May 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.13-alt1
+- 1.0.13
+
 * Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
 - 1.0.12
 

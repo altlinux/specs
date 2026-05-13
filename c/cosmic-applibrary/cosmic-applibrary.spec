@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: cosmic-applibrary
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1%beta
 
 Summary: COSMIC App Library
@@ -64,6 +64,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed May 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.13-alt1
+- 1.0.13
+
 * Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
 - 1.0.12
 

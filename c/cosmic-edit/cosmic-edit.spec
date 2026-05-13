@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-edit
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1%beta
 
 Summary: COSMIC Text Editor
@@ -70,6 +70,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed May 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.13-alt1
+- 1.0.13
+
 * Thu May 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
 - 1.0.12
 
