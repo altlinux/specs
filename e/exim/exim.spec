@@ -1,5 +1,5 @@
 Name: exim
-Version: 4.97
+Version: 4.99.3
 Release: alt1
 Summary: Exim MTA
 Group: Networking/Mail
@@ -7,6 +7,7 @@ License: GPLv2+
 Source: %name-%version.tar.xz
 URL: https://exim.org
 Conflicts: postfix, sendmail
+# ExclusiveArch: aarch64 x86_64
 BuildRoot: %_tmppath/%name-%version-root
 
 Requires: %name-config
@@ -19,8 +20,10 @@ BuildRequires: libldap-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: postgresql-devel
-# for utils
-BuildRequires: perl-Pod-Usage perl-File-FcntlLock perl-experimental
+# for tools
+BuildRequires: perl-Pod-Usage perl-experimental
+# for docs
+BuildRequires: docbook-utils
 
 %description
 Exim is a highly flexible and feature-rich mail transfer agent
@@ -59,7 +62,7 @@ Provides: smtpdaemon, smtpd, MTA, MailTransferAgent
 %summary
 
 %package mysql
-Summary: %name MTA with MySQL support
+Summary: %name MTA with MySQL (MariaDB) support
 Group: Networking/Mail
 Requires: %name-config
 Provides: %name-bin
@@ -111,11 +114,16 @@ do
   echo EXIM_RELEASE_VERSION=%version >> src/version.sh
   echo EXIM_VARIANT_VERSION=%release >> src/version.sh
   echo EXIM_COMPILE_NUMBER=1 >> src/version.sh
-  export CFLAGS="-Wno-format -I%_includedir/openssl -I%_includedir/pgsql"
+  export CFLAGS="-I%_includedir/openssl -I%_includedir/pgsql"
   export LDFLAGS="-s -lpq -lldap -llber"
   %make_build
   cp -a build-Linux-*/%name ./%name.$buildtype
 done
+
+# requires external XFPT tool
+# https://github.com/PhilipHazel/xfpt >>> https://github.com/Exim/xfpt
+cd ../doc/doc-docbook
+true make EXIM_VER=%version spec.txt filter.txt exim.8
 
 
 %install
@@ -126,6 +134,7 @@ rm -f %buildroot%_sbindir/%name %buildroot%_sbindir/%name-*
 
 # now install real binaries
 install -m 755 %name.* %buildroot%_sbindir/
+strip -s %buildroot%_sbindir/%{name}_* || true
 # ghost symlink
 ln -s exim.vmail %buildroot%_sbindir/%name
 
@@ -221,9 +230,7 @@ test -s mail-server.key || exim-mkcert
 %_sbindir/exim_dbmbuild
 %_sbindir/exim_dumpdb
 %_sbindir/exim_fixdb
-%_sbindir/exim_id_update
 %_sbindir/exim_lock
-%_sbindir/exim_msgdate
 %_sbindir/eximstats
 %_sbindir/exim_tidydb
 %_sbindir/exinext
@@ -231,12 +238,19 @@ test -s mail-server.key || exim-mkcert
 %_sbindir/exiqgrep
 %_sbindir/exiqsumm
 %_sbindir/exiwhat
-
+%_sbindir/exim_id_update
+%_sbindir/exim_msgdate
 
 %files doc
-%doc Readme.pod vmail-dovecot.txt
+%doc doc/doc-docbook/*.xfpt vmail-dovecot.txt
 
 %changelog
+* Wed May 13 2026 Gremlin from Kremlin <gremlin@altlinux.org> 4.99.3-alt1
+- update to 4.99.3 (fix CVE-2025-26794, CVE-2025-30232, CVE-2025-30232,
+  CVE-2026-40684, CVE-2026-40685, CVE-2026-40686, CVE-2026-40687 - all
+  previously mitigated by proper build and running options)
+- package unformatted documentation source instead of *.txt (TBF)
+
 * Tue Nov 28 2023 Gremlin from Kremlin <gremlin@altlinux.org> 4.97-alt1
 - update to 4.97 (fix CVE-2023-42114 ... CVE-2023-42116)
 - fix RM_COMMAND in scripts (#47254 #47255)
