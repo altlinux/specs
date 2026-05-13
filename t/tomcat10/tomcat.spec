@@ -22,7 +22,7 @@
 %global workdir %cachedir/work
 
 Name: tomcat10
-Version: 10.1.54
+Version: 10.1.55
 Release: alt1_jvm17
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
@@ -440,6 +440,10 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Tue May 12 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.55-alt1_jvm17
+- 10.1.54 -> 10.1.55 (fixes: CVE-2026-41284, CVE-2026-41293, CVE-2026-42498,
+  CVE-2026-43512, CVE-2026-43513, CVE-2026-43514, CVE-2026-43515).
+
 * Fri Apr 03 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.54-alt1_jvm17
 - 10.1.53 -> 10.1.54.
 
