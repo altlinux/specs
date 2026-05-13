@@ -21,8 +21,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     18
-%define postgresql_minor     3
-%define postgresql_altrel    2
+%define postgresql_minor     4
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -386,7 +386,7 @@ the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 Summary: The programs needed to create and run a PostgreSQL server
 Group: Databases
 Requires(pre): shadow-utils, syslogd-daemon, grep, sed
-Requires(pre): postgresql-common > 1.0-alt3
+Requires(pre): postgresql-common > 1.0-alt8
 Requires: %name = %EVR
 Requires: glibc-locales
 Provides: %prog_name-server = %EVR
@@ -1147,6 +1147,12 @@ fi
 %endif
 
 %changelog
+* Wed May 13 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt1
+- 18.4 (Fixes CVE-2026-6472, CVE-2026-6473, CVE-2026-6474, CVE-2026-6475,
+              CVE-2026-6476, CVE-2026-6477, CVE-2026-6478, CVE-2026-6479,
+              CVE-2026-6575, CVE-2026-6637, CVE-2026-6638)
+- Change requires version postgresql-common to  >1.0-alt8 (ALT #46555)
+
 * Fri Mar 20 2026 Alexei Takaseev <taf@altlinux.org> 18.3-alt2
 - Disable SSE4.2 emulation on e2k (ilyakurdyukov@)
 

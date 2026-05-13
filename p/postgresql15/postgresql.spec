@@ -16,8 +16,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     17
-%define postgresql_altrel    3
+%define postgresql_minor     18
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -373,7 +373,7 @@ the PostgreSQL tarball.  Selected contrib modules are prebuilt.
 Summary: The programs needed to create and run a PostgreSQL server
 Group: Databases
 Requires(pre): shadow-utils, syslogd-daemon, grep, sed
-Requires(pre): postgresql-common > 1.0-alt3
+Requires(pre): postgresql-common > 1.0-alt8
 Requires: %name = %EVR
 Requires: glibc-locales
 Provides: %prog_name-server = %EVR
@@ -1127,6 +1127,11 @@ fi
 %endif
 
 %changelog
+* Wed May 13 2026 Alexei Takaseev <taf@altlinux.org> 15.18-alt1
+- 15.18 (Fixes CVE-2026-6472, CVE-2026-6473, CVE-2026-6474, CVE-2026-6475,
+               CVE-2026-6477, CVE-2026-6478, CVE-2026-6479, CVE-2026-6637)
+- Change requires version postgresql-common to  >1.0-alt8 (ALT #46555)
+
 * Mon Mar 23 2026 Alexei Takaseev <taf@altlinux.org> 15.17-alt3
 - Fix "sed: can't read meson.build: No such file or directory" on e2k
 
