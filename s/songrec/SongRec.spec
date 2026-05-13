@@ -1,7 +1,7 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: An open-source Shazam client for Linux.
@@ -45,9 +45,9 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/RustAudio/cpal.git?rev=bce156d"]
+[source."git+https://github.com/RustAudio/cpal.git?rev=9c55a43"]
 git = "https://github.com/RustAudio/cpal.git"
-rev = "bce156d"
+rev = "9c55a43"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -82,6 +82,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Thu May 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.2-alt1
+- 0.7.1 -> 0.7.2
+
 * Sun May 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
 - 0.6.9 -> 0.7.1
 
