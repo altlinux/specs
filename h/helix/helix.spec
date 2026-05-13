@@ -3,7 +3,7 @@
 
 Name: helix
 Version: 25.07.1
-Release: alt2
+Release: alt3
 
 Summary: A post-modern modal text editor written in Rust
 License: MPL-2.0
@@ -60,7 +60,11 @@ export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
 export CC=clang
 export CXX=clang++
 %endif
-%rust_build
+%rust_build \
+%ifarch %ix86
+    --no-default-features \
+%endif
+    #
 
 %check
 %rust_test
@@ -105,6 +109,9 @@ export CXX=clang++
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Wed May 13 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 25.07.1-alt3
+- update
+
 * Tue May 12 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 25.07.1-alt2
 - fix ftbfs
 
