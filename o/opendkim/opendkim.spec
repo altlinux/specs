@@ -10,7 +10,7 @@ BuildRequires: %_bindir/gcov %_bindir/gprof %_bindir/lcov %_bindir/rrdtool libev
 
 Name: opendkim
 Version: 2.11.0
-Release: alt2
+Release: alt3
 
 Summary: A DomainKeys Identified Mail (DKIM) milter to sign and/or verify mail
 
@@ -71,6 +71,9 @@ required for developing applications against libopendkim.
 # Always use system libtool instead of pacakge-provided one to
 # properly handle 32 versus 64 bit detection and settings
 %define LIBTOOL LIBTOOL=`which libtool`
+
+# /usr/include/libmilter/mfapi.h has 'typedef int bool' which breaks under C23
+%add_optflags -std=gnu17
 
 %configure --with-odbx --with-db --with-libmemcached --with-openldap --localstatedir=/var
 
@@ -456,6 +459,9 @@ exit 0
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat May 09 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt3
+- build with -std=gnu17 to compile against libmilter mfapi.h that uses typedef bool (incompatible with C23 default in gcc 15)
+
 * Fri Oct 30 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt2
 - fix twice packaged opendkim-default-keygen
 
