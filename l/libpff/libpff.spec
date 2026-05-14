@@ -2,7 +2,7 @@
 
 Name: libpff
 Version: 20231205
-Release: alt2
+Release: alt3
 
 Summary: Library and tools to access Microsoft PFF and OFF format files
 License: LGPLv3+ and GFDLv1.1+ and GFDLv1.3+
@@ -96,7 +96,7 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %if_with python
 	--enable-python \
 %endif
-	%nill
+	%nil
 
 %make_build
 
@@ -131,6 +131,9 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %endif
 
 %changelog
+* Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 20231205-alt3
+- NMU: fix typo.
+
 * Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 20231205-alt2
 - NMU: Build without python2 module.
 
