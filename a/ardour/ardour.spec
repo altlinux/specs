@@ -1,5 +1,5 @@
 Name: ardour
-Version: 9.3
+Version: 9.4
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(liblo)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libwebsockets)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(lilv-0)
 BuildRequires: pkgconfig(lrdf)
@@ -133,6 +134,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Thu May 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.4-alt1
+- 9.4 released
+
 * Wed May 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.3-alt1
 - 9.3 released
 
