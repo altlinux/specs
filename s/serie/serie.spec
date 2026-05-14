@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    serie
-Version: 0.6.1
+Version: 0.8.0
 Release: alt1
 
 Summary: A rich git commit graph in your terminal, like magic
@@ -43,6 +43,9 @@ install -vpD %SOURCE2 .cargo/config.toml
 %_bindir/serie
 
 %changelog
+* Fri May 15 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.0-alt1
+- Update version.
+
 * Tue Mar 03 2026 Ilya Sorochan <k0tran@altlinux.org> 0.6.1-alt1
 - Update version.
 
