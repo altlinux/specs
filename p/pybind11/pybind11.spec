@@ -4,7 +4,7 @@
 
 Name: pybind11
 Version: 3.0.2
-Release: alt3
+Release: alt4
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -41,6 +41,8 @@ Summary: %summary
 Group: Development/Other
 # For dir ownership
 Requires: cmake
+# headers include <Python.h> via conduit/wrap_include_python_h.h
+Requires: python3-devel
 
 %package -n python3-module-%name
 Summary: %summary
@@ -117,6 +119,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Thu May 14 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt4
+- NMU: devel: add missing Requires: python3-devel (closes: 59135)
+
 * Thu May 07 2026 Michael Shigorin <mike@altlinux.org> 3.0.2-alt3
 - spec: -fno-exceptions for lcc as well (ilyakurdyukov@)
 
