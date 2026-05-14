@@ -4,7 +4,7 @@
 
 Name: xonotic
 Version: 0.8.6
-Release: alt1
+Release: alt2
 Summary: A free multi-player first person shooter
 Group: Games/Arcade
 License: GPLv2+
@@ -49,7 +49,7 @@ popd
 %build
 cd source/darkplaces
 make clean
-%make_build debug CPUOPTIMIZATIONS="%optflags" DP_FS_BASEDIR=%_datadir/%name
+%make_build debug CPUOPTIMIZATIONS="%optflags -std=gnu17" DP_FS_BASEDIR=%_datadir/%name
 
 %install
 install -D -m 755 source/darkplaces/darkplaces-sdl %buildroot%_bindir/%name-sdl
@@ -103,6 +103,9 @@ EOF
 %_datadir/xonotic
 
 %changelog
+* Thu May 14 2026 Artyom Bystrov <arbars@altlinux.org> 0.8.6-alt2
+- Set C standatr to gnu17
+
 * Tue Feb 24 2026 Anton Farygin <rider@altlinux.org> 0.8.6-alt1
 - 0.8.5 -> 0.8.6 with security fixes (Closes: #57982)
 
