@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.1
-Release: alt1.1
+Version: 7.3.0
+Release: alt1
 Summary: Manage devpi-server, Python packaging and testing
 License: MIT
 Group: Development/Python3
@@ -14,32 +14,22 @@ Url: https://pypi.org/project/devpi-client
 Vcs: https://github.com/devpi/devpi
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
+%pyproject_runtimedeps_metadata
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter setuptools-changelog-shortener
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-devpi-server
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-pypitoken
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-instafail
-BuildRequires: python3-module-pytest-timeout
+%add_pyproject_deps_check_filter pytest-github-actions-annotate-failures
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+# filtered by default but needed: command not found: sphinx-build
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-webtest
-
-BuildRequires: python3-module-build
-BuildRequires: python3-module-check-manifest
-BuildRequires: python3-module-devpi-common
-BuildRequires: python3-module-iniconfig
-BuildRequires: python3-module-pkginfo
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-pluggy
-BuildRequires: python3-module-requests
 BuildRequires: python3-module-pip
+# testing/conftest.py::initproj
 BuildRequires: python3-module-flit-core
 %endif
 
@@ -50,6 +40,11 @@ It allows to upload, test and install packages from devpi indexes.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -72,8 +67,8 @@ export PYTHONWARNINGS='ignore:pkg_resources is deprecated as an API.:UserWarning
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt1.1
-- Demodernized packaging.
+* Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
+- 7.2.1 -> 7.3.0.
 
 * Wed Mar 18 2026 Stanislav Levin <slev@altlinux.org> 7.2.1-alt1
 - 7.2.0 -> 7.2.1.
