@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: dtklog
-Version: 6.7.39
+Version: 6.7.41
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -60,7 +60,6 @@ Summary: Development package for dtk6log
 Group: Development/KDE and QT
 Provides: dtk6-log-devel = %EVR
 Obsoletes: dtk6-log-devel < %EVR
-Provides: libdtk6log-devel = %EVR
 
 %description -n libdtk6log-devel
 Header files and libraries for dtk6log.
@@ -132,6 +131,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Thu May 14 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.41-alt1
+- New version 6.7.41.
+
 * Wed Apr 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.39-alt1
 - New version 6.7.39.
 - Clarified license tag.
