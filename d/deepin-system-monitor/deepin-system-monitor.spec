@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.39
+Version: 6.5.42
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -127,6 +127,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu May 14 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.42-alt1
+- New version 6.5.42.
+
 * Thu Mar 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.39-alt1
 - New version 6.5.39.
 
