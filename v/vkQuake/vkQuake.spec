@@ -1,5 +1,5 @@
 Name: vkQuake
-Version: 1.33.1
+Version: 1.34.1
 Release: alt1
 
 Summary: Quake I engine
@@ -49,6 +49,9 @@ install -pDm755 %__builddir/vkquake %buildroot%_bindir/vkquake
 %_bindir/vkquake
 
 %changelog
+* Thu May 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.34.1-alt1
+- 1.34.1.
+
 * Fri Jan 16 2026 L.A. Kostis <lakostis@altlinux.ru> 1.33.1-alt1
 - 1.33.1.
 - build: enable user directories support.
