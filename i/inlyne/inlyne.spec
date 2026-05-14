@@ -1,5 +1,5 @@
 Name:    inlyne
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Introducing Inlyne, a GPU powered yet browserless tool to help you quickly view markdown files in the blink of an eye
@@ -10,8 +10,6 @@ Url:     https://github.com/Inlyne-Project/inlyne
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source: %name-%version.tar
-
-Patch: inlyne-0.4.3-alt-old-nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -36,10 +34,6 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
-
-%patch -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/nix-0.25.1/.cargo-checksum.json
 
 %build
 %rust_build
@@ -68,6 +62,9 @@ install -Dm 644 completions/%name.fish %buildroot%_datadir/fish/vendor_completio
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu May 14 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+
 * Wed Feb 05 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.0-alt1
 - new version 0.5.0
 
