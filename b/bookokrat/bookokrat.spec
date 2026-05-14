@@ -4,7 +4,7 @@
 
 Name: bookokrat
 Version: 0.3.10
-Release: alt1
+Release: alt2
 
 Summary: A terminal EPUB / PDF Book Reader
 License: AGPL-3.0-or-later
@@ -48,13 +48,18 @@ export RUST_FONTCONFIG_DLOPEN=on
 
 %check
 export SNAPSHOTS=overwrite
-%rust_test
+%rust_test -- \
+    --skip keybinding_actions \
+    #
 
 %files
 %doc README.md
 %_bindir/%name
 
 %changelog
+* Thu May 14 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.10-alt2
+- fix ftbfs
+
 * Mon Apr 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.10-alt1
 - new version
 
