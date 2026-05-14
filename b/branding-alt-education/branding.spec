@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt5
+Release: alt6
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -491,6 +491,10 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Thu May 14 2026 Grant Makyan <karonus@altlinux.org> 11.1-alt6
+- kde-settings: Show date below time in digital clock. (closes: 59178)
+- kde-settings: Disable digital clock auto font size.
+
 * Wed Apr 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt5
 - Scale installer background image (Closes: 49314) (thanks to zerg).
 - Align the os-release with current ALT wiki format recommendations.
