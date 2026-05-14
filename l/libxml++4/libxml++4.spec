@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: %{_name}4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -89,6 +89,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
+- 4.4.1
+
 * Thu Feb 19 2026 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - first build for sisyphus
 

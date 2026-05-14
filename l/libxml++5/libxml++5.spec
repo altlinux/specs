@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: %{_name}5
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -89,6 +89,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 5.6.1-alt1
+- 5.6.1
+
 * Sun Dec 28 2025 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
 - 5.6.0
 
