@@ -1,6 +1,6 @@
 Name: bomberclone
 Version: 0.11.9
-Release: alt2
+Release: alt3
 
 Summary: BomberClone is a Puzzle game clone of bomberman
 License: GPL
@@ -60,10 +60,12 @@ This is package contains data files for BomberClone.
 %patch2 -p0
 
 %build
+
+
 %configure \
     --prefix=%buildroot%prefix \
     --disable-debug \
-    --enable-werror=no
+    --enable-werror=no CFLAGS="%{optflags} -std=gnu17"
 
 %make_build
 
@@ -98,6 +100,9 @@ EOF
 %_gamesdatadir/%name
 
 %changelog
+* Thu May 14 2026 Artyom Bystrov <arbars@altlinux.org> 0.11.9-alt3
+- Set C standart to gnu17
+
 * Thu Oct 25 2018 Grigory Ustinov <grenka@altlinux.org> 0.11.9-alt2
 - Fix buffer overflow in network game (Closes: #16738).
 
