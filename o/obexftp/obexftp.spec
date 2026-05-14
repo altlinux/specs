@@ -1,5 +1,5 @@
 %def_enable perl
-%def_enable python
+%def_disable python
 %def_enable ruby
 %def_disable tcl
 %def_disable static
@@ -21,7 +21,7 @@
 Summary:       ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name:          obexftp
 Version:       0.24.2.1
-Release:       alt2
+Release:       alt3
 License:       GPLv2
 Group:         Communications
 Url:           https://sourceforge.net/projects/openobex/
@@ -142,7 +142,11 @@ Tcl bindings for obexftp.
 %autopatch -p1
 
 %build
-%cmake
+%cmake \
+%if_disabled python
+	-DENABLE_PYTHON=OFF \
+%endif
+	%nil
 %cmake_build -t all doc
 
 %install
@@ -195,6 +199,9 @@ Tcl bindings for obexftp.
 %endif
 
 %changelog
+* Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 0.24.2.1-alt3
+- NMU: disable python2 module.
+
 * Thu Nov 16 2023 Igor Vlasenko <viy@altlinux.org> 0.24.2.1-alt2
 - NMU: link perl xs with libperl
 
