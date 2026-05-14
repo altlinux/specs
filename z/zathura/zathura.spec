@@ -7,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 2026.03.27
+Version: 2026.05.11
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -94,6 +94,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Thu May 14 2026 Mikhail Efremov <sem@altlinux.org> 2026.05.11-alt1
+- Updated to 2026.05.11.
+
 * Mon Apr 13 2026 Mikhail Efremov <sem@altlinux.org> 2026.03.27-alt1
 - Updated to 2026.03.27.
 

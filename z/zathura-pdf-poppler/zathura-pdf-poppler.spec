@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-pdf-poppler
-Version: 2026.02.03
+Version: 2026.05.10
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
@@ -48,6 +48,9 @@ the poppler rendering engine.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu May 14 2026 Mikhail Efremov <sem@altlinux.org> 2026.05.10-alt1
+- Updated to 2026.05.10.
+
 * Thu Feb 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.02.03-alt1
 - Updated to 2026.02.03.
 
