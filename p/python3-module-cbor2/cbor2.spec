@@ -2,13 +2,13 @@
 %define pypi_name cbor2
 %define mod_name %pypi_name
 
-# build with limited api is not yet supported
-# %%python3_set_limited_api
+# upstream officially doesn't support tho,
+%python3_set_limited_api
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.9.0
+Version: 6.1.0
 Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 License: MIT
@@ -17,6 +17,8 @@ Url: https://pypi.org/project/cbor2/
 Vcs: https://github.com/agronholm/cbor2
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: vendor_rust.tar
+Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -33,7 +35,10 @@ Representation (CBOR) (RFC 8949) serialization format. The specification is
 fully compatible with the original RFC 7049.
 
 %prep
-%setup
+%setup -a2
+%autopatch -p1
+mkdir .cargo
+cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -42,6 +47,8 @@ fully compatible with the original RFC 7049.
 %endif
 
 %build
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_STRIP='none'
 %pyproject_build
 
 %install
@@ -53,10 +60,12 @@ fully compatible with the original RFC 7049.
 %files
 %_bindir/cbor2
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/_%mod_name.*.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 13 2026 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 5.9.0 -> 6.1.0.
+
 * Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 5.9.0-alt1
 - 5.8.0 -> 5.9.0 (fixes: CVE-2026-26209).
 
