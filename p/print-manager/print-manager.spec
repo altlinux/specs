@@ -6,7 +6,7 @@
 %define libkcups libkcups%sover
 
 Name: %rname
-Version: 6.6.4
+Version: 6.6.5
 Release: alt1
 %K6init
 
@@ -126,6 +126,9 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6--for-system-c
 %_K6lib/libkcups.so.*
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 

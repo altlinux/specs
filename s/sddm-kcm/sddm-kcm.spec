@@ -1,8 +1,8 @@
 %define rname sddm-kcm
 
 Name: %rname
-Version: 6.6.4
-Release: alt2
+Version: 6.6.5
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -61,6 +61,9 @@ SDDM configuration module.
 
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Fri Apr 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
 - don't require sddm
 

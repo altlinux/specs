@@ -24,7 +24,7 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.6.4
+Version: 6.6.5
 Release: alt1
 Epoch: 1
 %K6init
@@ -589,6 +589,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.5-alt1
+- new version
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.4-alt1
 - new version
 

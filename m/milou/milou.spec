@@ -4,7 +4,7 @@
 %define libmilou libmilou%milou_sover
 
 Name: %rname
-Version: 6.6.4
+Version: 6.6.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -49,6 +49,9 @@ Search and Launch.
 #%_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Thu Apr 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - new version
 

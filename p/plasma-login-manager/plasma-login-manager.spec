@@ -1,7 +1,7 @@
 %define rname plasma-login-manager
 
 Name: %rname
-Version: 6.6.4
+Version: 6.6.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -171,5 +171,8 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt1
 - initial build

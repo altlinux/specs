@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.6.4
-Release: alt2
+Version: 6.6.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -173,6 +173,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
 - fix network info
 

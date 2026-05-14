@@ -7,8 +7,8 @@
 
 %define rname libkscreen
 Name: plasma6-%rname
-Version: 6.6.4
-Release: alt2
+Version: 6.6.5
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -112,6 +112,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Mon Apr 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt2
 - add gcc-13 support
 

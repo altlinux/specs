@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.6.4
-Release: alt5
+Version: 6.6.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -44,31 +44,6 @@ Patch4: alt-def-numlock.patch
 Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 Patch6: alt-gcc13.patch
 Patch7: alt-abort-with-nvidia-driver-older-500.patch
-# upstream
-Patch100: 0005-plugins-colorpicker-use-GL_RGBA-instead-of-GL_RGB-to.patch
-Patch101: 0007-backends-drm-set-COLOR_RANGE-to-full-for-RGB-planes-.patch
-Patch102: 0008-plugins-highlightwindow-Don-t-animate-deleted-or-inv.patch
-Patch103: 0009-plugins-highlightwindow-Better-handling-of-windows-d.patch
-Patch104: 0014-backends-libinput-Fix-dangling-InputDevices-on-shutd.patch
-Patch105: 0017-activation-restore-code-updating-layers-of-fullscree.patch
-Patch106: 0018-Cleanup-keyboard-grabs.patch
-Patch107: 0019-Fix-saving-custom-output-modes.patch
-Patch108: 0020-Track-preferred-output-mode-flags.patch
-Patch109: 0021-Make-removed-flag-separate-state-in-OutputMode.patch
-Patch110: 0022-backends-drm-Match-output-modes-differently.patch
-Patch111: 0023-backends-drm-Fix-restoring-custom-modes-after-reboot.patch
-Patch112: 0024-opengl-eglcontext-add-asserts-for-eglMakeCurrent.patch
-Patch113: 0026-virtualdesktops-add-missing-connection-to-save-deskt.patch
-Patch114: 0027-backends-drm-Check-flags-when-comparing-modes.patch
-Patch115: 0029-input-Process-key-repeat-before-A11yKeyboardMonitor.patch
-Patch116: 0033-Fix-passing-fullscreen-to-the-X11-backend.patch
-Patch117: 0035-input-Map-devices-to-device-outputs-not-logical.patch
-Patch118: 0037-backends-drm-don-t-attempt-multi-GPU-copies-with-uns.patch
-Patch119: 0038-backends-drm-drop-dmabuf-import-modes.patch
-Patch120: 0040-rules-make-checkGeometrySafe-actually-safe.patch
-Patch121: 0042-backends-drm-only-update-outputs-on-GPUs-that-actual.patch
-Patch122: 0046-Temporarily-reference-Windows-during-compositing.patch
-Patch123: 0047-backends-x11-Fix-interactive-output-resizing.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -223,6 +198,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
+- new version
+
 * Thu May 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.4-alt5
 - update upstream fixes
 
