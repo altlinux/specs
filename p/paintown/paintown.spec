@@ -1,7 +1,7 @@
 
 Name: paintown
 Version: 3.6.0
-Release: alt3
+Release: alt4
 Summary: 2D Fighting Game
 License: GPL-2.0+
 Group: Games/Arcade
@@ -22,12 +22,7 @@ Patch3: Fix_E2K_build.patch
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: cmake
-%ifarch %e2k
 BuildRequires: gcc-c++
-%else
-%set_gcc_version 10
-BuildRequires: gcc10-c++
-%endif
 BuildRequires: glibc-devel
 BuildRequires: liballegro5.2-devel
 BuildRequires: libogg-devel
@@ -71,6 +66,9 @@ This package contains the data files.
 %endif
 
 find data/ -type f -exec chmod 0644 {} \;
+sed -i 's|-Wall|-Wall -fPIC -std=gnu++11 -Wno-error=incompatible-pointer-types|' CMakeLists.txt
+sed -i '/TestForPythonEmbed/d' src/paintown-engine/script/CMakeLists.txt
+sed -i '/error << /d' src/util/music-player.cpp
 
 %build
 
@@ -115,6 +113,9 @@ install -D -m0755 %SOURCE2 %buildroot%_bindir/%name
 %_datadir/%name-%version
 
 %changelog
+* Thu May 14 2026 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt4
+- Fix build with GCC15 (tnx to RPMFusion Team!) (closes #59039)
+
 * Wed Dec 24 2025 Artyom Bystrov <arbars@altlinux.org> 3.6.0-alt3
 - Back to Sisyphus
 
