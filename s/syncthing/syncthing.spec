@@ -6,7 +6,7 @@
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 2.0.16
+Version: 2.1.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
@@ -121,6 +121,9 @@ cp -pav etc/linux-systemd/user/syncthing.service %buildroot/%_userunitdir/
 %_man1dir/strelaysrv*
 
 %changelog
+* Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 2.0.16-alt1
 - New version 2.0.16.
 
