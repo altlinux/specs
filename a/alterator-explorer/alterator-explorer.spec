@@ -3,8 +3,8 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.18
-Release: alt3
+Version: 0.1.19
+Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
@@ -96,6 +96,11 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Thu May 14 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.19-alt1
+- Fixed:
+  + duplication of the icon on the bottom panel when launching acc
+    (closes: 59168).
+
 * Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt3
 - Update version for alterator-backend-legacy.
 
