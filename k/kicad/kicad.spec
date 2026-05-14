@@ -4,7 +4,7 @@
 %define majver 9.0
 
 Name: kicad
-Version: 10.0.0
+Version: 10.0.3
 Release: alt1
 Epoch: 1
 
@@ -200,6 +200,16 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.3-alt1
+- New version 10.0.3.
+- Fix bad elf symbol EDA_EVT_PLUGIN_AVAILABILITY_CHANGED (thanks brow@).
+
+* Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.2-alt1
+- New version 10.0.2.
+
+* Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.1-alt1
+- New version 10.0.1.
+
 * Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.0-alt1
 - New version 10.0.0.
 
