@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Rounded Window Corners Reborn extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -31,7 +31,7 @@ Source: %_name-%version%beta.tar
 %endif
 Source1: %_name-%version-npm.tar
 
-Requires: gnome-shell >= 49
+Requires: gnome-shell >= 50
 Requires: typelib(Adw) = 1
 
 %description
@@ -46,6 +46,7 @@ mv %_name-%version-npm.tar %_sourcedir/}
 
 %build
 just build
+glib-compile-schemas _build/schemas
 
 %install
 mkdir -p %buildroot%_datadir/{locale,glib-2.0/schemas,gnome-shell/extensions}
@@ -59,6 +60,9 @@ mv %buildroot%_datadir/gnome-shell/extensions/%uuid/locale %buildroot%_datadir/
 %doc README.md
 
 %changelog
+* Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 12-alt2
+- updated to 12-31-g9bc10e2 (GNOME 50 supported)
+
 * Sat Jan 10 2026 Yuri N. Sedunov <aris@altlinux.org> 12-alt1
 - first build for Sisyphus (12-15-g06e7874)
 
