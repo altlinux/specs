@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.12
+Version: 0.4.0
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -17,12 +17,19 @@ BuildRequires(pre): rpm-build-kf6
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
+BuildRequires: boost-devel
+BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel qt6-declarative-devel
 BuildRequires: extra-cmake-modules
+BuildRequires: libtoml11-devel
+BuildRequires: librange-v3-devel
 BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
 BuildRequires: nlohmann-json-devel
 
 Requires: alterator-backend-packages >= 0.2.14-alt1
+Requires: alterator-backend-source
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
 
@@ -55,6 +62,18 @@ and package repositories through apt and rpm.
 %_K6dbus_srv/*.service
 
 %changelog
+* Thu May 14 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.0-alt1
+- Changed (thx Andrey Alekseev):
+  + new implementation of the repository management module (old "Repo" tab)
+- Fixed (thx Andrey Alekseev):
+  + progress dialog was resetting its scroll position with every message
+  + progress dialog may not always be closable
+  + possibility of closing progress dialog by alt+f4 while operation
+    was still in progress
+  + error dialog was not a top-level dialog
+  + application was always suggesting updating database before upgrade,
+    even if it was already updated
+
 * Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.12-alt1
 - Changed (thx Andrey Alekseev):
   + application restricted to a single instance
