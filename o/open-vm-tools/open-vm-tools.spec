@@ -21,9 +21,9 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    13.0
-%global minorversion    10
-%global toolsbuild      25056151
+%global majorversion    13.1
+%global minorversion    0
+%global toolsbuild      25218885
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -328,6 +328,9 @@ fi
 
 
 %changelog
+* Thu May 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 13.1.0-alt1
+- 13.1.0
+
 * Tue Jan 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 13.0.10-alt1
 - 13.0.10
 
