@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 Summary: Backport of compression.zstd
 License: PSF-2.0
@@ -53,11 +53,13 @@ export BACKPORTSZSTD_SKIP_EXTENSION_TEST=1
 %pyproject_run_unittest discover tests -v
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.3.0 -> 1.5.0.
+
 * Thu Jan 15 2026 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0.
 
