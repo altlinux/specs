@@ -2,7 +2,7 @@
 %def_without check
 
 Name: oxker
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Summary: A simple tui to view and control docker containers
@@ -41,6 +41,9 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Thu May 14 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.13.2-alt1
+- new version
+
 * Wed Mar 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.13.1-alt1
 - new version
 
