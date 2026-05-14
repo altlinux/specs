@@ -7,7 +7,7 @@
 
 Name: etcd-for-kubernetes%k8s_ver
 Version: 3.6.6
-Release: alt1
+Release: alt2
 
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
@@ -66,6 +66,10 @@ mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/etcd
 %_sbindir/etcd
 
 %changelog
+* Thu May 07 2026 Ivan A. Melnikov <iv@altlinux.org> 3.6.6-alt2
+- NMU: Mark loong64 as supported architecture to simplify
+  kubernetes deployment on loongarch64.
+
 * Thu Dec 18 2025 Alexander Stepchenko <geochip@altlinux.org> 3.6.6-alt1
 - 3.6.5 -> 3.6.6 (as required by Kubernetes v1.35.0).
 - Introduce etcd package for Kubernetes 1.35.
