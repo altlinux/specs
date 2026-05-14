@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1
+Version: 7.2
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
@@ -62,7 +62,6 @@ This package contains development files for %pypi_name.
 %pyproject_run -- zope-testrunner --test-path=src
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
@@ -76,6 +75,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 7.2-alt1
+- 7.1 -> 7.2.
+
 * Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 7.1-alt1
 - 6.1 -> 7.1.
 
