@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 150.0.2
+Version: 150.0.3
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -389,6 +389,15 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu May 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.3-alt1
+- New version.
+- Fixes:
+  + CVE-2026-8388: Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-8389: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-8390: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-8391: Other issue in the JavaScript Engine component
+  + CVE-2026-8401: Sandbox escape in the Profile Backup component
+
 * Fri May 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.2-alt1
 - New version.
 - Fixes:
