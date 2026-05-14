@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 Summary: A Python3 Parser
 License: MIT
@@ -55,6 +55,9 @@ Parso consists of a small API to parse Python and analyse the syntax tree.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 0.8.7-alt1
+- 0.8.6 -> 0.8.7.
+
 * Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 0.8.6-alt1
 - 0.8.5 -> 0.8.6.
 
