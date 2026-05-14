@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.35
+Version: 2.0.36
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -36,7 +36,10 @@ BuildRequires: libdqt6-qmlcompiler libdqt6-quickcontrols2 libdqt6-concurrent vul
 %package -n liblaunchpadcommon
 Summary: liblaunchpadcommon library for %name
 Group: System/Libraries
-Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
+Requires: libdqt6-core = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-qml  = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description -n liblaunchpadcommon
 This package provides liblaunchpadcommon library for %name.
@@ -84,6 +87,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Thu May 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.36-alt1
+- New version 2.0.36.
+
 * Fri Apr 24 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.35-alt1
 - New version 2.0.35.
 
