@@ -1,5 +1,5 @@
 Name: tree-sitter-erlang
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Erlang grammar for tree-sitter
@@ -31,6 +31,9 @@ cp -a queries %buildroot%_libdir/tree-sitter-erlang
 %_libdir/tree-sitter-erlang
 
 %changelog
+* Thu May 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.17.0-alt1
+- 0.17.0 released
+
 * Thu Apr 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.0-alt1
 - 0.16.0 released
 
