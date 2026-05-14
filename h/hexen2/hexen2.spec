@@ -43,7 +43,7 @@ Name: hexen2
 License: GPLv2
 Group: Games/Arcade
 Version: 1.5.9
-Release: alt3
+Release: alt4
 Summary: Hexen II: Hammer of Thyrion
 Url: http://uhexen2.sourceforge.net/
 Source: http://download.sourceforge.net/uhexen2/hexen2source-%version.tgz
@@ -81,8 +81,10 @@ run a HexenWorld server or client, and a master server application.
 %prep
 %setup -q -n hexen2source-%version -a1 -a2
 sed -i 's@hexen2dir=.*@hexen2dir=%gamedir@' scripts/hexen2-run.sh
+sed 's/CFLAGS  =/CFLAGS +=/' -i h2patch/Makefile
 
 %build
+export CFLAGS="$CFLAGS -std=gnu17"
 
 # Build the main game binaries
 %mk_build -C engine/hexen2 h2
@@ -218,6 +220,9 @@ install -D -m 0644 %name.desktop  %buildroot%_desktopdir/%name.desktop
 %gamedir/*hw* 
 
 %changelog
+* Wed May 13 2026 Artyom Bystrov <arbars@altlinux.org> 1.5.9-alt4
+- Set C standart to gnu17 (https://aur.archlinux.org/packages/hexen2#comment-1027956)
+
 * Wed Apr 21 2021 Fr. Br. George <george@altlinux.ru> 1.5.9-alt3
 - Submajor version update
 - Brute force ix86 build

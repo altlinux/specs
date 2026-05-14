@@ -1,6 +1,6 @@
 Name: nexuiz
 Version: 2.5.2
-Release: alt2
+Release: alt3
 
 Summary: 3D deathmatch shooter game
 License: GPL
@@ -64,7 +64,7 @@ sed -i 's,/usr/X11R6/,/usr/,g' makefile makefile.inc
 
 %build
 export DP_FS_BASEDIR=%_datadir/nexuiz
-%make nexuiz OPTIM_RELEASE="%optflags" STRIP=:
+%make nexuiz OPTIM_RELEASE="%optflags -std=gnu17" STRIP=:
 
 %install
 mkdir -p %buildroot%_bindir/
@@ -124,6 +124,9 @@ EOF
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Wed May 13 2026 Artyom Bystrov <arbars@altlinux.org> 2.5.2-alt3
+- Set C standart to gnu17
+
 * Mon Oct 29 2012 Igor Zubkov <icesik@altlinux.org> 2.5.2-alt2
 - relocate binaries from /usr/games/ to /usr/bin/
 - buildreq
