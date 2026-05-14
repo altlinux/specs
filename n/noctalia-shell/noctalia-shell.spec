@@ -1,5 +1,5 @@
 Name: noctalia-shell
-Version: 4.7.1
+Version: 4.7.7
 Release: alt1
 
 Summary: A sleek and minimal desktop shell thoughtfully crafted for Wayland
@@ -24,6 +24,9 @@ Requires: ImageMagick-tools
 Requires: python3
 Requires: git
 Requires: power-profiles-daemon
+Requires: NetworkManager-daemon
+Requires: upower
+Requires: bluez
 Requires: xdg-desktop-portal
 
 %add_findreq_skiplist %_xdgconfigdir/quickshell/noctalia-shell/Scripts/dev/*
@@ -56,6 +59,10 @@ cp -r ./*      %buildroot%_xdgconfigdir/quickshell/noctalia-shell
 %_xdgconfigdir/quickshell/noctalia-shell
 
 %changelog
+* Wed May 13 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.7-alt1
+- Update version.
+- Add new packages to requires according to noctalia docs.
+
 * Mon Mar 30 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.1-alt1
 - Update version.
 - Switch from quickshell to noctalia-qs.

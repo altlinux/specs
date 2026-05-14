@@ -1,7 +1,7 @@
 %define _qt6_qml %_lib/qt6/qml
 
 Name: noctalia-qs
-Version: 0.0.10
+Version: 0.0.12
 Release: alt1
 License: GPL-3.0 and LGPL-3.0
 
@@ -76,5 +76,8 @@ to build a complete desktop environment.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Wed May 13 2026 Ilya Sorochan <k0tran@altlinux.org> 0.0.12-alt1
+- Update version.
+
 * Fri Mar 27 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.0.10-alt1
 - Initial build
