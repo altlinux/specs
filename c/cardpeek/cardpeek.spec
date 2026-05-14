@@ -2,15 +2,17 @@
 
 Name: cardpeek
 Version: 0.8.4
-Release: alt1
+Release: alt2
 
 Summary: Cardpeek is a tool to read the contents of ISO7816 smart cards.
 License: GPL-3.0
 Group: System/Configuration/Hardware
 
 Url: https://github.com/L1L1/cardpeek
-#Git: https://github.com/L1L1/cardpeek.git
+Vcs: https://github.com/L1L1/cardpeek.git
 Source: %name-%version.tar
+
+Patch0: %name-%version.patch
 
 BuildRequires: make
 BuildRequires: glib2-devel
@@ -50,6 +52,7 @@ It can also read the following cards with limited interpretation of data:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 autoreconf --install
@@ -71,5 +74,9 @@ rm -rf %buildroot/%_datadir/doc/%name/%{name}_ref.en.pdf
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed May 13 2026 Nikolai Kostrigin <nickel@altlinux.org> 0.8.4-alt2
+- fix FTBFS caused by spurious arguments in ui_update() calls
+  + spec: switch to Vcs tag for upstream URL
+
 * Wed Dec 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.8.4-alt1
 - initial build for Sisyphus
