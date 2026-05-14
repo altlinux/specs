@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%def_with check
+
 Name: gala
-Version: 8.5.0
+Version: 8.5.1
 Release: alt1
 
 Summary: Pantheon Window Manager
@@ -35,6 +37,12 @@ BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: vapi(libcanberra)
 BuildRequires: vapi(granite)
 BuildRequires: /usr/bin/valadoc
+
+%if_with check
+BuildRequires: xkeyboard-config
+BuildRequires: mutter-gnome
+BuildRequires: /usr/bin/dbus-run-session
+%endif
 
 Requires: dbus
 Requires: dconf
@@ -81,7 +89,12 @@ This package contains the development files used for gala.
 %build
 %meson \
        -Ddocumentation=true \
-       -Dsystemd=true
+       -Dsystemd=true \
+%if_with check
+       -Dtests=true
+%else
+       -Dtests=false
+%endif
 %meson_build
 
 %install
@@ -96,8 +109,14 @@ cp -pv vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
 
 %find_lang %name
 
+%check
+export XDG_RUNTIME_DIR="%buildroot"
+dbus-run-session %meson_test
+rm -rfv %buildroot/dconf/user
+
 %files -f %name.lang
 %doc AUTHORS COPYING HACKING README.md
+
 %_sysconfdir/xdg/io.elementary.desktop.wm.shell
 %_bindir/gala
 %_bindir/gala-daemon
@@ -134,6 +153,10 @@ cp -pv vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
 %_vapidir/xfixes-4.0.vapi
 
 %changelog
+* Thu May 14 2026 Nikolay Strelkov <snk@altlinux.org> 8.5.1-alt1
+- New version 8.5.1.
+- Enabled %%check.
+
 * Tue May 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.5.0-alt1
 - New version 8.5.0.
 
