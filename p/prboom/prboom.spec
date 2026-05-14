@@ -1,6 +1,6 @@
 Name: prboom
 Version: 2.5.0
-Release: alt0.3.2
+Release: alt0.3.3
 
 Summary: Doom - classic 3D shoot-em-up game
 Group: Games/Arcade
@@ -9,6 +9,7 @@ License: GPLv2
 
 Source0: %name-%version.tar.gz
 Patch: prboom-2.5.0-alt-libpng15.patch
+Patch1: 0001-Fix-incompatible-pointer-type-char.patch
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -26,9 +27,10 @@ could play them.
 %prep
 %setup -q
 %patch -p2
+%patch1 -p1
 
 %build
-%add_optflags -fcommon
+%add_optflags -fcommon -std=gnu17
 %configure \
 	--disable-cpu-opt
 %make_build
@@ -47,6 +49,10 @@ rm -rf %buildroot%_docdir/%name-%version/COPYING
 %_man6dir/*
 
 %changelog
+* Thu May 14 2026 Artyom Bystrov <arbars@altlinux.org> 2.5.0-alt0.3.3
+- Set C standart to gnu17
+- Add patch to fix incompatible pointer type
+
 * Thu Apr 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt0.3.2
 - Fixed FTBFS with -fcommon.
 - Fixed license tag.
