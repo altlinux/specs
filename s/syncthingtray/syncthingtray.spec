@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: syncthingtray
-Version: 2.0.10
+Version: 2.1.0
 Release: alt1
 
 Summary: Desktop integration for Syncthing
@@ -252,6 +252,9 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %dir %_datadir/syncthingplasmoid/translations
 
 %changelog
+* Thu May 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Wed Apr 08 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.10-alt1
 - New version 2.0.10.
 

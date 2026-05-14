@@ -3,7 +3,7 @@
 %def_without check
 
 Name: mkcal
-Version: 0.7.32
+Version: 0.7.33
 Release: alt1
 
 Summary: SQlite storage backend for KCalendarCore
@@ -77,6 +77,9 @@ xvfb-run -a %ctest -j1 -VV
 %_pkgconfigdir/libmkcal-qt5.pc
 
 %changelog
+* Thu May 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.33-alt1
+- new version 0.7.33 (with rpmrb script)
+
 * Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.32-alt1
 - new version 0.7.32 (with rpmrb script)
 
