@@ -1,20 +1,8 @@
-#
-# spec file for package libpff
-#
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
+%def_without python
 
 Name: libpff
 Version: 20231205
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access Microsoft PFF and OFF format files
 License: LGPLv3+ and GFDLv1.1+ and GFDLv1.3+
@@ -30,8 +18,9 @@ Source4: Personal_Folder_File_(PFF)_format.pdf
 Source5: MAPI_definitions.pdf
 Source6: libpff-libfdata.pdf
 
-BuildRequires: pkg-config
+%if_with python
 BuildRequires: python-dev
+%endif
 BuildRequires: pkgconfig(libcsplit) >= 20130609
 BuildRequires: pkgconfig(libcfile) >= 20130609
 BuildRequires: pkgconfig(libcpath) >= 20130609
@@ -104,7 +93,11 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %configure \
 	--disable-static \
 	--enable-wide-character-type \
-	--enable-python
+%if_with python
+	--enable-python \
+%endif
+	%nill
+
 %make_build
 
 %install
@@ -131,11 +124,16 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/pypff.so
 %python_sitelibdir/pypff.la
+%endif
 
 %changelog
+* Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 20231205-alt2
+- NMU: Build without python2 module.
+
 * Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20231205-alt1
 - New version 20231205.
 
