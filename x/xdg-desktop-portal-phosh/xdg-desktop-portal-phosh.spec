@@ -2,9 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.53
+%define ver_major 0.54
 %define beta %nil
-%define pfs_ver 0.0.7
+%define pfs_ver 0.0.8
 
 %define _name phosh
 # phrosh portal
@@ -69,7 +69,7 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --output=%name.lang %name phosh-mobile-portal
 
 %check
 %__meson_test
@@ -100,6 +100,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %exclude %_datadir/locale/*/*/pfs.mo
 
 %changelog
+* Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
+- 0.54.0
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 
