@@ -4,8 +4,8 @@
 %def_without check
 
 Name:     earlyoom
-Version:  1.6.2
-Release:  alt1.1
+Version:  1.9.0
+Release:  alt1
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -80,6 +80,9 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri May 15 2026 Ilya Sorochan <k0tran@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Tue Aug 20 2024 Michael Shigorin <mike@altlinux.org> 1.6.2-alt1.1
 - E2K: skip docs (no pandoc available so far)
 
