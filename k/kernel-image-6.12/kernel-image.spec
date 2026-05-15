@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.88
+%define kernel_sublevel	.89
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -596,6 +596,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri May 15 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.89-alt1
+- v6.12.89 (2026-05-15).
+
 * Thu May 14 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.88-alt1
 - v6.12.88 (2026-05-14).
 
