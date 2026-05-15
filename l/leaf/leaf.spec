@@ -1,18 +1,18 @@
 Name:     leaf
-Version:  1.21.0
+Version:  1.22.0
 Release:  alt1
 
-Summary:  Terminal Markdown previewer - GUI-like experience
+Summary:  Terminal Markdown previewer with GUI-like experience
 License:  MIT
 Group:    File tools
-Url:      https://github.com/RivoLink/leaf
+Url:      https://leaf.rivolink.mg/
 VCS:      https://github.com/RivoLink/leaf.git
 
 Packager: Alexei Mezin <alexvm@altlinux.org>
 Source:   %name-%version.tar.gz
 Source1:  README.alt.md
 
-Summary(ru_RU.UTF8): Консольная программа для просмотра markdown-файлов
+Summary(ru_RU.UTF-8): Консольная программа для просмотра markdown-файлов
 
 BuildRequires(pre): rpm-build-rust
 
@@ -36,13 +36,19 @@ install -D -m 0644 config.toml -t %buildroot/%_docdir/%name
 install -D -m 0644 README.md -t %buildroot/%_docdir/%name
 install -D -m 0644 TESTING.md -t %buildroot/%_docdir/%name
 install -D -m 0644 %SOURCE1 -t %buildroot/%_docdir/%name
-
+# add bash completion
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
+install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion.d
 
 %files
 %_bindir/*
 %doc %_docdir/%name/*
+%_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri May 15 2026 Alexei Mezin <alexvm@altlinux.org> 1.22.0-alt1
+- New version
+
 * Mon May 11 2026 Alexei Mezin <alexvm@altlinux.org> 1.21.0-alt1
 - Initial build
 
