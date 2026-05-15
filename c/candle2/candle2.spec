@@ -4,7 +4,7 @@
 
 Name: candle2
 Version: 2.4
-Release: alt3
+Release: alt4
 
 Summary: GRBL control interface in Qt
 License: GPL-3.0-only
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch0: alt-fix-app-startup-errors.patch
 Patch1: alt-fix-incorrect-window-scaling.patch
 Patch2: alt-add-external-qmake-vars.patch
+Patch3: alt-use-correct-file-extension-on-save.patch
 
 BuildRequires: qt5-serialport-devel
 
@@ -85,6 +86,10 @@ EOF
 %_iconsdir/hicolor/**/apps/%name.png
 
 %changelog
+* Fri May 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4-alt4
+- added filename checking on save (closes: 57211)
+- fixed fullscreen window opening at 800x600 resolution (closes: 56511)
+
 * Thu Nov 27 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4-alt3
 - renamed the application window title from "candle2-bin" to "Candle2"
 - fixed missing license text in the application help
