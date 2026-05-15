@@ -4,7 +4,7 @@
 %global soversion 1
 
 Name: openal
-Version: 1.25.1
+Version: 1.25.2
 Release: alt1
 
 Summary: OpenAL Soft is a software implementation of the OpenAL 3D audio API
@@ -152,6 +152,9 @@ install -Dpm 0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %endif
 
 %changelog
+* Fri May 15 2026 Ulysses Apokin <ulysses@altlinux.org> 1.25.2-alt1
+- new version 1.25.2
+
 * Fri Apr 24 2026 Ulysses Apokin <ulysses@altlinux.org> 1.25.1-alt1
 - new version 1.25.1
 - fix FTBFS
