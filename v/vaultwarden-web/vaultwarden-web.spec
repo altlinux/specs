@@ -1,12 +1,12 @@
 Name:    vaultwarden-web
-Version: 2026.2.0
+Version: 2026.4.1
 Release: alt1
 
 Summary: Web vault builds for vaultwarden
 License: GPL-3.0+
 Group:   Security/Networking
 Url:     https://github.com/dani-garcia/bw_web_builds
-# Source-url: https://github.com/dani-garcia/bw_web_builds/releases/download/v2026.2.0/bw_web_v2026.2.0.tar.gz
+# Source-url: https://github.com/dani-garcia/bw_web_builds/releases/download/v2026.4.1/bw_web_v2026.4.1.tar.gz
 
 Source0: %name-%version.tar
 Source1: web-vault.tar
@@ -29,6 +29,9 @@ install -d %buildroot%_datadir
 %_datadir/%name
 
 %changelog
+* Fri May 15 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2026.4.1-alt1
+- New version.
+
 * Wed Feb 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2026.2.0-alt1
 - New version.
 
