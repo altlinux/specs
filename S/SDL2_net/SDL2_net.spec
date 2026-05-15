@@ -1,5 +1,5 @@
 Name: SDL2_net
-Version: 2.2.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Portable network library
@@ -7,6 +7,7 @@ License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_net/
+Vcs: https://github.com/libsdl-org/SDL_net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://www.libsdl.org/projects/SDL_net/release/%name-%version.tar.gz
@@ -63,6 +64,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 %_libdir/cmake/%name
 
 %changelog
+* Fri May 15 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Feb 14 2024 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 
