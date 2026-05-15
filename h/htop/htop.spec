@@ -6,7 +6,7 @@
 
 Name: htop
 Version: 3.5.1
-Release: alt5
+Release: alt6
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -21,7 +21,7 @@ BuildRequires: libncursesw-devel
 BuildRequires: python3
 BuildRequires: /proc
 BuildRequires: libsensors3-devel libcap-devel libnl-devel libtool libhwloc-devel
-BuildRequires: gcc libnvidia-ml libdrm-devel
+BuildRequires: gcc libdrm-devel
 %{?!_with_bootstrap:BuildRequires: ImageMagick-tools}
 
 %define rman1dir %_mandir/ru/man1
@@ -111,6 +111,9 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Fri May 15 2026 Ivan A. Melnikov <iv@altlinux.org> 3.5.1-alt6
+- NMU: Drop unused libnvidia-ml BR (fixes FTBFS on riscv64 and loongarch64)
+
 * Sun May 10 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt5
 - Add missing man
 
