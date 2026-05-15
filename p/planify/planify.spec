@@ -5,10 +5,11 @@
 %define ver_major 4.19
 %define rdn_name io.github.alainm23.%_name
 
+%def_enable man
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Planify
@@ -44,6 +45,7 @@ BuildRequires: pkgconfig(libecal-2.0) >= %ecal_ver
 BuildRequires: pkgconfig(libedataserver-1.2)
 BuildRequires: evolution-data-server-vala
 BuildRequires: pkgconfig(libical-glib)
+BuildRequires: pkgconfig(icu-uc)
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(gxml-0.20)
 BuildRequires: pkgconfig(libsecret-1)
@@ -71,7 +73,9 @@ This package contains files necessary to develop Planify plugins.
 %setup -n %_name-%version
 
 %build
-%meson %{?_disable_snapshot:-Dprofile=default}
+%meson %{?_disable_snapshot:-Dprofile=default} \
+    %{subst_enable_meson_bool man manpage}
+%nil
 %meson_build
 
 %install
@@ -92,6 +96,7 @@ This package contains files necessary to develop Planify plugins.
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%{?_enable_man:%_man1dir/%{name}*.1*}
 %doc README*
 
 %files -n lib%_name
@@ -104,6 +109,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Fri May 15 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.2-alt1
+- 4.19.2
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.1-alt1
 - 4.19.1
 
