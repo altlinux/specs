@@ -1,29 +1,21 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt10
+Release: alt11
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
-License: GPL
+License: GPL-2.0-only
 Group: Text tools
 
-Url: http://www.fpx.de/fp/Software/UUDeview
-Source0: %name-%version.tar
-Source1: %name-library.pdf
+Url: https://github.com/hannob/uudeview
+Vcs: https://github.com/hannob/uudeview.git
+Source: %name-%version.tar
 
-# Debian and Fedora patches
-Patch1: uudeview-debian-patches.patch
-Patch2: uudeview-format-security.patch
-Patch3: matherr.patch
-
-Patch4: uudeview-alt-latex.patch
-
-BuildRequires: sendmail-common tcl-devel tk-devel transfig
-BuildRequires: texlive texlive-collection-basic texlive-dist
+BuildRequires: sendmail-common tcl-devel tk-devel
 BuildRequires: zlib-devel
 
 Summary(ru_RU.UTF-8): быстрый кодер/декодер uuenc/xxenc/base64
 
-%description 
+%description
 Smart multi-file multi-part decoder for uuencoded,
 xxencoded, Base64 and BinHex encoded files. Also
 includes a similarly powerful encoder.
@@ -34,29 +26,13 @@ includes a similarly powerful encoder.
 
 %package -n xdeview
 Summary: uudeview for X
-License: GPL
 Group: Text tools
 
 %description -n xdeview
 %summary
 
-%package doc
-Requires: %name
-Summary: Documentation for uudeview - smart uuenc/xxenc/base64 encoder/decoder
-Summary(ru_RU.UTF-8): Документация для uudeview - быстрого кодера/декодера uuenc/xxenc/base64
-License: GPL
-Group: Text tools
-BuildArch: noarch
-
-%description doc
-Smart multi-file multi-part decoder for uuencoded,
-xxencoded, Base64 and BinHex encoded files. Also
-includes a similarly powerful encoder.
-This package includes documentation.
-
 %package -n libuu
 Summary: %name shared library
-License: GPL
 Group: System/Libraries
 
 %description -n libuu
@@ -64,43 +40,31 @@ Group: System/Libraries
 
 %package -n libuu-devel
 Summary: Header files for %name shared library
-License: GPL
 Group: Development/C
+Requires: libuu = %EVR
 
 %description -n libuu-devel
 %summary
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
-%patch3 -p2
-%patch4 -p2
-
-install -pDm0644 %SOURCE1 doc/library.pdf
 
 %build
 %add_optflags %optflags_shared
+%autoreconf
 %configure --enable-tcl=%_libdir
 %make_build
-make -C doc ps 
 
 %install
-sed -i -e "s,xdeview.1,xdeview.1 uuwish.1,g" Makefile
+%makeinstall_std
 
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_man1dir
-mkdir -p %buildroot%_datadir/doc/%name-%version
-%makeinstall prefix=%buildroot/usr execprefix=%buildroot/usr BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
-%makeinstall -C uulib
-
-%files 
+%files
 %_bindir/minews
 %_bindir/uudeview
 %_bindir/uuenview
 %_man1dir/uudeview*
 %_man1dir/uuenview*
-%doc HISTORY INSTALL README
+%doc HISTORY INSTALL README.md
 
 %files -n xdeview
 %_bindir/uuwish
@@ -115,10 +79,11 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %_includedir/*.h
 %_libdir/libuu.so
 
-%files doc
-%doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
-
 %changelog
+* Fri May 15 2026 Alexey Shabalin <shaba@altlinux.org> 0.5.20-alt11
+- Build from upstream git, drop carried patches.
+- Drop -doc subpackage.
+
 * Tue Mar 26 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.20-alt10
 - Fixed FTBFS: built with system zlib.
 
@@ -190,4 +155,3 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 
 * Thu Sep 25 2003 Egor S. Orlov <oes@altlinux.ru> 0.5.18-alt1
 - Initial spec
-
