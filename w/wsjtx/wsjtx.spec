@@ -1,16 +1,17 @@
 Name: wsjtx
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 Summary: Weak-signal communication for Amateur Radio using digital protocols
 License: GPL-3.0
 Group: Engineering
 Url: https://wsjt.sourceforge.io/wsjtx.html
 
-# Source-url: https://github.com/WSJTX/wsjtx/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/WSJTX/wsjtx/releases/download/v%version/wsjtx-%version-src.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-alt-translation-ru-fix.patch
 # Fedora patch for ALLCALL7.TXT and sounds/* files
 # https://src.fedoraproject.org/rpms/wsjtx/blob/rawhide/f/wsjtx-3.0.0-path-fix.patch
+# fixed for version 3.0.1
 Patch1: %name-%version-fedora-path-fix.patch
 
 Buildrequires(pre): rpm-macros-cmake
@@ -37,26 +38,49 @@ Provides: %name-data = %EVR
 Obsoletes: %name-data < %EVR
 
 %description
+WSJT-X, MAP65, and QMAP are open-source, multi-platform programs designed for
+weak-signal digital communication by amateur radio. WSJT-X works with a standard
+SSB transceiver, while MAP65 and QMAP use wideband SDR-style hardware.
+The programs are open source, free of charge, and licensed under the GNU General
+Public License.
+
 WSJT-X implements communication protocols or "modes" called FST4, FST4W, FT4,
-FT8, JT4, JT9, JT65, Q65, MSK144, and WSPR, as well as one called Echo for
-detecting and measuring your own radio signals reflected from the Moon.
-These modes were designed for making reliable, confirmed QSOs under extreme
-weak-signal conditions.
+FT8, JT4, JT9, JT65, MSK144, Q65, WSPR, and Echo. The first nine modes were
+designed for making reliable, confirmed QSOs in a wide variety of weak-signal
+propagation circumstances. These modes use timed Transmit/Receive sequences of
+specific lengths, synchronized with UTC. WSPR mode is for probing potential
+propagation paths with low-power transmissions, and Echo mode is for detecting
+and measuring reflections of your own signals from the Moon.
 
-JT4, JT9, and JT65 use nearly identical message structure and source encoding
-(the efficient compression of standard messages used for minimal QSOs). They
-use timed 60-second T/R sequences synchronized with UTC.  JT4 and JT65 were
-designed for EME ("moonbounce") on the VHF/UHF/microwave bands.  JT9 is
-optimized for the MF and HF bands.  It is about 2 dB more sensitive than JT65
-while using less than 10%% of the bandwidth.  Q65 offers submodes with a wide
-range of T/R sequence lengths and tone spacings; it is highly recommended for
-EME, ionospheric scatter, and other weak signal work on VHF, UHF, and microwave
-bands.
+MAP65 implements a wideband receiver for JT65 and Q65 signals, optimized for EME
+on the VHF/UHF bands. It can be used together with Linrad (by SM5BSZ) or with
+direct input from a soundcard, FUNcube Dongle, or similar hardware. The program
+decodes all JT65 or Q65 signals in a passband up to 90 kHz wide, producing a
+sorted band map of decoded callsigns. In a dual-polarization system, MAP65
+optimally matches the linear polarization angle of each signal, thereby
+eliminating problems with Faraday rotation and spatial polarization offsets.
+MAP65 also handles T/R switching and generates suitable messages and audio
+waveforms for the selected mode.
 
-FT4 and FT8 are operationally similar but use T/R cycles only 7.5 and 15 s long,
-respectively.  MSK144 is designed for Meteor Scatter on the VHF bands.  These
-modes offer enhanced message formats with support for nonstandard callsigns and
-some popular contests.
+QMAP is similar to MAP65 in providing wideband reception of signals over a full
+EME sub-band. It works cooperatively with WSJT-X, supporting the Q65 mode in
+both 30-second and 60-second submodes. The QMAP + WSJT-X combination provides
+full rig control and Doppler compensation for the EME (Earth-Moon-Earth) path.
+
+JT4, JT9, and JT65 use nearly identical message structure, efficient compression
+of messages for minimal QSOs, and 60-second T/R sequences. JT4 and JT65 were
+designed for EME on the VHF, UHF, and microwave bands, while JT9 is optimized
+for the MF and HF bands. JT9 is about 2 dB more sensitive than JT65 while using
+less than 10%% of the bandwidth.
+
+FT4 and FT8 use T/R cycles of only 7.5 and 15 s, respectively. They have become
+extremely popular for world-wide DXing on the HF bands. MSK144 is designed for
+Meteor Scatter on the VHF bands. Q65 offers submodes with T/R sequence lengths
+from 15 seconds to 5 minutes, and a wide range of tone spacings. Particular Q65
+submodes are highly recommended for EME, ionospheric scatter, and other weak
+signal work on VHF, UHF, and microwave bands. These modes include message
+formats explicitly supporting nonstandard callsigns and some popular radio
+contests.
 
 FST4 and FST4W are designed particularly for the LF and MF bands. On these bands
 their fundamental sensitivities are better than other WSJT-X modes with the same
@@ -65,10 +89,6 @@ information throughput. FST4 is optimized for two-way QSOs, while FST4W is for
 quasi-beacon transmissions of WSPR-style messages. FST4 and FST4W do not require
 the strict, independent time synchronization and phase locking of modes like
 EbNaut.
-
-WSPR mode implements a protocol designed for probing potential propagation paths
-with low-power transmissions.  WSPR is fully implemented within WSJT-X,
-including programmable "band-hopping".
 
 %prep
 %setup
@@ -114,6 +134,11 @@ install -p -m 0644 -t %buildroot%_qt5_translationdir %_target_platform/wsjtx_*.q
 %_docdir/%name
 
 %changelog
+* Mon May 11 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.1-alt1
+- new version 3.0.1
+- update description and source URL
+- correct patch to fix path of data files
+
 * Sun Apr 19 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.0-alt1
 - new version 3.0.0
 - update summary and source URL
