@@ -8,7 +8,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1.0
+Version: 6.1.1
 Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 License: MIT
@@ -63,6 +63,9 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 15 2026 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
+- 6.1.0 -> 6.1.1.
+
 * Wed May 13 2026 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
 - 5.9.0 -> 6.1.0.
 
