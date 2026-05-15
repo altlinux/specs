@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: opentofu
-Version: 1.11.6
+Version: 1.12.0
 Release: alt1
 Summary: OpenTofu lets you declaratively manage your cloud infrastructure
 
@@ -18,8 +18,8 @@ Patch: %name-%version.patch
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang
-BuildRequires: /proc
+BuildRequires: rpm-build-golang
+BuildRequires: golang >= 1.26.3
 
 %description
 OpenTofu lets you declaratively manage your cloud infrastructure.
@@ -50,6 +50,12 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri May 15 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
+* Mon May 11 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.11.7-alt1
+- New version 1.11.7.
+
 * Sun May 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.11.6-alt1
 - New version 1.11.6.
 
