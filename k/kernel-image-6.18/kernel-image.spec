@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.29
+%define kernel_sublevel	.30
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -598,6 +598,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri May 15 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.30-alt1
+- v6.18.30 (2026-05-14).
+- net/netlabel: Add mark s0 flag for NetLabel subsystem.
+- config: add selinux to CONFIG_LSM.
+
 * Mon May 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.29-alt1
 - v6.18.29 (2026-05-11).
 
