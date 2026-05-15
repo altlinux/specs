@@ -1,6 +1,6 @@
 Name:     leaf
 Version:  1.22.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Terminal Markdown previewer with GUI-like experience
 License:  MIT
@@ -31,14 +31,15 @@ leaf позволяет просматривать файлы Markdown непо�
 %rust_build
 
 %install
-install -Dp target/release/%name -t %buildroot/%_bindir
+install -Dp target/release/%name %buildroot/%_bindir/%name-markdown-viewer
 install -D -m 0644 config.toml -t %buildroot/%_docdir/%name
 install -D -m 0644 README.md -t %buildroot/%_docdir/%name
 install -D -m 0644 TESTING.md -t %buildroot/%_docdir/%name
 install -D -m 0644 %SOURCE1 -t %buildroot/%_docdir/%name
 # add bash completion
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
-install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion.d
+sed -i 's/complete -F _leaf leaf/complete -F _leaf leaf-markdown-viewer/' completions/%name.bash
+install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion.d/%name-markdown-viewer.bash
 
 %files
 %_bindir/*
@@ -46,6 +47,9 @@ install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri May 15 2026 Alexei Mezin <alexvm@altlinux.org> 1.22.0-alt2
+- Rename main executable to avoid file name conflicts
+
 * Fri May 15 2026 Alexei Mezin <alexvm@altlinux.org> 1.22.0-alt1
 - New version
 
