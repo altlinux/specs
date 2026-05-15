@@ -26,8 +26,9 @@
 # configured in the generated pom.xml files.
 
 Name: %oname
+Epoch: 1
 Version: 31.1
-Release: alt1
+Release: alt1.1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 Group: System/Libraries
@@ -46,27 +47,33 @@ BuildRequires: gcc-c++ zlib-devel libgtest-devel libgmock-devel libabseil-cpp-de
 
 %if_with ruby
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
-BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
-BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
+%if_enabled check
+BuildRequires: gem(bigdecimal) >= 0
+BuildRequires: gem(rake) >= 13
+BuildRequires: gem(bigdecimal) >= 0
+BuildRequires: gem(ffi) >= 1
+BuildRequires: gem(ffi-compiler) >= 1
+BuildRequires: gem(rake) >= 13
+BuildRequires: gem(rake-compiler) >= 1.1.0
+BuildRequires: gem(rake-compiler-dock) >= 1.2.1
+BuildRequires: gem(test-unit) >= 3.0.9
+BuildConflicts: gem(ffi) >= 2
+BuildConflicts: gem(ffi-compiler) >= 2
+BuildConflicts: gem(rake-compiler) >= 2
+BuildConflicts: gem(rake-compiler-dock) >= 2
+BuildConflicts: gem(test-unit) >= 4
+%endif
 
-%ruby_use_gem_dependency rake-compiler >= 1.1.0,rake-compiler < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 %endif
 
 %description
 Protocol Buffers are a way of encoding structured data in
 an efficient yet extensible format. Google uses Protocol Buffers for
 almost all of its internal RPC protocols and file formats.
-
-%package compiler
-Summary: Protocol Buffers Compiler
-Group: Development/Other
-Requires: lib%oname%soversion = %EVR
-
-%description compiler
-Compiler for protocol buffer definition files
 
 %package -n lib%oname%soversion
 Summary: Protocol Buffer c++ library
@@ -118,6 +125,7 @@ lacks descriptors, reflection, and some other features.
 %if_with java
 
 %package java
+Version: 4.31.1
 Summary: Java Protocol Buffers runtime library
 Group: Development/Java
 BuildArch: noarch
@@ -190,10 +198,14 @@ Protocol Buffer BOM POM.
 
 %if_with ruby
 %package -n gem-google-protobuf
+Version: 4.31.1
 Summary: Protocol Buffers
 Group: Development/Ruby
 
 Provides: gem(google-protobuf) = %EVR
+Requires: ruby >= 3.1
+Requires: gem(bigdecimal) >= 0
+Requires: gem(rake) >= 13
 
 %description -n gem-google-protobuf
 Protocol Buffers are Google's data interchange format.
@@ -220,10 +232,19 @@ Summary(ru_RU.UTF-8): Файлы для разработки самоцвета 
 Group: Development/Ruby
 BuildArch: noarch
 
-Requires: gem(google-protobuf) = %EVR
-Requires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
-Requires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
-Requires: gem(test-unit) >= 3.0 gem(test-unit) < 4
+Requires:      gem(bigdecimal) >= 0
+Requires:      gem(rake) >= 13
+Requires:      gem(google-protobuf) = 4.31.1
+Requires:      gem(ffi) >= 1
+Requires:      gem(ffi-compiler) >= 1
+Requires:      gem(rake-compiler) >= 1.1.0
+Requires:      gem(rake-compiler-dock) >= 1.2.1
+Requires:      gem(test-unit) >= 3.0.9
+Conflicts:     gem(ffi) >= 2
+Conflicts:     gem(ffi-compiler) >= 2
+Conflicts:     gem(rake-compiler) >= 2
+Conflicts:     gem(rake-compiler-dock) >= 2
+Conflicts:     gem(test-unit) >= 4
 
 %description -n gem-google-protobuf-devel
 Protocol Buffers development package.
@@ -233,6 +254,16 @@ Protocol Buffers are Google's data interchange format.
 %description -n gem-google-protobuf-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета google-protobuf.
 %endif
+
+%package compiler
+Version: 31.1
+Summary: Protocol Buffers Compiler
+Group: Development/Other
+Requires: lib%oname%soversion = %EVR
+
+%description compiler
+Compiler for protocol buffer definition files
+
 
 %prep
 %setup -n %oname-%version
@@ -373,19 +404,15 @@ $PROTOC --java_out=lite:java/lite/src/main/java \
 %endif
 
 %if_with ruby
-pushd ruby
 rm -fv SetupConfig
 %ruby_build
-popd
 %endif
 
 %install
 %cmakeinstall_std
 
 %if_with ruby
-pushd ruby
 %ruby_install
-popd
 %endif
 
 %if_with java
@@ -471,6 +498,9 @@ popd
 %endif
 
 %changelog
+* Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:31.1-alt1.1
+- ! fixed package versions for java and ruby according version.json
+
 * Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 31.1-alt1
 - major update from 3.25.5 to 31.1 with new libabseil-cpp
 

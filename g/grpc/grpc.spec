@@ -1,6 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define   gemname grpc
 %def_without python3_bindings
 %def_with ruby
+%def_enable check
+%def_enable doc
+%def_enable devel
 
 # ABI/SONAME versions from CMakeLists.txt (gRPC_CORE_SOVERSION / gRPC_CPP_SOVERSION).
 # Bumped on ABI breakage - review when updating grpc version.
@@ -9,7 +13,7 @@
 
 Name: grpc
 Version: 1.80.0
-Release: alt1
+Release: alt1.1
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -40,21 +44,35 @@ BuildRequires: libabseil-cpp-devel
 BuildRequires: libre2-devel
 BuildRequires: libxxhash-devel
 BuildRequires: chrpath
-%if_enabled check
 %if_with ruby
+%if_enabled check
 BuildRequires: gem(bundler) >= 1.9
-BuildRequires: gem(google-protobuf) >= 31 gem(google-protobuf) < 32
-BuildRequires: gem(googleapis-common-protos-types) >= 1.0 gem(googleapis-common-protos-types) < 2
 BuildRequires: gem(facter) >= 2.4
+BuildRequires: gem(google-protobuf) >= 3.25
+BuildRequires: gem(googleapis-common-protos-types) >= 1.0
+BuildRequires: gem(googleauth) >= 1.0
 BuildRequires: gem(logging) >= 2.0
-BuildRequires: gem(simplecov) >= 0.14.1 gem(simplecov) < 1
-BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(rake-compiler) >= 1.2.0
-BuildRequires: gem(rake-compiler-dock) >= 1.2.0
+BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(rake-compiler) >= 1.1.2
+BuildRequires: gem(rake-compiler-dock) >= 1.2.1
 BuildRequires: gem(rspec) >= 3.6
-BuildRequires: gem(rubocop) >= 0.49.1 gem(rubocop) < 2
-BuildRequires: gem(signet) >= 0.7 gem(signet) < 1
-BuildRequires: gem(googleauth)
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(signet) >= 0.7
+BuildRequires: gem(simplecov) >= 0.17
+BuildRequires: gem(syslog) >= 0.3.0
+BuildConflicts: gem(facter) >= 5
+BuildConflicts: gem(google-protobuf) >= 5.0
+BuildConflicts: gem(googleapis-common-protos-types) >= 2
+BuildConflicts: gem(googleauth) >= 2
+BuildConflicts: gem(logging) >= 3
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rake-compiler) >= 2
+BuildConflicts: gem(rake-compiler-dock) >= 2
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(signet) >= 1
+BuildConflicts: gem(simplecov) >= 1
+BuildConflicts: gem(syslog) >= 0.4
 %endif
 %endif
 
@@ -65,12 +83,11 @@ Patch1: grpc-0001-enforce-system-crypto-policies.patch
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_ignore_names distribtest,grpc-demo,pubsub,grpc-native-debug
-%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake-compiler >= 1.2.0,rake-compiler < 2
-%ruby_use_gem_dependency rake-compiler-dock>= 1.2.0,rake-compiler-dock< 2
-%ruby_use_gem_dependency rubocop >= 1.13.0,rubocop < 2
-%ruby_use_gem_dependency simplecov >= 0.14.1,simplecov < 1
-%ruby_use_gem_dependency  googleauth >= 1.0.0,googleauth < 2
+%ruby_use_gem_dependency facter >= 4.10,facter < 5
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 %endif
 
 %description
@@ -179,32 +196,49 @@ Python3 bindings for gRPC library.
 %package -n gem-grpc
 Summary: GRPC system in Ruby
 Group: Development/Ruby
-Requires: libgrpc%_sover_c = %EVR
-Requires: gem(google-protobuf) >= 31 gem(google-protobuf) < 32
-Requires: gem(googleapis-common-protos-types) >= 1.0 gem(googleapis-common-protos-types) < 2
 Provides: gem(grpc) = %version
+Requires: libgrpc%_sover_c = %EVR
+Requires: ruby >= 3.1
+Requires: gem(google-protobuf) >= 3.25
+Requires: gem(googleapis-common-protos-types) >= 1.0
+Conflicts: gem(google-protobuf) >= 5.0
+Conflicts: gem(googleapis-common-protos-types) >= 2
 
 %description -n gem-grpc
 protoc and the Ruby gRPC protoc plugin
 
+%if_enabled    devel
 %package -n gem-grpc-devel
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета grpc
 Group: Development/Ruby
 BuildArch: noarch
 
-Requires: gem-grpc = %EVR
-Requires: gem(bundler) >= 1.9
-Requires: gem(facter) >= 2.4
-Requires: gem(logging) >= 2.0
-Requires: gem(simplecov) >= 0.17
-Requires: gem(rake) >= 13.0
-Requires: gem(rake-compiler) >= 1.1.2
-Requires: gem(rake-compiler-dock) >= 0.7.2
-Requires: gem(rspec) >= 3.6
-Requires: gem(rubocop) >= 1.15.0
-Requires: gem(signet) >= 0.7
-Requires: gem(googleauth) >= 0.5.1
+Requires:      gem-grpc = %EVR
+Requires:      gem(grpc) = 1.80.0
+Requires:      gem(bundler) >= 1.9
+Requires:      gem(facter) >= 2.4
+Requires:      gem(googleauth) >= 1.0
+Requires:      gem(logging) >= 2.0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(rake-compiler) >= 1.1.2
+Requires:      gem(rake-compiler-dock) >= 1.2.1
+Requires:      gem(rspec) >= 3.6
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(signet) >= 0.7
+Requires:      gem(simplecov) >= 0.17
+Requires:      gem(syslog) >= 0.3.0
+Conflicts:     gem(facter) >= 5
+Conflicts:     gem(googleauth) >= 2
+Conflicts:     gem(logging) >= 3
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rake-compiler) >= 2
+Conflicts:     gem(rake-compiler-dock) >= 2
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(signet) >= 1
+Conflicts:     gem(simplecov) >= 1
+Conflicts:     gem(syslog) >= 0.4
 
 %description -n gem-grpc-devel
 Modern, open source, high-performance remote procedure call (RPC) framework
@@ -231,7 +265,9 @@ Core Features that make it awesome:
 
 %description -n gem-grpc-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета grpc.
+%endif
 
+%if_enabled    doc
 %package -n gem-grpc-doc
 Summary: GRPC system in Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grpc
@@ -242,10 +278,32 @@ Requires: gem(grpc)
 %description -n gem-grpc-doc
 GRPC system in Ruby documentation files.
 
-Send RPCs from Ruby using GRPC
+Modern, open source, high-performance remote procedure call (RPC) framework
+documentation files.
+
+gRPC is a modern open source high performance RPC framework that can run in any
+environment. It can efficiently connect services in and across data centers with
+pluggable support for load balancing, tracing, health checking and
+authentication. It is also applicable in last mile of distributed computing to
+connect devices, mobile applications and browsers to backend services.
+
+The main usage scenarios:
+
+* Efficiently connecting polyglot services in microservices style architecture
+* Connecting mobile devices, browser clients to backend services
+* Generating efficient client libraries
+
+Core Features that make it awesome:
+
+* Idiomatic client libraries in 10 languages
+* Highly efficient on wire and with a simple service definition framework
+* Bi-directional streaming with http/2 based transport
+* Pluggable auth, tracing, load balancing and health checking
+
 
 %description -n gem-grpc-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета grpc.
+%endif
 
 %package -n gem-grpc-tools
 Summary: Development tools for Ruby gRPC
@@ -256,19 +314,19 @@ Provides: gem(grpc-tools) = %version
 %description -n gem-grpc-tools
 protoc and the Ruby gRPC protoc plugin
 
-%package tools-ruby-protoc
+%package grpc-tools-ruby-protoc
 Summary: Development tools for Ruby gRPC executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета grpc-tools
 Group: Other
 BuildArch: noarch
 Requires: gem(grpc-tools) = %version
 
-%description tools-ruby-protoc
+%description grpc-tools-ruby-protoc
 Development tools for Ruby gRPC executable(s).
 
 protoc and the Ruby gRPC protoc plugin
 
-%description tools-ruby-protoc -l ru_RU.UTF-8
+%description grpc-tools-ruby-protoc -l ru_RU.UTF-8
 Исполнямка для самоцвета grpc-tools.
 %endif
 
@@ -448,12 +506,16 @@ done
 %ruby_gemspecdir/grpc-tools-*
 %ruby_gemslibdir/grpc-tools-*
 
-%files tools-ruby-protoc
+%files grpc-tools-ruby-protoc
 %doc README.md
 %_bindir/grpc_tools_ruby_protoc
 %endif
 
 %changelog
+* Thu May 14 2026 Pavel Skrylev <majioa@altlinux.org> 1.80.0-alt1.1
+- ! fixed dep to gem google-protobuf
+- ! fixed some enclosing macros for ruby subsystem
+
 * Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 1.80.0-alt1
 - updated from 1.70.1 to 1.80.0
 
