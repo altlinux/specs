@@ -13,7 +13,7 @@
 
 Name:          node-nightly
 Version:       %major.2
-Release:       alt1
+Release:       alt2
 Summary:       Evented I/O for V8 Javascript
 Group:         Development/Tools
 License:       MIT
@@ -47,6 +47,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: openssl-devel >= %openssl_version
 BuildRequires: libcares-devel >= 1.18.1-alt1
 BuildRequires: libnghttp2-devel
+BuildRequires: libsimdjson-devel
 
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Provides:      node = %EVR
@@ -150,6 +151,7 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
    --shared-openssl \
    --shared-openssl-includes=%_includedir \
    --shared-nghttp2 \
+   --shared-simdjson \
    %nil
 
 %make_build BUILDTYPE=Release
@@ -228,5 +230,8 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 
 
 %changelog
+* Fri May 15 2026 Ilya Sorochan <k0tran@altlinux.org> 25.8.2-alt2
+- NMU: switch from vendored simdjson to packaged
+
 * Thu Mar 26 2026 Pavel Skrylev <majioa@altlinux.org> 25.8.2-alt1
 - + packaged nightly node for compat purposes
