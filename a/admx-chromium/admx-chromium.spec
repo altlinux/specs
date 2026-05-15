@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-chromium
-Version: 146.0
+Version: 148.0
 Release: alt1
 
 Summary: Chromium-specific ADMX policy templates
@@ -57,6 +57,10 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Fri May 15 2026 Valentin Sokolov <sova@altlinux.org> 148.0-alt1
+- Update to latest release 148.0-7778.168
+- Improved ru-lang policies description
+
 * Tue Mar 17 2026 Valentin Sokolov <sova@altlinux.org> 146.0-alt1
 - Update to latest release 146.0-7680.72
 - Improved ru-lang policy description
