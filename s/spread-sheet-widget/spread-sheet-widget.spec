@@ -1,6 +1,6 @@
 Summary: Library for Gtk+ which provides a widget for viewing and manipulating 2 dimensional tabular data
 Name: spread-sheet-widget
-Version: 0.8
+Version: 0.10
 Release: alt1
 License: GPLv3+
 Group: System/Libraries
@@ -67,6 +67,9 @@ install -D demo/.libs/demo %buildroot%_bindir/%name-demo
 %_infodir/*.info*
 
 %changelog
+* Fri May 15 2026 Anton Zhukharev <ancieg@altlinux.org> 0.10-alt1
+- NMU: Updated to 0.10.
+
 * Wed Apr 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.8-alt1
 - Updated to version 0.8
 

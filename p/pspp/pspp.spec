@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pspp
-Version: 2.0.1
+Version: 2.1.1
 Release: alt1
 
 Summary: A program for statistical analysis of sampled data.
@@ -78,6 +78,9 @@ rm -rf %buildroot%_infodir/pspp-figures
 %_datadir/%name/
 
 %changelog
+* Fri May 15 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt1
+- NMU: Updated to 2.1.1.
+
 * Mon May 20 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.1-alt1
 - Recovered for Sisyphus (once again)
 - Updated to 2.0.1
