@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: httpdirfs
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 Summary: FUSE mount for HTTP
 License: GPL-3.0-or-later
@@ -51,6 +51,9 @@ sed -i /_FORTIFY_SOURCE/d meson.build
 %_man1dir/httpdirfs.1*
 
 %changelog
+* Fri May 15 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.9-alt1
+- Update to 1.2.9 (2026-05-13).
+
 * Sun May 10 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.8-alt1
 - Update to 1.2.8 (2026-05-10).
 
