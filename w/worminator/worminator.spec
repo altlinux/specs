@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_41
+Release:        alt2_41.1
 Summary:        Sidescrolling platform and shoot'em up action-game
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/worminator/
@@ -43,7 +43,7 @@ sed -i 's/\r//' ReadMe.txt
 gcc $RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations \
   -Wno-char-subscripts -DALLEGRO_FIX_ALIASES \
   -DDATADIR=\"%{_datadir}/%{name}/\" -o %{name} \
-  Worminator.c `allegro-config --libs` -lm
+  Worminator.c `allegro-config --libs` -lm -std=gnu17
 
 
 %install
@@ -72,6 +72,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Fri May 15 2026 Artyom Bystrov <arbars@altlinux.org> 3.0R2.1-alt2_41.1
+- Set C standart to gnu17
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 3.0R2.1-alt2_41
 - update to new release by fcimport
 
