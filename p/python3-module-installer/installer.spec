@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: A library for installing Python wheels
 License: MIT
@@ -63,6 +63,9 @@ find -type f -name '*.exe' -delete
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 15 2026 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1.
+
 * Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.7.0 -> 1.0.0.
 
