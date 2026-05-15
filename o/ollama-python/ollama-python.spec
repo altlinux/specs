@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: Ollama Python library
 License: MIT
@@ -84,6 +84,9 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Fri May 15 2026 Vitaly Chikunov <vt@altlinux.org> 0.6.2-alt1
+- Update to v0.6.2 (2026-01-23).
+
 * Fri Nov 14 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1
 - Update to v0.6.1 (2025-11-12).
 
