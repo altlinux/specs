@@ -1,16 +1,16 @@
 %define soname 1
 
 Name: flashrom
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Universal flash programming utility
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: http://flashrom.org/Flashrom
-# Homepage: http://www.flashrom.org
-# https://review.coreboot.org/flashrom.git
+Url: https://flashrom.org/index.html
+Vcs: https://review.coreboot.org/flashrom
+
 Source0: %name-%version.tar
 Source1: flashboot.sh
 Patch: %name-%version-%release.patch
@@ -130,7 +130,7 @@ echo "options spidev bufsiz=64" > %buildroot%_sysconfdir/modprobe.d/spidev.conf
 %__meson_test
 
 %files
-%doc README.rst COPYING
+%doc README.rst COPYING.rst
 %_udevrulesdir/60_flashrom.rules
 %_sbindir/*
 %_man8dir/*
@@ -153,6 +153,9 @@ echo "options spidev bufsiz=64" > %buildroot%_sysconfdir/modprobe.d/spidev.conf
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri May 15 2026 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt1
+- 1.7.0.
+
 * Mon Aug 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
 - 1.6.0.
 
