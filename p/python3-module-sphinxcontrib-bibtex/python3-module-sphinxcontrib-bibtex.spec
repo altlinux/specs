@@ -1,7 +1,7 @@
 %global pypi_name sphinxcontrib-bibtex
 
 Name: python3-module-%pypi_name
-Version: 2.6.5
+Version: 2.7.0
 Release: alt1
 
 Summary: Sphinx extension for bibtex style references
@@ -43,5 +43,8 @@ LaTeX's thebibliography environment and the \citet and \citep commands.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 15 2026 Ulysses Apokin <ulysses@altlinux.org> 2.7.0-alt1
+- New version.
+
 * Tue Mar 31 2026 Ulysses Apokin <ulysses@altlinux.org> 2.6.5-alt1
 - Initial build for Sisyphus.
