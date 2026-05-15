@@ -1,5 +1,5 @@
 Name: icon-theme-qogir
-Version: 2025.02.15
+Version: 2025.11.04
 Release: alt1
 Epoch: 1
 
@@ -31,12 +31,20 @@ A flat colorful design icon theme for Qogir theme
 %install
 mkdir -p %buildroot%_datadir/icons
 ./install.sh -d %buildroot%_datadir/icons
+# fix unmets
+# %%_datadir/icons/Qogir*/symbolic/status/audio-input-microphone-symbolic.svg
+find %buildroot%_datadir/icons/Qogir*/symbolic/status/ \
+  -maxdepth 0 -type d -exec cp -n \
+  src/symbolic/devices/audio-input-microphone-symbolic.svg {} \;
 
 %files
 %doc AUTHORS COPYING README.md
 %_datadir/icons/Qogir*
 
 %changelog
+* Fri May 15 2026 Leontiy Volodin <lvol@altlinux.org> 1:2025.11.04-alt1
+- New version 2025.11.04.
+
 * Mon Sep 08 2025 Leontiy Volodin <lvol@altlinux.org> 1:2025.02.15-alt1
 - New version 2025.02.15.
 - Conflicts with 20190407 version (ALT #45549).
