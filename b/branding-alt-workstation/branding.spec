@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -374,6 +374,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri May 15 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt2
+- slideshow: add slide with Max QR code
+
 * Mon Apr 27 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt1
 - systemd: align os-release with os-release(5) spec.
 - systemd: rename edition to workstation to match VARIANT_ID.
