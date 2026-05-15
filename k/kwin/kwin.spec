@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.6.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -41,9 +41,11 @@ Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
-Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
+#Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 Patch6: alt-gcc13.patch
 Patch7: alt-abort-with-nvidia-driver-older-500.patch
+# Ubuntu
+Patch100: fix-drm-open-fallback-to-logind-fd.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -198,6 +200,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Fri May 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
+- fix take permissions on /dev/dri/card* when login compositor
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 
