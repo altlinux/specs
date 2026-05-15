@@ -3,7 +3,7 @@
 %define what remix-disc2
 Name: %rname-remix-pack2
 Serial: 1
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Group: Sound
@@ -73,6 +73,9 @@ __EOF__
 %_gamesdatadir/%rname/content/packages/*.uqm
 
 %changelog
+* Fri May 15 2026 Artyom Bystrov <arbars@altlinux.org> 1:0.8.0-alt1
+- new version
+
 * Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.7.0-alt1
 - new version for uqm >= 0.7.0
 

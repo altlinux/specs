@@ -3,8 +3,8 @@
 %define what remix-disc4
 Name: %rname-remix-pack4
 Serial: 1
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Group: Sound
 Summary: The Ur-Quan Masters Official Remix Add-On. Pack IV
@@ -61,6 +61,9 @@ __EOF__
 %_gamesdatadir/%rname/content/packages/*.uqm
 
 %changelog
+* Fri May 15 2026 Artyom Bystrov <arbars@altlinux.org> 1:0.8.0-alt1
+- new version
+
 * Sun Jul 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.7.0-alt2
 - fixed misprint thanks to icesik@
 

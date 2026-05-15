@@ -2,7 +2,7 @@
 %define what voice
 
 Name: %rname-%what
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Group: Games/Adventure
@@ -44,6 +44,9 @@ __EOF__
 %_gamesdatadir/%rname/content/packages/%what.uqm
 
 %changelog
+* Fri May 15 2026 Artyom Bystrov <arbars@altlinux.org> 0.8.0-alt1
+- new version
+
 * Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
 - new version
 

@@ -3,8 +3,8 @@
 %define rname uqm
 %define what bin
 Name: %rname-%what
-Version: 0.7.0
-Release: alt3
+Version: 0.8.0
+Release: alt1
 
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
@@ -21,8 +21,10 @@ Source10: %rname.16.png
 Source11: %rname.32.png
 Source12: %rname.48.png
 
-BuildRequires: libGL-devel libmikmod-devel libopenal-devel libSDL-devel
-BuildRequires: libSDL_image-devel libvorbis-devel zlib-devel
+Patch: 0001-Fix-build-with-GCC15.patch
+
+BuildRequires: libGL-devel libmikmod-devel libopenal-devel libSDL2-devel
+BuildRequires: libSDL2_image-devel libvorbis-devel zlib-devel libpng-devel
 
 %description
 The project started in August 2002, when Toys For Bob <http://toysforbob.com/>
@@ -37,6 +39,8 @@ This package contains binary executable program for this game.
 
 %prep
 %setup -n %rname-%version-1
+
+%patch -p1
 
 %build
 export CFLAGS="%optflags" LDFLAGS="%optflags -lm"
@@ -71,7 +75,7 @@ cat > %buildroot%_desktopdir/%rname.desktop <<__EOF__
 Version=1.0
 Type=Application
 Name=The Ur-Quan Masters
-Exec=%_gamesbindir/%rname
+Exec=%_gamesbindir/%rname -n /usr/share/games/uqm/content
 Icon=%rname
 Categories=Game;AdventureGame;
 Comment=Port of the classic space game StarControl 2.
@@ -82,11 +86,38 @@ cat > %buildroot%_desktopdir/%rname-hires.desktop <<__EOF__
 Version=1.0
 Type=Application
 Name=The Ur-Quan Masters - High Resolution
-Exec=%_gamesbindir/%rname -q high -f -o -c hq -r 1024x768
+Exec=%_gamesbindir/%rname -q high -f -o -c hq -r 1024x768 -n /usr/share/games/uqm/content
 Icon=%rname
 Categories=Game;AdventureGame;
 Comment=Port of the classic space game StarControl 2 (high resolution mode).
 __EOF__
+
+mkdir -p %buildroot%_datadir/appdata
+cat > %buildroot%_datadir/appdata/%name.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Luya Tshimbalanga <luya@fedoraproject.org> -->
+<!--
+BugReportURL: https://bugs.uqm.stack.nl/show_bug.cgi?id=1199
+SentUpstream: 2014-09-25
+-->
+<application>
+  <id type="desktop">uqm.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Classic space adventure game</summary>
+  <description>
+    <p>
+    A port of classic game Star Control II that includes adventure and melee
+    mode with enhancement for modern system.
+    </p>
+  </description>
+  <url type="homepage">http://sc2.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://sc2.sourceforge.net/screenshots/meleestep.png</screenshot>
+    <screenshot>http://sc2.sourceforge.net/screenshots/scale_triscan.png</screenshot>
+    <screenshot>http://sc2.sourceforge.net/screenshots/slaveshield.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 mkdir -p %buildroot/%_iconsdir/hicolor/{16x16,32x32,48x48}/apps/
 install -m 644 %SOURCE10 %buildroot/%_iconsdir/hicolor/16x16/apps/%rname.png
@@ -101,8 +132,14 @@ install -m 644 %SOURCE12 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_gamesdatadir/%rname
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%rname.png
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri May 15 2026 Artyom Bystrov <arbars@altlinux.org> 0.8.0-alt1
+- Update to new version
+- Fix build with GCC15
+- Add appstream data file
+
 * Sat Dec 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3
 - fixed build
 
