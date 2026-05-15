@@ -1,8 +1,8 @@
 %define oldname pdfbox
 
 Name:          	pdfbox2
-Version:       	2.0.26
-Release:       	alt3
+Version:       	2.0.28
+Release:       	alt1
 
 Summary:       	Apache PDFBox library for working with PDF documents
 License:       	Apache-2.0
@@ -194,7 +194,7 @@ rm fontbox/src/test/java/org/apache/fontbox/cff/CFFParserTest.java \
    pdfbox/src/test/java/org/apache/pdfbox/pdfparser/TestPDFParser.java \
    pdfbox/src/test/resources/input/rendering/{FANTASTICCMYK.ai,HOTRODCMYK.ai} \
    preflight/src/test/java/org/apache/pdfbox/preflight/TestIsartorBavaria.java
-ln -s %{_datadir}/fonts/liberation-sans/LiberationSans-Regular.ttf pdfbox/src/test/resources/org/apache/pdfbox/ttf/LiberationSans-Regular.ttf
+#ln -s %{_datadir}/fonts/liberation-sans/LiberationSans-Regular.ttf pdfbox/src/test/resources/org/apache/pdfbox/ttf/LiberationSans-Regular.ttf
 sed -i -e 's/\(testCIDFontType2VerticalSubset\)/ignore_\1/' pdfbox/src/test/java/org/apache/pdfbox/pdmodel/font/TestFontEmbedding.java
 sed -i -e 's/\(testStructureTreeMerge\)/ignore_\1/'  pdfbox/src/test/java/org/apache/pdfbox/multipdf/PDFMergerUtilityTest.java
 sed -i -e '/testPDFBOX4115/i\@org.junit.Ignore' pdfbox/src/test/java/org/apache/pdfbox/pdmodel/font/PDFontTest.java
@@ -280,6 +280,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 15 2026 Anton Meleshnikov <alton@altlinux.org> 2.0.28-alt1
+- new version
+
 * Thu May 14 2026 Anton Meleshnikov <alton@altlinux.org> 2.0.26-alt3
 - forked package for sambox
 - added JPMS support
