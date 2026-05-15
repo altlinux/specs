@@ -5,7 +5,7 @@
 
 Name: perl-%module
 Version: 1.8
-Release: alt4
+Release: alt5
 Epoch: 3
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
@@ -16,13 +16,14 @@ Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 # BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/M/ML/MLEHMANN/%{module}-%{version}.tar.gz
-Patch1: Convert-UUlib-1.5-alt-system-libuu.patch
-Patch2: Convert-UUlib-1.71-alt_strip_stuff_not_in_libuu.patch
-Patch3: Convert-UUlib-1.8-alt-system-libuu.patch
+# Upstream strongly discourages linking against the standalone libuu:
+# the bundled uulib has diverged (extra UUOPT_*, partcount out-arg in
+# UULoad*, reworked uulist struct). Debian and Fedora both build with
+# the bundled copy for the same reason.
 Patch4: Convert-UUlib-1.8-perl532.patch
+Patch5: Convert-UUlib-1.8-encodepartial-crcptr.patch
 
-# Automatically added by buildreq on Mon Oct 10 2011
-BuildRequires: libuu-devel perl-devel perl(Canary/Stability.pm) perl(common/sense.pm)
+BuildRequires: perl-devel perl(Canary/Stability.pm) perl(common/sense.pm)
 
 %description
 The UUDeview library is a highly portable set of functions
@@ -32,12 +33,15 @@ binary files into all of these representations except BinHex.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
+# Bundled uulib headers declare prototypes via the legacy K&R-compat
+# _ANSI_ARGS_(c) macro, which expands to () unless PROTOTYPES is defined.
+# gcc 14+ defaults to C23 and rejects calls to functions without prototypes,
+# so define PROTOTYPES to get real prototypes (the headers' intended path).
+%add_perl_vendor_optflags -DPROTOTYPES
 %perl_vendor_build
 
 %install
@@ -49,6 +53,9 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Fri May 15 2026 Alexey Shabalin <shaba@altlinux.org> 3:1.8-alt5
+- Fixed build with gcc 15.
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 3:1.8-alt4
 - properly fixed for perl 5.34
 - removed req_method relaxed
