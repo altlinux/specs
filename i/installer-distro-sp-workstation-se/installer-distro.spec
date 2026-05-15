@@ -1,7 +1,7 @@
 %define distro sp-workstation-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt6
+Release: alt7
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -93,6 +93,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files stage3
 
 %changelog
+* Fri May 15 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt7
+- postinstall.d/45-noexec-tmp.sh: replace /tmp/.private/root with /root/tmp.
+
 * Fri Feb 20 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
 - installer-steps: remove users-add step.
 

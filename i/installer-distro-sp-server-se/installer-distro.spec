@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt11
+Release: alt12
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -103,6 +103,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Fri May 15 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt12
+- postinstall.d/45-noexec-tmp.sh: replace /tmp/.private/root with /root/tmp.
+
 * Tue May 12 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt11
 - net-eth-stage3: fix dependencies.
 
