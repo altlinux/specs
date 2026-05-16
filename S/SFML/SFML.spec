@@ -1,7 +1,7 @@
-%define soversion 3.0
+%define soversion 3.1
 
 Name: SFML
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -15,9 +15,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # Source-url: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
+Patch0: %name-3.1.0-use-system-SheenBidi-debian.patch
+
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
+BuildRequires: libSheenBidi-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXdamage-devel
@@ -29,7 +32,9 @@ BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libflac-devel
-BuildRequires: libopenal-devel
+BuildRequires: libharfbuzz-devel
+BuildRequires: libmbedtls-devel
+BuildRequires: libssh2-devel
 BuildRequires: libudev-devel
 BuildRequires: libvorbis-devel
 
@@ -61,6 +66,7 @@ developing applications that use SFML.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -85,6 +91,9 @@ developing applications that use SFML.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Sat May 16 2026 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1
+- New version 3.1.0.
+
 * Thu Sep 18 2025 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt1
 - New version 3.0.2.
 
