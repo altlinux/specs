@@ -1,11 +1,11 @@
 %define nameL com.georgefb.mangareader
 
 Name: mangareader
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Qt manga reader for local files
-License: GPL-3.0-only and CC-BY-SA-4.0
+License: GPL-3.0-only and CC-BY-SA-4.0 and BSD-2-Clause and CC0-1.0
 Group: Office
 
 Url: https://github.com/g-fb/mangareader
@@ -45,6 +45,10 @@ mv settings.kcfg %name.kcfg
 %_datadir/metainfo/%nameL.metainfo.xml
 
 %changelog
+* Sun May 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt1
+- 2.4.0 -> 2.5.0
+- changed license
+
 * Fri Apr 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1
 - 2.3.0 -> 2.4.0
 
