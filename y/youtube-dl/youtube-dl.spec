@@ -4,7 +4,7 @@
 
 Name: youtube-dl
 Version: 2023.09.27
-Release: alt1
+Release: alt2
 
 Summary: Download videos from YouTube
 License: Public domain
@@ -19,7 +19,7 @@ Requires: python3-module-%py_name = %EVR
 
 # Automatically added by buildreq on Fri Apr 08 2016
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base
-BuildRequires: python-module-setuptools python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires(pre): rpm-build-python3
 %if_with snapshot
 BuildRequires: /usr/bin/sphinx-build
@@ -28,17 +28,6 @@ BuildRequires: /usr/bin/sphinx-build
 %description
 Youtube-dl is a small command-line program to download videos
 from YouTube.com.
-
-%package -n python-module-%py_name
-Group: Development/Python
-Summary: Python module for youtube-dl
-Conflicts: youtube-dl < 2016.04.06-alt1
-
-%description -n python-module-%py_name
-Youtube-dl is a small command-line program to download videos
-from YouTube.com.
-
-This package contains Python module.
 
 %package -n python3-module-%py_name
 Group: Development/Python
@@ -51,48 +40,32 @@ from YouTube.com.
 This package contains Python 3 module.
 
 %prep
-%setup -c
-for py in py2 py3; do
-	cp -a %name-%version $py
-done
+%setup
 
 %build
-cd py2
-	%python3_build
+%python3_build
 %if_with snapshot
-	make -C docs man
+make -C docs man
 %endif
-cd -
-
-cd py3
-	%python_build
-cd -
 
 %install
-cd py3
-	%python_install
-cd -
-
-cd py2
-	%python3_install
+%python3_install
 %if_with snapshot
-	install -D -m644 docs/_build/man/youtube-dl.1 %buildroot%_man1dir/youtube-dl.1
+install -D -m644 docs/_build/man/youtube-dl.1 %buildroot%_man1dir/youtube-dl.1
 %endif
-cd -
 
 %files
 %_bindir/youtube-dl
 %_man1dir/youtube-dl.1.*
-
-%files -n python-module-%py_name
-%python_sitelibdir/%py_name
-%python_sitelibdir/%py_name-*.egg-info
 
 %files -n python3-module-%py_name
 %python3_sitelibdir/%py_name
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 2023.09.27-alt2
+- NMU: build without python2 module.
+
 * Fri Nov 03 2023 Igor Vlasenko <viy@altlinux.org> 2023.09.27-alt1
 - updated to 2023.09.27 git snapshot
 
