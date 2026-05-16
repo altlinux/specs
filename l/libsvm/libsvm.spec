@@ -4,15 +4,14 @@
 
 Name: libsvm
 Version: 3.24
-Release: alt2
+Release: alt3
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
 License: BSD
 URL: http://www.csie.ntu.edu.tw/~cjlin/libsvm/
 Source: %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel gcc-c++
+BuildPreReq: gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
@@ -46,19 +45,6 @@ LIBSVM is an integrated software for support vector classification,
 estimation (one-class SVM). It supports multi-class classification.
 
 This package contains tools for LIBSVM.
-
-%package -n python-module-svm
-Summary: Python interface for LIBSVM
-Group: Development/Python
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n python-module-svm
-LIBSVM is an integrated software for support vector classification,
-(C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
-estimation (one-class SVM). It supports multi-class classification.
-
-This package contains Python interface for LIBSVM.
 
 %package -n python3-module-svm
 Summary: Python interface for LIBSVM
@@ -95,11 +81,6 @@ for i in checkdata easy grid subset; do
 	install -m755 tools/$i.py %buildroot%_bindir/svm-$i
 done
 
-# python
-
-install -d %buildroot%python_sitelibdir_noarch
-install -m644 python/*.py %buildroot%python_sitelibdir_noarch
-
 %if_with python3
 install -d %buildroot%python3_sitelibdir_noarch
 install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
@@ -117,10 +98,6 @@ install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
 %doc tools/README
 %_bindir/*
 
-%files -n python-module-svm
-%doc python/README
-%python_sitelibdir_noarch/*
-
 %if_with python3
 %files -n python3-module-svm
 %doc python/README
@@ -128,6 +105,9 @@ install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
 %endif
 
 %changelog
+* Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 3.24-alt3
+- NMU: Build without python2 module; cleanup Packager.
+
 * Mon Apr 13 2020 Pavel Vasenkov <pav@altlinux.org> 3.24-alt2
 - Set correct tag.
 
