@@ -5,7 +5,7 @@
 
 Name: efitools
 Version: 1.9.2
-Release: alt4
+Release: alt5
 Summary: UEFI secure boot toolkit
 Group: Development/Other
 License: GPL-2.0-only
@@ -43,6 +43,11 @@ Tools for manipulating UEFI secure boot platforms.
 %_man1dir/*.1*
 
 %changelog
+* Sat May 16 2026 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt5
+- Fix FTBFS for gcc-15 and binutils 2.46.
+- Updated to v1.9.2-4-gb988d20 (2020-11-05). Note that the code is unmaintained
+  by the upstream for 6 years already.
+
 * Sat Nov 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt4
 - Fix FTBFS for gcc14 (strptime) and for aarch64.
 - spec: Enable set_verify_elf_method strict and fix LFS.
