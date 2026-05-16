@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: curtail
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An Image Compressor for GNOME
@@ -75,6 +75,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Tue May 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 

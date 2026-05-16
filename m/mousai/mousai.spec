@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: mousai
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Identify songs in seconds
@@ -29,7 +29,7 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
 %define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 %define gst_ver 1.22
 
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -83,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.10-alt1
+- 0.7.10
+
 * Sat Aug 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
 - 0.7.9
 

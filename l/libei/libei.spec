@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.0
 
 %def_disable documentation
 %def_enable tests
 %define munit_ver 0.2.0
 
-%ifarch armh
+%ifarch armh %ix86
 # 7/7 libei:sigalrm / eierpecken              TIMEOUT        180.12s 
 %def_disable check
 %else
@@ -17,7 +17,7 @@
 
 Name: libei
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: A library for Emulated Input
 Group: System/Libraries
@@ -129,6 +129,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Fri May 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1.1
 - mike@: fixed build with check knob disabled
 

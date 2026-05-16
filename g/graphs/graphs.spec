@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Graphs
 %define pypi_name graphs
-%define ver_major 1.8
+%define ver_major 2.0
 %define api_ver 1
 %define rdn_name se.sjoerd.%_name
 
 %def_enable check
 
 Name: graphs
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -25,8 +25,9 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 
+Requires: lib%name = %EVR
 Requires: python3-module-pygobject3
 Requires: dconf yelp
 
@@ -35,7 +36,12 @@ BuildRequires: meson vala-tools blueprint-compiler /usr/bin/g-ir-compiler
 BuildRequires: yelp-tools
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1
 BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: python3(numpy) python3(scipy)
 BuildRequires: python3(PIL) python3(matplotlib)
+BuildRequires: python3(sympy) python3(gio_pyio)
+BuildRequires: python3(numexpr)
+BuildRequires: gir(Gee) = 0.8
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 # TODO: python tests
 #BuildRequires: python3(pytest) typelib(Adw) = 1}
@@ -64,19 +70,26 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %install
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name
+# this and lines below is a quick hack to fix 'install_subdir' with newer meson
+rm -rf %buildroot%_topdir
 
 %check
-%__meson_test -v
+install -pD tests/* -t %__builddir/run_tests/
+export LD_LIBRARY_PATH=%buildroot/%_libdir
+export GI_TYPELIB_PATH=%buildroot/%_typelibdir
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
 %python3_sitelibdir_noarch/%pypi_name
 %_desktopdir/%rdn_name.desktop
-%_datadir/%name/
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/mime/packages/%rdn_name.mime.xml
+%_man1dir/%name.1*
 %doc README*
 
 %files -n lib%name
@@ -84,6 +97,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.8-alt1
 - 1.8.8
 

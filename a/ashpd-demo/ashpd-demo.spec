@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name ashpd
-%define ver_major 0.5
+%define ver_major 0.13
 %define rdn_name com.belmoussaoui.%_name.demo
 
 %def_enable check
@@ -27,7 +27,7 @@ Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
 
-%define adw_ver 1.7
+%define adw_ver 1.9
 %define gst_ver 1.16
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-meson
@@ -53,33 +53,38 @@ It provides an alternative to the C library.
 This package provides ASHPD demo program to play with portals.
 
 %prep
-%setup -n %_name-%version/%name %{?_disable_bootstrap:-a1}
+%setup -n %_name-%version/demo %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 %build
+cd client
 %meson
 %meson_build
 
 %install
+cd client
 %meson_install
 
 %check
+cd client
 %meson_test
 
 %files
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
-%_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
+%doc ../README*
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0-52-g3ee41bb02
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus (0.5.0-demo-9-g51cc0b110)
 

@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define _name news_flash_gtk
-%define ver_major 5.0
+%define ver_major 5.1
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
@@ -50,6 +50,8 @@ BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(clapper-gtk-0.0)
 # for libxml
 BuildRequires: clang-devel
+# for lcms2
+BuildRequires: pkgconfig(libseccomp)
 
 %description
 %summary
@@ -82,6 +84,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
 - 5.0.0
 
