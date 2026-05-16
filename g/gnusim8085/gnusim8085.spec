@@ -1,5 +1,5 @@
 Name: gnusim8085
-Version: 1.3.7
+Version: 1.4.1
 Release: alt1
 
 Summary: Simulator and assembler for the Intel 8085 Microprocessor
@@ -10,10 +10,11 @@ Url: http://gnusim8085.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source:  http://launchpad.net/%name/trunk/%version/+download/%name-%version.tar.gz
+# Source-url: https://github.com/GNUSim8085/GNUSim8085/releases/download/%version/gnusim8085-%version.tar.gz
+Source: https://github.com/GNUSim8085/GNUSim8085/releases/download/%version/gnusim8085-%version.tar.gz
 Patch: gnusim8085-1.3.7-desktop.patch
 
-BuildRequires: libSM-devel libgtk+2-devel libgio-devel libgtksourceview-devel
+BuildRequires: libSM-devel libgtk+3-devel libgio-devel libgtksourceview3-devel
 
 Obsoletes: GNUSim8085
 Provides: GNUSim8085
@@ -42,9 +43,14 @@ run on several window managers.
 %_datadir/%name/
 %_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_datadir/metainfo/gnusim8085.appdata.xml
 %_man1dir/%name.1.*
 
 %changelog
+* Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- 1.4.1 (Closes: 59087)
+- build with gtk3
+
 * Wed Mar 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.3.7-alt1
 - 1.3.7
 - updated buildreqs
