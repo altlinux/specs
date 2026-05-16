@@ -1,24 +1,27 @@
 Name: ktoblzcheck
-Version: 1.53
+Version: 1.59
 Release: alt1
 
 Summary: A library to check account numbers and bank codes of German banks
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-License: LGPL v2+
+License: LGPL-2.0-or-later
 Group: System/Libraries
-Url: http://ktoblzcheck.sourceforge.net/
+URL: http://ktoblzcheck.sourceforge.net/
 
-Source: http://prdownloads.sf.net/ktoblzcheck/%name-%version.tar.gz
+# Source-url: http://prdownloads.sf.net/ktoblzcheck/%name-%version.tar.gz
+Source:  %name-%version.tar
 Source1: %name.watch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libstdc++-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libcurl-devel
 BuildRequires: lynx
-BuildRequires: python-devel
-BuildRequires: python-modules-encodings
+BuildRequires: python3-devel
 BuildRequires: recode
 
 %description
@@ -33,18 +36,18 @@ clear-text name and location of the bank.
 %package devel
 Summary: Header files for KtoBLZCheck library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Header files for KtoBLZCheck library.
 
-%package -n python-module-ktoblzcheck
+%package -n python3-module-ktoblzcheck
 Summary: Python binding for KtoBLZCheck library
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
-%description -n python-module-ktoblzcheck
-Python binding for KtoBLZCheck library.
+%description -n python3-module-ktoblzcheck
+Python 3 binding for KtoBLZCheck library.
 
 %prep
 %setup -q
@@ -54,15 +57,16 @@ Python binding for KtoBLZCheck library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc AUTHORS ChangeLog NEWS README.md
 %_bindir/ktoblzcheck
+%_bindir/ktoblzupdate
 %_bindir/ibanchk
 %_libdir/libktoblzcheck.so.*
-%dir %_datadir/%name/
-%_datadir/%name/*.txt
+#dir %_datadir/%name/
+#_datadir/%name/*.txt
 %_man1dir/ktoblzcheck.1*
 %_man1dir/ibanchk.1*
 
@@ -72,10 +76,16 @@ Python binding for KtoBLZCheck library.
 %_libdir/cmake/*
 %_pkgconfigdir/ktoblzcheck.pc
 
-%files -n python-module-ktoblzcheck
-%python_sitelibdir/%name.*
+%files -n python3-module-ktoblzcheck
+%python3_sitelibdir/%name.*
+%python3_sitelibdir/__pycache__/%name.cpython-*.pyc
 
 %changelog
+* Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 1.59-alt1
+- new version 1.59
+- build python3 module instead python2 module
+- cleanup spec
+
 * Sun Apr 26 2020 Andrey Cherepanov <cas@altlinux.org> 1.53-alt1
 - new version 1.53
 
