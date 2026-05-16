@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: ALT Local Policies Default templates
@@ -82,6 +82,9 @@ fi
 %_datadir/%name/*
 
 %changelog
+* Sat May 16 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.6.4-alt1
+- Add pam_canonicalize_user control enabled by default.
+
 * Thu Feb 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.6.3-alt1
 - Improve oddjob-gpupdate-dbus-timeout control.
 - Initial support build for debian.
