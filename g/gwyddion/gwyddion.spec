@@ -4,7 +4,7 @@
 
 Name: gwyddion
 Version: 2.70
-Release: alt1
+Release: alt2
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -19,7 +19,7 @@ Patch: ruby-dir.patch
 
 BuildRequires(pre): rpm-build-intro rpm-build-python libGConf-devel
 
-BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
+BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libicu-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
 BuildRequires: libgomp-devel
@@ -284,6 +284,9 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 
 %changelog
+* Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 2.70-alt2
+- NMU: fix build dependencies.
+
 * Sun Jan 04 2026 Alexei Mezin <alexvm@altlinux.org> 2.70-alt1
 - new version
 
