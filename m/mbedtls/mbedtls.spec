@@ -10,7 +10,7 @@
 
 Name: mbedtls
 Version: %mbedtls_version
-Release: alt1
+Release: alt2
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -132,9 +132,17 @@ Cryptographic utilities based on mbed TLS
 
 %prep
 %setup -n %name-%name-%version -b 1 -b 2
+
 %__mv -Tf ../TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto
 %__cp -Tr ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version framework
 %__mv -Tf ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto/framework
+
+# Enable threading support
+sed \
+    -e 's|//\(#define MBEDTLS_THREADING_PTHREAD\)|\1|' \
+    -e 's|//\(#define MBEDTLS_THREADING_C\)|\1|' \
+    -i tf-psa-crypto/include/psa/crypto_config.h
+
 %ifarch aarch64
 %add_optflags -Wno-error=array-bounds
 %endif
@@ -216,6 +224,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Sat May 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt2
+- Enable threading support
+
 * Tue Mar 31 2026 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1
 - Update mbedTLS to 4.1.0
 - Update TF PSA Crypto to 1.1.0
