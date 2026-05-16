@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bugstalker
-Version: 0.3.3
+Version: 0.4.5
 Release: alt1
 Url: https://godzie44.github.io/BugStalker/
 Vcs: https://github.com/godzie44/BugStalker.git
@@ -40,5 +40,11 @@ export RUSTFLAGS="-Copt-level=3"
 %_bindir/bs
 
 %changelog
+* Tue May 12 2026 Artyom Sinyugin <writers@altlinux.org> 0.4.5-alt1
+- New version 0.4.5.
+
+* Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 0.4.1-alt1
+- New version 0.4.1.
+
 * Tue Sep 03 2025 Artyom Sinyugin <writers@altlinux.org> 0.3.3-alt1
 - Initial build.
