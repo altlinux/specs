@@ -1,6 +1,6 @@
 %define 	projname google-authenticator
 Name:           libpam-%{projname}
-Version:        1.10
+Version:        1.11
 Release:        alt1
 Summary:        One-time passcode support using open standards
 #Summary(ru_RU.UTF8): 
@@ -63,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/security/pam_google_authenticator.la
 
 
 %changelog
+* Sun May 17 2026 Alexei Mezin <alexvm@altlinux.org> 1.11-alt1
+- New version
+
 * Sat Oct 26 2024 Alexei Mezin <alexvm@altlinux.org> 1.10-alt1
 - New version
 - Minor spec fixes
