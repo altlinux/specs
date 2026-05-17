@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3006.24
+Version: 3007.14
 Release: alt1
 Epoch: 1
 License: Apache-2.0
@@ -23,7 +23,6 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-alt-minion-KillMode.patch
-Patch3: salt-minion-fix-search-sls.patch
 
 AutoReq: yes, noshell
 
@@ -259,6 +258,12 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-proxy
 
 %changelog
+* Sat May 16 2026 Andrey Cherepanov <cas@altlinux.org> 1:3007.14-alt1
+- New version.
+
+* Sat May 16 2026 Andrey Cherepanov <cas@altlinux.org> 1:3006.25-alt1
+- New version.
+
 * Thu May 07 2026 Andrey Cherepanov <cas@altlinux.org> 1:3006.24-alt1
 - New LTS version.
 
