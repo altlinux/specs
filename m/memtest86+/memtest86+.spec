@@ -1,5 +1,5 @@
 Name: memtest86+
-Version: 8.00
+Version: 8.10
 Release: alt1
 
 Summary: Memory test for x86 architecture
@@ -100,6 +100,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 8.10-alt1
+- New version 8.10.
+
 * Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 8.00-alt1
 - New version 8.00.
 
