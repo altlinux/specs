@@ -1,16 +1,21 @@
 %def_disable snapshot
 
-%define ver_major 1.18
+%define _name gcmd
+%define libname lib%_name
+%define ver_major 2.0
+%define namespace GnomeCmd
+%define api_ver 1.0
+
 %def_with exiv2
 %def_with taglib
 %def_with poppler
 %def_with libgsf
-%def_with samba
 
 %def_enable check
+%def_disable bootstrap
 
 Name: gnome-commander
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -18,7 +23,7 @@ Release: alt1
 Summary: A Gnome file manager similar to the Norton Commander (TM)
 License: GPL-2.0-or-later
 Group: File tools
-Url: https://gcmd.github.io
+Url: https://gnome.pages.gitlab.gnome.org/gnome-commander/
 
 Vcs: https://gitlab.gnome.org/GNOME/gnome-commander.git
 
@@ -27,35 +32,41 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Source1: %name-%version-cargo.tar
 
-%define gtk_ver 3.24
+%define gtk_ver 4.14
+%define vte_ver 0.76
 
 Requires: dconf xdg-utils
 Requires: %_bindir/gio gvfs-backends
 Requires: file-roller
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson flex gcc-c++
+BuildRequires: /proc meson rust-cargo gcc-c++ chrpath
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
-BuildRequires: libgtk+3-devel >= %gtk_ver libgnome-keyring-devel
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(vte-2.91-gtk4) >= %vte_ver
+BuildRequires: gi-docgen gobject-introspection-devel gir(Gtk) = 4.0
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
-%{?_with_samba:BuildRequires: libsmbclient-devel}
 %{?_enable_check:BuildRequires: xvfb-run libgtest-devel}
 
 %description
 GNOME Commander is a two-pane graphical file manager for the GNOME
 desktop environment. It features separate tabs for each pane,
 setting up custom device buttons, bookmark manager, fully integrated
-commandline, file quick search, an internal image viewer, a powerful
-batch renaming tool, and FTP and Samba access.
+commandline, file quick search, an internal image viewer
 
 %prep
-%setup
-# c++17 required for gtest-1.17
-sed -i 's/\(=c.*1\)4/\17/g' tests/meson.build
+%setup %{?_disable_bootstrap:-a1}
+
+%{?_enable_bootstrap:
+#mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' >> .cargo/config.toml
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %ifarch %e2k
 # workaround for EDG frontend
@@ -68,7 +79,7 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 
 %install
 %meson_install
-rm -f %buildroot%_libdir/libgcmd.a
+chrpath -d %buildroot%_bindir/%name
 
 %find_lang --with-gnome %name
 
@@ -77,6 +88,8 @@ xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/*
+%_libdir/%libname.so
+%_typelibdir/%namespace-%api_ver.typelib
 %_libdir/%name/
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -84,15 +97,17 @@ xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/pixmaps/%name/
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/*
-%doc AUTHORS NEWS README* TODO doc/*.txt
+%doc AUTHORS NEWS README*
 
-%exclude %_datadir/%name/internal_viewer_hacking.txt
-%exclude %_datadir/%name/keys.txt
-
+%exclude %_girdir/%namespace-%api_ver.gir
+%exclude %_datadir/doc/libgcmd-%api_ver/
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0 (ported to Rust/GTK4)
+
 * Mon Apr 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.6-alt1
 - 1.18.6
 
