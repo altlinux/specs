@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.4.37
-Release: alt1.1
+Release: alt2
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 License: GPL-2.0-or-later
@@ -54,7 +54,8 @@ by default.
 %package -n %{name}conf
 Summary: A utility for graphically configuring your %name preferences
 Group: System/Configuration/Networking
-Requires: %name = %version-%release, tkinter
+Requires: %name = %version-%release
+Requires: python3(tkinter)
 
 %package daemon
 Summary: SySV init script for demonize %name for sucking emails
@@ -110,6 +111,9 @@ export ac_cv_path_procmail=%_bindir/procmail
 export ac_cv_path_sendmail=%_sbindir/sendmail
 export ac_cv_lib_intl_gettext=no
 export CPPFLAGS=-I%_includedir/krb5
+
+# to build with gcc15
+%add_optflags -std=c17
 
 %autoreconf
 
@@ -200,6 +204,11 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 6.4.37-alt2
+- NMU:
+  + add optflags "-std=c17" to build with gcc15
+  + fetchmailconf: fix runtime dependencies on python3(tkinter) instead tkinter
+
 * Thu Jul 17 2025 Grigory Ustinov <grenka@altlinux.org> 6.4.37-alt1.1
 - NMU: removed dependency on future.
 
