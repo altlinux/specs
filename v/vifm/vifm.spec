@@ -1,6 +1,6 @@
 Name: vifm
 Version: 0.14.3
-Release: alt1
+Release: alt2
 
 Summary: Two pane file manager with vi-like keybindings
 License: GPLv2
@@ -10,6 +10,9 @@ Url: http://vifm.sourceforge.net/
 Source: %name-%version.tar.bz2
 
 BuildRequires: gcc-c++ libncursesw-devel groff  libcfile-devel
+
+# skip optional requires from scripts
+%filter_from_requires /^python2-base/d
 
 %description
 Vifm is a ncurses based file manager with vi like keybindings,
@@ -52,6 +55,9 @@ sed -i 's/#!\/usr\/bin\/env perl/#!\/usr\/bin\/perl/' src/vifm-convert-dircolors
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 0.14.3-alt2
+- NMU: remove optional dependency on python2-base.
+
 * Tue Jun 24 2025 Ilya Mashkin <oddity@altlinux.ru> 0.14.3-alt1
 - 0.14.3
 
