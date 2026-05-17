@@ -1,5 +1,5 @@
 Name: kernel-image-7.1
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	7.0
 %define kernel_base_version	7.1
 %define kernel_sublevel	.0
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun May 17 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc4
+- Update to v7.1-rc4 (2026-05-17).
+
 * Sun May 10 2026 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt0.rc3
 - Update to v7.1-rc3 (2026-05-10).
 - config: Enable platform and machine keyrings.
