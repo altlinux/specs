@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: nwipe
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Utility to securely erase disks
@@ -65,6 +65,9 @@ export CFLAGS="$CFLAGS -Wno-unused-function"
 %doc README.md ssd-guide.md images/
 
 %changelog
+* Sun May 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.41-alt1
+- New version 0.41.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.40-alt1
 - New version 0.40.
 
