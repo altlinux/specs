@@ -1,22 +1,19 @@
 Name:           pology
-Version:        0.12
-Release:        alt2.2
+Version:        0.13
+Release:        alt1.77c0872.1
 Summary:        Pology is a Python library and collection of command-line tools for in-depth processing of PO files
 
-License:        GPL-3.0+
+License:        GPL-3.0-or-later
 Group:          Development/Tools
-URL:            http://pology.nedohodnik.net/
-
-Packager:       Andrey Cherepanov <cas@altlinux.org>
-
-Source0:        http://pology.nedohodnik.net//release/%{name}-%{version}.tar.bz2
+URL:            https://invent.kde.org/sdk/pology 
+VCS:            https://github.com/KDE/pology
+Source0:        %name-%version.tar
 
 BuildRequires(pre): cmake
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
 BuildRequires:  libxml2-devel
-BuildRequires:  python-devel
-BuildRequires:  python-module-distribute
+BuildRequires:  python3-devel
 BuildRequires:  xmllint
 BuildRequires:  xsltproc
 
@@ -30,10 +27,10 @@ operations on large collections of PO files.
 %prep
 %setup -q
 # Set correct python2 executable in shebang
-subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
+#subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *.py)
 
 %build
-%cmake -DPYTHON2_PACKAGES_DIR:PATH=%{python_sitelibdir}
+%cmake -DPYTHON3_PACKAGES_DIR:PATH=%{python3_sitelibdir}
 %cmake_build -j1
 
 %install
@@ -42,13 +39,16 @@ subst 's|#!.*python$|#!%__python|' $(grep -Rl '#!.*python$' *)
 %find_lang %name
 
 %files -f %name.lang
-%doc NEWS README TODO
+%doc NEWS README.rst TODO
 %doc %_datadir/doc/%name
 %_bindir/*
 %_datadir/%name
-%python_sitelibdir/%name
+%python3_sitelibdir/%name
 
 %changelog
+* Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 0.13-alt1.77c0872.1
+- New snapshot with python3 support (Closes: 59224).
+
 * Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.12-alt2.2
 - NMU: fixed BuildRequires.
 
