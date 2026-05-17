@@ -1,6 +1,6 @@
 %define ver_major 3
 %define ver_minor 12
-%define ver_micro 0
+%define ver_micro 1
 
 %define version %ver_major.%ver_minor.%ver_micro
 %define git_ver r%{ver_major}_%{ver_minor}_%{ver_micro}
@@ -61,6 +61,9 @@ software, mixes the audio data and sends the mix back to each client.
 %doc README.md ChangeLog COPYING
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Sun May 03 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.54
+%define ver_major 0.55
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -89,6 +89,8 @@ Requires: sound-theme-phosh
 Requires: gnome-software
 # since 0.46 (ALT #53890)
 Requires: xdg-desktop-portal-phosh >= 0.53
+# syncthing quick setting in 0.55.0
+Requires: syncbus
 
 # squeekboard provides osk-wayland
 #Requires: /usr/bin/osk-wayland
@@ -274,6 +276,8 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-wifi-hotspot-quick-setting.so
 %_libdir/%name/plugins/wifi-hotspot-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-scaling-quick-setting.so
+%_libdir/%name/plugins/lib%name-plugin-syncthing-quick-setting.so
+%_libdir/%name/plugins/syncthing-quick-setting.plugin
 %_libdir/%name/plugins/scaling-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-media-players.so
 %_libdir/%name/plugins/media-players.plugin
@@ -333,6 +337,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
+- 0.55.0
+
 * Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - 0.54.0
 

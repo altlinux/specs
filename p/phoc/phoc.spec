@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.54
+%define ver_major 0.55
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -8,8 +8,8 @@
 %define schema_name mobi.phosh.phoc
 
 %define dev_uid 500
-%define wlroots_ver_major 0.19
-%define wlroots_ver %wlroots_ver_major.3
+%define wlroots_ver_major 0.20
+%define wlroots_ver %wlroots_ver_major.0
 # since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
@@ -41,7 +41,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
-%{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
+%{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar.gz}
 Source3: gvdb-%gvdb_ver.tar
 
 %define glib_ver 2.74
@@ -124,6 +124,7 @@ mv gvdb-%gvdb_ver subprojects/gvdb
 
 %install
 %meson_install
+%find_lang %name
 
 %{?_enable_embed_wlroots:
 rm -r %buildroot%_includedir/wlroots*
@@ -137,7 +138,7 @@ rm %buildroot%_pkgconfigdir/gmobile.pc}
 %check
 WLR_RENDERER=pixman xvfb-run %__meson_test
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %_bindir/%name-outputs-states
 %_desktopdir/%xdg_name.desktop
@@ -153,6 +154,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
+- 0.55.0
+
 * Sat Apr 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - 0.54.0
 

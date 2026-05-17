@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: A native QR Code and barcode scanner application for Linux desktop
 License: GPL-3.0-or-later
@@ -69,6 +69,9 @@ remote.
 %doc README.*
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1.1
 - required typelib(Rsvg) = 2.0 (ALT #58347)
 

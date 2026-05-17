@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.54
+%define ver_major 0.55
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -71,6 +71,9 @@ BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(libcellbroadcast-0.0)
 # since 0.50
 BuildRequires: pkgconfig(yaml-0.1)
+# since 0.55
+BuildRequires: pkgconfig(accountsservice) >= 23.13
+BuildRequires: pkgconfig(polkit-gobject-1)
 # for gvc
 BuildRequires: pkgconfig(libpulse)
 %if_enabled embed_gmobile
@@ -168,6 +171,7 @@ xvfb-run %__meson_test
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/polkit-1/rules.d/phosh-mobile-settings.rules
 %_datadir/icons/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -196,6 +200,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
+- 0.55.0
+
 * Sun Apr 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - 0.54.0
 - new libpms* subpackages

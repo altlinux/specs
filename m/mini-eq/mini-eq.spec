@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Mini EQ is a small parametric equalizer for PipeWire desktops
@@ -94,6 +94,9 @@ cp -a extensions/gnome-shell/%uuid/* \
 %doc extensions/gnome-shell/README*
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Fri May 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 

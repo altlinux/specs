@@ -7,8 +7,8 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
 License: LGPL-2.1-or-later
@@ -94,6 +94,9 @@ install -pm644 NEWS README* %buildroot%docdir/
 
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1.1
 - disabled failed test_signal_connect test for %%e2k
 
