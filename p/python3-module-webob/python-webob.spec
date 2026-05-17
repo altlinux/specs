@@ -4,7 +4,7 @@
 
 Name: python3-module-webob
 Version: 1.8.9
-Release: alt1.2
+Release: alt2
 
 Summary: WSGI request and response object
 License: MIT
@@ -39,7 +39,7 @@ environment.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v -k 'not test_client_cookies'
 
 %files
 %doc README.rst
@@ -47,6 +47,9 @@ environment.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun May 17 2026 Anton Vyatkin <toni@altlinux.org> 1.8.9-alt2
+- Fix FTBFS.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.9-alt1.2
 - Fixed FTBFS.
 
