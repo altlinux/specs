@@ -1,6 +1,6 @@
 Name: eden
-Version: 0.1.1
-Release: alt1.1
+Version: 0.2.0
+Release: alt1
 
 Summary: Nintendo Switch Emulator
 License: GPLv3+
@@ -35,30 +35,28 @@ BuildRequires: libbrotli-devel
 BuildRequires: libcpp-httplib-devel
 BuildRequires: libcpp-jwt-devel
 BuildRequires: libcubeb-devel
-BuildRequires: libedit-devel
 BuildRequires: libenet-devel
-BuildRequires: libffi-devel
 BuildRequires: libfmt-devel
 BuildRequires: libgamemode-devel
 BuildRequires: liblz4-devel
-BuildRequires: libmbedtls-3.6-devel
+%ifarch aarch64
 BuildRequires: liboaknut-devel
+%endif
 BuildRequires: libopus-devel
 BuildRequires: libsimpleini-devel
-BuildRequires: libspirv-tools-devel
-BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libunordered_dense-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
-BuildRequires: libxml2-devel
+BuildRequires: libxbyak-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld
 BuildRequires: llvm
 BuildRequires: llvm-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
+BuildRequires: qt6-charts-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: quazip-qt6-devel
 BuildRequires: renderdoc-devel
@@ -97,10 +95,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DYUZU_USE_BUNDLED_SDL2:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_FFMPEG:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_OPENSSL:BOOL=OFF \
-	-DYUZU_ENABLE_LTO:BOOL=ON \
 	-DYUZU_TESTS:BOOL=ON \
 	-DTITLE_BAR_FORMAT_IDLE:STRING="Eden | v%version | Clang $(llvm-config --version)" \
 	-DTITLE_BAR_FORMAT_RUNNING:STRING="Eden | v%version | Clang $(llvm-config --version)" \
+	-Dunordered_dense_FORCE_SYSTEM:BOOL=ON \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -122,6 +120,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Sun May 17 2026 Nazarov Denis <nenderus@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Sun Mar 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.1.1-alt1.1
 - Fix build with RenderDoc 1.43+
 
