@@ -3,8 +3,8 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 1.1.15
-Release: alt2
+Version: 1.1.16
+Release: alt1
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL-2.0-or-later
 Group: Games/Strategy
@@ -112,6 +112,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 2:1.1.16-alt1
+- New version 1.1.16.
+
 * Sat Apr 25 2026 Anton Midyukov <antohami@altlinux.org> 2:1.1.15-alt2
 - Revert "Use engine-generated Russian fonts and buttons even if Russian
   assets are present (#9950)" to fix russian fonts.
