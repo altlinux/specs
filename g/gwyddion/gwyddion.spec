@@ -1,10 +1,8 @@
-%def_without kde4
-%def_without python2
 %def_with ruby
 
 Name: gwyddion
-Version: 2.70
-Release: alt2
+Version: 2.71
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -17,14 +15,15 @@ Url: http://gwyddion.net/
 Source: %name-%version.tar
 Patch: ruby-dir.patch
 
-BuildRequires(pre): rpm-build-intro rpm-build-python libGConf-devel
+BuildRequires(pre): rpm-build-intro libGConf-devel
+#rpm-build-python 
+
 
 BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libicu-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
 BuildRequires: libgomp-devel
 BuildRequires: gtk-doc
-%{?_with_python2:BuildRequires: python-module-distribute python-module-pygtk-devel}
 %if_with ruby
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libruby-devel
@@ -37,18 +36,12 @@ BuildRequires: perl-podlators libpng-devel
 
 BuildRequires: /proc
 
-%{?_with_kde4:BuildRequires: kde4libs-devel}
-
 %define _gtkdocdir %_datadir/gtk-doc/html
 %define pkglibdir %_libdir/%name
 %define pkglibexecdir %_libexecdir/%name
 %define pkgdatadir %_datadir/%name
 %define pkgincludedir %_includedir/%name
 %define libname lib%{name}2
-%if_with python2
-%add_python_req_skip %pkglibdir
-%add_python_req_skip %pkgdatadir
-%endif
 
 # Stop auto picking wrong deps!
 %add_findreq_skiplist %pkglibexecdir/plugins/*
@@ -67,18 +60,6 @@ Requires: %libname = %version-%release
 Summary: Docs for Gwyddion module development
 Group: Development/C
 BuildArch: noarch
-
-%package thumbnailer-kde4
-Summary: KDE4 gwyddion thumbnailer module
-Group: Graphical desktop/KDE
-Requires: %name = %version-%release
-# We do not actually link with them, but they own the module directory.
-Requires: kde4libs >= 4.0
-
-%package -n python-module-pygwy
-Summary: Python tools for Gwyddion module development
-Group: Development/Python
-Requires: %libname = %version-%release
 
 
 %description
@@ -103,13 +84,6 @@ This package also contains sample plug-ins in various programming languages.
 %description -n lib%name-doc
 This package contains the API docmentation.
 
-%description thumbnailer-kde4
-Gwyddion-thumbnailer based KDE thumbnail creator extension module for SPM
-files.
-
-%description  -n python-module-pygwy
-Python tools for Gwyddion module development
-
 %if_with ruby
 %package       -n ruby-%name
 Summary:       Ruby bindings for %name dump script
@@ -129,20 +103,16 @@ sed -i '/# Install the pseudo-library/,/^$/d' ltmain.sh
 # Replace universal %%_bindir/env shbang with the real thing.
 sed -i '1s/env *//' plugins/*.{py,rb,pl}
 
-sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
-sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
+#sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
+#sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
 
 # Fix libpython linking
-sed -i 's|--ldflags|--libs|' m4/gwy-python.m4
+#sed -i 's|--ldflags|--libs|' m4/gwy-python.m4
 
 %build
 %autoreconf
-%if_with kde4
-%add_optflags -I%_K4includedir
-%endif
 %configure \
 	CFLAGS='%optflags' CXXFLAGS='%optflags' \
-	%{?_with_kde4:--with-kde4-thumbnailer} \
         %{?_without_ruby:--without-ruby} \
 	--disable-rpath \
 	--enable-library-bloat \
@@ -165,10 +135,6 @@ find %buildroot -name \*.la -print0 | xargs -0 rm -f
 # Perl, Python, and Ruby modules are private, remove the Perl man page.
 rm -f %buildroot%_man3dir/Gwyddion::dump.*
 
-%if_with python2
-mkdir -p %buildroot%python_sitelibdir
-mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
-%endif
 %if_with ruby
 install -D -m 755 plugins/invert_ruby.rb %buildroot%ruby_vendorlibdir/gwyddion/samples/invert_ruby.rb
 install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion/samples/invert_narray.rb
@@ -176,7 +142,6 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%name-thumbnailer
 
 %doc AUTHORS COPYING INSTALL NEWS README THANKS
 %dir %pkgdatadir
@@ -188,7 +153,6 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 %pkgdatadir/ui/
 %pkgdatadir/user-guide-modules/
 %_man1dir/%name.1*
-%_man1dir/%name-thumbnailer.1*
 %_liconsdir/%name.png
 %_pixmapsdir/%name.png
 %pkglibdir/modules/file/*.so
@@ -212,8 +176,6 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 %dir %pkglibdir
 %_desktopdir/%name.desktop
 %_datadir/mime/packages/%name.xml
-%dir %_datadir/thumbnailers
-%_datadir/thumbnailers/%name.thumbnailer
 %_datadir/metainfo/*.xml
 
 %files -n %libname
@@ -243,9 +205,6 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 %pkglibdir/perl/Gwyddion/*
 %dir %pkglibdir/perl/Gwyddion
 %dir %pkglibdir/perl
-%pkglibdir/python/Gwyddion/*
-%dir %pkglibdir/python/Gwyddion
-%dir %pkglibdir/python
 
 %files -n lib%name-doc
 # Documentation
@@ -265,18 +224,6 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 %doc %dir %_datadir/gtk-doc
 %doc %_docdir/%name/
 
-%if_with kde4
-%files thumbnailer-kde4
-%_libdir/kde4/gwythumbcreator.so
-%endif
-
-%if_with python2
-%files -n python-module-pygwy
-%pkgdatadir/pygwy/
-%python_sitelibdir/*
-%_datadir/gtksourceview-2.0/language-specs/*.lang
-%endif
-
 %if_with ruby
 %files -n ruby-%name
 %ruby_vendorlibdir/gwyddion
@@ -284,6 +231,10 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 
 %changelog
+* Sun May 17 2026 Alexei Mezin <alexvm@altlinux.org> 2.71-alt1
+- New version
+- spec cleanup
+
 * Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 2.70-alt2
 - NMU: fix build dependencies.
 
