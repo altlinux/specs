@@ -1,5 +1,5 @@
 Name: xsnow
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
@@ -16,10 +16,11 @@ Summary(ru_RU.UTF8):  Немножко новогоднего настроени
 Patch0: rus_descr.patch
 Patch1: fix_politics_statements.patch
 
-# Automatically added by buildreq on Wed Jan 01 2020
-# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base python3-dev sh4 xorg-proto-devel
-###BuildRequires: i586-libxcb libXpm-devel libXt-devel libdb4-devel libdbus-devel libgtk+3-devel libxml2-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
-BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools desktop-file-utils libgsl-devel libgsl-devel libXinerama-devel libxkbcommon-devel libXtst-devel
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel 
+BuildRequires: libdbus-devel gcc-c++ ImageMagick-tools 
+BuildRequires: desktop-file-utils libgsl-devel libgsl-devel 
+BuildRequires: libXinerama-devel libxkbcommon-devel libXtst-devel
+BuildRequires: libopencv-devel
 
 ###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
@@ -44,6 +45,9 @@ cp -rf %{SOURCE1} src/Pixmaps/extratree.xpm
 
 %install
 %makeinstall_std
+%find_lang %name
+
+
 
 # create 48x48 pixmap and put icons according to the Policy, see https://www.altlinux.org/Icon_Paths_Policy
 convert -resize 48x48 src/Pixmaps/%name.xpm %name.png
@@ -60,7 +64,7 @@ desktop-file-install --dir %buildroot/%_desktopdir \
     %buildroot/%_desktopdir/%name.desktop
     
     
-%files
+%files -f %name.lang
 %doc README.md
 %_gamesbindir/*
 %_man6dir/*
@@ -69,9 +73,14 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.*
 %_desktopdir/*
 %_datadir/metainfo/*
-%_datadir/pixmaps/xsnow.svg
+#%_datadir/pixmaps/xsnow.svg
+
 
 %changelog
+* Sun May 17 2026 Alexei Mezin <alexvm@altlinux.org> 3.9.1-alt1
+- New version
+- Add lost localization files and remove redundant svg image (closes #57377)
+
 * Fri Dec 26 2025 Alexei Mezin <alexvm@altlinux.org> 3.9.0-alt1
 - New version
 
