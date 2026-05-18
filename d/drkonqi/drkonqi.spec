@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.6.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -52,8 +52,8 @@ Compatibility package.
 
 %build
 %K6build \
-    -DWITH_GDB12:BOOL=ON \
     -DWITH_PYTHON_VENDORING:BOOL=OFF \
+    -DWITH_GLOBAL_NOTIFIER:BOOL=OFF \
     #
 
 %install
@@ -82,6 +82,9 @@ Compatibility package.
 %_K6notif/*drkonqi*.notifyrc
 
 %changelog
+* Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
+- build without global notifier
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 
