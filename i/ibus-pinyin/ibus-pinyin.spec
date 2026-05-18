@@ -1,6 +1,6 @@
 Name:    ibus-pinyin
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License: GPL-2.0+
@@ -11,7 +11,7 @@ Source0: %name-%version.tar
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: glib2-devel sqlite3 gcc-c++ python-devel
+BuildRequires: glib2-devel sqlite3 gcc-c++ python3-devel
 BuildRequires: gnome-common
 BuildRequires: gettext-devel
 BuildRequires: intltool
@@ -24,6 +24,7 @@ BuildRequires: opencc-devel
 BuildRequires: pyzy-devel
 
 %add_python3_path %_datadir/%name
+AutoProv: nopython3
 
 %description
 The Chinese Pinyin and Bopomofo input methods for IBus platform.
@@ -59,6 +60,9 @@ subst "s|\\\\\"|\\\\'|g" data/db/english/english.awk
 %_desktopdir/*.desktop
 
 %changelog
+* Mon May 18 2026 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt2
+- NMU: Rebuild with python3-devel instead python-devel.
+
 * Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - New version from https://github.com/ibus/ibus-pinyin
 
