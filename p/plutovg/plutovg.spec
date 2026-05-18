@@ -2,7 +2,7 @@
 %define sover 1
 
 Name: plutovg
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: Standalone 2D vector graphics library
@@ -10,6 +10,7 @@ License: MIT
 Group: System/Libraries
 
 Url: https://github.com/sammycage/%name
+Vcs: https://github.com/sammycage/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/sammycage/%name/archive/v%version/%name-%version.tar.gz
@@ -85,6 +86,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_cmakedir/%name
 
 %changelog
+* Tue May 19 2026 Nazarov Denis <nenderus@altlinux.org> 1.3.3-alt1
+- New version 1.3.3.
+
 * Wed Nov 19 2025 Nazarov Denis <nenderus@altlinux.org> 1.3.2-alt1
 - New version 1.3.2.
 
