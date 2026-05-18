@@ -6,7 +6,7 @@
 %global optflags_lto %nil
 
 Name: adns
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: GNU adns, an asynchronous DNS resolver
@@ -93,6 +93,9 @@ make check
 %_libdir/lib%name.a
 
 %changelog
+* Mon May 18 2026 Anton Farygin <rider@altlinux.org> 1.6.2-alt1
+- 1.6.1 -> 1.6.2
+
 * Sun Aug 04 2024 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
 - 1.6.0 -> 1.6.1
 
