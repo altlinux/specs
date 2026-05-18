@@ -8,7 +8,7 @@
 
 %global v_major 22
 %global v_majmin %v_major.1
-%global v_full %v_majmin.4
+%global v_full %v_majmin.5
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -1608,6 +1608,9 @@ ninja -C %builddir check-all || :
 %endif
 
 %changelog
+* Sun May 17 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.5-alt0.1
+- 22.1.5.
+
 * Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.4-alt0.1
 - 22.1.4.
 
