@@ -1,5 +1,5 @@
 Name: python3-module-fnv-hash-fast
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: A fast version of fnv1a
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/fnv_hash_fast-%version.dist-info
 
 %changelog
+* Mon May 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.3-alt1
+- 2.0.3 released
+
 * Tue Mar 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.2-alt1
 - 2.0.2 released
 
