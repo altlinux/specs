@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.4.5
+Version: 3.4.6
 Release: alt1
 Summary: Python modules for implementing LDAP clients
 License: Python-style or MIT
@@ -58,7 +58,6 @@ export BIN="$PATH:%_sbindir"
 %pyproject_run_unittest discover -v -s Tests -p 't_*'
 
 %files
-%doc README
 %python3_sitelibdir/slapdtest/
 %python3_sitelibdir/_ldap.cpython-*.so
 %python3_sitelibdir/%mod_name/
@@ -68,6 +67,9 @@ export BIN="$PATH:%_sbindir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 15 2026 Stanislav Levin <slev@altlinux.org> 3.4.6-alt1
+- 3.4.5 -> 3.4.6.
+
 * Tue Oct 14 2025 Stanislav Levin <slev@altlinux.org> 3.4.5-alt1
 - 3.4.4 -> 3.4.5 (fixes: CVE-2025-61911, CVE-2025-61912).
 
