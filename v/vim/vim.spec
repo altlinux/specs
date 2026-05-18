@@ -47,8 +47,8 @@
 %define vimspell_version	50.1
 
 Name: vim
-%define branch 9.1
-Version: %branch.1264
+%define branch 9.2
+Version: %branch.0478
 Release: alt1
 Epoch: 4
 
@@ -872,9 +872,8 @@ rm ./usr/share/vim/spell/he.vim
 rm ./usr/share/vim/spell/spell.vim
 rm ./usr/share/vim/spell/yi.vim
 rm ./usr/share/vim/tutor/tutor1.bar
-rm ./usr/share/vim/tutor/tutor1.bar.utf-8
-rm ./usr/share/vim/tutor/tutor1.zh_cn.utf-8
-rm ./usr/share/vim/tutor/tutor1.zh_tw.utf-8
+rm ./usr/share/vim/tutor/tutor1.zh_cn
+rm ./usr/share/vim/tutor/tutor1.zh_tw
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -982,12 +981,11 @@ fi
 %_datadir/vim/tutor/it/
 %_datadir/vim/tutor/ru/
 %_datadir/vim/tutor/sr/
+%_datadir/vim/tutor/sv/
 %_datadir/vim/tutor/tutor.tutor
 %_datadir/vim/tutor/tutor.tutor.json
 %_datadir/vim/tutor/tutor1
-%_datadir/vim/tutor/tutor1.utf-8
 %_datadir/vim/tutor/tutor2
-%_datadir/vim/tutor/tutor2.utf-8
 %_datadir/vim/tutor/tutor.vim
 %_datadir/vim/tutor/README*
 # }}}
@@ -1078,6 +1076,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu May 14 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.2.0478-alt1
+- Updated to v9.2.0478.
+
 * Tue Apr 01 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.1264-alt1
 - Updated to v9.1.1264 (fixes CVE-2025-22134).
 
