@@ -5,7 +5,7 @@
 
 Name: plasma6-%rname
 Version: 6.6.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -19,6 +19,7 @@ Requires: %name-common >= %EVR
 Conflicts: plasma5-breeze < 1:6
 
 Source: %rname-%version.tar
+Patch1: alt-defaults.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libvulkan-devel
@@ -64,6 +65,7 @@ KDE 5 visual style.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %define _K6buildsubdir BUILD6
@@ -112,6 +114,9 @@ KDE 5 visual style.
 %_libdir/cmake/Breeze/
 
 %changelog
+* Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
+- disable window outline by default
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 
