@@ -1,11 +1,12 @@
 Name: python3-module-aiodiscover
-Version: 2.7.1
+Version: 3.0.0
 Release: alt1
 
 Summary: Async Host discovery
 License: Apache-2.0
 Group: Development/Python
-Url: https://github.com/bdraco/aiodiscover
+URL: https://pypi.org/project/aiodiscover
+VCS: https://github.com/bdraco/aiodiscover
 
 Source0: %name-%version-%release.tar
 Source1: pyproject_deps.json
@@ -42,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiodiscover-%version.dist-info
 
 %changelog
+* Mon May 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.0-alt1
+- 3.0.0 released
+
 * Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7.1-alt1
 - 2.7.1 released
 
