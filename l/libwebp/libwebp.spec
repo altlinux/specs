@@ -2,7 +2,7 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
-%def_disable sdl
+%def_enable sdl
 # disabled by default
 %def_disable libwebpextras
 # https://chromium.googlesource.com/webm/libwebp-test-data required
@@ -12,7 +12,7 @@
 
 Name: libwebp
 Version: 1.6.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library and tools for the WebP graphics format
 License: BSD-3-Clause
@@ -27,8 +27,8 @@ Patch1: libwebp-1.6.0-alt-cmake.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: libgif-devel libfreeglut-devel libSDL2-devel
-%{?_enable_sdl:BuildRequires: libSDL-devel}
+BuildRequires: libgif-devel libfreeglut-devel zlib-devel
+%{?_enable_sdl:BuildRequires: libSDL2-devel}
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -151,6 +151,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Mon May 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1.2
+- restored libpng support after switch to CMake (ALT #59235)
+
 * Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1.1
 - switched build to CMake (ALT #55478)
 
