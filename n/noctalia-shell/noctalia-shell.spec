@@ -1,6 +1,6 @@
 Name: noctalia-shell
 Version: 4.7.7
-Release: alt1
+Release: alt2
 
 Summary: A sleek and minimal desktop shell thoughtfully crafted for Wayland
 License: MIT
@@ -11,6 +11,9 @@ VCS: https://github.com/noctalia-dev/noctalia-shell.git
 
 Source0: %name-%version.tar
 Source1: README-quickstart.md
+Source2: %name.pam
+
+Patch0: noctalia-shell-4.7.7-alt-switch-default-pamd-file.patch
 
 BuildArch: noarch
 
@@ -48,17 +51,23 @@ customize to match your vibe.
 
 %prep
 %setup
+%patch -p1
 install -Dm644 %SOURCE1 .
 
 %install
 install -dm755 %buildroot%_xdgconfigdir/quickshell/noctalia-shell
 cp -r ./*      %buildroot%_xdgconfigdir/quickshell/noctalia-shell
+install -DT %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 
 %files
 %doc README.md LICENSE README-quickstart.md
 %_xdgconfigdir/quickshell/noctalia-shell
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/%name
 
 %changelog
+* Tue May 19 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.7-alt2
+- Fix lockscreen: add pam.d file and set it as default.
+
 * Wed May 13 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.7-alt1
 - Update version.
 - Add new packages to requires according to noctalia docs.

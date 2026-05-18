@@ -2,7 +2,7 @@
 
 Name: noctalia-qs
 Version: 0.0.12
-Release: alt1
+Release: alt2
 License: GPL-3.0 and LGPL-3.0
 
 Summary: Flexible toolkit for making desktop shells with QtQuick
@@ -70,12 +70,15 @@ to build a complete desktop environment.
 
 %files
 %_bindir/qs
-%_bindir/quickshell
+%attr(2711,root,chkpwd) %_bindir/quickshell
 %_qt6_qmldir/Quickshell
 %_desktopdir/dev.noctalia.noctalia-qs.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue May 19 2026 Ilya Sorochan <k0tran@altlinux.org> 0.0.12-alt2
+- Fix lockscreen on quickshell platform.
+
 * Wed May 13 2026 Ilya Sorochan <k0tran@altlinux.org> 0.0.12-alt1
 - Update version.
 
