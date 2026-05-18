@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  4
-%define _php_release_version 18
+%define _php_release_version 21
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -35,7 +35,7 @@ Source4: phpinfo.tar
 
 Patch1: php-8.4.3-alt-always-link-extension-with-libphp.patch
 Patch2: php-8.4.6-shared-1.patch
-Patch3: php-8.4.3-cli-build.patch
+Patch3: php-8.4.21-cli-build.patch
 Patch4: php-8.4.3-alt-build-with-PIC.patch
 Patch5: php-8.4.3-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
@@ -486,6 +486,11 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Mon May 18 2026 Anton Farygin <rider@altlinux.org> 8.4.21-alt1
+- 8.4.18 -> 8.4.21 (Fixes: CVE-2026-7263, CVE-2026-29078, CVE-2026-29079,
+- CVE-2026-6735, CVE-2026-7259, CVE-2026-6104, CVE-2025-14179, CVE-2026-6722,
+- CVE-2026-7261, CVE-2026-7262, CVE-2026-7568, CVE-2026-7258)
+
 * Thu Feb 12 2026 Anton Farygin <rider@altlinux.org> 8.4.18-alt1
 - 8.4.17 -> 8.4.18
 
