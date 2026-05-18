@@ -8,7 +8,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Pipewire Settings extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -45,6 +45,9 @@ cp -r %uuid %buildroot%_datadir/gnome-shell/extensions/
 %doc README.md
 
 %changelog
+* Mon May 18 2026 Yuri N. Sedunov <aris@altlinux.org> 3-alt2
+- updated to v3-23-g2f88bf1 (GNOME 50 supported)
+
 * Sat Jan 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3-alt1
 - first build for Sisyphus (v3-22-g41bbf18)
 
