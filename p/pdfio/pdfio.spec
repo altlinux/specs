@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: pdfio
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: Simple C library for reading and writing PDF files
@@ -98,6 +98,9 @@ PDFio is a simple C library for reading and writing PDF files.
 %_defaultdocdir/pdfio/examples/
 
 %changelog
+* Tue May 05 2026 Anton Farygin <rider@altlinux.org> 1.6.3-alt1
+- 1.6.2 -> 1.6.3
+
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 1.6.2-alt1
 - 1.6.0 -> 1.6.2
 
