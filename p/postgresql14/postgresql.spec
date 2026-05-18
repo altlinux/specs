@@ -18,7 +18,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     23
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -52,10 +52,12 @@ Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 
 Provides: %prog_name = %EVR
-Conflicts: %prog_name < %EVR
-Conflicts: %prog_name > %EVR
-# 1C
+Conflicts: %{prog_name}13
+Conflicts: %{prog_name}15
+Conflicts: %{prog_name}16
+Conflicts: %{prog_name}17
 Conflicts: %{prog_name}17-1C
+Conflicts: %{prog_name}18
 Conflicts: %{prog_name}18-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
@@ -361,9 +363,14 @@ Summary: Contributed source and binaries distributed with PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-contrib = %EVR
-# 1C
-Conflicts: %{prog_name}17-1C-contrib
-Conflicts: %{prog_name}18-1C-contrib
+
+Conflicts: %{prog_name}13-server
+Conflicts: %{prog_name}15-server
+Conflicts: %{prog_name}16-server
+Conflicts: %{prog_name}17-server
+Conflicts: %{prog_name}17-1C-server
+Conflicts: %{prog_name}18-server
+Conflicts: %{prog_name}18-1C-server
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -1120,6 +1127,9 @@ fi
 %endif
 
 %changelog
+* Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 14.23-alt2
+- Add conflicts for postgresqlXY and -server subpackages
+
 * Wed May 13 2026 Alexei Takaseev <taf@altlinux.org> 14.23-alt1
 - 14.23 (Fixes CVE-2026-6472, CVE-2026-6473, CVE-2026-6474, CVE-2026-6475,
                CVE-2026-6477, CVE-2026-6478, CVE-2026-6479, CVE-2026-6637)

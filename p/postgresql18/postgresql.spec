@@ -22,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     4
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -57,9 +57,11 @@ Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 Provides: %prog_name = %EVR
-Conflicts: %prog_name < %EVR
-Conflicts: %prog_name > %EVR
-# 1C
+Conflicts: %{prog_name}13
+Conflicts: %{prog_name}14
+Conflicts: %{prog_name}15
+Conflicts: %{prog_name}16
+Conflicts: %{prog_name}17
 Conflicts: %{prog_name}17-1C
 Conflicts: %{prog_name}18-1C
 
@@ -390,7 +392,12 @@ Requires(pre): postgresql-common > 1.0-alt8
 Requires: %name = %EVR
 Requires: glibc-locales
 Provides: %prog_name-server = %EVR
-# 1C
+
+Conflicts: %{prog_name}13-server
+Conflicts: %{prog_name}14-server
+Conflicts: %{prog_name}15-server
+Conflicts: %{prog_name}16-server
+Conflicts: %{prog_name}17-server
 Conflicts: %{prog_name}17-1C-server
 Conflicts: %{prog_name}18-1C-server
 
@@ -540,7 +547,12 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 %make_build -C doc all
 
 %check
-vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+%ifnarch %ix86
+QEMU_OPT='-m 4096 -object memory-backend-ram,id=ram-node0,size=4096M -numa node,nodeid=0,cpus=0-3,memdev=ram-node0'
+%else
+QEMU_OPT=""
+%endif
+vm-run --rootfs --user --sudo --cpu=4 --qemu="$QEMU_OPT" "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -1147,6 +1159,10 @@ fi
 %endif
 
 %changelog
+* Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt2
+- Fix NUMA tests
+- Add conflicts for postgresqlXY and -server subpackages
+
 * Wed May 13 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt1
 - 18.4 (Fixes CVE-2026-6472, CVE-2026-6473, CVE-2026-6474, CVE-2026-6475,
               CVE-2026-6476, CVE-2026-6477, CVE-2026-6478, CVE-2026-6479,
