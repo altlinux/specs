@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.28.2
+Version: 1.28.4
 Release: alt1
 Epoch: 1
 Summary: Document viewer
@@ -196,6 +196,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon May 18 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.4-alt1
+- 1.28.4
+
 * Sun Jun 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.2-alt1
 - 1.28.2
 
