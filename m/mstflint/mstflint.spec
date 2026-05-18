@@ -13,7 +13,7 @@
 %def_disable nvfwreset
 
 Name: mstflint
-Version: 4.35.0.1
+Version: 4.36.0.1
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -93,6 +93,9 @@ rm -f  %buildroot%_libdir/%name/*.a
 %_man1dir/*
 
 %changelog
+* Mon May 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.36.0.1-alt1
+- v4.36.0-1
+
 * Tue Feb 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.35.0.1-alt1
 - v4.35.0-1
 
