@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.4
+Version: 0.11.5
 Release: alt1
 Summary: TOML Toolkit
 License: MIT
@@ -73,5 +73,8 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %_bindir/tombi
 
 %changelog
+* Mon May 18 2026 Stanislav Levin <slev@altlinux.org> 0.11.5-alt1
+- 0.11.4 -> 0.11.5.
+
 * Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 0.11.4-alt1
 - Initial build for sisyphus.
