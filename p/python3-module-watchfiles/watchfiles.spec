@@ -1,5 +1,5 @@
 Name: python3-module-watchfiles
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Simple, modern file watching and code reload in python.
@@ -51,6 +51,9 @@ rm -rf watchfiles
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Mon May 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
 - 1.1.1 released
 
