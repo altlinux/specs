@@ -9,14 +9,15 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 26.3.1
-Release: alt1.1
+Version: 26.5.0
+Release: alt1
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
@@ -24,30 +25,19 @@ Url: https://pypi.org/project/black/
 VCS: https://github.com/psf/black
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
-BuildRequires: python3-module-hatch-fancy-pypi-readme
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pre-commit
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-xdist
-
-BuildRequires: python3-module-aiohttp
-BuildRequires: python3-module-click
+# filtered by default by actually used
 BuildRequires: python3-module-mypy-extensions
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-pathspec
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-pytokens
+%pyproject_builddeps_metadata_extra d
+%pyproject_builddeps_check
 
 # aiohttp.test_utils is shipped by tests subpackage
 BuildRequires: python3-module-aiohttp-tests
@@ -71,14 +61,12 @@ Black makes code review faster by producing the smallest diffs possible.
 %setup
 %autopatch -p1
 
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup tests
+%endif
 
 %build
 %pyproject_build
@@ -101,8 +89,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 26.3.1-alt1.1
-- Demodernized packaging.
+* Mon May 18 2026 Stanislav Levin <slev@altlinux.org> 26.5.0-alt1
+- 26.3.1 -> 26.5.0.
 
 * Thu Mar 12 2026 Stanislav Levin <slev@altlinux.org> 26.3.1-alt1
 - 26.3.0 -> 26.3.1.
