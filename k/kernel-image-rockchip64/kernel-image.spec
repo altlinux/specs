@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.30
+%define kernel_sublevel	.32
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -167,17 +167,17 @@ Patch0124: rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch
 Patch0125: rk3399-sd-drive-level-8ma.patch
 Patch0126: rk3399-sd-pwr-pinctrl.patch
 Patch0127: rk3399-unlock-temperature.patch
-Patch0128: rk3399-usbc-notify-typec-dp-hpd-state-through-extcon.patch
-Patch0129: rk3399-usbc-phy-phy-rockchip-inno-usb2-Decrease-delay-between-po.patch
-Patch0130: rk3399-usbc-phy-rockchip-inno-usb2-More-robust-charger-detection.patch
-Patch0131: rk3399-usbc-phy-rockchip-naneng-Add-fallback-for-old-DTs.patch
-Patch0132: rk3399-usbc-Revert-usb-typec-tcpm-unregister-existing-source-cap.patch
-Patch0133: rk3399-usbc-usb-dwc3-Extend-reset-quirk-support-to-include-role-.patch
-Patch0134: rk3399-usbc-usb-dwc3-Track-the-power-state-of-usb3_generic_phy.patch
-Patch0135: rk3399-usbc-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patch
-Patch0136: rk3399-usbc-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
-Patch0137: rk3399-usbc-usb-typec-tcpm-Unregister-altmodes-before-registerin.patch
-Patch0138: rk3399-usbc-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch
+#Patch0128: rk3399-usbc-notify-typec-dp-hpd-state-through-extcon.patch
+#Patch0129: rk3399-usbc-phy-phy-rockchip-inno-usb2-Decrease-delay-between-po.patch
+#Patch0130: rk3399-usbc-phy-rockchip-inno-usb2-More-robust-charger-detection.patch
+#Patch0131: rk3399-usbc-phy-rockchip-naneng-Add-fallback-for-old-DTs.patch
+#Patch0132: rk3399-usbc-Revert-usb-typec-tcpm-unregister-existing-source-cap.patch
+#Patch0133: rk3399-usbc-usb-dwc3-Extend-reset-quirk-support-to-include-role-.patch
+#Patch0134: rk3399-usbc-usb-dwc3-Track-the-power-state-of-usb3_generic_phy.patch
+#Patch0135: rk3399-usbc-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patch
+#Patch0136: rk3399-usbc-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
+#Patch0137: rk3399-usbc-usb-typec-tcpm-Unregister-altmodes-before-registerin.patch
+#Patch0138: rk3399-usbc-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch
 Patch0139: rk3528-01-arm64-dts-rockchip-Add-PCIe-Gen2x1-controller-for-RK.patch
 Patch0140: rk3528-02-arm64-dts-rockchip-Add-SFC-node-for-RK3528.patch
 Patch0141: rk3528-10-phy-rockchip-inno-usb2-Add-support-for-RK3528.patch
@@ -558,6 +558,12 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon May 18 2026 Alexei Takaseev <taf@altlinux.org> 6.18.32-alt1
+- v6.18.32 (2026-05-17).
+
+* Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 6.18.31-alt1
+- v6.18.31 (2026-05-15).
+
 * Fri May 15 2026 Alexei Takaseev <taf@altlinux.org> 6.18.30-alt1
 - v6.18.30 (2026-05-14).
 - config: add selinux to CONFIG_LSM.
