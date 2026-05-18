@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.6.0
 Release: alt1
 Summary: A plugin to fake subprocess for pytest
 License: MIT
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,11 +47,13 @@ subprocess.check_call() and subprocess.check_output() methods also functional.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 18 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.3 -> 1.6.0.
+
 * Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
 - 1.5.2 -> 1.5.3.
 
