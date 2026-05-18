@@ -1,64 +1,52 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          compress-lzf
-Version:       1.0.4
-Release:       alt1_2jpp11
-Summary:       Basic LZF codec, compatible with standard C LZF package
-License:       ASL 2.0
+Version:       1.2.0
+Release:       alt1
+
+Summary:       High-performance, streaming/chunking Java LZF codec, compatible with standard C LZF package
+License:       Apache-2.0
+Group:         Development/Java
 URL:           https://github.com/ning/compress
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
+VCS:           https://github.com/ning/compress
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.testng:testng)
+Source0:       %name-%version.tar
 
-BuildArch:     noarch
-Source44: import.info
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
+
+BuildArch:      noarch
 
 %description
-Compression codec for LZF encoding for particularly encoding/decoding,
-with reasonable compression. Compressor is basic Lempel-Ziv codec,
-without Huffman (deflate/gzip) or statistical post-encoding. See
-"http://oldhome.schmorp.de/marc/liblzf.html" for more on
-original LZF package.
+LZF-compress is a Java library for encoding and decoding data in LZF format,
+written by Tatu Saloranta. Data format and algorithm based on original LZF
+library by Marc A Lehmann.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n compress-%{name}-%{version}
+%setup
 
-%pom_remove_plugin :maven-source-plugin
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
+%pom_remove_plugin :moditect-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
-%pom_add_dep junit:junit::test
-
-%mvn_file : %{name}
+# missing dep for tests
+%pom_remove_dep :jazzer-junit
+rm src/test/java/com/ning/compress/lzf/TestFuzzUnsafeLZF.java
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Poffline-testing -Dmaven.test.skip=true
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md VERSION.txt
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc LICENSE VERSION.txt README.md
 
 %changelog
+* Wed Apr 15 2026 Evgeniy Serov <scala@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_2jpp11
 - new version
 
