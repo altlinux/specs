@@ -1,7 +1,7 @@
 Name:           sisu
 Epoch:          2
 Version:        0.9.0.M3
-Release:        alt1
+Release:        alt2
 
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0, the bundled asm is BSD
@@ -24,6 +24,7 @@ BuildRequires:  mvn(com.google.inject.extensions:guice-assistedinject)
 BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(javax.enterprise:cdi-api)
 
 BuildArch:      noarch
 
@@ -71,6 +72,9 @@ echo %_javadir/org.eclipse.sisu.plexus.jar >> .mfiles
 %files maven-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Sun May 17 2026 Evgeniy Serov <scala@altlinux.org> 2:0.9.0.M3-alt2
+- Fixed FTBFS: added missing dependency.
+
 * Sat Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 2:0.9.0.M3-alt1
 - Updated to 0.9.0.M3.
 
