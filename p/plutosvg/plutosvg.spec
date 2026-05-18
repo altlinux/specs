@@ -2,7 +2,7 @@
 %define sover 0
 
 Name: plutosvg
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 
 Summary: Compact and efficient SVG rendering library
@@ -10,6 +10,7 @@ License: MIT
 Group: System/Libraries
 
 Url: https://github.com/sammycage/%name
+Vcs: https://github.com/sammycage/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/sammycage/%name/archive/v%version/%name-%version.tar.gz
@@ -76,6 +77,9 @@ sed -i 's/0.0.4/1.0.0/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.8-alt1
+- New version 0.0.8.
+
 * Thu Jul 03 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.7-alt1
 - New version 0.0.7.
 
