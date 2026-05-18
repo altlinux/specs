@@ -1,5 +1,5 @@
 Name: installer-feature-systemd-oomd
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Turn on PSI for systemd-oomd
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
+- don't turn on oom killer when < 5GB RAM
+
 * Thu Jul 21 2022 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - fix usage of update-grub
 
