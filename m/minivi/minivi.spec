@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: A small application for viewing images
@@ -47,6 +47,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Tue May 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.1-alt1
+- 0.15.0 -> 0.15.1
+
 * Mon May 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.0-alt1
 - 0.14.0 -> 0.15.0
 - migrated to qt6
