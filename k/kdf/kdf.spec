@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 26.04.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ Provides: kwikdisk = %EVR
 Source: %rname-%version.tar
 Patch1: alt-desktop.patch
 Patch2: alt-mount.patch
+Patch3: alt-fix-default-window-size.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -61,6 +62,7 @@ KF6 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K6build
@@ -90,6 +92,9 @@ KF6 library
 
 
 %changelog
+* Mon May 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 26.04.1-alt2
+- fix incorrect window size on first launch (closes: 49893)
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
