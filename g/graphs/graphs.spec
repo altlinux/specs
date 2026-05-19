@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -97,6 +97,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Tue May 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
