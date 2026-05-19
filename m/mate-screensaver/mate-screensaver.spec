@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-screensaver
-Version: 1.28.0
-Release: alt2
+Version: 1.28.1
+Release: alt1
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
@@ -85,6 +85,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue May 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.1-alt1
+- 1.28.1
+
 * Wed Apr 16 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.0-alt2
 - fixed build with gcc 14
 
