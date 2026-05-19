@@ -25,7 +25,7 @@
 %define nv_version 580
 %define nv_release 142
 %define nv_minor   %nil
-%define pkg_rel alt301
+%define pkg_rel alt302
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -82,6 +82,7 @@
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
 %filter_from_requires /^libEGL_nvidia\.so\./d
 %filter_from_requires /^libnvcuvid\.so\./d
+%filter_from_requires /^libcuda\.so\./d
 
 Name: nvidia_glx_src_%nv_version_full
 Version: %nv_version_full
@@ -381,6 +382,9 @@ fi
 %endif
 
 %changelog
+* Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt302
+- drop requires to libcuda
+
 * Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt301
 - drop requires to libnvcuvid
 
