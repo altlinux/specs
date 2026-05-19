@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/dlvhdr/gh-dash/v4
-%global git_commit 7acb909
-%global git_date 20260307
+%global git_commit 02ec6a7
+%global git_date 20260513
 
 Name: gh-dash
-Version: 4.23.2
-Release: alt2
+Version: 4.24.1
+Release: alt1
 
 Summary: A rich terminal UI for GitHub that doesn't break your flow
 License: MIT
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon May 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.24.1-alt1
+- Updated to version 4.24.1.
+
 * Tue Apr 28 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.23.2-alt2
 - Added LDFLAGS to inject variables during build (Closes: #58827).
 
