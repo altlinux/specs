@@ -15,7 +15,7 @@
 
 Name: talos
 Version: 1.12.7
-Release: alt3
+Release: alt4
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -209,6 +209,12 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon May 18 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.7-alt4
+- Add new splash image.
+- Use LatestDistroTag for DefaultImage helper.
+- Use DistroVersion for installer image defaults.
+- Use version.Name in logs and UKI name.
+
 * Mon May 04 2026 Alexander Stepchenko <geochip@altlinux.org> 1.12.7-alt3
 - Update DefaultKernelVersion to 6.18.26.
 
