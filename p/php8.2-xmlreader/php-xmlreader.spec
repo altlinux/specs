@@ -11,6 +11,15 @@ License:	PHP-3.01
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 
+# Fix tests for libxml2 2.13+ compatibility
+# See: https://github.com/php/php-src/issues/18009
+%if "%_php_suffix" == "8.4"
+Patch1:		php8.4-%php_extension-alt-libxml2-2.13-tests.patch
+%else
+Patch1:         php8.3-%php_extension-alt-libxml2-2.13-tests.patch
+%endif
+
+
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires:	php-devel = %php_version
 
@@ -27,6 +36,7 @@ The extension allows you to operate on an XML document with the DOM API.
 mkdir ext
 cp -pr %php_extsrcdir/dom ext/
 cp -pr %php_extsrcdir/%php_extension/* .
+%patch1 -p1
 
 %build
 phpize

@@ -11,7 +11,7 @@ Summary:	OpenTelemetry auto-instrumentation support extension
 License:	%asl
 Group:		System/Servers
 URL:		https://pecl.php.net/package/opentelemetry
-#URL:		https://github.com/open-telemetry/opentelemetry-php-instrumentation
+VCS:		https://github.com/open-telemetry/opentelemetry-php-instrumentation
 
 Packager:	Nikolay A. Fetisov <naf@altlinux.org>
 

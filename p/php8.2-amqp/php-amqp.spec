@@ -1,7 +1,7 @@
 %define php_extension amqp
 
 Name: php%_php_suffix-%php_extension
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1.%php_version
 
 Summary: PHP extension to communicate with any AMQP compliant server
@@ -17,7 +17,6 @@ BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: rpm-build-php
 BuildRequires: php-devel = %php_version
 BuildRequires: librabbitmq-c-devel
-
 
 %description
 This extension can communicate with any AMQP spec 0-9-1 compatible server, 
@@ -55,6 +54,9 @@ NO_INTERACTION=1 php run-tests.php --offline
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.1.2 -> 2.2.0
 
 * Mon Feb 19 2024 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
 - 2.1.1 -> 2.1.2

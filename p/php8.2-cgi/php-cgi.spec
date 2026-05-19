@@ -10,11 +10,8 @@ License: PHP-3.01
 Source1: php-cgi-alt.ini
 Source2: php-cgi-browscap.ini
 
-%if "%_php_suffix" != "8.4"
-Patch0: php8.2-sapi-cgi-alt-build-fastcgi.patch
-%else
-Patch0: php8.4-sapi-cgi-alt-build-fastcgi.patch
-%endif
+%define _cgi_patch_suffix %([ "$(rpmvercmp "%_php_suffix" "8.4")" = "-1" ] && echo "8.2" || echo "8.4")
+Patch0: php%_cgi_patch_suffix-sapi-cgi-alt-build-fastcgi.patch
 
 Requires: php8.2 = %php_version
 Provides: php-engine = %php_version-%php_release

@@ -39,7 +39,9 @@ faster.
 %setup -T -c
 cp -pr -- %php_extsrcdir/%php_extension/* .
 
+%if "%_php_suffix" != "8.5"
 %patch0 -p1
+%endif
 
 # Fix path to pdo*.h
 subst 's@php/ext@php/%_php_version/ext@g' config.m4
