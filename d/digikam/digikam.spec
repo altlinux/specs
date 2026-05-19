@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 9.0.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -62,6 +62,7 @@ Patch101: alt-own-mysql-install-db.patch
 Patch102: fix-segfault-on-action-search.patch
 Patch103: alt-kf-deps.patch
 Patch104: alt-xdg-current-desktop.patch
+Patch105: alt-fix-btns-freezing-after-help-closed.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-ifver rpm-macros-qt6-webengine libopencv-devel
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
@@ -184,6 +185,7 @@ pushd core
 %patch102 -p2
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -287,6 +289,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Mon May 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 9.0.0-alt2
+- fix buttons freezing after help is closed (closes: 53467)
+
 * Tue Mar 10 2026 Sergey V Turchin <zerg@altlinux.org> 9.0.0-alt1
 - new version
 
