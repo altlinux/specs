@@ -1,13 +1,13 @@
 %def_with check
 Name: ethtool
-Version: 6.19
+Version: 7.0
 Release: alt1
 Epoch: 1
 Summary: Ethernet settings tools for network cards
 License: GPLv2
 Group: System/Configuration/Networking
 Url: https://www.kernel.org/pub/software/network/ethtool/
-VCS: https://git.kernel.org/pub/scm/network/ethtool/ethtool.git
+VCS: https://kernel.googlesource.com/pub/scm/network/ethtool/ethtool.git
 Source: %name-%version-%release.tar
 BuildRequires: libmnl-devel
 Summary(ru_RU.UTF-8): утилита настройки Ethernet-карт
@@ -51,6 +51,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Tue May 19 2026 Anton Farygin <rider@altlinux.org> 1:7.0-alt1
+- 6.19 -> 7.0
+
 * Wed Mar 11 2026 Anton Farygin <rider@altlinux.org> 1:6.19-alt1
 - 6.15 -> 6.19
 
