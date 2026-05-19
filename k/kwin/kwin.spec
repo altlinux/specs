@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.6.5
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Graphical desktop/KDE
@@ -200,6 +200,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt3
+- fix crash at exit
+
 * Fri May 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
 - fix take permissions on /dev/dri/card* when login compositor
 
