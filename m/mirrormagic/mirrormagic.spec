@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        3.0.0
-Release:        alt1_18
+Release:        alt1_18.1
 Summary:        Puzzle game where you steer a beam of light using mirrors
 License:        GPL-1.0-or-later
 URL:            http://www.artsoft.org/mirrormagic/
@@ -45,7 +45,7 @@ mv CREDITS.tmp CREDITS
 # parallel build has been disabled because for some unknown reason
 # it leads to unknown symbols during the linking of the mirrormagic binary
 make PROGBASE=%{name} RO_GAME_DIR=%{_datadir}/%{name} \
-  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA" \
+  OPTIONS="$RPM_OPT_FLAGS -DUSE_USERDATADIR_FOR_COMMONDATA -std=gnu17" \
   EXTRA_LDFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS" sdl2
 
 
@@ -77,6 +77,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue May 19 2026 Artyom Bystrov <arbars@altlinux.org> 3.0.0-alt1_18.1
+- Set C standart to gnu17
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_18
 - update to new release by fcimport
 
