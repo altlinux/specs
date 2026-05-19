@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 71
 %define nv_minor 05
-%define pkg_rel alt312
+%define pkg_rel alt313
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -225,7 +225,7 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/gbm/nvidia-drm_gbm.so
 
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
-ln -s %_sysconfdir/libnvidiacurrent/nvidia.icd.json %buildroot/%_sysconfdir/OpenCL/vendors/nvidia.%_target_cpu.icd
+ln -s %_sysconfdir/libnvidiacurrent/nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/nvidia.%_target_cpu.icd
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
 ln -s %_sysconfdir/libnvidiacurrent/nvidia_icd.json %buildroot/%_datadir/vulkan/icd.d/nvidia_icd.%_target_cpu.json
 mkdir -p %buildroot/%_datadir/vulkan/implicit_layer.d/
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt313
+- fix symlink to OpenCL icd
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt312
 - new version
 - exclude nvidia-uvm from initrd
