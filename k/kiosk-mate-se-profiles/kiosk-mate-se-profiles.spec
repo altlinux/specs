@@ -1,5 +1,5 @@
 Name:    kiosk-mate-se-profiles
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Profiles for mate desktop for kiosk mode
@@ -28,5 +28,8 @@ install -pDm 0644 profiles/*  %buildroot/%_sysconfdir/alterator/kiosk/profiles/
 %_sysconfdir/alterator/kiosk/profiles/*
 
 %changelog
+* Tue May 19 2026 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
+- LibreOffice-mate-se: remove LibreOffice-still and java.
+
 * Mon May 18 2026 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build.
