@@ -3,8 +3,8 @@
 %def_disable check
 %endif
 Name: srt
-Version: 1.5.4
-Release: alt2
+Version: 1.5.5
+Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
 License: MPL-2.0
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%_cmake__builddir ./%_cmake__builddir/test-srt
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Tue May 19 2026 Anton Farygin <rider@altlinux.org> 1.5.5-alt1
+- 1.5.4 -> 1.5.5
+
 * Wed Mar 05 2025 Anton Farygin <rider@altlinux.ru> 1.5.4-alt2
 - disabled check on 32-bit ix86
 
