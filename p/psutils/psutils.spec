@@ -2,7 +2,7 @@
 %def_with check
 
 Name: psutils
-Version: 3.3.14
+Version: 3.3.15
 Release: alt1
 Epoch: 2
 
@@ -13,7 +13,7 @@ Group: Publishing
 Url: https://github.com/rrthomas/psutils
 VCS: https://github.com/rrthomas/psutils
 Source: %name-%version.tar
-Patch1: %name-%version-alt-version-fallback.patch
+Patch1: %name-3.3.14-alt-version-fallback.patch
 
 BuildArch: noarch
 
@@ -70,6 +70,9 @@ for n-up printing, and resize, flip and rotate pages.
 %_man1dir/*
 
 %changelog
+* Tue May 19 2026 Anton Farygin <rider@altlinux.org> 2:3.3.15-alt1
+- 3.3.14 -> 3.3.15
+
 * Tue Feb 04 2025 Anton Farygin <rider@altlinux.org> 2:3.3.14-alt1
 - 2.10 -> 3.3.14
 - upstream rewrote psutils in Python (was Perl + autotools)
