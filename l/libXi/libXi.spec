@@ -1,5 +1,5 @@
 Name: libXi
-Version: 1.8
+Version: 1.8.3
 Release: alt1
 Summary: X Input Extension Library
 License: MIT/X11
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Tue May 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.8.3-alt1
+- 1.8.3
+
 * Mon Sep 20 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.8-alt1
 - 1.8
 
