@@ -16,7 +16,7 @@
 %endif
 
 Name: ImageMagick
-Version: 7.1.2.21
+Version: 7.1.2.23
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -41,7 +41,7 @@ BuildRequires: libzip-devel
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel liblqr-devel xdg-utils xorg-cf-files
 
 BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath liblqr-devel libltdl-devel perl-parent
-BuildRequires: libheif-devel libraw-devel libraqm-devel libflif-devel libzstd-devel libfftw3-devel
+BuildRequires: libheif-devel libraw0-devel libraqm-devel libflif-devel libzstd-devel libfftw3-devel
 BuildRequires: libpango-devel 
 %ifnarch armh
 BuildRequires: libjxl-devel
@@ -271,6 +271,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue May 19 2026 Anton Farygin <rider@altlinux.org> 7.1.2.23-alt1
+- 7.1.2.21 -> 7.1.2.23
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 7.1.2.21-alt1
 - 7.1.2.19 -> 7.1.2.21
 
