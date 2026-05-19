@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name planify
@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Planify
@@ -109,6 +109,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Tue May 19 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.3-alt1
+- updated to v4.19.3-5-gf03ded37c
+
 * Fri May 15 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.2-alt1
 - 4.19.2
 
