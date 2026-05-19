@@ -2,7 +2,7 @@
 %define _cmake__builddir build
 
 Name: throne
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
@@ -109,6 +109,9 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue May 19 2026 Andrey Kovalev <ded@altlinux.org> 1.1.3-alt1
+- Updated to upstream version 1.1.3.
+
 * Tue May 05 2026 Andrey Kovalev <ded@altlinux.org> 1.1.2-alt1
 - Updated to upstream version 1.1.2.
 
