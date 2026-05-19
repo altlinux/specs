@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: mise
-Version: 2026.4.27
+Version: 2026.5.11
 Release: alt1
 
 Summary: The front-end to your dev env
@@ -23,6 +25,10 @@ BuildRequires: rpm-build-rust
 BuildRequires: pkgconfig(openssl)
 BuildRequires: cmake
 BuildRequires: clang-devel
+
+%if_with check
+BuildRequires: git
+%endif
 
 %description
 mise (pronounced "meez") or "mise-en-place" is a development environment
@@ -84,6 +90,9 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 %_man1dir/%name.1.*
 
 %changelog
+* Mon May 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.5.11-alt1
+- Updated to version 2026.5.11.
+
 * Thu Apr 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.4.27-alt1
 - Updated to version 2026.4.27.
 
