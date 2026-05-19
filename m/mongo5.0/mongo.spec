@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.32
+Version: 5.0.33
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -211,6 +211,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue May 19 2026 Alexei Takaseev <taf@altlinux.org> 5.0.33-alt1
+- 5.0.33 (Fixes: CVE-2026-8053)
+
 * Wed Feb 11 2026 Alexei Takaseev <taf@altlinux.org> 5.0.32-alt1
 - 5.0.32
 
