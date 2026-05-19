@@ -27,7 +27,7 @@
 
 Name: openblas
 Version: 0.3.33
-Release: alt1
+Release: alt2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -159,6 +159,10 @@ export OPENBLAS_VERBOSE=3
 %exclude %_libdir/*.a
 
 %changelog
+* Tue May 19 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.33-alt2
+- backport upstream fix for TRSM on Barcelona target
+  (fixes FTBFS on i586).
+
 * Thu Apr 23 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.33-alt1
 - 0.3.33.
 
