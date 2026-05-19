@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.9
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2376,6 +2376,15 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Tue May 19 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.9-alt2
+- Update password policy management in samba-tool (thx Ivan Korytov):
+  + Add account lockout threshold limits.
+  + Increase minimum password length limit up to 128 (thx Ivan Volchenko).
+- Add DRS replication fixes and improvements (thx Vladimir Rubanov):
+  + Enforce DRS replication schedules by cancelling premature operations,
+    and properly handle MS-DRSR compliant WERR_DS_DRA_NO_REPLICA statuses
+    by removing unsupported replica sources from the repsTo list.
+
 * Fri May 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.9-alt1
 - Update to security release of Samba 4.22
 - Major changes from upstream:
