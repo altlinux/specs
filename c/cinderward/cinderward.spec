@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cinderward
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: A simple, no-nonsense, init-agnostic, Wayland-friendly GUI for firewalld
@@ -52,5 +52,8 @@ Requires: firewalld
 %_desktopdir/org.nitrux.cinderward.desktop
 
 %changelog
+* Tue May 19 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.4-alt1
+- New version 0.0.4.
+
 * Sat Jan 10 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.3-alt1
 - Initial build for Sisyphus
