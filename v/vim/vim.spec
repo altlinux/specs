@@ -46,10 +46,12 @@
 # vimspell interface version
 %define vimspell_version	50.1
 
+%set_autoconf_version 2.71
+
 Name: vim
 %define branch 9.2
 Version: %branch.0478
-Release: alt1
+Release: alt2
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1076,6 +1078,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue May 19 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0478-alt2
+- Set the version of autoconf to 2.71 to simplify the build.
+
 * Thu May 14 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.2.0478-alt1
 - Updated to v9.2.0478.
 
