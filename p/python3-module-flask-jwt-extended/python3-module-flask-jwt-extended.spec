@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 4.7.1
+Version: 4.7.4
 Release: alt1
 Summary: Support for using JSON Web Tokens (JWT) to Flask for protecting routes
 License: MIT
@@ -53,5 +53,8 @@ in to make working with JSON Web Tokens easier.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 19 2026 Alexey Rodygin <alehandro@altlinux.org> 4.7.4-alt1
+- Updated to new version 4.7.4.
+
 * Tue Jan 13 2026 Alexey Rodygin <alehandro@altlinux.org> 4.7.1-alt1
 - Initial build for ALT Linux
