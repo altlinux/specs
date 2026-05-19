@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2026.1.0
+Version: 2026.5.1
 Release: alt1
 Summary: Geodatasets for GeoPandas
 License: BSD-3-Clause
@@ -72,6 +72,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/test*
 
 %changelog
+* Tue May 19 2026 Nikita Panov <nexxy@altlinux.org> 2026.5.1-alt1
+- New version 2026.5.1.
+
 * Sun Feb 01 2026 Nikita Panov <nexxy@altlinux.org> 2026.1.0-alt1
 - New version 2026.1.0.
 
