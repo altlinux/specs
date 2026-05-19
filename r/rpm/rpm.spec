@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt44
+Release: alt45
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -578,6 +578,10 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri May 15 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt45
+- Backported an upstream fix for progress printing during installation of RPMv6
+  packages ((ALT#59173) (thx Pavlina Moravcova Varekova).
+
 * Mon Jan 19 2026 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt44
 - rpmio: Support concatenated xz streams in xzdio (fixes pkglist-query
   0.10-alt1).
