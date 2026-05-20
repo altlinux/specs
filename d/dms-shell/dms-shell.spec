@@ -3,7 +3,7 @@
 
 Name: dms-shell
 Version: 1.4.6
-Release: alt1
+Release: alt2
 
 Summary: DankMaterialShell - Material 3 inspired shell for Wayland compositors
 License: MIT
@@ -30,6 +30,7 @@ Requires: xdg-desktop-portal-gtk
 # False positive
 %filter_from_requires /niri/d
 %filter_from_requires /hyprland/d
+%filter_from_requires /Hyprland/d
 
 %description
 DankMaterialShell (DMS) is a modern Wayland desktop shell built with Quickshell
@@ -100,6 +101,9 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 %_iconsdir/hicolor/scalable/apps/danklogo.svg
 
 %changelog
+* Tue May 19 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.6-alt2
+- add Hyprland to filter_from_require (ALT bug: 59253)
+
 * Wed Apr 29 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.6-alt1
 - new version 1.4.6
 - delete notification dev scripts from package
