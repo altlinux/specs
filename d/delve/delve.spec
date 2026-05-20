@@ -3,7 +3,7 @@
 
 Name:           delve
 Version:        1.26.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Delve is a debugger for the Go programming language
 License:        MIT
@@ -32,6 +32,14 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
+%ifarch loongarch64
+export TAGS="exp.linuxloong64"
+%endif
+
+%ifarch riscv64
+export TAGS="exp.linuxriscv64"
+%endif
+
 %golang_prepare
 %golang_build cmd/dlv
 
@@ -57,6 +65,9 @@ install -Dm 644 dlv.fish %buildroot%_datadir/fish/vendor_completions.d/dlv.fish
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.26.1-alt2
+- NMU: Build on riscv64 and loongarch64
+
 * Wed Mar 25 2026 Nadezhda Fedorova <fedor@altlinux.org> 1.26.1-alt1
 - 1.25.1 -> 1.26.1
 - Closes: #58063
