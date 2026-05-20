@@ -25,7 +25,7 @@
 %define nv_version 580
 %define nv_release 142
 %define nv_minor   %nil
-%define pkg_rel alt302
+%define pkg_rel alt303
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -300,6 +300,12 @@ install -m0644 nvidia_icd_vksc.json %buildroot/%nv_lib_dir/nvidia_icd_vksc.json
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
 %endif
+for l in %buildroot/%nv_lib_dir/lib*.so ; do
+    f=`basename $l`
+    echo "$f" | grep -q "^libglxserver_nvidia\." && continue ||:
+    mv $l %buildroot/%nv_lib_dir/${f}.%tbver
+    ln -s ${f}.%tbver %buildroot/%nv_lib_dir/$f
+done
 /sbin/ldconfig -n %buildroot/%nv_lib_dir
 
 %ifarch x86_64
@@ -382,6 +388,9 @@ fi
 %endif
 
 %changelog
+* Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt303
+- package libs with version in filenames
+
 * Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt302
 - drop requires to libcuda
 
