@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hamr
-Version: 1.0.22
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Instant access to apps, calculations, clipboard history, and files
 License: MIT
@@ -21,13 +21,18 @@ Source2: systemd_daemon_config.tar
 Requires: hamr-daemon
 Requires: hamr-gtk
 
-BuildRequires(pre): rpm-macros-rust rpm-macros-python3
-BuildRequires: rpm-build-rust rpm-build-python3
+BuildRequires(pre): rpm-macros-rust
+BuildRequires(pre): rpm-macros-python3
+
+BuildRequires: rpm-build-rust
+BuildRequires: rpm-build-python3
 BuildRequires: libglycin-gtk4-devel
 BuildRequires: libgtk4-layer-shell-devel
 
 %description
-Hamr learns from your usage patterns to surface what you need, when you need it. Type a few characters to launch apps, calculate math, search files, access clipboard history, and more.
+Hamr learns from your usage patterns to surface what you need, when you
+need it. Type a few characters to launch apps, calculate math, search 
+files, access clipboard history, and more.
 
 %package daemon
 Summary: Socket server wrapping core
@@ -45,7 +50,7 @@ Group: Graphical desktop/Other
 
 %package tui
 Summary: Terminal UI for headless use
-Group: Terminals
+Group: Other
 
 %description tui
 %summary.
@@ -102,6 +107,9 @@ install -Dm 0644 systemd_daemon_config/hamr-gtk.service %buildroot%_userunitdir/
 %_bindir/hamr-tui
 
 %changelog
+* Wed May 20 2026 Dina Tagantseva <dinchik@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Mon May 04 2026 Dina Tagantseva <dinchik@altlinux.org> 1.0.22-alt2
 - Fixed requires (Closes: 58737)
 
