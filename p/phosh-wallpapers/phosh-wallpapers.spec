@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name phosh
-%define ver_major 0.42
+%define ver_major 0.55
 %define beta %nil
 
 %def_enable check
@@ -19,7 +19,8 @@ BuildArch: noarch
 Vcs: https://gitlab.gnome.org/guidog/phosh-wallpapers.git
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/guidog/%name/-/archive/v%version/%name-v%version%beta.tar.gz
+#Source: https://gitlab.gnome.org/guidog/%name/-/archive/v%version/%name-v%version%beta.tar.gz
+Source: https://sources.phosh.mobi/releases/%name/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -64,6 +65,8 @@ This package provides sound theme for Phosh.
 %_datadir/gnome-background-properties/%_name-byzantium-abstract.xml
 %_datadir/gnome-background-properties/%_name-logo.xml
 %_datadir/%_name/backgrounds/*
+# separate subpackage?
+%_datadir/systemd/bootctl/splash-%_name.bmp
 %doc README.* NEWS
 
 %files -n plymouth-theme-%_name
@@ -75,6 +78,9 @@ This package provides sound theme for Phosh.
 %doc README.* NEWS
 
 %changelog
+* Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
+- 0.55.0
+
 * Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 
