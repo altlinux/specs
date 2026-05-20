@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 #Epoch: 0
 %K6init no_altplace
 
@@ -37,6 +37,7 @@ Patch31: calligra-gcc11.patch
 # ALT
 Patch102: alt-find-ooo-sdk.patch
 Patch103: alt-disable-products.patch
+Patch104: alt-fix-saving-diff-formats.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: kf6-attica-devel boost-devel eigen3 glib2-devel rpm-build-python3
@@ -190,6 +191,7 @@ Conflicts: calligra-okular-generators < 20
 #
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 # fix docs names
 for subd in po/*/docs/{sheets,stage} ; do
@@ -429,6 +431,9 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Wed May 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 25.12.3-alt2
+- fix saving created spreadsheet in different formats (closes: 49363)
+
 * Mon Mar 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
