@@ -1,44 +1,34 @@
-%define sover 6
-%define compat_sover 4
+%define sover 3
 
-Name: gdbm
-Version: 1.26
-Release: alt1
+Name: gdbm%sover
+Version: 1.8.3
+Release: alt12
 
 Summary: A GNU set of database routines which use extensible hashing
 License: GPLv2+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.gnu.org/software/gdbm/
 
 # ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-%version.tar.gz
 Source: gdbm-%version.tar
-Patch1: gdbm-1.26-alt-texinfo.patch
+Patch1: gdbm-1.8.3-alt-texinfo.patch
+Patch2: gdbm-1.8.3-alt-makefile.patch
+Patch3: gdbm-1.8.3-alt-configure.patch
+Patch4: gdbm-1.8.3-alt-read_loop.patch
+Patch11: gdbm-1.8.3-deb-texinfo.patch
+Patch12: gdbm-1.8.3-deb-zero-headers.patch
+Patch13: gdbm-1.8.3-deb-man.patch
+Patch14: gdbm-1.8.3-rh-GDBM_FILE.patch
+Patch15: gdbm-1.8.3-deb-texinfo-null.patch
+Patch16: gdbm-1.8.3-alt-c23-fatal_func-type.patch
 
 %def_disable static
 
 BuildRequires: makeinfo
 
-%package -n lib%name%sover
+%package -n libgdbm
 Summary: A GNU set of database routines which use extensible hashing
-Group: System/Libraries
-
-%package -n lib%{name}_compat%compat_sover
-Summary: A GNU set of database routines which use extensible hashing
-Group: System/Libraries
-
-%package -n lib%name-devel
-Summary: Development libraries and header files for the gdbm library
-Group: Development/Databases
-Provides: %name-devel = %EVR
-Obsoletes: %name-devel
-Requires: lib%name%sover = %EVR
-
-%package -n lib%name-devel-static
-Summary: The gdbm static library
-Group: Development/Databases
-Provides: %name-devel-static = %EVR
-Obsoletes: %name-devel-static
-Requires: lib%name-devel = %EVR
+Group: System/Legacy libraries
 
 %description
 gdbm is a GNU database indexing library, including routines which use
@@ -47,87 +37,49 @@ routines.  gdbm is useful for developers who write C applications and
 need access to a simple and efficient database or who are building C
 applications which will use such a database.
 
-This package contains gdbmtool, gdbm_load, and gdbm_dump utilities.
-
-%description -n lib%name%sover
+%description -n libgdbm
 gdbm is a GNU database indexing library, including routines which use
 extensible hashing.  gdbm works in a similar way to standard Unix dbm
 routines.  gdbm is useful for developers who write C applications and
 need access to a simple and efficient database or who are building C
 applications which will use such a database.
-
-This package contains the gdbm library.
-
-%description -n lib%{name}_compat%compat_sover
-gdbm is a GNU database indexing library, including routines which use
-extensible hashing.  gdbm works in a similar way to standard Unix dbm
-routines.  gdbm is useful for developers who write C applications and
-need access to a simple and efficient database or who are building C
-applications which will use such a database.
-
-This package contains the gdbm_compat library.
-
-%description -n lib%name-devel
-This package contains the development libraries and header files for
-gdbm, the GNU database system.  These libraries and header files are
-necessary if you plan to do development using the gdbm database.
-
-%description -n lib%name-devel-static
-This package contains the GDBM development static library necessary
-if you plan to do development of statically linked software using
-the gdbm database.
 
 %prep
-%setup
-%autopatch -p1
+%setup -n gdbm-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+rm aclocal.m4
 
 %build
+export ac_cv_lib_dbm_main=no
+export ac_cv_lib_ndbm_main=no
 %autoreconf
-%configure \
-	%{subst_enable static} \
-	--enable-libgdbm-compat \
-	#
+%configure %{subst_enable static} --includedir=%_includedir/gdbm
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std install-compat \
+	INSTALL_ROOT=%buildroot \
+	BINOWN=`id -u` \
+	BINGRP=`id -g` \
+	#
+ln -s gdbm/gdbm.h %buildroot%_includedir/
 
-# create symlinks for compatibility
-mkdir -p %buildroot/%_includedir/gdbm
-ln -sf ../gdbm.h %buildroot/%_includedir/gdbm/gdbm.h
-ln -sf ../ndbm.h %buildroot/%_includedir/gdbm/ndbm.h
-ln -sf ../dbm.h %buildroot/%_includedir/gdbm/dbm.h
-
-%find_lang gdbm
-
-%check
-%make_build check
-
-%files
-%_bindir/gdbm*
-%_man1dir/gdbm*
-
-%files -n lib%name%sover -f gdbm.lang
-%_libdir/libgdbm.so.%{sover}*
+%files -n libgdbm
+%_libdir/*so.%{sover}*
 %doc README NEWS
 
-%files -n lib%{name}_compat%compat_sover
-%_libdir/libgdbm_compat.so.%{compat_sover}*
-
-%files -n lib%name-devel
-%_libdir/*so
-%_includedir/*
-%_infodir/*.info*
-%_man3dir/gdbm.*
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
 %changelog
-* Wed May 20 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.26-alt1
-- 1.8.3 -> 1.26.
+* Wed May 20 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.3-alt12
+- Rebuilt as a legacy library.
 
 * Tue Apr 28 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.3-alt11
 - Fixed FTBFS and gdbm.h header for gcc15 C17 -> C23 standard change.
