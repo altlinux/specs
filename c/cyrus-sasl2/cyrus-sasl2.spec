@@ -16,7 +16,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.28
-Release: alt3
+Release: alt4
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -244,6 +244,10 @@ rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 ls -l %buildroot/%_lib/*
 ls -l %buildroot%_man3dir/*
 
+%check
+make -C tests check VERBOSE=yes || { cat tests/test-suite.log tests/test_get_salt.log 2>/dev/null; exit 1; }
+cat tests/test_get_salt.log 2>/dev/null ||:
+
 %post
 %post_service saslauthd
 %preun
@@ -307,6 +311,14 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Wed Apr 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.28-alt4
+- crypt(3) patch: add support for $5$ SHA-256, $6$ SHA-512, $y$ yescrypt
+  and any future modular crypt format. Also fix $2[abxy]$ bcrypt salt
+  truncation (was extracting 17 chars instead of 29). Pass full stored
+  hash as salt argument to crypt() - modern crypt(3) reads only salt
+  prefix and ignores hash portion, so explicit salt-length parsing is
+  no longer needed.
+
 * Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 2.1.28-alt3
 - Change BR: postgresql-devel -> libpq-devel to reduce the size
   of the build environment
