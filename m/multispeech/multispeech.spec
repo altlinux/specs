@@ -2,7 +2,7 @@
 %define sover 5
 
 Name:    multispeech
-Version: 4.6.3
+Version: 4.6.4
 Release: alt1
 
 Summary: Multilingual speech server for Emacspeak
@@ -12,6 +12,7 @@ Url:     https://github.com/poretsky/multispeech
 
 Source: %name-%version.tar
 
+Requires: %name-common
 Requires: ru_tts
 Requires: mbrola-voices-en1
 
@@ -51,6 +52,33 @@ Summary: Lib files for %name
 %description -n lib%name%sover
 %summary
 
+%package -n speech-dispatcher-module-%name
+Summary: SPD module fore %name
+Group: Sound
+Requires: speech-dispatcher
+Requires: %name-common
+Requires: ru_tts
+Requires: mbrola-voices-en1
+
+%description -n speech-dispatcher-module-%name
+%summary
+
+%package doc
+Summary: doc files for %name
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+%summary
+
+%package common
+Summary: Common files for %name
+Group: Other
+BuildArch: noarch
+
+%description common
+%summary
+
 %prep
 %setup
 
@@ -64,25 +92,36 @@ Summary: Lib files for %name
 
 mkdir -pv %buildroot%_libdir/speech-dispatcher-modules
 mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
+rm -v %buildroot%_libdir/lib%name.so
 
 %check
 %make_build check
 
 %files
-%config(noreplace) %_sysconfdir/%name.conf
 %_bindir/%name
+
+%files -n lib%name%sover
+%_libdir/lib%name.so.%sover
+%_libdir/lib%name.so.%sover.*
+
+%files -n speech-dispatcher-module-%name
+%_libdir/speech-dispatcher-modules/sd_%name
+
+%files doc
+%doc AUTHORS doc/interface.txt doc/prehistory.ChangeLog LICENSE README README.md
 %_man1dir/*
 %_man5dir/*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/*
 
-%files -n lib%name%sover
-%_libdir/lib%name.so
-%_libdir/lib%name.so.%sover
-%_libdir/lib%name.so.%sover.*
-%_libdir/speech-dispatcher-modules/sd_%name
+%files common
+%config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Wed May 20 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt1
+-- Updated to new version 4.6.4
+- Package spleated to subpackages
+
 * Sat Nov 01 2025 Artem Semenov <savoptik@altlinux.org> 4.6.3-alt1
 - Updated to new version 4.6.3
 
