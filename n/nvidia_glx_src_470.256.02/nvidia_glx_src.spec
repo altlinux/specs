@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt301
+%define pkg_rel alt302
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -307,6 +307,12 @@ install -m 0644 %subd/libnvidia-nvvm.so.4.0.0 %buildroot/%nv_lib_dir/libnvidia-n
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
 %endif
+for l in %buildroot/%nv_lib_dir/lib*.so ; do
+    f=`basename $l`
+    echo "$f" | grep -q "^libglxserver_nvidia\." && continue ||:
+    mv $l %buildroot/%nv_lib_dir/${f}.%tbver
+    ln -s ${f}.%tbver %buildroot/%nv_lib_dir/$f
+done
 /sbin/ldconfig -n %buildroot/%nv_lib_dir
 
 %__install -m 0644 nvidia-application-profiles-%version-rc \
@@ -381,6 +387,9 @@ fi
 %endif
 
 %changelog
+* Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt302
+- package libs with version in filenames
+
 * Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt301
 - drop requires to libnvcuvid
 
