@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    mdbook
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Create modern online books from Markdown files
@@ -49,14 +49,7 @@ This package contains its user guide.
 %patch -p1
 tar -xf %SOURCE1
 
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -81,6 +74,9 @@ target/release/mdbook completions bash \
 %doc guide/book
 
 %changelog
+* Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 0.5.2-alt1
 - 0.5.2
 
