@@ -1,6 +1,6 @@
 Name: whdd
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Diagnostic and recovery tool for block devices
 License: GPL-3
@@ -40,6 +40,10 @@ WHDD может работать с жёстким диском на низко�
 %patch1 -p1
 %endif
 
+cat >> VERSION <<EOF
+%version-%release
+EOF
+
 %build
 %make_build
 
@@ -52,6 +56,9 @@ WHDD может работать с жёстким диском на низко�
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Wed May 20 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.1-alt2
+- Added product version output (Closes: #58920)
+
 * Fri Jul 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.1-alt1
 - new version whdd 3.1
 
