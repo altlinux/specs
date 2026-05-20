@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.14
+Release: alt0.15
 Epoch: 1
 Url: https://altsp.su
 
@@ -377,6 +377,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed May 20 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.15
+- os-release: add VARIANT_ID, update BUILD_ID (add LKNV).
+- indexhtml: add LKNV VERSION to title.
+- notes: add LKNV.
+
 * Fri May 01 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.14
 - browser-qt: update from ALT Workstation.
 
