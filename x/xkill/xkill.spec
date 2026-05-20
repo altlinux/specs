@@ -1,6 +1,6 @@
 Name: xkill
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: kill a client by its X resource
 License: X11
@@ -49,6 +49,9 @@ tar -xf %SOURCE2 -C %buildroot%_iconsdir/
 %_man1dir/*
 
 %changelog
+* Thu May 07 2026 Fedor Moseichuck <phobos@altlinux.org> 1.0.6-alt2
+- hide from Plasma Wayland session by KDE-specific way
+
 * Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
