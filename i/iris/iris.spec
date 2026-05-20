@@ -2,7 +2,7 @@
 %define app_id space.x1z53.iris
 
 Name: iris
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: GTK client for Yummy Anime
@@ -11,7 +11,8 @@ Group: Video
 
 URL: https://altlinux.space/alt-gnome/iris
 VCS: https://altlinux.space/alt-gnome/iris
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: libcassette-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -21,6 +22,8 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libapi-base-7)
 BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: gobject-introspection-devel
+BuildRequires: gir(Adw) = 1
 
 Requires: libwebp-pixbuf-loader
 
@@ -31,7 +34,7 @@ Obsoletes: yummy-anime-gtk < %EVR
 %summary.
 
 %prep
-%setup
+%setup -a1
 
 %build
 %meson
@@ -49,8 +52,23 @@ Obsoletes: yummy-anime-gtk < %EVR
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
+%_datadir/glib-2.0/schemas/space.x1z53.iris.gschema.xml
 
 %changelog
+* Tue May 19 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4-alt1
+- Update to 0.2.4:
+  + fixed memory leaks
+  + implemented image caching
+  + added additional mirrors that change automatically.
+  + added display switching between grid and list
+  + added score display and the ability to rate titles
+  + added a download spinner and a placeholder for images
+  + changed the display of the poster to display as a list
+  + added an authorization dialog for actions that require it.
+  + added the "Recommendations" and "Schedule" sections on the main page
+  + changed default window size to 800x600
+  + fixed incorrect behavior of elements in comments
+
 * Sun Mar 29 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.3-alt1
 - Update to 0.2.3:
   + add delete button for own comment
