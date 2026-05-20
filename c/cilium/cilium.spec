@@ -3,14 +3,14 @@
 
 Name:    cilium
 Version: 1.19.3
-Release: alt1
+Release: alt2
 
 Summary: eBPF-based Networking, Security, and Observability
 License: Apache-2.0
 Group:   System/Configuration/Networking
 Url:     https://github.com/cilium/cilium
 
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 Source: %name-%version.tar
 
 #add skip require, it's present within the project
@@ -152,6 +152,9 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_localstatedir/%name/etcd-config.yaml
 
 %changelog
+* Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt2
+- NMU: Build on loongarch64.
+
 * Thu Apr 23 2026 Nadezhda Fedorova <fedor@altlinux.org> 1.19.3-alt1
 - 1.18.2 -> 1.19.3
 
