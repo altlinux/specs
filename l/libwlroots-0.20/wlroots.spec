@@ -2,7 +2,7 @@
 %define soversion 0.20
 
 Name: lib%_name-%soversion
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -82,14 +82,11 @@ This package provides development files for libwlroots library.
 
 %build
 %meson \
-  "-Dbackends=[
-    'drm',
-	'libinput',
-    'x11',
-  ]" \
-  -Dxwayland=enabled \
-  -Dxcb-errors=enabled
-
+    "-Dbackends=[
+    'drm', 'libinput', 'x11',]" \
+    -Dxwayland=enabled \
+    -Dxcb-errors=enabled
+%nil
 %meson_build
 
 %install
@@ -107,6 +104,9 @@ This package provides development files for libwlroots library.
 %_pkgconfigdir/wlroots-%soversion.pc
 
 %changelog
+* Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
+- 0.20.1
+
 * Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
