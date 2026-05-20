@@ -18,17 +18,18 @@
 %define soname 5
 
 Name: ddcutil
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1
 
 Summary: Utility to query and update monitor settings
 Group: System/Configuration/Hardware
 License: GPL-2.0-or-later
 Url: http://github.com/rockowitz/%name
-
 Vcs: http://github.com/rockowitz/ddcutil
 
-Source: %url/archive/v%version/%name-%version.tar.gz
+Requires: i2c-tools
+
+Source: %url/archive/v%version/%name-%version.tar
 
 BuildRequires: libi2c-devel i2c-tools
 BuildRequires: pkgconfig(glib-2.0)
@@ -40,6 +41,9 @@ BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(libacl)
+BuildRequires: pkgconfig(dbus-1)
 
 %description
 ddcutil communicates with monitors implementing MCCS (Monitor Control Command
@@ -121,6 +125,9 @@ installed_modulesdir=%_modulesloaddir
 # TODO: python subpackage?
 
 %changelog
+* Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 2.2.7-alt1
+- 2.2.7 (closes: 59246)
+
 * Wed Mar 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.6-alt1
 - 2.2.6
 
