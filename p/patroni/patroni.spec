@@ -1,6 +1,6 @@
 Name:    patroni
 Version: 4.1.3
-Release: alt1
+Release: alt2
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
 License: MIT
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 # https://salsa.debian.org/postgresql/patroni.git
 Patch0: patroni-4.0.4-debian-avoid-overwriting-configuration-during-boostrap.patch
 Patch1: patroni-4.0.4-debian-startup-scripts.patch
+Patch2: patroni-fix-service-type.patch
 
 # From requirements.txt
 Requires: python3-module-urllib3 >= 1.19.1
@@ -71,6 +72,9 @@ install -D /dev/null %buildroot%_sysconfdir/patroni/env.conf
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed May 20 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.3-alt2
+- Set service type to simple.
+
 * Tue May 05 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.3-alt1
 - New version.
 
