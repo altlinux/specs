@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.7.2
-Release: alt2.1
+Version: 6.7.3
+Release: alt1
 
 Summary: Django admin CKEditor integration
 License: BSD-3-Clause
@@ -56,10 +56,16 @@ rm -rf %buildroot%python3_sitelibdir/%mod_name-%version/docs
 
 %files
 %doc *.rst LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name
+%python3_sitelibdir/ckeditor_uploader
+%python3_sitelibdir/ckeditor_demo
+%python3_sitelibdir/django_ckeditor-%version.dist-info
 
 
 %changelog
+* Wed May 20 2026 Anton Vyatkin <toni@altlinux.org> 6.7.3-alt1
+- New version 6.7.3.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 6.7.2-alt2.1
 - Demodernized packaging.
 
