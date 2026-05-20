@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 150.0.3
+Version: 151.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -34,10 +34,8 @@ Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch003: 0003-bmo-847568-Support-system-harfbuzz.patch
 Patch004: 0004-bmo-847568-Support-system-graphite2.patch
 Patch005: 0005-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch006: 0006-ALT-fix-double_t-redefinition.patch
-Patch007: 0007-build-Disable-Werror.patch
-Patch008: 0008-Add-dbus-cflags.patch
-Patch009: 0009-MOZ-bug-2033279-encoding_rs-Rust-1.95.patch
+Patch006: 0006-build-Disable-Werror.patch
+Patch007: 0007-Add-dbus-cflags.patch
 ### End Patches
 
 Provides: webclient
@@ -389,6 +387,41 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed May 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-8945: Sandbox escape in Firefox and Firefox Focus for Android
+  + CVE-2026-8946: Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-8947: Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-8948: Same-origin policy bypass in the DOM: Networking component
+  + CVE-2026-8949: Integer overflow in the Widget: Win32 component
+  + CVE-2026-8950: Same-origin policy bypass in the Networking: HTTP component
+  + CVE-2026-8951: Spoofing issue in the Toolbar component in Firefox for Android
+  + CVE-2026-8952: Privilege escalation in the Application Update component
+  + CVE-2026-8953: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-8954: Incorrect boundary conditions, integer overflow in the Audio/Video component
+  + CVE-2026-8955: Privilege escalation in the DOM: Workers component
+  + CVE-2026-8956: Integer overflow in the Networking: JAR component
+  + CVE-2026-8957: Privilege escalation in the Enterprise Policies component
+  + CVE-2026-8958: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-8959: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-8960: Spoofing issue in WebExtensions
+  + CVE-2026-8961: Spoofing issue in the Form Autofill component
+  + CVE-2026-8962: Mitigation bypass in the DOM: Security component
+  + CVE-2026-8963: Spoofing issue in the Web Speech component
+  + CVE-2026-8964: Spoofing issue in the Popup Blocker component
+  + CVE-2026-8965: Information disclosure in the DOM: Security component
+  + CVE-2026-8966: Information disclosure in the IP Protection component
+  + CVE-2026-8967: Information disclosure in the Graphics: WebGPU component
+  + CVE-2026-8968: Denial-of-service due to invalid pointer in the Audio/Video: Web Codecs component
+  + CVE-2026-8969: Mitigation bypass in the DOM: Security component
+  + CVE-2026-8970: Privilege escalation in the Security component
+  + CVE-2026-8971: Same-origin policy bypass in the Networking: JAR component
+  + CVE-2026-8972: Privilege escalation in the WebRTC: Audio/Video component
+  + CVE-2026-8973: Memory safety bugs fixed in Firefox 151
+  + CVE-2026-8974: Memory safety bugs fixed in Firefox ESR 140.11 and Firefox 151
+  + CVE-2026-8975: Memory safety bugs fixed in Firefox ESR 115.36, Firefox ESR 140.11 and Firefox 151
+
 * Thu May 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.3-alt1
 - New version.
 - Fixes:
