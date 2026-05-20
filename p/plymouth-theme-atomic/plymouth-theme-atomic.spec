@@ -5,7 +5,7 @@
 %define theme_name atomic
 
 Name: plymouth-theme-%theme_name
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Plymouth theme with Atomic animataed logo
@@ -42,5 +42,9 @@ BuildArch: noarch
 %doc README.md
 
 %changelog
+* Thu May 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
+- New version: 0.2.
+- Fixed logo for ultra-wide resolutions.
+
 * Mon Sep 15 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1-alt1
 - Initial build.
