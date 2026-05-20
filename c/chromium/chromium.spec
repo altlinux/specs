@@ -27,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        148.0.7778.167
+Version:        148.0.7778.178
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -723,10 +723,93 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed May 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.178-alt1
+- New version (148.0.7778.178).
+
 * Wed May 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.167-alt1
 - New version (148.0.7778.167).
 - Disable Glic ("Gemini Live in Chrome"), ScreenAI, and associated AI-based
   features.
+- Fixes:
+  + CVE-2026-8509: Heap buffer overflow in WebML
+  + CVE-2026-8510: Integer overflow in Skia
+  + CVE-2026-8511: Use after free in UI
+  + CVE-2026-8512: Use after free in FileSystem
+  + CVE-2026-8513: Use after free in Input
+  + CVE-2026-8514: Use after free in Aura
+  + CVE-2026-8515: Use after free in HID
+  + CVE-2026-8516: Insufficient validation of untrusted input in DataTransfer
+  + CVE-2026-8517: Object lifecycle issue in WebShare
+  + CVE-2026-8518: Use after free in Blink
+  + CVE-2026-8519: Integer overflow in ANGLE
+  + CVE-2026-8520: Race in Payments
+  + CVE-2026-8521: Use after free in Tab Groups
+  + CVE-2026-8522: Use after free in Downloads
+  + CVE-2026-8523: Use after free in Mojo
+  + CVE-2026-8558: Out of bounds write in Fonts
+  + CVE-2026-8524: Out of bounds write in WebAudio
+  + CVE-2026-8525: Heap buffer overflow in ANGLE
+  + CVE-2026-8526: Out of bounds write in WebRTC
+  + CVE-2026-8527: Insufficient validation of untrusted input in Downloads
+  + CVE-2026-8528: Insufficient validation of untrusted input in SiteIsolation
+  + CVE-2026-8529: Heap buffer overflow in Codecs
+  + CVE-2026-8530: Use after free in Network
+  + CVE-2026-8531: Heap buffer overflow in WebML
+  + CVE-2026-8532: Integer overflow in XML
+  + CVE-2026-8533: Use after free in Accessibility
+  + CVE-2026-8534: Integer overflow in GPU
+  + CVE-2026-8535: Out of bounds read in Media
+  + CVE-2026-8536: Insufficient validation of untrusted input in ReadingMode
+  + CVE-2026-8537: Insufficient policy enforcement in ViewTransitions
+  + CVE-2026-8538: Insufficient validation of untrusted input in GPU
+  + CVE-2026-8539: Script injection in SanitizerAPI
+  + CVE-2026-8540: Type Confusion in V8
+  + CVE-2026-8541: Out of bounds read in UI
+  + CVE-2026-8542: Use after free in Core
+  + CVE-2026-8543: Out of bounds read in FileSystem
+  + CVE-2026-8544: Use after free in Media
+  + CVE-2026-8545: Object corruption in Compositing
+  + CVE-2026-8546: Out of bounds read in GPU
+  + CVE-2026-8547: Insufficient policy enforcement in Passwords
+  + CVE-2026-8548: Out of bounds write in Media
+  + CVE-2026-8549: Use after free in Media
+  + CVE-2026-8550: Use after free in Google Lens
+  + CVE-2026-8551: Use after free in Downloads
+  + CVE-2026-8552: Heap buffer overflow in GPU
+  + CVE-2026-8553: Use after free in GPU
+  + CVE-2026-8554: Type Confusion in ANGLE
+  + CVE-2026-8555: Use after free in GTK
+  + CVE-2026-8556: Inappropriate implementation in ANGLE
+  + CVE-2026-8557: Use after free in Accessibility
+  + CVE-2026-8559: Integer overflow in Internationalization
+  + CVE-2026-8560: Heap buffer overflow in SwiftShader
+  + CVE-2026-8561: Incorrect security UI in Fullscreen
+  + CVE-2026-8562: Side-channel information leakage in Navigation
+  + CVE-2026-8563: Insufficient policy enforcement in IFrame Sandbox
+  + CVE-2026-8564: Incorrect security UI in Downloads
+  + CVE-2026-8565: Inappropriate implementation in Downloads
+  + CVE-2026-8566: Insufficient policy enforcement in Payments
+  + CVE-2026-8567: Integer overflow in ANGLE
+  + CVE-2026-8568: Insufficient policy enforcement in AI
+  + CVE-2026-8569: Out of bounds write in Codecs
+  + CVE-2026-8570: Type Confusion in V8
+  + CVE-2026-8571: Insufficient policy enforcement in GPU
+  + CVE-2026-8572: Insufficient policy enforcement in Network
+  + CVE-2026-8573: Integer overflow in Codecs
+  + CVE-2026-8574: Use after free in Core
+  + CVE-2026-8575: Use after free in UI
+  + CVE-2026-8576: Inappropriate implementation in CORS
+  + CVE-2026-8577: Integer overflow in Fonts
+  + CVE-2026-8578: Out of bounds read in GPU
+  + CVE-2026-8579: Insufficient validation of untrusted input in Skia
+  + CVE-2026-8580: Use after free in Mojo
+  + CVE-2026-8581: Use after free in GPU
+  + CVE-2026-8582: Object lifecycle issue in Dawn
+  + CVE-2026-8583: Insufficient policy enforcement in WebXR
+  + CVE-2026-8584: Inappropriate implementation in Views
+  + CVE-2026-8585: Inappropriate implementation in Media
+  + CVE-2026-8586: Inappropriate implementation in Chromoting
+  + CVE-2026-8587: Use after free in Extensions
 
 * Wed May 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.96-alt1
 - New version (148.0.7778.96).
