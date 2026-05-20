@@ -7,7 +7,7 @@
 
 Name: openssl1.1
 Version: 1.1.1w
-Release: alt3
+Release: alt4
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -29,6 +29,14 @@ Patch502: openssl-CVE-2024-2511.patch
 Patch503: openssl-CVE-2024-4741.patch
 Patch504: openssl-CVE-2024-5535.patch
 Patch505: openssl-CVE-2024-9143.patch
+Patch506: openssl-CVE-2024-13176.patch
+Patch507: openssl-CVE-2025-9230.patch
+Patch508: openssl-CVE-2025-68160.patch
+Patch509: openssl-CVE-2025-69418.patch
+Patch510: openssl-CVE-2025-69419.patch
+Patch511: openssl-CVE-2025-69420.patch
+Patch512: openssl-CVE-2025-69421.patch
+Patch513: openssl-CVE-2026-22795-CVE-2026-22796.patch
 
 Patch01: openssl-upstream-branch-updates.patch
 Patch03: openssl-alt-config.patch
@@ -239,6 +247,14 @@ on the command line.
 %patch503 -p1
 %patch504 -p1
 %patch505 -p1
+%patch506 -p1
+%patch507 -p1
+%patch508 -p1
+%patch509 -p1
+%patch510 -p1
+%patch511 -p1
+%patch512 -p1
+%patch513 -p1
 
 # ALT patches
 %patch01 -p1
@@ -498,6 +514,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Wed May 20 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt4
+- Backported upstream security fixes (fixes CVE-2024-13176, CVE-2025-68160,
+  CVE-2025-69418, CVE-2025-69419, CVE-2025-69420, CVE-2025-69421, CVE-2025-9230,
+  CVE-2026-22795, CVE-2026-22796).
+
 * Thu Dec 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt3
 - Moved openssl.cnf to a separate package (openssl-config).
 
