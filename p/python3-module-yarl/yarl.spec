@@ -1,5 +1,5 @@
 Name: python3-module-yarl
-Version: 1.23.0
+Version: 1.24.2
 Release: alt1
 
 Summary: Yet another URL library
@@ -45,6 +45,9 @@ export YARL_NO_EXTENSIONS=1
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Wed May 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.24.2-alt1
+- 1.24.2 released
+
 * Thu Feb 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.23.0-alt1
 - 1.23.0 released
 
