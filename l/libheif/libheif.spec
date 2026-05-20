@@ -1,6 +1,6 @@
 Name: libheif
-Version: 1.21.2
-Release: alt2
+Version: 1.22.0
+Release: alt1
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -14,7 +14,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires: cmake ctest gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libgdk-pixbuf-devel libaom-devel
 BuildRequires: libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel libx265-devel
-BuildRequires: libaom-tools libx264-devel zlib-devel
+BuildRequires: libaom-tools libx264-devel zlib-devel libwebp-devel
 %ifnarch %e2k
 BuildRequires: librav1e-devel libdav1d-devel
 %endif
@@ -60,11 +60,12 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 	-DWITH_LIBDE265_PLUGIN=ON \
 	-DWITH_LIBSHARPYUV=ON \
 	-DWITH_OpenJPEG_DECODER=ON \
-	-DWITH_OpenJPEG_DECODER_PLUGIN=ON \
+	-DWITH_OpenJPEG_DECODER_PLUGIN=OFF \
 	-DWITH_OpenJPEG_ENCODER=ON \
 	-DWITH_OpenJPEG_ENCODER_PLUGIN=ON \
 	-DWITH_SvtEnc=ON \
-	-DWITH_SvtEnc_PLUGIN=ON
+	-DWITH_SvtEnc_PLUGIN=ON \
+	-DWITH_LIBSHARPYUV=ON
 
 %cmake_build
 
@@ -89,6 +90,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed May 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt1
+- 1.22.0
+
 * Tue Apr 28 2026 Anton Farygin <rider@altlinux.org> 1.21.2-alt2
 - fixed build with SVT-AV1 4.0.0
 

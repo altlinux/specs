@@ -1,5 +1,5 @@
 Name: libde265
-Version: 1.0.16
+Version: 1.0.19
 Release: alt1
 Summary: Open H.265 video codec implementation
 License: LGPLv3
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++
+BuildRequires: cmake gcc-c++
 
 %description
 libde265 is an open source implementation of the H.265 video codec.
@@ -29,16 +29,14 @@ Development libraries for %name
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-dec265 \
-	--disable-sherlock265 \
-	--disable-static
+%cmake \
+	-DENABLE_SHERLOCK265=off \
+	-DENABLE_DECODER=off
 
-%make_build
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmake_install
 
 %files
 %_libdir/%name.so.*
@@ -47,8 +45,12 @@ Development libraries for %name
 %_includedir/%name
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_libdir/cmake/%name
 
 %changelog
+* Wed May 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.0.19-alt1
+- 1.0.19
+
 * Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.0.16-alt1
 - 1.0.16
 
