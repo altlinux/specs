@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 8681
+Version: 9245
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -48,6 +48,7 @@ BuildRequires: nvidia-cuda-devel-static
 %if_with vulkan
 BuildRequires: glslc
 BuildRequires: libvulkan-devel
+BuildRequires: spirv-headers
 %endif
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: ctest
@@ -148,6 +149,8 @@ sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' tools/mtmd/CMakeL
 perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
 # This test requires GPU.
 sed /test-thread-safety/d -i tests/CMakeLists.txt
+# MTP test is not runnable w/o CUDA.
+sed /test-recurrent-state-rollback/d -i tests/CMakeLists.txt
 
 %build
 %define optflags_debug -g1
@@ -161,6 +164,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DGGML_BACKEND_DIR=%_libexecdir/llama \
 	-DGGML_CPU=ON \
 	-DGGML_RPC=ON \
+	-DLLAMA_USE_PREBUILT_UI=OFF \
 %ifarch x86_64
 	-DGGML_CPU_ALL_VARIANTS=ON \
 %endif
@@ -210,13 +214,13 @@ llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
-# We do not provide convert tools.
-mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 
 %files
 
 %files -n libllama
 %_libdir/libllama.so.0.0.%version
+%_libdir/libllama-common.so.0
+%_libdir/libllama-common.so.0.0.%version
 %_libdir/libggml.so.0
 %_libdir/libggml.so.0.*
 %_libdir/libggml-base.so.0
@@ -225,6 +229,7 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 
 %files -n libllama-devel
 %_libdir/libllama.so
+%_libdir/libllama-common.so
 %_libdir/libggml.so
 %_libdir/libggml-base.so
 %_libdir/libmtmd.so
@@ -265,6 +270,9 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Wed May 20 2026 Vitaly Chikunov <vt@altlinux.org> 1:9245-alt1
+- Update to b9245 (2026-05-20).
+
 * Mon Apr 06 2026 Vitaly Chikunov <vt@altlinux.org> 1:8681-alt1
 - Update to b8681 (2026-04-06).
 
