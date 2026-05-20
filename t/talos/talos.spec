@@ -15,7 +15,7 @@
 
 Name: talos
 Version: 1.12.7
-Release: alt4
+Release: alt5
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -27,7 +27,7 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.24.0
@@ -209,6 +209,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.12.7-alt5
+- NMU: Build for loongarch64.
+
 * Mon May 18 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.7-alt4
 - Add new splash image.
 - Use LatestDistroTag for DefaultImage helper.
