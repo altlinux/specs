@@ -3,10 +3,10 @@
 
 Name: gnome-games-solitaire
 Version: 50.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME Solitaire game
-License: LGPL-3.0-only
+License: GPL-3.0-or-later and LGPL-3.0-only
 Group: Games/Boards
 
 Url: https://gitlab.gnome.org/wwarner/Solitaire
@@ -58,6 +58,9 @@ EOF
 %_datadir/%oname
 
 %changelog
+* Thu May 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.1-alt2
+- updated license
+
 * Wed May 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.1-alt1
 - Initial build for ALT Linux.
 
