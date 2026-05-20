@@ -9,7 +9,7 @@
 %endif
 
 Name: suricata
-Version: 8.0.4
+Version: 8.0.5
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -148,6 +148,12 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Wed May 20 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.5-alt1
+- 8.0.5 (fixes: CVE-2026-45764, CVE-2026-45766, CVE-2026-45769, CVE-2026-45768,
+  CVE-2026-46387, CVE-2026-45759, CVE-2026-45762, CVE-2026-45765,
+  CVE-2026-45747, CVE-2026-45770, CVE-2026-46352, CVE-2026-45767,
+  CVE-2026-45763, CVE-2026-45751, CVE-2026-45752, CVE-2026-45761)
+
 * Wed Mar 18 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.4-alt1
 - 8.0.4 (fixes: CVE-2026-31935, CVE-2026-31934, CVE-2026-31931, CVE-2026-31933,
   CVE-2026-31932, CVE-2026-31937).
