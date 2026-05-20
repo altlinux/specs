@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    robotlb
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Hetzner LoadBalancer for bare-metal robot clusters
@@ -12,6 +12,7 @@ Url:     https://github.com/Intreecom/robotlb
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
+BuildRequires(pre): rpm-macros-rust
 BuildRequires(pre): rpm-build-rust
 BuildRequires: libssl-devel
 BuildRequires: libjemalloc-devel
@@ -23,17 +24,9 @@ BuildRequires: /proc
 %prep
 %setup
 %patch -p1
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
-# from Dockerfile
 export JEMALLOC_SYS_WITH_MALLOC_CONF="background_thread:true,tcache:false,dirty_decay_ms:100,muzzy_decay_ms:100,abort_conf:true"
 %rust_build
 
@@ -45,5 +38,8 @@ export JEMALLOC_SYS_WITH_MALLOC_CONF="background_thread:true,tcache:false,dirty_
 %_bindir/%name
 
 %changelog
+* Tue May 05 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.0.6-alt1
+- New version 0.0.6
+
 * Tue Mar 24 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.0.5-alt1
 - Initial build for ALT.
