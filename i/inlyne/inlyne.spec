@@ -1,5 +1,5 @@
 Name:    inlyne
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Introducing Inlyne, a GPU powered yet browserless tool to help you quickly view markdown files in the blink of an eye
@@ -62,6 +62,9 @@ install -Dm 644 completions/%name.fish %buildroot%_datadir/fish/vendor_completio
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed May 20 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.2-alt1
+- new version 0.5.2
+
 * Thu May 14 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.1-alt1
 - new version 0.5.1
 
