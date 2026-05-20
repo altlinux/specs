@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt301
+%define pkg_rel alt302
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -262,7 +262,7 @@ if [ -f nvidia_drv.so ] ; then
 fi
 
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
-%__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
+#%__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
 
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
@@ -281,6 +281,12 @@ install -m 0644 libnvidia-fbc.so.%version %buildroot/%nv_lib_dir/libnvidia-fbc.s
 %ifarch x86_64
 install -m 0644 libnvidia-glsi.so.%version %buildroot/%nv_lib_dir/libnvidia-glsi.so
 %endif
+for l in %buildroot/%nv_lib_dir/lib*.so ; do
+    f=`basename $l`
+    echo "$f" | grep -q "^libglx\." && continue ||:
+    mv $l %buildroot/%nv_lib_dir/${f}.%tbver
+    ln -s ${f}.%tbver %buildroot/%nv_lib_dir/$f
+done
 /sbin/ldconfig -n %buildroot/%nv_lib_dir
 
 %__install -m 0644 nvidia-application-profiles-%version-rc \
@@ -341,6 +347,9 @@ fi
 %endif
 
 %changelog
+* Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt302
+- package libs with version in filenames
+
 * Fri Apr 24 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt301
 - drop requires to libnvcuvid
 
