@@ -11,11 +11,11 @@
 %define flavour %brand-%theme
 %define flavour_core %flavour-core
 %define pname ALT Atomic
-%define bugtracker https://altlinux.space/alt-atomic/core/issue
+%define bugtracker https://altlinux.space/alt-atomic/core/issues
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-core
-Version: 20260312
+Version: 20260518
 Release: alt1
 
 Group: Graphics
@@ -78,9 +78,12 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20260518-alt1
+- Fixed bugtracker link.
+
 * Thu Mar 12 2026 Vladimir Romanov <rirusha@altlinux.org> 20260312-alt1
 - Cleaned requires.
-- Replace requires on pam-limits-desktop with pam-limits-off.
+- Replaced requires on pam-limits-desktop with pam-limits-off.
 
 * Thu Sep 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250925-alt1
 - Initial build.

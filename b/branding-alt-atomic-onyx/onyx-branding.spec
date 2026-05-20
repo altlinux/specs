@@ -11,11 +11,11 @@
 %define flavour %brand-%theme
 %define flavour_onyx %flavour-onyx
 %define pname ALT Atomic
-%define bugtracker https://altlinux.space/alt-atomic/onyx/issue
+%define bugtracker https://altlinux.space/alt-atomic/onyx/issues
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260401
+Version: 20260518
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -140,6 +140,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20260518-alt1
+- Fixed bugtracker link.
+
 * Wed Apr 01 2026 Vladimir Romanov <rirusha@altlinux.org> 20260401-alt1
 - Added requires on ptyxis in gnome-settings subpackage.
 - Added ExcludeArch for i586 (because of ptyxis).
