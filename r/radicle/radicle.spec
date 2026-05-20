@@ -1,11 +1,12 @@
 Name: radicle
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
 License: MIT Apache-2.0
 Group: Development/Other
-URL: https://radicle.xyz/
+URL: https://radicle.dev/
+VCS: https://seed.radicle.dev/z3gqcJUoA1n9HaHKufZs5FCSGazv5.git
 
 Requires: git-core
 
@@ -41,7 +42,7 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=d9915d275fd07d2
+export GIT_HEAD=10004025367e26a
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
@@ -73,6 +74,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Wed May 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.0-alt1
+- 1.9.0 released
+
 * Tue Mar 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt1
 - 1.8.0 released
 
