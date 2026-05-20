@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A native QR Code and barcode scanner application for Linux desktop
@@ -69,6 +69,9 @@ remote.
 %doc README.*
 
 %changelog
+* Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
+- 2.5.2
+
 * Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
