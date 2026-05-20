@@ -95,8 +95,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 26.0
-%define ver_minor 6
+%define ver_major 26.1
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -303,7 +303,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dvulkan-layers='device-select, overlay, screenshot' \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec, mpeg12dec, jpegdec' \
 %ifarch x86_64
-	-Dintel-rt=true \
+	-Dintel-rt=enabled \
 %endif
 %ifarch %radeon_arches
 	-Dllvm=enabled \
@@ -484,6 +484,12 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed May 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.1-alt1
+- 26.1.1
+
+* Thu May 07 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.0-alt1
+- 26.1.0
+
 * Wed May 06 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.0.6-alt1
 - 26.0.6
 
