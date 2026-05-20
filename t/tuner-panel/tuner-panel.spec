@@ -3,8 +3,8 @@
 %define app_id org.altlinux.TunerPanel
 
 Name: tuner-panel
-Version: 0.4.5
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: Panel mode switcher
 License: GPL-3.0-or-later
@@ -44,6 +44,9 @@ Plugin for Tuner that adds panel mode switcher to Tweaks appearance page.
 %doc README.md
 
 %changelog
+* Wed May 20 2026 Alexander Davydzik <paladindev@altlinux.org> 0.4.6-alt1
+- update translation to better reflect alt-panelmode's workings (Closes: 58956)
+
 * Fri Apr 17 2026 Alexander Davydzik <paladindev@altlinux.org> 0.4.5-alt2
 - updated links
 
