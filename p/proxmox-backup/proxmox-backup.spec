@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 4.2.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -246,6 +246,9 @@ fi
 %_datadir/doc/%name
 
 %changelog
+* Thu May 21 2026 Ivan A. Melnikov <iv@altlinux.org> 1:4.2.0.1-alt2
+- Fix FTBFS on loongarch64
+
 * Wed May 06 2026 Sergey Konev <darisishe@altlinux.org> 1:4.2.0.1-alt1
 - 4.2.0-1
 
