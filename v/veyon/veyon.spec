@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.10.2
-Release: alt2
+Release: alt3
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -21,7 +21,6 @@ Source7: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
 Source8: %name-%version-3rdparty-x11vnc.tar
 Source9: %name-%version-3rdparty-libvncserver-doc-doxygen-awesome-css.tar
 Source100: veyon-config-dm-login.sh
-Source11: for_translation_veyon_veyon_4_10_ru.ts
 Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
 Patch2: alt-fix-dm-login.patch
@@ -93,7 +92,6 @@ Veyon доступен на разных языках и предоставля�
 %prep
 %setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9
 %autopatch -p1
-cp %SOURCE11 translations/veyon_ru.ts
 
 # Fix: error: "_FORTIFY_SOURCE" redefined [-Werror]
 # _FORTIFY_SOURCE enabled by default
@@ -132,6 +130,10 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt3
+- List FreeIPA in the distinguished-name
+  group member option (Closes: 51651).
+
 * Sun Mar 29 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.2-alt2
 - Update translation.
 
