@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.32
+Version: 7.0.34
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -212,6 +212,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu May 21 2026 Alexei Takaseev <taf@altlinux.org> 7.0.34-alt1
+- 7.0.34 (Fixes: CVE-2026-8053, CVE-2026-8199, CVE-2026-8200, CVE-2026-8201,
+                 CVE-2026-8202, CVE-2026-8336, CVE-2026-8843)
+
 * Mon May 04 2026 Alexei Takaseev <taf@altlinux.org> 7.0.32-alt1
 - 7.0.32 (Fixes: CVE-2026-5170, CVE-2026-6914, CVE-2026-6915)
 
