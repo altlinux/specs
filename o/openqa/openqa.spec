@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt26.gitc1f288ff
+Release: alt27.gitc1f288ff
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -220,6 +220,9 @@ sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbi
 sed -i -e 's,"$(DESTDIR)"/etc/nginx/vhosts.d,"$(DESTDIR)"%_sysconfdir/nginx/sites-available.d,g' Makefile
 sed -i -e 's,vhosts.d/,sites-available.d/,g' etc/nginx/vhosts.d/openqa.conf.template
 sed -i -e 's|include vhosts\.d/|include sites-available\.d/|g' etc/nginx/vhosts.d/openqa-locations.inc
+sed -i '/server \[::1\]:9526 max_fails=0;/i\    server 127.0.0.1:9526 max_fails=0;' etc/nginx/vhosts.d/openqa-upstreams.inc
+sed -i '/server \[::1\]:9527;/i\    server 127.0.0.1:9527;' etc/nginx/vhosts.d/openqa-upstreams.inc
+sed -i '/server \[::1\]:9528;/i\    server 127.0.0.1:9528;' etc/nginx/vhosts.d/openqa-upstreams.inc
 #These services and files are not used.
 rm -rf systemd/openqa-vde_switch.service
 rm -rf systemd/openqa-slirpvde.service
@@ -548,6 +551,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Thu May 21 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt27.gitc1f288ff
+- Update addpseudouser.patch and nginx configuration
+- Commit hash: c1f288ff
+
 * Wed Mar 25 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt26.gitc1f288ff
 - update to current version
 - add missing openqa-cli.yaml to package (closes: 58245)
