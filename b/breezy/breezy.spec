@@ -5,7 +5,7 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.3.20
+Version: 3.3.22
 Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
@@ -32,6 +32,8 @@ BuilDrequires: python3-module-yaml
 BuildRequires: rust rust-cargo
 BuildRequires: python3(setuptools-gettext)
 BuildRequires: python3(semantic_version)
+BuildRequires: python3(vcsgraph)
+BuildRequires: python3(catalogus)
 
 %if_with check
 
@@ -172,6 +174,10 @@ install -m0644 man1/brz.1 %buildroot%_man1dir/
 %endif
 
 %changelog
+* Thu May 21 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.22-alt1
+- 3.3.22.
+- BR: added vcsgraph and catalogus.
+
 * Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.20-alt1
 - 3.3.20.
 
