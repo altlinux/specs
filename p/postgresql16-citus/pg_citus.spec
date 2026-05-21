@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-citus
-Version: 14.0.1
+Version: 14.1.0
 Release: alt1
 
 Summary: Citus is a PostgreSQL extension that transforms Postgres into a distributed database-so you can achieve high performance at any scale.
@@ -75,6 +75,9 @@ Header files for Citus
 %_includedir/pgsql/server/distributed/
 
 %changelog
+* Thu May 21 2026 Alexei Takaseev <taf@altlinux.org> 14.1.0-alt1
+- v14.1.0
+
 * Tue Apr 21 2026 Alexei Takaseev <taf@altlinux.org> 14.0.1-alt1
 - v14.0.1
 
