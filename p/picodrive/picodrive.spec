@@ -2,8 +2,8 @@
 
 Name: picodrive
 Summary: Megadrive / Genesis / Sega CD / Mega CD / 32X / SMS emulator
-Version: 1.99
-Release: alt2
+Version: 2.05
+Release: alt1
 License: ALT-Public-Domain
 Group: Emulators
 Source0: %{name}-%{version}.tar.xz
@@ -57,17 +57,17 @@ Sega CD games must be in the cue / iso format, and the audio tracks must be in W
 
 %prep
 %setup -q 
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 
 %build
- ./configure --platform=x86_64
+ ./configure --platform=generic
 make %{?_smp_mflags}
 
 %install
 %__rm -rf %{buildroot}
 install -d %{buildroot}%{_bindir}
-install -D -m755 PicoDrive  %{buildroot}%{_bindir}/%name
+install -D -m755 picodrive  %{buildroot}%{_bindir}/%name
 install -d -m 0755 %buildroot%_datadir/pixmaps
 install -d -m 0755 %buildroot%_datadir/skin
 cp $RPM_BUILD_DIR/%{name}-%{version}/skin/* %{buildroot}%{_datadir}/skin/
@@ -80,7 +80,7 @@ Type=Application
 Name=PicoDrive
 GenericName=picodrive
 Comment=%{summary}
-Exec=picodrive
+Exec=%name
 Icon=%{name}.png
 Categories=Game;X-MandrivaLinux-MoreApplications-Emulators;
 EOF
@@ -88,13 +88,17 @@ EOF
 
 %files
 %defattr(0755,root,root,0755)
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS COPYING ChangeLog README.md
 %_bindir/*
 %_datadir/pixmaps/*
 %_datadir/applications/*
 %_datadir/skin/*
 
 %changelog
+* Thu May 21 2026  Artyom Bystrov <arbars@altlinux.org> 2.05-alt1
+- Update to new version
+- x86_64 platform pathces is no needed anymore
+
 * Fri Mar 25 2022  Artyom Bystrov <arbars@altlinux.org> 1.99-alt2
 - Fix name of exec in desktop file
 
