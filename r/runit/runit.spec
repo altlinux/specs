@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 
 Name: runit
-Version: 2.2.0
+Version: 2.3.1
 Release: alt1
 
 Group: System/Configuration/Boot and Init
@@ -15,11 +16,18 @@ Source3: %name.watch
 Source4: upstream-signing-key.asc
 
 # Most of these patches are from the Debian package
-Patch1: runit-2.1.2-service-dir-alt.patch
-Patch4: 0004-src-Makefile-don-t-use-static-to-link-runit-runit-ini.diff
-Patch6: 0006-make-buildsystem-respect-CFLAGS.patch
-Patch7: 0007-move-communication-files.patch
-Patch8: 0008-emulate-sysv-runlevel-5.patch
+Patch1:  runit-2.3.1-service-dir-alt.patch
+Patch2:  runit-2.3.1-dont-strip-alt.patch
+Patch4:  0004-src-Makefile-don-t-use-static-to-link-runit-runit-ini.diff
+Patch6:  0006-make-buildsystem-respect-CFLAGS.patch
+Patch7:  0007-move-communication-files.patch
+Patch8:  0008-emulate-sysv-runlevel-5.patch
+Patch9:  0010-make-build-system-print-compilatio.patch
+Patch10:  0013-Shutdown-when-runit-init-receices-SIGPWR.patch
+Patch11: 0018-fix-resource-leaks-and-other-issues-as-reported-by-i.patch
+Patch12: 0019-Make-runsvdir-8-rescan-directory-on-SIGALARM.patch
+Patch13: 0020-Add-regression-test-for-forced-rescan-feature.patch
+Patch14: 0021-Make-pid1-forward-sigalarm-to-stage2-process.patch
 
 %description
 runit is a collection of tools to provide system-wide service supervision
@@ -38,6 +46,7 @@ system completely.  Complete init replacement needs to be done by hand.
 rm -fv doc/debian
 
 %build
+export CFLAGS="%optflags"
 package/compile
 
 %check
@@ -86,6 +95,11 @@ install -D -m0644 %SOURCE2 %buildroot%_sysconfdir/bash_completion.d/sv
 
 
 %changelog
+* Thu May 21 2026 Paul Wolneykien <manowar@altlinux.org> 2.3.1-alt1
+- Updated to 2.3.1.
+- Added some more Debian patches.
+- Fix: Do not strip the ELF files.
+
 * Mon Dec 09 2024 Paul Wolneykien <manowar@altlinux.org> 2.2.0-alt1
 - Updated to 2.2.0.
 
