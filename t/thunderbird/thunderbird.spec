@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 150.0.2
+Version: 151.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -36,12 +36,10 @@ Source999: watch
 Patch001: 0001-thunderbird-115-add-loongarch-support.patch
 Patch002: 0002-Disable-browser-option.patch
 Patch003: 0003-Fix-types-defination.patch
-Patch004: 0004-Fix-wrong-redefinition-of-double_t-on-i586.patch
-Patch005: 0005-Correction-of-the-Russian-translation.patch
-Patch006: 0006-ALT-stop-putting-commonDialogs.properties-into-share.patch
-Patch007: 0007-Fix-OTR-query-message-split-on-newline.patch
-Patch008: 0008-Fix-tasks-context-menu-broken-disabled-state-after-b.patch
-Patch009: 0009-Fix-FTBFS-import-core-simd-Select-for-encoding_rs-un.patch
+Patch004: 0004-Correction-of-the-Russian-translation.patch
+Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
+Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
+Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
 ### End Patches
 
 Provides: mailclient
@@ -174,12 +172,10 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
-%patch5 -p1
+%patch4 -p1
+%patch5 -p2
 %patch6 -p2
 %patch7 -p2
-%patch8 -p2
-%patch9 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -368,6 +364,39 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed May 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-8946: Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-8947: Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-8948: Same-origin policy bypass in the DOM: Networking component
+  + CVE-2026-8949: Integer overflow in the Widget: Win32 component
+  + CVE-2026-8950: Same-origin policy bypass in the Networking: HTTP component
+  + CVE-2026-8952: Privilege escalation in the Application Update component
+  + CVE-2026-8953: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-8954: Incorrect boundary conditions, integer overflow in the Audio/Video component
+  + CVE-2026-8955: Privilege escalation in the DOM: Workers component
+  + CVE-2026-8956: Integer overflow in the Networking: JAR component
+  + CVE-2026-8957: Privilege escalation in the Enterprise Policies component
+  + CVE-2026-8958: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-8959: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-8960: Spoofing issue in WebExtensions
+  + CVE-2026-8961: Spoofing issue in the Form Autofill component
+  + CVE-2026-8962: Mitigation bypass in the DOM: Security component
+  + CVE-2026-8963: Spoofing issue in the Web Speech component
+  + CVE-2026-8964: Spoofing issue in the Popup Blocker component
+  + CVE-2026-8965: Information disclosure in the DOM: Security component
+  + CVE-2026-8966: Information disclosure in the IP Protection component
+  + CVE-2026-8967: Information disclosure in the Graphics: WebGPU component
+  + CVE-2026-8968: Denial-of-service due to invalid pointer in the Audio/Video: Web Codecs component
+  + CVE-2026-8969: Mitigation bypass in the DOM: Security component
+  + CVE-2026-8970: Privilege escalation in the Security component
+  + CVE-2026-8971: Same-origin policy bypass in the Networking: JAR component
+  + CVE-2026-8972: Privilege escalation in the WebRTC: Audio/Video component
+  + CVE-2026-8973: Memory safety bugs fixed in Thunderbird 151
+  + CVE-2026-8974: Memory safety bugs fixed in Thunderbird 140.11 and Thunderbird 151
+  + CVE-2026-8975: Memory safety bugs fixed in Thunderbird 140.11 and Thunderbird 151
+
 * Mon May 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 150.0.2-alt1
 - New version.
 - Fixes:
