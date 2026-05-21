@@ -1,68 +1,93 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    freespeech
-Version: r1.0m.21
-Release: alt2
-
+Version: 2.0.0
+Release: alt1
+Epoch: 1
 Summary: English text preprocessor for MBROLA speech synthesizer
 License: GPL
-Group:   Other
-Url:     https://github.com/poretsky/freespeech
-VCS:     https://github.com/poretsky/freespeech.git
+Group: Other
+Url: https://github.com/poretsky/freespeech
+VCS: https://github.com/poretsky/freespeech.git
 
 Source: %name-%version.tar
-
-# debian patches
-Patch000: 0001-Typo-fix.patch
-Patch001: 0002-Corrected-path-to-the-perl-interpreter.patch
-Patch002: 0003-C-library-regexp-support.patch
-Patch003: 0004-Berkeley-DB-instead-of-GDBM.patch
-Patch004: 0005-New-lexical-database-holding-utility.patch
-Patch005: 0006-Dictionary-enhancement.patch
-Patch006: 0007-Freephone-compilation.patch
-Patch007: 0008-Exclude-unused-code.patch
-Patch008: 0009-Minor-freephone-fixes.patch
-Patch009: 0010-Segmentation-fault-fix.patch
-Patch010: 0011-Memory-allocation-fix.patch
-Patch011: 0012-Numeric-values-pronunciation-fix.patch
-Patch012: 0013-Speak-leading-zeros-in-numbers.patch
-Patch013: 0014-General-Makefile.patch
-Patch014: 0015-Freed-memory-pointer-usage-fix.patch
-Patch015: hardening
+Patch: Fixed-include-pathes.patch
 
 BuildRequires: libgdbm-devel
-BuildRequires: perl
-BuildRequires: libdb6.1-devel
+BuildRequires: perl-devel
 
 %description
 %name generates phonetic data used as input for speech synthesizers.
 Usually it is used as a preprocessor for Mbrola where
 freephone converts English text to phonemes.
 
+%package -n enlex-data
+Summary: English pronunciation dictionary
+Group: Other
+Requires: freephone = %EVR
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n enlex-data
+This package is aimed primarily for use together with the Freephone
+ phonetizer for Mbrola. When it is installed you can instruct Freephone
+ to use the pronunciation dictionary by the command line switch
+
+%package -n freephone
+Summary: English Text-To-Phoneme converter
+Group: Other
+
+%description -n freephone
+freephone converts English text to phonemes for MBROLA.
+
+ It can make use of an external dictionary in hash format,
+ such as the one provided by enlex-data package.
+
+%package doc
+Summary: Doc files fore %name
+Group: Documentation 
+BuildArch: noarch
+
+%description doc
+%summary
+
 %prep
 %setup
 %autopatch -p1
 
 %build
-%make_build
+%add_optflags -std=gnu14
+%make_build LIBS=-lgdbm_compat -C lib
 
 %install
 %makeinstall_std
 
 # installing debian man pages
 install -d %buildroot%_man1dir
-install -m644 debian/freephone.1 debian/lexholder-en.1 %buildroot%_man1dir/
 
-%files
-%doc *.md
+%files doc
+%doc ACKNOWLEDGEMENTS Copying INSTALLATION README README.md
+%_man1dir/*
+%_docdir/enlex-data
+
+%files -n freephone
 %_bindir/freephone
 %_bindir/lexholder-en
-%_man1dir/*
-%dir %_datadir/freespeech
-%_datadir/freespeech/enlex.db
-%_datadir/doc/enlex-data
+
+%files -n enlex-data
+%_datadir/freespeech/enlex.dir
+%_datadir/freespeech/enlex.pag
 
 %changelog
+* Tue May 19 2026 Artem Semenov <savoptik@altlinux.org> 1:2.0.0-alt1
+- Updated to new version 2.0.0
+- Removed debian patches
+- Transition to GDBM (thx Igor B. Poretsky)
+- Hardening (thx Samuel Thibault)
+- Fixed man pages (thx Igor B. Poretsky)
+- Added missed license info (thx Igor B. Poretsky)
+- Add and update links (thx Nikita Tseykovets)
+
 * Wed May 13 2026 Artem Semenov <savoptik@altlinux.org> r1.0m.21-alt2
 - Applied debian patches
 
