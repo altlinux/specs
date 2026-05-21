@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Ctypes-based simple MagickWand API binding for Python
@@ -35,7 +35,7 @@ Requires: ImageMagick-lib >= 7.1
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(wheel) python3(setuptools)
 BuildRequires: libImageMagick-devel
-%{?_enable_check:BuildRequires: python3(pytest)}
+%{?_enable_check:BuildRequires: /proc python3(pytest)}
 
 %description
 Wand is a ctypes-based simple ImageMagick binding for Python, supporting
@@ -63,6 +63,9 @@ sed -i -e 's/^\(VERSION_INFO[ \t]*=\).*/\1%version_tuple/' wand/version.py
 %doc README*
 
 %changelog
+* Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
