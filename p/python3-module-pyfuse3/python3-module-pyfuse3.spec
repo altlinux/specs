@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.4.2
+Version: 3.5.0
 Release: alt1
 
 Summary: Python 3 bindings for libfuse 3 with async I/O support
@@ -13,7 +13,8 @@ Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/libfuse/pyfuse3.git
 
-Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+#Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://github.com/libfuse/pyfuse3/releases/download/v%version/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(fuse3)
@@ -37,8 +38,7 @@ easily write a full-featured Linux filesystem in Python.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -v -rs test/
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/%pypi_name/
@@ -46,6 +46,9 @@ py.test3 -v -rs test/
 %doc README* Changes.*
 
 %changelog
+* Thu May 21 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Wed Jan 07 2026 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
