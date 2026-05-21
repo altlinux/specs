@@ -1,6 +1,6 @@
 Name:    kafka
-Version: 4.2.0
-Release: alt4
+Version: 4.3.0
+Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -54,6 +54,9 @@ tar xf core/build/distributions/kafka_2.13-%version.tgz \
        -C %buildroot%_libexecdir/%name \
        --strip-components=1
 
+# Specify the CLASSPATH with explicit file names
+sed -i "/shopt -u nullglob/a CLASSPATH=$(find %buildroot%_libexecdir/%name/libs | sed 's|%buildroot||' | tr '\n' ':')" %buildroot%_libexecdir/%name/bin/kafka-run-class.sh
+
 # Move config to /etc
 mkdir -p %buildroot%_sysconfdir
 mv %buildroot%_libexecdir/%name/config %buildroot%_sysconfdir/%name
@@ -75,9 +78,12 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %preun_service %name.service
 
 %post
+if [ "$(getent passwd kafka | cut -f6 -d:)" = "/usr/kafka" ];then
+	# Fix user homedir
+	subst 's|/usr/kafka|/var/lib/kafka|' /etc/passwd
+fi
 # Generate meta.properties if needed
 if [ ! -e %_logdir/%name/meta.properties ]; then
-	usermod -d /var/lib/kafka kafka ||:
 	su - kafka -c '/usr/lib/kafka/bin/kafka-storage.sh format -t $(/usr/lib/kafka/bin/kafka-storage.sh random-uuid) -c /etc/kafka/server.properties --standalone'
 fi
 %post_service %name.service
@@ -94,6 +100,10 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu May 21 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+- Migrate from early versions.
+
 * Tue Apr 14 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt4
 - Used JAVA_HOME with OpenJDK 21 in kafka-run-class.sh (ALT #58054).
 
@@ -104,7 +114,7 @@ fi
 - Mentioned vulnerabilities (fixes: CVE-2025-48734, CVE-2025-58057,
   CVE-2025-48924, CVE-2026-24281, CVE-2026-24308, CVE-2024-29371,
   CVE-2025-67030, CVE-2024-6763, CVE-2025-11143, CVE-2025-12183,
-  CVE-2025-66566).
+  CVE-2025-66566, CVE-2026-33558, CVE-2026-33557, CVE-2026-35554).
 
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version.
