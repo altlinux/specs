@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 151.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -40,6 +40,7 @@ Patch004: 0004-Correction-of-the-Russian-translation.patch
 Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
 Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
+Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-hidden-by-window-deco.patch
 ### End Patches
 
 Provides: mailclient
@@ -176,6 +177,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
+%patch8 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -364,6 +366,10 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt2
+- Fix OpenPGP key wizard buttons being clipped off the window on
+  GNOME/Wayland when creating a new key pair (Closes: 59271).
+
 * Wed May 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt1
 - New version.
 - Fixes:
