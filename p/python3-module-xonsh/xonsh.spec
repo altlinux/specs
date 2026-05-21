@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.23.0
-Release: alt1
+Version: 0.23.7
+Release: alt1.14.g2791ce61
 
 Summary: Python-powered, cross-platform, Unix-gazing shell
 License: BSD-3-Clause
@@ -57,7 +57,9 @@ Xonsh (pronounced conch) is meant for the daily use of experts and novices alike
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vvvra --timeout=240
+# --reruns: this is necessary to avoid flaky tests failed with raise condition.
+# Link: https://github.com/xonsh/xonsh/issues/6456
+%pyproject_run_pytest -vvvra --timeout=240 --reruns 2
 
 %files
 %_bindir/xonsh*
@@ -67,6 +69,9 @@ Xonsh (pronounced conch) is meant for the daily use of experts and novices alike
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.23.7-alt1.14.g2791ce61
+- New version.
+
 * Tue Apr 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.23.0-alt1
 - New version.
 
