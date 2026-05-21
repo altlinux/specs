@@ -2,7 +2,7 @@
 
 Name: maven-war-plugin
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Apache Maven WAR Plugin
 License: Apache-2.0
@@ -30,7 +30,7 @@ BuildRequires: apache-commons-io
 BuildRequires: plexus-archiver
 BuildRequires: plexus-interpolation
 BuildRequires: plexus-utils
-BuildRequires: sisu-plexus
+BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 BuildRequires: atinject
 
 %description
@@ -57,5 +57,8 @@ from project output and dependencies.
 %doc README.md
 
 %changelog
+* Thu May 21 2026 Ilfat Aminov <aminov@altlinux.org> 3.4.0-alt2
+- fix sisu dependency
+
 * Fri Apr 03 2026 Ivan Khanas <xeno@altlinux.org> 3.4.0-alt1
 - Initial build for ALT.
