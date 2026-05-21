@@ -1,5 +1,5 @@
 Name: gkrellm
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Multiple stacked system monitors
@@ -66,8 +66,7 @@ subst 's,/usr/lib,%_libdir,g' src/gkrellm.h server/gkrellmd.h
 	-Dnls=enabled \
 	-Dsystemd=enabled \
 	-Dx11=enabled \
-	-Dssl=enabled \
-	-Dssl-backend=openssl \
+	-Dssl=openssl \
 	-Dsystemd-unit-dir=%_unitdir \
 	%nil
 
@@ -117,6 +116,9 @@ install -D -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/gkrellmd
 %_man1dir/gkrellmd.*
 
 %changelog
+* Thu May 21 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.1-alt1
+- 2.5.1.
+
 * Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.0-alt1
 - 2.5.0.
 - Switch to meson.
