@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.22.0
-Release: alt1
+Release: alt2
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -14,7 +14,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires: cmake ctest gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libgdk-pixbuf-devel libaom-devel
 BuildRequires: libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel libx265-devel
-BuildRequires: libaom-tools libx264-devel zlib-devel libwebp-devel
+BuildRequires: libaom-tools libx264-devel zlib-devel libwebp-devel libvvdec-devel libvvenc-devel
 %ifnarch %e2k
 BuildRequires: librav1e-devel libdav1d-devel
 %endif
@@ -60,12 +60,16 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 	-DWITH_LIBDE265_PLUGIN=ON \
 	-DWITH_LIBSHARPYUV=ON \
 	-DWITH_OpenJPEG_DECODER=ON \
-	-DWITH_OpenJPEG_DECODER_PLUGIN=OFF \
+	-DWITH_OpenJPEG_DECODER_PLUGIN=ON \
 	-DWITH_OpenJPEG_ENCODER=ON \
 	-DWITH_OpenJPEG_ENCODER_PLUGIN=ON \
 	-DWITH_SvtEnc=ON \
 	-DWITH_SvtEnc_PLUGIN=ON \
-	-DWITH_LIBSHARPYUV=ON
+	-DWITH_LIBSHARPYUV=ON \
+	-DWITH_VVDEC=ON \
+	-DWITH_VVDEC_PLUGIN=ON \
+	-DWITH_VVENC=ON \
+	-DWITH_VVENC_PLUGIN=ON
 
 %cmake_build
 
@@ -90,6 +94,10 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 21 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt2
+- enabled vvdec, vvenc
+- upstream: fix "bad_pixels" type (closes: #59287)
+
 * Wed May 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt1
 - 1.22.0
 
