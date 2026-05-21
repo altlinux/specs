@@ -3,11 +3,11 @@
 %define _name Flatseal
 %define ver_major 2.4
 %define beta %nil
-%define rdn_name com.github.tchx84.Flatseal
+%define rdn_name com.github.tchx84.%_name
 %def_enable check
 
 Name: flatseal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -75,6 +75,9 @@ xvfb-run %__meson_test -v
 %doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Thu May 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Tue Sep 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
