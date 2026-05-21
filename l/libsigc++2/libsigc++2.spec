@@ -7,7 +7,7 @@
 %def_disable docs
 
 Name: %{_name}2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -16,7 +16,8 @@ Group: System/Libraries
 Url: https://libsigcplusplus.github.io/libsigcplusplus/
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://github.com/libsigcplusplus/libsigcplusplus/releases/download/%version/%_name-%version.tar.xz
 %else
 Vcs: https://github.com/libsigcplusplus/libsigcplusplus.git
 Source: %_name-%version.tar
@@ -95,6 +96,9 @@ install -pm644 NEWS README* %buildroot%docdir/
 
 
 %changelog
+* Thu May 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.12.2-alt1
+- 2.12.2
+
 * Thu Oct 05 2023 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1
 - 2.12.1
 
