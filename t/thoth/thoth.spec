@@ -1,5 +1,5 @@
 Name:    thoth
-Version: 0.1.84
+Version: 0.1.88
 Release: alt1
 
 Summary: Terminal scratchpad inspired by the Heynote app
@@ -11,8 +11,7 @@ VCS:     https://github.com/jooaf/thoth.git
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires: rpm-build-rust
 BuildRequires: gcc-c++
 
 %description
@@ -20,15 +19,7 @@ BuildRequires: gcc-c++
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -41,6 +32,12 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon May 18 2026 Sergey Palcheh <minergenon@altlinux.org> 0.1.88-alt1
+- new version 0.1.88
+
+* Wed Dec 03 2025 Sergey Palcheh <minergenon@altlinux.org> 0.1.87-alt1
+- new version 0.1.87
+
 * Mon Jul 14 2025 Sergey Palcheh <minergenon@altlinux.org> 0.1.84-alt1
 - Initial build for Sisyphus
 
