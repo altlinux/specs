@@ -1,6 +1,6 @@
 %define soversion 2
 Name: libks
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 Summary: Foundational support for signalwire C products 
 Group: System/Libraries
@@ -53,6 +53,9 @@ cp copyright %_cmake__builddir/
 %_libdir/libks2.so
 
 %changelog
+* Thu May 21 2026 Anton Farygin <rider@altlinux.org> 2.0.11-alt1
+- 2.0.10 -> 2.0.11
+
 * Thu Jan 29 2026 Anton Farygin <rider@altlinux.org> 2.0.10-alt1
 - 2.0.8 -> 2.0.10
 
