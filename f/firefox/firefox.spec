@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 151.0
-Release: alt2
+Version: 151.0.1
+Release: alt1
 
 Summary: Fast, private and secure web browser
 Summary(ru_RU.UTF-8): Быстрый, приватный и безопасный браузер
@@ -387,6 +387,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.1-alt1
+- New version.
+
 * Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt2
 - Add support for KDE system proxy settings (Closes: 51648).
 - Fix User-Agent format in privacy preferences (Closes: 57449).
