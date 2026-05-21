@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.191
+Version: 0.195
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -20,6 +20,7 @@ Requires: libelf = %EVR
 BuildRequires: gettext
 BuildRequires: bison
 BuildRequires: flex
+BuildRequires: libjson-c-devel
 
 # libstdc++ demangle support
 BuildRequires: gcc-c++
@@ -262,12 +263,16 @@ cd %buildtarget
 # Explicitly remove debuginfod profile.d's as we don't have
 # default value for DEBUGINFOD_URLS anyway.
 rm %buildroot%_sysconfdir/profile.d/debuginfod.*sh
+rm %buildroot%_datadir/fish/vendor_conf.d/debuginfod.fish
 %endif
 %endif
 
 %check
 export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %make_build -k check -C %buildtarget VERBOSE=1
+%if_enabled debuginfod
+sh -n %buildroot%_sysconfdir/profile.d/debuginfod.sh
+%endif
 
 %files
 %_bindir/eu-addr2line
@@ -323,6 +328,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %dir %_includedir/elfutils/
 %_includedir/elfutils/libdw.h
 %_includedir/elfutils/libdwfl.h
+%_includedir/elfutils/libdwfl_stacktrace.h
 %_includedir/elfutils/libdwelf.h
 %_includedir/elfutils/known-dwarf.h
 %_libdir/libdw.so
@@ -348,7 +354,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/elfutils/version.h
 %_libdir/libelf.so
 %_pkgconfigdir/libelf.pc
-%_man3dir/elf_*
+%_man3dir/elf*_*
+%_man3dir/gelf*
+%_man3dir/libelf*
 
 %if_enabled static
 %files -n libelf-devel-static
@@ -384,11 +392,15 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n debuginfod-urls
 %dir %_sysconfdir/debuginfod/
 %config(noreplace) %_sysconfdir/debuginfod/altlinux.urls
-%config(noreplace) %_sysconfdir/profile.d/debuginfod.*sh
+%_sysconfdir/profile.d/debuginfod.*sh
+%_datadir/fish/vendor_conf.d/debuginfod.fish
 %endif
 %endif
 
 %changelog
+* Thu May 21 2026 Vitaly Chikunov <vt@altlinux.org> 0.195-alt1
+- Update to elfutils-0.195-11-ge9fe6b1e2 (2026-05-14) (closes: #59221, #56068).
+
 * Sat May 04 2024 Dmitry V. Levin <ldv@altlinux.org> 0.191-alt1
 - elfutils-0.189-46-g27a84961 -> elfutils-0.191.
 - Packaged new eu-srcfiles utility into a separate subpackage.
