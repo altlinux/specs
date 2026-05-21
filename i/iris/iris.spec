@@ -3,7 +3,7 @@
 
 Name: iris
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: GTK client for Yummy Anime
 License: GPL-3.0-only
@@ -52,9 +52,12 @@ Obsoletes: yummy-anime-gtk < %EVR
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
-%_datadir/glib-2.0/schemas/space.x1z53.iris.gschema.xml
+%_datadir/glib-2.0/schemas/%app_id.gschema.xml
 
 %changelog
+* Thu May 21 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4-alt2
+- Fix spec `files` section.
+
 * Tue May 19 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4-alt1
 - Update to 0.2.4:
   + fixed memory leaks
