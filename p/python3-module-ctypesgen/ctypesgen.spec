@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1.1
+Release: alt2
 
 Summary: Python wrapper generator for ctypes
 License: BSD-2-Clause
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/ctypesgen/
 Vcs: https://github.com/ctypesgen/ctypesgen
 
 Source: %name-%version.tar
+Patch: ctypesgen-1.1.1-fix-test-bool.patch
 
 BuildArch: noarch
 
@@ -36,6 +37,7 @@ for Lua, using the alien module (which binds libffi to Lua).
 
 %prep
 %setup
+%patch -p1
 
 if [ ! -d .git ]; then
     git init
@@ -63,6 +65,9 @@ fi
 
 
 %changelog
+* Sat May 23 2026 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt2
+- Fix FTBFS.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
