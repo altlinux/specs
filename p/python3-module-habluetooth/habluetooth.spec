@@ -1,11 +1,11 @@
 Name: python3-module-habluetooth
-Version: 5.11.2
+Version: 6.2.1
 Release: alt1
 
 Summary: High availability Bluetooth
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/habluetooth
+URL: https://pypi.org/project/habluetooth
 VCS: https://github.com/bluetooth-devices/habluetooth
 
 Source0: %name-%version.tar
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Fri May 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 6.2.1-alt1
+- 6.2.1 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.11.2-alt1
 - 5.11.2 released
 
