@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.10.2
-Release: alt3
+Release: alt4
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -130,6 +130,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Fri May 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt4
+- Configurator: auto-increment default names for new objects (Closes: 41420).
+
 * Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt3
 - List FreeIPA in the distinguished-name
   group member option (Closes: 51651).
