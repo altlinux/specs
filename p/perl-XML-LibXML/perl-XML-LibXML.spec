@@ -2,8 +2,8 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0210
-Release: alt10
+Version: 2.0212
+Release: alt1
 
 Summary: Perl binding for libxml2
 License: Artistic-1.0 OR GPL-2.0-or-later
@@ -12,7 +12,6 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
 Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
-Patch1: XML-LibXML-2.0210-fix-testsuite-with-libxml2-2.14.patch
 
 # To reduce dependencies replace Alien::Libxml2 with pkg-config
 Patch101: XML-LibXML-2.0208-Use-pkgconfig-instead-of-Alien-Libxml2.patch
@@ -57,7 +56,7 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 %perl_vendor_install
 
 %files
-%doc	Changes README HACKING.txt docs example
+%doc	Changes README.md HACKING.txt docs example
 %dir	%perl_vendor_archlib/XML
 	%perl_vendor_archlib/XML/LibXML.pm
 %doc	%perl_vendor_archlib/XML/LibXML.pod
@@ -70,6 +69,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu May 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0212-alt1
+- NMU: new version
+
 * Mon Mar 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0210-alt10
 - NMU: fix FTBFS
 
