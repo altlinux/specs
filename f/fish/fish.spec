@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 4.5.0
+Version: 4.7.1
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -14,11 +14,11 @@ License: GPLv2+
 Group: Shells
 
 Url: http://fishshell.com/
+Vcs: https://github.com/fish-shell/fish-shell.git
 
-# https://github.com/fish-shell/fish-shell.git
-Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
-Patch1: fish-4.0.0-alt_apt_adapter.patch
+Source0: %name-%version.tar
+Source1: vendor-%version.tar
+Patch0: fish-4.0.0-alt_apt_adapter.patch
 
 Requires: man
 BuildRequires(pre): rpm-build-rust rpm-build-python3 rpm-macros-cmake rpm-macros-ninja-build
@@ -31,6 +31,7 @@ BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
 
 # for check
 BuildRequires: ctest
+BuildRequires: shellcheck
 BuildRequires: /proc /dev/pts
 BuildRequires: procps
 BuildRequires: python3-module-pexpect
@@ -43,7 +44,7 @@ focused on user friendliness and discoverability. The language syntax
 is simple but incompatible with other shell languages.
 
 %prep
-%setup
+%setup -a 1
 %rust_prep
 cat >> .cargo/config.toml <<EOF
 [source."git+https://github.com/fish-shell/rust-pcre2?tag=0.2.9-utf32"]
@@ -53,7 +54,6 @@ replace-with = "vendored-sources"
 EOF
 
 %patch0 -p1
-%patch1 -p1
 echo "%version" > version
 
 # Change the bundled scripts to invoke the python binary directly.
@@ -85,8 +85,13 @@ rm -f %buildroot%_pixmapsdir/fish.png
 rm -rf %buildroot%_datadir/pkgconfig
 
 %check
-export SHOW_INTERACTIVE_LOG=1
-%cmake_build --target fish_run_tests ||:
+export CARGO_NET_OFFLINE=true
+printf '/vendor/\n' >> .ignore
+unset LESS LESSOPEN LESSCLOSE NO_COLOR
+cargo xtask shellcheck
+export RUST_TEST_THREADS=1
+export TERM=xterm-256color
+%cmake_build --target fish_run_tests
 
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
@@ -108,6 +113,9 @@ fi
 # %_man1dir/*
 
 %changelog
+* Fri May 22 2026 Artyom Sinyugin <writers@altlinux.org> 4.7.1-alt1
+- New version 4.7.1.
+
 * Mon Mar 02 2026 Artyom Sinyugin <writers@altlinux.org> 4.5.0-alt1
 - New release 4.5.0.
 - Sphinx auto doc removed from building process.
