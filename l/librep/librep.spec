@@ -4,7 +4,7 @@
 
 Name: librep
 Version: 0.92.7
-Release: alt1
+Release: alt2
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -16,7 +16,9 @@ Url: https://sawfish.fandom.com/wiki/Main_Page
 Vcs: https://github.com/SawfishWM/librep
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: librep-additional-arches.patch
+Patch2: librep-gcc-14.patch
 
 %define platform %(%_datadir/gnu-config/config.sub %_configure_platform | sed -e 's,-%_vendor,,')
 
@@ -50,7 +52,7 @@ Link libraries and C header files for librep development.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 cp -at . -- /usr/share/gnu-config/config.{guess,sub}
 %ifarch %e2k
 # lcc is not GNUC actually...
@@ -58,7 +60,7 @@ sed -i '/__GNUC__/s,__OPTIMIZE__,& \&\& !defined __LCC__,' src/repint.h
 %endif
 
 %build
-%add_optflags -fgnu89-inline
+%add_optflags -fgnu89-inline -std=gnu17
 %autoreconf
 %configure \
 	--disable-static \
@@ -116,6 +118,10 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Fri May 22 2026 Paul Wolneykien <manowar@altlinux.org> 0.92.7-alt2
+- Build the sources as GNU 17 C standard (-std=gnu17).
+- Extracted 'gcc-14' and 'additional-arches' patches.
+
 * Wed Dec 11 2024 Paul Wolneykien <manowar@altlinux.org> 0.92.7-alt1
 - New version 0.92.7.
 
