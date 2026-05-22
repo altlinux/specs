@@ -5,10 +5,10 @@
 %define        gemname diff-lcs
 
 Name:          gem-diff-lcs
-Version:       1.5.1
+Version:       2.0.0
 Release:       alt1
 Summary:       Port of Algorithm::Diff
-License:       MIT or Artistic-2.0 or GPL-2.0-or-later
+License:       MIT or Artistic-1.0-Perl or GPL-2.0-or-later
 Group:         Development/Ruby
 Url:           http://halostatue.github.io/diff-lcs/
 Vcs:           https://github.com/halostatue/diff-lcs.git
@@ -16,39 +16,43 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(hoe) >= 3.0
-BuildRequires: gem(hoe-doofus) >= 1.0
-BuildRequires: gem(hoe-gemspec2) >= 1.1
-BuildRequires: gem(hoe-git2) >= 1.7
-BuildRequires: gem(hoe-rubygems) >= 1.0
+BuildRequires: gem(fasterer) >= 0.11
+BuildRequires: gem(hoe) >= 4.0
+BuildRequires: gem(hoe-halostatue) >= 3.0
+BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(minitest-autotest) >= 1.0
+BuildRequires: gem(minitest-focus) >= 1.1
 BuildRequires: gem(rake) >= 10.0
-BuildRequires: gem(rdoc) >= 6.1.1
-BuildRequires: gem(rspec) >= 2.0
+BuildRequires: gem(rdoc) >= 6.0
+BuildRequires: gem(simplecov) >= 0.9
+BuildRequires: gem(simplecov-lcov) >= 0.9
+BuildRequires: gem(standard) >= 1.50
+BuildRequires: gem(standard-thread_safety) >= 1.0
+BuildConflicts: gem(fasterer) >= 1
 BuildConflicts: gem(hoe) >= 5
-BuildConflicts: gem(hoe-doofus) >= 2
-BuildConflicts: gem(hoe-gemspec2) >= 2
-BuildConflicts: gem(hoe-git2) >= 2
-BuildConflicts: gem(hoe-rubygems) >= 2
+BuildConflicts: gem(hoe-halostatue) >= 4
+BuildConflicts: gem(minitest) >= 7
+BuildConflicts: gem(minitest-autotest) >= 2
+BuildConflicts: gem(minitest-focus) >= 2
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rdoc) >= 8
+BuildConflicts: gem(simplecov) >= 1
+BuildConflicts: gem(simplecov-lcov) >= 1
+BuildConflicts: gem(standard) >= 2
+BuildConflicts: gem(standard-thread_safety) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-Requires:      gem(simplecov) >= 0.17
-Requires:      gem(byebug) >= 0
-Requires:      gem(standardrb) >= 0
-Requires:      gem(fasterer) >= 0
-Conflicts:     gem(simplecov) >= 1
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+Requires:      ruby >= 3.2.0
+Conflicts:     ruby >= 5
 Obsoletes:     ruby-diff-lcs < %EVR
 Provides:      ruby-diff-lcs = %EVR
-Provides:      gem(diff-lcs) = 1.5.1
-
+Provides:      diff-lcs = %EVR
+Provides:      gem(diff-lcs) = 2.0.0
 
 %description
 Diff::LCS is a port of Algorithm::Diff that uses the McIlroy-Hunt longest common
@@ -58,17 +62,17 @@ Wolczko's Smalltalk version (1.2, 1993) and Ned Konz's Perl version
 (Algorithm::Diff).
 
 
-%package       -n diff-lcs
-Version:       1.5.1
+%package       -n ldiff
+Version:       2.0.0
 Release:       alt1
 Summary:       Port of Algorithm::Diff executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета diff-lcs
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(diff-lcs) = 1.5.1
+Requires:      gem(diff-lcs) = 2.0.0
 
-%description   -n diff-lcs
+%description   -n ldiff
 Port of Algorithm::Diff executable(s).
 
 Diff::LCS is a port of Algorithm::Diff that uses the McIlroy-Hunt longest common
@@ -77,20 +81,20 @@ sequenced enumerable containers. The implementation is based on Mario I.
 Wolczko's Smalltalk version (1.2, 1993) and Ned Konz's Perl version
 (Algorithm::Diff).
 
-%description   -n diff-lcs -l ru_RU.UTF-8
+%description   -n ldiff -l ru_RU.UTF-8
 Исполнямка для самоцвета diff-lcs.
 
 
 %if_enabled    doc
 %package       -n gem-diff-lcs-doc
-Version:       1.5.1
+Version:       2.0.0
 Release:       alt1
 Summary:       Port of Algorithm::Diff documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета diff-lcs
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(diff-lcs) = 1.5.1
+Requires:      gem(diff-lcs) = 2.0.0
 
 %description   -n gem-diff-lcs-doc
 Port of Algorithm::Diff documentation files.
@@ -108,30 +112,38 @@ Wolczko's Smalltalk version (1.2, 1993) and Ned Konz's Perl version
 
 %if_enabled    devel
 %package       -n gem-diff-lcs-devel
-Version:       1.5.1
+Version:       2.0.0
 Release:       alt1
 Summary:       Port of Algorithm::Diff development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета diff-lcs
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(diff-lcs) = 1.5.1
-Requires:      gem(hoe) >= 3.0
-Requires:      gem(hoe-doofus) >= 1.0
-Requires:      gem(hoe-gemspec2) >= 1.1
-Requires:      gem(hoe-git2) >= 1.7
-Requires:      gem(hoe-rubygems) >= 1.0
-Requires:      gem(rspec) >= 2.0
+Requires:      gem(diff-lcs) = 2.0.0
+Requires:      gem(fasterer) >= 0.11
+Requires:      gem(hoe) >= 4.0
+Requires:      gem(hoe-halostatue) >= 3.0
+Requires:      gem(minitest) >= 5.17.0
+Requires:      gem(minitest-autotest) >= 1.0
+Requires:      gem(minitest-focus) >= 1.1
 Requires:      gem(rake) >= 10.0
-Requires:      gem(rdoc) >= 6.1.1
+Requires:      gem(rdoc) >= 6.0
+Requires:      gem(simplecov) >= 0.9
+Requires:      gem(simplecov-lcov) >= 0.9
+Requires:      gem(standard) >= 1.50
+Requires:      gem(standard-thread_safety) >= 1.0
+Conflicts:     gem(fasterer) >= 1
 Conflicts:     gem(hoe) >= 5
-Conflicts:     gem(hoe-doofus) >= 2
-Conflicts:     gem(hoe-gemspec2) >= 2
-Conflicts:     gem(hoe-git2) >= 2
-Conflicts:     gem(hoe-rubygems) >= 2
-Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(hoe-halostatue) >= 4
+Conflicts:     gem(minitest) >= 7
+Conflicts:     gem(minitest-autotest) >= 2
+Conflicts:     gem(minitest-focus) >= 2
 Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(rdoc) >= 8
+Conflicts:     gem(simplecov) >= 1
+Conflicts:     gem(simplecov-lcov) >= 1
+Conflicts:     gem(standard) >= 2
+Conflicts:     gem(standard-thread_safety) >= 2
 
 %description   -n gem-diff-lcs-devel
 Port of Algorithm::Diff development package.
@@ -149,7 +161,6 @@ Wolczko's Smalltalk version (1.2, 1993) and Ned Konz's Perl version
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -161,28 +172,30 @@ Wolczko's Smalltalk version (1.2, 1993) and Ned Konz's Perl version
 %ruby_test
 
 %files
-%doc Contributing.md History.md License.md README.rdoc
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md README.md licenses/COPYING.txt licenses/artistic.txt licenses/dco.txt licenses
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n diff-lcs
-%doc Contributing.md History.md License.md README.rdoc
-%_bindir/htmldiff
+%files         -n ldiff
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md README.md licenses/COPYING.txt licenses/artistic.txt licenses/dco.txt licenses
 %_bindir/ldiff
 
 %if_enabled    doc
 %files         -n gem-diff-lcs-doc
-%doc Contributing.md History.md License.md README.rdoc
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md README.md licenses/COPYING.txt licenses/artistic.txt licenses/dco.txt licenses
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-diff-lcs-devel
-%doc Contributing.md History.md License.md README.rdoc
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md README.md licenses/COPYING.txt licenses/artistic.txt licenses/dco.txt licenses
 %endif
 
 
 %changelog
+* Thu May 21 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- ^ 1.5.1 -> 2.0.0
+
 * Fri Aug 09 2024 Pavel Skrylev <majioa@altlinux.org> 1.5.1-alt1
 - ^ 1.4.3 -> 1.5.1
 
