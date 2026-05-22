@@ -2,8 +2,8 @@ Name: ima-inspect
 Summary: Output IMA/EVM extended attributes in a human readable format
 License: LGPL-2.1-or-later
 Group: System/Base
-Version: 0.13
-Release: alt2 
+Version: 0.15
+Release: alt1
 Url: https://github.com/mgerstner/ima-inspect
 Source0: %{name}-%{version}.tar
 BuildRequires: autoconf
@@ -41,6 +41,9 @@ format.
 %{_bindir}/ima-inspect
 
 %changelog
+* Fri May 22 2026 Artyom Bystrov <arbars@altlinux.org> 0.15-alt1
+- Update to new version
+
 * Thu Jul 13 2023 Artyom Bystrov <arbars@altlinux.org> 0.13-alt2
 - Fix build on GCC13
 
