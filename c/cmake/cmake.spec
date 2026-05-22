@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.2.3
+Version: 4.2.6
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -327,6 +327,9 @@ popd
 
 
 %changelog
+* Thu May 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt1
+- new version 4.2.6
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.3-alt1
 - new version 4.2.3
 
