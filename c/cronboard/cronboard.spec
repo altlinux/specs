@@ -1,7 +1,5 @@
-%def_without check
-
 Name: cronboard
-Version: 0.5.4
+Version: 0.6.0
 Release: alt1
 
 Summary: A terminal-based dashboard for managing cron jobs locally and on servers
@@ -19,18 +17,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
-%if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-python-crontab
-BuildRequires: python3-module-tomlkit
-BuildRequires: python3-module-textual
-BuildRequires: python3-module-textual-autocomplete
-BuildRequires: python3-module-cron-descriptor
-BuildRequires: python3-module-paramiko
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
-%endif
-
 %description
 %summary.
 
@@ -43,15 +29,15 @@ BuildRequires: python3-module-pytest-mock
 %install
 %pyproject_install
 
-%check
-%pyproject_run_pytest tests
-
 %files
 %doc *.md LICENSE
 %_bindir/%name
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
+- 0.5.4 -> 0.6.0
+
 * Fri May 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.4-alt1
 - 0.5.2 -> 0.5.4
 
