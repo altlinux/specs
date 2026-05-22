@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.25
-Release: alt2
+Version: 26.4.26
+Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
-Url: http://galeracluster.com/
+Url: https://mariadb.com/products/enterprise/galera-cluster/
 # VCS-git: https://github.com/MariaDB/galera.git
 Source: %name-%version.tar
 
@@ -65,7 +65,7 @@ popd
 echo %release > GALERA_GIT_REVISION
 
 %build
-%cmake
+%cmake -DINSTALL_LIBDIR=%_libdir/galera -DINSTALL_MANPAGE=%_man8dir
 %cmake_build
 
 %install
@@ -97,8 +97,7 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %preun_service garbd
 
 %files -n libgalera_smm
-%dir %_libdir/galera
-%_libdir/galera/libgalera_smm.so
+%_libdir/galera*
 
 %files garbd
 %dir %_sysconfdir/garbd
@@ -107,7 +106,7 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %attr(0750,_garbd,_garbd) %dir %_localstatedir/garbd
 %attr(3770,root,_garbd) %dir %_logdir/garbd
 %_sbindir/garbd
-%_man8dir/garbd.*
+%_man8dir/*
 %_unitdir/garbd.service
 %_initdir/garbd
 %_tmpfilesdir/garbd.conf
@@ -116,6 +115,10 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri May 22 2026 Alexei Takaseev <taf@altlinux.org> 26.4.26-alt1
+- 26.4.26
+- Change URL: to https://mariadb.com/products/enterprise/galera-cluster/
+
 * Tue Feb 10 2026 Alexei Takaseev <taf@altlinux.org> 26.4.25-alt2
 - Fix wsrep-API version (ALT #57828)
 

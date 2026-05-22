@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.6
-Release: alt3
+Version: 11.8.7
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -99,8 +99,8 @@ Source74: mariadbcheck.xinetd
 Source101: libmariadb_v3.4.9.tar
 Source102: rocksdb_v6.29.5.tar
 Source103: wsrep-lib_20260209.tar
-Source104: columnstore_25.10.3-1.tar
-Source105: libmarias3_3.1.3.tar
+Source104: columnstore_25.10.4-1.tar
+Source105: libmarias3_3.2.0.tar
 Source106: fmt_12.1.0.tar
 
 Patch0: %name-%version.patch
@@ -118,8 +118,6 @@ Patch32: mariadb-basedir.patch
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-11.8.6-disable-download-fmt.patch
-
-Patch200: mariadb-11.8.6-Fix-akonadi-crash.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -431,8 +429,6 @@ tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
-
-%patch200 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -790,6 +786,7 @@ fi
 %_bindir/mysql_install_db
 %_bindir/mariadb-install-db
 %_bindir/mariadb-conv
+%_bindir/mariadb-migrate-config-file
 %if_with mroonga
 %_datadir/mariadb/mroonga
 %endif
@@ -874,7 +871,6 @@ fi
 
 %if_with galera
 %files server-galera
-%doc Docs/README-wsrep
 %_bindir/wsrep_*
 %_bindir/galera_new_cluster
 %_bindir/clustercheck
@@ -1119,6 +1115,15 @@ fi
 %endif
 
 %changelog
+* Fri May 22 2026 Alexei Takaseev <taf@altlinux.org> 11.8.7-alt1
+- 11.8.7b (Fixes: CVE-2025-13699, CVE-2026-32710, CVE-2026-35549, CVE-2026-34303,
+                  CVE-2026-3494, CVE-2026-44168, CVE-2026-44169, CVE-2026-44170,
+                  CVE-2026-44171, CVE-2026-44172, CVE-2026-44173)
+- Update libmariadb
+- Update columnstore to 25.10.4-1
+- Update libmarias3 to 3.2.0
+- Drop mariadb-11.8.6-Fix-akonadi-crash.patch (fixed in upstream)
+
 * Wed Mar 25 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt3
 - FTBS: Delete custom hardening options, use system defaults
 - Delete unneeded patches
