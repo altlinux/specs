@@ -2,7 +2,7 @@
 
 Name: rastertokpsl-re
 Version: 1.0.1422
-Release: alt3
+Release: alt4
 
 Summary: Reverse engineered Kyocera rastertokpsl filter
 
@@ -42,6 +42,9 @@ install -D -m0644 Kyocera_FS-1060DN.ppd %buildroot%_datadir/cups/model/Kyocera/K
 %_datadir/cups/model/Kyocera/*.ppd
 
 %changelog
+* Fri May 22 2026 Paul Wolneykien <manowar@altlinux.org> 1.0.1422-alt4
+- Link with 'libm' library (FTBFS fix).
+
 * Tue Dec 10 2024 Paul Wolneykien <manowar@altlinux.org> 1.0.1422-alt3
 - Fixed build.
 
