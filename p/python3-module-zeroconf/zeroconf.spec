@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.149.15
+Version: 0.149.16
 Release: alt1
 Epoch: 1
 
@@ -43,6 +43,9 @@ export SKIP_IPV6=1
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Fri May 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.149.16-alt1
+- 0.149.16 released
+
 * Thu May 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.149.15-alt1
 - 0.149.15 released
 
