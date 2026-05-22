@@ -3,7 +3,7 @@
 
 Name: libUvula
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: UV-unwrapper for potentially big meshes
 License: LGPL-3.0-only
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
 BuildRequires: gcc-c++ cmake
+%ifarch %e2k
+BuildRequires: clang
+%endif
 BuildRequires: %_bindir/python3
 BuildRequires: pybind11-devel
 BuildRequires: libspdlog-devel
@@ -49,6 +52,10 @@ on a texture.
 
 %build
 %cmake \
+%ifarch %e2k
+    -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+    -DCMAKE_C{,XX}_FLAGS_RELWITHDEBINFO="-O2 -DNDEBUG" \
+%endif
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DUVULA_VERSION=%version
 %cmake_build
@@ -68,6 +75,9 @@ on a texture.
 %python3_sitelibdir/pyUvula.*.so
 
 %changelog
+* Fri May 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.1-alt3
+- e2k build fix
+
 * Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 1.0.1-alt2
 - Enable debuginfo for pyUvula.
 
