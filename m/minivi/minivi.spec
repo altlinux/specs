@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: A small application for viewing images
@@ -31,8 +31,8 @@ Functionality:
 
 %prep
 %setup
-subst 's|~/.local/bin|%buildroot%_bindir|' Makefile
-subst 's|~/.local/share|%buildroot%_datadir|' Makefile
+subst 's|/usr/bin|%buildroot%_bindir|' Makefile
+subst 's|/usr/share|%buildroot%_datadir|' Makefile
 
 %build
 make build
@@ -47,6 +47,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Fri May 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.2-alt1
+- 0.15.1 -> 0.15.2
+
 * Tue May 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.1-alt1
 - 0.15.0 -> 0.15.1
 
