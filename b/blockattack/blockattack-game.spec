@@ -1,5 +1,5 @@
 Name:     blockattack
-Version:  2.8.0
+Version:  2.10.0
 Release:  alt1
 
 Summary:  Block Attack - Rise of the Blocks - the game
@@ -41,5 +41,8 @@ BuildRequires: gcc-c++ cmake libSDL2 libSDL2_image-devel libSDL2_mixer-devel lib
 %_datadir/metainfo/net.%name.game.metainfo.xml
 
 %changelog
+* Fri May 22 2026 Artyom Bystrov <arbars@altlinux.org> 2.10.0-alt1
+- New version 2.10.0.
+
 * Mon Dec 12 2022 Artyom Bystrov <arbars@altlinux.org> 2.8.0-alt1
 - Initial build for Sisyphus
