@@ -4,7 +4,7 @@
 %define simple_name alt-components
 
 Name: tuner-%simple_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Control system components
@@ -47,6 +47,10 @@ Tuner Plugin for System Component Management
 %doc README.md
 
 %changelog
+* Fri May 22 2026 Alexander Davydzik <paladindev@altlinux.org> 1.0.4-alt1
+- hide version of some special packages in changes summary
+- closes component info while applying changes
+
 * Thu May 21 2026 Alexander Davydzik <paladindev@altlinux.org> 1.0.3-alt1
 - fixed edition warning (Closes: 59179)
 - fixed changed dialog wrapping (Closes: 59151)
