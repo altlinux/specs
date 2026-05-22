@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.6
 
 Name: wireshark
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -193,6 +193,7 @@ _EOF_
 %_man1dir/wifidump.*
 %_man4dir/wireshark-filter.*
 %_man4dir/extcap.*
+%_man1dir/sharkd.*
 %_datadir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -235,6 +236,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Thu May 21 2026 Anton Farygin <rider@altlinux.org> 4.6.6-alt1
+- 4.6.5 -> 4.6.6
+
 * Sat May 02 2026 Anton Farygin <rider@altlinux.org> 4.6.5-alt1
 - 4.6.4 -> 4.6.5
 - Fixes:
