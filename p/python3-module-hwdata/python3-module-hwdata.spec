@@ -1,7 +1,7 @@
 %define pypi_name hwdata
 
 Name:    python3-module-%pypi_name
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Python bindings to hwdata
@@ -11,7 +11,7 @@ Url:     https://github.com/xsuchy/python-hwdata
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 Requires: hwdata
 
@@ -37,6 +37,9 @@ BuildArch: noarch
 
 
 %changelog
+* Wed Dec 03 2025 Sergey Palcheh <minergenon@altlinux.org> 2.4.3-alt1
+- new version (2.4.3) with rpmgs script
+
 * Wed Feb 26 2025 Sergey Palcheh <minergenon@altlinux.org> 2.4.2-alt1
 - initial build for ALT Sisyphus
 
