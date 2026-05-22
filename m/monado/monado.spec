@@ -1,10 +1,8 @@
-%set_verify_elf_method relaxed
-
 %define soname 25 
 
 Name:    monado
 Version: 25.1.0
-Release: alt2
+Release: alt3
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
@@ -13,9 +11,10 @@ Url:     https://gitlab.freedesktop.org/monado/monado
 VCS:     https://gitlab.freedesktop.org/monado/monado
 
 Source:  %name-%version.tar
+Patch:   monado-25.1.0-steamvr-libdir.patch
+Patch1:  monado-25.1.0-openxr-libdir.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: /proc
 BuildRequires: cmake gcc-c++
 BuildRequires: glslang python3-dev eigen3 libvulkan-devel glslc libhidapi-devel
 BuildRequires: libbluez-devel libopenhmd-devel libopencv-devel libusb-devel
@@ -50,6 +49,8 @@ Summary: %name library
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 %build
 %cmake \
@@ -62,15 +63,17 @@ Summary: %name library
     -DBUILD_DOC:BOOL=OFF \
     -Wno-dev
 
+%cmake_build
+
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc CONTRIBUTING.md LICENSES README.md
 %_bindir/%{name}*
-%_libdir/libopenxr_monado.so
+%_libdir/monado/libopenxr_monado.so
 %_datadir/openxr
-%_datadir/steamvr-monado
+%_libdir/steamvr-monado
 %_userunitdir/%name.*
 
 %files devel
@@ -82,6 +85,11 @@ Summary: %name library
 %_libdir/libmonado.so.%{soname}.*
 
 %changelog
+* Tue May 19 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt3
+- spec cleanup
+- added patch monado-25.1.0-steamvr-libdir.patch
+- added patch monado-25.1.0-openxr-libdir.patch
+
 * Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 25.1.0-alt2
 - spec cleanup
 
