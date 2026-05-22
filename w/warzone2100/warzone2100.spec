@@ -1,6 +1,6 @@
 Name: warzone2100
 Version: 4.7.0
-Release: alt1
+Release: alt2
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
@@ -120,6 +120,9 @@ rm %buildroot%_iconsdir/net.wz2100.warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Fri May 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.7.0-alt2
+- fixed build with recent vulkan
+
 * Tue Apr 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.7.0-alt1
 - 4.7.0 released
 
