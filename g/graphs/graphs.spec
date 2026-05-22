@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -62,6 +62,7 @@ This package contains shared library needed %_name to work.
 %prep
 %setup -n %{?_disable_snapshot:%_name}%{?_enable_snapshot:%name}-%version
 sed -i "s/'pytest'/'py.test3'/" tests/meson.build
+%python3_fix_shebang data/generate_gresource.py
 
 %build
 %meson -Dbuildtype=release
@@ -97,6 +98,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue May 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
