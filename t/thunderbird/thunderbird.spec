@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 151.0
-Release: alt2
+Release: alt3
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -41,6 +41,8 @@ Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
 Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
 Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-hidden-by-window-deco.patch
+Patch009: 0009-Fix-OpenPGP-account-settings-buttons-clipped-when-pa.patch
+Patch010: 0010-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 ### End Patches
 
 Provides: mailclient
@@ -178,6 +180,8 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch6 -p2
 %patch7 -p2
 %patch8 -p2
+%patch9 -p2
+%patch10 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -366,6 +370,12 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Fri May 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt3
+- Fix OpenPGP account settings buttons being
+  clipped when the pane is narrow (Closes: 59272).
+- Add the Yandex search engine to the
+  bundled search configuration (Closes: 49609).
+
 * Thu May 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt2
 - Fix OpenPGP key wizard buttons being clipped off the window on
   GNOME/Wayland when creating a new key pair (Closes: 59271).
