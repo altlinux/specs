@@ -2,13 +2,13 @@
 
 %define __name Cine
 %define _name cine
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name io.github.diegopvlk.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: MPV-based Video Player for Linux
@@ -73,6 +73,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed May 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - 1.3.1
 
