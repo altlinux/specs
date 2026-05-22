@@ -8,16 +8,14 @@
 %def_disable check
 
 Name: git-branchless
-Version: 0.10.0
-Release: alt3
+Version: 0.11.0
+Release: alt1
 Summary: High-velocity, monorepo-scale workflow for Git
 License: MIT or Apache-2.0
 Group: Development/Tools
 Url: https://github.com/arxanas/git-branchless
 
 Source: %name-%version.tar
-Patch1: git-branchless-0.10.0-alt-nix-loongarch64.patch
-Patch2: git-branchless-fix-esl01-indexedlog-for-rust-1_89.patch
 
 BuildRequires: git
 BuildRequires: pkgconfig(libgit2)
@@ -50,10 +48,6 @@ strip = false
 EOF
 sed -i '/rusqlite/s/"bundled",\?//' Cargo.toml
 
-%autopatch -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-     ./vendor/nix/.cargo-checksum.json ./vendor/esl01-indexedlog/.cargo-checksum.json
-
 %build
 cargo build %_smp_mflags --offline --release --all-features
 
@@ -85,6 +79,9 @@ cargo test --release -- \
 %_man1dir/git-branchless*.1*
 
 %changelog
+* Fri May 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.11.0-alt1
+- Update to v0.10.0 (2026-05-21).
+
 * Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.10.0-alt3
 - NMU: fix FTBFS with rust 1.89.
 
