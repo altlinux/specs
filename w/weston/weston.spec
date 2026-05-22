@@ -118,7 +118,7 @@
 
 Name: weston
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -130,6 +130,7 @@ Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
 #Source1: %name.ini
 Patch: %name-%version-%release.patch
+Patch1: %name-15.0-up-neatvnc-1.0.0.patch
 #Patch2: weston-9.0.0-alt-launch-group.patch
 
 Requires: lib%name = %EVR
@@ -180,7 +181,7 @@ BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
 %{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
-%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel >= 0.8}
+%{?_enable_backend_vnc:BuildRequires: pkgconfig(aml1) libneatvnc-devel >= 1.0.0}
 %{?_enable_shell_lua:BuildRequires: lua5.4-devel}
 
 %description
@@ -223,6 +224,7 @@ Header files for doing development with the weston.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 %{?_enable_deprecated_weston_launch:%patch2 -p1 -b .launch_group}
 
 %build
@@ -323,6 +325,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 15.0.1-alt2
+- adopted to aml/neatvnc-1.0.0
+
 * Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 15.0.1-alt1
 - 15.0.1
 

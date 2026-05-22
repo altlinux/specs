@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: neatvnc
-Version: 0.9.6
+Version: 1.0.0
 Release: alt1
 
 Summary: A liberally licensed VNC server library with a clean interface
@@ -18,15 +18,18 @@ Vcs: https://github.com/any1/neatvnc.git
 
 Source: https://github.com/any1/neatvnc/archive/v%version/%name-%version.tar.gz
 
+%define aml_ver 1.0.0
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: libaml-devel
+BuildRequires: pkgconfig(aml1) >= %aml_ver
 BuildRequires: libpixman-devel libpng-devel zlib-devel
 %{?_enable_jpeg:BuildRequires: pkgconfig(libturbojpeg)}
 %{?_enable_gbm:BuildRequires: libdrm-devel libgbm-devel}
 %{?_enable_h264:BuildRequires: libavcodec-devel libavfilter-devel libavutil-devel}
 %{?_enable_tls:BuildRequires: libgnutls-devel}
 %{?_enable_nettle:BuildRequires: libnettle-devel libgmp-devel}
+%{?_enable_check:BuildRequires: /usr/bin/openssl}
 
 %description
 %summary
@@ -42,7 +45,7 @@ This package contains shared Neat VNC library.
 Summary: Neat VNC development file
 Group: Development/C
 Requires: lib%name = %EVR
-Requires: libaml-devel
+Requires: pkgconfig(aml1) >= %aml_ver
 
 %description -n lib%name-devel
 This package contains header files required to develop
@@ -77,6 +80,9 @@ Neat VNC based software.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
 - 0.9.6
 

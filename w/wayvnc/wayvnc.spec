@@ -1,6 +1,6 @@
 Name:     wayvnc
-Version:  0.9.1
-Release:  alt2
+Version:  0.10.0
+Release:  alt1
 Summary:  A VNC server for wlroots based Wayland compositors
 Group:    Graphical desktop/Other
 License:  ISC
@@ -20,7 +20,7 @@ BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(jansson)
-BuildRequires: pkgconfig(aml)
+BuildRequires: pkgconfig(aml1)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: scdoc
 
@@ -52,6 +52,9 @@ physical display attached.
 %_man1dir/%{name}ctl.1.*
 
 %changelog
+* Thu May 21 2026 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt2
 - add build dependency on pkgconfig(gbm)
 - enable check
