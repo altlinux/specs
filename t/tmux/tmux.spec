@@ -4,8 +4,8 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.6a
-Release: alt2
+Version: 3.6b
+Release: alt1
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
 Url: https://tmux.github.io/
@@ -70,6 +70,9 @@ make -C regress ||
 %_man1dir/*
 
 %changelog
+* Fri May 22 2026 Vitaly Chikunov <vt@altlinux.org> 3.6b-alt1
+- Update to tmux-3.6b (2026-05-22).
+
 * Sun Feb 22 2026 Vitaly Chikunov <vt@altlinux.org> 3.6a-alt2
 - Do not install bash completions (fixing file conflict with bash-completion
   2.17.0). (ALT#57969).
