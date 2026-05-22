@@ -3,12 +3,14 @@
 Name: proxmox-backup-qemu
 Summary: Proxmox Backup Server client library for QEMU
 Version: 2.0.2
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Archiving/Backup
 Url: https://git.proxmox.com/?p=proxmox-backup-qemu.git
 Vcs: git://git.proxmox.com/git/proxmox-backup-qemu.git
 Source: %name-%version.tar
+
+Patch1: pbs-buildcfg-Add-loongarch64-support.patch
 
 ExclusiveArch: x86_64 aarch64 ppc64le riscv64 loongarch64
 
@@ -56,6 +58,8 @@ within QEMU.
 # git add -f vendor Cargo.lock ...
 %setup
 
+%autopatch -p1
+
 # PATCH: libexecdir for 'file-restore'
 sed -i -e 's|/usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore|/usr/libexec/proxmox-backup/file-restore|' vendor/pbs-buildcfg/src/lib.rs
 
@@ -81,6 +85,9 @@ ln -s libproxmox_backup_qemu.so.0 %buildroot%_libdir/libproxmox_backup_qemu.so
 %_libdir/*.so
 
 %changelog
+* Fri May 22 2026 Ivan A. Melnikov <iv@altlinux.org> 2.0.2-alt2
+- NMU: fix FTBFS on loongarch64
+
 * Wed May 06 2026 Sergey Konev <darisishe@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
