@@ -6,7 +6,7 @@
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -24,6 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libmspack_ver 0.4
 %define soup3_ver 3.0
 %define json_glib_ver 1.0.4
+%define ical_ver 3.0
+#%%define ical_ver 4.0
 
 Requires: evolution >= %evolution_ver
 Requires: evolution-data-server >= %eds_ver
@@ -37,7 +39,9 @@ BuildRequires: libmspack-devel >= %libmspack_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup3.0-devel >= %soup3_ver
-BuildRequires: libsqlite3-devel libical-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libical-devel
+#BuildRequires: pkgconfig(libicalvcal) >= %ical_ver
 BuildRequires: pkgconfig(json-glib-1.0) >= %json_glib_ver
 
 %description
@@ -79,6 +83,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.2-alt1
+- 3.60.2
+
 * Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.1-alt1
 - 3.60.1
 

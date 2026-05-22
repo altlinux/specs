@@ -33,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Evolution Data Server
@@ -59,7 +59,8 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define secret_ver 0.5
 %define sqlite_ver 3.7.17
 %define gweather4_ver 4.1.0
-%define ical_ver 3.0.7
+#%%define ical_ver 4.0
+%define ical_ver 3.0
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
 %define webkit_api_ver 4.1
@@ -78,7 +79,7 @@ BuildRequires: libxml2-devel
 BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libgweather4.0-devel >= %gweather4_ver
-BuildRequires: libical-glib-devel >= %ical_ver
+BuildRequires: pkgconfig(libical-glib) >= %ical_ver
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 BuildRequires: pkgconfig(uuid)
@@ -91,7 +92,7 @@ BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel gir(Soup) = 3.0 gir(Json) = 1.0
 %{?_enable_gtk3:BuildRequires: libgtk+3-gir-devel}
 %{?_enable_gtk4:BuildRequires: libgtk4-gir-devel}
-BuildRequires: libical-glib-gir-devel}
+BuildRequires: gir(ICalGLib) = %ical_ver}
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
@@ -295,6 +296,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.2-alt1
+- 3.60.2
+
 * Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.1-alt1
 - 3.60.1
 

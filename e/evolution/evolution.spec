@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -50,7 +50,9 @@ Provides: camel
 %define soup3_ver 3.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.91
-%define ical_ver 1.0.1
+%define ical_ver 3.0
+#%%define ical_ver 4.0
+
 # libsoup-3.0 build
 %define champlain_ver 0.12.21-alt3
 %define pst_ver 0.6.54
@@ -82,7 +84,9 @@ BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libnotify-devel >= %libnotify_ver
 BuildRequires: pkgconfig(gweather4) >= %gweather_ver
 BuildRequires: pkgconfig(geocode-glib-2.0) >= %geocode_ver
-BuildRequires: libical-devel >= %ical_ver libicu-devel
+BuildRequires: libical-devel >= %ical_ver
+#BuildRequires: pkgconfig(libicalvcal) >= %ical_ver
+BuildRequires: libicu-devel
 BuildRequires: libpst-devel >= %pst_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
@@ -273,6 +277,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.2-alt1
+- 3.60.2
+
 * Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.1-alt1
 - 3.60.1
 
