@@ -5,7 +5,7 @@
 %def_with check
 
 Name: tuned-switcher
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: Simple utility to manipulate the Tuned service
@@ -19,6 +19,7 @@ BuildRequires(pre): cmake
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Svg)
 BuildRequires: qt6-tools-devel
 BuildRequires: pandoc
 
@@ -81,5 +82,8 @@ sed -i "s/ validate / validate --nonet /" CMakeLists.txt
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Thu May 21 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Apr 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus

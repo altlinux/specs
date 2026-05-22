@@ -3,7 +3,7 @@
 
 Name: kaichat-addons
 Version: 0.0.0
-Release: alt1_git20260204
+Release: alt2_git20260204
 
 Summary: Addons for KAIChat
 License: CC0-1.0 AND MIT AND GPL-2.0-or-later AND BSD-3-Clause
@@ -29,9 +29,6 @@ BuildRequires: kf6-ktextaddons-devel >= 1.9.0
 BuildRequires: kweathercore-devel
 BuildRequires: reuse
 
-# wait for kf6-ktextaddons-devel to be updated to 1.9.0
-ExcludeArch: riscv64 loongarch64
-
 %description
 %summary.
 
@@ -53,5 +50,8 @@ ExcludeArch: riscv64 loongarch64
 %_K6data/qlogging-categories6/kaichat-addons.categories
 
 %changelog
+* Fri May 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.0-alt2_git20260204
+- Enable build on riscv64 and loongarch64.
+
 * Wed Feb 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.0-alt1_git20260204
 - Initial build for Sisyphus

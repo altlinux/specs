@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: kaichat
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Chat interface for AI models such as ollama
@@ -43,9 +43,6 @@ Requires: plasma6-breeze
 Requires: icon-theme-breeze
 Requires: kf6-ktextaddons
 
-# wait for kf6-ktextaddons-devel to be updated to 1.9.0
-ExcludeArch: riscv64 loongarch64
-
 %description
 KAIChat allows to chat with AI (local ollama, network service).
 
@@ -77,13 +74,20 @@ sed -i "s|Categories=.*|Categories=Qt;KDE;Science;ArtificialIntelligence;|" src/
 %_K6lib/qt6/plugins/autogeneratetext/textplugins/kaichat_webshortcuttextplugin.so
 %_K6lib/qt6/plugins/autogeneratetext/toolplugins/textautogeneratetext_currentdatetimeplugin.so
 %_K6xdgapp/org.kde.kaichat.desktop
+%_K6icon/hicolor/16x16/apps/kaichat.png
 %_K6icon/hicolor/22x22/apps/kaichat.png
+%_K6icon/hicolor/24x24/apps/kaichat.png
 %_K6icon/hicolor/32x32/apps/kaichat.png
 %_K6icon/hicolor/48x48/apps/kaichat.png
+%_K6icon/hicolor/scalable/apps/kaichat.svg
 %_K6data/knotifications6/kaichat.notifyrc
 %_K6data/metainfo/org.kde.kaichat.appdata.xml
 %_K6data/qlogging-categories6/kaichat.categories
 
 %changelog
+* Thu May 21 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+- Enable build on riscv64 and loongarch64.
+
 * Wed Feb 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus
