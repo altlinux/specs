@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Source: %name-%version.tar
@@ -66,6 +66,9 @@ fi
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Fri May 22 2026 Oleg Solovyov <mcpain@altlinux.org> 1.20-alt1
+- fix "kiosk enabled" flag, patch from antohami@ (Closes: #59304)
+
 * Tue Mar 03 2026 Oleg Solovyov <mcpain@altlinux.org> 1.19-alt1
 - update man page
 
