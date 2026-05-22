@@ -3,7 +3,7 @@
 %global qt_module qtmqtt
 
 Name: qt6-mqtt
-Version: 6.10.2
+Version: 6.10.3
 Release: alt1
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Fri May 22 2026 Anton Farygin <rider@altlinux.org> 6.10.3-alt1
+- 6.10.2 -> 6.10.3
+
 * Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 6.10.2-alt1
 - 6.10.1 -> 6.10.2
 
