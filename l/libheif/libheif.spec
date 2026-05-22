@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.22.0
-Release: alt2
+Release: alt3
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -14,7 +14,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires: cmake ctest gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libgdk-pixbuf-devel libaom-devel
 BuildRequires: libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel libx265-devel
-BuildRequires: libaom-tools libx264-devel zlib-devel libwebp-devel libvvdec-devel libvvenc-devel
+BuildRequires: libaom-tools libx264-devel zlib-devel libwebp-devel libvvdec-devel libvvenc-devel libuvg266-devel
 %ifnarch %e2k
 BuildRequires: librav1e-devel libdav1d-devel
 %endif
@@ -69,7 +69,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 	-DWITH_VVDEC=ON \
 	-DWITH_VVDEC_PLUGIN=ON \
 	-DWITH_VVENC=ON \
-	-DWITH_VVENC_PLUGIN=ON
+	-DWITH_VVENC_PLUGIN=ON \
+	-DWITH_UVG266=ON \
+	-DWITH_UVG266_PLUGIN=ON
 
 %cmake_build
 
@@ -94,6 +96,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri May 22 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt3
+- enabled uvg266
+
 * Thu May 21 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt2
 - enabled vvdec, vvenc
 - upstream: fix "bad_pixels" type (closes: #59287)
