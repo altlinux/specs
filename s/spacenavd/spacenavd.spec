@@ -1,6 +1,6 @@
 Name:    spacenavd
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Free user-space driver for 6-dof space-mice.
 License: GPL-3.0
@@ -12,7 +12,7 @@ Patch: spacenavd-fix-pidfile.patch
 
 BuildRequires: gcc-c++ git-core
 BuildRequires: libXi-devel libXtst-devel libX11-devel libXext-devel
-Requires: xdpyinfo
+
 
 %description
 Spacenavd is a free software replacement user-space driver (daemon) for
@@ -43,5 +43,8 @@ install -Dm644 doc/example-spnavrc %buildroot%_sysconfdir/spnavrc
 %_unitdir/%name.service
 
 %changelog
+* Tue May 19 2026 Sergey Palcheh <minergenon@altlinux.org> 1.3.1-alt2
+- spec cleanup
+
 * Fri Mar 21 2025 Sergey Palcheh <minergenon@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
