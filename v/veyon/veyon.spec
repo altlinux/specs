@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.10.2
-Release: alt4
+Release: alt5
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -34,6 +34,7 @@ BuildRequires: gcc-c++ make cmake
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-httpserver-devel
 BuildRequires: libjpeg-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzo2-devel
@@ -130,6 +131,10 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Fri May 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt5
+- Enable the WebAPI plugin (Closes: 56194).
+- Configurator: hide x11vnc parameters label in standard view (Closes: 52928).
+
 * Fri May 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt4
 - Configurator: auto-increment default names for new objects (Closes: 41420).
 
