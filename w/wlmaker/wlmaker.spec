@@ -1,6 +1,6 @@
 Name:    wlmaker
-Version: 0.7.1
-Release: alt2
+Version: 0.8
+Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
 License: Apache-2.0
@@ -8,20 +8,11 @@ Group:   Graphical desktop/Window Maker
 Url:     https://github.com/phkaeser/wlmaker
 
 Source0: %name-%version.tar
+
 # To get required submodule version open github version tag,
 # go to submodules/libbase @ <hash>, Code -> Download ZIP,
 # and extract it to .gear/submodules/.
-#
-# Additionally there were appeared another bundled library source ceratinly
-# configured as upstream wrote:
-# > For wlmaker, the library is configured to permit much longer lines, and use
-# > the heap for dynamic sizing.
-# not sure is it wrong choise of required data structure or author strongly know
-# what to do, but from our side linkage with existing shared library raises
-# runtime error.
 Source1: submodules.tar
-
-Patch: %name-%version-alt-fix-xkb-config.patch
 
 BuildRequires(pre): rpm-build-cmake ctest
 BuildRequires: pkgconfig(cairo)
@@ -35,6 +26,7 @@ BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: pkgconfig(xcb-ewmh)
 BuildRequires: pkgconfig(libxdg-basedir)
+BuildRequires: pkgconfig(libinput)
 
 BuildRequires: flex doxygen
 
@@ -54,7 +46,7 @@ Key features:
 
 %prep
 %setup -a1
-%patch
+sed -i 's/XkbConfigurationFile/\/\/ XkbConfigurationFile/g' etc/Config.plist
 
 %build
 %cmake
@@ -65,9 +57,7 @@ Key features:
 
 %check
 %ctest \
-%ifarch %ix86
 -E backend_test
-%endif
 
 %files
 %doc *.md LICENSE
@@ -78,15 +68,20 @@ Key features:
 %_bindir/wlmcpugraph
 %_bindir/wlmmemgraph
 %_bindir/wlmnetgraph
+%_bindir/wlmbattery
 %_datadir/applications/*.desktop
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/%name
+%_datadir/metainfo/*.xml
 %_iconsdir/hicolor/48x48/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/*.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_sysconfdir/xdg/%name
 
 %changelog
+* Thu May 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.8-alt1
+- 0.7.1 -> 0.8
+
 * Thu Mar 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.7.1-alt2
 - Linked last wlroots version (closes: #58162).
 - Added another one vendored submodule.

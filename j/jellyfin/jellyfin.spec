@@ -2,7 +2,7 @@
 %define OutputPath64 server
 
 Name:    jellyfin
-Version: 10.11.8
+Version: 10.11.9
 Release: alt1
 
 Summary: The Free Software Media System - Server Backend & API
@@ -79,6 +79,7 @@ fi
 
 %preun
 %preun_systemd %name.service
+
 %files
 %doc *.md
 %_bindir/%name
@@ -88,5 +89,9 @@ fi
 %dir %attr(2770,%name,%name) %_sharedstatedir/%name
 
 %changelog
+* Fri May 22 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.9-alt1
+- New version.
+- Ignored ProtectHome setting removed from unit file (Closes: #58945).
+
 * Tue Apr 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.8-alt1
 - Initial build for Sisyphus(Closes: #45039, #55283).

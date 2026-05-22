@@ -1,7 +1,7 @@
 %define bname jellyfin
 
 Name:    %bname-web
-Version: 10.11.8
+Version: 10.11.9
 Release: alt1
 
 Summary: The Free Software Media System - Official Web Client
@@ -37,5 +37,8 @@ cp -Rfv dist/* %buildroot%_libexecdir/%bname/%name
 %_libexecdir/%bname/%name
 
 %changelog
+* Thu May 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.9-alt1
+- New version.
+
 * Mon Apr 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.8-alt1
 - Initial build for Sisyphus.
