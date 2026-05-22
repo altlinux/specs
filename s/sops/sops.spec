@@ -2,7 +2,7 @@
 %global import_path github.com/getsops/sops/v3
 
 Name: sops
-Version: 3.12.1
+Version: 3.13.1
 Release: alt1
 
 Group: Security/Networking
@@ -11,12 +11,12 @@ License: MPL-2.0 AND BSD-3-Clause AND Apache-2.0
 Url: https://getsops.io
 Vcs: https://github.com/getsops/sops.git
 Source0: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source1: vendor-%version.tar
 
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.0
+BuildRequires: rpm-build-golang golang >= 1.25.0
 
 %description
 SOPS is an editor of encrypted files that supports YAML, JSON, ENV, INI and
@@ -24,8 +24,7 @@ BINARY formats and encrypts with AWS KMS, GCP KMS, Azure Key Vault,
 HuaweiCloud KMS, age, and PGP.
 
 %prep
-%setup
-%patch -p1
+%setup -a 1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -56,5 +55,8 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri May 22 2026 Artyom Sinyugin <writers@altlinux.org> 3.13.1-alt1
+- New version 3.13.1.
+
 * Thu Mar 18 2026 Artyom Sinyugin <writers@altlinux.org> 3.12.1-alt1
 - Initial build 3.12.1.
