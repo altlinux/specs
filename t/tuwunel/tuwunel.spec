@@ -2,7 +2,7 @@
 %def_disable check
 
 Name:    tuwunel
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
@@ -57,7 +57,8 @@ export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
 %rust_test --workspace --exclude tuwunel
 
 %pre
-%sysusers_create_package %name rpm/sysusers
+groupadd -r -f %name
+useradd -r -g %name -c 'tuwunel Matrix homeserver' -d %_localstatedir/%name -s /sbin/nologin %name >/dev/null 2>&1 ||:
 
 %post
 %post_systemd %name.service
@@ -75,6 +76,10 @@ export TUWUNEL_DATABASE_PATH=/tmp/tuwunel-smoketest.db
 %doc LICENSE README.md
 
 %changelog
+* Fri May 22 2026 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- updated from 1.6.1 to 1.7.0
+- Fix create system user/group in %%pre via groupadd/useradd (ALT #59243).
+
 * Tue May 05 2026 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
 - 1.6.1.
 
