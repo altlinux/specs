@@ -4,7 +4,7 @@
 
 Name: greenmail
 Version: 2.1.8
-Release: alt1
+Release: alt2
 
 Summary: Email test server for integration tests
 License: Apache-2.0
@@ -14,6 +14,9 @@ Vcs: https://github.com/greenmail-mail-test/greenmail.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: greenmail
+Source2: greenmail-webapp
+Source3: greenmail-standalone.classpath
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -22,7 +25,6 @@ BuildRequires: jpackage-17-compat
 BuildRequires: maven-local
 BuildRequires: maven-war-plugin
 BuildRequires: jackson-bom
-BuildRequires: maven-shade-plugin
 BuildRequires: maven-failsafe-plugin
 BuildRequires: jakarta-mail
 BuildRequires: angus-mail
@@ -52,6 +54,16 @@ IMAPS) for integration tests and local development.
 Summary: GreenMail standalone launcher
 Group: Development/Java
 Requires: java-17-openjdk-headless
+Requires: angus-activation
+Requires: angus-mail
+Requires: jakarta-mail
+Requires: jersey-container-jdk-http
+Requires: jersey-hk2
+Requires: jersey-media-json-jackson
+Requires: jul-to-slf4j
+Requires: log4j
+Requires: log4j-slf4j
+Requires: slf4j
 
 %description standalone
 Standalone GreenMail launcher with HTTP API support.
@@ -87,6 +99,7 @@ GreenMail integration helpers for JUnit 5 tests.
 
 # inject-maven-plugin is not packaged in ALT.
 %pom_remove_plugin de.m3y.maven:inject-maven-plugin greenmail-core/pom.xml
+%pom_remove_plugin org.apache.maven.plugins:maven-shade-plugin greenmail-standalone/pom.xml
 %pom_remove_plugin -r -f org.codehaus.mojo:keytool-maven-plugin
 %pom_remove_plugin -r -f :maven-enforcer-plugin
 
@@ -109,240 +122,17 @@ sed -i 's|<artifactId>jakarta.mail</artifactId>|<artifactId>angus-mail</artifact
 
 install -Dpm0644 greenmail-webapp/target/greenmail-webapp-%version.war \
   %buildroot%greenmail_webapp_dir/greenmail-webapp.war
+install -Dpm0644 %SOURCE3 \
+  %buildroot%_greenmail_standalone_dir/greenmail-standalone.classpath
 
-install -Dpm0755 /dev/stdin %buildroot%_bindir/%name <<'EOF'
-#!/bin/sh
-JAR="%_greenmail_standalone_dir/greenmail-standalone.jar"
-JAVA_EXTRA=""
+install -d %buildroot%_bindir
+sed -e 's|@GREENMAIL_STANDALONE_DIR@|%_greenmail_standalone_dir|g' \
+  %SOURCE1 > %buildroot%_bindir/%name
+chmod 0755 %buildroot%_bindir/%name
 
-usage() {
-    echo "Usage: greenmail [JAVA_OPTS]" >&2
-    echo "  Example: greenmail -Dgreenmail.setup.test.smtp -Dgreenmail.setup.test.api" >&2
-    echo "  Env var: GREENMAIL_STANDALONE_JAVA_OPTS='-Dgreenmail.setup.test.all'" >&2
-}
-
-while [ $# -gt 0 ]; do
-    case "$1" in
-        --java-opt)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            JAVA_EXTRA="${JAVA_EXTRA} $2"
-            shift 2
-            ;;
-        --help|-h)
-            usage
-            exit 0
-            ;;
-        --)
-            shift
-            break
-            ;;
-        -D*|-X*|-XX:*|-agentlib:*|-agentpath:*|-javaagent:*)
-            JAVA_EXTRA="${JAVA_EXTRA} $1"
-            shift
-            ;;
-        *)
-            break
-            ;;
-    esac
-done
-
-GM_JAVA_OPTS="${GREENMAIL_STANDALONE_JAVA_OPTS:-}"
-if [ -n "$JAVA_EXTRA" ]; then
-    JAVA_EXTRA=${JAVA_EXTRA# }
-    if [ -n "$GM_JAVA_OPTS" ]; then
-        GM_JAVA_OPTS="$GM_JAVA_OPTS $JAVA_EXTRA"
-    else
-        GM_JAVA_OPTS="$JAVA_EXTRA"
-    fi
-fi
-
-if [ -n "$GM_JAVA_OPTS" ]; then
-    exec java $GM_JAVA_OPTS -jar "$JAR" "$@"
-fi
-
-exec java -jar "$JAR" "$@"
-EOF
-
-install -Dpm0755 /dev/stdin %buildroot%_bindir/greenmail-webapp <<'EOF'
-#!/bin/sh
-WAR="%greenmail_webapp_dir/greenmail-webapp.war"
-
-HTTP_PORT="${GREENMAIL_WEBAPP_HTTP_PORT:-8080}"
-SHUTDOWN_PORT="${GREENMAIL_WEBAPP_SHUTDOWN_PORT:-8005}"
-BIND_ADDR="${GREENMAIL_WEBAPP_BIND_ADDR:-127.0.0.1}"
-CONTEXT_PATH="${GREENMAIL_WEBAPP_CONTEXT_PATH:-/}"
-BASE_DEF="${XDG_RUNTIME_DIR:-/tmp}/greenmail-webapp-${USER:-$(id -un)}"
-CATALINA_BASE="${GREENMAIL_WEBAPP_BASE:-$BASE_DEF}"
-CMD="${GREENMAIL_WEBAPP_TOMCAT_CMD:-start}"
-
-JAVA_EXTRA=""
-CATALINA_EXTRA=""
-
-usage() {
-    echo "Usage: greenmail-webapp [OPTIONS]" >&2
-    echo "  --port N            HTTP port (default: 8080)" >&2
-    echo "  --shutdown-port N   Tomcat shutdown port (default: 8005)" >&2
-    echo "  --bind ADDR         Bind address (default: 127.0.0.1)" >&2
-    echo "  --context-path /p   Context path (default: /)" >&2
-    echo "  --base DIR          CATALINA_BASE directory" >&2
-    echo "  --java-opt OPT      Append OPT to JAVA_OPTS" >&2
-    echo "  --catalina-opt OPT  Append OPT to CATALINA_OPTS" >&2
-    echo "  --tomcat-command C  start|stop (default: start)" >&2
-}
-
-while [ $# -gt 0 ]; do
-    case "$1" in
-        --port|--http-port)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            HTTP_PORT="$2"
-            shift 2
-            ;;
-        --shutdown-port)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            SHUTDOWN_PORT="$2"
-            shift 2
-            ;;
-        --bind)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            BIND_ADDR="$2"
-            shift 2
-            ;;
-        --context-path)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            CONTEXT_PATH="$2"
-            shift 2
-            ;;
-        --base)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            CATALINA_BASE="$2"
-            shift 2
-            ;;
-        --java-opt)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            JAVA_EXTRA="${JAVA_EXTRA} $2"
-            shift 2
-            ;;
-        --catalina-opt)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            CATALINA_EXTRA="${CATALINA_EXTRA} $2"
-            shift 2
-            ;;
-        --tomcat-command)
-            [ $# -ge 2 ] || { usage; exit 2; }
-            CMD="$2"
-            shift 2
-            ;;
-        --help|-h)
-            usage
-            exit 0
-            ;;
-        -D*|-X*|-XX:*)
-            JAVA_EXTRA="${JAVA_EXTRA} $1"
-            shift
-            ;;
-        *)
-            usage
-            exit 2
-            ;;
-    esac
-done
-
-TOMCAT_SERVER=/usr/libexec/tomcat/server
-CATALINA_HOME="${CATALINA_HOME:-/usr/share/tomcat}"
-if [ ! -x "$TOMCAT_SERVER" ]; then
-    echo "greenmail-webapp: unable to find /usr/libexec/tomcat/server" >&2
-    echo "Install tomcat10 package." >&2
-    exit 1
-fi
-
-mkdir -p \
-    "$CATALINA_BASE/conf/Catalina/localhost" \
-    "$CATALINA_BASE/logs" \
-    "$CATALINA_BASE/temp" \
-    "$CATALINA_BASE/work" \
-    "$CATALINA_BASE/webapps"
-
-for conf in \
-    catalina.properties \
-    logging.properties \
-    web.xml \
-    context.xml
-
-do
-    if [ ! -f "$CATALINA_BASE/conf/$conf" ] && \
-       [ -f "$CATALINA_HOME/conf/$conf" ]; then
-        cp -f "$CATALINA_HOME/conf/$conf" "$CATALINA_BASE/conf/$conf"
-    fi
-done
-
-case "$CONTEXT_PATH" in
-    /) CTX_FILE="ROOT.xml" ;;
-    /*) CTX_FILE="${CONTEXT_PATH#/}.xml" ;;
-    *)
-        echo "greenmail-webapp: context path must start with /" >&2
-        exit 2
-        ;;
-esac
-
-cat > "$CATALINA_BASE/conf/server.xml" <<EOT
-<Server port="$SHUTDOWN_PORT" shutdown="SHUTDOWN">
-  <Service name="Catalina">
-    <Connector
-      port="$HTTP_PORT"
-      address="$BIND_ADDR"
-      protocol="HTTP/1.1"
-      connectionTimeout="20000"
-      redirectPort="8443" />
-    <Engine name="Catalina" defaultHost="localhost">
-      <Host name="localhost" appBase="webapps"
-            autoDeploy="true" unpackWARs="true" />
-    </Engine>
-  </Service>
-</Server>
-EOT
-
-cat > "$CATALINA_BASE/conf/Catalina/localhost/$CTX_FILE" <<EOT
-<Context docBase="$WAR" />
-EOT
-
-if [ -n "${GREENMAIL_WEBAPP_JAVA_OPTS:-}" ]; then
-    if [ -n "${JAVA_OPTS:-}" ]; then
-        JAVA_OPTS="$JAVA_OPTS ${GREENMAIL_WEBAPP_JAVA_OPTS}"
-    else
-        JAVA_OPTS="${GREENMAIL_WEBAPP_JAVA_OPTS}"
-    fi
-fi
-
-if [ -n "$JAVA_EXTRA" ]; then
-    JAVA_EXTRA=${JAVA_EXTRA# }
-    if [ -n "${JAVA_OPTS:-}" ]; then
-        JAVA_OPTS="$JAVA_OPTS $JAVA_EXTRA"
-    else
-        JAVA_OPTS="$JAVA_EXTRA"
-    fi
-fi
-
-if [ -n "${GREENMAIL_WEBAPP_CATALINA_OPTS:-}" ]; then
-    if [ -n "${CATALINA_OPTS:-}" ]; then
-        CATALINA_OPTS="$CATALINA_OPTS ${GREENMAIL_WEBAPP_CATALINA_OPTS}"
-    else
-        CATALINA_OPTS="${GREENMAIL_WEBAPP_CATALINA_OPTS}"
-    fi
-fi
-
-if [ -n "$CATALINA_EXTRA" ]; then
-    CATALINA_EXTRA=${CATALINA_EXTRA# }
-    if [ -n "${CATALINA_OPTS:-}" ]; then
-        CATALINA_OPTS="$CATALINA_OPTS $CATALINA_EXTRA"
-    else
-        CATALINA_OPTS="$CATALINA_EXTRA"
-    fi
-fi
-
-export CATALINA_HOME CATALINA_BASE JAVA_OPTS CATALINA_OPTS
-
-exec "$TOMCAT_SERVER" "$CMD"
-EOF
+sed -e 's|@GREENMAIL_WEBAPP_DIR@|%greenmail_webapp_dir|g' \
+  %SOURCE2 > %buildroot%_bindir/greenmail-webapp
+chmod 0755 %buildroot%_bindir/greenmail-webapp
 
 %files -f .mfiles-greenmail
 %doc --no-dereference README.md
@@ -350,6 +140,7 @@ EOF
 
 %files standalone -f .mfiles-greenmail-standalone
 %_bindir/greenmail
+%_greenmail_standalone_dir/greenmail-standalone.classpath
 
 %files webapp
 %_bindir/greenmail-webapp
@@ -358,5 +149,8 @@ EOF
 %files junit4 -f .mfiles-greenmail-junit4
 %files junit5 -f .mfiles-greenmail-junit5
 %changelog
+* Thu May 21 2026 Ivan Khanas <xeno@altlinux.org> 2.1.8-alt2
+- Unbandle dependencies from greenmail-standalone.
+
 * Wed Mar 18 2026 Ivan Khanas <xeno@altlinux.org> 2.1.8-alt1
 - Initial build for ALT.
