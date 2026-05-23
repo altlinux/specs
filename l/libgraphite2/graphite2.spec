@@ -5,29 +5,35 @@
 
 Name: lib%_name
 Version: 1.3.14
-Release: alt2.1
+Release: alt2.2
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
 License: LGPL-2.1-or-later or MPL-1.0
 Url: http://sourceforge.net/projects/silgraphite/
 
+Vcs: https://github.com/silnrsi/graphite.git
+
 %if_disabled snapshot
 Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
 %else
-# VCS: https://github.com/silnrsi/graphite.git
 Source: %_name-%version.tar
 %endif
 
 Obsoletes: %_name
-Provides: %_name = %version-%release
+Provides: %_name = %EVR
 
 # fc patch
 Patch1: graphite2-1.2.0-cmakepath.patch
 # lcc/e2k fixup
 Patch2: graphite2-1.3.13-alt-e2k-lcc123.patch
 Patch3: graphite2-1.3.13-alt-e2k-linking.patch
+# gcc-15
+Patch10: graphite2-1.3.14-up-gcc-15.patch
+# https://salsa.debian.org/fonts-team/graphite2/-/blob/master/debian/patches/nametabletest-NameRecord-bounds.diff?ref_type=heads
+Patch11: graphite2-1.3.14-deb-nametabletest-NameRecord-bounds.diff
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
 %ifarch %e2k
 BuildRequires: libstdc++5-devel-static
@@ -46,8 +52,8 @@ handles the "Rendering" aspect of writing system implementation.
 %package devel
 Summary: Files for developing with Graphite2
 Group: Development/C++
-Provides: %_name-devel = %version-%release
-Requires: %name = %version-%release
+Provides: %_name-devel = %EVR
+Requires: %name = %EVR
 
 %description devel
 Includes and definitions for developing with Graphite2.
@@ -57,13 +63,16 @@ Includes and definitions for developing with Graphite2.
 %patch1 -p1 -b .cmake
 %patch2 -p1 -b .e2k-lcc123
 %patch3 -p2 -b .e2k-linking
+%patch10 -p1 -b .gcc-15
+%patch11 -p1 -b .nametabletest
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake -DGRAPHITE2_COMPARE_RENDERER=OFF \
-	-DCMAKE_SHARED_LINKER_FLAGS=$LIBS \
-	-DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+    -DCMAKE_SHARED_LINKER_FLAGS=$LIBS \
+    -DPYTHON_EXECUTABLE:FILEPATH=%_bindir/python3 \
+    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%nil
 %cmake_build
 
 %if_enabled docs
@@ -75,7 +84,7 @@ sed -i -e 's!<a id="id[a-z]*[0-9]*"></a>!!g' BUILD/doc/manual.html
 %cmake_install
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
+%ctest
 
 %files
 %_libdir/%name.so.*
@@ -92,6 +101,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2.2
+- fixed build with gcc-15
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2.1
 - rebuild with new cmake macros
 
