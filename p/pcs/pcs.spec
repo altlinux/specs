@@ -4,8 +4,8 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.12.2
-Release:       alt1
+Version:       0.12.2.277
+Release:       alt0.1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -18,7 +18,6 @@ Source1:       pyagentx-v%pyagentx_version.tar.gz
 Source2:       pcsd
 Source3:       known-hosts
 Source4:       pcsd.gemspec
-Patch:         ruby-install.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
@@ -62,11 +61,12 @@ BuildRequires: gem(rackup)
 %add_python3_req_skip pyagentx
 Requires:      python3-module-pcs = %version
 Requires:      python3-module-snmp = %version
-Requires:      gem(pcsd) = 0.12.2
+Requires:      gem(pcsd) = 0.12.2.277
 Obsoletes:     pcs-pcsd < %EVR
 Provides:      pcs-pcsd = %EVR
 
 %ruby_ignore_names pcs
+%ruby_use_gem_version %gemname:%version
 
 %description
 Pacemaker/Corosync configuration system with remote access.
@@ -99,12 +99,12 @@ agent (snmpd).
 
 
 %package       -n gem-pcsd
-Version:       0.12.2
-Release:       alt1
+Version:       0.12.2.277
+Release:       alt0.1
 Summary:       Pacemaker/Corosync configuration system service
 Group:         Development/Ruby
 
-Provides:      gem(pcsd) = 0.12.2
+Provides:      gem(pcsd) = 0.12.2.277
 Requires:      gem(backports)
 Requires:      gem(childprocess)
 Requires:      gem(ethon)
@@ -123,14 +123,14 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 
 %if_enabled    doc
 %package       -n gem-pcsd-doc
-Version:       0.12.2
-Release:       alt1
+Version:       0.12.2.277
+Release:       alt0.1
 Summary:       Pacemaker/Corosync configuration system service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pcsd
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(pcsd) = 0.12.2
+Requires:      gem(pcsd) = 0.12.2.277
 
 %description   -n gem-pcsd-doc
 Pacemaker/Corosync configuration system service documentation files.
@@ -145,14 +145,14 @@ Pacemaker/Corosync gui/cli configuration system and daemon.
 
 %if_enabled    devel
 %package       -n gem-pcsd-devel
-Version:       0.12.2
-Release:       alt1
+Version:       0.12.2.277
+Release:       alt0.1
 Summary:       Pacemaker/Corosync configuration system service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pcsd
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pcsd) = 0.12.2
+Requires:      gem(pcsd) = 0.12.2.277
 Requires:      gem(bundler)
 Requires:      gem(io-console)
 Requires:      gem(json)
@@ -174,7 +174,6 @@ Pacemaker/Corosync gui/cli configuration system and daemon.
 
 %prep
 %setup
-%autopatch
 cp %SOURCE1 rpm
 mkdir -p pcs_bundled/src
 echo %version > .tarball-version
@@ -185,12 +184,10 @@ cp %SOURCE4 pcsd/
 %autoreconf
 export PATH=/sbin:$PATH
 %configure \
-    --with-distro=fedora \
     --localstatedir=%_var \
     --enable-local-build \
     --enable-use-local-cache-only \
     --enable-individual-bundling \
-    --disable-install-ruby-code \
     PYTHON=%__python3 \
     ENABLE_DOWNLOAD=false \
     INSTALL_EMBEDDED_GEMS=false \
@@ -222,7 +219,7 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %ruby_test
 
 %post
-%post_service pcsd
+%post_service_posttrans_restart pcsd
 
 %preun
 %preun_service pcsd
@@ -237,7 +234,8 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %doc CHANGELOG.md COPYING README.md
 %_bindir/pcsd
 %_sbindir/pcs
-%_man8dir/*.*
+%_man8dir/pcs.*
+%_man8dir/pcsd.*
 %exclude %_man8dir/pcs_snmp_agent.*
 %_sysconfdir/bash_completion.d/pcs
 %_sbindir/pcsd
@@ -274,6 +272,11 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri May 22 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2.277-alt0.1
+- ^ 0.12.2 -> 0.12.2p277
+- ! fixed post service for pcsd to post_trans restart
+- - cropped out unnecessary patch
+
 * Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2-alt1
 - ^ 0.11.6 -> 0.12.2
 
