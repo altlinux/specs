@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.10.2
-Release: alt6
+Version: 4.10.3
+Release: alt1
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -131,6 +131,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Sat May 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.3-alt1
+- New version.
+
 * Sat May 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.2-alt6
 - Demo: don't lock the master computer when
   sharing a user screen fullscreen (Closes: 41102).
