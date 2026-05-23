@@ -1,6 +1,6 @@
 Name: blobby
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Volley-ball game
 Group: Games/Other
@@ -10,6 +10,7 @@ Url: http://blobbyvolley.de
 VCS: https://github.com/danielknobe/blobbyvolley2
 
 Source0: %name-%version.tar
+Patch: LinkedList-1.1.1.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-devel libGLU-devel libglvnd-devel unzip
@@ -24,6 +25,7 @@ Blobby Volley 2 is the continuation of this lovely game.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -DOpenGL_GL_PREFERENCE=GLVND .
@@ -41,6 +43,9 @@ Blobby Volley 2 is the continuation of this lovely game.
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat May 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt2
+- fixed FTBFS
+
 * Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt1
 - 1.0 -> 1.1.1
 - removed patchs
