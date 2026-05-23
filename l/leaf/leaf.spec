@@ -1,6 +1,6 @@
 Name:     leaf
-Version:  1.22.0
-Release:  alt2
+Version:  1.22.3
+Release:  alt1
 
 Summary:  Terminal Markdown previewer with GUI-like experience
 License:  MIT
@@ -47,6 +47,9 @@ install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Sat May 23 2026 Alexei Mezin <alexvm@altlinux.org> 1.22.3-alt1
+- New version
+
 * Fri May 15 2026 Alexei Mezin <alexvm@altlinux.org> 1.22.0-alt2
 - Rename main executable to avoid file name conflicts
 
