@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.15.3
-Release: alt1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -214,14 +214,12 @@ cmake \
 %if %_lib == lib64
 	-DLIB_SUFFIX=64 \
 %endif
-	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
 	-DPCRE_INCLUDE_DIR:STRING="%_includedir/pcre" \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DPOCO_UNBUNDLED:BOOL=ON \
 	.
 %make_build VERBOSE=1
@@ -305,6 +303,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Sat May 23 2026 Alexei Takaseev <taf@altlinux.org> 1.15.3-alt2
+- Fix build with debuginfo
+
 * Thu May 21 2026 Alexei Takaseev <taf@altlinux.org> 1.15.3-alt1
 - 1.15.3
 
