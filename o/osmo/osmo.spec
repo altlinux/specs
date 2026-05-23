@@ -1,22 +1,32 @@
+%def_enable snapshot
 %def_enable printing
 %def_enable backup
 %define ver_micro %nil
 
 Name: osmo
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: Personal organizer
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Office
-Url: http://clayo.org/osmo/
+Url: https://sourceforge.net/projects/osmo-pim
 
-Source: http://downloads.sourceforge.net/%name-pim/%name-%version%ver_micro.tar.gz
+%if_disabled snapshot
+Source: https://downloads.sourceforge.net/%name-pim/%name-%version%ver_micro.tar.gz
+%else
+Source: %name-%version%ver_micro.tar
+%endif
+Patch1: %name-0.4.4-alt-incompatible-pointer-types.patch
 
-%define gtk_ver 3.10
+Vcs: https://git.code.sf.net/p/osmo-pim/osmo.git
+
+%define gtk_ver 3.24.0
+%define webkit_ver 2.8
 
 BuildRequires: libgtk+3-devel >= %gtk_ver libgspell-devel libxml2-devel
-BuildRequires: libnotify-devel libical-devel libicu-devel libwebkit2gtk-devel
+BuildRequires: libnotify-devel libical-devel libicu-devel
+BuildRequires: pkgconfig(webkit2gtk-4.1) >= %webkit_ver
 %{?_enable_backup:BuildRequires: libgringotts-devel libarchive-devel}
 
 %description
@@ -29,12 +39,14 @@ meet user preferences.
 
 %prep
 %setup -n %name-%version%ver_micro
+%patch1 -b .ipt
 
 %build
 %autoreconf
 %configure \
-	%{?_enable_backup:--enable-backup=yes} \
-	%{?_enable_printing:--enable-printing}
+    %{?_enable_backup:--enable-backup=yes} \
+    %{?_enable_printing:--enable-printing}
+%nil
 %make_build
 
 %install
@@ -53,6 +65,10 @@ meet user preferences.
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Sat May 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt2
+- update to last commit (RELEASE_0_4_2-53-g125cfe6)
+- fixed build with gcc-15
+
 * Mon Jul 13 2020 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 

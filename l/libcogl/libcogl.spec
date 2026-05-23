@@ -32,12 +32,14 @@
 
 Name: libcogl
 Version: %ver_major.8
-Release: alt2
+Release: alt2.1
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
 License: MIT
 Url: http://www.clutter-project.org/
+
+Vcs: https://gitlab.gnome.org/GNOME/cogl.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.tar.xz
@@ -113,7 +115,7 @@ options we are interested in for the future.
 %package devel
 Summary: %oname development environment
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libclutter-devel < 1.8.0
 
 %description devel
@@ -122,7 +124,7 @@ Header files and libraries for building and developing apps with %oname.
 %package gir
 Summary: GObject introspection data for the %oname
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Conflicts: libclutter-gir < 1.8.0
 
 %description gir
@@ -132,7 +134,7 @@ GObject introspection data for the %oname
 Summary: GObject introspection devel data for the %oname
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release %name-devel = %version-%release
+Requires: %name-gir = %EVR %name-devel = %EVR
 Conflicts: libclutter-gir-devel < 1.8.0
 
 %description gir-devel
@@ -150,7 +152,7 @@ Contains developer documentation for %oname.
 %package -n gst-plugins-%oname%gst_api_ver
 Summary: Cogl plugin for Gstreamer-1.0
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gst-plugins-%oname%gst_api_ver
 This package provides Cogl plugin for Gstreamer (1.0 API version)
@@ -167,27 +169,28 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %endif
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure  \
-	--disable-static \
-	%{subst_enable profile} \
-	%{subst_enable cairo} \
-	%{subst_enable glib} \
-	%{?_enable_cogl_pango:--enable-cogl-pango} \
-	%{?_enable_examples_install:--enable-examples-install} \
-	%{?_enable_apidocs:--enable-gtk-doc} \
-	--enable-introspection \
-	%{subst_enable gl} \
-	%{subst_enable gles2} \
-	%{?_enable_kms_egl:--enable-kms-egl-platform } \
-	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
-	%{?_enable_wayland_server:--enable-wayland-egl-server} \
-	%{?_enable_xlib_egl:--enable-xlib-egl-platform} \
-	%{?_enable_gst:--enable-cogl-gst} \
-	%{subst_enable deprecated} \
-	%{?_disable_unit_tests:--enable-unit-tests=no} \
-	--with-gles2-libname=%gles2_libname
-
+    --disable-static \
+    %{subst_enable profile} \
+    %{subst_enable cairo} \
+    %{subst_enable glib} \
+    %{?_enable_cogl_pango:--enable-cogl-pango} \
+    %{?_enable_examples_install:--enable-examples-install} \
+    %{?_enable_apidocs:--enable-gtk-doc} \
+    --enable-introspection \
+    %{subst_enable gl} \
+    %{subst_enable gles2} \
+    %{?_enable_kms_egl:--enable-kms-egl-platform } \
+    %{?_enable_wayland_egl:--enable-wayland-egl-platform} \
+    %{?_enable_wayland_server:--enable-wayland-egl-server} \
+    %{?_enable_xlib_egl:--enable-xlib-egl-platform} \
+    %{?_enable_gst:--enable-cogl-gst} \
+    %{subst_enable deprecated} \
+    %{?_disable_unit_tests:--enable-unit-tests=no} \
+    --with-gles2-libname=%gles2_libname
+%nil
 %make_build
 
 %install
@@ -223,6 +226,9 @@ This package provides Cogl plugin for Gstreamer (1.0 API version)
 %{?_disable_examples_install:%exclude %_datadir/cogl/examples-data}
 
 %changelog
+* Sat May 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt2.1
+- rebuilt with gcc-15 and -std=gnu17
+
 * Thu Jul 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt2
 - E2K: fixed ftbfs (vseleznv@)
 - armh: fixed ftbfs (sbolshakov@)

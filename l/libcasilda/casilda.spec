@@ -3,11 +3,12 @@
 
 %define _name casilda
 %define namespace Casilda
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver_major 1
 %define api_ver 1.0
 %define sover 0
 
+%def_enable dmabuf
 %def_enable introspection
 %def_enable vala
 %def_enable doc
@@ -15,7 +16,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Wayland compositor widget for GTK4
@@ -45,6 +46,7 @@ BuildRequires: pkgconfig(wlroots-%wlr_api_ver)
 BuildRequires: pkgconfig(wayland-protocols) >= %wp_ver
 BuildRequires: pkgconfig(xkbcommon-x11) >= %xkb_ver
 BuildRequires: pkgconfig(x11-xcb)
+BuildRequires: pkgconfig(libdrm)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_doc:BuildRequires: gi-docgen}
@@ -110,6 +112,7 @@ the functionality of the %_name library.
 
 %build
 %meson \
+    %{subst_enable_meson_bool dmabuf dmabuf} \
     %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool doc documentation}
 %nil
@@ -120,8 +123,9 @@ the functionality of the %_name library.
 %find_lang --output=%name.lang %_name-%api_ver
 
 mkdir -p %buildroot%_libexecdir/%_name
-# %__builddir/examples/{compositor,nested} segfaults
+# examples
 install -pD -m755  %__sourcedir/examples/*.{py,js} \
+    %__builddir/examples/{compositor,nested} \
     %buildroot%_libexecdir/%_name
 
 %check
@@ -154,6 +158,9 @@ install -pD -m755  %__sourcedir/examples/*.{py,js} \
 %endif
 
 %changelog
+* Sat May 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Apr 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
