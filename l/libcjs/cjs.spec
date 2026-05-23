@@ -1,11 +1,11 @@
-%define ver_major 128
+%define ver_major 140
 %define _name cjs
 %define api_ver 1.0
 
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: 140.0
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -15,7 +15,8 @@ Group: System/Libraries
 # The console module (modules/console.c)
 # Stack printer (cjs/stack.c)
 License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
-Url: https://github.com/linuxmint/cjs
+URL: https://github.com/linuxmint/cjs
+VCS: https://github.com/linuxmint/cjs
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -33,14 +34,16 @@ BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs128-devel
+BuildRequires: libmozjs140-devel
 BuildRequires: meson
 BuildRequires: pkgconfig(sysprof-capture-4)
 %if_with valgrind
 BuildRequires: valgrind
 %endif
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui}
-BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0}
+BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0 typelib(Gtk) = 4.0}
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk4)
 
 # for check
 BuildRequires: /proc dbus-tools-gui
@@ -60,6 +63,7 @@ Files for development with %name.
 
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
+%filter_from_provides /^typelib(GjsPrivate)/d
 
 %prep
 %setup
@@ -83,7 +87,7 @@ xvfb-run %meson_test
 %dir %_datadir/cjs-1.0
 %dir %_libdir/%_name/
 %dir %_libdir/%_name/girepository-1.0
-%_libdir/%_name/girepository-1.0/CjsPrivate-%api_ver.typelib
+%_libdir/%_name/girepository-1.0/GjsPrivate-%api_ver.typelib
 %doc COPYING NEWS README.md
 
 %files devel
@@ -98,6 +102,12 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Sat May 23 2026 Anton Midyukov <antohami@altlinux.org> 140.0-alt1
+- New version 140.0.
+- Build with gtk4 too.
+- Enable check.
+- filter provides "typelib(GjsPrivate)".
+
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 128.1-alt1
 - New version 128.1.
 
