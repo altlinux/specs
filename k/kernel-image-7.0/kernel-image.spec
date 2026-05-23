@@ -2,7 +2,7 @@ Name: kernel-image-7.0
 Release: alt1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.0
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -226,7 +226,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
-AutoReqProv: nocpp
+AutoReqProv: nocpp nopython nopython3
 %if "%sub_flavour" == "def"
 Provides: kernel-headers-modules-%kernel_latest = %version-%release
 %endif
@@ -471,7 +471,9 @@ for f in $KbuildFiles; do
 	[ -x "$f" ] && mode=755 || mode=644
 	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
 done
-cp -a scripts/gdb -t %buildroot%kbuild_dir/scripts
+cp -va	scripts/gdb \
+	scripts/livepatch \
+	-t %buildroot%kbuild_dir/scripts
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -599,6 +601,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat May 23 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.10-alt1
+- v7.0.10 (2026-05-23).
+- config: Enable CONFIG_LIVEPATCH=y.
+
 * Sun May 17 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.9-alt1
 - v7.0.9 (2026-05-17).
 
