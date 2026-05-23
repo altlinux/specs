@@ -19,7 +19,7 @@
 %global pyshortver 3%submajor
 
 # Controls if this version of python3 is standalone
-# Grenka, unset this macro (remove the line bellow) if you build the main one python3
+# Grenka, unset this macro (comment the line bellow) if you build the main one python3
 #define _python3_standalone .%submajor
 
 
@@ -100,8 +100,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.12
-Release: alt3
+Version: %{pybasever}.13
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -138,7 +138,6 @@ BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %add_python3_path %pylibdir
 #Do not recompile .py files with old python3
 %add_python3_compile_exclude %pylibdir
-%filter_from_requires /gdb/d
 Obsoletes: %name-module-gdb_libpython
 Provides: %name-module-gdb_libpython
 
@@ -1099,6 +1098,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu May 21 2026 Grigory Ustinov <grenka@altlinux.org> 3.13.13-alt1
+- Updated to upstream 3.13.13.
+- Brought back runtime dependency on gdbm.
+
 * Fri Apr 17 2026 kotopesutility <kotopesutility@altlinux.org> 3.13.12-alt3
 - Moved %%find_obsoletes to the script (thx to Ivan Zakharyaschev).
 
