@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 151.0
-Release: alt3
+Release: alt4
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -43,6 +43,9 @@ Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
 Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-hidden-by-window-deco.patch
 Patch009: 0009-Fix-OpenPGP-account-settings-buttons-clipped-when-pa.patch
 Patch010: 0010-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
+Patch011: 0011-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
+Patch012: 0012-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
+Patch013: 0013-Apply-chat-message-style-changes-to-already-open-con.patch
 ### End Patches
 
 Provides: mailclient
@@ -182,6 +185,9 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch8 -p2
 %patch9 -p2
 %patch10 -p2
+%patch11 -p2
+%patch12 -p2
+%patch13 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -370,6 +376,14 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Sat May 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt4
+- Stop the chat tooltip from resizing after it is shown when
+  buddy info arrives asynchronously (Closes: 45202).
+- Play the new-mail sound even when the desktop has event sounds
+  disabled (Closes: 39260).
+- Apply message-style changes to already-open chat conversations
+  without restart (Closes: 56121).
+
 * Fri May 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt3
 - Fix OpenPGP account settings buttons being
   clipped when the pane is narrow (Closes: 59272).
