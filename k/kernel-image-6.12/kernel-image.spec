@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.90
+%define kernel_sublevel	.91
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -225,7 +225,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
-AutoReqProv: nocpp
+AutoReqProv: nocpp nopython nopython3
 %if "%sub_flavour" == "def"
 Provides: kernel-headers-modules-%kernel_latest = %version-%release
 %endif
@@ -494,8 +494,6 @@ install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %endif
 
-%brp_strip_debug %modules_dir/kernel/lib/crypto/libcurve25519.ko
-
 %check
 banner check
 # First boot-test no matter have KVM or not.
@@ -596,6 +594,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat May 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.91-alt1
+- v6.12.91 (2026-05-23).
+- config: Enable CONFIG_LIVEPATCH=y.
+
 * Sun May 17 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.90-alt1
 - v6.12.90 (2026-05-17).
 
