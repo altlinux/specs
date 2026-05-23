@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
-%global commit_hash 29066c1
+%global commit_hash e5702ad
 
 Name: subtui
-Version: 2.14.2
+Version: 2.14.3
 Release: alt1
 Summary: A lightweight Subsonic TUI music player
 License: MIT
@@ -39,6 +39,9 @@ install -Dm 0755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat May 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.14.3-alt1
+- Updated to version 2.14.3.
+
 * Thu May 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.14.2-alt1
 - Updated to version 2.14.2.
 
