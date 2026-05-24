@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.32
+%define kernel_sublevel	.33
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -313,7 +313,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
-AutoReqProv: nocpp
+AutoReqProv: nocpp nopython nopython3
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -558,6 +558,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun May 24 2026 Alexei Takaseev <taf@altlinux.org> 6.18.33-alt1
+- v6.18.33 (2026-05-23).
+- config: Enable CONFIG_LIVEPATCH=y
+
 * Mon May 18 2026 Alexei Takaseev <taf@altlinux.org> 6.18.32-alt1
 - v6.18.32 (2026-05-17).
 
