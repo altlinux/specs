@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt7
+Release: alt8
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sun May 24 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt8
+- update docker, PBS, autoinstall
+- fix some typos
+
 * Fri Apr 03 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt7
 - fix FreeRADIUS (closes #58466, #58468, #58467, #58465, #58470, #58477, #58478)
 - fix some typos (closes #58480)
