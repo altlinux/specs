@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.9.1
+Version: 140.10.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -35,6 +35,7 @@ Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
+Patch005: 0005-MOZ-bug-2033279-encoding_rs-Rust-1.95.patch
 ### End Patches
 
 Provides: webclient
@@ -448,6 +449,35 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sun May 24 2026 Pavel Vasenkov <pav@altlinux.org> 140.10.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-6746 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-6747 Use-after-free in the WebRTC component
+  + CVE-2026-6748 Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6749 Information disclosure due to uninitialized memory in the Graphics: Canvas2D component
+  + CVE-2026-6750 Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-6751 Uninitialized memory in the Audio/Video: Web Codecs component
+  + CVE-2026-6752 Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6753 Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-6754 Use-after-free in the JavaScript Engine component
+  + CVE-2026-6757 Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-6759 Use-after-free in the Widget: Cocoa component
+  + CVE-2026-6761 Privilege escalation in the Networking component
+  + CVE-2026-6762 Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-6763 Mitigation bypass in the File Handling component
+  + CVE-2026-6764 Incorrect boundary conditions in the DOM: Device Interfaces component
+  + CVE-2026-6765 Information disclosure in the Form Autofill component
+  + CVE-2026-6766 Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6767 Other issue in the Libraries component in NSS
+  + CVE-2026-6769 Privilege escalation in the Debugger component
+  + CVE-2026-6770 Other issue in the Storage: IndexedDB component
+  + CVE-2026-6771 Mitigation bypass in the DOM: Security component
+  + CVE-2026-6772 Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-6776 Incorrect boundary conditions in the WebRTC: Networking component
+  + CVE-2026-6785 Memory safety bugs fixed in Firefox ESR 115.35, Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+  + CVE-2026-6786 Memory safety bugs fixed in Firefox ESR 140.10, Thunderbird ESR 140.10, Firefox 150 and Thunderbird 150
+
 * Sat Apr 11 2026 Pavel Vasenkov <pav@altlinux.org> 140.9.1-alt1
 - New ESR version.
 - Security fixes:
