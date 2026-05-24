@@ -1,7 +1,7 @@
 %define nameL com.georgefb.mangareader
 
 Name: mangareader
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Qt manga reader for local files
@@ -45,6 +45,9 @@ mv settings.kcfg %name.kcfg
 %_datadir/metainfo/%nameL.metainfo.xml
 
 %changelog
+* Sun May 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.1-alt1
+- 2.5.0 -> 2.5.1
+
 * Sun May 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt1
 - 2.4.0 -> 2.5.0
 - changed license
