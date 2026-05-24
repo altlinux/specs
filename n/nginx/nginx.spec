@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.1
+Version: 1.30.2
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -423,6 +423,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun May 24 2026 Anton Farygin <rider@altlinux.org> 1.30.2-alt1
+- 1.30.1 -> 1.30.2 (Fixes: CVE-2026-9256)
+
 * Mon May 18 2026 Anton Farygin <rider@altlinux.org> 1.30.1-alt1
 - 1.28.3 -> 1.30.1 (Fixes: CVE-2026-42926, CVE-2026-42945, CVE-2026-42946,
 - CVE-2026-42934, CVE-2026-40460, CVE-2026-40701, CVE-2026-27654, CVE-2026-27784,
