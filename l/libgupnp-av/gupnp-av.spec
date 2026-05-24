@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: libgupnp-av
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -140,6 +140,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Sun May 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.5-alt1
+- 0.14.5
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
 - 0.14.4
 

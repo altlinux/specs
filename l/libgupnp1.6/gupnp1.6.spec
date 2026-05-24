@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 %define meson_ver 0.54
 %define glib_ver 2.69
-%define gssdp_ver 1.6.2
+%define gssdp_ver 1.6.5
 %define soup_api_ver 3.0
 %define soup_ver 3.0.6
 
@@ -138,6 +138,9 @@ sed -i 's/-Werror/-Wno-error/g' meson.build
 
 
 %changelog
+* Sun May 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.10-alt1
+- 1.6.10
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.9-alt1
 - 1.6.9
 
