@@ -1,4 +1,4 @@
-%define commit_id d888bc3f79b4
+%define commit_id 89df288dd6ba
 
 %def_enable internal_absl
 
@@ -8,7 +8,7 @@
 %def_enable pipewire
 
 Name: libowt-tg
-Version: 4.3.0.14
+Version: 4.3.0.15
 Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
@@ -182,6 +182,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Thu May 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.15-alt1
+- build from git 89df288dd6ba (fix build with gcc 15: missing cstring include)
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.14-alt1
 - build from git d888bc3f79b4 (fix build with PipeWire >= 1.5.81)
 
