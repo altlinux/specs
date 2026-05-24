@@ -5,7 +5,7 @@
 %def_with python
 
 Name: tbb
-Version: 2022.3.0
+Version: 2023.0.0
 Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
@@ -177,6 +177,9 @@ fi
 %endif
 
 %changelog
+* Sun May 24 2026 Anton Farygin <rider@altlinux.org> 2023.0.0-alt1
+- 2022.3.0 -> 2023.0.0
+
 * Wed Dec 17 2025 Anton Farygin <rider@altlinux.org> 2022.3.0-alt1
 - 2022.2.0 -> 2022.3.0
 
