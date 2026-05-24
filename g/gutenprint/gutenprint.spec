@@ -3,7 +3,7 @@
 
 Name: gutenprint
 Version: 5.3.5
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 License: GPL-2.0-or-later
@@ -22,6 +22,7 @@ Patch1: gutenprint-5.2.9-alt-makefile.patch
 Patch2: gutenprint-alt-LFS.patch
 Patch3: gutenprint-alt-link-plugins-with-libraries.patch
 Patch4: gutenprint-alt-add-oki-mb472.patch
+Patch5: gutenprint-5.3.5-alt-pantum-p3300dn-backside.patch
 
 BuildRequires: chrpath
 BuildRequires: flex
@@ -125,6 +126,7 @@ Requires: gutenprint-cups-olivetti-ppds = %EVR
 Requires: gutenprint-cups-olmec-ppds = %EVR
 Requires: gutenprint-cups-olympus-ppds = %EVR
 Requires: gutenprint-cups-panasonic-ppds = %EVR
+Requires: gutenprint-cups-pantum-ppds = %EVR
 Requires: gutenprint-cups-pcl-ppds = %EVR
 Requires: gutenprint-cups-pcpi-ppds = %EVR
 Requires: gutenprint-cups-raven-ppds = %EVR
@@ -593,6 +595,18 @@ other UNIX-alike operating systems.
 
 This package contains panasonic PPDs for gutenprint-cups.
 
+%package cups-pantum-ppds
+Summary: PPDs for CUPS drivers for pantum and compatible printers
+Group: System/Configuration/Hardware
+Requires: gutenprint-cups = %EVR
+BuildArch: noarch
+
+%description cups-pantum-ppds
+Gutenprint is a package of high quality printer drivers for Linux and
+other UNIX-alike operating systems.
+
+This package contains pantum PPDs for gutenprint-cups.
+
 %package cups-pcl-ppds
 Summary: PPDs for CUPS drivers for pcl and compatible printers
 Group: System/Configuration/Hardware
@@ -804,6 +818,7 @@ This package contains xerox PPDs for gutenprint-cups.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch5 -p1
 rm -rf gutenprint/po/*.gmo
 install %SOURCE2 po/ru.po
 
@@ -1012,6 +1027,9 @@ fi
 %files cups-panasonic-ppds
 %_datadir/cups/model/Global/stp-panasonic*.5.3.ppd.gz
 
+%files cups-pantum-ppds
+%_datadir/cups/model/Global/stp-pantum*.5.3.ppd.gz
+
 %files cups-pcl-ppds
 %_datadir/cups/model/Global/stp-pcl*.5.3.ppd.gz
 
@@ -1064,6 +1082,11 @@ fi
 %_datadir/cups/model/Global/stp-xerox*.5.3.ppd.gz
 
 %changelog
+* Wed May 20 2026 Anton Farygin <rider@altlinux.org> 1:5.3.5-alt2
+- add Pantum P3300DN PCL XL driver with cupsBackSide: Rotated to fix
+  upside-down second page in duplex printing (closes: #59029).
+- new subpackage gutenprint-cups-pantum-ppds.
+
 * Tue Apr 15 2025 Constantin Sunzow <protvin@altlinux.org> 1:5.3.5-alt1
 - Split PPDs package by printer families.
 - Fix bug 53779.
