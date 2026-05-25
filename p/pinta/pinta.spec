@@ -1,11 +1,11 @@
-%define dotnet_version 9.0
+%define dotnet_version 10.0
 %define xdg_name com.github.PintaProject.Pinta
 
 %def_with prebuild
 
 Name: pinta
-Version: 3.1.1
-Release: alt2
+Version: 3.1.2
+Release: alt1
 
 Summary: An easy to use drawing and image editing program
 
@@ -14,8 +14,6 @@ Group: Graphics
 # the code is licensed under the MIT license while the icons are licensed as CC-BY
 License: MIT and CC-BY-3.0
 Url: http://pinta-project.com/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/PintaProject/Pinta/releases/download/%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -47,6 +45,10 @@ Pinta keeps things simple without sacrificing functionality.
 %__subst 's!PINTA_BUILD_OPTS =!PINTA_BUILD_OPTS = --source ./packages!' Makefile.am
 %__subst 's!lib_dir?.Name == "lib"!lib_dir?.Name == "%_lib"!' Pinta.Core/Managers/SystemManager.cs
 
+# change Tmds.DBus version because version 0.22.0 has vulnerability
+# https://github.com/advisories/GHSA-xrw6-gwf8-vvr9
+%__subst 's!Include="Tmds.DBus" Version="0.22.0"!Include="Tmds.DBus" Version="0.93.0"!' Directory.Packages.props
+
 %build
 %if_without prebuild
 # no certificates: https://bugzilla.altlinux.org/53633
@@ -69,13 +71,18 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=true
 %doc readme.md license-mit.txt license-pdn.txt
 %_bindir/%name
 %_libdir/%name/
-%_libdir/pkgconfig/%name.pc
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%{name}*
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sun May 24 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.2-alt1
+- new version 3.1.2
+- build with .NET 10
+- build with Tmds.DBus version 0.93.0 (fixes: CVE-2026-39959)
+- cleanup spec
+
 * Tue Feb 03 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.1-alt2
 - add requires: libadwaita, libgtk4
 
