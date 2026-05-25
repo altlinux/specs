@@ -1,11 +1,12 @@
 Name: python3-module-cached-ipaddress
-Version: 1.0.1
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Cache construction of ipaddress objects
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/cached-ipaddress/
+URL: https://pypi.org/project/cached-ipaddress
+VCS: https://github.com/bdraco/cached-ipaddress
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
@@ -17,6 +18,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+
+%python3_set_limited_api 3.12
 
 %description
 %summary
@@ -36,14 +39,14 @@ BuildRequires(pre): rpm-build-pyproject
 %check
 %pyproject_run_pytest -o=addopts= tests
 
-# extensions built against stable API, drop versioned ABI req
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %python3_sitelibdir/cached_ipaddress
 %python3_sitelibdir/cached_ipaddress-%version.dist-info
 
 %changelog
+* Mon May 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
+- 1.1.1 released
+
 * Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.1-alt2
 - fixed runtime deps
 
