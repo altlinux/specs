@@ -2,7 +2,7 @@
 
 Name: botan
 Version: 3.11.1
-Release: alt2
+Release: alt3
 
 Summary: A C++ Crypto Library
 License: BSD-2-Clause
@@ -67,6 +67,9 @@ touch src/build-data/arch/generic.txt
 %endif
 
 %build
+%ifarch loongarch64
+%add_optflags -mlsx
+%endif
 export CXXFLAGS="${CXXFLAGS:-%optflags}"
 
 python3 ./configure.py \
@@ -121,6 +124,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue May 26 2026 Ivan A. Melnikov <iv@altlinux.org> 3.11.1-alt3
+- NMU: fix FTBFS on loongarch64
+
 * Fri May 08 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.11.1-alt2
 - e2k build fix
 
