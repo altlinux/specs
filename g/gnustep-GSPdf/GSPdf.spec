@@ -2,7 +2,7 @@
 
 Name: gnustep-GSPdf
 Version: 0.5
-Release: alt7
+Release: alt8
 Summary: Postscript and Pdf Viewer for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -33,6 +33,7 @@ installed, GNUstep will recognize it and use it without further setup.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
+	CFLAGS="$CFLAGS -std=gnu17"
 	messages=yes \
 	debug=yes \
 	strip=no \
@@ -52,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 0.5-alt8
+- FTBFS: built with -std=gnu17.
+
 * Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.5-alt7
 - Remove redundant clang-devel for build
 
