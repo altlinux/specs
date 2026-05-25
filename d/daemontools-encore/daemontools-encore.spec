@@ -5,7 +5,7 @@
 Name: daemontools-encore
 Summary: Daemontools by DJB
 Version: 1.10
-Release: alt4
+Release: alt5
 License: Public domain
 Group: System/Servers
 Url: http://untroubled.org/daemontools-encore/
@@ -74,6 +74,8 @@ sed -i 's!/command/svc!/bin/svc!' svscanboot.sh
 sed -i 's!/service!/etc/daemontools.d!g' svscanboot.sh
 
 %build
+%add_optflags -std=gnu17
+export CFLAGS="%optflags"
 %make_build
 
 %install
@@ -126,6 +128,9 @@ fi
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon May 25 2026 Paul Wolneykien <manowar@altlinux.org> 1.10-alt5
+- Build the sources as GNU 17 C standard (-std=gnu17).
+
 * Thu Dec 26 2024 Paul Wolneykien <manowar@altlinux.org> 1.10-alt4
 - Fixed build.
 
