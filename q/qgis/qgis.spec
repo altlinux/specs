@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 4.0.2
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -99,7 +99,7 @@ BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: spatialindex-devel
 BuildRequires: libexiv2-devel
-BuildRequires: txt2tags
+BuildRequires: txt2tags-python3
 BuildRequires: libqwt6-qt6-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libprotobuf-lite-devel
@@ -430,6 +430,9 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %endif
 
 %changelog
+* Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt3
+- Rebuilt with txt2tags-python3.
+
 * Sat May 09 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt2
 - Rebuilt with grass 8.5.0.
 
