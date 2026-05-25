@@ -1,29 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-Name: deepseek-tui
-Version: 0.8.40
+Name: codewhale
+Version: 0.8.44
 Release: alt1
 
-Summary: Coding agent for DeepSeek models that runs in your terminal
+Summary: Agentic coding terminal
 License: MIT
 Group: Development/Tools
-Url: https://deepseek-tui.com/en
-Vcs: https://github.com/Hmbown/DeepSeek-TUI
+Url: https://codewhale.net/en
+Vcs: https://github.com/Hmbown/CodeWhale
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: config.toml
 Patch0: %name-%version-alt.patch
 
+# Was 'deepseek-tui' in the past and rebranded without incompatibility
+Provides: deepseek-tui
+Obsoletes: deepseek-tui
+
 BuildRequires: rust-cargo
 BuildRequires: libdbus-devel
 
 %description
-Terminal coding agent for DeepSeek V4. It runs from the deepseek
-command, streams reasoning blocks, edits local workspaces with approval
-gates, and includes an auto mode that chooses both model and thinking
-level per turn.
+DeepSeek-first agentic terminal for open source and open-weight coding
+models. It runs from the codewhale command, streams reasoning blocks,
+edits local workspaces with approval gates, and can auto-route each
+turn to the right DeepSeek model and thinking level.
 
 %prep
 %setup -a1
@@ -34,17 +38,21 @@ install -vpD %SOURCE2 .cargo/config.toml
 cargo build %_smp_mflags --release --offline
 
 %install
-install -vpD -m0755 target/release/deepseek -t %buildroot%_bindir
-install -vpD -m0755 target/release/deepseek-tui -t %buildroot%_bindir
-install -vpD -m0755 target/release/deepseek-app-server -t %buildroot%_bindir
+install -vpD -m0755 target/release/codewhale -t %buildroot%_bindir
+install -vpD -m0755 target/release/codewhale-tui -t %buildroot%_bindir
+install -vpD -m0755 target/release/codewhale-app-server -t %buildroot%_bindir
 
 %files
 %doc CHANGELOG.md LICENSE README.md
-%_bindir/deepseek
-%_bindir/deepseek-tui
-%_bindir/deepseek-app-server
+%_bindir/codewhale
+%_bindir/codewhale-tui
+%_bindir/codewhale-app-server
 
 %changelog
+* Mon May 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.44-alt1
+- Updated to 0.8.44.
+- Rebranded from DeepSeek-TUI to CodeWhale.
+
 * Fri May 22 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.40-alt1
 - Updated to 0.8.40.
 
