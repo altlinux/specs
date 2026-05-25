@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0.1
-Release: alt1
+Release: alt2
 
 Url: https://www.basealt.ru/alt-mobile
 
@@ -242,6 +242,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Mon May 25 2026 Andrew Savchenko <bircoph@altlinux.org> 11.0.1-alt2
+- Fix distro family name
+
 * Fri May 08 2026 Andrew Savchenko <bircoph@altlinux.org> 11.0.1-alt1
 - Update version for the bugfix release
 - Update os-release wrt wiki guidelines
