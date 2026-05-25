@@ -2,7 +2,7 @@
 
 Name: gnustep-back    
 Version: 0.32.0
-Release: alt1
+Release: alt2
 Summary: The GNUstep back-end library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ URL: http://www.gnustep.org
 # https://github.com/gnustep/libs-back
 Source: libs-back-%version.tar
 Patch1: gnustep-back-DejaVu-compatible-font.patch
+Patch2: 0001-Source-x11-scale.c.patch
 
 BuildRequires: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildRequires: libXmu-devel libICE-devel libXft-devel libGL-devel
@@ -45,6 +46,7 @@ This is develompent documentation for %name.
 %prep
 %setup -n libs-back-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -100,6 +102,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 0.32.0-alt2
+- FTBFS: upstream fix for GCC 15.
+
 * Wed Feb 12 2025 Andrey Cherepanov <cas@altlinux.org> 0.32.0-alt1
 - New version.
 
