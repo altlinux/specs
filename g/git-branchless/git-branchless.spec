@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: git-branchless
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 Summary: High-velocity, monorepo-scale workflow for Git
 License: MIT or Apache-2.0
@@ -79,8 +79,11 @@ cargo test --release -- \
 %_man1dir/git-branchless*.1*
 
 %changelog
+* Mon May 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.11.1-alt1
+- Update to v0.11.1 (2026-05-21).
+
 * Fri May 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.11.0-alt1
-- Update to v0.10.0 (2026-05-21).
+- Update to v0.11.0 (2026-05-21).
 
 * Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.10.0-alt3
 - NMU: fix FTBFS with rust 1.89.
