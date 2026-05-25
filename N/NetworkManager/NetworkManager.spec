@@ -19,7 +19,7 @@
 %else
 %def_disable ovs
 %endif
-%def_disable iwd
+%def_enable iwd
 
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests yes
@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.56.0
+Version: 1.56.1
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -649,6 +649,12 @@ fi
 %endif
 
 %changelog
+* Mon May 25 2026 Mikhail Efremov <sem@altlinux.org> 1.56.1-alt1
+- Enabled iwd support.
+- NM-prestart: Don't fail if /etc/net/sysctl.conf is absent
+  (closes: #58150).
+- Updated to 1.56.1.
+
 * Fri Feb 13 2026 Mikhail Efremov <sem@altlinux.org> 1.56.0-alt1
 - Moved the polkit conflict to daemon subpackage.
 - Updated to 1.56.0.
