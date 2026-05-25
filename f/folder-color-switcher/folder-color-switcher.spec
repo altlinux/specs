@@ -1,6 +1,6 @@
 Name: folder-color-switcher
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Folder Color Switcher extensions
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 
 %description
 Folder Color Switcher extensions for Caja and Nemo.
@@ -21,23 +21,28 @@ Folder Color Switcher extensions for Caja and Nemo.
 %package common
 Summary: Folder Color Switcher extensions common files
 Group: Graphical desktop/MATE
+
 %description common
 %summary.
 
 %package -n caja-%name
 Summary: Folder Color Switcher extension for Caja
 Group: Graphical desktop/MATE
+
 Requires: %name-common = %EVR
 Requires: python3-module-caja
-Requires: /usr/bin/caja
+Requires: %_bindir/caja
+
 %description -n caja-%name
 Allows you to change folder colors from the context menu under supported icon themes.
 
 %package -n nemo-%name
 Summary: Folder Color Switcher extension for Nemo
 Group: Graphical desktop/Other
+
 Requires: %name-common = %EVR
 Requires: nemo-python
+
 %description -n nemo-%name
 Allows you to change folder colors from the context menu under supported icon themes.
 
@@ -49,8 +54,8 @@ chmod -x COPYING.GPL3
 %make_build
 
 %install
-mkdir -p %buildroot
-cp -a usr %buildroot/
+mkdir -p %buildroot%prefix
+cp -a usr/* %buildroot%prefix
 %find_lang %name
 
 %files common -f %name.lang
@@ -64,6 +69,9 @@ cp -a usr %buildroot/
 %_datadir/nemo-python/extensions/nemo-%name.py
 
 %changelog
+* Sun May 24 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.1-alt3
+- Fixed spec.
+
 * Wed Apr 22 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.1-alt2
 - Added requires for Caja extension.
 
