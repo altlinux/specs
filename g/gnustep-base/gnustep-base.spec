@@ -7,7 +7,7 @@
 
 Name: gnustep-base
 Version: 1.31.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Source1: %name.init
 Patch1: %name-alt-objc2.patch
 Patch2: %name-use_system-wide_crypto-policies.patch
+Patch3: 0001-fix-signal-handler-for-dumping-internals-to-report-s.patch
 
 Requires: lib%name = %EVR
 
@@ -81,6 +82,7 @@ Development documentation for %name.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 %build
 %if_with objc2
@@ -178,6 +180,9 @@ fi
 %endif
  
 %changelog
+* Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.31.1-alt2
+- FTBFS: upstream fix for GCC 15.
+
 * Sat Mar 01 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.31.1-alt1
 - New version.
 
