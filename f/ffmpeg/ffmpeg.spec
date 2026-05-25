@@ -163,8 +163,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version: 8.0.1
-Release:	alt2
+Version: 8.1.1
+Release: alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -180,6 +180,7 @@ Patch2000: %name-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 BuildRequires: nasm
+BuildRequires: gcc-c++
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
@@ -188,7 +189,7 @@ BuildRequires:	yasm
 %{?_enable_ffplay:BuildRequires: libSDL2-devel}
 %{?_enable_bzlib:BuildRequires: bzlib-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
-%{?_enable_frei0r:BuildRequires: frei0r-devel}
+%{?_enable_frei0r:BuildRequires: frei0r-devel frei0r-plugins}
 %{?_enable_gnutls:BuildRequires: libgnutls-devel}
 %{?_enable_libaom:BuildRequires: libaom-devel >= 1.0.0}
 %{?_enable_libass:BuildRequires: libass-devel}
@@ -820,6 +821,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sun May 24 2026 Anton Farygin <rider@altlinux.org> 2:8.1.1-alt1
+- 8.0.1 -> 8.1.1
+
 * Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 2:8.0.1-alt2
 - built with libharfbuzz to enable drawtext support (closes: #56915)
 
