@@ -2,8 +2,8 @@
 %define oname2 org.gnome.gitlab.wwarner.Solitaire
 
 Name: gnome-games-solitaire
-Version: 50.1
-Release: alt2
+Version: 50.2
+Release: alt1
 
 Summary: GNOME Solitaire game
 License: GPL-3.0-or-later and LGPL-3.0-only
@@ -58,6 +58,9 @@ EOF
 %_datadir/%oname
 
 %changelog
+* Mon May 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.2-alt1
+- 50.1 -> 50.2
+
 * Thu May 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.1-alt2
 - updated license
 
