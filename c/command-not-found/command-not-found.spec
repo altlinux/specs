@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: command-not-found
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: Console assistant for ALT Linux
@@ -45,8 +45,14 @@ echo "After package removal, it is recommended to exit from all shells and resta
 %_sysconfdir/fish/conf.d/%name.fish
 %_sysconfdir/zshrc.d/%name.zsh
 %config(noreplace) %_sysconfdir/command-not-found/config
+%dir %_datadir/%name
+%dir %_datadir/%name/modules
+%_datadir/%name/modules/00-example
 
 %changelog
+* Mon May 16 2026 Anton Osipov <radiolamp@altlinux.org> 0.7-alt1
+- Added tests, improved functionality, refactored code.
+
 * Mon Mar 16 2026 Anton Osipov <radiolamp@altlinux.org> 0.6-alt1
 - Improved package sorting (Closes: 58094).
 - Added post and postun recommendation to restart $SHELL (Closes: 57241).
