@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: goodvibes
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: A Lightweight Radio Player
@@ -83,6 +83,9 @@ rm -rv docs/%name.readthedocs.io/_build/html/{.buildinfo,objects.inv}
 %endif
 
 %changelog
+* Sun May 24 2026 Alexander Kovalev <alexvk@altlinux.org> 0.8.4-alt1
+- New version 0.8.4.
+
 * Tue Nov 11 2025 Alexander Kovalev <alexvk@altlinux.org> 0.8.3-alt1
 - New version 0.8.3.
 
