@@ -2,7 +2,7 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0212
+Version: 2.0213
 Release: alt1
 
 Summary: Perl binding for libxml2
@@ -69,6 +69,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Mon May 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0213-alt1
+- NMU: new version
+
 * Thu May 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0212-alt1
 - NMU: new version
 
