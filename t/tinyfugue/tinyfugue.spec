@@ -1,15 +1,17 @@
 Name: tinyfugue
-Version: 5.0beta8
-Release: alt3
+Version: 5.2.2
+Release: alt1
 Summary: Console MUD client
 License: GPLv2
 Group: Games/Other
-Url: http://tinyfugue.sourceforge.net/
+Url: https://github.com/ingwarsw/tinyfugue
 Packager: %packager
 
 Source: %name-%version.tar
-Patch0: %name-5.0beta8-alt-extern.patch
-Patch1: %name-5.0beta8-alt-warning-fixes.patch
+Patch0: %%name-5.2.2-alt-remove-ICU_CFLAGS.patch
+
+# Automatically added by buildreq on Mon May 25 2026
+BuildRequires: libicu-devel libncurses-devel libpcre2-devel zlib-devel
 
 %description
 TinyFugue is a console MUD client with versatile scripting.
@@ -25,29 +27,23 @@ TinyFugue или tf - это свободный клиент для игр MUD
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p1
+%patch0 -p1
 
 %build
 %add_optflags -fcommon
-%configure
+./configure --prefix=%buildroot/usr
 %make
 
 %install
+%make install
 %define docdir %_docdir/%name-%version
 
-mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%docdir
-mkdir -p %buildroot%_datadir/tf-lib
-
-install -pm755 src/tf %buildroot/%_bindir/
-
-install -pm644 tf-lib/* %buildroot%_datadir/tf-lib
 
 install -pm644 CHANGES %buildroot%docdir/
 install -pm644 COPYING %buildroot%docdir/
 install -pm644 CREDITS %buildroot%docdir/
-install -pm644 README %buildroot%docdir/
+install -pm644 README.md %buildroot%docdir/
 
 %files
 %_bindir/*
@@ -58,6 +54,9 @@ install -pm644 README %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Mon May 25 2026 Andrey Bergman <vkni@altlinux.org> 5.2.2-alt1
+- Change upstream (Ken Keys is no longer developing it, new author Karol Lassak)
+
 * Sat Nov 02 2024 Andrey Bergman <vkni@altlinux.org> 5.0beta8-alt3
 - Fix various warnings popped up after gcc 14.2.1
 - Fix extern declaration.
