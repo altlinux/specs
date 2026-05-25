@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           rustnet
-Version:        1.2.0
+Version:        1.3.0
 Release:        alt1
 
 Summary:        A cross-platform network monitoring terminal UI tool
@@ -62,6 +62,9 @@ sed -i \
 %doc README.md CHANGELOG.md
 
 %changelog
+* Tue May 19 2026 Sergey Savelev <medovi@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Mon Apr 13 2026 Sergey Savelev <medovi@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 
