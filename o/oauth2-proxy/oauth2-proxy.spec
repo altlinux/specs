@@ -2,7 +2,7 @@
 %global import_path github.com/oauth2-proxy/oauth2-proxy
 
 Name: oauth2-proxy
-Version: 7.14.2
+Version: 7.15.2
 Release: alt1
 
 Group: Security/Networking
@@ -11,22 +11,21 @@ License: MIT
 Url: https://oauth2-proxy.github.io/oauth2-proxy
 Vcs: https://%import_path.git
 Source0: %name-%version.tar
-Source1: README.ALT
-Patch: %name-%version-%release.patch
+Source1: vendor-%version.tar
+Source2: README.ALT
 
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.6
+BuildRequires: rpm-build-golang golang >= 1.25.9
 
 %description
 A reverse proxy and static file server that provides authentication using Providers (Google,
 Keycloak, GitHub and others) to validate accounts by email, domain or group.
 
 %prep
-%setup
-%patch -p1
-cp -a %SOURCE1 .
+%setup -a 1
+cp -a %SOURCE2 .
 sed -i 's|^WorkingDirectory=.*|WorkingDirectory=/var/lib/oauth2-proxy|g' contrib/oauth2-proxy.service.example
 
 %build
@@ -50,6 +49,10 @@ install -m0644 contrib/%name.service.example %buildroot%_unitdir/%name.service
 install -m0644 contrib/%name.cfg.example %buildroot%_sysconfdir/%name/%name.cfg
 install -m0644 contrib/%{name}_autocomplete.sh %buildroot%_datadir/bash-completion/completions/%name
 
+%check
+export LDFLAGS="-X github.com/oauth2-proxy/oauth2-proxy/v7/pkg/version.VERSION=%version"
+%gotest
+
 %pre
 groupadd -r -f %name > /dev/null 2>&1 ||:
 useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "oauth2-proxy service" %name > /dev/null 2>&1 ||:
@@ -65,9 +68,16 @@ useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "oauth2-proxy se
 %_datadir/bash-completion/completions/%name
 %_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name/*
-%dir %attr(775, root, %name) %_localstatedir/%name
+%dir %attr(750, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri May 22 2026 Artyom Sinyugin <writers@altlinux.org> 7.15.2-alt1
+- New version 7.15.2.
+- Added support for trusted reverse proxy IPs via --trusted-proxy-ip.
+- Added --config-test option for configuration validation.
+- Added OIDC JWT signing algorithm allow-list, CSRF SameSite option and Unix socket mode support.
+- Tighten /var/lib/oauth2-proxy directory permissions from 755 to 750.
+
 * Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 7.14.2-alt1
 - New version 7.14.2.
 
