@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2026.05
-Release: alt3
+Release: alt4
 
 Url: https://altmobile.org
 
@@ -235,6 +235,9 @@ subst "s/Theme=.*/Theme=spinner-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Mon May 25 2026 Andrew Savchenko <bircoph@altlinux.org> 2026.05-alt4
+- Fix distro family name
+
 * Mon May 11 2026 Andrew Savchenko <bircoph@altlinux.org> 2026.05-alt3
 - Fix unquoted string
 
