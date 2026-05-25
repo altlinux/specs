@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    stplr-utils
-Version: 0.0.11
+Version: 0.0.13
 Release: alt1
 
 Summary: Utilities for working with stplr and Staplerfile
@@ -71,6 +71,9 @@ export IGNORE_SOURCES=1
 %_bindir/stplr-language-server
 
 %changelog
+* Mon May 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.13-alt1
+- New version 0.0.13.
+
 * Tue Mar 17 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.11-alt1
 - Initial build.
 
