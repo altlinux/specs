@@ -2,7 +2,7 @@
 
 Name:           amp
 Version:        0.7.1
-Release:        alt1
+Release:        alt2
 
 Summary:        A complete text editor for terminal
 License:        GPL-3.0
@@ -17,6 +17,8 @@ Patch:          %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires:      git-core
+BuildRequires: oniguruma-devel
+BuildRequires: libgit2-devel
 
 %description
 Amp is a modern text editor for the terminal.
@@ -30,12 +32,16 @@ for comfortable everyday use.
 %rust_prep
 
 %build
+export CFLAGS="-std=gnu17"
+export CC="gcc -std=gnu17"
 %rust_build
 
 %install
 %rust_install
 
 %check
+export CFLAGS="-std=gnu17"
+export CC="gcc -std=gnu17"
 %rust_test
 
 %files
@@ -43,5 +49,8 @@ for comfortable everyday use.
 %doc README.md CHANGELOG.md LICENSE
 
 %changelog
+* Tue May 19 2026 Sergey Savelev <medovi@altlinux.org> 0.7.1-alt2
+- Fixed build with gcc15 using -std=gnu17
+
 * Fri Nov 21 2025 Sergey Savelev <medovi@altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus.
