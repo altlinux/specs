@@ -1,5 +1,5 @@
 Name: picat
-Version: 3.9.7
+Version: 3.9.8
 Release: alt1
 
 Summary: Picat logical programming language
@@ -11,6 +11,7 @@ Packager: %packager
 Source: %name-%version.tar
 Patch0: %name-3.6.8-alt-cases-defaults.patch
 Patch1: %name-3.6.8-alt-DEFAULT-PICATPATH.patch
+Patch2: %name-3.9.8-alt-espresso-cofactor-false.patch
 
 BuildRequires: gcc-c++
 
@@ -35,6 +36,7 @@ Picat можно рассматривать как более экспресси
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %define libdir %_libdir/%name
@@ -73,6 +75,9 @@ install -pm644 README %buildroot%docdir/
 %libdir/preloaded/*.pi
 
 %changelog
+* Mon May 25 2026 Andrey Bergman <vkni@altlinux.org> 3.9.8-alt1
+- Version update.
+
 * Sat Mar 07 2026 Andrey Bergman <vkni@altlinux.org> 3.9.7-alt1
 - Version update.
 
