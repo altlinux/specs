@@ -2,7 +2,7 @@
 
 Name: gnustep-NeXTGo
 Version: 3.0
-Release: alt6
+Release: alt7
 Summary: NeXTGo is the classic Go game
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -34,6 +34,7 @@ environment.
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
+	CFLAGS="$CFLAGS -std=gnu17"
 	messages=yes \
 	debug=yes \
 	strip=no \
@@ -54,6 +55,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 3.0-alt7
+- FTBFS: built with -std=gnu17.
+
 * Wed Dec 18 2024 Andrey Cherepanov <cas@altlinux.org> 3.0-alt6
 - FTBFS fix (thanks alton@)
 
