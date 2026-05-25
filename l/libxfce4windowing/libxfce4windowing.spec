@@ -1,9 +1,10 @@
 %def_enable introspection
-%def_disable docs
+%def_enable vala
+%def_enable docs
 %define soname 0
 
 Name: libxfce4windowing
-Version: 4.20.5
+Version: 4.20.6
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -18,12 +19,13 @@ Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libgtk+3-devel libgdk-pixbuf-devel
 BuildRequires: libX11-devel libwnck3-devel libdisplay-info-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-client-devel wlr-protocols wayland-protocols
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_docs:BuildRequires: gtk-doc}
 # libxfce4windowing >= 4.19.6 breaks API/ABI whithout soname change
 Conflicts: xfdesktop < 4.19.5 xfce4-panel < 4.19.5 libxfce4panel-gtk3 < 4.19.5
 
@@ -66,28 +68,33 @@ Requires: %name-devel = %EVR
 GObject introspection devel data for %name.
 %endif
 
+%if_enabled vala
+%package vala 
+Summary: Vala bindings for %name
+Group: System/Libraries
+Requires: %name-devel = %EVR 
+BuildArch: noarch
+
+%description vala
+Vala bindings for %name.
+%endif
+
 %prep
 %setup
 #patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	--enable-wayland \
-	%{subst_enable introspection} \
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	-Dwayland=enabled \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_bool docs gtk-doc} \
+	-Dtests=false
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -97,9 +104,8 @@ GObject introspection devel data for %name.
 
 %files devel
 %if_enabled docs
-%doc %_datadir/gtk-doc/html/%name
+%doc %_datadir/gtk-doc/html/%{name}*
 %endif
-%dir %_includedir/xfce4/%name
 %_includedir/xfce4/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
@@ -112,7 +118,19 @@ GObject introspection devel data for %name.
 %_datadir/gir-1.0/*.gir
 %endif
 
+%if_enabled vala
+%files vala
+%_datadir/vala/vapi/%{name}*
+%endif 
+
 %changelog
+* Mon May 25 2026 Mikhail Efremov <sem@altlinux.org> 4.20.6-alt1
+- Explicitly disabled tests.
+- Enabled vala support
+- Enabled devel docs.
+- Switched to meson build.
+- Updated to 4.20.6.
+
 * Mon Dec 29 2025 Mikhail Efremov <sem@altlinux.org> 4.20.5-alt1
 - Updated to 4.20.5.
 
