@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 50
-%define beta .rc.1
+%define beta %nil
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -14,8 +14,8 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A quick previewer for Nautilus
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -122,6 +122,9 @@ GObject introspection devel data for the Sushi library.
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Mar 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50-alt0.9.rc.1
 - 50.rc.1
 

@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: gnome-user-share
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Gnome user file sharing
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* NEWS
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

@@ -8,11 +8,12 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-%def_enable examples
+# install: false
+%def_disable examples
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -147,6 +148,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.1-alt1
+- 1.9.1
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.0-alt1
 - 1.9.0
 
