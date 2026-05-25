@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: martchus-qtforkawesome
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Library that bundles ForkAwesome for use within Qt applications
@@ -131,5 +131,8 @@ that, at this time, Qt ForkAwesome's ABI changes with every release.
 %_datadir/martchus-qtquickforkawesome/cmake/martchus-qtquickforkawesomeTargets.cmake
 
 %changelog
+* Mon May 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Sat Nov 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
 - Initial build for Sisyphus

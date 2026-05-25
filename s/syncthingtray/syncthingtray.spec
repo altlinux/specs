@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: syncthingtray
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Desktop integration for Syncthing
@@ -235,12 +235,12 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/FullRepresentation.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/IconLabel.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/RecentChangesPage.qml
+%_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/SectionHeader.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/StatisticsView.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/TabButton.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/TinyButton.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/ToolBar.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/ToolButton.qml
-%_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/ToolTipTrigger.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/ToolTipView.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/TopLevelItem.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/TopLevelView.qml
@@ -252,6 +252,9 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %dir %_datadir/syncthingplasmoid/translations
 
 %changelog
+* Mon May 25 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.1-alt1
+- New version 2.1.1.
+
 * Thu May 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
 - New version 2.1.0.
 
