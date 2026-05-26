@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: codewhale
-Version: 0.8.44
+Version: 0.8.45
 Release: alt1
 
 Summary: Agentic coding terminal
@@ -49,6 +49,9 @@ install -vpD -m0755 target/release/codewhale-app-server -t %buildroot%_bindir
 %_bindir/codewhale-app-server
 
 %changelog
+* Tue May 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.45-alt1
+- Updated to 0.8.45.
+
 * Mon May 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.44-alt1
 - Updated to 0.8.44.
 - Rebranded from DeepSeek-TUI to CodeWhale.
