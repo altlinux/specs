@@ -3,7 +3,7 @@
 %def_with check
 
 Name: mylibrary
-Version: 5.0.1
+Version: 5.1
 Release: alt1
 
 Summary: Home librarian
@@ -94,7 +94,7 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
 %_desktopdir/ru.mail.bobilev_yury.MyLibrary.desktop
 %_iconsdir/hicolor/scalable/apps/mylibrary.svg
 %_libdir/libMLBookProc.so.2
-%_libdir/libMLBookProc.so.2.0.1
+%_libdir/libMLBookProc.so.2.1
 %_libdir/libMLPlugin.so.1
 %_libdir/libMLPlugin.so.1.0
 %_libdir/libXMLParserCPP.so.1
@@ -127,6 +127,9 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
 %_man3dir/*
 
 %changelog
+* Tue May 26 2026 Nikolay Strelkov <snk@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Mon May 11 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
 - New version 5.0.1.
 
