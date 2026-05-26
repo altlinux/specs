@@ -1,5 +1,5 @@
 Name:    OpenComposite
-Version: 1.0.1506
+Version: 1.0.1521
 Release: alt1
 
 Summary: Reimplementation of OpenVR, translating calls to OpenXR
@@ -39,6 +39,7 @@ they were native titles, without the use of SteamVR!
 mkdir -p %buildroot%_libdir/OpenComposite/
 mv -v %buildroot/usr/OpenComposite/bin/linux64/vrclient.so %buildroot%_libdir/OpenComposite/vrclient.so
 rm -rf %buildroot/usr/OpenComposite/bin/version.txt
+rm -rf %buildroot/usr/OpenComposite/openvrpaths.vrpath
 
 %files
 %doc LICENCE* LICENSE* README.*
@@ -46,6 +47,9 @@ rm -rf %buildroot/usr/OpenComposite/bin/version.txt
 %_libdir/%name/vrclient.so
 
 %changelog
+* Tue May 26 2026 Sergey Palcheh <minergenon@altlinux.org> 1.0.1521-alt1
+- new version (1.0.1521)
+
 * Sat Mar 15 2025 Sergey Palcheh <minergenon@altlinux.org> 1.0.1506-alt1
 - initial build for ALT Sisyphus
 
