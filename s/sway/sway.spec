@@ -1,5 +1,5 @@
 Name: sway
-Version: 1.11
+Version: 1.12
 Release: alt1
 Epoch:   1
 
@@ -18,6 +18,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libpam-devel
 BuildRequires: meson
+BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -28,13 +29,17 @@ BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(libinput) >= 1.26.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(pangocairo)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots-0.19)
+BuildRequires: pkgconfig(wlroots-0.20)
+BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xkbcommon) >= 1.5.0
 BuildRequires: scdoc
@@ -91,6 +96,9 @@ install -pm0644 -D Sway_Wallpaper_Gray.png %buildroot%_datadir/backgrounds/sway/
 %_man7dir/*
 
 %changelog
+* Mon May 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.12-alt1
+- 1.12 released
+
 * Mon Jun 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.11-alt1
 - 1.11 released
 
