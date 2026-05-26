@@ -1,5 +1,5 @@
 Name: xmp
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Extended Module Player for MOD/S3M/XM/IT/etc
@@ -40,6 +40,9 @@ Tracker (IT) files.
 %_man1dir/xmp.1*
 
 %changelog
+* Tue May 26 2026 Artem Kurashov <saahriktu@altlinux.org> 4.3.0-alt1
+- New 4.3.0 version.
+
 * Thu Dec 28 2023 Artem Kurashov <saahriktu@altlinux.org> 4.2.0-alt1
 - New version (4.2.0).
 - .spec cleanup.
