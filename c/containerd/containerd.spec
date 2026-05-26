@@ -3,7 +3,7 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%global commit      2976f38ccbfcda5ef1364d63d60b0a304e4bf94a
+%global commit      64b425cf570b3b8dd1d4cc46da7c1fce65c6651a
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -11,15 +11,13 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	2.3.0
+Version:	2.3.1
 Release:	alt1
 Summary:	A daemon to control runC
 
 Group:		Development/Other
 License:	Apache-2.0
 URL:		https://%import_path
-
-Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 Source2: %name.init
@@ -32,6 +30,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
 BuildRequires: libbtrfs-devel
 BuildRequires: libseccomp-devel
+BuildRequires: git
 
 Provides: docker-%name = %version-%release
 Obsoletes: docker-%name <= 1.0.0
@@ -87,6 +86,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Mon May 25 2026 Vladimir Didenko <cow@altlinux.org> 2.3.1-alt1
+- 2.3.1 (fixes: CVE-2026-46680, alt bug #59268)
+
 * Mon May 4 2026 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
