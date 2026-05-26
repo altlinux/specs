@@ -2,7 +2,7 @@
 
 Name: whisper-cpp
 Version: 1.8.4
-Release: alt1
+Release: alt2
 
 Summary: Port of OpenAI's Whisper model in C/C++
 Group: Sound
@@ -22,7 +22,8 @@ Patch4: whisper-cpp-1.8.4-alt-change-default-ggml-model.patch
 Requires: lib%name%soversion = %EVR
 Requires: %name-ggml-base
 
-BuildRequires: cmake gcc-c++ git libstdc++-devel-static ctest ccache
+# cuda won't build using gcc15, gcc14 is required
+BuildRequires: cmake gcc-c++ gcc14-c++ git libstdc++-devel-static ctest ccache 
 BuildRequires: libavdevice-devel libpostproc-devel libavfilter-devel libswscale-devel
 BuildRequires: libswresample-devel libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: vulkan-tools libvulkan-devel glslc
@@ -66,6 +67,7 @@ Contains ggml-base.bin model.
 %autopatch -p1
 
 %build
+export CUDAHOSTCXX=/usr/bin/g++-14
 %cmake -DWHISPER_BUILD_TESTS=ON \
     -DWHISPER_FFMPEG=ON \
     -DGGML_NATIVE=OFF \
@@ -73,6 +75,7 @@ Contains ggml-base.bin model.
     -DGGML_BACKEND_DIR=%_libdir/%name \
     -DDEFAULT_MODEL=%_datadir/%name/ggml-base.bin \
     -DGGML_VULKAN=ON \
+    -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-14 \
 %ifarch x86_64
     -DGGML_CPU_ALL_VARIANTS=ON \
     -DGGML_CUDA=ON \
@@ -121,6 +124,10 @@ export GGML_BACKEND_PATH=$PWD/%_cmake__builddir/bin/libggml-cpu.so
 %_datadir/%name/ggml-base.bin
 
 %changelog
+* Tue May 26 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.8.4-alt2
+- The nvcc-12.9 compiler doesn't support gcc15. gcc14 is required
+  to build with CUDA support.
+
 * Thu Mar 26 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.8.4-alt1
 - New version 1.8.4.
 - Added Vulkan GPU support.
