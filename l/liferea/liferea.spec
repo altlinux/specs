@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: liferea
-Version: 1.16.9
+Version: 1.16.10
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: xvfb-run gcc-c++ intltool
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.24.0
-BuildRequires: pkgconfig(glib-2.0) >= 2.50.0 pkgconfig(gio-2.0) >= 2.50.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(gio-2.0) >= 2.86.0
 BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(pango) >= 1.4.0
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
@@ -111,6 +111,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.10-alt1
+- 1.16.10
+
 * Sun May 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.9-alt1
 - 1.16.9
 

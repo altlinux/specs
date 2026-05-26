@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: helvum
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GTK-based patchbay for PipeWire
@@ -71,6 +71,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue May 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 

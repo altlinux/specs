@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gpu-profile-selector
 %define __name GPU_profile_selector
-%define ver_major 49
-%define ego_ver 24
+%define ego_ver 26
+%define ver_major %ego_ver
 %define beta %nil
 %define uuid %{__name}@lorenzo9904.gmail.com
 %define xdg_name org.gnome.shell.extensions.%__name
@@ -14,6 +14,7 @@
 Name: gnome-shell-extension-%_name
 Version: %ver_major
 Release: alt1
+Epoch: 1
 
 Summary: GPU profile selector extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -26,7 +27,7 @@ BuildArch: noarch
 
 %if_disabled snapshot
 #Source: %url/archive/%version%beta/%__name-%version%beta.tar.gz
-Source: %url/archive/%version%beta/gnome-%version%beta.tar.gz
+Source: %url/archive/v%version%beta/gnome-%version%beta.tar.gz
 %else
 Source: %__name-%version%beta.tar
 %endif
@@ -57,6 +58,10 @@ cp -a schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
 %doc README.md
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1:26-alt1
+- 26 (GNOME 50 supported)
+- switched to ego versioning
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt1
 - 49
 

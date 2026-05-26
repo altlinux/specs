@@ -10,7 +10,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -29,7 +29,7 @@ Patch1: %name-42.0-alt-format.patch
 
 Requires: lib%name = %EVR
 
-%define glib_ver 2.70
+%define glib_ver 2.76
 %define gtk3_ver 3.24.0
 %define gtk4_ver 4.6.0
 %define adwaita_ver 1.5
@@ -196,6 +196,9 @@ sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 45.6-alt1
+- 45.6
+
 * Sat Apr 04 2026 Yuri N. Sedunov <aris@altlinux.org> 45.4-alt1
 - 45.4
 
