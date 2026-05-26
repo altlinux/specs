@@ -6,7 +6,7 @@
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt3
+Release: alt3.1
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -58,6 +58,7 @@ echo %version > .tarball-version
 /usr/sbin/groupadd -rf %_group ||:
 /usr/sbin/useradd -M -r -s /dev/null -c "USB Multiplex Daemon" \
     -d %_localstatedir/empty -g %_group %_group &>/dev/null ||:
+/usr/sbin/usermod -a -G camera %_group &>/dev/null ||:
 
 %files
 %_sbindir/usbmuxd
@@ -67,6 +68,9 @@ echo %version > .tarball-version
 %doc AUTHORS README* NEWS
 
 %changelog
+* Tue May 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt3.1
+- %%pre: add "usbmux" user to "camera" group (ALT #59326)
+
 * Tue May 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt3
 - updated to 1.1.1-72-g3ded00c (fixed #272:
  "Path traversal vulnerability in SavePairRecord message handling"}
