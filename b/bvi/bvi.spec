@@ -1,5 +1,5 @@
 Name: bvi
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Display-oriented editor for binary files
@@ -7,7 +7,6 @@ License: GPLv2+
 Group: Editors
 
 Url: https://bvi.sourceforge.net/
-Packager: Artem Kurashov <saahriktu@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: libncurses-devel
@@ -40,8 +39,14 @@ sed -i "s@/usr/local/share/bmore.help@%_datadir/%name/bmore.help@" bmore.1
 %_man1dir/*.1*
 
 %changelog
+* Fri May 01 2026 Artem Kurashov <saahriktu@altlinux.org> 1.5.0-alt1
+- New 1.5.0 version.
+
+* Wed Nov 29 2023 Artem Kurashov <saahriktu@altlinux.org> 1.4.2-alt2
+- Tidying up the .spec file.
+
 * Sun May 07 2023 Artem Kurashov <saahriktu@altlinux.org> 1.4.2-alt1
-- New 1.4.2 version
+- New 1.4.2 version.
 
 * Fri May 05 2023 Artem Kurashov <saahriktu@altlinux.org> 1.4.0-alt1
-- Initial package
+- Initial package.
