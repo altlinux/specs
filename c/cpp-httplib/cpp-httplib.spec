@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define sover 0.45
+%define sover 0.46
 
 Name: cpp-httplib
-Version: 0.45.0
+Version: 0.46.0
 Release: alt1
 
 Summary: A C++11 single-file header-only cross platform HTTP/HTTPS library.
@@ -65,6 +65,9 @@ Header files for lib%name
 %_includedir/httplib.h
 
 %changelog
+* Tue May 26 2026 Nazarov Denis <nenderus@altlinux.org> 0.46.0-alt1
+- New version 0.46.0.
+
 * Sun May 17 2026 Nazarov Denis <nenderus@altlinux.org> 0.45.0-alt1
 - New version 0.45.0.
 
