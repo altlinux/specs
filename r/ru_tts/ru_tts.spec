@@ -2,7 +2,7 @@
 %define sover 7
 
 Name:    ru_tts
-Version: 6.2.4
+Version: 6.3.1
 Release: alt1
 Epoch: 1
 
@@ -47,6 +47,14 @@ Requires: librutts = %EVR
 %description -n librutts-devel
 %summary
 
+%package doc
+Summary: Doc files fore %name
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+%summary
+
 %prep
 %setup
 
@@ -59,10 +67,13 @@ Requires: librutts = %EVR
 %makeinstall_std DESTDIR=%buildroot PREFIX=%prefix
 
 %files
-%dir %_datadir/doc/ru-tts
-%_datadir/doc/ru-tts/README*
 %_bindir/ru_speak
 %_bindir/ru_tts
+
+%files doc
+%doc LICENSE publications
+%dir %_datadir/doc/ru-tts
+%_datadir/doc/ru-tts/README*
 %_man1dir/*
 %_man3dir/*
 
@@ -75,6 +86,9 @@ Requires: librutts = %EVR
 %_libdir/librutts.so
 
 %changelog
+* Tue May 26 2026 Artem Semenov <savoptik@altlinux.org> 1:6.3.1-alt1
+- Updated to new version 6.3.1
+
 * Wed May 13 2026 Artem Semenov <savoptik@altlinux.org> 1:6.2.4-alt1
 - Updated to new version 6.2.4
 - Removed requires to sox
