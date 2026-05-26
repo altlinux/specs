@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.38.0
+Version: 0.39.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,31 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue May 26 2026 Anton Farygin <rider@altlinux.org> 0.39.0-alt1
+- changed task rebuild default --dptype to binary.
+- changed up merge-hooks: .gear/merge-up.d/* run only when this invocation
+  produced a merge commit (or via explicit --stage merge-hooks).
+- added up: sync local repo with public gears/srpms mirror before
+  detection on known ALT branches.
+- added task copy --into to append subtasks into an existing target task.
+- added task copy --subtask to copy only selected subtasks.
+- added task test-rebuild --without-task baseline mode.
+- added task add --replace to replace an existing subtask in one command.
+- added task add positional shorthands <task>^<sub> and <task>/<sub>.
+- fixed submit / task batch tag-overwrite safety: recreate stale local tag
+  only when ancestor of HEAD and not in gears; --allow-overwrite-tag
+  bypasses checks; output distinguishes Created/Reusing/Recreated.
+- fixed task copy on fresh source task without fetched artifacts.
+- fixed builder clear_hasher_rpms to wipe SRPMS.hasher/ too.
+- fixed test-rebuild fork_single_task to clean apt-tmpdir and per-task
+  temp dirs on SIGINT/SIGTERM and normal exit.
+- fixed up merge when target upstream tag already merged.
+- fixed task manage retry on gyle reason-required rejection.
+- fixed gear rules parser to recognise any tar.<comp>: directive
+  (tar.zst was missed).
+- fixed up merge-hooks $TAG resolution via find_all_matching_tags.
+- fixed task batch main-package tag handling on second target repo.
+
 * Tue May 05 2026 Anton Farygin <rider@altlinux.org> 0.38.0-alt1
 - added task refresh --run/--commit/--test-only/-m to chain task run.
 - added web_regex parser for upstream HTML release notes (Wireshark and similar).
