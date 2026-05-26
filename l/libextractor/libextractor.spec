@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 # removed in 1.12
 %def_disable ffmpeg
 # test_rpm failed
 %def_disable check
 
 Name: libextractor
-Version: 1.13
-Release: alt2
+Version: 1.14
+Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -21,17 +21,17 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-# https://bugs.gnunet.org/view.php?id=9223
-Patch: %name-1.13-up-exiv2-path.diff
 
 %define flac_ver 1.3
 
-BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel >= %flac_ver
+BuildRequires: gcc-c++ chrpath
+BuildRequires: zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel >= %flac_ver
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
 BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel librpm-devel
 BuildRequires: libopus-devel libvorbis-devel libflac-devel
 BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 BuildRequires: libjpeg-devel gst-plugins1.0-devel
+BuildRequires: pkgconfig(poppler-cpp) pkgconfig(smf)
 %if_enabled ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
@@ -66,10 +66,10 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%autoreconf
+#gettext >= 23.1 required
+#%autoreconf
 %configure --disable-static \
     %{subst_enable ffmpeg}
 %nil
@@ -77,6 +77,7 @@ This package contains the files needed to build packages that depend on %name.
 
 %install
 %makeinstall_std
+chrpath -d %buildroot{%_libdir/%name/*.so,%_bindir/extract}
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/%name/*.la
@@ -107,6 +108,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue May 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14-alt1
+- 1.14
+
 * Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt2
 - fixed https://bugs.gnunet.org/view.php?id=9223 (ALT #54545)
 
