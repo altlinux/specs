@@ -6,7 +6,7 @@
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -67,6 +67,10 @@ echo %version > .tarball-version
 %doc AUTHORS README* NEWS
 
 %changelog
+* Tue May 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt3
+- updated to 1.1.1-72-g3ded00c (fixed #272:
+ "Path traversal vulnerability in SavePairRecord message handling"}
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt2
 - updated to 1.1.1-69-g523f700
 
