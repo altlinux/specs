@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.16.0
+Version:    4.17.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -46,6 +46,9 @@ touch %buildroot%_udevrulesdir/99-steelseries-rival.rules
 
 
 %changelog
+* Tue May 26 2026 L.A. Kostis <lakostis@altlinux.ru> 4.17.0-alt1
+- 4.17.0.
+
 * Sat Feb 28 2026 L.A. Kostis <lakostis@altlinux.ru> 4.16.0-alt1
 - 4.16.0.
 - BR: added flit-core.
