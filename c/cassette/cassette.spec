@@ -2,27 +2,34 @@
 %define xdg_name space.rirusha.Cassette
 
 Name: cassette
-Version: 0.2.1.g49
+Version: 0.2.4
 Release: alt1
 
 Summary: GTK/Adwaita application that allows you to use Yandex Music service on Linux operating systems
 License: GPL-3.0
 Group: Sound
-Url: https://gitlab.gnome.org/Rirusha/Cassette
-VCS: https://gitlab.gnome.org/Rirusha/Cassette
+Url: https://altlinux.space/rirusha/Cassette
+VCS: https://altlinux.space/rirusha/Cassette
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
+Requires: xdg-dbus-proxy
+Requires: libGLES
+
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson cmake vala
+BuildRequires: meson
+BuildRequires: vala
 BuildRequires: blueprint-compiler
-BuildRequires: libgtk4-devel libadwaita-gir-devel libadwaita-devel
-BuildRequires: libjson-glib-devel
-BuildRequires: libsqlite3-devel
-BuildRequires: libgee-devel libxml2-devel
-BuildRequires: libgstreamer1.0-gir-devel libgio-devel
-BuildRequires: libwebkitgtk6.0-devel
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(webkitgtk-6.0)
+
+BuildRequires: gir(Adw) = 1
 
 %description
 %summary.
@@ -52,6 +59,9 @@ sed -i "s/subdir('tests')/# subdir('tests')/" meson.build
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue May 26 2026 Alexey Volkov <qualimock@altlinux.org> 0.2.4-alt1
+- new version 0.2.4 (closes: #57610)
+
 * Tue Oct 21 2025 Alexey Volkov <qualimock@altlinux.org> 0.2.1.g49-alt1
 - new version 0.2.1.g49
 
