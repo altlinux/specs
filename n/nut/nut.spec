@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nut
-Version: 2.8.4
-Release: alt2
+Version: 2.8.5
+Release: alt1
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -269,7 +269,7 @@ sed -i 's/~HandlerThread<H>/~HandlerThread/' include/nutipc.hpp
 %endif
 
 # fix cgi path in html links for current %%cgidir
-sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
+sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/htmlcgi/header.html.in
 
 # fixes for nut client
 sed -i 's|=NUT-Monitor|=nut-monitor|'  scripts/python/app/nut-monitor.desktop
@@ -421,6 +421,7 @@ fi
 %config(noreplace) %attr(640,root,%runas) %confdir/upssched.conf
 %_initdir/upsmon
 %_tmpfilesdir/nut-common-tmpfiles.conf
+%_sysusersdir/nut-common-sysusers.conf
 
 %if_with systemd
 %_unitdir/nut-monitor.service
@@ -563,6 +564,8 @@ fi
 %config(noreplace) %confdir/upsset.conf
 %config(noreplace) %confdir/upsstats.html
 %config(noreplace) %confdir/upsstats-single.html
+%config(noreplace) %confdir/upsstats-modern-list.html
+%config(noreplace) %confdir/upsstats-modern-single.html
 %cgidir/upsimage.cgi
 %cgidir/upsset.cgi
 %cgidir/upsstats.cgi
@@ -599,6 +602,9 @@ fi
 %python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Tue May 26 2026 Andrey Kovalev <ded@altlinux.org> 2.8.5-alt1
+- Updated to upstream version 2.8.5.
+
 * Wed Jan 14 2026 Andrey Kovalev <ded@altlinux.org> 2.8.4-alt2
 - Fixed service startup permissions (closes: #56727)
 
