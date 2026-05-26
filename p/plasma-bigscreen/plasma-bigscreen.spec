@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: plasma-bigscreen
-Version: 6.5.80
-Release: alt3.git.989ac8b2
+Version: 6.6.90
+Release: alt1
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -95,7 +95,7 @@ to any installed apps and skills. Controllable via voice or TV remote.
 %setup
 sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
 sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
-sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
+sed -i "s|6.6.90|6.6.5|g" CMakeLists.txt
 
 %build
 %K6build
@@ -104,6 +104,10 @@ sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
 %K6install
 
 %find_lang %name --with-kde --all-name
+
+# move udev-rule file to the correct location
+mkdir -pv %buildroot%_udevrulesdir/
+mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 
 %files -f %name.lang
 %doc README.md
@@ -125,8 +129,12 @@ sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
 %_K6data/wayland-sessions/plasma-bigscreen-wayland.desktop
 %_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
 %_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
+%_udevrulesdir/40-uinput.rules
 
 %changelog
+* Tue May 26 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.90-alt1
+- New version 6.6.90.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.5.80-alt3.git.989ac8b2
 - Depend on renamed style package - qqc2-breeze-style.
 
