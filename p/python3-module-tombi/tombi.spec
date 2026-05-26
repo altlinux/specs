@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.5
+Version: 1.0.0
 Release: alt1
 Summary: TOML Toolkit
 License: MIT
@@ -73,6 +73,9 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %_bindir/tombi
 
 %changelog
+* Mon May 25 2026 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- updated from 0.11.5 to 1.0.0
+
 * Mon May 18 2026 Stanislav Levin <slev@altlinux.org> 0.11.5-alt1
 - 0.11.4 -> 0.11.5.
 
