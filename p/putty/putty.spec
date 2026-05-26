@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.83
+Version: 0.84
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -81,6 +81,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Wed May 27 2026 Ilya Mashkin <oddity@altlinux.ru> 0.84-alt1
+- 0.84
+
 * Mon Feb 10 2025 Ilya Mashkin <oddity@altlinux.ru> 0.83-alt1
 - 0.83
 
