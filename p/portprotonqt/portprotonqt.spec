@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.0
+Version: 1.1.0
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -59,12 +59,6 @@ install -Dm 0644 ./completions/portprotonqt.fish %buildroot%_datadir/fish/vendor
 
 install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functions/_portprotonqt
 
-# We no realy need Steam compat to system-wide
-rm -r %buildroot%_datadir/steam
-
-# https://bugzilla.altlinux.org/48467
-mv %buildroot%_datadir/locale/zh_Hans %buildroot%_datadir/locale/zh_CN
-
 %find_lang %name
 
 %files -f %name.lang
@@ -86,6 +80,10 @@ mv %buildroot%_datadir/locale/zh_Hans %buildroot%_datadir/locale/zh_CN
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue May 26 2026 Mikhail Tergoev <fidel@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+- fix zh_CN locale
+
 * Sat May 23 2026 Boris Yumankulov <boria138@altlinux.org> 1.0-alt1
 - new version 1.0
 - replace upstream
