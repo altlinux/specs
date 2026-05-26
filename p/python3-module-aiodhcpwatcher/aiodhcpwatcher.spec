@@ -1,6 +1,6 @@
 Name: python3-module-aiodhcpwatcher
-Version: 1.2.1
-Release: alt2
+Version: 1.2.7
+Release: alt1
 
 Summary: Watch for DHCP packets with asyncio
 License: GPLv3
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiodhcpwatcher-%version.dist-info
 
 %changelog
+* Tue May 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.7-alt1
+- 1.2.7 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.1-alt2
 - revert unsolicited changes
 
