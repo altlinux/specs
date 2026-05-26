@@ -1,6 +1,6 @@
 Name: python3-module-wakeonlan
-Version: 3.1.0
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: Python WOL implementation
 License: MIT
@@ -39,10 +39,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -o addopts=
 
 %files
+#_bindir/wakeonlan
 %python3_sitelibdir/wakeonlan
 %python3_sitelibdir/wakeonlan-%version.dist-info
 
 %changelog
+* Tue May 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.3.0-alt1
+- 3.3.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.0-alt2
 - revert unsolicited packaging changes
 
