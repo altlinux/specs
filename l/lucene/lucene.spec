@@ -1,6 +1,6 @@
 Name:    lucene
 Version: 10.4.0
-Release: alt1
+Release: alt2
 Summary: High-performance, full-featured text search engine
 License: Apache-2.0 AND MIT AND BSD-3-Clause AND BSD-2-Clause
 Group: Development/Java
@@ -46,7 +46,7 @@ ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): maven-local
-BuildRequires: /proc java-devel
+BuildRequires: /proc java-21-openjdk-devel
 BuildRequires: mvn(com.ibm.icu:icu4j)
 BuildRequires: mvn(commons-codec:commons-codec)
 BuildRequires: mvn(org.antlr:antlr4-runtime)
@@ -322,6 +322,9 @@ popd
 %files suggest -f .mfiles-lucene-suggest
 
 %changelog
+* Mon May 04 2026 Andrey Cherepanov <cas@altlinux.org> 10.4.0-alt2
+- Built with java-21-openjdk.
+
 * Mon Mar 30 2026 Andrey Cherepanov <cas@altlinux.org> 10.4.0-alt1
 - New version (fixes: CVE-2024-43383, CVE-2024-45772).
 
