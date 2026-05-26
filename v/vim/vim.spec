@@ -50,8 +50,8 @@
 
 Name: vim
 %define branch 9.2
-Version: %branch.0478
-Release: alt2
+Version: %branch.0537
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1078,6 +1078,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue May 26 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0537-alt1
+- Updated to v9.2.0537 (fixes CVE-2026-46483).
+
 * Tue May 19 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0478-alt2
 - Set the version of autoconf to 2.71 to simplify the build.
 
