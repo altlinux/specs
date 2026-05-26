@@ -6,7 +6,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		fzf
-Version:	0.72.0
+Version:	0.73.1
 Release:	alt1
 Summary:	A general-purpose command-line fuzzy finder.
 
@@ -100,6 +100,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Tue May 26 2026 Vladimir Didenko <cow@altlinux.org> 0.73.1-alt1
+- New version
+
 * Tue Apr 28 2026 Vladimir Didenko <cow@altlinux.org> 0.72.0-alt1
 - New version
 
