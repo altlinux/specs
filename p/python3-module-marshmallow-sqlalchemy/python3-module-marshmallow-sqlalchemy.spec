@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 Summary: SQLAlchemy integration with the marshmallow (de)serialization library
 License: MIT
@@ -46,5 +46,8 @@ BuildRequires: python3-module-sqlalchemy
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 26 2026 Alexey Rodygin <alehandro@altlinux.org> 1.5.0-alt1
+- Updated to new version 1.5.0.
+
 * Tue Jan 13 2026 Alexey Rodygin <alehandro@altlinux.org> 1.4.2-alt1
 - Initial build for ALT Linux
