@@ -1,105 +1,77 @@
-Epoch: 0
-Group: Development/Java
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-logging
-Version:        1.2
-Release:        alt1_30jpp11
+Version:        1.3.6
+Release:        alt1
+
 Summary:        Apache Commons Logging
-License:        ASL 2.0
-URL:            http://commons.apache.org/logging
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/logging/
+VCS:            https://github.com/apache/commons-logging
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
+
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/commons/logging/source/commons-logging-%{version}-src.tar.gz
-Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.pom
-
-Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
-Patch1:         0002-Port-to-maven-jar-plugin-3.0.0.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-%endif
-Source44: import.info
-
 %description
-The commons-logging package provides a simple, component oriented
-interface (org.apache.commons.logging.Log) together with wrappers for
-logging systems. The user can choose at runtime which system they want
-to use. In addition, a small number of basic implementations are
-provided to allow users to use the package standalone.
-commons-logging was heavily influenced by Avalon's Logkit and Log4J. The
-commons-logging abstraction is meant to minimize the differences between
-the two, and to allow a developer to not tie himself to a particular
-logging implementation.
+When writing a library it is very useful to log information. However there are
+many logging implementations out there, and a library cannot impose the use of
+a particular one on the overall application that the library is a part of.
 
-%{?javadoc_package}
+The Logging package is an ultra-thin bridge between different logging
+implementations. A library that uses the commons-logging API can be used with
+any logging implementation at runtime. Commons Logging comes with support for
+a number of popular logging implementations, and writing adapters for others is
+a reasonably simple task.
+
+Applications (rather than libraries) may also choose to use commons-logging.
+While logging-implementation independence is not as important for applications
+as it is for libraries, using commons-logging does allow the application to
+change to a different logging implementation without recompiling code.
+
+Note that commons-logging does not attempt to initialize or terminate the
+underlying logging implementation that is used at runtime; that is the
+responsibility of the application. However many popular logging implementations
+do automatically initialize themselves; in this case an application may be
+able to avoid containing any code that is specific to the logging implementation
+used.
+
+%javadoc_package
 
 %prep
-%setup -q -n commons-logging-%{version}-src
-%patch0 -p1
-%patch1 -p1
+%setup
 
+%pom_remove_plugin :maven-failsafe-plugin
+%pom_remove_plugin :maven-dependency-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
-%pom_remove_dep -r :avalon-framework
-%pom_remove_dep -r :logkit
-%pom_remove_dep -r :log4j
-rm src/main/java/org/apache/commons/logging/impl/AvalonLogger.java
-rm src/main/java/org/apache/commons/logging/impl/Log4JLogger.java
-rm src/main/java/org/apache/commons/logging/impl/LogKitLogger.java
-rm -r src/test/java/org/apache/commons/logging/{avalon,log4j,logkit}
-rm src/test/java/org/apache/commons/logging/pathable/{Parent,Child}FirstTestCase.java
+%pom_change_dep :avalon-framework :avalon-framework-impl
 
-
-# Avoid hard-coded versions in OSGi metadata
-%pom_xpath_set "pom:properties/pom:commons.osgi.import" '*;resolution:=optional'
-
-%pom_remove_plugin :cobertura-maven-plugin
-%pom_remove_plugin :maven-scm-publish-plugin
-
-sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
-
-# for compatibility reasons
-%mvn_file ":commons-logging{*}" "commons-logging@1" "%{name}@1"
-%mvn_alias ":commons-logging{*}" "org.apache.commons:commons-logging@1" "apache:commons-logging@1"
-
-# Remove log4j12 tests
-rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
+%mvn_file  : commons-logging %name
+%mvn_alias :commons-logging :commons-logging-api org.apache.commons:commons-logging apache:commons-logging
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.logging
-
-# The build produces more artifacts from one pom
-%mvn_artifact %{SOURCE2} target/commons-logging-%{version}-api.jar
-%mvn_artifact commons-logging:commons-logging-adapters:%{version} target/commons-logging-%{version}-adapters.jar
+# Tests disabled due missing deps
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc PROPOSAL.html RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Mon May 25 2026 Evgeniy Serov <scala@altlinux.org> 1.3.6-alt1
+- Updated to 1.3.6.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_30jpp11
 - update
 

@@ -1,56 +1,47 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-# END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %global version 2.7.3
-%global cvs_version %(echo %{version} | tr . _)
+%global cvs_version %(echo %version | tr . _)
 
 Name:           xalan-j2
+Epoch:          0
 Version:        2.7.3
-Release:        alt1
+Release:        alt2
+
 Summary:        Java XSLT processor
-# src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        Apache-2.0 and W3C
+Group:          Development/Java
 URL:            http://xalan.apache.org/
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %name-%version.tar.gz
 Source1:        xalan-j2-serializer-MANIFEST.MF
-Source2:        https://repo1.maven.org/maven2/xalan/xalan/%{version}/xalan-%{version}.pom
-Source3:        https://repo1.maven.org/maven2/xalan/serializer/%{version}/serializer-%{version}.pom
-Source4:        xsltc-%{version}.pom
+Source2:        xalan-%version.pom
+Source3:        serializer-%version.pom
+Source4:        xsltc-%version.pom
 Source5:        xalan-j2-MANIFEST.MF
-# Remove bundled binaries which cannot be easily verified for licensing
 Source6:        generate-tarball.sh
 
 Patch0:         xalan-j2-noxsltcdeps.patch
 
-BuildArch:      noarch
-
+BuildRequires(pre):  rpm-build-java
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  apache-parent
-BuildRequires:  bcel
+BuildRequires:  apache-commons-bcel
 BuildRequires:  java_cup
 BuildRequires:  regexp
 BuildRequires:  sed
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xml-commons-apis >= 0:1.3
+BuildRequires:  dos2unix
 
 Requires:       xerces-j2
 
+BuildArch:      noarch
+
 Provides:       jaxp_transform_impl
-BuildRequires: dos2unix
-Provides: xalan-j = %{name}-%{version}
-Obsoletes: xalan-j <= 2.7.0-alt3
+Provides:       xalan-j = %name-%version
+Obsoletes:      xalan-j <= 2.7.0-alt3
 
 %description
 Xalan is an XSLT processor for transforming XML documents into HTML,
@@ -60,11 +51,11 @@ be used from the command line, in an applet or a servlet, or as a module
 in other program.
 
 %package        xsltc
-Group: Development/Java
+Group:          Development/Java
 Summary:        XSLT compiler
-License:        ASL 2.0
+License:        Apache-2.0
 Requires:       java_cup
-Requires:       bcel
+Requires:       apache-commons-bcel
 Requires:       regexp
 Requires:       xerces-j2
 
@@ -73,16 +64,16 @@ The XSLT Compiler is a Java-based tool for compiling XSLT stylesheets into
 lightweight and portable Java byte codes called translets.
 
 %package        manual
-Group: Development/Java
-Summary:        Manual for %{name}
-License:        ASL 2.0
-BuildArch: noarch
+Group:          Development/Java
+Summary:        Manual for %name
+License:        Apache-2.0
+BuildArch:      noarch
 
 %description    manual
-Documentation for %{name}.
+Documentation for %name.
 
 %prep
-%setup -q -n xalan-j_%{cvs_version}
+%setup -n xalan-j_%cvs_version
 %patch0 -p0
 
 find . -name '*.jar' -delete
@@ -97,8 +88,8 @@ sed -i '/class-path/I d' $(find -iname '*manifest*')
 sed -i 's/\r//' KEYS LICENSE.txt NOTICE.txt xdocs/style/resources/script.js \
     xdocs/sources/xsltc/README* `find -name '*.sh'`
 
-%mvn_file :xalan %{name} jaxp_transform_impl
-%mvn_file :serializer %{name}-serializer
+%mvn_file :xalan %name jaxp_transform_impl
+%mvn_file :serializer %name-serializer
 %mvn_file :xsltc xsltc
 %mvn_package :xsltc xsltc
 
@@ -132,32 +123,36 @@ export CLASSPATH=$(build-classpath glassfish-servlet-api)
   xsltc.unbundledjar \
   docs
 
-%mvn_artifact %{SOURCE2} build/xalan-interpretive.jar
-%mvn_artifact %{SOURCE3} build/serializer.jar
-%mvn_artifact %{SOURCE4} build/xsltc.jar
+%mvn_artifact %SOURCE2 build/xalan-interpretive.jar
+%mvn_artifact %SOURCE3 build/serializer.jar
+%mvn_artifact %SOURCE4 build/xsltc.jar
 
 %install
 %mvn_install
 
 %post
-mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
+mv %_javadir/jaxp_transform_impl.jar{,.tmp} || :
 # alternatives removed in f26
 :
 # restore the symlink
-mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
+mv %_javadir/jaxp_transform_impl.jar{.tmp,} || :
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 %doc KEYS README
 
 %files xsltc -f .mfiles-xsltc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files manual
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc --no-dereference build/docs/*
+%doc LICENSE.txt NOTICE.txt
+%doc build/docs/*
 
 %changelog
+* Mon May 25 2026 Evgeniy Serov <scala@altlinux.org> 0:2.7.3-alt2
+- Switched bcel dependency to apache-commons-bcel.
+- Cleanup specfile.
+
 * Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 0:2.7.3-alt1
 - New version.
 - Security fixes: CVE-2022-34169 (ALT #52280).

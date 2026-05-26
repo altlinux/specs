@@ -1,62 +1,49 @@
-Epoch: 0
-Group: Development/Other
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-cli
-Version:        1.5.0
-Release:        alt1_3jpp11
-Summary:        Command Line Interface Library for Java
-License:        ASL 2.0
+Version:        1.11.0
+Release:        alt1
+
+Summary:        Apache Commons CLI
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://commons.apache.org/cli/
+VCS:            https://github.com/apache/commons-cli
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/commons/cli/source/commons-cli-%{version}-src.tar.gz
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-%endif
-Source44: import.info
-Provides: jakarta-commons-cli = %version
-
 %description
-The CLI library provides a simple and easy to use API for working with the
-command line arguments and options.
+Apache Commons CLI provides a simple API for presenting, processing, and
+validating a Command Line Interface.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -q -n commons-cli-%{version}-src
+%setup
 
-
-# Compatibility links
 %mvn_alias : org.apache.commons:commons-cli
-%mvn_file : commons-cli %{name}
+%mvn_file : commons-cli %name
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# Tests disabled due missing dep junit-pioneer (gradle)
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc README.md RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Wed May 13 2026 Evgeniy Serov <scala@altlinux.org> 1.11.0-alt1
+- Updated to 1.11.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.5.0-alt1_3jpp11
 - new version
 

@@ -1,6 +1,6 @@
 Name:           maven-wagon
 Version:        3.5.3
-Release:        alt3
+Release:        alt4
 
 Summary:        Tools to manage artifacts and deployment
 License:        Apache-2.0
@@ -42,6 +42,7 @@ following providers:
 %setup -n wagon-%version
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %pom_disable_module wagon-provider-test
 %pom_disable_module wagon-ssh-common-test wagon-providers
@@ -63,6 +64,9 @@ following providers:
 %doc LICENSE NOTICE DEPENDENCIES *.md
 
 %changelog
+* Fri May 22 2026 Evgeniy Serov <scala@altlinux.org> 3.5.3-alt4
+- Fixed FTBFS: removed maven-enforcer-plugin.
+
 * Mon Apr 27 2026 Arseniy Kostevich <faux@altlinux.org> 3.5.3-alt3
 - Include shaded jar (Closes: #58906).
 

@@ -1,78 +1,63 @@
-Epoch: 0
-Group: Development/Other
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-parent
-Version:        52
-Release:        alt1_4jpp11
-Summary:        Apache Commons Parent Pom
-License:        ASL 2.0
+Version:        99
+Release:        alt1
+
+Summary:        Apache Commons Parent
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://commons.apache.org/commons-parent-pom.html
-BuildArch:      noarch
+VCS:            https://github.com/apache/commons-parent
 
-Source0:        https://github.com/apache/commons-parent/archive/rel/commons-parent-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-%endif
-
-# Not generated automatically
-%if %{without bootstrap}
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-%endif
+
 Requires:       mvn(org.codehaus.mojo:build-helper-maven-plugin)
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
-The Project Object Model files for the apache-commons packages.
+The Apache Commons Parent POM provides common settings for all Apache Commons
+components.
 
 %prep
-%setup -q -n commons-parent-rel-commons-parent-%{version}
+%setup
 
-# Plugin is not in fedora
-%pom_remove_plugin org.apache.commons:commons-build-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-scm-publish-plugin
-
-# Plugins useless in package builds
-%pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :buildnumber-maven-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-source-plugin
-
-# Remove profiles for plugins that are useless in package builds
-for profile in animal-sniffer japicmp jacoco cobertura clirr; do
-    %pom_xpath_remove "pom:profile[pom:id='$profile']"
-done
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-artifact-plugin
+%pom_remove_plugin :cyclonedx-maven-plugin
+%pom_remove_plugin :spdx-maven-plugin
+%pom_remove_plugin :maven-changes-plugin
+%pom_remove_plugin :commons-build-plugin
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
+%pom_remove_plugin :versions-maven-plugin
+%pom_remove_plugin :moditect-maven-plugin
+%pom_remove_plugin :jacoco-maven-plugin
+%pom_remove_plugin :japicmp-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Fri May 15 2026 Evgeniy Serov <scala@altlinux.org> 99-alt1
+- Updated to 99.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:52-alt1_4jpp11
 - update
 

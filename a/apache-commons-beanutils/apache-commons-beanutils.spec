@@ -1,79 +1,50 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-beanutils
-Version:        1.9.4
-Release:        alt1_10jpp11
-Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
-License:        ASL 2.0
-URL:            http://commons.apache.org/beanutils
-BuildArch:      noarch
-Source0:        http://archive.apache.org/dist/commons/beanutils/source/commons-beanutils-%{version}-src.tar.gz
+Version:        1.11.0
+Release:        alt1
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-collections:commons-collections)
-BuildRequires:  mvn(commons-logging:commons-logging)
+Summary:        Apache Commons Beanutils
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/beanutils/
+VCS:            https://github.com/apache/commons-beanutils
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-%endif
-Source44: import.info
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-collections:commons-collections-testframework)
+
+BuildArch:      noarch
 
 %description
-The scope of this package is to create a package of Java utility methods
-for accessing and modifying the properties of arbitrary JavaBeans.  No
-dependencies outside of the JDK are required, so the use of this package
-is very lightweight.
+Apache Commons BeanUtils provides an easy-to-use but flexible wrapper around
+reflection and introspection.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+%javadoc_package
 
 %prep
-%setup -q -n commons-beanutils-%{version}-src
-sed -i 's/\r//' *.txt
+%setup
 
-%pom_remove_plugin :maven-assembly-plugin
-
-%mvn_alias :{*} :@1-core :@1-bean-collections
-%mvn_alias :{*} org.apache.commons:@1 org.apache.commons:@1-core org.apache.commons:@1-bean-collections
-%mvn_file : %{name} %{name}-core %{name}-bean-collections
-%mvn_file : commons-beanutils commons-beanutils-core commons-beanutils-bean-collections
+%mvn_alias :commons-beanutils org.apache.commons:commons-beanutils
 
 %build
-# Some tests fail in Koji
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.beanutils
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc RELEASE-NOTES.txt
-%doc LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Wed May 20 2026 Evgeniy Serov <scala@altlinux.org> 1.11.0-alt1
+- Updated to 1.11.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_10jpp11
 - update
 

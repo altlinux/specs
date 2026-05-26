@@ -1,90 +1,59 @@
-Epoch: 1
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_without  portlet
-
 Name:           apache-commons-fileupload
-Version:        1.4
-Release:        alt1_7jpp11
-Summary:        API to work with HTML file upload
-License:        ASL 2.0
-URL:            http://commons.apache.org/fileupload/
+Epoch:          1
+Version:        1.6.0
+Release:        alt1
+
+Summary:        Apache Commons FileUpload is a robust, high-performance, file upload capability to your servlets and web applications
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/fileupload/
+VCS:            https://github.com/apache/commons-fileupload
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-Source0:        http://archive.apache.org/dist/commons/fileupload/source/commons-fileupload-%{version}-src.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(javax.servlet:servlet-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-%if %{with portlet}
-BuildRequires:  mvn(javax.portlet:portlet-api)
-%endif
-Source44: import.info
-
 %description
-The javax.servlet package lacks support for RFC-1867, HTML file
-upload.  This package provides a simple to use API for working with
-such data.  The scope of this package is to create a package of Java
-utility classes to read multipart/form-data within a
-javax.servlet.http.HttpServletRequest.
+The Commons FileUpload package makes it easy to add robust, high-performance,
+file upload capability to your servlets and web applications.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
+FileUpload parses HTTP requests which conform to RFC 1867, "Form-based File
+Upload in HTML". That is, if an HTTP request is submitted using the POST method,
+and with a content type of "multipart/form-data", then FileUpload can parse that
+request, and make the results available in a manner easily used by the caller.
 
-%description javadoc
-This package contains the API documentation for %{name}.
+Starting with version 1.3, FileUpload handles RFC 2047 encoded header values.
 
-# -----------------------------------------------------------------------------
+%javadoc_package
 
 %prep
-%setup -q -n commons-fileupload-%{version}-src
-sed -i 's/\r//' LICENSE.txt
-sed -i 's/\r//' NOTICE.txt
+%setup
 
-%if %{with portlet}
-# fix gId
-sed -i "s|<groupId>portlet-api</groupId>|<groupId>javax.portlet</groupId>|" pom.xml
-%else
+%pom_remove_plugin :maven-checkstyle-plugin
+
 %pom_remove_dep portlet-api:portlet-api
-%pom_xpath_remove pom:properties/pom:commons.osgi.import
-%pom_xpath_remove pom:properties/pom:commons.osgi.dynamicImport
 rm -r src/main/java/org/apache/commons/fileupload/portlet
-%endif
-
-# -----------------------------------------------------------------------------
-
-%mvn_file ":{*}" @1 %{name}
-%mvn_alias : org.apache.commons:
 
 %build
-# tests fail to compile because they use an obsolete version of servlet API (2.4)
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.fileupload
+# Tests disabled due missing dep portlet
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-# -----------------------------------------------------------------------------
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Sat May 16 2026 Evgeniy Serov <scala@altlinux.org> 1:1.6.0-alt1
+- Updated to 1.6.0.
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1:1.4-alt1_7jpp11
 - java11 build
 

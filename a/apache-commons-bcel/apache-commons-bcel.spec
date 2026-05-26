@@ -1,54 +1,54 @@
-Name:    bcel
-Version: 6.8.2
-Release: alt1
-Epoch: 1
-Summary: Byte Code Engineering Library
-License: Apache-2.0
-Group: Development/Java
-URL: http://commons.apache.org/proper/commons-bcel/
+Name:           apache-commons-bcel
+Epoch:          1
+Version:        6.12.0
+Release:        alt1
 
-BuildArch: noarch
+Summary:        Byte Code Engineering Library
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/bcel/
+VCS:            https://github.com/apache/commons-bcel
 
-Source0: http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
+Source0:        %name-%version.tar
 
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
+BuildArch:      noarch
 
 %description
-The Byte Code Engineering Library (formerly known as JavaClass) is
-intended to give users a convenient possibility to analyze, create, and
-manipulate (binary) Java class files (those ending with .class). Classes
-are represented by objects which contain all the symbolic information of
-the given class: methods, fields and byte code instructions, in
-particular.  Such objects can be read from an existing file, be
-transformed by a program (e.g. a class loader at run-time) and dumped to
-a file again. An even more interesting application is the creation of
-classes from scratch at run-time. The Byte Code Engineering Library
-(BCEL) may be also useful if you want to learn about the Java Virtual
-Machine (JVM) and the format of Java .class files.  BCEL is already
-being used successfully in several projects such as compilers,
-optimizers, obfuscators and analysis tools, the most popular probably
-being the Xalan XSLT processor at Apache.
+The Byte Code Engineering Library (Apache Commons BCEL) is intended to give
+users a convenient way to analyze, create, and manipulate (binary) Java class
+files (those ending with .class). Classes are represented by objects which
+contain all the symbolic information of the given class: methods, fields and
+byte code instructions, in particular.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
+Such objects can be read from an existing file, be transformed by a program
+(e.g. a class loader at run-time) and written to a file again. An even more
+interesting application is the creation of classes from scratch at run-time.
+The Byte Code Engineering Library (BCEL) may be also useful if you want to
+learn about the Java Virtual Machine (JVM) and the format of Java .class files.
 
-%description javadoc
-This package provides %{summary}.
+BCEL contains a byte code verifier named JustIce, which usually gives you much
+better information about what's wrong with your code than the standard JVM
+message.
+
+BCEL is already being used successfully in several projects such as compilers,
+optimizers, obsfuscators, code generators and analysis tools. Unfortunately
+there hasn't been much development going on over the past few years. Feel free
+to help out or you might want to have a look into the ASM project at objectweb.
+
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup
 
 %pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :spotbugs-maven-plugin
-%pom_remove_plugin :jacoco-maven-plugin
- 
+
 %mvn_alias : bcel: apache:
-%mvn_file : %name
+%mvn_file : %name bcel
 
 %build
 %mvn_build -f
@@ -57,13 +57,14 @@ This package provides %{summary}.
 %mvn_install
 
 %files -f .mfiles
-%doc RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Thu May 21 2026 Evgeniy Serov <scala@altlinux.org> 1:6.12.0-alt1
+- Updated to 6.12.0.
+- Renamed package to apache-commons-bcel.
+
 * Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 1:6.8.2-alt1
 - New version.
 - Fix license according to SPDX.

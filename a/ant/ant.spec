@@ -2,7 +2,7 @@
 
 Name:           ant
 Version:        1.10.15
-Release:        alt1
+Release:        alt2
 
 Summary:        Java build tool
 Group:		Development/Java
@@ -37,7 +37,7 @@ BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(jdepend:jdepend)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-logging-api)
+BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(org.tukaani:xz)
 BuildRequires:  mvn(oro:oro)
 BuildRequires:  mvn(regexp:regexp)
@@ -527,6 +527,9 @@ install -p -m 644 man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 %doc --no-dereference manual/*
 
 %changelog
+* Fri May 22 2026 Evgeniy Serov <scala@altlinux.org> 1.10.15-alt2
+- Replace obsolete commons-logging-api BuildRequires with commons-logging.
+
 * Fri Jan 30 2026 Evgeniy Serov <scala@altlinux.org> 1.10.15-alt1
 - Updated to 1.10.15.
 

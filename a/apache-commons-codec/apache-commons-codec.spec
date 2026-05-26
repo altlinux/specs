@@ -1,72 +1,49 @@
-Epoch: 0
-Group: Development/Java
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-codec
-Version:        1.15
-Release:        alt1_4jpp11
-Summary:        Implementations of common encoders and decoders
-License:        ASL 2.0
+Version:        1.22.0
+Release:        alt1
+
+Summary:        Apache Commons Codec
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://commons.apache.org/codec/
+VCS:            https://github.com/apache/commons-codec
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-Source0:        https://archive.apache.org/dist/commons/codec/source/commons-codec-%{version}-src.tar.gz
-# Data in DoubleMetaphoneTest.java originally has an inadmissible license.
-# The author gives MIT in e-mail communication.
-Source1:        aspell-mail.txt
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-%endif
-Source44: import.info
-
 %description
-Commons Codec is an attempt to provide definitive implementations of
-commonly used encoders and decoders. Examples include Base64, Hex,
-Phonetic and URLs.
+The Apache Commons Codec component contains encoders and decoders for formats
+such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these
+widely used encoders and decoders, the codec package also maintains a
+collection of phonetic encoding utilities.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -q -n commons-codec-%{version}-src
+%setup
 
-cp %{SOURCE1} aspell-mail.txt
-sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
-
-%mvn_file : commons-codec %{name}
-%mvn_alias : commons-codec:commons-codec
+%mvn_file : commons-codec %name
 
 %build
-# Avoid running out of heap on s390x during test suite execution
-export MAVEN_OPTS="-Xmx1024m"
-
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.codec
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt aspell-mail.txt
-%doc RELEASE-NOTES*
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Sun May 17 2026 Evgeniy Serov <scala@altlinux.org> 1.22.0-alt1
+- Updated to 1.22.0.
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.15-alt1_4jpp11
 - update
 

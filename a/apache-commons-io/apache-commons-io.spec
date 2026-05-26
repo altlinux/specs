@@ -1,83 +1,49 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-io
 Epoch:          1
-Version:        2.19.0
+Version:        2.22.0
 Release:        alt1
-Summary:        Utilities to assist with developing IO functionality
+
+Summary:        Apache Commons IO
 License:        Apache-2.0
+Group:          Development/Java
 URL:            https://commons.apache.org/io
+VCS:            https://github.com/apache/commons-io
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-Source0:        https://archive.apache.org/dist/commons/io/source/commons-io-%{version}-src.tar.gz
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
-BuildRequires:  mvn(org.mockito:mockito-core)
-%endif
-
 %description
-Commons-IO contains utility classes, stream implementations,
-file filters, and endian classes. It is a library of utilities
-to assist with developing IO functionality.
+The Apache Commons IO library contains utility classes, stream implementations,
+file filters, file comparators, endian transformation classes, and much more.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -n commons-io-%{version}-src
-sed -i 's/\r//' *.txt
+%setup
 
-# Run tests in multiple reusable forks to improve test performance
-sed -i -e /reuseForks/d -e /forkCount/d pom.xml
-sed -i '/<argLine>/d' pom.xml
-
-%mvn_file  : commons-io %{name}
+%mvn_file  : commons-io %name
 %mvn_alias : org.apache.commons:
 
-%pom_remove_dep org.junit-pioneer:junit-pioneer
-%java_remove_annotations src -s -n DefaultLocale
-%pom_remove_dep com.google.jimfs:jimfs
-
 %build
-# See "-DcommonsIoVersion" in maven-surefire for the tested version
-
-# The following tests fail on tmpfs/nfs:
-#  * PathUtilsDeleteDirectoryTest.testDeleteDirectory1FileSize0OverrideReadOnly:80->testDeleteDirectory1FileSize0:68 » FileSystem
-#  * PathUtilsDeleteFileTest.testDeleteReadOnlyFileDirectory1FileSize1:114 » FileSystem
-#  * PathUtilsDeleteFileTest.testSetReadOnlyFileDirectory1FileSize1:134 » FileSystem
-#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize0OverrideReadonly:97->testDeleteDirectory1FileSize0:69 » FileSystem
-#  * PathUtilsDeleteTest.testDeleteDirectory1FileSize1OverrideReadOnly:145->testDeleteDirectory1FileSize1:117 » FileSystem
-
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.io
+# Tests disabled due missing deps
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt *.md
 
 %changelog
+* Sat May 16 2026 Evgeniy Serov <scala@altlinux.org> 1:2.22.0-alt1
+- Updated to 2.22.0.
+
 * Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.19.0-alt1
 - new version
 

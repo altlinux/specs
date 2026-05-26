@@ -1,44 +1,25 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           apache-commons-compress
 Version:        1.27.1
-Release:        alt1
-Summary:        Java API for working with compressed files and archivers
-License:        Apache-2.0
-URL:            https://commons.apache.org/proper/commons-compress/
-BuildArch:      noarch
+Release:        alt2
 
-Source0:        https://archive.apache.org/dist/commons/compress/source/commons-compress-%{version}-src.tar.gz
+Summary:        Apache Commons Compress
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/compress/
+VCS:            https://github.com/apache/commons-compress
+
+Source0:        commons-compress-%version-src.tar.gz
 
 Patch0:         0001-Remove-Brotli-compressor.patch
 Patch1:         0002-Remove-ZSTD-compressor.patch
 Patch2:         0003-Remove-Pack200-compressor.patch
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.tukaani:xz)
-%endif
+
+BuildArch:      noarch
 
 %description
 The Apache Commons Compress library defines an API for working with
@@ -46,16 +27,8 @@ ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
 In version 1.14 read-only support for Brotli decompression has been added,
 but it has been removed form this package.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
-
 %prep
-%setup -q -n commons-compress-%{version}-src
+%setup -n commons-compress-%version-src
 %autopatch -p1
 
 # Unavailable Google Brotli library (org.brotli.dec)
@@ -83,9 +56,9 @@ rm src/test/java/org/apache/commons/compress/java/util/jar/Pack200Test.java
 rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTest.java
 
 %build
-%mvn_file  : commons-compress %{name}
+%mvn_file  : commons-compress %name
 %mvn_alias : commons:
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
+%mvn_build -f -j -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
 %install
 %mvn_install
@@ -93,10 +66,11 @@ rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTe
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
 %changelog
+* Thu May 21 2026 Evgeniy Serov <scala@altlinux.org> 1.27.1-alt2
+- Disabled javadoc generation.
+- Cleaned up specfile.
+
 * Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 1.27.1-alt1
 - new version
 

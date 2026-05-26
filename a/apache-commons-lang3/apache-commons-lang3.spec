@@ -1,26 +1,21 @@
-Name:    apache-commons-lang3
-Version: 3.19.0
-Release: alt1
-Summary: Provides a host of helper utilities for the java.lang API
-License: Apache-2.0
-Group:   Development/Java
-URL:     https://commons.apache.org/lang
+Name:           apache-commons-lang3
+Version:        3.20.0
+Release:        alt1
 
-BuildArch: noarch
+Summary:        Apache Commons Lang
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/lang
+VCS:            https://github.com/apache/commons-lang
 
-Source0: https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
+Source0:        %name-%version.tar
 
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(biz.aQute.bnd:biz.aQute.bndlib)
-BuildRequires: mvn(com.google.code.findbugs:jsr305)
-BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires: mvn(org.easymock:easymock)
-BuildRequires: mvn(org.hamcrest:hamcrest)
-BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
+BuildArch:      noarch
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -39,42 +34,30 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -q -n commons-lang3-%{version}-src
+%setup
 
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_dep org.openjdk.jmh:jmh-core
-%pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
-%pom_remove_dep org.apache.commons:commons-text
- 
-%mvn_file : %{name} commons-lang3
- 
-# testParseSync() test fails on ARM and PPC64LE for unknown reason
-sed -i 's/\s*public void testParseSync().*/@org.junit.jupiter.api.Disabled\n&/' \
-    src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
- 
-# non-deterministic tests fail randomly
-rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
- 
-# Missing dependencies
-rm src/test/java/org/apache/commons/lang3/HashSetvBitSetTest.java
- 
-# Remove limits and Java 11 options
-sed -i '/<argLine>/d' pom.xml
+
+%mvn_file : %name commons-lang3
 
 %build
+# Tests disabled due missing dep (gradle)
 %mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Thu May 14 2026 Evgeniy Serov <scala@altlinux.org> 3.20.0-alt1
+- Updated to 3.20.0.
+
 * Mon Oct 20 2025 Alexander Danilov <admsasha@altlinux.org> 3.19.0-alt1
 - new version
 

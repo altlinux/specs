@@ -1,72 +1,52 @@
-Epoch: 0
-Group: Development/Java
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global base_name    net
-%global short_name   commons-%{base_name}
+Name:           apache-commons-net
+Version:        3.13.0
+Release:        alt1
 
-Name:           apache-%{short_name}
-Version:        3.6
-Release:        alt1_16jpp11
-Summary:        Internet protocol suite Java library
-License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}/
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Summary:        Apache Commons Net
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/net/
+VCS:            https://github.com/apache/commons-net
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-Source44: import.info
-
 %description
-This is an Internet protocol suite Java library originally developed by
-ORO, Inc.  This version supports Finger, Whois, TFTP, Telnet, POP3, FTP,
-NNTP, SMTP, and some miscellaneous protocols like Time and Echo as well
-as BSD R command support. The purpose of the library is to provide
-fundamental protocol access, not higher-level abstractions.
+Apache Commons Net library contains a collection of network utilities and
+protocol implementations. Supported protocols include Echo, Finger, FTP, NNTP,
+NTP, POP3(S), SMTP(S), Telnet, and Whois.
 
-%package javadoc
-Group: Development/Java
-Summary:    API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+%javadoc_package
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# This test fails with "Connection timed out"
-rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
-# Fails in Koji with "Address already in use"
-rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
+%setup
 
 %pom_remove_plugin :exec-maven-plugin
 
-%mvn_file  : %{short_name} %{name}
-%mvn_alias : org.apache.commons:%{short_name}
+%mvn_file : commons-net %name
+%mvn_alias :commons-net org.apache.commons:commons-net
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.net
+# Test disabled due missing deps
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Wed May 20 2026 Evgeniy Serov <scala@altlinux.org> 3.13.0-alt1
+- Updated to 3.13.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.6-alt1_16jpp11
 - update
 

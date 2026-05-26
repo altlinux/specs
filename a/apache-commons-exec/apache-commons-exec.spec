@@ -1,90 +1,47 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /bin/ping
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global base_name exec
-%global short_name commons-%{base_name}
-
 Name:           apache-commons-exec
-Version:        1.3
-Release:        alt1_22jpp11
-Summary:        Java library to reliably execute external processes from within the JVM
-License:        ASL 2.0
-URL:            http://commons.apache.org/exec/
+Version:        1.6.0
+Release:        alt1
+
+Summary:        Apache Commons Exec
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://commons.apache.org/exec/
+VCS:            https://github.com/apache/commons-exec
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+
 BuildArch:      noarch
 
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-
-# Tests execute /usr/bin/ping
-BuildRequires:  iputils
-Source44: import.info
-
 %description
-Commons Exec is a library for dealing with external process execution and
-environment management in Java.
+Apache Commons Exec is a library that reliably executes external processes from
+within the JVM.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+%javadoc_package
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# Fix wrong end-of-line encoding
-for file in LICENSE.txt NOTICE.txt RELEASE-NOTES.txt STATUS; do
-  sed -i.orig "s/\r//" $file && \
-  touch -r $file.orig $file && \
-  rm $file.orig
-done
-
-# Shell scripts used for unit tests must be executable (see
-# http://commons.apache.org/exec/faq.html#environment-testing)
-chmod a+x src/test/scripts/*.sh
-
-# Skip Exec57Test (it is unstable), see rhbz#1202260
-find -name Exec57Test.java -delete
-
-%pom_xpath_set pom:properties/pom:maven.compiler.source 8
-%pom_xpath_set pom:properties/pom:maven.compiler.target 8
-
-%mvn_file :%{short_name} %{short_name} %{name}
-
+%setup
 
 %build
-%mvn_build -- -Dmaven.test.failure.ignore=true -Dcommons.osgi.symbolicName=org.apache.commons.exec
-
+# Tests disabled due missing dep (gradle)
+%mvn_build -f
 
 %install
 %mvn_install
 
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
-%doc STATUS RELEASE-NOTES.txt
-
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc *.md
 
 %changelog
+* Thu May 14 2026 Evgeniy Serov <scala@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt1_22jpp11
 - update
 
