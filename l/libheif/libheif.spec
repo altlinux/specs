@@ -1,6 +1,6 @@
 Name: libheif
-Version: 1.22.0
-Release: alt3
+Version: 1.22.2
+Release: alt1
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -96,6 +96,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 26 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.2-alt1
+- 1.22.2
+
 * Fri May 22 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.22.0-alt3
 - enabled uvg266
 
