@@ -1,28 +1,30 @@
 Summary:	Cgoban is an X board for playing Go (Weiqi)
 Name:		cgoban
 Version:	1.9.14
-Release:	alt2.qa1
+Release:	alt3
 Group:		Games/Boards
-License:	GPL
+License:	GPLv2+
 URL:		http://cgoban1.sourceforge.net/
-Packager:   Paul Wolneykien <manowar@altlinux.ru>
+Packager:	Paul Wolneykien <manowar@altlinux.ru>
 
-Source:		http://prdownloads.sourceforge.net/cgoban1/%{name}-%{version}.tar.gz
+Source:		%name-%version.tar
+Patch:          cgoban-fixes.patch
 
 # Automatically added by buildreq on Tue Mar 29 2011 (-ba)
 BuildRequires: libXt-devel
 
 %description
-   Cgoban (Complete Goban) is for Unix systems with X11. It has the ability
+Cgoban (Complete Goban) is for Unix systems with X11. It has the ability
 to be a computerized Go board, view and edit smart-go files, and connect to
 Go servers on the Internet.
 
 %prep
-%setup -q
-
-%configure
+%setup
+%patch -p2
 
 %build
+%autoreconf
+%configure
 %make
 
 %install
@@ -42,7 +44,6 @@ Type=Application
 EOF
 
 %files
-%defattr(-,root,root,755)
 %doc COPYING README TODO
 %{_bindir}/*
 %{_mandir}/man6/*
@@ -50,6 +51,10 @@ EOF
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue May 26 2026 Paul Wolneykien <manowar@altlinux.org> 1.9.14-alt3
+- Fixed compilation errors (patch).
+- Clarify the license (GPLv2+).
+
 * Sun Apr 10 2011 Igor Vlasenko <viy@altlinux.ru> 1.9.14-alt2.qa1
 - NMU: dropped obsolete menu entry
 
