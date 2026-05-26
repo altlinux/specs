@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mobile-config-firefox
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Mobile and privacy friendly firefox configuration
@@ -41,6 +41,9 @@ sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" \
 %_datadir/metainfo/org.postmarketos.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Mon May 25 2026 Egor Shestakov <ved@altlinux.org> 5.2.0-alt1
+- Update to 5.2.0.
+
 * Wed Dec 24 2025 Egor Shestakov <ved@altlinux.org> 5.1.0-alt1
 - Update to 5.1.0:
   + Change FIREFOX_CONFIG_DIR to MCF_DIR.
