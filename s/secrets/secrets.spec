@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 12
+%define ver_major 13
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
 %def_disable check
 
 Name: secrets
-Version: %ver_major.3
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -80,9 +80,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/mime/packages/%xdg_name.xml
 %python3_sitelibdir_noarch/%pypi_name/
-%doc README*
+%doc README* CHANGELOG*
 
 %changelog
+* Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 13.0.1-alt1
+- 13.0.1
+
 * Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 12.3-alt1
 - 12.3
 

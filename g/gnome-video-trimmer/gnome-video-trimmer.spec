@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: gnome-%_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Video Trimmer
@@ -69,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 26.03.1-alt1
+- 26.03.1
+
 * Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 26.03-alt1
 - 26.03
 
