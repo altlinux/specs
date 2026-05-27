@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -19,6 +19,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: libudev-devel
 
 %description
 IMSProg - Linux IMSProg - I2C, SPI and MicroWire EEPROM/Flash chip programmer
@@ -55,35 +56,14 @@ EZP Chip.
 # update translations
 lrelease-qt6 IMSProg_editor/language/*.ts
 lrelease-qt6 IMSProg_programmer/language/*.ts
+lrelease-qt6 IMSProg_database_update/language/*.ts
 
 %build
-pushd IMSProg_editor
 %cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
 %cmake_build
-popd
-
-pushd IMSProg_programmer
-%cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
-%cmake_build
-popd
-
-pushd IMSProg_database_update
-%cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
-%cmake_build
-popd
 
 %install
-pushd IMSProg_editor
 %cmake_install
-popd
-
-pushd IMSProg_programmer
-%cmake_install
-popd
-
-pushd IMSProg_database_update
-%cmake_install
-popd
 
 # remove extra appdata
 rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_database_update.metainfo.xml
@@ -111,6 +91,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.4-alt1
+- New version 1.8.4.
+
 * Thu Apr 23 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.3-alt1
 - New version 1.8.3.
 - Add Qt6 support for IMSProg_database_update.
