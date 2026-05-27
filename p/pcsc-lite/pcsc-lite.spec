@@ -4,8 +4,8 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 2.4.1
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
@@ -172,6 +172,9 @@ fi
 %endif
 
 %changelog
+* Wed May 27 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+
 * Sun Apr 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt2
 - Created user pcscd for service file (ALT #58059, #58081).
 
