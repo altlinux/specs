@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%define bash_completionsdir %_datadir/bash-completion/completions
+%define fish_completionsdir %_datadir/fish/vendor_completions.d
+%define zsh_completionsdir %_datadir/zsh/site-functions
+
 Name: codewhale
-Version: 0.8.45
+Version: 0.8.47
 Release: alt1
 
 Summary: Agentic coding terminal
@@ -42,13 +46,31 @@ install -vpD -m0755 target/release/codewhale -t %buildroot%_bindir
 install -vpD -m0755 target/release/codewhale-tui -t %buildroot%_bindir
 install -vpD -m0755 target/release/codewhale-app-server -t %buildroot%_bindir
 
+mkdir -p %buildroot%bash_completionsdir
+mkdir -p %buildroot%fish_completionsdir
+mkdir -p %buildroot%zsh_completionsdir
+
+%buildroot%_bindir/codewhale completions bash \
+    > %buildroot%bash_completionsdir/codewhale
+%buildroot%_bindir/codewhale completions fish \
+    > %buildroot%fish_completionsdir/codewhale.fish
+%buildroot%_bindir/codewhale completions zsh \
+    > %buildroot%zsh_completionsdir/_codewhale
+
 %files
 %doc CHANGELOG.md LICENSE README.md
 %_bindir/codewhale
 %_bindir/codewhale-tui
 %_bindir/codewhale-app-server
+%bash_completionsdir/codewhale
+%fish_completionsdir/codewhale.fish
+%zsh_completionsdir/_codewhale
 
 %changelog
+* Wed May 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.47-alt1
+- Updated to 0.8.47.
+- Packaged shell completions for bash, fish and zsh.
+
 * Tue May 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.45-alt1
 - Updated to 0.8.45.
 
