@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 12.10.1
+Version: 12.10.2
 Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
 
 Summary: Forgejo Runner
-License: GPLv3-or-later
+License: GPL-3.0-or-later
 Group: Other
 Url: https://forgejo.org/docs/latest/admin/actions/#forgejo-runner
 Vcs: https://code.forgejo.org/forgejo/runner.git
@@ -138,6 +138,9 @@ fi
 %_userunitdir/%name-cache.service
 
 %changelog
+* Wed May 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.10.2-alt1
+- New version 12.10.2.
+
 * Tue May 05 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.10.1-alt1
 - New version 12.10.1.
 
