@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.68.2
+Version: 0.70.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -115,6 +115,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Apr 22 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.70.0-alt1
+- 0.70.0
+
 * Fri Dec 19 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.68.2-alt1
 - 0.68.2
 
