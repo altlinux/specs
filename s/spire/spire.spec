@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: spire
-Version: 1.12.4
+Version: 1.15.0
 Release: alt1
 Summary: The SPIFFE Runtime Environment
 License: Apache-2.0
@@ -58,6 +58,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name-server
 
 %changelog
+* Wed May 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.15.0-alt1
+- New version 1.15.0.
+
 * Fri Oct 24 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.12.4-alt1
 - Initial build
 
