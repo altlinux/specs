@@ -4,7 +4,7 @@
 
 Name: ctre
 Version: 3.11.0
-Release: alt1
+Release: alt2
 Summary: Compile Time Regular Expression in C++
 License: Apache-2.0
 Group: Development/C++
@@ -17,12 +17,11 @@ Source: %name-%version.tar
 Patch: ctre-3.11.0-noarch.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake %_bindir/python3
-BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
-# Tests
-%if_with check
+BuildRequires: cmake
 BuildRequires: gcc-c++
-%endif
+BuildRequires: %_bindir/python3
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
 
 %description
 Fast compile-time regular expressions with support
@@ -52,16 +51,16 @@ Documentation files for %name.
 
 %build
 %cmake \
-    -DCTRE_BUILD_PACKAGE_DEB:BOOL=FALSE \
-    -DCTRE_BUILD_PACKAGE_RPM:BOOL=FALSE
+    -DCTRE_BUILD_TESTS=%{?_with_check:ON}%{!?_with_check:OFF} \
+    -DCTRE_BUILD_PACKAGE=OFF
 sphinx-build docs doc
 
 %install
 %cmake_install
 
-%check
 %if_with check
-%make_build
+%check
+%cmake_build --target ctre-test
 %endif
 
 %files devel
@@ -80,9 +79,13 @@ sphinx-build docs doc
 %doc doc/*
 
 %changelog
+* Tue May 26 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt2
+- Fix build without tests.
+- Use CMake for building tests.
+
 * Tue May 12 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt1
 - New version 3.11.0.
-- Minor spec cleanup.
+- Enable RTD docs theme.
 
 * Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.0-alt2
 - Fix noarch-ness issue when other modules try to find ctre.

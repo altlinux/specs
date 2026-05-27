@@ -3,7 +3,7 @@
 
 Name: libdulcificum
 Version: 5.10.2
-Release: alt2
+Release: alt3.gitdfaa4763
 
 Summary: Translation between the dialects of 3D printer commands
 License: LGPL-3.0-only
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
 BuildRequires: gcc-c++ cmake
+%ifarch %e2k
+BuildRequires: clang
+%endif
 BuildRequires: %_bindir/python3
 BuildRequires: pybind11-devel
 BuildRequires: libspdlog-devel
@@ -49,6 +52,10 @@ Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 
 %build
 %cmake \
+%ifarch %e2k
+    -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+    -DCMAKE_C{,XX}_FLAGS_RELWITHDEBINFO="-O2 -DNDEBUG" \
+%endif
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DDULCIFICUM_VERSION=%version \
     -DENABLE_TESTS=OFF \
@@ -71,6 +78,10 @@ Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 %python3_sitelibdir/pyDulcificum.*.so
 
 %changelog
+* Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.2-alt3.gitdfaa4763
+- Fix build for e2k (thx ilyakurdyukov@).
+- Switch to more appropriate rolling tagging.
+
 * Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.2-alt2
 - Enable debuginfo for pyDulcificum.
 
