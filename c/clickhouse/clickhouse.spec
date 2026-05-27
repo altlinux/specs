@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 25.8.21.7
+Version: 25.8.24.21
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -231,6 +231,7 @@ fi
 %config(noreplace) %_sysconfdir/clickhouse-server/users.xml
 %config(noreplace) %_sysconfdir/clickhouse-keeper/keeper_config.xml
 %_bindir/ch*
+%_bindir/clickhouse-docker-init
 %_bindir/clickhouse-server
 %_bindir/clickhouse-keeper
 %_bindir/clickhouse-keeper-client
@@ -260,6 +261,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Wed May 27 2026 Anton Farygin <rider@altlinux.org> 25.8.24.21-alt1
+- 25.8.21.7 -> 25.8.24.21
+
 * Fri Apr 03 2026 Anton Farygin <rider@altlinux.org> 25.8.21.7-alt1
 - 25.8.20.4 -> 25.8.21.7
 
