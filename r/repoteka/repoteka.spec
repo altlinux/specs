@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: repoteka
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Fast HTTP/JSON API for ALT Linux apt-rpm repository metadata
 License: GPL-2.0-or-later
@@ -63,6 +63,21 @@ install -D -m 0644 %name.toml.example %buildroot%_sysconfdir/%name.toml
 %config(noreplace) %_sysconfdir/%name.toml
 
 %changelog
+* Wed May 27 2026 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- /repoteka/names: preserve original case of package names and add
+  smartcase prefix matching (uppercase prefix => case-sensitive, lowercase
+  prefix => case-insensitive). Fixes broken clone-URL completion for
+  packages like OpenUSD, OpenComposite, OCE
+- bounded /names ?prefix= and /packages ?q= at 256 bytes to cap substring
+  search complexity
+- per-branch sorted name arrays now reflect the case actually present in
+  each branch (no global representative leak across branches)
+- deterministic canonical case on lowercase-collision (lexicographic
+  minimum); reload-stable regardless of Hashtbl iteration order
+- fixed: source_rpm populated for srclist variants so kind=source returns
+  changelog
+- perf: Gc.compact after reload and debounced staggered branch updates
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - fixed: forward kind filter to global /names and /packages search
 - addded strict kind validation on all six kind-aware endpoints (HTTP 400)
