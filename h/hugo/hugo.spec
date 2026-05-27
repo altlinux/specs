@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hugo
-Version: 0.161.1
+Version: 0.162.0
 Release: alt1
 
 Summary: Configurable static site generator
@@ -11,6 +11,8 @@ Url: https://gohugo.io
 Vcs: https://github.com/gohugoio/hugo
 
 Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 
@@ -23,7 +25,7 @@ content and templates and renders them into a full HTML website.
 %global import_path github.com/mchernigin/hugo
 
 %prep
-%setup
+%setup -a1
 export BUILDDIR="$PWD/%build_dir"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -62,6 +64,9 @@ install -Dm 0644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed May 27 2026 Egor Ignatov <egori@altlinux.org> 0.162.0-alt1
+- New version 0.162.0.
+
 * Thu Apr 30 2026 Egor Ignatov <egori@altlinux.org> 0.161.1-alt1
 - New version 0.161.1.
 
