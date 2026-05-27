@@ -6,8 +6,8 @@
 %def_with check
 
 Name: %pypi_name
-Version: 1.4.0
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: Connect and query your database from your terminal in seconds
 Group: Development/Databases
@@ -65,6 +65,9 @@ not test_pending_query_set_before_connecting"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed May 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.5.0-alt1
+- new version
+
 * Tue Apr 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt2
 - update
 
