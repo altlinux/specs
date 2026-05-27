@@ -5,7 +5,7 @@ Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation-batocera
 Epoch: 1
 Version: 39
-Release: alt15.gitc3d5c67
+Release: alt17.gitc3d5c67
 License: MIT
 Group: Emulators
 Url: https://github.com/Maks1mS/batocera-emulationstation
@@ -65,6 +65,8 @@ cmake . \
     -DENABLE_FILEMANAGER=0 \
     -DEXPERIMENTAL_COMMON_LINUX=1 \
     -DUSE_SYSTEM_PUGIXML=1 -DCEC=0 \
+    -DCMAKE_CXX_STANDARD=20 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
 %ifarch aarch64
     -DUSE_GLES2=1
 %else
@@ -125,6 +127,13 @@ rm -rf %{buildroot}%{_includedir}
 %_libexecdir/libid3v2.a
 
 %changelog
+* Wed May 27 2026 Artyom Bystrov <arbars@altlinux.org> 1:39-alt17.gitc3d5c67
+- Fixed build with GCC15
+- Set bluetooth behavior (at last time, i hope).
+
+* Fri Apr 17 2026 Artyom Bystrov <arbars@altlinux.org> 1:39-alt16.gitc3d5c67
+- Fixed bluetooth behavior
+
 * Tue Oct 28 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt15.gitc3d5c67
 - Update run script
 
