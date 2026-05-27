@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Imager
-Version: 1.029
+Version: 1.031
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -9,7 +9,8 @@ Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битны�
 
 License: %perl_license
 Group: Development/Perl
-URL: http://imager.perl.org/
+URL: https://metacpan.org/release/Imager
+VCS: https://github.com/tonycoz/imager/
 
 Source: Imager-%version.tar
 Patch: perl-Imager-1.026-freetype-include.patch
@@ -70,6 +71,9 @@ IM_SUPPRESS_PROM=1 \
 %exclude /.perl.req
 
 %changelog
+* Tue May 26 2026 Anton Farygin <rider@altlinux.org> 1.031-alt1
+- 1.029 -> 1.031
+
 * Mon Oct 06 2025 Constantin Sunzow <protvin@altlinux.org> 1.029-alt1
 - New version.
 
