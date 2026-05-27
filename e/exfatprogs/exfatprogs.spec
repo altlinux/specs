@@ -1,8 +1,9 @@
 %define _sbindir /sbin
+%define _libexecdir %_prefix/libexec
 %def_enable check
 
 Name: exfatprogs
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -19,6 +20,7 @@ Obsoletes: exfat-utils
 Provides: %_sbindir/dump.exfat %_sbindir/exfatlabel %_sbindir/fsck.exfat
 Provides: %_sbindir/mkfs.exfat %_sbindir/tune.exfat
 
+BuildRequires: pkgconfig(blkid) >= 2.20
 %{?_enable_check:BuildRequires: losetup}
 
 %description
@@ -51,10 +53,18 @@ at the level of exfat utilities in windows.
 %_sbindir/mkfs.exfat
 %_sbindir/tune.exfat
 %_sbindir/exfat2img
+%_sbindir/chdosattr
+%_sbindir/lsdosattr
+%_libexecdir/exfat-uctbl2bin.sh
+%_man1dir/*
 %_man8dir/*
+%doc %_datadir/doc/%name/
 %doc NEWS README*
 
 %changelog
+* Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue Mar 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
