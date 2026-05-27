@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-osd
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1%beta
 
 Summary: COSMIC OSD
@@ -61,6 +61,9 @@ just rootdir=%buildroot install
 %_bindir/%name
 
 %changelog
+* Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.14-alt1
+- 1.0.14
+
 * Wed May 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.13-alt1
 - 1.0.13
 
