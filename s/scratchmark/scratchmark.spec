@@ -2,7 +2,7 @@
 %define app_id org.scratchmark.Scratchmark
 
 Name: scratchmark
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 Summary: Organized markdown editor.
 Group: Editors
@@ -52,6 +52,9 @@ install -vpD %SOURCE2 .cargo/config.toml
 %_datadir/%name/language_specs/markdown.lang
 
 %changelog
+* Wed Apr 15 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Tue Feb 10 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.7.1-alt1
 - New version 1.7.1. 
 
