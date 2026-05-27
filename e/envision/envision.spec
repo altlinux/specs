@@ -1,17 +1,17 @@
 Name:    envision
-Version: 3.0.1
+Version: 3.2.0
 Release: alt1
 
 Summary: Envision is a GUI to setup and run either Monado or WiVRn
 License: AGPL-3.0
 Group:   Games/Other
 Url:     https://gitlab.com/gabmus/envision
+VCS:     https://gitlab.com/gabmus/envision.git
 
 Source: %name-%version.tar
-Source1: %name-%version-vendor.tar
+Source1: %name-development-%version.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires: rpm-build-rust
 BuildRequires: meson cmake git-core
 BuildRequires: glib2-devel libgio-devel libgtk4-devel libvte3-devel libappstream-glib
 BuildRequires: libssl-devel libadwaita-devel openxr-devel
@@ -32,15 +32,7 @@ Be very careful while in VR using this app!
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 meson setup build -Dprefix="%buildroot/build/localprefix" -Dprofile=development
@@ -62,6 +54,9 @@ rm -rf %buildroot%_iconsdir/hicolor/icon-theme.cache
 %_iconsdir/hicolor/symbolic/apps/org.gabmus.envision.Devel-symbolic.svg
 
 %changelog
+* Wed May 27 2026 Sergey Palcheh <minergenon@altlinux.org> 3.2.0-alt1
+- new version 3.2.0
+- switched to predownloaded-development (cargo vendor) packaging
+
 * Mon Mar 24 2025 Sergey Palcheh <minergenon@altlinux.org> 3.0.1-alt1
 - Initial build for Sisyphus
-
