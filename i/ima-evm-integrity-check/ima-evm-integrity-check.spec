@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,15 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Wed May 06 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.3-alt1
+- Set SELinux context "s0" for the signing service.
+- Fixed documentation and help for --log and --log-stderr options
+  (closes: 58756).
+- Disable SELinux if /usr/sbin/setenforce is present.
+- Fixed stderr logging in integrity-sign.
+- Fix: Properly pass the --log option to integrity-sign.
+- Fixed check for SELinux kernel cmdline option.
+
 * Tue Apr 14 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.2-alt1
 - Switch to bash5 (closes: 58516).
 - Added --log-stderr to the synopsis in integrity-applier(8).
