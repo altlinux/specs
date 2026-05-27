@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.0.1
+Version: 3.2.0
 Release: alt1
 
 Summary: OAuth2 goodies for the Djangonauts
@@ -31,14 +31,12 @@ BuildRequires: python3-module-requests
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch1: disable-tests-requiring-a-network.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -56,6 +54,9 @@ export DJANGO_SETTINGS_MODULE=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 28 2026 Anton Vyatkin <toni@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Tue May 13 2025 Alexander Burmatov <thatman@altlinux.org> 3.0.1-alt1
 - Update version to 3.0.1.
 
