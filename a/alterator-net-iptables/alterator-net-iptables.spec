@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.12
+Version: 4.19.13
 Release: alt1
 
 Summary: alterator module for simple iptables configuration
@@ -63,6 +63,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Wed May 27 2026 Arseniy Kostevich <faux@altlinux.org> 4.19.13-alt1
+- iptables_helper: fix ir_add() with omitted arguments (Closes: #59141)
+
 * Thu Mar 19 2026 Fedor Moseichuck <phobos@altlinux.org> 4.19.12-alt1
 - ui: fix internal interfaces link
 
