@@ -1,5 +1,5 @@
 Name:    bino
-Version: 2.3
+Version: 2.7
 Release: alt1
 
 Summary: 3D video player
@@ -47,6 +47,9 @@ appstream-util validate-relax --nonet \
 %_man1dir/*
 
 %changelog
+* Wed May 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.7-alt1
+- new version (2.7)
+
 * Fri Jan 17 2025 Sergey Palcheh <minergenon@altlinux.org> 2.3-alt1
 - initial build for ALT Sisyphus
 
