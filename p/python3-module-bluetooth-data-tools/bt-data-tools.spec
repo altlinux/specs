@@ -1,12 +1,12 @@
 Name: python3-module-bluetooth-data-tools
-Version: 1.29.17
+Version: 1.29.18
 Release: alt1
 
 Summary: Tools for converting bluetooth data and packets
 License: Apache-2.0
 Group: Development/Python
 URL: https://pypi.org/project/bluetooth-data-tools
-Vcs: https://github.com/Bluetooth-Devices/bluetooth-data-tools
+VCS: https://github.com/bluetooth-devices/bluetooth-data-tools
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %python3_sitelibdir/bluetooth_data_tools-%version.dist-info
 
 %changelog
+* Wed May 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.29.18-alt1
+- 1.29.18 released
+
 * Fri May 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.29.17-alt1
 - 1.29.17 released
 
