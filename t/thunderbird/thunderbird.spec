@@ -15,8 +15,8 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 151.0
-Release: alt4
+Version: 151.0.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -46,6 +46,9 @@ Patch010: 0010-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 Patch011: 0011-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch012: 0012-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
 Patch013: 0013-Apply-chat-message-style-changes-to-already-open-con.patch
+Patch014: 0014-Disable-the-native-textarea-resize-handle-on-the-cha.patch
+Patch015: 0015-Fix-default-size-and-layout-of-the-chat-Accounts-w.patch
+Patch019: 0019-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is.patch
 ### End Patches
 
 Provides: mailclient
@@ -188,6 +191,9 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch11 -p2
 %patch12 -p2
 %patch13 -p2
+%patch14 -p2
+%patch15 -p2
+%patch19 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -376,6 +382,15 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed May 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.1-alt1
+- New version.
+- Disable the native textarea resize
+  handle on the chat input (Closes: 56736).
+- Fix default size and layout of the
+  chat Accounts window (Closes: 57571).
+- Fix Matrix chat infinite SSO browser reopen loop when the
+  "Save Token" account option is disabled.
+
 * Sat May 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0-alt4
 - Stop the chat tooltip from resizing after it is shown when
   buddy info arrives asynchronously (Closes: 45202).
