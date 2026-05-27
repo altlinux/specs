@@ -1,5 +1,8 @@
+# default = ["plugins_from_target", "vendored_curl", "web_server_capability"]
+%define features plugins_from_target web_server_capability
+
 Name:    zellij
-Version: 0.43.1
+Version: 0.44.3
 Release: alt1
 
 Summary: A terminal workspace with batteries included
@@ -16,7 +19,7 @@ Source2: config.toml
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
-BuildRequires: perl-IPC-Cmd
+BuildRequires: libssl-devel
 BuildRequires: mandown
 
 %description
@@ -32,7 +35,7 @@ its users' fingertips.
 install -vpD %SOURCE2 .cargo/config.toml
 
 %build
-%rust_build
+%rust_build --no-default-features --features "%features"
 for shell in "zsh" "bash" "fish"
 do
   ./target/release/zellij setup --generate-completion "$shell" > ./target/zellij."$shell"
@@ -63,6 +66,9 @@ cp -r ./example %buildroot%_datadir/example
 %_datadir/example
 
 %changelog
+* Wed May 27 2026 Ilya Sorochan <k0tran@altlinux.org> 0.44.3-alt1
+- Update version.
+
 * Mon Aug 11 2025 Ilya Sorochan <k0tran@altlinux.org> 0.43.1-alt1
 - Update version.
 
