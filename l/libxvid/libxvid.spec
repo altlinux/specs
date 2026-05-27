@@ -3,7 +3,7 @@
 
 Name: lib%bname
 Version: 1.3.7
-Release: alt1
+Release: alt2
 Summary: Shared library of %Name video codec
 Group: System/Libraries
 License: GPLv2+
@@ -14,6 +14,7 @@ Obsoletes: %bname < %version-%release
 
 # http://downloads.xvid.org/downloads/%{bname}core-%version.tar.gz
 Source: %{bname}core-%version.tar
+Patch0: xvidcore-c23.patch
 
 %ifarch %ix86 x86_64
 BuildRequires: nasm
@@ -40,6 +41,7 @@ software.
 
 %prep
 %setup -q -n %{bname}core-%version
+%patch0 -p1
 
 %build
 pushd build/generic
@@ -64,6 +66,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed May 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.3.7-alt2
+- fixed build with -std=gnu23
+
 * Fri Dec 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.3.7-alt1
 - 1.3.7
 
