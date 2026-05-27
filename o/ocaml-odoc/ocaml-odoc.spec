@@ -5,7 +5,7 @@
 %define modules odoc-parser,odoc
 
 Name: ocaml-odoc
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -75,6 +75,9 @@ mkdir -p %buildroot/%_docdir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed May 27 2026 Anton Farygin <rider@altlinux.org> 3.2.1-alt1
+- 3.2.0 -> 3.2.1
+
 * Mon May 04 2026 Anton Farygin <rider@altlinux.org> 3.2.0-alt1
 - 3.1.0 -> 3.2.0
 
