@@ -1,8 +1,14 @@
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
+
 %define  modulename integers
 
 Name:    ocaml-%modulename
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 Summary: Various signed and unsigned integer types for OCaml
 License: MIT
 Group:   Development/ML
@@ -45,6 +51,9 @@ sed -i 's,stdlib-shims,,' src/dune
 %_libdir/ocaml/%{modulename}*/*.h
 
 %changelog
+* Mon May 25 2026 Anton Farygin <rider@altlinux.org> 0.8.0-alt1
+- 0.7.0 -> 0.8.0
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
 - added ocaml-compiler-libs to BuildRequires
 
