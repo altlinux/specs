@@ -1,20 +1,35 @@
-%define sover 2
+%define _unpackaged_files_terminate_build 1
+%define sover 4
 
 %def_with python3
+%def_with java
+%def_with octave
 
 Name: libsvm
-Version: 3.24
-Release: alt3
+Version: 3.37
+Release: alt1
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
-License: BSD
+License: BSD-3-Clause
 URL: http://www.csie.ntu.edu.tw/~cjlin/libsvm/
-Source: %name-%version.tar.gz
+VCS: https://github.com/cjlin1/libsvm
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildPreReq: gcc-c++
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildRequires: python3(setuptools)
+%endif
+%if_with java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-devel-default
+%endif
+%if_with octave
+BuildRequires(pre): rpm-build-octave
+BuildRequires: octave-devel
 %endif
 
 %description
@@ -22,10 +37,19 @@ LIBSVM is an integrated software for support vector classification,
 (C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
 estimation (one-class SVM). It supports multi-class classification.
 
+%package -n %name%sover
+Summary: A Library for Support Vector Machines
+Group: Sciences/Mathematics
+
+%description -n %name%sover
+LIBSVM is an integrated software for support vector classification,
+(C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
+estimation (one-class SVM). It supports multi-class classification.
+
 %package devel
 Summary: Development files of LIBSVM
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name%sover = %EVR
 
 %description devel
 LIBSVM is an integrated software for support vector classification,
@@ -37,7 +61,7 @@ This package contains development files of LIBSVM.
 %package tools
 Summary: Tools for LIBSVM
 Group: Sciences/Mathematics
-Requires: %name = %version-%release
+Requires: gnuplot
 
 %description tools
 LIBSVM is an integrated software for support vector classification,
@@ -46,49 +70,126 @@ estimation (one-class SVM). It supports multi-class classification.
 
 This package contains tools for LIBSVM.
 
-%package -n python3-module-svm
+%if_with python3
+%package -n python3-module-%name
 Summary: Python interface for LIBSVM
 Group: Development/Python3
 BuildArch: noarch
-Requires: %name = %version-%release
 
-%description -n python3-module-svm
+Provides: python3-module-svm = %EVR
+Obsoletes: python3-module-svm < %EVR
+Requires: %name%sover = %EVR
+
+%description -n python3-module-%name
 LIBSVM is an integrated software for support vector classification,
 (C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
 estimation (one-class SVM). It supports multi-class classification.
 
 This package contains Python interface for LIBSVM.
+%endif
+
+%if_with java
+%package java
+Summary: Java implementation of LIBSVM
+Group: Development/Java
+BuildArch: noarch
+Requires: java
+
+%description java
+LIBSVM is an integrated software for support vector classification,
+(C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
+estimation (one-class SVM). It supports multi-class classification.
+
+This package contains native Java implementation of LIBSVM.
+%endif
+
+%if_with octave
+%global octpkg %name
+
+%package -n octave-%octpkg
+Summary: Octave interface for LIBSVM
+Group: Sciences/Mathematics
+Requires: octave
+
+%description -n octave-%octpkg
+LIBSVM is an integrated software for support vector classification,
+(C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
+estimation (one-class SVM). It supports multi-class classification.
+
+This package contains Octave interface for LIBSVM.
+%endif
 
 %prep
 %setup
+%autopatch -p1
+%python3_fix_shebang tools
 
 %build
-%make_build lib all
+%make_build all
+
+%if_with python3
+pushd python
+%pyproject_build
+popd
+%endif
+
+%if_with java
+%make_build -C java all
+%endif
+
+%if_with octave
+pushd matlab
+export LDFLAGS=-Wl,-rpath,$(octave-config -p OCTLIBDIR)
+%octave_cmd make
+popd
+%endif
 
 %install
 
-install -d %buildroot%_libdir
-install -m644 libsvm.so.%sover %buildroot%_libdir
+install -pD -m644 -t %buildroot%_libdir libsvm.so.%sover
 ln -s libsvm.so.%sover %buildroot%_libdir/libsvm.so
 
-install -d %buildroot%_includedir
-install -m644 *.h %buildroot%_includedir
+install -pD -m644 -t %buildroot%_includedir *.h
 
-install -d %buildroot%_bindir
-install -m755 svm-predict svm-scale svm-train \
-	%buildroot%_bindir
-for i in checkdata easy grid subset; do
-	install -m755 tools/$i.py %buildroot%_bindir/svm-$i
+install -pD -m755 -t %buildroot%_bindir \
+	svm-predict svm-scale svm-train
+for py in $(cd tools && ls *.py); do
+	install -pD -m755 tools/$py %buildroot%_bindir/svm-${py%%.py}
 done
 
 %if_with python3
-install -d %buildroot%python3_sitelibdir_noarch
-install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
+pushd python
+%pyproject_install
+popd
 %endif
 
-%files
+%if_with java
+install -pD -m644 -t %buildroot%_javadir java/libsvm.jar
+%endif
+
+%if_with octave
+install -pD -m644 -t %buildroot%octpkglibdir matlab/*.mex
+install -pD -m644 -t %buildroot%octpkglibdir/packinfo matlab/INDEX
+install -pD -m644 COPYRIGHT %buildroot%octpkglibdir/packinfo/COPYING
+sed \
+	-e "s/@VERSION@/%version/" \
+	-e "s/@DATE@/$(date -I)/" \
+	matlab/DESCRIPTION.in > %buildroot%octpkglibdir/packinfo/DESCRIPTION
+%endif
+
+%if_with octave
+# Prefixes are set temporarily to make Octave see the package
+
+%post -n octave-%octpkg
+%octave_cmd pkg prefix %octarchprefix; pkg rebuild
+
+%postun -n octave-%octpkg
+%octave_cmd pkg prefix %octarchprefix; pkg rebuild
+%endif
+
+%files -n %name%sover
 %doc COPYRIGHT README *.html
-%_libdir/*.so.*
+%_libdir/*.so.%sover
 
 %files devel
 %_libdir/*.so
@@ -96,15 +197,35 @@ install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
 
 %files tools
 %doc tools/README
-%_bindir/*
+%_bindir/svm-*
 
 %if_with python3
-%files -n python3-module-svm
+%files -n python3-module-%name
 %doc python/README
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%name
+%python3_sitelibdir_noarch/%{name}_official-*.dist-info
+%endif
+
+%if_with java
+%files java
+%_javadir/*.jar
+%endif
+
+%if_with octave
+%files -n octave-%octpkg
+%doc matlab/README
+%octpkglibdir
 %endif
 
 %changelog
+* Sat May 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.37-alt1
+- New version 3.37.
+- Apply Shared Libs Policy to new sover.
+- Enable Java implementation and Octave bindings.
+- Build Python module with pyproject and rename it to libsvm.
+- Use dynamic linking wherever possible.
+- Enable OpenMP and re-enable debuginfo for libsvm.
+
 * Sat May 16 2026 Anton Midyukov <antohami@altlinux.org> 3.24-alt3
 - NMU: Build without python2 module; cleanup Packager.
 
