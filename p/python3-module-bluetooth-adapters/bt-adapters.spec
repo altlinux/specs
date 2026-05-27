@@ -1,6 +1,6 @@
 Name: python3-module-bluetooth-adapters
-Version: 2.1.1
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: Tools to enumerate and find Bluetooth Adapters
 License: Apache-2.0
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/bluetooth_adapters-%version.dist-info
 
 %changelog
+* Wed May 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.0-alt1
+- 2.4.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.1-alt2
 - revert unsolicited packaging changes
 
