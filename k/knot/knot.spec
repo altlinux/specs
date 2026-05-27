@@ -1,6 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir /var
 
+%define libdnssec_sover 10
+%define libknot_sover 16
+%define libzscanner_sover 5
+
 %def_disable dnstap
 %def_enable maxminddb
 %def_enable xdp
@@ -9,7 +13,7 @@
 
 Name: knot
 Version: 3.5.3
-Release: alt1
+Release: alt2
 Summary: High-performance authoritative DNS server
 Group: System/Servers
 License: GPL-3.0-or-later
@@ -43,6 +47,10 @@ Knot DNS is a high-performance authoritative DNS server implementation.
 Summary: Development files for the Knot DNS libraries
 Group: Development/C
 
+Requires: libdnssec%libdnssec_sover = %EVR
+Requires: libknot%libknot_sover = %EVR
+Requires: libzscanner%libzscanner_sover = %EVR
+
 %description devel
 Knot DNS is a high-performance authoritative DNS server implementation.
 
@@ -55,27 +63,37 @@ Group: Networking/Other
 %description utils
 The package contains DNS client utilities shipped with the Knot DNS server.
 
-%package -n libdnssec
+%package -n libdnssec%libdnssec_sover
 Summary: Knot DNS DNSSEC library
 Group: System/Libraries
 
-%description -n libdnssec
+Provides: libdnssec = %EVR
+Obsoletes: libdnssec < %EVR
+
+%description -n libdnssec%libdnssec_sover
 Knot DNS DNSSEC library
 
-%package -n libknot
+%package -n libknot%libknot_sover
 Summary: Knot DNS library
 Group: System/Libraries
+
+Provides: libknot = %EVR
+Obsoletes: libknot < %EVR
+
 # Knot DNS 3.2+ isn't compatible with earlier knot-resolver
 Conflicts: knot-resolver < 5.7.0
 
-%description -n libknot
+%description -n libknot%libknot_sover
 Knot DNS library
 
-%package -n libzscanner
+%package -n libzscanner%libzscanner_sover
 Summary: Knot DNS Zone Parsing library
 Group: System/Libraries
 
-%description -n libzscanner
+Provides: libzscanner = %EVR
+Obsoletes: libzscanner < %EVR
+
+%description -n libzscanner%libzscanner_sover
 Knot DNS Zone Parsing library
 
 %package doc
@@ -189,17 +207,19 @@ V=1 %make check ||:
 
 %files devel
 %_includedir/*
-%_libdir/*.so
 %_pkgconfigdir/*
+%_libdir/libdnssec.so
+%_libdir/libknot.so
+%_libdir/libzscanner.so
 
-%files -n libdnssec
-%_libdir/libdnssec.so.*
+%files -n libdnssec%libdnssec_sover
+%_libdir/libdnssec.so.%{libdnssec_sover}*
 
-%files -n libknot
-%_libdir/libknot.so.*
+%files -n libknot%libknot_sover
+%_libdir/libknot.so.%{libknot_sover}*
 
-%files -n libzscanner
-%_libdir/libzscanner.so.*
+%files -n libzscanner%libzscanner_sover
+%_libdir/libzscanner.so.%{libzscanner_sover}*
 
 %if_enabled documentation
 %files doc
@@ -207,6 +227,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Thu May 21 2026 Aleksandr Gamzin <gamzin@altlinux.org> 3.5.3-alt2
+- Switch shared libraries to ABI-versioned packages (Shared Libs Policy).
+
 * Tue Feb 17 2026 Alexey Shabalin <shaba@altlinux.org> 3.5.3-alt1
 - updated from 3.4.8 to 3.5.3
 
