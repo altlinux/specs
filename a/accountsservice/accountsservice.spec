@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: accountsservice
-Version: 23.13.9
-Release: alt5
+Version: 26.12.8
+Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -13,7 +13,7 @@ Url: https://www.freedesktop.org/wiki/Software/AccountsService/
 Vcs: https://gitlab.freedesktop.org/accountsservice/accountsservice.git
 
 Source: %name-%version.tar
-Patch1: %name-%version.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: meson >= 0.63.0
 BuildRequires: gtk-doc
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(glib-2.0) >= 2.63.5
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(json-c)
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
 BuildRequires: libsystemd-devel >= 186 systemd-devel
@@ -77,7 +78,7 @@ GObject introspection devel data for the accountsservice library
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 %meson \
@@ -126,6 +127,11 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Tue May 26 2026 Vladimir Romanov <rirusha@altlinux.org> 26.12.8-alt1
+- 26.12.8 (closes: #58899)
+- Fixed creating user with ReadySet in ALT Atomic (closes: #59308).
+- Port package to more classic gear way.
+
 * Wed Sep 04 2024 Evgeny Sinelnikov <sin@altlinux.org> 23.13.9-alt5
 - Fixed problem with local users definition (difference with previous
   release - fixed path to /etc/tcb/ is removed, which allows to work
