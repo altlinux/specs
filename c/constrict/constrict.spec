@@ -3,8 +3,8 @@
 %define app_id io.github.wartybix.Constrict
 
 Name: constrict
-Version: 25.10
-Release: alt2
+Version: 26.2
+Release: alt1
 Summary: Compress videos to target sizes
 Group: Video
 License: GPL-3.0-or-later
@@ -15,18 +15,22 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 
+%add_python3_path %_datadir/%name/%name
+
 Requires: ffmpeg
 Requires: ffprobe
 Requires: typelib(Adw)
+Requires: typelib(GlyGtk4) = 2
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-python3
 BuildRequires: meson
 BuildRequires: blueprint-compiler
-BuildRequires: desktop-file-utils
-BuildRequires: appstream
-BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libadwaita-1)
+%if_enabled check
+BuildRequires: desktop-file-utils
+BuildRequires: %_bindir/appstreamcli
+%endif
 
 %description
 Constrict compresses your videos to your chosen file size - useful for uploading
@@ -50,7 +54,7 @@ at various bitrates yourself.
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/%name/%name/*.py
+%_datadir/%name/%name/
 %_datadir/%name/%name.gresource
 %_datadir/dbus-1/services/%app_id.service
 %_datadir/metainfo/%app_id.metainfo.xml
@@ -60,6 +64,9 @@ at various bitrates yourself.
 %_iconsdir/hicolor/scalable/apps/%app_id.svg
 
 %changelog
+* Thu Feb 19 2026 Vladislav Petrukhin <vladp@altlinux.org> 26.2-alt1
+- New version 26.2.
+
 * Wed Dec 17 2025 Vladislav Petrukhin <vladp@altlinux.org> 25.10-alt2
 - Fixed: #57256.
 
