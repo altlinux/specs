@@ -25,7 +25,7 @@
 %define nv_version 580
 %define nv_release 142
 %define nv_minor   %nil
-%define pkg_rel alt303
+%define pkg_rel alt304
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -388,6 +388,9 @@ fi
 %endif
 
 %changelog
+* Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt304
+- update devices lists
+
 * Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 580.142-alt303
 - package libs with version in filenames
 
