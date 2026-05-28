@@ -25,7 +25,7 @@
 %define nv_version 595
 %define nv_release 71
 %define nv_minor   05
-%define pkg_rel alt304
+%define pkg_rel alt305
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -302,6 +302,7 @@ install -m0644 nvidia_icd_vksc.json %buildroot/%nv_lib_dir/nvidia_icd_vksc.json
 %endif
 for l in %buildroot/%nv_lib_dir/lib*.so ; do
     f=`basename $l`
+    echo "$f" | grep -q "^libglxserver_nvidia\." && continue ||:
     mv $l %buildroot/%nv_lib_dir/${f}.%tbver
     ln -s ${f}.%tbver %buildroot/%nv_lib_dir/$f
 done
@@ -387,6 +388,9 @@ fi
 %endif
 
 %changelog
+* Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt305
+- update devices lists
+
 * Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt304
 - package libs with version in filenames
 
