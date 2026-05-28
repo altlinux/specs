@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.23.2
+Version: 0.23.3
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -125,6 +125,9 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Sat May 16 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.23.3-alt1
+- Remove extra space in full name
+
 * Tue Apr 28 2026 Semyon Knyazev <samael@altlinux.org> 0.23.2-alt1
 - Disabled the "Show Non-Container Objects in Console Tree" and
   "Advanced Features" options for the password settings subtree display.
