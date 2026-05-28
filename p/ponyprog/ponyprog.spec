@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%define _udevrulesdir /lib/udev/rules.d
+
 Name: ponyprog
 Version: 3.1.4
-Release: alt1
+Release: alt2
 
 Summary: Serial device programmer
 License: GPL-2.0
-Group: Other
+Group: Engineering
 Url: https://github.com/lancos/ponyprog
 
 Source: %name-%version.tar
@@ -74,5 +76,9 @@ cp -v icons/ponyprog.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_datadir/ponyprog/*
 
 %changelog
+* Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.4-alt2
+- Applied repocop fix for sisyphus_check.
+- Place package in Engineering group.
+
 * Wed May 27 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.4-alt1
 - Initial build for Sisyphus
