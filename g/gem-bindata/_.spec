@@ -2,7 +2,7 @@
 %define        pkgname bindata
 
 Name:          gem-%pkgname
-Version:       2.4.8
+Version:       2.4.15
 Release:       alt1
 Summary:       BinData - Parsing Binary Data in Ruby
 License:       MIT
@@ -67,5 +67,8 @@ Documentation files for %gemname gem.
 
 
 %changelog
+* Thu May 28 2026 Alexander Danilov <admsasha@altlinux.org> 2.4.15-alt1
+- New version 2.4.15.
+
 * Wed Dec 02 2020 Pavel Skrylev <majioa@altlinux.org> 2.4.8-alt1
 - + packaged gem with usage Ruby Policy 2.0
