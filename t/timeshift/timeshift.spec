@@ -12,7 +12,7 @@
 Name: timeshift
 Version: 25.12.4
 Summary: System restore tool for Linux
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -23,6 +23,7 @@ Patch1: alt-use-xvt.patch
 Patch2: alt-fix-41711.patch
 Patch3: alt-fix-41055.patch
 Patch4: alt-fix-47796.patch
+Patch5: alt-fix-59353.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-meson
@@ -50,6 +51,7 @@ running or from Live CD/USB.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %meson
@@ -78,6 +80,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Thu May 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 25.12.4-alt2
+- Use only polkit in timeshift-launcher (closes: #59353).
+
 * Fri Feb 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 25.12.4-alt1
 - Updated to version 25.12.4.
 
