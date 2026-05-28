@@ -5,7 +5,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.12.2.277
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -100,7 +100,7 @@ agent (snmpd).
 
 %package       -n gem-pcsd
 Version:       0.12.2.277
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service
 Group:         Development/Ruby
 
@@ -124,7 +124,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 %if_enabled    doc
 %package       -n gem-pcsd-doc
 Version:       0.12.2.277
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pcsd
 Group:         Development/Documentation
@@ -146,7 +146,7 @@ Pacemaker/Corosync gui/cli configuration system and daemon.
 %if_enabled    devel
 %package       -n gem-pcsd-devel
 Version:       0.12.2.277
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pcsd
 Group:         Development/Ruby
@@ -272,6 +272,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Thu May 28 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2.277-alt0.2
+- ! fixed path to run service script in settings (ALT #59328)
+
 * Fri May 22 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2.277-alt0.1
 - ^ 0.12.2 -> 0.12.2p277
 - ! fixed post service for pcsd to post_trans restart
