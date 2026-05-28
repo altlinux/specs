@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: caddy
-Version: 2.11.1
+Version: 2.11.3
 Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
@@ -125,6 +125,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu May 28 2026 Alexander Danilov <admsasha@altlinux.org> 2.11.3-alt1
+- New version 2.11.3.
+
 * Tue Mar 03 2026 Alexander Danilov <admsasha@altlinux.org> 2.11.1-alt1
 - New version 2.11.1.
 
