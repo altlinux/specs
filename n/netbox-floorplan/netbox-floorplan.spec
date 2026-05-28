@@ -1,5 +1,5 @@
 Name:    netbox-floorplan
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: A netbox plugin providing floorplan mapping capability for locations and sites
@@ -12,8 +12,8 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.5.0
-Conflicts: netbox > 4.5.99
+Requires: netbox >= 4.6.0
+Conflicts: netbox > 4.6.99
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-floorplan/README
 %_defaultdocdir/netbox-floorplan/README
 
 %changelog
+* Thu May 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.9.2-alt1
+- New 0.9.2 version.
+
 * Tue Apr 14 2026 Alexander Burmatov <thatman@altlinux.org> 0.9.1-alt1
 - New 0.9.1 version.
 

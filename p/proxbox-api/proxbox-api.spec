@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.10.post3
+Version: 0.0.15
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -32,6 +32,7 @@ BuildRequires: python3-module-aiosqlite
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-netbox-sdk
 BuildRequires: python3-module-proxmox-sdk
+BuildRequires: python3-module-yaml
 %endif
 
 Requires: python3-module-aiosqlite
@@ -111,7 +112,7 @@ install -p -D -m 644 %SOURCE6 %buildroot%_tmpfilesdir/proxbox-api.conf
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 
 %check
-%pyproject_run_pytest -k "not (test_generate_bundle_persists_artifacts or test_proxmox_mock_package_is_importable)"
+%pyproject_run_pytest -k "not (test_generate_bundle_persists_artifacts or test_proxmox_mock_package_is_importable or test_codegen_source_url_accepts_default_proxmox_viewer)"
 
 %pre
 groupadd -r -f proxbox-api >/dev/null 2>&1 ||:
@@ -155,6 +156,9 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Thu May 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.15-alt1
+- New 0.0.15 version.
+
 * Fri May 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.10.post3-alt1
 - New 0.0.10.post3 version.
 

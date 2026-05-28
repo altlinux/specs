@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.40
+Version: 0.0.43
 Release: alt1
 
 Summary: A modern static site generator by the Material for MkDocs team
@@ -27,6 +27,11 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-pymdown-extensions
+BuildRequires: python3-module-deepmerge
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-tomli
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-tabulate
 %endif
 
 %description
@@ -54,6 +59,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 27 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.43-alt1
+- Updated to 0.0.43.
+
 * Wed May 06 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.40-alt1
 - Updated to 0.0.40.
 
