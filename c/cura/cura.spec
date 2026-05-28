@@ -6,7 +6,7 @@
 
 Name: cura
 Epoch: 1
-Version: 5.12.1
+Version: 5.13.0
 Release: alt1
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
@@ -162,6 +162,11 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Thu May 28 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt1
+- New version 5.13.0.
+- Remove dependencies version from about dialog, because these do not
+  necessarily match with ALT ones and thus are hard to maintain.
+
 * Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.12.1-alt1
 - New version 5.12.1.
 

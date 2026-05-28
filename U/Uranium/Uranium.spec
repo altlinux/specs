@@ -10,11 +10,11 @@
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
-Version: 5.12.1
+Version: 5.13.0
 Release: alt1
 
-Summary:  A Python framework for building Desktop applications.
-License: LGPL-3.0
+Summary: A Python framework for building Desktop applications.
+License: LGPL-3.0-or-later
 Group:   Development/Python3
 URL:     https://github.com/Ultimaker/Uranium
 
@@ -132,6 +132,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt1
+- New version 5.13.0.
+
 * Thu Apr 16 2026 Valery Zabrovsky <brow@altlinux.org> 5.12.1-alt1
 - New version 5.12.1.
 

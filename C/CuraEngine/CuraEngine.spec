@@ -3,7 +3,7 @@
 
 Name: CuraEngine
 Epoch: 1
-Version: 5.12.1
+Version: 5.13.0
 Release: alt1
 
 Summary: Engine for processing 3D models into G-code instructions for 3D printers
@@ -111,6 +111,9 @@ rm -rf libs
 %doc README.md
 
 %changelog
+* Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt1
+- New version 5.13.0.
+
 * Fri Apr 17 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.12.1-alt1
 - New version 5.12.1.
 
