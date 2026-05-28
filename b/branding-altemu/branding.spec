@@ -9,8 +9,8 @@
 %define flavour %theme
 
 Name: branding-%flavour
-Version: 2025.09
-Release: alt2
+Version: 2026.05
+Release: alt1
 
 Url: https://www.altlinux.org/AltEMU
 
@@ -192,6 +192,10 @@ subst "s/Theme=.*/Theme=altemu/" /etc/plymouth/plymouthd.conf
 
 
 %changelog
+* Thu May 28 2026 Artyom Bystrov <arbars@altlinux.org> 2026.05-alt1
+- Update version
+- index pages update
+
 * Fri Sep 26 2025 Artyom Bystrov <arbars@altlinux.org> 2025.09-alt2
 - Minor cleanup
 - Add storage directory
