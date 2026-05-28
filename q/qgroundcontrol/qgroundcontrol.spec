@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.0.8
-Release: alt5
+Release: alt6
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -28,6 +28,9 @@ Requires: libOpenGL
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc gcc-c++
+%ifarch %e2k
+BuildRequires: clang
+%endif
 BuildRequires: packagekit-qt6-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
@@ -42,48 +45,13 @@ BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-wayland-devel
 BuildRequires: qt6-connectivity-devel
 BuildRequires: qt6-quick3d-devel
-BuildRequires: qt6-quick3d
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-shadertools-devel
-BuildRequires: qt6-sql-interbase
-BuildRequires: qt6-sql-postgresql
-BuildRequires: qt6-sql-odbc
-BuildRequires: qt6-sql-mysql
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: gst-plugins-good1.0-qt6
-BuildRequires: libpcre2-devel
-BuildRequires: libffi-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: liborc-devel
-BuildRequires: libXau-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libgudev-devel
-BuildRequires: libudev-devel
-BuildRequires: libcap-devel
-BuildRequires: libgbm-devel
 BuildRequires: zlib-devel
-BuildRequires: libmount-devel
-BuildRequires: libblkid-devel
-BuildRequires: libselinux-devel
-BuildRequires: libunwind-devel
 BuildRequires: libSDL2-devel
-BuildRequires: libSDL3-devel
-BuildRequires: libsystemd-devel
-BuildRequires: patchelf
-BuildRequires: libsoundio-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libwayland-client-devel
-BuildRequires: libX11-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libvulkan-devel
-BuildRequires: libgbm-devel
-BuildRequires: libdrm-devel
-BuildRequires: libibus-devel
-BuildRequires: libibus-gir-devel
-BuildRequires: libsamplerate-devel
-BuildRequires: libsndio7-devel
-BuildRequires: libqmdnsengine-devel
 BuildRequires: libshape-devel
 BuildRequires: libgeographiclib-devel geographiclib
 BuildRequires: libulog_cpp-devel
@@ -105,56 +73,67 @@ mission planning, making it the go-to solution for any MAVLink-enabled drone.
 %prep
 %setup
 %autopatch -p1
+# disable QML plugins deploy
+sed -i '/install(SCRIPT ${deploy_script})/d' cmake/Install.cmake
 
 # Copy prebuilt parameters where QGC expects them to be.
 cp -r %_datadir/ParameterRepository/* src/FirmwarePlugin/APM/ArduPilot-Parameter-Repository/
 
 %build
-export LC_ALL=ru_RU.UTF-8
-qt-cmake-qt6 -B build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PROJECT_INCLUDE=%SOURCE1 \
-            -DCMAKE_SKIP_INSTALL_RPATH=ON \
-            -DCMAKE_INSTALL_RPATH="%_libdir" \
-            -DCMAKE_PREFIX_PATH=%_libdir/cmake/ \
-            -DBUILD_SHARED_LIBS=ON \
-            -DLIB_PREFIX=%_libdir \
-            -DLIB_DIR_NAME=%_lib \
-            -DUSE_SYSTEM_ULOG_CPP=ON \
-            -DUSE_SYSTEM_QMDNSENGINE=ON \
-            -DUSE_SYSTEM_PX4-GPSDRIVERS=ON \
-            -DUSE_SYSTEM_SDL_GAMECONTROLLERDB=ON \
-            -DUSE_SYSTEM_SDL2=ON \
-            -DUSE_SYSTEM_MAVLINK=ON \
-            -DUSE_SYSTEM_LIBEVENTS=ON \
-            -DUSE_SYSTEM_ZLIB=ON \
-            -DUSE_SYSTEM_XZ-EMBEDDED=ON \
-            -DUSE_SYSTEM_GEOGRAPHICLIB=ON \
-            -DUSE_SYSTEM_SHAPE=ON \
-            -DUSE_SYSTEM_GSTQML6=ON \
-            #
+export LC_ALL=C.UTF-8
+export QTDIR=%_qt6_prefix
+export PATH="%{_qt6_bindir}:$PATH"
+%cmake \
+%ifarch %e2k
+	-DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+	-DCMAKE_C{,XX}_FLAGS_RELEASE="-O2 -g -DNDEBUG" \
+	-DCMAKE_INSTALL_RPATH="%_libdir/gstreamer-1.0" \
+	-DCMAKE_SKIP_INSTALL_RPATH=OFF \
+%endif
+	-DCMAKE_AUTOGEN_PARALLEL=%__nprocs \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_PROJECT_INCLUDE=%SOURCE1 \
+	-DCMAKE_PREFIX_PATH=%_libdir/cmake/ \
+	-DBUILD_SHARED_LIBS=ON \
+	-DLIB_PREFIX=%_libdir \
+	-DLIB_DIR_NAME=%_lib \
+	-DUSE_SYSTEM_ULOG_CPP=ON \
+	-DUSE_SYSTEM_QMDNSENGINE=ON \
+	-DUSE_SYSTEM_PX4-GPSDRIVERS=ON \
+	-DUSE_SYSTEM_SDL_GAMECONTROLLERDB=ON \
+	-DUSE_SYSTEM_SDL2=ON \
+	-DUSE_SYSTEM_MAVLINK=ON \
+	-DUSE_SYSTEM_LIBEVENTS=ON \
+	-DUSE_SYSTEM_ZLIB=ON \
+	-DUSE_SYSTEM_XZ-EMBEDDED=ON \
+	-DUSE_SYSTEM_GEOGRAPHICLIB=ON \
+	-DUSE_SYSTEM_SHAPE=ON \
+	-DUSE_SYSTEM_GSTQML6=ON \
+	#
 
-cmake --build build --config Release
-patchelf --set-rpath '' build/Release/QGroundControl # Clear wrong paths in rpath.
+%cmake_build
 
 %install
-mkdir -pv %buildroot
-mkdir -pv %buildroot%_bindir
-install -Dm 755 build/Release/QGroundControl %buildroot%_bindir/QGroundControl
-
-mkdir -pv %buildroot%_datadir/applications
-install -Dm 644 build/org.mavlink.qgroundcontrol.desktop %buildroot%_datadir/applications/org.mavlink.qgroundcontrol.desktop
-
-install -Dm 644 resources/icons/qgroundcontrol.png %buildroot/%_datadir/icons/hicolor/128x128/apps/QGroundControl.png
+%cmake_install
 
 %find_lang --without-mo --with-qt qgc
 
 %files -f qgc.lang
 %_bindir/QGroundControl
-%_datadir/applications/org.mavlink.qgroundcontrol.desktop
-%_datadir/icons/hicolor/128x128/apps/QGroundControl.png
+%_desktopdir/org.mavlink.qgroundcontrol.desktop
+%_iconsdir/hicolor/*/apps/QGroundControl.png
+%exclude %_datadir/metainfo/org.mavlink.qgroundcontrol.metainfo.xml
+# Install.cmake attempts to copy this file to the build directory.
+%exclude %_builddir/%name-%version/%_cmake__builddir/AppRun
 
 %changelog
+* Wed May 13 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.0.8-alt6
+- e2k build fix (use clang)
+- use proper cmake macros (enables parallel build)
+- parallel Qt meta-object compiler (moc/autogen)
+- remove unused BR
+- spec cleanup
+
 * Thu Apr 23 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt5
 - Replace Yandex Tiles with Esri, MapTiler, Stadia providers;
 - Add libcurl tile downloader.
