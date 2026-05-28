@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.12.1
+Version: 2.13.0
 Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
@@ -26,8 +26,9 @@ Obsoletes: python-module-%mod_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra tests
+%pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra crypto
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -38,6 +39,9 @@ A Python implementation of RFC 7519.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup tests
+%endif
 
 %build
 %pyproject_build
@@ -53,6 +57,10 @@ A Python implementation of RFC 7519.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 26 2026 Stanislav Levin <slev@altlinux.org> 2.13.0-alt1
+- updated from 2.12.1 to 2.13.0 (fixes: CVE-2026-48522, CVE-2026-48523,
+  CVE-2026-48524, CVE-2026-48525, CVE-2026-48526).
+
 * Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
 - 2.12.0 -> 2.12.1.
 
