@@ -4,6 +4,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method unresolved=relaxed
+%ifarch loongarch64 riscv64
+    %define spinwait_value 0
+    %global optflags_debug -g1
+%else
+    %define spinwait_value 1
+%endif
 
 #Disabling tests due to the need to use the network,
 #but it is not available in the build environment.
@@ -11,7 +17,7 @@
 
 Name: duckdb
 Version: 1.5.3
-Release: alt1
+Release: alt2
 
 Summary: An analytical in-process SQL database management system
 License: MIT
@@ -64,12 +70,6 @@ This package contains the source code of DuckDB.
 find extension/icu/third_party/icu -name unicode -type d | xargs rm -rf
 
 %build
-%ifarch loongarch64 riscv64
-    %define spinwait_value 0
-%else
-    %define spinwait_value 1
-%endif
-
 %cmake	-DWITH_INTERNAL_ICU=FALSE \
 	-DHAVE_CPU_SPINWAIT=%{spinwait_value} \
 	-DOVERRIDE_GIT_DESCRIBE="v%version" \
@@ -105,6 +105,9 @@ cp -r CMakeLists.txt extension src third_party tools %buildroot%_datadir/duckdb
 %_datadir/duckdb
 
 %changelog
+* Thu May 28 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.3-alt2
+- Reduce debuginfo on riscv64 and loongarch64 (thx iv@).
+
 * Wed May 27 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.3-alt1
 - New version 1.5.3.
 
