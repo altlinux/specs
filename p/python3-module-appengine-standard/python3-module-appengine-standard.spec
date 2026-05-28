@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.1.11
-Release: alt1
+Release: alt2
 
 Summary: Google App Engine services SDK for Python 3
 License: Apache-2.0
@@ -53,6 +53,9 @@ Source: %pypi_name-%version.tar
 
 %prep
 %setup -n %pypi_name-%version
+
+sed -i 's/namespace_packages=\["google"\],//' setup.py
+
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
     -e '1 s:#!%_bindir/env python$:#!%_bindir/python3:' \
     -e '1 s:#! %_bindir/env python$:#! %_bindir/python3:' \
@@ -63,16 +66,20 @@ find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
 
 %install
 %pyproject_install
+rm -f %buildroot%python3_sitelibdir/google/__init__.py
 
 %check
 %pyproject_run_pytest tests --cov=google.appengine
 
 %files
 %doc *.md
-%python3_sitelibdir/google/
+%python3_sitelibdir/google/appengine/
 %python3_sitelibdir/appengine_python_standard-*/
 
 %changelog
+* Tue May 12 2026 Nikita Panov <nexxy@altlinux.org> 1.1.11-alt2
+- Deleted the namespace package.
+
 * Wed Jul 02 2025 Alexander Burmatov <thatman@altlinux.org> 1.1.11-alt1
 - New 1.1.11 version.
 

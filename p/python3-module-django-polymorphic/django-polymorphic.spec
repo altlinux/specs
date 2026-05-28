@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 4.1.0
 Release: alt1
 Summary: Seamless polymorphic inheritance for Django models
 License: BSD-3-Clause
@@ -36,5 +36,8 @@ When a query is made at the base model, the inherited model classes are returned
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 19 2026 Nikita Panov <nexxy@altlinux.org> 4.1.0-alt1
+- version updated to 4.11.2
+
 * Tue Jul 23 2024 Anton Vyatkin <toni@altlinux.org> 3.1.0-alt1
 - Initial build for Sisyphus.

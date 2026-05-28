@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%modname
-Version: 2024.7.17
+Version: 2026.3.19
 Release: alt1
 
 Summary: A base for any Ansible application which will leverage Django
@@ -68,5 +68,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Tue Apr 28 2026 Nikita Panov <nexxy@altlinux.org> 2026.3.19-alt1
+- New version 2026.3.19. 
+
 * Sun Jul 21 2024 Anton Vyatkin <toni@altlinux.org> 2024.7.17-alt1
 - Initial build for Sisyphus.
