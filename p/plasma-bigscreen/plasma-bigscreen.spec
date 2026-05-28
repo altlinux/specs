@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%define _udevrulesdir /lib/udev/rules.d
+
 Name: plasma-bigscreen
 Version: 6.6.90
-Release: alt1
+Release: alt2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -132,6 +134,9 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %_udevrulesdir/40-uinput.rules
 
 %changelog
+* Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.90-alt2
+- Applied repocop fix for sisyphus_check.
+
 * Tue May 26 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.90-alt1
 - New version 6.6.90.
 
