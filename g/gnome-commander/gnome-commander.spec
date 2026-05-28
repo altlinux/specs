@@ -15,13 +15,13 @@
 %def_disable bootstrap
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %define xdg_name org.gnome.%name
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
-License: GPL-2.0-or-later
+License: GPL-3.0-or-later
 Group: File tools
 Url: https://gnome.pages.gitlab.gnome.org/gnome-commander/
 
@@ -105,6 +105,9 @@ xvfb-run %__meson_test
 %exclude %_datadir/doc/libgcmd-%api_ver/
 
 %changelog
+* Thu May 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0 (ported to Rust/GTK4)
 
