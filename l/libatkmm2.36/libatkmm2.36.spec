@@ -7,13 +7,13 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A C++ interface for ATK library
 License: LGPL-2.1-or-later
 Group: System/Libraries
-Url: http://atkmm.sourceforge.net/
+Url: https://gtkmm.gnome.org
 
 %if_enabled snapshot
 Source: %rname-%version.tar
@@ -93,6 +93,9 @@ developing atkmm applications.
 %endif
 
 %changelog
+* Thu May 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.36.4-alt1
+- 2.36.4
+
 * Sun Jan 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
 - 2.36.3
 

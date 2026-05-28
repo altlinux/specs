@@ -4,14 +4,14 @@
 %def_enable snapshot
 %define __name Gitte
 %define _name gitte
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name de.wwwtech.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK4/libadwaita Git client for the GNOME desktop
@@ -26,7 +26,7 @@ Source: %url/archive/%name-%version.tar.gz
 %else
 Source: %__name-%version.tar
 %endif
-Source1: %_name-%version-cargo.tar
+Source1: %__name-%version-cargo.tar
 
 %define gtk_ver 4.20
 %define adwaita_ver 1.8
@@ -52,7 +52,7 @@ pronounced "Git-ty" in English (with a hard G like in GIF).
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu May 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu May 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
