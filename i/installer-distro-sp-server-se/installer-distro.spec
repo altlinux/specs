@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt12
+Release: alt13
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -103,6 +103,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Thu May 28 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt13
+- 45-noexec-tmp.sh: add TMPDIR=/root/tmp to /etc/integrity/config.
+
 * Fri May 15 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt12
 - postinstall.d/45-noexec-tmp.sh: replace /tmp/.private/root with /root/tmp.
 

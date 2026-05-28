@@ -1,7 +1,7 @@
 %define distro sp-workstation-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt7
+Release: alt8
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -93,6 +93,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files stage3
 
 %changelog
+* Thu May 28 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt8
+- 45-noexec-tmp.sh: add TMPDIR=/root/tmp to /etc/integrity/config.
+
 * Fri May 15 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt7
 - postinstall.d/45-noexec-tmp.sh: replace /tmp/.private/root with /root/tmp.
 
