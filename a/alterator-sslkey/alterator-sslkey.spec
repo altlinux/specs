@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sslkey
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -39,6 +39,9 @@ and certificates
 %_altdata_dir/type/*
 
 %changelog
+* Wed May 27 2026 Arseniy Kostevich <faux@altlinux.org> 0.2.7-alt1
+- Fix stripping .key suffix in list_keys (Closes: #59074).
+
 * Mon Mar 23 2026 Fedor Moseichuck <phobos@altlinux.org> 0.2.6-alt1
 - ui: fix sign request export
 
