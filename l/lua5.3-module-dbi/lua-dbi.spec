@@ -2,7 +2,7 @@
 
 Name: lua%luaver-module-dbi
 Version: 0.7.5
-Release: alt1
+Release: alt2
 
 License: MIT
 Url: https://github.com/mwild1/luadbi
@@ -22,7 +22,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libpq-devel
 %ifnarch %ix86
-BuildRequires: duckdb duckdb-devel
+BuildRequires: duckdb duckdb-devel-static
 %endif
 
 %description
@@ -95,6 +95,9 @@ lua%luaver -e \
 %lua_modulesdir_noarch/DBI.lua
 
 %changelog
+* Thu May 28 2026 Alexei Takaseev <taf@altlinux.org> 0.7.5-alt2
+- Change BR duckdb duckdb-devel -> duckdb duckdb-devel-static
+
 * Thu Oct 23 2025 Alexei Takaseev <taf@altlinux.org> 0.7.5-alt1
 - 0.7.5
 - Fix FTBFS
