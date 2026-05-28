@@ -1,6 +1,6 @@
 Name:           retroarch
 Version:        1.22.2
-Release:        alt1
+Release:        alt2
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -170,6 +170,10 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Thu May 28 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.2-alt2
+- Update to new version
+- Fix video aspect ratio
+
 * Mon Jan 26 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.2-alt1
 - Update to new version
 
