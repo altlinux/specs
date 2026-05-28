@@ -3,7 +3,7 @@
 %global import_path github.com/betterleaks/betterleaks
 
 Name: betterleaks
-Version: 1.1.1
+Version: 1.3.1
 Release: alt1
 Summary: A Better Secrets Scanner built for configurability and speed
 License: MIT
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu May 28 2026 Vladislav Glinkin <smasher@altlinux.org> 1.3.1-alt1
+- New version
+
 * Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 1.1.1-alt1
 - Initial build for ALT
 
