@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 71
 %define nv_minor 05
-%define pkg_rel alt313
+%define pkg_rel alt314
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt314
+- don't use MatchDriver xorg option for 390 driver
+
 * Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt313
 - fix symlink to OpenCL icd
 
