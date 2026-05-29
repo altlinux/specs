@@ -37,8 +37,8 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 6.0.1.1
-Release: alt2
+Version: 6.0.2
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -519,6 +519,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt1
+- new version
+
 * Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.1.1-alt2
 - update russian translation
 
