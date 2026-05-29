@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: 0.6.2
+Version: %api_version.7.1
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -38,18 +38,20 @@ BuildRequires: gir(Adw) = 1
 BuildRequires: gir(Gtk) = 4.0
 BuildRequires: gir(Peas) = 2
 BuildRequires: gir(Gdm) = 1.0
+BuildRequires: gir(Serialize) = 7
 BuildRequires: pkgconfig(accountsservice)
+BuildRequires: pkgconfig(gdm)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(ibus-1.0)
 BuildRequires: pkgconfig(libadwaita-1) >= 1.7
 BuildRequires: pkgconfig(libpeas-2)
+BuildRequires: pkgconfig(libserialize-7) >= 7.5
 BuildRequires: pkgconfig(passwdqc)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(systemd)
-BuildRequires: pkgconfig(gdm)
 BuildRequires: pkgconfig(xkbcommon)
 
 %description
@@ -128,8 +130,19 @@ Summary: %name keyboard plugin
 Group: Other
 
 Requires: %name = %EVR
+Requires: %name-plugin-language = %EVR
 
 %description plugin-keyboard
+%summary.
+
+%package plugin-license-agreement
+Summary: %name license agreement plugin
+Group: Other
+
+Requires: %name = %EVR
+Requires: %name-plugin-language = %EVR
+
+%description plugin-license-agreement
 %summary.
 
 %package plugin-language
@@ -256,6 +269,10 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/language.plugin
 %_libdir/%name/plugins/steps/liblanguage.so
 
+%files plugin-license-agreement
+%_libdir/%name/plugins/steps/license-agreement.plugin
+%_libdir/%name/plugins/steps/liblicense-agreement.so
+
 %files plugin-user-common
 %_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
 %_datadir/polkit-1/rules.d/%app_id.Plugin.User.SetRootPassword.rules
@@ -274,6 +291,24 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Sat May 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.1-alt1
+- New version: 0.7.1.
+- Added `license-agreement` plugin for displaying localized license files.
+- Completely redesigned main page (`StepsMainPage`) with adaptive layouts
+  (`big`, `small`, `vertical`, `horizontal`) using `Adw.BreakpointBin` and
+  `Adw.MultiLayoutView`.
+- Replaced `BaseBarePage`/`BasePageDesc` with new `StatusPage`.
+- User: Split password setup into separate pages (`PagePassword` and
+  `PageRootPassword`), renamed context variables
+  (`passwd-conf-path` -> `user-passwd-conf-path`, etc.); removed
+  `hide-autologin` option; added avatar support via `user-avatar-file`.
+- Keyboard: Added dependency on `language` plugin; improved DnD logic moved
+  to `InputRow`; fixed crash when dropping item on itself.
+- Language: Reloading made smoother.
+- Context: Changed `INT` type to `INT64`; made `mode` internal.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.7.1
+
 * Wed Mar 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.2-alt1
 - New version: 0.6.2.
 - Hook execution IOError now logged as warning instead of error.
