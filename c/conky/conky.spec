@@ -33,6 +33,7 @@
 %def_enable rss
 %def_enable wayland
 %def_enable wlan
+%def_enable x11
 %def_enable xdamage
 %def_enable xdbe
 %def_enable xft
@@ -41,24 +42,23 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.22.3
+Version: 1.23.0
 Release: alt1
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
 License: GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT
 Group: Monitoring
-Url: https://github.com/brndnmtthws/conky
+Url: https://conky.cc/
+Vcs: https://github.com/brndnmtthws/conky.git
 
-VCS: git://github.com/brndnmtthws/conky.git
 Source: %name-%version.tar
-Source1: conky-dotfiles.tar.bz2
-Source99: conky.watch
-Patch: conky-1.22.1-ALT-lua.patch
+Source1: %name-dotfiles.tar
+Patch: %name-1.22.1-ALT-lua.patch
 
 BuildRequires(pre): rpm-build-vim rpm-build-cmake
 
-BuildRequires: cmake gcc-c++
+BuildRequires: gcc-c++
 BuildRequires: lua%luaver-devel
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-jinja2
@@ -81,34 +81,32 @@ BuildRequires: gperf
 %{?_enable_rss:BuildRequires: libcurl-devel libxml2-devel}
 %{?_enable_wayland:BuildRequires: libpango-devel libwayland-client-devel libwayland-server-devel wayland-protocols}
 %{?_enable_wlan:BuildRequires: libwireless-devel}
+%{?_enable_x11:BuildRequires: libXi-devel}
 %{?_enable_xdamage:BuildRequires: libXdamage-devel}
 %{?_enable_xft:BuildRequires: libXft-devel}
 %{?_enable_xinerama:BuildRequires: libXinerama-devel}
 
-%package -n vim-plugin-conky
+%description
+Conky is a free, light-weight system monitor for X11, that displays any kind
+of information on your desktop. It can also run on Wayland (with caveats).
+
+%description -l ru_RU.UTF-8
+Conky - это свободный легковесный системный монитор для X11, позволяющий
+отображать произвольную информацию (текущую дату, температуру процессора,
+статус проигрывателя и т.д). Он также может работать на Wayland
+(с оговорками).
+
+%package -n vim-plugin-%name
 BuildArch: noarch
 Summary: VIm syntax plugin for conky config file
 Group: Editors
 
-%description
-Conky is a program which can display arbitrary information (such as
-the date, CPU temperature from i2c, MPD info, and anything else you
-desire) to the root window in X11.
-
-%description -l ru_RU.UTF-8
-Conky - это утилита, позволяющая отображать произвольную информацию
-(такую как текущая дата, температура процессора, статус проигрывателя
-mpd, и т.д.) в окне графической системы X11.
-
-Данная утилита настраивается в чрезвычайно широких пределах и совсем не
-требовательна к ресурсам компьютера.
-
-%description -n vim-plugin-conky
+%description -n vim-plugin-%name
 VIm syntax plugin for conky config file.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 sed -i 's,@LUA_VERSION@,%luaver,' extras/convert.lua
 
 %build
@@ -143,14 +141,14 @@ sed -i 's,@LUA_VERSION@,%luaver,' extras/convert.lua
 	%{subst_buildoption rss} \
 	%{subst_buildoption wayland} \
 	%{subst_buildoption wlan} \
+	%{subst_buildoption x11} \
 	%{subst_buildoption xdamage } \
 	%{subst_buildoption xdbe } \
 	%{subst_buildoption xft} \
 	%{subst_buildoption xinerama} \
 	%{subst_buildoption xmms2} \
 	%{subst_buildoption xshape} \
-	#
-
+%nil
 %cmake_build
 
 %install
@@ -158,44 +156,47 @@ install -p -m644 %SOURCE1 ./
 %cmakeinstall_std
 
 # install config files
-mkdir -p %buildroot%_sysconfdir/conky
-install -m644 -p data/conky.conf data/conky_no_x11.conf %buildroot%_sysconfdir/conky
+mkdir -p %buildroot%_sysconfdir/%name
+install -m644 -p data/%name.conf data/%{name}_no_x11.conf %buildroot%_sysconfdir/%name
 
 # install config converter
-mkdir -p %buildroot/%_libexecdir/conky
-install -m755 -p extras/convert.lua %buildroot/usr/libexec/conky
+mkdir -p %buildroot/%_libexecdir/%name
+install -m755 -p extras/convert.lua %buildroot/usr/libexec/%name
 # install vim plugins
 mkdir -p %buildroot%vim_runtime_dir
 cp -a extras/vim/ftdetect %buildroot%vim_runtime_dir
 cp -a extras/vim/syntax %buildroot%vim_runtime_dir
-mv %buildroot%vim_runtime_dir/syntax/conkyrc.vim{.j2,}
+mv %buildroot%vim_runtime_dir/syntax/%{name}rc.vim{.j2,}
 
 # remove static libs
-rm %buildroot%_libdir/libtcp-portmon.a
+rm -v %buildroot%_libdir/libtcp-portmon.a
 
 %files
 %doc AUTHORS COPYING LICENSE.md LICENSE.BSD README.md
-%doc conky-dotfiles.tar.bz2
+%doc %name-dotfiles.tar
 
-%_bindir/conky
-%_libexecdir/conky
+%_bindir/%name
+%_libexecdir/%name
 %if_enabled lua_cairo || lua_imlib2 || lua_rsvg
-%_libdir/conky
+%_libdir/%name
 %endif
-%{?_enable_docs:%_man1dir/conky.1*}
+%{?_enable_docs:%_man1dir/%name.1*}
 
-%dir %_sysconfdir/conky
-%config %_sysconfdir/conky/conky.conf
-%config %_sysconfdir/conky/conky_no_x11.conf
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/%name.conf
+%config %_sysconfdir/%name/%{name}_no_x11.conf
 
-%_desktopdir/conky.desktop
-%_iconsdir/hicolor/scalable/apps/conky-logomark-violet.svg
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/scalable/apps/%{name}-logomark-violet.svg
 
-%files -n vim-plugin-conky
-%vim_runtime_dir/ftdetect/conkyrc.vim
-%vim_runtime_dir/syntax/conkyrc.vim
+%files -n vim-plugin-%name
+%vim_runtime_dir/ftdetect/%{name}rc.vim
+%vim_runtime_dir/syntax/%{name}rc.vim
 
 %changelog
+* Thu May 28 2026 Ulysses Apokin <ulysses@altlinux.org> 1.23.0-alt1
+- Updated to 1.23.0.
+
 * Fri Mar 06 2026 Ulysses Apokin <ulysses@altlinux.org> 1.22.3-alt1
 - Updated to 1.22.3.
 
