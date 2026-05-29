@@ -11,12 +11,12 @@
 %define _libexecdir /usr/libexec
 
 # git rev-parse v1.34.7^{commit}
-%define git_commit dd7d093666b511958a4a94399f1ad175ab36f52e
+%define git_commit 9ef5c1ec08a36c69ff0e64d1ac876b847a5a22b5
 
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          34
-%define cri_o_patch          7
+%define cri_o_patch          8
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -143,6 +143,11 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Fri May 22 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.8-alt1
+- 1.34.7 -> 1.34.8.
+- Fixes:
+  + CVE-2026-35469: SpdyStream: DOS on CRI
+
 * Mon Apr 06 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.7-alt1
 - 1.34.6 -> 1.34.7.
 
