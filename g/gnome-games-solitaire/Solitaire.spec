@@ -2,7 +2,7 @@
 %define oname2 org.gnome.gitlab.wwarner.Solitaire
 
 Name: gnome-games-solitaire
-Version: 50.2
+Version: 50.2.1
 Release: alt1
 
 Summary: GNOME Solitaire game
@@ -58,6 +58,9 @@ EOF
 %_datadir/%oname
 
 %changelog
+* Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.2.1-alt1
+- 50.2 -> 50.2.1
+
 * Mon May 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.2-alt1
 - 50.1 -> 50.2
 
