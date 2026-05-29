@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -66,7 +66,8 @@ This package provides Python3 bindings for CapyPDF library.
 sed -i 's|truetype\/noto|ttf/google-noto|' test/%{_name}tests.py
 
 # https://bugzilla.altlinux.org/48030
-sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.04.0/iccprofiles/a98.icc|' test/capypdftests.py
+%define gs_ver 10.06.0
+sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/%gs_ver/iccprofiles/a98.icc|' test/capypdftests.py
 
 %build
 %meson
@@ -93,6 +94,9 @@ sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.04.
 
 
 %changelog
+* Fri May 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
+- 0.21.0
+
 * Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
