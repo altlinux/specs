@@ -2,7 +2,7 @@
 
 Name: jackson-core
 Version: 2.20.1
-Release: alt3
+Release: alt4
 
 Summary: Core part of Jackson
 License: Apache-2.0
@@ -22,7 +22,7 @@ BuildRequires: maven-local
 BuildRequires: jackson-bom
 BuildRequires: replacer
 BuildRequires: maven-plugin-bundle
-BuildRequires: moditect-maven-plugin
+BuildRequires: mvn(org.moditect:moditect-maven-plugin)
 
 %description
 Core part of Jackson that defines Streaming API as well
@@ -56,6 +56,9 @@ as basic shared abstractions.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu May 28 2026 Ilfat Aminov <aminov@altlinux.org> 2.20.1-alt4
+- fix moditect dependency
+
 * Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
 - FTBFS fix.
 
