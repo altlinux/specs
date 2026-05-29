@@ -1,5 +1,5 @@
 Name: cronboard
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: A terminal-based dashboard for managing cron jobs locally and on servers
@@ -35,6 +35,9 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.2-alt1
+- 0.6.1 -> 0.6.2
+
 * Tue May 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.1-alt1
 - 0.6.0 -> 0.6.1
 
