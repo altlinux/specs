@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           jsr-305
 Version:        3.0.2
-Release:        alt2
+Release:        alt3
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -48,6 +48,7 @@ Detection.
 cp %{SOURCE1} NOTICE-CC-BY
 
 %mvn_alias com.google.code.findbugs:jsr305 org.jsr-305:ri
+%pom_change_dep -r org.jsr-305:ri com.google.code.findbugs:jsr305:%version
 
 %pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
 
@@ -75,6 +76,9 @@ cp %{SOURCE1} NOTICE-CC-BY
 %doc sampleUses
 
 %changelog
+* Mon Apr 20 2026 Anton Meleshnikov <alton@altlinux.org> 1:3.0.2-alt3
+- FTBFS fix.
+
 * Wed Nov 12 2025 Ivan Khanas <xeno@altlinux.org> 1:3.0.2-alt2
 - Rename the artifact according to its actual coordinates(closes: 56833).
 
