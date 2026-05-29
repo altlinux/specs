@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-welcome-k
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Greeting to Alt Linux for plasma-welcome
@@ -46,6 +46,9 @@ BuildRequires: qt6-tools-devel
 %_datadir/plasma/plasma-welcome/extra-pages/*.qml
 
 %changelog
+* Fri May 29 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.5-alt1
+- fix translation of tips
+
 * Tue Dec 24 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4-alt1
 - Apply the default theme from kdeglobals
 
