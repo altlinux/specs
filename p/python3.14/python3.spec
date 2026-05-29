@@ -105,8 +105,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.4
-Release: alt2
+Version: %{pybasever}.5
+Release: alt1
 
 %if 0%{?_python3_standalone:1}
     %extend_check_list %name
@@ -183,9 +183,6 @@ Patch1007: python3-sslv2-compat.patch
 
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
-
-# Fix a possible UAF, CVE-2026-6100
-Patch1012: python3-LZMA_BZ2_Zlib_decompression.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -431,8 +428,6 @@ rm -r Modules/_decimal/libmpdec || exit 1
 %patch1007 -p2
 
 %patch1011 -p2
-
-%patch1012 -p1
 
 %ifarch %e2k
 # add e2k arch
@@ -1232,6 +1227,9 @@ python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRock
 %endif
 
 %changelog
+* Thu May 28 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.5-alt1
+- Updated to upstream 3.14.15
+
 * Wed May 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.4-alt2
 - Implement checkinstall subpackages
 
