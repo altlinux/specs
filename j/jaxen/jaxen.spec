@@ -1,109 +1,62 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_without dom4j
-
 Name:           jaxen
-Summary:        An XPath engine written in Java
-Epoch:          0
-Version:        1.2.0
-Release:        alt1_6jpp11
-License:        BSD
+Version:        2.0.3
+Release:        alt1
 
-URL:            https://github.com/jaxen-xpath/jaxen
-Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Summary:        An XPath engine written in Java
+License:        BSD-2-Clause
+Group:          Development/Java
+URL:            https://jaxen-xpath.github.io/jaxen/
+VCS:            https://github.com/jaxen-xpath/jaxen
+
+Source0:        %name-%version.tar
+
+Patch0:         jaxen-dom4j-test-localname.patch
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(jdom:jdom)
+BuildRequires:  mvn(xom:xom)
 
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(xerces:xercesImpl)
-BuildRequires:  mvn(xml-apis:xml-apis)
-%if %{with dom4j}
-BuildRequires:  mvn(dom4j:dom4j)
-%endif
-Source44: import.info
-
 %description
-Jaxen is an open source XPath library written in Java. It is adaptable
-to many different object models, including DOM, XOM, dom4j, and JDOM.
-Is it also possible to write adapters that treat non-XML trees such as compiled
-Java byte code or Java beans as XML, thus enabling you to query these trees
-with XPath too.
+Jaxen is an open source XPath 1.0 library written in Java. It is adaptable to
+many different object models, including DOM, XOM, dom4j, and JDOM. It is also
+possible to write adapters that treat non-XML trees such as compiled Java byte
+code or Java beans as XML, thus enabling you to query these trees with XPath
+too.
 
-
-%package        demo
-Group: Development/Documentation
-Summary:        Samples for %{name}
-Requires:       %{name} = 0:%{version}-%{release}
-
-%description    demo
-%{summary}.
-
-
-%package        javadoc
-Group: Development/Documentation
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
+%javadoc_package
 
 %prep
-%setup -q
+%setup
+%autopatch -p1
 
-# remove unnecessary maven plugins
-%pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-assembly-plugin . core
+%pom_remove_plugin :japicmp-maven-plugin core
 
-# remove maven-compiler-plugin configuration that is broken with Java 11
+%pom_change_dep -r org.jdom:jdom-legacy jdom:jdom
+
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
-%if %{without dom4j}
-rm -rf src/java/main/org/jaxen/dom4j
-%pom_remove_dep dom4j:dom4j
-%endif
-
-rm -rf src/java/main/org/jaxen/xom
-%pom_remove_dep xom:xom
-
-%mvn_file : %{name}
-
-
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
-
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
 
 %install
 %mvn_install
 
-# demo
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/samples
-cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
-
-
 %files -f .mfiles
-%doc LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-
-%files demo
-%{_datadir}/%{name}
-
+%doc LICENSE.txt *.md
 
 %changelog
+* Wed May 27 2026 Evgeniy Serov <scala@altlinux.org> 2.0.3-alt1
+- Updated to 2.0.3.
+- Enabled tests.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.0-alt1_6jpp11
 - update
 
