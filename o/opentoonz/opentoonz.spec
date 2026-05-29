@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.7.1.1
-Release: alt2
+Release: alt3
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -112,8 +112,6 @@ popd
 # don't unbundle libtiff because it's patched. See: https://github.com/opentoonz/opentoonz/blob/master/doc/how_to_build_linux.md#building-libtiff
 rm -rf thirdparty/{boost,glew,glut,LibJPEG,libjpeg-turbo64,libmypaint,libpng-1.6.21,libusb,Lz4,lzo/2.03,openblas,quicktime,superlu,zlib-1.2.8}
 
-subst "s|VERSION 2.8.11|VERSION 3.5|" toonz/sources/CMakeLists.txt
-
 %build
 # build patched libtiff
 pushd thirdparty/tiff-4.0.3
@@ -133,6 +131,9 @@ pushd toonz/sources
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DTIFF_LIBRARY="%_builddir/%name-%version/thirdparty/tiff-4.0.3/libtiff/.libs/libtiff.a" \
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+	-DCMAKE_CXX_STANDARD=17 \
+	-DCMAKE_C_STANDARD=99
 	%nil
 
 %cmake_build
@@ -179,6 +180,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Sat May 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.1-alt3
+- fixed FTBFS
+
 * Sun Aug 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.1.1-alt2
 - e2k build fix
 
