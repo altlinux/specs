@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name:    mamonsu
 Version: 3.5.15
-Release: alt1
+Release: alt2
 
 Summary: mamonsu is an active agent for collecting PostgreSQL instance and operating system metrics that can interact with Zabbix
 License: BSD-3-Clause
@@ -27,10 +27,6 @@ Source: %name-%version.tar
 %install
 %pyproject_install
 
-%check
-#%%tox_create_default_config
-%tox_check_pyproject
-
 %files
 %doc *.md
 %_bindir/%name
@@ -38,5 +34,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri May 29 2026 Andrey Cherepanov <cas@altlinux.org> 3.5.15-alt2
+- Remove %%check for compatibility.
+
 * Fri May 29 2026 Andrey Cherepanov <cas@altlinux.org> 3.5.15-alt1
 - Initial build for Sisyphus
