@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: symbolical
-Version: 0.5.0.5
+Version: 0.6.0.1
 Release: alt1
 
 Summary: Math document application
@@ -13,6 +15,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3(PyQt6)
+%endif
 
 Requires: fonts-ttf-google-noto-serif
 
@@ -46,6 +52,9 @@ sed -i "s|Categories=.*|Categories=Science;Math;|" flatpak/dk.pracedru.Symbolica
 %meson_install
 sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %buildroot%_bindir/symbolical
 
+%check
+%__python3 src/testing.py
+
 %files
 %doc LICENSE README.md
 %_bindir/symbolical
@@ -61,5 +70,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Fri May 29 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0.1-alt1
+- New version 0.6.0.1.
+- Added %%check to enable Python unit-testing.
+
 * Sat May 09 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0.5-alt1
 - Initial build for Sisyphus
