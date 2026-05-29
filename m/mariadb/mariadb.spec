@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.7
+Version: 11.8.8
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -1115,6 +1115,9 @@ fi
 %endif
 
 %changelog
+* Fri May 29 2026 Alexei Takaseev <taf@altlinux.org> 11.8.8-alt1
+- 11.8.8 (Fixes: CVE-2026-48163, CVE-2026-48165)
+
 * Fri May 22 2026 Alexei Takaseev <taf@altlinux.org> 11.8.7-alt1
 - 11.8.7b (Fixes: CVE-2025-13699, CVE-2026-32710, CVE-2026-35549, CVE-2026-34303,
                   CVE-2026-3494, CVE-2026-44168, CVE-2026-44169, CVE-2026-44170,
