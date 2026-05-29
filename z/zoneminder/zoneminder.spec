@@ -6,8 +6,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.38.1
-Release: alt3
+Version: 1.38.3
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -193,6 +193,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Fri May 29 2026 Anton Farygin <rider@altlinux.org> 1.38.3-alt1
+- 1.38.1 -> 1.38.3
+
 * Fri Feb 27 2026 Anton Farygin <rider@altlinux.org> 1.38.1-alt3
 - added php-sockets to requires (closes: #58033)
 
