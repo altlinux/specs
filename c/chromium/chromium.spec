@@ -1,13 +1,17 @@
 %def_enable  ffmpeg
 %def_enable  google_api_keys
-%def_enable  samurai
+%def_disable samurai
 %def_disable gost
 
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
 # New llvm leads to intensive swapping with max_jobs >= 48
+%ifarch aarch64
+%global max_jobs 25
+%else
 %global max_jobs 42
+%endif
 
 %global llvm_version 22.1
 
@@ -27,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        148.0.7778.178
+Version:        148.0.7778.216
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -109,6 +113,7 @@ Patch030: 0030-DEBIAN-disable-rustc-allow-features.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
 Patch034: 0034-FRDORA-chromium-148-autodarkmode-workaround.patch
+Patch036: 0036-ALT-disable-lens-overlay.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 # Support extension manifest v2
@@ -596,11 +601,6 @@ fi
 
 n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
-%ifarch aarch64
-  n=25
-%else
-  n=%max_jobs
-%endif
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
@@ -723,8 +723,181 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Fri May 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.216-alt1
+- New version (148.0.7778.216).
+- Disable Lens Overlay.
+- Fixes:
+  + CVE-2026-9872: Out of bounds write in GPU
+  + CVE-2026-9873: Use after free in Network
+  + CVE-2026-9874: Use after free in Dawn
+  + CVE-2026-9875: Out of bounds read in WebGL
+  + CVE-2026-9876: Use after free in WebGL
+  + CVE-2026-9877: Use after free in ANGLE
+  + CVE-2026-9878: Use after free in ANGLE
+  + CVE-2026-9879: Out of bounds write in ANGLE
+  + CVE-2026-9880: Insufficient validation of untrusted input in WebGL
+  + CVE-2026-9881: Use after free in Bluetooth
+  + CVE-2026-9882: Integer overflow in ANGLE
+  + CVE-2026-9883: Use after free in Base
+  + CVE-2026-9884: Use after free in Browser
+  + CVE-2026-9885: Insufficient validation of untrusted input in UI
+  + CVE-2026-9886: Use after free in Base
+  + CVE-2026-9887: Use after free in Proxy
+  + CVE-2026-9888: Use after free in WebView
+  + CVE-2026-9889: Out of bounds read and write in Dawn
+  + CVE-2026-9890: Use after free in XR
+  + CVE-2026-9891: Use after free in Extensions
+  + CVE-2026-9892: Inappropriate implementation in Skia
+  + CVE-2026-9893: Use after free in Skia
+  + CVE-2026-9894: Use after free in GPU
+  + CVE-2026-9895: Out of bounds read in GPU
+  + CVE-2026-9896: Out of bounds write in V8
+  + CVE-2026-9897: Use after free in DOM
+  + CVE-2026-9898: Insufficient validation of untrusted input in GPU
+  + CVE-2026-9899: Use after free in ANGLE
+  + CVE-2026-9900: Out of bounds write in ANGLE
+  + CVE-2026-9901: Use after free in ANGLE
+  + CVE-2026-9902: Use after free in Accessibility
+  + CVE-2026-9903: Insufficient validation of untrusted input in Site Isolation
+  + CVE-2026-9904: Use after free in ANGLE
+  + CVE-2026-9905: Use after free in Accessibility
+  + CVE-2026-9906: Out of bounds write in GPU
+  + CVE-2026-9907: Out of bounds read in Dawn
+  + CVE-2026-9908: Out of bounds read in ANGLE
+  + CVE-2026-9909: Integer overflow in Skia
+  + CVE-2026-9910: Out of bounds memory access in ANGLE
+  + CVE-2026-9911: Integer overflow in ANGLE
+  + CVE-2026-9912: Inappropriate implementation in GPU
+  + CVE-2026-9913: Inappropriate implementation in ANGLE
+  + CVE-2026-9914: Insufficient validation of untrusted input in ANGLE
+  + CVE-2026-9915: Heap buffer overflow in ANGLE
+  + CVE-2026-9916: Out of bounds write in ANGLE
+  + CVE-2026-9917: Uninitialized Use in WebGL
+  + CVE-2026-9918: Inappropriate implementation in Tint
+  + CVE-2026-9919: Out of bounds read in WebGL
+  + CVE-2026-9920: Uninitialized Use in GPU
+  + CVE-2026-9921: Uninitialized Use in WebGL
+  + CVE-2026-9922: Use after free in GPU
+  + CVE-2026-9923: Use after free in Skia
+  + CVE-2026-9924: Heap buffer overflow in ANGLE
+  + CVE-2026-9925: Use after free in ANGLE
+  + CVE-2026-9926: Heap buffer overflow in ANGLE
+  + CVE-2026-9927: Use after free in ANGLE
+  + CVE-2026-9928: Out of bounds read in ANGLE
+  + CVE-2026-9929: Inappropriate implementation in WebGL
+  + CVE-2026-9930: Out of bounds write in Dawn
+  + CVE-2026-9931: Use after free in GPU
+  + CVE-2026-9932: Use after free in ANGLE
+  + CVE-2026-9933: Use after free in Input
+  + CVE-2026-9934: Use after free in Aura
+  + CVE-2026-9935: Uninitialized Use in ANGLE
+  + CVE-2026-9936: Use after free in GFX
+  + CVE-2026-9937: Use after free in UI
+  + CVE-2026-9938: Inappropriate implementation in V8
+  + CVE-2026-9939: Heap buffer overflow in WebCodecs
+  + CVE-2026-9940: Heap buffer overflow in ANGLE
+  + CVE-2026-9941: Use after free in ANGLE
+  + CVE-2026-9942: Uninitialized Use in ANGLE
+  + CVE-2026-9943: Out of bounds read in WebGL
+  + CVE-2026-9944: Uninitialized Use in ANGLE
+  + CVE-2026-9945: Use after free in Media
+  + CVE-2026-9946: Use after free in ANGLE
+  + CVE-2026-9947: Use after free in XML
+  + CVE-2026-9948: Use after free in Views
+  + CVE-2026-9949: Use after free in Core
+  + CVE-2026-9950: Insufficient validation of untrusted input in iOS
+  + CVE-2026-9951: Use after free in UI
+  + CVE-2026-9952: Use after free in WebAudio
+  + CVE-2026-9953: Out of bounds read in ANGLE
+  + CVE-2026-9954: Use after free in TabStrip
+  + CVE-2026-9955: Inappropriate implementation in iOS
+  + CVE-2026-9956: Use after free in iOS
+  + CVE-2026-9957: Use after free in PDF
+  + CVE-2026-9958: Use after free in PDFium
+  + CVE-2026-9959: Race in WebRTC
+  + CVE-2026-9960: Integer overflow in PDFium
+  + CVE-2026-9961: Use after free in SurfaceCapture
+  + CVE-2026-9962: Use after free in WebRTC
+  + CVE-2026-9963: Uninitialized Use in iOS
+  + CVE-2026-9964: Use after free in Bluetooth
+  + CVE-2026-9965: Out of bounds write in ANGLE
+  + CVE-2026-9966: Integer overflow in XML
+  + CVE-2026-9967: Out of bounds write in GPU
+  + CVE-2026-9968: Integer overflow in V8
+  + CVE-2026-9969: Insufficient validation of untrusted input in ANGLE
+  + CVE-2026-9970: Use after free in WebGL
+  + CVE-2026-9971: Inappropriate implementation in iOS
+  + CVE-2026-9972: Uninitialized Use in Gamepad
+  + CVE-2026-9973: Out of bounds write in V8
+  + CVE-2026-9974: Out of bounds write in GPU
+  + CVE-2026-9975: Out of bounds read and write in ANGLE
+  + CVE-2026-9976: Inappropriate implementation in USB
+  + CVE-2026-9977: Insufficient validation of untrusted input in WebShare
+  + CVE-2026-9978: Use after free in Glic
+  + CVE-2026-9979: Insufficient validation of untrusted input in Input
+  + CVE-2026-9980: Insufficient validation of untrusted input in Printing
+  + CVE-2026-9981: Inappropriate implementation in Skia
+  + CVE-2026-9982: Insufficient validation of untrusted input in ANGLE
+  + CVE-2026-9983: Type Confusion in Skia
+  + CVE-2026-9984: Use after free in UI
+  + CVE-2026-9985: Insufficient validation of untrusted input in Media
+  + CVE-2026-9986: Insufficient validation of untrusted input in OptimizationGuide
+  + CVE-2026-9987: Insufficient validation of untrusted input in WebAppInstalls
+  + CVE-2026-9988: Use after free in WebRTC
+  + CVE-2026-9989: Inappropriate implementation in Media
+  + CVE-2026-9990: Use after free in WebAppInstalls
+  + CVE-2026-9991: Inappropriate implementation in Media
+  + CVE-2026-9992: Use after free in Network
+  + CVE-2026-9993: Use after free in Views
+  + CVE-2026-9994: Use after free in Core
+  + CVE-2026-9995: Use after free in WebXR
+  + CVE-2026-9996: Out of bounds read in WebRTC
+  + CVE-2026-9997: Use after free in Input
+  + CVE-2026-9998: Integer overflow in Skia
+  + CVE-2026-9999: Inappropriate implementation in ANGLE
+  + CVE-2026-10000: Use after free in Passwords
+  + CVE-2026-10001: Use after free in PerformanceManager
+  + CVE-2026-10002: Use after free in PDFium
+  + CVE-2026-10003: Use after free in Views
+  + CVE-2026-10004: Insufficient validation of untrusted input in Passwords
+  + CVE-2026-10005: Use after free in WebAppInstalls
+  + CVE-2026-10006: Race in WebAudio
+  + CVE-2026-10007: Use after free in SVG
+  + CVE-2026-10008: Uninitialized Use in GPU
+  + CVE-2026-10009: Integer overflow in Skia
+  + CVE-2026-10010: Inappropriate implementation in Input
+  + CVE-2026-10011: Inappropriate implementation in Skia
+  + CVE-2026-10012: Use after free in Skia
+  + CVE-2026-10013: Use after free in WebCodecs
+  + CVE-2026-10014: Use after free in WebMIDI
+  + CVE-2026-10015: Integer overflow in WTF
+  + CVE-2026-10016: Use after free in DOM
+  + CVE-2026-10017: Out of bounds read in Headless
+  + CVE-2026-10018: Integer overflow in ANGLE
+  + CVE-2026-10019: Integer overflow in ANGLE
+  + CVE-2026-10020: Insufficient validation of untrusted input in Skia
+  + CVE-2026-10021: Insufficient validation of untrusted input in USB
+  + CVE-2026-10022: Type Confusion in V8
+
 * Wed May 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.178-alt1
 - New version (148.0.7778.178).
+- Fixes:
+  + CVE-2026-9111: Use after free in WebRTC
+  + CVE-2026-9110: Inappropriate implementation in UI
+  + CVE-2026-9112: Use after free in GPU
+  + CVE-2026-9113: Out of bounds read in GPU
+  + CVE-2026-9114: Use after free in QUIC
+  + CVE-2026-9115: Insufficient policy enforcement in Service Worker
+  + CVE-2026-9116: Insufficient policy enforcement in ServiceWorker
+  + CVE-2026-9117: Type Confusion in GFX
+  + CVE-2026-9118: Use after free in XR
+  + CVE-2026-9119: Heap buffer overflow in WebRTC
+  + CVE-2026-9120: Use after free in WebRTC
+  + CVE-2026-9126: Use after free in DOM
+  + CVE-2026-9121: Out of bounds read in GPU
+  + CVE-2026-9122: Out of bounds read in GPU
+  + CVE-2026-9123: Heap buffer overflow in Chromecast
+  + CVE-2026-9124: Insufficient validation of untrusted input in Input
 
 * Wed May 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.167-alt1
 - New version (148.0.7778.167).
