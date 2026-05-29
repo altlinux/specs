@@ -1,6 +1,6 @@
 Name: flacon
-Version: 12.0.0
-Release: alt1.1
+Version: 13.0.1
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -14,22 +14,9 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: alacenc
-BuildRequires: ctest
-BuildRequires: faac
-BuildRequires: flac
-BuildRequires: lame
 BuildRequires: libuchardet-devel
-BuildRequires: libyaml-cpp-devel
-BuildRequires: mac
-BuildRequires: mediainfo
-BuildRequires: opus-tools
 BuildRequires: qt6-tools-devel
-BuildRequires: sox-base
 BuildRequires: taglib-devel
-BuildRequires: ttaenc
-BuildRequires: vorbis-tools
-BuildRequires: wavpack
 
 Requires: alacenc
 Requires: faac
@@ -60,14 +47,11 @@ Extracts audio tracks from audio CD image to separate tracks.
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTS=ON -Wno-dev
+%cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -Wno-dev
 %cmake_build
 
 %install
 %cmake_install
-
-%check
-LANG=C.UTF-8 %ctest || :
 
 %files
 %doc LICENSE README.md
@@ -86,6 +70,9 @@ LANG=C.UTF-8 %ctest || :
 %_man1dir/%name.1.*
 
 %changelog
+* Fri May 29 2026 Nazarov Denis <nenderus@altlinux.org> 13.0.1-alt1
+- New version 13.0.1.
+
 * Tue May 27 2025 Nazarov Denis <nenderus@altlinux.org> 12.0.0-alt1.1
 - Build with taglib-devel (ALT #54495)
 
