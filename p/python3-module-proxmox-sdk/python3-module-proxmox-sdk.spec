@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.9
-Release: alt1
+Release: alt2
 
 Summary: Proxmox Async SDK
 License: MIT
@@ -25,6 +25,8 @@ BuildRequires: python3-module-httpx
 BuildRequires: python3-module-slowapi
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-typer
+BuildRequires: python3-modules-sqlite3
 %endif
 
 BuildArch: noarch
@@ -59,6 +61,9 @@ and in-memory CRUD operations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 29 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.9-alt2
+- Add needed requirements.
+
 * Thu May 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.9-alt1
 - New 0.0.9 version.
 
