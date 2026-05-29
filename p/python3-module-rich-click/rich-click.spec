@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.7
-Release: alt1.1
+Version: 1.9.8
+Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
 Group: Development/Python3
@@ -14,24 +14,16 @@ Url: https://pypi.org/project/rich-click
 Vcs: https://github.com/ewels/rich-click
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-click
-BuildRequires: python3-module-inline-snapshot
-BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-mypy
-BuildRequires: python3-module-nodeenv
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-pre-commit
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-ruff
-BuildRequires: python3-module-typer
+%add_pyproject_deps_check_filter rich-codex
+%pyproject_builddeps_metadata_extra dev
 %endif
 
 %description
@@ -41,6 +33,8 @@ formatted with rich, with minimal customisation required.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -56,14 +50,13 @@ export TERM=xterm
 %pyproject_run_pytest -ra -o=addopts=''
 
 %files
-%doc README.*
 %_bindir/rich-click
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.7-alt1.1
-- Demodernized packaging.
+* Fri May 29 2026 Stanislav Levin <slev@altlinux.org> 1.9.8-alt1
+- 1.9.7 -> 1.9.8.
 
 * Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 1.9.7-alt1
 - 1.9.5 -> 1.9.7.
