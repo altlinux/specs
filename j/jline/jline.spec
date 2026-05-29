@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jline
 Version:        3.21.0
-Release:        alt2
+Release:        alt3
 Summary:        Java library for handling console input
 License:        BSD
 URL:            https://github.com/jline/jline3
@@ -32,6 +32,7 @@ BuildRequires:  mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 
 %global _desc \
 JLine is a Java library for handling console input.  It is similar in\
@@ -215,6 +216,9 @@ This package contains a telnet client.
 %files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Mon Apr 20 2026 Anton Meleshnikov <alton@altlinux.org> 0:3.21.0-alt3
+- fixed FTBFS: add necessary BuildRequires
+
 * Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0:3.21.0-alt2
 - fixed FTBFS: uncomment patch which rename classes
 
