@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,10 @@ fi
 %_bindir/ams
 
 %changelog
+* Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.1-alt1
+- excluded: update.altsp.ru mirror
+- cli: fixed: Use of uninitialized value
+
 * Thu May 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.0-alt1
 - cli: added set Sisyphus archive date
 - cli: added show version number
