@@ -2,7 +2,7 @@
 
 Name:           ant
 Version:        1.10.15
-Release:        alt2
+Release:        alt3
 
 Summary:        Java build tool
 Group:		Development/Java
@@ -271,7 +271,7 @@ rm src/tests/junit/org/apache/tools/ant/taskdefs/optional/XsltTest.java
 rm src/tests/junit/org/apache/tools/ant/types/selectors/OwnedBySelectorTest.java
 
 #install jars
-build-jar-repository -s -p lib/optional antlr bcel commons-lang3 jakarta-mail/jakarta.mail-api jakarta-activation/jakarta.activation-api jdepend junit oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core hamcrest/library xz-java junit5 opentest4j
+build-jar-repository -s -p lib/optional antlr bcel commons-io commons-lang3 jakarta-mail/jakarta.mail-api jakarta-activation/jakarta.activation-api jdepend junit oro regexp bsf commons-logging commons-net jsch xalan-j2 xml-commons-resolver xalan-j2-serializer hamcrest/core hamcrest/library xz-java junit5 opentest4j
 
 # fix hardcoded paths in ant script and conf
 cp -p %{SOURCE2} %{name}.conf
@@ -388,7 +388,7 @@ echo "bsf commons-logging ant/ant-apache-bsf" > %{buildroot}%{_sysconfdir}/%{nam
 echo "xml-commons-resolver ant/ant-apache-resolver" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-resolver
 echo "apache-commons-logging ant/ant-commons-logging" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-logging
 echo "apache-commons-net ant/ant-commons-net" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-net
-echo "bcel commons-lang3 ant/ant-apache-bcel" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-bcel
+echo "bcel commons-io commons-lang3 ant/ant-apache-bcel" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-bcel
 echo "oro ant/ant-apache-oro" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-oro
 echo "regexp ant/ant-apache-regexp" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-regexp
 echo "xalan-j2 xalan-j2-serializer ant/ant-apache-xalan2" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-xalan2
@@ -527,6 +527,9 @@ install -p -m 644 man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 %doc --no-dereference manual/*
 
 %changelog
+* Thu May 28 2026 Evgeniy Serov <scala@altlinux.org> 1.10.15-alt3
+- Fixed FTBFS: added missing commons-io dependency for ant-apache-bcel.
+
 * Fri May 22 2026 Evgeniy Serov <scala@altlinux.org> 1.10.15-alt2
 - Replace obsolete commons-logging-api BuildRequires with commons-logging.
 

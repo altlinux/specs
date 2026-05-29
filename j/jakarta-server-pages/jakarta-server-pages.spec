@@ -1,36 +1,41 @@
 Name:           jakarta-server-pages
 Version:        3.0.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Jakarta Server Pages (JSP)
-License:        (EPL-2.0 or GPLv2 with exceptions) and ASL 2.0
+License:        (EPL-2.0 or GPLv2 with exceptions) and Apache-2.0
 Group:          Development/Java
 URL:            https://projects.eclipse.org/projects/ee4j.jsp
 VCS:            https://github.com/eclipse-ee4j/jsp-api
-BuildArch:      noarch
 
 Source0:        %name-%version.tar
 
-BuildRequires:  jpackage-default
-BuildRequires:  maven-local
+Patch0:         jakarta-server-pages-el6-getFeatureDescriptors.patch
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-17-compat
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(jakarta.el:jakarta.el-api)
+
+BuildArch:      noarch
 
 %description
 Jakarta Server Pages provides a container-independent implementation of
 the JSP API.
 
-%package api
+%package        api
 Group:          Development/Java
 Summary:        Jakarta Server Pages (JSP) API
 
-%description api
+%description    api
 Jakarta Server Pages provides a container-independent implementation of
 the JSP API. This package contains the API only.
 
 %prep
 %setup
+%autopatch -p1
 
 %pom_remove_parent -r
 
@@ -58,6 +63,9 @@ the JSP API. This package contains the API only.
 %doc LICENSE.md NOTICE.md
 
 %changelog
+* Fri May 29 2026 Evgeniy Serov <scala@altlinux.org> 3.0.0-alt2
+- Fixed FTBFS: fixed build with new el-api.
+
 * Wed Feb 25 2026 Evgeniy Serov <scala@altlinux.org> 3.0.0-alt1
 - Updated to 3.0.0.
 

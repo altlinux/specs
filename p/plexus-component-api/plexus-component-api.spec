@@ -1,65 +1,48 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 %define project_version 1.0-alpha-15
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt4_0.33.alpha15jpp11
+Release:        alt5.alpha15
+
 Summary:        Plexus Component API
-
-License:        ASL 2.0
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://svn.codehaus.org/plexus/plexus-containers/tags/plexus-containers-1.0-alpha-15/plexus-component-api/
-#svn export http://svn.codehaus.org/plexus/plexus-containers/tags/plexus-containers-1.0-alpha-15/plexus-component-api/ plexus-component-api-1.0-alpha-15
-#tar zcf plexus-component-api-1.0-alpha-15.tar.gz plexus-component-api-1.0-alpha-15/
-Source0:        %{name}-%{project_version}.tar.gz
+Source0:        %name-%project_version.tar.gz
 
-BuildArch: noarch
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
 
-BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  plexus-classworlds
-# requires as parent pom
-BuildRequires:  plexus-containers
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
-Plexus Component API
+%summary.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{project_version}
+%setup -n %name-%project_version
+
+%pom_remove_parent
+sed -i '/<modelVersion>4.0.0<\/modelVersion>/a\  <groupId>org.codehaus.plexus</groupId>' pom.xml
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri May 29 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt5.alpha15
+- Fixed FTBFS: removed parent from build.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt4_0.33.alpha15jpp11
 - java11 build
 

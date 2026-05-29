@@ -1,6 +1,6 @@
 Name:           mbassador
 Version:        1.3.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Powerful event-bus optimized for high throughput in multi-threaded applications
 License:        MIT
@@ -17,6 +17,7 @@ BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.slf4j:slf4j-reload4j)
 BuildRequires:  mvn(de.odysseus.juel:juel-impl)
 BuildRequires:  mvn(de.odysseus.juel:juel-spi)
+BuildRequires:  mvn(javax.el:el-api)
 
 BuildArch:      noarch
 
@@ -52,5 +53,8 @@ rm src/test/java/net/engio/mbassy/bus/AbstractPubSubSupportTest.java
 %doc LICENSE README.md
 
 %changelog
+* Fri May 29 2026 Evgeniy Serov <scala@altlinux.org> 1.3.1-alt2
+- Fixed FTBFS: added missing BuildRequires.
+
 * Thu Apr 23 2026 Evgeniy Serov <scala@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus.

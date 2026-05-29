@@ -1,6 +1,6 @@
 Name:           ant-contrib
 Version:        1.0
-Release:        alt6.b3
+Release:        alt7.b3
 
 Summary:        Collection of tasks for Ant
 License:        ASL 2.0 and ASL 1.1
@@ -21,11 +21,11 @@ BuildRequires:  ivy-local
 BuildRequires:  junit
 BuildRequires:  ant-junit
 BuildRequires:  xerces-j2
-BuildRequires:  bcel
 BuildRequires:  apache-ivy
 BuildRequires:  apache-commons-httpclient
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-parent
+BuildRequires:  apache-commons-bcel
 
 Requires:       junit
 Requires:       ant
@@ -81,6 +81,9 @@ echo "ant-contrib/ant-contrib" > %buildroot%_sysconfdir/ant.d/ant-contrib
 %doc target/docs/manual/tasks/*
 
 %changelog
+* Thu May 28 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt7.b3
+- Fixed FTBFS: replaced obsolete bcel BuildRequires with apache-commons-bcel.
+
 * Wed Apr 15 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt6.b3
 - Fix build with new ivy.
 
