@@ -3,14 +3,17 @@
 
 Name:    multispeech
 Version: 4.6.4
-Release: alt1
+Release: alt2
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
 Group:   Sound
 Url:     https://github.com/poretsky/multispeech
+VCS:     https://github.com/poretsky/multispeech.git
 
 Source: %name-%version.tar
+
+Patch0: fix-spd-module-dir.patch
 
 Requires: %name-common
 Requires: ru_tts
@@ -81,6 +84,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf -if
@@ -88,10 +92,8 @@ BuildArch: noarch
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std sdmoduledir=%_libdir/speech-dispatcher-modules
 
-mkdir -pv %buildroot%_libdir/speech-dispatcher-modules
-mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 rm -v %buildroot%_libdir/lib%name.so
 
 %check
@@ -118,6 +120,9 @@ rm -v %buildroot%_libdir/lib%name.so
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Fri May 29 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt2
+- Impruve make file
+
 * Wed May 20 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt1
 -- Updated to new version 4.6.4
 - Package spleated to subpackages
