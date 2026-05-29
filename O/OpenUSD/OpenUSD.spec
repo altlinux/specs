@@ -4,8 +4,9 @@
 
 %define soname 0
 # endless sigh
-%define lversion 25.11
+%define lversion 26.5
 %define qt_ver 6
+%define stage %nil
 
 %def_enable alembic
 %def_enable draco
@@ -22,11 +23,11 @@
 %def_enable materialx
 
 Name: OpenUSD
-Version: 25.11
+Version: 26.05
 Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
-License: Apache-2.0
+License: TOST-1.0
 Url: https://openusd.org
 VCS: https://github.com/PixarAnimationStudios/OpenUSD.git
 Source0: %name-%version.tar
@@ -45,6 +46,11 @@ Patch1: 0001-Downstream-only-add-an-SONAME-version.patch
 # Fix blender GL errors when using Hydra
 # https://github.com/PixarAnimationStudios/OpenUSD/pull/2550
 Patch2: 2550.patch
+# usd: Fix build failure with libstdc++15 / C++23
+# https://github.com/PixarAnimationStudios/OpenUSD/pull/4085
+Patch3: 4085.patch
+# should be send to upstream
+Patch4: openusd-alt-tbb-2023.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build /proc
 BuildRequires: gcc-c++
@@ -99,11 +105,21 @@ Group: System/Libraries
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
 AutoProv: nopython
+Requires: %name-resources = %EVR
 
 %description -n lib%name%soname
 Universal Scene Description (USD) is an efficient, scalable system for
 authoring, reading, and streaming time-sampled scene description for
 interchange between graphics applications.
+
+%package resources
+Summary: Universal Scene Description library resources
+Group: Development/Other
+AutoReq: nopython
+AutoProv: nopython
+
+%description resources
+Universal Scene Description library resources and plugins.
 
 %package devel
 Summary: Universal Scene Description library development headers
@@ -164,10 +180,6 @@ popd
 # building Doxygen-generated HTML documentation.
 rm -rf docs/doxygen/doxygen-awesome-css/
 
-# Use c++17 standard otherwise build fails
-sed -i 's|set(CMAKE_CXX_STANDARD 14)|set(CMAKE_CXX_STANDARD 17)|g' \
-	cmake/defaults/CXXDefaults.cmake
-
 # Fix libdir installation
 sed -i 's|lib/usd|%_libdir/usd|g' cmake/macros/Private.cmake
 sed -i 's|"lib"|%_libdir|g' cmake/macros/Private.cmake
@@ -183,11 +195,6 @@ sed -i 's|plugin/usd|%_libdir/usd/plugin|g' \
 # Fix cmake directory destination
 sed -i 's|"${CMAKE_INSTALL_PREFIX}"|%_libdir/cmake/pxr|g' pxr/CMakeLists.txt
 
-# Use Embree4 instead of Embree3. The find-then-modify pattern preserves mtimes
-# on sources that did not need to be modified.
-find . -type f -exec gawk '/embree3/ { print FILENAME }' '{}' '+' |
-  xargs -r sed -r -i 's/(embree)3/\14/'
-
 # Fix uic-qt6 use
 cat > uic-wrapper <<'EOF'
 #!/bin/sh
@@ -201,7 +208,6 @@ chmod +x uic-wrapper
 %if_with jemalloc
 	-DPXR_MALLOC_LIBRARY="%_libdir/libjemalloc.so" \
 %endif
-	-DCMAKE_CXX_STANDARD=17 \
 	-DCMAKE_SKIP_INSTALL_RPATH=ON \
 	%_cmake_skip_rpath \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -281,9 +287,6 @@ chmod +x uic-wrapper
      	\
      	-DPYSIDE_AVAILABLE=ON \
 	-DPYSIDEUICBINARY:PATH=${PWD}/uic-wrapper \
-	%ifarch aarch64
-	-DPXR_BUILD_EXEC=OFF \
-	%endif
 	%nil
 %cmake_build
 
@@ -292,9 +295,9 @@ chmod +x uic-wrapper
 
 %if_enabled usdview
 # Install a desktop icon for usdview
-#desktop-file-install                                    \
-#--dir=%%buildroot%%_desktopdir              \
-#%%SOURCE1
+desktop-file-install                                    \
+--dir=%buildroot%_desktopdir              \
+%SOURCE1
 %endif
 
 # Remove examples that were built and installed even though we set
@@ -337,7 +340,7 @@ done
 %{?_enable_test:%ctest}
 
 %files
-%doc NOTICE.txt README.md CHANGELOG.md SECURITY.md
+%doc NOTICE.txt README.md CHANGELOG.md SECURITY.md LICENSE.txt
 %_bindir/sdfdump
 %_bindir/sdffilter
 %_bindir/usdGenSchema
@@ -361,7 +364,7 @@ done
 %_bindir/usdmeasureperformance
 %_bindir/usdInitSchema
 %if_enabled usdview
-#%%_desktopdir/org.openusd.usdview.desktop
+%_desktopdir/org.openusd.usdview.desktop
 %_bindir/testusdview
 %_bindir/usdview
 %endif
@@ -397,10 +400,12 @@ done
 %_man1dir/usdview.1*
 %endif
 
+%files resources
+%_libdir/usd
+
 %files -n lib%name%soname
 %doc NOTICE.txt README.md LICENSE.txt
 %_libdir/libusd_ms.so.%soname.%lversion
-%_libdir/usd
 
 %files devel
 %_libdir/libusd_ms.so
@@ -411,6 +416,15 @@ done
 %python3_sitelibdir/pxr
 
 %changelog
+* Thu May 28 2026 L.A. Kostis <lakostis@altlinux.ru> 26.05-alt0.1
+- 26.05.
+- hydra: rebase blender patch.
+- usd: fix build failure with libstdc++15/c++23 (upstream PR#4085).
+- usd: fix build with TBB 2023.0.0 (tnx to rider@).
+- .spec fixes:
+  + usdview: enable .desktop file (closes #51184).
+  + split out -resources from library (closes #59343).
+
 * Wed Nov 19 2025 L.A. Kostis <lakostis@altlinux.ru> 25.11-alt0.1
 - 25.11.
 - embree4: drop patch (merged by upstream).
