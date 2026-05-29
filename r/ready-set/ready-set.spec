@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: %api_version.7.1
+Version: %api_version.7.2
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -291,6 +291,12 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Sat May 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.2-alt1
+- Fixed error or strange behavior on enabling pages.
+- `welcome` page now hide `language` page.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.7.2
+
 * Sat May 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.1-alt1
 - New version: 0.7.1.
 - Added `license-agreement` plugin for displaying localized license files.
