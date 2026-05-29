@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 10.0.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -74,6 +74,7 @@ BuildRequires: opencascade-devel
 BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
+BuildRequires: libnng-devel
 #Requires: kicad-packages3D >= %majver
 Requires: kicad-symbols >= %majver
 Requires: kicad-footprints >= %majver
@@ -152,7 +153,7 @@ sed -i "s/m_currentSymbol.GetSubLibraryName()/((wxString)&)/" eeschema/symbol_vi
     -DKICAD_SCRIPTING_WXPYTHON=ON \
     -DKICAD_USE_EGL=ON \
     -DKICAD_USE_CMAKE_FINDPROTOBUF=OFF \
-    -DKICAD_IPC_API=OFF \
+    -DKICAD_IPC_API=ON \
     -DKICAD_WAYLAND=ON \
     -DKICAD_BUILD_I18N=ON \
     -DKICAD_I18N_UNIX_STRICT_PATH=ON \
@@ -200,6 +201,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri May 29 2026 Valery Zabrovsky <brow@altlinux.org> 1:10.0.3-alt2
+- Rebuild with enabled IPC API.
+
 * Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.3-alt1
 - New version 10.0.3.
 - Fix bad elf symbol EDA_EVT_PLUGIN_AVAILABILITY_CHANGED (thanks brow@).
