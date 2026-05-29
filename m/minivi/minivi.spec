@@ -1,5 +1,5 @@
 Name: minivi
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Summary: A small application for viewing images
@@ -12,7 +12,7 @@ Vcs: https://altlinux.space/shad/minivi
 
 Source: %name-%version.tar
 
-Requires: libwebp-tools ImageMagick-tools
+Requires: libwebp-tools ImageMagick-tools libheif
 
 BuildRequires: lazarus qt6pas-devel
 
@@ -47,6 +47,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.0-alt1
+- 0.15.2 -> 0.16.0
+
 * Fri May 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.2-alt1
 - 0.15.1 -> 0.15.2
 
