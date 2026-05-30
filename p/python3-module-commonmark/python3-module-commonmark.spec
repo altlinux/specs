@@ -1,7 +1,7 @@
 %define  modulename CommonMark
 
 Name:    python3-module-commonmark
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Python parser for the CommonMark Markdown spec
@@ -39,5 +39,8 @@ rm -f %buildroot%_bindir/cmark
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 30 2026 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
+- New version.
+
 * Tue Feb 11 2020 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
 - Initial version in Sisyphus.
