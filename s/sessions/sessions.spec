@@ -2,7 +2,7 @@
 %define import_path github.com/pojntfx/sessions
 
 Name: sessions
-Version: 0.1.19
+Version: 0.1.20
 Release: alt1
 
 Summary: Focus with timed work intervals
@@ -103,6 +103,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun May 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.20-alt1
+- 0.1.19 -> 0.1.20
+
 * Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.19-alt1
 - 0.1.18 -> 0.1.19
 
