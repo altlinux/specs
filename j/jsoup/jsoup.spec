@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 
 Name:           jsoup
 Version:        1.14.3
-Release:        alt1_7jpp11
+Release:        alt2_7jpp11
 Summary:        Java library for working with real-world HTML
 License:        MIT
 URL:            http://jsoup.org/
@@ -30,6 +30,8 @@ BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 %endif
+BuildRequires: jsr-305
+
 Source44: import.info
 
 %description
@@ -104,6 +106,9 @@ jsoup will create a sensible parse tree.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Apr 20 2026 Pavel Vasenkov <pav@altlinux.org> 1.14.3-alt2_7jpp11
+- NMU: Fixed FTBFS with jsr305 
+
 * Tue Oct 28 2025 Pavel Vasenkov <pav@altlinux.org> 1.14.3-alt1_7jpp11
 - new version
 
