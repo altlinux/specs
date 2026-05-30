@@ -14,8 +14,8 @@
 %endif
 
 Name:    qgis
-Version: 4.0.2
-Release: alt3
+Version: 4.0.3
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -430,6 +430,9 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %endif
 
 %changelog
+* Sat May 30 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.3-alt1
+- New version.
+
 * Mon May 25 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt3
 - Rebuilt with txt2tags-python3.
 
