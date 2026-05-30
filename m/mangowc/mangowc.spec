@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: mangowc
-Version: 0.13.1
+Version: 0.14.0
 Release: alt1
 
 Summary: wayland compositor base wlroots and scenefx (dwm but wayland)
@@ -30,6 +30,7 @@ BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(scenefx-0.4)
 BuildRequires: pkgconfig(glesv2)
+BuildRequires: pkgconfig(libcjson)
 
 # Defined in config.conf
 Requires: /usr/bin/rofi
@@ -68,6 +69,9 @@ https://github.com/DreamMaoMao/mangowc/wiki .
 %_datadir/xdg-desktop-portal/mango-portals.conf
 
 %changelog
+* Sat May 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+
 * Tue May 19 2026 Nikolay Strelkov <snk@altlinux.org> 0.13.1-alt1
 - New version 0.13.1.
 
