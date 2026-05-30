@@ -1,5 +1,5 @@
 Name: fuse-sshfs
-Version: 3.7.5
+Version: 3.7.6
 Release: alt1
 
 Summary: SSH filesystem using FUSE
@@ -54,6 +54,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Sat May 30 2026 Anton Zhukharev <ancieg@altlinux.org> 3.7.6-alt1
+- Updated to 3.7.6 (fixes GHSA-pjv6-2c3f-r357, GHSA-mm85-q63v-4476).
+
 * Fri Jan 30 2026 Anton Zhukharev <ancieg@altlinux.org> 3.7.5-alt1
 - Updated to 3.7.5.
 
