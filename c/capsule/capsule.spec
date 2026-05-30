@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: capsule
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Tool for creating portable Linux containers from OCI images
@@ -74,6 +74,10 @@ export GOFLAGS="-mod=vendor"
 %doc examples
 
 %changelog
+* Sat May 30 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.6-alt1
+- Pull the image when it has been updated upstream.
+- Fix icon export.
+
 * Mon May 25 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.5-alt1
 - Auto-detect ld-linux and libgcc paths in the utils bundle.
 
