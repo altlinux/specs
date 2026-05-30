@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 0.2
 
 %def_disable bootstrap
@@ -7,7 +7,7 @@
 
 Name: wl-screenrec
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: High performance screen recorder for wlroots Wayland
 License: Apache-2.0
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat May 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- updated to v0.2.0-34-g0925290 (fixed for ffmpeg-8.1)
+
 * Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

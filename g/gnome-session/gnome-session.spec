@@ -8,7 +8,7 @@
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -142,6 +142,9 @@ export PATH=$PATH:/sbin
 %_datadir/wayland-sessions/gnome.desktop
 
 %changelog
+* Fri May 29 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
+- 50.1
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

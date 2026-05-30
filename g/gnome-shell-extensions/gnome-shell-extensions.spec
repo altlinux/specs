@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -206,6 +206,9 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Tue Apr 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 
