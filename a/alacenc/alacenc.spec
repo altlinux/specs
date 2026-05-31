@@ -1,5 +1,5 @@
 Name: alacenc
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: encode audio into the Apple Lossless Audio Codec (ALAC) format
@@ -26,7 +26,7 @@ sed -i "s/__aarch64__/__e2k__/" vendor/alac/codec/EndianPortable.c
 %endif
 
 %build
-%cmake
+%cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
 %cmake_build
 
 %install
@@ -36,6 +36,9 @@ sed -i "s/__aarch64__/__e2k__/" vendor/alac/codec/EndianPortable.c
 %_bindir/%name
 
 %changelog
+* Sun May 31 2026 Nazarov Denis <nenderus@altlinux.org> 0.4.2-alt1
+- New version 0.4.2.
+
 * Sun Jun 02 2024 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt1
 - New version 0.4.1.
 
