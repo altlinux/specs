@@ -66,7 +66,7 @@
 %endif
 
 Name: blender
-Version: 4.5.9
+Version: 4.5.10
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -545,6 +545,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Sat May 30 2026 Anton Farygin <rider@altlinux.org> 4.5.10-alt1
+- 4.5.9 -> 4.5.10
+
 * Mon Apr 27 2026 Anton Farygin <rider@altlinux.org> 4.5.9-alt1
 - 4.5.8 -> 4.5.9
 - use gcc-14 as CUDA host compiler on Sisyphus
