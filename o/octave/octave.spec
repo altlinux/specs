@@ -6,8 +6,8 @@
 %endif
 
 Name: octave
-Version: 11.1.0
-Release: alt1.1
+Version: 11.2.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -236,6 +236,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sun May 31 2026 Andrey Cherepanov <cas@altlinux.org> 11.2.0-alt1
+- New version.
+
 * Wed Mar 11 2026 Michael Shigorin <mike@altlinux.org> 11.1.0-alt1.1
 - E2K: lcc 1.29.15 ftbfs workaround (ilyakurdyukov@).
 
