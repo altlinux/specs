@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.6.2
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -22,7 +22,7 @@ Patch2: keycloak-alt-ssl-certificates.patch
 Patch3: 0001-Exclude-base-theme-from-settings.patch
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires: java-devel
+BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
 # For kiota
 BuildRequires: libicu
@@ -114,6 +114,9 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Sun May 31 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.2-alt2
+- Built with java-21-openjdk-devel.
+
 * Wed May 20 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.2-alt1
 - New version (fixes: CVE-2026-0636, CVE-2026-3505, CVE-2026-4628,
   CVE-2026-4630, CVE-2026-5588, CVE-2026-5598, CVE-2026-6856, CVE-2026-7307,
