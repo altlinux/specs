@@ -1,6 +1,6 @@
 Name:    python3-module-ansible-collections
 Version: 13.0.1
-Release: alt1
+Release: alt2
 
 Summary: This repository contains the community.general and some other Ansible Collection
 License: GPL-3.0+ and Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT and MPL-2.0 and PSF-2.0
@@ -57,7 +57,7 @@ mkdir -p %buildroot%python3_sitelibdir/ansible_collections/community/general
 cp -a * %buildroot%python3_sitelibdir/ansible_collections/community/general
 
 # Install additional collections
-tar xf %SOURCE1 -C %buildroot%python3_sitelibdir/ansible_collections/community --strip-components=2
+tar xf %SOURCE1 -C %buildroot%python3_sitelibdir/ansible_collections --strip-components=1
 
 # Remove tests
 find %buildroot%python3_sitelibdir/ansible_collections -name tests | xargs rm -rf
@@ -71,6 +71,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Thu May 28 2026 Andrey Cherepanov <cas@altlinux.org> 13.0.1-alt2
+- community.mysql -> ansible.mysql.
+
 * Tue May 26 2026 Andrey Cherepanov <cas@altlinux.org> 13.0.1-alt1
 - New version.
 
