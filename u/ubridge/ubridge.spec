@@ -1,5 +1,5 @@
 Name: ubridge
-Version: 0.9.19
+Version: 1.0.1
 Release: alt1
 
 Summary: Bridge for UDP tunnels, Ethernet, TAP and VMnet interfaces
@@ -41,6 +41,9 @@ setcap cap_net_admin,cap_net_raw=ep %_bindir/%name
 %attr(0755,root,root) %_bindir/%name
 
 %changelog
+* Sun May 31 2026 Anton Midyukov <antohami@altlinux.org> 1.0.1-alt1
+- New version 1.0.1.
+
 * Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt1
 - New version 0.9.19.
 
