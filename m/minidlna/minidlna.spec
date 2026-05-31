@@ -1,6 +1,6 @@
 Name: minidlna
 Version: 1.3.3
-Release: alt2
+Release: alt4
 
 Summary: DLNA AV Media Server
 License: GPLv2
@@ -63,6 +63,12 @@ mkdir -p %buildroot%_cachedir/%name
 %dir %attr(0770,root,_minidlna) %_cachedir/%name
 
 %changelog
+* Sat May 30 2026 Anton Farygin <rider@altlinux.org> 1.3.3-alt4
+- fixed crash in forked file-transfer child after select_fini
+
+* Fri May 29 2026 Anton Farygin <rider@altlinux.org> 1.3.3-alt3
+- fixed crash on subscriber removal during pending notify
+
 * Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.3-alt2
 - rebuilt with ffmpeg 7.x
 
