@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.7.15
-Release: alt3
+Version: 1.8.0
+Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -8,8 +8,6 @@ License: GPL-3.0+
 Group:   Education
 
 URL:     http://altlinux.org/education
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -133,24 +131,10 @@ Requires: puppet
 Requires: x11spice
 Requires: openssh-server
 %endif
-# LibreOffice
-%ifnarch %e2k
-%define lo_name LibreOffice-still
-%else
-%define lo_name LibreOffice
-%endif
-%ifnarch armh
-Requires: %{lo_name}-extensions
-Requires: %{lo_name}-integrated
-Requires: %{lo_name}-gtk3
-Requires: %{lo_name}-langpack-ru
-Requires: libreoffice-languagetool
-%endif
 Requires: mythes-ru
 Requires: hyphen-ru
 Requires: gst-plugins-bad
 Requires: gst-plugins-ugly
-Requires: pentaho-reporting-flow-engine
 Requires: perl-DBD-mysql
 Requires: postgresql-jdbc
 Requires: mysql-connector-java
@@ -461,9 +445,6 @@ Requires: libva-intel-media-driver
 Requires: vlc-maxi
 Requires: simplescreenrecorder
 Requires: quick-usb-formatter
-#ifnarch armh
-Requires: %{lo_name}-gtk3
-#endif
 %ifnarch %e2k ppc64le
 Requires: nextcloud-client
 %endif
@@ -477,7 +458,6 @@ Requires: xinput
 Requires: xorg-drv-libinput
 %ifnarch %not_qt5_qtwebengine_arches
 Requires: mousepad
-Requires: altcenter-education
 %endif
 %description xfce
 %{summary}.
@@ -494,9 +474,6 @@ Requires: kde6-runtime
 Requires: kde-printing
 Requires: kde-scanning
 Requires: kdeconnect
-#ifnarch armh
-Requires: %{lo_name}-kde6
-#endif
 %ifnarch %e2k ppc64le
 Requires: nextcloud-client-kde
 %endif
@@ -519,9 +496,6 @@ Requires: libva-intel-media-driver
 # Multimedia                                                                                  
 Requires: simplescreenrecorder
 Requires: quick-usb-formatter
-%ifnarch %not_qt5_qtwebengine_arches
-Requires: altcenter-education
-%endif
 %description kde
 %{summary}.
 
@@ -669,11 +643,17 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sun May 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.0-alt1
+- Remove LibreOffice (lite, xfce, kde) and pentaho-reporting-flow-engine
+  to make the office suite optional for ALT Education users.
+- Remove altcenter-education (xfce, kde).
+- Fix macro expansion in 1.7.15-alt2 changelog.
+
 * Sat Apr 25 2026 Ivan Khanas <xeno@altlinux.org> 1.7.15-alt3
 - Add kinfocenter-maxi to unlock systeminfo/graphics features.
 
 * Wed Apr 22 2026 Ivan Khanas <xeno@altlinux.org> 1.7.15-alt2
-- Exclude %ix86 for projectlibre.
+- Exclude %%ix86 for projectlibre.
 
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 1.7.15-alt1
 - server-apps: removed alterator-ulogd and ejabberd.
