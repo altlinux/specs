@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-otbr-api
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 Summary: Python API for the Open Thread Border Router
 License: MIT
@@ -46,6 +46,9 @@ Python package to interact with an OTBR via its REST API.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.10.0-alt1
+- Updated to version 2.10.0.
+
 * Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.9.0-alt1
 - Updated to version 2.9.0.
 
