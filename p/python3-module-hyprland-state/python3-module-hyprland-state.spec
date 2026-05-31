@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-hyprland-state
-Version: 0.2.1
+Version: 0.4.2
 Release: alt1
 Summary: Live state interface for Hyprland
 License: MIT
@@ -46,6 +46,9 @@ and inspect the running compositor's configuration.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.2-alt1
+- Updated to version 0.4.2.
+
 * Sun May 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.1-alt1
 - Updated to version 0.2.1.
 

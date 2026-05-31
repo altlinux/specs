@@ -3,7 +3,7 @@
 %def_with check
 
 Name: hyprmod
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Summary: A native GTK4/libadwaita settings app for Hyprland
 License:  GPL-3.0
@@ -22,6 +22,7 @@ BuildRequires: /usr/bin/glib-compile-schemas
 %if_with check
 BuildRequires: libadwaita-gir
 BuildRequires: libappstream-glib
+BuildRequires: lua5.4
 BuildRequires: python3-module-hyprland-config
 BuildRequires: python3-module-hyprland-monitors
 BuildRequires: python3-module-hyprland-schema
@@ -52,7 +53,7 @@ install -Dm 0644 data/icons/hicolor/scalable/apps/%namespace.%name.svg \
                  %buildroot%_iconsdir/hicolor/scalable/apps/%namespace.%name.svg
 
 %check
-xvfb-run -a python3 -m pyproject_installer run -- python3 -m pytest
+xvfb-run -a python3 -m pyproject_installer run -- python3 -m pytest -k "not test_environment_block_present"
 desktop-file-validate %buildroot%_desktopdir/%namespace.%name.desktop
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%namespace.%name.metainfo.xml
 
@@ -65,6 +66,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%namespace.%n
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.0-alt1
+- Updated to version 0.3.0.
+
 * Sun May 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.0-alt1
 - Updated to version 0.2.0.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-hyprland-socket
-Version: 0.10.0
+Version: 0.12.1
 Release: alt1
 Summary: Typed Python library for Hyprland IPC via Unix sockets
 License: MIT
@@ -44,6 +44,9 @@ applying settings live, batch commands, and monitoring events.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.12.1-alt1
+- Updated to version 0.12.1.
+
 * Sun May 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.0-alt1
 - Updated to version 0.10.0.
 

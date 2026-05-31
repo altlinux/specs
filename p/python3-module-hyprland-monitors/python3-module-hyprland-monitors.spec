@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-hyprland-monitors
-Version: 0.5.0
+Version: 0.7.0
 Release: alt1
 Summary: Monitor management utilities for Hyprland
 License: MIT
@@ -45,6 +45,9 @@ hardware capability detection for Hyprland monitor management.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
+- Updated to version 0.7.0.
+
 * Sun May 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.0-alt1
 - Updated to version 0.5.0.
 
