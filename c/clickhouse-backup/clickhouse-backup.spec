@@ -1,12 +1,7 @@
 %global _unpackaged_files_terminate_build 1
-# Vendorized go modules
-# $ go generate
-# $ GO111MODULE=on go mod vendor -v
-# $ git add -f vendor
-# $ git commit -n --no-post-rewrite -m "update go vendor modules"
-
+ExcludeArch: %ix86
 Name: clickhouse-backup
-Version: 2.6.43
+Version: 2.7.0
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
@@ -48,6 +43,9 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Sun May 31 2026 Anton Farygin <rider@altlinux.org> 2.7.0-alt1
+- 2.6.43 -> 2.7.0
+
 * Mon Mar 09 2026 Anton Farygin <rider@altlinux.org> 2.6.43-alt1
 - 2.6.42 -> 2.6.43
 
