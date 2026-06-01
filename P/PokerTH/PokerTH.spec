@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -91,6 +91,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Jun 01 2026 Mikhail Efremov <sem@altlinux.org> 2.0.7-alt1
+- Updated to 2.0.7.
+
 * Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 2.0.6-alt1
 - Handling the case when _priority_distbranch is not defined.
 - Updated to 2.0.6.
