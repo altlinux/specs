@@ -1,8 +1,6 @@
-%global __find_debuginfo_files %nil
-
 Name: musikcube
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: a cross-platform, terminal-based audio engine, library, player and server written in c++
 
@@ -12,8 +10,12 @@ URL: https://musikcube.com
 VCS: https://github.com/clangen/musikcube
 
 Source: %name-%version.tar
+Patch: alt-patch-rpath-script.patch
 
-BuildRequires: /proc asio-devel cmake gcc-c++ libavformat-devel libcurl-devel
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires: /proc asio-devel cmake gcc-c++
+BuildRequires: libavformat-devel libcap-devel libcurl-devel
 BuildRequires: libev-devel libgme-devel liblame-devel libmicrohttpd-devel
 BuildRequires: libmpg123-devel libncursesw-devel libopenmpt-devel
 BuildRequires: libportaudio2-devel libpulseaudio-devel libswresample-devel
@@ -29,20 +31,24 @@ as a streaming audio server.
 
 %prep
 %setup
+%autopatch -p1
+
+# remove empty dirs
+rm -rv src/3rdparty/{asio,bin}
+
+# fix paths
+sed -i 's|share|%_lib|' src/musikcube*/musikcube*.in
+sed -i 's|share/%name|%_lib/%name|g' .cmake/InstallFiles.cmake
 
 %build
-rm -rv src/3rdparty/{asio,bin}
-sed -i 's/share/%_lib/' src/musikcube*/musikcube*.in
-sed -i 's|share/%name|%_lib/%name|g' .cmake/InstallFiles.cmake
-cmake \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
+%cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DENABLE_PCH=true \
-    .
-%make_build
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %doc CHANGELOG.txt CONTRIBUTORS.txt LICENSE.txt README.md
@@ -53,6 +59,11 @@ cmake \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Jun 01 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.5-alt2
+- Build with debuginfo.
+- Add libcap-devel to BuildRequires.
+- Add patch to fix rpath.
+
 * Sun Sep 28 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.5-alt1
 - New version 3.0.5.
 - Remove submodule asio.
