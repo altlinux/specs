@@ -2,7 +2,7 @@
 Summary: Library for reading Jcat files
 Name: libjcat
 Version: 0.2.6
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
 Source0: %name-%version.tar
@@ -89,6 +89,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Mon Jun 01 2026 Anton Farygin <rider@altlinux.org> 0.2.6-alt2
+- fixed FTBFS with gnutls 3.8.13
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 0.2.6-alt1
 - 0.2.5 -> 0.2.6
 
