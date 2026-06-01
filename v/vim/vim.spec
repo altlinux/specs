@@ -50,7 +50,7 @@
 
 Name: vim
 %define branch 9.2
-Version: %branch.0537
+Version: %branch.0541
 Release: alt1
 Epoch: 4
 
@@ -516,6 +516,7 @@ cd src/shadow
 	--with-features=tiny \
 	--with-x=no \
 	--enable-gui=no \
+	--without-wayland \
 	--disable-gpm \
 	--enable-multibyte \
 	--disable-rpath \
@@ -565,6 +566,7 @@ cd src/shadow
 	--with-x=no \
 	--disable-xsmp \
 	--enable-gui=no \
+	--without-wayland \
 	--with-compiledby="%packager" \
 	#
 %make_build
@@ -1078,6 +1080,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Jun 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.2.0541-alt1
+- Updated to v9.2.0541.
+- vim-console: disabled wayland support (ALT#59327).
+
 * Tue May 26 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0537-alt1
 - Updated to v9.2.0537 (fixes CVE-2026-46483).
 
