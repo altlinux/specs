@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -58,7 +58,6 @@ Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 # 1C
 Patch101: 00001-1C-FULL.patch
-Patch102: 00002-1C-Fix-test-join.patch
 Patch103: 00003-1C-Fix-test-aggregates.patch
 
 Conflicts: %{prog_name}13
@@ -472,7 +471,6 @@ goal of accelerating analytics queries.
 
 # 1C
 %patch101 -p1
-%patch102 -p1
 %patch103 -p1
 
 %ifarch %e2k
@@ -1185,6 +1183,10 @@ fi
 %endif
 
 %changelog
+* Mon Jun 01 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt3
+- Update 1C patch
+- Drop 00002-1C-Fix-test-join.patch fix upstream
+
 * Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt2
 - Fix NUMA tests
 - Add conflicts for postgresqlXY and -server subpackages
