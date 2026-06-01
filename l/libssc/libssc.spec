@@ -1,3 +1,4 @@
+%define _libexecdir %_prefix/libexec
 %def_disable snapshot
 
 %define ver_major 0.4
@@ -12,7 +13,7 @@
 %def_enable check
 
 Name: libssc
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library for exposing Qualcomm Sensor Core to Linux
@@ -27,13 +28,10 @@ Source: https://codeberg.org/DylanVanAssche/libssc/archive/v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-# https://github.com/linux-msm/qrtr.git
-Source1: qrtr-%qrtr_ver.tar
-
 %define glib_ver 2.56
 %define qmi_ver 1.33.4
 
-BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(qmi-glib) >= %qmi_ver
@@ -42,7 +40,7 @@ BuildRequires: pkgconfig(protobuf)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Qmi) = 1.0}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_check:
-BuildRequires: pkgconfig(qrtr-glib)
+BuildRequires: pkgconfig(qrtr)
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3(google)}
 
@@ -78,35 +76,38 @@ Requires: %name-devel = %EVR
 %description gir-devel
 GObject introspection devel data for %name.
 
+%package tests
+Summary: Tests for %name
+Group: Development/Other
+BuildArch: noarch
+Requires: %name = %EVR
+# may be rpm-build-python3 bug
+%add_python3_req_skip ssc_common_pb2
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name.
 
 %prep
-%setup -n %name -a1
-mv qrtr-%qrtr_ver/* mocking/qrtr/
-sed -i 's|\/_build\/|/%__builddir/|' mocking/ssc-server
-
+%setup -n %name
+sed -i 's|\/_build\/|/%__builddir/|
+        s|\/usr/lib/|%_libdir/|' mocking/ssc_server/ssc-server.in
 %build
 %meson \
     %{?optflags_lto:-Db_lto=true}
 %nil
 %meson_build
 
-%{?_enable_check:
-pushd mocking/qrtr
-%meson
-%meson_build
-popd}
-
 %install
 %meson_install
 
 %check
-export PYTHONPATH=${PWD}/%__builddir/data
+#export PYTHONPATH=${PWD}/%__builddir/data
 %__meson_test
 
 %files
 %_bindir/ssccli
 %_libdir/%name.so.%{sover}*
-
 %doc README* CHANGELOG*
 
 %files devel
@@ -123,7 +124,15 @@ export PYTHONPATH=${PWD}/%__builddir/data
 %_girdir/%namespace-%api_ver.gir
 %endif
 
+%files tests
+%dir %_libexecdir/installed-tests/%name
+%_libexecdir/installed-tests/%name/ssc-server
+%python3_sitelibdir_noarch/ssc_server/
+
 %changelog
+* Sun May 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Thu Mar 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
