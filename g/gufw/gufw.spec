@@ -1,6 +1,6 @@
 Name: gufw
 Version: 26.04
-Release: alt1
+Release: alt2
 Summary: A graphical user interface for UFW
 Group: System/Configuration/Networking
 
@@ -26,7 +26,7 @@ Provides: firewallgui
 Provides: gui-ufw
 Requires: icon-theme-hicolor
 Requires: ufw
-Requires: typelib(WebKit2) = 4.0
+# Requires: typelib(WebKit2) = 4.0
 
 BuildArch: noarch
 
@@ -71,6 +71,9 @@ chmod a+rx %buildroot%python3_sitelibdir/%name/%name.py
 %_datadir/metainfo/io.github.costales.gufw.metainfo.xml
 
 %changelog
+* Mon Jun 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 26.04-alt2
+- remove unnecessary R: WebKit2
+
 * Mon Jun 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 26.04-alt1
 - 26.04
 
