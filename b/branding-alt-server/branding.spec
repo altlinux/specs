@@ -34,8 +34,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.1
-Release: alt7
+Version: 11.2
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -398,6 +398,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri May 29 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.2-alt1
+- Add MAX channel URL
+
 * Mon Apr 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt7
 - Fix NAME and VARIANT fields in os-release
 
