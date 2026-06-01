@@ -1,6 +1,6 @@
 Name: alterator-interface-service
-Version: 0.2.1
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Summary: XML files for org.altlinux.alterator.service interface
 License: GPLv2+
@@ -28,6 +28,13 @@ install -p -m 644 -D org.altlinux.alterator.service1.policy %buildroot%_datadir/
 %_datadir/polkit-1/actions/org.altlinux.alterator.service1.policy
 
 %changelog
+* Mon Jun 01 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.3-alt1
+- change: integrate diagnostic modes vith services (thx Andrey Alekseev)
+- chore: document actions (thx Andrey Alekseev)
+- chore: improve documentation (thx Andrey Alekseev)
+- chore: move readme.md into the root (thx Andrey Alekseev)
+- ci: add secret scanning (thx Maria Alexeeva)
+
 * Mon Jul 07 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.1-alt2
 - Change URL
 
