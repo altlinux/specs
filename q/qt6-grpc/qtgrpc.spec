@@ -4,7 +4,7 @@
 
 Name: qt6-grpc
 Version: 6.10.3
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - Grpc component
@@ -114,6 +114,7 @@ Requires: libqt6-core = %_qt6_version
 %build
 %Q6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
+    -DQT_BUILD_EXAMPLES:BOOL=OFF \
     #
 %if %qdoc_found
 %Q6make --target docs
@@ -164,9 +165,12 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-%_qt6_examplesdir/*
+#%_qt6_examplesdir/*
 
 %changelog
+* Mon Jun 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
+- don't build examples
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - fix build requires
 
