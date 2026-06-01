@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt13.g%{git}
+Release: alt14.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Proprietary
@@ -69,6 +69,12 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Mon Jun 01 2026 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt14.g6adc981
+- Apply patches from debian:
+  + wl: Do not flush system-wide queue
+  + build: dirty fix for the linking
+  + wl: use timer_container_of for kernel >= 6.16
+
 * Sun Nov 30 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt13.g6adc981
 - Apply patch from debian: wl: Fix memcpy() field-spanning write warning
   (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1084853).
