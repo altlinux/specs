@@ -8,7 +8,7 @@
 
 Name: criu
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -124,7 +124,7 @@ export CFLAGS="%optflags"
 %ifarch armh
 	UNAME-M=armv7l \
 %endif
-	PREFIX=%prefix V=1 all docs
+	PREFIX=%prefix LIBDIR=%_libdir V=1 all docs
 
 %install
 export PIPFLAGS="--no-build-isolation --no-index --no-deps"
@@ -200,6 +200,9 @@ rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %changelog
+* Thu May 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt2
+- Fix plugin path (ALT #59365).
+
 * Sun Nov 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt1
 - Updated to 4.2.
 
