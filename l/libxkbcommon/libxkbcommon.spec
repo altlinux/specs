@@ -18,7 +18,7 @@
 %def_disable python_tests
 
 Name: lib%_name
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -36,7 +36,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_check:rpm-macros-valgrind}
-BuildRequires: meson >= 0.51 bison >= 3.6 flex
+BuildRequires: meson >= 1.4 bison >= 3.6 flex
 BuildRequires: xkeyboard-config-devel >= 2.29
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
@@ -161,6 +161,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Sun May 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.13.2-alt1
+- 1.13.2
+
 * Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.1-alt1
 - 1.13.1
 

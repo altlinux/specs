@@ -1,11 +1,12 @@
 %def_disable snapshot
-%define _name graphite2
+%define __name graphite
+%define _name %{__name}2
 %def_disable docs
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.14
-Release: alt2.2
+Version: 1.3.15
+Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -15,23 +16,21 @@ Url: http://sourceforge.net/projects/silgraphite/
 Vcs: https://github.com/silnrsi/graphite.git
 
 %if_disabled snapshot
-Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
+#Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
+Source: https://github.com/silnrsi/graphite/archive/%version/%__name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-
-Obsoletes: %_name
-Provides: %_name = %EVR
-
 # fc patch
 Patch1: graphite2-1.2.0-cmakepath.patch
 # lcc/e2k fixup
 Patch2: graphite2-1.3.13-alt-e2k-lcc123.patch
 Patch3: graphite2-1.3.13-alt-e2k-linking.patch
-# gcc-15
-Patch10: graphite2-1.3.14-up-gcc-15.patch
 # https://salsa.debian.org/fonts-team/graphite2/-/blob/master/debian/patches/nametabletest-NameRecord-bounds.diff?ref_type=heads
 Patch11: graphite2-1.3.14-deb-nametabletest-NameRecord-bounds.diff
+
+Obsoletes: %_name
+Provides: %_name = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
@@ -59,11 +58,10 @@ Requires: %name = %EVR
 Includes and definitions for developing with Graphite2.
 
 %prep
-%setup -n %_name-%version
+%setup -n %__name-%version
 %patch1 -p1 -b .cmake
 %patch2 -p1 -b .e2k-lcc123
 %patch3 -p2 -b .e2k-linking
-%patch10 -p1 -b .gcc-15
 %patch11 -p1 -b .nametabletest
 
 %build
@@ -94,13 +92,16 @@ sed -i -e 's!<a id="id[a-z]*[0-9]*"></a>!!g' BUILD/doc/manual.html
 %_bindir/gr2fonttest
 %_includedir/%_name/
 %_libdir/%name.so
+%_pkgconfigdir/%_name.pc
 %dir %_libdir/%_name/
 %_libdir/%_name/%_name-release.cmake
 %_libdir/%_name/%_name.cmake
-%_pkgconfigdir/%_name.pc
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.15-alt1
+- 1.3.15
+
 * Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.14-alt2.2
 - fixed build with gcc-15
 
