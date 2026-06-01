@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 
 Summary: Pytest support for asyncio
 License: Apache-2.0
@@ -15,19 +15,16 @@ Url: https://pypi.org/project/pytest-asyncio/
 VCS: https://github.com/pytest-dev/pytest-asyncio
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-scm
-BuildRequires: python3-module-setuptools
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-hypothesis
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-typing-extensions
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -39,14 +36,9 @@ python 3.5+.
 %prep
 %setup
 %autopatch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,13 +50,12 @@ fi
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1.1
-- Demodernized packaging.
+* Fri May 29 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0.
 
 * Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0.
