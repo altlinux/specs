@@ -1,8 +1,8 @@
 %def_without   desktop
 
 Name:          pgadmin4
-Version:       8.3
-Release:       alt2
+Version:       8.14
+Release:       alt1
 Summary:       pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL
 License:       MIT
 Group:         Networking/WWW
@@ -15,11 +15,12 @@ Source2:       pgadmin4.logrotate
 Source3:       pgadmin4.service
 Source4:       config_local.py
 Source5:       pgadmin4.conf
+Source10:      pgadmin4-%version-generated-js.tar.xz
 Patch:         %name-%EVR.patch
 Autoprov:      yes,nopython
 %if_with       desktop
 ExclusiveArch: x86_64
-%else_without  desktop
+%else
 BuildArch:     noarch
 %endif
 %add_debuginfo_skiplist %_libdir/%name-desktop
@@ -29,6 +30,8 @@ BuildArch:     noarch
 %add_findreq_skiplist %_libdir/%name-desktop/**/*
 %add_findprov_skiplist %_libdir/%name-desktop/**/*
 BuildRequires(pre): rpm-build-python3
+BuildRequires: nodejs
+BuildRequires: npm
 # required for python web-server pre start
 #
 # required for nw.js
@@ -98,6 +101,9 @@ Requires:      python3(google_auth_oauthlib)
 Requires:      python3(werkzeug)
 Requires:      python3(keyring)
 Requires:      python3(typer)
+Requires:      python3(jsonformatter)
+Requires:      python3(libgravatar)
+Requires:      python3(flask_authlib_client)
 Requires:      postgresql-common
 
 %description
@@ -138,9 +144,19 @@ Desktop part of pgAdmin4.
 %setup
 %autopatch -p1
 
+cd web
+
+# Удаляем возможный неполный или старый generated из source tree
+rm -rf pgadmin/static/js/generated
+
+# Распаковываем prebuilt JS от той же версии pgAdmin4
+tar -xJf %SOURCE10
+
+# Контроль
+test -s pgadmin/static/js/generated/app.bundle.js
+test -s pgadmin/static/js/generated/vendor.others.js
+
 %build
-#cd web
-#yarn bundle
 
 %install
 mkdir -p -- \
@@ -212,6 +228,9 @@ ln -sf %_sysconfdir/nginx/sites-available.d/%name.conf %_sysconfdir/nginx/sites-
 
 
 %changelog
+* Mon Apr 06 2026 Pavel Vasenkov <pav@altlinux.org> 8.14-alt1
+- New version
+
 * Fri Mar 22 2024 Pavel Vasenkov <pav@altlinux.org> 8.3-alt2
 - Fixed packages dependencies (Closes: #49747)
 
