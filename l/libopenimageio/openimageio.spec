@@ -7,12 +7,12 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 3.0
+%define soname 3.1
 
 %def_with bootstrap
 
 Name:           lib%oname
-Version: 3.0.18.1
+Version: 3.1.13.1
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -38,6 +38,7 @@ BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asi
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel imath-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libturbojpeg-devel libopenjpeg2.0-devel
+BuildRequires:  openjpeg-tools2.0
 %if_without bootstrap
 %ifnarch %ix86
 BuildRequires:  openshadinglanguage-devel
@@ -221,6 +222,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue May 19 2026 Anton Farygin <rider@altlinux.org> 3.1.13.1-alt1
+- 3.0.18.1 -> 3.1.13.1
+
 * Tue May 05 2026 Anton Farygin <rider@altlinux.org> 3.0.18.1-alt1
 - 3.0.17.0 -> 3.0.18.1
 

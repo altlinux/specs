@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 1.14
+%define soname 1.15
 
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/issues/1810
 %define optflags_lto %nil
@@ -22,17 +22,15 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.14.10.0
-Release: alt0.1
+Version: 1.15.4.0
+Release: alt1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
 URL: https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
 
-# 64 bit only
 ExcludeArch: %ix86
 
-# https://github.com/AcademySoftwareFoundation/OpenShadingLanguage.git
 Source: %name-%version.tar
 Source2: %name.watch
 
@@ -55,6 +53,9 @@ BuildRequires: partio-devel
 BuildRequires: librobin-map-devel
 %if_with optix
 BuildRequires: optix-devel
+# CUDA 12.x nvcc cannot parse libstdc++-15 headers (new __is_pointer,
+# __is_volatile, __array_rank builtins). Force g++-14 as nvcc host compiler.
+BuildRequires: gcc14-c++
 %endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
@@ -174,10 +175,11 @@ export ALTWRAP_LLVM_VERSION=%llvm_ver
 %if_with optix
 	-DOSL_USE_OPTIX:BOOL=ON \
 	-DOSL_PTX_INSTALL_DIR:PATH=%_datadir/%name/ptx/ \
+	-DOSL_EXTRA_NVCC_ARGS="-ccbin=/usr/bin/g++-14" \
 %endif
 	%nil
 
-%cmake_build
+%cmake_build -j4
 
 %install
 %cmake_install
@@ -224,6 +226,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Mon May 25 2026 Anton Farygin <rider@altlinux.org> 1.15.4.0-alt1
+- 1.14.10.0 -> 1.15.4.0
+
 * Tue Apr 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.14.10.0-alt0.1
 - 1.14.10.0.
 - oiio plugin: use OIIO cmake variable for plugin path.
