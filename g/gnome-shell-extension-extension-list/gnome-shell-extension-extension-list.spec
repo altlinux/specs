@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name extension-list
 %define ver_major 50
@@ -7,13 +7,13 @@
 %define xdg_name org.gnome.shell.extensions.%_name
 
 %define ego 3088/%_name
-# EGO=3088/extension-list sh cli/get-version.sh
-%define ego_ver 43
+# cli/get-version.py %uuid %shell_version
+%define ego_ver 45
 
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 %define gettext_domain %name
@@ -48,7 +48,7 @@ Simple GNOME Shell extension manager in the top panel.
 %build
 %meson \
     -Dtarget=system \
-    -Dversion=%ego_ver
+    -Dversion=false
 %nil
 %meson_build
 
@@ -65,6 +65,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- updated to 50.2-1-gf1e379e
+
 * Thu Apr 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

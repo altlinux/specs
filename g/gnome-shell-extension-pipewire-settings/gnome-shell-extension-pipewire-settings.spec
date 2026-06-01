@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name pipewire-settings
-%define ver_major 3
+%define ver_major 10
 %define beta %nil
 %define uuid %_name@gaheldev.github.com
 %define gettext_domain %_name
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: Pipewire Settings extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -45,6 +45,9 @@ cp -r %uuid %buildroot%_datadir/gnome-shell/extensions/
 %doc README.md
 
 %changelog
+* Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 10-alt1
+- 10
+
 * Mon May 18 2026 Yuri N. Sedunov <aris@altlinux.org> 3-alt2
 - updated to v3-23-g2f88bf1 (GNOME 50 supported)
 
