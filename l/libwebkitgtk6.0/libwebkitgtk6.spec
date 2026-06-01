@@ -20,7 +20,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkitgtk-%api_ver
-%define ver_major 2.50
+%define ver_major 2.52
 
 %define oname webkit
 %define _name webkitgtk
@@ -36,7 +36,7 @@
 %ifnarch %ix86 x86_64 aarch64 riscv64
 %{?_enable_skia:%def_enable clang}
 %endif
-# try clang
+# try clang or not
 %def_enable clang
 
 %def_enable systemd
@@ -60,7 +60,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.4
+Version: %ver_major.3
 Release: alt1
 
 Summary: Web browser engine
@@ -71,8 +71,6 @@ Url: https://www.webkitgtk.org/
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
 Patch10: webkitgtk-2.50.1-deb-fix-ftbfs-x32.patch
-# fix undefined symbols
-Patch11: webkitgtk-2.50.2-up-undefined-symbol.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -84,13 +82,13 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 %define gst_ver 1.24.9
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
-BuildRequires: /proc gcc-c++ cmake unifdef
+BuildRequires: /proc /dev/pts gcc-c++ cmake ccache unifdef
+BuildRequires: bison flex >= 2.5.33
+BuildRequires: perl-Switch perl-JSON-PP perl-bignum
 %{?_enable_ninja:BuildRequires: ninja-build}
 %{?_enable_clang:BuildRequires: clang-devel lld}
-BuildRequires: ccache libicu-devel >= 7.0.1 bison
-BuildRequires: perl-Switch perl-JSON-PP perl-bignum
+BuildRequires: libicu-devel >= 7.0.1
 BuildRequires: zlib-devel
-BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel liblcms2-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
@@ -265,7 +263,6 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch10 -p1
-#%%patch11 -p1
 
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
@@ -361,7 +358,7 @@ export PYTHON=%__python3
 %{?_enable_gtk4:-DUSE_GTK4=ON} \
 %{?_disable_sysprof:-DUSE_SYSTEM_SYSPROF_CAPTURE=NO}
 %nil
-%ifarch aarch64 x86_64
+%ifarch x86_64
 [ %__nprocs -lt 128 ] || export NPROCS=128
 %endif
 %cmake_build
@@ -429,6 +426,12 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Apr 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.52.3-alt1
+- 2.52.3
+
+* Tue Feb 10 2026 Yuri N. Sedunov <aris@altlinux.org> 2.50.5-alt1
+- 2.50.5
+
 * Thu Dec 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.50.4-alt1
 - 2.50.4
 
