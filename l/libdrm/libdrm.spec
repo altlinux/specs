@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.133
+Version: 2.4.134
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -89,6 +89,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Mon Jun 01 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.134-alt1
+- 2.4.134
+
 * Wed Apr 29 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.133-alt1
 - 2.4.133
 
