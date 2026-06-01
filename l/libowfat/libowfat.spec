@@ -4,7 +4,7 @@
 
 Name: libowfat
 Version: 0.34
-Release: alt2
+Release: alt3
 Summary: Reimplementation of libdjb
 License: GPLv2
 Group: System/Libraries
@@ -19,6 +19,7 @@ Patch3: %name-0.34-debian-fix-gcc10.patch
 Patch4: %name-0.34-alt-fix-test-link.patch
 Patch5: %name-0.34-alt-fix-socket-accept-names.patch
 Patch6: %name-0.34-alt-fix-install.patch
+Patch7: %name-0.34-alt-gcc15-fix.patch
 
 %package devel
 Summary: Headers and static lib for libowfat development
@@ -48,6 +49,7 @@ Install this package if you want do compile applications using the
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 %build
 # Disable LTO - libowfat has multiple definitions of the same functions
@@ -87,6 +89,9 @@ ln -sf libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Mon Jun 01 2026 Anton Farygin <rider@altlinux.org> 0.34-alt3
+- fixed build with gcc 15
+
 * Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 0.34-alt2
 - fixed shared library versioning (LIB_VERSION/LIB_MAJOR conflict
   with upstream VERSION variable)
