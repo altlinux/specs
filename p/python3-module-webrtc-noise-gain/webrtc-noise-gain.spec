@@ -1,20 +1,26 @@
 Name: python3-module-webrtc-noise-gain
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1
 
 Summary: Python interface to the WebRTC
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/webrtc-noise-gain/
+URL: https://pypi.org/project/webrtc-noise-gain
+VCS: https://github.com/OHF-voice/webrtc-noise-gain
 
-Source0: %name-%version-%release.tar
-Patch2000: webrtc-e2k.patch
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildRequires: gcc-c++
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(pybind11)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+
+%python3_set_limited_api 3.9
 
 %description
 Tiny Python wrapper around webrtc-audio-processing for
@@ -22,9 +28,8 @@ noise suppression and auto gain only.
 
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -32,12 +37,18 @@ noise suppression and auto gain only.
 %install
 %pyproject_install
 
+%check
+rm -rf webrtc_noise_gain
+%pyproject_run_pytest -o addopts= tests
+
 %files
 %python3_sitelibdir/webrtc_noise_gain
-%python3_sitelibdir/webrtc_noise_gain_cpp.*.so
 %python3_sitelibdir/webrtc_noise_gain-%version.dist-info
 
 %changelog
+* Fri May 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Thu Apr 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.5-alt1
 - 1.2.5 released
 
