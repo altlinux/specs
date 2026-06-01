@@ -2,13 +2,13 @@
 
 %define _name Refine
 %define __name refine
-%define ver_major 0.7
+%define ver_major 0.8
 %define beta %nil
 %define rdn_name page.tesk.%_name
 %def_enable check
 
 Name: gnome-%__name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
@@ -74,6 +74,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Sun May 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Feb 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 

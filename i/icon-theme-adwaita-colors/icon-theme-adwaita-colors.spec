@@ -1,7 +1,8 @@
 %def_disable snapshot
-%define _name Adwaita-colors
+%define _name Adwaita-Colors
 %define __name adwaita-colors
-%define ver_major 2.5
+
+%define ver_major 2.6
 %define beta %nil
 
 %def_disable check
@@ -29,6 +30,8 @@ Source: %_name-%version%beta.tar
 
 Requires(pre): icon-theme-adwaita icon-theme-adwaita-legacy
 
+BuildRequires: icon-theme-adwaita /usr/bin/gio
+
 %description
 Adwaita Colors enhances the Adwaita icon theme by integrating GNOME's
 accent color feature, introduced in GNOME 47. This project ensures that
@@ -37,18 +40,20 @@ instead of the default blue, for a more cohesive and customized look.
 
 %prep
 %setup -n %_name-%version
-# broken symlink com.bitwig.BitwigStudio.application-bitwig-project-folder-legacy.svg -> folder-bitwig-legacy.svg
-rm -f Adwaita-blue/scalable/places/com.bitwig.BitwigStudio.application-bitwig-project-folder-legacy.svg
 
 %install
 mkdir -p %buildroot/%_iconsdir
-cp -r Adwaita-* %buildroot/%_iconsdir/
+./setup -i -p %buildroot/%_iconsdir
+ln -sf ../../../Adwaita/scalable/places/folder.svg %buildroot/%_iconsdir/Adwaita-blue/scalable/status/folder-open.svg
 
 %files
 %_iconsdir/Adwaita-*/
 %doc README*
 
 %changelog
+* Tue May 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
+- 2.6
+
 * Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
 - 2.5
 

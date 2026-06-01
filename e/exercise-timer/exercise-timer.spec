@@ -1,15 +1,15 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name exercise-timer
 %define __name hiit
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name xyz.safeworlds.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Exercise Timer
@@ -17,14 +17,13 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/ru/Hiit
 
-Vcs: https://github.com/mfep/exercise-timer.git
+Vcs: https://gitlab.gnome.org/World/exercise-timer.git
 
 %if_disabled snapshot
-Source: https://github.com/mfep/exercise-timer/archive/v%version/%name-%version%beta.tar.gz
+Source: https://gitlab.gnome.org/World/exercise-timer/-/archive/v%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
-Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.20
 %define adwaita_ver 1.8
@@ -68,6 +67,9 @@ built for the GNOME desktop using Libadwaita.
 
 
 %changelog
+* Sun May 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Thu Mar 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
