@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: %api_version.7.2
+Version: %api_version.7.3
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -213,6 +213,8 @@ Requires: %name = %EVR
 %_iconsdir/hicolor/*/apps/%{app_id}*
 %_datadir/applications/%{app_id}*
 %_datadir/polkit-1/rules.d/%app_id.rules
+%_userunitdir/gnome-session.target.wants/%name-existing-user.service
+%_userunitdir/%name-existing-user.service
 
 %files gdm
 %_libexecdir/%gis_name
@@ -237,6 +239,7 @@ Requires: %name = %EVR
 %_sysconfdir/dbus-1/system.d/%app_id.conf
 %_datadir/polkit-1/actions/%app_id.policy
 %_datadir/dbus-1/system-services/%app_id.service
+%_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
@@ -291,7 +294,16 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Mon Jun 01 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.3-alt1
+- New version: 0.7.3.
+- Added existing-user mode to configure an existing user who skipped
+  the initial setup or when new setup steps are added by vendor.
+- Added copying some files from initial-setup user to created user.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.7.3
+
 * Sat May 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.2-alt1
+- New version: 0.7.2.
 - Fixed error or strange behavior on enabling pages.
 - `welcome` page now hide `language` page.
 - Full release note here:
