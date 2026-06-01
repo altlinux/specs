@@ -1,5 +1,5 @@
 Name: python3-module-samsungtvws
-Version: 2.7.0
+Version: 3.0.5
 Release: alt1
 
 Summary: Python library for remote controlling Samsung TV sets
@@ -42,10 +42,15 @@ It currently supports modern TVs with Ethernet or Wi-Fi connectivity.
 %pyproject_run_pytest -o addopts=
 
 %files
+%doc APPLICATIONS.md COMMANDS.md README.md
+%_bindir/samsungtv
 %python3_sitelibdir/samsungtvws
 %python3_sitelibdir/samsungtvws-%version.dist-info
 
 %changelog
+* Mon Jun 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.5-alt1
+- 3.0.5 released
+
 * Thu Feb 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7.0-alt1
 - 2.7.0 released
 
