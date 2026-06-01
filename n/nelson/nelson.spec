@@ -3,7 +3,7 @@
 
 Name: nelson
 Version: 1.17.0
-Release: alt1
+Release: alt2
 
 Summary: The Nelson Programming Language
 License: LGPL-3.0 OR GPL-3.0
@@ -49,6 +49,11 @@ BuildRequires: boost-interprocess-devel
 BuildRequires: boost-asio-devel
 BuildRequires: patchelf
 
+Requires: nelson-common
+
+# no liblapacke-devel on loongson
+ExcludeArch: loongarch64
+
 %description
 Nelson is a powerful, open-source numerical computational language,
 developed to provide a comprehensive and intuitive environment for
@@ -80,9 +85,29 @@ flexibility.
 
 This package contains development files for Nelson.
 
+%package common
+Summary: Arch-independent files for %name
+Group: Development/Other
+BuildArch: noarch
+
+%description common
+Nelson is a powerful, open-source numerical computational language,
+developed to provide a comprehensive and intuitive environment for
+engineers, scientists, and students. With over 1,200 built-in functions,
+Nelson supports a wide range of tasks, from basic algebra to advanced
+numerical simulations.
+
+Originally inspired by languages like MATLAB and GNU Octave, Nelson
+offers users a lightweight yet feature-rich experience. It is designed
+to be easy to learn and use, with an emphasis on performance and
+flexibility.
+
+This package contains arch-independent files of Nelson.
+
 %prep
 %setup
 %patch -p1
+sed -i "s/Categories=.*/Categories=Science;Math;DataVisualization;NumericalAnalysis;/" desktop/io.github.nelson_lang.Nelson.desktop
 
 %build
 %cmake
@@ -108,12 +133,14 @@ patchelf %buildroot%_bindir/nelson_f2c --add-rpath %_libdir/Nelson
 %_bindir/nelson-sio-cli-exec
 %_bindir/nelson_f2c
 %_desktopdir/io.github.nelson_lang.Nelson.desktop
-%dir %_datadir/Nelson
-%_datadir/Nelson/*
 %dir %_libdir/Nelson
 %_libdir/Nelson/*
 %_iconsdir/hicolor/*/apps/nelson.png
 %_datadir/metainfo/io.github.nelson_lang.Nelson.appdata.xml
+
+%files common
+%dir %_datadir/Nelson
+%_datadir/Nelson/*
 
 %files devel
 %dir %_includedir/Nelson
@@ -122,5 +149,10 @@ patchelf %buildroot%_bindir/nelson_f2c --add-rpath %_libdir/Nelson
 %_libdir/cmake/Nelson/*
 
 %changelog
+* Mon Jun 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt2
+- Exclude loongarch64 as not buildable because of missed liblapacke.
+- Move arch-independent files to -common subpackage.
+- Applied repocop fix for freedesktop-desktop.
+
 * Sun May 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt1
 - Initial build for Sisyphus
