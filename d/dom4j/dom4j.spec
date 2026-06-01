@@ -34,8 +34,8 @@ BuildRequires: jpackage-11-compat
 #
 
 Name:           dom4j
-Version:        2.0.3
-Release:        alt2
+Version:        2.2.0
+Release:        alt1
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -47,7 +47,7 @@ Source1:        https://repo1.maven.org/maven2/org/%{name}/%{name}/%{version}/%{
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(jaxen:jaxen)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 
 # Test deps
 BuildRequires:  mvn(org.testng:testng)
@@ -99,7 +99,6 @@ rm src/main/java/org/dom4j/io/XPP3Reader.java
 rm src/test/java/org/dom4j/io/XPP3ReaderTest.java
 %pom_remove_dep xpp3:xpp3
 %pom_remove_dep pull-parser:pull-parser
-%pom_remove_dep javax.xml.stream:stax-api
 
 # Remove non-deterministic tests
 rm src/test/java/org/dom4j/ThreadingTest.java
@@ -108,7 +107,7 @@ rm src/test/java/org/dom4j/util/PerThreadSingletonTest.java
 
 %build
 export LANG=en_US.ISO8859-1
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 
 %install
@@ -124,6 +123,9 @@ export LANG=en_US.ISO8859-1
 
 
 %changelog
+* Fri May 29 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.2.0-alt1
+- new version
+
 * Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 0:2.0.3-alt2
 - rebuild with xalan-j2-2.7.3
 
