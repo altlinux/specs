@@ -2,7 +2,7 @@
 
 Name: drbd9
 Version: 9.3.2
-Release: alt1
+Release: alt2
 %define githash 0605140bf521251f4f362b5bad2eeaf33dba1e9f
 
 Summary: The Linux kernel code for DRBD9
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
 BuildRequires: kernel-headers-modules-6.18
+BuildRequires: /proc
 %endif
 
 %description
@@ -60,6 +61,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build CONFIG_DRBD_COMPAT_84=y
 %doc README.md COPYING
 
 %changelog
+* Mon Jun 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.3.2-alt2
+- fix FTBFS with 6.18.33
+
 * Tue Apr 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.3.2-alt1
 - 9.3.2
 
