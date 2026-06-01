@@ -1,8 +1,9 @@
-%define testsdir %{_localstatedir}/%{name}/tests
+%define statedir %{_localstatedir}/%{name}
+%define testsdir %{statedir}/tests
 
 Name: libtree
 Version: 0.12.2
-Release: alt1
+Release: alt2
 
 Summary: C++ lib that helps to work with tree-like data structures
 License: GPLv3
@@ -95,6 +96,8 @@ cd -
 %{_includedir}/%{name}/
 
 %files -n %{name}-tests
+%dir %{statedir}
+%dir %{testsdir}
 %{testsdir}/*
 
 %files -n %{name}-checkinstall
@@ -102,6 +105,11 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Jun 01 2026 Alexey Appolonov <alexey@altlinux.org> 0.12.2-alt2
+- Corrected makefiles;
+- A couple of directories that were left unowned is now stated as part of the
+  libtree-tests bin package.
+
 * Thu Oct 09 2025 Alexey Appolonov <alexey@altlinux.org> 0.12.2-alt1
 - Improved memory management.
 
