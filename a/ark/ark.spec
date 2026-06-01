@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 26.04.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Archiving/Compression
@@ -18,7 +18,7 @@ License: GPL-2.0-or-later
 Provides: kde5-ark = %EVR
 Obsoletes: kde5-ark < %EVR
 
-Requires: unrar p7zip unzip
+Requires: unrar /usr/bin/7z unzip
 
 Source: %rname-%version.tar
 
@@ -108,6 +108,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Mon Jun 01 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt2
+- update requires
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
