@@ -15,7 +15,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.48
+%define ver_major 2.50
 %define oname webkit
 %define _name webkitgtk
 %define bwrap_bin %_bindir/bwrap
@@ -25,6 +25,7 @@
 %def_enable gold
 %def_enable x11
 %def_enable wayland
+%def_enable skia
 %def_enable systemd
 %def_disable soup2
 %def_enable libavif
@@ -46,7 +47,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.1
+Version: %ver_major.6
 Release: alt1
 
 Summary: Web browser engine
@@ -69,7 +70,7 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc gcc-c++ cmake unifdef
 %{?_enable_ninja:BuildRequires: ninja-build}
-BuildRequires: ccache libicu-devel >= 5.6.1 bison
+BuildRequires: ccache libicu-devel >= 7.0.1 bison
 BuildRequires: perl-Switch perl-JSON-PP perl-bignum
 BuildRequires: zlib-devel
 BuildRequires: flex >= 2.5.33
@@ -299,6 +300,7 @@ export PYTHON=%__python3
 %{?_disable_gtkdoc:-DENABLE_DOCUMENTATION:BOOL=OFF} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
+%{?_disable_skia:-DUSE_SKIA=OFF} \
 %{?_enable_libavif:-DUSE_AVIF:BOOL=ON} \
 %{?_enable_speech_synthesis:-DENABLE_SPEECH_SYNTHESIS=ON} \
 %{?_disable_jpegxl:-DUSE_JPEGXL=OFF} \
@@ -393,6 +395,15 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.50.6-alt1
+- 2.50.6 (last release)
+
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.3-alt1
+- 2.48.3
+
+* Thu May 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.2-alt1
+- 2.48.2
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
 - 2.48.1
 
