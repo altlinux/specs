@@ -1,12 +1,12 @@
 Name: rpm-macros-uefi
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: A set of RPM macros to help package UEFI related things
 License: ALT-Public-Domain
 Group: Development/Other
 
-Url: http://www.altlinux.org/UEFI
+Url: https://www.altlinux.org/UEFI
 # NB: it's *not* noarch due to %%_libdir in a macro
 
 %define macrofile %_rpmmacrosdir/uefi
@@ -15,7 +15,7 @@ Url: http://www.altlinux.org/UEFI
 Summary: macros and tools to help package UEFI related things
 Group: Development/Other
 Requires: rpm-macros-uefi = %EVR
-%ifnarch loongarch64
+%ifnarch loongarch64 riscv64
 Requires: pesign
 %endif
 
@@ -33,6 +33,8 @@ to package (and probably sign before that) UEFI binaries.
 %install
 mkdir -p %buildroot%_rpmmacrosdir
 cat > %buildroot%macrofile << EOF
+%%efi_arches x86_64 aarch64 loongarch64 riscv64
+
 %%_efi_bootdir /boot/efi
 %%_efi_bindir %_libdir/efi
 %%_efi_keydir %_sysconfdir/pki/uefi
@@ -61,6 +63,9 @@ EOF
 %files -n rpm-build-uefi
 
 %changelog
+* Mon Jun 01 2026 Egor Ignatov <egori@altlinux.org> 0.9-alt1
+- add %%efi_arches macro
+
 * Mon Mar 31 2025 Egor Ignatov <egori@altlinux.org> 0.8-alt1
 - added %%_efi_arch_upper definitions
 

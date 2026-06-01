@@ -18,10 +18,9 @@
 %def_with check
 
 %def_enable tests
-%def_enable flashrom
 
 # fwupd-efi is only available on these arches
-%ifarch x86_64 aarch64 loongarch64 riscv64
+%ifarch %efi_arches
 %def_enable uefi
 %endif
 
@@ -32,7 +31,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Firmware update daemon
@@ -45,8 +44,9 @@ Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-uefi >= 0.9-alt1
 
 BuildRequires: bash-completion
 BuildRequires: cmake
@@ -64,15 +64,13 @@ BuildRequires: libcbor-devel
 BuildRequires: libcurl-devel >= %libcurl_version
 BuildRequires: libelf-devel
 BuildRequires: libgnutls-devel
+BuildRequires: gnutls-utils
 BuildRequires: libgpgme-devel
 BuildRequires: libusb-devel >= %libusb_version
 BuildRequires: libblkid-devel
 BuildRequires: libjcat-devel >= %libjcat_version
 BuildRequires: libpango-gir-devel
 BuildRequires: libpolkit-devel
-%if_enabled flashrom
-BUildRequires: libflashrom-devel
-%endif
 BuildRequires: libdrm-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsqlite3-devel
@@ -174,11 +172,6 @@ might have mobile broadband hardware. It is probably not required on servers.
     -Dman=true \
     -Dlvfs=true \
     -Dsupported_build=enabled \
-%if_enabled flashrom
-    -Dplugin_flashrom=enabled \
-%else
-    -Dplugin_flashrom=disabled \
-%endif
 %if_enabled tests
     -Dtests=true \
 %else
@@ -264,9 +257,6 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfwupd*.so
 %_modulesloaddir/fwupd-i2c.conf
-%if_enabled flashrom
-%fwupd_pluginsdir/libfu_plugin_flashrom.so
-%endif
 %if_enabled msr
 %_modulesloaddir/fwupd-msr.conf
 %endif
@@ -305,6 +295,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Sat May 30 2026 Egor Ignatov <egori@altlinux.org> 2.1.4-alt1
+- New version 2.1.4.
+
 * Thu May 21 2026 Egor Ignatov <egori@altlinux.org> 2.1.3-alt1
 - New version 2.1.3.
 
