@@ -1,5 +1,5 @@
 Name: libopenrazer
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Qt wrapper around the D-Bus API from OpenRazer
@@ -10,11 +10,8 @@ Url: https://github.com/z3ntu/libopenrazer
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: gcc-c++
-BuildRequires: meson
-BuildRequires: qt5-base-devel
-BuildRequires: pkgconfig(Qt5UiTools)
-BuildRequires: pkgconfig(Qt5Xml)
+BuildRequires: gcc-c++ meson
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-declarative-devel
 
 %description
 Qt wrapper around the D-Bus API from OpenRazer.
@@ -48,6 +45,9 @@ Qt wrapper around the D-Bus API from OpenRazer.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 01 2026 Sergey Palcheh <minergenon@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Mon Jan 13 2025 Sergey Palcheh <minergenon@altlinux.org> 0.3.0-alt1
 - Initial build for ALT Sisyphus.
 
