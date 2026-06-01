@@ -15,7 +15,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.48
+%define ver_major 2.52
 
 %define oname webkit
 %define _name webkitgtk
@@ -26,6 +26,14 @@
 %def_enable gold
 %def_enable x11
 %def_enable wayland
+%def_enable skia
+# https://skia.org/docs/user/build/#supported-and-preferred-compilers
+%ifnarch %ix86 x86_64 aarch64 riscv64
+%{?_enable_skia:%def_enable clang}
+%endif
+# try clang or not
+%def_enable clang
+
 %def_enable systemd
 %def_disable soup2
 %def_enable libavif
@@ -47,7 +55,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Web browser engine
@@ -57,6 +65,7 @@ Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
+Patch10: webkitgtk-2.50.1-deb-fix-ftbfs-x32.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -67,12 +76,13 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 %define gst_ver 1.24.9
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
-BuildRequires: /proc gcc-c++ cmake unifdef
-%{?_enable_ninja:BuildRequires: ninja-build}
-BuildRequires: ccache libicu-devel >= 5.6.1 bison
+BuildRequires: /proc /dev/pts gcc-c++ cmake ccache unifdef
+BuildRequires: bison flex >= 2.5.33
 BuildRequires: perl-Switch perl-JSON-PP perl-bignum
+%{?_enable_ninja:BuildRequires: ninja-build}
+%{?_enable_clang:BuildRequires: clang-devel lld}
+BuildRequires: libicu-devel >= 7.0.1
 BuildRequires: zlib-devel
-BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel liblcms2-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel >= 2.6
@@ -127,6 +137,7 @@ BuildRequires: libmanette-devel
 BuildRequires: libbacktrace-devel
 # since 2.45.x
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
+%{?_enable_skia:BuildRequires: libepoxy-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -252,6 +263,8 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
+
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -266,6 +279,23 @@ subst 's|Q\(unused-arguments\)|W\1|' Source/cmake/WebKitCompilerFlags.cmake
 [ ! -d %_includedir/flite ] && sed -i 's|<flite/flite.h>|<flite.h>|' Source/WebCore/platform/gstreamer/GUniquePtrFlite.h
 
 %build
+%if_enabled clang
+# Upstream prefers Clang
+# https://gitlab.archlinux.org/archlinux/packaging/packages/webkitgtk-6.0/-/issues/4
+export CC=clang CXX=clang++
+LDFLAGS+=" -fuse-ld=lld"
+%endif
+
+%if_enabled skia
+# Skia uses malloc_usable_size
+CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+%endif
+
+# JITted code crashes when CET is used
+CFLAGS+=' -fcf-protection=none'
+CXXFLAGS+=' -fcf-protection=none'
+
 %ifarch %e2k
 # because of this error on linking:
 # "relocation truncated to fit: R_E2K_32_ABS"
@@ -298,6 +328,8 @@ export PYTHON=%__python3
 %{?_disable_gtkdoc:-DENABLE_DOCUMENTATION:BOOL=OFF} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
+%{?_disable_skia:-DUSE_SKIA=OFF} \
+%{?_enable_clang:-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++} \
 %{?_enable_libavif:-DUSE_AVIF:BOOL=ON} \
 %{?_enable_speech_synthesis:-DENABLE_SPEECH_SYNTHESIS=ON} \
 %{?_disable_jpegxl:-DUSE_JPEGXL=OFF} \
@@ -310,6 +342,11 @@ export PYTHON=%__python3
 %ifarch %arm
 -DENABLE_GLES2=ON \
 %endif
+%ifarch %ix86
+-DFORCE_32BIT=ON \
+-DENABLE_JIT=OFF \
+-DUSE_SKIA=OFF \
+%endif
 %ifarch armh
 -DENABLE_JIT=OFF \
 -DENABLE_C_LOOP=ON \
@@ -319,10 +356,10 @@ export PYTHON=%__python3
 -DUSER_AGENT_BRANDING:STRING="ALTLinux" \
 %{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF} \
 %{?_enable_soup2:-DUSE_SOUP2=ON} \
-%{?_disable_webdriver:-DENABLE_WEBDRIVER=OFF}
+%{?_disable_webdriver:-DENABLE_WEBDRIVER=OFF} \
 %{?_disable_sysprof:-DUSE_SYSTEM_SYSPROF_CAPTURE=NO}
 %nil
-%ifarch aarch64 x86_64
+%ifarch x86_64
 [ %__nprocs -lt 128 ] || export NPROCS=128
 %endif
 %cmake_build
@@ -393,6 +430,15 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.52.3-alt1
+- 2.52.3
+
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.3-alt1
+- 2.48.3
+
+* Thu May 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.2-alt1
+- 2.48.2
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
 - 2.48.1
 
