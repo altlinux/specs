@@ -1,18 +1,19 @@
 Name: alterator-module-remote
-Version: 0.1.5
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
-License: %gpl2only
+License: GPLv2
 Group: System/Configuration/Other
 URL: https://altlinux.space/alterator/alterator-module-remote
 
-BuildRequires: cmake gcc rpm-build-licenses
+BuildRequires: cmake gcc rpm-build-licenses libjson-c-devel
 BuildRequires: libgio-devel libpolkit-devel
 # libsystemd-devel
 BuildRequires: alterator-manager-devel >= 0.1.28
 
 Requires: alterator-manager >= 0.1.28-alt1
+Requires: libjson-c5 >= 0.17
 
 Source: %name-%version.tar
 
@@ -34,6 +35,12 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Jun 02 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
+- A boolean input parameter, "success", has been added to the "ShowResult"
+  method of "Password agent". If authentication is successful, its value is
+  set to true; otherwise, it is set to false.
+- Methods for manipulating JSON have been replaced with library ones.
+
 * Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.1.5-alt2
 - Update secret scan action to use alterator fork (the-nexi@).
 

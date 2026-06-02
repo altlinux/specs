@@ -1,6 +1,6 @@
 Name: remote-polkit-agent
-Version: 0.1.2
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: polkit agent for use on a remote machine via ssh.
 License: %lgpl21plus
@@ -29,6 +29,10 @@ Polkit agent for use on a remote machine via ssh using stdin and stdout.
 %_bindir/remote-polkit-agent
 
 %changelog
+* Tue Jun 02 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
+- Add a "success" field to the JSON structures used to report the
+  authentication result.
+
 * Tue Jul 08 2025 Ivan Savin <svn17@altlinux.org> 0.1.2-alt2
 - Add URL to the spec.
 
