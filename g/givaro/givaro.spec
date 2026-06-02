@@ -9,16 +9,18 @@
 %endif
 
 Name: givaro
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 Summary: C++ library for arithmetic and algebraic computations
 
 License: CECILL-B
 Group: System/Libraries
 Url: https://github.com/linbox-team/givaro
-Vcs: git://github.com/linbox-team/givaro.git
+VCS: https://github.com/linbox-team/givaro
 
-Source: https://github.com/linbox-team/%name/releases/download/v%version/%name-%version.tar.gz
+# Source-url: https://github.com/linbox-team/%name/releases/download/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %if_with doc
 BuildRequires: doxygen texlive-dist
@@ -69,7 +71,7 @@ The static libraries for using %name for development.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 # Regenerate configure after monkeying with configure.ac
 %autoreconf
@@ -130,6 +132,9 @@ make check
 %endif
 
 %changelog
+* Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 4.2.2-alt1
+- New version 4.2.2.
+
 * Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 4.2.1-alt1
 - New version 4.2.1.
 - Added vcs tag.
