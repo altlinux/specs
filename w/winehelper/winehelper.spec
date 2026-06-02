@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -83,6 +83,23 @@ cp -rv winehelperqt %buildroot%python3_sitelibdir/
 %python3_sitelibdir/winehelperqt/
 
 %changelog
+* Tue Jun 02 2026 Mikhail Tergoev <fidel@altlinux.org> 0.13.0-alt1
+- updated to version 0.13.0
+- added new and removed unused versions of Wine
+- updated scripts: t-flex, emias, scadoffice, olimp, ctm-service
+- updated scripts:daobit-cservice (ALT bug: 58790)
+- updated scripts:npul (ALT bug: 58431)
+- added support for running third-party installation scripts
+- revert notification about mounting home with the noexec flag
+- added the ability to select a working directory for WineHelper
+- GUI: main functions fixed/improved
+- GUI: added icon indicators to the Wine and DXVK/VKD3D version buttons
+- GUI: added sorting of Wine versions
+- GUI: fixed auto-scrolling of the component manager list during search
+- GUI: hide the installed application shortcut if the .exe file is missing
+- GUI: added correct activation of CPCSP_PROXY in the additional prefix settings
+- GUI: added forced reinstallation of cpcsp_proxy when enabled
+
 * Mon Apr 06 2026 Mikhail Tergoev <fidel@altlinux.org> 0.12.0-alt1
 - updated to version 0.12.0
 - fixed work cpcsp_proxy when mounting home with the noexec flag
