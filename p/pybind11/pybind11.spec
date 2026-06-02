@@ -3,8 +3,8 @@
 %def_with check
 
 Name: pybind11
-Version: 3.0.2
-Release: alt4
+Version: 3.0.4
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -12,7 +12,6 @@ Group: Development/Other
 
 Url: https://github.com/pybind/pybind11
 Source: %name-%version.tar
-Patch1: pybind11-fix-virtual-base-shared-ptr.patch
 
 BuildArch: noarch
 
@@ -67,7 +66,6 @@ This package contains the Python 3 files.
 
 %prep
 %setup
-%patch1 -p1
 # tests/exo_planet_c_api.cpp needs -fno-exceptions
 sed -i 's/GNU|Intel/LCC|&/' tests/CMakeLists.txt
 
@@ -119,6 +117,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Jun 02 2026 Anton Vyatkin <toni@altlinux.org> 3.0.4-alt1
+- New version 3.0.4 (Closes: #46642).
+
 * Thu May 14 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt4
 - NMU: devel: add missing Requires: python3-devel (closes: 59135)
 
