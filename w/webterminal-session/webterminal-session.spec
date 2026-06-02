@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 %K6init no_altplace
 
@@ -65,6 +65,9 @@ install -m 0644 webterminal-gui.service %buildroot/%_userunitdir
 %_bindir/webterminal-application
 
 %changelog
+* Tue Jun 02 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.2-alt1
+- using basic password store
+
 * Mon May 04 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.1-alt1
 - separate webterminal-application
 
