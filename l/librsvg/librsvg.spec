@@ -17,10 +17,14 @@
 %def_enable vala
 %def_enable avif
 %def_disable installed_tests
+%ifarch %ix86
 %def_disable check
+%else
+%def_enable check
+%endif
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -207,6 +211,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.3-alt1
+- 2.62.3
+
 * Fri May 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.2-alt1
 - 2.62.2
 

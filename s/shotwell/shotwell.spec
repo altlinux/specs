@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 Patch: %name-0.31.3-alt-no-dark-theme-by-default.patch
 
 %define gtk_ver 3.22
-%define gexiv_ver 0.12.1
+%define gexiv_ver 0.16
 %define soup3_ver 3.0
 %define webkit_api_ver 4.1
 
@@ -39,16 +39,19 @@ Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: desktop-file-utils yelp-tools /usr/bin/appstream-util
+BuildRequires: desktop-file-utils yelp-tools /usr/bin/appstreamcli
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
-BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
-BuildRequires: libwebp-devel libgphoto2-devel libgudev-devel libjson-glib-devel
-BuildRequires: libraw-devel libexif-devel libgomp-devel libavif-devel
-BuildRequires: libsqlite3-devel libstdc++-devel pkgconfig(webkit2gtk-%webkit_api_ver)
+BuildRequires: libdconf-devel libdbus-glib-devel
+BuildRequires: pkgconfig(gexiv2-0.16) >= %gexiv_ver
+BuildRequires: libexif-devel
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: libwebp-devel libgphoto2-devel
+BuildRequires: libgudev-devel libjson-glib-devel
+BuildRequires: libraw-devel libgomp-devel libavif-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: libgee0.8-devel gcr-libs-devel gcr-libs-vala
-BuildRequires: libgdata-devel libchamplain-gtk3-devel
 BuildRequires: libsecret-devel
 BuildRequires: libportal-devel libportal-gtk3-devel
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
@@ -121,6 +124,9 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 
 
 %changelog
+* Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.32.16-alt1
+- 0.32.16
+
 * Mon Mar 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.32.15-alt1
 - shotwell-0.32.15-2-g86ace245
 
