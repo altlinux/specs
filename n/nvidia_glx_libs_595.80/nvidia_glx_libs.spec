@@ -19,9 +19,9 @@
 %endif
 
 %define nv_version 595
-%define nv_release 71
-%define nv_minor   05
-%define pkg_rel alt3
+%define nv_release 80
+%define nv_minor   %nil
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -202,7 +202,7 @@ mkdir -p %buildroot/%_libdir/
 ln -s libnvidianull.so %buildroot/%_libdir/libnvidia-ml.so
 # install libraries
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
-#ln -s libcuda.so.%version %buildroot/%_libdir/libcuda.so
+ln -s libcuda.so.%version %buildroot/%_libdir/libcuda.so
 #install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 #install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 #install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
@@ -238,7 +238,7 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 #%_libdir/libnvidia-ptxjitcompiler.so.%version
 #%_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
 %files -n libcuda
-#%_libdir/libcuda.so
+%_libdir/libcuda.so
 %_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
 %files -n libnvidia-ml
@@ -274,6 +274,10 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Tue Jun 02 2026 Sergey V Turchin <zerg@altlinux.org> 595.80-alt1
+- new version
+- return libcuda.so
+
 * Tue Jun 02 2026 Sergey V Turchin <zerg@altlinux.org> 595.71.05-alt3
 - don't package libcuda.so
 
