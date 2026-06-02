@@ -3,7 +3,7 @@
 
 Name: xpra
 Version: 6.4.3
-Release: alt2
+Release: alt3
 
 Summary: X Persistent Remote Applications
 License: GPL-2.0-or-later AND LicenseRef-Callaway-BSD AND LGPL-3.0-or-later AND LicenseRef-Callaway-MIT
@@ -139,6 +139,14 @@ that can help in restoring the system tray functionality.
 It also includes the %{gnome_shell_extension} extension which
 is required for querying and activating keyboard input sources.
 
+%package weston
+Summary: XWayland Persistent Remote Applications
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description weston
+XWayland Persistent Remote Applications.
+
 %prep
 %setup
 # instal service file in anyway
@@ -206,7 +214,8 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_desktopdir/*
 %_iconsdir/*
 %_man1dir/*
-/usr/libexec/%name/
+%_prefix/libexec/%name/
+%exclude %_prefix/libexec/%name/xpra_weston_xvfb
 #_datadir/parti/
 #_datadir/wimpiggy/
 %ifnarch %e2k
@@ -229,10 +238,16 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
 %attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
 
+%files weston
+%_prefix/libexec/%name/xpra_weston_xvfb
+
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Fri May 29 2026 Anton Midyukov <antohami@altlinux.org> 6.4.3-alt3
+- NMU: New subpackage xpra-weston (Closes: 59375).
+
 * Tue Apr 21 2026 Michael Shigorin <mike@altlinux.org> 6.4.3-alt2
 - E2K:
   + revert the uglifyjs/yuicompressor change done
