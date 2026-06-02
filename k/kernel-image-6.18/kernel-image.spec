@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.32
+%define kernel_sublevel	.34
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -225,7 +225,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
-AutoReqProv: nocpp
+AutoReqProv: nocpp nopython nopython3
 %if "%sub_flavour" == "def"
 Provides: kernel-headers-modules-%kernel_latest = %version-%release
 %endif
@@ -598,6 +598,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jun 01 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.34-alt1
+- v6.18.34 (2026-06-01).
+
+* Sat May 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.33-alt1
+- v6.18.33 (2026-05-23).
+- config: Enable CONFIG_LIVEPATCH=y.
+
 * Sun May 17 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.32-alt1
 - v6.18.32 (2026-05-17).
 

@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.271
-%define module_release alt21
+%define module_release alt22
 
 %define flavour		6.18
 %define karch %ix86 x86_64
@@ -26,8 +26,7 @@ ExclusiveOS: Linux
 Url: https://github.com/antoineco/broadcom-wl
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
-# for 6.15+ compatibility
-BuildRequires: kernel-source-%module_name >= %module_version-alt13.g6adc981
+BuildRequires: kernel-source-%module_name >= %module_version-alt14.g6adc981
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
@@ -36,8 +35,6 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
-
-Patch: 6.16.patch
 
 %description
 These packages contain Broadcom's IEEE 802.11a/b/g/n hybrid Linux device
@@ -53,7 +50,6 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
 pushd bcmwl
-%patch -p2
 popd
 
 %build
@@ -74,6 +70,11 @@ make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MO
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jun 02 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.30.223.271-alt22
+- Bumped the kernel-source-bcmwl dependency to 6.30.223.271-alt14.g6adc981.
+- Dropped the 6.16+ compatibility patch which is now applied in
+  the kernel-source-bcmwl package.
 
 * Sun Nov 30 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt21
 - BR: bump kernel-source-bcmwl version (for 6.17+).
