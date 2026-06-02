@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.3.3
+Version: 3.0.3
 Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
@@ -54,7 +54,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 %add_python3_req_skip numba.core.extending
 %add_python3_req_skip numba.core.imputils
 %add_python3_req_skip pyarrow
-%py3_requires pytz dateutil numpy sqlalchemy numexpr
+%py3_requires dateutil numpy sqlalchemy numexpr
 %py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
 %py3_requires tables
 
@@ -157,6 +157,9 @@ py.test-3 -n auto \
 %endif
 
 %changelog
+* Tue Jun 02 2026 Anton Vyatkin <toni@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 2.3.3-alt1
 - New version 2.3.3.
 
