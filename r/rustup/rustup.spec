@@ -3,7 +3,7 @@
 
 Name: rustup
 Version: 1.29.0
-Release: alt1
+Release: alt2
 
 Summary: The Rust toolchain installer
 License: Apache-2.0 or MIT
@@ -39,6 +39,14 @@ cat >%buildroot%_sysconfdir/rustup/settings.toml <<EOF
 default_toolchain = "stable"
 EOF
 
+pushd %buildroot
+mkdir -pv .%_datadir/bash-completion/completions/ .%_datadir/zsh/site-functions/ .%_datadir/fish/vendor_completions.d/
+
+.%_bindir/rustup completions bash > .%_datadir/bash-completion/completions/rustup
+.%_bindir/rustup completions zsh > .%_datadir/zsh/site-functions/_rustup
+.%_bindir/rustup completions fish > .%_datadir/fish/vendor_completions.d/rustup.fish
+popd
+
 %check
 # Skipped test either requires network or can't be ran in hasher.
 %rust_test -F test --                       \
@@ -55,7 +63,13 @@ EOF
 %_bindir/rustup
 %_bindir/rustup-init
 %_sysconfdir/rustup
+%_datadir/bash-completion/completions/rustup
+%_datadir/zsh/site-functions/_rustup
+%_datadir/fish/vendor_completions.d/rustup.fish
 
 %changelog
+* Fri May 29 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.29.0-alt2
+- Add shell completions (Closes: 49831).
+
 * Thu Apr 23 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.29.0-alt1
 - Initial build.
