@@ -4,7 +4,7 @@
 
 Name: tigervnc
 Version: 1.16.2
-Release: alt1
+Release: alt2
 
 Summary: A TigerVNC remote display system
 License: GPL-2.0-or-later
@@ -26,7 +26,7 @@ Source2: vncserver.service
 Source3: vncserver.pl
 Source4: vncserver.man
 
-Source100: xorg-server-21.1.8.tar
+Source100: xorg-server-21.1.23.tar
 Source200: repatch_spec.sh
 
 ## FC patches
@@ -276,6 +276,10 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue Jun 02 2026 Anton Farygin <rider@altlinux.org> 1.16.2-alt2
+- updated xorg-server to 21.1.23 (Fixes: CVE-2025-26601, CVE-2025-26600, CVE-2025-26599
+ , CVE-2025-26598, CVE-2025-26597, CVE-2025-26596, CVE-2025-26595, CVE-2025-26594)
+
 * Thu Apr 02 2026 Anton Farygin <rider@altlinux.org> 1.16.2-alt1
 - 1.16.0 -> 1.16.2
 
