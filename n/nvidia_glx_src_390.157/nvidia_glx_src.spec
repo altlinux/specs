@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt302
+%define pkg_rel alt303
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -347,6 +347,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 01 2026 Anton Golubev <golubevan@altlinux.org> 390.157-alt303
+- fix so that the drm node could be at least opened
+
 * Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt302
 - package libs with version in filenames
 
