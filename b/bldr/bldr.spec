@@ -1,9 +1,9 @@
 %define import_path github.com/siderolabs/bldr
-%define sha 7d7a36a
+%define sha 71a72d9
 %define tag v%version
 
 Name: bldr
-Version: 0.5.6
+Version: 0.6.0
 Release: alt1
 Summary: Tool to build and package software distributions
 
@@ -65,6 +65,9 @@ mkdir -p \
 %doc *.md
 
 %changelog
+* Tue Jun 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Sun Dec 21 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.5.6-alt1
 - New version 0.5.6.
 
