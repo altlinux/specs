@@ -13,7 +13,7 @@
 %endif
 
 Name: ncnn
-Version: 20260113
+Version: 20260526
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -21,9 +21,9 @@ Summary: Mobile neural network inference framework
 License: BSD-3-Clause
 Group: Engineering
 Url: https://github.com/Tencent/ncnn
-Vcs: https://github.com/Tencent/ncnn.git
+Vcs: https://github.com/Tencent/ncnn
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/Tencent/ncnn/archive/%version/%name-%version.tar.gz
 Source0: %name-%version.tar
 Source1: glslang.tar
 Source2: pybind11.tar
@@ -155,6 +155,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 20260526-alt1
+- New version 20260526.
+
 * Thu Jan 15 2026 Leontiy Volodin <lvol@altlinux.org> 20260113-alt1
 - New version 20260113.
 
