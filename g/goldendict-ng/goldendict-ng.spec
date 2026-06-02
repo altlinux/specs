@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: goldendict-ng
 Version: 26.3.0
-Release: alt1
+Release: alt2
 Summary: The Next Generation GoldenDict. A feature-rich open-source dictionary lookup program, supporting multiple dictionary formats and online dictionaries.
 License: GPL-3.0
 ExclusiveArch: %qt6_qtwebengine_arches
@@ -11,6 +11,7 @@ URL: https://github.com/xiaoyifang/goldendict-ng
 Source: %name-%version.tar
 Patch0: rename_user_config_file.patch
 Patch1: disable_default_online_resources.patch
+Patch2: hide_about_subitem.patch
 
 
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -42,6 +43,7 @@ The Next Generation GoldenDict. A feature-rich open-source dictionary lookup pro
 %setup
 %patch0
 %patch1 -p1
+%patch2 -p1
 
 
 %build
@@ -59,6 +61,9 @@ The Next Generation GoldenDict. A feature-rich open-source dictionary lookup pro
 %_datadir/pixmaps/goldendict-ng.png
 
 %changelog
+* Tue Jun 02 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 26.3.0-alt2
+- hide untranslated menu sub-item
+
 * Mon Apr 13 2026 Oleg Proskurin <proskur@altlinux.org> 26.3.0-alt1
 - New version
 
