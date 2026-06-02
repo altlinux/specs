@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 3.1.3
-Release: alt2
+Release: alt3
 
 Summary: Flask is a lightweight WSGI web application framework
 License: BSD-3-Clause
@@ -72,6 +72,9 @@ Extra 'async' for %pypi_name.
 %files -n %name+async
 
 %changelog
+* Tue Jun 02 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.3-alt3
+- Fixed FTBFS (werkzeug==3.1.8).
+
 * Thu Mar 26 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.3-alt2
 - Fixed FTBFS (werkzeug==3.1.7).
 
