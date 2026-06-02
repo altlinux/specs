@@ -1,7 +1,7 @@
 %global import_path github.com/cybertec-postgresql/vip-manager
 Name:     vip-manager
-Version:  1.0.2
-Release:  alt2
+Version:  4.2.0
+Release:  alt1
 
 Summary:  Manages a virtual IP based on state kept in etcd or Consul
 License:  BSD-2-Clause
@@ -16,8 +16,6 @@ Source1: vip-manager@.service
 Source2: vip.in
 
 Patch1:   debian-disable_windows_build.patch
-Patch2:   debian-service_file.patch
-Patch3:   %name-0001-fix-VIP-address-lookup-in-IP-address-list.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -28,8 +26,6 @@ BuildRequires: golang
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -48,8 +44,8 @@ export IGNORE_SOURCES=1
 %golang_install
 
 install -pDm 0644 %SOURCE1 %buildroot%_unitdir/vip-manager@.service
-install -pDm 0644 package/scripts/vip-manager.service %buildroot%_unitdir/vip-manager.service
-install -pDm 0644 package/config/vip-manager.default %buildroot%_sysconfdir/default/vip-manager
+install -pDm 0644 vip-manager.service %buildroot%_unitdir/vip-manager.service
+install -pDm 0644 vipconfig/vip-manager.yml %buildroot%_sysconfdir/default/vip-manager.yml
 install -pDm 0644 %SOURCE2 %buildroot%_sysconfdir/patroni/vip.in
 
 %files
@@ -57,10 +53,13 @@ install -pDm 0644 %SOURCE2 %buildroot%_sysconfdir/patroni/vip.in
 %_unitdir/vip-manager@.service
 %_unitdir/vip-manager.service
 %config(noreplace) %_sysconfdir/patroni/vip.in
-%config(noreplace) %_sysconfdir/default/vip-manager
+%config(noreplace) %_sysconfdir/default/vip-manager.yml
 %doc *.md
 
 %changelog
+* Mon Jun 01 2026 Nikolay Burykin <bne@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Wed May 31 2023 Nikolay Burykin <bne@altlinux.org> 1.0.2-alt2
 - Backported fix VIP address lookup in IP address list from 2.1.0
 
