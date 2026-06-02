@@ -1,4 +1,4 @@
-%global pxbu_major_minor 80
+%global pxbu_major_minor 84
 
 # TODO remove it, after fix sphinx
 %def_without man
@@ -7,13 +7,12 @@
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
-Version: 8.0.35
-Release: alt9
+Version: 8.4.0
+Release: alt1
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
 Source: %name-%version.tar
-Source1: boost_1_77_0.tar.bz2
 Source2: libkmip.tar
 Patch0: percona-xtrabackup-8.0.28-missing-memory-header.patch
 Patch2000: percona-xtrabackup-e2k.patch
@@ -21,16 +20,15 @@ Patch2000: percona-xtrabackup-e2k.patch
 Obsoletes: xtrabackup < 2.0.0
 Obsoletes: percona-xtrabackup < 8.0.30-alt3
 Conflicts: percona-xtrabackup24
-Conflicts: percona-xtrabackup84
-# Automatically added by buildreq on Mon Jul 25 2022
-# optimized out: alt-os-release cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libgpg-error-devel libncurses-devel libprotobuf-devel libprotobuf27-lite libsasl2-3 libstdc++-devel libtinfo-devel mpdecimal pkg-config python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: cmake gcc-c++ libaio-devel libcurl-devel libev-devel libgcrypt-devel libicu-devel
-BuildRequires: libldap-devel libncurses-devel libproc2-devel libprotobuf-lite-devel libsasl2-devel libssl-devel libudev-devel
-BuildRequires: protobuf-compiler python3-dev python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp
-BuildRequires: python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp
-BuildRequires: python3-module-sphinxcontrib-serializinghtml python3-tools xxd
-BuildRequires: zlib-devel libzstd-devel liblz4-devel
+Conflicts: percona-xtrabackup80
+
+# Automatically added by buildreq on Tue Jun 02 2026
+BuildRequires: cmake doxygen gcc-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel
+BuildRequires: libicu-devel libldap-devel liblz4-devel libncurses-devel libproc2-devel libprotobuf-lite-devel
+BuildRequires: libsasl2-devel libzstd-devel python3-dev
+%ifarch x86_64
+BuildRequires: libquadmath-devel
+%endif
 
 ExcludeArch: ppc64le %ix86 %arm %mips32 ppc
 
@@ -46,8 +44,6 @@ Online backup for InnoDB/XtraDB in MySQL, MariaDB and Percona Server.
 sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/EncodeBase_EDG/}" router/src/mysql_protocol/include/mysqlrouter/classic_protocol_codec_*.h
 %endif
 
-mkdir -p %_build/../libboost
-cp %SOURCE1 %_build/../libboost/
 tar xfv %SOURCE2 -C extra/libkmip
 
 %build
@@ -55,11 +51,15 @@ tar xfv %SOURCE2 -C extra/libkmip
   -DCMAKE_INSTALL_PREFIX=%prefix -DWITH_SSL=system -DINSTALL_MANDIR=%_mandir -DWITH_MAN_PAGES=1 \
   -DINSTALL_MYSQLTESTDIR=%_datadir/percona-xtrabackup-test-%pxbu_major_minor \
   -DINSTALL_PLUGINDIR="%_lib/xtrabackup/plugin" -DFORCE_INSOURCE_BUILD=1 \
-  -DWITH_ZLIB=system -DWITH_ZSTD=system -DWITH_LZ4=system \
 %if_without man
    -DWITH_MAN_PAGES=FALSE \
 %endif
-  -DWITH_ICU=system
+  -DWITH_CURL=system \
+  -DWITH_FIDO=system \
+  -DWITH_ICU=system \
+  -DWITH_LZ4=system \
+  -DWITH_ZLIB=system \
+  -DWITH_ZSTD=system
 
 %cmake_build
 
@@ -95,8 +95,8 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
-* Tue Jun 02 2026 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt9
-- Add Conflicts to percona-xtrabackup84
+* Tue Jun 02 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt1
+- Build for MySQL 8.4
 
 * Mon Jan 26 2026 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt8
 - 8.0.35-35
