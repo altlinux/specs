@@ -3,8 +3,9 @@
 %def_with devel
 
 Name:    FP16
-Version: 1.0.git98b0a46
-Release: alt1
+Epoch: 	 1
+Version: 0
+Release: alt0.git98b0a46
 
 Summary: Conversion to/from half-precision floating point formats
 License: MIT
@@ -67,5 +68,8 @@ Header-only library for conversion to/from half-precision floating point formats
 %endif
 
 %changelog
+* Mon Jun 01 2026 Nikita Shmatko <nash@altlinux.org> 1:0-alt0.git98b0a46
+- Fixed git snapshot versioning to keep future upstream releases upgradeable.
+
 * Wed Sep 17 2025 Nikita Shmatko <nash@altlinux.org> 1.0.git98b0a46-alt1
 - Initial build for Sisyphus.
