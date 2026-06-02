@@ -3,8 +3,9 @@
 %def_with devel
 
 Name:    fxdiv
-Version: 1.0.git63058ef
-Release: alt1
+Epoch:   1
+Version: 0
+Release: alt0.git63058ef
 
 Summary: C99/C++ header-only library for division via fixed-point multiplication by inverse
 License: MIT
@@ -77,5 +78,8 @@ Features
 %endif
 
 %changelog
+* Tue Jun 02 2026 Nikita Shmatko <nash@altlinux.org> 1:0-alt0.git63058ef
+- Fixed git snapshot versioning to keep future upstream releases upgradeable.
+
 * Mon Oct 13 2025 Nikita Shmatko <nash@altlinux.org> 1.0.git63058ef-alt1
 - Initial build for Sisyphus.
