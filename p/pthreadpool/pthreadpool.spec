@@ -6,8 +6,9 @@
 %def_with devel
 
 Name:    pthreadpool
-Version: 0.1.git560c60d
-Release: alt2
+Epoch:   1
+Version: 0.1
+Release: alt3.git560c60d
 
 Summary: Portable (POSIX/Windows/Emscripten) thread pool for C/C++
 License: BSD-2-Clause
@@ -109,6 +110,9 @@ Features:
 %endif
 
 %changelog
+* Tue Jun 02 2026 Nikita Shmatko <nash@altlinux.org> 1:0.1-alt3.git560c60d
+- Fixed snapshot versioning and added Epoch to preserve upgrade path.
+
 * Wed Mar 11 2026 Nikita Shmatko <nash@altlinux.org> 0.1.git560c60d-alt2
 - Minor specfile fixes.
 
