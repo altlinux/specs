@@ -1,5 +1,5 @@
 Name: icon-themes-mint-l
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Mint-L Icon Theme
@@ -8,8 +8,6 @@ License: GPLv3 and CC-BY-SA-4.0
 Group: Graphical desktop/MATE
 URL: https://github.com/linuxmint/mint-l-icons
 VCS: https://github.com/linuxmint/mint-l-icons.git
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -48,6 +46,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-L.json
 
 %changelog
+* Tue Jun 02 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
