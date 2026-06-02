@@ -1,9 +1,9 @@
-%define ver_major 3.1
+%define ver_major 3.2
 %define ver_base %ver_major.0
 
 Name: openbabel
-Version: %ver_major.1
-Release: alt4.5
+Version: %ver_major.0
+Release: alt1
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -137,6 +137,9 @@ sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
 %endif
 
 %changelog
+* Tue Jun 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.2.0-alt1
+- NMU: 3.2.0 from upstream
+
 * Wed Jul 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.1.1-alt4.5
 - NMU: final fix for watch file
 
