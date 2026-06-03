@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Polari
 
@@ -18,8 +18,8 @@ Url: https://wiki.gnome.org/Apps/Polari
 Vcs: https://github.com/GNOME/polari.git
 
 %if_disabled snapshot
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
-Source: https://github.com/GNOME/polari/archive/%version/%name-%version%beta.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: https://github.com/GNOME/polari/archive/%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -39,7 +39,7 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
-Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 4.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
@@ -47,14 +47,14 @@ Requires: typelib(Secret)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(Tracker) = 3.0
 Requires: typelib(Soup) = 3.0
-Requires: typelib(WebKit2) = 4.1
+Requires: typelib(WebKit) = 6.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libtelepathy-glib-devel
 BuildRequires: pkgconfig(tracker-sparql-3.0)
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup3.0-gir-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel libsoup3.0-gir-devel
 BuildRequires: libsecret-gir-devel gir(Tracker) = 3.0
 BuildRequires: libtelepathy-glib-gir-devel
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
@@ -93,6 +93,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Wed Jun 03 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
