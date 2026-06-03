@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.5.10
-Release: alt2
+Release: alt3
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -55,6 +55,7 @@ sed -i "s|/var/run/c-icap|/run/c-icap|g" utils/Makefile.am
 sed -i "s|/var/run/c-icap|/run/c-icap|g" Makefile.am
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %undefine _configure_gettext
 %configure --localstatedir=%_var
@@ -134,6 +135,9 @@ chmod -x %buildroot/%_sysconfdir/%name.magic*
 %_libdir/libicapapi.so
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1:0.5.10-alt3
+- FTBFS: built with -std=gnu17.
+
 * Wed Dec 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.5.10-alt2
 - FTBFS fix (thanks alton@).
 
