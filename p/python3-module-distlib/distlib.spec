@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
-Release: alt1.1
+Version: 0.4.1
+Release: alt1
 Summary: Distribution utilities
 License: Python
 Group: Development/Python3
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,6 +54,9 @@ export PYTHONHASHSEED=0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 03 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1
+
 * Thu Oct 16 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1.1
 - NMU: Fixed FTBFS.
 
