@@ -1,11 +1,11 @@
 %define oname scikit-learn
 
 # CPU time limit exceeded
-# 1.8.0 passes check on local machine
+# 1.9.0 passes check on local machine
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
@@ -39,6 +39,7 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-threadpoolctl
 BuildRequires: python3-module-contourpy
 BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-narwhals
 %endif
 
 %py3_provides sklearn
@@ -88,6 +89,9 @@ popd
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
 %changelog
+* Wed Jun 03 2026 Anton Vyatkin <toni@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Wed Feb 11 2026 Anton Vyatkin <toni@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
