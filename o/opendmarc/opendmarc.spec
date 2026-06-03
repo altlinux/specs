@@ -1,6 +1,6 @@
 Name: opendmarc
 Version: 1.4.2
-Release: alt2
+Release: alt3
 Summary: A Domain-based Message Authentication, Reporting & Conformance (DMARC) milter and library
 
 License: BSD and Sendmail
@@ -75,6 +75,7 @@ required for developing applications against libopendmarc.
 %autopatch -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure \
 	--with-sql-backend \
@@ -163,6 +164,9 @@ exit 0
 %_libdir/*.so
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt3
+- FTBFS: built with -std=gnu17.
+
 * Tue Feb 10 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt2
 - Used patches from Fedora (fixes: CVE-2024-25768).
 
