@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.20
+Version: 2.21
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -22,7 +22,7 @@ Source3: %name-tmpfs.conf
 Source4: %name.conf.empty
 Patch: %name-%version-%release.patch
 
-BuildRequires: libcheck-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel}}
 BuildRequires: flex, byacc
 
 %description
@@ -48,11 +48,16 @@ export LDFLAGS=-pie
 %configure \
 	--with-pidfile=/run/radvd/radvd.pid \
 	--with-systemdsystemunitdir=%systemd_unitdir \
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+	--with-check \
+%else
+	--without-check \
+%endif
 	--disable-silent-rules
 %make_build
 
-#check
-#make check
+%check
+make -k check
 
 %install
 %makeinstall_std
@@ -78,7 +83,7 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %files
-%doc COPYRIGHT README CHANGES INTRO.html TODO
+%doc COPYRIGHT README.md SECURITY.md CHANGES INTRO.html TODO
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_tmpfilesdir/%name.conf
@@ -91,6 +96,11 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 %_sbindir/radvdump
 
 %changelog
+* Wed Jun 03 2026 Mikhail Efremov <sem@altlinux.org> 2.21-alt1
+- Enabled tests.
+- Dropped obsoleted patch.
+- Updated to 2.21 (fixes: CVE-2026-48715).
+
 * Wed Feb 19 2025 Mikhail Efremov <sem@altlinux.org> 2.20-alt1
 - Updated Vcs tag.
 - Updated Url tag.
