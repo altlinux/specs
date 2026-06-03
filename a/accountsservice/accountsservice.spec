@@ -4,7 +4,7 @@
 
 Name: accountsservice
 Version: 26.12.8
-Release: alt1
+Release: alt2
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -127,6 +127,10 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Wed Jun 03 2026 Vladimir Romanov <rirusha@altlinux.org> 26.12.8-alt2
+- Allowed to user change their own password without authentication
+  (closes: #59397).
+
 * Tue May 26 2026 Vladimir Romanov <rirusha@altlinux.org> 26.12.8-alt1
 - 26.12.8 (closes: #58899)
 - Fixed creating user with ReadySet in ALT Atomic (closes: #59308).
