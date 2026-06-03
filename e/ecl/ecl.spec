@@ -1,6 +1,6 @@
 Name: ecl
 Version: 21.2.1
-Release: alt1.1
+Release: alt2
 Summary: Embeddable Common-Lisp
 
 License: LGPLv2+ and BSD and MIT and ALT-Public-Domain
@@ -81,6 +81,7 @@ sed -i "/ECL_LDRPATH='-Wl,--rpath,~A'/d" src/configure
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
+%add_optflags -std=gnu17
 %configure --enable-manual=html \
     --with-sse=auto \
     CFLAGS="%optflags -Wno-unused -Wno-return-type -Wno-unknown-pragmas"
@@ -126,6 +127,9 @@ cp -p %SOURCE2 %buildroot%_iconsdir/hicolor/scalable/apps
 %_man1dir/*
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 21.2.1-alt2
+- FTBFS: built with -std=gnu17.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 21.2.1-alt1.1
 - FTBFS: used emacs-common without version.
 - Fixed documentation build.
