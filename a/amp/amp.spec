@@ -2,7 +2,7 @@
 
 Name:           amp
 Version:        0.7.1
-Release:        alt2
+Release:        alt3
 
 Summary:        A complete text editor for terminal
 License:        GPL-3.0
@@ -13,12 +13,10 @@ VCS:            https://github.com/jmacdonald/amp
 Source:         %name-%version.tar
 Source1:        vendor.tar
 
-Patch:          %name-%version-%release.patch
+Patch:          amp-0.7.1-alt_vendored_nix_loongarch64_support.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires:      git-core
-BuildRequires: oniguruma-devel
-BuildRequires: libgit2-devel
 
 %description
 Amp is a modern text editor for the terminal.
@@ -29,6 +27,11 @@ for comfortable everyday use.
 %prep
 %setup -a 1 -q
 %patch -p1
+
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+        ./vendor/nix/.cargo-checksum.json
+
 %rust_prep
 
 %build
@@ -49,6 +52,10 @@ export CC="gcc -std=gnu17"
 %doc README.md CHANGELOG.md LICENSE
 
 %changelog
+* Tue Jun 02 2026 Sergey Savelev <medovi@altlinux.org> 0.7.1-alt3
+- Fixed build for loongarch64.
+- Removed unnecessary BuildRequires: oniguruma-devel, libgit2-devel.
+
 * Tue May 19 2026 Sergey Savelev <medovi@altlinux.org> 0.7.1-alt2
 - Fixed build with gcc15 using -std=gnu17
 
