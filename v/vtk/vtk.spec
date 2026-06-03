@@ -7,7 +7,7 @@
 
 Name: vtk
 Version: %ver.2
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -965,9 +965,12 @@ This package contains VTK QML plugin.
 %autopatch -p1
 
 %ifarch %e2k
-sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
 sed -i -E 's/(std::vector<.*(pointList_|transforms_))\{\}/\1={}/' \
 	ThirdParty/ioss/vtkioss/Ioss_{Field,CoordinateFrame}.h
+sed -i 's/large_power_of_5\[\] = {/large_power_of_5[5] = {/' \
+	ThirdParty/fast_float/vtkfast_float/vtkfast_float/bigint.h
+sed -i '/#define vtkOpenFOAMReader_h/a #include "vtkUnsignedCharArray.h"' \
+	IO/Geometry/vtkOpenFOAMReader.h
 %endif
 
 # apply build timestamp
@@ -1542,6 +1545,9 @@ EOF
 %endif
 
 %changelog
+* Fri May 08 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.5.2-alt3
+- e2k build fix
+
 * Sun Feb 02 2026 Anton Farygin <rider@altlinux.com> 9.5.2-alt2
 - fixed vtkStreamTracer use-after-free in RequestData (InputData null guard)
 - fixed numpy 2.x compatibility (numpy.in1d -> numpy.isin)
