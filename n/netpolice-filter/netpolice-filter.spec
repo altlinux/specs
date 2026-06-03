@@ -1,6 +1,6 @@
 Name: netpolice-filter
 Version: 1.01
-Release: alt6
+Release: alt7
 
 Summary: URL filter for c-icap server
 License: BSD
@@ -31,6 +31,7 @@ ICAP module for checking URL against blacklist.
 %patch1 -p2
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %undefine __libtoolize
 %undefine _configure_gettext
@@ -47,6 +48,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_libdir/c_icap/srv_url_filter.so
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1.01-alt7
+- FTBFS: built with -std=gnu17.
+
 * Mon Dec 09 2024 Andrey Cherepanov <cas@altlinux.org> 1.01-alt6
 - FTBFS fix (thanks alton@).
 
