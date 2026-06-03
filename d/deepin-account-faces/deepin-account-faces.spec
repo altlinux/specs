@@ -1,15 +1,18 @@
 %global repo dde-account-faces
 
 Name: deepin-account-faces
-Version: 1.0.17
+Version: 1.0.18
 Release: alt1
 Summary: Account faces for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-account-faces
+VCS: https://github.com/linuxdeepin/dde-account-faces
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-account-faces/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %repo-%version-%release.patch
 BuildArch: noarch
 
 %description
@@ -17,16 +20,21 @@ Account faces for Linux Deepin.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 %install
 %makeinstall_std
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md debian/changelog
 %_sharedstatedir/AccountsService/icons/*
 
 %changelog
+* Wed Jun 03 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
+- New version 1.0.18.
+- Added VCS tag.
+
 * Fri Jan 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
 - New version (1.0.17) with rpmgs script.
 
