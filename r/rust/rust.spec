@@ -10,7 +10,7 @@
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 95
+%define v_minor 96
 %define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
@@ -48,6 +48,10 @@ Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
 Patch002: rust-1.95.0-fedora_alt-use_system_lld.patch
 # https://github.com/rust-lang/rust/issues/114940
 Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
+# When channel isn't configured, bootstrap tries to use channel from ci file.
+# Since we delete all ci files to make repository and rust-src smaller,
+# it would be better to force user channel configuration instead.
+Patch004: rust-1.96.0-alt-force_channel_configuration.patch
 
 Requires: gcc
 Requires: rustc
@@ -397,8 +401,24 @@ python3 x.py install
 # Remove installer artifacts (manifests, uninstall scripts, etc.)
 find %buildroot%rust_rustlib -maxdepth 1 -type f -delete
 
+# Remove development files from rust-src
+pushd %buildroot%rust_rustlib/src/rust/library
+rm -rf test
+rm -rf std/tests
+find ./ -name tests.rs -type f -delete
+rm -rf                                              \
+        compiler-builtins/builtins-test             \
+        compiler-builtins/libm-test                 \
+        builtins-test-intrinsics                    \
+        compiler-builtins/crates/libm-macros/tests  \
+        std_detect/tests                            \
+        coretests                                   \
+        std_detect/src/detect/test_data             \
+        %nil
+
 # We don't actually need to ship any of those python scripts in rust-src anyway.
-find %buildroot/%rust_rustlib/src -type f -name '*.py' -delete
+find ./ -type f -name '*.py' -delete
+popd
 
 %add_python3_path %rust_rustlib/etc
 
@@ -580,6 +600,13 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Mon Jun 01 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.96.0-alt1
+- New version (1.96.0).
+- Security fixes:
+  + CVE-2026-5222: Cargo can be coerced to share credentials between registries
+  + CVE-2026-5223: Crates in third party registries can override the cached source of other crates
+- Remove ci and tests from rust-src.
+
 * Fri Apr 17 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.95.0-alt1
 - New version (1.95.0).
 - Add rust-full subpackage, which installs everything required for
