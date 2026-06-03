@@ -1,6 +1,6 @@
 Name: chkrootkit
 Version: 0.58b
-Release: alt1
+Release: alt2
 
 Summary: Check rootkits
 Summary(ru_RU.UTF-8): Поиск троянских коней и закладок в программах
@@ -43,7 +43,7 @@ Chkrootkit является набором утилит для поиска тр
 subst 's|@CHKROOTKIT_DIR@|%_libdir/%name|' %name
 
 %build
-make sense CC="%{__cc} $RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64"
+make sense CC="%{__cc} $RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64" CFLAGS="$CFLAGS -std=gnu17"
 
 %install
 install -Dpm0755 chkrootkit %buildroot%_sbindir/chkrootkit
@@ -73,6 +73,9 @@ __EOF__
 %attr(700,root,root) %cron_daily/%name
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.58b-alt2
+- FTBFS: built with -std=gnu17.
+
 * Fri Mar 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.58b-alt1
 - New version.
 
