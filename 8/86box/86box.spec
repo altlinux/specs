@@ -1,8 +1,8 @@
 %define _metainfodir %_datadir/metainfo
 %set_verify_elf_method rpath=relaxed
 Name: 86box
-Version: 5.3
-Release: alt2
+Version: 6.0
+Release: alt1
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems
 Group: Emulators
 License: GPLv3
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ libevdev-devel ecm wayland-devel libwayland-client-devel 
 BuildRequires: cmake libpng-devel zlib-devel libopenal-devel librtmidi-devel libpcre-devel qt5-tools-devel libfluidsynth-devel libpcre2-devel bzlib-devel libbrotli-devel libpulseaudio-devel libsndfile-devel libXdmcp-devel
 BuildRequires: fontconfig-devel libxcb libSDL2_ttf-devel libXi-devel libalsa-devel qt5-base-devel libxkbcommon-x11-devel libcap-devel libreadline-devel libserialport-devel libtinfo-devel
 
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le %ix86
 
 %description
 86Box is a low level x86 emulator that runs older operating systems
@@ -34,7 +34,7 @@ Download release with the release number of emulator, and unzip in
 
 %prep
 %setup -n %name-%version
-%patch -p1
+#patch -p1
 
 %build
 %ifarch %ix86
@@ -60,7 +60,7 @@ Download release with the release number of emulator, and unzip in
 # install -D -m0755 ./%_cmake__builddir/src/86Box %buildroot%_bindir/%name
 
 # install icons
-for i in 48 64 72 96 128 192 256 512; do
+for i in 48 64 72 128 256; do
   mkdir -p %buildroot%_iconsdir/hicolor/${i}x${i}/apps
   cp src/unix/assets/${i}x${i}/net.86box.86Box.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps
 done
@@ -81,6 +81,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/net.86box.86Box.me
 %_iconsdir/hicolor/*/apps/net.86box.86Box.png
 
 %changelog
+* Tue Jun  2 2026 Artyom Bystrov <arbars@altlinux.org> 6.0-alt1
+- Update to new version (closes #59414)
+- Disable build for ix86
+
 * Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 5.3-alt2
 - Add patch for fixing
 
