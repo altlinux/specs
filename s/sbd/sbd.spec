@@ -2,7 +2,7 @@
 
 Name:     sbd
 Version:  1.5.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Storage-based death
 License:  GPLv2+
@@ -105,6 +105,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Wed Jun 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt2
+- fix FTBFS with new pacemaker
+
 * Mon Jan 09 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
