@@ -1,5 +1,5 @@
 Name: deepin-wallpapers
-Version: 1.7.25
+Version: 1.7.26
 Release: alt1
 
 Summary: Deepin Wallpapers provides wallpapers of DDE
@@ -9,7 +9,7 @@ Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-wallpapers
 Vcs: https://github.com/linuxdeepin/deepin-wallpapers
 
-Source: %url/archive/%version/%name-%version.tar.gz
+Source: https://github.com/linuxdeepin/deepin-wallpapers/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
@@ -53,6 +53,9 @@ fi
 %_datadir/wallpapers/deepin/*
 
 %changelog
+* Wed Jun 03 2026 Leontiy Volodin <lvol@altlinux.org> 1.7.26-alt1
+- New version 1.7.26.
+
 * Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.25-alt1
 - New version 1.7.25.
 - Cleanup spec.
