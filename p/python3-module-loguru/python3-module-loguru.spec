@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.7.3
-Release: alt4
+Release: alt5
 Summary: Python logging made (stupidly) simple
 License: MIT
 Group: Development/Python3
@@ -48,6 +48,9 @@ Loguru is a library which aims to bring enjoyable logging in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.3-alt5
+- Fixed tests with mypy 2.0.0.
+
 * Sat Apr 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.3-alt4
 - Fixed tests with mypy 1.20.
 
