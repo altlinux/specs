@@ -2,10 +2,10 @@
 %global import_path github.com/gogatekeeper/gatekeeper
 
 Name: gatekeeper
-Version: 4.7.1
+Version: 4.9.0
 Release: alt1
 
-Summary: An OpenID / Proxy service 
+Summary: An OpenID / Proxy service
 License: Apache-2.0
 Group: System/Servers
 Url: https://gogatekeeper.github.io/gatekeeper/
@@ -33,8 +33,8 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
-export LDFLAGS="-X %import_path/pkg/proxy/core.release=%version-%release -X %import_path/pkg/proxy/core.gitsha=altlinux-package -X %import_path/pkg/proxy/core.compiled=$(date +%s)"
-%golang_build cmd/keycloak cmd/google
+export LDFLAGS="-X %import_path/pkg/proxy/core.release=%version-%release -X %import_path/pkg/proxy/core.gitsha=altlinux-package -X %import_path/pkg/proxy/core.compiled=$(date +%%s)"
+%golang_build cmd/keycloak
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -43,7 +43,6 @@ export IGNORE_SOURCES=1
 install -d %buildroot%_datadir/gatekeeper
 cp -a templates %buildroot%_datadir/gatekeeper/
 mv %buildroot%_bindir/keycloak %buildroot%_bindir/gatekeeper
-mv %buildroot%_bindir/google %buildroot%_bindir/gatekeeper-google
 
 install -D -p -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 install -D -p -m 0640 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
@@ -59,11 +58,9 @@ install -d %buildroot%_logdir/%name
 
 %preun
 %preun_service %name
-
 %files
 %doc README.md
 %_bindir/gatekeeper
-%_bindir/gatekeeper-google
 %_datadir/gatekeeper
 %_unitdir/%name.service
 %config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%name
@@ -71,5 +68,8 @@ install -d %buildroot%_logdir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 
 %changelog
+* Tue May 12 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.9.0-alt1
+- New version (4.9.0).
+
 * Thu Apr 02 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.7.1-alt1
 - Initial build for ALT.
