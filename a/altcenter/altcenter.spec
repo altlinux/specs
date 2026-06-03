@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.36
+Release: alt0.37
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.37
+- policies: added wireless access policies.
+- policies: added removable media policies.
+
 * Wed May 27 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.36
 - Fixed bugs (ALT #59265, #54844).
 
