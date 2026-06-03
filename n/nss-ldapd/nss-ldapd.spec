@@ -4,7 +4,7 @@
 
 Name: 	 nss-ldapd
 Version: 0.9.13
-Release: alt1
+Release: alt2
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -44,9 +44,8 @@ nsswitch module.
 %patch1 -p2
 %autoreconf
 
-
 %build
-%add_optflags -I%_includedir/krb5
+%add_optflags -I%_includedir/krb5 -std=gnu17
 # Override man generator name
 export DOCBOOK2X_MAN=/usr/bin/db2x_docbook2man
 %configure \
@@ -175,6 +174,9 @@ exit 0
 %endif
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.9.13-alt2
+- FTBFS: built with -std=gnu17.
+
 * Mon Feb 10 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.13-alt1
 - New version.
 
