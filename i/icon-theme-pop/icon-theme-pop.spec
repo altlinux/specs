@@ -2,7 +2,7 @@
 %define _name pop
 
 Name: icon-theme-%_name
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: System76 Pop icon theme for Linux
@@ -42,6 +42,9 @@ from the Adwaita GNOME Icons.
 %doc README.md
 
 %changelog
+* Wed Jun 03 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
 - first build for Sisyphus
 
