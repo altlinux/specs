@@ -3,7 +3,7 @@
 %define soversion %(cmake -P %SOURCE1 %SOURCE2 2>&1)
 
 Name:          lib%_name
-Version:       0.1.3
+Version:       0.1.4
 Release:       alt1
 Group:         System/Libraries
 Summary:       Library for alterator objects
@@ -25,6 +25,13 @@ BuildRequires: libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
 BuildRequires: libpolkit-devel
+
+Requires: alterator-backend-packages >= 0.2.14-alt1
+Requires: alterator-backend-component >= 0.3.1
+Requires: alterator-backend-systeminfo >= 0.4.2
+Requires: alterator-backend-edition >= 0.4.1
+Requires: alt-components-base >= 0.7.12-alt1
+Requires: alterator-interface-diag >= 0.1.4
 
 %description
 Library for alterator objects.
@@ -72,6 +79,9 @@ cd src/tests
 ../../%_cmake__builddir/src/tests/libalterator-glib-tests
 
 %changelog
+* Wed Jun 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt1
+- Update version to 0.1.4.
+
 * Thu May 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.3-alt1
 - Update version to 0.1.3.
 
