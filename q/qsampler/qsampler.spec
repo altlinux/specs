@@ -1,5 +1,5 @@
 Name: qsampler
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: A LinuxSampler Qt GUI
@@ -47,6 +47,9 @@ reference interface for the LinuxSampler Control Protocol (LSCP).
 %_man1dir/qsampler.1*
 
 %changelog
+* Wed Jun 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2-alt1
+- 1.0.2 released
+
 * Fri Jul 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.1-alt1
 - 1.0.1 released
 
