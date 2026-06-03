@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2026.03.25
+Version: 2026.05.25
 Release: alt1
 
 Summary: Base component for Deepin
@@ -68,6 +68,9 @@ rm -r %buildroot%_datadir/distro-info
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Wed Jun 03 2026 Leontiy Volodin <lvol@altlinux.org> 2026.05.25-alt1
+- New version 2026.05.25.
+
 * Fri Apr 10 2026 Leontiy Volodin <lvol@altlinux.org> 2026.03.25-alt1
 - New version 2026.03.25.
 
