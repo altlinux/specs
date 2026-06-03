@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 26.04.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Sound
@@ -22,6 +22,8 @@ Obsoletes: kde5-audiotube < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-buildreq.patch
+#
+Patch10: kdebug-520142.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: pybind11-devel python3-devel python3(ytmusicapi) python3(yt_dlp)
@@ -38,9 +40,15 @@ Convergent YouTube Music client.
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+#
+%patch10 -p1
 
 %build
+ADD_I="`pkg-config --cflags python3`"
+%add_optflags %optflags_shared $ADD_I
 %K6build \
+    -DCMAKE_EXE_LINKER_FLAGS:STRING='-lpython3' \
+    -DCMAKE_SHARED_LINKER_FLAGS:STRING='-lpython3' \
     -DQT_MAJOR_VERSION=6 \
     #
 
@@ -65,6 +73,9 @@ mkdir -p %buildroot/%_K6data/audiotube/
 
 
 %changelog
+* Fri May 29 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt2
+- fix to build
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
