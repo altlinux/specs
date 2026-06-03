@@ -1,11 +1,11 @@
 Name:     kubernetes-pause
-Version:  3.10.1
+Version:  3.10.2
 Release:  alt1
 
 Summary:  This executable can be used as a minimal init process inside a container
 License:  Apache-2.0
 Group:    Other
-Url:      https://raw.githubusercontent.com/kubernetes/kubernetes/v1.34.3/build/pause/linux/pause.c
+Url:      https://raw.githubusercontent.com/kubernetes/kubernetes/v1.36.1/build/pause/linux/pause.c
 
 Source:   %name-%version.tar
 
@@ -27,6 +27,9 @@ install -m0755 -D pause %buildroot/%_bindir/kubernetes-pause
 %_bindir/kubernetes-pause
 
 %changelog
+* Mon Jun 01 2026 Alexander Stepchenko <geochip@altlinux.org> 3.10.2-alt1
+- 3.10.1 -> 3.10.2 (only version bump for k8s 1.36, no functional changes).
+
 * Tue Dec 16 2025 Alexander Stepchenko <geochip@altlinux.org> 3.10.1-alt1
 - 3.10 -> 3.10.1 (only version bump for k8s 1.34, no functional changes).
 
