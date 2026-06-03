@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: libgphoto2
-Version: 2.5.33
-Release: alt2
+Version: 2.5.34
+Release: alt1
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -233,6 +233,11 @@ groupadd -f -r camera || :
 %endif
 
 %changelog
+* Wed Jun 03 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.34-alt1
+- 2.5.34 (fixes: CVE-2026-40333, CVE-2026-40334, CVE-2026-40335,
+  CVE-2026-40336, CVE-2026-40338, CVE-2026-40339, CVE-2026-40340,
+  CVE-2026-40341)
+
 * Mon May 04 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.33-alt2
 - moved Obsoletes to %name-common
 - drop unneeded %%triggerpostun
