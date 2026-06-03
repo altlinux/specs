@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: capsule
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Tool for creating portable Linux containers from OCI images
@@ -74,6 +74,10 @@ export GOFLAGS="-mod=vendor"
 %doc examples
 
 %changelog
+* Wed Jun 03 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.7-alt1
+- Add sandbox isolation levels: shared, isolated, strict.
+- Guide the user to set up rootless subuid/subgid (ALT-specific).
+
 * Sat May 30 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.6-alt1
 - Pull the image when it has been updated upstream.
 - Fix icon export.
