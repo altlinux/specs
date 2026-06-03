@@ -5,7 +5,7 @@
 
 Name: pinta
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: An easy to use drawing and image editing program
 
@@ -34,6 +34,10 @@ Requires: dotnet-%dotnet_version
 Requires: libadwaita >= 1.7
 Requires: libgtk4 >= 4.18
 
+# replace Adwaita symbolic icons (ALT bug 59342)
+BuildRequires: xapp-symbolic-icons
+Requires: xapp-symbolic-icons
+
 %description
 Pinta is a free, open-source program for drawing and image editing.
 It combines intuitive tools with powerful features, making it easy to create,
@@ -48,6 +52,9 @@ Pinta keeps things simple without sacrificing functionality.
 # change Tmds.DBus version because version 0.22.0 has vulnerability
 # https://github.com/advisories/GHSA-xrw6-gwf8-vvr9
 %__subst 's!Include="Tmds.DBus" Version="0.22.0"!Include="Tmds.DBus" Version="0.93.0"!' Directory.Packages.props
+
+# replace Adwaita symbolic icons (ALT bug 59342)
+xsi-replace-adwaita-symbolic --fix Pinta.Resources
 
 %build
 %if_without prebuild
@@ -77,6 +84,9 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=true
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Wed Jun 03 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.2-alt2
+- replace Adwaita symbolic icons (ALT #59342)
+
 * Sun May 24 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.2-alt1
 - new version 3.1.2
 - build with .NET 10
