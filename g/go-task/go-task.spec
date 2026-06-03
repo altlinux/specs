@@ -1,6 +1,6 @@
 %global import_path github.com/go-task/task
 Name:     go-task
-Version:  3.50.0
+Version:  3.51.1
 Release:  alt1
 
 Summary:  A task runner / simpler Make alternative written in Go
@@ -45,6 +45,9 @@ install -Dm 644 completion/zsh/_task %buildroot/%_datadir/zsh/site-functions/_ta
 %_datadir/zsh/site-functions/_task
 
 %changelog
+* Wed Jun 03 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.51.1-alt1
+- New version 3.51.1.
+
 * Thu May 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.50.0-alt1
 - New version 3.50.0.
 
