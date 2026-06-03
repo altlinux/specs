@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.10
-Release: alt2
+Version: 0.26.2
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -238,6 +238,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Jun 03 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.2-alt1
+- 0.26.2 (fixes: CVE-2026-2100).
+
 * Sun Nov 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:0.25.10-alt2
 - Fix the verification in checkinstall with an extra space in label start.
 
