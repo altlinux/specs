@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: The request rate limiter using Leaky-bucket Algorithm
@@ -62,6 +62,9 @@ BuildRequires: python3-modules-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 03 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.2.0-alt1
+- New version (4.2.0).
+
 * Tue Mar 24 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.1.0-alt1
 - New version (4.1.0).
 
