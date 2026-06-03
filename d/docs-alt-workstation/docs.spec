@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jun 03 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt3
+- update to ALT Workstation 11.2RC1
+
 * Tue May 05 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt2
 - update to ALT Workstation 11.2BETA3
 
