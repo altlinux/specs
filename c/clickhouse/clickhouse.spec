@@ -1,7 +1,7 @@
 %global __find_debuginfo_files %nil
 %define _unpackaged_files_terminate_build 1
-%global llvm_version 19.1
-%global clang_version 19
+%global llvm_version 22.1
+%global clang_version 22
 %global __nprocs 8
 
 %def_with clang
@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 25.8.24.21
+Version: 26.3.12.3
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -37,7 +37,7 @@ Url: https://clickhouse.com
 VCS: https://github.com/ClickHouse/ClickHouse.git
 Source: %name-%version.tar.xz
 
-Source100: %name-contrib-%version-%release.tar
+Source100: %name-contrib-%version-%release.tar.xz
 
 Source1000: clickhouse.watch
 
@@ -134,6 +134,8 @@ export ROOT_PATH=$PWD
 	-DCOMPILER_CACHE=disabled \
 	-DUSE_LIBCXX:BOOL=ON \
 	-DDISABLE_HERMETIC_BUILD:BOOL=ON \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DUSE_SYSTEM_COMPILER_RT:BOOL=ON \
 	-DPARALLEL_COMPILE_JOBS=$NPROCS \
 	-DPARALLEL_LINK_JOBS=1 \
 %else
@@ -154,6 +156,7 @@ export ROOT_PATH=$PWD
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
 %ifarch x86_64
 	-DENABLE_CPUID:BOOL=ON \
+	-DCMAKE_CXX_COMPILER_TARGET=x86_64-linux-gnu \
 %else
 	-DENABLE_CPUID:BOOL=OFF \
 	-DENABLE_FASTOPS:BOOL=OFF \
@@ -161,6 +164,7 @@ export ROOT_PATH=$PWD
 %endif
 %ifarch aarch64
 	-DNO_ARMV81_OR_HIGHER=1 \
+	-DCMAKE_CXX_COMPILER_TARGET=aarch64-linux-gnu \
 %endif
 %if_with jemalloc
 	-DENABLE_JEMALLOC:BOOL=ON \
@@ -237,7 +241,6 @@ fi
 %_bindir/clickhouse-keeper-client
 %_bindir/clickhouse-keeper-utils
 %_bindir/clickhouse-keeper-converter
-%_bindir/clickhouse-fst-dump-tree
 %_unitdir/clickhouse-server.service
 %dir %attr(0750,_clickhouse,_clickhouse) %_logdir/clickhouse-server
 %dir %attr(0750,_clickhouse,_clickhouse) %_localstatedir/clickhouse
@@ -261,6 +264,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Fri May 29 2026 Anton Farygin <rider@altlinux.org> 26.3.12.3-alt1
+- 25.8.24.21 -> 26.3.12.3
+
 * Wed May 27 2026 Anton Farygin <rider@altlinux.org> 25.8.24.21-alt1
 - 25.8.21.7 -> 25.8.24.21
 
