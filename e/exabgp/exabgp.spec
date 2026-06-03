@@ -1,5 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
+
+%define exabgp_user _exabgp 
+%define exabgp_group _exabgp
+
 Name: exabgp
-Version: 4.2.6
+Version: 5.0.9
 Release: alt1
 
 Summary: The BGP swiss army knife of networking
@@ -9,14 +16,30 @@ Url: https://github.com/Exa-Networks/exabgp
 
 BuildArch: noarch
 
-Source: %name-%version.tar
+Patch: 0001-exabgp-5.0.9-python3-thread.patch
+
+Source0: %name-%version.tar
+Source1: %name.service
+Source2: %name@.service
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
+%if_with check
+BuildRequires: /proc
+BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-benchmark
+%endif
 
 Requires: python3-module-%name
-%add_python3_req_skip _abcoll exabgp.vendoring.six.moves thread
 
+# Optional VyOS CLI/YANG parser code is not used by normal ExaBGP runtime,
+# but Python autodeps treats its imports as mandatory. Skip bogus requires.
+%add_python3_req_skip vyos vyos.cli vyos.cli.completer vyos.cli.validator
+%add_python3_req_skip vyos.ifconfig.section vyos.modules vyos.util vyos.xml
+%add_python3_req_skip yanglexer exabgp.conf.yang.tree
 
 %description
 ExaBGP allows engineers to control their network from commodity
@@ -36,32 +59,64 @@ Group: Development/Python3
 
 %prep
 %setup
+%autopatch -p2
 
 %build
+%pyproject_build
 
 %install
-%__python3 setup.py install --root=%buildroot
+%pyproject_install
 
-install -pDm 644 etc/systemd/%name.service %buildroot%_unitdir/%name.service
 install -pDm 644 doc/man/%name.1 %buildroot%_man1dir/%name.1
 install -pDm 644 doc/man/%name.conf.5 %buildroot%_man5dir/%name.conf.5
-mkdir -p %buildroot%_sysconfdir
-mv -v %buildroot/usr/etc/%name %buildroot%_sysconfdir/%name
+
+install -dm 0750 %buildroot%_sysconfdir/%name 
+install -Dp -m0644 %SOURCE1 %buildroot%_unitdir/%name.service
+install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/%name@.service
+
+# Delete examples
+rm -rf %buildroot%_usr/etc/%name
+
+%check
+%pyproject_run_pytest
+
+%pre
+# Add the "_exabgp" user and group
+getent group %exabgp_group >/dev/null || groupadd -r %exabgp_group
+getent passwd %exabgp_user >/dev/null || \
+    useradd -r -g %exabgp_group -d /dev/null -s /sbin/nologin \
+    --no-create-home -c "ExaBGP service user"  %exabgp_user
+exit 0
+
+%post
+%systemd_post %name.service
+
+%preun
+%systemd_preun %name.service
+
+%postun
+%systemd_postun %name.service
 
 %files
-%doc CHANGELOG.rst LICENCE.txt README.*
+%doc doc/CHANGELOG.rst CODING_STYLE.md CONTRIBUTING.md LICENCE.txt README.*
 %_bindir/*
-%config %_sysconfdir/%name
-# %%_unitdir/%name.service
+%dir %attr(0750,root,%exabgp_group) %_sysconfdir/%name
 %_man1dir/*.1*
 %_man5dir/*.5*
+%_unitdir/%name.service
+%_unitdir/%name@.service
 
 %files -n python3-module-%name
-%python3_sitelibdir/%name
-%python3_sitelibdir/*.egg-info
-
+%python3_sitelibdir/%name/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Wed Jun 03 2026 Nikita Shmatko <nash@altlinux.org> 5.0.9-alt1
+- Version updated to 5.0.9.
+- Specfile cleanup.
+- Fixed legacy thread import.
+- Turned on tests.
+
 * Wed Mar 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.2.6-alt1
 - Version updated to 4.2.6 (with python3 support).
 
