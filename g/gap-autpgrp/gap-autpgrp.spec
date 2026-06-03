@@ -4,8 +4,8 @@ Name: gap-autpgrp
 Summary: GAP: Computing the Automorphism Group of a p-Group
 License: GPL-2.0-or-later
 Group: Sciences/Mathematics
-Version: 1.11.1
-Release: alt2
+Version: 1.12.0
+Release: alt1
 Url: https://gap-packages.github.io/autpgrp/
 VCS: https://github.com/gap-packages/autpgrp
 
@@ -16,7 +16,7 @@ Patch: autpgrp-%version-%release.patch
 BuildPreReq: rpm-macros-gap
 
 BuildArch: noarch
-Requires: gap >= 4.4
+Requires: gap >= 4.7
 
 %description
 The AutPGrp package introduces a new function to compute the
@@ -38,6 +38,9 @@ the ANUPQ method.
 %gap_sitelib/%repo/
 
 %changelog
+* Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
 * Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.11.1-alt2
 - Moved files from autpgrp-version to autpgrp.
 

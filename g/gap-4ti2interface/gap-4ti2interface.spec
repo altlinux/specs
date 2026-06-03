@@ -1,5 +1,5 @@
 Name: gap-4ti2interface
-Version: 2025.12.01
+Version: 2026.05.01
 Release: alt1
 Summary: GAP: Interface to 4ti2
 License: GPL-2.0+
@@ -35,6 +35,9 @@ geometric and combinational problems on linear spaces.
 %gap_sitelib/4ti2Interface/
 
 %changelog
+* Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 2026.05.01-alt1
+- New version 2026.05.01.
+
 * Wed Dec 24 2025 Leontiy Volodin <lvol@altlinux.org> 2025.12.01-alt1
 - New version 2025.12.01.
 
