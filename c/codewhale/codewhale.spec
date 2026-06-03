@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.8.50
+Version: 0.8.52
 Release: alt1
 
 Summary: Agentic coding terminal
@@ -14,6 +14,11 @@ License: MIT
 Group: Development/Tools
 Url: https://codewhale.net/en
 Vcs: https://github.com/Hmbown/CodeWhale
+
+# Old architectures run out of memory during building (link-time).
+# NOTE: there are few ways to fix that, but it is better to drop
+#       support of 32-bit architectures at all.
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -67,6 +72,10 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Wed Jun 03 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.52-alt1
+- Updated to 0.8.52.
+- Stopped building for i586 machines.
+
 * Tue Jun 02 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.50-alt1
 - Updated to 0.8.50.
 
