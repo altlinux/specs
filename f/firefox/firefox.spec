@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 151.0.2
+Version: 151.0.3
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jun 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.3-alt1
+- New version.
+- Fixes:
+  + CVE-2026-10701: Incorrect boundary conditions in the Graphics: Text component
+  + CVE-2026-10702: JIT miscompilation in the JavaScript Engine: JIT component
+
 * Tue May 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.2-alt1
 - New version.
 
