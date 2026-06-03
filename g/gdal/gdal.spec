@@ -1,6 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k
+# ModuleNotFoundError: No module named 'rpds'
+%def_without docs
+%else
 %def_with docs
+%endif
 
 %ifarch %ix86
 %def_without check
@@ -12,7 +17,7 @@
 
 Name: gdal
 Version: 3.12.4
-Release: alt3
+Release: alt4
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 License: MIT
@@ -144,6 +149,10 @@ sed -i '/large_power_of_5\[\] =/s/\[\]/[5]/' third_party/fast_float/bigint.h
 sed -i -E 's/^(.*<Image>\(rc, )isBigTIFF/bool fix=isBigTIFF;\1fix/' third_party/libertiff/libertiff.hpp
 sed -i -E 's/(m_o(Map.*|Conf))\{\};/\1={};/' frmts/zarr/zarr.h ogr/ogrsf_frmts/gmlas/ogr_gmlas.h
 sed -i -E 's/(m_anArrow.*)\{\};/\1={};/' ogr/ogrsf_frmts/generic/ograrrowarrayhelper.h
+# error: incomplete type is not allowed
+sed -i '/class GDALRasterAttributeTable;/i #include "gdal_rat.h"' gcore/gdal_multidim.h
+sed -i '/class GDALPansharpenOperation;/i #include "gdalpansharpen.h"' frmts/vrt/vrtdataset.h
+sed -i '/class MEMDataset;/i #include "memdataset.h"' apps/gdalalg_vector_pipeline.h
 %endif
 
 %build
@@ -299,6 +308,9 @@ popd
 %python3_sitelibdir/osgeo_utils
 
 %changelog
+* Wed Jun 03 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.12.4-alt4
+- e2k build fix
+
 * Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 3.12.4-alt3
 - NMU: fix obsolete gdal-plugins
 
