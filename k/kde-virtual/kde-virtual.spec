@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.11
+Version: 6.1.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -279,17 +279,16 @@ Requires: kde-common
 %description -n kde-display-manager-0-dummy
 %summary
 
-%package -n kde-display-manager-5-sddm
+%package -n kde-display-manager-5-plm
 Group: Graphical desktop/KDE
-Summary: SDDM Display Manager collective package
-Provides: kde5-display-manager-5-sddm = %EVR
-Obsoletes: kde5-display-manager-5-sddm < %EVR
+Summary: Plasma Login Manager collective package
 #
 Provides: kde-display-manager = %EVR
-Provides: kde-display-manager-sddm = %EVR
+Provides: kde-display-manager-plm = %EVR
 Requires: kde-common
-Requires: sddm sddm-theme-breeze sddm-kcm dm-tool
-%description -n kde-display-manager-5-sddm
+Requires: plasma-login-manager kcm-plasmalogin
+#Requires: dm-tool
+%description -n kde-display-manager-5-plm
 %summary
 
 %package -n kde-display-manager-6-lightdmgtk
@@ -347,11 +346,14 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-messenger-client-6-mix
 
 %files -n kde-display-manager-0-dummy
-#%files -n kde-display-manager-5-sddm
+%files -n kde-display-manager-5-plm
 %files -n kde-display-manager-6-lightdmgtk
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Wed Jun 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- add plasma-login-manager as kde-display-manager-plm
+
 * Fri Apr 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.11-alt1
 - don't require sddm
 
