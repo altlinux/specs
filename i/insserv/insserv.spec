@@ -1,17 +1,13 @@
-Name:       insserv
-Version:    1.16.0
-Release: alt3
+Name: insserv
+Version: 1.24.0
+Release: alt1
 
-Summary:    Tool for process controlling in System V boot scripts 
-License:    GPLv2+
-Group:      System/Configuration/Boot and Init
-URL:        http://savannah.nongnu.org/projects/sysvinit
+Summary: Tool for process controlling in System V boot scripts 
+License: GPL-2.0+
+Group: System/Configuration/Boot and Init
+URL: http://savannah.nongnu.org/projects/sysvinit
 
-Packager:   Andrey Cherepanov <cas@altlinux.org>
-
-Source0:    %name-%version.tar.bz2
-
-Patch:      %name-build-with-gcc5.patch
+Source0: %name-%version.tar.bz2
 
 BuildRequires: libdbus-devel
 BuildRequires: /proc
@@ -22,9 +18,9 @@ in System V boot scripts.
 
 %prep
 %setup
-%patch -p2
 
 %build
+%add_optflags -std=gnu17
 %ifarch %ix86
 %add_optflags -no-pie
 %endif
@@ -37,10 +33,13 @@ rm -f %buildroot%_libexecdir/lsb/*_initd
 
 %files
 %config(noreplace) %_sysconfdir/%name.conf
-/sbin/%name
+%_sbindir/%name
 %_man8dir/%name.8.*
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1.24.0-alt1
+- New version.
+
 * Fri Apr 23 2021 Slava Aseev <ptrnine@altlinux.org> 1.16.0-alt3
 - Fix build on ix86 due to --enable-default-pie
 
