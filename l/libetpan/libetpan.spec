@@ -1,6 +1,6 @@
 Name: libetpan
-Version: 1.9.4
-Release: alt6
+Version: 1.10
+Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: BSD-3-Clause
@@ -14,28 +14,13 @@ Source: %name-%version.tar
 Source1: libetpan-config
 Patch: %name-%version-%release.patch
 
-# Patches from upstream git. Drop them when
-# new version will be released.
-Patch2: CVE-2020-15953.patch
-Patch3: CVE-2022-4121.patch
-Patch4: Fix-potential-null-pointer-deference-348.patch
-Patch5: Fix-potential-null-pointer-deferenced-361.patch
-Patch6: Fix-potential-null-pointer-deferenced-363.patch
-Patch7: Missing-boundary-fix-384.patch
-Patch8: CVE-2020-15953-2.patch
-Patch9: Fix-buffer-overwrite-for-empty-string-in-remove_trai.patch
-
-# Patch from upstream pull request
-# https://github.com/dinhvh/libetpan/pull/436
-Patch100: Fix-charconv-double-free.patch
 # Patch from upstream pull request
 # https://github.com/dinhvh/libetpan/pull/427
 Patch101: Fix-FD_SET-undefined-behavior.patch
-# Patch from upstream pull request
-# https://github.com/dinhvh/libetpan/pull/447
-Patch102: Fix-poll-operator-precedence.patch
 %def_with gnutls
 %def_without openssl
+
+%define sover 20
 
 %define _unpackaged_files_terminate_build 1
 
@@ -72,18 +57,8 @@ program which use lib%name.
 %prep
 %setup
 %patch -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
 
-%patch100 -p1
 %patch101 -p1
-%patch102 -p1
 
 ln -s README.md README
 
@@ -106,7 +81,8 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 
 %files
 %doc ChangeLog NEWS COPYRIGHT README AUTHORS
-%_libdir/%name.so.*
+%_libdir/%name.so.%sover
+%_libdir/%name.so.%sover.*
 
 %files devel
 %_bindir/%name-config
@@ -117,6 +93,11 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Wed Jun 03 2026 Mikhail Efremov <sem@altlinux.org> 1.10-alt1
+- Added soname check.
+- Dropped obsoleted patches.
+- Updated to 1.10.
+
 * Wed Nov 13 2024 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt6
 - Use poll() instead of select().
 - Patch from upstream pull requests:
