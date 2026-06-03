@@ -3,7 +3,7 @@
 
 Name: plasma-sdk
 Version: 6.6.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Development/KDE and QT
@@ -11,7 +11,7 @@ Summary: KDE Frameworks 6 Applications useful for Plasma Development
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: kf6-kirigami
+Requires: kf6-kirigami kf6-kconfig
 Provides: plasma5-sdk = %EVR
 Obsoletes: plasma5-sdk < %EVR
 
@@ -61,6 +61,9 @@ Applications useful for Plasma Development.
 
 
 %changelog
+* Wed Jun 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
+- fix requires (closes: 59429)
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 
