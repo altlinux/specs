@@ -4,8 +4,8 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.6.7
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Effortless event stream integration for your services
 License: Apache-2.0
@@ -31,6 +31,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra nats
 %pyproject_builddeps_metadata_extra rabbit
 %pyproject_builddeps_metadata_extra redis
+%pyproject_builddeps_metadata_extra mqtt
 %endif
 BuildRequires: /proc
 
@@ -62,6 +63,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Jun 02 2026 Egor Ignatov <egori@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Mon Mar 30 2026 Egor Ignatov <egori@altlinux.org> 0.6.7-alt2
 - Revert hostile changes.
 
