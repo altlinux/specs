@@ -1,12 +1,14 @@
 Name: neocmakelsp
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: CMake LSP implementation
 License: MIT
 Group: Development/Other
-Url: https://neocmakelsp.github.io
+URL: https://neocmakelsp.github.io
 VCS: https://github.com/neocmakelsp/neocmakelsp
+
+Requires: cmake
 
 Source0: %name-%version.tar
 Source1: crates.tar
@@ -35,6 +37,9 @@ install -pm0755 -D target/release/neocmakelsp \
 %_bindir/neocmakelsp
 
 %changelog
+* Thu Jun 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.3-alt1
+- 0.10.3 released
+
 * Fri Apr 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.2-alt1
 - 0.10.2 released
 
