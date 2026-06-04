@@ -1,7 +1,7 @@
 %define node_module configurable-http-proxy
 
 Name: node-configurable-http-proxy
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Node-http-proxy plus a REST API
@@ -43,6 +43,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Thu Jun 04 2026 Anton Vyatkin <toni@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+
 * Fri Dec 05 2025 Anton Vyatkin <toni@altlinux.org> 5.1.0-alt1
 - New version 5.1.0.
 
