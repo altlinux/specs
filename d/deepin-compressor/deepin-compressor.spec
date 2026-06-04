@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.23
+Version: 6.5.29
 Release: alt1
 Epoch: 1
 
@@ -19,7 +19,7 @@ Obsoletes: %name-devel < %version
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: p7zip
+Requires: 7-zip
 # Requires: icon-theme-hicolor
 
 %if_enabled clang
@@ -102,6 +102,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Thu Jun 04 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.29-alt1
+- New version 6.5.29.
+- Updated requires (p7zip is obsoleted).
+
 * Wed Apr 01 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.23-alt1
 - New version 6.5.23.
 
