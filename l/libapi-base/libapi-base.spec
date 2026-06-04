@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 5
+%define minor_version 6
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -159,7 +159,12 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Thu Jun 04 2026 Vladimir Romanov <rirusha@altlinux.org> 7.6-alt1
+- New version: 7.6.
+- Fixed build soversion.
+
 * Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 7.5-alt1
+- New version: 7.5.
 - Added INI format support in Serialize.
 - Added supported PascalCase.
 - Deprecate `Serialize.Jsoner`, `Serialize.JsonWorker` should be used instead.
