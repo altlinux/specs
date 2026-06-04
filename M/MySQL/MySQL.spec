@@ -13,8 +13,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.4.8
-Release: alt2
+Version: 8.4.9
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -62,7 +62,7 @@ Patch7: mysql-8.4.8-alt-mysql_config-libs.patch
 Patch9: mysql-8.4.8-alt-disable-run-libmysql_api_test.patch
 Patch10: mysql-8.4.8-alt-disable-faster-TLS-model.patch
 Patch11: mysql-8.4.8-alt-client.patch
-Patch12: mysql-8.4.8-alt-allow-32bit.patch
+Patch12: mysql-8.4.9-alt-allow-32bit.patch
 
 # Patches for mysql-shell
 Patch201: mysql-shell-8.4.8-alt-link-secret-store-login-path-with-ssl.patch
@@ -91,6 +91,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-lite-devel
 BuildRequires: libcurl-devel
+BuildRequires: libidn2-devel
 BuildRequires: libicu-devel
 %ifnarch aarch64
 BuildRequires: libquadmath-devel
@@ -976,6 +977,17 @@ cd %_cmake__builddir && ctest --output-on-failure -R '.*-t' -LE NDB -j4
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Jun 03 2026 Nikolai Kostrigin <nickel@altlinux.org> 8.4.9-alt1
+- update mysql-server 8.4.8 -> 8.4.9
+  + (fixes: CVE-2026-21998, CVE-2026-22001, CVE-2026-22002, CVE-2026-22004)
+  + (fixes: CVE-2026-22005, CVE-2026-22009, CVE-2026-22015, CVE-2026-22017)
+  + (fixes: CVE-2026-34270, CVE-2026-34271, CVE-2026-34276, CVE-2026-34303)
+  + (fixes: CVE-2026-34304, CVE-2026-34308, CVE-2026-35236, CVE-2026-35237)
+  + (fixes: CVE-2026-35238, CVE-2026-35239, CVE-2026-35240)
+- update alt-allow-32bit patch 8.4.8 -> 8.4.9
+- update mysql-shell 8.4.8 -> 8.4.9
+  + (fixes: CVE-2026-34317, CVE-2026-34318, CVE-2026-34319)
+
 * Wed May 28 2026 Nikolai Kostrigin <nickel@altlinux.org> 8.4.8-alt2
 - fix auto-upgrade deprecated utf8 charset to utf8mb4 on package update
 - add Obsoletes for previous soname devel packages
