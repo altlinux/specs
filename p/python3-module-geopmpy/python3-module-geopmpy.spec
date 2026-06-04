@@ -1,8 +1,8 @@
 %global prj_name geopmpy
 
 Name: python3-module-%prj_name
-Version: 3.2.2
-Release: alt2
+Version: 3.2.2.0.300.aaf9
+Release: alt1
 
 Summary: Python 3 bindings for GEOPM runtime library
 Group: System/Configuration/Other
@@ -11,7 +11,6 @@ License: BSD-3-Clause
 URL: https://geopm.github.io
 VCS: https://github.com/geopm/geopm.git
 Source0: %name-%version.tar
-Patch1: drop-distutils.patch
 ExclusiveArch: x86_64
 
 BuildRequires: gcc
@@ -42,10 +41,14 @@ Includes tools for data analysis and visualization of power management metrics.
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
 
 pushd %prj_name
-echo %version > %prj_name/VERSION
+# Hardcode a PEP 440 compliant version for setuptools_scm.
+# The RPM Version (3.2.2.0.300.aaf9) is not a valid Python version,
+# causing setuptools_scm to fail with InvalidVersion during build.
+# Remove this line when upgrading to the next upstream release where
+# %version will be PEP 440 compliant again.
+echo 3.2.2 > %prj_name/VERSION
 popd
 
 %build
@@ -71,6 +74,11 @@ popd
 %_bindir/geopmlaunch
 
 %changelog
+* Thu Jun 04 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2.0.300.aaf9-alt1
+- interim build with all upstream fixes from dev branch after v3.2.2
+- fixed infinite loop in HDF5 cache generation
+- fixed TestIO.py and other test corrections from upstream
+
 * Wed Mar 04 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt2
 - added blosc2 for test
 
