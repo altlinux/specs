@@ -1,18 +1,18 @@
 %define optflags_lto %nil
 
-%define git_ver 18871
-%define git_commit 595e42c4f3bfa11b8585ea029e1aa9d2c9c68fd1
+%define git_ver 19431
+%define git_commit 40e9ee5af0de7ca31691c58eebe64ba205a2900b
 
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
-%define yaml_cpp_commit 05c44fcd18074836e21e1eda9fc02b3a4a1529b5
-%define soundtouch_commit 3982730833b6daefe77dcfb32b5c282851640c17
+%define yaml_cpp_commit 51a5d623e3fde1f58829a56ba910f1cb33596222
+%define soundtouch_commit a0fba77b6f9cfbdb71f8bbec58b6ac4e5e3b1097
 %define fusion_version 1.2.11
 %define gamemode_version 1.8.2
 %define protobuf_version 33.4
 
 Name: rpcs3
-Version: 0.0.40
-Release: alt2
+Version: 0.0.41
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -147,6 +147,9 @@ sed -e 's|miniupnpc>=2.3.3|miniupnpc>=2.2.4|' -i 3rdparty/miniupnp/CMakeLists.tx
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Jun 04 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.41-alt1
+- Version 0.0.41
+
 * Tue Mar 17 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.40-alt2
 - Fix miniupnpc version
 
