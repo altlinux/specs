@@ -10,7 +10,7 @@
 
 Name: file-roller
 Version: %ver_major.6
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
@@ -33,7 +33,7 @@ Patch1: %name-3.3.90-alt-zip_command.patch
 %define portal_ver 0.5
 
 Requires: tar gzip bzip2 ncompress lzop binutils
-Requires: arj lha unrar zip unzip p7zip lzma-utils xz
+Requires: arj lha unrar zip unzip /usr/bin/7z lzma-utils xz
 # since 44.4
 Requires: bzip3
 # Requires: cdrecord # for .iso support
@@ -133,6 +133,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 44.6-alt1.1
+- required /usr/bin/7z instead of p7zip
+
 * Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 44.6-alt1
 - 44.6
 
