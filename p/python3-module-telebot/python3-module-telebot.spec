@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 4.33.0
+Version: 4.34.0
 Release: alt1
 
 Summary: Python Telegram bot api
@@ -16,12 +16,15 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3(hatchling)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
+BuildRequires: python3(aiohttp)
+BuildRequires: python3(certifi)
 BuildRequires: python3(requests)
 BuildRequires: python3(pytest)
 %endif
@@ -49,6 +52,9 @@ A simple, but extensible Python implementation for the Telegram Bot API.
 %python3_sitelibdir/%{pyproject_distinfo pytelegrambotapi}
 
 %changelog
+* Thu Jun 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.34.0-alt1
+- Updated to version 4.34.0.
+
 * Sun Apr 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.33.0-alt1
 - Updated to version 4.33.0.
 
@@ -124,4 +130,3 @@ A simple, but extensible Python implementation for the Telegram Bot API.
 
 * Thu May 25 2017 Konstantin Artyushkin <akv@altlinux.org> 3.0.0-alt1
 - initial build
-
