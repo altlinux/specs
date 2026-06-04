@@ -1,7 +1,7 @@
 %define goipath github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 6.0.38
+Version: 6.0.43
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 #Requires(pre): shadow-utils dbus-tools
 
 BuildRequires(pre): rpm-build-golang rpm-build-python3
-BuildRequires: libgtk+3-devel glib2-devel libgio-devel libgdk-pixbuf-xlib-devel libXcursor-devel libpoppler-glib-devel librsvg-devel libXfixes-devel libalsa-devel libpulseaudio-devel libgudev-devel libXi-devel deepin-gettext-tools
+BuildRequires: gcc-c++ libgtk+3-devel glib2-devel libgio-devel libgdk-pixbuf-xlib-devel libXcursor-devel libpoppler-glib-devel librsvg-devel libXfixes-devel libalsa-devel libpulseaudio-devel libgudev-devel libXi-devel deepin-gettext-tools
 BuildRequires: /proc
 
 %description
@@ -40,6 +40,15 @@ This package contains library source intended for
 building other packages which use import path with
 %goipath prefix.
 
+%package devel
+Summary: %summary
+Group: Development/C++
+BuildArch: noarch
+Provides: dde-api-devel = %EVR
+
+%description devel
+This package provides headers for %name.
+
 %prep
 %setup -n dde-api-%version -a1
 %autopatch -p1
@@ -47,6 +56,8 @@ sed -i 's|/usr/sbin/locale-gen|locale-gen|' \
   locale-helper/main.go
 sed -i 's|/usr/bin/true|/bin/true|' \
   misc/systemd/system/deepin-shutdown-sound.service
+sed -i 's|/usr/lib/libdeepin-event-log.so|%_libdir/libdeepin-event-log.so|' \
+  cpp-include/eventlogger.hpp
 
 %build
 export GOFLAGS="-mod=vendor"
@@ -75,7 +86,17 @@ export GOPATH="%go_path"
 %files -n golang-%name-devel
 %go_path/src/%goipath
 
+%files devel
+%dir %_includedir/dde-api/
+%_includedir/dde-api/eventlogger.hpp
+%dir %_datadir/cmake/DDEAPI/
+%_datadir/cmake/DDEAPI/DDEAPIConfig.cmake
+
 %changelog
+* Thu Jun 04 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.43-alt1
+- New version 6.0.43.
+- Added devel subpackage.
+
 * Fri Apr 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.38-alt1
 - New version 6.0.38.
 
