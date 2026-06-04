@@ -2,8 +2,8 @@
 %global import_path github.com/grafviktor/goto
 
 Name: goto
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: %name is console SSH client application
 Group: Networking/Remote access
 License: MIT
@@ -55,6 +55,9 @@ ln -s %buildroot_bindir/%name %buildroot%_bindir/gg
 %_bindir/gg
 
 %changelog
+* Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.6.0-alt1
+- Update to new version 1.6.0.
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.1-alt2
 - Add conflicts with grip-grab.
 

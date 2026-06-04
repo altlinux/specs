@@ -2,7 +2,7 @@
 %global import_path github.com/alebeck/boring
 
 Name: boring
-Version: 0.12.0
+Version: 0.15.0
 Release: alt1
 Summary: The boring SSH tunnel manager.
 License: MIT
@@ -45,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.15.0-alt1
+- 0.12.0 -> 0.15.0
+
 * Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.12.0-alt1
 - 0.11.8 -> 0.12.0
 
