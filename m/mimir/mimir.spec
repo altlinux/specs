@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: mimir
-Version: 3.0.6
+Version: 3.1.0
 Release: alt1
 
 Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
@@ -17,7 +17,7 @@ Patch: mimir-2.15.0-alt-systemd.patch
 ExcludeArch: i586 armh
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: golang >= 1.23.0
+BuildRequires: golang >= 1.25.9
 BuildRequires: /proc
 
 %description
@@ -94,7 +94,7 @@ usermod -a -G proc %name ||:
 %preun_service %name
 
 %files
-%doc README.md SECURITY.md CONTRIBUTING.md
+%doc README.md CONTRIBUTING.md
 %_bindir/mimir
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/%name/*
@@ -103,18 +103,21 @@ usermod -a -G proc %name ||:
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %files query-tee
-%doc README.md SECURITY.md CONTRIBUTING.md
+%doc README.md CONTRIBUTING.md
 %_bindir/query-tee
 
 %files -n mimirtool
-%doc README.md SECURITY.md CONTRIBUTING.md
+%doc README.md CONTRIBUTING.md
 %_bindir/mimirtool
 
 %files metaconvert
-%doc README.md SECURITY.md CONTRIBUTING.md
+%doc README.md CONTRIBUTING.md
 %_bindir/metaconvert
 
 %changelog
+* Wed Jun 03 2026 Anton Meleshnikov <alton@altlinux.org> 3.1.0-alt1
+- New version 3.1.0.
+
 * Mon Apr 27 2026 Anton Meleshnikov <alton@altlinux.org> 3.0.6-alt1
 - New version 3.0.6.
 
