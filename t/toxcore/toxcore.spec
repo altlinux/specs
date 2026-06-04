@@ -3,7 +3,7 @@
 %define abiversion 2
 
 Name: toxcore
-Version: 0.2.22
+Version: 0.2.23
 Release: alt1
 
 Summary: Peer to peer (serverless) instant messenger
@@ -130,6 +130,9 @@ sed -i "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
 %_pkgconfigdir/libtoxcore.pc
 
 %changelog
+* Thu Jun 04 2026 Anton Farygin <rider@altlinux.org> 0.2.23-alt1
+- 0.2.22 -> 0.2.23
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 0.2.22-alt1
 - 0.2.21 -> 0.2.22
 
