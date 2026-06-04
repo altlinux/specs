@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: a2ps
-Version: 4.15.6
+Version: 4.15.8
 Release: alt1
 
 # Brain damaged lib/program_name system...
@@ -80,6 +80,9 @@ install -m 755 %SOURCE1 %buildroot%_sbindir
 %_datadir/emacs/site-lisp/a2ps.el
 
 %changelog
+* Thu Jun 02 2026 Petr Usoltsev <usoltsevpv@altlinux.org> 4.15.8-alt1
+- Version up
+
 * Mon Jun 30 2025 Petr Usoltsev <usoltsevpv@altlinux.org> 4.15.6-alt1
 - Version up
 - Update koi8 patch
