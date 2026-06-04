@@ -1,6 +1,6 @@
 Name: eaglemode
 Version: 0.96.2
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: Futuristic desktop allowing user to visit almost everything by zooming in
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -10,7 +10,7 @@ Source1: %name-install.sed
 Source2: %name.wrapper
 Url: http://eaglemode.sourceforge.net/index.html
 
-Requires: arj p7zip lzop lha zip unzip unrar htmldoc
+Requires: arj 7-zip lzop lha zip unzip unrar htmldoc
 
 %set_perl_req_method relaxed
 #set_verify_elf_method unresolved=relaxed
@@ -71,6 +71,9 @@ mv %buildroot%_libdir/%name/include %buildroot%_includedir/%name && ln -s %_incl
 %_includedir/%name/*
 
 %changelog
+* Thu Jun 04 2026 Anton Midyukov <antohami@altlinux.org> 0.96.2-alt2
+- NMU: replace requirements on p7zip with 7-zip.
+
 * Sat Nov 02 2024 Denis Medvedev <nbr@altlinux.org> 0.96.2-alt1
 - version 0.96.2
 
