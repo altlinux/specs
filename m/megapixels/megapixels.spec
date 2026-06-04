@@ -2,7 +2,7 @@
 
 Name:    megapixels
 Version: 1.5.2
-Release: alt3.git7741389
+Release: alt4.git7741389
 Epoch:   1
 
 Summary: The GTK camera application
@@ -37,6 +37,7 @@ uses opengl to debayer the raw sensor data for the preview.
 %setup
 
 %build
+%add_optflags -std=gnu17
 %meson
 %meson_build
 
@@ -53,6 +54,9 @@ uses opengl to debayer the raw sensor data for the preview.
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Thu Jun 04 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.5.2-alt4.git7741389
+- FTBFS: built with -std=gnu17.
+
 * Thu Aug 28 2025 x1z53 <x1z53@altlinux.org> 1:1.5.2-alt3.git7741389
 - Add runtime dependency on dcraw.
 
