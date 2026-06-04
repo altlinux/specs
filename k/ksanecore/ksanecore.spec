@@ -4,7 +4,7 @@
 %define libksanecore libksanecore6_%sover
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -78,6 +78,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

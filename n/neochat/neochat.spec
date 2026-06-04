@@ -1,7 +1,7 @@
 %define rname neochat
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -71,6 +71,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

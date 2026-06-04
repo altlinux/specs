@@ -1,7 +1,7 @@
 
 %define rname konversation
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %define beta %nil
 %K6init no_altplace
@@ -73,6 +73,9 @@ sed -i \
 
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

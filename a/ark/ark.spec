@@ -6,8 +6,8 @@
 %def_disable libzip
 
 Name: %rname
-Version: 26.04.1
-Release: alt2
+Version: 26.04.2
+Release: alt1
 %K6init
 
 Group: Archiving/Compression
@@ -108,6 +108,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Mon Jun 01 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt2
 - update requires
 

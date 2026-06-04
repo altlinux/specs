@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -147,6 +147,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
