@@ -22,7 +22,7 @@
 
 Name: OpenSceneGraph
 Version: 3.6.5
-Release: alt5
+Release: alt6
 
 Summary: High performance real-time graphics toolkit
 License: LGPL-2.1-only WITH WxWindows-exception-3.1
@@ -101,7 +101,7 @@ BuildRequires: libgdal-devel
 
 %ifarch %e2k
 # error: cpio archive too big - 4321M
-%global __find_debuginfo_files %nil
+%define optflags_debug -g0
 %endif
 
 %description
@@ -487,6 +487,9 @@ rm -rf %buildroot/usr/doc/
 %_includedir/OpenThreads
 
 %changelog
+* Thu Jun 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.5-alt6
+- e2k build fix
+
 * Wed Feb 11 2026 Pavel Petrykin <silverducks@altlinux.org> 3.6.5-alt5
 - Ensure compliance with Shared Libs Policy.
 
