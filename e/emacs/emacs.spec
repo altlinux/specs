@@ -1,6 +1,6 @@
 Name: emacs
 Version: 30.2
-Release: alt4
+Release: alt5
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -263,7 +263,7 @@ rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
 # arch-dependent part of locallisppath, mostly for modules
-mkdir %buildroot%_libdir/emacs/%version/site-lisp
+mkdir -p %buildroot%_libdir/emacs/%version/site-lisp
 
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
@@ -344,7 +344,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_libexecdir/systemd/user/emacs.service
 
 %dir %_libdir/emacs/%version
+%if_enabled natcomp
 %dir %_libdir/emacs/%version/native-lisp
+%endif
 %_libdir/emacs/%version/site-lisp
 
 %_emacslispdir
@@ -374,6 +376,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Thu Jun 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 30.2-alt5
+- e2k build fix
+
 * Tue Apr 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 30.2-alt4
 - backported fix for emacs#79687
 
