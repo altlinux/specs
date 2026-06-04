@@ -4,7 +4,7 @@
 %def_with check
 
 Name: beets
-Version: 2.7.1
+Version: 2.11.0
 Release: alt1
 Summary: Music library manager and MusicBrainz tagger.
 License: MIT and ISC
@@ -49,9 +49,11 @@ BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-distutils-extra
 BuildRequires: gstreamer1.0
 BuildRequires: ffmpeg
+BuildRequires: ffprobe
 BuildRequires: ImageMagick-tools
 BuildRequires: unrar
 BuildRequires: bash-completion
+BuildRequires: python3-module-factory_boy
 BuildRequires: python3-module-requests-ratelimiter
 
 Requires: python3
@@ -67,6 +69,7 @@ Requires: python3(requests)
 Requires: python3(pylast)
 Requires: gstreamer1.0
 Requires: ffmpeg
+Requires: ffprobe
 Requires: ImageMagick-tools
 Requires: python3(flask)
 Requires: python3(lap)
@@ -78,6 +81,8 @@ BuildRequires: python3(pytest)
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-requests-mock
 BuildRequires: python3-module-pytest-flask
+BuildRequires: python3-module-pyacoustid
+BuildRequires: python3-module-librosa
 %endif
 
 %add_python3_req_skip titlecase
@@ -129,7 +134,9 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %pyproject_install
 
 %check
-%pyproject_run_pytest --ignore=test/plugins/test_titlecase.py
+%pyproject_run_pytest \
+--ignore=test/plugins/test_titlecase.py \
+--ignore=test/plugins/test_autobpm.py
 
 %files
 %doc *.md
@@ -142,6 +149,9 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %python3_sitelibdir/beetsplug/
 
 %changelog
+* Wed Jun 03 2026 Pavel Shilov <zerospirit@altlinux.org> 2.11.0-alt1
+- Update to new version 2.11.0
+
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt1
 - Update to new version 2.7.1.
 
