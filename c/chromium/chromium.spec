@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        148.0.7778.216
+Version:        149.0.7827.53
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -83,9 +83,7 @@ Patch003: 0003-DEBIAN-manpage-fixes.patch
 Patch004: 0004-DEBIAN-ps-print.patch
 Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
-Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
-Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-gentoo-stylesheet.patch
 
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
@@ -102,7 +100,7 @@ Patch020: 0020-ALT-swiftshader-fix-llvm.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-ALT-block-error-from-google.patch
 Patch023: 0023-Add-missing-headers.patch
-Patch024: 0024-ALT-chromium-147-rust-1.95-bytemuck.patch
+Patch024: 0024-DEBIAN-chromium-148-rust-bytemuck.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch027: 0027-DEBIAN-disable-tests-swiftshader.patch
@@ -115,9 +113,8 @@ Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
 Patch034: 0034-FRDORA-chromium-148-autodarkmode-workaround.patch
 Patch036: 0036-ALT-disable-lens-overlay.patch
 Patch037: 0037-ALT-clang-path.patch
-Patch038: 0038-ALT-std::exchange.patch
 # Support extension manifest v2
-Patch039: 0039-extensions-manifestv2_ifdef.patch
+# Patch039: 0039-extensions-manifestv2_ifdef.patch
 
 Patch040: 0040-DEBIAN-foreach.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -139,7 +136,7 @@ Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 Patch060: 0060-DEBIAN-llvm-19-clone-traits.patch
 Patch061: 0061-DEBIAN-autofill-binarypb.patch
 Patch062: 0062-DEBIAN-nodejs-set-intersection.patch
-Patch063: 0063-DEBIAN-value-or.patch
+Patch063: 0063-DEBIAN-llvm-19-value-or.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
@@ -154,12 +151,11 @@ Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 # features.
 Patch072: 0072-DEBIAN-disable-ai.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
-Patch074: 0074-FEDORA-chromium-147-widevine-on-arm64.patch
+Patch074: 0074-DEBIAN-llvm-19-const-profile.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
 Patch076: 0076-DEBIAN-llvm-19-iota.patch
 Patch077: 0077-DEBIAN-llvm-19-raw-ref-map-find.patch
 Patch078: 0078-DEBIAN-revert-v8-sanitize.patch
-Patch079: 0079-DEBIAN-turboshaft.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -249,7 +245,8 @@ BuildRequires:  pkgconfig(libwebp)
 ## BuildRequires:  pkgconfig(libwoff2dec)
 ## BuildRequires:  pkgconfig(libxslt)
 BuildRequires:  pkgconfig(libzstd)
-BuildRequires:  pkgconfig(minizip)
+BuildRequires:  pkgconfig(minizip-ng)
+BuildRequires:  libminizip-ng-compat-devel
 BuildRequires:  pkgconfig(nspr)
 BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(openh264)
@@ -418,7 +415,7 @@ export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS=
 FLAGS+=' -fno-delete-null-pointer-checks'
-FLAGS+=' -DUSE_SYSTEM_MINIZIP'
+# FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 #FLAGS+=' -stdlib=libc++'
 # FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
 FLAGS+=' -I/usr/include/c++/v1'
@@ -723,6 +720,9 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Jun 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.53-alt1
+- New version (149.0.7827.53).
+
 * Fri May 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 148.0.7778.216-alt1
 - New version (148.0.7778.216).
 - Disable Lens Overlay.
