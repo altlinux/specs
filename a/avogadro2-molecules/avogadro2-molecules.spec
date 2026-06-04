@@ -1,5 +1,5 @@
 Name: avogadro2-molecules
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Common molecule fragments for visualization in Avogadro2
@@ -58,6 +58,9 @@ rm -f %buildroot%_datadir/avogadro2/molecules/README*
 %doc README.md
 
 %changelog
+* Mon Apr 27 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0.
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0.
 

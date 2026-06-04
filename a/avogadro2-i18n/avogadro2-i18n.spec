@@ -1,5 +1,5 @@
 Name: avogadro2-i18n
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Translations for Avogadro app and libraries
@@ -31,6 +31,9 @@ install -pm 644 avogadrolibs/* %buildroot%_datadir/avogadro2/i18n/
 %doc README.md LICENSE
 
 %changelog
+* Tue Apr 14 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0.
 

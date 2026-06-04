@@ -23,7 +23,7 @@
 %def_without mmtf
 
 Name: avogadro2-libs
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Avogadro2 libraries
@@ -37,8 +37,7 @@ Source: %name-%version.tar
 Patch0: avogadro2-libs-spglib.cmake.patch
 Patch1: avogadro2-libs-fragments-1.102.1.patch
 Patch2: avogadro2-insert_modules.patch
-Patch3: avogadro2-libs-alt-use-noarch-scripts.patch
-Patch4: avogadro2-libs-insertpeptide-1.103.0.patch
+Patch3: avogadro2-libs-insertpeptide-1.103.0.patch
 
 BuildRequires(pre): rpm-build-cmake
 
@@ -74,10 +73,6 @@ Requires: avogadro2-avogenerators = %version
 Requires: avogadro2-crystals = %version
 Requires: avogadro2-molecules = %version
 
-# This Python scripts are not standalone executables and are not imported
-# as Python modules. They are used internally by Avogadro2
-%add_findprov_skiplist %_libexecdir/avogadro2/scripts/formatScripts/zyx.py
-%add_findreq_skiplist %_libexecdir/avogadro2/scripts/formatScripts/zyx.py
 
 %description
 Avogadro libraries provide 3D rendering, visualization, analysis
@@ -122,7 +117,6 @@ HTML documentation of %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 
 sed -e 's|${AvogadroLibs_SOURCEDATA_DIR}/|${AvogadroLibs_SOURCE_DIR}/|g' -i avogadro/qtplugins/insertfragment/CMakeLists.txt
@@ -171,21 +165,13 @@ mv thirdparty/libgwavi/README.md thirdparty/libgwavi/README-libgwavi.md
 %cmake_install
 rm -rf %buildroot%_datadir/doc
 
-%if "%_libexecdir" != "%_libdir"
-mkdir -p %buildroot%_libexecdir/avogadro2/scripts
-mv -v %buildroot%_libdir/avogadro2/scripts \
-      %buildroot%_libexecdir/avogadro2/
-%endif
-
 
 %files
 %doc README.md LICENSE
 %doc thirdparty/libgwavi/README-libgwavi.md
 %dir %_libdir/avogadro2
-%_libdir/libAvogadro*.so.1
+%_libdir/libAvogadro*.so.2
 %_libdir/libAvogadro*.so.%version
-%dir %_libexecdir/avogadro2
-%_libexecdir/avogadro2/scripts/
 %_libdir/avogadro2/libgwavi.a
 %_libdir/avogadro2/staticplugins/
 
@@ -205,6 +191,9 @@ mv -v %buildroot%_libdir/avogadro2/scripts \
 %endif
 
 %changelog
+* Mon Apr 20 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0.
 

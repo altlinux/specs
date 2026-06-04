@@ -1,5 +1,5 @@
 Name: avogadro2-crystals
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Crystal structure database used by Avogadro2.
@@ -37,6 +37,9 @@ rm -f %buildroot%_datadir/avogadro2/crystals/README*
 %doc README.md
 
 %changelog
+* Fri Apr 24 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0.
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0.
 

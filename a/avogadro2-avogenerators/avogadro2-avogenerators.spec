@@ -1,5 +1,5 @@
 Name: avogadro2-avogenerators
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Python input file generators for Avogadro2
@@ -10,8 +10,8 @@ VCS: https://github.com/OpenChemistry/avogenerators
 
 # These Python scripts are not standalone executables and are not imported
 # as Python modules. They are used internally by Avogadro2
-%add_findprov_skiplist %_libexecdir/avogadro2/scripts/inputGenerators/*
-%add_findreq_skiplist %_libexecdir/avogadro2/scripts/inputGenerators/*
+%add_findprov_skiplist %_libexecdir/avogadro2/plugins/generators*
+%add_findreq_skiplist %_libexecdir/avogadro2/plugins/generators*
 
 Source: %name-%version.tar
 
@@ -35,14 +35,17 @@ by the Avogadro 2 application to generate input for various codes:
 %setup
 
 %install
-mkdir -p %buildroot%_libexecdir/avogadro2/scripts/inputGenerators
-cp -a *.py plugin.json %buildroot%_libexecdir/avogadro2/scripts/inputGenerators/
+mkdir -p %buildroot%_libexecdir/avogadro2/plugins/generators
+cp -a scripts src tests pyproject.toml  %buildroot%_libexecdir/avogadro2/plugins/generators
 
 %files
-%_libexecdir/avogadro2/scripts/inputGenerators
+%_libexecdir/avogadro2/plugins/generators
 %doc README.md LICENSE
 
 %changelog
+* Fri Apr 24 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0
 

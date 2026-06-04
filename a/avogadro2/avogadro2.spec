@@ -4,7 +4,7 @@
 %def_with cups
 
 Name: avogadro2
-Version: 1.103.0
+Version: 2.0.0
 Release: alt1
 Summary: Advanced molecular editor
 
@@ -98,6 +98,9 @@ cp -a avogadro/icons/* %buildroot%_datadir/icons/%name/
 %_datadir/%name
 
 %changelog
+* Mon Apr 20 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
+- Update to version 2.0.0
+
 * Fri Feb 06 2026 Valentin Sokolov <sova@altlinux.org> 1.103.0-alt1
 - Update to version 1.103.0.
 
