@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
@@ -16,10 +16,11 @@ License: LGPL-2.0
 Group: System/Libraries
 Url: https://cairographics.org/cairomm
 
+Vcs: https://git.cairographics.org/git/cairomm
+
 %if_disabled snapshot
 Source: https://www.cairographics.org/releases/%_name-%version.tar.xz
 %else
-Vcs: https://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
@@ -91,6 +92,9 @@ This package contains documentation needed for developing %_name applications.
 %endif
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 

@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: This library provides a C++ interface to cairo
@@ -17,10 +17,11 @@ License: LGPL-2.0
 Group: System/Libraries
 Url: https://cairographics.org/cairomm
 
+Vcs: https://git.cairographics.org/git/cairomm
+
 %if_disabled snapshot
 Source: https://www.cairographics.org/releases/%_name-%version.tar.xz
 %else
-Vcs: https://git.cairographics.org/git/cairomm
 Source: %_name-%version.tar
 %endif
 
@@ -92,6 +93,9 @@ This package contains documentation needed for developing %_name applications.
 %endif
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.6-alt1
+- 1.14.6
+
 * Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
 - 1.14.5
 
