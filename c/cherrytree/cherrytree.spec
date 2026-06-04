@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 1.6.3
+Version: 1.7.0
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -27,6 +27,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libuchardet-devel
 BuildRequires: libvte3-devel
 BuildRequires: libxml++2-devel
+BuildRequires: libxml2-devel
 
 %description
 CherryTree is a hierarchical note taking application, featuring rich text and
@@ -40,6 +41,7 @@ file with extension ".ctd".
 %prep
 %setup
 %autopatch -p0
+sed -i '/pkg_check_modules(LIBXML libxml++-2.6 REQUIRED)/a list(APPEND LIBXML_LIBRARIES xml2)' CMakeLists.txt
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,Glib::ustring) |" src/ct/ct_{misc_utils,storage_xml}.cc
@@ -78,6 +80,9 @@ rm -r src/spdlog
 
 
 %changelog
+* Thu Jun 04 2026 Danila Skachedubov <skachedubov@altlinux.org> 1.7.0-alt1
+- new version 1.7.0 (with rpmrb script)
+
 * Tue Jan 20 2026 Danila Skachedubov <skachedubov@altlinux.org> 1.6.3-alt1
 - new version 1.6.3 (with rpmrb script)
 
