@@ -1,5 +1,5 @@
 Name: firsttime-lightdm-kde
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.4-alt1
+- return setup for old nvidia cards with driver < 500
+- improve greeter-session setup
+
 * Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt1
 - return setup for old nvidia cards with driver < 400
 
