@@ -1,38 +1,27 @@
-%ifarch %e2k
-# pandoc is unavailable because depends on haskell
-%def_without pandoc
-%else
-%def_with pandoc
-%endif
-
 Name:     cutecom
-Version:  0.51.0
-Release:  alt3
+Version:  0.60.0
+Release:  alt0.1
 
 Summary:  A graphical serial terminal
-Summary(pl): Graficzny terminal szeregowy
 Summary(ru_RU.UTF-8): Графический последовательный терминал
-License:  GPL-3.0+
+License:  GPL-3.0-or-later
 Group:    Communications
-Url:      https://gitlab.com/cutecom/cutecom
+URL:      https://gitlab.com/cutecom/cutecom
+VCS:      https://gitlab.com/cutecom/cutecom
 
 Source:   %name-%version.tar
-Patch:    cutecom-0.40.0-mga-fixinstall.patch
+#Patch:    cutecom-0.40.0-mga-fixinstall.patch
 
 # Upstream patch
-Patch1:   0001-Fix-build-with-Qt-5.15-hopefully.patch 
+#Patch1:   0001-Fix-build-with-Qt-5.15-hopefully.patch 
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5SerialPort)
-BuildRequires: pkgconfig(Qt5Widgets)
-%if_with pandoc
-# build MarkDown
-BuildRequires: pandoc
-%endif
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6SerialPort)
+BuildRequires: pkgconfig(Qt6Widgets)
 
 # Required for xmodem support
 Requires: lrzsz
@@ -53,15 +42,14 @@ Cutecom - графический последовательный термина
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 %cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Upstream script does not install the .desktop file if KDE is not installed,
 # so we install it manually
@@ -72,23 +60,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=System \
 	cutecom.desktop
 
-%if_with pandoc
-pandoc -f markdown -t html README.md -o README.html
-%endif
-
 %files
 %doc Changelog LICENSE *.png TODO
-%if_with pandoc
-%doc README.html
-%else
 %doc README.md
-%endif
-%_bindir/*
-%_man1dir/*
-%_desktopdir/*
+%_bindir/cutecom
+%_man1dir/cutecom.1.*
+%_desktopdir/cutecom.desktop
+%_iconsdir/hicolor/*/apps/cutecom.png
 %_iconsdir/hicolor/scalable/apps/cutecom.svg
+%_datadir/metainfo/com.gitlab.cutecom.cutecom.appdata.xml
 
 %changelog
+* Thu Jun 04 2026 Anton Midyukov <antohami@altlinux.org> 0.60.0-alt0.1
+- New snapshot.
+
 * Sun Oct 31 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.51.0-alt3
 - Fixed build for Elbrus
 
