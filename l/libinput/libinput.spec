@@ -21,7 +21,7 @@
 %define plugins_paths %_sysconfdir/%name/plugins/ %_libdir/%name/plugins/
 
 Name: libinput
-Version: 1.31.2
+Version: 1.31.3
 Release: alt1
 
 Summary: Input devices library
@@ -225,6 +225,9 @@ for d in %plugins_paths; do
 %endif
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.31.3-alt1
+- 1.31.3
+
 * Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1.31.2-alt1
 - 1.31.2
 
