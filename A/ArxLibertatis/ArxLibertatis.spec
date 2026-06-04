@@ -1,18 +1,20 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define sover 0
+
 Name:     ArxLibertatis
-Version:  1.2
-Release:  alt2
+Version:  1.2.1
+Release:  alt1
 
 Summary:  Cross-platform port of Arx Fatalis, a first-person role-playing game
 License:  GPL-3.0-or-later
 Group:    Games/Other
-Url:      https://github.com/arx/ArxLibertatis
-
-Packager: Anton Midyukov <antohami@altlinux.org>
+URL:      https://github.com/arx/ArxLibertatis
+VCS:      https://github.com/arx/ArxLibertatis
 
 Source:   %name-%version.tar
+Patch:    %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -29,21 +31,29 @@ BuildRequires: cppunit-devel
 BuildRequires: libglm-devel
 BuildRequires: inkscape
 BuildRequires: optipng
-BuildRequires: ImageMagick
+BuildRequires: ImageMagick-tools
 
 %description
 %summary.
 
+%package -n libArxIO%sover
+Summary: Shared library for %name
+Group: System/Libraries
+
+%description -n libArxIO0
+Shared library for %name.
+
 %package devel
 Summary: Developments files for %name
 Group: Development/Other
-Requires: %name = %EVR
+Requires: libArxIO%sover = %EVR
 
 %description devel
 Developments files for %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -DBUILD_TESTS=ON
@@ -52,7 +62,7 @@ Developments files for %name.
 %install
 %cmake_install
 
-# Remove unpackages files
+# Remove unpackaged files
 rm -r %buildroot%_datadir/blender
 
 %check
@@ -63,17 +73,24 @@ rm -r %buildroot%_datadir/blender
 %_prefix/libexec/arxtool
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
-%_libdir/*.so.*
 %_gamesdatadir/arx
-%_man1dir/*
-%_man6dir/*
+%_man1dir/*.1.*
+%_man6dir/*.6.*
 %doc *.md
 
+%files -n libArxIO%sover
+%_libdir/libArxIO.so.%sover
+%_libdir/libArxIO.so.%version
+
 %files devel
-%_libdir/*.so
+%_libdir/libArxIO.so
 %_includedir/*
 
 %changelog
+* Mon Apr 13 2026 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+- New subpackage with library.
+
 * Sat Jan 22 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt2
 - 1.2 Release
 
