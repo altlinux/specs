@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.10.3
+Version: 4.10.4
 Release: alt1
 
 Summary: Open source computer monitoring and classroom management
@@ -13,13 +13,10 @@ VCS: https://github.com/veyon/veyon/
 
 Source0: %name-%version.tar
 Source1: %name-%version-3rdparty-kldap.tar
-Source3: %name-%version-3rdparty-libfakekey.tar
-Source4: %name-%version-3rdparty-libvncserver.tar
-Source5: %name-%version-3rdparty-libvncserver-webclients-novnc.tar
-Source6: %name-%version-3rdparty-qthttpserver.tar
-Source7: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
-Source8: %name-%version-3rdparty-x11vnc.tar
-Source9: %name-%version-3rdparty-libvncserver-doc-doxygen-awesome-css.tar
+Source2: %name-%version-3rdparty-qthttpserver.tar
+Source3: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
+Source4: %name-%version-3rdparty-x11vnc.tar
+
 Source100: veyon-config-dm-login.sh
 Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
@@ -52,6 +49,7 @@ BuildRequires: libfakekey-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libproc2-devel
+BuildRequires: libvncserver-devel
 
 %description
 Veyon is a free and open source software
@@ -91,7 +89,7 @@ Veyon доступен на разных языках и предоставля�
 просто установив Veyon у себя на домашнем ПК.
 
 %prep
-%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9
+%setup -a1 -a2 -a3 -a4
 %autopatch -p1
 
 # Fix: error: "_FORTIFY_SOURCE" redefined [-Werror]
@@ -131,6 +129,11 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Thu Jun 04 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.4-alt1
+- New version.
+- Exclude the local host from the screen lock broadcast so the master keeps
+  control, mirroring the demo client behaviour.
+
 * Sat May 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.10.3-alt1
 - New version.
 
