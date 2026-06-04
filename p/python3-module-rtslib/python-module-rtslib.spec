@@ -1,5 +1,5 @@
 Name:           python3-module-rtslib
-Version:        2.2.3
+Version:        2.2.4
 Release:        alt1
 
 Summary:        API for Linux kernel LIO SCSI target
@@ -72,6 +72,9 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 %_man5dir/saveconfig.json.5.*
 
 %changelog
+* Mon May 25 2026 Anton Vyatkin <toni@altlinux.org> 2.2.4-alt1
+- New version 2.2.4.
+
 * Tue Apr 08 2025 Anton Vyatkin <toni@altlinux.org> 2.2.3-alt1
 - New version 2.2.3.
 
