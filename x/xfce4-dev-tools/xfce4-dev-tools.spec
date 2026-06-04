@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.21.0
+Version: 4.21.1
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -37,6 +37,7 @@ mkdir -p m4/
 %build
 %autoreconf
 %configure \
+	--with-cppcheck-cfg-prefix=%_datadir \
 	--enable-maintainer-mode
 %make_build
 
@@ -52,9 +53,14 @@ make check
 %doc AUTHORS HACKING README.md NEWS
 %_bindir/*
 %_datadir/aclocal/*
+%_datadir/Cppcheck/cfg/*.cfg
 %_man1dir/*
 
 %changelog
+* Thu Jun 04 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Fixed cppcheck cfg dir.
+- Updated to 4.21.1.
+
 * Sat Jan 10 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
 - Updated to 4.21.0.
 
