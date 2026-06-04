@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.10.0
+Version: 140.10.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -36,6 +36,7 @@ Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
 Patch005: 0005-MOZ-bug-2033279-encoding_rs-Rust-1.95.patch
+Patch006: 0006-Firefox-140-ffvpx-parser-list-FFCodecParser.patch
 ### End Patches
 
 Provides: webclient
@@ -449,6 +450,15 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sun May 24 2026 Pavel Vasenkov <pav@altlinux.org> 140.10.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-7320 Information disclosure due to incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-7321 Sandbox escape due to incorrect boundary conditions in the WebRTC: Networking component
+  + CVE-2026-8091 Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-7322 Memory safety bugs fixed in Firefox ESR 115.35.1, Firefox ESR 140.10.1 and Firefox 150.0.1
+  + CVE-2026-7323 Memory safety bugs fixed in Firefox ESR 140.10.1 and Firefox 150.0.1
+
 * Sun May 24 2026 Pavel Vasenkov <pav@altlinux.org> 140.10.0-alt1
 - New ESR version.
 - Security fixes:
