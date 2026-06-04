@@ -3,7 +3,7 @@
 %define soversion %(cmake -P %SOURCE1 %SOURCE2 2>&1)
 
 Name:          lib%_name
-Version:       0.1.4
+Version:       0.1.5
 Release:       alt1
 Group:         System/Libraries
 Summary:       Library for alterator objects
@@ -79,6 +79,9 @@ cd src/tests
 ../../%_cmake__builddir/src/tests/libalterator-glib-tests
 
 %changelog
+* Thu Jun 04 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.5-alt1
+- Update version to 0.1.5.
+
 * Wed Jun 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt1
 - Update version to 0.1.4.
 

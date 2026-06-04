@@ -2,8 +2,8 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.5
-Release: alt2
+Version: 0.3.6
+Release: alt1
 
 Summary: Backends generations for components backends
 License: GPLv2+
@@ -69,6 +69,14 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Thu May 07 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt1
+- Add locale awareness to the Description and DescriptionRaw methods
+  of the following interfaces:
+  + batch_component_categories1;
+  + batch_components1;
+  + component_categories1.
+- Update docs (thx Sergey Savelev).
+
 * Wed Mar 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.5-alt2
 - Upgrade the backend version to ensure correct operation with exit_status.
 
