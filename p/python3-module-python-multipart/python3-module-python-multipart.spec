@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.29
+Version: 0.0.31
 Release: alt1
 
 Summary: A streaming multipart parser for Python
@@ -58,6 +58,10 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 04 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.31-alt1
+- Updated to 0.0.30 (fixes GHSA-v9pg-7xvm-68h, GHSA-5rvq-cxj2-64vf,
+  GHSA-6jv3-5f52-599m, GHSA-vffw-93wf-4j4q).
+
 * Fri May 29 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.29-alt1
 - Updated to 0.0.29 (fixes GHSA-pp6c-gr5w-3c5g).
 
