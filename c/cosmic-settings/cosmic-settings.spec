@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-settings
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1%beta
 
 Summary: COSMIC Settings
@@ -95,6 +95,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.15-alt1
+- 1.0.15
+
 * Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.14-alt1
 - 1.0.14
 

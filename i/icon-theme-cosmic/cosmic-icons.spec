@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: icon-theme-cosmic
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1%beta
 
 Summary: COSMIC Icons
@@ -26,6 +26,8 @@ Source: %url/archive/%git_ver/%_name-%version%beta.tar.gz
 %else
 Source: %_name-%version%beta.tar
 %endif
+# Inherits=Pop,hicolor
+Requires: icon-theme-pop icon-theme-hicolor
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -45,6 +47,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.15-alt1
+- 1.0.15
+
 * Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.14-alt1
 - 1.0.14
 
