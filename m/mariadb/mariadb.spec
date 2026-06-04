@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.8
+Version: 12.3.2
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -108,7 +108,7 @@ Patch0: %name-%version.patch
 # ALTLinux
 Patch1: mariadb-10.6.8-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
-Patch4: mariadb-10.1.8-alt-client.patch
+Patch4: mariadb-12.3.2-alt-client.patch
 Patch7: mariadb-10.3.8-alt-config-libs.patch
 
 # Patches specific for this mysql package
@@ -611,10 +611,6 @@ popd
 ln %buildroot%_bindir/mariadb-install-db %buildroot%_sbindir/mariadb-install-db
 ln -sf mariadb-install-db %buildroot%_sbindir/mysql_install_db
 
-# Move pam_user_map.so to %_pam_modules_dir
-mkdir -p %buildroot%_pam_modules_dir
-mv %buildroot/%_lib/security/* %buildroot%_pam_modules_dir/
-
 # NB: still a problem for cmake on %%e2k as of 10.4.14, do not remove
 # (gave up on figuring out what was the particular crap that
 # generated broken libmariadb/cmake/install.cmake) // mike@
@@ -757,6 +753,7 @@ fi
 %config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
 %config(noreplace) %_sysconfdir/my.cnf.server/*.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/spider.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/videx.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/hashicorp_key_management.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/provider_bzip2.cnf
 %config(noreplace) %_sysconfdir/my.cnf.d/provider_lz4.cnf
@@ -878,6 +875,7 @@ fi
 %_unitdir/mariadbcheck@.service
 %config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 %config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/wsrep_info.cnf
 %_datadir/mariadb/wsrep_notify
 %_man1dir/galera_new_cluster.1*
 %_man1dir/wsrep_*.1*
@@ -1115,6 +1113,10 @@ fi
 %endif
 
 %changelog
+* Thu Jun 04 2026 Alexei Takaseev <taf@altlinux.org> 12.3.2-alt1
+- 12.3.2
+- Update mariadb-*-alt-client.patch
+
 * Fri May 29 2026 Alexei Takaseev <taf@altlinux.org> 11.8.8-alt1
 - 11.8.8 (Fixes: CVE-2026-48163, CVE-2026-48165)
 
