@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 68.1
+Version: 69.0
 Release: alt1
 
 Summary: WeasyPrint converts web documents to PDF
@@ -27,6 +27,7 @@ BuildRequires: python3-module-pydyf
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: ghostscript
 BuildRequires: python3-module-pytest-xdist
+BuildRequires: fonts-ttf-google-noto-emoji
 %endif
 
 BuildArch: noarch
@@ -55,6 +56,9 @@ Source:  %name-%version.tar
 %doc README.rst LICENSE
 
 %changelog
+* Wed Jun 03 2026 Anton Vyatkin <toni@altlinux.org> 69.0-alt1
+- New version 69.0 (Fixes: CVE-2026-49452).
+
 * Fri Feb 06 2026 Anton Vyatkin <toni@altlinux.org> 68.1-alt1
 - New version 68.1.
 
