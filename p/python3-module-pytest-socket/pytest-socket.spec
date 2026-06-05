@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Pytest Plugin to disable socket calls during tests
 License: MIT
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -34,7 +35,7 @@ ensure network calls are prevented.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -47,11 +48,12 @@ ensure network calls are prevented.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
-%python3_sitelibdir/%mod_name.py
-%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.0 -> 0.8.0
+
 * Mon Feb 19 2024 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
