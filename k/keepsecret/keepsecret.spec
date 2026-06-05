@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 %K6init
 
 Summary: Password manager GUI for KDE Plasma
@@ -48,5 +48,8 @@ It can be used with KWallet, but also other systems such as oo7, Gnome-keyring o
 %_datadir/qlogging-categories6/*keepsecret*
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt2
+- add russian translation
+
 * Wed Jun 03 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - initial build
