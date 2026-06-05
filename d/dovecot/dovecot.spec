@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.21.1
+Version: 2.4.4
 Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
@@ -22,12 +22,9 @@ Source4: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 Source5: %name.watch
 Source6: 90-dovecot.filetrigger
 
-Patch1: fix-mail_plugin_dir-default.patch
-Patch2: dovecot-2.0-defaultconfig.patch
-#Patch3: dovecot-2.1-privatetmp.patch
-Patch4: dovecot-2.1.4-postreleasefix.patch
-Patch5: dovecot-2.3-systemd_firsttime.patch
-Patch6: CVE-2022-30550.patch
+Patch1: dovecot-2.1.4-postreleasefix.patch
+Patch2: dovecot-2.3-systemd_firsttime.patch
+Patch3: dovecot-alt-config.patch
 
 Requires(pre,postun): mailboxes-control
 
@@ -36,8 +33,9 @@ Requires(pre,postun): mailboxes-control
 
 %filter_from_requires /systemctl/d
 
-BuildRequires: bzlib-devel
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
+BuildRequires: bzlib-devel
 BuildRequires: libexpat-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libldap-devel
@@ -48,6 +46,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libssl-devel
 BuildRequires: libsystemd-devel
 BuildRequires: openssl
+BuildRequires: perl-Encode
 BuildRequires: postgresql-devel
 BuildRequires: zlib-devel
 
@@ -76,23 +75,15 @@ Libraries and headers for Dovecot
 
 %prep
 %setup
-
 %patch1 -p1
-%patch2 -p1
-#patch3 -p1
-%patch4 -p1
-%patch5 -p2
-%patch6 -p1
-
-sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
-sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
+%patch2 -p2
+%patch3 -p2
 
 %ifarch %e2k
 # lcc 1.23.12 won't do that
 sed -i 's, ATTR_RETURNS_NONNULL,,' src/lib/mempool.h
 %endif
-
-xz -9 ChangeLog
+xz -9 NEWS
 
 %build
 %undefine _configure_gettext
@@ -114,7 +105,7 @@ export ACLOCAL='aclocal -I .'
     --with-sqlite \
 
 # setup right ssl directory
-sed -i 's|/etc/ssl|%_ssldir|' doc/mkcert.sh doc/example-config/conf.d/10-ssl.conf
+#sed -i 's|/etc/ssl|%_ssldir|' doc/mkcert.sh doc/example-config/conf.d/10-ssl.conf
 
 cp -a %SOURCE4 src/lib
 %make_build
@@ -137,9 +128,9 @@ mkdir -p %buildroot/var/cache/dovecot/indexes
 
 # Install dovecot configuration and dovecot-openssl.cnf
 mkdir -p %buildroot%_sysconfdir/dovecot/conf.d
-install -Dp -m 644 doc/example-config/dovecot.conf %buildroot%_sysconfdir/dovecot
-install -p -m 644 doc/example-config/conf.d/*.conf %buildroot%_sysconfdir/dovecot/conf.d
-install -p -m 644 doc/example-config/conf.d/*.conf.ext %buildroot%_sysconfdir/dovecot/conf.d
+#install -Dp -m 644 doc/example-config/dovecot.conf %buildroot%_sysconfdir/dovecot
+#install -p -m 644 doc/example-config/conf.d/*.conf %buildroot%_sysconfdir/dovecot/conf.d
+#install -p -m 644 doc/example-config/conf.d/*.conf.ext %buildroot%_sysconfdir/dovecot/conf.d
 install -Dp -m 644 doc/dovecot-openssl.cnf %buildroot%_ssldir/dovecot-openssl.cnf
 
 install -Dp -m755 doc/mkcert.sh %buildroot%_libexecdir/%name/mkcert.sh
@@ -176,16 +167,22 @@ groupadd -r -f dovenull 2>/dev/null ||:
 useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 		-d %_var/run/%name -s /dev/null dovenull 2>/dev/null ||:
 %post
+if [ -f /etc/dovecot/dovecot.conf ] && grep -q "dovecot_config_version" /etc/dovecot/dovecot.conf; then
+    echo "=================================================="
+    echo "ATTENTION! Since 2.4.0 old configuration is incompatible."
+    echo "See https://doc.dovecot.org/2.4.4/installation/upgrade/2.3-to-2.4.html"
+    echo "=================================================="
+fi
 %post_control -s private mailboxes
 %post_service %name
 
 # TODO postun old mailboxes access?
 
 %files
-%doc AUTHORS ChangeLog* COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING NEWS* README.md
 %_bindir/doveconf
 %_bindir/doveadm
-%_bindir/dsync
+#_bindir/dsync
 %_sbindir/dovecot
 %dir %_datadir/dovecot
 %_datadir/dovecot/*
@@ -198,7 +195,7 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %dir %_sysconfdir/dovecot
 %dir %_sysconfdir/dovecot/conf.d
 %config(noreplace) %_sysconfdir/dovecot/dovecot.conf
-%config(noreplace) %_sysconfdir/dovecot/conf.d/*
+#config(noreplace) %_sysconfdir/dovecot/conf.d/*
 %config(noreplace) %_sysconfdir/pam.d/dovecot
 %config(noreplace) %_ssldir/dovecot-openssl.cnf
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_ssldir/certs/dovecot.pem
@@ -221,6 +218,28 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue May 12 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt1
+- New version (fixes: CVE-2026-27851, CVE-2026-33603, CVE-2026-40020,
+  CVE-2026-42006, CVE-2026-27857, CVE-2026-40016).
+- Attention! Since 2.4.0 old configuration is incompatible.
+  See https://doc.dovecot.org/2.4.4/installation/upgrade/2.3-to-2.4.html 
+  for details.
+
+* Tue May 12 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
+- Updated to 2.4.3 (fixes: CVE-2025-59028, CVE-2025-59031, CVE-2026-24031,
+  CVE-2026-27859, CVE-2026-27860, CVE-2026-27857, CVE-2026-27856,
+  CVE-2026-27855, CVE-2026-27858, CVE-2025-59032).
+
+* Thu Feb 26 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.2-alt1
+- Updated to 2.4.2 (fixes: CVE-2025-30189).
+
+* Mon Jul 28 2025 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
+- Updated to 2.4.1.
+- Used grep -E instead of egrep (ALT #55378).
+
+* Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Thu Aug 15 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21.1-alt1
 - Updated to 2.3.21.1.
 - Security fixes:

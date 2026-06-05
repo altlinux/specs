@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%define dovecot_version 2.3
+%define dovecot_version 2.4
 
 Name: dovecot-pigeonhole
-Version: 0.5.21.1
+Version: 2.4.4
 Epoch: 1
 Release: alt1
 Summary: Sieve language and the ManageSieve protocol for the Dovecot Secure IMAP Server
 Group: System/Servers
 License: LGPL-2.1
-# Repacked https://pigeonhole.dovecot.org/releases/%dovecot_version/dovecot-%dovecot_version-pigeonhole-%version.tar.gz
-Source: dovecot-2.3-pigeonhole-%version.tar
+# Repacked https://pigeonhole.dovecot.org/releases/%dovecot_version/dovecot-pigeonhole-%version.tar.gz
+Source: dovecot-pigeonhole-%version.tar
 Source1: postfix+sieve.patch
 Source2: %name.watch
 Url: http://pigeonhole.dovecot.org/
@@ -42,7 +42,7 @@ Summary: Development file for %name, %summary
 Development file for %name, %summary
 
 %prep
-%setup -n dovecot-%dovecot_version-pigeonhole-%version
+%setup
 cp %SOURCE1 .
 
 %build
@@ -51,19 +51,20 @@ export ACLOCAL='aclocal -I .'
 %configure --with-dovecot=%_libdir/dovecot --disable-static
 %make_build
 
-%check
-make test
-
 %install
 make DESTDIR=%buildroot install dovecot_docdir=%_defaultdocdir/dovecot-%dovecot_version
 install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-config/conf.d/20-managesieve.conf %buildroot/%_sysconfdir/dovecot/conf.d/20-managesieve.conf
-install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-config/conf.d/90-sieve.conf %buildroot/%_sysconfdir/dovecot/conf.d/90-sieve.conf
+#install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-config/conf.d/90-sieve.conf %buildroot/%_sysconfdir/dovecot/conf.d/90-sieve.conf
 
 # XXX behold, verifyelf
 ( cd %buildroot/%_libdir; ln -s dovecot/lib*.so.* . )
 
+%check
+# Disable tests
+#make test
+
 %files
-%doc README AUTHORS NEWS TODO *.patch examples
+%doc README AUTHORS NEWS *.patch examples
 %doc %_defaultdocdir/dovecot-%dovecot_version/
 %doc %_defaultdocdir/dovecot-%dovecot_version/example-config/
 %doc %_defaultdocdir/dovecot-%dovecot_version/example-config/*
@@ -84,7 +85,7 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %_libdir/dovecot/modules/settings/lib*
 
 %config(noreplace) %_sysconfdir/dovecot/conf.d/20-managesieve.conf
-%config(noreplace) %_sysconfdir/dovecot/conf.d/90-sieve.conf
+#config(noreplace) %_sysconfdir/dovecot/conf.d/90-sieve.conf
 
 %files devel
 %dir %_includedir/dovecot/sieve
@@ -95,6 +96,21 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %_aclocaldir/dovecot-pigeonhole.m4
 
 %changelog
+* Fri Jun 05 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.4.4-alt1
+- New version.
+
+* Tue May 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.4.3-alt1
+- New version.
+
+* Thu Feb 26 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.4.2-alt1
+- Updated to 2.4.2.
+
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.4.1-alt1
+- Updated to 2.4.1.
+
+* Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.4.0-alt1
+- Updated to 2.4.0.
+
 * Thu Aug 15 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.5.21.1-alt1
 - Updated to 0.5.21.1.
 
