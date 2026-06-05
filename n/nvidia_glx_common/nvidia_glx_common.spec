@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 80
 %define nv_minor %nil
-%define pkg_rel alt316
+%define pkg_rel alt317
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.80-alt317
+- ensure to prefer open kernel module
+
 * Tue Jun 02 2026 Sergey V Turchin <zerg@altlinux.org> 595.80-alt316
 - new version
 
