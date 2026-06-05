@@ -23,14 +23,14 @@
 %define fakebrand xalt
 
 %define major 11
-%define minor 3
+%define minor 4
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -294,11 +294,16 @@ for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 # os-release
+echo "altbranch=%altbranch"
 mkdir -p %buildroot/%prefix/lib/
 cat >>%buildroot/%prefix/lib/os-release <<__EOF__
 NAME="%Brand"
 %if "%status" != "%nil"
 RELEASE_TYPE="development"
+%elif "%altbranch" == "sisyphus"
+RELEASE_TYPE="development"
+%else
+RELEASE_TYPE="stable"
 %endif
 VERSION_CODENAME="%smallcodename"
 VERSION="%altversion%status"
@@ -506,6 +511,13 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg at altlinux dot org> 11.4.0-alt1
+- clear status
+- set RELEASE_TYPE stable for releases
+
+* Fri May 29 2026 Sergey V Turchin <zerg at altlinux dot org> 11.4.0-alt0.1
+- new beta
+
 * Tue Apr 14 2026 Sergey V Turchin <zerg at altlinux dot org> 11.3.0-alt2
 - add VERSION_CODENAME and RELEASE_TYPE to os-releae
 
