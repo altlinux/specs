@@ -1,5 +1,5 @@
 Name: matiec
-Version: 20250821
+Version: 20260503
 Release: alt1
 
 Summary: IEC 61131-3 compiler
@@ -85,6 +85,15 @@ rm %buildroot/%_libdir/*.a
 %_libexecdir/%name
 
 %changelog
+* Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 20260503-alt1
+- New snapshot.
+
+* Tue Feb 24 2026 Anton Midyukov <antohami@altlinux.org> 20260224-alt1
+- New snapshot.
+
+* Mon Dec 22 2025 Anton Midyukov <antohami@altlinux.org> 20251222-alt1
+- New snapshot.
+
 * Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 20250821-alt1
 - New snapshot.
 

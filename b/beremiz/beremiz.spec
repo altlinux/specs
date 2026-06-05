@@ -3,8 +3,8 @@
 
 %def_with doc
 Name: beremiz
-Version: 1.4
-Release: alt0.1.20250821.2
+Version: 1.5
+Release: alt0.1.20260530.1
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -38,6 +38,22 @@ Requires: inkscape
 # for wamp
 %py3_requires twisted.internet.wxsupport
 %py3_requires msgpack
+
+# False Dependency
+%add_python3_req_skip posix_spawn
+
+# for ethercat
+%add_python3_req_skip MotionLibrary
+
+# for canfestival
+%add_python3_req_skip commondialogs
+%add_python3_req_skip eds_utils 
+%add_python3_req_skip gen_cfile 
+%add_python3_req_skip networkeditortemplate
+%add_python3_req_skip nodeeditortemplate
+%add_python3_req_skip nodelist
+%add_python3_req_skip nodemanager
+%add_python3_req_skip subindextable
 
 Obsoletes: python-module-beremiz < 1.4
 Obsoletes: python-module-beremiz-tests < 1.4
@@ -154,7 +170,7 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 %_bindir/%name-service
 %_iconsdir/hicolor/256x256/apps/%name.png
 %_desktopdir/%name.desktop
-%doc README.md COPYING COPYING.Runtime
+%doc README.md COPYING_*
 %if_with doc
 %_man1dir/*.1.*
 %doc doc/_build/html/
@@ -162,13 +178,25 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 %endif #doc
 %_datadir/%name
 # opc_ua required python3-module-asyncio
-%exclude %_datadir/%name/opc_ua
+#exclude %_datadir/%name/opc_ua
 # canfestival required canfestival_config ???
-%exclude %_datadir/%name/canfestival
+#exclude %_datadir/%name/canfestival
 # etherlab required MotionLibrary
-%exclude %_datadir/%name/etherlab
+#exclude %_datadir/%name/etherlab
 
 %changelog
+* Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260530.1
+- New snapshot.
+
+* Tue Feb 24 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260224.1
+- New snapshot.
+
+* Thu Jan 08 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260106.1
+- New develop version 1.5.
+
+* Mon Dec 22 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20251222.1
+- New snapshot.
+
 * Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.2
 - do not use dos2unix
 
