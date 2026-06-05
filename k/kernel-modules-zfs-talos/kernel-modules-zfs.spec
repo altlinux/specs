@@ -1,5 +1,5 @@
 %define module_name zfs
-%define module_version 2.4.0
+%define module_version 2.4.2
 %define module_release alt1
 
 %define flavour talos
@@ -10,12 +10,6 @@ BuildRequires(pre): kernel-headers-modules-talos
 
 %define strip_mod_opts --strip-unneeded -R .comment
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/fs
-
-# The kernel 5.10 on powerpc has a GPL-only symbol mmu_feature_keys, which block build zfs with an error:
-# ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
-%if "%(rpmvercmp '%kversion' '5.10')" >= "0"
-ExcludeArch: ppc64le %ix86
-%endif
 
 Summary: ZFS Linux modules
 Name: kernel-modules-%module_name-%flavour
@@ -28,10 +22,13 @@ Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-Url: http://zfsonlinux.org
+Url: https://zfsonlinux.org/
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+%if "%flavour" != "talos"
+Provides: zfs-kernel-module = %EVR
+%endif
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -74,6 +71,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jun 04 2026 Anton Farygin <rider@altlinux.org> 2.4.2-alt1
+- 2.4.0 -> 2.4.2
 
 * Sun Dec 21 2025 Anton Farygin <rider@altlinux.org> 2.4.0-alt1
 - 2.3.5 -> 2.4.0

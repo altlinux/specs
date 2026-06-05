@@ -1,21 +1,15 @@
 %define module_name zfs
-%define module_version 2.4.0
+%define module_version 2.4.2
 %define module_release alt1
 
 %define flavour 6.12
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64 aarch64
 BuildRequires(pre): kernel-headers-modules-6.12
 
 %setup_kernel_module %flavour
 
 %define strip_mod_opts --strip-unneeded -R .comment
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/fs
-
-# The kernel 5.10 on powerpc has a GPL-only symbol mmu_feature_keys, which block build zfs with an error:
-# ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
-%if "%(rpmvercmp '%kversion' '5.10')" >= "0"
-ExcludeArch: ppc64le %ix86
-%endif
 
 Summary: ZFS Linux modules
 Name: kernel-modules-%module_name-%flavour
@@ -28,10 +22,13 @@ Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-Url: http://zfsonlinux.org
+Url: https://zfsonlinux.org/
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+%if "%flavour" != "talos"
+Provides: zfs-kernel-module = %EVR
+%endif
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -41,7 +38,6 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
 Provides: kernel-modules-spl-%flavour = %version-%release
 Provides: kernel-modules-spl-%kversion-%flavour-%krelease = %version-%release
-Provides: zfs-kernel-module = %EVR
 
 ExclusiveArch: %karch
 
@@ -76,11 +72,17 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
+* Thu Jun 04 2026 Anton Farygin <rider@altlinux.org> 2.4.2-alt1
+- 2.4.0 -> 2.4.2
+
 * Sun Dec 21 2025 Anton Farygin <rider@altlinux.org> 2.4.0-alt1
 - 2.3.5 -> 2.4.0
 
 * Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 2.3.5-alt1
 - 2.3.3 -> 2.3.5
+
+* Wed Oct 29 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.3.3-alt2
+- Remove provides zfs-kernel-module
 
 * Wed Aug 06 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt1
 - 2.3.2 -> 2.3.3
