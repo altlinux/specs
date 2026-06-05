@@ -1,5 +1,5 @@
 Name: kernel-image-6.18
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
 %define kernel_sublevel	.34
@@ -598,6 +598,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 04 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.18.34-alt2
+- Applied patches adding support for enabling automatic lockdown in UEFI Secure
+  Boot mode (thx egori@).
+- config: Enable LOCK_DOWN_IN_EFI_SECURE_BOOT=y.
+
 * Mon Jun 01 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.34-alt1
 - v6.18.34 (2026-06-01).
 
