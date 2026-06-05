@@ -1,5 +1,8 @@
 %def_disable bootstrap
 %def_with    sources
+# Only the fpdoc-generated API docs (rtl/fcl/fclres) are built; the LaTeX
+# manuals are skipped because tex4ht crashes on them in Sisyphus.
+# Link: https://bugzilla.altlinux.org/56874
 %def_with    doc
 %def_without win32
 %def_with    tests
@@ -8,7 +11,7 @@
 
 Name: 	  fpc
 Version:  3.2.3
-Release:  alt2
+Release:  alt3
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -127,7 +130,9 @@ BuildRequires: libunwind-devel
 BuildRequires: python3-dev
 BuildRequires: unzip
 %if_with doc
-BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-units-fcl latex2html
+# Only the fpdoc-generated API docs are built, so no LaTeX/tex4ht toolchain
+# is needed -- fpdoc and chmcmd are FPC's own tools, built here.
+BuildRequires: fpc-units-fcl
 %endif
 
 %define fpc_docdir  %_defaultdocdir/%name
@@ -233,10 +238,16 @@ make build VERBOSE=1 FPC=$ppcname LDCONFIG="$(dirname `gcc -print-file-name=libg
 popd
 
 # Make documentation
+# Build only the fpdoc-generated API docs (rtl/fcl/fclres): CHM for the IDE
+# help system and HTML for browsing. The LaTeX manuals (user/ref/prog/...)
+# are intentionally skipped -- they go through tex4ht, which aborts with a
+# buffer overflow in current Sisyphus (bug 56874). fpdoc needs no tex4ht.
 %if_with doc
 mkdir fpcdocs/rtl fpcdocs/fcl fpcdocs/fclres
-make -j1 -C fpcdocs chm FPC=$(pwd)/fpcsrc/compiler/%ppcname
-make -j1 -C fpcdocs html FPC=$(pwd)/fpcsrc/compiler/%ppcname
+make -j1 -C fpcdocs rtl.chk fcl.chk fclres.chk HTMLFMT=chm FPC=$(pwd)/fpcsrc/compiler/%ppcname
+rm -f fpcdocs/rtl.chk fpcdocs/fcl.chk fpcdocs/fclres.chk
+make -j1 -C fpcdocs rtl.chk fcl.chk fclres.chk FPC=$(pwd)/fpcsrc/compiler/%ppcname
+%endif
 
 # Generate help index to file fpctoc.htx
 %if_with help_index
@@ -246,8 +257,6 @@ popd
 pushd fpcdocs
 ../fpcsrc/installer/writeidx fpctoc.html
 popd
-%endif
-
 %endif
 
 %install
@@ -318,15 +327,16 @@ mkdir -p %buildroot%fpc_docdir
 install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%fpc_docdir
 
 %if_with doc
-make INSTALL_DOCDIR=%buildroot%fpc_docdir DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
-# Install xct files
+# htmlinstall would copy every manual (including the unbuilt LaTeX ones),
+# so install the fpdoc API docs and their cross-reference/CHM files by hand.
+cp -a fpcdocs/rtl fpcdocs/fcl fpcdocs/fclres %buildroot%fpc_docdir
 cp -a fpcdocs/*.xct %buildroot%fpc_docdir
 cp -a fpcdocs/*.chm %buildroot%fpc_docdir
+%endif
 %if_with help_index
 install -p -m 644 fpcdocs/fpctoc.htx %buildroot%fpc_docdir
 %else
 install -p -m 644 %SOURCE9 %buildroot%fpc_docdir
-%endif
 %endif
 
 # Remove hacker ASCII art picture as IDE background by renaming fp.ans to fp.ans.original
@@ -978,7 +988,9 @@ Summary: Free Pascal -- IDE
 Group: Development/Other
 Requires: %name-common = %EVR
 Requires: fpc-units-base = %EVR
+%if_with doc
 Requires: fpc-docs = %EVR
+%endif
 
 %description ide
 This package contains the Integrated Development Environment (IDE) for
@@ -992,6 +1004,8 @@ Free Pascal. The IDE has an internal compiler.
 %fpc_dir/ide/*
 %fpc_fpmdir/ide.fpm
 %_man1dir/fp.1*
+# Help index for the IDE help system; shipped even without fpc-docs
+%fpc_docdir/fpctoc.htx
 %doc %fpc_docdir/ide/readme.ide
 %_pixmapsdir/*
 %_miconsdir/*
@@ -1021,21 +1035,14 @@ Group: Documentation
 Summary: Free Pascal Compiler - Documentation
 
 %description docs
-This package provides documentation for the Free Pascal Compiler in HTML
-and PDF format.
+This package provides the Free Pascal API reference (RTL, FCL and FCL
+resources) in HTML and CHM format. The CHM files are used by the IDE help
+system.
 
 %files docs
-%fpc_docdir/buttons
-%fpc_docdir/chart
 %fpc_docdir/fcl
 %fpc_docdir/fclres
-%fpc_docdir/fpctoc.*
-%fpc_docdir/fpdoc
-%fpc_docdir/pics
-%fpc_docdir/prog
-%fpc_docdir/ref
 %fpc_docdir/rtl
-%fpc_docdir/user
 %fpc_docdir/*.xct
 %fpc_docdir/*.chm
 %endif
@@ -1060,6 +1067,14 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 3:3.2.3-alt3
+- Fix FTBFS: build only the fpdoc-generated API documentation
+  (rtl/fcl/fclres) in HTML and CHM and skip the LaTeX manuals, which
+  crash tex4ht with a buffer overflow in current Sisyphus (Closes: 56874).
+- Drop the tex4ht/texlive/latex2html build dependency.
+- Require fpc-docs from fpc-ide only when documentation is built; ship the
+  IDE help index fpctoc.htx in fpc-ide regardless.
+
 * Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 3:3.2.3-alt2
 - NMU: Add upstream patches:
   + GetMutableValue and TryGetMutableValue for
