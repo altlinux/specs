@@ -128,8 +128,8 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.22.9
-Release: alt2
+Version: 4.22.10
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2376,6 +2376,25 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Jun 05 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.10-alt1
+- Update to security release of Samba 4.22
+- Revert DRS replication fixes and improvements (enforcing schedules and
+  WERR_DS_DRA_NO_REPLICA handling) for more comprehensive integration testing.
+- Security fixes (Fixes: CVE-2026-1933, CVE-2026-2340, CVE-2026-3012,
+                         CVE-2026-3238, CVE-2026-4408, CVE-2026-4480):
+  + CVE-2026-1933: Lack of access control on reparse points.
+                   https://www.samba.org/samba/security/CVE-2026-1933.html
+  + CVE-2026-2340: WORM vfs module allows file overwrite.
+                   https://www.samba.org/samba/security/CVE-2026-2340.html
+  + CVE-2026-3012: Insufficient certificate verification during auto-enrollment.
+                   https://www.samba.org/samba/security/CVE-2026-3012.html
+  + CVE-2026-3238: NULL pointer dereference in AD DC WINS server.
+                   https://www.samba.org/samba/security/CVE-2026-3238.html
+  + CVE-2026-4408: Remote code execution via check password script.
+                   https://www.samba.org/samba/security/CVE-2026-4408.html
+  + CVE-2026-4480: Remote code execution via print command.
+                   https://www.samba.org/samba/security/CVE-2026-4480.html
+
 * Tue May 19 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.9-alt2
 - Update password policy management in samba-tool (thx Ivan Korytov):
   + Add account lockout threshold limits.
