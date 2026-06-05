@@ -6,7 +6,7 @@
 %endif
 
 Name: octave
-Version: 11.2.0
+Version: 11.3.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -236,6 +236,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Fri Jun 05 2026 Andrey Cherepanov <cas@altlinux.org> 11.3.0-alt1
+- New version.
+
 * Sun May 31 2026 Andrey Cherepanov <cas@altlinux.org> 11.2.0-alt1
 - New version.
 
