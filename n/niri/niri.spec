@@ -1,5 +1,5 @@
 Name: niri
-Version: 25.11
+Version: 26.04
 Release: alt1
 License: GPL-3.0
 
@@ -72,6 +72,15 @@ install -pD resources/niri-portals.conf %buildroot%_datadir/xdg-desktop-portal/n
 install -pD resources/niri.service %buildroot%_userunitdir/niri.service
 install -pD resources/niri-shutdown.target %buildroot%_userunitdir/niri-shutdown.target
 
+%buildroot%_bindir/%name completions bash | \
+    install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/%name
+
+%buildroot%_bindir/%name completions zsh | \
+    install -Dm644 /dev/stdin  %buildroot%_datadir/zsh/site-functions/_%name
+
+%buildroot%_bindir/%name completions fish | \
+    install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+
 %files
 %doc README.md
 %doc resources/default-config.kdl
@@ -82,8 +91,14 @@ install -pD resources/niri-shutdown.target %buildroot%_userunitdir/niri-shutdown
 %_datadir/xdg-desktop-portal/niri-portals.conf
 %_userunitdir/niri.service
 %_userunitdir/niri-shutdown.target
+%_datadir/bash-completion/completions/%name
+%_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu May 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 26.04-alt1
+- new version 26.04
+
 * Tue Dec 02 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.11-alt1
 - new version 25.11 (with rpmrb script)
 
