@@ -1,26 +1,24 @@
 %define modulename OWSLib
 
-Name:           python3-module-%modulename
-Version:        0.35.0
-Release:        alt1
+Name: python3-module-%modulename
+Version: 0.36.0
+Release: alt1
 
-Summary:        Client library for OGC web services
-License:        BSD
-Group:   	Development/Python
-URL:            http://geopython.github.io/OWSLib
+Summary: Client library for OGC web services
+License: BSD
+Group: Development/Python
+URL: http://geopython.github.io/OWSLib
+VCS: git://github.com/geopython/OWSLib.git
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Source0: %modulename-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-module-distribute
-BuildRequires:  python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
-Provides:	python-%modulename = %version-%release
-
-BuildArch:      noarch
-
-Source0:	%modulename-%version.tar
-#VCS:		git://github.com/geopython/OWSLib.git
+Provides: python-%modulename = %version-%release
 
 %description
 Package for client programming with Open Geospatial Consortium (OGC) web
@@ -31,17 +29,21 @@ models.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst
 %python3_sitelibdir/owslib/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Thu Jun 04 2026 Andrey Cherepanov <cas@altlinux.org> 0.36.0-alt1
+- New version.
+- Built using pyproject.
+
 * Wed Oct 29 2025 Andrey Cherepanov <cas@altlinux.org> 0.35.0-alt1
 - New version.
 
