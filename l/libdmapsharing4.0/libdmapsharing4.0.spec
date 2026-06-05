@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: 3.9.13
+Version: 3.9.14
 Release: alt1
 
 Summary: A DMAP client and server library (4.0 API)
@@ -134,6 +134,9 @@ tests/vala-*.c
 %_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Fri Jun 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9.14-alt1
+- 3.9.14
+
 * Sat Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 3.9.13-alt1
 - 3.9.13
 
