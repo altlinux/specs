@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -48,6 +48,7 @@ Summary: Editions of BaseALT distribution ALT Education
 Group: System/Configuration/Other
 
 Requires: alt-components-base = %version-%release
+Requires: alt-components-vendors = %version-%release
 Requires: alt-editions-common
 
 %description -n alt-editions-education
@@ -176,6 +177,19 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.5-alt1
+- Add components:
+  + ca-certificates-espd and education-uav.
+  + LibreOffice Xfce gtk3 variant.
+- Update components:
+  + normalize libreoffice-still and describe it for Windows users.
+  + replace arduino with arduino-ide in education-robotics.
+- Consolidate third-party repository components (netpolice, r7-office,
+  rutoken) under vendors/ and validate them from the vendors/ directory.
+- Update edition_education:
+  + refresh it with the current component set and drop the base section.
+  + substitute @YEAR@ in its final-notes.
+
 * Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.4-alt1
 - Fix:
   + package errors in the alt-server-gnome-environment component:
