@@ -3,7 +3,7 @@
 
 Name:       emacspeak
 Version:    58.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Speech output interface to Emacs.
 License:    GPLv2+ and BSD
@@ -17,6 +17,7 @@ Source2: %name.conf
 Source3: enable-%name
 
 Requires: voiceman
+Conflicts: ru_emacspeak
 
 BuildRequires: rpm-build-emacs
 BuildRequires: emacs-speedbar
@@ -118,6 +119,9 @@ chmod -R go+rX %_emacspeakdir/media
 
 
 %changelog
+* Fri Jun 05 2026 Artem Semenov <savoptik@altlinux.org> 58.0-alt2
+- Added conflicts to ru_emacspeak
+
 * Fri Sep 22 2023 Danil Shein <dshein@altlinux.org> 58.0-alt1
 - new version 58.0
   + fix FTBFS

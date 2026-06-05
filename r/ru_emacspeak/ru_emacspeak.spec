@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt1
+Release: alt2
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -43,12 +43,12 @@ BuildRequires: xsltproc
 %description
 Emacspeak is a speech output system that will allow someone who
  cannot see to work directly on a UNIX system.
- .
+
  Emacspeak is built on
  top of Emacs.  Once Emacs is started with Emacspeak loaded, users get
  spoken feedback for all actions.  As Emacs can do everything,
  they get speech feedback for everything they do.
- .
+
  This package also includes speech server written in Tcl to support
  the DECtalk Express speech synthesizer and remote speech server
  access scripts.  For other synthesizers, look for separate
@@ -57,14 +57,13 @@ Emacspeak is a speech output system that will allow someone who
 
 %package doc
 Summary: Doc files for %name
-Group: Other
+Group: Documentation
 BuildArch: noarch
-Requires: %name = %EVR
 
 %description doc
 Emacspeak is a speech output system that will allow someone who
  cannot see to work directly on a UNIX system.
- .
+
  This package contains additional documentation in html and pdf
  formats.
 
@@ -76,7 +75,7 @@ Requires: %name = %EVR
 %description espeak
 Emacspeak is a speech output system that will allow someone who
  cannot see to work directly on a UNIX system.
- .
+
  This package provides additional speech output for Emacspeak
  via eSpeak speech synthesizer.
 
@@ -88,7 +87,7 @@ Requires: %name = %EVR
 %description outloud
 Emacspeak is a speech output system that will allow someone who
  cannot see to work directly on a UNIX system.
- .
+
  This package allows one to use IBM ViaVoice Outloud speech synthesizer
  for speech output in Emacspeak.
 
@@ -101,10 +100,18 @@ Requires: %name = %EVR
 This theme is made up mostly of different chimes and short notes
  from various instruments with autopan effect applied.
  The icons are high-quality 44K-stereo.
- .
+
  When the package is installed, you can switch Emacspeak to use
  this theme by command emacspeak-sounds-select-theme
  bound by default to control-e ).
+
+%package pan-chimes-doc
+Summary: Doc files for pan-chimes
+Group: Documentation
+BuildArch: noarch
+
+%description pan-chimes-doc
+%summary
 
 %package classic
 Summary: Classic auditory icons theme for Emacspeak
@@ -114,7 +121,7 @@ Requires: %name = %EVR
 %description classic
 This theme is made up of the original default-8k sounds
  that have been converted to 44.1k stereo format.
- .
+
  When the package is installed, you can switch Emacspeak to use
  this theme by command emacspeak-sounds-select-theme
  bound by default to control-e ).
@@ -375,12 +382,6 @@ chmod -R go+rX %_emacspeakdir/media
 %_emacspeakdir/servers/ssh-outloud
 %_emacspeakdir/servers/tts-lib.tcl
 %_emacspeakdir/servers/.servers
-%dir %_docdir/emacspeak
-%_docdir/emacspeak/NEWS
-%_docdir/emacspeak/applications.html
-%_docdir/emacspeak/tips.html
-%_docdir/emacspeak/remote.txt
-%_docdir/emacspeak/install.org
 %_bindir/emacspeak
 %_emacspeakdir/.nosearch
 
@@ -390,6 +391,12 @@ chmod -R go+rX %_emacspeakdir/media
 
 %files doc
 %_docdir/emacspeek/html/*
+%dir %_docdir/emacspeak
+%_docdir/emacspeak/NEWS
+%_docdir/emacspeak/applications.html
+%_docdir/emacspeak/tips.html
+%_docdir/emacspeak/remote.txt
+%_docdir/emacspeak/install.org
 
 %files espeak
 %_emacspeakdir/blurbs/espeak.blurb
@@ -409,10 +416,15 @@ chmod -R go+rX %_emacspeakdir/media
 %files pan-chimes
 %_emacspeakdir/sounds/pan-chimes/*.wav
 %_emacspeakdir/sounds/pan-chimes/define-theme.el
+
+%files pan-chimes-doc
 %_docdir/emacspeak/pan-chimes/README
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Fri Jun 05 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt2
+- Moved docs to doc subpackages
+
 * Wed Jun 03 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt1
 - Restructure install section for proper ALT packaging (thx Timofei Fedotov)
 - Fix misplaced sit-for in cl-case otherwise clause (thx Timofei Fedotov)
