@@ -1,12 +1,13 @@
 %define nm_version 1.4.1-alt1.git20160914
 %define _unpackaged_files_terminate_build 1
 
-%def_with gcr
-%def_with gtk4
+%def_enable gcr
+%def_enable gtk4
+%def_enable vala
 
 Name: libnma
 Version: 1.10.6
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -15,7 +16,7 @@ Vcs: https://gitlab.gnome.org/GNOME/libnma.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: libgtk+3-devel libtool
 BuildRequires: libnm-devel >= %nm_version
@@ -23,9 +24,15 @@ BuildRequires: libnm-gir-devel >= %nm_version
 BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: mobile-broadband-provider-info
+%{?_enable_vala:BuildRequires: rpm-build-vala vala-tools}
 BuildRequires: gtk-doc
-%{?_with_gcr:BuildRequires: gcr4-libs-devel}
-%{?_with_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
+
+%if_enabled gtk4
+%{?_enable_gcr:BuildRequires: gcr4-libs-devel}
+%else
+%{?_enable_gcr:BuildRequires: gcr-libs-devel}
+%endif
+%{?_enable_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
 
 Requires: %name-common = %EVR
 
@@ -65,7 +72,7 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the libnma.
 
-%if_with gtk4
+%if_enabled gtk4
 %package gtk4
 Summary: Experimental GTK 4 version of NetworkManager GUI library
 Group: Graphical desktop/GNOME
@@ -131,18 +138,10 @@ This package contains development documentation for libnma-devel-doc.
 %meson \
 	--libexecdir==%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-%if_with gcr
-	-Dgcr=true \
-%else
-	-Dgcr=false \
-%endif
+	%{subst_enable_meson_bool gcr gcr} \
 	-Dintrospection=true \
-	-Dvapi=false \
-%if_with gtk4
-	-Dlibnma_gtk4=true \
-%else
-	-Dlibnma_gtk4=false \
-%endif
+	%{subst_enable_meson_bool vala vapi} \
+	%{subst_enable_meson_bool gtk4 libnma_gtk4} \
 	-Dmobile_broadband_provider_info=true \
 	-Diso_codes=true \
 	-Dgtk_doc=true
@@ -160,6 +159,7 @@ This package contains development documentation for libnma-devel-doc.
 %_includedir/libnma/
 %_libdir/libnma.so
 %_pkgconfigdir/libnma.pc
+%{?_enable_vala:%_vapidir/%name.*}
 
 %files gir
 %_libdir/girepository-1.0/NMA-1.0.typelib
@@ -167,7 +167,7 @@ This package contains development documentation for libnma-devel-doc.
 %files gir-devel
 %_datadir/gir-1.0/NMA-1.0.gir
 
-%if_with gtk4
+%if_enabled gtk4
 %files gtk4
 %_libdir/libnma-gtk4.so.*
 
@@ -175,6 +175,7 @@ This package contains development documentation for libnma-devel-doc.
 %_includedir/libnma/
 %_libdir/libnma-gtk4.so
 %_pkgconfigdir/libnma-gtk4.pc
+%{?_enable_vala:%_vapidir/%name-gtk4.*}
 
 %files gtk4-gir
 %_libdir/girepository-1.0/NMA4-1.0.typelib
@@ -193,6 +194,11 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Fri Jun 05 2026 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt2
+- Enabled vala bindings (closes: #59459).
+- Used macros from rpm-macros-meson.
+- Fixed build with gcr and without gtk4.
+
 * Tue Jan 10 2023 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt1
 - Dropped obsoleted patch.
 - Updated to 1.10.6.
