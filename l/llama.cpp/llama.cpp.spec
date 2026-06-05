@@ -11,14 +11,15 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 9245
+Version: 9524
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
 Group: Sciences/Computer science
 # https://ggml.ai/
-Url: https://github.com/ggerganov/llama.cpp
+Url: https://github.com/ggml-org/llama.cpp
+Vcs: https://github.com/ggml-org/llama.cpp.git
 ExcludeArch: %ix86
 Requires: %name-cpu = %EVR
 %if_with cuda
@@ -201,6 +202,9 @@ printf '%%s\n' llama-cli llama-simple llama-run llama-mtmd-cli |
 	xargs -ti ln -s llama-server %buildroot%_datadir/bash-completion/completions/{}
 mv %buildroot%_bindir/rpc-server %buildroot%_bindir/llama-rpc-server
 install -Dpm644 llama-server.1 -t %buildroot%_man1dir
+# Parametric systemd template + config dir (see .gear/llama.env.example).
+install -Dpm644 .gear/llama-server@.service %buildroot%_unitdir/llama-server@.service
+install -dm755 %buildroot%_sysconfdir/llama
 
 %check
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
@@ -210,7 +214,8 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/
 llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback wants network.
-%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented|test-llama-archs'
+# test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
+%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented|test-save-load-state|test-llama-archs'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
@@ -241,10 +246,19 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %_cmakedir/llama
 %_pkgconfigdir/llama.pc
 
+%post cpu
+%post_systemd 'llama-server@*.service'
+
+%preun cpu
+%preun_systemd 'llama-server@*.service'
+
 %files cpu
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md docs build-options.txt
-%_bindir/llama-*
+%doc LICENSE README.md docs build-options.txt .gear/llama.env.example
+%_bindir/llama*
+%_libdir/libllama-*-impl.so
+%_unitdir/llama-server@.service
+%dir %_sysconfdir/llama
 %dir %_datadir/%name
 %dir %_datadir/%name/examples
 %_datadir/%name/examples/*.sh
@@ -270,6 +284,10 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Fri Jun 05 2026 Alexey Shabalin <shaba@altlinux.org> 1:9524-alt1
+- Update to b9524.
+- Add parametric llama-server@.service systemd unit.
+
 * Wed May 20 2026 Vitaly Chikunov <vt@altlinux.org> 1:9245-alt1
 - Update to b9245 (2026-05-20).
 
