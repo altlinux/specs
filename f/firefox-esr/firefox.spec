@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.10.2
+Version: 140.11.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -35,8 +35,6 @@ Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
-Patch005: 0005-MOZ-bug-2033279-encoding_rs-Rust-1.95.patch
-Patch006: 0006-Firefox-140-ffvpx-parser-list-FFCodecParser.patch
 ### End Patches
 
 Provides: webclient
@@ -450,6 +448,30 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Jun 05 2026 Pavel Vasenkov <pav@altlinux.org> 140.11.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-8946 Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-8388 Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-8947 Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-8391 Other issue in the JavaScript Engine component
+  + CVE-2026-8401 Sandbox escape in the Profile Backup component
+  + CVE-2026-8949 Integer overflow in the Widget: Win32 component
+  + CVE-2026-8950 Same-origin policy bypass in the Networking: HTTP component
+  + CVE-2026-8953 Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-8954 Incorrect boundary conditions, integer overflow in the Audio/Video component
+  + CVE-2026-8955 Privilege escalation in the DOM: Workers component
+  + CVE-2026-8956 Integer overflow in the Networking: JAR component
+  + CVE-2026-8957 Privilege escalation in the Enterprise Policies component
+  + CVE-2026-8958 Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-8959 Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-8961 Spoofing issue in the Form Autofill component
+  + CVE-2026-8962 Mitigation bypass in the DOM: Security component
+  + CVE-2026-8968 Denial-of-service due to invalid pointer in the Audio/Video: Web Codecs component
+  + CVE-2026-8970 Privilege escalation in the Security component
+  + CVE-2026-8974 Memory safety bugs fixed in Firefox ESR 140.11 and Firefox 151
+  + CVE-2026-8975 Memory safety bugs fixed in Firefox ESR 115.36, Firefox ESR 140.11 and Firefox 151
+
 * Thu Jun 04 2026 Pavel Vasenkov <pav@altlinux.org> 140.10.2-alt1
 - New ESR version.
 - Security fixes:
