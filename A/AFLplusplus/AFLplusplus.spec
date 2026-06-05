@@ -6,11 +6,11 @@
 %endif
 
 Name: AFLplusplus
-Version: 4.40c
+Version: 5.00c
 Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
-License: Apache-2.0
+License: AGPL-3.0-or-later and Apache-2.0
 Group: Development/Tools
 VCS: https://github.com/AFLplusplus/AFLplusplus
 Url: https://aflplus.plus
@@ -46,6 +46,11 @@ BuildRequires: clang%_llvm_version lld%_llvm_version
 
 %filter_from_requires /^opendoas$/d
 %filter_from_requires /^afl-plot-ui$/d
+
+%ifarch %ix86
+%filter_from_requires /^\/usr\/bin\/afl-c++$/d
+%filter_from_requires /^\/usr\/lib\/afl\/afl-compiler-rt.o$/d
+%endif
 
 AutoProv: no
 
@@ -114,6 +119,9 @@ cp -a include %buildroot%_datadir/afl/include
 %_includedir/afl
 
 %changelog
+* Thu Jun 04 2026 Egor Ignatov <egori@altlinux.org> 5.00c-alt1
+- New version 5.00c.
+
 * Thu Mar 19 2026 Egor Ignatov <egori@altlinux.org> 4.40c-alt1
 - New version 4.40c.
 
