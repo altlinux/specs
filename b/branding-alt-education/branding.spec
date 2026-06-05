@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt6
+Release: alt7
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -193,6 +193,7 @@ Group:   Graphical desktop/KDE
 Requires(pre): %name-graphics
 Requires: %name-system-settings
 Requires: %name-graphics = %EVR
+Requires: shared-desktop-icons
 Requires: konsole-colorscheme-SolarizedPastel
 Requires: papirus-icon-theme
 Requires: gtk-theme-breeze
@@ -437,6 +438,10 @@ fi
 
 %files kde-settings
 %_datadir/konsole/%Theme.profile
+%_datadir/kio_desktop/DesktopLinks/Home.desktop
+%_datadir/kio_desktop/DesktopLinks/trash.desktop
+%attr(0755,root,root) %_datadir/Desktop/Home.desktop
+%attr(0755,root,root) %_datadir/Desktop/trash.desktop
 /etc/skel/.config/autostart/nm-applet.desktop
 /etc/skel/.config/k*
 /etc/skel/.config/plasma*
@@ -491,6 +496,12 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt7
+- kde-settings:
+  + Add Home and Trash icons to the KDE desktop.
+  + Pin Chromium in the task manager instead of a separate icon.
+- xfce-settings: Blank the Xfce screensaver instead of random hacks.
+
 * Thu May 14 2026 Grant Makyan <karonus@altlinux.org> 11.1-alt6
 - kde-settings: Show date below time in digital clock. (closes: 59178)
 - kde-settings: Disable digital clock auto font size.
