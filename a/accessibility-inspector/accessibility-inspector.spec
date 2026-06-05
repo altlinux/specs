@@ -4,7 +4,7 @@
 %def_with check
 
 Name: accessibility-inspector
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 
 Summary: Inspect your application accessibility tree
@@ -80,6 +80,9 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6data/qlogging-categories6/accessibilityinspector.categories
 
 %changelog
+* Fri Jun 05 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
+- New version 26.04.2.
+
 * Thu May 07 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.1-alt1
 - New version 26.04.1.
 

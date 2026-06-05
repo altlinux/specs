@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kbackup
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 
 Summary: Backup program with an easy-to-use interface
@@ -59,6 +59,9 @@ excluded from the backup process.
 %_K6data/mime/packages/kbackup.xml
 
 %changelog
+* Fri Jun 05 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
+- New version 26.04.2.
+
 * Thu May 07 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.1-alt1
 - New version 26.04.1.
 
