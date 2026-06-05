@@ -1,7 +1,7 @@
 Name:     papirus-icon-theme
 
 Version:  20250501
-Release:  alt1
+Release:  alt2
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -160,6 +160,29 @@ rm -rf $THEME_DIR/22x22/panel
 ln -s ../../Papirus-Light/22x22/panel $THEME_DIR/22x22/panel
 rm -rf $THEME_DIR/16x16/panel
 ln -s ../../Papirus-Light/16x16/panel $THEME_DIR/16x16/panel
+
+# Make file manager icon (org.kde.dolphin, system-file-manager) look like the
+# orange Education folder. apps/ and categories/ are wholesale symlinks to the
+# base Papirus theme (blue), so the icon cannot be replaced in place. Instead
+# add a dedicated apps-edu directory listed *before* apps/categories in
+# index.theme, so the freedesktop icon lookup picks the orange folder there first.
+for size in 16 22 24 32 48 64; do
+	d=$THEME_DIR/${size}x${size}/apps-edu
+	mkdir $d
+	for icon in org.kde.dolphin system-file-manager; do
+		ln -s ../places/folder.svg $d/$icon.svg
+	done
+done
+subst 's#^Directories=#Directories=16x16/apps-edu,22x22/apps-edu,24x24/apps-edu,32x32/apps-edu,48x48/apps-edu,64x64/apps-edu,#' $THEME_DIR/index.theme
+for size in 16 22 24 32 48 64; do
+	cat >> $THEME_DIR/index.theme <<EOF
+
+[${size}x${size}/apps-edu]
+Context=Applications
+Size=${size}
+Type=Fixed
+EOF
+done
 
 # Make Papirus Remix themes with all colors of folder icons
 %define THEMES Adwaita Black BlueGrey Breeze Brown Carmine Cyan DarkCyan DeepOrange Green Grey Indigo Magenta Nordic Orange PaleBrown PaleOrange Pink Red Teal Violet White Yaru Yellow
@@ -340,6 +363,9 @@ cp -a Papirus* %buildroot%_iconsdir
 %_iconsdir/Papirus-Light-*
 
 %changelog
+* Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 20250501-alt2
+- Make Papirus-Edu file manager icon (Dolphin) match the orange folder.
+
 * Mon May 12 2025 Andrey Cherepanov <cas@altlinux.org> 20250501-alt1
 - New version (thanks felixz@).
 - Removed packages: icon-theme-ePapirus and icon-theme-ePapirus-Dark.
