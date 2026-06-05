@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -169,6 +169,7 @@ Requires: adp
 %ifarch %e2k
 Requires: rtc
 %endif
+Requires: touchegg
 %description tools
 %{summary}.
 
@@ -514,7 +515,6 @@ Requires: virt-viewer
 %ifnarch %not_qt6_qtwebengine_arches
 Requires: OpenBoard
 %endif
-Requires: touchegg
 %description teacher
 %{summary}.
 
@@ -643,6 +643,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Jun 04 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.1-alt1
+- Move touchegg from teacher to tools.
+
 * Sun May 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.0-alt1
 - Remove LibreOffice (lite, xfce, kde) and pentaho-reporting-flow-engine
   to make the office suite optional for ALT Education users.
