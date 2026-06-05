@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.4.3-alt1
+- Add static license ALT_Education_License/11.2
+
 * Thu Jun 04 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt1
 - Add static license ALT_Domain_License/11.2
 
