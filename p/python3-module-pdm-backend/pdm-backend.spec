@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.8
-Release: alt1
+Release: alt2
 
 Summary: The build backend used by PDM that supports latest packaging standards
 License: MIT
@@ -97,6 +97,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 2.4.8-alt2
+- Fixed FTBFS (editables 0.6).
+
 * Thu Apr 02 2026 Stanislav Levin <slev@altlinux.org> 2.4.8-alt1
 - 2.4.7 -> 2.4.8.
 
