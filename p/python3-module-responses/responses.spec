@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.26.1
 Release: alt1
 Summary: A utility library for mocking out the requests Python library
 License: Apache-2.0
@@ -49,6 +49,9 @@ A utility library for mocking out the `requests` Python library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 0.26.1-alt1
+- 0.26.0 -> 0.26.1
+
 * Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 0.26.0-alt1
 - 0.25.8 -> 0.26.0.
 
