@@ -11,8 +11,8 @@
 %endif
 
 Name: %pypi_name
-Version: 2.19.1
-Release: alt1.1
+Version: 2.28.1
+Release: alt1
 Summary: Conan - The open-source C/C++ package manager (client)
 License: MIT
 Group: System/Libraries
@@ -43,6 +43,8 @@ BuildRequires: python3-module-fasteners
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-patch-ng
 BuildRequires: python3-modules-sqlite3
+BuildRequires: python3(yaml)
+BuildRequires: clang
 %endif
 
 %description
@@ -99,6 +101,9 @@ rm -r %buildroot%python3_sitelibdir/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_server}/
 
 %changelog
+* Sat Jun 06 2026 Anton Midyukov <antohami@altlinux.org> 2.28.1-alt1
+- New version 2.28.1.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.19.1-alt1.1
 - Demodernized packaging.
 
