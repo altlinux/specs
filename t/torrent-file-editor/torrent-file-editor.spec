@@ -1,7 +1,7 @@
 %define oname io.github.torrent_file_editor.Torrent-file-editor
 
 Name: torrent-file-editor
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 License: GPLv3+
@@ -43,6 +43,9 @@ cd ./build
 %_iconsdir/hicolor/*/apps/%oname.*
 
 %changelog
+* Sat Jun 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.3-alt1
+- updated from 1.0.2 to 1.0.3
+
 * Mon Mar 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt1
 - 1.0.1 -> 1.0.2
 
