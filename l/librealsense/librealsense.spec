@@ -1,29 +1,37 @@
-%add_verify_elf_skiplist %_libdir/librsutils.so.*
-
 Name:    librealsense
-Version: 2.56.3
+Version: 2.58.1
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
 License: Apache-2.0
 Group:   System/Libraries
-Url:     https://github.com/IntelRealSense/librealsense
+URL:     https://github.com/realsenseai/librealsense
+VCS:     https://github.com/realsenseai/librealsense.git
 
 Source0: %name-%version.tar
 Source1: realsense-viewer.desktop
 
 Patch0:  presets_path.patch
 Patch1:  disable-pedantic.patch
+Patch2:  librealsense.use-system-yaml-cpp.patch
 Patch3:  librealsense.use-system-json.patch
 Patch4:  librealsense.use-system-pybind11.patch
-Patch5:  librealsense.realsense-file-shared-library.patch
+Patch5:  librealsense.realsense-file-fixes.patch
 Patch6:  librealsense.rsutils-shared-library.patch
+Patch7:  librealsense.use-system-fastcdr.patch
+Patch8:  librealsense.use-system-sqlite3.patch
+Patch9:  librealsense.fix-zstd-qsort.patch
+Patch10: librealsense.fix-pybind11-keepalive.patch
+Patch11: librealsense.fix-easylogging-visibility.patch
+Patch12: librealsense.fix-cxx14-all.patch
+Patch13: librealsense.fix-fastcdr-v2-api.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-python3 rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libglfw3-devel libusb-devel libudev-devel libGL-devel libGLU-devel
-BuildRequires: python3-dev python3-module-setuptools pybind11-devel
-BuildRequires: nlohmann-json-devel doxygen
+BuildRequires: python3-dev python3-module-setuptools pybind11-devel libcap-devel
+BuildRequires: nlohmann-json-devel doxygen libyaml-cpp-devel libsqlite3-devel
+BuildRequires: fast-cdr-devel
 Provides: librealsense2 = %EVR
 
 %description
@@ -84,6 +92,8 @@ with %name.
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
   -DBUILD_PYTHON_BINDINGS:bool=true \
+  -DCMAKE_C_FLAGS="%optflags -ffat-lto-objects" \
+  -DCMAKE_CXX_FLAGS="%optflags -ffat-lto-objects" \
   -Wno-dev
 
 %cmake_build
@@ -101,7 +111,6 @@ popd
 
 %install
 %cmake_install
-
 mkdir -p %buildroot/%_udevrulesdir
 install -p -m644 config/99-realsense-libusb.rules %buildroot%_udevrulesdir
 
@@ -128,7 +137,12 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-depth-quality
 %_bindir/rs-distance
 %_bindir/rs-embed
+%_bindir/rs-embedded-filters
+%_bindir/rs-eth-config
 %_bindir/rs-enumerate-devices
+%_bindir/rs-infrared
+%_bindir/rs-labeled-pointcloud
+%_bindir/rs-on-chip-calib
 %_bindir/rs-fw-logger
 %_bindir/rs-fw-update
 %_bindir/rs-gl
@@ -167,6 +181,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_libdir/librealsense2.so
 %_libdir/pkgconfig/realsense2-gl.pc
 %_libdir/pkgconfig/realsense2.pc
+%_libdir/librs_lz4.a
 
 %files -n python3-module-%name
 %dir %python3_sitelibdir/pyrealsense2/
@@ -184,6 +199,16 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Sun May 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.1-alt1
+- new version 2.58.1
+- use system packages instead of bundled: yaml-cpp, nlohmann-json, pybind11,
+  sqlite3, fastcdr
+- fix fastcdr v2 API compatibility (ros2 reader/writer, ros2-msg-types)
+- fix pybind11 keep_alive incompatibility with v3.0.2
+- fix easylogging++ visibility for librsutils ELF verification
+- fix zstd qsort_r compatibility (use qsort for glibc)
+- fix C++14 requirement (auto in lambdas) for tools/examples
+
 * Wed Jan 15 2025 Sergey Palcheh <minergenon@altlinux.org> 2.56.3-alt1
 - initial build for ALT Sisyphus
 

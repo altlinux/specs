@@ -2,7 +2,7 @@
 
 Name:    monado
 Version: 25.1.0
-Release: alt3
+Release: alt4
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
@@ -16,14 +16,14 @@ Patch1:  monado-25.1.0-openxr-libdir.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: glslang python3-dev eigen3 libvulkan-devel glslc libhidapi-devel
+BuildRequires: glslang python3-dev eigen3-devel libvulkan-devel glslc libhidapi-devel
 BuildRequires: libbluez-devel libopenhmd-devel libopencv-devel libusb-devel
 BuildRequires: libjpeg-devel librealsense-devel libSDL2-devel zlib-devel
 BuildRequires: libcjson-devel libsystemd-devel libuvc-devel libudev-devel
 BuildRequires: libXrandr-devel libXau-devel libXdmcp-devel libXext-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libffi-devel
 BuildRequires: libpcre2-devel liborc-devel libsurvive-devel libopenvr-devel
-BuildRequires: wayland-devel wayland-protocols
+BuildRequires: wayland-devel wayland-protocols libcap-devel
 BuildRequires: doxygen graphviz
 
 ExclusiveArch: x86_64
@@ -85,6 +85,9 @@ Summary: %name library
 %_libdir/libmonado.so.%{soname}.*
 
 %changelog
+* Sat Jun 06 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt4
+- rebuild with librealsense 2.58.1
+
 * Tue May 19 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt3
 - spec cleanup
 - added patch monado-25.1.0-steamvr-libdir.patch
