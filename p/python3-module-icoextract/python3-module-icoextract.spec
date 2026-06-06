@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Extract icons from Windows PE files (.exe/.dll)
@@ -58,6 +58,9 @@ install -Dm644 exe-thumbnailer.thumbnailer %buildroot%_datadir/thumbnailers/exe-
 %_datadir/thumbnailers/exe-thumbnailer.thumbnailer
 
 %changelog
+* Sat Jun 06 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
+- New version.
+
 * Tue Jun 03 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
 - New version.
 
