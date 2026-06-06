@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.10
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -38,9 +38,11 @@ BuildRequires: libstdc++-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libnotify-devel
 BuildRequires: libcurl-devel
+BuildRequires: libsecret-devel
+BuildRequires: pkgconfig(gspell-1)
 
 %if_with webkitgtk
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 %endif
 
 %if_with sdl
@@ -327,6 +329,11 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 3.2.10-alt2
+- Rebuild with libsecret (Closes: 59469).
+- Add build dependency on pkgconfig(gspell-1).
+- Rebuild with libwebkit2gtk4.1.
+
 * Tue Mar 03 2026 Anton Midyukov <antohami@altlinux.org> 3.2.10-alt1
 - New version 3.2.10.
 
