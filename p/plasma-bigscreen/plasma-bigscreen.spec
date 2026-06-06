@@ -4,8 +4,8 @@
 %define _udevrulesdir /lib/udev/rules.d
 
 Name: plasma-bigscreen
-Version: 6.6.90
-Release: alt2
+Version: 6.6.91
+Release: alt1
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -97,7 +97,7 @@ to any installed apps and skills. Controllable via voice or TV remote.
 %setup
 sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
 sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
-sed -i "s|6.6.90|6.6.5|g" CMakeLists.txt
+sed -i "s|6.6.91|6.6.5|g" CMakeLists.txt
 
 %build
 %K6build
@@ -134,6 +134,9 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %_udevrulesdir/40-uinput.rules
 
 %changelog
+* Sat Jun 06 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.91-alt1
+- New version 6.6.91.
+
 * Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.90-alt2
 - Applied repocop fix for sisyphus_check.
 
