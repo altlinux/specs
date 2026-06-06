@@ -55,7 +55,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Web browser engine
@@ -66,6 +66,7 @@ Url: https://www.webkitgtk.org/
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
 Patch10: webkitgtk-2.50.1-deb-fix-ftbfs-x32.patch
+Patch11: webkitgtk-2.52.4-deb-fix-ftbfs-system-malloc.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -264,6 +265,7 @@ GObject introspection devel data for the JavaScriptCore library
 %prep
 %setup -n %_name-%version
 %patch10 -p1
+%patch11 -p1
 
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
@@ -430,6 +432,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.52.4-alt1
+- 2.52.4
+
 * Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.52.3-alt1
 - 2.52.3
 
