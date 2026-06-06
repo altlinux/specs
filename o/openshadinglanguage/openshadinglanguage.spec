@@ -22,7 +22,7 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.15.4.0
+Version: 1.15.5.0
 Release: alt1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -226,6 +226,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Sat Jun 06 2026 Anton Farygin <rider@altlinux.org> 1.15.5.0-alt1
+- 1.15.4.0 -> 1.15.5.0
+
 * Mon May 25 2026 Anton Farygin <rider@altlinux.org> 1.15.4.0-alt1
 - 1.14.10.0 -> 1.15.4.0
 
