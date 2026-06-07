@@ -7,7 +7,7 @@
 
 Name: u-boot-repka4
 Version: 2020.04.rc3.%RBS_VER
-Release: alt2
+Release: alt3
 
 Summary: Boot Loader for Repka Pi 4
 License: GPLv2+
@@ -33,6 +33,9 @@ BuildRequires: python3-module-setuptools
 %setup
 %autopatch -p1
 
+# Fix build with the swig version 4.3.x.
+sed -i 's/SWIG_Python_AppendOutput(/SWIG_AppendOutput(/g' contrib/u-boot-2020-04-rc3/scripts/dtc/pylibfdt/libfdt.i_shipped
+
 %build
 pushd %TRUSTED_FIRMWARE_DIR
 %make_build PLAT=sun50i_h6 PRELOADED_BL33_BASE=0x40010000 LDFLAGS='--no-warn-rwx-segment'
@@ -57,6 +60,9 @@ install -Dpm0644 %U_BOOT_DIR/u-boot-sunxi-with-spl.bin -t %buildroot%_datadir/u-
 %_datadir/u-boot/repka_pi4/*
 
 %changelog
+* Sun Jun 07 2026 Anton Kurachenko <srebrov@altlinux.org> 2020.04.rc3.1-alt3
+- Fixed build with the swig version 4.3.x.
+
 * Wed Apr 09 2025 Anton Kurachenko <srebrov@altlinux.org> 2020.04.rc3.1-alt2
 - Switched to use gcc11.
 
