@@ -1,5 +1,5 @@
 Name:    ludusavi
-Version: 0.28.0
+Version: 0.31.0
 Release: alt1
 
 Summary: Backup tool for PC game saves
@@ -9,14 +9,11 @@ Url:     https://github.com/mtkennerly/ludusavi
 VCS:     https://github.com/mtkennerly/ludusavi.git
 
 Source: %name-%version.tar
-Source1: %name-%version-vendor.tar
+Source1: %name-development-%version.tar
 
-BuildRequires(pre): rpm-macros-rust
-BuildRequires: /proc
 BuildRequires: rpm-build-rust
 BuildRequires: glib2-devel libgio-devel libatk-devel libgtk+3-devel
 BuildRequires: libappstream-devel
-Requires: rclone
 
 ExclusiveArch: x86_64
 
@@ -26,15 +23,7 @@ in Rust. It is cross-platform and supports multiple game stores.
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
     ./vendor/*/.cargo-checksum.json
@@ -67,5 +56,8 @@ install -Dm644 assets/linux/com.mtkennerly.ludusavi.desktop -t %buildroot%_deskt
 %_iconsdir/hicolor/scalable/apps/com.mtkennerly.ludusavi.svg
 
 %changelog
+* Sun Jun 07 2026 Sergey Palcheh <minergenon@altlinux.org> 0.31.0-alt1
+- new version 0.31.0
+
 * Thu Mar 20 2025 Sergey Palcheh <minergenon@altlinux.org> 0.28.0-alt1
 - Initial build for Sisyphus
