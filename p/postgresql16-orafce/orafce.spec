@@ -2,8 +2,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-orafce
-Version: 4.16.4
-Release: alt2
+Version: 4.16.7
+Release: alt1
 
 Summary: The "orafce" project implements in Postgres some of the functions from the Oracle database that are missing
 License: 0BSD
@@ -50,6 +50,9 @@ All functions are fully compatibles with Oracle and respect all known format str
 
 
 %changelog
+* Sun Jun 07 2026 Alexei Takaseev <taf@altlinux.org> 4.16.7-alt1
+- 4.16.7
+
 * Fri Mar 13 2026 Alexei Takaseev <taf@altlinux.org> 4.16.4-alt2
 - Use LLVM if it used in PostgreSQL
 
