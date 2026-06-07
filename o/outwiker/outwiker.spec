@@ -1,12 +1,13 @@
 Name: outwiker
-Version: 3.3.0
-Release: alt1.1
+Version: 4.0.0
+Release: alt1
 
 Summary: OutWiker is designed to store notes in a tree
 
 License: GPL-3.0
 Group: Text tools
-Url: https://github.com/Jenyay/outwiker
+URL: https://outwiker.readthedocs.io/
+VCS: https://github.com/Jenyay/outwiker
 
 # Source-url: https://github.com/Jenyay/outwiker/archive/refs/tags/%version-stable.tar.gz
 Source: %name-%version.tar
@@ -63,6 +64,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pixmapsdir/*
 
 %changelog
+* Sun Jun 07 2026 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
+- New version 4.0.0.
+
 * Sun Jul 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
 - NMU: adapt package for python3.13
 
