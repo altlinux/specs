@@ -51,9 +51,9 @@
 
 Name: libreoffice
 %define hversion 26.2
-%define urelease 3.2
+%define urelease 4.2
 Version: %hversion.%urelease
-Release: alt2
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -110,7 +110,6 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
-Patch501: 64c7eac.diff
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -472,7 +471,6 @@ echo Direct build
 #patch412 -p1
 
 %patch500 -p0
-%patch501 -p1
 %patch700 -p1
 
 # TODO move officebeans to SDK or separate package
@@ -892,6 +890,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Jun 07 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.4.2-alt1
+- New version.
+
 * Wed May 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt2
 - Removed python2.7(distutils) from build requirements (ALT #59084).
 
