@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: capsule
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: Tool for creating portable Linux containers from OCI images
@@ -74,6 +74,9 @@ export GOFLAGS="-mod=vendor"
 %doc examples
 
 %changelog
+* Mon Jun 08 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.8-alt1
+- Use private build storage instead of podman shared store.
+
 * Wed Jun 03 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.7-alt1
 - Add sandbox isolation levels: shared, isolated, strict.
 - Guide the user to set up rootless subuid/subgid (ALT-specific).
