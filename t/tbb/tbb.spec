@@ -6,7 +6,7 @@
 
 Name: tbb
 Version: 2023.0.0
-Release: alt1
+Release: alt2
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -177,6 +177,9 @@ fi
 %endif
 
 %changelog
+* Fri Jun 05 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2023.0.0-alt2
+- e2k build fix
+
 * Sun May 24 2026 Anton Farygin <rider@altlinux.org> 2023.0.0-alt1
 - 2022.3.0 -> 2023.0.0
 
