@@ -8,9 +8,10 @@
 %define _libexecdir %_prefix/libexec
 
 %def_disable applet
+%def_enable check
 
 Name: gpaste
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -133,6 +134,9 @@ sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
 %meson_install
 %find_lang %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
 %_bindir/%name-client
 %_libexecdir/%name/
@@ -196,6 +200,9 @@ sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 45.8-alt1
+- 45.8
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 45.6-alt1
 - 45.6
 

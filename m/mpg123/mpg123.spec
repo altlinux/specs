@@ -7,13 +7,23 @@
 # enabled by default
 %def_enable largefile
 
+%ifarch %ix86
+%define wcpu i586
+%elifarch x86_64
+%define wcpu x86-64
+%elifarch aarch64
+%define wcpu aarch64
+%else
+%define wcpu generic
+%endif
+
 # list of audio output modules
 %define mods alsa oss %{?_with_nas:nas} %{?_with_pulse:pulse} %{?_with_sdl:sdl}
 
 %def_enable check
 
 Name: mpg123
-Version: 1.33.4
+Version: 1.33.6
 Release: alt1
 Epoch: 1
 
@@ -28,16 +38,6 @@ Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
 
 Requires: libmpg123 = %EVR
-
-%ifarch %ix86
-%define wcpu i586
-%else
-%ifarch x86_64
-%define wcpu x86-64
-%else
-%define wcpu generic
-%endif
-%endif
 
 BuildRequires: libalsa-devel
 %{?_with_nas:BuildRequires: libaudio-devel}
@@ -81,15 +81,15 @@ install -p -m644 %SOURCE1 .
 # since 1.32.6 this is a cause of ABI break for 32-bit
 #%%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 %configure \
-	%{subst_enable portable} \
-	%{subst_enable largefile} \
-	--with-audio="%mods" \
-	--with-optimization=0 \
-	--enable-network=yes \
-	--enable-ipv6 \
-	--with-cpu=%{wcpu}
+    %{subst_enable portable} \
+    %{subst_enable largefile} \
+    --with-audio="%mods" \
+    --with-optimization=2 \
+    --enable-network=yes \
+    --enable-ipv6 \
+    --with-cpu=%{wcpu}
 %nil
-%make_build CFLAGS="%optflags -Wformat -Werror=format-security"
+%make_build
 
 %install
 %makeinstall_std
@@ -127,6 +127,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.33.6-alt1
+- 1.33.6
+
 * Sun Dec 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.33.4-alt1
 - 1.33.4
 

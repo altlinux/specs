@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 0.4
-%define git_tag af89873f780f604f0c3e251237824dde78dcce97
+%define ver_major 0.5
+%define git_tag 5e134cf06e0801c0c7c6bec3bf07267ae27e925d
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
@@ -70,6 +70,9 @@ simple.
 %doc README* NEWS
 
 %changelog
+* Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Feb 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

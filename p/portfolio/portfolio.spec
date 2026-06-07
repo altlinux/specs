@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Portfolio
 %define ver_major 1.0
@@ -11,8 +11,8 @@
 %endif
 
 Name: portfolio
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: File manager for Linux mobile devices
 License: GPL-3.0-or-later
@@ -76,6 +76,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
 - updated to v1.0.2-6-gb62ed1b
 

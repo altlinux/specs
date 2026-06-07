@@ -1,14 +1,14 @@
 %def_enable snapshot
 
 %define _name KeyRack
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name app.drey.%_name
 
 %def_disable bootstrap
 
 Name: key-rack
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Key Rack
 License: GPL-3.0
@@ -60,10 +60,14 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sat Jun 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- updated to 0.5.0-11-g5c1489a
+
 * Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
 - updated to 0.4.0-39-g689c6fd
 
