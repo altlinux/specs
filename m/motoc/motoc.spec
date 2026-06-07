@@ -1,5 +1,5 @@
 Name:    motoc
-Version: 0.3.4
+Version: 0.3.6
 Release: alt1
 
 Summary: Monado Tracking Origin Calibrator
@@ -8,10 +8,9 @@ Group:   Other
 Url:     https://github.com/galister/motoc
 
 Source: %name-%version.tar
-Source1: %name-vendor-%version.tar
+Source1: %name-development-%version.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires: rpm-build-rust
 BuildRequires: openxr-devel
 
 ExclusiveArch: x86_64
@@ -22,25 +21,7 @@ This tool allows users to calibrate devices of different tracking origins
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/Ralith/openxrs.git?rev=6c7747aee678048642dc16aad8bab3d6961dce03"]
-git = "https://github.com/Ralith/openxrs.git"
-rev = "6c7747aee678048642dc16aad8bab3d6961dce03"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/technobaboo/libmonado-rs.git?rev=8982759c936ddf3d0fffc96ec404bfe53971276d"]
-git = "https://github.com/technobaboo/libmonado-rs.git"
-rev = "8982759c936ddf3d0fffc96ec404bfe53971276d"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
     ./vendor/openxr-sys/.cargo-checksum.json
@@ -56,5 +37,8 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Sun Jun 07 2026 Sergey Palcheh <minergenon@altlinux.org> 0.3.6-alt1
+- new version 0.3.6
+
 * Mon Feb 17 2025 Sergey Palcheh <minergenon@altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus
