@@ -11,8 +11,8 @@ ExcludeArch: %ix86
 %endif
 
 Name: postgresql%pg_ver-%prog_name
-Version: 4.7.1
-Release: alt2
+Version: 4.7.2
+Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -42,8 +42,8 @@ BuildRequires: libssl-devel
 Provides: pgpool2 = %EVR
 Conflicts: pgpool2 < %EVR
 Requires: postgresql%pg_ver-server
-%add_findprov_skiplist %_libdir/libpcp.so*
-%filter_from_requires /^libpcp\.so.*/d
+%add_findprov_skiplist %_libdir/libpgpoolpcp.so*
+%filter_from_requires /^libpgpoolpcp\.so.*/d
 
 %description
 pgpool-II is a inherited project of pgpool (to classify from
@@ -143,6 +143,9 @@ fi
 %attr(1775,root,postgres) %dir %_logdir/%sname
 
 %changelog
+* Sun Jun 07 2026 Alexei Takaseev <taf@altlinux.org> 4.7.2-alt1
+- 4.7.2
+
 * Tue Mar 17 2026 Alexei Takaseev <taf@altlinux.org> 4.7.1-alt2
 - Use LLVM if it used in PostgreSQL
 
