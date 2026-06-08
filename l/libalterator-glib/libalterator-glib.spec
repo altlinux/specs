@@ -4,7 +4,7 @@
 
 Name:          lib%_name
 Version:       0.1.7
-Release:       alt1
+Release:       alt3
 Group:         System/Libraries
 Summary:       Library for alterator objects
 License:       LGPLv3+
@@ -26,20 +26,19 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools
 BuildRequires: libpolkit-devel
 
-Requires: alterator-backend-packages >= 0.2.14-alt1
-Requires: alterator-backend-component >= 0.3.1
-Requires: alterator-backend-systeminfo >= 0.4.2
-Requires: alterator-backend-edition >= 0.4.1
-Requires: alt-components-base >= 0.7.12-alt1
-Requires: alterator-interface-diag >= 0.1.4
-
 %description
 Library for alterator objects.
 
 %package -n %name%soversion
 Group: System/Libraries
 Summary: Library for alterator objects
-Obsoletes: %name
+Requires: alterator-backend-packages >= 0.2.14-alt1
+Requires: alterator-backend-component >= 0.3.1
+Requires: alterator-backend-systeminfo >= 0.4.2
+Requires: alterator-backend-edition >= 0.4.1
+Requires: alt-components-base >= 0.7.12-alt1
+Requires: alterator-interface-diag >= 0.1.4
+Provides: %name = %EVR
 
 %description -n %name%soversion
 Library for alterator objects.
@@ -79,6 +78,12 @@ cd src/tests
 ../../%_cmake__builddir/src/tests/libalterator-glib-tests
 
 %changelog
+* Mon Jun 08 2026 Vasiliy Doylov <neko@altlinux.org> 0.1.7-alt3
+- Fix package dependencies.
+
+* Mon Jun 08 2026 Vasiliy Doylov <neko@altlinux.org> 0.1.7-alt2
+- Fix package provides.
+
 * Fri Jun 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.7-alt1
 - Update version to 0.1.7.
 
