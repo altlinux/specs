@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.62b0
+Version: 0.63b1
 Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
@@ -157,9 +157,11 @@ done
 %_bindir/opentelemetry-instrument
 %python3_sitelibdir/%mod_name/instrumentation/__pycache__
 %python3_sitelibdir/%mod_name/instrumentation/auto_instrumentation
+%python3_sitelibdir/%mod_name/instrumentation/_labeler
 %python3_sitelibdir/%mod_name/instrumentation/_semconv.py
 %python3_sitelibdir/%mod_name/instrumentation/bootstrap.py
 %python3_sitelibdir/%mod_name/instrumentation/bootstrap_gen.py
+%python3_sitelibdir/%mod_name/instrumentation/cidict.py
 %python3_sitelibdir/%mod_name/instrumentation/dependencies.py
 %python3_sitelibdir/%mod_name/instrumentation/distro.py
 %python3_sitelibdir/%mod_name/instrumentation/environment_variables.py
@@ -192,6 +194,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Fri Jun 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.63b1-alt1
+- New version.
+
 * Mon Apr 13 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.62b0-alt1
 - New version.
 
