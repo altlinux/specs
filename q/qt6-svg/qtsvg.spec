@@ -1,9 +1,13 @@
-%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qtsvg
 
 Name: qt6-svg
 Version: 6.10.3
-Release: alt1
+Release: alt2
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -12,7 +16,10 @@ License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-qt6 qt6-tools
+BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
+%if_disabled bootstrap
+BuildRequires: qt6-tools
+%endif
 BuildRequires: qt6-base-devel
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: cmake libxkbcommon-devel zlib-devel
@@ -75,6 +82,11 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
+%if_disabled bootstrap
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%else
+%define qdoc_found 0
+%endif
 %Q6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
     #
@@ -85,7 +97,6 @@ Requires: libqt6-core = %_qt6_version
 %install
 %Q6install_qt
 %if %qdoc_found
-#Q6install_qt --target install_docs
 mkdir -p %buildroot/%_docdir/qt6/
 cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
@@ -128,6 +139,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- build docs after qttools
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
