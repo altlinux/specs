@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 2
+%define abiversion 3
 
 Name: zxc
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: High-performance asymmetric lossless compression
 License: BSD-3-Clause
@@ -56,6 +56,9 @@ ZXC header, pkg-config and cmake files
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jun 08 2026 Vladislav Glinkin <smasher@altlinux.org> 0.11.0-alt2
+- Bump ABI version for shared library (SOVERSION is 3 since v0.10.0)
+
 * Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.11.0-alt1
 - New version
 
