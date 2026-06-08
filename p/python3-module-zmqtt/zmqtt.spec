@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-zmqtt
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Pure asyncio MQTT 3.1.1/5.0 client library
@@ -58,5 +58,8 @@ threading, no god classes.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 08 2026 Egor Ignatov <egori@altlinux.org> 0.0.5-alt1
+- New version 0.0.5.
+
 * Tue Jun 02 2026 Egor Ignatov <egori@altlinux.org> 0.0.4-alt1
 - Initial build for ALT Linux.
