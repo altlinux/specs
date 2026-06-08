@@ -2,7 +2,7 @@
 %def_disable online_editor
 
 Name: hygg
-Version: 0.1.19
+Version: 0.1.21
 Release: alt1
 
 Summary: Simplifying the way you read
@@ -11,6 +11,8 @@ Group: Text tools
 
 Url: https://github.com/kruserr/hygg
 VCS: https://github.com/kruserr/hygg
+
+ExcludeArch: i586
 
 Source0: %name-%version.tar
 Source1: vendor.tar
@@ -25,7 +27,8 @@ BuildRequires: /proc pkgconfig(openssl)
 %setup -a1
 
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
+
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -110,6 +113,9 @@ install -D target/release/cli-justify %buildroot%_bindir/cli-justify
 %_bindir/cli-justify
 
 %changelog
+* Mon Jun 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.21-alt1
+- 0.1.19 -> 0.1.21
+
 * Sat Sep 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.19-alt1
 - 0.1.18 -> 0.1.19
 
