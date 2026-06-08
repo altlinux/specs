@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openvpn-server
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -43,6 +43,11 @@ Alterator module for openvpn server configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Tue May 05 2026 Alexey Volkov <qualimock@altlinux.org> 0.8.9-alt1
+NMU:
+  + add data-ciphers support with multi-select UI
+  + fix GOST mode overriding user-selected cipher parameters
+
 * Tue Apr 01 2025 Alexey Volkov <qualimock@altlinux.org> 0.8.8-alt1
 NMU:
   + fix DHPARAM_NUMBITS small value
