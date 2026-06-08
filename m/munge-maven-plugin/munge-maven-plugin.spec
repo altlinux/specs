@@ -13,15 +13,13 @@ BuildRequires: jpackage-default
 
 Name:           munge-maven-plugin
 Version:        1.0
-Release:        alt2_24jpp11
+Release:        alt3_24jpp11
 Summary:        Munge Maven Plugin
 License:        CDDL-1.0
 URL:            http://github.com/sonatype/munge-maven-plugin
 BuildArch:      noarch
 
 Source0:        https://github.com/sonatype/munge-maven-plugin/archive/munge-maven-plugin-1.0.tar.gz
-
-Patch: pom-1.0-alt-build.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -67,7 +65,6 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch -p1
 %pom_remove_parent
 
 %build
@@ -84,6 +81,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt3_24jpp11
+- drop pom-1.0-alt-build.patch
+
 * Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt2_24jpp11
 - Fix FTBFS.
 
