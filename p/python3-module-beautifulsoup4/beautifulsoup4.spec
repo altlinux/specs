@@ -9,14 +9,15 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 4.14.3
-Release: alt1.1
+Version: 4.15.0
+Release: alt1
 Summary: Screen-scraping library
 License: MIT
 Group: Development/Python3
@@ -24,23 +25,19 @@ Url: https://pypi.org/project/beautifulsoup4/
 Vcs: https://git.launchpad.net/beautifulsoup
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 Provides: python3-module-BeautifulSoup4 = %EVR
 Obsoletes: python3-module-BeautifulSoup4
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-html5lib
-BuildRequires: python3-module-lxml
-BuildRequires: python3-module-packaging
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-soupsieve
-BuildRequires: python3-module-typing-extensions
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-Requires: python3-module-soupsieve
 
 %description
 Beautiful Soup is a Python library designed for quick turnaround projects like
@@ -63,6 +60,11 @@ screen-scraping. Three features make it powerful:
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -74,13 +76,12 @@ screen-scraping. Three features make it powerful:
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.14.3-alt1.1
-- Demodernized packaging.
+* Mon Jun 08 2026 Stanislav Levin <slev@altlinux.org> 4.15.0-alt1
+- 4.14.3 -> 4.15.0
 
 * Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 4.14.3-alt1
 - 4.14.2 -> 4.14.3.
