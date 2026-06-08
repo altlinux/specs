@@ -12,7 +12,7 @@
 
 Name: NetworkManager-openvpn
 Version: 1.12.5
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -133,6 +133,12 @@ make check
 %exclude %_tmpfilesdir/nm-openvpn-tmpfiles.conf
 
 %changelog
+* Tue May 05 2026 Alexey Volkov <qualimock@altlinux.org> 1.12.5-alt2
+NMU:
+  + add custom HMAC auth algorithm entry to advanced dialog
+  + add cipher picker and input filter for data-ciphers field
+  + add GOST digest algorithms to HMAC auth list
+
 * Thu Dec 25 2025 Mikhail Efremov <sem@altlinux.org> 1.12.5-alt1
 - Updated to 1.12.5.
 
