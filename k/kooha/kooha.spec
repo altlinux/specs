@@ -1,6 +1,6 @@
 Name: kooha
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Epoch: 1
 
 Summary: Simple screen recorder with a minimal interface
@@ -49,6 +49,9 @@ BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gst
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 1:2.3.2-alt1
+- New version 2.3.2.
+
 * Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 1:2.3.1-alt2
 - Updated translations.
 
