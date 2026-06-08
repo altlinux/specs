@@ -2,7 +2,7 @@
 %define libname libultrahdr%sover
 Name: libultrahdr
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: Library for handling Ultra HDR image format
 License: Apache-2.0
 Group: System/Libraries
@@ -48,6 +48,9 @@ applications using %name.
 %prep
 %setup
 %patch0 -p1
+%ifarch %e2k
+sed -i '/FATAL_ERROR "Architecture/c set(ARCH "e2k")' CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -77,6 +80,9 @@ rm -f %buildroot/%_libdir/*.a
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jun 08 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.0-alt3
+- e2k build fix
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt2
 - fixed build with gcc 15
 
