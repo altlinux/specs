@@ -6,7 +6,7 @@
 %def_with check
 
 Name: %pypi_name
-Version: 6.18.0
+Version: 6.20.0
 Release: alt1
 
 Summary: Freeze (package) Python programs into stand-alone executables
@@ -91,6 +91,9 @@ and not test_sys_executable[onefile-sideload]" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 6.20.0-alt1
+- New version (6.20.0).
+
 * Fri Jan 16 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 6.18.0-alt1
 - New version (6.18.0).
 - Enabled check section.
