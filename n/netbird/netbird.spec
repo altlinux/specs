@@ -5,7 +5,7 @@
 %define shortcommit %(c=%commit; echo ${c:0:8})
 
 Name: netbird
-Version: 0.71.4
+Version: 0.72.2
 Release: alt1
 
 Summary: Mesh VPN based on WireGuard
@@ -82,6 +82,9 @@ install -dm750 %buildroot%_sharedstatedir/%name
 %dir %attr(0750,root,root) %_sharedstatedir/%name
 
 %changelog
+* Mon Jun 08 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.72.2-alt1
+- New version 0.72.2.
+
 * Sun May 24 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.71.4-alt1
 - New version 0.71.4.
 
