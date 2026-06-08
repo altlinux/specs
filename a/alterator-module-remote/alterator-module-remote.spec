@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,9 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Jun 08 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt1
+- Add "pty" parameter to "ShowResult" call in the password agent.
+
 * Tue Jun 02 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
 - A boolean input parameter, "success", has been added to the "ShowResult"
   method of "Password agent". If authentication is successful, its value is
