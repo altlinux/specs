@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-
 %global import_path github.com/betterleaks/betterleaks
 
 Name: betterleaks
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 Summary: A Better Secrets Scanner built for configurability and speed
 License: MIT
-Group: Monitoring
+Group: Development/Tools
 Url: https://betterleaks.com/
 Vcs: https://github.com/betterleaks/betterleaks
 
@@ -27,19 +26,11 @@ in git repos, files, and whatever else you wanna throw at it via stdin.
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="-X %import_path/torrent.Version=%version"
-
 %golang_prepare
-
-cd .gopath/src/%import_path
-
 %golang_build .
 
 %install
 export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
 
 %golang_install
@@ -49,6 +40,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 1.4.0-alt1
+- New version
+
 * Thu May 28 2026 Vladislav Glinkin <smasher@altlinux.org> 1.3.1-alt1
 - New version
 
