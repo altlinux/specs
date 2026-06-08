@@ -2,7 +2,12 @@
 # on %%x86 build fails with 
 # -o CMakeFiles/openvdb_shared.dir/instantiations/GridOperators.cc.o -c /usr/src/RPM/BUILD/openvdb-13.0.0/i586-alt-linux/openvdb/openvdb/instantiations/GridOperators.cc
 # [i586] virtual memory exhausted: Cannot allocate memory
+# on [e2k] gcc selection is not fully supported so keep it as-is
+%ifnarch %e2k
 %define gcc_ver 14
+%else
+%define gcc_ver %nil
+%endif
 
 # enable LTO/full debuginfo only on verified arches due resource constrains
 %ifnarch x86_64 ppc64le aarch64
@@ -25,7 +30,7 @@
 
 Name: openvdb
 Version: 13.0.0
-Release: alt2.1
+Release: alt3
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: Apache-2.0
@@ -35,7 +40,8 @@ URL: https://www.openvdb.org
 Source0: %name-%version.tar
 Source1: CPM.cmake
 
-Patch: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
+Patch0: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
+Patch1: openvdb-13.0.0-tbb2023.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel
@@ -130,7 +136,9 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 cp -f %SOURCE1 cmake/CPM.cmake
 
 %build
+%ifnarch %e2k
 export GCC_VERSION=%gcc_ver
+%endif
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -185,6 +193,10 @@ export GCC_VERSION=%gcc_ver
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Mon Jun 08 2026 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt3
+- %%e2k: do not set gcc version (spotted by ilyakurdyukov@).
+- openvdb: fix build with TBB2023.
+
 * Wed May 06 2026 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt2.1
 - downgrade gcc version to 14 (to compile cuda and fix memory alloc errors on
   %%ix86).
