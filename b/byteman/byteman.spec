@@ -25,7 +25,7 @@ BuildRequires: jpackage-11
 
 Name:             byteman
 Version:          4.0.16
-Release:          alt1_7jpp11
+Release:          alt2
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -112,6 +112,10 @@ operation of the instrumented methods.
 
 %prep
 %setup -q -n byteman-%{version}
+
+# The generated HelpMojo uses try-with-resources, so Java 6 source/target fails.
+%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" "1.8"
+%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" "1.8"
 
 # Fix the gid:aid for java_cup
 sed -i "s|net.sf.squirrel-sql.thirdparty-non-maven|java_cup|" agent/pom.xml
@@ -235,6 +239,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Mon Jun 08 2026 Arseniy Kostevich <faux@altlinux.org> 4.0.16-alt2
+- Build with Java 8 source/target to fix compilation of generated HelpMojo.
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 4.0.16-alt1_7jpp11
 - update
 

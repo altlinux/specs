@@ -1,6 +1,6 @@
 Name:           maven-plugin-tools
 Version:        3.9.0
-Release:        alt2
+Release:        alt3
 Epoch:          0
 Summary:        Maven Plugin Tools
 License:        Apache-2.0
@@ -10,10 +10,9 @@ BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugin-tools/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch0:         0001-Disable-help-MOJO-generation.patch
-Patch1:         0002-Remove-dependency-on-jtidy.patch
-Patch2:         0003-Disable-reporting.patch
-Patch4:         0004-sisu-index-for-aven-plugin-tools-java.patch
+Patch1:         0001-Remove-dependency-on-jtidy.patch
+Patch2:         0002-Disable-reporting.patch
+Patch4:         0003-sisu-index-for-aven-plugin-tools-java.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: jpackage-default
@@ -42,6 +41,7 @@ BuildRequires: mvn(org.jsoup:jsoup)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.ow2.asm:asm-commons)
 BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
+BuildRequires: mvn(org.codehaus.plexus:plexus-velocity)
 
 Obsoletes: maven-plugin-tools-javadoc < 0:3.6.0-1
 Obsoletes: maven-plugin-tools-ant < %{epoch}:%{version}-%{release}
@@ -125,7 +125,6 @@ rm -r maven-plugin-tools-api/src/test/resources/javadoc
 
 %pom_remove_dep -r :maven-reporting-impl
 %pom_remove_dep -r :maven-reporting-api
-%pom_remove_dep -r :plexus-velocity
 %pom_remove_dep -r :velocity
 %pom_remove_dep -r :jtidy
 %pom_remove_plugin -r :spotless-maven-plugin
@@ -161,6 +160,9 @@ rm maven-plugin-tools-generators/src/main/java/org/apache/maven/tools/plugin/gen
 %files java -f .mfiles-maven-plugin-tools-java
 
 %changelog
+* Mon Jun 08 2026 Arseniy Kostevich <faux@altlinux.org> 0:3.9.0-alt3
+- Canceled disabling of help MOJO generation.
+
 * Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 0:3.9.0-alt2
 - NMU: Fix building of legacy plugins that rely on MOJO metadata
   extraction from javadoc.

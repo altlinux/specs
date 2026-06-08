@@ -1,33 +1,30 @@
-BuildRequires: maven-project
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
+
+Name: keytool-maven-plugin
+Version: 2.0.2
+Release: alt1
+
+Summary: A plugin that wraps the keytool program and allows to manipulate keystores
+Group: Development/Other
+License: Apache-2.0
+Url: https://www.mojohaus.org/keytool/
+Vcs: https://github.com/mojohaus/keytool
+
+Source0: %{name}-%{version}.tar
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat mojo-parent maven-plugin-plugin apache-commons-lang
-
-%global group_id  org.codehaus.mojo
-
-Name:             keytool-maven-plugin
-Version:          1.0
-Release:          alt9_18jpp11
-Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
-License:          MIT and ASL 2.0
-Group:            Development/Other
-# http://mojo.codehaus.org/keytool-maven-plugin/
-URL:              http://mojo.codehaus.org/%{name}/
-# svn export http://svn.codehaus.org/mojo/tags/keytool-maven-plugin-1.0/ keytool-maven-plugin-1.0
-# tar caf keytool-maven-plugin-1.0.tar.xz keytool-maven-plugin-1.0
-Source0:          %{name}-%{version}.tar.xz
-Source1:          LICENSE-ASL
-
-Patch: pom-1.0-alt-build.patch
-
-BuildArch:        noarch
-
-BuildRequires: javapackages-tools rpm-build-java
-BuildRequires:    maven-local
-
-Source44: import.info
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: mojo-parent
+BuildRequires: maven-plugin-plugin
+BuildRequires: bouncycastle-pkix
+BuildRequires: slf4j
+BuildRequires: atinject
+BuildRequires: sisu-mojos
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-invoker-plugin
 
 %description
 A plugin that wraps the keytool program bundled with Sun's Java SDK.
@@ -35,36 +32,30 @@ It provides the capability to manipulate keys and keystores
 with the goals "keytool:genkey" and "keytool:clean".
 
 %package javadoc
-Summary:          API documentation for %{name}
-Group:            Development/Java
-BuildArch: noarch
+Summary: API documentation for %{name}
+Group: Development/Java
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-%patch -p1
-# fixing licenses
-mv LICENSE.txt LICENSE-MIT
-cp %{SOURCE1} LICENSE-ASL
-
-# junit dependency was removed in Plexus 1.6
-%pom_add_dep junit:junit::test
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# To run the tests correctly, you need to update maven to version 3.9.
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-MIT LICENSE-ASL
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Mon Jun 08 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.2-alt1
+- New version (Closes: #59468).
+
 * Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt9_18jpp11
 - Fix FTBFS.
 
