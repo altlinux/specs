@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.25.0
+Version: 0.26.7
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -15,6 +15,7 @@ Group: Development/Python3
 Url: https://typer.tiangolo.com/
 Vcs: https://github.com/tiangolo/typer
 BuildArch: noarch
+AutoReq: yes, nopython3
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -97,6 +98,14 @@ popd
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
 export COLUMNS=135
+# Set TERMINAL_WIDTH to a large value to prevent Rich from cropping error
+# messages in panels, which causes test_path_convert_failures assertions to
+# fail. Upstream CI also uses this approach.
+export TERMINAL_WIDTH=3000
+# Add the build directory to PYTHONPATH so that subprocess-based tests can
+# import the tests package (e.g. test_binary_stderr runs __file__ via
+# subprocess). See upstream PR #1827.
+export PYTHONPATH="${PWD}${PYTHONPATH:+:$PYTHONPATH}"
 # Set TERM to "xterm-256color" because some tests rely on decorated output from
 # Python's Rich module. When "TERM=dumb", the Rich will disable any decorations
 # and output plain text.
@@ -119,6 +128,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Mon Jun 08 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.26.7-alt1
+- Updated to 0.26.7.
+
 * Tue Apr 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.25.0-alt1
 - Updated to 0.25.0.
 
