@@ -2,13 +2,15 @@
 
 Name: perftest
 Summary: IB Performance tests
-Version: 25.10.0.0.128
+Version: 26.04.17
 Release: alt1
 License: %gpl2only
 Group: Monitoring
 Url: https://github.com/linux-rdma/perftest
+VCS: https://github.com/linux-rdma/perftest
 
 Source: %name-%version.tar
+Patch1: perftest-26.04.17-alt-simd-target-attr.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -21,6 +23,7 @@ gen2 uverbs microbenchmarks.
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -40,6 +43,9 @@ install -m 0755 raw_ethernet_{bw,lat} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Jun 08 2026 Anton Farygin <rider@altlinux.org> 26.04.17-alt1
+- 25.10.0.0.128 -> 26.04.17
+
 * Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 25.10.0.0.128-alt1
 - 4.5.0.20 -> 25.10.0.0.128
 
