@@ -2,8 +2,8 @@
 %define _name blackbox
 
 Name: blackbox-terminal
-Version: 0.14.0
-Release: alt9.git53be998
+Version: 0.15.1
+Release: alt2
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -11,14 +11,11 @@ Group: Terminals
 
 Url: https://gitlab.gnome.org/raggesilver/blackbox
 Source: %name-%version.tar
-Patch1: blackbox-0.14.0-alt-xvt-compatibility.patch
-Patch2: blackbox-0.14.0-alt-gio-print.patch
+Patch1: blackbox-0.15.1-alt-xvt-compatibility.patch
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Provides: xvt
 Provides: x-terminal-emulator
-# Executable file name conflict
-Conflicts: blackbox
 
 %define vte_ver 0.69.0
 
@@ -32,7 +29,6 @@ BuildRequires: libgio-devel
 BuildRequires: libgtk4-devel
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: libadwaita-devel
-BuildRequires: libmarblepq-vala
 BuildRequires: libpcre2-devel libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: libjson-glib-devel
@@ -47,7 +43,7 @@ A beautiful GTK 4 terminal.
 %autopatch -p1
 
 %build
-%meson -Dblackbox_is_flatpak=false -Ddevel=false
+%meson -Ddevel=false
 %meson_build
 
 %install
@@ -56,15 +52,15 @@ A beautiful GTK 4 terminal.
 # alternatives (gnome-terminal -- 39)
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%_name <<EOF
-%_bindir/xvt	%_bindir/%_name	38
-%_bindir/x-terminal-emulator	%_bindir/%_name	38
+%_bindir/xvt	%_bindir/%_name-terminal	38
+%_bindir/x-terminal-emulator	%_bindir/%_name-terminal	38
 EOF
 
 %find_lang %_name
 
 %files -f %_name.lang
 %doc COPYING README.md
-%_bindir/%_name
+%_bindir/%_name-terminal
 %_altdir/%_name
 %_datadir/%_name
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -74,6 +70,12 @@ EOF
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Jun 8 2026 Vladimir Didenko <cow@altlinux.org> 0.15.1-alt2
+- Fix binary name in alternatives config
+
+* Mon Jun 8 2026 Vladimir Didenko <cow@altlinux.org> 0.15.1-alt1
+- New version
+
 * Wed Aug 7 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt9.git53be998
 - New version
 
