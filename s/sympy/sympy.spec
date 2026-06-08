@@ -10,8 +10,8 @@
 
 Name: sympy
 Epoch: 1
-Version: 1.13.2
-Release: alt2
+Version: 1.14.0
+Release: alt1
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
 Group: Sciences/Mathematics
@@ -24,10 +24,10 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 
-Patch1: sympy-1.13.1-alt-build.patch
+Patch1: sympy-1.14.0-alt-build.patch
 
-# https://github.com/sympy/sympy/pull/27069
-Patch2: sympy-1.13.2-alt-fix-races-in-tests.patch
+# avoid deprecated mpmath.libmp.bitcount (fails tests under -W error)
+Patch2: sympy-1.14.0-alt-mpmath-bitcount.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-pyproject
@@ -55,6 +55,9 @@ simple as possible in order to be comprehensible and easily extensible.
 %package -n python3-module-%name
 Summary: A Python 3 module for symbolic mathematics
 Group: Development/Python3
+# examples removed upstream in 1.14.0
+Obsoletes: python3-module-%name-examples < %EVR
+Provides: python3-module-%name-examples = %EVR
 
 %description -n python3-module-%name
 SymPy is a Python library for symbolic mathematics. It aims to become a
@@ -62,18 +65,6 @@ full-featured computer algebra system (CAS) while keeping the code as
 simple as possible in order to be comprehensible and easily extensible.
 
 This package contains python module of SymPy.
-
-%package -n python3-module-%name-examples
-Summary: Examples for SymPy
-Group: Development/Documentation
-Requires: python3-module-%name = %EVR
-
-%description -n python3-module-%name-examples
-SymPy is a Python library for symbolic mathematics. It aims to become a
-full-featured computer algebra system (CAS) while keeping the code as
-simple as possible in order to be comprehensible and easily extensible.
-
-This package contains examples for SymPy.
 
 %package -n python3-module-%name-pickles
 Summary: Pickles for SymPy
@@ -170,9 +161,6 @@ python3 bin/doctest -v ||:
 %exclude %python3_sitelibdir/%name/pickle
 %endif
 
-%files -n python3-module-%name-examples
-%doc examples/*
-
 %if_with doc
 %files -n python3-module-%name-pickles
 %python3_sitelibdir/%name/pickle
@@ -182,6 +170,10 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Mon Jun 08 2026 Anton Farygin <rider@altlinux.org> 1:1.14.0-alt1
+- 1.13.2 -> 1.14.0
+- drop examples subpackage (examples removed upstream in 1.14.0)
+
 * Tue Sep 17 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.13.2-alt2
 - Run tests in parallel
 - Fix file-related race condition in the test suite
