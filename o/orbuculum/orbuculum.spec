@@ -1,6 +1,6 @@
 Name: orbuculum
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Cortex-M code instrumentation for the masses
 License: BSD-3-Clause
@@ -36,6 +36,9 @@ sed -ri '/FN_SLEEPING_STR/ s,Sleeping,sleeping,' Inc/symbols.h
 %_datadir/orbcode
 
 %changelog
+* Mon Jun 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.0-alt2
+- backported support for cortex-m33
+
 * Sun Sep 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.0-alt1
 - 2.2.0 released
 
