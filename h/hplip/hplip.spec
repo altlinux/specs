@@ -29,8 +29,8 @@
 %def_with new_systemd
 
 Name:    hplip
-Version: 3.25.8
-Release: alt3
+Version: 3.26.4
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -392,21 +392,12 @@ Patch169: hplip-use-raw-strings.patch
 # FTBFS GCC 14
 # https://bugs.launchpad.net/hplip/+bug/2048780
 Patch170: hplip-hpaio-gcc14.patch
-# format is no longer method in locale module
-# https://bugs.launchpad.net/hplip/+bug/2045507
-Patch171: hplip-locale-format.patch
 # function prototype did not specify argument's data types
 # https://bugs.launchpad.net/hplip/+bug/2096650
 Patch172: hplip-gcc15-stdc23.patch
 # status history table shows unformatted QDateTime values
 # https://bugs.launchpad.net/hplip/+bug/1956547
 Patch173: hplip-format-qdatetime.patch
-# make sure we see prompts when installing plugin...
-# https://bugs.launchpad.net/hplip/+bug/2110101
-Patch175: hplip-plugin-stdout.patch
-# toolbox shows traceback when button 'close' is clicked on at first dialog
-# https://bugs.launchpad.net/hplip/+bug/2111722
-Patch176: hplip-gui-close-trace.patch
 # Python 3.14 removed urlopener
 # https://bugs.launchpad.net/hplip/+bug/2115046
 Patch177: hplip-no-urlopener.patch
@@ -723,11 +714,8 @@ rm -f prnt/hpcups/libImageProcessor-*.so
 %patch168 -p1 -b .curl-switch
 %patch169 -p1 -b .raw-strings
 %patch170 -p1 -b .hpaio-gcc14
-%patch171 -p1 -b .locale-format
 %patch172 -p1 -b .gcc-strc23
 %patch173 -p1 -b .format-qdatetime
-#%%patch175 -p1 -b .stdout
-#%%patch176 -p1 -b .gui-close-trace
 %patch177 -p1 -b .no-urlopener
 
 # from fedora 3.9.12-3/3.10.9-9
@@ -1319,6 +1307,34 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu May 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.26.4-alt1
+- New version (fixes: CVE-2026-8631, CVE-2026-8632).
+- Added support for the following new printers:
+  + HP LaserJet Pro MFP 3106sdw
+  + HP LaserJet Pro MFP 3105sdw
+  + HP Envy 6500e series
+  + HP Envy 6500 series
+  + HP OfficeJet Pro 9730 Series
+  + HP OfficeJet Pro 9730e Series
+  + HP OfficeJet Pro 9720 Series
+  + HP OfficeJet Pro 9720e Series
+  + HP OfficeJet Pro 8130e All-in-One series
+  + HP OfficeJet Pro 8130 All-in-One series
+  + HP OfficeJet 8130e All-in-One series
+  + HP OfficeJet 8130 All-in-One series
+  + HP OfficeJet Pro 8120e All-in-One series
+  + HP OfficeJet Pro 8120 All-in-One series
+  + HP OfficeJet 8120e All-in-One series
+  + HP OfficeJet 8120 All-in-One series
+  + HP DeskJet Ink Advantage ultra 5800 All-in-One Printer series
+  + HP DeskJet Ink Advantage ultra 5100 All-in-One Printer series
+  + HP DeskJet 4300e All-in-One Printer series
+  + HP DeskJet Ink Advantage 4300 All-in-One Printer series
+  + HP DeskJet 4300 All-in-One Printer series
+  + HP DeskJet 2900e All-in-One Printer series
+  + HP DeskJet Ink Advantage 2900 All-in-One Printer series
+  + HP DeskJet 2900 All-in-One Printer series
+
 * Wed Dec 17 2025 Anton Midyukov <antohami@altlinux.org> 1:3.25.8-alt3
 - NMU: hplip-alt-hplip-desktop.patch: add Name[ru].
 
