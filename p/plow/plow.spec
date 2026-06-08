@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-
 %global import_path github.com/six-ddc/plow
 
 Name: plow
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Plow is an HTTP(S) benchmarking tool, written in Golang
@@ -27,12 +26,10 @@ fasthttp instead of Go's default net/http due to its lightning fast performance
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-cd .build/src/%import_path
-
+cd $BUILDDIR/src/$IMPORT_PATH
 %golang_build .
 
 %install
@@ -46,8 +43,11 @@ export IGNORE_SOURCES=1
 %doc README.md LICENSE
 
 %changelog
+* Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 1.4.0-alt1
+- New version
+
 * Fri Sep 05 2025 Vladislav Glinkin <smasher@altlinux.org> 1.3.2-alt1
-- 1.3.1 -> 1.3.2 
+- 1.3.1 -> 1.3.2
 
 * Mon Sep 04 2023 Vladislav Glinkin <smasher@altlinux.org> 1.3.1-alt1
 - Initial build for ALT
