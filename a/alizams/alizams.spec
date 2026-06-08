@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alizams
-Version: 1.9.11
+Version: 1.10.0
 Release: alt1
 
 Summary: DICOM Viewer
@@ -83,6 +83,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jun 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.10.0-alt1
+- New version 1.10.0.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.11-alt1
 - New version 1.9.11.
 
