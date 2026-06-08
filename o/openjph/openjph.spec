@@ -3,7 +3,7 @@
 
 Name: openjph
 Version: 0.27.4
-Release: alt1
+Release: alt2
 Summary: High-throughput JPEG 2000 (HTJ2K) encoder/decoder and library
 License: BSD-2-Clause
 Group: Graphics
@@ -59,7 +59,9 @@ sed -i '/#else/,/#endif/ {
 
 %cmake \
   -DCMAKE_BUILD_TYPE=Release \
+%if_with check
   -DOJPH_BUILD_TESTS=ON \
+%endif
   -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
   -DFETCHCONTENT_SOURCE_DIR_JP2K_TEST_CODESTREAMS=%_builddir/%name-%version/jp2k_test_codestreams-%version \
 %ifnarch x86_64
@@ -102,6 +104,9 @@ sed -i '/#else/,/#endif/ {
 %_libdir/cmake/openjph/
 
 %changelog
+* Mon Jun 08 2026 Michael Shigorin <mike@altlinux.org> 0.27.4-alt2
+- spec: fix build --without check (ilyakurdyukov@)
+
 * Sat Jun 06 2026 Anton Farygin <rider@altlinux.org> 0.27.4-alt1
 - 0.27.3 -> 0.27.4
 
