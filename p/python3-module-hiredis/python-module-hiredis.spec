@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
-Release: alt1.1
+Version: 3.4.0
+Release: alt1
 
 Summary: Python wrapper for hiredis
 
@@ -17,23 +17,19 @@ Group: Development/Python3
 Url: https://pypi.org/project/hiredis/
 Vcs: https://github.com/redis/hiredis-py
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libhiredis-devel
-
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-black
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-isort
-BuildRequires: python3-module-memray
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-memray
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-vulture
-BuildRequires: python3-module-wheel
-BuildRequires: /proc
+# memray is not packaged
+%add_pyproject_deps_check_filter '.*memray'
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -45,6 +41,11 @@ Python wrapper for hiredis.
 
 # use the system's one
 rm -r ./vendor/hiredis/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev_requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -60,8 +61,8 @@ rm -r ./vendor/hiredis/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1.1
-- Demodernized packaging.
+* Mon Jun 08 2026 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.3.1 -> 3.4.0.
 
 * Tue Mar 17 2026 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.3.0 -> 3.3.1.
