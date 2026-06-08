@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-
 %global import_path github.com/git-pkgs/git-pkgs
 
 Name: git-pkgs
-Version: 0.15.2
+Version: 0.16.2
 Release: alt1
 Summary: A git subcommand for analyzing package/dependency usage in git repositories over time
 License: MIT
@@ -28,13 +27,11 @@ made those changes, and why.
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 %golang_build .
 
 %install
 export BUILDDIR="$PWD/.gopath"
-export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
 %golang_install
 
@@ -43,6 +40,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.16.2-alt1
+- New version
+
 * Fri Apr 03 2026 Vladislav Glinkin <smasher@altlinux.org> 0.15.2-alt1
 - New version
 
