@@ -1,20 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.3.7
-Release: alt2
+Version: 1.4.4.3
+Release: alt1
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
 Group: Graphical desktop/GNOME
-URL: https://github.com/dr-ni/onboard
-VCS: https://github.com/dr-ni/onboard
+URL: https://github.com/onboard-osk/onboard
+VCS: https://github.com/onboard-osk/onboard
 
 Source0: %name-%version.tar
 Source1: ru.po
 Patch: build-against-Ayatana-AppIndicator.patch
-Patch1: 1004-fix-ftbfs-python3-12.patch
-Patch2: alt-fix-queue-draw.patch
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-python3 rpm-build-pyproject
 BuildRequires: gcc-c++
@@ -110,6 +108,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Mon Jun 08 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.3-alt1
+- New version.
+- Set upstream to https://github.com/onboard-osk/onboard.
+
 * Wed May 06 2026 Ilya Muhamadeev <nicourced@altlinux.org> 1.4.3.7-alt2
 - Fix on lightdm.
 
