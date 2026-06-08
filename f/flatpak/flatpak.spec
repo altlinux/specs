@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.16.6
+Version: 1.18.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -183,7 +183,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %dir %_localstatedir/lib/%name
 %_man1dir/%{name}*.1*
 %attr(0755,root,root) %_sysconfdir/profile.d/%name.sh
-%_sysconfdir/dbus-1/system.d/%xdg_name.SystemHelper.conf
+%_datadir/dbus-1/system.d/%xdg_name.SystemHelper.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
@@ -225,6 +225,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Mon Jun 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Fri Apr 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.6-alt1
 - 1.16.6
 

@@ -1,5 +1,5 @@
 Name: nautilus-dropbox
-Version: 2026.01.15
+Version: 2026.05.06
 Release: alt1
 
 Summary: Dropbox integration for Nautilus
@@ -79,6 +79,9 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %_man1dir/*.1*
 
 %changelog
+* Mon Jun 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.05.06-alt1
+- 2026.05.06
+
 * Wed Feb 04 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.01.15-alt1
 - 2026.01.15
 

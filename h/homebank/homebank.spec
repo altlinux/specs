@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define ver_major 5.10
-%define ver_minor 0
+%define ver_minor 1
 %define rdn_name fr.free.mdoyen.HomeBank
 
 Name: homebank
-Version: %ver_major
+Version: %ver_major.%ver_minor
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -98,6 +98,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Mon Jun 08 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10.1-alt1
+- 5.10.1
+
 * Tue Mar 10 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10-alt1
 - 5.10
 
