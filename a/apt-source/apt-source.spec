@@ -2,7 +2,7 @@
 %define mod_name apt_source
 
 Name: apt-source
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: APT sources list manager
@@ -56,6 +56,12 @@ Requires: python3-module-tabulate
 
 
 %changelog
+* Mon Jun 08 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Added transactional file deletion for source tables.
+- Fixed Repository.get_table() resolves symlinks and non-canonical
+  paths correctly.
+- Thx Oleg Chagaev.
+
 * Mon Mar 30 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
 - First build for Sisyphus.
 

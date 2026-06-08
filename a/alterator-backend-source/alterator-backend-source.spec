@@ -2,7 +2,7 @@
 %define mod_name alterator_backend_source
 
 Name: alterator-backend-source
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: System software sources manager for Alterator
@@ -28,8 +28,9 @@ BuildRequires: python3-module-setuptools
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tomlkit
-BuildRequires: apt-source
+BuildRequires: apt-source >= 0.1.1
 BuildRequires: alterator-entry
+BuildRequires: python3-module-gnupg
 }}
 
 %description
@@ -46,7 +47,7 @@ Group: System/Configuration/Other
 Summary: System software sources manager for Alterator
 Group: Development/Python3
 
-Requires: apt-source
+Requires: apt-source >= 0.1.1
 Requires: python3-module-gnupg
 Requires: python3-module-tomlkit
 
@@ -97,6 +98,16 @@ fi
 
 
 %changelog
+* Mon Jun 08 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Generated source lists are consolidated into a single file per source.
+- Legacy mirror files are commented out (not deleted) during migration.
+- Added Polkit authentication for write operations.
+- Switched to APT methods to support all protocols.
+- Removed parallel downloads due to mirror compatibility issues.
+- Changed sign semantics: sign changes now apply only to enabled entries.
+- Improved handling of malformed TOML files and missing sources.
+- Thx Oleg Chagaev and Andrey Alekseev.
+
 * Mon Mar 30 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
 - First build for Sisyphus.
 
