@@ -2,7 +2,7 @@
 %define abiversion 2
 
 Name: zxc
-Version: 0.9.1
+Version: 0.11.0
 Release: alt1
 
 Summary: High-performance asymmetric lossless compression
@@ -56,6 +56,9 @@ ZXC header, pkg-config and cmake files
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.11.0-alt1
+- New version
+
 * Fri Mar 27 2026 Vladislav Glinkin <smasher@altlinux.org> 0.9.1-alt1
 - Initial build for ALT
 
