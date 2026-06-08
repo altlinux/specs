@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: Django Channels HTTP/WebSocket server
@@ -54,6 +54,9 @@ prefixing to determine WebSocket endpoints versus HTTP endpoints.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 08 2026 Andrey Kovalev <ded@altlinux.org> 4.2.2-alt1
+- Updated to upstream version 4.2.2.
+
 * Tue Mar 10 2026 Andrey Kovalev <ded@altlinux.org> 4.2.1-alt1
 - Updated to upstream version 4.2.1.
 
