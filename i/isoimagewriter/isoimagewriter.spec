@@ -2,7 +2,7 @@
 %define nameL org.kde.isoimagewriter
 
 Name: isoimagewriter
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 
 Group: Archiving/Cd burning
@@ -48,6 +48,9 @@ done
 %_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: %rname
-Version: 26.04.1
-Release: alt2
+Version: 26.04.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -92,6 +92,9 @@ KF6 library
 
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Mon May 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 26.04.1-alt2
 - fix incorrect window size on first launch (closes: 49893)
 

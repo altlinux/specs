@@ -1,7 +1,7 @@
 %define rname massif-visualizer
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 
 Group: Development/Other
@@ -69,6 +69,9 @@ rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 %_man1dir/%rname.*
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

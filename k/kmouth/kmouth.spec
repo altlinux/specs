@@ -1,7 +1,7 @@
 %define rname kmouth
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -47,6 +47,9 @@ KMouth is an application that enables persons that cannot speak to let their com
 %_datadir/metainfo/*kmouth*.xml
 
 %changelog
+* Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
