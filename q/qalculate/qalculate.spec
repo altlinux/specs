@@ -8,7 +8,7 @@
 %define libname libqalculate%sover
 
 Name: qalculate
-Version: 5.10.0
+Version: 5.11.0
 Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
@@ -112,6 +112,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Jun 08 2026 Anton Farygin <rider@altlinux.org> 5.11.0-alt1
+- 5.10.0 -> 5.11.0
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 5.10.0-alt1
 - 5.9.0 -> 5.10.0
 
