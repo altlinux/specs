@@ -1,11 +1,11 @@
 %def_enable introspection
 %def_enable vala
-%def_disable docs
+%def_enable docs
 
 %define gtk3_soname 4
 
 Name: xfce4-panel
-Version: 4.21.1
+Version: 4.21.2
 Release: alt1
 
 Summary: Panel for Xfce
@@ -24,7 +24,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util-devel >= %xfce_min_vers
-BuildRequires: libxfce4ui-gtk3-devel >= 4.21.3
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
 BuildRequires: libgarcon-gtk3-devel >= %xfce_min_vers
 BuildRequires: libxfconf-devel >= %xfce_min_vers
 Buildrequires: libxfce4windowing-devel >= 4.20.1-alt1
@@ -175,6 +175,10 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Jun 08 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
+- Returned devel-doc subpackage.
+- Updated to 4.21.2.
+
 * Mon Jan 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
 - Switched to meson build.
 - Updated to 4.21.1.
