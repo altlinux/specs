@@ -5,7 +5,7 @@
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 Version: 2.9.4
-Release: alt4
+Release: alt5
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
@@ -71,7 +71,7 @@ BuildRequires: nanosvg-devel
 BuildRequires: openssl-devel
 BuildRequires: heatshrink-devel
 
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 BuildRequires: catch-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
@@ -124,7 +124,7 @@ glad --reproducible \
   --extensions='GL_EXT_texture_compression_s3tc,GL_EXT_texture_filter_anisotropic,GL_KHR_debug' \
   c --loader
 
-sed -i 's|slic3r_jobs_tests.cpp||' tests/slic3rutils/CMakeLists.txt
+#sed -i 's|slic3r_jobs_tests.cpp||' tests/slic3rutils/CMakeLists.txt
 # Disable libseqarrange_tests as it looks like they are stuck in an infinite
 # loop somewhere in Z3_solver_get_model
 sed -i 's|SLIC3R_BUILD_TESTS|FALSE|' src/libseqarrange/CMakeLists.txt
@@ -155,7 +155,7 @@ sed -i 's|SLIC3R_BUILD_TESTS|FALSE|' src/libseqarrange/CMakeLists.txt
 
 %check
 pushd %_cmake__builddir
-ctest
+ctest --output-on-failure
 popd
 
 %files
@@ -170,6 +170,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Mon Jun 08 2026 Anton Midyukov <antohami@altlinux.org> 2.9.4-alt5
+- Rebuild with libwebkit2gtk4.1-devel.
+
 * Thu Feb 12 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.9.4-alt4
 - Add memory limit 3072 per thread.
 
