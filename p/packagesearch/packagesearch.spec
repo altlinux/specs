@@ -3,7 +3,7 @@
 %define app_id space.altlinux.PackageSearch
 
 Name: packagesearch
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: GTK4/Libadwaita app to search and install packages from ALT Linux repositories
@@ -14,6 +14,8 @@ Url: https://altlinux.space/vladislavpetrukhin/PackageSearch.git
 Vcs: https://altlinux.space/vladislavpetrukhin/PackageSearch.git
 Source: %name-%version.tar
 
+Requires: packagekit
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
@@ -22,6 +24,7 @@ BuildRequires: pkgconfig(libalt-repo-1)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(packagekit-glib2)
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
@@ -55,6 +58,12 @@ p10, p9, c10f2 and c9f2 repositories.
 %doc README.md
 
 %changelog
+* Fri Jun 05 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.2.2-alt1
+- New version 0.2.2.
+- PackageKit.
+- Show OS images with selected package.
+- Show files in binary packages on binary's page.
+
 * Tue Jun 02 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.2.0-alt1
 - Initial build.
 
