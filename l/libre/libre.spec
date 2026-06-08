@@ -1,7 +1,7 @@
 %define oname re
 %define sover 42
 Name: libre
-Version: 4.7.0
+Version: 4.8.1
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -53,6 +53,9 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jun 08 2026 Ilya Demyanov <turbid@altlinux.org> 4.8.1-alt1
+- new version 4.8.1
+
 * Thu Apr 09 2026 Ilya Demyanov <turbid@altlinux.org> 4.7.0-alt1
 - new version 4.7.0
 

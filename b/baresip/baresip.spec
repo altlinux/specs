@@ -1,6 +1,6 @@
 %define sover 27
 Name: baresip
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -14,9 +14,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 4.5.0
+BuildRequires: libre-devel >= 4.8.0
 
 Obsoletes: %{name}-mpa < 4.3.0
+Obsoletes: %{name}-g726 < 4.8.0
 
 %add_verify_elf_skiplist %_libdir/%name/modules/*.so
 
@@ -24,7 +25,7 @@ Obsoletes: %{name}-mpa < 4.3.0
 baresip is a bare-bones SIP user agent. It supports SIP, SDP, RTP/RTCP,
 and STUN/TURN/ICE, and IPv4 and IPv6, and is RFC-compliant and has
 portable C89 and C99 source code. A modular plugin architecture provides
-stdio, cons, and evdev user interfaces, codec2, g711, g722, g726, ilbc, l16,
+stdio, cons, and evdev user interfaces, codec2, g711, g722, ilbc, l16,
 and opus codecs, alsa, pulseaudio, pipewire, jack, coreaudio, gst, portaudio,
 winwave, opensles and sndio audio drivers, the audio filters, av1, h264, h265,
 vp8, vp9 video codec, avformat, acvapture and v4l2 video sources, sdl2,
@@ -166,17 +167,6 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the G.722 audio codec.
-
-%package g726
-Summary: G.726 audio codec module for baresip
-Group: Communications
-BuildRequires: libspandsp3-devel
-Requires: %name = %version-%release
-
-%description g726
-Baresip is a portable and modular SIP User-Agent with audio and video support
-
-This module provides the G.726 audio codec.
 
 %package gst
 Summary: GStreamer audio source driver module for baresip
@@ -373,8 +363,7 @@ This module provides the X11 video output driver.
 %setup -q
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DEXTRA_MODULES:STRING="g726"
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
@@ -467,9 +456,6 @@ This module provides the X11 video output driver.
 %files g722
 %_libdir/%name/modules/g722.so
 
-%files g726
-%_libdir/%name/modules/g726.so
-
 %files gst
 %_libdir/%name/modules/gst.so
 
@@ -524,6 +510,9 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Mon Jun 08 2026 Ilya Demyanov <turbid@altlinux.org> 4.8.0-alt1
+- new version 4.8.0
+
 * Thu Apr 09 2026 Ilya Demyanov <turbid@altlinux.org> 4.7.0-alt1
 - new version 4.7.0
 
