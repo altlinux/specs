@@ -1,6 +1,6 @@
 %define soversion 1
 Name: openslide
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: C library for reading virtual slides
@@ -23,6 +23,8 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: libturbojpeg-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libdicom-devel
+BuildRequires: libzstd-devel
 BuildRequires: libdicom-devel
 
 %description
@@ -78,6 +80,9 @@ with virtual slides.
 %_man1dir/*
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 4.0.1-alt1
+- 4.0.0 -> 4.0.1
+
 * Thu Jan 18 2024 Anton Farygin <rider@altlinux.ru> 4.0.0-alt1
 - 3.4.1 -> 4.0.0
 

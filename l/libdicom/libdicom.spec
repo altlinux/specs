@@ -1,13 +1,12 @@
-
 Name:           libdicom
-Version:        1.0.5
+Version: 1.3.0
 Release:        alt1
 Summary:        C library and tools for reading DICOM data sets
-Packager: 	Ilya Mashkin <oddity@altlinux.ru>
 Group:		Sciences/Medicine
 License:        MIT
-URL:            https://github.com/ImagingDataCommons/%{name}
-Source0:        https://github.com/ImagingDataCommons/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.xz
+URL:            https://github.com/ImagingDataCommons/libdicom
+VCS:		https://github.com/ImagingDataCommons/libdicom.git
+Source0:        %name-%version.tar
 
 BuildRequires:  gcc
 BuildRequires:  meson
@@ -37,8 +36,6 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 BuildArch:      noarch
 Group: Sciences/Medicine
-# add HTML documentation once Hawkmoth is packaged
-# https://bugzilla.redhat.com/show_bug.cgi?id=2242888
 
 %description    doc
 The %{name}-doc package contains documentation for developing
@@ -89,6 +86,9 @@ rm doc/text/conf.py
 
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1.3.0-alt1
+- 1.0.5 -> 1.3.0
+
 * Sun Oct 15 2023 Ilya Mashkin <oddity@altlinux.ru> 1.0.5-alt1
 - Build for Sisyphus
 
