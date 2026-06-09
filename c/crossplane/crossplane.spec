@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: crossplane
-Version: 2.2.1
+Version: 2.3.1
 Release: alt1
 Summary: Crossplane Is the Cloud-Native Framework for Platform Engineering
 License: Apache-2.0
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Jun 02 2026 Alexey Rodygin <alehandro@altlinux.org> 2.3.1-alt1
+- Updated to new version 2.3.1.
+
 * Wed May 13 2026 Alexey Rodygin <alehandro@altlinux.org> 2.2.1-alt1
 - Updated to new version 2.2.1.
 
