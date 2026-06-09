@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.15
+Version: 0.0.17.post1
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -156,6 +156,9 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Mon Jun 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.17.post1-alt1
+- New 0.0.17.post1 version.
+
 * Thu May 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.15-alt1
 - New 0.0.15 version.
 

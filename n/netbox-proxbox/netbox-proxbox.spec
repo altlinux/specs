@@ -1,5 +1,5 @@
 Name:    netbox-proxbox
-Version: 0.0.18
+Version: 0.0.20.post1
 Release: alt1
 
 Summary: Netbox Plugin for integration between Proxmox and Netbox
@@ -44,6 +44,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-proxbox/README
 %_defaultdocdir/netbox-proxbox/README
 
 %changelog
+* Mon Jun 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.20.post1-alt1
+- New 0.0.20.post1 version.
+
 * Thu May 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.18-alt1
 - New 0.0.18 version.
 
