@@ -1,17 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 50
 %define beta %nil
 %define api_ver 2
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
 %define _libexecdir %_prefix/libexec
 
-%def_disable applet
 %def_enable check
 
 Name: gpaste
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -31,9 +30,8 @@ Patch1: %name-42.0-alt-format.patch
 Requires: lib%name = %EVR
 
 %define glib_ver 2.76
-%define gtk3_ver 3.24.0
-%define gtk4_ver 4.6.0
-%define adwaita_ver 1.5
+%define gtk4_ver 4.12
+%define adwaita_ver 1.9
 %define gi_ver 1.58.0
 %define vala_ver 0.42
 %define mutter_ver 45.0
@@ -44,11 +42,10 @@ BuildRequires(pre):rpm-macros-meson rpm-build-gir rpm-build-vala rpm-build-syste
 BuildRequires: meson /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libdbus-devel
-BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
-BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk4-gir-devel libadwaita-gir-devel
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: gcr4-libs-devel >= %gcr_ver
@@ -119,8 +116,6 @@ in notification area.
 %patch1 -b .format
 %endif
 
-sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
-
 %build
 %ifarch %ix86
 %add_optflags -Wno-incompatible-pointer-types
@@ -140,10 +135,10 @@ sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
 %files -f %_name.lang
 %_bindir/%name-client
 %_libexecdir/%name/
-%{?_enable_applet:%exclude %_libexecdir/%name/%name-applet}
 %_desktopdir/%xdg_name.Ui.desktop
+%_desktopdir/%xdg_name.Daemon.desktop
 %_desktopdir/%xdg_name.Preferences.desktop
-%_datadir/metainfo/%xdg_name.Ui.appdata.xml
+%_datadir/metainfo/%xdg_name.Ui.metainfo.xml
 %_prefix/lib/systemd/user/%xdg_name.Ui.service
 %_datadir/dbus-1/services/*.service
 %_userunitdir/%xdg_name.service
@@ -158,48 +153,35 @@ sed -i  's/"49"/&, "50"/' src/gnome-shell/metadata.json.in
 
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
-%_libdir/lib%name-gtk-3.so.*
 %_libdir/lib%name-gtk4.so.*
 
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
-%_libdir/lib%name-gtk-3.so
 %_libdir/lib%name-gtk4.so
 %_pkgconfigdir/%name-%api_ver.pc
-%_pkgconfigdir/%name-gtk-3.pc
 %_pkgconfigdir/%name-gtk-4.pc
 %_vapidir/%name-%api_ver.deps
 %_vapidir/%name-%api_ver.vapi
-%_vapidir/%name-gtk-3.deps
-%_vapidir/%name-gtk-3.vapi
 %_vapidir/%name-gtk-4.deps
 %_vapidir/%name-gtk-4.vapi
 
 %files -n lib%name-gir
 %_typelibdir/%_name-%api_ver.typelib
-%_typelibdir/%{_name}Gtk-3.typelib
 %_typelibdir/%{_name}Gtk-4.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/%_name-%api_ver.gir
-%_girdir/%{_name}Gtk-3.gir
 %_girdir/%{_name}Gtk-4.gir
-
-%if_enabled applet
-%files applet
-%_libexecdir/%name/%name-applet
-%_datadir/metainfo/%xdg_name.Applet.appdata.xml
-%_datadir/applications/%xdg_name.Applet.desktop
-%_prefix/lib/systemd/user/%xdg_name.Applet.service
-%_sysconfdir/xdg/autostart/%xdg_name.Applet.desktop
-%endif
 
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Tue Jun 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0 (ported to GTK4/Libadwaita)
+
 * Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 45.8-alt1
 - 45.8
 

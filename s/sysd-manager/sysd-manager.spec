@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.19
+%define ver_major 2.20
 %define rdn_name io.github.plrigaux.%name
 %define bus_name io.github.plrigaux.SysDManager
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -23,7 +23,6 @@ Source: https://github.com/plrigaux/sysd-manager/archive/v%version/%name-%versio
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
-Patch1: %name-2.11.5-alt-schemas.patch
 
 %define adw_ver 1.8
 %define rust_ver 1.89
@@ -48,10 +47,6 @@ and peak at their journal logs.
 [ -d .cargo ] || mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
-
-# fix schemas
-#%%patch1 -b .bad
-#sed -i '/<schemalist>/,$!d' data/schemas/%rdn_name.gschema.xml
 
 %build
 %rust_build --manifest-path %name-proxy/Cargo.toml
@@ -104,6 +99,9 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %doc CHANGELOG* README*
 
 %changelog
+* Tue Jun 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
+- 2.20.0
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 2.19.6-alt1
 - 2.19.6
 
