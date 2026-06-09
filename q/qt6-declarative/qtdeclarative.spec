@@ -4,7 +4,7 @@
 
 Name: qt6-declarative
 Version: 6.10.3
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -40,6 +40,8 @@ Requires: libqt6-quickcontrols2basic
 Requires: libqt6-quickcontrols2fusion
 Requires: libqt6-quickcontrols2imagine
 Requires: libqt6-quickcontrols2material
+Requires: libqt6-quickvectorimagegenerator
+Requires: libqt6-quickvectorimagehelpers
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-qml.tar
@@ -61,7 +63,7 @@ Patch1: qtdeclarative-quickshapes-make-module-public.patch
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
 BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
 BuildRequires: rpm-build-python3
-BuildRequires: gcc-c++ glibc-devel qt6-base-devel qt6-shadertools-devel
+BuildRequires: glibc-devel qt6-base-devel qt6-shadertools-devel qt6-svg-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
 BuildRequires: qt6-tools
@@ -454,6 +456,30 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-labssynchronizer
 %summary
 
+%package -n libqt6-quickvectorimagegenerator
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickvectorimagegenerator
+%summary
+
+%package -n libqt6-quickvectorimagehelpers
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickvectorimagehelpers
+%summary
+
+%package -n libqt6-quickvectorimage
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickvectorimage
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
@@ -477,7 +503,7 @@ sed -i 's/baseIndent, std::move(loc2str)/baseIndent, loc2str/' src/qmldom/qqmldo
 %endif
 
 %build
-%if_enabled bootstrap
+%if_disabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %else
 %define qdoc_found 0
@@ -500,7 +526,8 @@ popd
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # relax depends on plugins files
@@ -543,10 +570,10 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_examplesdir/*
 
 %files -n libqt6-labssynchronizer
-%_qt6_libdir//libQt6LabsSynchronizer.so.*
+%_qt6_libdir/libQt6LabsSynchronizer.so.*
 %_qt6_qmldir/Qt/labs/synchronizer/
 %files -n libqt6-quickshapesdesignhelpers
-%_qt6_libdir//libQt6QuickShapesDesignHelpers.so.*
+%_qt6_libdir/libQt6QuickShapesDesignHelpers.so.*
 %files -n libqt6-qml
 %_qt6_libdir/libQt?Qml.so.*
 %_qt6_qmldir/QML/
@@ -561,11 +588,11 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_libdir/libQt6QmlAssetDownloader.so.*
 %_qt6_qmldir/Qt/labs/assetdownloader/
 %files -n libqt6-labsplatform
-%_qt6_libdir//libQt6LabsPlatform.so.*
+%_qt6_libdir/libQt6LabsPlatform.so.*
 %files -n libqt6-qmlmeta
-%_qt6_libdir//libQt6QmlMeta.so.*
+%_qt6_libdir/libQt6QmlMeta.so.*
 %files -n libqt6-quickcontrols2fluentwinui3styleimpl
-%_qt6_libdir//libQt6QuickControls2FluentWinUI3StyleImpl.so.*
+%_qt6_libdir/libQt6QuickControls2FluentWinUI3StyleImpl.so.*
 %_qt6_qmldir/QtQuick/Controls/FluentWinUI3/
 %files -n libqt6-quick
 %_qt6_libdir/libQt?Quick.so.*
@@ -674,10 +701,23 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_qmldir/QtQuick/Controls/Universal/
 %files -n libqt6-quickcontrols2universalstyleimpl
 %_qt6_libdir/libQt6QuickControls2UniversalStyleImpl.so.*
+%files -n libqt6-quickvectorimage
+%_qt6_libdir/libQt6QuickVectorImage.so.*
+%dir %_qt6_qmldir/QtQuick/VectorImage/
+%_qt6_qmldir/QtQuick/VectorImage/libqquickvectorimageplugin.so
+%_qt6_qmldir/QtQuick/VectorImage/plugins.qmltypes
+%_qt6_qmldir/QtQuick/VectorImage/qmldir
+%files -n libqt6-quickvectorimagegenerator
+%_qt6_libdir/libQt6QuickVectorImageGenerator.so.*
+%files -n libqt6-quickvectorimagehelpers
+%_qt6_libdir/libQt6QuickVectorImageHelpers.so.*
+%_qt6_qmldir/QtQuick/VectorImage/Helpers/
 
 %files devel
 %_bindir/qml*
+%_bindir/svgtoqml*
 %_qt6_bindir/qml*
+%_qt6_bindir/svgtoqml*
 %_qt6_libexecdir/qml*
 %_qt6_plugindir/qmltooling/*
 %_qt6_plugindir/qmllint/*
@@ -711,6 +751,10 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- build vectorimage QML plugin (closes: 59476)
+- fix compile docs
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
