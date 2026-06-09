@@ -1,24 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ccache
-Version: 4.11.3
+Version: 4.13.6
 Release: alt1
 
 Summary: Compiler cache
 License: GPLv3+
 Group: Development/Tools
 
-Url: http://ccache.dev/
-# Source-git: https://github.com/ccache/ccache.git
+Url: https://ccache.dev/
+VCS: https://github.com/ccache/ccache.git
 Source: %name-%version.tar
+Source1: update-ccache-symlinks.py
+Source2: ccache.filetrigger
 Patch: %name-%version-alt.patch
-Patch1: 0001-Fix-build-on-GCC13.patch
 
 BuildRequires: asciidoctor
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libhiredis-devel
 BuildRequires: libzstd-devel
+BuildRequires: libxxhash-devel
+BuildRequires: doctest-devel
 BuildRequires: rpm-build-python3
 
 %description
@@ -30,7 +33,6 @@ in a 5 to 10 times speedup in common compilations.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -41,14 +43,15 @@ in a 5 to 10 times speedup in common compilations.
 mkdir -p -m755 %buildroot%prefix/lib/ccache
 mkdir -p -m755 %buildroot%prefix/lib/rpm
 mkdir -p -m755 %buildroot%_sbindir
-install -p -m 0755 update-ccache-symlinks.py %buildroot%_sbindir/update-ccache-symlinks
-install -p -m 0755 ccache.filetrigger %buildroot%prefix/lib/rpm
-
+install -p -m 0755 %SOURCE1 %buildroot%_sbindir/update-ccache-symlinks
+install -p -m 0755 %SOURCE2 %buildroot%prefix/lib/rpm
+rm -rf %buildroot/%_docdir
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name << EOF
 %name
 EOF
+
 
 %files
 %doc LICENSE.adoc README.md GPL-3.0.txt
@@ -62,6 +65,9 @@ EOF
 %prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 4.13.6-alt1
+- 4.11.3 -> 4.13.6
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.11.3-alt1
 - new version 4.11.3
 
