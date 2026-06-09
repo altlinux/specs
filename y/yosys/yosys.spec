@@ -4,7 +4,7 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.64
+Version: 0.66
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -78,6 +78,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Tue Jun 09 2026 Anton Midyukov <antohami@altlinux.org> 0.66-alt1
+- New version 0.66.
+
 * Thu Apr 16 2026 Anton Midyukov <antohami@altlinux.org> 0.64-alt1
 - New version 0.64.
 
