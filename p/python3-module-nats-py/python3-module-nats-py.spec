@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define ns_name nats
-%define nats_py_version 2.14.0
-%define nats_core_version 0.1.0
+%define nats_py_version 2.15.0
+%define nats_core_version 0.2.0
 %define nats_server_version 0.0.0
-%define nats_jetstream_version 0.1.0
+%define nats_jetstream_version 0.3.0
+%define nats_key_value_version 0.1.0
 
 # flaky tests
 %def_without check
 
 Name: python3-module-nats-py
 Version: %nats_py_version
-Release: alt2
+Release: alt1
 
 Summary: NATS client for Python
 License: Apache-2.0
@@ -32,6 +33,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps -- nats_core_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
 %pyproject_builddeps -- nats_server_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
 %pyproject_builddeps -- nats_jetstream_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_key_value_pep518 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
 %if_with check
 BuildRequires: nats-server
 %pyproject_builddeps -- nats_py_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
@@ -47,6 +49,9 @@ BuildRequires: nats-server
 
 %pyproject_builddeps -- nats_jetstream_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
 %pyproject_builddeps -- nats_jetstream_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter}
+
+%pyproject_builddeps -- nats_key_value_pep517 %{?pyproject_deps_build_filter:--exclude %pyproject_deps_build_filter}
+%pyproject_builddeps -- nats_key_value_metadata %{?pyproject_deps_check_filter:--exclude %pyproject_deps_check_filter}
 %endif
 
 %description
@@ -67,6 +72,7 @@ A Python client for the NATS messaging system..
 
 %package -n python3-module-nats-server
 Version: %nats_server_version
+Release: alt3
 Summary: Python library for managing NATS server for development and testing
 License: MIT
 Group: Development/Python3
@@ -89,6 +95,19 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- nats_jetstream_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
 
 %description -n python3-module-nats-jetstream
+%summary.
+
+%package -n python3-module-nats-key-value
+Version: %nats_key_value_version
+Summary: Python client for NATS KeyValue Store
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/nats-key-value/
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- nats_key_value_metadata %{?pyproject_deps_runtime_filter:--exclude %pyproject_deps_runtime_filter}
+
+%description -n python3-module-nats-key-value
 %summary.
 
 %prep
@@ -129,15 +148,25 @@ cd nats-jetstream
 %endif
 cd -
 
+# nats-key-value
+cd nats-key-value
+%pyproject_deps_resync nats_key_value_pep518 pep518
+%pyproject_deps_resync nats_key_value_pep517 pep517
+%pyproject_deps_resync nats_key_value_metadata metadata
+%if_with check
+%pyproject_deps_resync nats_key_value_check pep735 dev
+%endif
+cd -
+
 %build
-for package in nats nats-core nats-server nats-jetstream; do
+for package in nats nats-core nats-server nats-jetstream nats-key-value; do
     pushd $package
     %pyproject_build
     popd
 done
 
 %install
-for package in nats nats-core nats-server nats-jetstream; do
+for package in nats nats-core nats-server nats-jetstream nats-key-value; do
     pushd $package
     %pyproject_install
     popd
@@ -145,7 +174,7 @@ done
 
 %check
 export PATH="$PATH:%_sbindir"
-for package in nats nats-core nats-server nats-jetstream; do
+for package in nats nats-core nats-server nats-jetstream nats-key-value; do
     pushd $package
     %pyproject_run_pytest -vra -o=addopts=-Wignore
     popd
@@ -186,7 +215,17 @@ done
 %dir %python3_sitelibdir/nats/
 %python3_sitelibdir/nats/jetstream/
 
+%files -n python3-module-nats-key-value
+%doc nats-key-value/README.md nats-key-value/CHANGELOG.md
+%python3_sitelibdir/nats_key_value-%nats_key_value_version.dist-info/
+%dir %python3_sitelibdir/nats/
+%python3_sitelibdir/nats/key_value/
+
 %changelog
+* Tue Jun 09 2026 Anton Zhukharev <ancieg@altlinux.org> 2.15.0-alt1
+- Updated to 2.15.0.
+- Packaged nats-key-value subproject.
+
 * Fri Mar 06 2026 Anton Zhukharev <ancieg@altlinux.org> 2.14.0-alt2
 - Shared /usr/lib/python3/site-packages/nats/ ownership.
 - Corrected docs packaging for each subpackage.
