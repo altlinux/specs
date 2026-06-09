@@ -4,7 +4,7 @@
 
 Name: gearlever
 Version: 3.3.3
-Release: alt2
+Release: alt3
 
 Summary: Manage AppImages
 License: GPL-3.0-or-later
@@ -21,7 +21,6 @@ Patch: %name-%version-%release.patch
 
 AutoProv: nopython3
 
-Requires: p7zip
 Requires: 7-zip
 
 BuildRequires(pre): rpm-macros-meson
@@ -71,6 +70,9 @@ install -Dm755 "build-aux/get_appimage_offset.sh" "%buildroot%_libexecdir/%name/
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Tue Jun 09 2026 Vladislav Petrukhin <vladp@altlinux.org> 3.3.3-alt3
+- Remove p7zip dependency.
+
 * Wed Jul 09 2025 Semen Fomchenkov <armatik@altlinux.org> 3.3.3-alt2
 - Remove user manual (ALT #55037).
 - Added 7-zip dependency (ALT #55043).
