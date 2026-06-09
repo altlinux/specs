@@ -1,6 +1,6 @@
 Name:     swap_cleaner
 Version:  0.1.2
-Release:  alt1
+Release:  alt2
 
 Summary:  swap cleaner at shutdown
 License:  GPL-2.0-or-later
@@ -30,6 +30,10 @@ install -D -m0644 unit/swap_cleaner.service \
 %_sbindir/swap_cleaner
 
 %changelog
+* Tue Jun 09 2026 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt2
+- sbin/swap_cleaner: fix for multiple swap partitions support (Closes: 59483).
+- Fix URL.
+
 * Fri May 22 2026 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
 - Fix bug in case of swapfile (size of file evaluation).
 
