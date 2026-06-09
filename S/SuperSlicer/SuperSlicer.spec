@@ -1,12 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%def_disable tests
+%def_without check
 %_tune_parallel_build_by_procsize 3072
 
 Name: SuperSlicer
 Summary: A PrusaSlicer fork (which is a slic3r fork) (previously Slic3r++)
 Version: 2.7.61.10
-Release: alt4
+Release: alt5
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://superslicer.net
@@ -32,7 +32,6 @@ BuildRequires: eigen3 >= 3
 
 BuildRequires: gcc-c++
 BuildRequires: libgtest >= 1.7
-BuildRequires: ctest
 BuildRequires: boost-devel
 BuildRequires: boost-asio-devel
 BuildRequires: boost-atomic-devel
@@ -68,8 +67,11 @@ BuildRequires: nanosvg-devel
 BuildRequires: openssl-devel
 BuildRequires: heatshrink-devel
 
-BuildRequires: libwebkit2gtk-devel
-BuildRequires: catch-devel
+BuildRequires: libwebkit2gtk4.1-devel
+%if_with check
+BuildRequires: catch2-devel
+BuildRequires: ctest
+%endif
 BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
 BuildRequires: bzlib-devel
@@ -111,7 +113,10 @@ rm resources/udev/90-3dconnexion.rules
   -DCMAKE_BUILD_TYPE=Release \
   -DOPENVDB_FIND_MODULE_PATH=%_libdir/cmake/OpenVDB \
   -DWITH_WERROR=OFF \
-%if_disabled tests
+%if_with check
+  -DBUILD_TESTING=ON \
+  -DSLIC3R_BUILD_TESTS=ON \
+%else
   -DBUILD_TESTING=OFF \
   -DSLIC3R_BUILD_TESTS=OFF \
 %endif
@@ -130,11 +135,9 @@ rm %buildroot/%_libexecdir/libangelscript.a
 rm %buildroot/%_includedir/angelscript.h
 
 %check
-%if_enabled tests
 pushd %_cmake__builddir
-ctest
+ctest --output-on-failure
 popd
-%endif
 
 %files
 %_bindir/superslicer
@@ -148,6 +151,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Mon Jun 08 2026 Anton Midyukov <antohami@altlinux.org> 2.7.61.10-alt5
+- Rebuild with libwebkit2gtk4.1-devel.
+
 * Thu Feb 12 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.7.61.10-alt4
 - Add memory limit 3072 per thread.
 
