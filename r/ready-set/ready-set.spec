@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: %api_version.7.3
+Version: %api_version.7.4
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -23,7 +23,10 @@ VCS: https://altlinux.space/alt-gnome/ReadySet.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: %name-common = %EVR
+Obsoletes: %name-translation <= 0.3.0-alt1
+Provides: %name-translation = %EVR
+Obsoletes: %name-common <= 0.7.3-alt1
+Provides: %name-common = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -67,28 +70,6 @@ Conflicts: %gis_name
 
 %description gdm
 %summary.
-
-%package common
-Summary: Common files for %name frontends
-Group: Other
-
-Obsoletes: %name-translation <= 0.3.0-alt1
-Provides: %name-translation = %EVR
-
-%description common
-%summary.
-
-# %package cli
-# Summary: CLI %name frontend
-# Group: Other
-
-# BuildArch: noarch
-
-# Requires: %name-common = %EVR
-# Conflicts: %name = %EVR
-
-# %description cli
-# %summary.
 
 %package -n %libname%api_version
 Summary: %name library
@@ -208,13 +189,24 @@ Requires: %name = %EVR
 %check
 %meson_test
 
-%files
+%files -f %name.lang
 %_libexecdir/%name
 %_iconsdir/hicolor/*/apps/%{app_id}*
 %_datadir/applications/%{app_id}*
 %_datadir/polkit-1/rules.d/%app_id.rules
 %_userunitdir/gnome-session.target.wants/%name-existing-user.service
 %_userunitdir/%name-existing-user.service
+%_libexecdir/%app_id
+%_sysconfdir/%name
+%_datadir/%name
+%_sharedstatedir/%name
+%_sysconfdir/dbus-1/system.d/%app_id.conf
+%_datadir/polkit-1/actions/%app_id.policy
+%_datadir/dbus-1/system-services/%app_id.service
+%_datadir/glib-2.0/schemas/%app_id.gschema.xml
+%_unitdir/%name.service
+%_sysusersdir/%name.conf
+%_tmpfilesdir/%name.conf
 
 %files gdm
 %_libexecdir/%gis_name
@@ -228,22 +220,6 @@ Requires: %name = %EVR
 %_userunitdir/gnome-session@%gis_name.target.d
 %_sysusersdir/%gis_name.conf
 %_tmpfilesdir/%gis_name.conf
-
-# %files cli
-
-%files common -f %name.lang
-%_libexecdir/%app_id
-%_sysconfdir/%name
-%_datadir/%name
-%_sharedstatedir/%name
-%_sysconfdir/dbus-1/system.d/%app_id.conf
-%_datadir/polkit-1/actions/%app_id.policy
-%_datadir/dbus-1/system-services/%app_id.service
-%_datadir/glib-2.0/schemas/%app_id.gschema.xml
-%_unitdir/%name.service
-%_sysusersdir/%name.conf
-%_tmpfilesdir/%name.conf
-%doc README.en.md
 
 %files -n %libname%api_version
 %_libdir/%libname-%api_version.so.%api_version
@@ -294,6 +270,12 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.4-alt1
+- Removed short options from CLI interface.
+- Fixed infinity loop on window reloading.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.7.4
+
 * Mon Jun 01 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.3-alt1
 - New version: 0.7.3.
 - Added existing-user mode to configure an existing user who skipped
