@@ -3,7 +3,7 @@
 
 Name:       rexi
 Version:    1.2.1
-Release:    alt2
+Release:    alt3
 BuildArch:  noarch
 
 License:    MIT
@@ -12,7 +12,7 @@ Summary:    Terminal UI for Regex Testing.
 
 Url:        https://github.com/royreznik/rexi
 Source:     %name-%version.tar
-Patch:      %name-%version-%release.patch
+Patch:      rexi-1.2.1-fix_cli_test_typer.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-poetry
@@ -73,6 +73,9 @@ sed -i 's/renderable/visual/g' tests/test_ui.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 09 2026 Sergey Savelev <medovi@altlinux.org> 1.2.1-alt3
+- Fixed FTBFS: passed bytes instead of BytesIO in test_no_args.
+
 * Thu Feb 12 2026 Sergey Savelev <medovi@altlinux.org> 1.2.1-alt2
 - Fixed FTBFS: in the test_ui, the attribute has been changed from renderable to visual.
 
