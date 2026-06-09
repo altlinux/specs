@@ -13,7 +13,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		6.18
 %define karch x86_64 aarch64
 
@@ -26,7 +26,7 @@
 
 %define legacy8 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy8 580.142
+%define legacy8 580.159.04
 %endif
 %define legacy8_src %(echo %legacy8 | tr -d .)
 
@@ -326,7 +326,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Tue Jun 02 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-altN
+* Tue Jun 09 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-alt2
+- new version (580.159.04)
+
+* Tue Jun 02 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-alt1
 - new version (595.80)
 
 * Tue May 12 2026 Sergey V Turchin <zerg at altlinux dot org> 595.71.05-alt1
