@@ -1,8 +1,8 @@
 %define soversion 1
 
 Name: whisper-cpp
-Version: 1.8.4
-Release: alt2
+Version: 1.8.6
+Release: alt1
 
 Summary: Port of OpenAI's Whisper model in C/C++
 Group: Sound
@@ -26,7 +26,7 @@ Requires: %name-ggml-base
 BuildRequires: cmake gcc-c++ gcc14-c++ git libstdc++-devel-static ctest ccache 
 BuildRequires: libavdevice-devel libpostproc-devel libavfilter-devel libswscale-devel
 BuildRequires: libswresample-devel libavcodec-devel libavformat-devel libavutil-devel
-BuildRequires: vulkan-tools libvulkan-devel glslc
+BuildRequires: vulkan-tools libvulkan-devel glslc glslang spirv-headers
 %ifarch x86_64
 BuildRequires: nvidia-cuda-toolkit nvidia-cuda-devel-static
 %endif
@@ -124,6 +124,9 @@ export GGML_BACKEND_PATH=$PWD/%_cmake__builddir/bin/libggml-cpu.so
 %_datadir/%name/ggml-base.bin
 
 %changelog
+* Tue Jun 09 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.8.6-alt1
+- Updated from 1.8.4 to 1.8.6.
+
 * Tue May 26 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.8.4-alt2
 - The nvcc-12.9 compiler doesn't support gcc15. gcc14 is required
   to build with CUDA support.
