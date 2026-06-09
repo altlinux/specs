@@ -4,7 +4,7 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -94,6 +94,9 @@ Requires: %name-common
 
 
 %changelog
+* Tue Jun 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 

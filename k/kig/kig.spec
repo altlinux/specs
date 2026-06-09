@@ -4,7 +4,7 @@
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -66,6 +66,9 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jun 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
