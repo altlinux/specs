@@ -11,7 +11,7 @@
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: %api_version.7.4
+Version: %api_version.7.6
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -270,6 +270,12 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.6-alt1
+- Added comments to vapi file.
+- Fixed small bug at username page.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.7.6
+
 * Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.4-alt1
 - Removed short options from CLI interface.
 - Fixed infinity loop on window reloading.
