@@ -2,7 +2,7 @@
 %define mod_name alterator_backend_source
 
 Name: alterator-backend-source
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: System software sources manager for Alterator
@@ -98,6 +98,9 @@ fi
 
 
 %changelog
+* Tue Jun 09 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.2-alt1
+- Fix signature verification when apt-config returns an empty string.
+
 * Mon Jun 08 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
 - Generated source lists are consolidated into a single file per source.
 - Legacy mirror files are commented out (not deleted) during migration.
