@@ -1,6 +1,6 @@
 Name: xfce4-mixer
 Version: 4.20.0
-Release: alt1
+Release: alt2.g70658bd
 
 Summary: A volume control application and plugin for the Xfce panel
 License: GPL-2.0+
@@ -30,6 +30,7 @@ the Xfce panel.
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %meson \
@@ -55,6 +56,9 @@ the Xfce panel.
 %_man1dir/*
 
 %changelog
+* Tue Jun 09 2026 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2.g70658bd
+- Upstream git snapshot.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Switched to meson build.
 - Updated to 4.20.0.
