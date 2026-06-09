@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: cpu_features
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: A library to get CPU features at runtime
 License: Apache-2.0
@@ -69,6 +69,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_cmakedir/CpuFeatures
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 0.11.0-alt1
+- 0.10.0 -> 0.11.0
+
 * Sun May 04 2025 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to v0.10.0 (2025-05-02).
 
