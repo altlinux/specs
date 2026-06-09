@@ -2,7 +2,7 @@
 
 Name: libssh2
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: A library implementing the SSH2 protocol
 Group: Networking/Remote access
@@ -10,6 +10,7 @@ License: BSD
 Url: https://www.libssh2.org/
 VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
+Patch0: libssh2-1.11.1-CVE-2026-7598.patch
 
 BuildRequires: libssl-devel zlib-devel
 # for tests
@@ -42,6 +43,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 # set version
@@ -73,6 +75,10 @@ LC_ALL=en_US.UTF-8 %make -C tests check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1.11.1-alt2
+- Fixes:
+  + CVE-2026-7598 integer overflow via large username or password arguments
+
 * Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 1.11.1-alt1
 - updated from 1.11.0 to 1.11.1
 - removed patches (merged upstream)
