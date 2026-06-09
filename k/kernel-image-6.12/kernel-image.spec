@@ -1,8 +1,8 @@
 Name: kernel-image-6.12
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.92
+%define kernel_sublevel	.93
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jun 09 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.93-alt1
+- v6.12.93 (2026-06-09).
+
 * Thu Jun 04 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.12.92-alt2
 - Applied patches adding support for enabling automatic lockdown in UEFI Secure
   Boot mode (thx egori@).
