@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,5 +50,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jun 09 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt2
+- fix some typos (ALT 59449, 59448, 59447)
+- fix crane (ALT 59455, 59457, 59454, 59453)
+- fix trivy (ALT 59458)
+- fix regctl (ALT 59452, 59451)
+- small improvements (ALT 59450)
+
 *Thu May 14 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt1
 - initial build
