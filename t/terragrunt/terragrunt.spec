@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: terragrunt
-Version: 0.99.4
+Version: 1.0.7
 Release: alt1
 Summary: Terragrunt is a orchestration tool for OpenTofu/Terraform
 
@@ -51,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Jun 09 2026 Alexey Romanyuta <r9odt@altlinux.org> 1.0.7-alt1
+- New version 1.0.7.
+
 * Fri Mar 06 2026 Alexey Romanyuta <r9odt@altlinux.org> 0.99.4-alt1
 - New version v0.99.4
 - Remove documentation from the package due to a change in the presentation
