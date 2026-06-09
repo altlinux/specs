@@ -1,7 +1,7 @@
 %define rname alligator
 
 Name: %rname
-Version: 26.04.1
+Version: 26.04.2
 Release: alt1
 %K6init
 
@@ -45,6 +45,9 @@ Alligator is a convergent RSS/Atom feed reader.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
+- new version
+
 * Sun May 10 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
 - new version
 
