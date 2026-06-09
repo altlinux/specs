@@ -1,9 +1,9 @@
 %define module_name	amneziawg
-%define module_version	1.0.20251104
+%define module_version	1.0.20260329
 %define module_release	alt1
 
 %define flavour		6.12
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64 aarch64
 BuildRequires(pre): kernel-headers-modules-6.12
 %setup_kernel_module %flavour
 
@@ -63,6 +63,9 @@ install amneziawg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1.0.20260329-alt1
+- 1.0.20251104 -> 1.0.20260329
 
 * Wed Jan 21 2026 Anton Farygin <rider@altlinux.org> 1.0.20251104-alt1
 - 1.0.20251004 -> 1.0.20251104
