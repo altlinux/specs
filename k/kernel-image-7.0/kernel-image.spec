@@ -1,8 +1,8 @@
 Name: kernel-image-7.0
-Release: alt2
+Release: alt1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.0
-%define kernel_sublevel	.11
+%define kernel_sublevel	.12
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jun 09 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.12-alt1
+- v7.0.12 (2026-06-09).
+
 * Tue Jun 02 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.11-alt2
 - Applied patches adding support for enabling automatic lockdown in UEFI Secure
   Boot mode (thx egori@).
