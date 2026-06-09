@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-hanabi
 Version: 1
-Release: alt8
+Release: alt9
 Epoch: 1
 
 Summary: Live Wallpaper for GNOME
@@ -62,6 +62,9 @@ or 'Force GtkMediaFile' in the extension settings can help.
 %doc README.md
 
 %changelog
+* Tue Jun 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt9
+- updated to git.074982d14d
+
 * Mon Jun 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt8
 - updated to git.1ba3be9474
 
