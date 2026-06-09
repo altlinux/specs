@@ -2,12 +2,12 @@
 
 Name: slapi-nis
 Version: 0.70.0
-Release: alt1
+Release: alt2
 Summary: Schema Compatibility plugins for Directory Server
 License: GPL-3.0
 Group: System/Base
-Url: http://pagure.io/slapi-nis/
-Vcs: https://pagure.io/slapi-nis/
+Url: https://codeberg.org/freeipa/slapi-nis
+Vcs: https://codeberg.org/freeipa/slapi-nis
 ExcludeArch: %ix86 armh
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -70,6 +70,9 @@ done
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Tue Jun 09 2026 Stanislav Levin <slev@altlinux.org> 0.70.0-alt2
+- Fixed FTBFS (gcc 15).
+
 * Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 0.70.0-alt1
 - 0.60.0 -> 0.70.0.
 
