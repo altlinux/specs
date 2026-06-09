@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.67
+Version: 2.4.68
 Release: alt1
 Epoch: 1
 
@@ -1434,6 +1434,23 @@ exit 0
 %_mandir/man8/suexec*
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1:2.4.68-alt1
+- 2.4.67 -> 2.4.68
+- Fixes:
+  * CVE-2026-49975: mod_http2 denial of service
+  * CVE-2026-48913: mod_http2 memory corruption when file handles exhausted
+  * CVE-2026-44631: Heap Underflow in `ap_regname` via Signed Char Overflow
+  * CVE-2026-44186: Loop in `proxy_ftp_handler` in mod_proxy_ftp
+  * CVE-2026-44185: Stack Buffer Over-Read in mod_ssl OCSP `send_request`
+  * CVE-2026-44119: escalation of privilege through expressions in .htaccess in multiple modules
+  * CVE-2026-43951: OOB Read in `merge_response_headers` can cause crash
+  * CVE-2026-42536: mod_xml2enc heap overflow
+  * CVE-2026-42535: mod_dav_fs protected directory access
+  * CVE-2026-34356: ProxyPassReverseCookieMap buffer overflow
+  * CVE-2026-34355: mod_proxy_html buffer overflow
+  * CVE-2026-29170: mod_proxy_ftp XSS
+  * CVE-2026-29167: mod_ldap per-dir use-after-free
+
 * Tue May 05 2026 Anton Farygin <rider@altlinux.org> 1:2.4.67-alt1
 - 2.4.66 -> 2.4.67
 - Fixes:
