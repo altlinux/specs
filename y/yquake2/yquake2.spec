@@ -1,5 +1,5 @@
-%define quake2_ver 8.60
-%define ref_vk_ver 1.0.11
+%define quake2_ver 8.70
+%define ref_vk_ver 1.0.12
 
 Name: yquake2
 Version: %quake2_ver
@@ -15,8 +15,8 @@ Source1: ref_vk-%ref_vk_ver.tar
 # due same binary names
 Conflicts: quake2
 
-BuildRequires(pre): cmake ninja-build
-BuildRequires: libopenal-devel libcurl-devel libglvnd-devel libSDL2-devel libstb-devel libvulkan-devel
+BuildRequires(pre): cmake ninja-build pkgconf
+BuildRequires: libopenal-devel libcurl-devel libglvnd-devel libSDL3-devel libstb-devel libvulkan-devel
 
 %description
 Yamagi Quake II is an alternative client for id Softwares Quake II. Our goal is
@@ -60,6 +60,12 @@ ln -sf %_libdir/%name/quake2 %buildroot%_gamesbindir/quake2
 %_gamesbindir/q2ded
 
 %changelog
+* Tue Jun 09 2026 L.A. Kostis <lakostis@altlinux.ru> 8.70-alt1
+- quake2: updated to 8.70.
+- ref_vk: updated to 1.0.12.
+- SDL2->SDL3.
+- ref_vk/BR: added pkgconf.
+
 * Wed Sep 17 2025 L.A. Kostis <lakostis@altlinux.ru> 8.60-alt1
 - quake2: updated to 8.60.
 - ref_vk: updated to 1.0.11.
