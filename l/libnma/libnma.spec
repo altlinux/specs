@@ -5,9 +5,11 @@
 %def_enable gtk4
 %def_enable vala
 
+%define sover 0
+
 Name: libnma
-Version: 1.10.6
-Release: alt2
+Version: 1.10.7
+Release: alt1.g3b25a43e
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -153,7 +155,8 @@ This package contains development documentation for libnma-devel-doc.
 %find_lang %name
 
 %files
-%_libdir/libnma.so.*
+%_libdir/libnma.so.%sover
+%_libdir/libnma.so.%sover.*
 
 %files devel
 %_includedir/libnma/
@@ -169,7 +172,8 @@ This package contains development documentation for libnma-devel-doc.
 
 %if_enabled gtk4
 %files gtk4
-%_libdir/libnma-gtk4.so.*
+%_libdir/libnma-gtk4.so.%sover
+%_libdir/libnma-gtk4.so.%sover.*
 
 %files gtk4-devel
 %_includedir/libnma/
@@ -194,6 +198,10 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Jun 09 2026 Mikhail Efremov <sem@altlinux.org> 1.10.7-alt1.g3b25a43e
+- Added soname check.
+- Upstream git snapshot (closes: #59459).
+
 * Fri Jun 05 2026 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt2
 - Enabled vala bindings (closes: #59459).
 - Used macros from rpm-macros-meson.
