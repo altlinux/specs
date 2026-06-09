@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.39.0
+Version: 0.40.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,20 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 0.40.0-alt1
+- added sandbox [sandbox] specbr to skip BuildRequires with a bare chroot init
+- added submit kernel-module template autodetect with per-flavour specsubst tags
+- added submit universal multi-tag --replace for flavour and batch submits
+- added task gitclone to clone every subtask repo at its built commit
+- added task mkrepo (experimental) merged apt repo overlaying a task on its branch
+- added up --reset-to-gear to hard-reset a package to its published state
+- fixed up: expand the RPM builtin %nil macro to the empty string in versions
+- fixed up: set the upstream remote from any reachable forge, not an allowlist
+- fixed up scheme detection for merges of prefixed and non-semver upstream tags
+- fixed build --section to expand @var@ specsubst placeholders before rpmbuild
+- fixed gen environment GPG key generation hangs on legacy and classic keyrings
+- fixed several submit and task test-rebuild edge cases
+
 * Tue May 26 2026 Anton Farygin <rider@altlinux.org> 0.39.0-alt1
 - changed task rebuild default --dptype to binary.
 - changed up merge-hooks: .gear/merge-up.d/* run only when this invocation
