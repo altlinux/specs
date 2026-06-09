@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 6
+%define minor_version 7
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -159,9 +159,16 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 7.7-alt1
+- Added comments to generated vapi file.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.7
+
 * Thu Jun 04 2026 Vladimir Romanov <rirusha@altlinux.org> 7.6-alt1
 - New version: 7.6.
 - Fixed build soversion.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.6
 
 * Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 7.5-alt1
 - New version: 7.5.
@@ -170,7 +177,7 @@ Requires: %sname%api_version-gir = %EVR
 - Deprecate `Serialize.Jsoner`, `Serialize.JsonWorker` should be used instead.
 - Deprecate `Serialize.JsonError`, `Serialize.Error` should be used instead.
 - Full release notes:
-  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.5.
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.5
 
 * Mon Apr 20 2026 Vladimir Romanov <rirusha@altlinux.org> 7.4-alt1
 - New version: 7.4.
@@ -179,7 +186,7 @@ Requires: %sname%api_version-gir = %EVR
 - Improved serialization: case-insensitive enum parsing, UTC timezone
   for DateTime, INT64 -> DateTime conversion.
 - Full release notes:
-  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.4.
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.4
 
 * Sun Mar 29 2026 Vladimir Romanov <rirusha@altlinux.org> 7.3-alt1
 - New version: 7.3.
