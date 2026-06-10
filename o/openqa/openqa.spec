@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt28.git637609536
+Release: alt29.git637609536
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -551,6 +551,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Wed Jun 10 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt29.git637609536
+- update assets
+- Commit hash: 637609536
+
 * Fri Jun 05 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt28.git637609536
 - update to current version
 - Commit hash: 637609536
