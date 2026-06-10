@@ -14,8 +14,8 @@
 %def_without check
 
 Name: beszel
-Version: 0.18.2
-Release: alt2
+Version: 0.18.7
+Release: alt1
 Summary: Lightweight server monitoring hub
 License: MIT
 Group: System/Configuration/Networking
@@ -32,6 +32,8 @@ Source4: %agent_service
 Source5: %hub_conf
 Source6: %agent_conf
 Source7: 50-beszel.preset
+
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -63,6 +65,7 @@ metrics and status information to the Beszel hub.
 
 %prep
 %setup -a1 -a2
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -111,8 +114,8 @@ install -Dm644 %SOURCE7 %buildroot%_presetdir/50-beszel.preset
 
 %_sbindir/useradd -r -g %_beszel_group \
     -c "Beszel Service User" \
-    -d %_beszel_home/hub \
-    -m \
+    -d %_beszel_home \
+    -M \
     -s /sbin/nologin \
     %_beszel_user >/dev/null 2>&1 || :
 
@@ -121,8 +124,8 @@ install -Dm644 %SOURCE7 %buildroot%_presetdir/50-beszel.preset
 
 %_sbindir/useradd -r -g %_beszel_group \
     -c "Beszel Service User" \
-    -d %_beszel_home/agent \
-    -m \
+    -d %_beszel_home \
+    -M \
     -s /sbin/nologin \
     %_beszel_user >/dev/null 2>&1 || :
 
@@ -152,6 +155,12 @@ go test -tags=testing ./...
 %doc LICENSE readme.md
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.18.7-alt1
+- Updated to 0.18.7.
+- Removed self-update command incompatible with Sisyphus idea (Closes: #59273).
+- Added ALT Linux install command to agent setup dialog (Closes: #59226).
+- Prevented creation of skeleton files in /var/lib/beszel (Closes: #59275).
+
 * Tue Apr 21 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.18.2-alt2
 - Improved package structure.
 
