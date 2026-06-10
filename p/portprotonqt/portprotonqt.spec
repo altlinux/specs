@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -18,14 +18,15 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libvulkan-devel
 
 Requires: qt6-svg udev pciutils mesa-info qt6-imageformats python3(dbus_fast)
+Requires: libSDL3
 
-# System Tab
-Requires: udisks2
-Requires: bluez
-Requires: upower
-Requires: NetworkManager-daemon
-Requires: pulseaudio-utils
-Requires: python3(qrcode)
+# TODO: meta package for portprotonqt-os (System Tab)
+# Requires: udisks2
+# Requires: bluez
+# Requires: upower
+# Requires: NetworkManager-daemon
+# Requires: pulseaudio-utils
+# Requires: python3(qrcode)
 
 ExclusiveArch: x86_64
 
@@ -80,6 +81,9 @@ install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functi
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Jun 10 2026 Mikhail Tergoev <fidel@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Tue May 26 2026 Mikhail Tergoev <fidel@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 - fix zh_CN locale
