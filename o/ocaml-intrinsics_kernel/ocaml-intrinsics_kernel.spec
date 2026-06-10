@@ -1,6 +1,6 @@
 %define oname  ocaml_intrinsics_kernel
 Name: ocaml-intrinsics_kernel
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 Summary: a library of intrinsics for OCaml
 License: MIT
@@ -41,5 +41,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jun 10 2026 Anton Farygin <rider@altlinux.org> 0.17.2-alt1
+- 0.17.1 -> 0.17.2
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.17.1-alt1
 - first build for ALT Linux
