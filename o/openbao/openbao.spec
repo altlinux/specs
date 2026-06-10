@@ -2,7 +2,7 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: Secure secrets and encryption management system
@@ -88,6 +88,13 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Tue Jun 09 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.4-alt1
+- Updated to new version 2.5.4.
+- Fixes:
+  + CVE-2026-46358: fix audit logs dropping custom headers when using inline auth (core/auth)
+  + CVE-2026-46405: prevent hidden default token issuance from auth plugin endpoints (core)
+  + CVE-2026-45808: remove legacy lease endpoints due to cross-namespace lease modification (core)
+
 %changelog
 * Wed Apr 22 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.3-alt1
 - Updated to new version 2.5.3.
