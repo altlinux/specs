@@ -3,8 +3,8 @@
 %global sover 4
 
 Name: rabbitmq-c
-Version: 0.15.0
-Release: alt2
+Version: 0.16.0
+Release: alt1
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -83,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Tue Jun 09 2026 Egor Ignatov <egori@altlinux.org> 0.16.0-alt1
+- New version 0.16.0.
+
 * Fri Mar 13 2026 Egor Ignatov <egori@altlinux.org> 0.15.0-alt2
 - Fix librabbitmq-c%%sover self conflict (Closes: #58226)
 
