@@ -3,8 +3,8 @@
 %def_without tac_plus
 
 Name: event-driven-servers
-Version: 1.0
-Release: alt7
+Version: 2026.06.08.2
+Release: alt1
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -130,10 +130,16 @@ SSL encryption wrapper.
 ./configure --installroot=%buildroot --prefix=%_prefix \
     --bindir=%_bindir --etcdir=%_sysconfdir --sbindir=%_sbindir \
     --libdir=%_libdir --libarchdir=%_libdir --libexecdir=%_prefix/libexec \
-    --with-ssl --with-ares --with-sctp --with-zlib --with-crypto mavis spawnd mavisd ftpd tac_plus tac_plus-ng tcprelay
+    mavis spawnd mavisd ftpd tac_plus tac_plus-ng tcprelay
+#   --without-ssl --with-ares --with-sctp --with-zlib --without-crypto mavis spawnd mavisd ftpd tac_plus tac_plus-ng tcprelay
 #   --without-ssl --without-ares --without-sctp --without-zlib --without-crypto mavis spawnd mavisd ftpd tac_plus tac_plus-ng tcprelay
 
 export NPROCS=1
+%make_build
+
+# https://github.com/MarcJHuber/event-driven-servers/issues/20#issuecomment-1310656856
+find ./build/ -name packet.o -delete
+sed -i -e 's/-O2/-O0/g' ./build/Makefile.inc.linux-*
 %make_build
 
 %install
@@ -223,6 +229,8 @@ rm %buildroot%_sbindir/{ftpd,mavisd,spawnd,tcprelay}
 %endif
 %if_without tac_plus
 rm %buildroot%_sbindir/tac_plus
+rm %buildroot%_sysconfdir/tac_plus.cfg
+rm %buildroot%_unitdir/tac_plus.service
 %endif
 
 %post -n tac_plus-ng
@@ -294,6 +302,10 @@ rm %buildroot%_sbindir/tac_plus
 
 
 %changelog
+* Tue Jun 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 2026.06.08.2-alt1
+- update to upstream/master
+- switch off optimization for packet.o (ALT #58317)
+
 * Mon Mar 31 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt7
 - add extra packages (ftpd, mavisd, spawnd, tac_plus, tcprelay)
 
