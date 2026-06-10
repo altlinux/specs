@@ -1,7 +1,9 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
+%define basever 2.43
+
 Name: glibc
-Version: 2.40.0.224.573a
+Version: 2.43.0.35.fe0ccc
 
 Release: alt1
 Epoch: 6
@@ -29,8 +31,6 @@ Url: http://www.gnu.org/software/glibc/
 %else
 %def_disable multiarch
 %endif
-
-%define basever 2.34
 
 %define enablekernel 3.2
 
@@ -749,6 +749,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Tue Jun 09 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.43.0.35.fe0ccc-alt1
+- glibc-2.40-224-g573a7e46ec -> glibc-2.43-35-gfe0ccc9564.
+
 * Wed Apr 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.224.573a-alt1
 - Updated to glibc-2.40-224-g573a7e46ec (fixes CVE-2025-5702, CVE-2025-5745,
   CVE-2026-0861, CVE-2026-0915, CVE-2025-15281, CVE-2026-4437, CVE-2026-4438).
