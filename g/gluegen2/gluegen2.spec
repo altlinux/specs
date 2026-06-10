@@ -1,6 +1,6 @@
 Name: gluegen2
 Version: 2.5.0
-Release: alt1
+Release: alt2
 %global src_name gluegen-v%{version}
 Summary: Java/JNI glue code generator to call out to ANSI C
 
@@ -41,6 +41,7 @@ Patch29: spelling.patch
 Patch30: gcc14.patch
 Patch31: jcpp-remove-javax-api.patch
 Patch32: disable-build-tests.patch
+Patch33: use-system-jni.patch
 
 ExcludeArch: armh %ix86
 
@@ -97,19 +98,39 @@ GlueGen's user manual.
 %prep
 %setup -n gluegen-v%version
 tar -xJf %{SOURCE1} -C jcpp --strip 1
-%autopatch -p1
-
-#patch1 -p1
-#sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
-#    >use-fedora-jni.patch
-#/usr/bin/patch -s -p1 --fuzz=0 <use-fedora-jni.patch
-#patch3 -p1
-#patch4 -p1
-#patch5 -p1
-#patch6 -p1
-#patch7 -p1
-#patch8 -p1
-#patch9 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
+%patch06 -p1
+%patch07 -p1
+%patch08 -p1
+%patch09 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch26 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH33} \
+    >use-system-jni.patch
+/usr/bin/patch -s -p1 --fuzz=0 <use-system-jni.patch
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -179,7 +200,7 @@ mkdir -p %{buildroot}%{_javadir}/%{name} \
 install build/gluegen.jar %{buildroot}%{_javadir}/%{name}.jar
 install build/gluegen-rt.jar %{buildroot}%{_jnidir}/%{name}-rt.jar
 ln -s ../../..%{_jnidir}/%{name}-rt.jar %{buildroot}%{_libdir}/%{name}/
-install build/obj/libgluegen2_rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}-rt.so
+install build/obj/libgluegen2_rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}_rt.so
 
 # Provide JPP pom
 mkdir -p %{buildroot}%{_mavenpomdir}
@@ -245,6 +266,10 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Wed Jun 10 2026 Arseniy Kostevich <faux@altlinux.org> 2.5.0-alt2
+- fixed runtime native library loading from %%_libdir/gluegen2
+- installed native library as libgluegen2_rt.so to match Java loader name (Closes: #59491)
+
 * Sat Feb 22 2025 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - new version
 
@@ -295,4 +320,3 @@ rm -fr %{buildroot}%{_jnidir}/test
 
 * Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_6jpp7
 - initial build
-
