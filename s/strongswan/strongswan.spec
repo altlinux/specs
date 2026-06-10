@@ -20,7 +20,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 6.0.6
+Version: 6.0.7
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -346,6 +346,10 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Wed Jun 10 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.7-alt1
+- 6.0.7
+- Fixed a vulnerability in libstrongswan related to the cloning of certain identities that can result in an double-free and potentially remote code execution.  (Fixes: CVE-2026-47895)
+
 * Sat Apr 25 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.6-alt1
 - 6.0.6
 - Fixes:
