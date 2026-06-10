@@ -1,5 +1,5 @@
 Name: atf-sunxi
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -39,6 +39,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.15-alt1
+- 2.15 released
+
 * Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14-alt1
 - 2.14 released
 
