@@ -9,7 +9,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 3.9.0
+Version: 3.11.1
 Release: alt1
 
 Summary: Real asynchronous file operations with asyncio support
@@ -39,10 +39,14 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
+
+# Fix version in pyproject.toml
+sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -60,6 +64,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.11.1-alt1
+- Updated to 3.11.1.
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 3.9.0-alt1
 - Initial build for ALT Sisyphus.
 

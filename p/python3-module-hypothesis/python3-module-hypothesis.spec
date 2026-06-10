@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.152.4
+Version: 6.155.2
 Release: alt1
 
 Summary: A library for property based testing
@@ -43,6 +43,8 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-fakeredis
 # pandas.testing is needed, but is in the separate rpm package
 BuildRequires: python3-module-pandas-tests
+# needed by test_writes_gitignore_to_new_storage_dir
+BuildRequires: git-core
 %endif
 %add_python3_req_skip dpcontracts pandas
 
@@ -74,7 +76,8 @@ in your code with less work.
 # Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
 # flaw of python3-module-dateutil packaging and we don't create and package
 # dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
-%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests \
+%pyproject_run_pytest -ra -nauto -p pytester --runpytest=subprocess \
+	-Wignore::UserWarning:dateutil.zoneinfo tests \
 %if_without crosshair_check
 	--ignore="tests/crosshair" \
 %endif
@@ -96,6 +99,9 @@ in your code with less work.
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.155.2-alt1
+- Updated to 6.155.2.
+
 * Fri May 08 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.152.4-alt1
 - Updated to 6.152.4.
 

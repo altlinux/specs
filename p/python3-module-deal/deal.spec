@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.24.6
-Release: alt1
+Release: alt2
 
 Summary: Design by contract for Python. Write bug-free code. Add a few decorators, get static analysis and tests for free
 License: MIT
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-docstring-parser-tests
 # Filter outdated and possibly unmaintained packages
 %add_pyproject_deps_check_filter deal-solver$
 %add_pyproject_deps_check_filter vaa$
@@ -79,6 +80,12 @@ echo > pytest.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.24.6-alt2
+- Fixed FTBFS:
+  + Handled pytest.param Call nodes alongside Tuple in test extractor.
+  + Skipped None docstring values from docstring_parser test cases.
+  + Added BuildRequires on python3-module-docstring-parser-tests.
+
 * Mon Dec 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 4.24.6-alt1
 - Updated to 4.24.6.
 
