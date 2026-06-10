@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.2.1
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 # See: https://github.com/Kludex/starlette/pull/3054
 BuildRequires: python3-module-typing-extensions
 BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-zstandard
 %pyproject_builddeps_metadata_extra full
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -74,6 +75,9 @@ It is production-ready, and gives you the following:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Mon Mar 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt1
 - Updated to 1.0.0.
 
