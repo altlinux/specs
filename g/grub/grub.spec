@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt6
+Release: alt7
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -587,6 +587,9 @@ fi
 %endif
 
 %changelog
+* Thu Jun 04 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt7
+- fix boot hang with encrypted root on some CPUs (e.g. AMD Ryzen 5 7530U)
+
 * Fri May 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.14-alt6
 - Backported a couple of upstream commit reverts to fix issues in grub-pc
   triggered by the new binutils 2.46 (ALT#58959).
