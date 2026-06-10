@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: php%_php_suffix-%php_extension
-Version: 6.1.0
+Version: 6.2.1
 Release: alt1.%_php_release_version
 
 Summary: Main component of the Bacula programming interface
@@ -70,6 +70,9 @@ ln -s %php_moddir/%php_extension/protected/tools %buildroot%_libexecdir/baculari
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - rebuilt with php-devel = %php_version-%php_release
+
+* Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.2.1-alt1
+- 6.1.0 -> 6.2.1
 
 * Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.0-alt1
 - 6.0.0 -> 6.1.0
