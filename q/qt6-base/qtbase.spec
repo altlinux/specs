@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.3
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -869,6 +869,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Jun 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
+- don't generate SBOM by default
+
 * Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - add fix against QTBUG-145310
 
