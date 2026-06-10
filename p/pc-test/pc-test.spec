@@ -6,8 +6,8 @@
 %endif
 
 Name: pc-test
-Version: 2.1.8
-Release: alt1
+Version: 2.1.9
+Release: alt2
 
 Summary: PC Test Suite
 Group: System/Configuration/Hardware
@@ -143,6 +143,11 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Sat Jun 06 2026 Leonid Krivoshein <klark@altlinux.org> 2.1.9-alt2
+- Fixed:
+  + improved SELinux detection
+  + improved restart_as_root()
+
 * Mon Mar 23 2026 Leonid Krivoshein <klark@altlinux.org> 2.1.8-alt1
 - Fixed:
   + install dependencies for express test (ALT #55638)
