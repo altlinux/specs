@@ -1,13 +1,14 @@
 Name: libserd
-Version: 0.32.8
+Version: 0.32.10
 Release: alt1
 
 Summary: Lightweight C library for working with RDF data.
 License: 0BSD
 Group: System/Libraries
-Url: https://gitlab.com/drobilla/serd
+URL: https://gitlab.com/drobilla/serd
+VCS: https://gitlab.com/drobilla/serd
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: meson
 
@@ -43,6 +44,9 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.32.10-alt1
+- 0.32.10 released
+
 * Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.32.8-alt1
 - 0.32.8 released
 

@@ -1,13 +1,14 @@
 Name: lilv
-Version: 0.26.4
+Version: 0.28.0
 Release: alt1
 
 Summary: An LV2 Resource Description Framework Library
 License: 0BSD
 Group: Sound
-Url: https://github.com/lv2/lilv
+URL: https://drobilla.net/software/lilv
+VCS: https://gitlab.com/lv2/lilv
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ meson rpm-build-python3
 BuildRequires: pkgconfig(lv2)
@@ -82,6 +83,9 @@ This package contains the python bindings for lilv.
 %python3_sitelibdir_noarch/*/lilv.*
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.28.0-alt1
+- 0.28.0 released
+
 * Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.4-alt1
 - 0.26.4 released
 

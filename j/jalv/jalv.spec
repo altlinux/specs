@@ -1,13 +1,14 @@
 Name: jalv
-Version: 1.8.0
-Release: alt2
+Version: 1.8.2
+Release: alt1
 
 Summary: Simple host for LV2 plugins
 License: 0BSD
 Group: Sound
-Url: https://gitlab.com/drobilla/jalv
+URL: https://drobilla.net/software/jalv
+VCS: https://gitlab.com/drobilla/jalv
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ meson
 BuildRequires: pkgconfig(jack)
@@ -79,6 +80,9 @@ sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
 %_man1dir/jalv.qt*.1*
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.2-alt1
+- 1.8.2 released
+
 * Tue Dec 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt2
 - added explicit req on suil-gtk3/qt5
 
