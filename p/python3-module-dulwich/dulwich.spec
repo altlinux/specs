@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Python Git Library
@@ -15,11 +15,11 @@ Url: https://www.dulwich.io
 
 Vcs: https://github.com/dulwich/dulwich.git
 Source: %name-%version.tar
+Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
 BuildRequires: python3-module-semantic_version
 BuildRequires: rust
 BuildRequires: rust-cargo
@@ -28,6 +28,7 @@ BuildRequires: python3-module-setuptools-rust
 BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-fastimport
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-hypothesis
 BuildRequires: git
 BuildRequires: gnupg
 BuildRequires: gnupg2
@@ -57,7 +58,7 @@ extensions are also available for better performance.
 This package contains tests for dulwich.
 
 %prep
-%setup
+%setup -a1
 
 %build
 mkdir -p .cargo
@@ -87,10 +88,14 @@ popd
 %check
 # tests/compat/ requires network access (git daemon via TCP), unavailable
 #   in the isolated build environment (NO_INTERNET=YES).
-# tests/contrib/ fails due to error in dulwich/contrib/swift.py
+# contrib/ fails due to error in dulwich/contrib/swift.py
 #   (NameError: ObjectFormat is not defined).
 # fuzzing/ requires 'atheris' (fuzzing framework), not available at build time.
-%pyproject_run_pytest --ignore=tests/compat --ignore=tests/contrib --ignore=fuzzing
+# test_apply_delta_only_raises_apply_delta_error: apply_delta() raises TypeError
+#   instead of ApplyDeltaError when a copy command (cmd & 0x80) references bytes
+#   beyond the end of the delta buffer (ord() on empty slice b'').
+%pyproject_run_pytest --ignore=tests/compat --ignore=contrib --ignore=fuzzing \
+    --deselect property_tests/test_pack.py::PackPropertyTests::test_apply_delta_only_raises_apply_delta_error
 
 %files
 %_bindir/dulwich.py3
@@ -98,18 +103,19 @@ popd
 %_bindir/dul-receive-pack.py3
 %python3_sitelibdir/%module_name/
 %exclude %python3_sitelibdir/%module_name/tests
-%exclude %python3_sitelibdir/%module_name/contrib
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc COPYING NEWS docs/*.txt
 %doc docs/tutorial README.rst examples
 
 %files tests
 %python3_sitelibdir/%module_name/tests
-%python3_sitelibdir/%module_name/contrib
 
 %changelog
+* Wed Jun 09 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.2.1-alt1
+- NMU: updated to 1.2.1.
+
 * Wed Apr 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.1.0-alt1
-- Updated to new version 1.1.0.
+- NMU: updated to 1.1.0.
 
 * Wed Jan 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.22.7-alt1
 - NMU: 0.22.7 (Closes: #52703).
