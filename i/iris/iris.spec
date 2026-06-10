@@ -2,8 +2,8 @@
 %define app_id space.x1z53.iris
 
 Name: iris
-Version: 0.2.4
-Release: alt2
+Version: 0.2.4.1
+Release: alt1
 
 Summary: GTK client for Yummy Anime
 License: GPL-3.0-only
@@ -12,7 +12,6 @@ Group: Video
 URL: https://altlinux.space/alt-gnome/iris
 VCS: https://altlinux.space/alt-gnome/iris
 Source0: %name-%version.tar
-Source1: libcassette-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -22,8 +21,10 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libapi-base-7)
 BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(libcase-0)
 BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Adw) = 1
+BuildRequires: typelib(Case) = 0
 
 Requires: libwebp-pixbuf-loader
 
@@ -34,7 +35,7 @@ Obsoletes: yummy-anime-gtk < %EVR
 %summary.
 
 %prep
-%setup -a1
+%setup
 
 %build
 %meson
@@ -55,6 +56,13 @@ Obsoletes: yummy-anime-gtk < %EVR
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 
 %changelog
+* Tue Jun 09 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4.1-alt1
+- Update to 0.2.4.1:
+  + fixed memory leaks
+  + added Dialogs section
+  + fixed Viewing order links
+  + moved from libcassette to libcase
+
 * Thu May 21 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4-alt2
 - Fix spec `files` section.
 
