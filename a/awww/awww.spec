@@ -8,7 +8,7 @@
 %define elv_completions_dir %_datadir/elvish/lib/
 
 Name: awww
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: An Answer to your Wayland Wallpaper Woes
@@ -65,6 +65,9 @@ find -type f -exec install -m644 -Dpvt %buildroot%_man1dir/ {} \;
 %doc README.md LICENSE example_scripts
 
 %changelog
+* Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.1-alt1
+- Updated to 0.12.1.
+
 * Mon Mar 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.0-alt1
 - Updated to 0.12.0.
 
