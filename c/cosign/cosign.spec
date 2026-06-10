@@ -1,12 +1,12 @@
-%global import_path github.com/sigstore/cosign/v2
+%global import_path github.com/sigstore/cosign/v3
 %global _unpackaged_files_terminate_build 1
 
-%define revision 479147a4df05f31be48aeb2b3a9d32dfc35ba877
+%define revision 7914231b348c4057891edeb321772aad3ed04fce
 
 %def_with check
 
 Name:    cosign
-Version: 3.0.6
+Version: 3.1.1
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -17,10 +17,11 @@ Url:     https://github.com/sigstore/cosign
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
+Source1: vendor.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.3
+BuildRequires: rpm-build-golang golang >= 1.26.0
 BuildRequires: libpcsclite-devel
 BuildRequires: /proc
 
@@ -36,7 +37,7 @@ Cosign supports:
 * Bring-your-own PKI
 
 %prep
-%setup
+%setup -a 1
 %patch -p1
 
 %build
@@ -69,6 +70,9 @@ export BUILDDIR="$PWD/.gopath"
 %_bindir/%name
 
 %changelog
+* Wed Jun 10 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.1-alt1
+- New version 3.1.1.
+
 * Wed Apr 08 2026 Alexander Danilov <admsasha@altlinux.org> 3.0.6-alt1
 - New version 3.0.6 (Fixes: CVE-2026-39395).
 
