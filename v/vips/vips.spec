@@ -2,16 +2,18 @@
 %def_enable gtk_doc
 %def_disable static
 %def_disable orc
+%define soname 42
 
 Name: vips
-Version: 8.18.0
+Version: 8.18.3
 Release: alt1
 
 Summary: Large image processing library
 
-License: LGPLv2.1
+License: LGPL-2.1-or-later
 Group: Graphics
-Url: https://libvips.github.io/libvips/
+Url: https://www.libvips.org/
+Vcs: https://github.com/libvips/libvips
 
 # Source0-url: https://github.com/libvips/libvips/archive/v%version.tar.gz
 Source0: %name-%version.tar
@@ -75,9 +77,11 @@ BuildRequires: libultrahdr-devel
 BuildRequires: libraw-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_introspection:BuildRequires(pre): gobject-introspection-devel}
 
 %define majorver %(echo %version |cut -d. -f1,2)
+
+Requires: lib%name-modules = %EVR
 
 %description
 VIPS is an image processing library. It is good for very large
@@ -87,15 +91,20 @@ man pages, a command-line interface, automatic threading and
 an operation database. There are several user interfaces built
 on top of VIPS: for example "nip2".
 
-%package -n lib%name
+%package -n lib%{name}%{soname}
 Summary: VIPS development kit
 Group: System/Libraries
+Provides: lib%name = %EVR
+
+%package -n lib%{name}-modules
+Summary: VIPS library modules
+Group: System/Libraries
+Requires: lib%name = %version
 
 %package -n lib%name-devel
 Summary: VIPS development kit
 Group: Development/C
-Requires: lib%name = %version-%release
-Provides: %name-devel = %version-%release
+Provides: %name-devel = %EVR
 Obsoletes: %name-devel < 7.16.3-alt3
 
 %package -n lib%name-devel-doc
@@ -106,14 +115,14 @@ BuildArch: noarch
 %package -n lib%name-devel-static
 Summary: VIPS static libraries
 Group: Development/C
-Requires: lib%name-devel = %version-%release
-Provides: %name-devel-static = %version-%release
+Requires: lib%name-devel = %EVR
+Provides: %name-devel-static = %EVR
 Obsoletes: %name-devel-static < 7.16.3-alt3
 
 %package -n lib%name-gir
 Summary: GObject introspection data for VIPS
 Group: System/Libraries
-Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for VIPS
@@ -122,8 +131,11 @@ BuildArch: noarch
 Requires: lib%name-devel = %EVR
 Requires: lib%name-gir = %EVR
 
-%description -n lib%name
+%description -n lib%{name}%{soname}
 Shared libraries for VIPS.
+
+%description -n lib%name-modules
+%name shared library modules.
 
 %description -n lib%name-devel
 Development libraries and header files for VIPS.
@@ -170,12 +182,15 @@ rm -fv %buildroot%_bindir/vips%majorver
 rm -v %buildroot%_docdir/vips-cpp/html/*.map
 
 %files -f vips%majorver.lang
+%doc README.md LICENSE ChangeLog CITATION.cff
 %_bindir/*
 %_man1dir/*
 #_docdir/vips
 
-%files -n lib%name
-%_libdir/lib*.so.*
+%files -n lib%{name}%{soname}
+%_libdir/lib*.so.%{soname}*
+
+%files -n lib%name-modules
 %dir %_libdir/vips-modules-%majorver/
 %_libdir/vips-modules-%majorver/vips-*.so
 
@@ -208,6 +223,12 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Tue Jun 09 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.3-alt1
+- 8.18.3.
+- Replace License with SDPX tag.
+- libvips->libvips42 according Shared Libs Policy.
+- relocate VIPS modules into separate package.
+
 * Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.0-alt1
 - 8.18.0.
 - BR: added libraw and libuhdr.
