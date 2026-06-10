@@ -2,7 +2,7 @@
 %define import_path github.com/derailed/k9s
 
 Name: k9s
-Version: 0.50.18
+Version: 0.51.0
 Release: alt1
 
 Summary: Kubernetes CLI To Manage Your Clusters In Style
@@ -56,6 +56,9 @@ install -Dm755 $BUILDDIR/bin/k9s "%buildroot%_bindir/k9s"
 %doc COPYING README.md
 
 %changelog
+* Tue Jun 09 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.51.0-alt1
+- Updated to new version v0.51.0.
+
 * Tue Jan 13 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.50.18-alt1
 - Updated to new version v0.50.18.
 
