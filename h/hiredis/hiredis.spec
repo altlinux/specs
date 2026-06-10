@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 1.3.0
+%define sover 1.4.0
 
 %def_with devel
 
@@ -12,8 +12,8 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.3.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -114,6 +114,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu Jun 04 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0
+
 * Wed Jan 28 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt3
 - e2k build fix
 
