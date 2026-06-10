@@ -1,11 +1,12 @@
 Name: upplay
-Version: 1.9.10
+Version: 1.9.11
 Release: alt1
 
 Summary: UPnP/OpenHome audio Control Point
 License: GPLv2
 Group: Sound
-Url: http://www.lesbonscomptes.com/upplay/
+URL: http://www.lesbonscomptes.com/upplay/
+VCS: https://framagit.org/medoc92/upplay
 
 ExcludeArch: i586
 
@@ -39,6 +40,9 @@ make install INSTALL_ROOT=%buildroot
 %_pixmapsdir/upplay.png
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.11-alt1
+- 1.9.11 released
+
 * Thu Feb 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.10-alt1
 - 1.9.10 released
 
