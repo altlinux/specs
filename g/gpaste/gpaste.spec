@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gpaste
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -35,7 +35,6 @@ Requires: lib%name = %EVR
 %define gi_ver 1.58.0
 %define vala_ver 0.42
 %define mutter_ver 45.0
-%define gjs_ver 1.78
 %define gcr_ver 3.90.0
 
 BuildRequires(pre):rpm-macros-meson rpm-build-gir rpm-build-vala rpm-build-systemd
@@ -43,7 +42,7 @@ BuildRequires: meson /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libdbus-devel
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
-BuildRequires: libgjs-devel >= %gjs_ver libmutter-devel >= %mutter_ver
+BuildRequires: libmutter-devel >= %mutter_ver
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk4-gir-devel libadwaita-gir-devel
@@ -179,6 +178,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Wed Jun 10 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
+- 50.1
+
 * Tue Jun 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0 (ported to GTK4/Libadwaita)
 
