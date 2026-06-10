@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tar-diff
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Set of commandline tools to diff and patch tar files
@@ -64,5 +64,8 @@ export GOROOT="%_libexecdir/golang"
 %_bindir/tar-patch
 
 %changelog
+* Wed Jun 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.0-alt1
+- New version: 0.5.0.
+
 * Mon Jun 08 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4.0-alt1
 - Initial build.
