@@ -2,7 +2,7 @@
 %define import_path github.com/yannh/kubeconform
 
 Name: kubeconform
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Kubernetes manifest validation tool
@@ -48,6 +48,9 @@ export IGNORE_SOURCES=1
 %doc Readme.md 
 
 %changelog
+* Tue Jun 09 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.8.0-alt1
+- Updated to new version 0.8.0.
+
 * Tue Aug 26 2025 Maxim Tulskiy <tulskijms@altlinux.org> 0.7.0-alt1
 - Initial build for ALT Sisyphus.
 
