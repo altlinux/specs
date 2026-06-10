@@ -4,8 +4,8 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.10.2
-Release: alt0.dde.1
+Version: 6.10.3
+Release: alt1.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -21,9 +21,10 @@ Url: http://qt.io/
 License:  GPL-3.0-only or LGPL-3.0-only
 
 Requires: %name-common = %EVR
+AutoReq: no
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: alt-run-qttools-with-dqt6-suffix.patch
+Patch1: alt-hide-search-and-translate.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -154,7 +155,7 @@ Requires: libdqt6-core = %_dqt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-#%patch1 -p1
+%patch1 -p1
 
 %build
 %if_disabled bootstrap
@@ -331,6 +332,21 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.1
+- merge with new version
+
+* Wed May 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- hide qdbusviewer from menu (closes: 59114)
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
+* Thu Mar 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
+- hide linguist Search and Translate action
+
+* Fri Mar 06 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.2
+- prevent hasher-privd limits
+
 * Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

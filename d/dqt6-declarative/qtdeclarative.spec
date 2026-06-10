@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -141,7 +141,7 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-quicktest
 Group: System/Libraries
 Summary: Qt6 - library
-Provides: dqml6(Qt.test.qtestroot)
+Provides: dqml(Qt.test.qtestroot)
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-quicktest
@@ -476,6 +476,11 @@ ln -s %__python3 bin_add/python
 # don't make  module static
 sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
+%ifarch %e2k
+# as of lcc 1.29.06 (mcst#9355)
+sed -i 's/baseIndent, std::move(loc2str)/baseIndent, loc2str/' src/qmldom/qqmldomastdumper.cpp
+%endif
+
 %build
 %if_enabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
@@ -711,6 +716,12 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

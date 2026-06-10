@@ -3,7 +3,7 @@
 %global qt_module dqtserialport
 
 Name: dqt6-serialport
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -14,8 +14,9 @@ License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
+BuildRequires: clang-devel
 BuildRequires: cmake glibc-devel dqt6-base-devel dqt6-tools-devel
-BuildRequires: vulkan-headers
+BuildRequires: vulkan-headers libdqt6-widgets libdqt6-qml libdqt6-help
 BuildRequires: pkgconfig(libudev)
 
 # find librares
@@ -107,6 +108,12 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %_dqt6_examplesdir/*
 
 %changelog
+* Tue Jun 09 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

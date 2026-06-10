@@ -2,11 +2,12 @@
 %define sover 6
 
 %def_disable clang
-%def_with docs
+# >= Qt 6.10.3
+%def_without docs
 
 Name: dtkmultimedia
 Version: 6.0.4
-Release: alt2
+Release: alt3
 
 Summary: Deepin tool kit multimedia modules
 
@@ -30,6 +31,7 @@ BuildRequires(pre): rpm-macros-dqt6
 BuildRequires(pre): rpm-macros-llvm-common
 %endif
 BuildRequires: cmake dqt6-base-devel dqt6-multimedia-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel libcups-devel glib2-devel libncnn-devel libopencv-devel libudev-devel libavcodec-devel libavformat-devel libswresample-devel libswscale-devel libffmpegthumbnailer-devel libavdevice-devel libusb-devel libportaudio2-devel libv4l-devel libmpv-devel gstreamer1.0-devel gst-plugins1.0-devel libXtst-devel
+BuildRequires: libdqt6-openglwidgets libdqt6-concurrent
 %if_with docs
 BuildRequires: dqt6-base-doc doxygen
 %endif
@@ -172,6 +174,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Wed Jun 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt3
+- Fixed build with Qt 6.10.3.
+
 * Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt2
 - Fixed build with ffmpeg 8.0.1.
 

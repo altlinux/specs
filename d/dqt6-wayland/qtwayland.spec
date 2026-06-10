@@ -2,7 +2,7 @@
 %global qt_module dqtwayland
 
 Name: dqt6-wayland
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -21,6 +21,7 @@ Requires: libdqt6-wlshellintegration
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
+BuildRequires: clang-devel
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
 BuildRequires: libEGL-devel libGLES-devel libvulkan-devel
 BuildRequires: libdrm-devel
@@ -29,7 +30,7 @@ BuildRequires: libinput-devel libts-devel libmtdev-devel
 BuildRequires: libudev-devel
 BuildRequires: wayland-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel
-BuildRequires: libdqt6-qmlcompiler
+BuildRequires: libdqt6-qmlcompiler libdqt6-quick libdqt6-help
 
 %description
 %summary.
@@ -236,6 +237,12 @@ done
 %endif
 
 %changelog
+* Tue Jun 09 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 - update requires on devel subpackage

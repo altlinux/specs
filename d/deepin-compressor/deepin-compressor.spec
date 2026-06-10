@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.29
+Version: 6.5.30
 Release: alt1
 Epoch: 1
 
@@ -102,6 +102,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Fri Jun 05 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.30-alt1
+- New version 6.5.30.
+
 * Thu Jun 04 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.29-alt1
 - New version 6.5.29.
 - Updated requires (p7zip is obsoleted).

@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: dqt6-imageformats
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -20,6 +20,8 @@ Requires: dqt6-svg
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
+BuildRequires(pre): libdqt6-gui libdqt6-qml libdqt6-help
+BuildRequires(pre): clang-devel
 BuildRequires: cmake glibc-devel libtiff-devel libwebp-devel dqt6-base-devel
 %{?_enable_fmt_jp2:BuildRequires: libjasper-devel}
 %{?_enable_fmt_mng:BuildRequires: libmng-devel}
@@ -101,6 +103,12 @@ done
 %endif
 
 %changelog
+* Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

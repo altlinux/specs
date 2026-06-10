@@ -5,7 +5,7 @@
 %def_enable pulse
 
 Name: dqt6-multimedia
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -19,10 +19,11 @@ Patch1: qtmultimedia-fix-build-on-x86-arch.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 BuildRequires(pre): dqt6-tools
+BuildRequires: clang-devel
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-dqml6
 BuildRequires: dqt6-base-devel dqt6-declarative dqt6-declarative-devel dqt6-shadertools-devel dqt6-svg-devel
-BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler libdqt6-concurrent
+BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler libdqt6-concurrent libdqt6-help
 BuildRequires: libxkbcommon-x11-devel libXrandr-devel
 BuildRequires: libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
 BuildRequires: pkgconfig(alsa)
@@ -191,6 +192,12 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Tue Jun 09 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

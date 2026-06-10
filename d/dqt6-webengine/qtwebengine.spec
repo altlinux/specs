@@ -25,7 +25,7 @@
 %endif
 
 Name: dqt6-webengine
-Version: 6.10.2
+Version: 6.10.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -57,6 +57,7 @@ BuildRequires(pre): rpm-macros-dqt6-webengine
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires(pre): libavformat-devel
 BuildRequires: /proc
+BuildRequires: clang-devel
 BuildRequires: cmake libstdc++-devel-static
 BuildRequires: libxkbcommon-devel libxkbfile-devel
 %if_enabled system_ffmpeg
@@ -84,7 +85,7 @@ BuildRequires: python3(json) python3(html5lib)
 BuildRequires: dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel
 BuildRequires: dqt6-declarative-devel
 BuildRequires: dqt6-websockets-devel dqt6-webchannel-devel dqt6-positioning-devel
-BuildRequires: libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quickwidgets libdqt6-quicktest libdqt6-designer libdqt6-qmlcompiler libdqt6-printsupport vulkan-headers
+BuildRequires: libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quickwidgets libdqt6-quicktest libdqt6-designer libdqt6-qmlcompiler libdqt6-printsupport vulkan-headers libdqt6-help
 #BuildRequires: dqt6-phonon-devel
 
 # find librares
@@ -429,6 +430,12 @@ done
 %_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %changelog
+* Wed Jun 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
+- merge with new version
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 

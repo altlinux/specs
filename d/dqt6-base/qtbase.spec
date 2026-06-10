@@ -35,8 +35,8 @@
 %define gname  dqt6
 Name: dqt6-base
 %define major  6
-Version: 6.10.2
-Release: alt0.dde.1
+Version: 6.10.3
+Release: alt1.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -68,6 +68,7 @@ Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
 Patch202: qtbase-wayland-optimize-scroll-operations.patch
 Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
 Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
+Patch205: QTBUG-145310.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -144,7 +145,7 @@ Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
 Requires: gcc-c++ cmake ninja-build
-Requires: libssl-devel
+Requires: libssl-devel libwayland-cursor-devel
 %description devel
 %summary.
 
@@ -394,6 +395,7 @@ OpenGL widgets library for the Qt%major toolkit
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
+Obsoletes: libdqt6-waylandeglclienthwintegration < %EVR
 %description -n libdqt6-waylandclient
 %summary
 
@@ -418,6 +420,7 @@ Requires: %name-common
 %patch202 -p1
 %patch203 -p1
 %patch204 -p1
+%patch205 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -435,6 +438,9 @@ Requires: %name-common
 
 # install optflags
 %add_optflags %optflags_shared
+%ifarch %e2k
+%add_optflags -mno-sse4.2
+%endif
 sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = %optflags|" mkspecs/common/gcc-base.conf
 QMAKE_CFLAGS_OPTIMIZE_FULL=`echo %optflags | sed 's|-O[[:digit:]]||'`
 QMAKE_CFLAGS_OPTIMIZE_FULL+=" -O3"
@@ -884,6 +890,18 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.1
+- merge with new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- add fix against QTBUG-145310
+
+* Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
+- new version
+
+* Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt2
+- fix requires
+
 * Tue Feb 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.2-alt0.dde.1
 - merge with new version
 
