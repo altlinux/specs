@@ -1,5 +1,5 @@
 Name: riscv32-none-elf-binutils
-Version: 2.46
+Version: 2.46.1
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
@@ -65,6 +65,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.46.1-alt1
+- 2.46.1 released
+
 * Fri Feb 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.46-alt1
 - 2.46 released
 
