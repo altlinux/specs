@@ -2,7 +2,7 @@
 %define fname moe.launcher.the-honkers-railway-launcher
 
 Name:    the-honkers-railway-launcher
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 
 Summary: The Honkers Railway launcher for Linux with automatic patching and telemetry disabling
@@ -61,6 +61,9 @@ install -Dm644 assets/%fname.metainfo.xml -t %buildroot%_datadir/metainfo
 %_datadir/metainfo/%fname.metainfo.xml
 
 %changelog
+* Wed Jun 10 2026 Ilya Sorochan <k0tran@altlinux.org> 1.15.1-alt1
+- Update version.
+
 * Thu May 28 2026 Ilya Sorochan <k0tran@altlinux.org> 1.15.0-alt1
 - Initial build for Sisyphus.
 
