@@ -7,7 +7,7 @@
 
 %define rname kid3
 Name: %rname
-Version: 3.9.7
+Version: 3.10.0
 Release: alt1
 %K6init
 
@@ -231,6 +231,9 @@ done
 #%_K6dbus_iface/*id3*
 
 %changelog
+* Wed Jun 10 2026 Sergey V Turchin <zerg@altlinux.org> 3.10.0-alt1
+- new version
+
 * Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 3.9.7-alt1
 - new version
 
