@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.210
+Version: 4.0.4.211
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -402,6 +402,7 @@ fi
 %rpmattr %_rpmlibdir/find-provides
 %rpmattr %_rpmlibdir/find-requires
 %rpmattr %_rpmlibdir/find-debuginfo-files
+%rpmattr %_rpmlibdir/autodep-functions
 %rpmattr %_rpmlibdir/rpmb-functions
 %rpmattr %_rpmlibdir/process-debuginfo
 %rpmattr %_rpmlibdir/process-lto
@@ -453,6 +454,14 @@ fi
 %files checkinstall
 
 %changelog
+* Tue Apr 14 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.211-alt1
+- vt@:
+  + Removed redundant cleanup of *.pc files. (Closes: 58008)
+- Added an env var to override findreqprov method location.
+  This is useful to test findreqprov methods.
+- Put the sysusers.d provide generator under automated build time testing;
+  this was not possible until the previous change.
+
 * Wed Jan 14 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.210-alt1
 - vt@:
   + Made rpmbuild --eval work without the fake error termination.
