@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtox
-Version: 1.18.4
+Version: 1.18.5
 Release: alt1
 
 Summary: Powerful Tox client that follows the Tox design guidelines
@@ -59,6 +59,9 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Jun 11 2026 Anton Farygin <rider@altlinux.org> 1.18.5-alt1
+- 1.18.4 -> 1.18.5
+
 * Tue Apr 07 2026 Anton Farygin <rider@altlinux.org> 1.18.4-alt1
 - 1.18.3 -> 1.18.4
 
