@@ -6,7 +6,7 @@
 %define amnezia_xray_bindings_version 1.1.0
 
 Name: amnezia-vpn
-Version: 4.8.15.4
+Version: 4.8.18.0
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -50,7 +50,7 @@ Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
 Requires: amnezia-tun2socks >= 2.5.4
-Requires: amneziawg-go >= 0.2.15
+Requires: amneziawg-go >= 0.2.18
 Requires: cloak-client
 Requires: libnss-resolve
 Requires: openvpn
@@ -170,6 +170,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Thu Jun 11 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.18.0-alt1
+- Version 4.8.18.0
+
 * Thu Apr 30 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.15.4-alt1
 - Version 4.8.15.4
 

@@ -1,6 +1,6 @@
 Name: amneziawg-go
-Version: 0.2.16
-Release: alt2
+Version: 0.2.18
+Release: alt1
 Epoch: 1
 
 Summary: Go Implementation of AmneziaWG
@@ -44,6 +44,9 @@ go env
 %_bindir/%name
 
 %changelog
+* Thu Jun 11 2026 Nazarov Denis <nenderus@altlinux.org> 1:0.2.18-alt1
+- New version 0.2.18.
+
 * Sat Jan 31 2026 Nazarov Denis <nenderus@altlinux.org> 1:0.2.16-alt2
 - Update to 0.2.16
 
