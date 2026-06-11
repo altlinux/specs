@@ -1,6 +1,6 @@
 Name: libtasn1
 Version: 4.21.0
-Release: alt1
+Release: alt2
 
 %define soname 6
 
@@ -16,9 +16,13 @@ Patch2: Enable-LFS-support.patch
 Patch3: Fix-build-with-gcc11.patch
 Patch4: Fix-build-with-gcc12.patch
 Patch5: Fix-build-tests-with-gcc12.patch
-#Patch6: Fix-build-with-gcc13.patch
 Patch7: Fix-tests-build-with-glibc-2.38.patch
 Patch8: No-error-on-missing-variable-declarations.patch
+Patch9: Fix-build-with-glibc-2.43.0.35.fe0ccc-alt1.patch
+
+# Patch from upstream git.
+# Must be droped when new version will be released.
+Patch100: Fix-likely-off-by-one-error-in-_asn1_expand_object_i.patch
 
 BuildRequires: gtk-doc texinfo help2man
 
@@ -81,9 +85,11 @@ This package contains libtasn1 development documentation.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#%patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+
+%patch100 -p1
 
 %build
 %autoreconf
@@ -138,8 +144,14 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Wed Jun 10 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt2
+- Fixed build with glibc-2.43.0.35.fe0ccc-alt1.
+- Patch from upstream:
+  + Fix likely off by one error.
+- Fixed changelog entry.
+
 * Tue Feb 10 2026 Alexander Danilov <admsasha@altlinux.org> 4.21.0-alt1
-- Updated to 4.20.0 (fixes: CVE-2025-13151).
+- Updated to 4.21.0 (fixes: CVE-2025-13151).
 
 * Sun Feb 23 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.20.0-alt2
 - Fixed build for Elbrus.
