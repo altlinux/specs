@@ -1,5 +1,5 @@
 Name: python3-module-av
-Version: 17.0.1
+Version: 17.1.0
 Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
@@ -47,6 +47,9 @@ BuildRequires: pkgconfig(libswresample)
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Thu Jun 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.1.0-alt1
+- 17.1.0 released
+
 * Mon Apr 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.0.1-alt1
 - 17.0.1 released
 
