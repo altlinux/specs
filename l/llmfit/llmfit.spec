@@ -3,7 +3,7 @@
 %def_with check
 
 Name: llmfit
-Version: 0.9.28
+Version: 0.9.31
 Release: alt1
 
 Summary: Hundreds of models & providers
@@ -47,6 +47,9 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Thu Jun 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.31-alt1
+- new version
+
 * Wed May 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.28-alt1
 - new version
 
