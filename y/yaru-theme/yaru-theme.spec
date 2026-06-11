@@ -4,7 +4,7 @@
 %def_enable xfwm4
 
 Name: yaru-theme
-Version: 26.04.5
+Version: 26.10.1
 Release: alt1
 
 Summary: Ubuntu Yaru theme suite
@@ -157,6 +157,10 @@ popd
 %_datadir/folder-color-switcher/colors.d/Yaru.json
 
 %changelog
+* Thu Jun 11 2026 Alexander Kovalev <alexvk@altlinux.org> 26.10.1-alt1
+- New version 26.10.1.
+- Fix mixed Cinnamon style appearance.
+
 * Sun Apr 19 2026 Alexander Kovalev <alexvk@altlinux.org> 26.04.5-alt1
 - New version 26.04.5.
 
