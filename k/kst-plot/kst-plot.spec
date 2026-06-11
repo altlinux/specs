@@ -4,7 +4,7 @@
 
 Name: kst-plot
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Summary: Fast real-time large-dataset viewing and plotting tool for KDE
 License: GPL-2.0-or-later
@@ -28,6 +28,8 @@ BuildRequires: pkgconfig(gsl)
 BuildRequires: pkgconfig(matio)
 BuildRequires: pkgconfig(netcdf-cxx4)
 BuildRequires: pkgconfig(cfitsio)
+
+Requires: lib%{name}libs = %{version}-%{release}
 
 %if_with check
 BuildRequires: ctest
@@ -61,10 +63,17 @@ Features of Kst include:
 %package devel
 Summary: Development files for Kst
 Group: Development/C++
-Requires: %{name} = %{version}-%{release}
+Requires: lib%{name}libs = %{version}-%{release}
 
 %description devel
 Development files for %name.
+
+%package -n lib%{name}libs
+Group: System/Libraries
+Summary: libraries for %name
+
+%description -n lib%{name}libs
+This package contains libraries for %name.
 
 %prep
 %setup
@@ -92,6 +101,13 @@ rm -v %buildroot%_libdir/libkst2app.a
 %files
 %doc AUTHORS NEWS README COPYING*
 %_bindir/kst2
+%_desktopdir/kst2.desktop
+%_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/scalable/*/*.svg
+%_man1dir/kst2.1.xz
+%_datadir/mime/packages/x-kst.xml
+
+%files -n lib%{name}libs
 %dir %_libdir/kst2
 %dir %_libdir/kst2/plugins
 %_libdir/kst2/plugins/*.*
@@ -101,11 +117,6 @@ rm -v %buildroot%_libdir/libkst2app.a
 %_libdir/libkst2math.so.2.1
 %_libdir/libkst2widgets.so.2
 %_libdir/libkst2widgets.so.2.1
-%_desktopdir/kst2.desktop
-%_iconsdir/hicolor/*/*/*.png
-%_iconsdir/hicolor/scalable/*/*.svg
-%_man1dir/kst2.1.xz
-%_datadir/mime/packages/x-kst.xml
 
 %files devel
 %_libdir/libkst2core.so
@@ -113,5 +124,8 @@ rm -v %buildroot%_libdir/libkst2app.a
 %_libdir/libkst2widgets.so
 
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt2
+- Moved libraries to libkst-plotlibs package.
+
 * Thu Jan 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt1
 - Initial build for Sisyphus
