@@ -1,12 +1,12 @@
-Name:    freeoffice
-Version: 1.0.0
-Release: alt4
+Name:    free-office
+Version: 1.1.0
+Release: alt1
 
 Summary: Free Office Application Suite
 License: Proprietary
 Group:   Office
 
-Url:     http://www.altlinux.org/FreeOffice
+Url:     http://www.altlinux.org/Free_Office
 Source:  %name-%version.tar
 
 ExcludeArch: %ix86 armh ppc64le
@@ -26,6 +26,9 @@ Requires: surguch
 Requires: chromium
 Requires: ca-certificates-digital.gov.ru
 Requires: zenity
+
+Provides: freeoffice = %EVR
+Obsoletes: freeoffice < %EVR
 
 Summary(ru_RU.UTF-8): Пакет офисных приложений Свободный офис
 
@@ -78,21 +81,27 @@ issues.
 install -Dpm0644 license-en.html %buildroot%_datadir/%name/license-en.html
 install -Dpm0644 license-ru.html %buildroot%_datadir/%name/license-ru.html
 install -Dpm0644 com.Basealt.FreeOffice.appdata.xml %buildroot%_datadir/metainfo/com.Basealt.FreeOffice.appdata.xml
-install -Dpm0644 freeoffice.svg %buildroot%_pixmapsdir/freeoffice.svg
-install -Dpm0644 freeoffice-symbolic.svg %buildroot%_pixmapsdir/freeoffice-symbolic.svg
-install -Dpm0755 freeoffice-installed %buildroot%_bindir/freeoffice-installed
+install -Dpm0755 %name-installed %buildroot%_bindir/%name-installed
+install -Dpm0644 free-office.svg %buildroot%_pixmapsdir/free-office.svg
+install -Dpm0644 free-office-symbolic.svg %buildroot%_pixmapsdir/free-office-symbolic.svg
 install -Dpm0644 com.Basealt.FreeOffice.desktop %buildroot%_desktopdir/com.Basealt.FreeOffice.desktop
+install -Dpm0644 altlinux-%name.directory %buildroot%_datadir/desktop-directories/altlinux-%name.directory
+install -Dpm0644 %name.menu %buildroot%_sysconfdir/xdg/menus/applications-merged/free-office.menu
 
 %files
-%_bindir/freeoffice-installed
+%_bindir/%name-installed
 %_datadir/%name
 %_datadir/metainfo/*.xml
 %_pixmapsdir/*.svg
 %_desktopdir/*.desktop
+%_datadir/desktop-directories/altlinux-%name.directory
+%_sysconfdir/xdg/menus/applications-merged/free-office.menu
 
 %changelog
-* Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt4
-- NMU: remove runtime dependency on obsoleted package alt-csp-cryptopro.
+* Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- Renamed to free-office.
+- Added "Free Office" top-level menu with applications.
+- Removed alt-csp-cryptopro replaced by surguch by its functionality.
 
 * Wed Nov 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
 - Required libreoffice instead of LibreOffice-still.
