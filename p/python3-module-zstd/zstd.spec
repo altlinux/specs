@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.7.2
+Version: 1.5.7.3
 Release: alt1
 
 Summary: Zstd Bindings for Python
@@ -17,6 +17,7 @@ Vcs: https://github.com/sergey-dryabzhinsky/python-zstd
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: gcc
@@ -51,11 +52,13 @@ rm tests/test_speed.py
 %pyproject_run_unittest -v
 
 %files
-%doc README.rst LICENSE
 %python3_sitelibdir/%mod_name.*.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 09 2026 Stanislav Levin <slev@altlinux.org> 1.5.7.3-alt1
+- 1.5.7.2 -> 1.5.7.3.
+
 * Tue Jun 24 2025 Stanislav Levin <slev@altlinux.org> 1.5.7.2-alt1
 - 1.5.7.1 -> 1.5.7.2.
 
