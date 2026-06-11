@@ -1,6 +1,4 @@
 %define nm_version 1.2.0
-%define git_date %nil
-#define git_date .git20110314
 %define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 %def_with gtk4
@@ -15,7 +13,7 @@
 
 Name: NetworkManager-pptp
 Version: 1.2.12
-Release: alt2%git_date
+Release: alt3
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -87,7 +85,6 @@ This package contains files for GTK4 applications to use %name.
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-	--without-libnm-glib \
 	%{subst_with gtk4} \
 	--enable-more-warnings=%more_warnings
 %make_build
@@ -120,6 +117,10 @@ This package contains files for GTK4 applications to use %name.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jun 11 2026 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt3
+- Fixed build with glibc-2.43.0.35.fe0ccc-alt1.
+- Dropped obsoleted configure option.
+
 * Tue Aug 08 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.12-alt2
 - Fixed rebuild with ppp-2.5.0.
 - Updated Russian translation.
