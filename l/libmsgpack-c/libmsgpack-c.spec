@@ -1,7 +1,7 @@
 %define oname msgpack-c
 %define oldname libmsgpack
 Name: libmsgpack-c
-Version: 6.1.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Binary-based efficient object serialization library for C
@@ -10,11 +10,12 @@ License: BSL-1.0
 Group: System/Libraries
 Url: http://msgpack.org
 
-# Source-url: https://github.com/msgpack/%oname/archive/refs/tags/c-6.0.0.tar.gz
+# Source-url: https://github.com/msgpack/%oname/archive/refs/tags/c-7.0.1.tar.gz
 Source: %name-%version.tar
 BuildRequires: cmake zlib-devel
 # Tests are written in C++
 BuildRequires: gcc-c++
+BuildRequires: libcjson-devel
 
 # for %%check
 BuildRequires: ctest libgtest-devel
@@ -64,6 +65,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack-c/
 
 %changelog
+* Thu Jun 11 2026 Vladimir Didenko <cow@altlinux.ru> 7.0.1-alt1
+- new version 7.0.1
+
 * Tue Aug 20 2024 Vladimir Didenko <cow@altlinux.ru> 6.1.0-alt1
 - new version 6.1.0
 
