@@ -1,5 +1,5 @@
 Name:		freedroid
-Version:	1.9.0
+Version:	1.9.1
 Release:	alt1
 Summary:	A clone of the game "Paradroid"
 Group:		Games/Arcade
@@ -83,6 +83,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/*
 
 %changelog
+* Mon Jun 08 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.1-alt1
+- NMU: New version.
+
 * Mon Mar 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.0-alt1
 - NMU: New version:
   + Link against SDL2 API.
