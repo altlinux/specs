@@ -9,7 +9,7 @@
 
 Name: dhcp
 Version: 4.4.3.P1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -88,6 +88,7 @@ Patch0038: 0038-dhcpctl.3-avoid-undefined-manpage-macro.patch
 Patch0039: 0039-fix-spelling-mistakes.patch
 Patch0040: 0040-Fixed-len-4-bug.patch
 Patch0041: 0041-Fix-function-pointers-declaration.patch
+Patch0042: 0042-Use-const-pointer-for-const-strings.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -243,6 +244,7 @@ server
 %patch0039 -p2
 %patch0040 -p2
 %patch0041 -p2
+%patch0042 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -576,6 +578,9 @@ fi
 # }}}
 
 %changelog
+* Thu Jun 11 2026 Mikhail Efremov <sem@altlinux.org> 1:4.4.3.P1-alt4
+- Fixed build with glibc >= 2.43.0.35.fe0ccc-alt1.
+
 * Wed Apr 22 2026 Mikhail Efremov <sem@altlinux.org> 1:4.4.3.P1-alt3
 - Fixed build with gcc15.
 - Patch from upstream git:
