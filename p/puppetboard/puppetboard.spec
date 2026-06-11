@@ -1,6 +1,6 @@
 Name:    puppetboard
 Version: 7.0.2
-Release: alt1
+Release: alt2
 
 Summary: Web frontend for PuppetDB
 License: Apache-2.0
@@ -22,7 +22,7 @@ BuildRequires: python3-module-werkzeug >= 0.16.0
 BuildRequires: python3-module-itsdangerous >= 1.1.0
 BuildRequires: python3-module-pypuppetdb >= 2.1.0
 BuildRequires: python3-module-requests >= 2.22.0
-BuildRequires: python3-module-commonmark = 0.9.1
+BuildRequires: python3-module-commonmark >= 0.9.1
 BuildRequires: puppetboard
 
 BuildArch: noarch
@@ -99,6 +99,9 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt2
+- Build with python3-module-commonmark >= 0.9.1.
+
 * Sat Mar 21 2026 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
 - New version.
 
