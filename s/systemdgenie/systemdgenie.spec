@@ -2,7 +2,7 @@
 
 Name: systemdgenie
 Version: 0.100.0
-Release: alt0.2
+Release: alt1
 
 Summary: Systemd managment utility
 License: GPLv2+
@@ -28,6 +28,7 @@ BuildRequires: kf6-kio-devel
 BuildRequires: libsystemd-devel
 
 Requires: systemd
+Requires: kf6-kirigami-addons
 
 %description
 SystemdGenie is a systemd management utility based on KDE technologies.
@@ -48,16 +49,19 @@ sed -i 's|^Categories=.*|Categories=Qt;KDE;System;Monitor;Security;|' src/org.kd
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING NEWS README.md
+%doc NEWS README.md
 %_K6bin/%name
 %_K6dbus_sys_srv/org.kde.kcontrol.%name.service
 %_K6exec/kauth/%{name}helper
 %_K6dbus/system.d/org.kde.kcontrol.%name.conf
 %_K6xdgapp/org.kde.%name.desktop
-%_K6data/kxmlgui?/%name/
+%_datadir/metainfo/org.kde.%name.metainfo.xml
 %_datadir/polkit-1/actions/org.kde.kcontrol.%name.policy
 
 %changelog
+* Thu Jun 11 2026  Nikolay Strelkov <snk@altlinux.org> 0.100.0-alt1
+- Updated to newer commit 4c83c2d0 (closes: #53048).
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.100.0-alt0.2
 - Applied repocop fixes for freedesktop-desktop, freedesktop-categories
 

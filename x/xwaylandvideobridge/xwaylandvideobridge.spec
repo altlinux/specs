@@ -2,10 +2,10 @@
 
 Name: xwaylandvideobridge
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Utility to allow streaming Wayland windows to X applications
-License: GPL-2.0-only OR GPL-3.0-or-later
+License: (GPL-2.0-only or GPL-3.0-only) and LGPL-2.0-or-later and BSD-3-Clause
 Group: System/X11
 Url: https://invent.kde.org/system/xwaylandvideobridge
 
@@ -63,6 +63,9 @@ the control of the user at all times.
 %_K6data/qlogging-categories6/*.*categories
 
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
+- Updated license tag.
+
 * Mon May 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 
