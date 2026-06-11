@@ -1,27 +1,23 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+BuildRequires: java-17-openjdk-devel
+
 Name:           plantuml
-Version:        1.2022.6
-Release:        alt1_2jpp11
+Version:        1.2026.5
+Release:        alt1
 Epoch:          2
 Summary:        Program to generate UML diagram from a text description
 
 License:        LGPLv3+
-URL:            http://plantuml.com/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-lgpl-%{version}.tar.gz
-#Fix compilation under openjdk
-#Patch0:         build-with-javac-utf8-encoding.patch
+URL:            https://plantuml.com/
+Source0:        https://github.com/%{name}/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  fdupes
-BuildRequires:  xmvn
-Requires:       java >= 1.8.0
 BuildRequires:  javapackages-local
+Requires:       java >= 17
+
 # Explicit requires for javapackages-tools since plantuml script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
@@ -43,36 +39,18 @@ PlantUML supports the following diagram types
   - component diagram
   - state diagram
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
-%setup -q -c -n plantuml
-#%patch0 -p1
-
-# Convert from dos to unix line ending
-sed -i.orig 's|\r||g' README
-touch -r README.orig README
-rm README.orig
+%setup
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
-
-# build javadoc
-export CLASSPATH=$(build-classpath ant):plantuml.jar
-%javadoc -source 1.8 -source 1.8 -encoding UTF-8 -Xdoclint:none -d javadoc $(find src -name "*.java") -windowtitle "PlantUML %{version}"
+ant
 
 %install
 # Set jar location
 %mvn_file net.sourceforge.%{name}:%{name} %{name}
 # Configure maven depmap
 %mvn_artifact net.sourceforge.%{name}:%{name}:%{version} %{name}.jar
-%mvn_install -J javadoc
+%mvn_install
 
 %jpackage_script net.sourceforge.plantuml.Run "" "" plantuml plantuml true
 
@@ -81,14 +59,15 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files -f .mfiles
 %{_bindir}/plantuml
-%doc README
-%doc --no-dereference COPYING
+%doc README.md
+%doc --no-dereference COPYING plantuml-lgpl/lgpl-license.txt
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference COPYING
-
 %changelog
+* Thu Jun 11 2026 Anton Meleshnikov <alton@altlinux.org> 2:1.2026.5-alt1
+- new version (thanks fedora for the spec) (closes: #50011)
+- remove javadoc
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 2:1.2022.6-alt1_2jpp11
 - new version
 
