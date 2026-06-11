@@ -3,7 +3,7 @@
 
 Name: kaichat
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Chat interface for AI models such as ollama
 License: CC0-1.0 AND LGPL-2.0-or-later AND MIT AND GPL-2.0-or-later AND BSD-3-Clause
@@ -42,6 +42,7 @@ BuildRequires: kf6-ktextaddons-devel >= 1.9.0
 Requires: plasma6-breeze
 Requires: icon-theme-breeze
 Requires: kf6-ktextaddons
+Requires: libkaichatlibs = %EVR
 
 %description
 KAIChat allows to chat with AI (local ollama, network service).
@@ -52,6 +53,13 @@ KAIChat supports the following features:
 * Increase/Decrease global font by using CTRL++/CTRL+- shortcut
 
 The functionality much extended by installing kaichat-addons package.
+
+%package -n libkaichatlibs
+Group: System/Libraries
+Summary: libraries for %name
+
+%description -n libkaichatlibs
+This package contains libraries for %name.
 
 %prep
 %setup
@@ -68,11 +76,6 @@ sed -i "s|Categories=.*|Categories=Qt;KDE;Science;ArtificialIntelligence;|" src/
 %files -f %name.lang
 %doc README.md
 %_K6bin/kaichat
-%_K6lib/libkaichatcore.so.0*
-%_K6lib/libkaichatwidgets.so.0*
-%_K6lib/qt6/plugins/autogeneratetext/textplugins/kaichat_sharetextplugin.so
-%_K6lib/qt6/plugins/autogeneratetext/textplugins/kaichat_webshortcuttextplugin.so
-%_K6lib/qt6/plugins/autogeneratetext/toolplugins/textautogeneratetext_currentdatetimeplugin.so
 %_K6xdgapp/org.kde.kaichat.desktop
 %_K6icon/hicolor/16x16/apps/kaichat.png
 %_K6icon/hicolor/22x22/apps/kaichat.png
@@ -84,7 +87,17 @@ sed -i "s|Categories=.*|Categories=Qt;KDE;Science;ArtificialIntelligence;|" src/
 %_K6data/metainfo/org.kde.kaichat.appdata.xml
 %_K6data/qlogging-categories6/kaichat.categories
 
+%files -n libkaichatlibs
+%_K6lib/libkaichatcore.so.0*
+%_K6lib/libkaichatwidgets.so.0*
+%_K6lib/qt6/plugins/autogeneratetext/textplugins/kaichat_sharetextplugin.so
+%_K6lib/qt6/plugins/autogeneratetext/textplugins/kaichat_webshortcuttextplugin.so
+%_K6lib/qt6/plugins/autogeneratetext/toolplugins/textautogeneratetext_currentdatetimeplugin.so
+
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt2
+- Moved libraries to libkaichatlibs package (closes: #59500).
+
 * Thu May 21 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 - Enable build on riscv64 and loongarch64.
