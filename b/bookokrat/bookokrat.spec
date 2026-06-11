@@ -3,7 +3,7 @@
 %def_with check
 
 Name: bookokrat
-Version: 0.3.11
+Version: 0.3.12
 Release: alt1
 
 Summary: A terminal EPUB / PDF Book Reader
@@ -57,6 +57,9 @@ export SNAPSHOTS=overwrite
 %_bindir/%name
 
 %changelog
+* Thu Jun 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.12-alt1
+- new version
+
 * Wed May 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.11-alt1
 - new version
 
