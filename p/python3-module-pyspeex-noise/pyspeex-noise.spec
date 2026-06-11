@@ -1,11 +1,11 @@
 Name: python3-module-pyspeex-noise
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Noise suppression and automatic gain control using speex.
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/pyspeex-noise
+URL: https://pypi.org/project/pyspeex-noise
 VCS: https://github.com/rhasspy/pyspeex-noise
 
 Source0: %name-%version.tar
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+
+%python3_set_limited_api 3.9
 
 %description
 %summary
@@ -38,15 +40,15 @@ BuildRequires(pre): rpm-build-pyproject
 %check
 %pyproject_run_pytest -o addopts= tests
 
-# extension built against limited API, drop versioned ABI req
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %python3_sitelibdir/speex_noise_cpp.*
 %python3_sitelibdir/pyspeex_noise
 %python3_sitelibdir/pyspeex_noise-%version.dist-info
 
 %changelog
+* Thu Jun 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.1-alt1
+- 2.0.1 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
 - 2.0.0 released
 
