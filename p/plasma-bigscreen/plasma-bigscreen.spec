@@ -5,7 +5,7 @@
 
 Name: plasma-bigscreen
 Version: 6.6.91
-Release: alt1
+Release: alt2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -85,6 +85,8 @@ Requires: xdg-desktop-portal-kde
 Requires: kscreen
 Requires: kde-volume-control-pipewire
 
+Requires: lib%{name}libs = %{version}-%{release}
+
 ExcludeArch: %ix86 riscv64
 
 %description
@@ -92,6 +94,13 @@ Plasma Bigscreen is an open-source user interface for TVs. Running on
 top of a Linux distribution, Plasma Bigscreen turns your TV or set-top
 box into a fully hackable device. A big launcher giving you easy access
 to any installed apps and skills. Controllable via voice or TV remote.
+
+%package -n lib%{name}libs
+Group: System/Libraries
+Summary: libraries for %name
+
+%description -n lib%{name}libs
+This package contains libraries for %name.
 
 %prep
 %setup
@@ -114,8 +123,6 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %files -f %name.lang
 %doc README.md
 %_K6bin/plasma-bigscreen-*
-%_K6plug/plasma/applets/org.kde.bigscreen.homescreen.so
-%_K6plug/plasma/kcms/systemsettings/kcm_mediacenter_*.so
 %dir %_K6qml/org/kde/bigscreen
 %_K6qml/org/kde/bigscreen/*
 %_K6xdgapp/*.desktop
@@ -129,11 +136,18 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %dir %_K6data/sounds/plasma-bigscreen
 %_K6data/sounds/plasma-bigscreen/*
 %_K6data/wayland-sessions/plasma-bigscreen-wayland.desktop
-%_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
 %_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
 %_udevrulesdir/40-uinput.rules
 
+%files -n lib%{name}libs
+%_K6plug/plasma/applets/org.kde.bigscreen.homescreen.so
+%_K6plug/plasma/kcms/systemsettings/kcm_mediacenter_*.so
+%_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
+
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.91-alt2
+- Moved libraries to libplasma-bigscreenlibs package.
+
 * Sat Jun 06 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.91-alt1
 - New version 6.6.91.
 

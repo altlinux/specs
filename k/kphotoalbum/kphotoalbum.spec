@@ -5,7 +5,7 @@
 
 Name: kphotoalbum
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: Photo Album for easy organization of your images
 License: GPL-2.0-or-later
@@ -65,6 +65,7 @@ Requires: plasma6-breeze
 Requires: icon-theme-breeze
 
 Requires: %{name}-data = %{version}-%{release}
+Requires: lib%{name}libs = %{version}-%{release}
 
 ExcludeArch: %ix86 riscv64
 
@@ -107,6 +108,13 @@ importing, exporting and batch processing.
 
 This package provides the architecture independent data files for %name.
 
+%package -n lib%{name}libs
+Group: System/Libraries
+Summary: libraries for %name
+
+%description -n lib%{name}libs
+This package contains libraries for %name.
+
 %prep
 %setup
 %patch -p1
@@ -135,13 +143,15 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6bin/kpa-thumbnailtool
 %_K6bin/kphotoalbum
 %_K6bin/open-raw.pl
-%_K6lib/libkpabase.so
-%_K6lib/libkpaexif.so
-%_K6lib/libkpathumbnails.so
 %_K6xdgapp/org.kde.kphotoalbum-import.desktop
 %_K6xdgapp/org.kde.kphotoalbum.desktop
 %_K6xdgapp/org.kde.kphotoalbum.open-raw.desktop
 %_K6icon/hicolor/*/*/*
+
+%files -n lib%{name}libs
+%_K6lib/libkpabase.so
+%_K6lib/libkpaexif.so
+%_K6lib/libkpathumbnails.so
 
 %files data -f %name.lang
 %dir %_K6data/kphotoalbum
@@ -149,6 +159,9 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6data/metainfo/org.kde.kphotoalbum.appdata.xml
 
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
+- Moved libraries to libkphotoalbumlibs package.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
 - New version 6.2.0.
 

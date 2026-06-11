@@ -5,7 +5,7 @@
 
 Name: rkward
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: Easily extensible and easy-to-use IDE/GUI for R
 License: GPL-2.0-or-later
@@ -67,6 +67,7 @@ Requires: plasma6-breeze
 Requires: icon-theme-breeze
 
 Requires: %{name}-data = %{version}-%{release}
+Requires: lib%{name}libs = %{version}-%{release}
 
 ExcludeArch: %ix86 riscv64
 
@@ -90,6 +91,13 @@ future versions will also provide seamless integration with an
 office-suite.
 
 This package provides the architecture independent data files for %name.
+
+%package -n lib%{name}libs
+Group: System/Libraries
+Summary: libraries for %name
+
+%description -n lib%{name}libs
+This package contains libraries for %name.
 
 %prep
 %setup
@@ -121,7 +129,6 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV -E "rkward-c
 %doc README
 %_K6bin/rkward
 %_man1dir/rkward.1.*
-%_K6lib/librkward.rbackend.lib.so
 %_K6lib/rkward.rbackend
 
 %files data
@@ -137,7 +144,13 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV -E "rkward-c
 %dir %_K6data/rkward
 %_K6data/rkward/*
 
+%files -n lib%{name}libs
+%_K6lib/librkward.rbackend.lib.so
+
 %changelog
+* Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.3-alt2
+- Moved libraries to librkwardlibs package.
+
 * Fri May 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.3-alt1
 - New version 0.8.3 from upstream/releases/0.8.3 branch.
 
