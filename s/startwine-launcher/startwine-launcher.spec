@@ -1,11 +1,11 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v422
+%define nameVR _v423
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 422
+Version: 423
 Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
@@ -56,6 +56,15 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Fri Jun 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 423-alt1
+- 422 -> 423:
+  + Updated list of Wine versions.
+  + Updated prefix configurations.
+  + Fixed installation script.
+  + Fixed update installed application data.
+  + Fixed helper functions in sw_runlib.
+  + Steam libraries have been added to utils for compatibility with older games.
+
 * Sat May 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 422-alt1
 - 421 -> 422
 
