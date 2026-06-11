@@ -2,7 +2,7 @@
 
 Name:    epsonscan2
 Version: 6.7.82.0
-Release: alt2
+Release: alt3
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -43,7 +43,7 @@ driver to interface with software built around the SANE standard.
 subst 's|${EPSON_INSTALL_ROOT}/lib/udev|%_udevdir|' CMakeLists.txt
 
 %build
-%add_optflags -Wno-unused-function -Wno-unused-variable
+%add_optflags -Wno-unused-function -Wno-unused-variable -Wno-template-body
 %cmake -GNinja \
        -Wno-dev \
        -Wno-unused-function \
@@ -66,6 +66,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 6.7.82.0-alt3
+- FTBFS: built with -Wno-template-body.
+
 * Sat Jan 17 2026 Andrey Cherepanov <cas@altlinux.org> 6.7.82.0-alt2
 - FTBFS: built with zlib-devel.
 
