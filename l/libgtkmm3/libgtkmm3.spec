@@ -8,7 +8,7 @@
 %def_enable docs
 
 Name: libgtkmm3
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -93,8 +93,7 @@ The %name-demos package contains source code of demo programs for %name.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test
 
 %files
 %doc NEWS
@@ -120,6 +119,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Thu Jun 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.24.11-alt1
+- 3.24.11
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.10-alt1
 - 3.24.10
 
