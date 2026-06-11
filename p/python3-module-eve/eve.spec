@@ -4,12 +4,12 @@
 %define mod_name %pypi_nname
 
 Name: python3-module-%pypi_nname
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: Python REST API for Humans
 License: BSD
 Group: Development/Python3
-Url: https://pypi.org/project/Eve/
+Url: https://pypi.org/project/eve
 Vcs: https://github.com/pyeve/eve
 BuildArch: noarch
 Source: %name-%version.tar
@@ -45,6 +45,9 @@ via community extensions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 10 2026 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1.
+
 * Fri Mar 20 2026 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.5 -> 2.3.0.
 
