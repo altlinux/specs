@@ -1,4 +1,4 @@
-%define nm_version 1.46.2
+%define nm_version 1.52.2
 
 %def_with gtk4
 
@@ -12,7 +12,7 @@
 
 Name: NetworkManager-openvpn
 Version: 1.12.5
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -133,6 +133,10 @@ make check
 %exclude %_tmpfilesdir/nm-openvpn-tmpfiles.conf
 
 %changelog
+* Thu Jun 11 2026 Mikhail Efremov <sem@altlinux.org> 1.12.5-alt3
+- Fixed build with glibc-2.43.0.35.fe0ccc-alt1.
+- Bumped NM version requirement.
+
 * Tue May 05 2026 Alexey Volkov <qualimock@altlinux.org> 1.12.5-alt2
 NMU:
   + add custom HMAC auth algorithm entry to advanced dialog
