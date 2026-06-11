@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.211
+Version: 4.0.4.212
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -454,6 +454,10 @@ fi
 %files checkinstall
 
 %changelog
+* Thu Jun 11 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.212-alt1
+- Fixed ocaml.prov and other externally packaged find-provides methods.
+- Added an env var to override %%_rpmlibdir location.
+
 * Tue Apr 14 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.211-alt1
 - vt@:
   + Removed redundant cleanup of *.pc files. (Closes: 58008)
