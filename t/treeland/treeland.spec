@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.8.6
+Version: 0.8.8
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja patchelf
 # Automatically added by buildreq on Fri Feb 21 2025
 # optimized out: cmake-modules dqt6-base-common dqt6-base-devel dqt6-declarative-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcap-ng libcrypt-devel libddm-auth-devel libddm-auth0 libddm-common-devel libddm-common0 libdisplay-info libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-qml libdqt6-qmlcompiler libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickcontrols2 libdqt6-quickcontrols2basic libdqt6-quickcontrols2fusion libdqt6-quickcontrols2imagine libdqt6-quickcontrols2material libdqt6-quickcontrols2universal libdqt6-quickeffects libdqt6-quicklayouts libdqt6-quickshapes libdqt6-quicktemplates2 libdqt6-quicktest libdqt6-shadertools libdqt6-test libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libpixman-devel libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-errors libxcbutil-icccm libxkbcommon-devel ninja-build openssl-config pkg-config python3 python3-base sh5 vulkan-headers wayland-devel xorg-proto-devel xz
-BuildRequires: cmake ddm-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-declarative-devel dqt6-wayland-devel dtk6-common-devel libdtk6declarative-devel libdtk6systemsettings-devel libpam-devel libsystemd-devel libwayland-egl-devel libwlroots-devel libxcbutil-icccm-devel treeland-protocols wayland-protocols libdrm-devel wlr-protocols libinput-devel libXau-devel libmpv-devel
+BuildRequires: cmake ddm-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-declarative-devel dqt6-wayland-devel dtk6-common-devel libdtk6declarative-devel libdtk6systemsettings-devel libpam-devel libsystemd-devel libwayland-egl-devel libwlroots-devel libxcbutil-icccm-devel treeland-protocols wayland-protocols libdrm-devel wlr-protocols libinput-devel libXau-devel libmpv-devel dqt6-remoteobjects-devel
 BuildRequires: libdqt6-qmlcompiler libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest libdqt6-concurrent vulkan-headers
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -170,7 +170,6 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_bindir/treeland
 %_bindir/treeland.sh
 %_libexecdir/treeland-sd
-%_libexecdir/treeland-shortcut
 %_libexecdir/treeland-screensaver
 %_libexecdir/treeland-session-helper
 %_libexecdir/treeland-xwayland
@@ -191,7 +190,6 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %dir %_datadir/dsg/configs/
 %_datadir/dsg/configs/org.deepin.dde.treeland/
 %dir %_datadir/treeland/
-%_datadir/treeland/shortcuts/
 %_datadir/wayland-sessions/treeland.desktop
 %_datadir/dbus-1/interfaces/org.freedesktop.ScreenSaver.xml
 
@@ -238,6 +236,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Thu Jun 11 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.8-alt1
+- New version 0.8.8.
+
 * Tue May 12 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.6-alt1
 - New version 0.8.6.
 
