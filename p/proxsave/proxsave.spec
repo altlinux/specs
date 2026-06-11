@@ -1,5 +1,5 @@
 Name: proxsave
-Version: 0.23.1
+Version: 0.24.0
 Release: alt1
 
 Summary: Backup tool for Proxmox PBS & PVE System Files
@@ -56,6 +56,9 @@ install -Dm0755 build/%name %buildroot%_bindir/%name
 %doc docs
 
 %changelog
+* Fri Jun 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.24.0-alt1
+- automatic build: 0.23.1 -> 0.24.0
+
 * Tue Jun 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.23.1-alt1
 - 0.23.0 -> 0.23.1
 
