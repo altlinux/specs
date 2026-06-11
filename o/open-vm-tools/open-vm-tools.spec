@@ -30,7 +30,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1
+Release: alt2
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -47,7 +47,8 @@ Source6: %name-%vgauthdaemon.tmpfile
 Source90: 90-vmware-guest-tools.rules
 Source99: 99-vmware-scsi-udev.rules
 
-Patch100: add-altlinux-open-vm-tools.patch
+# Patch100: add-altlinux-open-vm-tools.patch
+Patch01: open-vm-tools-gcc16.patch
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -128,6 +129,7 @@ machines.
 %prep
 %setup
 #%%patch100 -p1
+%autopatch -p1
 
 rm -rf autom4te.cache
 rm -f configure
@@ -328,6 +330,9 @@ fi
 
 
 %changelog
+* Thu Jun 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 13.1.0-alt2
+- fix FTBFS with new glibc
+
 * Thu May 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 13.1.0-alt1
 - 13.1.0
 
