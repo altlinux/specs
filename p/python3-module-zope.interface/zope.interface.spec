@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.2
+Version: 8.4
 Release: alt1
 
 Summary: Zope interfaces package
@@ -59,7 +59,6 @@ python -m unittest discover -s %ns_name.%mod_name -t "$site_packages"
 ENDTESTS
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
@@ -67,6 +66,9 @@ ENDTESTS
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Wed May 06 2026 Stanislav Levin <slev@altlinux.org> 8.4-alt1
+- 8.2 -> 8.4.
+
 * Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 8.2-alt1
 - 8.1.1 -> 8.2.
 
