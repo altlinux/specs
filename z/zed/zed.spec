@@ -11,11 +11,11 @@
 %define webrtc_dir %webrtc_basedir/linux-x64-release
 
 Name: zed
-Version: 1.5.3
+Version: 1.6.3
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-License: GPL-3.0 and AGPL-3.0 and Apache-2.0
+License: GPL-3.0 and Apache-2.0
 Group: Editors
 Url: https://zed.dev/
 Vcs: https://github.com/zed-industries/zed.git
@@ -112,7 +112,7 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 
 %files
 # some licenses files have copyrights
-%doc LICENSE-AGPL LICENSE-APACHE README.md assets/licenses.md
+%doc LICENSE-APACHE README.md assets/licenses.md
 %_libexecdir/zed-editor
 %_bindir/%app_cli
 %_desktopdir/%app_id.desktop
@@ -120,6 +120,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Jun 11 2026 Anton Zhukharev <ancieg@altlinux.org> 1.6.3-alt1
+- Updated to 1.6.3.
+
 * Thu Jun 04 2026 Anton Zhukharev <ancieg@altlinux.org> 1.5.3-alt1
 - Updated to 1.5.3.
 
