@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define cfg %_builddir/%name-%version/
 
-Name:    lazarus
-Version: 4.6
+Name: lazarus
+Version: 4.8
 Release: alt1
-Epoch:   1
+Epoch: 1
 
 Summary: Lazarus Component Library and IDE
 License: GPL-2.0 and LGPL-2.0 and MPL-1.1
 # For additional components and tools: LGPL-2.0 and LGPL-2.1 and MPL-1.1 and MPL-2.0 and GPL-2.0 and BSD-3-Clause
-Group:   Development/Other
-Url:     http://www.lazarus-ide.org/
-# Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
+Group: Development/Other
+Url: http://www.lazarus-ide.org/
+VCS: https://gitlab.com/freepascal.org/lazarus/lazarus.git
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -45,19 +45,19 @@ BuildRequires: qt5pas-devel
 # .xct files for documentation build
 BuildRequires: fpc-docs
 
-Requires:   fpc >= 3.2.2 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
-Requires:   glibc-devel
-Requires:   libdbus-devel
-Requires:   xterm
-Requires:   lazarus-lcl
+Requires: fpc >= 3.2.2 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
+Requires: glibc-devel
+Requires: libdbus-devel
+Requires: xterm
+Requires: lazarus-lcl
 # Default LCL
-Requires:   lazarus-gtk
-Requires:   gcc
+Requires: lazarus-gtk
+Requires: gcc
 
-Provides:   %name-docs = %version
-Obsoletes:  %name-docs < %version
-Provides:   %name-examples = %version
-Obsoletes:  %name-examples < %version
+Provides: %name-docs = %EVR
+Obsoletes: %name-docs < %EVR
+Provides: %name-examples = %EVR
+Obsoletes: %name-examples < %EVR
 
 %add_findreq_skiplist %_libdir/%name/examples/* %_libdir/%name/components/*
 
@@ -404,6 +404,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt6Pas.so
 
 %changelog
+* Wed Jun 10 2026 Andrey Cherepanov <cas@altlinux.org> 1:4.8-alt1
+- New version.
+
 * Sat Feb 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:4.6-alt1
 - New version.
 
