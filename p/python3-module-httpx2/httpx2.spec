@@ -31,7 +31,7 @@ Extra "%1" for %%core2_pypi_name. \
 %def_with check
 
 Name: python3-module-%x2_pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: A next generation HTTP client for Python
@@ -114,8 +114,7 @@ Some things HTTP Core does do:
 %autopatch -p1
 
 for dir in %core2_dir %x2_dir; do
-    sed -i 's/fallback-version = ".*"/fallback-version = "%version"/' \
-        "$dir/pyproject.toml"
+    sed -i '/^fallback-version/s/= .*$/= "%version"/' "$dir/pyproject.toml"
 done
 
 cd %core2_dir
@@ -176,5 +175,8 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %core2_pypi_name}/
 
 %changelog
+* Thu Jun 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.3.0-alt1
 - Initial build for ALT Sisyphus.
