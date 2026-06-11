@@ -8,7 +8,7 @@
 
 Name: criu
 Version: 4.2
-Release: alt2
+Release: alt3
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -200,6 +200,9 @@ rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %changelog
+* Thu Jun 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt3
+- Fix FTBFS with glibc-2.43.0.35.fe0ccc-alt1.
+
 * Thu May 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt2
 - Fix plugin path (ALT #59365).
 
