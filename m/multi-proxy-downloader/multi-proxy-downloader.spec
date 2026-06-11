@@ -1,7 +1,7 @@
 %define import_path github.com/patryk-ku/multi-proxy-downloader
 
 Name: multi-proxy-downloader
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Download a file in parallel using multiple proxies
@@ -42,6 +42,9 @@ export IGNORE_SOURCES=1
 %doc *.md LICENSE
 
 %changelog
+* Fri Jun 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
+- automatic build: 1.0.0 -> 1.1.0
+
 * Wed May 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
 - Initial build for ALT Linux.
 
