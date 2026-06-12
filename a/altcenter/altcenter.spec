@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.37
+Release: alt0.38
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,12 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Jun 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.38
+- Components: filtered obsolete egrep warning.
+- Auditd logs settings: added system power audit rule.
+- Components: shown installed component packages.
+- Components: used apt-get for component installation (ALT #59410).
+
 * Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.37
 - policies: added wireless access policies.
 - policies: added removable media policies.
