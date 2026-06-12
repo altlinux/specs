@@ -1,5 +1,5 @@
 Name:    spnavcfg
-Version: 1.1
+Version: 1.3
 Release: alt1
 
 Summary: Spacenav interactive configuration GUI
@@ -9,7 +9,7 @@ Url:     https://github.com/FreeSpacenav/spnavcfg
 
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ qt5-base-devel libspnav-devel
+BuildRequires: gcc-c++ qt6-base-devel libspnav-devel
 Requires: spacenavd
 
 %description
@@ -20,8 +20,8 @@ Requires: spacenavd
 
 %build
 %configure --disable-debug
-%make_build UIC=uic-qt5 MOC=moc-qt5 RCC=rcc-qt5 src/ui.moc.o # work around Makefile glitch
-%make_build UIC=uic-qt5 MOC=moc-qt5 RCC=rcc-qt5
+%make_build src/ui.moc.o
+%make_build
 strip spnavcfg
 
 %install
@@ -34,6 +34,9 @@ strip spnavcfg
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 1.3-alt1
+- new version 1.3
+
 * Fri Mar 21 2025 Sergey Palcheh <minergenon@altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 
