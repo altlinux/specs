@@ -1,5 +1,5 @@
 Name:    nfpm
-Version: 2.41.2
+Version: 2.46.3
 Release: alt1
 
 Summary: Simple deb, rpm, apk and arch linux packager written in Go
@@ -8,7 +8,7 @@ Group:   Other
 Url:     https://github.com/goreleaser/nfpm
 
 Source: %name-%version.tar
-Source1: %name-vendor-%version.tar
+Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -98,5 +98,8 @@ mkdir -p %buildroot%_datadir/zsh_completion.d/
 %_datadir/zsh_completion.d/_%name
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.46.3-alt1
+- new version 2.46.3
+
 * Fri Feb 21 2025 Sergey Palcheh <minergenon@altlinux.org> 2.41.2-alt1
 - Initial build for Sisyphus
