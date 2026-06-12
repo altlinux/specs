@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.1.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Use git repo data (latest tag, current commit hash, etc) for building a version number according PEP-440
@@ -37,11 +37,14 @@ BuildArch: noarch
 %tox_check_pyproject
 
 %files
-%doc LICENSE MANIFEST.* README.*
+%doc LICENSE README.*
 %_bindir/%pypi_name
-%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/setuptools_git_versioning/__pycache__/*
 %python3_sitelibdir/setuptools*
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+
 * Sat Jan 25 2025 Sergey Palcheh <minergenon@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus
