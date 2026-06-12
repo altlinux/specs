@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Interactively find and recover deleted or overwritten files from your terminal
@@ -13,7 +13,6 @@ URL:     https://pypi.org/project/recoverpy/
 Vcs:     https://github.com/PabloLec/RecoverPy
 
 Source: %name-%version.tar
-Patch:  python3-module-RecoverPy-2.2.0-alt1-screen-params_fixes.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -27,7 +26,6 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -46,6 +44,10 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+- delete patch python3-module-RecoverPy-2.2.0-alt1-screen-params_fixes.patch
+
 * Thu Jan 30 2025 Sergey Palcheh <minergenon@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus
 
