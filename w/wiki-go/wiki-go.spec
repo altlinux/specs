@@ -2,7 +2,7 @@
 %global import_path github.com/leomoon-studios/wiki-go
 
 Name: wiki-go
-Version: 1.8.6
+Version: 1.8.10
 Release: alt1
 Summary: A modern, feature-rich, databaseless flat-file wiki platform built with Go
 License: GPL-3.0
@@ -63,6 +63,9 @@ touch %buildroot%_sysconfdir/wiki-go/config.yaml
 %doc LICENSE README.md SECURITY.md
 
 %changelog
+* Fri Jun 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.8.10-alt1
+- Updated to version 1.8.10.
+
 * Wed Mar 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.8.6-alt1
 - Updated to version 1.8.6.
 
