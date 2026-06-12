@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        149.0.7827.102
+Version:        149.0.7827.114
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -721,6 +721,38 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Fri Jun 12 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.114-alt1
+- New version (149.0.7827.114).
+- Fixes:
+  + CVE-2026-12007: Use after free  Core
+  + CVE-2026-12008: Use after free  DigitalCredentials
+  + CVE-2026-12009: Insufficient validation of untrusted input  Accessibility
+  + CVE-2026-12010: Heap buffer overflow  GPU
+  + CVE-2026-12011: Use after free  WebMIDI
+  + CVE-2026-12012: Use after free  Network
+  + CVE-2026-12013: Use after free  Media
+  + CVE-2026-12014: Use after free  Cast
+  + CVE-2026-12015: Use after free  Autofill
+  + CVE-2026-12016: Insufficient validation of untrusted input  DevTools
+  + CVE-2026-12017: Insufficient validation of untrusted input  Extensions
+  + CVE-2026-12018: Inappropriate implementation  Mojo
+  + CVE-2026-12019: Out of bounds write  Codecs
+  + CVE-2026-12020: Use after free  Autofill
+  + CVE-2026-12022: Race  Safe Browsing
+  + CVE-2026-12023: Use after free  GPU
+  + CVE-2026-12024: Insufficient policy enforcement  DevTools
+  + CVE-2026-12025: Insufficient validation of untrusted input  Network
+  + CVE-2026-12026: Out of bounds read  Video
+  + CVE-2026-12027: Insufficient policy enforcement  Headless
+  + CVE-2026-12028: Use after free  GPU
+  + CVE-2026-12029: Use after free  Video
+  + CVE-2026-12030: Heap buffer overflow  GPU
+  + CVE-2026-12031: Inappropriate implementation  Views
+  + CVE-2026-12032: Inappropriate implementation  Passwords
+  + CVE-2026-12033: Out of bounds read  VideoCapture
+  + CVE-2026-12034: Insufficient validation of untrusted input  Linux Toolkit Theming
+  + CVE-2026-12035: Use after free  Views
+
 * Tue Jun 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.102-alt1
 - New version (149.0.7827.102).
 - Fixes:
