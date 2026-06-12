@@ -1,5 +1,5 @@
 Name: eden
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Nintendo Switch Emulator
@@ -120,6 +120,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Fri Jun 12 2026 Nazarov Denis <nenderus@altlinux.org> 0.2.1-alt1
+- New version 0.2.1.
+
 * Sun May 17 2026 Nazarov Denis <nenderus@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
