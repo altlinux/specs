@@ -6,7 +6,7 @@
 
 Name: vips
 Version: 8.18.3
-Release: alt1
+Release: alt2
 
 Summary: Large image processing library
 
@@ -95,6 +95,7 @@ on top of VIPS: for example "nip2".
 Summary: VIPS development kit
 Group: System/Libraries
 Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
 %package -n lib%{name}-modules
 Summary: VIPS library modules
@@ -223,6 +224,9 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Fri Jun 12 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.3-alt2
+- libvips: add missing obsoletes.
+
 * Tue Jun 09 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.3-alt1
 - 8.18.3.
 - Replace License with SDPX tag.
