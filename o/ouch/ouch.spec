@@ -5,7 +5,7 @@
 %endif
 
 Name: ouch
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
@@ -35,6 +35,9 @@ to help you compress and decompress files of several formats.
 %rust_prep
 
 %build
+%ifarch i586
+export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_T"
+%endif
 %rust_build
 
 %install
@@ -48,6 +51,9 @@ to help you compress and decompress files of several formats.
 %doc README.md LICENSE
 
 %changelog
+* Fri Jun 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.0-alt1
+- Updated to version 0.8.0.
+
 * Sat Apr 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.1-alt1
 - Updated to version 0.7.1.
 
