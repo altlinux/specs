@@ -1,5 +1,5 @@
 Name:    vdu_controls
-Version: 2.3.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Visual Display Unit virtual control panel
@@ -61,6 +61,9 @@ install -m644 docs/_build/man/%name.1 %buildroot%_mandir/man1/
 %_datadir/%name/sample-scripts/vlux_meter.py
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.6.0-alt1
+- new version 2.6.0
+
 * Sun Jun 01 2025 Sergey Palcheh <minergenon@altlinux.org> 2.3.0-alt1
 - new version 2.3.0
 
