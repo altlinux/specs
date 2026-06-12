@@ -8,7 +8,7 @@
 %define typelib %name-gir
 Name: libayatana-common
 Version: 0.9.11
-Release: alt2
+Release: alt3
 
 Summary: Common files and libraries used by Ayatana System Indicators
 License: GPLv3
@@ -130,7 +130,7 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 
 %files -n %lname
 %doc COPYING
-%_libdir/%soname.so*
+%_libdir/%soname.so.*
 
 %files -n %typelib
 %_libdir/girepository-1.0/AyatanaCommon-*.typelib
@@ -142,8 +142,12 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_pkgconfigdir/%soname.pc
 %_datadir/gir-1.0/AyatanaCommon-*.gir
 %_vapidir/AyatanaCommon.vapi
+%_libdir/%soname.so
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt3
+- Moved devel-library to the -devel package.
+
 * Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt2
 - Added Lomiri support.
 

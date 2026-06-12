@@ -3,7 +3,7 @@
 
 Name: ayatana-indicator-sound
 Version: 24.5.2
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for managing system sound
 License: GPLv3
@@ -54,6 +54,14 @@ Ayatana Indicator Sound provides easy control of the PulseAudio sound
 daemon, and integrates well with media players that support the Mpris
 protocol.
 
+%package -n %name-devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %version-%release
+
+%description -n %name-devel
+%{summary}.
+
 %prep
 %setup
 
@@ -91,13 +99,18 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %dir %_datadir/ayatana/indicators
 %_datadir/ayatana/indicators/org.ayatana.indicator.sound
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.sound.gschema.xml
-%_datadir/dbus-1/interfaces/org.ayatana.indicator.sound.AccountsService.xml
 %_userunitdir/%name.service
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.sound.AccountsService.xml
 %_datadir/polkit-1/actions/org.ayatana.indicator.sound.AccountsService.policy
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.sound.AccountsService.rules
 
+%files devel
+%_datadir/dbus-1/interfaces/org.ayatana.indicator.sound.AccountsService.xml
+
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt2
+- Created -devel package with the corresponding files.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt1
 - New version 24.5.2.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: qmenumodel
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: Qt5 renderer for Ayatana Indicators
@@ -94,8 +94,8 @@ QMenuModel library.
 
 %files -n libqmenumodel-devel
 %doc examples
-%dir %_includedir/%name
-%_includedir/%name/*
+%dir %_includedir/qt5/%name
+%_includedir/qt5/%name/*
 %_libdir/libqmenumodel.so
 %_libdir/pkgconfig/*.pc
 
@@ -104,5 +104,8 @@ QMenuModel library.
 %_qt5_qmldir/QMenuModel.1/*
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus

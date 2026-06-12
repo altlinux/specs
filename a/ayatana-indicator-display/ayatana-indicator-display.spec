@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-display
-Version: 24.5.2
+Version: 24.5.3
 Release: alt1
 
 Summary: Ayatana Indicator for Display configuration
@@ -49,6 +49,14 @@ Ayatana Indicators are only available on desktop environments that
 provide a renderer for system indicators (such as MATE, Xfce, Lomiri,
 etc.).
 
+%package -n %name-devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %version-%release
+
+%description -n %name-devel
+%{summary}.
+
 %prep
 %setup
 
@@ -87,13 +95,19 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.display.gschema.xml
 %_datadir/ayatana/indicators/org.ayatana.indicator.display
 %_iconsdir/hicolor/scalable/status/*.svg
-%_datadir/dbus-1/interfaces/org.ayatana.indicator.display.AccountsService.xml
 %_userunitdir/%name.service
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.display.AccountsService.xml
 %_datadir/polkit-1/actions/org.ayatana.indicator.display.AccountsService.policy
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.display.AccountsService.rules
 
+%files devel
+%_datadir/dbus-1/interfaces/org.ayatana.indicator.display.AccountsService.xml
+
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 24.5.3-alt1
+- New version 24.5.3.
+- Created -devel package with the corresponding files.
+
 * Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt1
 - New version 24.5.2.
 

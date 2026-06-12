@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-printers
-Version: 23.10.1
-Release: alt2
+Version: 23.10.2
+Release: alt1
 
 Summary: Ayatana Indicator showing active print jobs
 License: GPLv3
@@ -75,6 +75,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 23.10.2-alt1
+- New version 23.10.2.
+
 * Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 23.10.1-alt2
 - Fixed FTBFS caused by gcc15.
 

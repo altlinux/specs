@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-datetime
-Version: 25.4.0
-Release: alt2
+Version: 26.6.0
+Release: alt1
 
 Summary: Ayatana Indicator providing clock and calendar
 License: GPLv3
@@ -146,6 +146,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/lomiri-indicator-datetime.service
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+
 * Sun Jul 20 2025 Nikolay Strelkov <snk@altlinux.org> 25.4.0-alt2
 - Enable Lomiri support.
 

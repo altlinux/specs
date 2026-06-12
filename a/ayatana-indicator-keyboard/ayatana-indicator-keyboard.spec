@@ -2,9 +2,11 @@
 
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 Name: ayatana-indicator-keyboard
-Version: 24.7.2
-Release: alt2
+Version: 26.6.1
+Release: alt1
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
 License: GPLv3
@@ -43,6 +45,11 @@ BuildRequires: libxml2-devel
 BuildRequires: mate-themes
 BuildRequires: pkg-config
 BuildRequires: zlib-devel
+BuildRequires: libudev-devel
+
+%if_with check
+BuildRequires: ctest
+%endif
 
 Requires: matekbd-keyboard-display
 
@@ -54,12 +61,25 @@ environments.
 It can be used to switch key layouts or languages, and helps the
 user identifying which layouts are currently in use.
 
+%package -n %name-devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %version-%release
+
+%description -n %name-devel
+%{summary}.
+
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
+%if_with check
+  -Denable_tests=On
+%else
   -Denable_tests=Off
+%endif
 %cmake_build
 
 %install
@@ -68,6 +88,9 @@ user identifying which layouts are currently in use.
 # these translations are ignored by %%find_lang
 rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
+
+%check
+%ctest -j1 -VV
 
 %find_lang %name
 
@@ -84,11 +107,10 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %doc COPYING AUTHORS NEWS README.md
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.keyboard.AccountsService.xml
-%_datadir/dbus-1/interfaces/org.ayatana.indicator.keyboard.AccountsService.xml
 %_datadir/polkit-1/actions/org.ayatana.indicator.keyboard.AccountsService.policy
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.keyboard.gschema.xml
-%_libdir/libayatana-keyboard-x11.so*
-%_libdir/libayatana-keyboard-lomiri.so*
+%_libdir/libayatana-keyboard-x11.so.*
+%_libdir/libayatana-keyboard-lomiri.so.*
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
 %_iconsdir/hicolor/scalable/status/*
@@ -97,7 +119,16 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.keyboard.AccountsService.rules
 %_userunitdir/%name.service
 
+%files devel
+%_libdir/libayatana-keyboard-x11.so
+%_libdir/libayatana-keyboard-lomiri.so
+%_datadir/dbus-1/interfaces/org.ayatana.indicator.keyboard.AccountsService.xml
+
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.1-alt1
+- New version 26.6.1.
+- Created -devel package with the corresponding files.
+
 * Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.2-alt2
 - Packaged library for Lomiri.
 
