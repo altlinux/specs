@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qdia
-Version: 0.63
+Version: 0.64
 Release: alt1
 
 Summary: Simple schematic/diagram editor
@@ -44,6 +44,9 @@ sed -i 's|^Categories=.*|Categories=Graphics;Publishing;|' resources/qdia.deskto
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.64-alt1
+- New version 0.64.
+
 * Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.63-alt1
 - New version 0.63.
 
