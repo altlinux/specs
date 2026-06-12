@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: arqiver
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Simple Qt archive manager; front-end for libarchive, gzip and 7z
@@ -51,5 +51,8 @@ qmake-qt6 \
 %_iconsdir/hicolor/scalable/apps/arqiver.svg
 
 %changelog
+* Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Sun Dec 07 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
