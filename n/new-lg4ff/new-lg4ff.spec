@@ -1,5 +1,5 @@
 Name:    new-lg4ff
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 
 Summary: Experimental Logitech force feedback module for Linux
@@ -67,5 +67,8 @@ install -m 644 Kbuild Makefile dkms.conf %buildroot%_usrsrc/%name-%version/
 %_usrsrc/%name-%version/
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+
 * Mon Feb 24 2025 Sergey Palcheh <minergenon@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus
