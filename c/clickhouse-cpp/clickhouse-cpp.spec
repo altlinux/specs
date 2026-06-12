@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define abiversion 2.6.0
 Name: clickhouse-cpp
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 Summary: ClickHouse C++ client library
 Group: System/Libraries
@@ -75,6 +75,9 @@ ln -s clickhouse %buildroot/%_includedir/clickhouse-cpp
 %_libdir/*.so
 
 %changelog
+* Fri Jun 12 2026 Anton Farygin <rider@altlinux.org> 2.6.2-alt1
+- 2.6.1 -> 2.6.2
+
 * Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 2.6.1-alt1
 - 2.6.0 -> 2.6.1
 
