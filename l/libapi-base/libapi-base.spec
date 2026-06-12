@@ -4,8 +4,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 7
+%define minor_version 8
 %define gir_name ApiBase
+
+%define yaml_api_version 0.1
+%define yaml_name yaml
+%define yaml_gir_name Yaml
 
 %define sname libserialize
 %define gir_sname Serialize
@@ -36,6 +40,7 @@ BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: gir(Soup) = 3.0
 BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(yaml-0.1)
 BuildRequires: gobject-introspection-devel
 
 %description
@@ -116,7 +121,7 @@ Requires: %sname%api_version-gir = %EVR
 %autopatch -p1
 
 %build
-%meson -Drun_net_tests=false
+%meson
 %meson_build
 
 %install
@@ -134,6 +139,8 @@ Requires: %sname%api_version-gir = %EVR
 %_pkgconfigdir/%name-%api_version.pc
 %_vapidir/%name-%api_version.vapi
 %_vapidir/%name-%api_version.deps
+%_vapidir/%yaml_name-%yaml_api_version.vapi
+%_vapidir/%yaml_name-%yaml_api_version.deps
 %doc README.md
 
 %files -n %name%api_version-gir
@@ -141,6 +148,7 @@ Requires: %sname%api_version-gir = %EVR
 
 %files gir-devel
 %_girdir/%gir_name-%api_version.gir
+%_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %files -n %sname%api_version
 %_libdir/%sname-%api_version.so.*
@@ -159,6 +167,12 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Sat Jun 13 2026 Vladimir Romanov <rirusha@altlinux.org> 7.8-alt1
+- Added yaml support.
+- Class TypeFamily now JsonTypeFamily for json and YamlTypeFamily for yaml.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.8
+
 * Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 7.7-alt1
 - Added comments to generated vapi file.
 - Full release notes:
