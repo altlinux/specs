@@ -1,5 +1,5 @@
 Name:    qpdftools
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: Qpdf Tools is an easy-to-use Qt interface for Ghostscript and QPDF
@@ -38,6 +38,9 @@ makes it possible for normal users to manage their PDFs.
 %_datadir/metainfo/br.eng.silas.qpdftools.metainfo.xml
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 3.1.3-alt1
+- new version 3.1.3
+
 * Sun Jun 01 2025 Sergey Palcheh <minergenon@altlinux.org> 3.1.2-alt1
 - new version 3.1.2 (with rpmrb script)
 
