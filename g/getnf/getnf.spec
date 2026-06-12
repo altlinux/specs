@@ -1,5 +1,5 @@
 Name: getnf
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Epoch: 1
 Summary: A better way to install NerdFonts
@@ -25,6 +25,9 @@ install -m 0755 %name %buildroot%_bindir
 %doc LICENSE
 
 %changelog
+* Fri Jun 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1:0.3.0-alt1
+- Updated to version 0.3.0.
+
 * Sat Aug 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1:0.2.0-alt1
 - Updated to version 0.2.0.
 
