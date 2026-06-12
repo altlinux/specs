@@ -6,7 +6,7 @@
 
 Name: spirv-tools
 Version: 2026.2
-Release: alt0.1.rc2
+Release: alt0.2.rc2
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -19,6 +19,8 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 Source: https://github.com/KhronosGroup/SPIRV-Tools/archive/v%version/SPIRV-Tools-%version.tar
 Patch0: %name-soname-alt.patch
 Patch1: %name-alt-cmake-path.patch
+# https://github.com/KhronosGroup/SPIRV-Tools/pull/6725
+Patch2: 6725.patch
 
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
@@ -55,6 +57,7 @@ integration into other code bases directly.
 %setup -n SPIRV-Tools-%version
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
 
 # will check protobuf support later
 # for fuzzler
@@ -96,6 +99,9 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Fri Jun 12 2026 L.A. Kostis <lakostis@altlinux.ru> 1:2026.2-alt0.2.rc2
+- Added a fix for upstream issue #6712 ([opt] Fix folding rule).
+
 * Thu May 21 2026 L.A. Kostis <lakostis@altlinux.ru> 1:2026.2-alt0.1.rc2
 - Updated to 2026.2.rc2 (for sdk 1.4.350.0).
 
