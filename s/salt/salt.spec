@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3008.0
+Version: 3008.1
 Release: alt1
 Epoch: 1
 License: Apache-2.0
@@ -85,6 +85,7 @@ Summary: Management component for salt, a parallel remote execution system
 Group: System/Configuration/Other
 Requires: python3-module-salt = %version-%release
 AutoReq: yes, noshell
+%py3_requires xxhash
 
 %description master
 The Salt master is the central server to which all minions connect.
@@ -258,6 +259,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-proxy
 
 %changelog
+* Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.1-alt1
+- New version.
+
 * Fri May 29 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.0-alt1
 - New version.
 
