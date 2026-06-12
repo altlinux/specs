@@ -3,7 +3,7 @@
 
 Name: apt-repo-wks-kernel
 Version: 0.0.1
-Release: alt2
+Release: alt3
 
 Summary: %kflavour kernel migration package
 
@@ -43,6 +43,9 @@ fi
 %_sysconfdir/apt/sources.list.d/kernel-%kflavour.list
 
 %changelog
+* Fri Jun 12 2026 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt3
+- Switched apt url to contabo.
+
 * Sun Oct 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt2
 - Added missing deps to apt-https.
 
