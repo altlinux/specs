@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: dufs
-Version: 0.43.0
+Version: 0.46.0
 Release: alt1
 Summary: A file server that supports static serving, uploading, searching, accessing control, webdav
 License: Apache-2.0 or MIT
@@ -76,5 +76,8 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Jun 13 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.46.0-alt1
+- Update to upstream v0.46.0 (2026-05-07).
+
 * Fri Apr 04 2025 Vitaly Chikunov <vt@altlinux.org> 0.43.0-alt1
 - First import v0.43.0-13-g4fbdec2 (2025-03-20).

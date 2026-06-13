@@ -2,8 +2,10 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define commit_num .1
+%define commit_id .g5689a8e9
 Name: lkrg
-Version: 1.0.0
+Version: 1.0.1.0%commit_num%commit_id
 Release: alt1
 
 Summary: Linux Kernel Runtime Guard module
@@ -153,6 +155,9 @@ test $1 -eq 1 && ! test -s %_sysconfdir/lkrg-logger.conf && lkrg-keygen > %_sysc
 %_unitdir/lkrg-logger.service
 
 %changelog
+* Sat Jun 13 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.1.0.1.g5689a8e9-alt1
+- Update to upstream 1.0.1-1-g5689a8e9 (2026-06-13).
+
 * Sat Sep 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt1
 - Update to v1.0.0 (2025-09-02).
 

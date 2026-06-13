@@ -5,7 +5,7 @@
 
 Name: libdeflate
 Version: 1.25
-Release: alt1
+Release: alt2
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
 Group: System/Libraries
@@ -117,6 +117,9 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Fri Jun 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.25-alt2
+- Fix FTBFS with glibc 2.43
+
 * Sat Nov 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.25-alt1
 - Update to v1.25 (2025-10-31): no fixes or improvements, only the build
   harness maintenance.

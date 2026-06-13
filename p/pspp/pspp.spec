@@ -2,7 +2,7 @@
 
 Name: pspp
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: A program for statistical analysis of sampled data.
 License: GPLv3+
@@ -11,6 +11,7 @@ Group: Sciences/Mathematics
 Url: http://www.gnu.org/software/pspp/
 
 Source: %name-%version.tar.zst
+Patch0: bsearch_conflict.patch
 
 BuildRequires: libgsl-devel
 BuildRequires: perl-devel perl-Text-Diff
@@ -37,6 +38,7 @@ similar to it with a few exceptions.
 
 %prep
 %setup 
+%patch0 -p2
 
 %build
 %ifarch i586 armh
@@ -78,6 +80,9 @@ rm -rf %buildroot%_infodir/pspp-figures
 %_datadir/%name/
 
 %changelog
+* Fri Jun 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.1-alt2
+- Fix FTBFS with glibc 2.43
+
 * Fri May 15 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt1
 - NMU: Updated to 2.1.1.
 

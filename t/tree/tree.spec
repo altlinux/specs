@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: tree
-Version: 2.1.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Epoch: 1
 
 Summary: List contents of directories in a tree-like format
@@ -46,6 +46,9 @@ cd %buildroot
 %_man1dir/tree.1*
 
 %changelog
+* Sat Jun 13 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1:2.3.2-alt1
+- Update to upstream 2.3.2 (2026-03-16).
+
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 1:2.1.1-alt2
 - E2K: avoid lcc-unsupported option
 
