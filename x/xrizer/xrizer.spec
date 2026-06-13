@@ -1,5 +1,5 @@
 Name:    xrizer
-Version: 0.2
+Version: 0.5
 Release: alt1
 
 Summary: XR-ize your favorite OpenVR games
@@ -8,10 +8,9 @@ Group:   Other
 Url:     https://github.com/Supreeeme/xrizer
 
 Source: %name-%version.tar
-Source1: %name-%version-vendor.tar
+Source1: %name-development-%version.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires: rpm-build-rust
 BuildRequires: cmake gcc-c++
 BuildRequires: libGLEW-devel libvulkan-devel jsoncpp-devel libX11-devel
 BuildRequires: clang-devel glslc
@@ -25,7 +24,7 @@ to run OpenVR games through any OpenXR runtime without running SteamVR.
 %prep
 %setup -a1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat > .cargo/config.toml << EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -36,36 +35,35 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
+[profile.release]
+strip = false
 EOF
 
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/bytemuck/.cargo-checksum.json
-
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/bytemuck_derive/.cargo-checksum.json
-
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/epaint/.cargo-checksum.json
-
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/env_logger/.cargo-checksum.json
-
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/clang-sys/.cargo-checksum.json
-
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/slotmap/.cargo-checksum.json
+    ./vendor/*/.cargo-checksum.json
 
 %build
 %rust_build
 
 %install
-install -Dm644 target/release/libxrizer.so -t %buildroot%_libdir/xrizer
+install -Dm755 target/release/libxrizer.so %buildroot%_libdir/%name/libxrizer.so
 
 %files
 %doc LICENSE README.md
-%_libdir/xrizer/libxrizer.so
+%dir %_libdir/%name/
+%_libdir/%name/libxrizer.so
 
 %changelog
+* Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 0.5-alt1
+- new version 0.5
+
 * Sun Feb 16 2025 Sergey Palcheh <minergenon@altlinux.org> 0.2-alt1
 - Initial build for Sisyphus
