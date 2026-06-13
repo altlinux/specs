@@ -3,12 +3,13 @@
 Summary: A simple program that emulates the detach feature of screen
 Name: dtach
 Version: 0.9
-Release: alt1_4
+Release: alt2
 License: GPLv2+
 URL: http://dtach.sourceforge.net
 Group: System/Base
 Source: http://prdownloads.sourceforge.net/dtach/dtach-%{version}.tar.gz
 Source44: import.info
+Patch0: dtach-0.9-fix-ftbs-gcc-15.patch
 
 %description
 
@@ -20,6 +21,7 @@ full-screen applications such as emacs.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 %configure
@@ -38,6 +40,9 @@ install -m 644 dtach.1 $RPM_BUILD_ROOT/%{_mandir}/man1/dtach.1
 %{_mandir}/*/*
 
 %changelog
+* Sat Jun 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.9-alt2
+- NMU: fix FTBFS with gcc 15
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_4
 - update to new version by fcimport
 
@@ -103,7 +108,7 @@ install -m 644 dtach.1 $RPM_BUILD_ROOT/%{_mandir}/man1/dtach.1
 - Modified spec file to correct detach binary permissions
 - Modified spec file to correct detach documentation path
 - Modified spec file URL: to point to http://people.redhat.com/iweiner/detach
-- Modified spec file %clean to remove buildroot and builddir.
+- Modified spec file %%clean to remove buildroot and builddir.
 
 * Mon Sep 17 2001 Ned T. Crigler <crigler@hell-city.org> 0.1
 - Initial rpm release.
