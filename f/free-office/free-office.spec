@@ -1,6 +1,20 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+%if "%altbranch" == "sisyphus"
+%define lo_name libreoffice
+%else
+%define lo_name LibreOffice-still
+%endif
+
 Name:    free-office
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Free Office Application Suite
 License: Proprietary
@@ -11,15 +25,15 @@ Source:  %name-%version.tar
 
 ExcludeArch: %ix86 armh ppc64le
 
-Requires: libreoffice
-Requires: libreoffice-gtk3
-Requires: libreoffice-kde6
-Requires: libreoffice-langpack-be
-Requires: libreoffice-langpack-kk
-Requires: libreoffice-langpack-ky
-Requires: libreoffice-langpack-ru
-Requires: libreoffice-langpack-uk
-Requires: libreoffice-langpack-uz
+Requires: %lo_name
+Requires: %lo_name-gtk3
+Requires: %lo_name-kde6
+Requires: %lo_name-langpack-be
+Requires: %lo_name-langpack-kk
+Requires: %lo_name-langpack-ky
+Requires: %lo_name-langpack-ru
+Requires: %lo_name-langpack-uk
+Requires: %lo_name-langpack-uz
 Requires: thunderbird
 Requires: davmail
 Requires: surguch
@@ -98,6 +112,9 @@ install -Dpm0644 %name.menu %buildroot%_sysconfdir/xdg/menus/applications-merged
 %_sysconfdir/xdg/menus/applications-merged/free-office.menu
 
 %changelog
+* Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2
+- Universal package for Sisyphus and p11.
+
 * Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - Bringing the license into compliance with the amendments to Article 1286.1
   of the Russian Federation.
