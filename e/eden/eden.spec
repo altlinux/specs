@@ -1,6 +1,6 @@
 Name: eden
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Nintendo Switch Emulator
 License: GPLv3+
@@ -120,6 +120,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Sat Jun 13 2026 Nazarov Denis <nenderus@altlinux.org> 0.2.1-alt2
+- Build with system cpp-httplib
+
 * Fri Jun 12 2026 Nazarov Denis <nenderus@altlinux.org> 0.2.1-alt1
 - New version 0.2.1.
 
