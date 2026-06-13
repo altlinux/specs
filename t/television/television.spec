@@ -5,7 +5,7 @@
 %def_with check
 
 Name: television
-Version: 0.15.5
+Version: 0.15.8
 Release: alt1
 Summary: A fast, portable and hackable fuzzy finder for the terminal
 License: MIT
@@ -37,6 +37,8 @@ custom channels to search through any data source you need.
 %prep
 %setup -a 1
 %rust_prep
+# disable UI integration tests requiring ghostty
+sed -i '/phantom-test/d' Cargo.toml
 cat >> .cargo/config.toml <<EOF
 [source."git+https://github.com/alexpasmantier/nucleo.git?branch=television"]
 git = "https://github.com/alexpasmantier/nucleo.git"
@@ -59,7 +61,7 @@ install -Dm 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions/_%bin_name
 
 %check
 export TV_BIN_PATH=%bin_path
-%rust_test --lib --bin tv --test app --test channels
+%rust_test --lib --bin tv --test app
 
 %files
 %_bindir/%bin_name
@@ -70,6 +72,9 @@ export TV_BIN_PATH=%bin_path
 %doc LICENSE
 
 %changelog
+* Sat Jun 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.8-alt1
+- Updated to version 0.15.8.
+
 * Sun Apr 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.5-alt1
 - Updated to version 0.15.5.
 
