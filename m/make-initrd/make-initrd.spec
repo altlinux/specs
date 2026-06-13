@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.58.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -269,7 +269,7 @@ Requires: %name = %version-%release
 Requires: file mount rsync
 Requires: fdisk sfdisk gdisk parted zerofree
 Requires: binutils gzip-utils nfs-utils mdadm-tool
-Requires: e2fsprogs guestfsd xfsprogs reiserfsprogs
+Requires: e2fsprogs guestfsd xfsprogs
 Requires: btrfs-progs dosfstools jfsutils fuse ntfs-3g
 AutoReq: noshell, noshebang
 
@@ -421,6 +421,9 @@ fi
 %endif
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 2.58.0-alt2
+- guestfs: remove dependencies on reiserfsprogs.
+
 * Mon Apr 27 2026 Anton Midyukov <antohami@altlinux.org> 2.58.0-alt1
 - Feature nvmf:
   + Added initial NVMe over Fabrics root support.
