@@ -2,7 +2,7 @@
 %define beta %nil
 Name: testdisk
 Version: 7.2
-Release: alt1
+Release: alt2
 
 Summary: Tool to check and undelete partition
 
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # manually removed: python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Apr 02 2017
 # optimized out: gcc-c++ glibc-devel-static gnu-config libcom_err-devel libncurses-devel libntfs-3g libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel libtinfo-devel pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: libe2fs-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libprogsreiserfs-devel libuuid-devel
+BuildRequires: libe2fs-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libossp-uuid-devel libuuid-devel
 %if_with ewf
 BuildRequires: libewf-devel
 %endif
@@ -40,7 +40,6 @@ partitions:
  - LVM and LVM2, Linux Logical Volume Manager
  - Netware NSS
  - NTFS ( Windows NT/2K/XP/2003 )
- - ReiserFS 3.5 and 3.6
  - UFS (Sun/BSD/...)
  - XFS, SGI's Journaled File System
 
@@ -107,6 +106,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 7.2-alt2
+- NMU: rebuild withot progsreiserfs.
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
 - new version 7.2 (with rpmrb script)
 
