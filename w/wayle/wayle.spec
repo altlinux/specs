@@ -3,7 +3,7 @@
 %def_with check
 
 Name: wayle
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: A compositor agnostic shell with extensive customization
 License: MIT
@@ -79,5 +79,8 @@ desktop-file-validate %buildroot%_desktopdir/%desktop_file
 %_datadir/fish/vendor_completions.d/wayle.fish
 
 %changelog
+* Sat Jun 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.0-alt1
+- Updated to version 0.6.0.
+
 * Sat May 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.0-alt1
 - Initial build for ALT.
