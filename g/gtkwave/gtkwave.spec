@@ -1,38 +1,84 @@
 Name: gtkwave
-Version: 3.3.117
+Version: 3.3.127
 Release: alt1
-Summary: %name
-License: GPL
+Summary: GTKWave is a fully featured GTK+ based wave viewer
+License: GPL-2.0
 Group: Development/Other
 
-Packager: Denis Smirnov <mithraen@altlinux.ru>
+URL: http://gtkwave.sourceforge.net/
+VCS: https://github.com/gtkwave/gtkwave
 
-Url: http://gtkwave.sourceforge.net/
-
+# Source-url: https://gtkwave.sourceforge.net/gtkwave-gtk3-%version.tar.gz
 Source: %name-%version.tar
-Source100: %name.watch
 
-# Automatically added by buildreq on Thu Aug 08 2013 (-bb)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base rpm-build-tcl shared-mime-info tcl tcl-devel xorg-xproto-devel zlib-devel
-BuildRequires: bzlib-devel desktop-file-utils flex gcc-c++ gperf libgtk+2-devel liblzma-devel tk-devel
+BuildRequires: bzlib-devel
+BuildRequires: zlib-devel
+BuildRequires: desktop-file-utils
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: gperf
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.0.0
+BuildRequires: pkgconfig(gtk+-unix-print-3.0)
+BuildRequires: pkgconfig(libtirpc)
+BuildRequires: liblzma-devel
+BuildRequires: tk-devel
+BuildRequires: libjudy-devel
+BuildRequires: libappstream-glib
+BuildRequires: hardlink
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
-%configure --disable-mime-update
+#autoreconf
+%configure \
+	--disable-dependency-tracking \
+	--disable-mime-update \
+	--enable-gtk3 \
+	--enable-judy \
+	--with-gsettings \
+	--with-tirpc
+
 %make_build
+
 %install
-%makeinstall_std
+%makeinstall_std pkgdatadir=%_pkgdocdir
+
+# Icons and desktop entry
+desktop-file-install --vendor "" --dir %buildroot%_desktopdir \
+	share/applications/gtkwave.desktop
+install -D -m 644 -p share/icons/gnome/16x16/mimetypes/gtkwave.png \
+	%buildroot%_iconsdir/hicolor/16x16/apps/gtkwave.png
+install -D -m 644 -p share/icons/gnome/32x32/mimetypes/gtkwave.png \
+	%buildroot%_iconsdir/hicolor/32x32/apps/gtkwave.png
+install -D -m 644 -p share/icons/gnome/48x48/mimetypes/gtkwave.png \
+	%buildroot%_iconsdir/hicolor/48x48/apps/gtkwave.png
+install -D -m 644 -p share/icons/gtkwave_256x256x32.png \
+	%buildroot%_iconsdir/hicolor/256x256/apps/gtkwave.png
+
+# Appdata
+install -D -m 644 -p share/appdata/io.github.gtkwave.GTKWave.metainfo.xml \
+	%buildroot%_datadir/metainfo/io.github.gtkwave.GTKWave.metainfo.xml
+
+# Include extra docs
+install -p -m 644 AUTHORS %buildroot%_pkgdocdir/
+install -p -m 644 ChangeLog %buildroot%_pkgdocdir/
+
+# hardlink identical icons together
+hardlink -cv %buildroot%_iconsdir}/
 
 %files
 %_bindir/*
-%_man5dir/*
-%_man1dir/*
-%_datadir/%name
+%_man5dir/*.5.*
+%_man1dir/*.1.*
+#_datadir/%name
+%_datadir/metainfo/io.github.gtkwave.GTKWave.metainfo.xml
+%_datadir/mime/packages/x-gtkwave-extension-*.xml
+%_datadir/glib-2.0/schemas/com.geda.gtkwave.gschema.xml
 %_desktopdir/%name.desktop
 %_iconsdir/gnome/16x16/mimetypes/*.png
 %_iconsdir/gnome/32x32/mimetypes/*.png
@@ -40,9 +86,13 @@ BuildRequires: bzlib-devel desktop-file-utils flex gcc-c++ gperf libgtk+2-devel 
 %_iconsdir/gtkwave_256x256x32.png
 %_iconsdir/gtkwave_files_256x256x32.png
 %_iconsdir/gtkwave_savefiles_256x256x32.png
-%_datadir/mime/packages/*.xml
+%_iconsdir/hicolor/*/apps/gtkwave.png
+%_iconsdir/hicolor/scalable/apps/gtkwave.svg
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 3.3.127-alt1
+- New version 3.3.127.
+
 * Wed Aug 16 2023 Cronbuild Service <cronbuild@altlinux.org> 3.3.117-alt1
 - New version 3.3.117.
 
