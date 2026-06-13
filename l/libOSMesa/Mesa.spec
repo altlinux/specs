@@ -2,7 +2,7 @@
 
 Name: libOSMesa
 Version: 25.0.7
-Release: alt3
+Release: alt4
 Epoch: 4
 License: MIT
 Summary: Mesa offscreen rendering libraries
@@ -102,6 +102,9 @@ rm -rf %buildroot%_includedir/KHR
 %_pkgconfigdir/osmesa.pc
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 4:25.0.7-alt4
+- Apply 0001-c11-threads-fix-build-on-fedora-44.patch.
+
 * Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 4:25.0.7-alt3
 - Add BR on python3(packaging) (fix FTBFS).
 
