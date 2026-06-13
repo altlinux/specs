@@ -6,6 +6,8 @@
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
 
+%def_enable cdparanoia
+
 %ifarch %e2k
 # https://gitlab.gnome.org/GNOME/gnome-build-meta/issues/38
 # https://gitlab.freedesktop.org/gstreamer/gst-plugins-base/issues/564
@@ -20,7 +22,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -52,7 +54,8 @@ BuildRequires: libgudev-devel libglvnd-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXi-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
-BuildRequires: libcdparanoia-devel libtheora-devel
+%{?_enable_cdparanoia:BuildRequires: libcdparanoia-devel}
+BuildRequires: libtheora-devel
 BuildRequires: pkgconfig(vorbis)
 #BuildRequires: pkgconfig(vorbisidec)
 BuildRequires: libopus-devel >= %opus_ver
@@ -135,11 +138,12 @@ GObject introspection devel data for the GStreamer library
 
 %build
 %meson \
-	-Dexamples=disabled \
-	-Dgio=enabled \
-	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_doc:-Ddoc=disabled} \
-	%{?_enable_debug:-Dgst_debug=true}
+    -Dexamples=disabled \
+    -Dgio=enabled \
+    %{subst_enable_meson_feature cdparanoia cdparanoia} \
+    %{?_enable_check:-Dtests=enabled} \
+    %{?_disable_doc:-Ddoc=disabled} \
+    %{?_enable_debug:-Dgst_debug=true}
 %nil
 %meson_build
 
@@ -206,6 +210,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Fri Jun 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.4-alt1
+- 1.28.4
+
 * Tue May 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.3-alt1
 - 1.28.3
 

@@ -9,7 +9,7 @@
 %{?_with_test_package:%def_enable examples}
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.4-alt1
+- 1.28.4
+
 * Tue May 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.3-alt1
 - 1.28.3
 
