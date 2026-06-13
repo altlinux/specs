@@ -1,20 +1,27 @@
+%define sover 1
+
 Name: gerbv
-Version: 2.10.0
-Release: alt2
+Version: 2.13.0
+Release: alt1
 
 Summary: Gerber file viewer
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Url: https://github.com/gerbv/gerbv
-License: GPLv2
+URL: https://github.com/gerbv/gerbv
+VCS: https://github.com/gerbv/gerbv
+License: GPL-2.0
 Group: Graphics
 
 # Source-url: https://github.com/gerbv/gerbv/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch: gerbv-2.13.0-Fix-Fails-GCC15.patch
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: ImageMagick-tools
-BuildRequires: gcc-c++ libgtk+2-devel libdxflib-devel
+BuildRequires: gcc-c++ 
+BuildRequires: libdxflib-devel
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: libpng-devel
+
 # needed for p10/c10/c9
 BuildRequires: desktop-file-utils
 
@@ -37,7 +44,6 @@ BuildArch: noarch
 %description examples
 Example files for gerbv.
 
-
 %package -n lib%name
 Summary: %name library files
 Group: Development/Other
@@ -45,32 +51,33 @@ Group: Development/Other
 %description -n lib%name
 lib%name library.
 
-
 %package -n lib%name-devel
 Summary: Header files for lib%name
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Header files for lib%name library.
 
 %prep
 %setup
+%autopatch -p1
 subst 's|set -e||' utils/git-version-gen.sh
 
 %build
-%autoreconf
-%configure --enable-dxf --disable-static
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
+
+#rm %buildroot%_libdir/libgerbv.la
+rm %buildroot%_libdir/libgerbv.a
+rm -r %buildroot%_docdir/%name
+
 mkdir -p %buildroot%_datadir/gerbv
 cp -r example %buildroot%_datadir/gerbv
 cp -r doc %buildroot%_datadir/gerbv
-
-rm -f %buildroot%_desktopdir/*.cache
 
 %find_lang %name
 
@@ -78,7 +85,7 @@ rm -f %buildroot%_desktopdir/*.cache
 %dir %_datadir/gerbv
 %dir %_datadir/gerbv/doc
 %dir %_datadir/gerbv/scheme
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS COPYING README.md
 %_bindir/gerbv
 %_man1dir/gerbv.*
 %_datadir/gerbv/doc/*
@@ -89,18 +96,23 @@ rm -f %buildroot%_desktopdir/*.cache
 %_iconsdir/*/*/*/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libgerbv.so.%sover
+%_libdir/libgerbv.so.%sover.*
 
 %files -n lib%name-devel
 %_pkgconfigdir/*.pc
-%_includedir/%name-*/
-%_libdir/*.so
+%_includedir/%name/
+%_libdir/libgerbv.so
 
 %files examples
 %dir %_datadir/gerbv/example
 %_datadir/gerbv/example/*
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 2.13.0-alt1
+- New version 2.13.0.
+- switch to build with cmake.
+
 * Tue Dec 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt2
 - restored missed BR: desktop-file-utils
 
