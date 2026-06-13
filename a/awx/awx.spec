@@ -2,7 +2,7 @@
 
 Name: awx
 Version: 24.6.1
-Release: alt5
+Release: alt6
 
 Summary: The official command line interface for Ansible AWX
 License: Apache-2.0
@@ -18,6 +18,8 @@ Source2: awx.conf
 Source3: 0196_oauth2_toolkit_v3_fields.py
 Source4: supervisord.conf
 Source5: receptor.conf
+Source6: awx.service
+Source7: redis_settings.py
 Patch0: reimplementation_of_strtobool_function.patch
 Patch1: replace_distutils_version.patch
 Patch2: awx-disable-aioredis.patch
@@ -29,6 +31,8 @@ Patch7: remove-old-django-attribute.patch
 Patch8: fix-migrations-for-sqlite.patch
 Patch9: new-attribute-for-psycopg.patch
 Patch10: replace-old-python-attribute.patch
+Patch11: redis-py-with-unix-socket.patch
+
 
 BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires(pre): rpm-build-python3
@@ -47,6 +51,11 @@ Requires: python3-module-django-dbbackend-postgresql
 Requires: python3-module-python-tss-sdk
 Requires: redis
 Requires: python3-module-channels_redis
+Requires: supervisor
+Requires: receptor
+Requires: python3-module-receptorctl
+Requires: uwsgi
+Requires: apache2-mod_wsgi-py3
 
 %add_python3_req_skip defaults development
 
@@ -112,34 +121,67 @@ install -Dm0644 -p %SOURCE3 %buildroot%python3_sitelibdir/%name/main/migrations/
 install -Dm0644 -p %SOURCE4 %buildroot%_sysconfdir/supervisord.d/awx.ini
 
 # receptor.conf
-install -Dm0644 -p %SOURCE5 %buildroot%_sysconfdir/receptor/receptor.conf
+install -Dm0644 -p %SOURCE5 %buildroot%_sysconfdir/receptor/awx.conf
+
+mkdir -p %buildroot%_sysconfdir/tower/conf.d/
+touch %buildroot%_sysconfdir/tower/conf.d/database.py
+touch %buildroot%_sysconfdir/tower/conf.d/local_settings.py
+
+mkdir -p %buildroot%_sharedstatedir/awx/rsyslog
+
+install -Dm0644 -p %SOURCE6 %buildroot%_unitdir/awx.service
+
+install -Dm0644 -p %SOURCE7 %buildroot%_sysconfdir/tower/conf.d/redis_settings.py
 
 %check
 %pyproject_run_pytest
 
+%pre
+# Add the "awx" user and group
+getent group awx >/dev/null || %_sbindir/groupadd -r awx
+getent passwd awx >/dev/null || \
+    %_sbindir/useradd -r -g awx -G awx -M -d %_sharedstatedir/awx -s /sbin/nologin -c "AWX" awx
+# Add apache into awx group for static files access
+getent passwd %apache2_user >/dev/null && \
+    %_sbindir/usermod -a -G awx %apache2_user
+exit 0
+
+%preun
+%preun_service supervisord
+
 %files
 %doc README.*
 %_bindir/awx-manage
-%config(noreplace) %_sysconfdir/tower/settings.py
-%config(noreplace) %_sysconfdir/tower/uwsgi.ini
-%config(noreplace) %_sysconfdir/tower/SECRET_KEY
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/settings.py
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/uwsgi.ini
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/conf.d/database.py
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/conf.d/local_settings.py
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/conf.d/redis_settings.py
+%attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/SECRET_KEY
 %config(noreplace) %_sysconfdir/supervisord.d/awx.ini
-%config(noreplace) %_sysconfdir/receptor/receptor.conf
+%config(noreplace) %_sysconfdir/receptor/awx.conf
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
-%_sharedstatedir/awx
 %dir %_sysconfdir/tower
-%dir %_sharedstatedir/awx/public/static
-%dir %_sharedstatedir/awx/projects
-%dir %_sharedstatedir/awx/job_status
-%dir %_sharedstatedir/awx/venv
-%attr(770,root,%webserver_group) %dir %_logdir/tower
+%dir %_sysconfdir/tower/conf.d
+%dir %attr(770,awx,awx) %_sharedstatedir/awx
+%dir %_sharedstatedir/awx/public
+%dir %attr(755,root,root) %_sharedstatedir/awx/public/static
+%dir %attr(770,awx,awx) %_sharedstatedir/awx/projects
+%dir %attr(770,awx,awx) %_sharedstatedir/awx/job_status
+%dir %attr(770,awx,awx) %_logdir/tower   
+%dir %attr(755,root,root) %_sharedstatedir/awx/venv
+%dir %attr(755,root,root) %_sharedstatedir/awx/rsyslog
+%_unitdir/awx.service
 
 %files apache2
 %config(noreplace) %apache2_sites_available/*.conf
 %ghost %apache2_sites_enabled/*.conf
 
 %changelog
+* Tue Jun 09 2026 Nikita Panov <nexxy@altlinux.org> 24.6.1-alt6
+- Automation of deployment and fixes.
+
 * Tue May 19 2026 Nikita Panov <nexxy@altlinux.org> 24.6.1-alt5
 - Readme and minor fixes.
 

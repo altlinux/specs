@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.5
+Version: 0.4.7
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -33,6 +33,12 @@ echo "pg_ver: %pg_ver" > modules/vars/postgresql
 %_datadir/%name
 
 %changelog
+* Tue Jun 09 2026 Nikita Panov <nexxy@altlinux.org> 0.4.7-alt1
+- Additional deployment commands for awx.
+
+* Tue Jun 02 2026 Nikita Panov <nexxy@altlinux.org> 0.4.6-alt1
+- Improved awx role.
+
 * Tue May 12 2026 Nikita Panov <nexxy@altlinux.org> 0.4.5-alt1
 - Added awx and redis roles.
 
