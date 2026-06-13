@@ -20,7 +20,7 @@
 
 Name: partclone
 Version: 0.3.47
-Release: alt2
+Release: alt3
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -73,7 +73,6 @@ BuildRequires: e2fsprogs
 BuildRequires: btrfs-progs
 BuildRequires: dosfstools
 BuildRequires: f2fs-tools
-BuildRequires: reiserfsprogs
 BuildRequires: hfsprogs
 BuildRequires: ntfs-3g
 
@@ -150,6 +149,9 @@ cd tests && make check
 %doc AUTHORS CONTRIBUTORS ChangeLog README.md IMAGE_FORMATS.md SECURITY_TESTING.md
 
 %changelog
+* Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 0.3.47-alt3
+- NMU: fix build requirements to fix FTBFS.
+
 * Sun Apr 26 2026 Leonid Krivoshein <klark@altlinux.org> 0.3.47-alt2
 - switch to upstream git sources
 - packaging documentation
