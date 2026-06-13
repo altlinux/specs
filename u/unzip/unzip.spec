@@ -4,7 +4,7 @@
 
 Name: unzip
 Version: 6.0
-Release: alt7
+Release: alt8
 
 Summary: An utility for unpacking zip archives
 License: Info-ZIP
@@ -85,6 +85,7 @@ Patch35: unzip-6.0-CVE-2019-13232-fix-bug-in-uzbunzip2.patch
 Patch36: unzip-6.0-CVE-2019-13232-fix-bug-in-uzinflate.patch
 Patch37: unzip-6.0-CVE-2022-0529.patch
 Patch38: unzip-6.0-CVE-2022-0530.patch
+Patch39: unzip-drop-conflicting-declarations.patch
 
 # Automatically added by buildreq on Mon Aug 10 2009
 BuildRequires: libnatspec-devel
@@ -139,6 +140,7 @@ default behaviors do differ in some respects.
 
 %patch30 -p1
 %patch31 -p1
+%patch39 -p1
 
 ln -s unix/Makefile .
 
@@ -151,6 +153,7 @@ ln -s unix/Makefile .
 # NOMEMCPY solve problem with memory overlapping - decomression is slowly,
 # but successfull.
 %define _optlevel 3
+%add_optflags "-std=gnu89"
 %__subst 's/CFLAGS_OPT=.-O3./CFLAGS_OPT="%optflags -DUNIX -DNO_WORKING_ISPRINT -DNOMEMCPY -DIZ_HAVE_UXUIDGID -DDATE_FORMAT=DF_YMD"/g' unix/configure
 # -DNO_WORKING_ISPRINT fixes ALT bug #21137.
 
@@ -174,6 +177,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Sat Jun 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.0-alt8
+- NMU: fix FTBFS with gcc 15
+
 * Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 6.0-alt7
 - NMU: Fix gcc14-related FTBFS due to configure false negatives.
 
