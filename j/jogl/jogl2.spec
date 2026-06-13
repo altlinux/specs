@@ -1,35 +1,22 @@
-Name:    jogl2
-Version: 2.5.0
-Release: alt2
+Name:    jogl
+Version: 2.6.0
+Release: alt1
+Epoch: 1
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
-# For a breakdown of the licensing, see LICENSE.txt 
-License: BSD and MIT and Apache-2.0 and Apache-1.1 
+# For a breakdown of the licensing, see LICENSE.txt
+License: BSD and MIT and Apache-2.0 and Apache-1.1
 Group: Development/Java
 URL: http://jogamp.org/
-Source0: http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
+VCS: https://github.com/sgothel/jogl
+Source0: %name-%version.tar
 
-Patch03: arm-build.diff
-Patch04: cc_attributes_in_build.patch
-Patch06: disable_android_2.diff
-#Patch08: disable_android.diff
-Patch09: disable-applet.diff
-Patch10: disable_git_call.diff
-Patch11: disableOneDir.diff
-Patch12: disable-test-compilation.patch
-Patch15: jar_paths.patch
-Patch16: java11.patch
-#Patch17: jni_include_files.patch
-Patch19: manifest.diff
-Patch21: openjfx_jars.patch
-Patch26: skip_parts_of_build.patch
-Patch27: skip_Win_and_Mac.patch
-Patch28: spelling.patch
-Patch29: swt.diff
-Patch30: build-only-for-x11.patch
-Patch31: remove-unprintable-characters.patch
-Patch32: disable-setup.addNativeBroadcom.patch
+Patch0: cc-attributes-in-build.patch
+Patch1: build-only-for-x11.patch
+Patch2: skip-Win-and-Mac.patch
+Patch3: jogl2-disable-build-native-broadcom.patch
+Patch4: aarch64-build.patch
 
 ExcludeArch: armh %ix86
 
@@ -37,7 +24,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-utils
-BuildRequires: gluegen2-devel = %{version}
+BuildRequires: gluegen-devel = %{version}
 BuildRequires: eclipse-swt
 BuildRequires: libXt-devel
 BuildRequires: libXrender-devel
@@ -48,9 +35,12 @@ BuildRequires: libXi-devel
 BuildRequires: maven-local
 
 Requires: jpackage-utils
-Requires: gluegen2 = %{version}
+Requires: gluegen = %{version}
 
-%add_findreq_skiplist %_libdir/jogl2/libnativewindow_awt.so
+Provides: jogl2 = %EVR
+Obsoletes: jogl2 < %EVR
+
+%add_findreq_skiplist %_libdir/jogl/libnativewindow_awt.so
 
 %description
 The JOGL project hosts the development version of the Java Binding for
@@ -63,13 +53,15 @@ Sun Microsystems.
 
 %package doc
 Group: Development/Java
-Summary: User manual for jogl2
+Summary: User manual for jogl
+Provides: jogl2-doc = %EVR
+Obsoletes: jogl2-doc < %EVR
 
 %description doc
-User manual for jogl2.
+User manual for jogl.
 
 %prep
-%setup -n %{src_name}
+%setup
 %autopatch -p1
 
 rm -rf src/nativewindow/classes/jogamp/nativewindow/jawt/{drm,ios,macosx,windows}
@@ -85,9 +77,9 @@ find -name "*.jar" -type f -exec rm {} \;
 find -name "*.apk" -type f -exec rm {} \;
 rm -fr make/lib
 
-# Restore the gluegen2 source code from gluegen2-devel
+# Restore the gluegen source code from gluegen-devel
 rm -fr ../gluegen
-cp -rdf %{_datadir}/gluegen2 ../gluegen
+cp -rdf %{_datadir}/gluegen ../gluegen
 
 # Fix file-not-utf8
 for file in README.txt; do
@@ -119,20 +111,20 @@ xargs -t ant <<EOF
  -Djavacdebug=true
  -Djavac.memorymax=512m
  -Dcommon.gluegen.build.done=true
- -Dtarget.sourcelevel=1.8                                                                                          
+ -Dtarget.sourcelevel=1.8
  -Dtarget.targetlevel=1.8
- -Dantlr.jar=%{_javadir}/antlr.jar 
- -Djunit.jar=%{_javadir}/junit.jar 
- -Dant.jar=%{_javadir}/ant.jar 
- -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar 
- -Dgluegen.jar=%{_javadir}/gluegen2.jar 
- -Dgluegen-rt.jar=%{_jnidir}/gluegen2-rt.jar 
- -Dswt.jar=%{_jnidir}/swt.jar 
+ -Dantlr.jar=%{_javadir}/antlr.jar
+ -Djunit.jar=%{_javadir}/junit.jar
+ -Dant.jar=%{_javadir}/ant.jar
+ -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
+ -Dgluegen.jar=%{_javadir}/gluegen.jar
+ -Dgluegen-rt.jar=%{_jnidir}/gluegen-rt.jar
+ -Dswt.jar=%{_javadir}/swt.jar
 
  -Djava.excludes.all='com/jogamp/newt/util/applet*/**/*.java com/jogamp/audio/**/*.java jogamp/opengl/gl2/fixme/**/*.java com/jogamp/opengl/test/**/*.java'
 
- -Djavadoc.link=%{_javadocdir}/java 
- -Dgluegen.link=%{_javadocdir}/gluegen2 
+ -Djavadoc.link=%{_javadocdir}/java
+ -Dgluegen.link=%{_javadocdir}/gluegen
 
  build.nativewindow build.jogl build.newt build.graphui build.oculusvr one.dir javadoc.public
 EOF
@@ -141,7 +133,7 @@ cd ..
 export JAVA_HOME=/usr/lib/jvm/java
 
 %install
-%mvn_install 
+%mvn_install
 mkdir -p %{buildroot}%{_javadir}/%{name} \
     %{buildroot}%{_libdir}/%{name} \
     %{buildroot}%{_javadir}
@@ -163,6 +155,10 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.md LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Fri Jun 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.6.0-alt1
+- New version.
+- Renamed to jogl.
+
 * Mon Jan 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt2
 - FTBFS: remove strictly build with Java 11.x.
 
