@@ -1,5 +1,5 @@
 Name:    free-office
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Free Office Application Suite
@@ -98,6 +98,10 @@ install -Dpm0644 %name.menu %buildroot%_sysconfdir/xdg/menus/applications-merged
 %_sysconfdir/xdg/menus/applications-merged/free-office.menu
 
 %changelog
+* Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- Bringing the license into compliance with the amendments to Article 1286.1
+  of the Russian Federation.
+
 * Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Renamed to free-office.
 - Added "Free Office" top-level menu with applications.
