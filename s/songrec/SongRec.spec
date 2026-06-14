@@ -1,7 +1,7 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: An open-source Shazam client for Linux.
@@ -13,8 +13,8 @@ VCS: https://github.com/marin-m/SongRec
 Source0: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: libalsa-devel libssl-devel pkgconfig(dbus-1)
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) libcairo-devel
 BuildRequires: pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
@@ -39,22 +39,7 @@ your input device.
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/RustAudio/cpal.git?rev=1c40a85"]
-git = "https://github.com/RustAudio/cpal.git"
-rev = "1c40a85"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
-
-subst 's|%nameB|%{nameB}-rainbow|' packaging/rootfs/usr/share/applications/%nameB.desktop
+%rust_prep
 
 %build
 %rust_build 
@@ -67,12 +52,13 @@ install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.s
 install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
 install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
-for locale in fr_FR nl it pl es ja ca cs_CZ de_DE ko_KR sk_SK pt_BR ru ar tr oc; do
- install -Dm 0644 translations/locale/${locale}/LC_MESSAGES/%name.mo \
- %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%name.mo
+mv -v translations/locale ./
+for locale in locale/*; do
+ install -Dm 0644 ${locale}/LC_MESSAGES/%name.mo \
+ %buildroot%_datadir/${locale}/LC_MESSAGES/%name.mo
 done
 
-%find_lang %name --all-name
+%find_lang --all-name %name
 
 %files -f %name.lang
 %doc *.md LICENSE
@@ -82,6 +68,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Sun Jun 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.4-alt1
+- 0.7.3 -> 0.7.4
+
 * Mon May 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.3-alt1
 - 0.7.2 -> 0.7.3
 
