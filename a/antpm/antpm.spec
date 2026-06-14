@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _udevrulesdir /lib/udev/rules.d
 
+%def_with check
+
 Name: antpm
-Version: 1.24
-Release: alt2
+Version: 1.25
+Release: alt1
 
 Summary: ANT+ information retrieval client for Garmin GPS products
 License: GPL-3.0
@@ -20,6 +22,11 @@ BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: boost-devel
 BuildRequires: boost-program_options-devel
+
+%if_with check
+BuildRequires: ctest
+BuildRequires: boost-asio-devel
+%endif
 
 %description
 This software uses the Garmin ANT+ proprietary USB keys and
@@ -42,12 +49,16 @@ to avoid confusion with existing Java software
 
 %prep
 %setup -q -n %{name}-%{version}/src
-patch -p1 < ../debian/patches/1000-appstream-metainfo.patch
 
 %build
 %cmake \
        -DCMAKE_BUILD_TYPE=Release \
        -DUSE_BOOST_STATIC_LINK=OFF \
+%if_with check
+       -DUSE_BOOST_TEST=TRUE \
+%else
+       -DUSE_BOOST_TEST=FALSE \
+%endif
        -Wno-dev
 %cmake_build
 
@@ -55,17 +66,20 @@ patch -p1 < ../debian/patches/1000-appstream-metainfo.patch
 %cmake_install
 
 # install man-pages
-install -D -m 0644 ../debian/antpm-garmin-ant-downloader.1 -t "%{buildroot}%{_man1dir}/"
+install -D -m 0644 gant/gant.1 %{buildroot}%{_man1dir}/antpm-garmin-ant-downloader.1
 install -D -m 0644 *.1 -t "%{buildroot}%{_man1dir}/"
 
 # install metainfo
-install -D -m 0644 com.github.ralovich.antpm.metainfo.xml -t "%{buildroot}%_datadir/metainfo/"
+install -D -m 0644 ../scripts/com.github.ralovich.antpm.metainfo.xml -t "%{buildroot}%_datadir/metainfo/"
 
 # install udev-rule
 install -m 0644 -D ../scripts/80-ant-stick.rules %buildroot%_udevrulesdir/60-%{name}.rules
 
 # rename
 mv -v %buildroot%_bindir/gant %buildroot%_bindir/antpm-garmin-ant-downloader
+
+%check
+%ctest
 
 %files
 %doc ../LICENSE ../docs/*.txt
@@ -75,6 +89,10 @@ mv -v %buildroot%_bindir/gant %buildroot%_bindir/antpm-garmin-ant-downloader
 %_udevrulesdir/*.rules
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.25-alt1
+- New version 1.25.
+- Enabled tests.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt2
 - Applied repocop fix for sisyphus_check
 
