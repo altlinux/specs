@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt2
+Release: alt3
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -22,6 +22,7 @@ Patch1: ru_emacspeak-fix-voice-setup-defvar.patch
 Patch2: ru_emacspeak-fix-proced-cl-case-otherwise.patch
 
 Requires: multispeech
+Requires: tclx
 Conflicts: emacspeak
 
 %filter_from_requires \,/etc/emacspeak.conf,d
@@ -422,6 +423,9 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Thu Jun 11 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt3
+- Added req to tclx
+
 * Fri Jun 05 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt2
 - Moved docs to doc subpackages
 
