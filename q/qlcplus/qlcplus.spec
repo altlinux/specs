@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     qlcplus
-Version:  5.2.1
+Version:  5.2.2
 Release:  alt1
 
 Summary:  Q Light Controller Plus
@@ -93,6 +93,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Jun 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.2.2-alt1
+- Update to 5.2.2.
+
 * Sun Mar 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.2.1-alt1
 - Update to 5.2.1.
 
