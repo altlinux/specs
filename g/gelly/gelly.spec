@@ -2,7 +2,7 @@
 
 Name: gelly
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: A native music client for Jellyfin and Navidrome/Subsonic
 License: GPL-3.0-or-later
@@ -11,8 +11,10 @@ Group: Sound
 Url: https://github.com/Fingel/gelly
 VCS: https://github.com/Fingel/gelly
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source1: vendor.tar
+
+Patch: i18n-1.6.2-alt-fix.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust pkgconfig(glib-2.0) pkgconfig(gio-2.0)
@@ -27,6 +29,7 @@ BuildRequires: libseccomp-devel /usr/bin/glib-compile-resources
 
 %prep
 %setup -a1
+%patch -p0
 %rust_prep
 
 %build
@@ -47,12 +50,12 @@ install -Dm 0644 resources/%oname.svg %buildroot%_iconsdir/hicolor/128x128/apps/
 for locale in po/*.po; do
  dirname=$(basename "$locale" .po)
  mkdir -p %buildroot%_datadir/locale/${dirname}/LC_MESSAGES
- msgfmt -o "%buildroot%_datadir/locale/${dirname}/LC_MESSAGES/%oname.mo" "$locale"
+ msgfmt -o "%buildroot%_datadir/locale/${dirname}/LC_MESSAGES/%name.mo" "$locale"
 done
 
-%find_lang --all-name %oname
+%find_lang --all-name %name
 
-%files -f %oname.lang
+%files -f %name.lang
 %doc *.md LICENSE
 %_bindir/%name
 %_desktopdir/%oname.desktop
@@ -62,6 +65,9 @@ done
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Sun Jun 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.2-alt2
+- fixed: locale path
+
 * Sun Jun 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.2-alt1
 - Initial build for ALT Linux.
 
