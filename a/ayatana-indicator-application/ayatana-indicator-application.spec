@@ -1,34 +1,38 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 # psuffix is related to the GTK version. It's usually empty for GTK2.
 %define psuffix 3
 %define sover   7
 Name: ayatana-indicator-application
-Version: 22.2.0
-Release: alt2
+Version: 26.6.0
+Release: alt1
 
 Summary: Ayatana Indicator that takes StatusNotifiers and puts them in the panel
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-application
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: cmake libayatana-appindicator3-devel libdbus-glib-devel libdbusmenu-gtk3-devel
 BuildRequires: at-spi2-atk-devel
 BuildRequires: ayatana-cmake-modules
 BuildRequires: ayatana-indicator-common
 BuildRequires: bzlib-devel
+BuildRequires: cmake
 BuildRequires: intltool
 BuildRequires: libat-spi2-core-devel
+BuildRequires: libayatana-appindicator3-devel
 BuildRequires: libblkid-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libdatrie-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libexpat-devel
 BuildRequires: libffi-devel
@@ -44,6 +48,8 @@ BuildRequires: libsystemd-devel
 BuildRequires: libthai-devel
 BuildRequires: libtiff-devel
 BuildRequires: libuuid-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXdamage-devel
@@ -53,8 +59,11 @@ BuildRequires: libXinerama-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXtst-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
+BuildRequires: libayatana-appindicator-glib-devel
+
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 This package provides a library and an ayatana indicator to take the
@@ -65,12 +74,20 @@ application StatusNotifiers and display them on the panel bar.
 
 %build
 %cmake \
-  -Denable_tests=Off
+%if_with check
+       -DENABLE_TESTS=ON \
+%else
+       -DENABLE_TESTS=OFF \
+%endif
+       -DENABLE_COVERAGE=OFF
 %cmake_build
 
 %install
 %cmake_install
 find %buildroot -type f -name "*.la" -delete -print
+
+%check
+%ctest -j1 -VV
 
 %post
 %systemd_user_post %name.service
@@ -90,11 +107,19 @@ find %buildroot -type f -name "*.la" -delete -print
 %dir %_libdir/ayatana-indicators%{?psuffix}
 %dir %_libdir/ayatana-indicators%{?psuffix}/%sover
 %_libdir/ayatana-indicators%{?psuffix}/%sover/libayatana-application.so
-%dir %_prefix/lib/systemd
-%dir %_userunitdir
 %_userunitdir/%name.service
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own systemd dirs (thanks to @antohami)
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt2
 - Move service to /usr/libexec for compatibility with MATE Tweak and Debian
 
