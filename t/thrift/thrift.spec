@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thrift
-Version: 0.18.1
+Version: 0.22.0
 Release: alt1
 Summary: Software framework for cross-language services development
 Group: Development/Other
 License: Apache-2.0
-Url: https://thrift.apache.org/
+URL: https://thrift.apache.org/
+# Source-url: https://dlcdn.apache.org/thrift/%version/thrift-%version.tar.gz
 Source: %name-%version.tar
 Patch0001: 0001-fix-install-thrift_c_glibpc.patch
 
@@ -115,6 +116,9 @@ popd
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Sun Jun 14 2026 Anton Midyukov <antohami@altlinux.org> 0.22.0-alt1
+- 0.22.0.
+
 * Wed Apr 12 2023 Alexey Shabalin <shaba@altlinux.org> 0.18.1-alt1
 - 0.18.1
 - switch to build with cmake

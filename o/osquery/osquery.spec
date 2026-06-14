@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.21.0
+Version: 5.23.0
 Release: alt1
 Epoch: 1
 
@@ -152,6 +152,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1:5.23.0-alt1
+- New version.
+
 * Fri Dec 26 2025 Andrey Cherepanov <cas@altlinux.org> 1:5.21.0-alt1
 - New version.
 
