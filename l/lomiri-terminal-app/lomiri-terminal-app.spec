@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-terminal-app
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Terminal App for Lomiri Operating Environment
@@ -82,5 +82,8 @@ This package provides Lomiri's Terminal App.
 %_datadir/lomiri-url-dispatcher/urls/lomiri-terminal-app.url-dispatcher
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.6-alt1
+- New version 2.0.6.
+
 * Sun Jul 20 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.5-alt1
 - Initial build for Sisyphus

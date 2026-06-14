@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: typhoon
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Stylish weather app based on Stormcloud
@@ -95,6 +95,9 @@ mkdir -p %buildroot%perl_vendor_autolib/%name
 %endif
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.3-alt1
+- New version 1.7.3.
+
 * Sun Mar 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.2-alt1
 - New version 1.7.2.
 
