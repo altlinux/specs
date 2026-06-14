@@ -2,9 +2,11 @@
 
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 Name: ayatana-indicator-session
-Version: 24.5.1
-Release: alt2
+Version: 26.6.0
+Release: alt1
 
 Summary: Ayatana Indicator showing session management, status and user switching
 License: GPLv3
@@ -34,6 +36,12 @@ BuildRequires: libselinux-devel
 BuildRequires: libsystemd-devel
 BuildRequires: zlib-devel
 
+%if_with check
+BuildRequires: libgtest-devel
+BuildRequires: ctest
+BuildRequires: dbus
+%endif
+
 %description
 This indicator is designed to be placed on the right side of a
 panel and give the user easy control for changing their instant
@@ -49,8 +57,13 @@ the appropriate package is mate-indicator-applet.
 
 %build
 %cmake \
-  -Denable_tests=Off \
-  -DENABLE_RDA=Off
+%if_with check
+       -DENABLE_TESTS=ON \
+%else
+       -DENABLE_TESTS=OFF \
+%endif
+       -DENABLE_COVERAGE=OFF \
+       -DENABLE_RDA=OFF
 %cmake_build
 
 %install
@@ -61,6 +74,9 @@ rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
+
+%check
+%ctest -j1 -VV
 
 %post
 %systemd_user_post %name.service
@@ -82,6 +98,10 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+- Enabled tests.
+
 * Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt2
 - Adapted for Lomiri.
 

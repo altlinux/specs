@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 Name: ayatana-indicator-sound
-Version: 24.5.2
-Release: alt2
+Version: 24.5.3
+Release: alt1
 
 Summary: Ayatana Indicator for managing system sound
 License: GPLv3
@@ -43,6 +45,18 @@ BuildRequires: libtiff-devel
 BuildRequires: libxml2-devel
 BuildRequires: vala-tools
 BuildRequires: zlib-devel
+BuildRequires: liblomiri-api-devel
+BuildRequires: lomiri-schemas-devel
+BuildRequires: libgmenuharness-devel
+
+%if_with check
+BuildRequires: ctest
+BuildRequires: libdbustest1-devel
+BuildRequires: libgtest-devel
+BuildRequires: libqtdbustest-devel
+BuildRequires: libqtdbusmock-devel
+BuildRequires: python3-module-dbusmock
+%endif
 
 Requires: gobject-introspection
 
@@ -67,9 +81,14 @@ Requires: %name = %version-%release
 
 %build
 %cmake \
-  -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
-  -Denable_tests=Off \
-  -Denable_lomiri_features=Off
+       -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
+%if_with check
+       -DENABLE_TESTS=ON \
+%else
+       -DENABLE_TESTS=OFF \
+%endif
+       -DENABLE_COVERAGE=OFF \
+       -DENABLE_LOMIRI_FEATURES=ON
 %cmake_build
 
 %install
@@ -80,6 +99,9 @@ rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
+
+%check
+%ctest -j1 -VV
 
 %post
 %systemd_user_post %name.service
@@ -108,6 +130,11 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/dbus-1/interfaces/org.ayatana.indicator.sound.AccountsService.xml
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 24.5.3-alt1
+- New version 24.5.3.
+- Enabled tests.
+- Enabled Lomiri features.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt2
 - Created -devel package with the corresponding files.
 

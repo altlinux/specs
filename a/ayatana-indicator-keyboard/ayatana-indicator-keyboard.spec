@@ -5,7 +5,7 @@
 %def_with check
 
 Name: ayatana-indicator-keyboard
-Version: 26.6.1
+Version: 26.6.2
 Release: alt1
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
@@ -76,10 +76,11 @@ Requires: %name = %version-%release
 %build
 %cmake \
 %if_with check
-  -Denable_tests=On
+       -DENABLE_TESTS=ON \
 %else
-  -Denable_tests=Off
+       -DENABLE_TESTS=OFF \
 %endif
+       -DENABLE_COVERAGE=OFF
 %cmake_build
 
 %install
@@ -89,10 +90,10 @@ Requires: %name = %version-%release
 rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
+%find_lang %name
+
 %check
 %ctest -j1 -VV
-
-%find_lang %name
 
 %post
 %systemd_user_post %name.service
@@ -125,6 +126,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/dbus-1/interfaces/org.ayatana.indicator.keyboard.AccountsService.xml
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.2-alt1
+- New version 26.6.2.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.1-alt1
 - New version 26.6.1.
 - Created -devel package with the corresponding files.

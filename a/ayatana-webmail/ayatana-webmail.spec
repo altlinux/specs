@@ -2,8 +2,8 @@
 
 %define moname  ayatanawebmail
 Name: ayatana-webmail
-Version: 24.5.17
-Release: alt2
+Version: 26.6.13
+Release: alt1
 
 Summary: Webmail notifications and actions for any desktop
 License: GPLv3
@@ -89,6 +89,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
 %_desktopdir/ayatana-webmail.desktop
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.13-alt1
+- New version 26.6.13.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.17-alt2
 - Applied repocop fix for freedesktop-desktop
 

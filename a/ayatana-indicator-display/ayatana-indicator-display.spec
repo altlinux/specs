@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 Name: ayatana-indicator-display
-Version: 24.5.3
+Version: 26.6.0
 Release: alt1
 
 Summary: Ayatana Indicator for Display configuration
@@ -38,6 +40,16 @@ BuildRequires: zlib-devel
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xrandr)
 
+%if_with check
+BuildRequires: libgtest-devel
+BuildRequires: ctest
+BuildRequires: qt5-base-devel
+BuildRequires: libqtdbustest-devel
+BuildRequires: libqtdbusmock-devel
+BuildRequires: dbus
+BuildRequires: cppcheck
+%endif
+
 Requires: xsct
 
 %description
@@ -62,9 +74,13 @@ Requires: %name = %version-%release
 
 %build
 %cmake \
-  -Denable_lomiri_features=Off \
-  -Denable_tests=OFF \
-  -DENABLE_RDA=OFF
+%if_with check
+       -DENABLE_TESTS=ON \
+%else
+       -DENABLE_TESTS=OFF \
+%endif
+       -DENABLE_COVERAGE=OFF \
+       -DENABLE_RDA=OFF
 %cmake_build
 
 %install
@@ -77,6 +93,9 @@ rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
+
+%check
+%ctest -j1 -VV
 
 %post
 %systemd_user_post %name.service
@@ -104,6 +123,10 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/dbus-1/interfaces/org.ayatana.indicator.display.AccountsService.xml
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+- Enabled tests.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 24.5.3-alt1
 - New version 24.5.3.
 - Created -devel package with the corresponding files.

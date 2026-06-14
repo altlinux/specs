@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%def_with check
+
 Name: ayatana-indicator-printers
-Version: 23.10.2
+Version: 26.6.0
 Release: alt1
 
 Summary: Ayatana Indicator showing active print jobs
@@ -27,6 +29,11 @@ BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libsystemd-devel
 
+%if_with check
+BuildRequires: ctest
+BuildRequires: dbus
+%endif
+
 %description
 This Ayatana Indicator is designed to let you view and control
 active print jobs.
@@ -41,9 +48,13 @@ indicator to the user.
 %build
 %add_optflags -std=gnu17
 %cmake \
-  -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
-  -Denable_tests=Off \
-  -Denable_lomiri_features=Off
+       -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
+%if_with check
+       -DENABLE_TESTS=ON \
+%else
+       -DENABLE_TESTS=OFF \
+%endif
+       -DENABLE_COVERAGE=OFF
 %cmake_build
 
 %install
@@ -56,6 +67,9 @@ rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
+
+%check
+%ctest -j1 -VV
 
 %post
 %systemd_user_post %name.service
@@ -75,6 +89,10 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+- Enabled tests.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 23.10.2-alt1
 - New version 23.10.2.
 

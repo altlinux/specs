@@ -6,9 +6,12 @@
 %define moname  ayatana-common
 %define sover   0
 %define typelib %name-gir
+
+%def_with check
+
 Name: libayatana-common
-Version: 0.9.11
-Release: alt3
+Version: 0.9.12
+Release: alt1
 
 Summary: Common files and libraries used by Ayatana System Indicators
 License: GPLv3
@@ -41,6 +44,11 @@ BuildRequires: vala
 BuildRequires: vala-tools
 BuildRequires: zlib-devel
 BuildRequires: pkgconfig(lomiri-url-dispatcher)
+
+%if_with check
+BuildRequires: libgtest-devel
+BuildRequires: ctest
+%endif
 
 Requires: gobject-introspection
 
@@ -93,11 +101,19 @@ This package contains the development files.
 
 %prep
 %setup
+sed -i "s/gir-1.2/gir-1.0/" src/CMakeLists.txt
+sed -i "s/girepository-1.2/girepository-1.0/" src/CMakeLists.txt
 
 %build
 %cmake \
-  -Denable_tests=Off \
+%if_with check
+  -DENABLE_TESTS=ON \
+%else
+  -DENABLE_TESTS=OFF \
+%endif
+  -DENABLE_COVERAGE=OFF \
   -DENABLE_LOMIRI_FEATURES=ON
+
 %cmake_build
 
 %install
@@ -111,6 +127,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
 
 # Create empty directory for owning within this package.
 install -d -m 755 %buildroot%_datadir/ayatana/indicators
+
+%check
+%ctest -j1 -VV
 
 %post -n %common_name
 %systemd_user_post ayatana-indicators.target
@@ -145,6 +164,10 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_libdir/%soname.so
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.12-alt1
+- New version 0.9.12.
+- Enabled tests.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt3
 - Moved devel-library to the -devel package.
 

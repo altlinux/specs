@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ayatana-settings
-Version: 24.10.1
+Version: 26.6.13
 Release: alt1
 
 Summary: Ayatana Indicators Settings
@@ -47,10 +47,16 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_iconsdir/ContrastHigh/scalable/categories/%name-*
 %_iconsdir/hicolor/scalable/apps/%name.*
 %_iconsdir/hicolor/scalable/categories/%name-*
+%_iconsdir/HighContrast/scalable/apps/%name.*
+%_iconsdir/HighContrast/scalable/categories/%name-*
+
 %_desktopdir/ayatana-settings.desktop
 %_man8dir/ayatana-settings.8*
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.13-alt1
+- New version 26.6.13.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.10.1-alt1
 - New version 24.10.1.
 

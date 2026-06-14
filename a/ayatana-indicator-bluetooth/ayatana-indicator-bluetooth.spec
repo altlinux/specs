@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-bluetooth
-Version: 24.5.0
-Release: alt2
+Version: 26.6.1
+Release: alt1
 
 Summary: Ayatana Indicator for managing Bluetooth devices
 License: GPLv3
@@ -35,6 +35,7 @@ BuildRequires: libselinux-devel
 BuildRequires: libsystemd-devel
 BuildRequires: vala-tools
 BuildRequires: zlib-devel
+BuildRequires: libnotify-devel
 
 Requires: ayatana-indicator-common
 Requires: blueman
@@ -84,6 +85,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.1-alt1
+- New version 26.6.1.
+
 * Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt2
 - Added Lomiri greeter support.
 
