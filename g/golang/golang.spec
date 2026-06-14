@@ -46,11 +46,13 @@
 %def_disable cgo
 %endif
 
+%def_disable race
+
 %def_enable check
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.26.3
+Version: 1.26.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -85,12 +87,13 @@ Requires: /proc
 BuildRequires(pre): rpm-build-golang rpm-build-python3
 BuildRequires: golang >= 1.22.6
 BuildRequires: libselinux-utils
+%if_enabled check
+# for tests
 BuildRequires: libpcre2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: /proc
-# for tests
 BuildRequires: /dev/pts
-
+%endif
 Provides: go = %version-%release
 
 Provides:  golang-godoc = %version-%release
@@ -126,6 +129,14 @@ Summary: Golang shared object libraries
 Group:   Development/Other
 
 %description shared
+%summary.
+
+%package race
+Summary: Golang std library with -race enabled
+Group:   Development/Other
+Requires: %name = %EVR
+
+%description race
 %summary.
 
 %package docs
@@ -201,12 +212,16 @@ export CGO_ENABLED=0
 %endif
 
 # build
-cd src
-./make.bash --no-clean -v
-cd ..
+pushd src
+./make.bash -v
+popd
 
 %if_enabled shared
 GOROOT=$PWD PATH="$GOROOT/bin:$PATH" go install -v -buildmode=shared -v -x std
+%endif
+
+%if_enabled race
+GOROOT=$PWD PATH="$GOROOT/bin:$PATH" go install -race -v -x std
 %endif
 
 %check
@@ -222,15 +237,19 @@ export GO_LDFLAGS="-linkmode internal"
 %if_disabled cgo
 export CGO_ENABLED=0
 %endif
+%ifnarch riscv64
 export GO_TEST_TIMEOUT_SCALE=2
-
-cd src
-%if_enabled fail_on_tests
-./run.bash --no-rebuild -v -v -v -k
 %else
-./run.bash --no-rebuild -v -v -v -k ||:
+export GO_TEST_TIMEOUT_SCALE=20
 %endif
-cd ..
+
+pushd src
+%if_enabled fail_on_tests
+./run.bash --no-rebuild -v -v -v -k %{?_disable_race:-run '!:race'}
+%else
+./run.bash --no-rebuild -v -v -v -k %{?_disable_race:-run '!:race'} ||:
+%endif
+popd
 
 %install
 # remove GC build cache
@@ -326,35 +345,47 @@ find \
         -print0 |
     xargs -0 rm -rfv --
 
-# find test files
+# find files
 cwd=$(pwd)
 src_list=$cwd/go-src.list
+pkg_list=$cwd/go-pkg.list
+race_list=$cwd/go-race.list
 tests_list=$cwd/go-tests.list
-rm -f $src_list $tests_list
-touch $src_list $tests_list
+rm -f $src_list $pkg_list $tests_list $race_list
+touch $src_list $pkg_list $tests_list $race_list
 pushd %buildroot%go_root
 find src/ -type d -a \( ! -name testdata -a ! -ipath '*/testdata/*' \) -printf '%%%%dir %go_root/%%p\n' >> $src_list
 find src/ ! -type d -a \( ! -ipath '*/testdata/*' -a ! -name '*_test.go' \) -printf '%go_root/%%p\n' >> $src_list
+find pkg/ -type d -a ! -path '*_dynlink/*' -a ! -path '*_race/*' -printf '%%%%dir %go_root/%%p\n' >> $pkg_list
+find pkg/ ! -type d -a ! -path '*_dynlink/*' -a ! -path '*_race/*' -printf '%go_root/%%p\n' >> $pkg_list
 find src/ -type d -a \( -name testdata -o -ipath '*/testdata/*' \) -printf '%%%%dir %go_root/%%p\n' >> $tests_list
 find src/ ! -type d -a \( -ipath '*/testdata/*' -o -name '*_test.go' \) -printf '%go_root/%%p\n' >> $tests_list
+%if_enabled race
+find pkg/*_race/ -type d -printf '%%%%dir %go_root/%%p\n' >> $race_list
+find pkg/*_race/ ! -type d -printf '%go_root/%%p\n' >> $race_list
+%endif
 popd
 
-%files
+%files -f go-pkg.list
 %_bindir/*
-%go_root
 %go_path
-%exclude %go_root/doc
-%exclude %go_root/misc
-%exclude %go_root/src
-%exclude %go_root/test
+%dir %go_root
+%go_root/api
+%go_root/bin
+%go_root/lib
+%go_root/go.env
+%go_root/VERSION
 
 %if_enabled shared
-%exclude %go_root/pkg/linux_%{go_hostarch}_dynlink
 %exclude %golibdir/*.so
 
 %files shared
 %go_root/pkg/linux_%{go_hostarch}_dynlink
 %golibdir/*.so
+%endif
+
+%if_enabled race
+%files race -f go-race.list
 %endif
 
 %files gdb
@@ -377,6 +408,14 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Sun Jun 14 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.4-alt1
+- Updated from 1.26.3 to 1.26.4.
+- Add race subpackage and disable build.
+- Fixes:
+  + CVE-2026-42504
+  + CVE-2026-42507
+  + CVE-2026-27145
+
 * Fri May 08 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.3-alt1
 - updated from 1.26.2 to 1.26.3.
 - Fixes:
