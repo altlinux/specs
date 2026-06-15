@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.4.3
 Release: alt1
 Summary: Distribution utilities
 License: Python
@@ -54,6 +54,9 @@ export PYTHONHASHSEED=0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 0.4.3-alt1
+- 0.4.1 -> 0.4.3
+
 * Wed Jun 03 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1
 
