@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: exfatprogs
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -53,8 +53,8 @@ at the level of exfat utilities in windows.
 %_sbindir/mkfs.exfat
 %_sbindir/tune.exfat
 %_sbindir/exfat2img
-%_sbindir/chdosattr
-%_sbindir/lsdosattr
+%_bindir/chdosattr
+%_bindir/lsdosattr
 %_libexecdir/exfat-uctbl2bin.sh
 %_man1dir/*
 %_man8dir/*
@@ -62,6 +62,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
