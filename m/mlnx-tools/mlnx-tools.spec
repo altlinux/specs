@@ -12,7 +12,7 @@
 %define _udevdir /lib/udev
 
 Name: mlnx-tools
-Version: 2604.0.17
+Version: 2607.0.1
 Release: alt1
 
 Summary: Mellanox userland tools and scripts
@@ -77,6 +77,9 @@ chmod +x %buildroot%python3_sitelibdir/%name/dcbnetlink.py
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 2607.0.1-alt1
+- New version 2607.0.1 (2604.0.18).
+
 * Fri Jun 05 2026 Leontiy Volodin <lvol@altlinux.org> 2604.0.17-alt1
 - New version 2604.0.17.
 
