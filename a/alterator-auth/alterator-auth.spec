@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.51
+Version: 0.52
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -9,7 +9,7 @@ License: GPL-2.0+
 Group: System/Configuration/Other
 
 Requires: alterator >= 4.7-alt4
-Requires: alterator-l10n >= 2.9.114-alt1
+Requires: alterator-l10n >= 2.9.184-alt1
 Requires: pam-config >= 1.9.1-alt1
 Requires: pam_krb5
 Requires: libnss-myhostname
@@ -86,6 +86,7 @@ Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-roles-common
+Requires: samba-dc-libs
 
 Provides:  task-auth-ldap = %EVR
 Obsoletes: task-auth-ldap < %EVR
@@ -174,6 +175,11 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Mon Jun 15 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.52-alt1
+- Fix fatal error when running system-auth without any arguments (ALT #48140).
+- Fix task-auth-ldap-sssd requirement for samba-dc-libs (ALT #56696).
+- Adjust alterator-l10n version dependency.
+
 * Tue May 05 2026 Andrey Limachko <liannnix@altlinux.org> 0.51-alt1
 - Adjust winbind idmap range to avoid local UID
   conflicts.
