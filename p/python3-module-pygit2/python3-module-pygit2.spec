@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.19.2
+Version: 1.19.3
 Release: alt1
 
 Summary: Python bindings for libgit2
@@ -55,6 +55,9 @@ Bindings to the libgit2 shared library, implements Git plumbing.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 15 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.3-alt1
+- Updated to 1.19.3.
+
 * Mon Mar 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.2-alt1
 - Updated to 1.19.2.
 
