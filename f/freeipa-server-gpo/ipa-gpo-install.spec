@@ -1,7 +1,8 @@
 %add_python3_req_skip parse_admx_structure
+%add_python3_req_skip utils
 
 Name:           freeipa-server-gpo
-Version:        0.0.6
+Version:        0.0.8
 Release:        alt1
 
 Summary:        Prepare FreeIPA for Group Policy Management
@@ -39,6 +40,7 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %doc README.md
 %doc README.ru.md
 %_bindir/ipa-gpo-install
+%_bindir/ipa-gpo-update-paths
 %python3_sitelibdir/ipa_gpo_install/
 %python3_sitelibdir/ipaserver/plugins/gpo.py*
 %python3_sitelibdir/ipaserver/plugins/chain.py*
@@ -48,8 +50,7 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpo.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/chain.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpmaster.*
-%_datadir/ipa/ui/js/plugins/chain/chain.js
-%_datadir/ipa/ui/js/plugins/chain/gpo.js
+%_datadir/ipa/ui/js/plugins/chain
 %_datadir/ipa/schema.d/75-gpc.ldif
 %_datadir/ipa/schema.d/75-chain.ldif
 %_datadir/ipa/schema.d/75-gpmaster.ldif
@@ -70,6 +71,25 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 
 
 %changelog
+* Mon Jun 15 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.8-alt1
+- feat: add unsaved changes confirmation modal on tree navigation (thx vladimirovicp)
+- feat(admx): implemented package management (thx vladimirovicp)
+- fix(gpui): restore checkbox visibility in ADMX options (thx Valery Sinelnikov)
+- fix(gpui): restore preferences control buttons in header (thx Valery Sinelnikov)
+- fix(gpoiservice): show policy displayName as tree root title (thx Valery Sinelnikov)
+- feat(gpuiservice): add policy comments support (CMTX/CMTL) (thx Valery Sinelnikov)
+- feat(gpuiservice): add scripts support (scripts.ini/psscripts.ini) (thx Valery Sinelnikov)
+- feat(gpoiservice): add locale-aware UI initialization (thx Valery Sinelnikov)
+
+* Thu Apr 30 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.7-alt1
+- feat: improved ADMX support (localization, help texts, parsing, and navigation)
+- feat: added full Group Policy Preferences (GPP) support, including validation, XML generation, and DBus API
+- feat: enhanced path handling (config-driven paths, normalization, sysvol mapping, update utility with rollback)
+- fix: multiple fixes for policy handling, registry processing, JSON/Unicode output, and API compatibility
+- fix: improved stability (thread safety, error handling, correct data parsing)
+- refactor: simplified architecture, added type hints, and introduced shared configuration modules
+- docs/build: added testing documentation and updated build utilities/dependencies
+
 * Tue Mar 03 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.6-alt1
 - feat(gpuiservice): improve service management with enable --now
 
