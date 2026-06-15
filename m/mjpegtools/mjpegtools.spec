@@ -3,7 +3,7 @@
 
 Name: mjpegtools
 Version: 2.2.1
-Release: alt2
+Release: alt3
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPLv2
@@ -14,6 +14,7 @@ Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
 Patch0: mjpegtools-2.1.0-debian-disable-sse2.patch
 Patch1: mjpegtools-2.2.0-debian-mplex-ftbfs.patch
 Patch2: mjpegtools-2.2.0-lavtools-ftbfs.patch
+Patch3: mjpegtools-2.2.1-alt-gcc15-template-body.patch
 
 %define libdv_ver 0.9
 
@@ -92,6 +93,7 @@ This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
 %endif
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -139,6 +141,9 @@ rm -f %buildroot%_bindir/lavtc.sh
 %_libdir/*.a
 
 %changelog
+* Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt3
+- fixed build with gcc 15
+
 * Fri Oct 27 2023 Anton Farygin <rider@altlinux.ru> 2.2.1-alt2
 - removed lavtc.sh due to unsupported transcode
 
