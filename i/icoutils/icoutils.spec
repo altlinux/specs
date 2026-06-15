@@ -1,6 +1,6 @@
 Name: icoutils
 Version: 0.32.3
-Release: alt1
+Release: alt2
 
 Summary: Utility for extracting and converting Microsoft icon and cursor files
 Summary(ru_RU.KOI8-R): Утилита для извлечения и преобразования файлов Microsoft пиктограмм и курсоров
@@ -11,6 +11,9 @@ Url: http://www.nongnu.org/icoutils/
 
 # http://savannah.nongnu.org/download/icoutils/%name-%version.tar.bz2
 Source: %name-%version.tar
+
+Patch0: fix-build-with-gcc15.patch
+Patch1: fix-macro-definition.patch
 
 # Automatically added by buildreq on Tue Jul 12 2005 (-bi)
 BuildRequires: gcc-c++ libpng-devel libstdc++-devel perl-Term-ReadLine-Gnu perl-libwww zlib-devel
@@ -54,6 +57,7 @@ icoutils - набор программ для извлечения и преобразования изображений из/в
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -62,8 +66,9 @@ icoutils - набор программ для извлечения и преобразования изображений из/в
 
 %install
 %makeinstall
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README AUTHORS COPYING ChangeLog NEWS TODO
 %_bindir/icotool
 %_bindir/wrestool
@@ -80,6 +85,9 @@ icoutils - набор программ для извлечения и преобразования изображений из/в
 %_man1dir/genresscript.1*
 
 %changelog
+* Mon Jun 15 2026 Mikhail Tergoev <fidel@altlinux.org> 0.32.3-alt2
+- Fixed FBTFS
+
 * Thu Dec 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.32.3-alt1
 - Updated to upstream version 0.32.3 (Fixes: CVE-2017-5208,
   CVE-2017-5331, CVE-2017-5332, CVE-2017-5333).
