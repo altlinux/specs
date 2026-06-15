@@ -5,9 +5,10 @@
 %def_without python3
 # dane_ta_usage requires openssl >= 1.1.0
 %def_with dane_ta_usage
+%define soname 3
 
 Name: ldns
-Version: 1.9.0
+Version: 1.9.2
 Release: alt1
 
 Summary: Lowlevel DNS(SEC) library with API
@@ -131,7 +132,8 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %_mandir/man1/drill*
 
 %files -n lib%name
-%_libdir/libldns*.so.*
+%_libdir/libldns*.so.%soname
+%_libdir/libldns*.so.%soname.*
 %doc README LICENSE
 
 %files -n lib%name-devel
@@ -161,6 +163,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 1.9.2-alt1
+- 1.9.0 -> 1.9.2 (Fixes: CVE-2026-10846)
+
 * Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 1.9.0-alt1
 - 1.8.4 -> 1.9.0
 
