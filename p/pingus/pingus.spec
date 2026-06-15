@@ -2,15 +2,13 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt4
+Release: alt5
 
 Summary: A free Lemmings clone
 Summary(ru_RU.UTF8): Свободный клон Lemmings
-License: GPL
+License: GPL-2.0
 Group: Games/Arcade
 Url: http://pingus.seul.org
-
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: %name.16.xpm
@@ -21,6 +19,7 @@ Source4: CMakeLists.txt
 Patch8:  pingus-0.7.6-alt-VERSION.patch
 Patch9:  pingus-0.7.6-upstream-std-header.patch
 Patch10: pingus-0.7.6-upstream-boost-compat.patch
+Patch11: pingus-0.7.6-includes.patch
 
 # Automatically added by buildreq on Fri Sep 28 2007
 BuildRequires: esound flex gcc-c++ ghostscript-utils libSDL-devel
@@ -45,6 +44,7 @@ SDL, что должно сделать его портируемым на мн�
 %patch8 -p2
 %patch9 -p1
 %patch10 -p1
+%patch11 -p0
 
 cp %SOURCE4 CMakeLists.txt
 
@@ -58,7 +58,7 @@ cp %SOURCE4 CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
@@ -110,8 +110,12 @@ rm -f %buildroot%_datadir/%name/po/update-po.sh
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Jun 15 2026 Anton Midyukov <antohami@altlinux.org> 0.7.6-alt5
+- NMU: Fix FTBFS.
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.6-alt4
 - Fix build on GCC13
+
 * Tue Dec 03 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.6-alt3
 - Rebuilt with boost-1.71.0 using cmake.
 - Spec cleanup.
