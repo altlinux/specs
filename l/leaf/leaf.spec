@@ -1,5 +1,5 @@
 Name:     leaf
-Version:  1.23.2
+Version:  1.24.1
 Release:  alt1
 
 Summary:  Terminal Markdown previewer with GUI-like experience
@@ -47,6 +47,9 @@ install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Jun 16 2026 Alexei Mezin <alexvm@altlinux.org> 1.24.1-alt1
+- New version
+
 * Fri May 29 2026 Alexei Mezin <alexvm@altlinux.org> 1.23.2-alt1
 - New version
 
