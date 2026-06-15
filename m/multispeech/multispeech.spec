@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.4
-Release: alt2
+Release: alt3
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -12,6 +12,7 @@ Url:     https://github.com/poretsky/multispeech
 VCS:     https://github.com/poretsky/multispeech.git
 
 Source: %name-%version.tar
+Source1: multispeech.blurb
 
 Patch0: fix-spd-module-dir.patch
 
@@ -27,7 +28,6 @@ BuildRequires: boost-locale-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: autoconf-archive
-BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: gcc-c++
 BuildRequires: librutts-devel
@@ -35,28 +35,26 @@ BuildRequires: libbobcat-devel
 BuildRequires: libspeechd-devel
 
 %description
-Multispeech was primarily designed as a multilingual speech server for Emacspeak,
-but it can be useful in some other circumstances as well,
-when multilingual speech feedback is needed.
-For instance, it can work in conjunction with
-Speech Dispatcher
-as its backend module.
+This speech server provides multilingual speech output for Emacspeak
+using software TTS engines such as mbrola, espeak, ru_tts, etc.
+At the moment English, German, French, Italian, Spanish,
+Portuguese and Russian languages are supported.
 
-Multispeech utilizes third party speech synthesis software to perform
-actual TTS transformation. Being capable to detect language by text
-nature it can automatically choose an appropriate TTS for each one.
-For the moment English, German, French, Italian, Spanish, Portuguese
-and Russian languages are supported.
+The most prominent features are as follows:
+- flexible configuration;
+- easy adaptation to various speech engines;
+- language autodetection capability;
+- online voice control means.
 
 %package -n lib%name%sover
 Group: System/Libraries
-Summary: Lib files for %name
+Summary: Multilingual speech server - core shared library
 
 %description -n lib%name%sover
-%summary
+This package provides core shared library.
 
 %package -n speech-dispatcher-module-%name
-Summary: SPD module fore %name
+Summary: Multilingual Speech Dispatcher backend
 Group: Sound
 Requires: speech-dispatcher
 Requires: %name-common
@@ -64,7 +62,17 @@ Requires: ru_tts
 Requires: mbrola-voices-en1
 
 %description -n speech-dispatcher-module-%name
-%summary
+This module provides multilingual speech output for Speech Dispatcher
+using software TTS engines such as mbrola, espeak, ru_tts, etc.
+It is based on the Multispeech speech server.
+At the moment English, German, French, Italian, Spanish,
+Portuguese and Russian languages are supported.
+
+The most prominent features are as follows:
+- flexible configuration;
+- easy adaptation to various speech engines;
+- language autodetection capability;
+- online voice control means.
 
 %package doc
 Summary: doc files for %name
@@ -75,12 +83,13 @@ BuildArch: noarch
 %summary
 
 %package common
-Summary: Common files for %name
+Summary: Multilingual speech server - common files
 Group: Other
 BuildArch: noarch
 
 %description common
-%summary
+This package provides common configuration file used by all Multispeech
+ implementations along with its documentation.
 
 %prep
 %setup
@@ -95,12 +104,17 @@ BuildArch: noarch
 %makeinstall_std sdmoduledir=%_libdir/speech-dispatcher-modules
 
 rm -v %buildroot%_libdir/lib%name.so
+install -D %SOURCE1 %buildroot%_datadir/emacs/site-lisp/emacspeak/blurbs/%name.blurb
+mkdir -pv %buildroot%_datadir/emacs/site-lisp/emacspeak/servers
+ln -s %_bindir/%name %buildroot%_datadir/emacs/site-lisp/emacspeak/servers/multispeech
 
 %check
 %make_build check
 
 %files
 %_bindir/%name
+%_datadir/emacs/site-lisp/emacspeak/blurbs/%name.blurb
+%_datadir/emacs/site-lisp/emacspeak/servers/multispeech
 
 %files -n lib%name%sover
 %_libdir/lib%name.so.%sover
@@ -120,6 +134,10 @@ rm -v %buildroot%_libdir/lib%name.so
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Tue Jun 16 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt3
+- Packed the missing files.
+- Updated descriptions
+
 * Fri May 29 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt2
 - Impruve make file
 
