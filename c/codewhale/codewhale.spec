@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.8.52
+Version: 0.8.60
 Release: alt1
 
 Summary: Agentic coding terminal
@@ -47,6 +47,7 @@ install -vpD %SOURCE2 .cargo/config.toml
 cargo build %_smp_mflags --release --offline
 
 %install
+install -vpD -m0755 target/release/codew -t %buildroot%_bindir
 install -vpD -m0755 target/release/codewhale -t %buildroot%_bindir
 install -vpD -m0755 target/release/codewhale-tui -t %buildroot%_bindir
 install -vpD -m0755 target/release/codewhale-app-server -t %buildroot%_bindir
@@ -64,6 +65,7 @@ mkdir -p %buildroot%zsh_completionsdir
 
 %files
 %doc CHANGELOG.md LICENSE README.md
+%_bindir/codew
 %_bindir/codewhale
 %_bindir/codewhale-tui
 %_bindir/codewhale-app-server
@@ -72,6 +74,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Mon Jun 15 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.60-alt1
+- Updated to 0.8.60.
+
 * Wed Jun 03 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.52-alt1
 - Updated to 0.8.52.
 - Stopped building for i586 machines.
