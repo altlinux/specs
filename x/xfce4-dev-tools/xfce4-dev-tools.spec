@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.21.1
+Version: 4.21.2
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -57,6 +57,11 @@ make check
 %_man1dir/*
 
 %changelog
+* Mon Jun 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
+- Don't pull rust-cargo.
+- Don't pull git (patch updated).
+- Updated to 4.21.2.
+
 * Thu Jun 04 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
 - Fixed cppcheck cfg dir.
 - Updated to 4.21.1.
