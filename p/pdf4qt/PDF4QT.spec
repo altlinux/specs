@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: pdf4qt
-Version: 1.5.3.1
+Version: 1.6.0.0
 Release: alt1
 
 Summary: Open source PDF editor
@@ -15,9 +15,6 @@ Vcs: https://github.com/JakubMelka/PDF4QT
 ExcludeArch: i586
 
 Source: %name-%version.tar
-
-#move translations
-Patch: CMakeLists-1.5.2.0-alt-fixes.patch
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake clang qt6-base-devel qt6-tools-devel
@@ -58,13 +55,12 @@ Summary: %name library
 
 %prep
 %setup
-%autopatch -p0
 #fix: start app from LaunchPad
-subst 's|QString("./%1")|QString("/usr/bin/%1")|' Pdf4QtLaunchPad/launchdialog.cpp
+subst 's|QString("./%1")|QString("/usr/bin/%1")|' Pdf4QtLaunchPad/launchapplication.cpp
 #fix: load plugins
 subst 's|"lib"|"lib64"|' Pdf4QtLibGui/pdfprogramcontroller.cpp
 #fix: load translations
-subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
+subst 's|applicationDirectory.absolutePath()|"%_datadir/pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -80,7 +76,7 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' 
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*.appdata.xml
-%_datadir/Pdf4qt/*
+%_datadir/%name
 
 %files devel
 %_includedir/*/*.h
@@ -98,6 +94,9 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' 
 %_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Mon Jun 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0.0-alt1
+- 1.5.3.1 -> 1.6.0.0
+
 * Mon Jan 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.3.1-alt1
 - 1.5.3.0 -> 1.5.3.1
 
