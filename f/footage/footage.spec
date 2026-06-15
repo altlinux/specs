@@ -1,24 +1,25 @@
 %def_enable snapshot
 %define _name Footage
-%define ver_major 1.3
+%define ver_major 1.4
 %define xdg_name io.gitlab.adhami3310.Footage
 
 %def_enable check
 %def_disable bootstrap
 
 Name: footage
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple video editor for GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Video
 Url: https://gitlab.com/adhami3310/Footage.git
+
+Vcs: https://gitlab.com/adhami3310/Footage.git
 
 %if_disabled snapshot
 Source: https://gitlab.com/adhami3310/Footage/releases/download/v%version/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.com/adhami3310/Footage.git
 Source: %_name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -78,6 +79,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_iconsdir/hicolor/scalable/actions/*.svg
@@ -85,6 +87,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* PRESS*
 
 %changelog
+* Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- updated to v1.4.0-5-g9414be6
+
 * Thu Jan 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
