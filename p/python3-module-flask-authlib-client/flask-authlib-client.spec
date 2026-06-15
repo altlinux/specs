@@ -5,7 +5,7 @@
 
 Name: python3-module-flask-authlib-client
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Flask-Authlib-Client is a Flask extension
 License: GPL-3
@@ -14,6 +14,7 @@ URL: https://pypi.org/project/Flask-Authlib-Client/
 VCS: https://github.com/michaelbukachi/flask-authlib-client
 
 Source: %name-%version.tar
+Patch1: fix_time_def.patch
 
 BuildArch: noarch
 
@@ -29,6 +30,7 @@ authorization/resource servers.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export LC_ALL=en_US.UTF-8
@@ -51,5 +53,8 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/flask_authlib_client-*.dist-info/
 
 %changelog
+* Mon Jun 15 2026 Pavel Vasenkov <pav@altlinux.org> 1.0-alt2
+- Fix time definition (Closes: #59504)
+
 * Sat Feb 21 2026 Pavel Vasenkov <pav@altlinux.org> 1.0-alt1
 - New build for sisyphus
