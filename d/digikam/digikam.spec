@@ -16,11 +16,11 @@
 %define rname digikam
 %define label digiKam
 Name: %rname
-%define ver_major 8
-%define ver_minor 5
+%define ver_major 9
+%define ver_minor 1
 %define ver_bugfix 0
-Version: 9.0.0
-Release: alt2
+Version: %{ver_major}.%{ver_minor}.%{ver_bugfix}
+Release: alt1
 %K6init no_altplace
 
 %define sover %version
@@ -62,7 +62,6 @@ Patch101: alt-own-mysql-install-db.patch
 Patch102: fix-segfault-on-action-search.patch
 Patch103: alt-kf-deps.patch
 Patch104: alt-xdg-current-desktop.patch
-Patch105: alt-fix-btns-freezing-after-help-closed.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-ifver rpm-macros-qt6-webengine libopencv-devel
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
@@ -178,6 +177,7 @@ Development files for %label.
 
 %prep
 %setup -n %rname-%version -c -a1 -a2 -a3
+install -m 0644 %SOURCE6 ./
 mv %rname-%version core
 pushd core
 %patch100 -p1
@@ -185,17 +185,23 @@ pushd core
 %patch102 -p2
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 popd
-install -m 0644 %SOURCE6 ./
-sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
-sed -i '/DIGIKAM_MINOR_VERSION/s|@VERMINOR@|%ver_minor|' CMakeLists.txt
-sed -i '/DIGIKAM_PATCH_VERSION/s|@VERPATCH@|%ver_bugfix|' CMakeLists.txt
+#sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
+#sed -i '/DIGIKAM_MINOR_VERSION/s|@VERMINOR@|%ver_minor|' CMakeLists.txt
+#sed -i '/DIGIKAM_PATCH_VERSION/s|@VERPATCH@|%ver_bugfix|' CMakeLists.txt
 cat >>CMakeLists.txt <<__EOF__
     find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS DocTools)
     ECM_OPTIONAL_ADD_SUBDIRECTORY(doc)
     ECM_OPTIONAL_ADD_SUBDIRECTORY(doc-translated)
 __EOF__
+# set soname
+#pushd core/libs
+#    find -type f -name CMakeLists.txt | \
+#    while read f ; do
+#	LIB_NAME=`grep ^add_library $f | head -n1 | sed 's|^add_library(||' | sed 's|[[:space:]].*||'`
+#	sed -i "s|^\(add_library.*\)|\1\nset_target_properties($LIB_NAME PROPERTIES VERSION %version SOVERSION %ver_major)|" $f
+#    done
+#popd
 # change double to qreal for casting on arm
 #find -type f -name \*.cpp | \
 #while read f ; do
@@ -289,6 +295,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Wed Jun 10 2026 Sergey V Turchin <zerg@altlinux.org> 9.1.0-alt1
+- new version
+
 * Mon May 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 9.0.0-alt2
 - fix buttons freezing after help is closed (closes: 53467)
 
