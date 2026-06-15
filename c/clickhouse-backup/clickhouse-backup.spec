@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 ExcludeArch: %ix86
 Name: clickhouse-backup
-Version: 2.7.0
+Version: 2.7.2
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
@@ -43,6 +43,9 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Thu Jun 11 2026 Anton Farygin <rider@altlinux.org> 2.7.2-alt1
+- 2.7.0 -> 2.7.2
+
 * Sun May 31 2026 Anton Farygin <rider@altlinux.org> 2.7.0-alt1
 - 2.6.43 -> 2.7.0
 
