@@ -4,8 +4,8 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.12.2.277
-Release:       alt0.2
+Version:       0.12.2.277.1
+Release:       alt0.1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -61,7 +61,7 @@ BuildRequires: gem(rackup)
 %add_python3_req_skip pyagentx
 Requires:      python3-module-pcs = %version
 Requires:      python3-module-snmp = %version
-Requires:      gem(pcsd) = 0.12.2.277
+Requires:      gem(pcsd) = 0.12.2.277.1
 Obsoletes:     pcs-pcsd < %EVR
 Provides:      pcs-pcsd = %EVR
 
@@ -99,12 +99,12 @@ agent (snmpd).
 
 
 %package       -n gem-pcsd
-Version:       0.12.2.277
+Version:       0.12.2.277.1
 Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service
 Group:         Development/Ruby
 
-Provides:      gem(pcsd) = 0.12.2.277
+Provides:      gem(pcsd) = 0.12.2.277.1
 Requires:      gem(backports)
 Requires:      gem(childprocess)
 Requires:      gem(ethon)
@@ -123,14 +123,14 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 
 %if_enabled    doc
 %package       -n gem-pcsd-doc
-Version:       0.12.2.277
+Version:       0.12.2.277.1
 Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pcsd
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(pcsd) = 0.12.2.277
+Requires:      gem(pcsd) = 0.12.2.277.1
 
 %description   -n gem-pcsd-doc
 Pacemaker/Corosync configuration system service documentation files.
@@ -145,14 +145,14 @@ Pacemaker/Corosync gui/cli configuration system and daemon.
 
 %if_enabled    devel
 %package       -n gem-pcsd-devel
-Version:       0.12.2.277
+Version:       0.12.2.277.1
 Release:       alt0.2
 Summary:       Pacemaker/Corosync configuration system service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pcsd
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pcsd) = 0.12.2.277
+Requires:      gem(pcsd) = 0.12.2.277.1
 Requires:      gem(bundler)
 Requires:      gem(io-console)
 Requires:      gem(json)
@@ -272,6 +272,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Mon Jun 15 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2.277.1-alt0.1
+- ! fixed code to detect wither the exec is system for local (ALT #59328)
+
 * Thu May 28 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.2.277-alt0.2
 - ! fixed path to run service script in settings (ALT #59328)
 
