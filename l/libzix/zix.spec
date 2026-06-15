@@ -1,5 +1,5 @@
 Name: libzix
-Version: 0.8.0
+Version: 0.8.2
 Release: alt1
 
 Summary: Lightweight C library of portability wrappers and data structures.
@@ -41,6 +41,9 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jun 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8.2-alt1
+- 0.8.2 released
+
 * Thu Nov 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8.0-alt1
 - 0.8.0 released
 

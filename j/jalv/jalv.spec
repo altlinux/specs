@@ -1,5 +1,5 @@
 Name: jalv
-Version: 1.8.2
+Version: 1.10.0
 Release: alt1
 
 Summary: Simple host for LV2 plugins
@@ -12,15 +12,16 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ meson
 BuildRequires: pkgconfig(jack)
-BuildRequires: pkgconfig(lilv-0)
 BuildRequires: pkgconfig(lv2)
-BuildRequires: pkgconfig(serd-0)
-BuildRequires: pkgconfig(sord-0)
-BuildRequires: pkgconfig(sratom-0)
-BuildRequires: pkgconfig(suil-0)
-BuildRequires: pkgconfig(zix-0)
+BuildRequires: pkgconfig(lilv-0) >= 0.28.0
+BuildRequires: pkgconfig(serd-0) >= 0.32.10
+BuildRequires: pkgconfig(sord-0) >= 0.16.22
+BuildRequires: pkgconfig(sratom-0) >= 0.6.22
+BuildRequires: pkgconfig(suil-0) >= 0.10.26
+BuildRequires: pkgconfig(zix-0) >= 0.8.2
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt6Widgets)
 
 %package gtk3
 Summary: GTK-based host for LV2 plugins
@@ -33,6 +34,12 @@ Summary: Qt-based host for LV2 plugins
 Group: Sound
 Requires: jalv = %version-%release
 Requires: libsuil-qt5
+
+%package qt6
+Summary: Qt-based host for LV2 plugins
+Group: Sound
+Requires: jalv = %version-%release
+Requires: libsuil-qt6
 
 %define desc\
 Jalv (JAck LV2) is a simple host for LV2 plugins. It runs a plugin,\
@@ -48,6 +55,9 @@ This package offers GTK3 based GUI for LV2 plugins.
 %description qt5 %desc
 This package offers Qt based GUI for LV2 plugins.
 
+%description qt6 %desc
+This package offers Qt based GUI for LV2 plugins.
+
 %prep
 %setup
 
@@ -59,7 +69,10 @@ This package offers Qt based GUI for LV2 plugins.
 %meson_install
 sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
     < %buildroot%_desktopdir/jalv.desktop \
-    > %buildroot%_desktopdir/jalv-qt.desktop
+    > %buildroot%_desktopdir/jalv-qt5.desktop
+sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt6,' \
+    < %buildroot%_desktopdir/jalv.desktop \
+    > %buildroot%_desktopdir/jalv-qt6.desktop
 
 %files
 %doc AUTHORS COPYING INSTALL* NEWS README*
@@ -75,11 +88,19 @@ sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
 %_man1dir/jalv.gtk3.1*
 
 %files qt5
-%_bindir/jalv.qt*
-%_desktopdir/jalv-qt.desktop
-%_man1dir/jalv.qt*.1*
+%_bindir/jalv.qt5
+%_desktopdir/jalv-qt5.desktop
+%_man1dir/jalv.qt5.1*
+
+%files qt6
+%_bindir/jalv.qt6
+%_desktopdir/jalv-qt6.desktop
+%_man1dir/jalv.qt6.1*
 
 %changelog
+* Mon Jun 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.0-alt1
+- 1.10.0 released
+
 * Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.2-alt1
 - 1.8.2 released
 
