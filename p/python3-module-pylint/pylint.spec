@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.5
-Release: alt1.1
+Version: 4.0.6
+Release: alt1
 Summary: Python code static checker
 License: GPLv2+
 Group: Development/Python3
@@ -14,28 +14,20 @@ Url: https://pypi.org/project/pylint/
 Vcs: https://github.com/pylint-dev/pylint
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 Provides: pylint-py3 = %EVR
 Obsoletes: pylint-py3 < %EVR
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-astroid
-BuildRequires: python3-module-py
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-benchmark
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-typing-extensions
-
-BuildRequires: python3-module-dill
-BuildRequires: python3-module-gitpython
-BuildRequires: python3-module-isort
-BuildRequires: python3-module-mccabe
-BuildRequires: python3-module-platformdirs
-BuildRequires: python3-module-tomlkit
-BuildRequires: python3-module-pyenchant
+%set_pyproject_deps_check_filter towncrier
+%pyproject_builddeps_metadata_extra testutils
+%pyproject_builddeps_metadata_extra spelling
+%pyproject_builddeps_check
 # PyEnchant's spelling dictionary
 BuildRequires: hunspell-en_US
 %endif
@@ -51,6 +43,11 @@ about how the code could be refactored.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements_test_min.txt
+%endif
 
 %build
 %pyproject_build
@@ -77,8 +74,8 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.5-alt1.1
-- Demodernized packaging.
+* Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 4.0.6-alt1
+- 4.0.5 -> 4.0.6
 
 * Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 4.0.5-alt1
 - 4.0.4 -> 4.0.5.
