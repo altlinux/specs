@@ -6,6 +6,8 @@
 %ifarch x86_64 aarch64
 %def_with cuda
 %filter_from_requires /libcudart\.so\.12/d
+# cuda (12.x) is not ready for gcc15
+%define gcc_ver 14
 %else
 %def_without cuda
 %endif
@@ -14,7 +16,7 @@
 
 Name: opensubdiv
 Version: %soname
-Release: alt3
+Release: alt4
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: TOST
@@ -42,6 +44,10 @@ BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel 
 BuildRequires: gcc-c++ libgomp-devel
 %if_with cuda
 BuildRequires: nvidia-cuda-devel
+BuildRequires: gcc%{gcc_ver}-c++
+# build runs under gcc%{gcc_ver}: -fopenmp needs the matching libgomp.so,
+# otherwise FindOpenMP fails and the Osd OMP evaluator is dropped
+BuildRequires: libgomp%{gcc_ver}-devel
 %endif
 
 %description
@@ -132,6 +138,9 @@ An Open-Source subdivision surface library documentation
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%if_with cuda
+export GCC_VERSION=%{gcc_ver}
+%endif
 %cmake \
 	-DCMAKE_CXX_STANDARD=17 \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -167,6 +176,9 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Jun 14 2026 Anton Farygin <rider@altlinux.org> 3.7.0-alt4
+- fix FTBFS: compile cuda with gcc14 (nvcc 12.x rejects gcc15 headers)
+
 * Wed Feb 18 2026 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt3
 - Fix FTBFS with new Ptex (std::clamp is C++17 feature).
 
