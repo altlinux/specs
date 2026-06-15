@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.40.0
+Version: 0.41.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -103,6 +103,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 0.41.0-alt1
+- added config file validation: warn on unknown sections and misspelled keys
+- added submit --with pkg.git=tag search form
+- added submit kernel-image specsubst autodetect (-s kflavour=)
+- added gen environment -d full decision-path tracing
+- enabled the runtime shell-injection safety net in the production binary
+- fixed validate the new version against an allowlist before writing the spec
+- fixed gen pypi2spec/opam2spec: sanitize upstream metadata against macro injection
+- fixed build: clean up tarballs and apt tmpdirs on every exit path
+- fixed sandbox: disable commit signing and recreate missing hasher dirs
+
 * Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 0.40.0-alt1
 - added sandbox [sandbox] specbr to skip BuildRequires with a bare chroot init
 - added submit kernel-module template autodetect with per-flavour specsubst tags
