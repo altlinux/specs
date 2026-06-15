@@ -5,7 +5,7 @@
 
 Name: %_name
 Version: 0.15.3
-Release: alt1
+Release: alt1.1
 
 Summary: A fast high compression read-only file system
 License: MIT
@@ -102,6 +102,8 @@ rm -f %buildroot%_libdir/*.a
 
 # fix symlink
 ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
+# https://bugzilla.altlinux.org/59541
+ln -sf ../../sbin/%{_name}extract %buildroot%_bindir/%{_name}extract
 
 %check
 %ctest
@@ -110,6 +112,8 @@ ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
 /sbin/%{_name}ck
 /sbin/%{_name}extract
 /sbin/mk%_name
+# symlink
+%_bindir/%{_name}extract
 %_man1dir/*
 %_man5dir/%_name-format.5*
 %_man7dir/%_name-env.7*
@@ -119,6 +123,7 @@ ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
 
 %files -n fuse-%name
 /sbin/%_name
+# symlink
 %_bindir/mount.%_name
 %_desktopdir/%_name-mount-handler.desktop
 %_datadir/mime/packages/%_name.xml
@@ -128,6 +133,9 @@ ln -sf ../../sbin/%_name %buildroot%_bindir/mount.%_name
 %exclude %_libdir/cmake/%_name/
 
 %changelog
+* Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.3-alt1.1
+- symlinked dwarfsextract to %%_bindir (ALT #59541)
+
 * Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.3-alt1
 - 0.15.3
 
