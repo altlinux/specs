@@ -4,7 +4,7 @@
 %define rdn_name org.zim_wiki.Zim
 
 Name: zim-wiki
-Version: 0.76.3
+Version: 0.77.0
 Release: alt1
 
 Summary: A desktop wiki and outliner
@@ -74,12 +74,16 @@ install -pD -m644 data/globe.svg %buildroot%_iconsdir/hicolor/scalable/apps/%rdn
 %_datadir/mime/*
 %_datadir/metainfo/*
 %_iconsdir/*/*/*/*.svg
+%_iconsdir/*/*/*/*.png
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %exclude %_iconsdir/ubuntu*
 
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.77.0-alt1
+- 0.77.0
+
 * Fri Mar 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.3-alt1
 - 0.76.3
 
