@@ -7,7 +7,7 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.19.1
+Version: 7.0
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -143,6 +143,9 @@ end
 %_includedir/*
 
 %changelog
+* Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 7.0-alt1
+- 6.19.1 -> 7.0
+
 * Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 6.19.1-alt1
 - 6.19 -> 6.19.1
 
