@@ -5,7 +5,7 @@
 %define devname lib%name-devel
 
 Name: openvr
-Version: 2.12.14
+Version: 2.15.6
 Release: alt1
 
 Summary: Virtual reality SDK
@@ -90,6 +90,9 @@ rm -r thirdparty samples/thirdparty
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 15 2026 Mikhail Tergoev <fidel@altlinux.org> 2.15.6-alt1
+- 2.15.6
+
 * Mon Jan 12 2026 Ilya Sorochan <k0tran@altlinux.org> 2.12.14-alt1
 - 2.12.14
 
