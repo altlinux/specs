@@ -5,16 +5,17 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.16
+Version: 1.0.0
 Release: alt1
 Summary: A light, configurable Sphinx theme
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/alabaster/
+Url: https://pypi.org/project/alabaster
 Vcs: https://github.com/sphinx-doc/alabaster
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -47,11 +48,13 @@ the default theme.
 %pyproject_run -- sphinx-build -M html ./docs ./build -j=auto -T -W --keep-going
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 14 2026 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.7.16 -> 1.0.0.
+
 * Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.7.16-alt1
 - 0.7.6 -> 0.7.16.
 
