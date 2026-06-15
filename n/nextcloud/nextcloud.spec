@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 33.0.2
+Version: 34.0.0
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -40,6 +40,9 @@ Requires: php%php_version-memcached
 Requires: php%php_version-gmp
 Requires: php%php_version-imagick
 Requires: php%php_version-exif
+# Database support
+Requires: php%php_version-pdo_mysql
+Requires: php%php_version-pdo_pgsql
 
 Source0: %name-%version.tar
 Source1: %name.watch
@@ -169,6 +172,13 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 34.0.0-alt1
+- New version (fixes: CVE-2026-45154, CVE-2026-45155, CVE-2026-45156,
+  CVE-2026-45157, CVE-2026-45159, CVE-2026-45281, CVE-2026-45282,
+  CVE-2026-45283, CVE-2026-45284, CVE-2026-45690).
+- Required mysql and postgresql drivers for update from previous major PHP
+  version.
+
 * Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 33.0.2-alt1
 - New version (fixes: CVE-2025-66512).
 
