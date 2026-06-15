@@ -5,7 +5,7 @@
 %def_with check
 
 Name: ayatana-indicator-session
-Version: 26.6.0
+Version: 26.6.1
 Release: alt1
 
 Summary: Ayatana Indicator showing session management, status and user switching
@@ -98,6 +98,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Mon Jun 15 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.1-alt1
+- New version 26.6.1.
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
 - New version 26.6.0.
 - Enabled tests.
