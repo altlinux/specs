@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.21
+Version: 1.0.22
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libsystemd-devel dtk6-common-devel libdtk6core-devel
+BuildRequires: libdqt6-gui
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -106,6 +107,10 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.22-alt1
+- New version 1.0.22.
+- Fixed build on dqt6-base 6.10.3.
+
 * Thu Mar 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.21-alt1
 - New version 1.0.21.
 

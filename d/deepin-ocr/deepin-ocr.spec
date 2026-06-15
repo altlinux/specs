@@ -3,7 +3,7 @@
 
 Name: deepin-ocr
 Version: 6.5.16
-Release: alt1
+Release: alt2
 
 Summary: Base character recognition ability on DDE
 
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 # Automatically added by buildreq on Wed Apr 23 2025
 # optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-qml libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
 BuildRequires: dqt6-tools-devel dtk6-common-devel libGLU-devel libdtk6ocr-devel libdtk6widget-devel python3-devel libncnn-devel deepin-libopencv_world-devel libwayland-client-devel
-BuildRequires: libcups-devel
+BuildRequires: libcups-devel libdqt6-qml
 %if_enabled clang
 BuildRequires: rpm-macros-llvm-common
 BuildRequires: clang-devel lld-devel libomp%_llvm_version-devel
@@ -84,6 +84,9 @@ export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtTest:$CPLUS_INCLUDE_PATH
 %_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.16-alt2
+- Fixed build on dqt6-declarative 6.10.3.
+
 * Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.16-alt1
 - New version 6.5.16.
 - Fixed build on dtk 6.7.31.

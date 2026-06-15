@@ -5,7 +5,7 @@
 
 Name: dqt6-tools
 Version: 6.10.3
-Release: alt1.dde.1
+Release: alt1.dde.2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -45,7 +45,7 @@ BuildRequires: dqt6-base-devel dqt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: libdqt6-quickwidgets libdqt6-xml libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-sql libdqt6-printsupport libdqt6-openglwidgets libdqt6-quicklayouts libdqt6-qmlcompiler vulkan-headers
+BuildRequires: libdqt6-quickwidgets libdqt6-xml libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-sql libdqt6-printsupport libdqt6-openglwidgets libdqt6-quicklayouts libdqt6-qmlcompiler vulkan-headers libdqt6-help
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
 %endif
@@ -332,6 +332,9 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.2
+- fix build on dqt6-declarative 6.10.3
+
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.1
 - merge with new version
 

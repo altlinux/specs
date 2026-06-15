@@ -36,7 +36,7 @@
 Name: dqt6-base
 %define major  6
 Version: 6.10.3
-Release: alt1.dde.1
+Release: alt1.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -119,6 +119,7 @@ BuildRequires: libsqlite3-devel
 %if_disabled bootstrap
 BuildRequires: dqt6-base-devel dqt6-tools
 %endif
+BuildRequires: libdqt6-qml libdqt6-help
 
 # find libraries
 %add_findprov_lib_path %_dqt6_libdir
@@ -890,6 +891,9 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.2
+- fix build on dqt6-declarative 6.10.3
+
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.1
 - merge with new version
 
