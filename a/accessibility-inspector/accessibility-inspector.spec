@@ -1,29 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%def_disable testing
 
-%def_with check
+%define rname accessibility-inspector
+%define accessibilityinspector_sover 1
+%define libaccessibilityinspector libaccessibilityinspector%accessibilityinspector_sover
 
-Name: accessibility-inspector
+Name: %rname
 Version: 26.04.2
-Release: alt1
+Release: alt2
+%K6init
 
+Group: Graphical desktop/KDE
 Summary: Inspect your application accessibility tree
 License: LGPL-2.0-or-later
-Group: Graphical desktop/KDE
 Url: https://invent.kde.org/accessibility/accessibility-inspector
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires(pre): rpm-macros-cmake
-
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: extra-cmake-modules
-
-BuildRequires: pkgconfig(Qt6)
-BuildRequires: pkgconfig(Qt6Qml)
-
+BuildRequires: cmake extra-cmake-modules
+BuildRequires: pkgconfig(Qt6) pkgconfig(Qt6Qml)
 BuildRequires: kf6-kcoreaddons-devel
 BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kdbusaddons-devel
@@ -33,7 +29,7 @@ BuildRequires: kf6-kxmlgui-devel
 BuildRequires: kf6-kcrash-devel
 BuildRequires: libqaccessibilityclient-qt6-devel
 
-%if_with check
+%if_with testing
 BuildRequires: ctest
 BuildRequires: icon-theme-breeze
 BuildRequires: xauth
@@ -48,38 +44,63 @@ Accessibility Inspector is as the name suggests an inspector for your
 application accessibility tree. It lets you check all the items exposed
 via At-SPI, too.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kde-common
+Conflicts: accessibility-inspector < 26.04.2-alt2
+%description common
+%name common package
+
+%package -n %libaccessibilityinspector
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libaccessibilityinspector
+%name library
+
 %prep
 %setup
 sed -i "s|Categories=.*|Categories=Qt;KDE;Utility;Accessibility;|" org.kde.accessibilityinspector.desktop
 
 %build
-%cmake \
-%if_with check
-       -DBUILD_TESTING=ON
+%K6build \
+%if_enabled testing
+    -DBUILD_TESTING=ON \
 %else
-       -DBUILD_TESTING=OFF
+    -DBUILD_TESTING=OFF \
 %endif
-%cmake_build
+    #
 
 %install
-%cmake_install
+%K6install
 
-%find_lang %name --with-kde --all-name --with-man
+%find_lang %name --with-kde --all-name
 
 %check
+%if_enabled testing
 xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
+%endif
 
-%files -f %{name}.lang
+%files common -f %name.lang
+
+%files
 %doc README.md
 %_K6bin/accessibilityinspector
-%_K6lib/libaccessibilityinspector.so.1
-%_K6lib/libaccessibilityinspector.so.1.0
-%_K6xdgapp/org.kde.accessibilityinspector.desktop
-%_K6icon/hicolor/scalable/apps/org.kde.accessibilityinspector.svg
-%_K6data/metainfo/org.kde.accessibilityinspector.metainfo.xml
-%_K6data/qlogging-categories6/accessibilityinspector.categories
+%_K6xdgapp/*accessibilityinspector*.desktop
+%_K6icon/*/*/apps/*accessibilityinspector*
+%_K6data/metainfo/*accessibilityinspector*.xml
+%_K6data/qlogging-categories6/*accessibilityinspector*.categories
+
+%files -n %libaccessibilityinspector
+%_K6lib/libaccessibilityinspector.so.%accessibilityinspector_sover
+%_K6lib/libaccessibilityinspector.so.*
 
 %changelog
+* Mon Jun 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
+- fix packaging
+
 * Fri Jun 05 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
 - New version 26.04.2.
 
