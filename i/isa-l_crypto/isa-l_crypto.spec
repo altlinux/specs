@@ -3,7 +3,7 @@
 %def_without check
 
 Name: isa-l_crypto
-Version: 2.26
+Version: 2.26.1
 Release: alt1
 
 Summary: Intelligent Storage Acceleration Library with crypto
@@ -69,6 +69,9 @@ The package provides development files for %name.
 %_libdir/libisal_crypto.so
 
 %changelog
+* Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 2.26.1-alt1
+- New version 2.26.1.
+
 * Tue Feb 03 2026 Leontiy Volodin <lvol@altlinux.org> 2.26-alt1
 - New version 2.26.
 
