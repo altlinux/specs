@@ -5,7 +5,7 @@ Group: File tools
 %global bashcompdir %(pkg-config --variable=completionsdir bash-completion)
 
 Name:           lynis
-Version:        3.0.9
+Version:        3.1.6
 Release:        alt1
 Summary:        Security and system auditing tool
 License:        GPLv3
@@ -62,6 +62,7 @@ chmod 644 %buildroot%_datadir/%name/include/*
 
 mkdir -p  %buildroot%_datadir/%name/plugins/
 install -p plugins/* %buildroot%_datadir/%name/plugins/
+chmod 640 %buildroot%_datadir/%name/plugins/*
 
 cp -pR db/ %buildroot%_datadir/%name/
 
@@ -76,7 +77,6 @@ do
     mkdir -p %buildroot`dirname "$rpm404_ghost"`
     touch %buildroot"$rpm404_ghost"
 done
-
 
 %check
 # Sanity check
@@ -96,6 +96,9 @@ done
 %ghost %_localstatedir/log/lynis-report.dat
 
 %changelog
+* Mon Jun 15 2026 Pavel Vasenkov <pav@altlinux.org> 3.1.6-alt1
+- update new release 3.1.6 (Closes: #52018)
+
 * Fri Mar 01 2024 Pavel Vasenkov <pav@altlinux.org> 3.0.9-alt1
 - update new release 3.0.9 (Closed: #49562)
 
