@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     4
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -540,12 +540,7 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 
 %ifnarch %ix86
 %check
-%ifarch x86_64
-QEMU_OPT='-m 4096 -object memory-backend-ram,id=ram-node0,size=4096M -numa node,nodeid=0,cpus=0-3,memdev=ram-node0'
-%else
-QEMU_OPT=""
-%endif
-vm-run --rootfs --user --sudo --cpu=4 --qemu="$QEMU_OPT" "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+vm-run --rootfs --user --sudo --cpu=1 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 %endif
 
 %install
@@ -839,10 +834,6 @@ fi
 %_datadir/%PGSQL/extension/amcheck-*.sql
 %_datadir/%PGSQL/extension/amcheck.control
 %_libdir/%PGSQL/auth_delay.so
-%_libdir/%PGSQL/auto_dump.so
-%_datadir/%PGSQL/extension/auto_dump-*.sql
-%_datadir/%PGSQL/extension/auto_dump.control
-%_libdir/%PGSQL/auto_explain.so
 %_libdir/%PGSQL/autoinc.so
 %_datadir/%PGSQL/extension/autoinc-*.sql
 %_datadir/%PGSQL/extension/autoinc.control
@@ -873,15 +864,9 @@ fi
 %_libdir/%PGSQL/earthdistance.so
 %_datadir/%PGSQL/extension/earthdistance-*.sql
 %_datadir/%PGSQL/extension/earthdistance.control
-%_libdir/%PGSQL/fasttrun.so
-%_datadir/%PGSQL/extension/fasttrun-*.sql
-%_datadir/%PGSQL/extension/fasttrun.control
 %_libdir/%PGSQL/file_fdw.so
 %_datadir/%PGSQL/extension/file_fdw-*.sql
 %_datadir/%PGSQL/extension/file_fdw.control
-%_libdir/%PGSQL/fulleq.so
-%_datadir/%PGSQL/extension/fulleq-*.sql
-%_datadir/%PGSQL/extension/fulleq.control
 %_libdir/%PGSQL/fuzzystrmatch.so
 %_datadir/%PGSQL/extension/fuzzystrmatch-*.sql
 %_datadir/%PGSQL/extension/fuzzystrmatch.control
@@ -919,9 +904,6 @@ fi
 %_libdir/%PGSQL/ltree_plpython3.so
 %_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
 %_datadir/%PGSQL/extension/ltree_plpython3u.control
-%_libdir/%PGSQL/mchar.so
-%_datadir/%PGSQL/extension/mchar-*.sql
-%_datadir/%PGSQL/extension/mchar.control
 %_libdir/%PGSQL/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
@@ -941,9 +923,6 @@ fi
 %_libdir/%PGSQL/pg_prewarm.so
 %_datadir/%PGSQL/extension/pg_prewarm-*.sql
 %_datadir/%PGSQL/extension/pg_prewarm.control
-%_libdir/%PGSQL/pg_stat_statements.so
-%_datadir/%PGSQL/extension/pg_stat_statements-*.sql
-%_datadir/%PGSQL/extension/pg_stat_statements.control
 %_libdir/%PGSQL/pg_surgery.so
 %_datadir/%PGSQL/extension/pg_surgery-*.sql
 %_datadir/%PGSQL/extension/pg_surgery.control
@@ -953,9 +932,6 @@ fi
 %_libdir/%PGSQL/pg_visibility.so
 %_datadir/%PGSQL/extension/pg_visibility-*.sql
 %_datadir/%PGSQL/extension/pg_visibility.control
-%_libdir/%PGSQL/pg_wait_sampling.so
-%_datadir/%PGSQL/extension/pg_wait_sampling-*.sql
-%_datadir/%PGSQL/extension/pg_wait_sampling.control
 %_libdir/%PGSQL/pg_walinspect.so
 %_datadir/%PGSQL/extension/pg_walinspect-*.sql
 %_datadir/%PGSQL/extension/pg_walinspect.control
@@ -1068,6 +1044,25 @@ fi
 %_datadir/%PGSQL/system_functions.sql
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
+%_libdir/%PGSQL/auto_explain.so
+%_libdir/%PGSQL/auto_dump.so
+%_datadir/%PGSQL/extension/auto_dump-*.sql
+%_datadir/%PGSQL/extension/auto_dump.control
+%_libdir/%PGSQL/fasttrun.so
+%_datadir/%PGSQL/extension/fasttrun-*.sql
+%_datadir/%PGSQL/extension/fasttrun.control
+%_libdir/%PGSQL/fulleq.so
+%_datadir/%PGSQL/extension/fulleq-*.sql
+%_datadir/%PGSQL/extension/fulleq.control
+%_libdir/%PGSQL/mchar.so
+%_datadir/%PGSQL/extension/mchar-*.sql
+%_datadir/%PGSQL/extension/mchar.control
+%_libdir/%PGSQL/pg_stat_statements.so
+%_datadir/%PGSQL/extension/pg_stat_statements-*.sql
+%_datadir/%PGSQL/extension/pg_stat_statements.control
+%_libdir/%PGSQL/pg_wait_sampling.so
+%_datadir/%PGSQL/extension/pg_wait_sampling-*.sql
+%_datadir/%PGSQL/extension/pg_wait_sampling.control
 %_localstatedir/%PGSQL
 %docdir/README.ALT-ru_RU.UTF-8
 %docdir/README.rpm-dist
@@ -1183,6 +1178,11 @@ fi
 %endif
 
 %changelog
+* Mon Jun 15 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt4
+- Move extention auto_dump, auto_explain, fasttrun, fulleq, mchar,
+  pg_stat_statements, pg_wait_sampling from -contrib to -server (ALT #59522)
+- Fix run tests. Use 1 cpu
+
 * Mon Jun 01 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt3
 - Update 1C patch
 - Drop 00002-1C-Fix-test-join.patch fix upstream
