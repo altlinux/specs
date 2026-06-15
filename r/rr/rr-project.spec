@@ -4,9 +4,12 @@
 #  %%define _stripped_files_terminate_build 1
 #  %%set_verify_elf_method strict
 
+%define commit_num .151
+%define commit_id .gf85267d3
+
 Name:		rr
-Version: 5.9.0
-Release: alt2
+Version: 5.9.0.0%commit_num%commit_id
+Release: alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -129,6 +132,9 @@ file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug
 %files checkinstall
 
 %changelog
+* Mon Jun 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 5.9.0.0.151.gf85267d3-alt1
+- Update to upstream 5.9.0-151-gf85267d3 (2026-06-15).
+
 * Sat May 09 2026 Vitaly Chikunov <vt@altlinux.org> 5.9.0-alt2
 - Fix FTBFS with gcc-15.
 
