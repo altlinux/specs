@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
+Version: 6.2
 Release: alt1
 Summary: Very basic event publishing system
 License: ZPL-2.1
@@ -54,12 +54,14 @@ The zope.event package provides a simple event system. It provides:
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests*
 
 %changelog
+* Wed Apr 29 2026 Stanislav Levin <slev@altlinux.org> 6.2-alt1
+- 6.1 -> 6.2.
+
 * Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 5.1.1 -> 6.1.
 
