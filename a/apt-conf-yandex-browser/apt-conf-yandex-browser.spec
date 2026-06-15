@@ -1,6 +1,6 @@
 Name: apt-conf-yandex-browser
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: Official repository of Yandex Browser
 License: Public-Domain
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Requires: apt-https
 Requires: apt-gpgkeys-pki
-Requires: ffmpeg-plugin-browser-142
+Requires: ffmpeg-plugin-yandex-browser
 
 %description
 %{summary}.
@@ -33,6 +33,9 @@ install -Dpm0644 yandex-browser.asc %buildroot%_datadir/pki/apt-gpg/sources/yand
 %_datadir/pki/apt-gpg/sources/yandex-browser.asc
 
 %changelog
+* Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 1.0-alt3
+- Require ffmpeg-plugin-yandex-browser (separate package)
+
 * Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 1.0-alt2
 - Require ffmpeg-plugin-browser 142 version for correct playing video
 

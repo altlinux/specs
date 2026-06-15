@@ -172,11 +172,11 @@
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg-plugin-browser-142
+Name:		ffmpeg-plugin-yandex-browser
 Version:	142
 Release:	alt1
 
-Summary:	FFmpeg built specifically for codec support in special browser
+Summary:	FFmpeg built specifically for codec support in Yandex Browser
 License:	GPLv3
 Group:		Video
 
@@ -189,8 +189,6 @@ Patch1: chromium.patch
 Patch2: ffmpeg-chromium-120.patch
 Patch3: armv6-ffmpeg-no-thumb.patch
 Patch2000: ffmpeg-e2k-simd.patch
-
-Conflicts: ffmpeg-plugin-browser
 
 %define __find_provides %SOURCE1
 
@@ -689,8 +687,8 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 
 %install
 %makeinstall_std V=1 STRIP=true install-libffmpeg
-mkdir -p %buildroot/%_libdir/ffmpeg-plugin-browser/
-mv %buildroot/%_libdir/chromium/libffmpeg.so. %buildroot/%_libdir/ffmpeg-plugin-browser/libffmpeg.so
+mkdir -p %buildroot/%_libdir/yandex/browser/
+mv %buildroot/%_libdir/chromium/libffmpeg.so. %buildroot/%_libdir/yandex/browser/libffmpeg.so
 
 cat > add-provides.c <<__EOF__
 #include <stdio.h>
@@ -720,12 +718,11 @@ tests/checkasm/checkasm
 
 %files
 %doc README.* MAINTAINERS Changelog* LICENSE.md CREDITS*
-%dir %_libdir/ffmpeg-plugin-browser/
-%_libdir/ffmpeg-plugin-browser/libffmpeg.so
+%_libdir/yandex/browser/libffmpeg.so
 
 %changelog
 * Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 142-alt1
-- new version
+- build for yandex browser from official repo
 
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 132-alt1
 - new version
