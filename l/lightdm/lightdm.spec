@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt13
+Release: alt14
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -284,6 +284,11 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Wed Jun 03 2026 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt14
+- cancel authentication when greeter session stops
+- test launch of fallback greeter
+- test launch of fallback greeter during authentication
+
 * Mon Mar 16 2026 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt13
 - fix run fallback greeter in case of problems with the X server
 - ignore greeter-setup-script error with warning
