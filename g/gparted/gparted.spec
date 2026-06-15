@@ -10,7 +10,7 @@
 
 Name: gparted
 Version: 1.8.1
-Release: alt1
+Release: alt1.1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -49,10 +49,12 @@ Requires: udftools >= 2.0
 # since 1.2.0 (optional)
 # exfatprogs conflicts with exfat-utils
 Requires: exfatprogs >= 1.1.0
+#Requires: reiserfsprogs
 
+BuildRequires: gcc-c++
 BuildRequires: libparted-devel >= 3.2
 BuildRequires: libglibmm-devel >= 2.32 libgtkmm3-devel >= 3.4.0
-BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel
+BuildRequires: libuuid-devel
 BuildRequires: yelp-tools
 BuildRequires: polkit >= %polkit_ver libpolkit-devel
 %{?_enable_check:BuildRequires: xvfb-run}
@@ -134,6 +136,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Sun Jun 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1.1
+- no more progsreiserfs and reiserfsprogs
+
 * Wed Mar 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 

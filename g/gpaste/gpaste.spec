@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gpaste
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -30,7 +30,7 @@ Patch1: %name-42.0-alt-format.patch
 Requires: lib%name = %EVR
 
 %define glib_ver 2.76
-%define gtk4_ver 4.12
+%define gtk4_ver 4.18
 %define adwaita_ver 1.9
 %define gi_ver 1.58.0
 %define vala_ver 0.42
@@ -178,6 +178,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Sat Jun 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Wed Jun 10 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

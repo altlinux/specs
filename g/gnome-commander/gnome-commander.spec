@@ -15,7 +15,7 @@
 %def_disable bootstrap
 
 Name: gnome-commander
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -105,6 +105,9 @@ xvfb-run %__meson_test
 %exclude %_datadir/doc/libgcmd-%api_ver/
 
 %changelog
+* Sat Jun 13 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
