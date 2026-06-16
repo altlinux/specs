@@ -8,9 +8,13 @@
 %define xss_ad_dir	%_sysconfdir/X11/%name/hack.d
 #
 
+%def_with wayland
+
+%define _unpackaged_files_terminate_build 1
+
 Name: xscreensaver
-Version: 5.45
-Release: alt5
+Version: 6.15
+Release: alt1
 
 Summary: A screen saver and locker for the X window system
 
@@ -21,21 +25,18 @@ Url: http://www.jwz.org/xscreensaver
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
-Patch1: xscreensaver-5.40-do-not-claim-on-old-version.patch
-Patch2: xscreensaver-5.43-lcc-is-not-gcc.patch
-
-Source1: %name-%version-ad.tar
 
 Source2: %name.pamd
 Source3: %name-update.sh
-
-Source4: xscreensaver-hacks
-Source5: xscreensaver-hacks-gl
 
 Source6: ru.po
 
 Source7: xscreensaver-config.xsl
 Source8: xscreensaver-config.sh
+
+Source9: xscreensaver-hacks-bl
+
+Source10: xscreensaver-auth.control
 
 Requires: xli urlview appres
 Requires: %name-hack
@@ -44,16 +45,14 @@ Obsoletes: %name-contrib
 
 Provides: screen-saver-engine
 
-%if_with gnome2
-# NB: gnome-screensaver-3.0.0 doesn't contain migration script
-BuildPrereq: gnome-screensaver-utils
-%endif
 BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel
 BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel
 BuildRequires: libXxf86vm-devel libgle-devel libjpeg-devel
 BuildRequires: libpam-devel libxml2-devel xorg-cf-files
-BuildRequires: libgdk-pixbuf-xlib-devel libgtk+2-devel libsystemd-devel
+BuildRequires: libgdk-pixbuf-xlib-devel libgtk+3-devel libsystemd-devel
 BuildRequires: xsltproc
+BuildRequires: perl-diagnostics
+%{?_with_wayland:BuildRequires: libwayland-server-devel libwayland-client-devel}
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -76,41 +75,6 @@ can draw on the root window as a display mode.
 
 This package contains RPM macros needed to build packages
 for additional xscreensaver hacks.
-
-%package hacks
-Summary: A screen saver and locker for the X window system - standard hacks
-Group: Graphical desktop/Other
-Requires: %name = %EVR
-Requires: %name-modules = %EVR
-Provides: %name-hack = %EVR
-# By webcollage...
-Requires: netpbm libjpeg-utils
-# By noseguy and phosphor
-Requires: fortune-mod
-BuildArch: noarch
-
-%description hacks
-A modular screen saver and locker for the X Window System.
-Highly customizable: allows the use of any program that
-can draw on the root window as a display mode.
-
-This package contains standard xscreensaver hacks.
-
-%package hacks-gl
-Summary: A screen saver and locker for the X window system - GL hacks
-Group: Graphical desktop/Other
-Requires: %name = %EVR
-Requires: %name-modules-gl = %EVR
-Provides: %name-hack = %EVR
-Provides: %name-gl = %EVR
-Obsoletes: %name-gl
-
-%description hacks-gl
-A modular screen saver and locker for the X Window System.
-Highly customizable: allows the use of any program that
-can draw on the root window as a display mode.
-
-This package contains OpenGL xscreensaver hacks.
 
 %package -n desktop-screensaver-modules-xscreensaver
 Summary: A screen saver and locker for the X window system - MATE and XFCE Screensaver modules
@@ -151,6 +115,9 @@ Conflicts: %name > %EVR
 Requires: netpbm libjpeg-utils
 # By noseguy and phosphor
 Requires: fortune-mod
+Provides: %name-hack = %EVR
+Provides: %name-hacks = %EVR
+Obsoletes: %name-hacks < %EVR
 
 %description modules
 A modular screen saver and locker for the X Window System.
@@ -166,6 +133,15 @@ Conflicts: %name < %EVR
 Conflicts: %name > %EVR
 # By starwars
 Requires: fortune-mod
+# For mapscroller.pl
+Requires: perl(LWP/Simple.pm)
+Requires: perl(LWP/Protocol/https.pm)
+
+Provides: %name-hack = %EVR
+Provides: %name-gl = %EVR
+Obsoletes: %name-gl < %EVR
+Provides: %name-hacks-gl = %EVR
+Obsoletes: %name-hacks-gl < %EVR
 
 %description modules-gl
 A modular screen saver and locker for the X Window System.
@@ -192,14 +168,13 @@ This package contains xscreensaver configuration frontend.
 %prep
 %setup
 %patch -p1
-%patch1 -p2
-%ifarch %e2k
-%patch2 -p2
-%endif
-cp %SOURCE6 po/ru.po
+
+# Merge old ALT Russian translation with upstreams
+msgcat --use-first -o merged_ru.po %SOURCE6 po/ru.po
+mv -f merged_ru.po po/ru.po
 
 # Remove drug molecules
-rm -f hacks/images/molecules/{cocaine,dthc}.pdb
+rm hacks/images/molecules/{cocaine,dthc}.pdb
 
 %build
 %autoreconf
@@ -207,13 +182,43 @@ rm -f hacks/images/molecules/{cocaine,dthc}.pdb
   --without-motif \
   --with-pam \
   --without-shadow \
-  --with-gl \
+  --with-gle \
   --with-pixbuf \
-  --with-proc-interrupts
+  %{subst_with wayland} \
+  --with-systemd \
+  --with-gtk \
+  --with-text-file=/usr/share/license/GPL-2.0-only \
+  --with-proc-interrupts \
+  --with-proc-oom
+
 # Hack to install locale files
 subst 's,@install_sh@,install,' po/Makefile
 
 %make_build all
+
+%define alt_xs_hacks_list_begin ^\\\*programs:[[:blank:]]+\\\\\\
+%define alt_xs_hacks_list_end ^[[:blank:]-]*(GL:)?[[:blank:]]+[^[:blank:]]+[[:blank:]]+([^[:blank:]]+[[:blank:]]+)?\\\\\\n$
+%define src_xs_conf driver/XScreenSaver.ad
+
+# Generate ad/* files
+mkdir -p ad/hack.d/
+sed -nr "1,/%alt_xs_hacks_list_begin/p" %src_xs_conf >ad/xscreensaver.top
+sed -r "1,/%alt_xs_hacks_list_end/d" %src_xs_conf >ad/xscreensaver.bottom
+sed -nr "/%alt_xs_hacks_list_begin/,/%alt_xs_hacks_list_end/{s;^[[:blank:]-]*(GL:)?[[:blank:]]+([^[:blank:]]+).*$;\2;p}" \
+		%src_xs_conf | while read hname; do
+	if grep -qs "^$hname\$" %SOURCE9; then
+		continue
+	fi
+	sed -nr "/%alt_xs_hacks_list_begin/,/%alt_xs_hacks_list_end/{/^[[:blank:]-]*(GL:)?[[:blank:]]+${hname}[[:blank:]].*$/p}" \
+		%src_xs_conf | sed 's/\\n[[:blank:]]*$/\\n\\/' >ad/hack.d/"$hname.xss"
+
+	if grep -E -qs "^[[:blank:]-]*GL:[[:blank:]]+${hname}[[:blank:]].*$"  ad/hack.d/"$hname.xss"; then
+		echo "$hname" >>xscreensaver-hacks-gl.list
+	else
+		echo "$hname" >>xscreensaver-hacks.list
+	fi
+done
+
 
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir/{X11/{app-defaults,%name},pam.d},%_datadir/pixmaps,%_rpmlibdir,%_rpmmacrosdir}
@@ -229,10 +234,6 @@ cat <<EOF >%buildroot%_rpmmacrosdir/%name
 %%xss_hack_dir	%xss_hack_dir	
 %%xss_conf_dir	%xss_conf_dir	
 %%xss_ad_dir	%xss_ad_dir	
-
-# post-install commands (obsoleted by filetrigger)
-%%update_xscreensaver	%%{warning %%%%update_xscreensaver is obsolete}
-%%clean_xscreensaver	%%{warning %%%%clean_xscreensaver is obsolete}
 EOF
 
 cat <<EOF >%buildroot%_rpmlibdir/%name.filetrigger
@@ -242,9 +243,13 @@ grep -qs '^%xss_ad_dir/' && update-%name ||:
 EOF
 chmod 755 %buildroot%_rpmlibdir/%name.filetrigger
 
-tar xf %_sourcedir/%name-%version-ad.tar -C %buildroot%_sysconfdir/X11/%name
+cp -a ad/* %buildroot%_sysconfdir/X11/%name/
+
+install -pD -m755 %SOURCE10 %buildroot%_controldir/xscreensaver-auth
 
 %find_lang %name
+
+:> exclude-files.list
 
 MkModuleFilelists() {
   list="$1" && shift
@@ -252,10 +257,14 @@ MkModuleFilelists() {
 
   :> "%name-hacks-$name"
   :> "%name-modules-$name"
-  :> "%name-gnome-$name"
 
   while read module; do
-    [ "$module" = "providence" ] && continue
+    if [ ! -x "%buildroot%xss_hack_dir/$module" ]; then
+        echo "Module $module listed in the config, but not installed. Skipped."
+        echo "%%exclude %xss_ad_dir/$module.xss" >> exclude-files.list
+        continue
+    fi
+
     echo "%%config %xss_ad_dir/$module.xss" >> "%name-hacks-$name"
     echo "%xss_conf_dir/$module.xml" >> "%name-hacks-$name"
     echo "%xss_hack_dir/$module" >> "%name-modules-$name"
@@ -268,13 +277,33 @@ MkModuleFilelists() {
 }
 
 mkdir -p %buildroot%_datadir/applications/screensavers
-MkModuleFilelists %_sourcedir/xscreensaver-hacks std
-MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
+MkModuleFilelists xscreensaver-hacks.list std
+MkModuleFilelists xscreensaver-hacks-gl.list gl
 
-# Thanks to Obninsk for detection of really bad animation!
-find %buildroot -name "*handsy*" -delete
+# Exclude blacklisted nodules
+while read module; do
+    echo "%%exclude %xss_hack_dir/$module" >>exclude-files.list
+    if [ -f %buildroot%xss_ad_dir/$module.xss ]; then
+      echo "%%exclude %xss_ad_dir/$module.xss" >>exclude-files.list
+    fi
+    if [ -f %buildroot%xss_conf_dir/$module.xml ]; then
+      echo "%%exclude %xss_conf_dir/$module.xml" >>exclude-files.list
+    fi
+    if [ -f %buildroot%_man6dir/$module.6 ]; then
+      echo "%%exclude %_man6dir/$module.6*" >>exclude-files.list
+    fi
+done < %SOURCE9
 
-%files
+cat xscreensaver-hacks-std >>xscreensaver-modules-std
+cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
+
+%pre
+%pre_control xscreensaver-auth
+
+%post
+%post_control -s default xscreensaver-auth
+
+%files -f exclude-files.list
 %doc README README.hacking
 %verify(not md5 size mtime) %ghost %config(missingok) %_sysconfdir/X11/app-defaults/XScreenSaver
 %dir %_sysconfdir/X11/%name
@@ -282,60 +311,97 @@ find %buildroot -name "*handsy*" -delete
 %config %_sysconfdir/X11/%name/%name.top
 %config %_sysconfdir/X11/%name/%name.bottom
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
-%attr(2711,root,chkpwd) %_bindir/%name
+%_bindir/%name
 %_bindir/%name-command
-%_bindir/%name-getimage
-%_bindir/%name-getimage-file
-%_bindir/%name-getimage-video
-%_bindir/%name-text
-%_bindir/%name-systemd
+%xss_hack_dir/%name-getimage
+%xss_hack_dir/%name-getimage-file
+%xss_hack_dir/%name-getimage-video
+%xss_hack_dir/%name-text
+%xss_hack_dir/%name-systemd
+%attr(2711,root,chkpwd)%xss_hack_dir/%name-auth
+%config %_controldir/xscreensaver-auth
+%xss_hack_dir/%name-gfx
 %_bindir/update-%name
 %_man1dir/%name.1*
 %_man1dir/%name-command.1*
-%_man1dir/%name-getimage.1*
-%_man1dir/%name-getimage-file.1*
-%_man1dir/%name-getimage-video.1*
-%_man1dir/%name-text.1*
-%_man1dir/%name-systemd.1*
+%_man6dir/%name-getimage.6*
+%_man6dir/%name-getimage-file.6*
+%_man6dir/%name-getimage-video.6*
+%_man6dir/%name-text.6*
+%_man6dir/%name-systemd.6*
+%_man6dir/%name-auth.6*
+%_man6dir/%name-gfx.6*
 
 %dir %_datadir/%name
 %dir %xss_conf_dir
 %doc %xss_conf_dir/README
 %dir %xss_hack_dir
 
-%xss_hack_dir/ljlatest
-%_man6dir/ljlatest.6*
-
 %_rpmlibdir/%name.filetrigger
 
+%exclude %_datadir/xscreensaver/xscreensaver.service
+
+%_datadir/fonts/xscreensaver/
+
 %files frontend -f %name.lang
+%_bindir/%name-settings
+%_man1dir/%name-settings.1*
 %_bindir/%name-demo
 %_man1dir/%name-demo.1*
-%_desktopdir/xscreensaver-properties.desktop
-%_datadir/pixmaps/%name.xpm
-%_datadir/%name/ui
+%_desktopdir/xscreensaver-settings.desktop
+%_desktopdir/xscreensaver.desktop
+%_datadir/pixmaps/%name.png
 
 %files -n rpm-build-%name
 %_rpmmacrosdir/%name
-
-%files hacks -f xscreensaver-hacks-std
-
-%files hacks-gl -f xscreensaver-hacks-gl
-%_bindir/xscreensaver-gl-helper
-%_man6dir/xscreensaver-gl-helper.6*
 
 %files modules -f xscreensaver-modules-std
 %dir %xss_hack_dir
 %xss_hack_dir/webcollage-helper
 
 %files modules-gl -f xscreensaver-modules-gl
+%xss_hack_dir/%name-gl-visual
+%_man6dir/%name-gl-visual.6*
 %dir %xss_hack_dir
+%xss_hack_dir/mapscroller.pl
+%xss_hack_dir/xshadertoy
+%_man6dir/xshadertoy.6*
 
 %files -n desktop-screensaver-modules-xscreensaver -f xscreensaver-desktop-std
 
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Mon Jun 15 2026 Mikhail Efremov <sem@altlinux.org> 6.15-alt1
+- Drop obsoleted rpm macros.
+- Squashed hacks subpackages to modules.
+- Used pam_permit for account for now.
+- Added control for xscreensaver-auth.
+- Enabled wayland support.
+- Skipped not installed modules.
+- Merged old ALT traslation with upstreams one.
+- Generated hacks lists from xss files.
+- Generated ad/* files from XScreenSaver.ad.
+- Added runtime check for systemd booted.
+- Updated xscreensaver-config.xsl.
+- xscreensaver-config.xsl: Removed 'Encoding' entry.
+- Disabled mapscroller by default.
+- Required some extra perl modules for mapscroller.pl.
+- Updated setgid patch.
+- xscreensaver-update.sh: Remove tailing '\' in the hacks list.
+- Fixed x-terminal-emulator arguments.
+- Updated resources.
+- Packaged xshadertoy.
+- Dropped obsoleted gnome parts.
+- Blacklisted handsy module.
+- Dropped line for 'providence' module deleting.
+- Filtered out blacklisted modules.
+- Renamed rd-bomb -> rdbomb everywhere.
+- Added perl-diagnostics to BR.
+- Don't fail in case of unrecognized configure options.
+- Dropped obsoleted patches.
+- Updated to 6.15 (closes: #43619).
+
 * Mon Feb 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.45-alt5
 - Do not claim on even older version.
 
