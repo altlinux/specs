@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.2
-Release: alt1.1
+Version: 2.3.0
+Release: alt1
 Summary: Python subprocess replacement
 License: MIT
 Group: Development/Python3
@@ -14,20 +14,15 @@ Url: https://pypi.org/project/sh/
 Vcs: https://github.com/amoffat/sh
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry-core
-
+Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-black
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-mypy
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-toml
-BuildRequires: python3-module-tox
-
+%add_pyproject_deps_check_filter rstcheck
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: /dev/pts
 BuildRequires: /proc
 %endif
@@ -46,6 +41,11 @@ systems - Linux, macOS, BSDs etc. Specifically, Windows is not supported.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -58,14 +58,12 @@ export SH_TESTS_RUNNING=1
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
-%python3_sitelibdir/%mod_name.py
-%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1.1
-- Demodernized packaging.
+* Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.2 -> 2.3.0
 
 * Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
 - 2.2.1 -> 2.2.2.
