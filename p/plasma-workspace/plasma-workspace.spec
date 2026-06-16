@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.6.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -66,9 +66,8 @@ Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
 #
 Source11: freememorynotifier.tar
 Source40: ssh-agent.conf
-Source41: spice-vdagent.conf
+Source41: xdg-user-dirs.conf
 Source42: obex.conf
-Source43: xdg-user-dirs.conf
 #
 Source51: dri_prime_available.cpp
 
@@ -445,9 +444,8 @@ EOF
 mkdir -p %buildroot/%_userunitdir/plasma-core.target.d/
 mkdir -p %buildroot/%_userunitdir/plasma-workspace@.target.d/
 install -m0644 -p -D %SOURCE40 %buildroot/%_userunitdir/plasma-core.target.d/ssh-agent.conf
-install -m0644 -p -D %SOURCE41 %buildroot/%_userunitdir/plasma-core.target.d/spice-vdagent.conf
+install -m0644 -p -D %SOURCE41 %buildroot/%_userunitdir/plasma-core.target.d/xdg-user-dirs.conf
 install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obex.conf
-install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg-user-dirs.conf
 
 %find_lang %name --with-kde --all-name
 
@@ -589,6 +587,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.5-alt2
+- drop spice-vdagent.conf to fix startup spice-vdagent
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.5-alt1
 - new version
 
