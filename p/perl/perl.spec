@@ -6,7 +6,7 @@
 
 Name: perl
 Version: 5.38.4
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -607,6 +607,7 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%privlib/unicore/lib/Upper/Y.pl
 	%privlib/unicore/uni_keywords.pl
 # modules
+	%privlib/B
 	%privlib/Carp*
 	%archlib/Config.pm
 	%archlib/Config_heavy.pl
@@ -775,7 +776,6 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%archlib/CORE/libperl*.so
 # perl-devel modules
 	%privlib/AutoSplit.pm
-	%privlib/B
 	%archlib/B
 	%autolib/B
 %exclude %autolib/B/B.so
@@ -1006,6 +1006,9 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 %doc	%privlib/pod/perldiag.pod
 
 %changelog
+* Tue Jun 16 2026 Anton Midyukov <antohami@altlinux.org> 1:5.38.4-alt5
+- NMU: Replace %privlib/B from perl-devel to perl-base.
+
 * Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:5.38.4-alt4
 - NMU: fix packaging of unpackaged files
 
