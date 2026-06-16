@@ -1,12 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
 %define ver_major 2.44
 %define _libexecdir %_prefix/libexec
-# timeout multiplier for tests
-%define timeout 2
+%define __meson_test_timeout_multiplier 2
 
 # glycin is a deafult loader
 %def_disable glycin
@@ -17,10 +16,10 @@
 %def_enable introspection
 %def_enable thumbnailer
 %def_enable installed_tests
-%def_enable check
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -58,11 +57,12 @@ BuildRequires: meson >= %meson_ver
 BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(shared-mime-info)
 %{?_disable_glycin:BuildRequires: libjpeg-devel libpng-devel libtiff-devel}
-%{?_enable_glycin:BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver}
+%{?_enable_glycin:BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: glycin-%glycin_api_ver-loaders}
 %{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_check:%{?_enable_glycin:BuildRequires: bubblewrap}}
+%{?_enable_check:%{?_enable_glycin:BuildRequires: bubblewrap }}
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -175,7 +175,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %find_lang %_name
 
 %check
-%__meson_test -t %timeout
+%__meson_test
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
@@ -240,6 +240,13 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Jun 16 2026 Yuri N. Sedunov <aris@altlinux.org> 2.44.6-alt1
+- 2.44.6-8-g8b835353 (fixed CVE-2026-5201
+ (https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/304))
+
+* Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 2.44.5-alt1
+- 2.44.5
+
 * Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.4-alt1
 - 2.44.4
 
