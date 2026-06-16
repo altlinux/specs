@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: obs-studio-plugin-multi-rtmp
-Version: 0.7.3.2
+Version: 0.7.4
 Release: alt1
 
 Summary: This is a plugin to streaming to multiple RTMP servers concurrently
@@ -50,6 +50,9 @@ It can also use standalone encoders with basic configuration (bitrate).
 %_datadir/obs/obs-plugins/obs-multi-rtmp
 
 %changelog
+* Tue Jun 16 2026 Mikhail Tergoev <fidel@altlinux.org> 0.7.4-alt1
+- 0.7.4
+
 * Sun Dec 28 2025 Mikhail Tergoev <fidel@altlinux.org> 0.7.3.2-alt1
 - 0.7.3.2
 
