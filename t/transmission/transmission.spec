@@ -7,8 +7,8 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.1.1
-Release: alt3
+Version: 4.1.2
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -261,6 +261,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Jun 16 2026 Anton Farygin <rider@altlinux.org> 4.1.2-alt1
+- 4.1.1 -> 4.1.2
+
 * Fri Mar 20 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.1-alt3
 - e2k build fix
 
