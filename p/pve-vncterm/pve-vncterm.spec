@@ -2,7 +2,7 @@
 
 Name: pve-%sname
 Summary: VNC Terminal Emulator
-Version: 1.8.0
+Version: 1.9.2
 Release: alt1
 License: AGPL-3.0-or-later and GPLv2
 Group: Networking/WWW
@@ -40,6 +40,9 @@ install -m0644 %SOURCE2 .
 %_man1dir/%sname.1*
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 1.9.2-alt1
+- 1.9.2
+
 * Wed Apr 16 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 1.8.0-alt1
 - 1.8.0 
 

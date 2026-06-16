@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 9.1.2
+Version: 9.2.2
 Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.2.2-alt1
+- 9.2.2
+
 * Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 9.1.2-alt1
 - 9.1.2
 

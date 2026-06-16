@@ -3,8 +3,8 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 9.1.4
-Release: alt2
+Version: 9.1.16
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -19,11 +19,11 @@ Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
 Requires: socat genisoimage pve-qemu-system >= 10.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
-Requires: conntrack-tools python3-module-virt-firmware
+Requires: conntrack-tools python3-module-virt-firmware proxmox-termproxy >= 2.1.0
 Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
-BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.0.16 pve-qemu-system >= 10.1 pve-network
+BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager libpve-rs-perl >= 0.14.0
+BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.1.6 pve-qemu-system >= 10.1 pve-network
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
 BuildRequires: perl(Class/MethodMaker.pm)
@@ -44,6 +44,7 @@ sed -i 's!SERVICEDIR=.*systemd/system!SERVICEDIR=%_unitdir!' src/query-machine-c
 
 %install
 %makeinstall_std -C src
+install -Dm0644 debian/tmpfiles %buildroot%_tmpfilesdir/qemu-server.conf
 install -m0644 %SOURCE71 %buildroot%_datadir/qemu-server/bootsplash.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-cirrus.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-std.jpg
@@ -55,7 +56,15 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial2.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial3.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 
+%triggerun -- pve-qemu-server < 9.1.13
+touch /run/qemu-server/force-legacy-cleanup \
+    || echo "warning: force-legacy-cleanup marker write failed - in-flight VMs may skip cleanup on stop" >&2
+
+%post
+%tmpfiles_create %_tmpfilesdir/qemu-server.conf
+
 %files
+%_tmpfilesdir/qemu-server.conf
 %_modules_loaddir/qemu-server.conf
 %_unitdir/qmeventd.service
 %_unitdir/qmeventd.socket
@@ -81,6 +90,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.16-alt1
+- 9.1.16
+
 * Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt2
 - Add dependency to perl-Class-MethodMaker
 

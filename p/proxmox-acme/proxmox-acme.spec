@@ -1,6 +1,6 @@
 Name: proxmox-acme
 Summary: Proxmox ACME integration perl library
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 License: AGPL-3.0-or-later and GPL-3.0
 Group: Development/Perl
@@ -42,6 +42,9 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Mon Jun 08 2026 Sergey Konev <darisishe@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Mon Jul 21 2025 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - Rename package pve-acme -> proxmox-acme

@@ -2,7 +2,7 @@
 
 Name: pve-yew-mobile-gui
 Summary: Mobile Web UI to for the Proxmox Virtual Environment
-Version: 0.6.4
+Version: 0.7.0
 Release: alt1
 License: AGPL-3.0-or-later
 Group: System/Servers
@@ -43,6 +43,9 @@ export BUILD_MODE=release
 %_datadir/%name
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 0.6.4-alt1
 - 0.6.4
 

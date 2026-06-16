@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.4.1
-Release: alt3
+Release: alt4
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -19,9 +19,10 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel perl-devel
-BuildRequires: libssl-devel libacl-devel libuuid-devel
+BuildRequires: libssl-devel libacl-devel libuuid-devel libnettle-devel
 BuildRequires: cargo-vendor-checksum
-BuildRequires: gcc-c++ libapt-devel
+BuildRequires: gcc-c++ libapt-devel libsystemd-devel
+BuildRequires: proxmox-frr-templates
 BuildRequires: /proc
 %set_perl_req_method relaxed
 
@@ -41,19 +42,19 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.11.4
+Version: 0.15.3
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
-# Commented out for bootstrap
-# Conflicts: pve-ha-manager <= 5.0.6
+Conflicts: pve-ha-manager <= 5.0.6
+# Conflicts: pve-network < 1.4.0
 
 %description -n libpve-rs-perl
 %summary
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.8.1
+Version: 0.8.2
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -98,9 +99,10 @@ popd
 %install
 pushd pve-rs
 install -pD -m0644 target/release/libpve_rs.so %buildroot%perl_vendor_autolib/libpve_rs.so
-mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/SDN,PVE/RS/Firewall,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
+mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/SDN,PVE/RS/SDN/WireGuard,PVE/RS/Firewall,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
 install -m0644 PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
 install -m0644 PVE/RS/SDN/*.pm %buildroot%perl_vendor_privlib/PVE/RS/SDN/
+install -m0644 PVE/RS/SDN/WireGuard/*.pm %buildroot%perl_vendor_privlib/PVE/RS/SDN/WireGuard/
 install -m0644 PVE/RS/Firewall/*.pm %buildroot%perl_vendor_privlib/PVE/RS/Firewall/
 install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE/RS/ResourceScheduling/
 install -m0644 common/pkg/PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
@@ -118,10 +120,12 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 %dir %perl_vendor_privlib/PVE/RS
 %dir %perl_vendor_privlib/PVE/RS/ResourceScheduling
 %dir %perl_vendor_privlib/PVE/RS/SDN
+%dir %perl_vendor_privlib/PVE/RS/SDN/WireGuard
 %dir %perl_vendor_privlib/PVE/RS/Firewall
 %perl_vendor_privlib/PVE/RS/*.pm
 %perl_vendor_privlib/PVE/RS/ResourceScheduling/*.pm
 %perl_vendor_privlib/PVE/RS/SDN/*.pm
+%perl_vendor_privlib/PVE/RS/SDN/WireGuard/*.pm
 %perl_vendor_privlib/PVE/RS/Firewall/*.pm
 
 %files -n libproxmox-rs-perl
@@ -134,6 +138,10 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Mon Jun 08 2026 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt4
+- Update:
+  + libpve-rs-perl 0.15.3
+
 * Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt3
 - Update:
   + libpve-rs-perl 0.11.4

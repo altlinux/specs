@@ -4,7 +4,7 @@
 Name: pve-esxi-import-tools
 Summary: Tools to allow importing VMs from ESXi hosts
 Version: 1.0.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/?p=pve-esxi-import-tools.git
@@ -61,6 +61,9 @@ export BUILD_MODE=release
 %_libexecdir/%name
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 1.0.1-alt2
+- Use proxmox-fuse 3
+
 * Wed Aug 20 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

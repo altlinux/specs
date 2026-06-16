@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 9.1.6
-Release: alt2
+Version: 9.1.14
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -73,6 +73,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.1.14-alt1
+- 9.1.14
+
 * Mon Apr 27 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt2
 - Use mknodat instead of mknod syscall (aarch64 compatibility)
 

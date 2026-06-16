@@ -3,8 +3,8 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
-%define ver_major 9.1
-%define ver_minor 4
+%define ver_major 9.2
+%define ver_minor 3
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -21,12 +21,12 @@ BuildRequires(pre): rpm-macros-javascript
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
-Requires: pve-common >= 9.0.8 pve-guest-common >= 5.1.4
+Requires: pve-common >= 9.1.13 pve-guest-common >= 5.1.4
 Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
-Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
-Requires: pve-container >= 5.2.5 pve-firewall pve-ha-manager >= 5.0.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
-Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.0.3
-Requires: proxmox-widget-toolkit >= 5.1.1 proxmox-mini-journalreader >= 1.3.1
+Requires: pve-vncterm pve-novnc >= 1.6.0.4 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
+Requires: pve-container >= 6.1.6 pve-firewall pve-ha-manager >= 5.2.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
+Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.1.0
+Requires: proxmox-widget-toolkit >= 5.2.1 proxmox-mini-journalreader >= 1.3.1
 Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.10.4
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
@@ -41,10 +41,10 @@ Source9: basealt_logo-128.png
 
 Source10: sencha-touch.tgz
 
-BuildRequires: pve-doc-generator >= 9.0.5 xmlto perl-Pod-Parser
+BuildRequires: pve-doc-generator >= 9.1.5 xmlto perl-Pod-Parser
 BuildRequires: pve-storage >= 8.3.5 pve-cluster >= 8.0.5
-BuildRequires: pve-common >= 9.1.1 pve-guest-common >= 5.1.4
-BuildRequires: libpve-cluster-perl >= 9.0.7 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.1 pve-qemu-server >= 9.0.28,
+BuildRequires: pve-common >= 9.1.13 pve-guest-common >= 5.1.4
+BuildRequires: libpve-cluster-perl >= 9.1.5 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.1 pve-qemu-server >= 9.1.13,
 BuildRequires: pve-acme pve-http-server >= 6.0.3 pve-access-control >= 9.0.4
 BuildRequires: proxmox-widget-toolkit >= 4.3.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
@@ -175,6 +175,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.2.3-alt1
+- 9.2.3
+
 * Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt1
 - 9.1.4
 

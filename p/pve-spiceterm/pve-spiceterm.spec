@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
-Version: 3.3.0
+Version: 3.4.2
 Release: alt1
 License: GPLv2
 Group: Networking/WWW
@@ -38,6 +38,9 @@ sed -i 's|\ -Werror||' src/Makefile
 %_man1dir/%sname.1*
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Thu Dec 19 2024 Konstantin Kozoriz <kozorizki@altlinux.org> 3.3.0-alt1
 - 3.3.0
 

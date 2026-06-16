@@ -3,13 +3,14 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 9.0.7
+Version: 9.1.6
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
 
 ExclusiveArch: x86_64 aarch64 loongarch64
+Requires: pve-common >= 9.1.13
 Requires: chrony ntpdate corosync fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
@@ -19,7 +20,7 @@ Patch: %name-%version.patch
 Source3: %name.filetrigger
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: pve-common libcheck-devel xmlto
+BuildRequires: pve-common >= 9.1.13 libcheck-devel xmlto
 %if_without bootstrap
 BuildRequires: pve-doc-generator
 %endif
@@ -123,6 +124,24 @@ if [ -L %_sysconfdir/cron.d/vzdump ]; then
 	rm -f %_sysconfdir/cron.d/vzdump
 fi
 
+%triggerpostun -- %name < 9.1.1
+[ -d /var/lib/pve-cluster/backup ] && chmod -v 0700 /var/lib/pve-cluster/backup
+
+%triggerpostun -- %name < 9.1.5
+DC_CFG="/etc/pve/datacenter.cfg"
+if test -r "$DC_CFG" && grep -E -q '^crs:.*\b(ha-auto-rebalance-threshold|ha-auto-rebalance-margin)=' "$DC_CFG"; then
+  cat <<EOF
+
+!! ATTENTION !!
+Detected an explicit 'ha-auto-rebalance-threshold' or 'ha-auto-rebalance-margin'
+value in the 'crs' section of ${DC_CFG}.
+These properties now use a 0-100 percent scale instead of a 0.0-1.0 fraction;
+multiply any previously-configured fraction value by 100 to keep the same
+behavior.
+
+EOF
+fi
+
 %files
 %doc debian/copyright
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -168,6 +187,9 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt1
+- 9.1.6
+
 * Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 9.0.7-alt1
 - 9.0.7
 

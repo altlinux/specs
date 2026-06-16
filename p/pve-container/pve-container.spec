@@ -3,8 +3,8 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 6.0.18
-Release: alt3
+Version: 6.1.10
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64
 
 Requires(pre,postun): shadow-submap
-Requires: pve-lxc >= 6.0.5-alt3 pve-lxc-syscalld pve-ha-manager >= 5.0.3 pve-access-control >= 8.0.0 pve-firewall >= 6.0.1
-Requires: libpve-rs-perl >= 0.11.0 proxmox-backup-client >= 3.2.3.1
+Requires: pve-lxc >= 6.0.5-alt3 pve-lxc-syscalld pve-ha-manager >= 5.0.3 pve-access-control >= 9.0.7 pve-firewall >= 6.0.1
+Requires: libpve-rs-perl >= 0.11.0 proxmox-backup-client >= 3.2.3.1 proxmox-termproxy >= 2.1.0
 Requires: dtach xz file binutils
 # For now implementation uses dhclient for setting up containers.
 # As ISC DHCP is deprecated, switch to using dhcpcd later
@@ -62,6 +62,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 6.1.10-alt1
+- 6.1.10
+
 * Sun Mar 22 2026 Sergey Konev <darisishe@altlinux.org> 6.0.18-alt3
 - Restrict network device name and bridge patterns to ASCII-only
 

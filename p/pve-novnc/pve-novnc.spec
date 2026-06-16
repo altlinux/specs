@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.5.0.1
+Version: 1.7.0.1
 Release: alt1
 License: Apache-2.0 and BSD-3-Clause and MPL-2.0
 Group: Networking/WWW
@@ -28,7 +28,7 @@ Proxmox VE to provide HTML VM console
 cd %sname
 cat ../debian/patches/series | while read p; do patch -p1 < ../debian/patches/$p; done
 install -m0644 %SOURCE3 app/locale/ru.json
-esbuild --bundle app/ui.js > app.js
+esbuild --bundle --format=esm app/ui.js > app.js
 
 %install
 mkdir -p %buildroot%_datadir/%pname/app
@@ -45,6 +45,9 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 1.7.0.1-alt1
+- 1.7.0-1
+
 * Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.0.1-alt1
 - 1.5.0-1
 

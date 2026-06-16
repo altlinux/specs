@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 Name: proxmox-mini-journalreader
 Summary: Minimal systemd Journal Reader
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -31,13 +32,19 @@ sed -i 's/-D_FORTIFY_SOURCE=2//' src/Makefile
 
 %install
 %makeinstall_std -C src
+install -d %buildroot%_bindir
+ln -s %_libexecdir/%name %buildroot%_bindir/mini-journalreader
 
 %files
 %doc debian/copyright
-%_bindir/*
+%_libexecdir/%name
+%_bindir/mini-journalreader
 %_man1dir/*
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

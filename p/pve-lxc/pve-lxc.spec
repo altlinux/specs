@@ -4,8 +4,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 6.0.5
-Release: alt3
+Version: 7.0.0
+Release: alt1
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -105,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 7.0.0-alt1
+- 7.0.0-2 
+
 * Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt3
 - Realy avoid dependencies to nvidia-container-cli.
 

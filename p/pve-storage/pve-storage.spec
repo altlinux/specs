@@ -2,8 +2,8 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 9.1.0
-Release: alt2
+Version: 9.1.6
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -31,7 +31,7 @@ Conflicts: pve-container < 3.1.2
 Conflicts: pve-manager < 5.2.12
 Conflicts: pve-qemu-server < 8.3.2
 
-BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
+BuildRequires: librados2-perl pve-common >= 9.1.12 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
@@ -68,6 +68,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt1
+- 9.1.6
+
 * Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.0-alt2
 - Use OVA file itself as path to diskimage (Closes: 54360)
 
