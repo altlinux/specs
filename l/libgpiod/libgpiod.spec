@@ -1,6 +1,6 @@
 Name: libgpiod
-Version: 2.2.4
-Release: alt2
+Version: 2.2.5
+Release: alt1
 
 Summary: Linux GPIO interacting library
 License: LGPL-2.1
@@ -87,6 +87,9 @@ This package contains command-line tools.
 %_man1dir/gpio*.1*
 
 %changelog
+* Tue Jun 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.5-alt1
+- 2.2.5 released
+
 * Tue Apr 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.4-alt2
 - built without python bindings
 
