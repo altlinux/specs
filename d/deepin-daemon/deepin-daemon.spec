@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.93
+Version: 6.1.95
 Release: alt1
 Epoch: 2
 
@@ -201,6 +201,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Tue Jun 16 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.95-alt1
+- New version 6.1.95.
+
 * Thu Jun 04 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.93-alt1
 - New version 6.1.93.
 
