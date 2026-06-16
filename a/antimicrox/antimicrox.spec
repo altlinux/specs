@@ -1,7 +1,7 @@
 %global appname io.github.antimicrox.antimicrox
 
 Name: antimicrox
-Version: 3.5.1
+Version: 3.6.1
 Release: alt1
 
 Summary: Graphical program used to map keyboard buttons and mouse controls to a gamepad
@@ -68,6 +68,9 @@ rm -rv %buildroot%_iconsdir/breeze
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%appname.appdata.xml
 
 %changelog
+* Tue Jun 16 2026 Mikhail Tergoev <fidel@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Sat Feb 01 2025 Mikhail Tergoev <fidel@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
