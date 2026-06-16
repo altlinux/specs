@@ -8,7 +8,7 @@
 
 Name: %{_name}-session
 Version: 6.6.3
-Release: alt1
+Release: alt2
 
 License: GPL-2.0-or-later
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -134,12 +134,16 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/%name/config.py
 %_datadir/xsessions/*.desktop
 %doc AUTHORS NEWS README
+%_userunitdir/cinnamon-session.target
 
 %files wayland
 %_datadir/cinnamon-session/sessions/%{_name}-wayland.session
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Tue Jun 16 2026 Anton Midyukov <antohami@altlinux.org> 6.6.3-alt2
+- Apply upstream commit to add graphical session support.
+
 * Thu Feb 12 2026 Anton Midyukov <antohami@altlinux.org> 6.6.3-alt1
 - New version 6.6.3.
 
