@@ -4,7 +4,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-pynput
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Monitor and control user input devices
@@ -16,6 +16,7 @@ Vcs: https://github.com/moses-palmer/pynput
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_build_filter setuptools-lint
@@ -40,11 +41,13 @@ rm -v lib/pynput/*/*darwin* lib/pynput/*/*win32*
 %pyproject_install
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 16 2026 Stanislav Levin <slev@altlinux.org> 1.8.2-alt1
+- 1.8.1 -> 1.8.2
+
 * Tue Mar 18 2025 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
 - 1.8.0 -> 1.8.1.
 
