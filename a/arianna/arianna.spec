@@ -1,22 +1,30 @@
-%define _unpackaged_files_terminate_build 1
-
-Name: arianna
+%define rname arianna
+Name: %rname
 Version: 26.04.2
-Release: alt1
-
-Summary: Epub Reader for Plasma and Plasma Mobile
-License: (BSD-2-Clause OR BSD-3-Clause) AND (GPL-2.0-only OR GPL-3.0-only) AND (LGPL-2.0-or-later OR LGPL-2.1-or-later OR LGPL-3.0-or-later)
+Release: alt2
 
 Group: Graphical desktop/KDE
+Summary: Epub Reader for Plasma and Plasma Mobile
+License: (BSD-2-Clause OR BSD-3-Clause) AND (GPL-2.0-only OR GPL-3.0-only) AND (LGPL-2.0-or-later OR LGPL-2.1-or-later OR LGPL-3.0-or-later)
 Url: https://apps.kde.org/arianna
 VCS: https://invent.kde.org/graphics/arianna
 
-Source: %name-%version.tar
+ExcludeArch: %not_qt6_qtwebengine_arches
 
-BuildRequires(pre): rpm-build-kf6
+Requires: qt6-declarative
+Requires: qml6(QtWebChannel)
+Requires: qml6(QtWebEngine)
+Requires: libkf6itemmodels
+Requires: libkf6sonnetui
+Requires: kf6-kconfig
+Requires: kf6-kirigami
+Requires: kf6-kquickcharts
+Requires: kf6-kirigami-addons
 
+Source: %rname-%version.tar
+
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Qml)
@@ -25,6 +33,7 @@ BuildRequires: pkgconfig(Qt6WebEngineQuick)
 BuildRequires: pkgconfig(Qt6WebSockets)
 BuildRequires: pkgconfig(Qt6Svg)
 BuildRequires: pkgconfig(Qt6HttpServer)
+BuildRequires: qt6-webchannel-devel
 BuildRequires: kf6-kirigami-devel
 BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kconfig-devel
@@ -38,29 +47,7 @@ BuildRequires: kf6-kcrash-devel
 BuildRequires: kf6-kcolorscheme-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: kf6-qqc2-desktop-style-devel
-BuildRequires: qt6-webchannel-devel
 BuildRequires: kf6-baloo-devel
-
-Requires: kf6-kconfig
-Requires: kf6-kirigami
-Requires: kf6-kirigami-addons
-Requires: libkf6itemmodels
-Requires: kf6-kquickcharts
-Requires: libqt6-quicktemplates2
-Requires: libqt6-quick
-Requires: libqt6-quickcontrols2
-Requires: libqt6-quickdialogs2
-Requires: libqt6-quickeffects
-Requires: libqt6-quicklayouts
-Requires: libqt6-qml
-Requires: libqt6-webchannelquick
-Requires: libqt6-webenginequick
-Requires: kf6-qqc2-desktop-style
-Requires: libkf6sonnetui
-Requires: plasma6-breeze
-
-# no libqt6-webenginequick
-ExcludeArch: %ix86 riscv64
 
 %description
 An ebook reader and library management app supporting ".epub" files.
@@ -68,8 +55,7 @@ Arianna discovers your books automatically, and sorts them by categories,
 genres and authors.
 
 %prep
-%setup
-sed -i "s/Categories=.*/Categories=Qt;KDE;Office;Viewer;Database;/" org.kde.arianna.desktop
+%setup -n %rname-%version
 
 %build
 %K6build
@@ -80,14 +66,17 @@ sed -i "s/Categories=.*/Categories=Qt;KDE;Office;Viewer;Database;/" org.kde.aria
 %find_lang %name --with-kde
 
 %files -f %name.lang
-%doc README.md screenshots
-%_bindir/arianna
-%_desktopdir/org.kde.arianna.desktop
-%_iconsdir/hicolor/scalable/apps/org.kde.arianna.svg
-%_datadir/metainfo/org.kde.arianna.appdata.xml
-%_datadir/qlogging-categories6/arianna.categories
+%doc README.md
+%_K6bin/arianna
+%_K6xdgapp/*arianna*.desktop
+%_K6icon/hicolor/*/apps/*arianna*
+%_datadir/metainfo/*arianna*
+%_datadir/qlogging-categories6/*arianna*.categories
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
+- update packaging
+
 * Fri Jun 05 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
 - New version 26.04.2.
 
