@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 Summary: Python interpreter discovery
 License: MIT
@@ -49,6 +49,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
+- 1.4.0 -> 1.4.2
+
 * Thu May 28 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.1 -> 1.4.0
 
