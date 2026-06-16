@@ -1,5 +1,5 @@
 Name: localai
-Version: 4.3.6
+Version: 4.4.3
 Release: alt1
 
 Summary: LocalAI is the open-source AI engine. Run any model - LLMs, vision, voice, image, video - on any hardware.
@@ -55,5 +55,8 @@ make build-all VERSION=%version-%release \
 
 
 %changelog
+* Tue Jun 16 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.4.3-alt1
+- Updated from 4.3.6 to 4.4.3.
+
 * Tue Jun 03 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.3.6-alt1
 - Initial build for Sisyphus.
