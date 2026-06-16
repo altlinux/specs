@@ -1,18 +1,18 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.13
-Release: alt2
+Version: 1.2.15.2
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
 License: GPLv2+
 Group: System/Kernel and hardware
 
-Url: http://www.alsa-project.org
+Url: https://www.alsa-project.org
+VCS: https://github.com/alsa-project/alsa-utils
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: dialog
 Requires: tree
@@ -104,6 +104,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1:1.2.15.2-alt1
+- 1.2.13 -> 1.2.15.2
+
 * Sun Mar 08 2026 Anton Midyukov <antohami@altlinux.org> 1:1.2.13-alt2
 - Add upstream fixes:
   + alsactl: 90-alsa-restore.rules - fix alsa_restore_go/std (Closes: 56062)

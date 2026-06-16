@@ -1,14 +1,15 @@
 %define basever 1.1.0
 
 Name: alsa-tools
-Version: 1.2.14
+Version: 1.2.15
 Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPLv2+
 Group: System/Kernel and hardware
 
-Url: http://www.alsa-project.org/
+Url: https://www.alsa-project.org/wiki/Main_Page
+VCS: https://github.com/alsa-project/alsa-tools
 Source0: %name-%version.tar
 Source1: 90-alsa-tools-firmware.rules
 Patch: %name-%version-%release.patch
@@ -25,7 +26,7 @@ Conflicts: emu10k1-tools
 # someone remind me how to cheat SourceIfExists clones
 Provides: /etc/default/ld10k1
 
-BuildRequires: gcc-c++ libgtk+2-devel libgtk+3-devel
+BuildRequires: gcc-c++ libgtk+2-devel libgtk+3-devel libgtk4-devel 
 BuildRequires: libalsa-devel >= %basever
 BuildRequires: rpm-build-python3
 
@@ -171,6 +172,9 @@ install -pm644 %SOURCE1 %buildroot%_udevrulesdir/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1.2.15-alt1
+- 1.2.14 -> 1.2.15
+
 * Thu Jul 03 2025 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
 - 1.2.14
 

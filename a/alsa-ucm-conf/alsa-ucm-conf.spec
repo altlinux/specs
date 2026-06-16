@@ -1,12 +1,13 @@
 Name: alsa-ucm-conf
-Version: 1.2.14
-Release: alt2
+Version: 1.2.15.3
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
 Group: System/Libraries
 
-Url: http://www.alsa-project.org
+Url: https://www.alsa-project.org/wiki/Main_Page
+VCS: https://github.com/alsa-project/alsa-ucm-conf
 Source: %name-%version.tar
 
 Patch1: 0001-ucm.conf-turn-on-support-for-V2Module-and-V2Name-by-.patch
@@ -58,6 +59,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 1.2.15.3-alt1
+- 1.2.14 -> 1.2.15.3
+
 * Wed Aug 27 2025 Artyom Bystrov <arbars@altlinux.org> 1.2.14-alt2
 - Add Retroid Pocket 5 support (try #2) (ALTBUG #55391)
 

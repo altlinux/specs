@@ -2,7 +2,7 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.14
+Version: 1.2.15.3
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,8 @@ Group: System/Libraries
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: 0001-Restore-loading-usr-share-alsa-alsa.conf.d.patch
-Url: http://www.alsa-project.org
+Url: https://www.alsa-project.org/wiki/Main_Page
+VCS: https://github.com/alsa-project/alsa-lib
 
 # tse3 still depends on that, argh
 Provides: libalsa2 = %version
@@ -201,6 +202,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1:1.2.15.3-alt1
+- 1.2.14 -> 1.2.15.3
+
 * Thu Jul 03 2025 Michael Shigorin <mike@altlinux.org> 1:1.2.14-alt1
 - 1.2.14
 
