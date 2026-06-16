@@ -1,19 +1,19 @@
 Name: normalize
 Version: 0.7.7
-Release: alt3
+Release: alt4
 
 Summary: A tool for adjusting the volume of WAV files to a standard level
 License: GPL
 Group: Sound
 Url: http://normalize.nongnu.org/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://savannah.nongnu.org/download/normalize/%name-%version.tar
 
 Patch0: compressed-wav-files.dpatch
 Patch1: fix-flac.dpatch
 Patch2: alt-configure-fix.patch
+Patch3: normalize-0.7.7-gcc15.patch
+Patch4: normalize-automake-1.13.patch
 
 Requires: lame mp3info mpg123 vorbis-tools
 
@@ -30,9 +30,7 @@ albums can cause the volume to vary greatly from song to song.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%autopatch -p1
 touch AUTHORS ChangeLog
 
 %build
@@ -54,6 +52,9 @@ ln -s normalize-mp3.1 %buildroot%_man1dir/normalize-ogg.1
 %_man1dir/*
 
 %changelog
+* Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.7.7-alt4
+- fix FTBFS with gcc 15
+
 * Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.7-alt3
 - rebuild without gtk+-devel
 
