@@ -2,7 +2,7 @@
 
 Name: awx
 Version: 24.6.1
-Release: alt6
+Release: alt7
 
 Summary: The official command line interface for Ansible AWX
 License: Apache-2.0
@@ -121,7 +121,7 @@ install -Dm0644 -p %SOURCE3 %buildroot%python3_sitelibdir/%name/main/migrations/
 install -Dm0644 -p %SOURCE4 %buildroot%_sysconfdir/supervisord.d/awx.ini
 
 # receptor.conf
-install -Dm0644 -p %SOURCE5 %buildroot%_sysconfdir/receptor/awx.conf
+install -Dm0644 -p %SOURCE5 %buildroot%_sysconfdir/receptor/receptor.conf
 
 mkdir -p %buildroot%_sysconfdir/tower/conf.d/
 touch %buildroot%_sysconfdir/tower/conf.d/database.py
@@ -159,7 +159,7 @@ exit 0
 %attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/conf.d/redis_settings.py
 %attr(640,root,awx) %config(noreplace) %_sysconfdir/tower/SECRET_KEY
 %config(noreplace) %_sysconfdir/supervisord.d/awx.ini
-%config(noreplace) %_sysconfdir/receptor/awx.conf
+%config(noreplace) %_sysconfdir/receptor/receptor.conf
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
 %dir %_sysconfdir/tower
@@ -179,6 +179,9 @@ exit 0
 %ghost %apache2_sites_enabled/*.conf
 
 %changelog
+* Mon Jun 15 2026 Nikita Panov <nexxy@altlinux.org> 24.6.1-alt7
+- Receptor config fixes and improvements.
+
 * Tue Jun 09 2026 Nikita Panov <nexxy@altlinux.org> 24.6.1-alt6
 - Automation of deployment and fixes.
 

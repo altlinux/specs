@@ -3,7 +3,7 @@
 
 Name:     receptor
 Version:  1.6.5
-Release:  alt1
+Release:  alt2
 
 Summary:  Overlay network for distributed work
 License:  Apache-2.0
@@ -50,15 +50,16 @@ export IGNORE_SOURCES=1
 mv %buildroot/%_bindir/receptor-cl %buildroot/%_bindir/receptor
 
 mkdir -p %buildroot%_sysconfdir/receptor
-cp packaging/container/receptor.conf %buildroot%_sysconfdir/receptor/receptor.conf
 
 %files
 %doc README.md LICENSE.md
 %_bindir/receptor
-%config(noreplace) %_sysconfdir/receptor/receptor.conf
 %dir %_sysconfdir/receptor
 
 %changelog
+* Mon Jun 15 2026 Nikita Panov <nexxy@altlinux.org> 1.6.5-alt2
+- Removed creation of default config.
+
 * Fri Jun 12 2026 Nikita Panov <nexxy@altlinux.org> 1.6.5-alt1
 - Initial build for Sisyphus.
 
