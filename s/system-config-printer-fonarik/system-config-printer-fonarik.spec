@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           system-config-printer-fonarik
-Version:        0.1.0
-Release:        alt5
+Version:        0.1.1
+Release:        alt1
 Summary:        "Fonarik" plugin for the GTK printer job viewer
 Summary(ru_RU.UTF-8): Добавляет операцию "Маркировка задания" в менеджер печати на GTK
 License:        GPLv3+
@@ -32,7 +32,7 @@ Summary(ru_RU.UTF-8): Добавляет операцию "Маркировка 
 License:        GPLv3+
 Group:          System/Configuration/Printing
 Requires:       system-config-printer >= 1.5.11-alt12
-Requires:       python3-module-cups >= 1.9.74-alt2
+Requires:       python3-module-fonarik = %version-%release
 
 %description -n python3-module-%name
 The plugin adds the "Mark Job" context menu item. By invoking this action
@@ -43,22 +43,42 @@ a user can enter the desired job metadata and print it along with the job.
 может ввессти желаемые метаданные, которые будет напечатаны вместе
 с документом.
 
+%package -n python3-module-fonarik
+Summary: A Python module to add a special meta-data job to the CUPS queue
+License:        GPLv3+
+Group:          System/Configuration/Printing
+Requires:       python3-module-cups >= 1.9.74-alt2
+
+%description -n python3-module-fonarik
+A Python module to add the special "Fonarik" meta-data job to the
+CUPS queue.
+
 %prep
 %setup -n fonarik-%version
 
 %build
-python3 setup.py build
+(cd fonarik && %pyproject_build)
+(cd system_config_printer_fonarik && %pyproject_build)
 
 %install
-python3 setup.py install \
-    --root=%buildroot \
-    --install-lib=%python3_sitelibdir_noarch
+(cd fonarik && %pyproject_install)
+(cd system_config_printer_fonarik && %pyproject_install)
+
+%files -n python3-module-fonarik
+%_bindir/fonarik
+%python3_sitelibdir_noarch/fonarik
+%python3_sitelibdir_noarch/fonarik-*.dist-info
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/system_config_printer_fonarik
-%python3_sitelibdir_noarch/system_config_printer_fonarik-*.egg-info
+%python3_sitelibdir_noarch/system_config_printer_fonarik-*.dist-info
 
 %changelog
+* Thu Jun 11 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
+- Split onto two Python packages: 'fonarik' and
+  'system_config_printer_fonarik'.
+- Added a CLI 'fonarik' utility.
+
 * Mon Jun 28 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
 - Specify the package version and other metadata.
 - Comment-out install_requires as it is known not to work with
