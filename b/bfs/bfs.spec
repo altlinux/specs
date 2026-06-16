@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bfs
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 
 Summary: A breadth-first version of the UNIX find command
@@ -50,6 +50,9 @@ its output with the same colors ls uses.
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Tue Jun 16 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.3-alt1
+- New version 4.1.3.
+
 * Thu May 07 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.2-alt1
 - New version 4.1.2.
 
