@@ -1,6 +1,6 @@
 Name: ktls-utils
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: TLS handshake utilities for in-kernel TLS consumers
 License: GPLv2
@@ -30,7 +30,7 @@ parameters are passed back to the kernel via standard kTLS socket options.
 
 %build
 %autoreconf
-%configure --with-systemd --enable-session-tags
+%configure --with-systemd=%_unitdir --enable-session-tags
 %make_build
 
 %install
@@ -49,6 +49,9 @@ parameters are passed back to the kernel via standard kTLS socket options.
 %_man8dir/tlshd.8*
 
 %changelog
+* Tue Jun 16 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt2
+- NMU: explicitly specified %%_unitdir for systemd unit installation
+
 * Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
 - 1.4.0 released
 
