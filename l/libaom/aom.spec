@@ -15,7 +15,7 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.13.1
+Version: 3.14.1
 Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
@@ -157,6 +157,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Tue Jun 02 2026 Anton Farygin <rider@altlinux.org> 3.14.1-alt1
+- 3.13.1 -> 3.14.1
+
 * Tue Oct 28 2025 Constantin Sunzow <protvin@altlinux.org> 3.13.1-alt1
 - New version.
 
