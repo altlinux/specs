@@ -1,22 +1,19 @@
-%define _unpackaged_files_terminate_build 1
+%define rname kbackup
 
-Name: kbackup
+Name: %rname
 Version: 26.04.2
-Release: alt1
+Release: alt2
 
+Group: Graphical desktop/KDE
 Summary: Backup program with an easy-to-use interface
 License: GPL-2.0-or-later
-Group: Graphical desktop/KDE
 Url: https://invent.kde.org/utilities/kbackup
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
-
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(Qt6Qml)
@@ -30,9 +27,6 @@ BuildRequires: kf6-kxmlgui-devel
 BuildRequires: kf6-kdoctools-devel
 BuildRequires: pkgconfig(libarchive)
 
-Requires: plasma6-breeze
-Requires: icon-theme-breeze
-
 %description
 Kbackup is a program that lets you back up any directories or files. It
 uses an easy to use directory tree to select the things to back up and
@@ -40,7 +34,7 @@ lets you save your settings in "profile" files. These are simple textfiles conta
 excluded from the backup process.
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
 %K6build
@@ -52,13 +46,17 @@ excluded from the backup process.
 
 %files -f %name.lang
 %doc AUTHORS COPYING README
-%_K6bin/kbackup
-%_K6xdgapp/org.kde.kbackup.desktop
-%_K6icon/hicolor/*/*/*
-%_K6data/metainfo/org.kde.kbackup.appdata.xml
-%_K6data/mime/packages/kbackup.xml
+%_K6bin/*%{rname}*
+%_K6xdgapp/*%{rname}*
+%_K6icon/hicolor/*/*/*%{rname}*
+%_K6icon/hicolor/*/*/*kbp*
+%_K6data/metainfo/*%{rname}*
+%_K6xdgmime/*%{rname}*
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
+- update packaging
+
 * Fri Jun 05 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
 - New version 26.04.2.
 
