@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.3.2
+Version: 3.0.0
 Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
@@ -14,14 +14,11 @@ Url: https://pypi.org/project/kafka-python/
 VCS: https://github.com/dpkp/kafka-python.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: debundler.py.in
-Source2: %pyproject_deps_config_name
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 Provides: python3-module-%pypi_name = %EVR
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
-# vendored
-Requires: python3-module-six
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,7 +26,6 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter docker-py
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-BuildRequires: python3-module-six
 %endif
 
 %description
@@ -41,22 +37,13 @@ and Snappy compression is also supported for message sets.
 %prep
 %setup
 %patch -p1
-
+# not used anywhere anyway
+rm -r %mod_name/vendor/
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
 %pyproject_deps_resync_check_pipreqfile requirements-dev.txt
 %endif
-
-VENDORED_PATH='%mod_name/vendor'
-UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
-rm -r "$VENDORED_PATH"
-mkdir "$VENDORED_PATH"
-cp "%SOURCE1" "$UNVENDORED_PATH"
-sed -i \
-    -e 's/@VENDORED_ROOT@/"%mod_name.vendor"/' \
-    -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
-    "$UNVENDORED_PATH"
 
 %build
 %pyproject_build
@@ -70,10 +57,14 @@ rm -r %buildroot%python3_sitelibdir/test/
 %pyproject_run_pytest -ra -Wignore
 
 %files
+%_bindir/kafka-python
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.3.2 -> 3.0.0
+
 * Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 2.3.2-alt1
 - 2.3.1 -> 2.3.2
 
