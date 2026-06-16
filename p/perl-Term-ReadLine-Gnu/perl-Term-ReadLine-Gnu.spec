@@ -4,7 +4,7 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
 Version: 1.46
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the GNU Readline library
 License: GPLv2+ or Artistic-2.0
@@ -15,6 +15,7 @@ Source0: %dist-%version.tar
 Source1: Term-ReadLine.tar
 Source2: Makefile.PL
 
+Patch0: 00-Fix-for-compilation-in-C23-mode.patch
 Patch1: perl-Term-ReadLine-Gnu-1.46-at-Gnu.pm-use-XSLoader.patch
 # two merged in one Patch3 file
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
@@ -42,14 +43,7 @@ input history management facility, word completion facility, etc.
 mv Makefile.PL Makefile.PL.orig
 cp -f %{SOURCE2} Makefile.PL
 
-%patch1 -p1
-%patch3 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p0
+%autopatch -p1
 
 %build
 %perl_vendor_build
@@ -73,6 +67,9 @@ expect -c '
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.46-alt2
+- NMU: fix FTBFS with gcc 15
+
 * Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1.46-alt1
 - new version
 
