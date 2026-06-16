@@ -6,7 +6,7 @@
 
 Name: perl
 Version: 5.38.4
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -981,6 +981,8 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%archlib/SDBM_File.pm
 	%autolib/SDBM_File
 	%privlib/DBM_Filter*
+	%archlib/ODBM_File.pm
+	%autolib/ODBM_File
 %dir	%privlib/pod
 %doc	%privlib/pod/perldbmfilter.pod
 
@@ -1004,6 +1006,9 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 %doc	%privlib/pod/perldiag.pod
 
 %changelog
+* Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:5.38.4-alt4
+- NMU: fix packaging of unpackaged files
+
 * Thu Sep 04 2025 Igor Vlasenko <viy@altlinux.org> 1:5.38.4-alt3
 - majioa@:
   NMU fixed incompatible pointer type explicit conversion for SvPV macros
