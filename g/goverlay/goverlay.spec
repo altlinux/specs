@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -49,6 +49,9 @@ Goverlay makes everything accessible in just a few clicks.
 %_datadir/%name/data/icons/*/*
 
 %changelog
+* Tue Jun 16 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Mon May 11 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 
