@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname hdf5
-%define sover 310
-%define soverhl 310
-%set_autoconf_version 2.71
+%define sover 320
+%define soverhl 320
 
 Name: lib%oname
-Version: 1.14.6
+Version: 2.1.1
 Release: alt1
 
 Summary: Hierarchical Data Format 5 library
@@ -16,10 +15,13 @@ Group: System/Libraries
 Url: http://www.hdfgroup.org/HDF5/
 VCS: https://github.com/HDFGroup/hdf5.git
 Source: %name-%version.tar
-Patch: %name-alt-disable-rpath.patch
+Patch0: %name-alt-disable-rpath.patch
 
-# Automatically added by buildreq on Sat Sep 15 2007
-BuildRequires: gcc-c++ libssl-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
+BuildRequires: cmake
+BuildRequires: libaec-devel
 
 %description
 HDF5 is a completely new Hierarchical Data Format product consisting
@@ -54,7 +56,7 @@ requirements of modern systems and applications.
 %package -n lib%oname-devel
 Summary: HDF5 library development package
 Group: Development/C
-Requires: libstdc++-devel zlib-devel
+Requires: libstdc++-devel zlib-devel libaec-devel
 Requires: lib%oname-%sover = %EVR
 Requires: lib%oname-hl-%soverhl = %EVR
 Conflicts: lib%oname-mpi-devel < 1.8.3-alt5
@@ -78,7 +80,9 @@ This package contains tools for work with HDF5.
 
 %prep
 %setup
-%patch -p1
+# ALT: h5cc/h5c++ add -Wl,-rpath,%_libdir by default; RPATH to the standard
+# libdir is forbidden by verify-elf and breaks packages linking via h5cc.
+%patch0 -p1
 
 %ifarch %e2k
 # too many unsupported warning options
@@ -87,40 +91,31 @@ find config/gnu-warnings/ -type f ! -name '*general' \
 %endif
 
 %build
-%autoreconf
-%add_optflags -fno-strict-aliasing
-# --with-default-api-version=v18 is needed for libnetcdf
-%configure \
-	--enable-hl \
-	--enable-cxx \
-	--enable-shared \
-	--disable-static \
-	--disable-sharedlib-rpath \
-	--enable-build-mode=production \
-	--with-pic \
-	--with-pthread \
-	--with-zlib \
-	--with-szlib \
-	--with-default-api-version=v18 \
-	%nil
+%cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+	    -DHDF5_USE_GNU_DIRS=ON \
+            -DBUILD_SHARED_LIBS=ON \
+            -DBUILD_STATIC_LIBS=OFF \
+            -DHDF5_ENABLE_ALL_WARNINGS=ON \
+            -DHDF5_ENABLE_PARALLEL=OFF \
+            -DHDF5_BUILD_CPP_LIB=ON \
+            -DHDF5_BUILD_FORTRAN=OFF \
+            -DHDF5_BUILD_JAVA=OFF \
+            -DHDF5_BUILD_DOC=OFF \
+            -DHDF5_ENABLE_MIRROR_VFD=ON \
+            -DHDF5_ENABLE_DIRECT_VFD=ON \
+	    -DHDF5_BUILD_HL_LIB=ON \
+	    -DHDF5_ENABLE_ZLIB_SUPPORT=ON \
+	    -DHDF5_ENABLE_SZIP_SUPPORT=ON \
+            -DHDF5_USE_ZLIB_NG=OFF
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
-install -d %buildroot%_pkgconfigdir
-cat << EOF > %buildroot%_pkgconfigdir/%oname.pc
-prefix=%prefix
-exec_prefix=%prefix
-libdir=%_libdir
-includedir=%_includedir
-
-Name: %oname
-Description: Hierarchical Data Format 5 library
-Version: %version
-Libs: -lhdf5_hl_cpp -lhdf5_hl -lhdf5_cpp -lhdf5 -lstdc++ -lz
-EOF
+rm -rf %buildroot%_datadir/LICENSE %buildroot%_datadir/doc
+rm -rf %buildroot%_libdir/cmake/Modules/Findlibaec.cmake
 
 %files -n lib%oname-%sover
 %_libdir/lib*.so.%{sover}
@@ -132,9 +127,11 @@ EOF
 %_libdir/libhdf5_hl*.so.%{soverhl}.*
 
 %files -n lib%oname-devel
-%doc COPYING COPYING_LBNL_HDF5
-%doc README.md release_docs/{HISTORY*,RELEASE.txt}
+%doc LICENSE
+%doc README.md release_docs/USING_HDF5_CMake.txt
+%doc release_docs/CHANGELOG.md
 %_libdir/lib*.so
+%_libdir/cmake/*.cmake
 %_includedir/*
 %_pkgconfigdir/*
 
@@ -144,6 +141,12 @@ EOF
 %_libdir/libhdf5.settings
 
 %changelog
+* Thu Jun 11 2026 Anton Farygin <rider@altlinux.org> 2.1.1-alt1
+- 2.0.0 -> 2.1.1
+
+* Thu Jun 11 2026 Anton Farygin <rider@altlinux.org> 2.0.0-alt1
+- 1.14.6 -> 2.0.0
+
 * Mon Feb 24 2025 Anton Farygin <rider@altlinux.ru> 1.14.6-alt1
 - 1.14.5 -> 1.14.6
 

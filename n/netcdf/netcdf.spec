@@ -9,8 +9,8 @@
 %endif
 
 Name: netcdf
-Version: 4.9.3
-Release: alt3
+Version: 4.10.0
+Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: NetCDF
 Group: System/Libraries
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel libxml2-devel
-BuildRequires: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
+BuildRequires: libcurl-devel libexpat-devel
 %if_with check
 BuildRequires: /proc unzip
 %endif
@@ -148,17 +148,6 @@ you'll need to install the %name-devel package.
 использовать библиотеку NetCDF, вам необходимо установить пакет
 %name-devel.
 
-%package -n libnetcdf-doc
-Summary: Documentation for NetCDF
-Summary(ru_RU.UTF-8): Документация по NetCDF
-Group: Documentation
-
-%description -n libnetcdf-doc
-Documentation for NetCDF library.
-
-%description -l ru_RU.UTF-8 -n libnetcdf-doc
-Документация по NetCDF.
-
 %package -n hdf5-netcdf-plugins
 Summary:        HDF5 filter plugins for NetCDF
 Group:          System/Libraries
@@ -189,8 +178,8 @@ rm -fR udunits/expat
 	--enable-static=no \
 	--enable-hdf5 \
 	--enable-netcdf-4 \
-	--enable-doxygen \
-	--enable-internal-docs \
+	--disable-oxygen \
+	--disable-internal-docs \
 	--enable-v2 \
 	--enable-mmap \
 	--disable-dap-remote-tests \
@@ -232,10 +221,10 @@ rm -f %buildroot%_libdir/hdf5/plugin/*.la
 %_libdir/hdf5/plugin/lib__nch5*.so
 %_libdir/hdf5/plugin/lib__ncz*.so
 
-%files -n libnetcdf-doc
-%doc docs/html examples
-
 %changelog
+* Sun Jun 14 2026 Anton Farygin <rider@altlinux.org> 4.10.0-alt1
+- 4.9.3 -> 4.10.0
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 4.9.3-alt3
 - built with netcdf-4 and hdf5 for python3 modules
 

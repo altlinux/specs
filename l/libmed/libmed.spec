@@ -1,18 +1,16 @@
 Name:     libmed
-Version:  4.1.0
-Release:  alt3
+Version:  6.0.1
+Release:  alt1
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
 Group:    System/Libraries
-Url:      https://www.salome-platform.org/downloads/current-version
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Url:      https://www.salome-platform.org/?page_id=2768
 
 Source:   med-%version.tar
 
 Patch1: med-4.1.0-fedora-cmake.patch
-Patch2: med-4.1.0-gentoo-build-against-hdf5-1.14.patch
+Patch2: med-6.0.1-hdf5-2.x.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -78,6 +76,10 @@ popd
 %_bindir/*
 
 %changelog
+* Fri Jun 12 2026 Anton Farygin <rider@altlinux.org> 6.0.1-alt1
+- 6.0.1
+- fixed fedora-cmake patch context for 6.0.1; replaced obsolete gentoo hdf5-1.14 patch with hdf5 2.x version-gate fix
+
 * Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 4.1.0-alt3
 - NMU: added patch from Gentoo against hdf5 1.14
 

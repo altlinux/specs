@@ -15,7 +15,7 @@ wrapping of the HDF5 API, while the high-level component supports access to HDF5
 files, datasets and groups using established Python and NumPy concepts.
 
 Name: %pypi_name
-Version: 3.15.1
+Version: 3.16.0
 Release: alt1
 Summary: Read and write HDF5 files from Python
 License: BSD-3-Clause
@@ -87,6 +87,9 @@ ENDTESTS
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 3.16.0-alt1
+- 3.15.1 -> 3.16.0
+
 * Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 3.15.1-alt1
 - Automatically updated to 3.15.1.
 
