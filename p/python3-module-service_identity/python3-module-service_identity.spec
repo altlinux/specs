@@ -1,7 +1,7 @@
 %define oname service_identity
 
 Name: python3-module-%oname
-Version: 24.2.0
+Version: 26.1.0
 Release: alt1
 
 Summary: Service identity verification for pyOpenSSL (Python 3)
@@ -55,6 +55,9 @@ fi
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Tue Jun 16 2026 Vladimir Didenko <cow@altlinux.org> 26.1.0-alt1
+- new version
+
 * Mon Nov 11 2024 Vladimir Didenko <cow@altlinux.org> 24.2.0-alt1
 - new version
 
