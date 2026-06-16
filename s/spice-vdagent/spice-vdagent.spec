@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.23.0
-Release: alt5
+Release: alt6
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -63,10 +63,8 @@ Features:
 %install
 %makeinstall_std tmpfilesdir=%_tmpfilesdir udevrulesdir=%_udevrulesdir systemdunitdir=%_unitdir userunitdir=%_user_unitdir
 
-# disable xdg-autostart in DE with graphical-session.target (use spice-vdagent.service)
-desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
-	--add-not-show-in="KDE;GNOME;XFCE;" \
-	%buildroot/%_sysconfdir/xdg/autostart/spice-vdagent.desktop
+# to prevent a race with the service
+rm -r %buildroot/%_sysconfdir/xdg/autostart
 
 %files
 %doc COPYING CHANGELOG.md README.md
@@ -76,10 +74,14 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_userunitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
-%_sysconfdir/xdg/autostart/spice-vdagent.desktop
 %_man1dir/*
 
 %changelog
+* Tue Jun 16 2026 Anton Midyukov <antohami@altlinux.org> 1:0.23.0-alt6
+- Remove autostart spice-vdagent.desktop to prevent a race with the
+  spice-vdagent.service.
+- spice-vdagent.service: After=graphical-session.target.
+
 * Thu Apr 02 2026 Anton Midyukov <antohami@altlinux.org> 1:0.23.0-alt5
 - Disable xdg-autostart in DE with graphical-session.target (KDE;GNOME;xfce)
   (ALT bug 58485).
