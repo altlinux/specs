@@ -7,8 +7,8 @@
 %def_without proxy-extras
 
 Name: litellm
-Version: 1.81.13
-Release: alt2
+Version: 1.89.0
+Release: alt1
 
 Summary: LiteLLM CLI and AI Gateway (Proxy Server) utilities
 Group: Development/Other
@@ -21,6 +21,9 @@ Requires: python3-module-%{pypi_name} = %version-%release
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: litellm.service
+Source3: litellm.config.yaml
+Source4: litellm.sysconfig
 
 %add_pyproject_deps_runtime_filter azure-storage-blob
 %add_pyproject_deps_runtime_filter litellm-enterprise
@@ -29,9 +32,11 @@ Source1: %pyproject_deps_config_name
 %add_pyproject_deps_runtime_filter polars
 %add_pyproject_deps_runtime_filter pyroscope-io
 %add_pyproject_deps_runtime_filter semantic-router
+%add_pyproject_deps_runtime_filter granian
 %pyproject_runtimedeps_metadata_extra proxy
 
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: rpm-macros-systemd
 %pyproject_builddeps_build
 
 %if_with check
@@ -69,7 +74,7 @@ AutoReq: yes, nopython3
 %add_pyproject_deps_runtime_filter a2a-sdk
 %add_pyproject_deps_runtime_filter google-cloud-iam
 %add_pyproject_deps_runtime_filter google-cloud-kms
-%add_pyproject_deps_runtime_filter prisma
+#%%add_pyproject_deps_runtime_filter prisma
 %add_pyproject_deps_runtime_filter redisvl
 %add_pyproject_deps_runtime_filter resend
 %pyproject_runtimedeps_metadata_extra extra-proxy
@@ -108,6 +113,16 @@ popd
 # Exclude enterprise sources from OSS package payload.
 rm -rf %{buildroot}%{python3_sitelibdir}/enterprise
 
+install -Dpm644 %SOURCE2 %buildroot%_unitdir/litellm.service
+install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/litellm/config.yaml
+install -Dpm600 %SOURCE4 %buildroot%_sysconfdir/sysconfig/litellm
+
+%post
+%post_service litellm
+
+%preun
+%preun_service litellm
+
 %check
 %tox_check_pyproject
 
@@ -115,6 +130,10 @@ rm -rf %{buildroot}%{python3_sitelibdir}/enterprise
 %doc README.md LICENSE ARCHITECTURE.md security.md
 %_bindir/litellm
 %_bindir/litellm-proxy
+%_unitdir/litellm.service
+%dir %_sysconfdir/litellm
+%config(noreplace) %_sysconfdir/litellm/config.yaml
+%config(noreplace) %attr(600,root,root) %_sysconfdir/sysconfig/litellm
 
 %files -n python3-module-%{pypi_name}
 %python3_sitelibdir/litellm
@@ -127,6 +146,13 @@ rm -rf %{buildroot}%{python3_sitelibdir}/enterprise
 %endif
 
 %changelog
+* Mon Jun 15 2026 Egor Ignatov <egori@altlinux.org> 1.89.0-alt1
+- New version 1.89.0.
+
+* Wed Jun 10 2026 Egor Ignatov <egori@altlinux.org> 1.88.1-alt1
+- New version 1.88.1.
+- Add litellm.service systemd unit with default config (closes: #59001).
+
 * Fri May 08 2026 Egor Ignatov <egori@altlinux.org> 1.81.13-alt2
 - Fix build and runtime dependencies (closes: #59002)
 
