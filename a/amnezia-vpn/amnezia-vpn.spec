@@ -6,7 +6,7 @@
 %define amnezia_xray_bindings_version 1.1.0
 
 Name: amnezia-vpn
-Version: 4.8.18.0
+Version: 4.8.19.0
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -170,6 +170,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Jun 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.19.0-alt1
+- Version 4.8.19.0
+
 * Thu Jun 11 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.18.0-alt1
 - Version 4.8.18.0
 
