@@ -2,7 +2,7 @@
 %define protocols all
 
 Name: bird
-Version: 3.2.0
+Version: 3.3.1
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -101,6 +101,9 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Tue Jun 16 2026 Anton Farygin <rider@altlinux.org> 3.3.1-alt1
+- 3.2.0 -> 3.3.1
+
 * Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 3.2.0-alt1
 - 3.1.5 -> 3.2.0
 
