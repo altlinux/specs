@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-anyio
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
@@ -74,6 +74,9 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.14.0-alt1
+- Updated to 4.14.0.
+
 * Wed Mar 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.13.0-alt1
 - Updated to 4.13.0.
 

@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.1
+Version: 0.16.1
 Release: alt1
 
 Summary: Fast, drop-in replacement for Python's uuid module, powered by Rust
@@ -21,6 +21,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
 BuildRequires: python3-module-maturin
+BuildRequires: python3-dev
 BuildRequires: rust-cargo
 BuildRequires: /proc
 %if_with check
@@ -86,5 +87,8 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.16.1-alt1
+- Updated to 0.16.1.
+
 * Tue Mar 17 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.14.1-alt1
 - Initial build for ALT Sisyphus.

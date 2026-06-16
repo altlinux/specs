@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Linux AIO c python bindings
@@ -54,6 +54,9 @@ sed -i "/^version_info/s/= .*$/= $TRIPLE/" caio/version.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.1-alt1
+- Updated to 0.10.1.
+
 * Tue Mar 17 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
