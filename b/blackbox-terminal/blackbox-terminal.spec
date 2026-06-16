@@ -2,8 +2,8 @@
 %define _name blackbox
 
 Name: blackbox-terminal
-Version: 0.15.1
-Release: alt2
+Version: 0.15.2
+Release: alt1
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -38,6 +38,16 @@ BuildRequires: libgee0.8-devel
 %description
 A beautiful GTK 4 terminal.
 
+%package nautilus
+Summary: Nautilus extension for the Blackbox Terminal
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: nautilus-python
+
+%description nautilus
+This package provides integration with the Blackbox Terminal for the
+Nautilus file manager.
+
 %prep
 %setup
 %autopatch -p1
@@ -69,7 +79,13 @@ EOF
 %_iconsdir/hicolor/*/actions/*.svg
 %_iconsdir/hicolor/*/apps/*.svg
 
+%files nautilus
+%_datadir/nautilus-python/extensions/open-blackbox.py
+
 %changelog
+* Tue Jun 16 2026 Vladimir Didenko <cow@altlinux.org> 0.15.2-alt1
+- New version
+
 * Mon Jun 8 2026 Vladimir Didenko <cow@altlinux.org> 0.15.1-alt2
 - Fix binary name in alternatives config
 
