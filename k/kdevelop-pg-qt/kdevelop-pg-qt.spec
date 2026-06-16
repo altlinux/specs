@@ -1,21 +1,23 @@
-Name: kdevelop-pg-qt
-Version: 2.2.2
+%define rname kdevelop-pg-qt
+
+Name: %rname
+Version: 2.4.0
 Release: alt1
-Obsoletes: kdevelop-unstable-pg-qt
+%K6init
 
 Group: Development/Other
 Summary: KDevelop parser generator
 Url: http://techbase.kde.org/Development/KDevelop-PG-Qt_Introduction
-License: GPLv2+
+License: LGPL-2.0-or-later
 
-Source: v%version.tar
 Provides: kdevelop-pg-qt-devel = %EVR
-Obsoletes: kdevelop-unstable-pg-qt-devel < %version
+Obsoletes: kdevelop-unstable-pg-qt < %EVR
+Obsoletes: kdevelop-unstable-pg-qt-devel < %EVR
 
-# Automatically added by buildreq on Sun Aug 12 2018
-# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libqt5-core libqt5-test libstdc++-devel python-base python-modules python3-base sh3
-BuildRequires: extra-cmake-modules flex git-core libssl-devel python3 qt5-base-devel
-BuildRequires(pre): rpm-build-kf5
+Source: %rname-%version.tar
+
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules flex git-core libssl-devel python3 qt6-base-devel
 
 %description
 KDevelop-PG-Qt is a parser generator written in readable source-code and
@@ -24,21 +26,24 @@ implements the visitor-pattern and uses the Qt library. That is why it
 is ideal to be used in Qt-/KDE-based applications like KDevelop.
 
 %prep
-%setup -n kdevelop-pg-qt-%version
+%setup -n %rname-%version
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 
 %files
 %doc README AUTHORS
-%_bindir/kdev-pg-qt
-%_includedir/kdevelop-pg-qt
+%_K6bin/kdev-pg-qt
+%_includedir/KDevelopPGQt/
 %_libdir/cmake/*
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 2.4.0-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.2.2-alt1
 - New version
 
