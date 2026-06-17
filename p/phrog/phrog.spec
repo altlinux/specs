@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 0.50
+%define ver_major 0.53
 %define xdg_name mobi.phosh.Phrog
 %define rdn_name mobi.phosh.phrog
 
@@ -53,18 +53,21 @@ It is the spiritual successor of phog.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-sed -i 's|user = "greetd"|user = "_greeter"|' dist/fedora/greetd-config.toml
+#sed -i 's|user = "greetd"|user = "_greeter"|' dist/fedora/greetd-config.toml
 
 %build
+export GETTEXT_SYSTEM=1
 %rust_build
+%__cargo run --offline --package xtask -- dist-data greetd-config.toml --greetd-vt 1 --greetd-user _greeter
 
 %install
+export GETTEXT_SYSTEM=1
 %rust_install
-install -pD -m 644 data/%rdn_name.gschema.xml \
-    %buildroot%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+install -pD -m 644 data/%rdn_name.gschema.xml -t %buildroot%_datadir/glib-2.0/schemas/
+install -pD -m 644 data/00_%xdg_name.gschema.override -t %buildroot%_datadir/glib-2.0/schemas/
 install -pD -m 644 data/%name.session -t %buildroot%_datadir/gnome-session/sessions/
 install -pD -m 644 data/%xdg_name.desktop -t %buildroot%_desktopdir
-install -pD -m 644 dist/fedora/greetd-config.toml -t %buildroot%_sysconfdir/%name/
+install -pD -m 644 target/dist-data/greetd-config.toml -t %buildroot%_sysconfdir/%name/
 install -pD -m 644 dist/fedora/%name.service -t %buildroot%_unitdir/
 install -pD -m 644 data/%xdg_name.service -t %buildroot%_userunitdir/
 install -pD -m 644 data/%xdg_name.target -t %buildroot%_userunitdir/
@@ -76,6 +79,7 @@ install -d %buildroot%_sysconfdir/%name/autostart
 %find_lang %name
 
 %check
+export GETTEXT_SYSTEM=1
 dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 
 %files -f %name.lang
@@ -91,9 +95,13 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %_desktopdir/%xdg_name.desktop
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/glib-2.0/schemas/00_%xdg_name.gschema.override
 %doc README*
 
 %changelog
+* Wed Jun 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- 0.53.0
+
 * Fri Nov 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 
