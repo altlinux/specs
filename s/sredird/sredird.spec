@@ -1,6 +1,6 @@
 Name: sredird
 Version: 2.2.2
-Release: alt2.qa1
+Release: alt3
 
 Summary: RFC 2217-compliant serial port redirector
 License: GPL
@@ -10,7 +10,10 @@ Url: http://www.ibiblio.org/pub/Linux/system/serial
 Source0: %url/%name-%version.tar.gz
 # Source0-md5:	e541e4b1cb9fa8fc8ff0e76bb1127cda
 Source1: sredird.xinetd
-Packager: Michael Shigorin <mike@altlinux.org>
+
+Patch1: sredird-2.2.2-Fix-segfault-if-insufficient-arguments-and-some-star.patch
+Patch2: sredird-2.2.2-Re-raise-deadly-signals-instead-of-ignoring-them-Clo.patch
+Patch3: sredird-2.2.2-rm-termio-h.patch
 
 Summary(pl):	Program przekierowuj±cy port szeregowy zgodny z RFC 2217
 
@@ -26,6 +29,7 @@ na udostêpnianie portu szeregowego przez sieæ.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 %make_build
@@ -40,6 +44,9 @@ install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/xinetd.d/sredir-tcp
 %doc README
 
 %changelog
+* Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.2.2-alt3
+- NMU: fix FTBFS with new glibc, add patches from Debian
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
