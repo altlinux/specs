@@ -7,8 +7,8 @@
 %define libfontconfig libfontconfig%sover
 
 Name: fontconfig
-Version: 2.17.1
-Release: alt4
+Version: 2.18.1
+Release: alt1
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -73,6 +73,7 @@ documentation required for development of fontconfig-based software.
 	--docdir=%docdir \
 	--with-default-hinting=full \
 	--with-default-sub-pixel-rendering=none \
+	--with-bitmap-conf=yes \
 	#
 
 %make PDF_FILES=
@@ -105,7 +106,7 @@ while read CONF ; do
     ln -sr %buildroot/%_sysconfdir/fonts/conf.avail/$CONF %buildroot/%_datadir/%name/conf.avail/$CONF
 done
 
-# don't reject bitmap fonts
+# don't touch bitmap fonts
 rm %buildroot/%_sysconfdir/fonts/conf.d/70-*bitmaps*.conf
 
 mkdir -p %buildroot/%_libdir/libfontconfig/
@@ -193,6 +194,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Wed Jun 17 2026 Sergey V Turchin <zerg@altlinux.org> 2.18.1-alt1
+- new version
+
 * Thu Jun 11 2026 Sergey V Turchin <zerg@altlinux.org> 2.17.1-alt4
 - return default hinting to full because dejavu and noto-vf fonts failed
 
