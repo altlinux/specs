@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: which
-Version: 2.20
-Release: alt2.qa1
+Version: 2.25
+Release: alt1
 
 Summary: Displays where a particular program in your path is located
 License: GPLv3
@@ -14,7 +14,11 @@ Packager: Slava Semushin <php-coder@altlinux.ru>
 # ftp://ftp.gnu.org/gnu/which/which-%version.tar.gz
 Source: which-%version.tar
 Patch1: which-alt-texinfo.patch
-Patch2: which-rh-alt-fixes.patch
+Patch2: which-2.25-warning.patch
+
+BuildRequires: gcc-c++
+BuildRequires: makeinfo
+BuildRequires: readline-devel
 
 %description
 The which command shows the full pathname of a specified program,
@@ -22,8 +26,7 @@ if the specified program is in your PATH.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
+%autopatch -p1
 
 %build
 %configure
@@ -33,13 +36,19 @@ if the specified program is in your PATH.
 %makeinstall --silent --no-print-directory
 rm -f -- %buildroot%_infodir/dir
 
+%check
+%make_build check
+
 %files
-%doc AUTHORS EXAMPLES NEWS
+%doc AUTHORS EXAMPLES NEWS README README.alias COPYING
 %_bindir/%name
 %_man1dir/%name.1.*
 %_infodir/%name.info.*
 
 %changelog
+* Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.25-alt1
+- NMU: new version, fix FTBFS
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.20-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
