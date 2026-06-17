@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 151.0.4
+Version: 152.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,50 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jun 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-12289: Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-12290: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12291: Use-after-free in the Networking: HTTP component
+  + CVE-2026-12292: Incorrect boundary conditions in the Web Audio component
+  + CVE-2026-12293: Use-after-free in the Graphics: WebGPU component
+  + CVE-2026-12294: Sandbox escape in the DOM: Workers component
+  + CVE-2026-12295: Sandbox escape in the DOM: Navigation component
+  + CVE-2026-12296: Sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12297: Sandbox escape due to incorrect boundary conditions in the Networking component
+  + CVE-2026-12298: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12299: JIT miscompilation in the DOM: Core & HTML component
+  + CVE-2026-12300: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12301: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12302: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12303: Information disclosure due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-12304: Same-origin policy bypass in the Networking: Cookies component
+  + CVE-2026-12305: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12306: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12307: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12308: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12309: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12310: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12311: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12312: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12313: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12314: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12315: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12316: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12317: Memory safety bug fixed in Firefox 152
+  + CVE-2026-12318: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-12319: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-12320: Information disclosure in the Password Manager component
+  + CVE-2026-12321: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-12322: Clickjacking issue in the Widget: Gtk component
+  + CVE-2026-12323: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-12324: Incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-12325: Denial-of-service in the Graphics: ImageLib component
+  + CVE-2026-12326: Memory safety bugs fixed in Firefox 152 and Thunderbird 152
+  + CVE-2026-12327: Memory safety bugs fixed in Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+  + CVE-2026-12328: Memory safety bugs fixed in Firefox ESR 115.37, Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+
 * Thu Jun 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.4-alt1
 - New version.
 - Backport upstream glslopt 0.1.13 to fix the build with glibc 2.43,
