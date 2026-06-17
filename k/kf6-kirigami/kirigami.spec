@@ -18,7 +18,7 @@
 %define libkirigamiformsprivatetemplates libkirigamiformsprivatetemplates%sover
 
 Name: kf6-kirigami
-Version: 6.26.0
+Version: 6.27.0
 Release: alt1
 %K6init altplace
 
@@ -202,6 +202,7 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6inc/Kirigami/
 %_libdir/cmake/KF6Kirigami*/
 %_K6data/kdevappwizard/templates/*kirigami*
+%_K6archdata/metatypes/*.json
 
 %files -n %libkirigami
 %_K6lib/libKirigami.so.*
@@ -250,6 +251,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiFormsPrivateTemplates.so.*
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
 - new version
 

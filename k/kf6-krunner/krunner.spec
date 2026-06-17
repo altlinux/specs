@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf6-%rname
-Version: 6.26.0
+Version: 6.27.0
 Release: alt1
 %K6init altplace
 
@@ -71,12 +71,16 @@ KF6 library
 %_K6lib/cmake/KF6Runner
 %_K6dbus_iface/*.xml
 %_K6data/kdevappwizard/templates/*runner*
+%_K6archdata/metatypes/*.json
 
 %files -n libkf6runner
 %_K6lib/libKF6Runner.so.*
 
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
 - new version
 

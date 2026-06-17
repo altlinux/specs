@@ -6,14 +6,14 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.26.0
+Version: 6.27.0
 Release: alt1
 %K6init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 advanced configuration system
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.1-or-later AND GPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch2: alt-kconfig-notify-via-dbus.patch
@@ -126,7 +126,8 @@ Sip files for python3-module-%rname
 %_K6inc/KConfigGui/
 %_K6inc/KConfigQml/
 %_K6link/lib*.so
-%_K6lib/cmake/KF6Config
+%_K6lib/cmake/KF6Config/
+%_K6archdata/metatypes/*.json
 
 %files -n libkf6configcore
 %_K6lib/libKF6ConfigCore.so.*
@@ -146,6 +147,9 @@ Sip files for python3-module-%rname
 
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
 - new version
 

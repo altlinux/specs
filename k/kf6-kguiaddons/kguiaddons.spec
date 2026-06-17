@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.26.0
+Version: 6.27.0
 Release: alt1
 %K6init no_altplace
 
@@ -132,6 +132,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K6inc/KGuiAddons/
 %_K6link/lib*.so
 %_K6lib/cmake/KF6GuiAddons/
+%_K6archdata/metatypes/*.json
 %_pkgconfigdir/KF6GuiAddons.pc
 
 %files -n libkf6guiaddons
@@ -151,6 +152,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
+- new version
+
 * Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
 - new version
 
