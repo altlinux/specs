@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.34
+Version: 7.0.37
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -102,8 +102,6 @@ MongoDB instance.
 
 %ifarch aarch64
 %define ccflags_arch_opts "-march=armv8-a+crc"
-# Disable LTO for fix crash compile on Aarch64
-%define optflags_lto %nil
 %endif
 
 %ifarch %e2k
@@ -212,6 +210,12 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Wed Jun 17 2026 Alexei Takaseev <taf@altlinux.org> 7.0.37-alt1
+- 7.0.37 (Fixes: CVE-2026-9740, CVE-2026-9741, CVE-2026-9746, CVE-2026-9747,
+                 CVE-2026-9748, CVE-2026-9749, CVE-2026-9750, CVE-2026-9751,
+                 CVE-2026-9752, CVE-2026-9753, CVE-2026-11933)
+- Enable LTO for aarch64
+
 * Thu May 21 2026 Alexei Takaseev <taf@altlinux.org> 7.0.34-alt1
 - 7.0.34 (Fixes: CVE-2026-8053, CVE-2026-8199, CVE-2026-8200, CVE-2026-8201,
                  CVE-2026-8202, CVE-2026-8336, CVE-2026-8843)
