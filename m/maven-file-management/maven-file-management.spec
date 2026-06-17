@@ -1,71 +1,47 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-file-management
 Epoch:          1
-Version:        3.0.0
-Release:        alt1_17jpp11
-Summary:        Maven File Management API
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/file-management
-BuildArch:      noarch
+Version:        3.2.0
+Release:        alt1
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/file-management/%{version}/file-management-%{version}-source-release.zip
+Summary:        Apache Maven File Management API
+License:        Apache-2.0
+Group:          Development/Java
+URL:            https://maven.apache.org/shared/file-management/
+VCS:            https://github.com/apache/maven-file-management
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
 Provides a component for plugins to easily resolve project dependencies.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n file-management-%{version}
+%setup
+
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Tue Jun 16 2026 Evgeniy Serov <scala@altlinux.org> 1:3.2.0-alt1
+- Updated to 3.2.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:3.0.0-alt1_17jpp11
 - update
 

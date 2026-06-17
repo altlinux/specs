@@ -1,87 +1,48 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-plugin-build-helper
-Version:        3.3.0
-Release:        alt1_2jpp11
+Version:        3.6.1
+Release:        alt1
+
 Summary:        Build Helper Maven Plugin
 License:        MIT
+Group:          Development/Java
 URL:            https://www.mojohaus.org/build-helper-maven-plugin/
-BuildArch:      noarch
+VCS:            https://github.com/mojohaus/build-helper-maven-plugin
 
-Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/build-helper-maven-plugin/%{version}/build-helper-maven-plugin-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.assertj:assertj-core)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.testng:testng)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 
-Provides: mojo-maven2-plugin-build-helper = %version
-Obsoletes: mojo-maven2-plugin-build-helper = 17
-
+BuildArch:      noarch
 
 %description
 This plugin contains various small independent goals to assist with
 Maven build lifecycle.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
+%javadoc_package
 
 %prep
-%setup -q -n build-helper-maven-plugin-%{version}
+%setup
 
-%pom_add_dep junit:junit::test
-
-find -name BeanshellPropertyMojo.java -delete
-%pom_remove_dep :bsh
-
-%pom_remove_plugin :maven-invoker-plugin
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt
-%doc README.md
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt README.md
 
 %changelog
+* Tue Jun 16 2026 Evgeniy Serov <scala@altlinux.org> 3.6.1-alt1
+- Updated to 3.6.1.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_2jpp11
 - new version
 
