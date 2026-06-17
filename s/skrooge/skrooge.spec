@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 26.1.20
-Release: alt2
+Version: 26.4.0
+Release: alt1
 Summary: A personal finances manager, powered by KDE
 License: %gpl2plus
 Group: Office
@@ -116,6 +116,9 @@ A personal finances manager, powered by KDE.
 %_datadir/skrooge_source/*.json
 
 %changelog
+* Wed Jun 17 2026 Andrey Cherepanov <cas@altlinux.org> 26.4.0-alt1
+- New version.
+
 * Wed Feb 04 2026 Ivan A. Melnikov <iv@altlinux.org> 26.1.20-alt2
 - Build w/o qt6-webengine on architectures that don't have it
   (fixes build on riscv64).
