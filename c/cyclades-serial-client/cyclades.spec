@@ -1,43 +1,40 @@
 Name: cyclades-serial-client
-Version: 0.93
-Release: alt5
+Version: 0.95
+Release: alt1
 
 Summary: Serial port client
-License: GPL
+License: GPL-2.0
 Group: System/Kernel and hardware
 Url: http://www.lysator.liu.se/~astrand/projects/cyclades-serial-client
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-#Source: %url/%name-%version.tar.gz
 Source: %name-%version.tgz
-Patch: %name.patch
-Patch1: %name-cflags.patch
+Patch1: cyclades-serial-client-termio.patch
 
 # Automatically added by buildreq on Fri Jun 08 2007
 BuildRequires: gcc-c++
 
 %description
-cyclades-serial-client is a 
-RFC 2217 compliant client
+Network Serial port client software for Cyclades terminal servers
+This is the client for network serial port emulation via the RFC 2217
+protocol as used by Cyclades terminal servers and other products.  It
+consists of a daemon that manages a pseudo-tty and a shared object to take
+over the tcsetattr() and tcsendbreak() library calls to redirect their
+functionality over the network.
 
 %set_verify_elf_method textrel=relaxed
 
 %prep
-%setup -q
-
-patch -p0 -i %PATCH0
-%patch1 -p2
+%setup
+%autopatch -p1
 
 %build
 %add_optflags -fcommon
+%autoreconf
 %configure
 %make
-#%%make_build
 
 %install
-#mkdir -p %buildroot%_sysconfdir
-%make_install install prefix=%buildroot
-#install -m755 -D sercd.xinetd %buildroot/%_sysconfdir/sercd
+%makeinstall_std
 
 %files
 %_target_libdir_noarch/lib*
@@ -47,6 +44,10 @@ patch -p0 -i %PATCH0
 %_man8dir/*
 
 %changelog
+* Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.95-alt1
+- NMU: fix FTBFS with new glibc
+- update to new version
+
 * Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.93-alt5
 - fix build with gcc-10
 
