@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:    librealsense
-Version: 2.58.1
+Version: 2.58.2
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
@@ -143,6 +145,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-infrared
 %_bindir/rs-labeled-pointcloud
 %_bindir/rs-on-chip-calib
+%_bindir/rs-object-detection
 %_bindir/rs-fw-logger
 %_bindir/rs-fw-update
 %_bindir/rs-gl
@@ -160,6 +163,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-sensor-control
 %_bindir/rs-software-device
 %_bindir/rs-terminal
+%dir %_datadir/librealsense2
 %_datadir/librealsense2/presets
 %_datadir/pixmaps/realsense-viewer.png
 %_libdir/librealsense2-gl.so.*
@@ -187,18 +191,22 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %dir %python3_sitelibdir/pyrealsense2/
 %python3_sitelibdir/pyrealsense2/__init__.py
 %python3_sitelibdir/pyrealsense2/__pycache__/
+%python3_sitelibdir/pyrealsense2/pyrealsense2*.so
 %python3_sitelibdir/pyrealsense2/pyrealsense2*.so.*
+%python3_sitelibdir/pyrealsense2/pyrsutils*.so
 %python3_sitelibdir/pyrealsense2/pyrsutils*.so.*
 
 %files -n python3-module-%name-devel
 %_libdir/cmake/pyrealsense2
-%python3_sitelibdir/pyrealsense2/pyrealsense2*.so
-%python3_sitelibdir/pyrealsense2/pyrsutils*.so
 
 %files doc
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Wed Jun 17 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.2-alt1
+- new version 2.58.2
+- fix rsutils shared library patch for upstream 2.58.2
+
 * Sun May 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.1-alt1
 - new version 2.58.1
 - use system packages instead of bundled: yaml-cpp, nlohmann-json, pybind11,
