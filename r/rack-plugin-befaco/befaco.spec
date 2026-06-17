@@ -1,5 +1,5 @@
 Name: rack-plugin-befaco
-Version: 2.9.1
+Version: 2.11.0
 Release: alt1
 
 Summary: Virtual Eurorack Modules for VCV Rack
@@ -20,6 +20,7 @@ BuildRequires: rack-devel
 %setup
 
 %build
+%add_optflags -Wno-suggest-override
 %make_build RACK_DIR=%_datadir/rack/sdk
 
 %install
@@ -31,5 +32,8 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Wed Jun 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11.0-alt1
+- 2.11.0 released
+
 * Fri Oct 31 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9.1-alt1
 - initial
