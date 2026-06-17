@@ -3,7 +3,7 @@
 
 Name: bootupd
 Version: 0.2.32
-Release: alt1
+Release: alt3
 
 Summary: Bootloader updater
 License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
@@ -56,6 +56,12 @@ does not update /boot/efi (and also doesn't update the BIOS MBR).
 %doc README.md
 
 %changelog
+* Wed Jun 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.32-alt3
+- Add refreshing GRUB configs and modules on update, not just install.
+
+* Sat Mar 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.32-alt2
+- Added adaptation to the behavior of grub 2.14+.
+
 * Thu Feb 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.32-alt1
 - New version: 0.2.32.
 
