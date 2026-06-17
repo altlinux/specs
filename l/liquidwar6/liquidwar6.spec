@@ -1,9 +1,9 @@
 Name: liquidwar6
 Version: 0.6.3902
-Release: alt7
+Release: alt8
 
 Summary: A unique multiplayer wargame
-License: GPL
+License: GPLv3
 Group: Games/Strategy
 
 Url: http://www.gnu.org/software/liquidwar6
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 
 Patch0: liquidwar6-0.6.3902-alt-drop-Werror.patch
 Patch1: liquidwar6-0.6.3902-alt-guile22.patch
+Patch2: GCC15-build.patch
 
 # Automatically added by buildreq on Sat Jun 06 2020
 # optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 guile guile-devel guile22 libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgc-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmp-devel libgpg-error libharfbuzz-devel libpango-devel libpng-devel libsasl2-3 libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python2-base sh4 shared-mime-info xz zlib-devel
@@ -29,6 +30,7 @@ on Internet.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Building the package
 %build
@@ -57,6 +59,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 0.6.3902-alt8
+- Fix FCC15 build
+
 * Sun Dec 10 2023 Michael Shigorin <mike@altlinux.org> 0.6.3902-alt7
 - E2K: no special handling required
 
