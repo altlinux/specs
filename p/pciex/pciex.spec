@@ -1,9 +1,9 @@
 # XXX: Actual commit hash of build tag(git log -1 --format=%%h %%version)
-%define tag_hash 86ece9e
+%define tag_hash 53bd21a
 
 Name:    pciex
-Version: 0.0.2
-Release: alt3.1
+Version: 0.0.2.0.11.git%tag_hash
+Release: alt1
 
 Summary: PCI topology EXplorer
 License: GPL-2.0-only
@@ -12,16 +12,15 @@ Url:     https://github.com/s0nx/pciex
 
 Source: %name-%version.tar
 Patch0: pciex-0.0.2-alt-unbundle-deps.patch
-Patch1: pciex-0.0.2-alt-compile-error-fix.patch
-Patch2: pciex-0.0.2-alt-upstream-fix-ftxui.patch
-Patch3: pciex-0.0.2-alt-setversion.patch
-Patch4: pciex-0.0.2-alt-fmt-12.patch
+Patch1: pciex-0.0.2-alt-setversion.patch
+Patch2: pciex-0.0.2-alt-adapt-ftxui7.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(fmt)
 BuildRequires: pkgconfig(ftxui)
 BuildRequires: pkgconfig(CLI11)
+BuildRequires: glaze-devel
 
 Requires: hwdata
 
@@ -41,11 +40,7 @@ Features
 
 %prep
 %setup
-%patch0
-%patch1
-%patch2
-%patch3
-%patch4
+%autopatch
 %ifarch %e2k
 # error: no instance of function template "std::construct_at" matches the argument list
 sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
@@ -68,6 +63,9 @@ sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
 %_bindir/%name
 
 %changelog
+* Wed Jun 17 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.0.2.0.11.git53bd21a-alt1
+- Fix compatibility with FTXUI v7.0.0.
+
 * Sat Sep 20 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.2-alt3.1
 - fix build with fmt 12
 
