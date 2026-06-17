@@ -17,7 +17,7 @@
 
 Name: jwasm
 Version: 2.13
-Release: alt1
+Release: alt2
 License: Watcom-1.0
 Summary: MASM-compatible assembler
 Url: http://jwasm.github.io/
@@ -29,9 +29,9 @@ Patch: jwasm-undef.patch
 # PATCH-FIX-UPSTREAM conrad@quisquis.de
 Patch1: jwasm-bof.patch
 
-# Automatically added by buildreq on Wed Nov 30 2016
-# optimized out: python-base
-BuildRequires: dos2unix unzip
+# Automatically added by buildreq on Wed Jun 17 2026
+# optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error python3 python3-base sh5
+BuildRequires: dos2unix gcc14
 
 %description
 JWasm is a free MASM-compatible assembler with these features:
@@ -59,8 +59,8 @@ dos2unix *.txt Doc/*
 %ifarch x86_64
 IS_64=-DLONG_IS_64BITS
 %endif
-make DEBUG=1 extra_c_flags="%optflags -DDEBUG_OUT -fno-strict-aliasing $IS_64" -f GccUnix.mak GccUnixD GccUnixD/omfint.o
-%make_build DEBUG=1 extra_c_flags="%optflags -DDEBUG_OUT $IS_64" -f GccUnix.mak
+make CC=gcc-14 DEBUG=1 extra_c_flags="%optflags -DDEBUG_OUT -fno-strict-aliasing $IS_64" -f GccUnix.mak GccUnixD GccUnixD/omfint.o
+%make_build CC=gcc-14 DEBUG=1 extra_c_flags="%optflags -DDEBUG_OUT $IS_64" -f GccUnix.mak
 
 %install
 install -D GccUnixD/jwasm %buildroot%_bindir/jwasm
@@ -70,6 +70,9 @@ install -D GccUnixD/jwasm %buildroot%_bindir/jwasm
 %_bindir/%name
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 2.13-alt2
+- Use old GCC to compile
+
 * Fri Nov 13 2020 Fr. Br. George <george@altlinux.ru> 2.13-alt1
 - Version up
 
