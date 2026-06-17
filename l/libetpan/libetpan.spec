@@ -1,5 +1,5 @@
 Name: libetpan
-Version: 1.10
+Version: 1.10.1
 Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
@@ -17,15 +17,19 @@ Patch: %name-%version-%release.patch
 # Patch from upstream pull request
 # https://github.com/dinhvh/libetpan/pull/427
 Patch101: Fix-FD_SET-undefined-behavior.patch
+# Patch from upstream pull request
+# https://github.com/dinhvh/libetpan/pull/450
+Patch102: Replace-Cyrus-SASL-MD5-with-Colin-Plumb-s-MD5.patch
+# Patch from upstream pull request
+# https://github.com/dinhvh/libetpan/pull/458
+Patch103: dont_require_c++.patch
+
 %def_with gnutls
 %def_without openssl
 
-%define sover 20
+%define sover 26
 
 %define _unpackaged_files_terminate_build 1
-
-# FIXME: Is it really needed g++?
-BuildRequires: gcc-c++
 
 %{?_with_gnutls:BuildRequires: libgnutls-devel}
 %{?_with_openssl:BuildRequires: libssl-devel}
@@ -59,6 +63,8 @@ program which use lib%name.
 %patch -p1
 
 %patch101 -p1
+%patch102 -p1
+%patch103 -p1
 
 ln -s README.md README
 
@@ -93,6 +99,12 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Wed Jun 17 2026 Mikhail Efremov <sem@altlinux.org> 1.10.1-alt1
+- Patches from upstream pull requests:
+  + Do not require C++ compiler on non-Windows builds.
+  + Replace Cyrus SASL MD5 with Colin Plumb's MD5.
+- Updated to 1.10.1.
+
 * Wed Jun 03 2026 Mikhail Efremov <sem@altlinux.org> 1.10-alt1
 - Added soname check.
 - Dropped obsoleted patches.
