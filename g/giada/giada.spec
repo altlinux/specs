@@ -1,16 +1,17 @@
 Name: giada
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Giada - Your Hardcore Loop Machine
 License: GPLv3
 Group: Sound
-Url: https://www.giadamusic.com/
+URL: https://www.giadamusic.com/
+VCS: https://github.com/monocasual/giada
 
 ExclusiveArch: aarch64 x86_64
 
-Source0: %name-%version-%release.tar
-Source1: deps-%version-%release.tar
+Source0: %name-%version.tar
+Source1: deps-%version.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(alsa)
@@ -61,6 +62,9 @@ rm -vf %buildroot{%_bindir/fltk*,%_libdir/libfltk*,%_mandir/man?/fltk*}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jun 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
+- 1.5.0 released
+
 * Thu Jun 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.2-alt1
 - 1.4.2 released
 
