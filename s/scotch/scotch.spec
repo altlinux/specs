@@ -12,7 +12,7 @@
 %define sover 7.0
 
 Name: scotch
-Version: 7.0.11
+Version: 7.0.12
 Release: alt1
 
 Summary: Package and libraries for sequential and parallel graph partitioning
@@ -250,6 +250,9 @@ export OMPI_MCA_plm_rsh_agent=false OMPI_MCA_btl=^tcp
 %_datadir/%name/tgt
 
 %changelog
+* Wed Jun 17 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.12-alt1
+- New version 7.0.12.
+
 * Tue May 12 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.11-alt1
 - New version 7.0.11 (Closes: 43103).
 - Split libscotch into packages with optional libraries.
