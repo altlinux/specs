@@ -1,7 +1,7 @@
 %def_without sqlite2
 Name: sqliteodbc
 Summary: ODBC driver for SQLite
-Version: 0.9998
+Version: 0.99991
 Release: alt1
 Source: %name-%version.tar.gz
 Patch: sqliteodbc-0.993-alt-odbcinstext.patch
@@ -11,7 +11,7 @@ License: BSD
 
 # Automatically added by buildreq on Tue Jun 18 2013
 # optimized out: libunixODBC-devel
-BuildRequires: libiodbc-devel libsqlite3-devel libxml2-devel zlib-devel
+BuildRequires: libiodbc-devel libsqlite3-devel libxml2-devel zlib-devel gcc14
 %if_with sqlite2
 BuildRequires: libsqlite-devel
 %endif
@@ -30,7 +30,7 @@ http://www.iodbc.org     -  iODBC Driver Manager
 %build
 rm aclocal.m4
 %autoreconf
-%configure
+%configure CC=gcc-14
 %make_build
 
 %install
@@ -106,6 +106,9 @@ fi
 %_libdir/*.so*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 0.99991-alt1
+- Autobuild version bump to 0.99991
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.9998-alt1
 - Autobuild version bump to 0.9998
 
