@@ -1,11 +1,9 @@
 Name: lsof
-Version: 4.93.2
+Version: 4.99.6
 Release: alt1
 
-Packager: Victor Forsiuk <force@altlinux.org>
-
 Summary: Lists files open by processes
-License: Free
+License: MIT
 Group: Monitoring
 
 URL: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof
@@ -14,6 +12,10 @@ URL: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof
 # Repackaged file is picked from http://pkgs.fedoraproject.org/repo/pkgs/lsof
 Source: %name-%version.tar.xz
 Source1: README.lsof.maintainer
+
+# Automatically added by buildreq on Wed Jun 17 2026
+# optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgcc15-devel libgpg-error pkg-config python3 python3-base sh5 xz
+BuildRequires: groff-base
 
 %description
 Lsof's name stands for LiSt Open Files, and it does just that. It lists
@@ -24,9 +26,9 @@ system.
 %setup
 
 %build
-%add_optflags -DHASSECURITY -Dlint
+#add_optflags -DHASSECURITY -Dlint
 #export LSOF_VSTR=2.6.16
-./Configure -n linux
+%configure --enable-security
 %make_build DEBUG="%optflags"
 
 sed -e '/.so .\/00DIALECTS/d' \
@@ -46,6 +48,9 @@ ln -rs %buildroot%_sbindir/lsof %buildroot%_bindir/
 %doc 00*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 4.99.6-alt1
+- Update, taking tarball from RH
+
 * Mon Dec 09 2019 Ivan A. Melnikov <iv@altlinux.org> 4.93.2-alt1
 - Update, taking tarball from RH
 - Add lsof symlink to %%_bindir (closes: #37594)
