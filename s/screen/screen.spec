@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.9.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A screen manager that supports multiple sessions on one terminal
@@ -118,6 +118,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 1:4.9.1-alt3
+- Fix GCC15 build
+
 * Tue May 13 2025 Fr. Br. George <george@altlinux.org> 1:4.9.1-alt2
 - Fixes:
   + CVE-2025-46802 prevent temporary 0666 mode on PTYs
