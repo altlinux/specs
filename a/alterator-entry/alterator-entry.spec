@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,11 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Jun 10 2026 Andrey Alekseev <parovoz@altlinux.org> 0.4.13-alt1
+- Added 'required' component marker to source entry
+- Added missing descriptions of the source entity (thx Sergey Savelev)
+- Added mention of source in the entry schema (thx Sergey Savelev)  
+
 * Thu Jun 04 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.12-alt1
 - Fix compatibility with Python < 3.10 (thx Oleg Chagaev).
 

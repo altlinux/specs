@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -26,10 +26,13 @@ BuildRequires: kf6-kdbusaddons-devel
 BuildRequires: kf6-kcoreaddons-devel
 BuildRequires: kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
+BuildRequires: kf6-breeze-icons-devel
 BuildRequires: nlohmann-json-devel
 
+Requires: alterator-entry >= 0.4.13-alt1
 Requires: alterator-backend-packages >= 0.2.14-alt1
 Requires: alterator-backend-source
+Requires: alterator-backend-categories
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
 
@@ -62,6 +65,19 @@ and package repositories through apt and rpm.
 %_K6dbus_srv/*.service
 
 %changelog
+* Tue Jun 11 2026 Andrey Alekseev <parovoz@altlinux.org> 0.5.0-alt1
+- Added
+  + 'reload sources' action
+- Fixed
+  + dynamic translations
+  + signature check is now only performed if pending state is active
+  + source state indicator was not properly updated
+- Changed
+  + protocol selection is now preserved between different mirrors where possible
+  + apply confirmation is now immediately shown on "disable" button click
+  + updated to latest alterator-entry changes
+  + reworked sources module user interface
+
 * Thu May 14 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.0-alt1
 - Changed (thx Andrey Alekseev):
   + new implementation of the repository management module (old "Repo" tab)
