@@ -1,13 +1,12 @@
 Name: tvtime
 Version: 1.0.11
-Release: alt2
+Release: alt3
 
 Summary: A high quality TV viewer
 License: GPLv2+ and LGPLv2+
 Group: Video
 
 Url: http://tvtime.net
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: http://linuxtv.org/downloads/%name/%name-%version.tar.gz
 Source1: tvtime.watch
@@ -16,8 +15,9 @@ Source4: tvtime.desktop
 
 Patch0: tvtime-1.0.2-alt-tango.patch
 Patch1: tvtime-1.0.11-fix-for-glibc2.30.patch
+Patch2: tvtime-1.0.11-tvtime-notermio.patch
 Patch3: tvtime-1.0.8-alt-confdir.patch
-Patch301: tvtime-1.0.2-alt-drop-freefont.patch
+Patch4: tvtime-1.0.2-alt-drop-freefont.patch
 
 # Automatically added by buildreq on Fri Oct 30 2015
 # optimized out: libICE-devel libX11-devel libXext-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel xz zlib-devel
@@ -32,10 +32,7 @@ card and displays it on a computer monitor or projector.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p2
-%patch3 -p1
-%patch301 -p1
+%autopatch -p1
 tar xf %SOURCE3
 
 %build
@@ -56,7 +53,7 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/*
 %_datadir/%name
-#_datadir/pixmaps/%name.*
+#_datadir/pixmaps/%%name.*
 %_datadir/appdata/tvtime.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
@@ -65,6 +62,9 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %_mandir/*/man?/*.*
 
 %changelog
+* Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.11-alt3
+- NMU: fix FTBFS with new glibc
+
 * Fri Dec 20 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.11-alt2
 - Fixed FTBFS.
 
