@@ -1,7 +1,7 @@
 Name: geany-plugins
-Version: 2.0
-Release: alt2
-%define geany_ver 2.0
+Version: 2.1
+Release: alt1
+%define geany_ver 2.1
 
 Summary: Plugins for Geany
 
@@ -14,7 +14,6 @@ Packager: Fr. Br. George <george@altlinux.org>
 Source: %name-%version.tar.bz2
 
 # https://github.com/geany/geany-plugins/pull/1315
-Patch1: geany-plugins-pr1315-eliminate-some-compiler-warnings.patch
 
 BuildRequires(pre): geany geany-devel intltool
 # Hack out self-providing symbols
@@ -97,6 +96,9 @@ export PYTHON_VERSION=2
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Sat Jun 13 2026 Alexey Appolonov <alexey@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Wed Feb 12 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0-alt2
 - Apply changes from upstream PR 1315 to fix FTBFS.
 

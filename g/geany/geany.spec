@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 2.0
-Release: alt2
+Version: 2.1
+Release: alt1
 
 Summary: A fast and lightweight IDE using GTK3
 License: GPLv2
@@ -132,6 +132,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Sat Jun 13 2026 Alexey Appolonov <alexey@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Fri Nov 03 2023 Fr. Br. George <george@altlinux.org> 2.0-alt2
 - Eliminate GTK variety (Closes: #48302)
 - Enable VTE build
