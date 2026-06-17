@@ -4,18 +4,21 @@
 %define spirv_cross_commit 4212eef67ed0ca048cb726a6767185504e7695e5
 %define cpu_features_commit fd4ffc1632db7b4e763bd28ffa6fc9d761cf3587
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
-%define ffmpeg_commit 82049cca2e4c1516ed00a77b502a21f91b7843f4
-%define rcheevos_commit ef0e22bc076235315b94499bbd9f799a3c781708
-%define libchdr_commit 26d27ca4903aaccd3ef41337b29bf5ecafb1f0ca
+%define ffmpeg_commit 1e3b4965632f60b1d85360261d1b9dd45444bc71
+%define rcheevos_commit ebfe8ca1bf944358e27200d66964fcb4e00e2487
+%define libchdr_commit 8bba7745d758627258b315997a860039244cedaf
 %define rapidjson_commit 73063f5002612c6bf64fe24f851cd5cc0d83eef9
 %define lua_commit 7648485f14e8e5ee45e8e39b1eb4d3206dbd405a
+%define aemu_postoffice_commit 530fee545c27ffb8524a8f496cbbcfdb687fe8c5
+%define nanosvg_commit 478dbb8f7ed11c3d9b20b3986a8ee2283f483ef7
+%define libretro_common_commit 76a3d54feb0ee0ce9d59b90aa24694f3782063d3
 
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: ppsspp
-Version: 1.19.3
+Version: 1.20.4
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -51,6 +54,12 @@ Source9: libchdr-%libchdr_commit.tar
 Source10: rapidjson-%rapidjson_commit.tar
 # https://github.com/hrydgard/ppsspp-lua/archive/%lua_commit/ppsspp-lua-%lua_commit.tar.gz
 Source11: ppsspp-lua-%lua_commit.tar
+# https://github.com/Kethen/aemu_postoffice/archive/%aemu_postoffice_commit/aemu_postoffice-%aemu_postoffice_commit.tar.gz
+Source12: aemu_postoffice-%aemu_postoffice_commit.tar
+# https://github.com/hrydgard/nanosvg/archive/%nanosvg_commit/nanosvg-%nanosvg_commit.tar.gz
+Source13: nanosvg-%nanosvg_commit.tar
+# https://github.com/libretro/libretro-common/archive/%libretro_common_commit/libretro-common-%libretro_common_commit.tar.gz
+Source14: libretro-common-%libretro_common_commit.tar
 
 Patch0: %name-alt-git.patch
 
@@ -58,6 +67,7 @@ Requires: %name-common = %EVR
 
 BuildRequires(pre): fontconfig-devel
 BuildRequires(pre): libpng-devel
+BuildRequires(pre): libfreetype-devel
 
 BuildRequires: /proc
 BuildRequires: cmake
@@ -112,7 +122,7 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
@@ -125,6 +135,9 @@ This build using the Qt frontend.
 %__mv -Tf ../libchdr-%libchdr_commit ext/libchdr
 %__mv -Tf ../rapidjson-%rapidjson_commit ext/rapidjson
 %__mv -Tf ../%name-lua-%lua_commit ext/lua
+%__mv -Tf ../aemu_postoffice-%aemu_postoffice_commit ext/aemu_postoffice
+%__mv -Tf ../nanosvg-%nanosvg_commit ext/nanosvg
+%__mv -Tf ../libretro-common-%libretro_common_commit libretro/libretro-common
 
 %patch0 -p1
 
@@ -143,6 +156,7 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
+	-DUSE_SYSTEM_FREETYPE:BOOL=TRUE \
 	-DHEADLESS:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 %ifarch %arm
@@ -172,6 +186,7 @@ const char *PPSSPP_GIT_VERSION = \"%{version}\";
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
+	-DUSE_SYSTEM_FREETYPE:BOOL=TRUE \
 	-DLIBRETRO:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 %ifarch %arm
@@ -201,6 +216,7 @@ const char *PPSSPP_GIT_VERSION = \"%{version}\";
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
+	-DUSE_SYSTEM_FREETYPE:BOOL=TRUE \
 	-DUSING_QT_UI:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
 %ifarch %arm
@@ -252,6 +268,9 @@ const char *PPSSPP_GIT_VERSION = \"%{version}\";
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Wed Jun 17 2026 Nazarov Denis <nenderus@altlinux.org> 1.20.4-alt1
+- Version 1.20.4
+
 * Mon Jul 14 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.3-alt1
 - Version 1.19.3
 
