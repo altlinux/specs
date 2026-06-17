@@ -2,7 +2,7 @@
 
 Name: gnustep-terminal
 Version: 0.9.9
-Release: alt1
+Release: alt2
 Summary: Terminal emulator for GNUstep
 License: GPL-2.0
 Group: Graphical desktop/GNUstep
@@ -14,11 +14,13 @@ Source1: %name.menu
 Patch1: check-write-return-value.patch
 Patch2: fix-int-to-pointer-cast.patch
 Patch3: gcc-10.patch
+Patch4: FTBFS-kFreeBSD.patch
 
-BuildPreReq: gnustep-make-devel /proc
-BuildPreReq: gnustep-base-devel gnustep-gui-devel
-BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+BuildRequires: gnustep-make-devel /proc
+BuildRequires: gnustep-base-devel gnustep-gui-devel
+BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildRequires: libxslt-devel libffi-devel libicu-devel zlib-devel
+BuildRequires: glibc-devel
 
 Requires: gnustep-back
 
@@ -29,9 +31,7 @@ terminal services.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.9.9-alt2
+- NMU: fix FTBFS with new glib.
+
 * Sat Jan 02 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt1
 - New version.
 - Apply patches from Debian.
