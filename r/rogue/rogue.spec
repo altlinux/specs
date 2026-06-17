@@ -1,6 +1,6 @@
 Name: rogue
 Version: 5.4.4
-Release: alt4
+Release: alt5
 Packager: Fr. Br. George <george@altlinux.ru>
 Group: Games/Adventure
 License: BSD
@@ -11,7 +11,7 @@ Source2: %name.png
 Patch: rogue5.4.4-gcc8.patch
 
 BuildRequires: desktop-file-utils
-BuildRequires: ncurses-devel
+BuildRequires: ncurses-devel gcc14
 
 Summary: The original graphical adventure game
 
@@ -35,7 +35,7 @@ here.
 
 %build
 CFLAGS="-DNCURSES_INTERNALS" %configure --enable-setgid=games --enable-scorefile=%_gamesvar/roguelike/rogue54.scr --enable-lockfile=%_gamesvar/roguelike/rogue54.lck --bindir=%_gamesbindir
-%make_build
+%make_build CC=gcc-14
 
 %install
 make install DESTDIR=%buildroot
@@ -54,6 +54,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 %doc LICENSE.TXT %name.doc %name.html %name.me
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 5.4.4-alt5
+- Use old GCC
+
 * Sat Jul 19 2025 Fr. Br. George <george@altlinux.org> 5.4.4-alt4
 - Build with new internals API
 
