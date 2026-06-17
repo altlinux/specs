@@ -1,6 +1,6 @@
 Name: libmesode
-Version: 0.9.3
-Release: alt2
+Version: 0.10.1
+Release: alt1
 Summary: Profanity project fork of libstrophe, an XMPP client library written in C
 Group: System/Libraries
 License: GPLv3
@@ -8,7 +8,8 @@ Source: %version.tar.gz
 
 # Automatically added by buildreq on Sun Jul 22 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel perl pkg-config python-base
-BuildRequires: doxygen libexpat-devel libssl-devel
+BuildRequires: doxygen libexpat-devel libssl-devel gcc14
+%set_gcc_version 14
 
 %description
 Libmesode is a fork of libstrophe (http://strophe.im/libstrophe/),
@@ -40,7 +41,7 @@ sed -i '/SSL_OP_NO_TLSv1/s|^|//|' "src/tls_openssl.c"
 
 %build
 %autoreconf
-%configure
+%configure CC=gcc-14
 %make_build
 doxygen
 
@@ -62,6 +63,10 @@ make check
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 0.10.1-alt1
+- Autobuild version bump to 0.10.1
+- Use old GCC
+
 * Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt2
 - Fixed FTBFS.
 
