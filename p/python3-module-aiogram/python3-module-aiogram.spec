@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.23.0
-Release: alt1
+Release: alt2
 Summary: Modern and fully asynchronous framework for Telegram Bot API
 License: MIT
 Group: Development/Python3
@@ -50,7 +50,7 @@ support.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra -W'default::DeprecationWarning'
 
 %files
 %doc README.rst LICENSE
@@ -58,6 +58,9 @@ support.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 09 2026 Stanislav Levin <slev@altlinux.org> 3.23.0-alt2
+- NMU: fixed FTBFS (aiohttp 3.14.0).
+
 * Tue Dec 09 2025 Aleksandr A. Voyt <sobue@altlinux.org> 3.23.0-alt1
 - 3.22.0 -> 3.23.0
 

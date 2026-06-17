@@ -7,7 +7,7 @@
 Name: python3-module-%mod_name
 Epoch: 1
 Version: 1.6
-Release: alt1
+Release: alt2
 Summary: jinja2 template renderer for aiohttp.web
 License: Apache-2.0
 Group: Development/Python3
@@ -53,7 +53,9 @@ sed -i '/--cov=/d' pytest.ini
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra tests
+# waiting for https://github.com/aio-libs/aiohttp-jinja2/pull/1025
+%pyproject_run_pytest -ra tests \
+    -W'default::aiohttp.web_exceptions.NotAppKeyWarning'
 
 %files
 %doc *.rst docs/*.rst
@@ -61,6 +63,9 @@ sed -i '/--cov=/d' pytest.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 09 2026 Stanislav Levin <slev@altlinux.org> 1:1.6-alt2
+- Fixed FTBFS (aiohttp 3.14.0).
+
 * Fri Feb 02 2024 Anton Vyatkin <toni@altlinux.org> 1:1.6-alt1
 - new version 1.6
 

@@ -2,7 +2,7 @@
 
 Name: python3-module-aioresponses
 Version: 0.7.8
-Release: alt1.1
+Release: alt2
 
 Summary: Helper to mock/fake web requests in python aiohttp package
 License: MIT
@@ -49,6 +49,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/aioresponses-%version.dist-info
 
 %changelog
+* Wed Jun 10 2026 Stanislav Levin <slev@altlinux.org> 0.7.8-alt2
+- NMU: fixed FTBFS (aiohttp 3.14.0).
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.8-alt1.1
 - Demodernized packaging.
 

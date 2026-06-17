@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 8.1.1
-Release: alt1
+Release: alt2
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
 Group: Development/Python3
@@ -52,6 +52,9 @@ export REQUESTS_CA_BUNDLE=`python3 -m pytest_httpbin.certs`
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 10 2026 Stanislav Levin <slev@altlinux.org> 8.1.1-alt2
+- Fixed FTBFS (aiohttp 3.14.0).
+
 * Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 8.1.1-alt1
 - 8.1.0 -> 8.1.1.
 

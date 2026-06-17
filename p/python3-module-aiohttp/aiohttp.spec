@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.13.5
+Version: 3.14.1
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -58,7 +58,10 @@ http client/server for asyncio (PEP-3156).
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-cat requirements/base.in requirements/test-common.in >> requirements/test.in
+cat requirements/base.in \
+    requirements/test-common-base.in \
+    requirements/test-common.in \
+    >> requirements/test.in
 %pyproject_deps_resync_check_pipreqfile requirements/test.in
 %endif
 
@@ -90,6 +93,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 08 2026 Stanislav Levin <slev@altlinux.org> 3.14.1-alt1
+- 3.13.5 -> 3.14.1 (fixes: CVE-2026-34993, CVE-2026-47265).
+
 * Wed Apr 01 2026 Stanislav Levin <slev@altlinux.org> 3.13.5-alt1
 - 3.13.3 -> 3.13.5.
 
