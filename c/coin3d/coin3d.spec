@@ -1,5 +1,5 @@
 Name:    coin3d
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 Summary: OpenGL-based, 3D graphics library
 License: BSD-3-Clause
@@ -138,7 +138,7 @@ This package contains architecture independent files of Coin3D.
 %ninja_install -C BUILD
 
 %files -n lib%name
-%doc AUTHORS ChangeLog README{.md,.UNIX} THANKS FAQ* RELNOTES
+%doc AUTHORS ChangeLog README.md THANKS FAQ* RELNOTES
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -158,6 +158,9 @@ This package contains architecture independent files of Coin3D.
 %_datadir/Coin4
 
 %changelog
+* Wed Jun 17 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.9-alt1
+- New version.
+
 * Tue Mar 24 2026 Andrey Cherepanov <cas@altlinux.org> 4.0.8-alt1
 - New version.
 
