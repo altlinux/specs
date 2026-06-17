@@ -4,8 +4,8 @@
 %define _udevrulesdir /lib/udev/rules.d
 
 Name: plasma-bigscreen
-Version: 6.6.91
-Release: alt2
+Version: 6.7.0
+Release: alt1
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libcec)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(sdl3)
 BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(vulkan)
 
 BuildRequires: kf6-bluez-qt-devel
 BuildRequires: kf6-ki18n-devel
@@ -48,6 +49,7 @@ BuildRequires: plasma6-activities-stats-devel
 BuildRequires: plasma-workspace-devel
 BuildRequires: qcoro6-devel
 BuildRequires: qqc2-breeze-style-devel
+BuildRequires: kf6-kitemmodels-devel
 
 BuildRequires: kde5-plasma-wayland-protocols
 
@@ -76,6 +78,7 @@ Requires: qt6-multimedia
 Requires: qt6-declarative
 Requires: qt6-webengine
 Requires: qqc2-breeze-style
+Requires: libkf6itemmodels
 
 Requires: kwayland-integration
 Requires: plasma6-breeze
@@ -106,7 +109,7 @@ This package contains libraries for %name.
 %setup
 sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
 sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
-sed -i "s|6.6.91|6.6.5|g" CMakeLists.txt
+sed -i 's|PROJECT_DEP_VERSION "6.7.0"|PROJECT_DEP_VERSION "6.6.5"|g' CMakeLists.txt
 
 %build
 %K6build
@@ -145,6 +148,9 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
 
 %changelog
+* Wed Jun 17 2026 Nikolay Strelkov <snk@altlinux.org> 6.7.0-alt1
+- New version 6.7.0.
+
 * Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.6.91-alt2
 - Moved libraries to libplasma-bigscreenlibs package.
 
