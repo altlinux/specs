@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: rclone
-Version: 1.73.5
+Version: 1.74.3
 Release: alt1
 Summary: "rsync" for cloud storage
 License: MIT
@@ -61,7 +61,7 @@ rclone lsd . | grep -w vendor
 rclone check . .			  # positive
 ! rclone check . .. 2>/dev/null	|| exit 2 # netagive
 # Remote protocol and remote control
-rclone --rc serve webdav --read-only . &
+rclone --rc --rc-no-auth serve webdav --read-only . &
 trap "kill $!" EXIT
 sleep 1
 rclone --webdav-url=http://127.0.0.1:8080/ check :webdav: .
@@ -81,6 +81,9 @@ diff COPYING /tmp/COPYING
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jun 16 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.74.3-alt1
+- new version 1.74.3
+
 * Mon Apr 27 2026 Vitaly Chikunov <vt@altlinux.org> 1.73.5-alt1
 - Update to v1.73.5 (2026-04-19). (Fixes: CVE-2026-41176, CVE-2026-41179).
 
