@@ -1,6 +1,6 @@
 Name: rott
-Version: 1.1.1
-Release: alt1.qa2
+Version: 1.1.2
+Release: alt1
 Summary: Rise of the Triad
 Group: Games/Arcade
 License: GPLv2+
@@ -15,13 +15,11 @@ Source5: rott-registered.desktop
 # free datafiles. I believe this constitues fair-use. If anyone disagrees let
 # me know and I'll remove it
 Source6: rott.png
-# Note: this gets applied during build, not during prep!
-Patch99: rott-1.0-registered.patch
 
 Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Sun Jul 20 2008
-BuildRequires: libSDL-devel libSDL_mixer-devel
+BuildRequires: libSDL-devel libSDL_mixer-devel gcc14
 
 BuildRequires: libSDL_mixer-devel desktop-file-utils
 
@@ -66,12 +64,11 @@ from this dir.
 
 %build
 pushd rott
-make %{?_smp_mflags} EXTRACFLAGS="$RPM_OPT_FLAGS -Wno-unused -Wno-pointer-sign"
+make CC=gcc-14 %{?_smp_mflags} EXTRACFLAGS="$RPM_OPT_FLAGS -Wno-unused -Wno-pointer-sign -DSHAREWARE=1"
 mv rott rott-shareware.bin
 
-patch -p2 < %PATCH99
 make clean
-make %{?_smp_mflags} EXTRACFLAGS="$RPM_OPT_FLAGS -Wno-unused -Wno-pointer-sign"
+make CC=gcc-14 %{?_smp_mflags} EXTRACFLAGS="$RPM_OPT_FLAGS -Wno-unused -Wno-pointer-sign -DSUPERROTT=1"
 mv rott rott-registered.bin
 popd
 
@@ -112,6 +109,10 @@ install -p -m 644 %SOURCE6 \
 %_datadir/icons/hicolor/64x64/apps/%name.png
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 1.1.2-alt1
+- Update version (year 2012, but newer anyway)
+- Use old GCC
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
