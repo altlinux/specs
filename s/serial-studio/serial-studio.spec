@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 3.2.7
+Version: 4.0.0
 Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
@@ -20,6 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: pkgconfig(mimalloc)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(Qt6Svg)
@@ -79,6 +80,9 @@ sed -i "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Wed Jun 17 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.0-alt1
+- New version 4.0.0.
+
 * Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.7-alt1
 - New version 3.2.7.
 
