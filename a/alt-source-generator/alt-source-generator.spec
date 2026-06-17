@@ -2,7 +2,7 @@
 %define snake_case_name alt_source_generator
 
 Name: alt-source-generator
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Generator of .source files for the source control module (Alterator)
@@ -36,5 +36,10 @@ which is used by the source management module.
 %_bindir/%name
 
 %changelog
+* Wed Jun 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Updated for alterator-entry 0.4.13:
+  + Removed the requires key
+  + Added support for required components (the required key)
+
 * Thu May 14 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
 - First build for Sisyphus.
