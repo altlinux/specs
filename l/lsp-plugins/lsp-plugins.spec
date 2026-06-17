@@ -1,14 +1,18 @@
 %def_disable check
 %define xdg_name in.lsp_plug.lsp_plugins
 
+%def_enable jack
+%def_enable gst
+%def_enable pw
 %def_enable ui
+%def_enable standalone
 
 %ifnarch %ix86 armh
 %def_enable vst3
 %endif
 
 Name: lsp-plugins
-Version: 1.2.29
+Version: 1.2.33
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -20,11 +24,16 @@ Vcs: https://github.com/sadko4u/lsp-plugins.git
 
 Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
+%{?_enable_standalone:Obsoletes: %name-jack
+Provides: %name-jack = %EVR}
+
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
-BuildRequires: libGL-devel libXrandr-devel
+%{?_enable_ui:BuildRequires: libGL-devel libXrandr-devel}
+%{?_enable_gst:BuildRequires: pkgconfig(gstreamer-audio-1.0)}
+%{?_enable_pw:BuildRequires: pkgconfig(libpipewire-0.3)}
 BuildRequires: %_bindir/php
 
 #ExclusiveArch: %ix86 x86_64 aarch64 %e2k riscv64 loongarch64
@@ -61,6 +70,13 @@ Group: Sound
 %description -n vst-%name
 LSP (Linux Studio Plugins) LinuxVST plugins.
 
+%package -n gst-plugins-lsp
+Summary: LSP (Linux Studio Plugins) GStreamer plugins
+Group: Sound
+
+%description -n gst-plugins-lsp
+LSP (Linux Studio Plugins) GStreamer plugins.
+
 %package doc
 Summary: Documentation for LSP (Linux Studio Plugins) plugins
 Group: Sound
@@ -90,7 +106,9 @@ export PLATFORM=Linux BUILD_SYSTEM=Linux
 export VERSION=%version
 %make PREFIX=%_prefix \
     LIBDIR=%_libdir \
-    FEATURES="jack ladspa lv2 vst2 %{?_enable_vst3:vst3} %{?_enable_ui:ui} doc xdg" \
+    FEATURES="%{?_enable_jack:jack} %{?_enable_gst:gst} ladspa lv2 vst2 \
+    %{?_enable_pw:pipewire} %{?_enable_ui:ui} %{?_enable_standalone:standalone} \
+    %{?_enable_vst3:vst3} doc xdg" \
     EXT_FLAGS="%optflags_default %(getconf LFS_CFLAGS)" \
     config
 %make_build VERBOSE=1
@@ -102,16 +120,22 @@ rm -f %buildroot%_libdir/*.a
 %check
 %make check
 
-%files -n jack-%name
+%{?_enable_standalone:
+%files
 %_bindir/*
 %{?_enable_ui:%_libdir/liblsp-r3d-glx-lib*.so}
+%{?_enable_jack:%_libdir/liblsp-audio-jack-lib*.so}
+%{?_enable_pw:%_libdir/liblsp-audio-pipewire-lib*.so}
 %dir %_libdir/%name
-%_libdir/%name/lib%name-jack-%version.so
+%_libdir/%name/lib%name-standalone-%version.so
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %doc CHANGELOG* README*
 
 %{?_enable_ui:%exclude %_pkgconfigdir/lsp-r3d-glx-lib.pc}
+%{?_enable_jack:%exclude %_pkgconfigdir/lsp-audio-jack-lib.pc}
+%{?_enable_pw:%exclude %_pkgconfigdir/lsp-audio-pipewire-lib.pc}
+}
 
 %files -n ladspa-%name
 %_libdir/ladspa/*
@@ -126,10 +150,18 @@ rm -f %buildroot%_libdir/*.a
 %{?_enable_vst3:%_libdir/vst3/*}
 %doc CHANGELOG* README*
 
+%{?_enable_gst:
+%files -n gst-plugins-lsp
+%_libdir/%name/lib%name-gstreamer-%version.so
+%_libdir/gstreamer-1.0/*.so}
+
 %files doc
 %_defaultdocdir/%name/
 
 %changelog
+* Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.33-alt1
+- 1.2.33
+
 * Thu Apr 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.29-alt1
 - 1.2.29
 
