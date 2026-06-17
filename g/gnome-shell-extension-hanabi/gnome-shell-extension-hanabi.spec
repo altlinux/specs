@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %define ext_id hanabi-extension@jeffshee.github.io
 %define ext_schema_id io.github.jeffshee.hanabi-extension
 
 Name: gnome-shell-extension-hanabi
-Version: 1
-Release: alt9
-Epoch: 1
+Version: 20260617
+Release: alt1
+Epoch: 2
 
 Summary: Live Wallpaper for GNOME
 Summary(ru_RU.UTF-8): Живые обои для GNOME
@@ -14,16 +13,15 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/jeffshee/gnome-ext-hanabi
 Vcs: https://github.com/jeffshee/gnome-ext-hanabi.git
 
-BuildArch: noarch
+ExcludeArch: i586
 
 Source: %name-%version.tar
 Source1: node_modules.tar
+Source2: arm64.tar
 
-Patch1: prefs-1-alt-fixs.patch
+Requires: gnome-shell >= 50.0
 
-Requires: gnome-shell >= 42.0
-
-BuildRequires(pre): rpm-macros-meson rpm-build-nodejs
+BuildRequires(pre): rpm-build-nodejs
 BuildRequires: meson node npm
 BuildRequires: %_bindir/glib-compile-schemas
 
@@ -40,28 +38,32 @@ or 'Force GtkMediaFile' in the extension settings can help.
 или 'Force GtkMediaFile' в настройках расширения может помочь.
 
 %prep
-%setup -a1
+%setup
 
-# fixed tooltips
-%patch1 -p0
+%ifarch x86_64
+tar -xf %SOURCE1 -C %_builddir/%name-%version/
+%endif
+%ifarch aarch64
+tar -xf %SOURCE2 -C %_builddir/%name-%version/
+%endif
 
 %build
-%meson
-%meson_build
+npm run build
 
 %install
-%meson_install
-%find_lang %ext_id
+meson setup .build --prefix=%buildroot/usr/ && ninja -C .build install
 
-%check
-%meson_test
-
-%files -f %ext_id.lang
+%files
 %_datadir/glib-2.0/schemas/%ext_schema_id.gschema.xml
 %_datadir/gnome-shell/extensions/%ext_id/
+%exclude %_datadir/glib-2.0/schemas/*.compiled
 %doc README.md
 
 %changelog
+* Wed Jun 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260617-alt1
+- updated to git.6783f7aff4
+- Hanabi is migrating to TypeScript for GNOME 50+.
+
 * Tue Jun 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt9
 - updated to git.074982d14d
 
