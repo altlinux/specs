@@ -1,16 +1,16 @@
 Name: mathomatic
 Version: 16.0.5
-Release: alt5
+Release: alt6
 
 Summary: Small, portable symbolic math program
-License: LGPL
+License: LGPLv2.1
 Group: Sciences/Mathematics
 Url: http://www.mathomatic.org/
 
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 
-BuildRequires: libncurses-devel libreadline-devel
+BuildRequires: libncurses-devel libreadline-devel gcc14
 
 BuildRequires: rpm-build-python3
 
@@ -25,8 +25,8 @@ Gesslein II and has been under development since 1986.
 %patch -p1
 
 %build
-%make_build READLINE=1 mathdocdir=%_defaultdocdir/%name-%version
-%make_build -C primes READLINE=1 mathdocdir=%_defaultdocdir/%name-%version
+%make_build CC=gcc-14 READLINE=1 mathdocdir=%_defaultdocdir/%name-%version
+%make_build CC=gcc-14 -C primes READLINE=1 mathdocdir=%_defaultdocdir/%name-%version
 
 %install
 %makeinstall m4install mathdocdir=%buildroot%_defaultdocdir/%name-%version
@@ -49,6 +49,9 @@ make test
 
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 16.0.5-alt6
+- Use old GCC
+
 * Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 16.0.5-alt5
 - Fix python3 build
 
