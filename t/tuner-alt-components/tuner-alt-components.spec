@@ -4,7 +4,7 @@
 %define simple_name alt-components
 
 Name: tuner-%simple_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Control system components
@@ -47,6 +47,9 @@ Tuner Plugin for System Component Management
 %doc README.md
 
 %changelog
+* Wed Jun 17 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.1-alt1
+- fixed show others switch behavior (Closes: 59563, 59564, 59566)
+
 * Mon Jun 15 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.0-alt1
 - fixed translations in error dialog
 
