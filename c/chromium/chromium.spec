@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        149.0.7827.114
+Version:        149.0.7827.155
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -721,6 +721,43 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.155-alt1
+- - New version (149.0.7827.155).
+- Fixes:
+  + CVE-2026-12437: Use after free in WebShare
+  + CVE-2026-12438: Inappropriate implementation in WebView
+  + CVE-2026-12439: Use after free in Digital Credentials
+  + CVE-2026-12440: Use after free in DigitalCredentials
+  + CVE-2026-12441: Use after free in File Input
+  + CVE-2026-12442: Use after free in Passwords
+  + CVE-2026-12443: Use after free in Web Authentication
+  + CVE-2026-12444: Out of bounds read in Chromoting
+  + CVE-2026-12445: Use after free in Extensions
+  + CVE-2026-12446: Insufficient data validation in Passwords
+  + CVE-2026-12447: Heap buffer overflow in WebRTC
+  + CVE-2026-12448: Inappropriate implementation in WebView
+  + CVE-2026-12449: Use after free in Chromoting
+  + CVE-2026-12450: Inappropriate implementation in Media
+  + CVE-2026-12451: Use after free in DigitalCredentials
+  + CVE-2026-12452: Use after free in Downloads
+  + CVE-2026-12453: Insufficient validation of untrusted input in Input
+  + CVE-2026-12454: Race in Safe Browsing
+  + CVE-2026-12455: Use after free in Tab Strip
+  + CVE-2026-12456: Insufficient validation of untrusted input in Extensions
+  + CVE-2026-12457: Insufficient data validation in Extensions
+  + CVE-2026-12458: Incorrect security UI in Passwords
+  + CVE-2026-12459: Inappropriate implementation in Serial
+  + CVE-2026-12460: Insufficient policy enforcement in File System Access
+  + CVE-2026-12461: Out of bounds read in WebRTC
+  + CVE-2026-12462: Use after free in Media
+  + CVE-2026-12463: Inappropriate implementation in Views
+  + CVE-2026-12464: Use after free in Browser
+  + CVE-2026-12465: Insufficient validation of untrusted input in Metrics
+  + CVE-2026-12466: Heap buffer overflow in WebRTC
+  + CVE-2026-12467: Use after free in Extensions
+  + CVE-2026-12468: Inappropriate implementation in Updater
+  + CVE-2026-12469: Uninitialized Use in GPU
+
 * Fri Jun 12 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.114-alt1
 - New version (149.0.7827.114).
 - Fixes:
