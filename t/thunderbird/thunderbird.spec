@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 151.0.1
+Version: 152.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -40,15 +40,15 @@ Patch004: 0004-Correction-of-the-Russian-translation.patch
 Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
 Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
-Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-hidden-by-window-deco.patch
+Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-clipped-on-GNOME-Wayl.patch
 Patch009: 0009-Fix-OpenPGP-account-settings-buttons-clipped-when-pa.patch
 Patch010: 0010-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 Patch011: 0011-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch012: 0012-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
 Patch013: 0013-Apply-chat-message-style-changes-to-already-open-con.patch
 Patch014: 0014-Disable-the-native-textarea-resize-handle-on-the-cha.patch
-Patch015: 0015-Fix-default-size-and-layout-of-the-chat-Accounts-w.patch
-Patch019: 0019-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is.patch
+Patch015: 0015-Fix-default-size-and-layout-of-the-chat-Accounts-win.patch
+Patch016: 0016-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
 ### End Patches
 
 Provides: mailclient
@@ -193,7 +193,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch13 -p2
 %patch14 -p2
 %patch15 -p2
-%patch19 -p2
+%patch16 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -382,6 +382,50 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Jun 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-12289: Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-12290: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12291: Use-after-free in the Networking: HTTP component
+  + CVE-2026-12292: Incorrect boundary conditions in the Web Audio component
+  + CVE-2026-12293: Use-after-free in the Graphics: WebGPU component
+  + CVE-2026-12294: Sandbox escape in the DOM: Workers component
+  + CVE-2026-12295: Sandbox escape in the DOM: Navigation component
+  + CVE-2026-12296: Sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12297: Sandbox escape due to incorrect boundary conditions in the Networking component
+  + CVE-2026-12298: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12299: JIT miscompilation in the DOM: Core & HTML component
+  + CVE-2026-12300: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12301: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12302: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12303: Information disclosure due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-12304: Same-origin policy bypass in the Networking: Cookies component
+  + CVE-2026-12305: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12306: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12307: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12308: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12309: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12310: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12311: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12312: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12313: Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12314: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12315: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12316: Mitigation bypass in the DOM: Security component
+  + CVE-2026-12317: Memory safety bug fixed in Thunderbird 152
+  + CVE-2026-12318: Incorrect boundary conditions in the Libraries component in NSS
+  + CVE-2026-12319: Denial-of-service in the Audio/Video: Playback component
+  + CVE-2026-12320: Information disclosure in the Password Manager component
+  + CVE-2026-12321: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-12322: Clickjacking issue in the Widget: Gtk component
+  + CVE-2026-12323: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-12324: Incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-12325: Denial-of-service in the Graphics: ImageLib component
+  + CVE-2026-12326: Memory safety bugs fixed in Firefox 152 and Thunderbird 152
+  + CVE-2026-12327: Memory safety bugs fixed in Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+  + CVE-2026-12328: Memory safety bugs fixed in Firefox ESR 115.37, Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+
 * Wed May 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 151.0.1-alt1
 - New version.
 - Disable the native textarea resize
