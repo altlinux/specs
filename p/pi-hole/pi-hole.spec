@@ -7,7 +7,7 @@
 %define _servicename pi-hole
 
 Name:    pi-hole
-Version: 6.4.1
+Version: 6.4.2
 Release: alt1
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
@@ -111,15 +111,15 @@ EOF
 
 cat >%buildroot%_sysconfdir/%_name/versions <<EOF
 CORE_BRANCH=master
-CORE_HASH=d3bbfea9
+CORE_HASH=341376
 CORE_VERSION=v%version
 GITHUB_CORE_VERSION=v%version
-GITHUB_CORE_HASH=d3bbfea9
-FTL_VERSION=v6.6
+GITHUB_CORE_HASH=341376
+FTL_VERSION=v6.6.2
 FTL_BRANCH=master
-FTL_HASH=71b6fc6
-GITHUB_FTL_VERSION=v6.6
-GITHUB_FTL_HASH=71b6fc6
+FTL_HASH=82c58cc4
+GITHUB_FTL_VERSION=v6.6.2
+GITHUB_FTL_HASH=82c58cc4
 EOF
 
 cat >%buildroot%_datadir/%_name/update.sh <<EOF
@@ -153,6 +153,9 @@ chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/unins
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.4.2-alt1
+- v6.4.2
+
 * Tue Apr 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.4.1-alt1
 - v6.4.1
 
