@@ -1,40 +1,41 @@
-%def_with check
-
 Name: python3-module-aioresponses
 Version: 0.7.8
-Release: alt2
+Release: alt3
 
 Summary: Helper to mock/fake web requests in python aiohttp package
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/aioresponses/
+URL: https://pypi.org/project/aioresponses
 VCS: https://github.com/pnuckowski/aioresponses
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
-
-%if check
-BuildRequires: python3-module-aiohttp
-BuildRequires: python3-module-ddt
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter asynctest typing
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+export PBR_VERSION=%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
 
 %build
 export PBR_VERSION=%version
 %pyproject_build
 
 %install
-export PBR_VERSION=%version
 %pyproject_install
 
 %check
@@ -49,6 +50,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/aioresponses-%version.dist-info
 
 %changelog
+* Thu Jun 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.8-alt3
+- revert unsolicited changes
+
 * Wed Jun 10 2026 Stanislav Levin <slev@altlinux.org> 0.7.8-alt2
 - NMU: fixed FTBFS (aiohttp 3.14.0).
 
