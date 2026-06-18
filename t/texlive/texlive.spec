@@ -19,6 +19,8 @@ BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 BuildRequires: /usr/bin/hg
+%set_gcc_version 14
+BuildRequires: gcc%_gcc_version-c++
 #define _binary_payload		w9.gzdio
 #define _source_payload		w9.gzdio
 
@@ -67,7 +69,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt0_12
+Release:	alt0_13
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -402,6 +404,8 @@ rm -rf libs/luajit
 
 #-----------------------------------------------------------------------
 %build
+export CC=%__cc
+export CXX=%__cxx
 export CXXFLAGS="%{optflags} -std=c++17 -fpermissive"
 export CFLAGS="%{optflags}"
 
@@ -601,6 +605,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_13
+- NMU: fix build with gcc15.
+
 * Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_12
 - NMU: fix FTBFS with gcc14.
 
