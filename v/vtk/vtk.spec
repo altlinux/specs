@@ -7,7 +7,7 @@
 
 Name: vtk
 Version: %ver.2
-Release: alt3
+Release: alt4
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -26,6 +26,7 @@ Patch3: vtk-9.1.0-alt-compile-flags.patch
 Patch4: vtk-9.4.2-alt-fmt-12.patch
 Patch5: vtk-9.5.2-alt-numpy2-in1d.patch
 Patch6: vtk-9.5.2-alt-streamtracer-use-after-free.patch
+Patch7: vtk-9.5.2-fix-gdal-conversion.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -1545,6 +1546,9 @@ EOF
 %endif
 
 %changelog
+* Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 9.5.2-alt4
+- fixed build with GDAL 3.13.1
+
 * Fri May 08 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.5.2-alt3
 - e2k build fix
 

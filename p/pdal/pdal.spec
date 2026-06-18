@@ -2,16 +2,15 @@
 
 Name:    pdal
 Version: 2.9.3
-Release: alt1
+Release: alt2
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
 Group:   Other
 Url:     https://github.com/PDAL/PDAL
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 Source: PDAL-%version.tar
+Patch0: 0001-build-fix-with-GDAL-master-4929.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -56,6 +55,7 @@ Group: Development/C++
 
 %prep
 %setup -n PDAL-%version
+%patch0 -p1
 %ifnarch %e2k
 sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
 %endif
@@ -90,6 +90,9 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt2
+- Rebuilt with GDAL 3.13.1.
+
 * Thu Nov 27 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt1
 - New version.
 
