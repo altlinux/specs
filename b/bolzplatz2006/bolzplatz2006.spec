@@ -18,7 +18,7 @@ BuildRequires: jpackage-default
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_56jpp11
+Release:        alt1_57jpp11
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -47,6 +47,7 @@ Patch9:         %{name}-1.0.3-libpng15.patch
 Patch10:        %{name}-use-system-extgl.patch
 Patch11:        %{name}-gcc6.patch
 Patch12:        %{name}-openjdk11.patch
+Patch13:	%{name}-gcc15.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ant sdljava dom4j vecmath1.2 swig xml-commons-apis
 BuildRequires:  libGLU-devel libdevil-devel libXxf86vm-devel libjpeg-devel
@@ -142,6 +143,7 @@ Gratuit et open-source.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp %{SOURCE6} libsrc/jirr-dev/diff.txt
 cp %{SOURCE7} .
@@ -246,6 +248,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.3-alt1_57jpp11
+- NMU: fix FTBFS with gcc15
+
 * Mon Mar 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.3-alt1_56jpp11
 - NMU: fix FTBFS with zlib
 
