@@ -2,7 +2,7 @@
 
 Name: glassfish-hk2-extra
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: HK2 OSGi resource locator
 License: EPL-2.0
@@ -26,7 +26,7 @@ BuildRequires: osgi-compendium
 BuildRequires: glassfish-hk2-core
 BuildRequires: glassfish-hk2-osgi-adapter
 BuildRequires: args4j
-BuildRequires: bcel
+BuildRequires: apache-commons-bcel
 BuildRequires: junit5
 BuildRequires: ee4j-parent
 
@@ -84,6 +84,9 @@ sed -i 's/${project.osgi.version}/%{version}/' osgi-resource-locator/osgi.bundle
 %files dependency-visualizer -f .mfiles-hk2-dependency-visualizer
 
 %changelog
+* Thu Jun 18 2026 Anton Meleshnikov <alton@altlinux.org> 3.0.0-alt3
+- FTBFS fix.
+
 * Wed Apr 01 2026 Ivan Khanas <xeno@altlinux.org> 3.0.0-alt2
 - Augmented packaging.
 
