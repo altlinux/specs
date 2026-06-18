@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
 Version: 100.18
-Release: alt1
+Release: alt2
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-Requires: gnome-shell >= 49.0
+Requires: gnome-shell >= 50.0
 Requires: nautilus >= 3.38.0
 Requires: file-roller >= 3.38.0
 # https://bugzilla.altlinux.org/53044
@@ -70,15 +70,8 @@ rm -r %buildroot%_datadir/locale/zh-Hans
 rm -r %buildroot%_datadir/locale/zh-Hant
 
 # override for systemd user units for fix user session end
-mkdir -p %buildroot%_userunitdir/org.gnome.Shell@wayland.service.d
-pushd %buildroot%_userunitdir/org.gnome.Shell@wayland.service.d
-cat > gtk4-ding.conf << EOF
-[Unit]
-After=xdg-desktop-portal.service xdg-document-portal.service gvfs-daemon.service
-EOF
-popd
-mkdir -p %buildroot%_userunitdir/org.gnome.Shell@x11.service.d
-pushd %buildroot%_userunitdir/org.gnome.Shell@x11.service.d
+mkdir -p %buildroot%_userunitdir/org.gnome.Shell@user.service.d
+pushd %buildroot%_userunitdir/org.gnome.Shell@user.service.d
 cat > gtk4-ding.conf << EOF
 [Unit]
 After=xdg-desktop-portal.service xdg-document-portal.service gvfs-daemon.service
@@ -90,11 +83,14 @@ popd
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.gtk4-ding.gschema.xml
 %_desktopdir/com.desktop.ding.desktop
 %_iconsdir/hicolor/scalable/apps/com.desktop.ding.svg
-%_userunitdir/org.gnome.Shell@wayland.service.d/gtk4-ding.conf
-%_userunitdir/org.gnome.Shell@x11.service.d/gtk4-ding.conf
+%_userunitdir/org.gnome.Shell@user.service.d/gtk4-ding.conf
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Thu Jun 18 2026 Anton Midyukov <antohami@altlinux.org> 100.18-alt2
+- Fix override for org.gnome.Shell.service on gnome 50.
+- Runtime dependency on gnome-shell >= 50.
+
 * Wed Mar 18 2026 Anton Midyukov <antohami@altlinux.org> 100.18-alt1
 - New version 100.18.
 
