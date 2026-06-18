@@ -3,7 +3,7 @@
 
 %global import_path github.com/OpenPrinting/ipp-usb
 Name:    ipp-usb
-Version: 0.9.33
+Version: 0.9.34
 Release: alt1
 
 Summary: ipp-usb -- HTTP reverse proxy, backed by IPP-over-USB connection to device
@@ -72,6 +72,9 @@ install -m 0644 -vp ipp-usb-quirks/* %buildroot%_datadir/ipp-usb/quirks
 %_unitdir/*.service
 
 %changelog
+* Wed Jun 17 2026 Anton Midyukov <antohami@altlinux.org> 0.9.34-alt1
+- New version 0.9.34.
+
 * Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 0.9.33-alt1
 - New version 0.9.33.
 
