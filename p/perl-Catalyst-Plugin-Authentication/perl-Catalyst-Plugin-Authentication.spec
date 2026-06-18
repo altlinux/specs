@@ -1,7 +1,7 @@
 %define dist Catalyst-Plugin-Authentication
 Name: perl-%dist
 Version: 0.10024
-Release: alt1
+Release: alt2
 
 Summary: Infrastructure plugin for the Catalyst
 License: GPL or Artistic
@@ -14,6 +14,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 25 2011 (-bi)
 BuildRequires: perl-Catalyst-Devel perl-Catalyst-Plugin-Session perl-Class-Accessor perl-Class-Inspector perl-Digest-SHA perl-Digest-SHA1 perl-Test-Exception perl-Tie-RefHash
+BuildRequires: perl(Test/Fatal.pm)
 
 %description
 The authentication plugin provides generic user support for
@@ -35,6 +36,9 @@ the user to do what the system authorises them to do).
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.10024-alt2
+- NMU: fix FTBFS
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.10024-alt1
 - automated CPAN update
 
