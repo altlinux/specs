@@ -5,7 +5,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 7.5.7
+Version: 7.6.0
 Release: alt1
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
@@ -114,6 +114,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook.json \
 %endif
 
 %changelog
+* Fri Jun 19 2026 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
+- new version 7.6.0
+
 * Fri Jun 05 2026 Anton Vyatkin <toni@altlinux.org> 7.5.7-alt1
 - new version 7.5.7
 
