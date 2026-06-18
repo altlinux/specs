@@ -1,6 +1,6 @@
 Name:    tomcat-jakartaee-migration
 Version: 1.0.9
-Release: alt2
+Release: alt3
 Summary: Apache Tomcat migration tool for Jakarta EE
 
 License: Apache-2.0
@@ -10,7 +10,7 @@ Vcs:     https://github.com/apache/tomcat-jakartaee-migration.git
 Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-java
-BuildRequires: java-devel
+BuildRequires: java-devel >= 17.0
 BuildRequires: /proc
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache:apache:pom:)
@@ -56,6 +56,9 @@ chmod +x %buildroot%_bindir/javax2jakarta
 %_mavenpomdir/*.pom
 
 %changelog
+* Thu Jun 18 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt3
+- Rebuilt with java >= 17.0
+
 * Fri Dec 26 2025 Stanislav Levin <slev@altlinux.org> 1.0.9-alt2
 - Package CLI tool (javax2jakarta) (closes: #57376).
 
