@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.6.5
 Release: alt1
 Summary: Receptorctl is a front-end CLI and importable Python library that interacts with Receptor over its control socket interface
 License: Apache-2.0
@@ -15,6 +15,7 @@ Source: %pypi_name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
@@ -28,8 +29,20 @@ BuildRequires: python3-module-yaml
 
 %prep
 %setup -n %pypi_name-%version
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+     git init
+     git config user.email author@example.com
+     git config user.name author
+     git add .
+     git commit -m 'release'
+     git tag '%version'
+fi
+
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -40,9 +53,11 @@ BuildRequires: python3-module-yaml
 %_bindir/receptorctl
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/tests
 
 %changelog
+* Tue Jun 16 2026 Nikita Panov <nexxy@altlinux.org> 1.6.5-alt1
+- new version 1.6.5
+
 * Thu Feb 20 2025 Anton Vyatkin <toni@altlinux.org> 1.5.3-alt1
 - new version 1.5.3
 
