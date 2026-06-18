@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-wlr
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: xdg-desktop-portal backend for wlroots
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-systemd rpm-build-xdg
 BuildRequires: meson
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
-BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.62
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.64
 BuildRequires: pkgconfig(inih)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(libdrm)
@@ -63,6 +63,9 @@ mkdir -p %buildroot/%_xdgconfigdir/%name
 
 
 %changelog
+* Thu Jun 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Fri Apr 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
