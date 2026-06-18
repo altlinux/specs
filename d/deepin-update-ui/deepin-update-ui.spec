@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.52
+Version: 1.0.56
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -98,6 +98,8 @@ sed \
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
 %dir %_datadir/dde-control-center/translations/v1.1/
+%dir %_datadir/dde-control-center/permission-interfaces/
+%_datadir/dde-control-center/permission-interfaces/org.deepin.dcc-update-ui.json
 %dir %_datadir/private-lastore-tray/
 %dir %_datadir/private-lastore-tray/translations/
 %dir %_datadir/dock-update-plugin/
@@ -105,6 +107,9 @@ sed \
 %_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Thu Jun 18 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.56-alt1
+- New version 1.0.56.
+
 * Wed May 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.52-alt1
 - New version 1.0.52.
 
