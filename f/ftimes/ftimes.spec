@@ -1,6 +1,6 @@
 Name: ftimes
 Version: 3.11.0
-Release: alt2
+Release: alt3
 
 Summary: a system baselining and evidence collection tool
 License: BSD (3-clause), Apache, MIT
@@ -8,13 +8,15 @@ Group: File tools
 
 Url: http://ftimes.sourceforge.net/FTimes/
 Source: %name-%version.tgz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 ExclusiveArch: x86_64 %ix86 %e2k
 
 # Automatically added by buildreq on Mon May 12 2014
 # optimized out: gnu-config libcloog-isl4 libcom_err-devel libkrb5-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
 BuildRequires: libpcre-devel libssl-devel perl-podlators perl-devel
+BuildRequires: perl(Digest/SHA1.pm)
+
+%set_gcc_version 14
 
 %description
 FTimes is a system baselining and evidence collection tool.
@@ -28,6 +30,7 @@ sed -i 's,pcre.h,pcre/pcre.h,' configure* src/app-includes.h
 sed -i 's,XMAGIC_PREFIX"/etc/xmagic","/etc/xmagic",' src/xmagic.h
 
 %build
+export CC=%__cc
 %autoreconf
 %configure --bindir=%_bindir --without-ssl
 %make_build
@@ -54,6 +57,9 @@ mv %buildroot/usr/etc/xmagic %buildroot%_sysconfdir/
 # - server-side?
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.11.0-alt3
+- NMU: fix FTBFS with gcc 15
+
 * Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 3.11.0-alt2
 - added e2k support
 
