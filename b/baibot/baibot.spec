@@ -6,7 +6,7 @@
 
 Name:    baibot
 Version: 1.21.1
-Release: alt2
+Release: alt3
 Summary: Matrix bot for AI LLM capabilities (text-generation, TTS, STT, image-generation)
 License: AGPL-3.0-or-later
 Group:   Networking/Instant messaging
@@ -25,7 +25,6 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: libsqlite3-devel
 BuildRequires: gcc-c++
-BuildRequires: libssl-devel
 
 %description
 baibot is a Matrix bot built by etke.cc for using different capabilities of
@@ -78,6 +77,12 @@ useradd -r -M -g %group_name -c 'baibot Matrix AI bot' -d %_localstatedir/%name 
 %dir %attr(750,%user_name,%group_name) %_localstatedir/%name
 
 %changelog
+* Thu Jun 18 2026 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt3
+- Enable ureq "native-certs" feature so the openai-compatible provider
+  trusts the system CA store instead of only the bundled webpki-roots
+  (fixes UnknownIssuer against endpoints behind a private/internal CA).
+- Revert "Build async-openai with native-tls".
+
 * Thu Jun 18 2026 Alexey Shabalin <shaba@altlinux.org> 1.21.1-alt2
 - Build async-openai with native-tls (use the system CA trust store).
 
