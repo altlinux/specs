@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define sover 0
 Name: libid3tag
-Version: 0.16.3
+Version: 0.16.4
 Release: alt1
 Summary: ID3 Tag manipulation library
 Summary(ru_RU.UTF-8): Библиотека для работы с тегами ID3
@@ -44,7 +44,7 @@ using %name library.
 %cmake_install
 
 %files
-%doc CHANGES README CREDITS COPYRIGHT
+%doc CHANGES README.md CREDITS COPYRIGHT
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
@@ -55,6 +55,9 @@ using %name library.
 %_includedir/*
 
 %changelog
+* Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 0.16.4-alt1
+- 0.16.3 -> 0.16.4
+
 * Mon Jan 29 2024 Anton Farygin <rider@altlinux.ru> 0.16.3-alt1
 - 0.16.3
 
