@@ -1,6 +1,6 @@
 Name:    infinispan
 Version: 13.0.22
-Release: alt5
+Release: alt6
 Summary: Infinispan is an open source data grid platform and highly scalable NoSQL cloud data store.
 
 Group:   Development/Java
@@ -40,6 +40,7 @@ BuildRequires: mvn(bsh:bsh)
 BuildRequires: mvn(org.twdata.maven:mojo-executor)
 BuildRequires: mvn(org.apache.maven:maven-project)
 BuildRequires: mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires: mvn(jakarta.enterprise:jakarta.enterprise.cdi-api)
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 AutoReqProv: yes, noosgi-fc
@@ -146,6 +147,9 @@ getent passwd infinispan >/dev/null || /usr/sbin/useradd -r \
 %attr(0755,infinispan,infinispan) %dir %_localstatedir/%name
 
 %changelog
+* Thu Jun 18 2026 Anton Meleshnikov <alton@altlinux.org> 13.0.22-alt6
+- Added new jar dependency for build.
+
 * Thu Oct 09 2025 Andrey Cherepanov <cas@altlinux.org> 13.0.22-alt5
 - Required strictly jar dependencies for build.
 
