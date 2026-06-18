@@ -9,7 +9,7 @@
 Summary:	Rio Karma tools
 Name:		libkarma
 Version:	0.1.2
-Release:	alt2_12
+Release:	alt3
 License:	GPLv2+
 Group:		System/Libraries
 Url:		http://www.freakysoft.de/html/libkarma/
@@ -21,6 +21,9 @@ BuildRequires:	pkgconfig(mono)
 BuildRequires:	pkgconfig(taglib)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(zlib)
+
+%set_gcc_version 14
+
 Requires:	%libname >= %version
 Source44: import.info
 
@@ -72,7 +75,7 @@ Rio Karma C# bindings.
 sed -i 's!gmcs!mcs!' karma-sharp/Makefile
 
 %build
-
+export CC=%__cc
 make PREFIX=$RPM_BUILD_ROOT/%_prefix
 
 %install
@@ -123,6 +126,9 @@ install -m 644 %SOURCE4 %buildroot%_libdir/karma-sharp/karma-sharp.dll.config
 
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.1.2-alt3
+- NMU: fix build with gcc 15
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.1.2-alt2_12
 - fixed build
 
