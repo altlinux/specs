@@ -1,7 +1,7 @@
 
 Name: plasma-keyboard
 Version: 6.6.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -44,6 +44,9 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Thu Jun 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
+- add russian translation
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 
