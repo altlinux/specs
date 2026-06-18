@@ -5,7 +5,7 @@
 
 Name: libgtk-nocsd
 Version: 4.1
-Release: alt1
+Release: alt2
 
 Summary: An LD_PRELOAD library to disable CSD in GTK3/4
 
@@ -48,21 +48,17 @@ rm -r %buildroot%prefix/share/licenses
 
 sed -i 's|/usr/lib/|%_libdir/|' Source/gtk-nocsd.{,c}sh
 
-install -pDm 755 Source/gtk-nocsd.sh \
-	%buildroot%_sysconfdir/profile.d/gtk-nocsd.sh
-
-install -pDm 755 Source/gtk-nocsd.csh \
-	%buildroot%_sysconfdir/profile.d/gtk-nocsd.csh
-
 %files
-%doc *.md LICENSE
+%doc *.md LICENSE Source/gtk-nocsd.csh Source/gtk-nocsd.sh
 %_libdir/libgtk-nocsd.so
-%_sysconfdir/profile.d/gtk-nocsd.csh
-%_sysconfdir/profile.d/gtk-nocsd.sh
 
 %files -n %name%sover
 %_libdir/libgtk-nocsd.so.%sover
 
 %changelog
+* Thu Jun 18 2026 Anton Midyukov <antohami@altlinux.org> 4.1-alt2
+- Don't pack /etc/profile.d. Copy yourself from doc or use for each application
+  independently.
+
 * Wed Jun 17 2026 Anton Midyukov <antohami@altlinux.org> 4.1-alt1
 - Initial build.
