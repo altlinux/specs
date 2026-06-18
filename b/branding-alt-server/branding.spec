@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -398,6 +398,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Jun 18 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.2-alt2
+- Add a border to all scrollbars in the installer
+
 * Fri May 29 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.2-alt1
 - Add MAX channel URL
 
