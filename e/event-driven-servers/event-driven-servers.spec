@@ -1,9 +1,10 @@
 # Build ftpd, mavisd, spawnd, tac_plus, tcprelay
 %def_with extra
 %def_without tac_plus
+%def_with clang
 
 Name: event-driven-servers
-Version: 2026.06.08.2
+Version: 2026.06.17.9
 Release: alt1
 
 Summary: This is a collection of high-performance and scalable event-driven servers
@@ -18,6 +19,9 @@ ExcludeArch: %ix86 ppc64le armh
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%endif
 BuildRequires: libcares-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libradcli-devel
@@ -28,6 +32,7 @@ BuildRequires: libssl-devel
 # BuildRequires: libtls-devel
 BuildRequires: liblksctp-devel
 BuildRequires: zlib-devel
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Net/IP.pm)
 BuildRequires: perl(Net/LDAP.pm)
 BuildRequires: perl(Net/TacacsPlus/Packet.pm)
@@ -127,6 +132,11 @@ SSL encryption wrapper.
 %setup
 
 %build
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%endif
 ./configure --installroot=%buildroot --prefix=%_prefix \
     --bindir=%_bindir --etcdir=%_sysconfdir --sbindir=%_sbindir \
     --libdir=%_libdir --libarchdir=%_libdir --libexecdir=%_prefix/libexec \
@@ -137,10 +147,12 @@ SSL encryption wrapper.
 export NPROCS=1
 %make_build
 
+%if_without clang
 # https://github.com/MarcJHuber/event-driven-servers/issues/20#issuecomment-1310656856
 find ./build/ -name packet.o -delete
 sed -i -e 's/-O2/-O0/g' ./build/Makefile.inc.linux-*
 %make_build
+%endif
 
 %install
 %makeinstall_std -j1
@@ -302,6 +314,10 @@ rm %buildroot%_unitdir/tac_plus.service
 
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 2026.06.17.9-alt1
+- update to upstream/master (2026.06.17.9)
+- build with clang
+
 * Tue Jun 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 2026.06.08.2-alt1
 - update to upstream/master
 - switch off optimization for packet.o (ALT #58317)
