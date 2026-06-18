@@ -6,7 +6,7 @@
 %endif
 
 Name: xfsprogs
-Version: 6.19.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -113,11 +113,11 @@ rm -rf %buildroot%_datadir/doc/%name
 %_sbindir/*
 %_unitdir/*.service
 %_unitdir/*.timer
-%_unitdir/system-xfs_scrub.slice
+%_unitdir/*.slice
 %dir %_datadir/xfsprogs
 %dir %_datadir/xfsprogs/mkfs
 %dir %_libdir/xfsprogs
-%_libdir/xfsprogs/xfs_scrub_fail
+%_libdir/xfsprogs/*
 %_datadir/xfsprogs/xfs_scrub_all.cron
 %_datadir/xfsprogs/mkfs/*.conf
 %_mandir/man[85]/*
@@ -150,6 +150,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 7.0.1-alt1
+- 6.19.0 -> 7.0.1
+
 * Tue Mar 24 2026 Anton Farygin <rider@altlinux.org> 6.19.0-alt1
 - 6.18.0 -> 6.19.0
 
