@@ -2,14 +2,14 @@
 
 Name: plafon-altbooster
 Version: 5.6.9
-Release: alt3
+Release: alt4
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
 Group: System/Configuration/Other
 
-Url: https://github.com/plafonlinux/altbooster
-Vcs: https://github.com/plafonlinux/altbooster
+Url: https://altlinux.space/plafonlinux/altbooster
+Vcs: https://altlinux.space/plafonlinux/altbooster
 
 Requires: pip
 Requires: gnome-extensions-cli
@@ -51,6 +51,9 @@ cp -p -r icons/hicolor/scalable icons/hicolor/symbolic %buildroot%_datadir/icons
 %_bindir/%%oname
 
 %changelog
+* Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.9-alt4
+- changed url && vcs
+
 * Tue Jun 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.9-alt3
 - fixed: load icons (ALT #59387)
 
