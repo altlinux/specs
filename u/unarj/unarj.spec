@@ -1,12 +1,11 @@
 Name: unarj
 Version: 2.65
-Release: alt4
+Release: alt5
 
 Summary: An uncompressor for .arj format archive files
 Group: Archiving/Compression
 License: distributable
 URL: http://www.arjsoftware.com/files.htm#unarj
-Packager: Alexey Voinov <voins@altlinux.ru>
 
 Source: ftp://ibiblio.org/pub/Linux/utils/compress/%name-%version.tar.bz2
 Patch0: %name-%version-time.diff
@@ -14,24 +13,21 @@ Patch1: %name-%version-overflow.diff
 Patch2: %name-%version-path.diff
 Patch3: %name-%version-notice.diff
 Patch4: %name-2.63c-iconv.patch
+Patch5: %name-%version-proto.patch
 
 %description
 The UNARJ program is used to uncompress .arj format archives.
 The .arj format archive was mostly used on DOS machines.
 
 %prep
-%setup -q
-%patch0
-%patch1
-%patch2
-%patch3
-%patch4
+%setup
+%autopatch
+sed -i -e '/strip unarj/d' Makefile
 
 %define _optlevel 3
 
 %build
-make clean
-%make_build clean %name CFLAGS="$RPM_OPT_FLAGS -DUNIX"
+%make_build clean %name CFLAGS="$RPM_OPT_FLAGS -DUNIX -Wno-old-style-definition -Wno-unused-value"
 
 %install
 install -p -m755 -D %name $RPM_BUILD_ROOT%_bindir/%name
@@ -41,6 +37,9 @@ install -p -m755 -D %name $RPM_BUILD_ROOT%_bindir/%name
 %doc {%name,technote}.txt
 
 %changelog
+* Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.65-alt5
+- NMU: fix build with gcc15
+
 * Mon Aug 26 2019 Anton Farygin <rider@altlinux.ru> 2.65-alt4
 - added  fixed CVE's ID to the changelog
 
