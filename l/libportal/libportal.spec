@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.9
+%define ver_major 0.10
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
@@ -14,8 +14,8 @@
 %def_enable check
 
 Name: libportal
-Version: %ver_major.1
-Release: alt1.2
+Version: %ver_major.0
+Release: alt1
 Epoch: 1
 
 Summary: Flatpak portal library
@@ -28,9 +28,8 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Patch10: %name-0.9.1-up-qt-6.9.patch
 
-%define glib_ver 2.72
+%define glib_ver 2.80
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -208,7 +207,6 @@ of the installed %name.
 
 %prep
 %setup
-%patch10 -p1
 sed -i 's|pytest-3|py.test3|' tests/meson.build
 
 %ifarch %e2k
@@ -321,6 +319,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Jun 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.10.0-alt1
+- 0.10.0
+
 * Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1.2
 - fixed subpackage interdependencies
 

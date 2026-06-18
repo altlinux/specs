@@ -8,7 +8,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Epoch: 1
 
@@ -30,7 +30,6 @@ Source: %name-%version.tar
 %define meson_ver 0.56.2
 %define glib_ver 2.76
 %define geoclue_ver 2.5.2
-%define portal_ver 0.2.90
 %define fuse3_ver 3.10.0
 
 Requires: dbus
@@ -49,8 +48,6 @@ BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(json-glib-1.0)
-# since 1.5
-BuildRequires: pkgconfig(libportal) >= %portal_ver
 # since 1.9.1
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) pkgconfig(umockdev-1.0)
 BuildRequires: pkgconfig(gudev-1.0)
@@ -151,6 +148,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Thu Jun 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.22.1-alt1
+- 1.22.1
+
 * Mon Jun 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.22.0-alt1
 - 1.22.0
 
