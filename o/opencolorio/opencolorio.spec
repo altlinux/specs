@@ -13,8 +13,8 @@
 %define soname 2.5
 
 Name: opencolorio
-Version: 2.5.1
-Release: alt2
+Version: 2.5.2
+Release: alt1
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
@@ -203,6 +203,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 2.5.2-alt1
+- 2.5.1 -> 2.5.2
+
 * Sat Apr 04 2026 Anton Farygin <rider@altlinux.org> 2.5.1-alt2
 - fixed test compatibility with yaml-cpp 0.9.0
 
