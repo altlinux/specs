@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt26.gita466b131
+Release: alt27.git2d0c10da
 
 Summary: OS-level test automation
 License: GPLv2+
@@ -154,6 +154,10 @@ export TESSDATA_PREFIX="%_datadir/tessdata/"
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Thu Jun 18 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt27.git2d0c10da
+- update to current version
+- Commit hash: git2d0c10da
+
 * Fri Jun 05 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt26.gita466b131
 - update to current version
 - Commit hash: gita466b131
