@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osslsigncode
-Version: 2.10
+Version: 2.13
 Release: alt1
 
 Summary: Tool for Authenticode signing of EXE/CAB files
-License: GPLv2+
+License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/mtrojnar/osslsigncode
+VCS: https://github.com/mtrojnar/osslsigncode.git
 
 Source: %name-%version.tar
 
@@ -46,6 +47,10 @@ Tool for Authenticode signing of EXE/CAB files.
 %_datadir/bash-completion/completions/osslsigncode.bash
 
 %changelog
+* Fri Jun 19 2026 Nikolai Kostrigin <nickel@altlinux.org> 2.13-alt1
+- new version
+  + spec: add VCS tag and fix license
+
 * Tue Jul 01 2025 Nikolai Kostrigin <nickel@altlinux.org> 2.10-alt1
 - new version
   + remove alt-fix-test-python-cryptography-submodule-import patch
