@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/gtsteffaniak/filebrowser
-%global commit_hash 28e9b81e
+%global commit_hash 4072e46e4
 %global short_name filebrowser
 
 Name: filebrowser-quantum
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 Summary: The best free self-hosted web-based file manager
 License: Apache-2.0
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_sharedstatedir/%short_name
 %dir %attr(0750, _%short_name, _%short_name) %_sharedstatedir/%short_name
 
 %changelog
+* Fri Jun 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.4.0-alt1
+- Updated to version 1.4.0.
+
 * Sun May 24 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.3.3-alt1
 - Updated to version 1.3.3.
 
