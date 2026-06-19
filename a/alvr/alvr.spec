@@ -1,6 +1,6 @@
 Name: alvr
-Version: 20.13.0
-Release: alt2
+Version: 20.14.1
+Release: alt1
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -12,7 +12,6 @@ Source1: %name-%version-vendor.tar
 
 # alvr helper script
 Source10: alvr.sh
-Source11: 20.13.0_session.json
 
 Patch1: use-static-x264-ffmpeg.patch
 Patch2: alvr-default-settings.patch
@@ -141,15 +140,11 @@ install -Dm644 %_alvrBuildDir/libalvr_server_openvr.so %buildroot%_libdir/%name/
 install -Dm644 %_alvrBuildDir/libalvr_vulkan_layer.so -t %buildroot%_libdir/
 install -Dm644 alvr/vulkan_layer/layer/alvr_x86_64.json -t %buildroot%_datadir/vulkan/explicit_layer.d/
 
-# Default settings
-install -Dm644 %SOURCE11 %buildroot%_libdir/%name/default_settings.json
-
 # Desktop
 sed -i "s|Exec=alvr_dashboard|Exec=%name|" alvr/xtask/resources/%name.desktop
 install -Dm644 alvr/xtask/resources/%name.desktop -t %buildroot%_desktopdir/
 
 # Icons
-
 for res in 16 32 48 128 256; do
     mkdir -p %buildroot%_iconsdir/hicolor/$res'x'$res/apps/
     convert alvr/xtask/flatpak/alvr_icon.png -resize $res'x'$res %buildroot%_iconsdir/hicolor/$res'x'$res/apps/%name.png
@@ -166,6 +161,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Tue Jun 16 2026 Mikhail Tergoev <fidel@altlinux.org> 20.14.1-alt1
+- updated to version: 20.14.1
+
 * Sat May 03 2025 Mikhail Tergoev <fidel@altlinux.org> 20.13.0-alt2
 - fixed build with new NVIDIA CUDA Toolkit
 
