@@ -1,8 +1,8 @@
 %define sover 12
 
 Name: fmt
-Version: 12.1.0
-Release: alt1.2
+Version: 12.2.0
+Release: alt1
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -14,6 +14,9 @@ Url: http://%{name}lib.net/
 
 # https://github.com/%{name}lib/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+# https://github.com/fmtlib/%name/pull/4813
+Patch0: %name-12.2.0-fix-fallback-unit128-bitwise-not.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -41,6 +44,7 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 # [  FAILED  ] float_test.isnan
 sed -i 's/fegetexceptflag(&fe, FE_ALL_EXCEPT)/fe = 0/' test/format-test.cc
@@ -48,8 +52,8 @@ sed -i 's/fegetexceptflag(&fe, FE_ALL_EXCEPT)/fe = 0/' test/format-test.cc
 sed -i 's/FMT_USE_BITINT 1/FMT_USE_BITINT 0/' include/fmt/base.h
 %endif
 
-# Remove illegal political lines
-sed -i '/If you like this project, please consider donating/,+2d' README.md
+# Remove political badge
+sed -i '/\[!\[Support/,+1d' README.md
 
 %build
 %cmake \
@@ -65,6 +69,7 @@ sed -i '/If you like this project, please consider donating/,+2d' README.md
 
 %install
 %cmake_install
+%__rm -f %buildroot%_libdir/lib%name-c.a
 
 %files -n lib%name%sover
 %doc CONTRIBUTING.md ChangeLog.md LICENSE README.md
@@ -78,6 +83,9 @@ sed -i '/If you like this project, please consider donating/,+2d' README.md
 %_libdir/lib%name.so
 
 %changelog
+* Fri Jun 19 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt1
+- New version 12.2.0.
+
 * Tue Dec 09 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:12.1.0-alt1.2
 - e2k build fix
 
