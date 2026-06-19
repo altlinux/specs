@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.1.3
 Release: alt1
 Summary: A python svg graph plotting library
 License: LGPLv3
@@ -49,12 +49,14 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 %pyproject_run_pytest -ra pygal/test/
 
 %files
-%doc CHANGELOG README*
 %_bindir/pygal_gen.py3
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 19 2026 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1
+- 3.1.0 -> 3.1.3
+
 * Wed Dec 10 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.5 -> 3.1.0.
 
