@@ -1,16 +1,13 @@
 Name: mt-st
-Version: 1.1
-Release: alt2
+Version: 1.8
+Release: alt1
 
 Summary: Programs to control tape device operations
-License: GPL
+License: GPLv2
 Group: Archiving/Backup
-Url: http://www.ibiblio.org/pub/Linux/system/backup/
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
+Url: https://github.com/iustin/mt-st
 
-# ftp://ftp.ibiblio.org/pub/Linux/system/backup/mt-st-%version.tar.gz
-Source: mt-st-%version.tar
-
+Source: %name-%version.tar
 Patch: mt-st-1.1-fix-for-glibc2.30.patch
 
 %description
@@ -26,15 +23,22 @@ rewinding, ejecting, skipping files and blocks and more.
 %make_build
 
 %install
-%make_install install mandir=%_mandir
+%makeinstall_std
 
 %files
-/bin/mt
-/sbin/stinit
-%_mandir/man?/*
-%doc README* *.lsm stinit.def.examples
+%_sysconfdir/bash_completion.d/*
+/bin/*
+/sbin/*
+%_man1dir/*
+%_man8dir/*
+%doc CHANGELOG.md COPYING README* stinit.def.examples
 
 %changelog
+* Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 1.8-alt1
+- 1.8
+- Change upstream URL
+- Change License GPL->GPLv2
+
 * Sat Dec 21 2019 Grigory Ustinov <grenka@altlinux.org> 1.1-alt2
 - Fixed FTBFS.
 
