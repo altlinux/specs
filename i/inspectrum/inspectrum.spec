@@ -2,7 +2,7 @@
 
 Name: inspectrum
 Version: 0.4.0
-Release: alt2
+Release: alt3
 
 Summary: Tool for visualising captured radio signals
 License: GPL-3.0
@@ -16,7 +16,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(fftw3)
-BuildRequires: liquid-dsp-devel
+BuildRequires: pkgconfig(liquid-dsp)
 
 %description
 inspectrum is a tool for analysing captured signals, primarily from
@@ -75,6 +75,9 @@ EOF
 %_desktopdir/inspectrum.desktop
 
 %changelog
+* Fri Jun 19 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt3
+- Use pkgconfig for liquid-dsp.
+
 * Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
 - Enabled build on i586.
 

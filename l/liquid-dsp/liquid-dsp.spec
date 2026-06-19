@@ -5,7 +5,7 @@
 %define sover 1
 %define libname libliquid%{sover}
 Name: liquid-dsp
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Digital Signal Processing Library for Software-Defined Radios
@@ -57,16 +57,12 @@ applications that want to make use of libliquid.
 
 %prep
 %setup
-
-# do not package these files
-rm -v examples/.gitignore
-rm -v examples/CMakeLists.txt
+sed -i 's|DESTINATION lib$|DESTINATION "lib${LIB_SUFFIX}"|' CMakeLists.txt
 
 %build
 %cmake \
- -DENABLE_SIMD=OFF \
- -DBUILD_EXAMPLES=OFF \
- -DCMAKE_INSTALL_LIBDIR=%_libdir
+       -DENABLE_SIMD=OFF \
+       -DBUILD_EXAMPLES=OFF
 %cmake_build
 
 %install
@@ -85,7 +81,13 @@ rm -v examples/CMakeLists.txt
 %dir %_includedir/liquid
 %_includedir/liquid/*
 %_libdir/libliquid.so
+%dir %_libdir/cmake/liquid
+%_libdir/cmake/liquid/*.cmake
+%_libdir/pkgconfig/liquid-dsp.pc
 
 %changelog
+* Fri Jun 19 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus
