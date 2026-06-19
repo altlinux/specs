@@ -2,7 +2,7 @@
 
 Name: classgraph
 Version: 4.8.184
-Release: alt1
+Release: alt2
 
 Summary: An uber-fast parallelized Java classpath scanner and module scanner
 License: MIT
@@ -24,6 +24,7 @@ BuildRequires: maven-antrun-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: jmh-generator-annprocess
 BuildRequires: jmh
+BuildRequires: cdi-api
 
 %description
 ClassGraph is an uber-fast parallelized classpath scanner and module scanner
@@ -55,5 +56,8 @@ for Java, Scala, Kotlin and other JVM languages.
 %doc --no-dereference LICENSE-ClassGraph.txt
 
 %changelog
+* Fri Jun 19 2026 Anton Meleshnikov <alton@altlinux.org> 4.8.184-alt2
+- FTBFS fix.
+
 * Fri Nov 21 2025 Ivan Khanas <xeno@altlinux.org> 4.8.184-alt1
 - First build for ALT.
