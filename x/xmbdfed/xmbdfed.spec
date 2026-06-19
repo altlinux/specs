@@ -1,6 +1,6 @@
 Name: xmbdfed
 Version: 4.7
-Release: alt3
+Release: alt4
 
 %define prefix /usr/X11R6
 
@@ -16,6 +16,7 @@ Patch0:		xmbdfed-4.7-patch1
 Patch1:		xmbdfed-4.7-linux.patch
 Patch2:		xmbdfed-4.7-staticfix.patch
 Patch3:		xmbdfed-4.7-getline.patch
+Patch4:         xmbdfed-4.7-gcc15.patch
 Patch100: %name-4.7patch1-debian-3.patch
 Patch101: %name-4.7-alt-makefile.patch
 
@@ -57,6 +58,7 @@ XmBDFEditor is a Motif-based BDF font editor with the following features:
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch4 -p1
 %patch3 -p1
 %patch100 -p1
 %patch101 -p1
@@ -77,6 +79,9 @@ install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 %doc README COPYRIGHTS CHANGES xmbdfedrc
 
 %changelog
+* Fri Jun 19 2026 Fr. Br. George <george@altlinux.org> 4.7-alt4
+- Fix GCC15 build
+
 * Tue Aug 28 2012 Fr. Br. George <george@altlinux.ru> 4.7-alt3
 - Resurrect from orphaned
 - Merge FC patches
