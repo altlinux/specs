@@ -1,19 +1,19 @@
 Name: joe
-Version: 4.6
+Version: 4.8
 Release: alt1
 Summary: An easy to use modeless text editor
 License: GPLv2
 Group: Editors
 URL: https://joe-editor.sourceforge.io/
+VCS: https://github.com/joe-editor/joe/
 Source: %name-%version.tar
-Patch1: joe-3.7-joerc.patch
-Patch2: joe-3.8-selinux.patch
-Patch3: joe-3.8-time.patch
-Patch4: joe-3.8-indent-ow.patch
-Patch5: joe-3.8-aarch64.patch
-Patch6: joe-3.8-format-security.patch
-Patch7: joe-4.6-c99.patch
+Patch1: joe-4.8-joerc.patch
+Patch2: joe-4.8-selinux.patch
+Patch3: joe-4.8-time.patch
+Patch4: joe-4.8-indent-ow.patch
+Patch6: joe-4.8-format-security.patch
 BuildRequires: aspell libncurses-devel
+BuildRequires: autoconf automake
 
 %description
 Joe is an easy to use, modeless text editor which would be very appropriate for
@@ -32,9 +32,7 @@ it is very easy to use.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 iconv -f koi8-r -t utf-8 ./man/ru/joe.1.in >./man/ru/joe.1.in.aux
 touch -r ./man/ru/joe.1.in ./man/ru/joe.1.in.aux
 mv ./man/ru/joe.1.in.aux ./man/ru/joe.1.in
@@ -42,12 +40,18 @@ iconv -f ISO_8859-1 -t UTF-8 ChangeLog > ChangeLog.tmp
 touch -r ChangeLog ChangeLog.tmp
 mv ChangeLog.tmp ChangeLog
 
+# Building from upstream git: regenerate the autotools scripts.
+autoreconf -fisv
+
 %build
 %configure
 %make_build
 
 %install
 %make_install install DESTDIR=%buildroot
+
+# Drop upstream-installed docs; they are shipped via %%doc below.
+rm -rf %buildroot%_datadir/doc
 
 # This is automatically compressed afterwards...
 pushd %buildroot%_man1dir
@@ -61,6 +65,7 @@ popd
 %files
 %doc NEWS.md README.md ChangeLog
 %_bindir/*
+%_datadir/applications/*.desktop
 %dir %_sysconfdir/joe
 %config(noreplace) %_sysconfdir/joe/*
 %_datadir/joe
@@ -68,6 +73,10 @@ popd
 %lang(ru) %_mandir/ru/man?/*
 
 %changelog
+* Fri Jun 19 2026 Anton Farygin <rider@altlinux.org> 4.8-alt1
+- 4.6 -> 4.8
+- refreshed patches; dropped joe-4.6-c99.patch (merged upstream)
+
 * Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 4.6-alt1
 - 3.7 -> 4.6
 - sync patches with fedora
@@ -130,12 +139,12 @@ popd
 * Wed Nov 22 2000 Vincent Danen <vdanen@mandrakesoft.com> 2.8-22mdk
 - security fix: don't blindly write to DEADJOE, unlink and create it safely first.
 
-* Mon Sep 25 2000 Giuseppe Ghibò <ghibo@mandrakesoft.com> 2.8-21mdk
+* Mon Sep 25 2000 Giuseppe Ghibï¿½ <ghibo@mandrakesoft.com> 2.8-21mdk
 - sync with latest RedHat patches (procrc)
 - removed patch7 (included into joe-resize2.patch) and patch10
   (same things into joe-vfile.patch).
 
-* Mon Sep 25 2000 Giuseppe Ghibò <ghibo@mandrakesoft.com> 2.8-20mdk
+* Mon Sep 25 2000 Giuseppe Ghibï¿½ <ghibo@mandrakesoft.com> 2.8-20mdk
 - fixed a typo in menu.
 - included macro and BM fixes to SPEC file from Stefan van der
   Eijk <s.vandereijk@chello.nl>.
@@ -151,14 +160,14 @@ popd
 - Corrected group
 - Remove strip and bzip2 in spec file
 
-* Fri Feb 04 2000 Giuseppe Ghibò <ghibo@linux-mandrake.com>
+* Fri Feb 04 2000 Giuseppe Ghibï¿½ <ghibo@linux-mandrake.com>
 - merged with Bero's patch from Has de Goede <hans@highrise.nl> to fix the
   End Key.
 
 * Fri Jan 28 2000 Francis Galiegue <francis@mandrakesoft.com> 2.8-15mdk
 - Added missing %%defattr() in %%files section.
 
-* Sat Dec 18 1999 Giuseppe Ghibò <ghibo@linux-mandrake.com>
+* Sat Dec 18 1999 Giuseppe Ghibï¿½ <ghibo@linux-mandrake.com>
 - merged with latest Chris Gafton <gafton@redhat.com> patches
   (joe-2.8-security and joe-2.8-deadjoe).
 - finally fixed a bug causing segfault on big files with short
@@ -168,10 +177,10 @@ popd
 - Build release for Oxygen
 - fix sucks on locale patch where -p1 delete the _filename_ ...
 
-* Wed Aug 26 1999 Giuseppe Ghibò <ghibo@linux-mandrake.com>
+* Wed Aug 26 1999 Giuseppe Ghibï¿½ <ghibo@linux-mandrake.com>
 - fixed a bug causing segfault on long filenames.
 
-* Fri Jun 04 1999 Giuseppe Ghibò <ghibo@caesar.polito.it>
+* Fri Jun 04 1999 Giuseppe Ghibï¿½ <ghibo@caesar.polito.it>
 - added patch to get joe working on terminals supporting
   ti/te entries.
 
