@@ -3,10 +3,11 @@ Name: volleyball
 Version: 0.8.6
 %define dversion 0.8.5
 Epoch: 1
-Release: alt2
+Release: alt3
 Source: %name-%version.tar.gz
 Source1: %name.desktop
 Source2: %name-data-%dversion.tar.gz
+Patch: gcc15.patch
 License: GPL
 Group: Games/Sports 
 URL: http://www.losersjuegos.com.ar/juegos/volleyball
@@ -25,6 +26,7 @@ Volleyball - video game similar to GNU Arcade Volleyball
 %prep
 %setup -q
 tar xvf %SOURCE2 && mv %name-data-%dversion data
+%patch -p1
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
@@ -53,6 +55,9 @@ install -p -m644 -D %SOURCE1  %buildroot%_desktopdir/%name.desktop
 %doc README ChangeLog TODO AUTHORS
 
 %changelog
+* Fri Jun 19 2026 Fr. Br. George <george@altlinux.ru> 1:0.8.6-alt3
+- Fix GCC15 build
+
 * Mon May 28 2012 Fr. Br. George <george@altlinux.ru> 1:0.8.6-alt2
 - DSO list completion
 
