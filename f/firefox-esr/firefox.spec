@@ -6,7 +6,7 @@
 %ifarch i586
 %global build_parallel_jobs 4
 %else
-%global build_parallel_jobs %__nprocs
+%global build_parallel_jobs 4
 %endif
 %endif
 
@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.11.0
+Version: 140.12.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -35,6 +35,8 @@ Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
+Patch005: 0005-firefox-140-glslopt-once-flag-libc.patch
+Patch006: 0006-firefox-140-fix-sys-seccomp-glibc.patch
 ### End Patches
 
 Provides: webclient
@@ -172,6 +174,24 @@ Most likely you don't need to use this package.
 %setup -q -n firefox-%version -c
 %autopatch -p1
 
+python3 - <<'PY'
+import json
+import hashlib
+from pathlib import Path
+
+crate = Path("third_party/rust/glslopt")
+target = crate / "glsl-optimizer/include/c11/threads_posix.h"
+checksum_file = crate / ".cargo-checksum.json"
+
+data = json.loads(checksum_file.read_text())
+rel = str(target.relative_to(crate))
+data["files"][rel] = hashlib.sha256(target.read_bytes()).hexdigest()
+
+checksum_file.write_text(
+    json.dumps(data, sort_keys=True, separators=(",", ":")) + "\n"
+)
+PY
+
 mv -- .rpm/l10n .
 cp -f .rpm/firefox-mozconfig .mozconfig
 
@@ -185,9 +205,9 @@ ac_add_options --enable-linker=lld
 # See linker flags in the build section.
 ac_add_options --enable-linker=bfd
 %endif
-%ifnarch armh %{ix86}
-ac_add_options --enable-lto=thin
-%endif
+#%ifnarch armh %{ix86}
+#ac_add_options --enable-lto=thin
+#%endif
 %ifarch armh
 ac_add_options --disable-webrtc
 %endif
@@ -203,8 +223,9 @@ ac_add_options --disable-debug-symbols
 ac_add_options --disable-strip
 ac_add_options --disable-install-strip
 %endif
-mk_add_options MOZ_MAKE_FLAGS="-j%build_parallel_jobs --no-print-directory"
+mk_add_options MOZ_MAKE_FLAGS="--no-print-directory"
 EOF
+#mk_add_options MOZ_MAKE_FLAGS="-j%build_parallel_jobs --no-print-directory"
 
 find third_party \
 	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
@@ -448,6 +469,42 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Jun 18 2026 Pavel Vasenkov <pav@altlinux.org> 140.12.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-12289 Privilege escalation in the Graphics: WebRender component
+  + CVE-2026-12290 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12291 Use-after-free in the Networking: HTTP component
+  + CVE-2026-12292 Incorrect boundary conditions in the Web Audio component
+  + CVE-2026-12294 Sandbox escape in the DOM: Workers component
+  + CVE-2026-12295 Sandbox escape in the DOM: Navigation component
+  + CVE-2026-12298 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12296 Sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12297 Sandbox escape due to incorrect boundary conditions in the Networking component
+  + CVE-2026-12299 JIT miscompilation in the DOM: Core & HTML component
+  + CVE-2026-12329 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12302 Mitigation bypass in the DOM: Security component
+  + CVE-2026-12304 Same-origin policy bypass in the Networking: Cookies component
+  + CVE-2026-12305 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12306 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12307 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12308 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12309 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12310 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12311 Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12312 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12313 Information disclosure, sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-12314 Memory safety bug fixed in Firefox ESR 140.12
+  + CVE-2026-12315 Mitigation bypass in the DOM: Security component
+  + CVE-2026-12330 Incorrect boundary conditions in the Internationalization component
+  + CVE-2026-12324 Incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-12325 Denial-of-service in the Graphics: ImageLib component
+  + CVE-2026-12327 Memory safety bugs fixed in Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+  + CVE-2026-12328 Memory safety bugs fixed in Firefox ESR 115.37, Firefox ESR 140.12, Thunderbird ESR 140.12, Firefox 152 and Thunderbird 152
+
+* Tue Jun 16 2026 Pavel Vasenkov <pav@altlinux.org> 140.11.0-alt2
+- Fix FTBFS with glslopt once flag libc
+
 * Fri Jun 05 2026 Pavel Vasenkov <pav@altlinux.org> 140.11.0-alt1
 - New ESR version.
 - Security fixes:
