@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gcdemu
-Version: 3.2.6
+Version: 3.3.1
 Release: alt1
 
 Summary: GTK+ based GUI for controlling CDEmu daemon
@@ -11,6 +11,7 @@ License: GPLv2+
 Group: Emulators
 
 Url: http://cdemu.sourceforge.net/
+Vcs: https://github.com/cdemu/cdemu
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 # http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
@@ -81,6 +82,9 @@ mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Jun 19 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Thu Jan 13 2022 Nazarov Denis <nenderus@altlinux.org> 3.2.6-alt1
 - Version 3.2.6
 

@@ -1,7 +1,7 @@
 %add_optflags -fcommon
 
 Name: cdemu-daemon
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: CDEmu daemon
@@ -25,7 +25,7 @@ BuildPreReq: zlib-devel
 BuildRequires: cmake
 BuildRequires: intltool
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 3.2.5
+BuildRequires: libmirage-devel >= 3.3.1
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -64,6 +64,9 @@ to control it.
 %config %_sysconfdir/modules-load.d/%name.conf
 
 %changelog
+* Fri Jun 19 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Mon Feb 23 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 
