@@ -3,7 +3,7 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%global commit      64b425cf570b3b8dd1d4cc46da7c1fce65c6651a
+%global commit      fff62f14765df376e5fc36f5a8f8e795b5670f61
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	2.3.1
+Version:	2.3.2
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -86,6 +86,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Fri Jun 19 2026 Vladimir Didenko <cow@altlinux.org> 2.3.2-alt1
+- 2.3.2 (fixes: CVE-2026-47262, CVE-2026-53489, CVE-2026-53492, CVE-2026-53488, CVE-2026-50195)
+
 * Mon May 25 2026 Vladimir Didenko <cow@altlinux.org> 2.3.1-alt1
 - 2.3.1 (fixes: CVE-2026-46680, alt bug #59268)
 
