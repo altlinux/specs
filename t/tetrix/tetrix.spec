@@ -1,5 +1,5 @@
 Name: tetrix
-Version: 2.6
+Version: 2.7
 Release: alt1
 License: BSD
 Group: Games/Arcade
@@ -33,6 +33,9 @@ install -D %name.6 %buildroot%_man6dir/%name.6
 %_man6dir/*
 
 %changelog
+* Fri Jun 19 2026 Fr. Br. George <george@altlinux.org> 2.7-alt1
+- Autobuild version bump to 2.7
+
 * Tue Mar 31 2026 Fr. Br. George <george@altlinux.org> 2.6-alt1
 - Autobuild version bump to 2.6
 
