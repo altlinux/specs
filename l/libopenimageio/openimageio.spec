@@ -2,17 +2,18 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-# TODO: dependency on Field3D
-
-# TODO: build and run tests
-
 %define oname openimageio
 %define soname 3.1
 
 %def_with bootstrap
+%ifnarch %ix86
+%def_with check
+%else
+%def_without check
+%endif
 
 Name:           lib%oname
-Version: 3.1.13.1
+Version: 3.1.14.1
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -31,7 +32,9 @@ Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
-BuildRequires:  cmake gcc-c++
+BuildRequires:  cmake ctest gcc-c++
+# unit_filesystem test needs /proc/self/exe at %%check time
+BuildRequires:  /proc
 BuildRequires:  txt2man
 BuildRequires:  qt6-base-devel
 BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asio-devel
@@ -77,9 +80,10 @@ OpenImageIO is a library for reading and writing images, and a bunch of related
 classes, utilities, and applications. Main features include:
 - Extremely simple but powerful ImageInput and ImageOutput APIs for reading and
   writing 2D images that is format agnostic.
-- Format plugins for TIFF, JPEG/JFIF, OpenEXR, PNG, HDR/RGBE, Targa, JPEG-2000,
-  DPX, Cineon, FITS, BMP, ICO, RMan Zfile, Softimage PIC, DDS, SGI,
-  PNM/PPM/PGM/PBM, Field3d.
+- Format plugins for TIFF, JPEG/JFIF, JPEG-2000, JPEG-XL, OpenEXR, PNG, HDR/RGBE,
+  Targa, DPX, Cineon, FITS, BMP, ICO, RMan Zfile, Softimage PIC, DDS, SGI,
+  PNM/PPM/PGM/PBM, WebP, HEIF/HEIC, GIF, Photoshop PSD, RAW digital camera,
+  Ptex, OpenVDB, DICOM, and movie formats via FFmpeg.
 - An ImageCache class that transparently manages a cache so that it can access
   truly vast amounts of image data.
 
@@ -92,9 +96,10 @@ OpenImageIO is a library for reading and writing images, and a bunch of related
 classes, utilities, and applications. Main features include:
 - Extremely simple but powerful ImageInput and ImageOutput APIs for reading and
   writing 2D images that is format agnostic.
-- Format plugins for TIFF, JPEG/JFIF, OpenEXR, PNG, HDR/RGBE, Targa, JPEG-2000,
-  DPX, Cineon, FITS, BMP, ICO, RMan Zfile, Softimage PIC, DDS, SGI,
-  PNM/PPM/PGM/PBM, Field3d.
+- Format plugins for TIFF, JPEG/JFIF, JPEG-2000, JPEG-XL, OpenEXR, PNG, HDR/RGBE,
+  Targa, DPX, Cineon, FITS, BMP, ICO, RMan Zfile, Softimage PIC, DDS, SGI,
+  PNM/PPM/PGM/PBM, WebP, HEIF/HEIC, GIF, Photoshop PSD, RAW digital camera,
+  Ptex, OpenVDB, DICOM, and movie formats via FFmpeg.
 - An ImageCache class that transparently manages a cache so that it can access
   truly vast amounts of image data.
 
@@ -173,7 +178,7 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	-DOPENJPEG_INCLUDE_DIR=$(pkg-config --variable=includedir libopenjp2) \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 	-DVERBOSE=TRUE \
-	-DOIIO_BUILD_TESTS:BOOL=FALSE \
+	-DOIIO_BUILD_TESTS:BOOL=TRUE \
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DOIIO_USING_IMATH=3 \
@@ -182,6 +187,23 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	%nil
 
 %cmake_build
+
+%check
+# Built (not yet installed) python module and bundled fonts must be found
+# by the testsuite.
+export PYTHONPATH="$PWD/%_cmake__builddir/lib/python/site-packages"
+export OPENIMAGEIO_FONTS="$PWD/src/fonts/Droid_Serif:$PWD/src/fonts/Droid_Sans:$PWD/src/fonts/Droid_Sans_Mono"
+# ImageCache clamps max_open_files to (RLIMIT_NOFILE - 5 * cpu_cores). On
+# many-core build hosts the low default soft limit collapses this to the
+# floor (10), while python-imagecache expects 90. Raise the soft limit to
+# the hard limit so the clamp does not kick in.
+ulimit -n "$(ulimit -Hn)" 2>/dev/null || :
+# Excluded tests cannot run in this context:
+#  - igrep, texture-levels-stoch*: need the external oiio-images data set
+#  - cmake-consumer, docs-examples-cpp: need OpenImageIO already installed
+#    (docs-examples-python compares against docs-examples-cpp reference output)
+#  - unit_imageinout: HEIF encode unsupported by the kvazaar bit depth
+%ctest -E 'cmake-consumer|docs-examples|igrep|texture-levels-stoch|unit_imageinout'
 
 %install
 %cmake_install
@@ -222,6 +244,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Fri Jun 19 2026 Anton Farygin <rider@altlinux.org> 3.1.14.1-alt1
+- 3.1.13.1 -> 3.1.14.1
+
 * Tue May 19 2026 Anton Farygin <rider@altlinux.org> 3.1.13.1-alt1
 - 3.0.18.1 -> 3.1.13.1
 
