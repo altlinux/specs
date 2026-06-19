@@ -1,8 +1,8 @@
 %define oname altbooster
 
 Name: plafon-altbooster
-Version: 5.6.9
-Release: alt4
+Version: 5.7
+Release: alt1
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -21,29 +21,22 @@ AutoReq: nopython3
 
 Source: %name-%version.tar
 
-Patch: config-5.6.8-alt-fixes.patch
-
 %description
 %summary. 
 
 %prep
 %setup
-%patch -p0
 
 %build
 %install
 install -d %buildroot
 %make_install \
     SHAREDIR=%buildroot%_datadir \
-    PREFIXBIN=%buildroot%_bindir
-    
-#https://bugzilla.altlinux.org/59387
-install -d %buildroot%_datadir/icons/hicolor/scalable/apps
-install -d %buildroot%_datadir/icons/hicolor/scalable/devices
-install -d %buildroot%_datadir/icons/hicolor/symbolic/devices
-cp -p -r icons/hicolor/scalable icons/hicolor/symbolic %buildroot%_datadir/icons/hicolor/
+    BINDIR=%buildroot%_bindir
 
-%files
+%find_lang --all-name %name
+
+%files -f %name.lang
 %doc LICENSE *.md
 %_datadir/%oname
 %_datadir/applications/%oname.desktop
@@ -51,6 +44,9 @@ cp -p -r icons/hicolor/scalable icons/hicolor/symbolic %buildroot%_datadir/icons
 %_bindir/%%oname
 
 %changelog
+* Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt1
+- 5.6.9 -> 5.7
+
 * Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.9-alt4
 - changed url && vcs
 
