@@ -1,6 +1,6 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  2.3.2
+Version:  2.3.3
 Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
@@ -84,6 +84,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Jun 19 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.3.3-alt1
+- new version 2.3.3
+
 * Wed Jun 17 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.3.2-alt1
 - new version 2.3.2
 
