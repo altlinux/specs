@@ -1,7 +1,7 @@
 Summary: ttyrec - A tty recorder
 Name: ttyrec
 Version: 1.0.8
-Release: alt3
+Release: alt4
 Group: Terminals
 License: BSD
 Source0: %name-%version.tar.gz
@@ -24,6 +24,7 @@ Patch14: 15_ttyrec_dont_record_query.diff
 Patch15: 16_ttyrec_XCASE.diff
 Patch50: 50_openpty_ALT.patch
 Patch51: ttyrec-1.0.8-alt-newglibc.patch
+Patch52: ttyrec-1.0.8-alt-gcc5.patch
 
 Url: http://0xcc.net/ttyrec/
 %define PLAYterm You can yse PLAYterm service (http://www.playterm.org/) to share records.
@@ -57,6 +58,7 @@ programs running on tty.
 # Don't know how it works in Debian!
 %patch50 -p1
 %patch51 -p2
+%patch52 -p1
 
 echo "%PLAYterm" >> README
 
@@ -79,6 +81,9 @@ install *.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Jun 19 2026 Fr. Br. George <george@altlinux.org> 1.0.8-alt4
+- Fix GCC15 build
+
 * Wed Jun 28 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.8-alt3
 - Patched to build with new glibc
 
