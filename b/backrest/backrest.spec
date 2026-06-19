@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/garethgeorge/backrest
 # git rev-parse --short v%version
-%global commit_hash b2d4be2
+%global commit_hash a389bbc
 
 Name: backrest
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 Summary: Web UI and orchestrator for restic backup
 License: GPL-3.0
@@ -80,6 +80,12 @@ touch %buildroot%_sysconfdir/backrest/config.json
 %doc LICENSE
 
 %changelog
+* Fri Jun 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.13.0-alt1
+- Updated to version 1.13.0.
+
+* Thu Mar 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.12.1-alt1
+- Updated to version 1.12.1.
+
 * Sun Feb 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.12.0-alt1
 - Updated to version 1.12.0.
 
