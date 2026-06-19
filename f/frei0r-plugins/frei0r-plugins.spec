@@ -10,7 +10,7 @@
 %endif
 
 Name: frei0r-plugins
-Version: 3.1.3
+Version: 3.2.1
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -20,8 +20,10 @@ Url: https://frei0r.dyne.org
 Vcs: https://github.com/dyne/frei0r.git
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 BuildRequires: libcairo-devel
@@ -40,14 +42,6 @@ Group: Development/C
 %description -n frei0r-devel
 Frei0r - a minimalistic plugin API for video effects.
 
-%package -n frei0r-devel-doc
-Summary: Development documentation for %name
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n frei0r-devel-doc
-This package contains development documentation for %name.
-
 %if_with opencv
 %package opencv
 Summary: Frei0r plugins using OpenCV
@@ -60,6 +54,7 @@ Frei0r plugins that use the OpenCV computer vision framework.
 
 %prep
 %setup
+%patch0 -p1
 
 %ifarch %e2k
 # error: incompatible types when assigning to type ‘__m128’ from type ‘__m128i’
@@ -74,16 +69,11 @@ sed -i 's/defined(__SSE4_1__)/0/' src/filter/tint0r/tint0r.c
 	%nil
 %cmake_build
 
-pushd doc
-doxygen Doxyfile
-popd
-
 %install
 %cmake_install
 
 %check
-%make_build -C test frei0r-run PLUGINDIR=../%_cmake__builddir/src
-%make_build -C test check PLUGINDIR=../%_cmake__builddir/src
+%ctest
 
 %files
 %dir %_libdir/frei0r-1
@@ -99,9 +89,6 @@ popd
 %_includedir/frei0r/
 %_pkgconfigdir/frei0r.pc
 
-%files -n frei0r-devel-doc
-%doc doc/html
-
 %if_with opencv
 %files opencv
 %dir %_libdir/frei0r-1
@@ -110,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 3.2.1-alt1
+- 3.1.3 -> 3.2.1
+
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 3.1.3-alt1
 - 3.1.2 -> 3.1.3
 
