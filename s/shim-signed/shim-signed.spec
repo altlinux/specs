@@ -1,43 +1,60 @@
 Name: shim-signed
-Version: 15.8
+Version: 16.1
 Release: alt1
 
-Summary: UEFI RestrictedBoot shim signed by Microsoft
-License: BSD
+Summary: UEFI Secure Boot shim signed by Microsoft
+License: BSD-2-Clause-Patent
 Group: System/Kernel and hardware
 
 Url: https://github.com/rhboot/shim
+VCS: https://github.com/rhboot/shim.git
 Source: %name-%version.tar
 
 BuildRequires: rpm-macros-uefi
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
-This package contains shim binaries signed by "Microsoft
-Windows UEFI Driver Publisher" key for both EFI x64 and EFI ia32
-architectures. MokManager (as mm*.efi) and fallback (as fb*.efi)
-utilities signed by "ALT Linux Secure Boot Signer" are provided as well.
+This package contains shim binaries signed by "Microsoft Corporation UEFI CA
+2011" and "Microsoft UEFI CA 2023" keys for x64, ia32 and aa64 efi
+architectures. MokManager (as mm*.efi) and fallback (as fb*.efi) utilities
+signed by "ALT Linux Secure Boot Signer" are provided as well.
 
 %prep
 %setup
 
 %install
 mkdir -p %buildroot%_efi_bindir %buildroot%_libexecdir/shim
-install -p *.efi %buildroot%_efi_bindir/
-install -p BOOT*.CSV %buildroot%_libexecdir/shim/
-# both should end up within /usr
-for pefile in $(ls %buildroot%_efi_bindir/*.efi | rev | cut -d/ -f1 | rev);
-  do
-	ln %buildroot%_efi_bindir/$pefile \
-		%buildroot%_libexecdir/shim/$pefile.signed
-  done
+
+install -Dpm 0644 {fb,mm}%_efi_arch.efi -t %buildroot%_efi_bindir/
+install -Dpm 0644 msuefica2011/shim%_efi_arch.efi -t %buildroot%_efi_bindir/msuefica2011
+install -Dpm 0644 msuefica2023/shim%_efi_arch.efi -t %buildroot%_efi_bindir/msuefica2023
+ln -svf msuefica2011/shim%_efi_arch.efi %buildroot%_efi_bindir/shim%_efi_arch.efi
+
+install -Dpm 0644 BOOT%_efi_arch_upper.CSV -t %buildroot%_libexecdir/shim/
+
+%ifarch x86_64
+install -Dpm 0644 {fb,mm}ia32.efi -t %buildroot%_efi_bindir/
+install -Dpm 0644 msuefica2011/shimia32.efi -t %buildroot%_efi_bindir/msuefica2011
+install -Dpm 0644 msuefica2023/shimia32.efi -t %buildroot%_efi_bindir/msuefica2023
+ln -svf msuefica2011/shimia32.efi %buildroot%_efi_bindir/shimia32.efi
+
+install -Dpm 0644 BOOTIA32.CSV -t %buildroot%_libexecdir/shim/
+%endif
 
 %files
+%dir %attr(0755,root,root) %_libexecdir/shim
 %attr(0644,root,root) %_efi_bindir/*.efi
-%attr(0644,root,root) %_libexecdir/shim/*.efi.signed
+%dir %attr(0755,root,root) %_efi_bindir/msuefica2011
+%attr(0644,root,root) %_efi_bindir/msuefica2011/*.efi
+%dir %attr(0755,root,root) %_efi_bindir/msuefica2023
+%attr(0644,root,root) %_efi_bindir/msuefica2023/*.efi
 %attr(0644,root,root) %_libexecdir/shim/BOOT*.CSV
 
 %changelog
+* Tue Jun 09 2026 Egor Ignatov <egori@altlinux.org> 16.1-alt1
+- new shim version
+- add aarch64 build
+
 * Mon Apr 29 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt1
 - new shim version
 
