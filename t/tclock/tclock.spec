@@ -1,15 +1,12 @@
 Name: tclock
-Version: 1.0.1
-Release: alt5.qa1
+Version: 1.0.2
+Release: alt1
 
 Summary: Simple transparent X11 analog clock
 Group: Monitoring
 License: BSD
 
-Source: ftp://ftp.uni-potsdam.de/pub/X11/tools/clocks/%name-%version.tar.Z
-
-Patch0: %name.FreeBSD.patch
-Patch1: %name.sigsuspend.patch
+Source: %name-%version.tar
 
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -21,12 +18,9 @@ Simple transparent X11 analog clock showing no numbers but 12 stones.
 Stones and arrow geometry is configurable.
 
 %prep
-%setup -cq
-%patch0 -p0
-%patch1 -p1
+%setup
 
 %build
-# Can't build both 2.0.x/2.1.x memstat modules
 xmkmf
 %make
 
@@ -38,6 +32,9 @@ xmkmf
 %_x11mandir/man?/%name.*
 
 %changelog
+* Wed Jun 17 2026 Fr. Br. George <george@altlinux.org> 1.0.2-alt1
+- Incorporate patches.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
