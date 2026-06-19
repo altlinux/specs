@@ -6,8 +6,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: opentoonz
-Version: 1.7.1.1
-Release: alt3
+Version: 1.8.0
+Release: alt1
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -30,12 +30,10 @@ Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
 Patch5: %name-1.5.0-alt-docs-sphinx-compat.patch
 Patch6: Fix-build-proccess.patch
-## https://github.com/opentoonz/opentoonz/pull/4739
-#Patch7: Clarify-size_t-origin.patch
-Patch8: igs_rotate_blur-1.7.1-alt-build.patch
 Patch9: cmakeblur-1.7.1-alt-build.patch
 Patch10: cmakegeom-1.7.1-alt-build.patch
 Patch11: cmakemultiplugin-1.7.1-alt-build.patch
+Patch12: stylepickertool-1.8.0-alt-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -94,11 +92,10 @@ This package contains documentation and samples for OpenToonz.
 %patch3 -p1
 %patch4 -p1
 %patch6 -p1
-#%patch7 -p1
-%patch8 -p0
 %patch9 -p0
 %patch10 -p0
 %patch11 -p0
+%patch12 -p0
 %ifarch %e2k
 # error: linkage specification is incompatible with previous "__errno_location"
 sed -i 's/extern int errno;//' toonz/sources/image/sgi/filesgi.cpp
@@ -180,6 +177,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt1
+- 1.7.1.1 -> 1.8.0
+
 * Sat May 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.1-alt3
 - fixed FTBFS
 
