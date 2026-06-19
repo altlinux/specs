@@ -2,7 +2,7 @@
 %global bin_name dua
 
 Name: dua-cli
-Version: 2.34.0
+Version: 2.36.0
 Release: alt1
 Summary: View disk space usage and delete unwanted data
 License: MIT
@@ -50,5 +50,8 @@ install -Dm 0644 %bin_name.fish %buildroot%_datadir/fish/vendor_completions.d/%b
 %_datadir/fish/vendor_completions.d/%bin_name.fish
 
 %changelog
+* Fri Jun 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.36.0-alt1
+- Updated to version 2.36.0.
+
 * Thu May 21 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.34.0-alt1
 - Initial build for ALT.
