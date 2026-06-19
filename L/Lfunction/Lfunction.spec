@@ -2,17 +2,18 @@
 
 Name: Lfunction
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: C++ L-function command line interface
 
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gitlab.com/sagemath/lcalc
-VCS: https://gitlab.com/sagemath/lcalc.git
+VCS: https://gitlab.com/sagemath/lcalc
 
-Source: %url/-/archive/%version/lcalc-%version.tar.bz2
-Patch: L-function-%version-%release.patch
+# Source-url: %url/-/archive/%version/lcalc-%version.tar.bz2
+Source: lcalc-%version.tar
+Patch: lcalc-%version-%release.patch
 
 Provides: L-function = %version-%release
 
@@ -76,6 +77,9 @@ rm -fr %buildroot%_docdir/lcalc
 %_pkgconfigdir/lcalc.pc
 
 %changelog
+* Fri Jun 19 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt2
+- Fixed build on gengetopt 2.23.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt1
 - New version 2.1.1.
 
