@@ -2,8 +2,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pgvector
-Version: 0.8.2
-Release: alt2
+Version: 0.8.3
+Release: alt1
 Summary: Open-source vector similarity search for Postgres
 License: PostgreSQL
 Group: Databases
@@ -53,6 +53,9 @@ sed -i "s|OPTFLAGS = -march=native|OPTFLAGS =|g" Makefile
 %_includedir/pgsql/server/extension/*
 
 %changelog
+* Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Wed Mar 18 2026 Alexei Takaseev <taf@altlinux.org> 0.8.2-alt2
 - Use LLVM if it used in PostgreSQL
 
