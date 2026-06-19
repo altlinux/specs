@@ -1,10 +1,10 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 
-Summary: An Adwaita Music Player / Library Manager
+Summary: A modern Navidrome / Jellyfin client
 License: GPL-3.0-or-later
 Group: Sound
 
@@ -50,6 +50,9 @@ but it's capable of installing and managing it's own Navidrome instance.
 %doc *.md
 
 %changelog
+* Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
+- automatic build: 1.2.2 -> 1.3.0
+
 * Tue Jun 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt1
 - 1.2.1 -> 1.2.2
 
