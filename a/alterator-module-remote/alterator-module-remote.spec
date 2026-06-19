@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,10 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Jun 19 2026 Ivan Savin <svn17@altlinux.org> 0.4.0-alt1
+- Add "repeat_request" parameter to "SelectUser" call on the password agent.
+  It is true if this is a retry after an incorrect password was entered.
+
 * Mon Jun 08 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt1
 - Add "pty" parameter to "ShowResult" call in the password agent.
 

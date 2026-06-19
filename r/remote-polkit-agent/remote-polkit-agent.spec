@@ -1,5 +1,5 @@
 Name: remote-polkit-agent
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: polkit agent for use on a remote machine via ssh.
@@ -29,6 +29,12 @@ Polkit agent for use on a remote machine via ssh using stdin and stdout.
 %_bindir/remote-polkit-agent
 
 %changelog
+* Fri Jun 19 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt1
+- Add the ability for the user to re-enter the password if the password is
+  entered incorrectly.
+- Add missing zeroing.
+- Remove unnecessary data transfer to the polkit agent user.
+
 * Tue Jun 02 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
 - Add a "success" field to the JSON structures used to report the
   authentication result.
