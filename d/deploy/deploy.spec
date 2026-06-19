@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -33,6 +33,9 @@ echo "pg_ver: %pg_ver" > modules/vars/postgresql
 %_datadir/%name
 
 %changelog
+* Fri Jun 19 2026 Andrey Cherepanov <cas@altlinux.org> 0.4.9-alt1
+- postgresql: inited database with --auth=trust to prevent interaction.
+
 * Tue Jun 16 2026 Nikita Panov <nexxy@altlinux.org> 0.4.8-alt1
 - Admin password generation for awx.
 
