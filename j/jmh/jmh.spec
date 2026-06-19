@@ -2,7 +2,7 @@
 
 Name: jmh
 Version: 1.37
-Release: alt1
+Release: alt2
 
 Summary: Java Microbenchmark Harness
 License: GPL-2.0-only
@@ -94,6 +94,7 @@ JMH Samples.
 %pom_remove_plugin -r :maven-shade-plugin
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin    :maven-enforcer-plugin
 
 # wagon-ssh
 %pom_xpath_remove "pom:build/pom:extensions" %name-core
@@ -137,6 +138,9 @@ rm -rf %buildroot%_javadocdir
 %doc --no-dereference %name-samples/LICENSE src/license/bsd/*
 
 %changelog
+* Fri Jun 19 2026 Anton Meleshnikov <alton@altlinux.org> 1.37-alt2
+- FTBFS fix.
+
 * Fri Nov 07 2025 Ivan Khanas <xeno@altlinux.org> 1.37-alt1
 - New version.
 
