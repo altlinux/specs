@@ -1,7 +1,7 @@
 Name: xfractint
 Version: 20.04p16
-Release: alt1
-License: Freeware
+Release: alt2
+License: CC-BY-NC-1.0
 Group: Sciences/Mathematics
 Summary: The oldest fractal generator program ever
 Source: %name-%version.tar.gz
@@ -10,7 +10,7 @@ Url: http://www.fractint.org/
 
 # Automatically added by buildreq on Tue Jun 21 2011
 # optimized out: fontconfig fontconfig-devel libX11-devel libXrender-devel libfreetype-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: libXft-devel
+BuildRequires: libXft-devel gcc14
 
 %description
 Fractint is a freeware fractal generator created for IBMPC's and
@@ -22,10 +22,10 @@ compatible computers to run under DOS and ported to Linux.
 sed -n '/Copyright Information:/,/as the source of the code/p' fractsrc.txt > LICENSE
 
 %build
-%make_build
+%make_build CC=gcc-14 DESTDIR=%buildroot%prefix fractint.hlp xfractint
 
 %install
-%makeinstall DESTDIR=%buildroot%prefix
+%makeinstall CC=gcc-14 DESTDIR=%buildroot%prefix
 
 %files
 %doc LICENSE
@@ -34,6 +34,9 @@ sed -n '/Copyright Information:/,/as the source of the code/p' fractsrc.txt > LI
 %_man1dir/*
 
 %changelog
+* Fri Jun 19 2026 Fr. Br. George <george@altlinux.org> 20.04p16-alt2
+- Use old GCC
+
 * Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 20.04p16-alt1
 - Autobuild version bump to 20.04p16
 
