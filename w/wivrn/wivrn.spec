@@ -4,7 +4,7 @@
 %global monado_version 25.1.0
 
 Name:    wivrn
-Version: 26.6
+Version: 26.6.1
 Release: alt1
 
 Summary: An OpenXR streaming application to a standalone headset
@@ -158,6 +158,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/io.github.wivrn.wivrn.svg
 
 %changelog
+* Sat Jun 20 2026 Sergey Palcheh <minergenon@altlinux.org> 26.6.1-alt1
+- new version 26.6.1
+
 * Sat Jun 13 2026 Sergey Palcheh <minergenon@altlinux.org> 26.6-alt1
 - initial build for ALT Sisyphus
 
