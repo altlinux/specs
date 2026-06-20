@@ -4,20 +4,22 @@
 #%%def_disable check
 
 Name: chirp
-Version: 20250731
+Version: 20260616
 Release: alt1
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
 License: GPL-3.0-or-later
-Url: https://github.com/kk7ds/chirp
+URL: https://chirpmyradio.com
+VCS: https://github.com/kk7ds/chirp
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.diff
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -98,14 +100,17 @@ find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_da
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 20260616-alt1
+- New snapshot.
+
 * Sat Aug 02 2025 Anton Midyukov <antohami@altlinux.org> 20250731-alt1
-- new snapshot
+- New snapshot.
 
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 20240910-alt1.1
 - NMU: Removed extra build dependency on future module.
 
 * Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 20240910-alt1
-- new snapshot
+- New snapshot.
 
 * Sun Sep 10 2023 Anton Midyukov <antohami@altlinux.org> 20230906-alt2
 - Revert "do not require importlib-resources"
