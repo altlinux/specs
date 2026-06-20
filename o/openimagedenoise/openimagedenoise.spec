@@ -18,7 +18,7 @@
 
 Name: openimagedenoise
 Version: 2.3.3
-Release: alt5
+Release: alt6
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -50,7 +50,8 @@ BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-r
 BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel opencl-headers
 %endif
 %if_with cuda
-BuildRequires: nvidia-cuda-devel >= 12.8 nvidia-cuda-devel-static
+# nvcc 12.9 rejects gcc > 14 (crt/host_config.h), use gcc14 as CUDA host compiler
+BuildRequires: nvidia-cuda-devel >= 12.8 nvidia-cuda-devel-static gcc14-c++
 %endif
 
 %description
@@ -128,6 +129,13 @@ EOF
 %if_with hip
 export ROCM_PATH=/usr
 export ALTWRAP_LLVM_VERSION=rocm
+# co-installed CUDA puts nvcc in PATH, so `hipconfig --platform` autodetects
+# nvidia and hip::device becomes an empty stub; force the AMD HIP platform
+export HIP_PLATFORM=amd
+%endif
+%if_with cuda
+# nvcc 12.9 rejects gcc > 14 (crt/host_config.h); pin nvcc host compiler to gcc14
+export CUDAHOSTCXX=g++-14
 %endif
 %cmake \
 	-DOIDN_STATIC_LIB:BOOL=OFF \
@@ -138,6 +146,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 	%if_with cuda
 	-DOIDN_DEVICE_CUDA:BOOL=ON \
 	-DOIDN_DEVICE_CUDA_API=RuntimeShared \
+	-DCUDAToolkit_ROOT=%_prefix \
 	%endif
 	%if_with oneapi
 	-DOIDN_DEVICE_SYCL:BOOL=ON \
@@ -200,6 +209,13 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 2.3.3-alt6
+- Fixed CUDA build against nvidia-cuda-devel 12.9:
+  + set CUDAToolkit_ROOT (new scattered toolkit layout broke nvcc autodetect);
+  + build CUDA device with gcc14 (nvcc 12.9 rejects gcc > 14).
+- Force HIP_PLATFORM=amd (co-installed CUDA made hipconfig pick nvidia,
+  turning hip::device into an empty stub).
+
 * Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt5
 - Disable sycl (can't reliably compile).
 - Added patch to fix already enabled FORTIFY_SOURCE warning.
