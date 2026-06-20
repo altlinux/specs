@@ -5,7 +5,7 @@
 %define ver_major 8.3
 
 Name: scratch-text-editor
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The text editor that works
@@ -128,6 +128,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Sat Jun 20 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.1-alt1
+- 8.3.1
+
 * Mon May 18 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.0-alt1
 - 8.3.0
 
