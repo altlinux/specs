@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -138,6 +138,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt1
+- Revert "alterator-setup-run: use last monitor on wayland".
+
 * Mon Apr 06 2026 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
 - alterator-setup-run: use last monitor on wayland.
 
