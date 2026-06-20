@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.35
+%define kernel_sublevel 	.36
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -13,7 +13,7 @@ Version: %kversion
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; expr + "$s" : '[[:digit:]]\\+\\.[[:digit:]]\\+$' >/dev/null && s=def; printf %%s "${s#*-}" )
-%define is_main	%([ "%sub_flavour" = def -o "%sub_flavour" = vm ] && echo 1 || echo 0)
+%define is_main	%([ "%sub_flavour" = def ] && echo 1 || echo 0)
 
 # Build options
 # You can change compiler version by editing this line:
@@ -530,6 +530,24 @@ if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_
 	exit 1
 fi
 
+%if "%sub_flavour" == "vm"
+%post
+# The vm flavour is built without hibernation (CONFIG_HIBERNATION is unset).
+# A leftover resume= boot option makes the initramfs hang at boot
+# ("waiting for resume device"). Warn if one is still configured.
+if grep -Eqw 'resume=[^[:space:]]+' /proc/cmdline 2>/dev/null ||
+   grep -Eq '^[^#]*resume=' /etc/sysconfig/grub2 2>/dev/null; then
+cat >&2 <<EOF
+WARNING: %name has no hibernation support, but a 'resume=' option is set
+in the boot configuration. With hibernation disabled the initramfs will
+hang at boot ("waiting for resume device").
+Fix: remove 'resume=...' from GRUB_CMDLINE_* in /etc/sysconfig/grub2 and
+regenerate the bootloader config (update-grub), or add 'noresume' to the
+kernel command line.
+EOF
+fi
+%endif
+
 %post checkinstall
 check-pesign-helper
 
@@ -618,5 +636,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jun 19 2026 Anton Farygin <rider@altlinux.org> 6.18.36-alt1
+- 6.18.35 -> 6.18.36
+- vm flavour tuning by Alexey Shabalin:
+  + boot without initramfs (virtio-blk/scsi/console/rng built in)
+  + throughput defaults: HZ_250, PREEMPT_NONE (runtime-switchable)
+  + hardening: drop /dev/mem, /proc/kcore, hibernation; DMI via sysfs
+  + confidential guest support (TDX/SEV/Arm CCA)
+- spec: vm flavour no longer treated as main kernel
+- spec: vm flavour has no hibernation; warn on install if a leftover
+  resume= is set in /etc/sysconfig/grub2 (it hangs boot at "waiting for
+  resume device")
+
 * Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 6.18.35-alt1
 - initial build for ALT Linux, based on 6.18.34-alt1 kernel config
