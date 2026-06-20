@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.5
-Release: alt5
+Release: alt6
 
 Summary: Android Debug CLI tools
 License: APL
@@ -237,8 +237,8 @@ LDFLAGS+=" -fuse-ld=lld"
 
 LDFLAGS+=" -Wl,--build-id=sha1 -Wl,-rpath,%aprefix/lib -L%outlibdir"
 
-export LLVM_LIBDIR=`llvm-config --libdir`
 export CLANG_MAJVER=`echo %llvm_version | cut -d. -f1`
+export LLVM_LIBDIR=`llvm-config-${CLANG_MAJVER} --libdir` # to avoid discrepancy if there are multiple LLVM
 export CLANG_INCDIR="${LLVM_LIBDIR}/clang/${CLANG_MAJVER}/include/"
 
 CXXFLAGS+=" -I${CLANG_INCDIR}" # for stdbool.h and alike
@@ -368,6 +368,11 @@ done
 %aprefix
 
 %changelog
+* Sat Jun 20 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt6
+- Harden Clang include path evaluation
+- Still use Clang 21.1 due to issues with build on aarch64
+- Fix libext4_utils build which uses squashfuse
+
 * Sat Mar 28 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt5
 - Build with Clang 21.1, fixes build failure
 - Hardcode mkf2fs path to '/usr/sbin/mkfs.f2fs' instead of 'make_f2fs' (Closes: #58175)
