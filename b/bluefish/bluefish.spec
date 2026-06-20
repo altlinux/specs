@@ -1,6 +1,6 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Epoch: 2
 
@@ -19,22 +19,18 @@ Source: %name-%version.tar
 # Fedora patches
 # Avoid potential aliasing issues in zencoding plugin
 Patch0: bluefish-2.2.13-strict-aliasing.patch
-
-# Avoid use of /usr/bin/env in shipped scripts
-# Also change /usr/bin/python → /usr/bin/python3 (for now)
-Patch1: bluefish-2.2.17-shellbang.patch
-
+Patch1: bluefish-2.4.1-shellbang.patch
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
 #Patch4: bluefish-2.2.19-russian-translation.patch
 
 Obsoletes: bluefish-common =< %EVR
 
-AutoProv: nopython3
+AutoProv: nopython nopython3
 
 %add_python3_path %_datadir/%name
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: intltool
 BuildRequires: libgtk+3-devel
@@ -105,6 +101,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 2:2.4.1-alt1
+- New version 2.4.1.
+
 * Fri Feb 27 2026 Anton Midyukov <antohami@altlinux.org> 2:2.4.0-alt1
 - new version (2.4.0)
 
