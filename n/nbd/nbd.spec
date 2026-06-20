@@ -11,7 +11,7 @@
 %def_with setproctitle
 
 Name: nbd
-Version: 3.26.1
+Version: 3.27.1
 Release: alt1
 Summary: Network Block Device user space tools
 License: GPLv2
@@ -28,6 +28,7 @@ Patch1: %name-alt.patch
 
 BuildRequires: glib2-devel docbook-utils
 BuildRequires: autoconf-archive bison flex
+BuildRequires: libnl-devel
 %{?_with_setproctitle:BuildRequires: setproctitle-devel}
 %{?_enable_gznbd:BuildRequires: zlib-devel}
 %{?_with_static_client:BuildRequires: dietlibc}
@@ -70,6 +71,7 @@ a Network Block Device.
     %{subst_enable sdp} \
     %{subst_with setproctitle} \
     %{subst_enable gznbd} \
+    --with-libnl \
     %nil
 
 %make_build
@@ -122,6 +124,10 @@ DELAY=10 make check
 %_man8dir/*
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 3.27.1-alt1
+- 3.26.1 -> 3.27.1
+- enabled netlink support
+
 * Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 3.26.1-alt1
 - 3.25 -> 3.26.1
 
