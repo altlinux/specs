@@ -14,7 +14,7 @@
 
 Name: python3-module-%pyname
 Version: 0.18.1
-Release: alt1
+Release: alt2
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -98,7 +98,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %pyproject_install
 
 %check
-%pyproject_run_pytest -n auto -k "not test_setup_build and not test_setup_build2 and not benchmark"
+%pyproject_run_pytest -n auto --dist worksteal -v -ra --tb=short -k "not test_setup_build and not test_setup_build2 and not benchmark"
 
 %files
 %doc LICENSE
@@ -113,6 +113,12 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.com> 0.18.1-alt2
+- Fixed FTBFS with newer xsimd: constrain numpy.signbit helper to
+  scalar types so SFINAE drops the array overload cleanly
+  (backport of upstream commit a42f3d895, adapted to C++14:
+  std::is_scalar<T>::value instead of std::is_scalar_v<T>).
+
 * Sat Nov 22 2025 Anton Farygin <rider@altlinux.com> 0.18.1-alt1
 - 0.18.0 -> 0.18.1
 
