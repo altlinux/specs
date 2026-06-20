@@ -1,4 +1,4 @@
-%define mainline_ver 5.1.21
+%define mainline_ver 5.1.32
 
 Name: eid-mw
 Version: %mainline_ver
@@ -187,6 +187,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sat Jun 20 2026 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.32-alt1
+- updated to version 5.1.32
+
 * Sun Nov 03 2024 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.21-alt1
 - updated to version 5.1.21
 
