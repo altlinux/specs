@@ -1,5 +1,5 @@
 Name: cups-pdf
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: Extension for creating pdf-Files with CUPS
@@ -63,7 +63,7 @@ touch %buildroot%_sysconfdir/cups-pdf-firsttime.flag
 if [ "$1" -eq "1" ]; then
     SYSTEMCTL=systemctl
     service cups status >/dev/null 2>&1
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 0 ] && [ -z "$DURING_INSTALL" ]; then
         /usr/sbin/lpadmin -p Cups-PDF -v cups-pdf:/ -m CUPS-PDF.ppd -E >/dev/null 2>&1 ||:
 		/usr/sbin/lpadmin -d Cups-PDF >/dev/null 2>&1 ||:
     else
@@ -107,6 +107,11 @@ fi
 %dir %_spooldir/cups-pdf/SPOOL
 
 %changelog
+* Sat Jun 20 2026 Mikhail Efremov <sem@altlinux.org> 3.0.3-alt1
+- Updated cups-pdf-conf.patch.
+- Don't create printer in the installer.
+- Updated to 3.0.3.
+
 * Wed Mar 25 2026 Mikhail Efremov <sem@altlinux.org> 3.0.2-alt1
 - Updated patches.
 - Updated to 3.0.2.
