@@ -2,7 +2,7 @@
 
 Name: alizams
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: DICOM Viewer
 License: GPL-3.0
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(cups)
 BuildRequires: pkgconfig(bullet)
+BuildRequires: pkgconfig(fmt)
 BuildRequires: libitk-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel
@@ -83,6 +84,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Jun 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.10.0-alt2
+- Fixed FTBFS.
+
 * Mon Jun 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.10.0-alt1
 - New version 1.10.0.
 

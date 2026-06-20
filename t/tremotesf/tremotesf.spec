@@ -4,7 +4,7 @@
 
 Name: tremotesf
 Version: 2.9.1
-Release: alt2
+Release: alt3
 
 Summary: Remote GUI for transmission-daemon
 License: GPL-3.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(fmt)
 BuildRequires: pkgconfig(cxxopts)
 BuildRequires: pkgconfig(libpsl)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(fmt)
 BuildRequires: kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libcpp-httplib-devel
@@ -87,6 +88,9 @@ sed -i "s/0.22.5/0.21/" data/CMakeLists.txt
 %_datadir/metainfo/org.equeim.Tremotesf.appdata.xml
 
 %changelog
+* Sat Jun 20 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt3
+- Fixed FTBFS.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt2
 - Fixed FTBFS by skipping tracker_test which needs network access.
 
