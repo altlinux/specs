@@ -4,12 +4,13 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.125.0
+Version: 0.141.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
 Group: Development/Other
-Url: https://github.com/openai/codex
+URL: https://github.com/openai/codex
+
 Requires: bubblewrap
 Requires: git-core
 Requires: ripgrep
@@ -23,18 +24,7 @@ BuildRequires: rust-cargo
 BuildRequires: libcap-devel
 
 %description
-The default model is gpt-oss:20b which is supposed to be run locally with
-ollama. Other models can be configured, see config.md for details.
-
-When using with ollama it's important to increase its context limit by
-setting in /etc/sysconfig/ollama:
-
-    OLLAMA_CONTEXT_LENGTH=131072
-
-Warning: The tool is provided experimentally without warranty of
-functionality, performance, or availability. Features may change, regress,
-or fail without notice; use at your own risk. The tool is provided solely
-as a showcase and proof-of-concept, without upstream support.
+Codex CLI is a coding agent from OpenAI that runs locally on your computer.
 
 %prep
 %setup
@@ -94,6 +84,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sat Jun 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.141.0-alt1
+- Updated to version 0.141.0.
+
 * Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 0.125.0-alt1
 - Update to rust-v0.125.0 (2026-04-24).
 
