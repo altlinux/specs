@@ -8,11 +8,7 @@
 %define optflags_lto %nil
 
 # the required range is 11.0...20.1
-%ifarch %e2k
-%define llvm_ver 13.0
-%else
 %define llvm_ver 21.1
-%endif
 
 %ifarch x86_64 aarch64
 %def_with optix
@@ -23,10 +19,12 @@
 
 Name: openshadinglanguage
 Version: 1.15.5.0
-Release: alt1
+Release: alt2
+
 Summary: Advanced shading language for production GI renderers
-Group: Development/Other
 License: BSD-3-Clause
+Group: Development/Other
+
 URL: https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
 
 ExcludeArch: %ix86
@@ -226,6 +224,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Sat Jun 20 2026 Michael Shigorin <mike@altlinux.org> 1.15.5.0-alt2
+- E2K: no need for an older llvm version
+
 * Sat Jun 06 2026 Anton Farygin <rider@altlinux.org> 1.15.5.0-alt1
 - 1.15.4.0 -> 1.15.5.0
 
