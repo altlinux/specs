@@ -1,8 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define sover 12
 
 Name: fmt
 Version: 12.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -69,7 +71,6 @@ sed -i '/\[!\[Support/,+1d' README.md
 
 %install
 %cmake_install
-%__rm -f %buildroot%_libdir/lib%name-c.a
 
 %files -n lib%name%sover
 %doc CONTRIBUTING.md ChangeLog.md LICENSE README.md
@@ -80,9 +81,13 @@ sed -i '/\[!\[Support/,+1d' README.md
 %_includedir/%name
 %_cmakedir/%name
 %_pkgconfigdir/%name.pc
+%_libdir/lib%name-c.a
 %_libdir/lib%name.so
 
 %changelog
+* Sat Jun 20 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt2
+- Pack libfmt-c.a into devel subpackage
+
 * Fri Jun 19 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt1
 - New version 12.2.0.
 
