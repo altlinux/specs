@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    ocaml-%modulename
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 Summary: Manipulate, parse and generate OCaml compiler version strings
 License: ISC
@@ -43,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt1
+- 4.1.2 -> 4.1.3
+
 * Tue Jun 16 2026 Anton Farygin <rider@altlinux.org> 4.1.2-alt1
 - 4.1.1 -> 4.1.2
 
