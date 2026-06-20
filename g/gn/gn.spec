@@ -1,32 +1,37 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
 # Note: use chromium-gn-pkgver.sh to get latest version
-%define major 1967
-%define commit 80a40b07
+%define major 2384
+%define commit 1740f5c2
 
 Name: gn
 Version: 0.%major.%commit
 Release: alt1
 
-Summary: A meta-build system that generates NinjaBuild files
-
-License: BSD
-Group: Development/C++
+Summary: Meta-build system that generates build files for Ninja
+License: BSD-3-Clause
+Group: Development/Tools
 Url: https://gn.googlesource.com/gn/
+Vcs: https://gn.googlesource.com/gn/
 
-#Source-url: https://gn.googlesource.com/gn/+archive/refs/heads/main.tar.gz
-# Source-url: https://gn.googlesource.com/gn/+archive/%{commit}.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: clang libstdc++-devel ninja-build
-BuildRequires: rpm-build-python3
-# for tests
+BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-python3
+BuildRequires: clang
+BuildRequires: libstdc++-devel
+%if_with check
 BuildRequires: /proc
+%endif
 
 %description
-GN is a meta-build system that generates NinjaBuild files so that you can build Chromium with Ninja.
+GN is a meta-build system that generates build files for Ninja.
+It is currently used as the build system for Chromium, Fuchsia,
+and related projects.
 
-GN is a GYP replacement
-GN files are more readable and more maintainable than GYP files.
-GN is 20x faster than GYP.
+GN is designed for large projects with a readable, clean syntax,
+multi-platform support, and a focus on correctness.
 
 %prep
 %setup
@@ -43,19 +48,24 @@ cat <<EOF >out/last_commit_position.h
 EOF
 
 %build
+export CC=clang CXX=clang++
 ./build/gen.py --no-strip --no-last-commit-position --no-static-libstdc++
-ninja -C out
+%ninja_build -C out
+
+%install
+install -Dpm755 out/gn %buildroot%_bindir/gn
 
 %check
 ./out/gn_unittests
 
-%install
-install -m755 -D out/gn %buildroot%_bindir/gn
-
 %files
-%doc README.md LICENSE AUTHORS
-%_bindir/%name
+%doc README.md LICENSE AUTHORS docs/*.md
+%_bindir/gn
 
 %changelog
+* Fri May 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.2384.1740f5c2-alt1
+- New version.
+- Build from the upstream git history instead of a vendored snapshot.
+
 * Sun Mar 20 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1967.80a40b07-alt1
 - initial build for ALT Sisyphus
