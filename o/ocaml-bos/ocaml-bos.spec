@@ -1,7 +1,7 @@
 %define libname bos
 Name:           ocaml-%libname
-Version:        0.2.1
-Release:        alt4
+Version: 0.3.0
+Release: alt1
 Summary:        Basic OS interaction for OCaml
 License:        ISC
 Group:          Development/ML
@@ -46,6 +46,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 0.3.0-alt1
+- 0.2.1 -> 0.3.0
+
 * Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.2.1-alt4
 - fixed FTBFS with opam-installer package changes
 
