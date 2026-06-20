@@ -1,27 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define mpiimpl openmpi
+%define mpiimpl mpich
 %define mpidir %_libdir/%mpiimpl
 
-%define sover 0
+%define sover 7
 
 Name: pnetcdf
-Version: 1.8.1
-Release: alt4
+Version: 1.14.1
+Release: alt1
 
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
-License: Open source
+License: NetCDF
 Group: File tools
 
-Url: http://trac.mcs.anl.gov/projects/parallel-netcdf
+Url: https://parallel-netcdf.github.io/
+VCS: https://github.com/Parallel-NetCDF/PnetCDF
 Source: %name-%version.tar
-Patch: %name-%version-alt-build.patch
 
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: flex gcc-fortran
-BuildRequires: ghostscript-utils texlive-latex-base
-BuildRequires: tex(dehypht.tex)
+BuildRequires: libtool
 
 %description
 Parallel netCDF (PnetCDF) is a library providing high-performance I/O
@@ -33,11 +32,11 @@ difficult to achieve high I/O performance. By making some small changes
 to the API specified by NetCDF, we can use MPI-IO and its collective
 operations.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Shared library of Parallel netCDF
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%sover
 Parallel netCDF (PnetCDF) is a library providing high-performance I/O
 while still maintaining file-format compatibility with Unidata's NetCDF.
 
@@ -52,7 +51,7 @@ This package contains shared library of Parallel netCDF.
 %package -n lib%name-devel
 Summary: Development files of Parallel netCDF
 Group: Development/Other
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Requires: %mpiimpl-devel
 
 %description -n lib%name-devel
@@ -87,40 +86,45 @@ Parallel netCDF.
 
 %prep
 %setup
-%patch -p2
+# ALT ships libtool 2.4.x; upstream only asserts a newer version, no 2.5 features used
+sed -i -e 's/LT_PREREQ(\[2\.5\.4\])/LT_PREREQ([2.4.2])/' configure.ac
 rm -fR autom4te.cache
 
 %build
-sed -i -e "s|@LIB_SUFFIX@|%_libsuff|g" pnetcdf_pc.in
-
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared -DNDEBUG -Df2cFortran -I%mpidir/lib
 export FCFLAGS="%optflags -fallow-argument-mismatch"
 export F90FLAGS="%optflags"
+# sequential utility programs (ncvalidator, ncoffsets, cdfdiff, pnetcdf_version)
+# are built with SEQ_CC and default to no flags - give them %optflags so they
+# carry debug info like the rest
+export SEQ_CFLAGS="%optflags"
 %autoreconf
 %configure \
 	--with-mpi=%mpidir \
+	--enable-shared \
+	--disable-static \
 	--enable-mpi-io-test \
 	--enable-fortran \
 	--enable-strict \
 	%nil
 
-%make SOVER=%sover LIB_SUFFIX=%_libsuff
-%make -C doc
+%make
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%makeinstall SOVER=%sover LIB_SUFFIX=%_libsuff
+%makeinstall
 
-# fix pkg-config file
-sed -i -e "s|%buildroot||" %buildroot%_pkgconfigdir/*.pc
+# fix libdir in pkg-config file on lib64 systems
+sed -i -e "s|\${exec_prefix}/lib\b|\${exec_prefix}/lib%_libsuff|" %buildroot%_pkgconfigdir/*.pc
 
-rm -f %buildroot%_libdir/*.so.
+# drop libtool archives and static libs
+rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%_libdir/*.a
 
 %files
@@ -128,8 +132,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 %_man1dir/*
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%sover
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -138,9 +143,12 @@ rm -f %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %files -n lib%name-devel-doc
-%doc doc/*.pdf doc/*.txt examples
+%doc doc/*.md doc/*.txt examples
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 1.14.1-alt1
+- 1.8.1 -> 1.14.1
+
 * Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 1.8.1-alt4
 - Minor spec cleanup
   + ...and a release bump to facilitate upgrade of the e2k fork.
