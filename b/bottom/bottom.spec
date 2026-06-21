@@ -1,7 +1,7 @@
 %def_with check
 
 Name: bottom
-Version: 0.12.3
+Version: 0.14.0
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
@@ -14,8 +14,10 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-# need for tests
+
+%if_with check
 BuildRequires: /proc /dev/pts
+%endif
 
 %description
 A customizable cross-platform graphical process/system monitor for the terminal.
@@ -51,6 +53,9 @@ export RUST_BACKTRACE=full
 %_datadir/zsh/site-functions/_btm
 
 %changelog
+* Sun Jun 21 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.0-alt1
+- Updated to version 0.14.0.
+
 * Sat Jan 17 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.12.3-alt1
 - Updated to version 0.12.3.
 
