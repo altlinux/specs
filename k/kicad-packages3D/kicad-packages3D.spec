@@ -4,7 +4,7 @@
 Name: kicad-packages3D
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): 3D модели для kicad (разработка печатных плат)
-Version: 10.0.3
+Version: 10.0.4
 Release: alt1
 Source: %name-%version.tar
 License: GPL-2.0-or-later
@@ -45,6 +45,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/3dmodels
 
 %changelog
+* Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 10.0.4-alt1
+- New version 10.0.4.
+
 * Thu May 14 2026 Anton Midyukov <antohami@altlinux.org> 10.0.3-alt1
 - New version 10.0.3.
 
