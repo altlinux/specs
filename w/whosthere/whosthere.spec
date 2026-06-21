@@ -2,7 +2,7 @@
 %define import_path github.com/ramonvermeulen/whosthere
 
 Name:       whosthere
-Version:    0.6.1
+Version:    0.8.2
 Release:    alt1
 
 License:    Apache-2.0
@@ -49,5 +49,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Jun 17 2026 Sergey Savelev <medovi@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Mon Mar 02 2026 Sergey Savelev <medovi@altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus.
