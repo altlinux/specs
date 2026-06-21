@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -51,9 +52,13 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/%name
 %_datadir/metainfo/%oname.metainfo.xml
+%_datadir/glib-2.0/schemas/%oname.gschema.xml
 %doc *.md
 
 %changelog
+* Sun Jun 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.1-alt1
+- 0.2.0 -> 0.2.1
+
 * Sun Mar 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt2
 - seted GSK_RENDERER=gl for fixed segmentation fault on XFCE (ALT #58349)
 
