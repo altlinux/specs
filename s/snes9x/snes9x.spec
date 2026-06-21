@@ -6,7 +6,7 @@
 
 Name: snes9x
 Version: 1.63
-Release: alt2
+Release: alt2.1
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -27,6 +27,8 @@ Source2: SPIRV-Cross-%spirv_cross_commit.tar
 Source3: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source4: cubeb-%cubeb_commit.tar
+
+Patch0: alt-glslang-cstdint.patch
 Patch1: alt-qt6.10.patch
 
 BuildRequires(pre): at-spi2-atk-devel
@@ -129,12 +131,14 @@ This package contains common files.
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4
-%patch1 -p1
 
 %__mv -Tf ../glslang-%glslang_commit external/glslang
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit external/SPIRV-Cross
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version external/vulkan-headers
 %__mv -Tf ../cubeb-%cubeb_commit external/cubeb
+
+%patch0 -p1
+%patch1 -p1
 
 %build
 # Build CLI version
@@ -194,6 +198,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Sun Jun 21 2026 Nazarov Denis <nenderus@altlinux.org> 1.63-alt2.1
+- Fix FTBFS
+
 * Fri Mar 13 2026 Sergey V Turchin <zerg@altlinux.org> 1.63-alt2
 - NMU: fix to build with Qt-6.10
 
