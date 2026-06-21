@@ -4,7 +4,7 @@
 %def_with doc
 Name: beremiz
 Version: 1.5
-Release: alt0.1.20260530.1
+Release: alt0.1.20260619.1
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -185,6 +185,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260619.1
+- New snapshot.
+
 * Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260530.1
 - New snapshot.
 
