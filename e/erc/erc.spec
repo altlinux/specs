@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,38 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sun Jun 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.10-alt1
+- ercat: return error code on failed files like cat does
+- erc: add extract_tar_stdin helper
+- erc: reuse extract_tar_stdin in extract_command
+- erc: add makeself (.run) archive extraction support
+- erc: add makeself repack support via extract_makeself_tar
+- erc-sh-archive: prefer 7zz (official 7-Zip) over deprecated p7zip
+- erc: derive ercat path from script name for eepm compatibility
+- erc: make --quiet suppress 7z output
+- erc: fix symlink support in 7z create (-l -> -snl)
+- erc: fix duplicate -y flag with 7zz
+- man: rewrite erc.1 with all commands, options and extraction rules
+- erc: fail on incomplete AppImage extraction via 7z, suggest squashfs-tools
+- erc: always name extracted directory after archive basename
+- erc: fix lost exit code from extract commands
+- erc: add --here/--no-subdir to extract without creating subdirectory
+- erc: add --flat/-j/--junk-paths to extract stripping directory structure
+- erc: fix --help examples and add extraction rules
+- erc: fix --flat for special archives (AppImage, squashfs, exe, run)
+- erc: find squashfs offset by magic for cross-arch AppImage extraction
+- erc: fix --flat with 7z for special archives (use absolute paths)
+- erc: add ERC_USE_7Z_SQUASHFS to force 7z backend for squashfs
+- erc: use -snld flag for 7z 25.01+ to preserve symlinks with ../
+- erc: document system directory exception in --help
+- erc: apply subdir logic for -C and special archives
+- erc: add dotglob when counting items in move_from_tdir/move_to_target_dir
+- erc: clean up temp dir in extract_special_archive on unsupported type
+- erc: add -no-xattrs to unsquashfs to avoid exit code 2 on xattr failures
+- erc: quote $(pwd) in mktemp to support paths with spaces
+- erc: check for 7z backend availability before using it for unsupported types
+- erc: fall back to 7z for tar.* when native (de)compressor is missing
+
 * Thu Feb 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.9-alt1
 - ercat: use pigz when available for faster decompression
 - ercat: use parallel decompressors (pigz, pbzip2, pixz) when available
