@@ -9,8 +9,8 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.6
-Release: alt1.1%beta
+Version: %ver_major.7
+Release: alt1%beta
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
@@ -133,6 +133,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 44.7-alt1
+- 44.7
+
 * Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 44.6-alt1.1
 - required /usr/bin/7z instead of p7zip
 

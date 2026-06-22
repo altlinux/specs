@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.13
 Release: alt1
 
 Summary: Remote connections manager
@@ -102,6 +102,9 @@ done
 %doc *.md docs/*.md
 
 %changelog
+* Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.16.13-alt1
+- 0.16.13
+
 * Tue Jun 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.16.6-alt1
 - 0.16.6
 
