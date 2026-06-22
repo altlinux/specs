@@ -9,7 +9,7 @@
 %endif
 
 Name: genimage
-Version: 19
+Version: 20
 Release: alt1
 
 Summary: Tool to generate multiple filesystem and flash images
@@ -66,21 +66,24 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Mon Jun 22 2026 Anton Midyukov <antohami@altlinux.org> 20-alt1
+- New version 20.
+
 * Sat Jul 05 2025 Anton Midyukov <antohami@altlinux.org> 19-alt1
-- new version (19) with rpmgs script
+- New version 19.
 
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 18-alt2
-- remove "BuildRequires: genext2fs"
+- Remove "BuildRequires: genext2fs".
 
 * Thu Jul 04 2024 Anton Midyukov <antohami@altlinux.org> 18-alt1
-- new version
+- New version 18.
 
 * Sat Jan 20 2024 Anton Midyukov <antohami@altlinux.org> 17-alt1
-- new version
-- enable qemu and uboot support on looongarch64, riscv64
+- New version 17.
+- Enable qemu and uboot support on looongarch64, riscv64.
 
 * Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 16-alt1
-- new version
+- New version 16.
 
 * Sun Jan 23 2022 Anton Midyukov <antohami@altlinux.org> 15-alt1
-- Initial build
+- Initial build.
