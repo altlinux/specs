@@ -5,12 +5,12 @@
 
 Name: codex
 Version: 0.141.0
-Release: alt1
+Release: alt2
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
 Group: Development/Other
-URL: https://github.com/openai/codex
-
+Url: https://github.com/openai/codex
+Vcs: https://github.com/openai/codex.git
 Requires: bubblewrap
 Requires: git-core
 Requires: ripgrep
@@ -18,6 +18,9 @@ Requires: ripgrep
 ExcludeArch: %ix86
 
 Source: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Source2: README.alt
+Patch1: %name-%version-%release.patch
 BuildRequires: help2man
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
@@ -27,7 +30,10 @@ BuildRequires: libcap-devel
 Codex CLI is a coding agent from OpenAI that runs locally on your computer.
 
 %prep
-%setup
+%setup -a1
+%patch1 -p1
+# .gear/ is excluded from the source tarball/diff, so bring the ALT readme in.
+cp -p %SOURCE2 README.alt
 set -C
 cat > .cargo/config.toml <<EOF
 [term]
@@ -76,7 +82,7 @@ codex --version | grep -Fx '%name-cli %version'
 
 %files
 %define _customdocdir %_docdir/%name
-%doc CHANGELOG.md LICENSE README.md docs .gear/README.alt
+%doc CHANGELOG.md LICENSE README.md docs README.alt
 %_bindir/codex
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -84,8 +90,12 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
-* Sat Jun 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.141.0-alt1
-- Updated to version 0.141.0.
+* Mon Jun 22 2026 Alexey Shabalin <shaba@altlinux.org> 0.141.0-alt2
+- Rework packaging for zoryn.
+
+* Fri Jun 19 2026 Alexey Shabalin <shaba@altlinux.org> 0.141.0-alt1
+- Update to rust-v0.141.0.
+- Re-apply the downstream Code Mode stub (keep rusty_v8 out of the build).
 
 * Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 0.125.0-alt1
 - Update to rust-v0.125.0 (2026-04-24).
