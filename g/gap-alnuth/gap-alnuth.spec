@@ -1,7 +1,7 @@
 %define repo alnuth
 
 Name: gap-alnuth
-Version: 4.0.0
+Version: 4.0.2
 Release: alt1
 Summary: GAP: Algebraic number theory and an interface to KANT
 License: GPL-2.0+
@@ -41,6 +41,9 @@ over number fields.
 %gap_sitelib/%repo/
 
 %changelog
+* Mon Jun 22 2026 Leontiy Volodin <lvol@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 4.0.0-alt1
 - New version 4.0.0.
 - Added VCS tag.
