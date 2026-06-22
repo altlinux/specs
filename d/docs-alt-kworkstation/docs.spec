@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.4
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -51,6 +51,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Jun 22 2026 Elena Mishina <lepata@altlinux.org> 11.4-alt2
+- update to ALT Kworkstation 11.4
+
 * Mon Jun 08 2026 Elena Mishina <lepata@altlinux.org> 11.4-alt1
 - update to ALT Kworkstation 11.4BETA
 - typo fixes (closes #58638, #58640)
