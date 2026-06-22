@@ -9,7 +9,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt7
+Release: alt8
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -33,6 +33,7 @@ Patch12: patch.1.3
 Patch13: patch.1.4
 # other patches
 Patch20: db-1.85-errno.patch
+Patch21: db-5.3.28-dberr.patch
 Patch22: db-4.6.21-1.85-compat.patch
 Patch24: db-4.5.20-jni-include-dir.patch
 # License clarification patch
@@ -77,7 +78,7 @@ Patch43: libdb-c99.patch
 Patch44: libdb-configure-c99.patch
 Patch45: libdb-sqlite-c99.patch
 
-BuildRequires: gcc gcc-c++
+BuildRequires: gcc-c++
 BuildRequires: perl libtool
 BuildRequires: tcl-devel >= %{__tclversion}
 BuildRequires: chrpath
@@ -230,6 +231,7 @@ pushd db.1.85
 %patch12 -p0
 %patch13 -p0
 %patch20 -p1
+%patch21 -p1
 popd
 
 %patch22 -p1
@@ -260,7 +262,7 @@ cd dist
 cd ..
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -std=gnu17"
 CFLAGS="$CFLAGS -DSHAREDSTATEDIR='\"%{_sharedstatedir}\"' -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 -I../../../lang/sql/sqlite/ext/fts3/"
 export CFLAGS
 
@@ -413,6 +415,9 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Mon Jun 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.3.28-alt8
+- NMU: fix FTBFS with gcc 15.
+
 * Thu Feb 20 2025 Constantin Sunzow <protvin@altlinux.org> 5.3.28-alt7
 - Provide db-utils (ALT #53146).
 
