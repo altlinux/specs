@@ -7,7 +7,7 @@
 
 Name: elmerfem
 Version: 26.2.1
-Release: alt1
+Release: alt2
 
 Summary: Elmer FEM software
 License: LGPL-2.0-only
@@ -29,7 +29,10 @@ BuildRequires: liblapack-devel
 BuildRequires: pkgconfig(UMFPACK)
 
 BuildRequires: libgomp-devel
+
+%ifnarch riscv64
 BuildRequires: libhypre-devel
+%endif
 
 BuildRequires: pkgconfig(netcdf)
 BuildRequires: pkgconfig(netcdf-fortran)
@@ -59,9 +62,7 @@ Requires: elmerfem-data = %{version}-%{release}
 
 # needed by /usr/bin/elmerf90
 Requires: gcc-fortran
-Requires: libgomp15-devel
-
-ExcludeArch: i586 riscv64
+Requires: libgomp-devel
 
 %description
 Elmer is computational tool for multi-physics problems. Elmer includes
@@ -83,6 +84,10 @@ This package provides data files of %name.
 %setup
 %patch -p1
 
+%ifarch %ix86
+sed -i 's|SET(ElmerIce_SRC ${ElmerIce_SRC} CalvingRemeshMMG.F90 )|MESSAGE(STATUS "Disabling CalvingRemeshMMG.F90 on %ix86 as not buildable.")|' elmerice/Solvers/CMakeLists.txt
+%endif
+
 %build
 # Following https://github.com/flathub/fi.csc.Elmer/blob/master/fi.csc.Elmer.yaml
 # and docker/elmer.def
@@ -103,8 +108,10 @@ This package provides data files of %name.
        -Wno-dev \
        -DWITH_MPI=TRUE \
        -DWITH_OpenMP=TRUE \
+%ifnarch riscv64
        -DHYPRE_INCLUDE_DIR=%_includedir/hypre \
        -DWITH_Hypre=TRUE \
+%endif
        -DWITH_ElmerIce=TRUE \
        -DWITH_QT5=TRUE \
        -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
@@ -131,12 +138,7 @@ This package provides data files of %name.
        -DUMFPACK_INCLUDE_DIR="%_includedir/suitesparse" \
        -DELMER_SOLVER_HOME=%_datadir/elmersolver \
        -DELMER_INSTALL_LIB_DIR=%_libdir \
-       -DELMER_INSTALL_BIN_DIR=%_bindir \
-%if_with check
-       -DBUILD_TESTING=TRUE
-%else
-       -DBUILD_TESTING=FALSE
-%endif
+       -DELMER_INSTALL_BIN_DIR=%_bindir
 
 %cmake_build
 
@@ -184,6 +186,12 @@ rm -fv %buildroot/usr/lib/ElmerGUI/ngcore/libng.a
 %dir %_datadir/elmersolver/lib
 %_datadir/elmersolver/lib/*
 
+%post
+echo "NOTE: at the present time %name can use only ElmerVTK for"
+echo "      post-processing, user have to select it manually by"
+echo "      the longpress on P button on the toolbar and/or use"
+echo "      Run -> Start ElmerVTK menu option to view results."
+
 %files data
 %dir %_datadir/ElmerGUI
 %_datadir/ElmerGUI/*
@@ -195,5 +203,9 @@ rm -fv %buildroot/usr/lib/ElmerGUI/ngcore/libng.a
 %_datadir/elmersolver/lua-scripts/defaults.lua
 
 %changelog
+* Mon Jun 22 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt2
+- Enable build on i586 and riscv64.
+- Added post-install message about using ElmerVTK as default instead of non-compilable ElmerPost.
+
 * Sat Jun 20 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt1
 - Initial build for Sisyphus
