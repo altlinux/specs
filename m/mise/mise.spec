@@ -3,7 +3,7 @@
 %def_with check
 
 Name: mise
-Version: 2026.5.11
+Version: 2026.6.12
 Release: alt1
 
 Summary: The front-end to your dev env
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 Requires: usage
+Requires: libatomic1
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -90,6 +91,10 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.6.12-alt1
+- Updated to version 2026.6.12.
+- Added libatomic1 to requires (Closes: #58938).
+
 * Mon May 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.5.11-alt1
 - Updated to version 2026.5.11.
 
