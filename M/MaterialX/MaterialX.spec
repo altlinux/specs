@@ -13,7 +13,7 @@
 
 Name: MaterialX
 Version: 1.39.4
-Release: alt0.1
+Release: alt0.2
 Summary: MaterialX is an open standard for representing rich material and look-development content in computer graphics
 Group: Development/Other
 License: Apache-2.0
@@ -136,6 +136,9 @@ subst 's,march=nehalem,march=native,' source/MaterialXView/NanoGUI/CMakeLists.tx
 	-DMATERIALX_BUILD_VIEWER=ON \
 	%endif
 	-DMATERIALX_BUILD_SHARED_LIBS=ON \
+	%ifarch %e2k
+	-DCMAKE_SKIP_INSTALL_RPATH=OFF \
+	%endif
 	%nil
 %cmake_build
 
@@ -172,6 +175,9 @@ ln -s %_datadir/%name/libraries %buildroot%python3_sitelibdir/%name/libraries
 %endif
 
 %changelog
+* Mon Jun 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.39.4-alt0.2
+- e2k build fix (need rpath)
+
 * Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 1.39.4-alt0.1
 - 1.39.4.
 
