@@ -1,6 +1,6 @@
 Name: surge
 Version: 1.3.4
-Release: alt2
+Release: alt3
 
 Summary: Hybrid synthesizer
 License: GPLv3
@@ -14,7 +14,6 @@ Source1: deps-%version-%release.tar
 
 BuildRequires: cmake gcc-c++ rack-devel
 BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(fmt)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(luajit)
@@ -114,6 +113,9 @@ make install -C src/surge-rack RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Mon Jun 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.4-alt3
+- rebuilt with vendored fmt
+
 * Fri Oct 31 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.4-alt2
 - added vcvrack plugin
 
