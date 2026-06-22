@@ -3,7 +3,7 @@
 
 Name: os-prober
 Version: 1.84
-Release: alt2
+Release: alt3
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -62,6 +62,9 @@ mkdir -p %buildroot%_localstatedir/os-prober
 %_localstatedir/os-prober
 
 %changelog
+* Mon Jun 22 2026 Egor Ignatov <egori@altlinux.org> 1.84-alt3
+- os-prober: Ignore timeshift btrfs snapshots
+
 * Tue Mar 17 2026 Egor Ignatov <egori@altlinux.org> 1.84-alt2
 - Add btrfs support (closes: #54224, #49156).
 
