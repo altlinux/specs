@@ -1,6 +1,6 @@
 Name: giada
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Giada - Your Hardcore Loop Machine
 License: GPLv3
@@ -40,6 +40,7 @@ Designed for DJs, live performers and electronic musicians.
 
 %prep
 %setup -a1
+grep -lr fmt::format src|xargs sed -i '/fmt\/core/ a#include <fmt/format.h>'
 
 %build
 %cmake  -DWITH_VST3=ON \
@@ -62,6 +63,9 @@ rm -vf %buildroot{%_bindir/fltk*,%_libdir/libfltk*,%_mandir/man?/fltk*}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jun 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt2
+- fixed build with recent fmt
+
 * Wed Jun 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
 - 1.5.0 released
 
