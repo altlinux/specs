@@ -8,7 +8,7 @@
 %define libname lib%name
 %define girname ReadySet
 %define api_version 0
-%define major_version 8
+%define major_version 9
 %define minor_version 0
 %define gis_name gnome-initial-setup
 
@@ -16,7 +16,7 @@ Name: ready-set
 Version: %api_version.%major_version.%minor_version
 Release: alt1
 
-Summary: System Installer and Initial Setup Wizard
+Summary: Modular (System Installer | Initial Setup Wizard)
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 URL: https://altlinux.space/alt-gnome/ReadySet
@@ -182,7 +182,7 @@ Requires: %name = %EVR
 %autopatch -p1
 
 %build
-%meson -Dpassword_check_backend=both -Duser_with_set_root=true
+%meson -Dpassword_check_backend=both --auto-features=enabled
 %meson_build
 
 %install
@@ -210,6 +210,7 @@ Requires: %name = %EVR
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
+%_datadir/bash-completion/completions/%name
 
 %files gdm
 %_libexecdir/%gis_name
@@ -273,6 +274,14 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Mon Jun 22 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.0-alt1
+- New version: 0.9.0.
+- Added support for pageless plugins.
+- Added bash completion for the CLI.
+- Reworked keyboard page completely with stevia layouts support.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.9.0
+
 * Sun Jun 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.8.0-alt1
 - New version: 0.8.0.
 - Added ability to create pages directly by the installer (`InstallerAddin`).
