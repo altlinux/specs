@@ -3,7 +3,7 @@
 
 Name: libUvula
 Version: 1.0.1
-Release: alt3
+Release: alt4.g3954db41.1
 
 Summary: UV-unwrapper for potentially big meshes
 License: LGPL-3.0-only
@@ -75,6 +75,9 @@ on a texture.
 %python3_sitelibdir/pyUvula.*.so
 
 %changelog
+* Mon Jun 22 2026 Valery Zabrovsky <brow@altlinux.org> 1.0.1-alt4.g3954db41.1
+- Switch to more appropriate rolling tagging.
+
 * Fri May 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.1-alt3
 - e2k build fix
 
