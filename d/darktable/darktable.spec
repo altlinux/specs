@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 5.4
+%define ver_major 5.6
 %define beta %nil
 %define rdn_name org.darktable.darktable
 
@@ -16,6 +16,7 @@
 %def_enable libheif
 %def_enable jxl
 %def_enable map
+%def_disable ai
 
 # lensfun a mandatory dependency
 #src/iop/lens.cc:
@@ -23,8 +24,8 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -62,6 +63,8 @@ AutoReq: nolua
 %define openexr_ver 3.0
 %define lua_ver_major 5.4
 %define lua_ver 5.4.6
+%define potrace_ver 1.16
+%define onnx_ver 1.18
 
 Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
@@ -89,6 +92,7 @@ BuildRequires: libpugixml-devel >= %pugixml_ver libcups-devel
 BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: libgmic-devel libjasper-devel
+BuildRequires: libpotrace-devel >= %potrace_ver
 %{?_enable_system_lua:BuildRequires(pre): rpm-build-lua
 BuildRequires: liblua%lua_ver_major-devel >= %lua_ver
 Provides: lua%lua_ver_major(darktable)}
@@ -97,6 +101,7 @@ Provides: lua%lua_ver_major(darktable)}
 %{?_enable_libheif:BuildRequires: libheif-devel}
 %{?_enable_jxl:BuildRequires: libjxl-devel}
 %{?_enable_map:BuildRequires: libosm-gps-map1.0-devel}
+%{?_enable_ai:BuildRequires: pkgconfig(libonnxruntime) >= %onnx_ver}
 # for not recommended build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -146,7 +151,8 @@ sed -i "/#pragma unroll/d" src/common/fast_guided_filter.h src/iop/channelmixerr
 %endif
 %{?_enable_system_libraw:-DDONT_USE_INTERNAL_LIBRAW=ON} \
 %{?_enable_system_lua:-DDONT_USE_INTERNAL_LUA=ON} \
-%{?_disable_map:-DOSMGpsMap=OFF -DUSE_MAP=OFF}
+%{?_disable_map:-DOSMGpsMap=OFF -DUSE_MAP=OFF} \
+%{?_enable_ai:-DUSE_AI=ON}
 %nil
 %cmake_build
 
@@ -179,6 +185,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 5.4.1-alt1.1
 - made libosmgpsmap support optional
 
