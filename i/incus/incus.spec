@@ -3,7 +3,7 @@
 %define incususer incusadm
 
 Name:		incus
-Version:	7.0.0
+Version:	7.1.0
 Release:	alt1
 Summary:	Incus is a system container and virtual machine manager
 
@@ -47,7 +47,7 @@ Requires:       %name-client = %version-%release
 Requires:       attr
 Requires:       dnsmasq
 Requires:       shadow-submap
-Requires:       iptables, ebtables
+Requires:       iptables, ebtables, nftables
 Requires:       lxcfs >= 6.0.0
 Requires:       rsync
 Requires:       squashfs-tools
@@ -227,6 +227,9 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_man1dir/%name-agent.*
 
 %changelog
+* Fri May 29 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.1.0-alt1
+- Updated to 7.1.0.
+
 * Wed May 06 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.0.0-alt1
 - Updated to 7.0.0.
 
