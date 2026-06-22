@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-workstation
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: Volumes description for SP Workstation
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Jun 22 2026 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- 10-vm-profile.sh: switch to alt-workstation profile, but without BTRFS
+  support.
+
 * Wed Oct 16 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
 - decrease minimal size /home to 9,5 GiB
 
