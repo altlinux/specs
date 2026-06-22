@@ -2,7 +2,7 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        4.7.1
+Version:        4.7.2
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
@@ -217,6 +217,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Mon Jun 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.2-alt1
+- New version 4.7.2.
+
 * Thu Apr 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.1-alt1
 - New version 4.7.1.
 
