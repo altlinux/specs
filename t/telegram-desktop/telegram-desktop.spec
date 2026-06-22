@@ -23,7 +23,7 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 6.8.2
+Version: 6.9.3
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -76,6 +76,8 @@ BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
 # WebView support: Quick QuickWidgets WaylandCompositor
 BuildRequires: qt6-declarative-devel
+# provides qsb (Qt Shader Baker) to bake QRhi shaders at build time
+BuildRequires: qt6-shadertools-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
@@ -165,7 +167,8 @@ BuildRequires: libmicrosoft-gsl-devel >= 1:4.1.0
 #BuildRequires: libvariant-devel
 BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.11.0
-BuildRequires: libdispatch-devel
+# no libdispatch-devel: upstream skips the dispatch lib (desktop_app_skip_libs),
+# its header would force crl onto the unlinked dispatch backend instead of bundled TMC
 
 # for bundled cldr3
 BuildRequires: libprotobuf-devel libprotobuf-lite-devel protobuf-compiler
@@ -323,6 +326,7 @@ export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
     -DDESKTOP_APP_USE_ENCHANT:BOOL=ON \
     -DQT_VERSION_MAJOR=6 \
+    -DQSB_EXECUTABLE=%_bindir/qsb-qt6 \
 %if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
 %else
@@ -376,6 +380,11 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Mon Jun 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.9.3-alt1
+- new version 6.9.3
+- build QRhi shaders with qt6-shadertools (qsb-qt6)
+- drop libdispatch-devel: use bundled TooManyCooks (TMC) crl backend
+
 * Tue May 19 2026 Vitaly Lipatov <lav@altlinux.ru> 6.8.2-alt1
 - new version 6.8.2
 
