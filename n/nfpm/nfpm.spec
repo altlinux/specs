@@ -1,5 +1,5 @@
 Name:    nfpm
-Version: 2.46.3
+Version: 2.47.0
 Release: alt1
 
 Summary: Simple deb, rpm, apk and arch linux packager written in Go
@@ -98,6 +98,9 @@ mkdir -p %buildroot%_datadir/zsh_completion.d/
 %_datadir/zsh_completion.d/_%name
 
 %changelog
+* Mon Jun 22 2026 Sergey Palcheh <minergenon@altlinux.org> 2.47.0-alt1
+- new version 2.47.0
+
 * Fri Jun 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.46.3-alt1
 - new version 2.46.3
 
