@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.21.1
+Version: 4.21.2
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -18,9 +18,11 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: libxfce4ui-gtk3-devel >= 4.21.2
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
 BuildRequires: libxfconf-devel >= 4.19.3 libgarcon-devel >= 4.18.0
+BuildRequires: xfce-wayland-protocols
 BuildRequires: libX11-devel libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
+BuildRequires: libxkbcommon-devel >= 1.6.0
 Buildrequires: libXext-devel
 BuildRequires: libwayland-client-devel wayland-devel >= 1.20 wlr-protocols libgtk-layer-shell-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= 0.99.10}
@@ -86,6 +88,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Mon Jun 22 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
+- Used system xfce-wayland-protocols.
+- Updated to 4.21.2.
+
 * Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
 - xfce4-fixkeyboard: Do nothing in wayland session.
 - Switched to meson build.
