@@ -1,3 +1,4 @@
+%define _libexecdir %_prefix/libexec
 %define sover 6
 
 %def_disable clang
@@ -6,7 +7,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.81
+Version: 6.1.95
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -27,7 +28,7 @@ Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel wlr-protocols
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel wlr-protocols libffmpegthumbnailer-devel
 BuildRequires: vulkan-headers libdqt6-concurrent libdqt6-test libdqt6-wlshellintegration
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -108,6 +109,8 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so
 %files -f %repo.lang
 %doc LICENSE README.md debian/changelog
 %_bindir/%repo
+%dir %_libexecdir/deepin/
+%_libexecdir/deepin/%repo
 %_desktopdir/org.deepin.dde.control-center.desktop
 %_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
 %_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
@@ -145,6 +148,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so
 %_includedir/%repo/
 
 %changelog
+* Mon Jun 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.95-alt1
+- New version 6.1.95.
+
 * Fri Apr 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.81-alt1
 - New version 6.1.81.
 
