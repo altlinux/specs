@@ -1,7 +1,7 @@
 %def_with check
 
 Name: bottom
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
@@ -53,6 +53,9 @@ export RUST_BACKTRACE=full
 %_datadir/zsh/site-functions/_btm
 
 %changelog
+* Mon Jun 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.1-alt1
+- Updated to version 0.14.1.
+
 * Sun Jun 21 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.0-alt1
 - Updated to version 0.14.0.
 
