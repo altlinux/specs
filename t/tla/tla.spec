@@ -1,22 +1,25 @@
 Name: tla
 Version: 1.3.5
-Release: alt1.1.qa2
+Release: alt1.1.qa3
 #define subver -fix-1
 %define subver %nil
 
 Summary: GNU Arch -- revision control system
-License: GPL
+License: GPL-2.0
 Group: Development/Other
 Url: http://gnuarch.org/
-Packager: Alexey Voinov <voins@altlinux.ru>
 
-# ftp://ftp.gnu.org/pub/gnu/gnu-arch/tla-%version%subver.tar.gz
+# ftp://ftp.gnu.org/pub/gnu/gnu-arch/tla-%%version%%subver.tar.gz
 Source: tla-%version%subver.tar
 Source1: tla.1
 Source2: tla-gpg-check.1
 
 Patch0: tla-1.3.5-neon.patch
 Patch1: tla-1.3.5-neon-327111.patch
+Patch2: tla-1.3.5-fix-some-includes.patch
+Patch3: tla-1.3.5-add-missing-include.patch
+Patch4: tla-1.3.5-missing-prototypes.patch
+Patch5: tla-1.3.5-add-more-include.patch
 
 Requires: diffutils >= 2.8.1, patch, tar
 BuildRequires: libneon-devel
@@ -38,8 +41,7 @@ GNU Arch documentation in HTML format.
 
 %prep
 %setup -q -n %name-%version%subver
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 # Remove unused code.
 rm -rf src/{expat,libneon}
@@ -52,10 +54,11 @@ find -type f -name \*.html -print0 |
 cp -a /usr/share/gnu-config/config.guess src/build-tools/gnu/
 
 %build
+export EXTRA_CFLAGS="-std=gnu17 -Wno-error=incompatible-pointer-types"
 cd src
 mkdir build
 cd build
-../configure --prefix=%_prefix 
+../configure --prefix=%_prefix
 make
 
 %install
@@ -78,6 +81,9 @@ install -pm644 %_sourcedir/tla{,-gpg-check}.1 %buildroot%_man1dir/
 %doc %_docdir/%name-%version/
 
 %changelog
+* Mon Jun 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.5-alt1.1.qa3
+- NMU: fix build with gcc 15.
+
 * Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1.1.qa2
 - E2K: update config.guess.
 
