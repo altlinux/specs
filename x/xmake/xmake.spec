@@ -6,7 +6,7 @@
 %def_with check
 
 Name: xmake
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: A cross-platform build utility based on Lua
@@ -16,9 +16,9 @@ Url: https://xmake.io
 VCS: https://github.com/xmake-io/xmake
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-fix-sv-external-include.patch
-Patch1: %name-%version-alt-fix-DESTDIR-configure.patch
-Patch2: %name-%version-alt-add-relwithdebinfo-mode.patch
+Patch: xmake-3.0.8-alt-fix-sv-external-include.patch
+Patch1: xmake-3.0.8-alt-fix-DESTDIR-configure.patch
+Patch2: xmake-3.0.8-alt-add-relwithdebinfo-mode.patch
 
 Requires: %name-data = %EVR
 
@@ -103,16 +103,21 @@ xmake l tests/run.lua
 
 %files
 %doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md NOTICE.md README.md
-%_bindir/*
+%_bindir/%name
+%_bindir/xrepo
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
-%_man1dir/*
+%_man1dir/%name.1.xz
+%_man1dir/xrepo.1.xz
 
 %files data
 %_datadir/%name
 
 %changelog
+* Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.0.9-alt1
+- Updated to version 3.0.9.
+
 * Tue Apr 14 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.0.8-alt1
 - Initial build for ALT.
 
