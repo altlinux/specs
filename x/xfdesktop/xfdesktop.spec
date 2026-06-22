@@ -1,5 +1,7 @@
+%def_enable videobackdrop
+
 Name: xfdesktop
-Version: 4.20.2
+Version: 4.21.0
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -15,17 +17,19 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
-BuildRequires: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libxfce4util-devel
 BuildRequires: libxfconf-devel >= 4.19.3
-BuildRequires: libxfce4windowing-devel >= 4.19.8
+BuildRequires: libxfce4windowing-devel >= 4.20.6
 BuildRequires: libX11-devel
 BuildRequires: libgtk-layer-shell-devel
-Buildrequires: time
 BuildRequires: libnotify-devel
 BuildRequires: libyaml-devel
+%{?_enable_videobackdrop:BuildRequires: gstreamer1.0-devel gst-plugins-good1.0}
 
-Requires: exo-utils
+Requires: libxfce4ui-utils
 
 # libxfce4windowing >= 4.19.6 breaks API/ABI whithout soname change
 Conflicts: libxfce4windowing < 4.19.6
@@ -45,22 +49,20 @@ Conflicts: libxfce4windowing < 4.19.6
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	--enable-wayland \
-	--enable-notifications \
-	--enable-thunarx \
-	--enable-desktop-icons \
-	--enable-file-icons \
-	--with-default-backdrop-filename=%default_background \
-	--enable-debug=minimum
+%meson \
+	-Dx11=enabled \
+	-Dwayland=enabled \
+	-Dnotifications=enabled \
+	-Dthunarx=enabled \
+	-Ddesktop-icons=true \
+	-Dfile-icons=true \
+	%{subst_enable_meson_bool videobackdrop video-backdrop} \
+	-Ddefault-backdrop-filename=%default_background
 
-%make_build
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 touch %buildroot%default_background
@@ -82,6 +84,11 @@ fi
 %ghost %default_background
 
 %changelog
+* Tue Jun 23 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Enabled video backdrop.
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Fri Mar 27 2026 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Updated to 4.20.2.
 
