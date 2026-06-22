@@ -4,7 +4,7 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
@@ -95,6 +95,12 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Mon Jun 22 2026 Anton Farygin <rider@altlinux.org> 1.8.2-alt1
+- 1.8.1 -> 1.8.2 (Fixes: CVE-2026-32316, CVE-2026-33947, CVE-2026-33948,
+- CVE-2026-39956, CVE-2026-39979, CVE-2026-40164, CVE-2026-40612, CVE-2026-41256,
+- CVE-2026-41257, CVE-2026-43894, CVE-2026-43895, CVE-2026-43896, CVE-2026-44777,
+- CVE-2026-47770, CVE-2026-49839, CVE-2026-54679)
+
 * Fri Aug 01 2025 Anton Farygin <rider@altlinux.com> 1.8.1-alt1
 - 1.8.1 (Fixes: CVE-2025-49014, GHSA-f946-j5j2-4w5m)
 
