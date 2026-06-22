@@ -6,11 +6,12 @@ BuildRequires: /proc rpm-build-java
 #BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define src_name mysql-connector-j
 
 Summary:       Official JDBC driver for MySQL
 Name:          mysql-connector-java
-Version:       8.0.30
-Release:       alt1_2jpp11
+Version:       8.2.0
+Release:       alt1_1jpp17
 Epoch:         1
 License:       GPLv2 with exceptions
 URL:           http://dev.mysql.com/downloads/connector/j/
@@ -39,7 +40,6 @@ Source0:       %{name}-%{version}-nojars.tar.xz
 # will create a new tarball compressed with xz and without those jar files.
 Source1:       generate-tarball.sh
 
-Patch1:        remove-coverage-test.patch
 Patch2:        java-11-migration.patch
 Patch3:        remove-authentication-plugin.patch
 Patch4:        remove-StatementsTest.patch
@@ -80,9 +80,10 @@ for file in README README.md; do
  rm $file.orig
 done
 
-sed -i 's/>@.*</>%{version}</' src/build/misc/pom.xml
+%pom_xpath_set 'pom:project/pom:artifactId' '%src_name' src/build/misc
+%pom_xpath_set 'pom:project/pom:version' '%version' src/build/misc
+%mvn_alias : mysql:%name
 
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -99,14 +100,13 @@ rm src/test/java/testsuite/regression/ConnectionRegressionTest.java
 rm src/test/java/testsuite/regression/DataSourceRegressionTest.java
 rm src/test/java/testsuite/simple/StatementsTest.java
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-17-openjdk \
-    -Dcom.mysql.cj.extra.libs=%{_javadir} \
-    test dist
+ant -Dant.build.javac.source=17 -Dant.build.javac.target=17  -Dcom.mysql.cj.build.jdk=/usr/lib/jvm/java-17-openjdk \
+    -Dcom.mysql.cj.extra.libs=%{_javadir}
 
 %install
 # Install the Maven build information
-%mvn_file mysql:mysql-connector-java %{name}
-%mvn_artifact src/build/misc/pom.xml build/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT.jar
+%mvn_file : %name
+%mvn_artifact src/build/misc/pom.xml build/%src_name-%version-SNAPSHOT/%src_name-%version-SNAPSHOT.jar
 %mvn_install
 
 %files -f .mfiles
@@ -114,6 +114,12 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcom.mysql.cj.bu
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu May 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:8.2.0-alt1_1jpp17
+- new version
+- security fix:
+  + CVE-2023-21971: Denial of service.
+  + CVE-2023-22102: Scope takeover.
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:8.0.30-alt1_2jpp11
 - update
 
