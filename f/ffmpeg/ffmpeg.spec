@@ -163,7 +163,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version: 8.1.1
+Version: 8.1.2
 Release: alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -821,6 +821,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Mon Jun 22 2026 Anton Farygin <rider@altlinux.org> 2:8.1.2-alt1
+- 8.1.1 -> 8.1.2
+
 * Sun May 24 2026 Anton Farygin <rider@altlinux.org> 2:8.1.1-alt1
 - 8.0.1 -> 8.1.1
 
