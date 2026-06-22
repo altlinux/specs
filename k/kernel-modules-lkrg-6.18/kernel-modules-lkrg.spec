@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define module_name	lkrg
-%define module_version	1.0.0
-%define module_release	alt2
+%define module_version	1.0.1.0.1.g5689a8e9
+%define module_release	alt1
 
 %define flavour		6.18
 %define karch		%ix86 x86_64
@@ -96,6 +96,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Mon Jun 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.1.0.1.g5689a8e9-alt1.%kcode.%kbuildrelease
+- Update to 1.0.1.0.1.g5689a8e9 (2026-06-13)
+- Add 7.0 and 7.1 kflavours
 
 * Mon Dec 08 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt2.%kcode.%kbuildrelease
 - Only BR actual kernel for the test.
