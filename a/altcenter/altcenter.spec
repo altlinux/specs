@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.38
+Release: alt0.39
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,14 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Jun 22 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.39
+- Policy: added user console blocking.
+- Policy: added Podman policy and package availability check.
+- Policy: added ptrace tracing restriction.
+- Policy: added SysRq key blocking.
+- Components: enabled apply on checkbox changes.
+- Policy: added network services startup control.
+
 * Fri Jun 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.38
 - Components: filtered obsolete egrep warning.
 - Auditd logs settings: added system power audit rule.
