@@ -16,7 +16,7 @@
 %global optflags_lto %nil
 
 Name: squid
-Version: 7.5
+Version: 7.6
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -323,6 +323,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Mon Jun 22 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt1
+- 7.6 (fixes: CVE-2026-47729)
+
 * Fri Apr 03 2026 Egor Ignatov <egori@altlinux.org> 7.5-alt1
 - 7.5 (fixes: CVE-2026-33515,  CVE-2026-32748, CVE-2026-33526)
 
