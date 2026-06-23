@@ -5,7 +5,7 @@
 %define        gemname chef-zero
 
 Name:          gem-chef-zero
-Version:       15.1.6
+Version:       15.1.11
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License:       Apache-2.0
@@ -16,9 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb
 %if_enabled check
 BuildRequires: gem(chef) >= 18.7
 BuildRequires: gem(ffi) >= 1.15.5
@@ -29,11 +27,10 @@ BuildRequires: gem(ohai) >= 18.1
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(pry-byebug) >= 0
 BuildRequires: gem(pry-stack_explorer) >= 0
-BuildRequires: gem(rack) >= 3.1
-BuildRequires: gem(rackup) >= 2.2.1
+BuildRequires: gem(rack) >= 3.1.7
+BuildRequires: gem(rackup) >= 2.3.1
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.0
-BuildRequires: gem(unf_ext) >= 0.0.8
 BuildRequires: gem(uuidtools) >= 2.1
 BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(yard) >= 0
@@ -44,13 +41,11 @@ BuildConflicts: gem(mixlib-log) >= 4.0
 BuildConflicts: gem(ohai) >= 20
 BuildConflicts: gem(rackup) >= 3
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(unf_ext) >= 1
-BuildConflicts: gem(uuidtools) >= 3
+BuildConflicts: gem(uuidtools) >= 4.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency unf_ext >= 0.0.9.1,unf_ext < 1
 %ruby_use_gem_dependency rack >= 3.1.7,rack < 4
 %ruby_use_gem_dependency chef >= 19.1.116,chef < 20
 %ruby_use_gem_dependency ohai >= 19.1.15,ohai < 20
@@ -58,18 +53,16 @@ Requires:      ruby >= 3.0
 Requires:      gem(ffi-yajl) >= 2.2
 Requires:      gem(hashie) >= 2.0
 Requires:      gem(mixlib-log) >= 2.0
-Requires:      gem(rack) >= 3.1
-Requires:      gem(rackup) >= 2.2.1
-Requires:      gem(unf_ext) >= 0.0.8
+Requires:      gem(rack) >= 3.1.7
+Requires:      gem(rackup) >= 2.3.1
 Requires:      gem(uuidtools) >= 2.1
 Requires:      gem(webrick) >= 0
 Conflicts:     gem(ffi-yajl) >= 4.0
 Conflicts:     gem(hashie) >= 6.0
 Conflicts:     gem(mixlib-log) >= 4.0
 Conflicts:     gem(rackup) >= 3
-Conflicts:     gem(unf_ext) >= 1
-Conflicts:     gem(uuidtools) >= 3
-Provides:      gem(chef-zero) = 15.1.6
+Conflicts:     gem(uuidtools) >= 4.0
+Provides:      gem(chef-zero) = 15.1.11
 
 %description
 Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
@@ -86,16 +79,14 @@ Internet.
 
 
 %package       -n chef-zero
-Version:       15.1.6
+Version:       15.1.11
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-zero
 Group:         Other
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.1.6
+Requires:      gem(chef-zero) = 15.1.11
 
 %description   -n chef-zero
 Self-contained, easy-setup, fast-start in-memory Chef server for testing and
@@ -119,16 +110,14 @@ Internet.
 
 %if_enabled    doc
 %package       -n gem-chef-zero-doc
-Version:       15.1.6
+Version:       15.1.11
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-zero
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.1.6
+Requires:      gem(chef-zero) = 15.1.11
 Obsoletes:     chef-zero-doc < %EVR
 Provides:      chef-zero-doc = %EVR
 
@@ -155,16 +144,14 @@ Internet.
 
 %if_enabled    devel
 %package       -n gem-chef-zero-devel
-Version:       15.1.6
+Version:       15.1.11
 Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-zero
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(chef-zero) = 15.1.6
+Requires:      gem(chef-zero) = 15.1.11
 Requires:      gem(chef) >= 18.7
 Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(ffi-yajl) >= 2.2
@@ -174,11 +161,10 @@ Requires:      gem(ohai) >= 18.1
 Requires:      gem(pry) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-stack_explorer) >= 0
-Requires:      gem(rack) >= 3.1
-Requires:      gem(rackup) >= 2.2.1
+Requires:      gem(rack) >= 3.1.7
+Requires:      gem(rackup) >= 2.3.1
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.0
-Requires:      gem(unf_ext) >= 0.0.8
 Requires:      gem(uuidtools) >= 2.1
 Requires:      gem(webrick) >= 0
 Requires:      gem(yard) >= 0
@@ -189,7 +175,6 @@ Conflicts:     gem(mixlib-log) >= 4.0
 Conflicts:     gem(ohai) >= 20
 Conflicts:     gem(rackup) >= 3
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(unf_ext) >= 1
 Conflicts:     gem(uuidtools) >= 3
 
 %description   -n gem-chef-zero-devel
@@ -226,27 +211,30 @@ Internet.
 %ruby_test
 
 %files
-%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n chef-zero
-%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %_bindir/chef-zero
 
 %if_enabled    doc
 %files         -n gem-chef-zero-doc
-%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-chef-zero-devel
-%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %endif
 
 
 %changelog
+* Sat May 30 2026 Pavel Skrylev <majioa@altlinux.org> 15.1.11-alt1
+- ^ 15.1.6 -> 15.1.11
+
 * Mon Mar 30 2026 Pavel Skrylev <majioa@altlinux.org> 15.1.6-alt1
 - ^ 15.0.28 -> 15.1.6
 

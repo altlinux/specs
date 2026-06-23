@@ -6,7 +6,7 @@
 
 Name:          gem-rackup
 Epoch:         2
-Version:       2.2.1
+Version:       2.3.1
 Release:       alt1
 Summary:       A general server command for Rack applications
 License:       MIT
@@ -17,30 +17,30 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(rack) >= 3.0.0
+BuildRequires: gem(rack) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.5
-Requires:      gem(rack) >= 3.0.0
-Provides:      gem(rackup) = 2.2.1
+Requires:      gem(rack) >= 3
+Provides:      gem(rackup) = 2.3.1
 
 %description
 A general server command for Rack applications.
 
 
 %package       -n rackup
-Version:       2.2.1
+Version:       2.3.1
 Release:       alt1
 Summary:       A general server command for Rack applications executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rackup
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rackup) = 2.2.1
+Requires:      gem(rackup) = 2.3.1
 
 %description   -n rackup
 A general server command for Rack applications executable(s).
@@ -51,14 +51,14 @@ A general server command for Rack applications executable(s).
 
 %if_enabled    doc
 %package       -n gem-rackup-doc
-Version:       2.2.1
+Version:       2.3.1
 Release:       alt1
 Summary:       A general server command for Rack applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rackup
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rackup) = 2.2.1
+Requires:      gem(rackup) = 2.3.1
 
 %description   -n gem-rackup-doc
 A general server command for Rack applications documentation files.
@@ -70,14 +70,14 @@ A general server command for Rack applications documentation files.
 
 %if_enabled    devel
 %package       -n gem-rackup-devel
-Version:       2.2.1
+Version:       2.3.1
 Release:       alt1
 Summary:       A general server command for Rack applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rackup
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rackup) = 2.2.1
+Requires:      gem(rackup) = 2.3.1
 
 %description   -n gem-rackup-devel
 A general server command for Rack applications development package.
@@ -121,6 +121,9 @@ A general server command for Rack applications development package.
 
 
 %changelog
+* Sat May 30 2026 Pavel Skrylev <majioa@altlinux.org> 2:2.3.1-alt1
+- ^ 2.2.1 -> 2.3.1
+
 * Mon May 19 2025 Pavel Skrylev <majioa@altlinux.org> 2:2.2.1-alt1
 - ^ 2.1.0 -> 2.2.1
 - > regeared as direct flow as tag
