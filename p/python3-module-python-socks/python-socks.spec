@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD python_socks
 %def_with check
 
 Name: python3-module-python-socks
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Core proxy client (SOCKS4, SOCKS5, HTTP) functionality for Python
@@ -50,6 +51,9 @@ directly. It is used internally by aiohttp-socks and httpx-socks packages.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Tue Jun 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.8.2-alt1
+- 2.8.1 -> 2.8.2
+
 * Tue Feb 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.8.1-alt1
 - 2.8.0 -> 2.8.1
 
