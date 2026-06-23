@@ -5,10 +5,9 @@
 %define        gemname jaro_winkler
 
 Name:          gem-jaro-winkler
-Version:       1.5.6
+Version:       1.6.1
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string
-Summary(ru_RU.UTF-8): Воплощение алгоритма расстояний Яро-Винклера на Си и Рубине, который поддерживает строки UTF-8
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/tonytonyjan/jaro_winkler
@@ -16,22 +15,19 @@ Vcs:           https://github.com/tonytonyjan/jaro_winkler.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
+BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-compiler) >= 0
-BuildRequires: gem(minitest) >= 0
-BuildRequires: gem(fuzzy-string-match) >= 0
-BuildRequires: gem(hotwater) >= 0
-BuildRequires: gem(amatch) >= 0
 BuildConflicts: gem(rake) >= 14
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names jaro_winkler,jaro-winkler
-Provides:      gem(jaro_winkler) = 1.5.6
-
+Provides:      jaro_winkler = %EVR
+Provides:      gem(jaro_winkler) = 1.6.1
 
 %description
 jaro_winkler is an implementation of Jaro-Winkler distance algorithm which is
@@ -42,14 +38,14 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 
 %if_enabled    doc
 %package       -n gem-jaro-winkler-doc
-Version:       1.5.6
+Version:       1.6.1
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета jaro_winkler
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(jaro_winkler) = 1.5.6
+Requires:      gem(jaro_winkler) = 1.6.1
 
 %description   -n gem-jaro-winkler-doc
 Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8
@@ -67,20 +63,17 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 
 %if_enabled    devel
 %package       -n gem-jaro-winkler-devel
-Version:       1.5.6
+Version:       1.6.1
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета jaro_winkler
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(jaro_winkler) = 1.5.6
+Requires:      gem(jaro_winkler) = 1.6.1
+Requires:      gem(minitest) >= 0
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) >= 0
-Requires:      gem(minitest) >= 0
-Requires:      gem(fuzzy-string-match) >= 0
-Requires:      gem(hotwater) >= 0
-Requires:      gem(amatch) >= 0
 Conflicts:     gem(rake) >= 14
 
 %description   -n gem-jaro-winkler-devel
@@ -110,22 +103,28 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 %ruby_test
 
 %files
+%doc LICENSE.txt CHANGELOG.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-jaro-winkler-doc
+%doc LICENSE.txt CHANGELOG.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-jaro-winkler-devel
+%doc LICENSE.txt CHANGELOG.md README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Mon Jun 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt1
+- ^ 1.5.6 -> 1.6.1
+
 * Thu Jul 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.5.6-alt1
 - ^ 1.5.4.1 -> 1.5.6
 

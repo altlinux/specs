@@ -5,8 +5,8 @@
 %define        gemname ast
 
 Name:          gem-ast
-Version:       2.4.2.7
-Release:       alt0.1
+Version:       2.4.3
+Release:       alt1
 Summary:       A library for working with Abstract Syntax Trees
 License:       MIT
 Group:         Development/Ruby
@@ -16,26 +16,24 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(bacon) >= 1.2
-BuildRequires: gem(bacon-colored_output) >= 0
 BuildRequires: gem(coveralls) >= 0.8.23
 BuildRequires: gem(kramdown) >= 0
-BuildRequires: gem(rake) >= 12.3
+BuildRequires: gem(rake) >= 13.1.0
+BuildRequires: gem(rspec) >= 3.10.0
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(yard) >= 0
-BuildConflicts: gem(bacon) >= 2
 BuildConflicts: gem(coveralls) >= 0.9
 BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-Provides:      gem(ast) = 2.4.2.7
-
-%ruby_use_gem_version ast:2.4.2.7
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+Provides:      gem(ast) = 2.4.3
 
 %description
 AST is a small library for working with immutable abstract syntax trees.
@@ -43,14 +41,14 @@ AST is a small library for working with immutable abstract syntax trees.
 
 %if_enabled    doc
 %package       -n gem-ast-doc
-Version:       2.4.2.7
-Release:       alt0.1
+Version:       2.4.3
+Release:       alt1
 Summary:       A library for working with Abstract Syntax Trees documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ast
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ast) = 2.4.2.7
+Requires:      gem(ast) = 2.4.3
 
 %description   -n gem-ast-doc
 A library for working with Abstract Syntax Trees documentation files.
@@ -64,24 +62,23 @@ AST is a small library for working with immutable abstract syntax trees.
 
 %if_enabled    devel
 %package       -n gem-ast-devel
-Version:       2.4.2.7
-Release:       alt0.1
+Version:       2.4.3
+Release:       alt1
 Summary:       A library for working with Abstract Syntax Trees development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ast
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ast) = 2.4.2.7
-Requires:      gem(bacon) >= 1.2
-Requires:      gem(bacon-colored_output) >= 0
+Requires:      gem(ast) = 2.4.3
 Requires:      gem(coveralls) >= 0.8.23
 Requires:      gem(kramdown) >= 0
-Requires:      gem(rake) >= 12.3
+Requires:      gem(rake) >= 13.1.0
+Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(simplecov) >= 0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(bacon) >= 2
 Conflicts:     gem(coveralls) >= 0.9
 Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-ast-devel
 A library for working with Abstract Syntax Trees development package.
@@ -123,6 +120,9 @@ AST is a small library for working with immutable abstract syntax trees.
 
 
 %changelog
+* Mon Jun 22 2026 Pavel Skrylev <majioa@altlinux.org> 2.4.3-alt1
+- ^ 2.4.2p7 -> 2.4.3
+
 * Mon Mar 03 2025 Pavel Skrylev <majioa@altlinux.org> 2.4.2.7-alt0.1
 - ^ 2.4.2 -> 2.4.2p7
 - * define explicit dependencies
