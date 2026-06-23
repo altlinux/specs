@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_qualstats
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 Summary: pg_qualstats is a PostgreSQL extension keeping statistics on predicates.
 License: PostgreSQL
@@ -42,5 +42,8 @@ are most frequently queried together.
 %doc LICENSE README.md CHANGELOG CONTRIBUTORS.md
 
 %changelog
+* Tue Jun 23 2026 Alexei Takaseev <taf@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 2.1.3-alt1
 - Initial build for ALT Linux
