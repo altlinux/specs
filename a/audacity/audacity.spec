@@ -16,8 +16,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.7
-Release: alt4
+Version: 3.7.8
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -41,11 +41,6 @@ Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
 Patch0007: 0007-Manual-document-session-path.patch
 Patch0008: 0008-Fix-release-build-warning.patch
-Patch0009: 0009-fix-mixerboard-mute-solo-buttons.patch
-
-# https://github.com/audacity/audacity/pull/10103
-Patch0010: 0010-auStaticText-Use-default-font-size-on-WXGTK3.patch
-Patch0011: 0011-MeterPanel-Set-font-size-based-on-default-on-WXGTK3.patch
 
 Source2000: audacity-e2k.patch
 
@@ -273,6 +268,9 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Tue Jun 23 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.8-alt1
+- 3.7.8
+
 * Fri Dec 26 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.7-alt4
 - Update ffmpeg dependencies to 8.0
 
