@@ -39,12 +39,12 @@ BuildRequires: jpackage-default
 %global python_prefix python3
 %global python_interpreter %{?__python3}%{!?__python3:dummy}
 
-%global default_jdk %{_prefix}/lib/jvm/java-11-openjdk
-%global default_jre %{_prefix}/lib/jvm/jre-11-openjdk
+%global default_jdk %_prefix/lib/jvm/java-17-openjdk
+%global default_jre %_prefix/lib/jvm/jre-17-openjdk
 
 Name:           javapackages-tools
 Version:        6.4.1
-Release:        alt2
+Release:        alt3
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -197,8 +197,10 @@ This package provides non-essential macros and scripts to support Java packaging
 %package -n maven-local-openjdk8
 Group: Development/Java
 Summary:        OpenJDK 8 toolchain for XMvn
-#RemovePathPostfixes: -openjdk8
 Requires:       maven-local
+Provides:       maven-local-toolchain = %EVR
+Conflicts:      maven-local-openjdk11
+Conflicts:      maven-local-openjdk17
 
 %description -n maven-local-openjdk8
 OpenJDK 8 toolchain for XMvn
@@ -206,8 +208,10 @@ OpenJDK 8 toolchain for XMvn
 %package -n maven-local-openjdk11
 Group: Development/Java
 Summary:        OpenJDK 11 toolchain for XMvn
-#RemovePathPostfixes: -openjdk11
 Requires:       maven-local
+Provides:       maven-local-toolchain = %EVR
+Conflicts:      maven-local-openjdk8
+Conflicts:      maven-local-openjdk17
 
 %description -n maven-local-openjdk11
 OpenJDK 11 toolchain for XMvn
@@ -215,14 +219,16 @@ OpenJDK 11 toolchain for XMvn
 %package -n maven-local-openjdk17
 Group: Development/Java
 Summary:        OpenJDK 17 toolchain for XMvn
-#RemovePathPostfixes: -openjdk17
 Requires:       maven-local
+Provides:       maven-local-toolchain = %EVR
+Conflicts:      maven-local-openjdk8
+Conflicts:      maven-local-openjdk11
 
 %description -n maven-local-openjdk17
 OpenJDK 17 toolchain for XMvn
 
 %prep
-%setup -q
+%setup
 
 sed -i '/^manpage /d' build
 sed -i '/${mandir}/d' install
@@ -262,6 +268,9 @@ mkdir -p %{buildroot}%{_datadir}/xmvn/conf/
 cp -p %{SOURCE8} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk8
 cp -p %{SOURCE11} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk11
 cp -p %{SOURCE17} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk17
+
+# default XMvn toolchain = JDK 17
+#cp -p %{SOURCE17} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml
 
 install -p -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/java/javapackages-config.json
 
@@ -304,9 +313,6 @@ mv osgi.req osgi-fc.req
 popd
 sed -i 's,/usr/lib/rpm/osgi\.,/usr/lib/rpm/osgi-fc.,' files-generators
 sed -i '/usr.lib.rpm.fileattrs/d' files-generators
-# keep maven-local-openjdk8 for now
-mv %buildroot%_datadir/xmvn/conf/toolchains.xml{-openjdk8,}
-rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 
 %files -f files-tools
 %_bindir/abs2rel
@@ -340,7 +346,6 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 # end if -f files-generators;
 %_rpmmacrosdir/maven.env
 
-
 %files -n maven-local
 
 %if %{with ivy}
@@ -348,13 +353,21 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 %endif
 
 %files -n maven-local-openjdk8
-%dir %{_datadir}/xmvn/conf
-%{_datadir}/xmvn/conf/toolchains.xml
+%{_datadir}/xmvn/conf/toolchains.xml-openjdk8
+
+%files -n maven-local-openjdk11
+%{_datadir}/xmvn/conf/toolchains.xml-openjdk11
+
+%files -n maven-local-openjdk17
+%{_datadir}/xmvn/conf/toolchains.xml-openjdk17
 
 %files -n python3-module-javapackages -f files-python
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jun 16 2026 Evgeniy Serov <scala@altlinux.org> 1:6.4.1-alt3
+- Swithed to JDK 17.
+
 * Sun Nov 30 2025 Ivan Khanas <xeno@altlinux.org> 1:6.4.1-alt2
 - Add java_arches macro.
 

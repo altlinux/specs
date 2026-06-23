@@ -1,22 +1,20 @@
-Name: jpackage-generic-compat
-Version: 0.43
-Release: alt1
-
-Summary: ALT to JPackage build compatibility adaptor.
-Group: Development/Java
-License: GPLv2+ or Apache-2.0 or ALT-Public-Domain
-Url: http://www.sisyphus.ru/packages/viy/srpms
-
-# java 17 is not availiable on armh
-#BuildArch: noarch
-
 %define jpackage_common_requires \
 Requires(pre): rpm-build-java \
 Requires: /proc \
 Requires: java-stub-javadoc
 
+Name: jpackage-generic-compat
+Version: 0.44
+Release: alt1
+
+Summary: ALT to JPackage build compatibility adaptor
+Group: Development/Java
+License: GPLv2+ or Apache-2.0 or ALT-Public-Domain
+Url: http://www.sisyphus.ru/packages/viy/srpms
+
+BuildArch: noarch
+
 Requires: java-devel java-headless java
-#Requires: java-javadoc
 %jpackage_common_requires
 
 %description
@@ -24,25 +22,15 @@ JPackage compatibility package. The main goal is to provide all nessssary
 symlinks, Requires and BuildRequires for ALTLinux to create a build environment
 compatible with JPackage.org.
 
-
 %package -n jpackage-1.8-compat
 Summary: JPackage build environment with java-1.8.0.
 Group: Development/Java
-BuildArch: noarch
 
-# does not work
-#Requires(pre): java-devel >= 0:1.8.0 java >= 0:1.8.0
-#Requires(pre): java-javadoc >= 0:1.8.0
-# does work
 Requires(pre): java-1.8.0-openjdk-devel
-#Requires(pre): java-1.8.0-openjdk-javadoc-zip
-# hack
 Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
-#java-javadoc > 1.8.99
 Conflicts: maven-openjdk11
 Conflicts: maven-openjdk17
 
-#Requires: jpackage-generic-compat
 %jpackage_common_requires
 Obsoletes: jpackage-1.7-compat < %version
 Obsoletes: jpackage-1.7.0-compat < %version
@@ -55,22 +43,17 @@ Provides JPackage build environment with java-1.8.0.
 %package -n jpackage-11-compat
 Summary: JPackage build environment with java-11.
 Group: Development/Java
-BuildArch: noarch
 
 Obsoletes: jpackage-9-compat < %version
 Obsoletes: jpackage-10-compat < %version
-Provides: jpackage-default = %version-%release
 Provides: jpackage-11 = %version-%release
 
 Requires(pre): java-11-devel >= 11 java-11
-#Requires(pre): java-11-openjdk-javadoc-zip
-# hack
 Conflicts: java-devel > 11.99 java > 11.99 java-headless > 11.99 java-javadoc > 11.99
 Conflicts: maven-local-openjdk8
 Conflicts: maven-local-openjdk17
 Conflicts: maven-openjdk8
 Conflicts: maven-openjdk17
-#Requires: jpackage-generic-compat
 %jpackage_common_requires
 
 %description -n jpackage-11-compat
@@ -81,21 +64,16 @@ Provides JPackage build environment with java-11.
 %package -n jpackage-17-compat
 Summary: JPackage build environment with java-17.
 Group: Development/Java
-# not on armh
-#BuildArch: noarch
 
-#Provides: jpackage-default = %version-%release
 Provides: jpackage-17 = %version-%release
 
-Requires(pre): java-17-devel >= 17 java-17
-#Requires(pre): java-17-openjdk-javadoc-zip
-# hack
+Requires(pre): java-17-openjdk-devel
+
 Conflicts: java-devel > 17.99 java > 17.99 java-headless > 17.99 java-javadoc > 17.99
 Conflicts: maven-local-openjdk8
 Conflicts: maven-local-openjdk11
 Conflicts: maven-openjdk8
 Conflicts: maven-openjdk11
-#Requires: jpackage-generic-compat
 %jpackage_common_requires
 
 %description -n jpackage-17-compat
@@ -103,21 +81,32 @@ JPackage compatibility package. the main goal is to provide all nessssary symlin
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-17.
 
+%package -n jpackage-default
+Summary: Default JPackage build environment
+Group: Development/Java
+
+Requires: jpackage-17-compat = %version-%release
+
+%description -n jpackage-default
+Default JPackage compatibility package.
+
 %prep
 
 %build
 
 %install
-install -d $RPM_BUILD_ROOT%_datadir
+install -d %buildroot%_datadir
 
 %files -n jpackage-generic-compat
 %files -n jpackage-1.8-compat
 %files -n jpackage-11-compat
-%ifnarch %arm
 %files -n jpackage-17-compat
-%endif
+%files -n jpackage-default
 
 %changelog
+* Sat Jun 06 2026 Evgeniy Serov <scala@altlinux.org> 0.44-alt1
+- Introduced jpackage-default package targeting JDK 17.
+
 * Fri Jan 12 2024 Igor Vlasenko <viy@altlinux.org> 0.43-alt1
 - added jpackage-17-compat
 

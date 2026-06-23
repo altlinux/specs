@@ -1,7 +1,7 @@
 Name:           slf4j
 Epoch:          0
 Version:        1.7.36
-Release:        alt2
+Release:        alt3
 
 Summary:        Simple Logging Facade for Java
 License:        MIT and Apache-2.0
@@ -129,7 +129,7 @@ sed -i s/tasks/target/ slf4j-api/pom.xml
 
 %build
 # tests fails cause there are problems with bindings
-%mvn_build -f -s -- -Drequired.jdk.version=1.6
+%mvn_build -f -s -- -Drequired.jdk.version=1.8
 
 %install
 %mvn_install
@@ -149,6 +149,9 @@ sed -i s/tasks/target/ slf4j-api/pom.xml
 %doc LICENSE.txt README.md
 
 %changelog
+* Fri Jun 05 2026 Evgeniy Serov <scala@altlinux.org> 0:1.7.36-alt3
+- Build with required JDK version set to 1.8.
+
 * Wed Apr 08 2026 Evgeniy Serov <scala@altlinux.org> 0:1.7.36-alt2
 - Enabled previously disabled modules.
 
