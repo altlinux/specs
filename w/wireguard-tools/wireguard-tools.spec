@@ -2,15 +2,15 @@
 
 Name: wireguard-tools
 
-Version: 1.0.20210914
-Release: alt2
+Version: 1.0.20260223
+Release: alt1
 
 Summary: Tools for WireGuard: fast, modern, secure VPN tunnel
 Summary(ru_RU.UTF-8): Утилиты для WireGuard, быстрого, современного, защищенного VPN-туннеля
 License: GPLv2
 Group: System/Servers
 Url: https://www.wireguard.com/
-#Git: https://git.zx2c4.com/wireguard-tools/
+VCS: https://git.zx2c4.com/wireguard-tools
 
 Source0: %name-%version.tar
 Patch1: wireguard-tools-1.0.20200513-completion-exit-early-with-bash-less-than-4.patch
@@ -102,6 +102,10 @@ popd
 %doc contrib/*
 
 %changelog
+* Tue Jun 23 2026 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20260223-alt1
+- New version
+- Spec: switch to VCS tag to point upstream git repo
+
 * Thu Nov 17 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20210914-alt2
 - Spec: remove sudo from Requires as not all users welcome it (closes: #42192)
 - Spec: pack /etc/wireguard into wg-quick subpackage to guide users to expected
