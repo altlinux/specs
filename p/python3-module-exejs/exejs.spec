@@ -1,7 +1,7 @@
 %define pypi_name exejs
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.0.0.1
 Release: alt1
 
 Summary: Run JavaScript code from Python
@@ -35,6 +35,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0.1-alt1
+- 1.0.0 -> 1.0.0.1
+
 * Sat Jun 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
 - automatic build: 0.0.7.1 -> 1.0.0
 
