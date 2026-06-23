@@ -1,5 +1,5 @@
 Name: amber-mpris
-Version: 1.2.9
+Version: 1.2.10
 Release: alt1
 
 Summary: Qt and QML MPRIS interface and adaptor
@@ -52,5 +52,8 @@ make install INSTALL_ROOT=%buildroot
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.10-alt1
+- 1.2.10 released
+
 * Tue Dec 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.9-alt1
 - initial
