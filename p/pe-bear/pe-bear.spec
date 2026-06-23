@@ -2,7 +2,7 @@
 %define appname PE-bear
 
 Name: pe-bear
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Portable Executable reversing tool with a friendly GUI
@@ -47,5 +47,8 @@ sed -i 's;\(Name=\).*;\1%appname;' %_cmake__builddir/%name/%name.desktop
 %_pixmapsdir/net.hasherezade.pe-bear.png
 
 %changelog
+* Tue Jun 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.7.2-alt1
+- new version
+
 * Fri Mar 13 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.7.1-alt1
 - initial build for ALT Linux
