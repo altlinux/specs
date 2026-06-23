@@ -1,7 +1,7 @@
 %define soversion 1
 
 Name: whisper-cpp
-Version: 1.8.6
+Version: 1.9.1
 Release: alt1
 
 Summary: Port of OpenAI's Whisper model in C/C++
@@ -14,10 +14,9 @@ ExcludeArch: %ix86
 Source: %name-%version.tar
 
 Patch0: %name-%version.patch
-Patch1: whisper-cpp-1.7.5-alt-cmake-fix-destination-pkgconfig.patch
-Patch2: whisper-cpp-1.8.4-alt-fix-ggml-lib-names-to-resolve-conflict.patch
-Patch3: whisper-cpp-1.8.4-alt-fix-test-segfaults.patch
-Patch4: whisper-cpp-1.8.4-alt-change-default-ggml-model.patch
+Patch1: whisper-cpp-1.8.4-alt-fix-ggml-lib-names-to-resolve-conflict.patch
+Patch2: whisper-cpp-1.8.4-alt-change-default-ggml-model.patch
+Patch3: whisper-cpp-1.9.1-alt-fix-test-segfaults.patch
 
 Requires: lib%name%soversion = %EVR
 Requires: %name-ggml-base
@@ -124,6 +123,9 @@ export GGML_BACKEND_PATH=$PWD/%_cmake__builddir/bin/libggml-cpu.so
 %_datadir/%name/ggml-base.bin
 
 %changelog
+* Tue Jun 23 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.9.1-alt1
+- Updated from 1.8.6 to 1.9.1.
+
 * Tue Jun 09 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.8.6-alt1
 - Updated from 1.8.4 to 1.8.6.
 
