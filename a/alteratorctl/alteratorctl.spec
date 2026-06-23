@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -17,12 +17,13 @@ BuildRequires: libpolkit-devel libjson-glib-devel
 
 Requires: alterator-manager >= 0.1.32
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-backend-packages >= 0.2.13
-Requires: alterator-backend-component >= 0.3.3
-Requires: alterator-interface-edition >= 0.4.1
-Requires: alterator-interface-diag >= 0.1.4
-Requires: alterator-backend-systeminfo >= 0.4.2
+Requires: alterator-backend-packages >= 0.2.19
+Requires: alterator-backend-component >= 0.3.6
+Requires: alterator-interface-edition >= 0.4.2
+Requires: alterator-interface-diag >= 0.1.5
+Requires: alterator-backend-systeminfo >= 0.4.3
 Requires: alterator-interface-service >= 0.2.1-alt2
+Requires: alterator-backend-source >= 0.1.2-alt1
 Requires: libtomlc99 polkit libjson-glib
 
 Source0: %name-%version.tar
@@ -56,6 +57,15 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Mon Jun 22 2026 Pavel Khromov <hromovpi@altlinux.org> 0.4.0-alt1
+- Added:
+  + Module for working with sources.
+
+- Fixed:
+  + Fail of `editions list`. (Closes #59536);
+  + Helps for components, diag, services, systeminfo, editions modules and packages apt submodule. (Closes #57975);
+  + The component module does not allow deleting a component if there is no base section in the edition. (Closes #59514).
+
 * Tue Apr 28 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.2-alt1
 - Fixed:
   + Handling invalid command input in services module;
