@@ -1,23 +1,27 @@
 Name: python3-module-mutagen
-Version: 1.47.0
+Version: 1.48.0
 Release: alt1
 
 Summary: Python module to handle audio metadata
 License: GPLv2
 Group: Development/Python
-Url: https://pypi.org/project/mutagen/
+URL: https://pypi.org/project/mutagen
+VCS: https://github.com/quodlibet/mutagen
 
 Provides: mutagen = %version-%release
 Obsoletes: mutagen
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(pytest) python3(hypothesis)
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 Mutagen is a Python module to handle audio metadata. It supports FLAC,
@@ -30,6 +34,9 @@ streams on an individual packet/page level.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup dev
 
 %build
 %pyproject_build
@@ -48,6 +55,9 @@ streams on an individual packet/page level.
 %_man1dir/*
 
 %changelog
+* Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.48.0-alt1
+- 1.48.0 released
+
 * Mon Oct  2 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.47.0-alt1
 - 1.47.0 released
 
