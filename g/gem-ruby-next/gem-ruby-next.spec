@@ -5,7 +5,7 @@
 %define        gemname ruby-next
 
 Name:          gem-ruby-next
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Make older Rubies quack like edge Ruby
 License:       MIT
@@ -16,9 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(benchmark_driver) >= 0
 BuildRequires: gem(bootsnap) >= 0
@@ -34,13 +32,14 @@ BuildConflicts: gem(paco) >= 1
 BuildConflicts: gem(require-hooks) >= 1
 BuildConflicts: gem(rubocop-md) >= 3
 BuildConflicts: gem(standard) >= 2
-BuildConflicts: gem(unparser) >= 0.7
+BuildConflicts: gem(unparser) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
-%ruby_use_gem_dependency rubocop-md >= 2.0,rubocop-md < 3
+%ruby_use_gem_dependency unparser >= 0.9,unparser < 1
+%ruby_use_gem_dependency rubocop-md >= 2.0.2,rubocop-md < 3
 Requires:      ruby >= 2.2.0
 Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(paco) >= 0.2
@@ -50,8 +49,8 @@ Requires:      gem(unparser) >= 0.6.0
 Requires:      gem(zeitwerk) >= 0
 Conflicts:     gem(paco) >= 1
 Conflicts:     gem(require-hooks) >= 1
-Conflicts:     gem(unparser) >= 0.7
-Provides:      gem(ruby-next) = 1.1.2
+Conflicts:     gem(unparser) >= 1
+Provides:      gem(ruby-next) = 1.2.0
 
 %description
 Ruby Next is a collection of polyfills and a transpiler for supporting latest
@@ -60,21 +59,14 @@ implementations (such as mruby, JRuby, Opal, Artichoke, RubyMotion, etc.).
 
 
 %package       -n gem-ruby-next-core
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Ruby Next core functionality
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      ruby >= 2.2.0
-Requires:      gem(benchmark_driver) >= 0
-Requires:      gem(pry) > 0.13.1
-Requires:      gem(ruby-next-core) >= 0
-Requires:      gem(ruby-next-parser) >= 3.4.0.2
-Requires:      gem(zeitwerk) >= 0
-Provides:      gem(ruby-next-core) = 1.1.2
+Provides:      gem(ruby-next-core) = 1.2.0
 
 %description   -n gem-ruby-next-core
 Ruby Next Core is a zero deps version of Ruby Next meant to be used as as
@@ -85,16 +77,14 @@ dependencies to be install.
 
 
 %package       -n ruby-next
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Ruby Next core functionality executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby-next-core
 Group:         Other
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ruby-next-core) = 1.1.2
+Requires:      gem(ruby-next-core) = 1.2.0
 Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(ruby-next-parser) >= 3.4.0.2
 Requires:      gem(zeitwerk) >= 0
@@ -114,16 +104,14 @@ dependencies to be install.
 
 %if_enabled    doc
 %package       -n gem-ruby-next-core-doc
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Ruby Next core functionality documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-next-core
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ruby-next-core) = 1.1.2
+Requires:      gem(ruby-next-core) = 1.2.0
 
 %description   -n gem-ruby-next-core-doc
 Ruby Next core functionality documentation files.
@@ -141,22 +129,25 @@ dependencies to be install.
 
 %if_enabled    devel
 %package       -n gem-ruby-next-core-devel
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Ruby Next core functionality development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-next-core
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ruby-next-core) = 1.1.2
+Requires:      gem(ruby-next-core) = 1.2.0
+Requires:      gem(benchmark_driver) >= 0
+Requires:      gem(pry) > 0.13.1
 Requires:      gem(paco) >= 0.2
 Requires:      gem(require-hooks) >= 0.2
+Requires:      gem(ruby-next-core) >= 0
+Requires:      gem(ruby-next-parser) >= 3.4.0.2
 Requires:      gem(unparser) >= 0.6.0
+Requires:      gem(zeitwerk) >= 0
 Conflicts:     gem(paco) >= 1
 Conflicts:     gem(require-hooks) >= 1
-Conflicts:     gem(unparser) >= 0.7
+Conflicts:     gem(unparser) >= 1
 
 %description   -n gem-ruby-next-core-devel
 Ruby Next core functionality development package.
@@ -174,16 +165,14 @@ dependencies to be install.
 
 %if_enabled    doc
 %package       -n gem-ruby-next-doc
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Make older Rubies quack like edge Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-next
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ruby-next) = 1.1.2
+Requires:      gem(ruby-next) = 1.2.0
 
 %description   -n gem-ruby-next-doc
 Make older Rubies quack like edge Ruby documentation files.
@@ -199,16 +188,14 @@ implementations (such as mruby, JRuby, Opal, Artichoke, RubyMotion, etc.).
 
 %if_enabled    devel
 %package       -n gem-ruby-next-devel
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Make older Rubies quack like edge Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-next
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ruby-next) = 1.1.2
+Requires:      gem(ruby-next) = 1.2.0
 Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(bootsnap) >= 0
 Requires:      gem(paco) >= 0.2
@@ -223,7 +210,7 @@ Conflicts:     gem(paco) >= 1
 Conflicts:     gem(require-hooks) >= 1
 Conflicts:     gem(rubocop-md) >= 3
 Conflicts:     gem(standard) >= 2
-Conflicts:     gem(unparser) >= 0.7
+Conflicts:     gem(unparser) >= 1
 
 %description   -n gem-ruby-next-devel
 Make older Rubies quack like edge Ruby development package.
@@ -256,8 +243,8 @@ implementations (such as mruby, JRuby, Opal, Artichoke, RubyMotion, etc.).
 
 %files         -n gem-ruby-next-core
 %doc CHANGELOG.md LICENSE.txt README.md
-%ruby_gemspecdir/ruby-next-core-1.1.2.gemspec
-%ruby_gemslibdir/ruby-next-core-1.1.2
+%ruby_gemspecdir/ruby-next-core-1.2.0.gemspec
+%ruby_gemslibdir/ruby-next-core-1.2.0
 
 %files         -n ruby-next
 %doc CHANGELOG.md LICENSE.txt README.md
@@ -266,7 +253,7 @@ implementations (such as mruby, JRuby, Opal, Artichoke, RubyMotion, etc.).
 %if_enabled    doc
 %files         -n gem-ruby-next-core-doc
 %doc CHANGELOG.md LICENSE.txt README.md
-%ruby_gemsdocdir/ruby-next-core-1.1.2
+%ruby_gemsdocdir/ruby-next-core-1.2.0
 %endif
 
 %if_enabled    devel
@@ -287,6 +274,9 @@ implementations (such as mruby, JRuby, Opal, Artichoke, RubyMotion, etc.).
 
 
 %changelog
+* Mon Jun 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
+- ^ 1.1.2 -> 1.2.0
+
 * Tue Dec 09 2025 Pavel Skrylev <majioa@altlinux.org> 1.1.2-alt1
 - ^ 1.0.2 -> 1.1.2
 
