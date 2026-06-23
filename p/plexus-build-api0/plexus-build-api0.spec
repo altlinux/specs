@@ -1,22 +1,26 @@
-Name:           plexus-build-api
+%define base_name plexus-build-api
+
+Name:           plexus-build-api0
 Epoch:          0
-Version:        1.2.0
-Release:        alt1
+Version:        0.0.7
+Release:        alt5
 
 Summary:        Plexus Build API
-License:        Apache-2.0
+License:        ASL 2.0
 Group:          Development/Java
 URL:            https://codehaus-plexus.github.io/plexus-build-api/
 VCS:            https://github.com/codehaus-plexus/plexus-build-api
 
-Source0:        %name-%version.tar
+Source0:        %base_name-%version.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         %base_name-migration-to-component-metadata.patch
+Patch1:         0000-Port-to-plexus-utils-3.3.0.patch
 
 BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
 
-BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 
 BuildArch:      noarch
 
@@ -27,7 +31,19 @@ by just using regular Maven/Mojo API.
 %javadoc_package
 
 %prep
-%setup
+%setup -n %base_name-%base_name-%version
+%autopatch -p1
+
+cp -p %SOURCE1 .
+
+%pom_remove_parent
+
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.8
+
+%mvn_file : plexus/%name
+
+# Install plexus-build-api-tests as well
+%mvn_package :
 
 %build
 %mvn_build
@@ -36,11 +52,11 @@ by just using regular Maven/Mojo API.
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE README.md
+%doc LICENSE-2.0.txt
 
 %changelog
-* Tue Jun 23 2026 Evgeniy Serov <scala@altlinux.org> 0:1.2.0-alt1
-- Updated to 1.2.0.
+* Tue Jun 23 2026 Evgeniy Serov <scala@altlinux.org> 0:0.0.7-alt5
+- Renamed package to plexus-build-api0.
 
 * Mon Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 0:0.0.7-alt4
 - Fix build with new sisu and plexus-containers.
