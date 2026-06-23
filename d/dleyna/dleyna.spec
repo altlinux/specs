@@ -8,7 +8,7 @@
 %def_disable docs
 
 Name: dleyna
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Services and D-Bus APIs for UPnP access
@@ -142,6 +142,9 @@ development with dLeyna.
 %exclude %python3_sitelibdir_noarch
 
 %changelog
+* Tue Jun 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4
+
 * Mon Oct 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - first build for Sisyphus
 

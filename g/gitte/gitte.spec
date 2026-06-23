@@ -4,7 +4,7 @@
 %def_enable snapshot
 %define __name Gitte
 %define _name gitte
-%define ver_major 0.7
+%define ver_major 0.8
 %define rdn_name de.wwwtech.%_name
 
 %def_enable check
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Jun 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Sat Jun 13 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
