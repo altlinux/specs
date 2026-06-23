@@ -5,8 +5,8 @@
 %define _docsinstalldir %_defaultdocdir/%variant
 
 Name: docs-%variant
-Version: 11.1
-Release: alt5
+Version: 11.2
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jun 23 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt1
+- update to ALT Education 11.2BETA
+- fix typo (closes #58453)
+- veyon: add integration with FreeIPA (closes #48453)
+
 * Mon Mar 30 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt5
 - desktop-software: add surguch, delete alt-csp-cryptopro
 - fix some typos (closes #58432, #58435, #58430)
