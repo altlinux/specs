@@ -4,11 +4,11 @@
 %def_with check
 
 Name: logitune
-Version: 0.3.4
+Version: 0.3.6
 Release: alt1
 
 Summary: Configure Logitech devices on Linux (Options+ clone)
-License: GPL-3.0-or-later
+License: GPL-3.0-only
 Group: System/Configuration/Hardware
 Url: https://github.com/mmaher88/logitune
 VCS: https://github.com/mmaher88/logitune
@@ -16,6 +16,7 @@ VCS: https://github.com/mmaher88/logitune
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-declarative-devel
@@ -74,6 +75,10 @@ xvfb-run %ctest
 %_datadir/gnome-shell/extensions/%name-focus@%name.com
 
 %changelog
+* Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.6-alt1
+- Updated to version 0.3.6.
+- Updated License tag to GPL-3.0-only.
+
 * Wed May 06 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.4-alt1
 - Updated to version 0.3.4.
 - Removed autostart desktop file.
