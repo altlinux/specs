@@ -1,5 +1,5 @@
 Name: python3-module-ollmcp
-Version: 0.29.1
+Version: 0.30.0
 Release: alt1
 
 Summary: MCP Client for Ollama
@@ -48,6 +48,9 @@ working with local LLMs.
 %python3_sitelibdir/mcp_client_for_ollama-%version.dist-info
 
 %changelog
+* Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.30.0-alt1
+- 0.30.0 released
+
 * Mon Jun 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.29.1-alt1
 - 0.29.1 released
 
