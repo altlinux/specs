@@ -5,43 +5,41 @@
 %define        gemname RedCloth
 
 Name:          gem-redcloth
-Version:       4.3.4
-Release:       alt1
+Version:       4.3.4.14
+Release:       alt0.1
 Summary:       Textile parser for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://redcloth.org/
 Vcs:           https://github.com/jgarber/redcloth.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         gemfile.patch
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: ragel6 < 7.0
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) > 1.3.4
-BuildRequires: gem(rake) >= 13
-BuildRequires: gem(rspec) >= 3.10.0
 BuildRequires: gem(diff-lcs) >= 1.5
-BuildRequires: gem(rvm) >= 1.11.3.9
+BuildRequires: gem(rake) >= 13
 BuildRequires: gem(rake-compiler) >= 0.7.1
+BuildRequires: gem(rspec) >= 3.10.0
+BuildConflicts: gem(diff-lcs) >= 3
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(diff-lcs) >= 2
-BuildConflicts: gem(rvm) >= 1.11.4
 BuildConflicts: gem(rake-compiler) >= 2
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency diff-lcs >= 2.0.0,diff-lcs < 3
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_alias_names RedCloth,redcloth
-Obsoletes:     ruby-redcloth
-Provides:      ruby-redcloth
-Provides:      gem(RedCloth) = 4.3.4
+Requires:      ruby >= 2.4
+Obsoletes:     ruby-redcloth < %EVR
+Provides:      ruby-redcloth = %EVR
+Provides:      gem(RedCloth) = 4.3.4.14
 
-%ruby_on_build_rake_tasks compile
+%ruby_use_gem_version RedCloth:4.3.4.14
 
 %description
 RedCloth is a module for using Textile in Ruby. Textile is a text format. A very
@@ -50,14 +48,14 @@ to HTML.
 
 
 %package       -n redcloth
-Version:       4.3.4
-Release:       alt1
+Version:       4.3.4.14
+Release:       alt0.1
 Summary:       Textile parser for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета RedCloth
-Group:         Development/Ruby
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(RedCloth) = 4.3.4
+Requires:      gem(RedCloth) = 4.3.4.14
 
 %description   -n redcloth
 Textile parser for Ruby executable(s).
@@ -72,14 +70,14 @@ to HTML.
 
 %if_enabled    doc
 %package       -n gem-redcloth-doc
-Version:       4.3.4
-Release:       alt1
+Version:       4.3.4.14
+Release:       alt0.1
 Summary:       Textile parser for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета RedCloth
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(RedCloth) = 4.3.4
+Requires:      gem(RedCloth) = 4.3.4.14
 
 %description   -n gem-redcloth-doc
 Textile parser for Ruby documentation files.
@@ -95,26 +93,21 @@ to HTML.
 
 %if_enabled    devel
 %package       -n gem-redcloth-devel
-Version:       4.3.4
-Release:       alt1
+Version:       4.3.4.14
+Release:       alt0.1
 Summary:       Textile parser for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета RedCloth
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      ragel6 < 7.0
-Requires:      gem(RedCloth) = 4.3.4
+Requires:      gem(RedCloth) = 4.3.4.14
 Requires:      gem(bundler) > 1.3.4
+Requires:      gem(diff-lcs) >= 1.5
 Requires:      gem(rake) >= 13
 Requires:      gem(rspec) >= 3.10.0
-Requires:      gem(diff-lcs) >= 1.5
-Requires:      gem(rvm) >= 1.11.3.9
-Requires:      gem(rake-compiler) >= 0.7.1
+Conflicts:     gem(diff-lcs) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(diff-lcs) >= 2
-Conflicts:     gem(rvm) >= 1.11.4
-Conflicts:     gem(rake-compiler) >= 2
 
 %description   -n gem-redcloth-devel
 Textile parser for Ruby development package.
@@ -130,7 +123,6 @@ to HTML.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -142,31 +134,33 @@ to HTML.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc CHANGELOG README.rdoc LICENSE.txt
 %ruby_gemspec
 %ruby_gemlibdir
-%ruby_gemextdir
 
 %files         -n redcloth
-%doc README.rdoc
+%doc CHANGELOG README.rdoc LICENSE.txt
 %_bindir/redcloth
 
 %if_enabled    doc
 %files         -n gem-redcloth-doc
-%doc README.rdoc
+%doc CHANGELOG README.rdoc LICENSE.txt
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-redcloth-devel
-%doc README.rdoc
+%doc CHANGELOG README.rdoc LICENSE.txt
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Sat May 30 2026 Pavel Skrylev <majioa@altlinux.org> 4.3.4.14-alt0.1
+- ^ 4.3.4 -> 4.3.4p14
+
 * Fri Aug 09 2024 Pavel Skrylev <majioa@altlinux.org> 4.3.4-alt1
-- ^ 4.3.2.1 -> 4.3.4 with fixes (closes: #51105)
+- ^ 4.3.2.1 -> 4.3.4
 
 * Sun May 08 2022 Pavel Skrylev <majioa@altlinux.org> 4.3.2.1-alt1
 - ^ 4.3.2 -> 4.3.2.1
