@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.2
+Version: 1.30.3
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -20,6 +20,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with geoip2
 %def_with zip
 %def_with push_stream
+%def_with dav_ext
 %def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
@@ -43,9 +44,12 @@ Source15: nginx-accept_language-module.tar
 Source16: nginx-push-stream-module.tar
 Source17: nginx-geoip2-module.tar
 Source18: nginx-zip-module.tar
+Source19: nginx-dav-ext-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
+Patch1: spnego-fix-ngx-strchr-const.patch
+Patch2: push-stream-fix-ngx-strchr-const.patch
 
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -144,6 +148,16 @@ Requires: %name = %EVR
 A pure stream http push technology for your Nginx setup.
 %endif
 
+%if_with dav_ext
+%package dav_ext
+Summary: Extended WebDAV module for nginx
+Group: System/Servers
+Requires: %name = %EVR
+
+%description dav_ext
+nginx WebDAV PROPFIND, OPTIONS, LOCK and UNLOCK support.
+%endif
+
 %package spnego
 Summary: Simple and Protected GSSAPI Negotiation Mechanism for nginx
 Group: System/Servers
@@ -166,12 +180,20 @@ XSLT module for nginx
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17 -a18
+%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17 -a18 -a19
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
 pushd cache_purge
 %patch0 -p1
+popd
+
+pushd spnego-http-auth-nginx-module
+%patch1 -p1
+popd
+
+pushd nginx-push-stream-module
+%patch2 -p1
 popd
 
 %build
@@ -228,6 +250,9 @@ popd
 %if_with push_stream
 	--add-dynamic-module=nginx-push-stream-module \
 %endif
+%if_with dav_ext
+	--add-dynamic-module=nginx-dav-ext-module \
+%endif
 	--with-http_sub_module \
 	--with-http_dav_module \
 	--with-http_flv_module \
@@ -247,6 +272,7 @@ popd
 	--with-mail_ssl_module \
 	--with-stream=dynamic \
 	--with-stream_ssl_module \
+	--with-stream_ssl_preread_module \
 %if_enabled cache_purge
 	--add-module=cache_purge \
 %endif
@@ -264,7 +290,6 @@ popd
 %install
 mkdir -p %buildroot{%nginx_etc,%_sysconfdir/logrotate.d,%_sbindir,%nginx_spool/tmp,%nginx_log}
 mkdir -p %buildroot%_spooldir/nginx/tmp/{client,proxy,fastcgi,scgi,uwsgi}
-mkdir -p %buildroot%_lockdir/%name
 mkdir -p %buildroot%nginx_etc/sites-enabled.d
 mkdir -p %buildroot%nginx_etc/sites-available.d
 mkdir -p %buildroot%nginx_etc/conf-enabled.d
@@ -333,7 +358,6 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/rtmp.conf
 %nginx_etc/stat.xsl
 %endif
-%dir %attr(0700,root,root) %_lockdir/%name
 %dir %attr(1770,root,%nginx_group) %nginx_spool/tmp
 %dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/client
 %dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/proxy
@@ -414,6 +438,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_push_stream_module.so
 %endif
 
+%if_with dav_ext
+%files dav_ext
+%config(noreplace) %nginx_etc/modules-available.d/http_dav_ext.conf
+%modpath/ngx_http_dav_ext_module.so
+%endif
+
 %files spnego
 %config(noreplace) %nginx_etc/modules-available.d/http_auth_spnego.conf
 %modpath/ngx_http_auth_spnego_module.so
@@ -423,6 +453,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Jun 23 2026 Anton Farygin <rider@altlinux.org> 1.30.3-alt1
+- 1.30.2 -> 1.30.3 (Fixes: CVE-2026-42055, CVE-2026-48142)
+- added dav_ext module for full WebDAV support (closes: #59521)
+- built stream module with ssl_preread support (closes: #38631, #58454)
+- moved SysV lock file to /var/lock/subsys (closes: #37489)
+
 * Sun May 24 2026 Anton Farygin <rider@altlinux.org> 1.30.2-alt1
 - 1.30.1 -> 1.30.2 (Fixes: CVE-2026-9256)
 
@@ -1321,4 +1357,3 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 
 * Tue Oct 12 2004 Denis Smirnov <mithraen@altlinux.ru> 0.1.1-alt1
 - first build
-
