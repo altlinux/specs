@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 12.1.0
+Version: 12.2.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -59,6 +59,9 @@ when writing unit tests or doc tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 23 2026 Stanislav Levin <slev@altlinux.org> 12.2.0-alt1
+- 12.1.0 -> 12.2.0
+
 * Fri Jun 19 2026 Stanislav Levin <slev@altlinux.org> 12.1.0-alt1
 - 12.0.1 -> 12.1.0
 
