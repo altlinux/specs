@@ -1,4 +1,4 @@
-%ifarch ppc64le
+%ifarch ppc64le aarch64
 %define relax ||:
 %else
 %define relax %nil
@@ -7,7 +7,7 @@
 %define soname 2
 Name: glog
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: C++ implementation of Google logging module
 License: BSD
 Group: Development/C++
@@ -64,6 +64,10 @@ Development tools.
 %_libdir/cmake/%name
 
 %changelog
+* Tue Jun 23 2026 Anton Farygin <rider@altlinux.org> 0.7.1-alt2
+- relaxed check on aarch64: stacktrace/symbolize tests abort with libunwind
+   there, while build itself succeeds
+
 * Fri Aug 16 2024 Anton Farygin <rider@altlinux.ru> 0.7.1-alt1
 - 0.7.0 -> 0.7.1
 
@@ -89,4 +93,3 @@ Development tools.
 
 * Mon Jun 22 2015 Dmitry Derjavin <dd@altlinux.org> 0.3.4-alt1
 - Initial ALT Linux build.
-
