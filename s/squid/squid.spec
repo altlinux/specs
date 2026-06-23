@@ -17,7 +17,7 @@
 
 Name: squid
 Version: 7.6
-Release: alt1
+Release: alt2
 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -58,7 +58,7 @@ Obsoletes: %name-conf-default < %EVR
 BuildConflicts: bind-devel
 BuildRequires(pre): rpm-build >= 4.0.4-alt10
 
-BuildRequires: gcc-c++ cppunit-devel doxygen linuxdoc-tools
+BuildRequires: gcc-c++ cppunit-devel doxygen linuxdoc-tools ed
 
 BuildRequires: libcap-devel
 BuildRequires: libpam-devel
@@ -138,6 +138,14 @@ sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 %define _localstatedir %_var
 %add_optflags %optflags_shared
 ./bootstrap.sh
+
+# OpenLDAP < 2.5 ships no ldap.pc, so PKG_CHECK_MODULES([LIBLDAP])
+# leaves LIBLDAP_LIBS empty and the LDAP auth helpers fail to link
+# ("required helper auth/basic/LDAP ... found but cannot be built").
+# Provide the link flags explicitly; harmless on branches that have ldap.pc.
+export LIBLDAP_CFLAGS=" "
+export LIBLDAP_LIBS="-lldap -llber"
+
 %configure \
 	--disable-arch-native \
 	--bindir=%_sbindir \
@@ -323,6 +331,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Tue Jun 23 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt2
+- Fix build with openldap < 2.5
+
 * Mon Jun 22 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt1
 - 7.6 (fixes: CVE-2026-47729)
 
