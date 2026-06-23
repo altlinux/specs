@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    sccache
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: sccache is ccache with cloud storage
@@ -60,6 +60,9 @@ sed -ir 's/^zstd = \(.*\)/zstd = { version = \1, features = ["pkg-config"] }/' C
 %doc README.md docs
 
 %changelog
+* Tue Jun 23 2026 Ivan A. Melnikov <iv@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.15.0-alt1
 - 0.15.0
 - switch to using %%rust_prep to enable debuginfo
