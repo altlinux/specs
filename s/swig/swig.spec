@@ -14,13 +14,14 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
 Group: Development/C
-Url: https://github.com/swig/swig
+URL: https://www.swig.org
+VCS: https://github.com/swig/swig
 
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
@@ -37,7 +38,7 @@ Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch
 
 %{?_with_boost:BuildRequires: boost-devel}
 %{?_with_caml:BuildRequires: ocaml-findlib}
-%{?_with_doc:BuildRequires: yodl tidy htmldoc}
+%{?_with_doc:BuildRequires: yodl tidy}
 %{?_with_java:BuildRequires: java-devel}
 %{?_with_lua:BuildRequires: liblua5-devel lua5}
 %{?_with_perl5:BuildRequires: perl-devel libpcre2-devel}
@@ -242,6 +243,10 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Jun 23 2026 Anton Midyukov <antohami@altlinux.org> 1:4.3.1-alt2
+- Remove build dependency on htmldoc.
+- Update URL, add VCS.
+
 * Tue Jul 22 2025 Anton Midyukov <antohami@altlinux.org> 1:4.3.1-alt1
 - new version 4.3.1
 
