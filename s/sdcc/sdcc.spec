@@ -1,6 +1,6 @@
 Name: sdcc
-Version: 4.5.0
-Release: alt2
+Version: 4.6.0
+Release: alt1
 Epoch: 1
 
 Summary: Small Device C Compiler
@@ -65,7 +65,6 @@ find support -type f |xargs grep -l 'env python' |\
 	xargs sed -ri '/^#!\/usr\/bin\/env python$/ s,env python,python3,'
 
 %build
-%add_optflags -std=gnu11
 export CC=gcc CXX=g++
 %configure \
 	--docdir=%_docdir/%name-%version \
@@ -77,6 +76,16 @@ export CC=gcc CXX=g++
 
 %install
 %makeinstall_std STRIP=:
+# clashes with binutils
+rm -vf %buildroot%_bindir/c++filt
+rm -vf %buildroot%_includedir/*
+rm -vf %buildroot%_infodir/*
+rm -rvf %buildroot%_datadir/locale
+# not used anywhere
+rm -vf %buildroot%_libdir/*.a
+# bindir copy
+rm -rvf %buildroot%_prefix/%_target_alias
+# ain't no such thing
 rm -vf %buildroot%_man1dir/serialview*
 
 %brp_strip_none %_datadir/sdcc/*
@@ -89,6 +98,9 @@ rm -vf %buildroot%_man1dir/serialview*
 %_docdir/%name-%version
 
 %changelog
+* Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.6.0-alt1
+- 4.6.0 released
+
 * Wed Apr 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.5.0-alt2
 - fixed build with gcc15
 
