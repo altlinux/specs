@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname org.kde.drawy
 %define soname 0
 
 Name: drawy
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Epoch: 1
 
@@ -80,6 +81,7 @@ Summary: %name library
 %_datadir/qlogging-categories?/%name.categories
 %_datadir/mime/packages/*.xml
 %_datadir/config.kcfg/*.kcfg
+%_libdir/lib%{name}config.so
 
 %files devel
 %_libdir/kf?/devel/*.so
@@ -98,6 +100,9 @@ Summary: %name library
 %_libdir/libstandardformplugin.so.%version
 
 %changelog
+* Wed Jun 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1.0.2-alt1
+- 1.0.1 -> 1.0.2
+
 * Wed May 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1.0.1-alt1
 - 1.0.0 -> 1.0.1
 
