@@ -4,11 +4,11 @@
 
 %def_with check
 
-%python3_set_limited_api
+%{?python3_set_limited_api}
 
 Name: python3-module-%pypi_name
 Version: 1.11.0
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -61,6 +61,10 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 23 2026 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt3
+- Made using of Python Limited API optional (useful to copy the package
+  into stable branches).
+
 * Tue Jun 23 2026 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt2
 - Fixed FTBFS (jq >= 1.8.2-alt1).
 
