@@ -1,18 +1,28 @@
-Name: libunistring2
-Version: 0.9.10
-Release: alt2
+%define sover 5
+
+Name: libunistring
+Version: 1.4.2
+Release: alt1
 
 Summary: GNU Unicode string library
-License: GPLV2+ or LGPLv3+
-Group: System/Legacy libraries
+License: GPL-2.0-or-later or LGPL-3.0-or-later
+Group: System/Libraries
 Url: http://www.gnu.org/software/libunistring/
-%define srcname libunistring-%version
-# https://ftp.gnu.org/gnu/libunistring/%srcname.tar.xz
-Source: %srcname.tar
-%def_disable static
-Provides: libunistring = %version-%release
+# https://ftp.gnu.org/gnu/libunistring/libunistring-%version.tar.xz
+Source: libunistring-%version.tar
 
 %description
+This portable C library implements Unicode string types in three
+flavours: (UTF-8, UTF-16, UTF-32), together with functions for character
+processing (names, classifications, properties) and functions for
+string processing (iteration, formatted output, width, word breaks,
+line breaks, normalization, case folding and regular expressions).
+
+%package -n libunistring%sover
+Group: System/Libraries
+Summary: GNU Unicode string library
+
+%description -n libunistring%sover
 This portable C library implements Unicode string types in three
 flavours: (UTF-8, UTF-16, UTF-32), together with functions for character
 processing (names, classifications, properties) and functions for
@@ -22,26 +32,16 @@ line breaks, normalization, case folding and regular expressions).
 %package -n libunistring-devel
 Summary: GNU Unicode string library development files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libunistring%sover = %EVR
 
 %description -n libunistring-devel
 This package contains development files for programs building with libunistring.
 
 %prep
-%setup -n %srcname
-
-# Disable printf_safe for a while,
-# required to enforce build using system vfprintf().
-subst --preserve 's/gl_printf_safe=yes/gl_printf_safe=/' \
-	gnulib-m4/gnulib-comp.m4 configure
-
-# Taken from gnulib.
-grep -lZ '^test_.*@LIBMULTITHREAD@' tests/Makefile.* |
-        xargs -r0 sed -i '/^test_.*@LIBMULTITHREAD@/ s/@LIBMULTITHREAD@/-Wl,--push-state,--no-as-needed,-lpthread,--pop-state/' --
+%setup
 
 %build
-%add_optflags -std=gnu17
-%configure %{subst_enable static}
+%configure --disable-static
 %make_build
 
 %install
@@ -58,15 +58,20 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %check
 %make_build -k check VERBOSE=1
 
-%files
-/%_lib/*.so.*
+%files -n libunistring%sover
+/%_lib/*.so.%{sover}*
 %doc AUTHORS BUGS NEWS THANKS
 %exclude %_docdir/libunistring/libunistring*
 
+%files -n libunistring-devel
+%_libdir/*.so
+%_includedir/*
+%_infodir/*.info*
+
 %changelog
-* Wed Jun 17 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.10-alt2
-- Rebuilt as a legacy library.
-- Rebuilt with -std=gnu17 flag to fix ftbfs with gcc 15+.
+* Wed Jun 17 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.2-alt1
+- 0.9.10 -> 1.4.2.
+- Fixed the License: tag (GPL-2.0-or-later or LGPL-3.0-or-later).
 
 * Mon Dec 03 2018 Dmitry V. Levin <ldv@altlinux.org> 0.9.10-alt1
 - 0.9.8 -> 0.9.10.

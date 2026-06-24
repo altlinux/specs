@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.21
-Release: alt2
+Version: 1.0
+Release: alt1
 
 %define libintl libintl3
 
@@ -15,15 +15,14 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch0: gnulib-up-perror-strerror_r-remove-unportable-tests.patch
-
-Patch10: gettext-alt-autogen.patch
 Patch11: gettext-alt-gettextize-quiet.patch
 Patch12: gettext-alt-autopoint-archive.patch
 Patch13: gettext-alt-tmp-autopoint.patch
 Patch14: gettext-alt-gcc.patch
 Patch15: gettext-alt-urlview.patch
-Patch16: gettext-fedora-disable-libtextstyle.patch
+Patch16: gettext-alt-libtextstyle.patch
+Patch17: gettext-alt-po-fetch-deps.patch
+Patch18: gettext-alt-intl-lfs.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -36,7 +35,7 @@ Obsoletes: %name-base
 BuildPreReq: gcc-c++ makeinfo xz %{?_with_emacs:emacs-nox}
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
-BuildRequires: glib2-devel libunistring-devel libxml2-devel
+BuildRequires: glib2-devel libncurses-devel libunistring-devel libxml2-devel
 # Needed for the test suite.
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3}}
 
@@ -100,6 +99,17 @@ License: LGPLv2+
 Group: Development/C++
 Requires: libasprintf = %version-%release
 
+%package -n libtextstyle
+Summary: A text styling library
+License: GPLv3+
+Group: Development/C++
+
+%package -n libtextstyle-devel
+Summary: Development related files for libtextstyle
+License: GPLv3+
+Group: Development/C++
+Requires: libtextstyle = %version-%release
+
 %description
 The GNU gettext provides a set of tools and documentation for producing
 multi-lingual messages in programs.  Tools include a set of conventions about
@@ -158,23 +168,32 @@ usable in C++ programs, for use with the <string> strings and the
 This packages contains development files for libasprintf,
 a formatted output library for C++.
 
+%description -n libtextstyle
+The GNU libtextstyle is a text styling library that provides an easy way
+to add styling to programs that produce output to a console or terminal
+emulator window.
+
+%description -n libtextstyle-devel
+This packages contains all development related files for the GNU libtextstyle,
+a text styling library.
+
 %prep
 %setup
-cd gettext-tools/gnulib-tests
-%patch0 -p2
-cd - > /dev/null
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
+
+touch -r gettext-tools/man/po-fetch.1 gettext-tools/misc/po-fetch.in
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
 cd archive
-archive=../gettext-tools/misc/archive.dir.tar
+archive=../gettext-tools/autotools/archive.dir.tar
 tar -xf $archive
 find -type f -print0 |
 	xargs -r0 grep -lZ '\<sys_lib_\(dl\)\?search_path_spec=' -- |
@@ -186,13 +205,19 @@ rm -rf archive
 # Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
 
+# Guard against libtextstyle attempt to bundle libxml2.
+# The comments indicate this is done because the libtextstyle authors do
+# not want applications using their code to suffer startup delays due to
+# the relocations in these libraries.  This is not an acceptable reason.
+rm -r libtextstyle/gnulib-local/lib/lib* libtextstyle/lib/libxml
+
 %build
 ./autogen.sh --skip-gnulib
 %add_optflags -fno-strict-aliasing
 %configure --enable-shared \
+	--disable-more-warnings \
 	--without-included-regex \
 	--without-included-glib \
-	--without-included-libcroco \
 	--without-included-libxml \
 	--disable-csharp \
 	--without-cvs --without-git \
@@ -267,21 +292,27 @@ mkdir -p %buildroot%_docdir
 %_man1dir/envsubst.*
 
 %files tools -f %name-tools.lang
-%_libdir/gettext
+%dir %_libexecdir/gettext
+%_libexecdir/gettext/cldr-plurals
+%_libexecdir/gettext/hostname
+%_libexecdir/gettext/project-id
+%_libexecdir/gettext/user-email
 %_libdir/lib%{name}*.so*
 %{!?_with_included_gettext:%_libdir/preloadable_libintl.so}
 %_bindir/*
-%exclude %_bindir/gettext
-%exclude %_bindir/ngettext
 %exclude %_bindir/envsubst
+%exclude %_bindir/gettext
 %exclude %_bindir/gettext.sh
 %exclude %_bindir/msghack
+%exclude %_bindir/ngettext
+%exclude %_bindir/spit
 %_includedir/%{name}*
 %_mandir/man?/*
-%exclude %_man1dir/gettext.*
-%exclude %_man1dir/ngettext.*
 %exclude %_man1dir/envsubst.*
+%exclude %_man1dir/gettext.*
 %exclude %_man1dir/msghack.*
+%exclude %_man1dir/ngettext.*
+%exclude %_man1dir/spit.*
 %_infodir/gettext.info*
 %_datadir/gettext/
 %_datadir/gettext-*/
@@ -301,7 +332,9 @@ mkdir -p %buildroot%_docdir
 
 %files tools-python
 %_bindir/msghack
+%_bindir/spit
 %_man1dir/msghack.*
+%_man1dir/spit.*
 
 %files -n libasprintf
 %_libdir/libasprintf.so.*
@@ -312,7 +345,19 @@ mkdir -p %buildroot%_docdir
 %_infodir/autosprintf.info*
 %_defaultdocdir/libasprintf
 
+%files -n libtextstyle
+%_libdir/libtextstyle.so.*
+
+%files -n libtextstyle-devel
+%_includedir/textstyle*
+%_libdir/libtextstyle.so
+%_infodir/libtextstyle.info*
+%_defaultdocdir/libtextstyle/
+
 %changelog
+* Wed Jun 17 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt1
+- 0.21 -> 1.0.
+
 * Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.21-alt2
 - Dropped libtextstyle due to its dependence on the unmaintained libcroco
   library, which also contains known security vulnerabilities
