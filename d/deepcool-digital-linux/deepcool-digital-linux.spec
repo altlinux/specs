@@ -3,7 +3,7 @@
 %define service_name deepcool-digital
 
 Name: deepcool-digital-linux
-Version: 0.9.0
+Version: 0.10.6
 Release: alt1
 Summary: Utility to control DeepCool digital devices on Linux
 License: GPL-3.0
@@ -56,6 +56,9 @@ EOF
 %doc README.md
 
 %changelog
+* Wed Jun 24 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.10.6-alt1
+- 0.9.0 -> 0.10.6
+
 * Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.9.0-alt1
 - 0.7.5 -> 0.9.0
 
