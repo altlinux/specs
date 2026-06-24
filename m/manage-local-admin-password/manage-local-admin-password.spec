@@ -3,7 +3,7 @@
 %filter_from_requires /\/usr\/local\/bin\/password-auto-rotate/d
 
 Name:    manage-local-admin-password
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Microsoft LAPS alternative for Windows and Linux using Hashicorp Vault/OpenBao/StarVault
@@ -67,6 +67,9 @@ install -D -m0644 linux/assets/%oname.env \
 %config(noreplace) %_sysconfdir/%oname.env
 
 %changelog
+* Mon May 18 2026 Olesya Shuster <lesyafox@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Fri Oct 17 2025 Alexander Danilov <admsasha@altlinux.org> 1.1-alt1
 - New version to 1.1.
 
