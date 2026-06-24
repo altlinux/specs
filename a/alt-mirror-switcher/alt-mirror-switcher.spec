@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: alt-mirror-switcher
-Version: 0.10.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -42,7 +44,7 @@ Additional mirrors for %name.
 Summary: A terminal simple local mirror switcher for ALT
 Group: Other
 BuildArch: noarch
-BuildRequires: perl-String-Util perl-Date-Calc
+BuildRequires: perl-String-Util perl-Date-Calc perl-Config-Tiny
 %description cli
 A terminal simple local mirror switcher for ALT.
 
@@ -85,6 +87,19 @@ fi
 %_bindir/ams
 
 %changelog
+* Wed Jun 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- cli: added command for enable sources.list and disable or not disable all system lists
+- cli: added show command as an alternative active command
+- cli: added list command as an alternative mirror command
+- cli: added command for do not write config file
+- cli: automatic write config file if GUI ams and conf exist for sync
+- cli: added command for showing active mirror and enabled protocol
+- cli: added command for not do automatic restore active list if GUI ams and conf exist
+- cli: added command for not disable sources.list and not do automatic restore active list if GUI ams and conf exist
+- cli: added command for ignoring sources.list and not disable it
+- cli: fixed: some errors
+- cli: automatic restored mirror from GUI utility config file if exists
+
 * Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.1-alt1
 - excluded: update.altsp.ru mirror
 - cli: fixed: Use of uninitialized value
