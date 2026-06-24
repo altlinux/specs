@@ -8,7 +8,7 @@
 %add_python3_req_skip gpresult.Preferences.Preferences.Shortcut
 
 Name: gpresult
-Version: 0.0.7
+Version: 0.1.0
 Release: alt1
 
 Summary: Display applied policies
@@ -44,6 +44,10 @@ The utility allows you to display a list of domain  (GPO) policies that apply to
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Jun 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
+- Added (thx Niall Tugushev):
+  + save report as HTML
+
 * Fri Apr 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.0.7-alt1
 - Added (thx Valery Sinelnikov):
   + disabled and Remove policy fields to preference output
