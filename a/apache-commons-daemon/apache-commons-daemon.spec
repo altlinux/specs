@@ -3,8 +3,8 @@
 
 Name: apache-commons-daemon
 Summary: Defines API to support an alternative invocation mechanism
-Version: 1.4.1
-Release: alt2
+Version: 1.6.1
+Release: alt1
 Epoch: 1
 License: Apache-2.0
 Group: System/Base
@@ -12,6 +12,7 @@ Group: System/Base
 URL: https://commons.apache.org/%{base_name}
 
 Source0: https://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source1: %name.watch
 Patch33: apache-commons-daemon-1.2.0-e2k.patch
 Patch34: apache-commons-daemon-1.2.0-riscv64.patch
 Patch35: apache-commons-daemon-1.2.4-loongarch64.patch
@@ -58,6 +59,7 @@ cd src/native/unix
 xmlto man man/jsvc.1.xml
 
 %build
+%add_optflags -std=gnu17
 # build native jsvc
 pushd src/native/unix
 #sh support/buildconf.sh
@@ -87,6 +89,10 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 %{_mandir}/man1/jsvc.1*
 
 %changelog
+* Wed Jun 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.6.1-alt1
+- New version.
+- Added watch file.
+
 * Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.4.1-alt2
 - Fixed build with $JAVA_HOME.
 
