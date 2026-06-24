@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rizin
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: UNIX-like reverse engineering framework and command-line tool-set
@@ -12,8 +12,8 @@ VCS: https://github.com/rizinorg/rizin
 
 # Source-url: https://github.com/rizinorg/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Source1: %name-postsubmodules-%version.tar
-Patch1: alt-use-sys-blake3.patch
+Source1: %name-production-%version.tar
+Patch1: alt-add-blake2-option.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -29,6 +29,8 @@ BuildRequires: pkgconfig(tree-sitter)
 BuildRequires: pkgconfig(libblake3)
 BuildRequires: libmspack-devel
 BuildRequires: libzstd-devel
+BuildRequires: libzydis-devel
+BuildRequires: libblake2-devel
 
 Requires: %name-common = %EVR
 
@@ -79,7 +81,9 @@ more information
     -Duse_sys_pcre2=enabled \
     -Duse_sys_tree_sitter=enabled \
     -Duse_sys_lzma=enabled \
+    -Duse_sys_blake2=enabled \
     -Duse_sys_blake3=enabled \
+    -Duse_sys_zydis=enabled \
     -Denable_tests=false \
     -Denable_rz_test=false
 %meson_build
@@ -119,10 +123,12 @@ more information
 %_datadir/%name/syscall
 %_datadir/%name/types
 %_datadir/%name/arch
-%_datadir/%name/arch/platforms/*.sdb
 %dir %_datadir/%name
 
 %changelog
+* Tue Jun 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.0-alt1
+- new version
+
 * Wed Feb 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.8.2-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define cutter_plugindir_native %_libdir/cutter/plugins/native
 
 Name: rz-ghidra
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Deep ghidra decompiler and sleigh disassembler integration for rizin
@@ -26,6 +26,7 @@ BuildRequires: libpugixml-devel
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: rizin-devel
+BuildRequires: zlib-devel
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel
 %endif
@@ -92,5 +93,8 @@ done
 %cutter_plugindir_native/*_cutter.so
 
 %changelog
+* Tue Jun 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.0-alt1
+- new version
+
 * Wed Jun 11 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Linux

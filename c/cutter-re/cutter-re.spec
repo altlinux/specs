@@ -3,8 +3,8 @@
 %define plugindir %_libdir/%gitname/plugins
 
 Name: cutter-re
-Version: 2.4.1
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: GUI for Rizin reverse engineering framework
 License: LGPL-3.0-only and GPL-3.0-only
@@ -14,7 +14,8 @@ VCS: https://github.com/rizinorg/cutter
 
 # Source-url: https://github.com/rizinorg/%gitname/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Source1: %gitname-postsubmodules-%version.tar
+Source1: %gitname-production-%version.tar
+Patch1: alt-fix-namespace-conflict-with-openssl.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: kf6-syntax-highlighting-devel
@@ -44,8 +45,10 @@ more information.
 %prep
 %setup
 %setup -D -T -a1
+%patch1 -p1
+
 mkdir -p src/translations
-%__cp -rf dependencies/%gitname-translations/* src/translations
+%__cp -rf %gitname-translations/* src/translations/
 
 %build
 %cmake \
@@ -87,6 +90,9 @@ sed -i 's/bin\/%gitname/bin\/%name/g' %buildroot%_libdir/cmake/Cutter/CutterTarg
 %dir %_libdir/cmake/Cutter
 
 %changelog
+* Wed Jun 24 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.5.0-alt1
+- new version
+
 * Wed Mar 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4.1-alt2
 - add additional categories to the desktop file
 
