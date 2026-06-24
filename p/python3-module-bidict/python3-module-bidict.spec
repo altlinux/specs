@@ -5,8 +5,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.22.1
-Release: alt1.1
+Version: 0.23.1
+Release: alt1
 
 Summary: The bidirectional mapping library for Python
 License: MPL-2.0
@@ -55,6 +55,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.23.1-alt1
+- 0.22.1 -> 0.23.1
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.22.1-alt1.1
 - Demodernized packaging.
 

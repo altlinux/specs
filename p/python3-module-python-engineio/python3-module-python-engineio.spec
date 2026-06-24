@@ -6,8 +6,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.8.0
-Release: alt1.1
+Version: 4.13.2
+Release: alt1
 
 Summary: Python Engine.IO server and client
 License: MIT
@@ -19,13 +19,15 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-furo
+BuildRequires: python3-module-accessible-pygments
 
 %if_with check
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-simple-websocket
 BuildRequires: python3-module-websocket-client
-BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-tornado
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %add_findreq_skiplist *gevent_uwsgi.py
@@ -33,8 +35,6 @@ BuildRequires: python3-module-tornado
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-
-Patch: %pypi_name-%version-alt.patch
 
 %description
 Python implementation of the Engine.IO realtime client and server.
@@ -51,7 +51,6 @@ This package contains documentation for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -61,7 +60,7 @@ This package contains documentation for %pypi_name.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.md
@@ -73,6 +72,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Sun Jun 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.13.2-alt1
+- 4.8.0 -> 4.13.2
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1.1
 - Demodernized packaging.
 

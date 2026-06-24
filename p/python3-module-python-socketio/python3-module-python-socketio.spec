@@ -6,8 +6,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.11.0
-Release: alt1.1
+Version: 5.16.3
+Release: alt1
 
 Summary: Python Socket.IO server and client
 License: MIT
@@ -18,6 +18,8 @@ VCS:     https://github.com/miguelgrinberg/python-socketio
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-furo
+BuildRequires: python3-module-accessible-pygments
 
 %if_with check
 BuildRequires: python3-module-pytest-cov
@@ -28,13 +30,15 @@ BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-simple-websocket
 BuildRequires: python3-module-websocket-client
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-valkey
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-
-Patch: %pypi_name-%version-alt.patch
 
 %description
 Python implementation of the Socket.IO realtime client and server.
@@ -51,7 +55,6 @@ This package contains documentation for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -73,6 +76,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.16.3-alt1
+- 5.11.0 -> 5.16.3
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.11.0-alt1.1
 - Demodernized packaging.
 
