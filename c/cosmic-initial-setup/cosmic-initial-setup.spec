@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.0
+%define ver_major 1.1
 %define beta %nil
 %define rdn_name com.system76.CosmicInitialSetup
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-initial-setup
-Version: %ver_major.16
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Initial Setup
@@ -72,6 +72,9 @@ just rootdir=%buildroot install
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 
 %changelog
+* Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jun 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
 - 1.0.16
 

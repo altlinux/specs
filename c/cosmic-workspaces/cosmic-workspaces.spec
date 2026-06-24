@@ -2,7 +2,7 @@
 
 %define _name cosmic-workspaces
 %define git_name %_name-epoch
-%define ver_major 1.0
+%define ver_major 1.1
 %define beta %nil
 %define rdn_name com.system76.CosmicWorkspaces
 
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.16
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Workspaces
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%git_name-%version%beta-cargo.tar .cargo/ vendor/}
 #%doc README*
 
 %changelog
+* Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jun 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
 - 1.0.16
 

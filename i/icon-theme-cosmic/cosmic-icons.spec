@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name cosmic-icons
-%define ver_major 1.0
+%define ver_major 1.1
 %define beta %nil
 
 %def_disable check
 
 Name: icon-theme-cosmic
-Version: %ver_major.16
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Icons
@@ -47,6 +47,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jun 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
 - 1.0.16
 
