@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.0.0
+Version: 8.0.2
 Release: alt1
 
 Summary: Instrument your FastAPI with Prometheus metrics
@@ -27,7 +27,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter devtools
-%add_pyproject_deps_check_filter httpx2
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: python3-module-httpx
@@ -55,13 +54,15 @@ A configurable and modular Prometheus Instrumentator for your FastAPI.
 # Remove 'devtools' requirement
 sed -i 's/^from devtools import debug$/debug = print/' tests/conftest.py
 sed -i '/HELP process_cpu_seconds_total/d' tests/test_instrumentation.py
-# Drop tests/test_instrumentator_multiproc.py due to missing httpx2 in the repo
-%pyproject_run_pytest -vra --ignore=tests/test_instrumentator_multiproc.py
+%pyproject_run_pytest -vra
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 24 2026 Anton Zhukharev <ancieg@altlinux.org> 8.0.2-alt1
+- Updated to 8.0.2.
+
 * Mon Jun 08 2026 Anton Zhukharev <ancieg@altlinux.org> 8.0.0-alt1
 - Packaged for ALT Sisyphus.
