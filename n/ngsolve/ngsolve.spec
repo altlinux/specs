@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2604
+Version: 6.2.2605
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -39,7 +39,7 @@ BuildRequires: tcl-togl-devel
 %endif
 
 %add_findreq_skiplist %_datadir/%name/py_tutorials/*.py
-%add_python3_req_skip petsc4py.PETSc webgui_jupyter_widgets webgui_jupyter_widgets.widget
+%add_python3_req_skip netgen.webgui ngsolve._ngscuda petsc4py.PETSc webgui_jupyter_widgets webgui_jupyter_widgets.widget
 
 %define base_description \
 NGSolve is a general purpose Finite Element Library on top of Netgen. \
@@ -161,6 +161,10 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Sun Jun 21 2026 Anton Farygin <rider@altlinux.org> 6.2.2605-alt1
+- 6.2.2604 -> 6.2.2605
+- excluded optional webgui and CUDA wrapper imports from python3 autorequires
+
 * Fri May 01 2026 Anton Farygin <rider@altlinux.org> 6.2.2604-alt1
 - 6.2.2603 -> 6.2.2604
 
@@ -261,4 +265,3 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 
 * Tue Dec 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.14-alt1.svn20111116
 - Initial build for Sisyphus
-

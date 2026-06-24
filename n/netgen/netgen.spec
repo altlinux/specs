@@ -20,13 +20,13 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2604
+Version: 6.2.2605
 Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
 Url: https://github.com/NGSolve/netgen
-#Git: https://github.com/NGSolve/netgen.git
+VCS: https://github.com/NGSolve/netgen.git
 
 ExcludeArch: i586
 
@@ -379,6 +379,11 @@ sed -i 's|Exec=mpirun|Exec=%mpidir/bin/mpirun|' %buildroot%_datadir/applications
 rm -rf %buildroot%_includedir/netgen/pybind11
 rm -rf %buildroot%_datadir/%name/doc
 
+# Drop Jupyter webgui module: pulls unpackaged python3(anywidget),
+# no consumer in the distro (ngsolve doesn't use netgen.webgui)
+rm -f %buildroot%python3_sitelibdir/%name/webgui.py
+rm -f %buildroot%python3_sitelibdir/%name/__pycache__/webgui.*
+
 %files
 %doc AUTHORS
 %_datadir/icons/hicolor/48x48/apps/%name.png
@@ -416,6 +421,10 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Jun 22 2026 Anton Farygin <rider@altlinux.org> 6.2.2605-alt1
+- 6.2.2604 -> 6.2.2605
+- Drop Jupyter netgen.webgui module (unmet python3(anywidget) dep, unused).
+
 * Fri May 01 2026 Anton Farygin <rider@altlinux.org> 6.2.2604-alt1
 - 6.2.2603 -> 6.2.2604
 
