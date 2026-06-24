@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.41.0
+Version: 0.42.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -61,6 +61,13 @@ operations, task management on gitery/gyle, and cross-branch submissions.
 Includes batch builds, automatic dependency detection, and CVE detection
 in changelogs.
 
+It also spins up reproducible per-package development environments (devenv)
+on podman or bwrap, resolving a package's BuildRequires inside the environment
+so rpm macros and conditionals are honoured, with reusable feature bundles and
+configuration profiles. Local AI coding agents (Claude Code, Codex, opencode,
+Kimi) can be installed into a devenv and wired up via the bundled zoryn Agent
+Skill.
+
 %package -n ocaml-%name
 Summary: OCaml libraries for %name
 Group: Development/ML
@@ -97,12 +104,32 @@ developing applications that use %name.
 %_datadir/bash-completion/completions/zoryn
 %_datadir/zsh/site-functions/_zoryn
 %_datadir/fish/vendor_completions.d/zoryn.fish
+%_datadir/%name/skills/
 
 %files -n ocaml-%name -f ocaml-files.runtime
 
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 0.42.0-alt1
+- added devenv: ephemeral dev shell with a package's build deps (bwrap and podman)
+- added devenv podman backend: derived image plus persistent keep-id container entered as your host user
+- added devenv BuildRequires resolved inside the environment in two passes, honouring rpm macros and dynamic build-body deps
+- added devenv environment management: install, clean, remove, enter, list and inspect subcommands
+- added devenv config profiles with independent per-profile configuration, branch and base image selection
+- added devenv features: reusable feature.toml bundles with typed options (claude, codex, opencode, kimi, vim, ssh, zoryn)
+- added devenv kimi feature: Kimi Code CLI installed to ~/.local/kimi with ~/.kimi-code mounted
+- added devenv --with-task-repo and --with-builder-repo to pull packages from a gyle task or builder output repo
+- added devenv apt sources generation from a builder, apt-config or inline list
+- added devenv SSH agent forwarding into the podman container
+- added devenv knobs: shell prompt, outbound interface, --init, --pids-limit, --rebuild and --debug cache-key dump
+- added zoryn agent skill to manage the bundled zoryn Agent Skill for local AI agents
+- added submit -m/--message to set the gyle build reason
+- fixed check version/upstream to default the package name from the spec
+- fixed up to note a newer local final-release git tag when PyPI is up to date
+- fixed up on kernel-style specs to bump the right leaf macro without rewriting Version
+- fixed task add/run/show without an id to reuse the last task zoryn worked with
+
 * Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 0.41.0-alt1
 - added config file validation: warn on unknown sections and misspelled keys
 - added submit --with pkg.git=tag search form
