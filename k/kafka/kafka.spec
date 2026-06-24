@@ -1,5 +1,5 @@
 Name:    kafka
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
@@ -100,6 +100,9 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Wed Jun 24 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
+- New version (fixes: CVE-2026-41115).
+
 * Thu May 21 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
 - New version.
 - Migrate from early versions.
