@@ -21,7 +21,7 @@
 %endif
 
 Name: uhd
-Version: 4.9.0.1
+Version: 4.10.0.0
 Release: alt1
 Summary: Universal Hardware Driver for Ettus Research products
 License: GPL-3.0-or-later
@@ -39,7 +39,9 @@ ExcludeArch: %ix86 %arm
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: ctest cmake
 BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
 BuildRequires: dpdk-devel
@@ -47,6 +49,7 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cheetah
 BuildRequires: python3-module-docutils
+BuildRequires: python3-module-ruamel-yaml
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: libpcap-devel
@@ -105,6 +108,7 @@ Tools that are useful for working with and/or debugging USRP device.
 Group: Development/Python3
 Summary: Python 3 API for %name
 Requires: lib%name = %EVR
+%add_python3_req_skip usrp_mpm.chips.ic_reg_maps.lmx2572_regs
 
 %description -n python3-module-%name
 Python 3 API for %name.
@@ -143,7 +147,8 @@ pushd host
         %_cmake_skip_rpath \
         -DENABLE_GPSD=ON \
         -DENABLE_E300=ON \
-        -DENABLE_PYTHON_API=ON
+        -DENABLE_PYTHON_API=ON \
+        -DENABLE_PYMOD_UTILS=ON
 %cmake_build
 popd
 
@@ -238,6 +243,9 @@ install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usr
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Tue Jun 23 2026 Anton Midyukov <antohami@altlinux.org> 4.10.0.0-alt1
+- New version 4.10.0.0.
+
 * Tue Oct 14 2025 Anton Midyukov <antohami@altlinux.org> 4.9.0.1-alt1
 - New version 4.9.0.1.
 
