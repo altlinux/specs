@@ -3,8 +3,8 @@
 %define _without_test 1
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.46
-Release: alt2
+Version: 1.47
+Release: alt1
 
 Summary: Perl interface to the GNU Readline library
 License: GPLv2+ or Artistic-2.0
@@ -15,8 +15,8 @@ Source0: %dist-%version.tar
 Source1: Term-ReadLine.tar
 Source2: Makefile.PL
 
-Patch0: 00-Fix-for-compilation-in-C23-mode.patch
 Patch1: perl-Term-ReadLine-Gnu-1.46-at-Gnu.pm-use-XSLoader.patch
+Patch2: perl-Term-ReadLine-Gnu-1.47-utf8.patch
 # two merged in one Patch3 file
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
 # hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
@@ -31,7 +31,10 @@ Patch11: Term-ReadLine-1.15-at.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libncurses-devel libreadline-devel perl-devel perl-Encode
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /dev/pts
 BuildRequires: expect
+}}
 
 %description
 Term::ReadLine::Gnu is an implementation of the interface to the GNU
@@ -39,7 +42,7 @@ Readline library.  This module gives you input line editing facility,
 input history management facility, word completion facility, etc.
 
 %prep
-%setup -q -n %dist-%version -a1
+%setup -n %dist-%version -a1
 mv Makefile.PL Makefile.PL.orig
 cp -f %{SOURCE2} Makefile.PL
 
@@ -67,6 +70,9 @@ expect -c '
 %perl_vendor_autolib/Term
 
 %changelog
+* Wed Jun 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.47-alt1
+- NMU: 1.47
+
 * Tue Jun 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.46-alt2
 - NMU: fix FTBFS with gcc 15
 
