@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.12
-Release: alt5
+Version: 1.11.1
+Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -24,7 +24,7 @@ BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
-BuildRequires: libsndfile-devel libpcre-devel liblua5-devel
+BuildRequires: libsndfile-devel libpcre2-devel liblua5-devel
 BuildRequires: libilbc1-devel >= 0.0.2-alt3 flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel
@@ -216,6 +216,9 @@ This package provides simple web-based UI.
 %build
 # https://github.com/signalwire/freeswitch/issues/1670
 %add_optflags -Wno-error=address
+# glibc declares strchr()/strrchr()/strstr() const-correct under _GNU_SOURCE,
+# so the widespread `char *p = strchr(const_str, ...)` idiom trips -Werror with gcc 15
+%add_optflags -Wno-error=discarded-qualifiers
 
 LIBTOOL_M4=/usr/share/libtool/aclocal/libtool.m4 ./bootstrap.sh
 autoreconf -fisv
@@ -325,7 +328,6 @@ fi
 %_bindir/tone2wav
 
 %dir %_libdir/%name
-%_libdir/%name/mod_abstraction.so
 %_libdir/%name/mod_alsa.so
 %_libdir/%name/mod_amr.so
 %_libdir/%name/mod_b64.so
@@ -343,7 +345,6 @@ fi
 %_libdir/%name/mod_console.so
 %_libdir/%name/mod_curl.so
 %_libdir/%name/mod_db.so
-%_libdir/%name/mod_dahdi_codec.so
 %_libdir/%name/mod_dialplan_asterisk.so
 %_libdir/%name/mod_dialplan_directory.so
 %_libdir/%name/mod_dialplan_xml.so
@@ -364,7 +365,6 @@ fi
 %_libdir/%name/mod_fsv.so
 %_libdir/%name/mod_g723_1.so
 %_libdir/%name/mod_g729.so
-%_libdir/%name/mod_h26x.so
 %_libdir/%name/mod_hash.so
 %_libdir/%name/mod_httapi.so
 %_libdir/%name/mod_http_cache.so
@@ -377,17 +377,13 @@ fi
 %_libdir/%name/mod_logfile.so
 %_libdir/%name/mod_loopback.so
 %_libdir/%name/mod_memcache.so
-%_libdir/%name/mod_mp4.so
-%_libdir/%name/mod_mp4v.so
 %_libdir/%name/mod_native_file.so
 %_libdir/%name/mod_nibblebill.so
 %_libdir/%name/mod_opus.so
-%_libdir/%name/mod_oreka.so
 %_libdir/%name/mod_posix_timer.so
 %_libdir/%name/mod_random.so
 %_libdir/%name/mod_redis.so
 %_libdir/%name/mod_reference.so
-%_libdir/%name/mod_rss.so
 %_libdir/%name/mod_rtc.so
 %_libdir/%name/mod_rtmp.so
 %_libdir/%name/mod_shell_stream.so
@@ -397,16 +393,10 @@ fi
 %_libdir/%name/mod_snapshot.so
 %_libdir/%name/mod_sndfile.so
 %_libdir/%name/mod_snmp.so
-%_libdir/%name/mod_snom.so
-%_libdir/%name/mod_stress.so
 %_libdir/%name/mod_sofia.so
-%_libdir/%name/mod_sonar.so
-%_libdir/%name/mod_soundtouch.so
 %_libdir/%name/mod_spandsp.so
 %_libdir/%name/mod_spy.so
-%_libdir/%name/mod_ssml.so
 %_libdir/%name/mod_syslog.so
-%_libdir/%name/mod_theora.so
 %_libdir/%name/mod_timerfd.so
 %_libdir/%name/mod_tone_stream.so
 %_libdir/%name/mod_translate.so
@@ -419,7 +409,6 @@ fi
 %_libdir/%name/mod_xml_cdr.so
 %_libdir/%name/mod_xml_curl.so
 %_libdir/%name/mod_xml_rpc.so
-%_libdir/%name/mod_yaml.so
 
 %dir %_datadir/%name
 %dir %_datadir/%name/scripts
@@ -544,6 +533,17 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 1:1.11.1-alt1
+- 1.10.12 -> 1.11.1
+- re-applied ALT source patches lost in the v1.11.1 merge
+- fixed build with gcc 15 (-Wno-error=discarded-qualifiers)
+- extended ffmpeg 8 support to mod_av/avformat.c
+- fixed mod_enum build with ldns 1.9.2
+- dropped modules removed upstream in 1.11.x (mod_rss, mod_snom, mod_yaml,
+  mod_theora, mod_soundtouch, mod_ssml, mod_sonar, mod_stress, mod_mp4,
+  mod_mp4v, mod_h26x, mod_oreka, mod_abstraction, mod_dahdi_codec,
+  mod_unimrcp, mod_dingaling)
+
 * Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 1:1.10.12-alt5
 - fixed build with ffmpeg 8.0
 
