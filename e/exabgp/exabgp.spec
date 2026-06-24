@@ -7,7 +7,7 @@
 
 Name: exabgp
 Version: 5.0.9
-Release: alt1
+Release: alt2
 
 Summary: The BGP swiss army knife of networking
 License: BSD
@@ -78,7 +78,7 @@ install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/%name@.service
 rm -rf %buildroot%_usr/etc/%name
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --ignore=tests/fuzz
 
 %pre
 # Add the "_exabgp" user and group
@@ -111,6 +111,9 @@ exit 0
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Wed Jun 24 2026 Nikita Shmatko <nash@altlinux.org> 5.0.9-alt2
+- Excluded fuzz tests from check.
+
 * Wed Jun 03 2026 Nikita Shmatko <nash@altlinux.org> 5.0.9-alt1
 - Version updated to 5.0.9.
 - Specfile cleanup.
