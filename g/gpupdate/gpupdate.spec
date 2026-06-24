@@ -1,16 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-#add_python3_self_prov_path %buildroot%python3_sitelibdir/gpoa
+# gpoa/ is installed to sitelib but code uses bare imports (import gpt.gpt)
+# while RPM provides generate python3(gpoa.gpt.gpt) - mismatch requires skips.
+# These cannot be reduced until gpoa/ becomes a proper Python package.
 
-%add_python3_req_skip applaer.systemd
 %add_python3_req_skip backend
 %add_python3_req_skip frontend.frontend_manager
-%add_python3_req_skip gpt.envvars
-%add_python3_req_skip gpt.folders
-%add_python3_req_skip gpt.gpt
-%add_python3_req_skip gpt.printers
-%add_python3_req_skip gpt.shortcuts
-%add_python3_req_skip gpt.gpo_dconf_mapping
 %add_python3_req_skip gpt.dynamic_attributes
+%add_python3_req_skip gpt.drives
+%add_python3_req_skip gpt.envvars
+%add_python3_req_skip gpt.files
+%add_python3_req_skip gpt.filter
+%add_python3_req_skip gpt.folders
+%add_python3_req_skip gpt.gpo_dconf_mapping
+%add_python3_req_skip gpt.gpt
+%add_python3_req_skip gpt.inifiles
+%add_python3_req_skip gpt.networkshares
+%add_python3_req_skip gpt.polfile
+%add_python3_req_skip gpt.printers
+%add_python3_req_skip gpt.scriptsini
+%add_python3_req_skip gpt.services
+%add_python3_req_skip gpt.shortcuts
+%add_python3_req_skip gpt.tasks
 %add_python3_req_skip messages
 %add_python3_req_skip plugin
 %add_python3_req_skip storage
@@ -41,10 +51,37 @@
 %add_python3_req_skip storage.gpp_state
 %add_python3_req_skip util.check_filters
 %add_python3_req_skip util.secure_paths
+%add_python3_req_skip util.windows_vars
+%add_python3_req_skip frontend
+%add_python3_req_skip frontend.applier_frontend
+%add_python3_req_skip frontend.chromium_applier
+%add_python3_req_skip frontend.cifs_applier
+%add_python3_req_skip frontend.control_applier
+%add_python3_req_skip frontend.cups_applier
+%add_python3_req_skip frontend.envvar_applier
+%add_python3_req_skip frontend.file_applier
+%add_python3_req_skip frontend.firefox_applier
+%add_python3_req_skip frontend.firewall_applier
+%add_python3_req_skip frontend.folder_applier
+%add_python3_req_skip frontend.gsettings_applier
+%add_python3_req_skip frontend.ini_applier
+%add_python3_req_skip frontend.kde_applier
+%add_python3_req_skip frontend.laps_applier
+%add_python3_req_skip frontend.networkshare_applier
+%add_python3_req_skip frontend.ntp_applier
+%add_python3_req_skip frontend.package_applier
+%add_python3_req_skip frontend.polkit_applier
+%add_python3_req_skip frontend.scripts_applier
+%add_python3_req_skip frontend.shortcut_applier
+%add_python3_req_skip frontend.systemd_applier
+%add_python3_req_skip frontend.thunderbird_applier
+%add_python3_req_skip frontend.yandex_browser_applier
+%add_python3_req_skip frontend_plugins
+%add_python3_req_skip frontend_plugins.dm_applier
 
 
 Name: gpupdate
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: GPT applier
@@ -57,6 +94,7 @@ Requires: control
 
 BuildRequires: rpm-build-python3
 BuildRequires: gettext-tools
+Requires: gpoa-lib = %version-%release
 Requires: python3-module-rpm
 Requires: python3-module-dbus
 Requires: python3-module-configobj
@@ -78,12 +116,36 @@ Requires: desktop-file-utils
 Requires: python3-module-smbc >= 1.0.23-alt3
 # This is needed for laps
 Requires: python3-module-libcng_dpapi
+# These are needed by various appliers
+Requires: python3-module-jinja2
+Requires: python3-module-psutil
+Requires: python3-module-dateutil
 
 Source0: %name-%version.tar
 
 %description
 gpupdate is the facility to apply various GPO/GPT settings retrieved
 from Active Directory domain in UNIX environment.
+
+%package -n gpoa-lib
+Summary: Shared library for GPOA - GPO Applier for Linux
+Group: Development/Python
+Requires: python3-module-dbus
+Requires: python3-module-configobj
+Requires: python3-module-samba
+Requires: python3-module-rpm
+Requires: python3-module-jinja2
+Requires: python3-module-pygobject3
+Requires: python3-module-smbc >= 1.0.23-alt3
+Requires: python3-module-libcng_dpapi
+Requires: python3-module-defusedxml
+Requires: libgvdb-gir
+
+%description -n gpoa-lib
+gpoa-lib is a shared library providing policy appliers, storage,
+GPT parsing, plugin framework and utility modules for GPOA.
+Can be used independently of gpupdate to apply Group Policy
+settings in Linux environments.
 
 %prep
 %setup -q
@@ -93,15 +155,21 @@ mkdir -p \
 	%buildroot%python3_sitelibdir/
 cp -r gpoa \
 	%buildroot%python3_sitelibdir/
+cp -r gpoa_lib/gpoa_lib \
+	%buildroot%python3_sitelibdir/gpoa_lib
+
+# Remove test directory and bytecode from gpoa-lib package
+find %buildroot%python3_sitelibdir/gpoa_lib -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
+find %buildroot%python3_sitelibdir/gpoa_lib -name '*.pyc' -delete 2>/dev/null || true
 
 # Generate translations
 msgfmt \
 	-o %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.mo \
 	%buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.po
 
-# Generate plugin translations
-for po_file in %buildroot%python3_sitelibdir/gpoa/frontend_plugins/locale/*/LC_MESSAGES/*.po; do
-	mo_file="${po_file%.po}.mo"
+# Generate plugin translations for gpoa_lib
+for po_file in %buildroot%python3_sitelibdir/gpoa_lib/frontend_plugins/locale/*/LC_MESSAGES/*.po; do
+	mo_file="${po_file%%.po}.mo"
 	msgfmt -o "$mo_file" "$po_file"
 done
 
@@ -138,9 +206,9 @@ touch %buildroot%_sysconfdir/%name/environment
 install -Dm0644 dist/%name.service %buildroot%_unitdir/%name.service
 install -Dm0644 dist/%name.timer %buildroot%_unitdir/%name.timer
 install -Dm0644 dist/%name-scripts-run.service %buildroot%_unitdir/%name-scripts-run.service
-install -Dm0644 dist/%name-user.service %buildroot/usr/lib/systemd/user/%name-user.service
-install -Dm0644 dist/%name-scripts-run-user.service %buildroot/usr/lib/systemd/user/%name-scripts-run-user.service
-install -Dm0644 dist/%name-user.timer %buildroot/usr/lib/systemd/user/%name-user.timer
+install -Dm0644 dist/%name-user.service %buildroot%{_user_unitdir}/%name-user.service
+install -Dm0644 dist/%name-scripts-run-user.service %buildroot%{_user_unitdir}/%name-scripts-run-user.service
+install -Dm0644 dist/%name-user.timer %buildroot%{_user_unitdir}/%name-user.timer
 install -Dm0644 dist/system-policy-%name %buildroot%_sysconfdir/pam.d/system-policy-%name
 install -Dm0644 dist/%name-remote-policy %buildroot%_sysconfdir/pam.d/%name-remote-policy
 install -Dm0644 dist/%name.ini %buildroot%_sysconfdir/%name/%name.ini
@@ -215,7 +283,23 @@ fi
 %exclude %python3_sitelibdir/gpoa/Makefile
 %exclude %python3_sitelibdir/gpoa/test
 
+%files -n gpoa-lib
+%python3_sitelibdir/gpoa_lib
+%exclude %python3_sitelibdir/gpoa_lib/test
+%doc API_REFERENCE.md API_REFERENCE_RU.md
+%doc README.md PLUGIN_DEVELOPMENT_GUIDE.md PLUGIN_DEVELOPMENT_GUIDE_RU.md EXAMPLES.md
+
 %changelog
+* Tue Jun 23 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.0-alt1
+- Added:
+  gpoa-lib subpackage with public API (StorageAdapter, StorageWriter, ApplierRunner)
+  Targeting filters: IP range, MAC range, RAM, disk, battery, CPU, language, file
+  FilterDomain support for both NetBIOS and FQDN domain names
+- Changed:
+  Split package into gpupdate + gpoa-lib
+  INI file handling: protect comment markers, preserve double quotes
+  Force rewrite INI values when formatting flags change
+
 * Wed Apr 15 2026 Valery Sinelnikov <greh@altlinux.org> 0.15.0-alt1
 - Added:
   GPP lifecycle management (applyOnce, removePolicy, disabled)
