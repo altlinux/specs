@@ -2,7 +2,7 @@
 
 Name: ananicy-cpp
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Rewrite of ananicy in c++ for lower cpu and memory usage
 
@@ -35,6 +35,16 @@ Requires: ananicy-rules
 %prep
 %setup
 
+# partialy based on https://gitlab.com/ananicy-cpp/ananicy-cpp/-/merge_requests/42
+%__subst '1a #include <unistd.h>' src/platform/linux/debug.cpp
+%__subst '1a #include <unistd.h>' src/platform/linux/process.cpp
+%__subst '1a #include <unistd.h>' src/platform/systemd/service.cpp
+%__subst '1a #include <unistd.h>' src/tests/unit-core.cpp
+%__subst '1a #include <unistd.h>' src/tests/unit-cpuset.cpp
+%__subst '1a #include <cstdint>' src/platform/linux/backtrace.cpp
+%__subst '1a #include <cstring>' src/utility/argument_parsing/argument.cpp
+%__subst '1a #include <cstring>' src/platform/linux/singleton_process.cpp
+
 %build
 %cmake \
     -GNinja \
@@ -57,6 +67,9 @@ Requires: ananicy-rules
 %_unitdir/ananicy-cpp.service
 
 %changelog
+* Tue Jun 23 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.0-alt2
+- fix FTBFS
+
 * Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
