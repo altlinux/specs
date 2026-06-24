@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.20.0
+Version: 8.21.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -232,6 +232,28 @@ popd
 %endif
  
 %changelog
+* Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 8.21.0-alt1
+- 8.20.0 -> 8.21.0
+- Fixes:
+  * CVE-2026-12064: proto-default skips SSH verification
+  * CVE-2026-11856: cross-origin Digest auth state leak
+  * CVE-2026-11586: WS Auto-PONG memory exhaustion
+  * CVE-2026-11564: Native CA trust persist
+  * CVE-2026-11352: QUIC zero-length UDP datagrams busy-loop
+  * CVE-2026-10536: HTTP/2 stream-dependency tree UAF
+  * CVE-2026-9547: SSH improper host validation
+  * CVE-2026-9546: sending old referer
+  * CVE-2026-9545: exposing HTTP/3 early data
+  * CVE-2026-9080: UAF after pause in socket callback
+  * CVE-2026-9079: stale proxy password leak
+  * CVE-2026-8932: incomplete mTLS config matching in conn reuse
+  * CVE-2026-8927: env-set cross-proxy Digest auth state leak
+  * CVE-2026-8926: password leak with netrc and user in URL
+  * CVE-2026-8925: SASL double-free
+  * CVE-2026-8924: trailing dot domain super cookie
+  * CVE-2026-8458: wrong reuse for different services
+  * CVE-2026-8286: wrong STARTTLS connection reuse
+
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 8.20.0-alt1
 - 8.19.0 -> 8.20.0
 - Fixes:
