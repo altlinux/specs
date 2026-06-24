@@ -1,41 +1,48 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tgpt
-Version: 2.11.0
-Release: alt2
+Version: 2.11.1
+Release: alt1
 
-Summary: tool that allows you to use AI in your Terminal
+Summary: AI Chatbots in terminal for free
 License: GPL-3.0
-Group: Communications
-Vcs: https://github.com/aandrew-me/tgpt
-URL: https://github.com/aandrew-me/tgpt.git
+Group: Development/Other
+URL: https://github.com/aandrew-me/tgpt
+VCS: https://github.com/aandrew-me/tgpt
 
 Source: %name-%version.tar
-Source2: vendor.tar
+Source1: vendor.tar
+Patch: alt-remove-update-command.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: golang
+BuildRequires: rpm-build-golang
 
 %description
-tgpt is a Cross-platform Command-Line Interface (CLI) tool that allows you to
-use AI in your Terminal.
+tgpt is a Cross-platform Command-Line Interface (CLI) tool
+that allows you to use AI in your Terminal.
 
 %prep
-%setup -a2
+%setup -a1
+%patch -p1
 
 %build
 CGO_ENABLED=0 \
 GOARCH=%go_hostarch \
-go build -mod=vendor -trimpath -ldflags="-s -w" -o ./build/tgpt-linux-%go_hostarch
+go build -mod=vendor \
+         -o ./build/tgpt-linux-%go_hostarch
 
 %install
 install -Dm 0755 build/tgpt-linux-%go_hostarch %buildroot%_bindir/tgpt
 
 %files
-%doc README.md LICENSE
 %_bindir/tgpt
+%doc README.md LICENSE
 
 %changelog
+* Wed Jun 24 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.11.1-alt1
+- Updated to version 2.11.1.
+- Removed update command.
+
 * Wed Feb 18 2026 Ivan A. Melnikov <iv@altlinux.org> 2.11.0-alt2
 - NMU: Use %%go_hostarch macro to derive the architecture name for go
   (fixes FTBFS on loongarch64).
