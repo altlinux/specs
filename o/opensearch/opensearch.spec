@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -19,6 +19,7 @@ Source3: m2.tar
 Patch0: opensearch-disable-test-reporting.patch
 Patch1: opensearch-disable-network.patch
 Patch2: opensearch-system-java.patch
+Patch3: opensearch-alt-restart-service.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
@@ -74,8 +75,11 @@ if [ "%_sysctldir" = "/lib/sysctl.d" ]; then
 	mv %buildroot{%prefix,}%_tmpfilesdir/%name.conf
 fi
 
+# Remove jars for other architectures
+rm -rf %buildroot%_datadir/%name/modules/transport-netty4/netty-codec-native-quic-*-{linux-aarch,osx,windows}*.jar
+
 # List all using jars by it names to CLASSPATH
-cp="$(find %buildroot%_datadir/%name/lib/ -name \*.jar -maxdepth 1 | sed 's|%buildroot||' | tr '\n' ':' | sed 's/:$//')"
+cp="$(find %buildroot%_datadir/%name -name \*.jar | grep -Ev '/modules/|/reindex/|/fips-demo-installer-cli/|/lang-painless/|plugin-cli/opensearch-agent-policy-|plugin-cli/commons-codec-' | sed 's|%buildroot||' | tr '\n' ':' | sed 's/:$//')"
 subst "s|^OPENSEARCH_CLASSPATH=.*$|OPENSEARCH_CLASSPATH='${cp}'|" %buildroot%_datadir/%name/bin/opensearch-env
 
 %pre
@@ -111,12 +115,6 @@ grant {
 };
 EOF.
 fi
-# Prevent use old version of jars
-for i in aggs-matrix-stats-client-2 analysis-common-2 cache-common-2 geo-2 ingest-common-2 ingest-geoip-2 ingest-user-agent-2 lang-expression-2 lang-mustache-client-2 lang-painless-2 mapper-extras-client-2 opensearch-dashboards-2 opensearch-dissect-2 opensearch-grok-2 opensearch-rest-client-2 opensearch-scripting-painless-spi-2 opensearch-ssl-config-2 parent-join-client-2 percolator-client-2 rank-eval-client-2 reindex-client-2 repository-url-2 search-pipeline-common-2 systemd-2 transport-netty4-client-2 geoip2-4.2 jackson-annotations-2.17 jackson-databind-2.17 maxmind-db-3.1 lucene-expressions-9 compiler-0.9.13 netty-buffer-4.1.11 netty-codec-4.1.11 netty-codec-http-4.1.11 netty-common-4.1.11 netty-handler-4.1.11 netty-resolver-4.1.11 netty-transport-4.1.11 netty-transport-native-unix-common-4.1.11 joni-2.2.1 httpclient-4 httpcore-4 jcodings-1.0.58
-do
-	find /usr/share/opensearch/modules -name ${i}\*.jar -exec mv '{}' '{}.old' ';'
-done
-
 # Restart service
 %post_service %name.service
 
@@ -141,6 +139,10 @@ find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue May 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt2
+- Fixed update.
+- Removed jars for other architectures.
+
 * Wed Apr 08 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version.
 
