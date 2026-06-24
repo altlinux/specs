@@ -3,7 +3,7 @@
 
 Packager: Egor Boyko <nit@altlinux.org>
 Name:     verify-checksums
-Version:  1.0.14
+Version:  1.0.18
 Release:  alt1
 Summary: A utility for verify checksums in files
 License: GPL-2.0-only
@@ -12,9 +12,14 @@ BuildArch: 	noarch
 Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-macros-python3
-BuildRequires: rpm-build-python3 
-BuildRequires: python3-module-setuptools 
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: pytest3
+BuildRequires: python3-module-pytest
+BuildRequires: python3(tqdm)
+BuildRequires: python3-module-pytest-mock
+BuildRequires: gnupg2 alt-gpgkeys gostsum
 Requires: gostsum
 Provides: verifychecksums
 Obsoletes: verifychecksums
@@ -31,6 +36,11 @@ Reads files containing hashes of rpm files and checks them.
 %install
 %pyproject_install
 
+
+%check
+%pyproject_run_pytest
+
+
 %files
 %_bindir/verify-checksums
 %python3_sitelibdir/%mod_name/
@@ -38,6 +48,23 @@ Reads files containing hashes of rpm files and checks them.
 %doc README.md
 
 %changelog
+* Tue Jun 23 2026 Paul Wolneykien <manowar@altlinux.org> 1.0.18-alt1
+- Version 1.0.18.
+- Fix: Update locales (thx Egor Boyko).
+- Fixed incorrect translation strings in localization (thx Egor Boyko).
+- Fix: Normalize listExtras to full RPM package names (thx Egor Boyko)
+- Fix: Split packages by vendor and not vendor (thx Egor Boyko).
+- Get a part of the package developer's public key (thx Egor Boyko).
+
+* Fri Apr 03 2026 Egor Boyko <nit@altlinux.org> 1.0.17-alt1
+- Version 1.0.17
+
+* Thu Mar 05 2026 Egor Boyko <nit@altlinux.org> 1.0.16-alt1
+- Version 1.0.16
+
+* Wed Nov 13 2024 Egor Boyko <nit@altlinux.org> 1.0.15-alt1
+- Version 1.0.15
+
 * Thu Oct 10 2024 Egor Boyko <nit@altlinux.org> 1.0.14-alt1
 - Version 1.0.14
 
@@ -51,7 +78,7 @@ Reads files containing hashes of rpm files and checks them.
 - Add the ability to use a different rpm database for package verification
 
 * Sun Sep 08 2024 Egor Boyko <nit@altlinux.org> 1.0.10-alt1
-- Add the ability to pass more than one directory for verification 
+- Add the ability to pass more than one directory for verification
 
 * Mon Aug 26 2024 Egor Boyko <nit@altlinux.org> 1.0.9-alt1
 - Version 1.0.9
