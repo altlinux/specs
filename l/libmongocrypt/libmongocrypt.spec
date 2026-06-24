@@ -5,7 +5,7 @@
 %endif
 
 Name: libmongocrypt
-Version: 1.19.1
+Version: 1.19.2
 Release: alt1
 
 Summary: The companion C library for client side encryption in drivers
@@ -128,6 +128,9 @@ ctest
 %_pkgconfigdir/libkms_message.pc
 
 %changelog
+* Wed Jun 24 2026 Leontiy Volodin <lvol@altlinux.org> 1.19.2-alt1
+- New version 1.19.2.
+
 * Thu Jun 18 2026 Leontiy Volodin <lvol@altlinux.org> 1.19.1-alt1
 - New version 1.19.1.
 
