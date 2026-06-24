@@ -5,7 +5,8 @@
 %def_enable gdbserver
 
 Name: gdb
-Version: 14.1.0.56.d739d4fd457
+Version: 17.2.0.32.4f981313519
+
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
@@ -243,6 +244,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Wed Jun 17 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.2.0.32.4f981313519-alt1
+- Updated to gdb-17.2-release-32-g4f981313519.
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.1.0.56.d739d4fd457-alt1
 - Updated to gdb-14.1-release-56-gd739d4fd457.
 
