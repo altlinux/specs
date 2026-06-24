@@ -1,5 +1,5 @@
 Name: libass
-Version: 0.17.4
+Version: 0.17.5
 Release: alt1
 
 Summary: Portable library for SSA/ASS subtitles rendering
@@ -50,6 +50,9 @@ This package contains the headers and libraries for libass development.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jun 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.17.5-alt1
+- 0.17.5 released
+
 * Mon Jun 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.17.4-alt1
 - 0.17.4 released
 
