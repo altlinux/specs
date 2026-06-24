@@ -1,11 +1,11 @@
 Name: python3-module-zeep
-Version: 4.3.2
+Version: 4.3.3
 Release: alt1
 
 Summary: A fast and modern Python SOAP client
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/python-zeep
+URL: https://pypi.org/project/python-zeep
 VCS: https://github.com/mvantellingen/python-zeep
 
 Source0: %name-%version.tar
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_tox tox.ini testenv
+%pyproject_deps_resync_check_depgroup dev
 
 %build
 %pyproject_build
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/zeep-%version.dist-info
 
 %changelog
+* Wed Jun 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.3-alt1
+- 4.3.3 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.2-alt1
 - 4.3.2 released
 
