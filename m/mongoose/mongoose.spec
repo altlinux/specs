@@ -9,7 +9,7 @@
 %def_disable static
 
 Name: mongoose
-Version: 7.21
+Version: 7.22
 Release: alt1
 
 Summary: An easy-to-use self-sufficient web server
@@ -20,7 +20,6 @@ VCS: https://github.com/cesanta/mongoose
 
 Source: %name-%version.tar
 Patch0: alt-disable-static-build.patch
-Patch1: alt-make-mg-helpers-overridable.patch
 
 BuildRequires: gcc-c++
 
@@ -68,7 +67,6 @@ are using %name's embeddable API to provide web services.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' test/Makefile
 %endif
@@ -112,6 +110,9 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Thu Jun 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 7.22-alt1
+- new version
+
 * Mon Apr 06 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 7.21-alt1
 - new version
 
