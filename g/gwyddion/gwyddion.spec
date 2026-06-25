@@ -2,7 +2,7 @@
 
 Name: gwyddion
 Version: 2.71
-Release: alt1
+Release: alt2
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -16,8 +16,8 @@ Source: %name-%version.tar
 Patch: ruby-dir.patch
 
 BuildRequires(pre): rpm-build-intro libGConf-devel
-#rpm-build-python 
 
+#rpm-build-python 
 
 BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libicu-devel
 BuildRequires: libxml2-devel
@@ -108,6 +108,10 @@ sed -i '1s/env *//' plugins/*.{py,rb,pl}
 
 # Fix libpython linking
 #sed -i 's|--ldflags|--libs|' m4/gwy-python.m4
+
+# Build with new gettext:
+sed -i 's|ACLOCAL_AMFLAGS = -I m4|ACLOCAL_AMFLAGS = -I m4 -I /usr/share/gettext/m4|' Makefile.am
+
 
 %build
 %autoreconf
@@ -231,6 +235,9 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 
 %changelog
+* Thu Jun 25 2026 Alexei Mezin <alexvm@altlinux.org> 2.71-alt2
+- Fix build with new gettext
+
 * Sun May 17 2026 Alexei Mezin <alexvm@altlinux.org> 2.71-alt1
 - New version
 - spec cleanup
