@@ -2,7 +2,7 @@
 %define bin_name kondo
 
 Name: kondo
-Version: 0.8
+Version: 0.9
 Release: alt1
 Summary: Kondo cleans dependencies and build artifacts from various projects
 
@@ -24,14 +24,7 @@ acts like rm -rf, and always back up projects.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat > .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -47,6 +40,8 @@ EOF
 %_bindir/%bin_name
 
 %changelog
+* Thu Jun 25 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.9-alt1
+- 0.8 -> 0.9
+
 * Wed Aug 13 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.8-alt1
 - Initial build.
-
