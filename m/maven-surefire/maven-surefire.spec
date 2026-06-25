@@ -1,184 +1,106 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-surefire
-Version:        3.2.2
-Release:        alt2
-Summary:        Test framework project
+Version:        3.5.6
+Release:        alt1
+
+Summary:        Apache Maven Surefire
 License:        Apache-2.0 and CPL-1.0
+Group:          Development/Java
 URL:            https://maven.apache.org/surefire/
-BuildArch:      noarch
+VCS:            https://github.com/apache/maven-surefire
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-# Remove bundled binaries which cannot be easily verified for licensing
-Source1:        generate-tarball.sh
-Source2:        https://junit.sourceforge.net/cpl-v10.html
+Source0:        %name-%version.tar
 
-Patch1:         0001-Port-to-TestNG-7.4.0.patch
-Patch2:         0002-Disable-JUnit-4.8-test-grouping.patch
+Patch0:         port-to-testng-7.4.0.patch
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
-BuildRequires:  mvn(org.eclipse.aether:aether-util)
-BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
-BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
-BuildRequires:  mvn(org.testng:testng)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
-BuildRequires:  mvn(org.apiguardian:apiguardian-api)
-%endif
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
 
-# PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       procps
-Source44: import.info
+BuildArch:      noarch
 
 %description
 Surefire is a test framework project.
 
-%package plugin
-Group: Development/Java
-Summary:        Surefire plugin for maven
-Requires:       %{name}-provider-junit = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-provider-junit5 = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-provider-testng = %{?epoch:%epoch:}%{version}-%{release}
+%javadoc_package
 
-%description plugin
+%package        plugin
+Group:          Development/Java
+Summary:        Surefire plugin for maven
+Requires:       %name-provider-junit  = %version-%release
+Requires:       %name-provider-junit5 = %version-%release
+Requires:       %name-provider-testng = %version-%release
+
+%description    plugin
 Maven surefire plugin for running tests via the surefire framework.
 
-%package provider-junit
-Group: Development/Java
+%package        provider-junit
+Group:          Development/Java
 Summary:        JUnit provider for Maven Surefire
 
-%description provider-junit
+%description    provider-junit
 JUnit provider for Maven Surefire.
 
-%package provider-junit5
-Group: Development/Java
+%package        provider-junit5
+Group:          Development/Java
 Summary:        JUnit 5 provider for Maven Surefire
 
-%description provider-junit5
+%description    provider-junit5
 JUnit 5 provider for Maven Surefire.
 
-%package provider-testng
-Group: Development/Java
+%package        provider-testng
+Group:          Development/Java
 Summary:        TestNG provider for Maven Surefire
 
-%description provider-testng
+%description    provider-testng
 TestNG provider for Maven Surefire.
 
-%package -n maven-failsafe-plugin
-Group: Development/Java
+%package -n     maven-failsafe-plugin
+Group:          Development/Java
 Summary:        Maven plugin for running integration tests
 
 %description -n maven-failsafe-plugin
 The Failsafe Plugin is designed to run integration tests while the
-Surefire Plugins is designed to run unit. The name (failsafe) was
-chosen both because it is a synonym of surefire and because it implies
-that when it fails, it does so in a safe way.
-
-If you use the Surefire Plugin for running tests, then when you have a
-test failure, the build will stop at the integration-test phase and
-your integration test environment will not have been torn down
-correctly.
-
-The Failsafe Plugin is used during the integration-test and verify
-phases of the build lifecycle to execute the integration tests of an
-application. The Failsafe Plugin will not fail the build during the
-integration-test phase thus enabling the post-integration-test phase
-to execute.
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
+Surefire Plugin is designed to run unit tests.
 
 %prep
-%setup -q -n surefire-%version
-cp -p %{SOURCE2} .
+%setup
+%autopatch -p1
 
-%patch1 -p1
-%patch2 -p1
-
-# Disable strict doclint
-sed -i /-Xdoclint:all/d pom.xml
-
-%pom_disable_module maven-surefire-report-plugin
-%pom_disable_module surefire-report-parser
-%pom_disable_module surefire-shadefire
-%pom_disable_module surefire-grouper
-
-%pom_add_dep org.apiguardian:apiguardian-api
-%pom_remove_dep org.junit:junit-bom
-%pom_remove_dep :surefire-grouper surefire-providers/common-junit48
-%pom_remove_dep :surefire-grouper surefire-providers/surefire-testng-utils
-rm surefire-providers/common-junit48/src/main/java/org/apache/maven/surefire/common/junit48/{FilterFactory,GroupMatcherCategoryFilter}.java
-rm surefire-providers/surefire-testng-utils/src/main/java/org/apache/maven/surefire/testng/utils/GroupMatcherMethodSelector.java
-
-%pom_remove_dep -r org.apache.maven.surefire:surefire-shadefire
-
-# Help plugin is needed only to evaluate effective Maven settings.
-# For building RPM package default settings will suffice.
+%pom_remove_plugin :maven-deploy-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-help-plugin surefire-its
 
-# QA plugin useful only for upstream
-%pom_remove_plugin -r :jacoco-maven-plugin
-# Not wanted
-%pom_remove_plugin -r :maven-shade-plugin
-find -name *.java -exec sed -i -e s/org.apache.maven.surefire.shared.utils/org.apache.maven.shared.utils/ -e s/org.apache.maven.surefire.shared.io/org.apache.commons.io/ -e s/org.apache.maven.surefire.shared.lang3/org.apache.commons.lang3/ -e s/org.apache.maven.surefire.shared.compress/org.apache.commons.compress/ {} \;
-# Not in Fedora
-%pom_remove_plugin -r :animal-sniffer-maven-plugin
-# Complains
-%pom_remove_plugin -r :apache-rat-plugin
-# We don't need site-source
-%pom_remove_plugin :maven-assembly-plugin maven-surefire-plugin
-%pom_remove_dep -r ::::site-source
+%pom_disable_module surefire-shadefire
+%pom_remove_dep -r :surefire-shadefire
 
-%build
+sed -i 's|<groupId>org\.javacc\.plugin</groupId>|<groupId>org.codehaus.mojo</groupId>|g' surefire-grouper/pom.xml
+
 %mvn_package ":*{surefire-plugin}*" @1
 %mvn_package ":*junit-platform*" junit5
-%mvn_package ":*{junit,testng,failsafe-plugin}*"  @1
+%mvn_package ":*{junit,testng,failsafe-plugin}*" @1
 %mvn_package ":*tests*" __noinstall
-# tests turned off because they need jmock
+
+%build
+# Tests disabled due missing powermock
 %mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
-%doc --no-dereference cpl-v10.html
+%doc LICENSE README.md
 
 %files plugin -f .mfiles-surefire-plugin
 %files provider-junit -f .mfiles-junit
@@ -186,10 +108,10 @@ find -name *.java -exec sed -i -e s/org.apache.maven.surefire.shared.utils/org.a
 %files provider-testng -f .mfiles-testng
 %files -n maven-failsafe-plugin -f .mfiles-failsafe-plugin
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference cpl-v10.html
-
 %changelog
+* Thu Jun 25 2026 Evgeniy Serov <scala@altlinux.org> 3.5.6-alt1
+- Updated to 3.5.6.
+
 * Thu Nov 13 2025 Mikhail Efremov <sem@altlinux.org> 0:3.2.2-alt2
 - Dropped unneeded dependencies.
 
