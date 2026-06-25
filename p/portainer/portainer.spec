@@ -3,7 +3,7 @@
 # Only for the test tasks (pocket).
 
 Name: portainer
-Version: 2.39.3
+Version: 2.39.4
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -67,7 +67,7 @@ go build -x \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=6486934a334a7b8bf6cfa51aeee1a2569c6a5f8f' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=90a3374c2e8e38a0e7ccb8318da166e690546f08' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %else
@@ -119,6 +119,13 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.4-alt1
+- New LTS version 2.39.4 (Fixes: CVE-2026-45570, CVE-2026-45571,
+  GHSA-w5pp-99ch-qj29, CVE-2026-42504, CVE-2026-27145,
+  CVE-2026-42499, CVE-2026-39836, CVE-2026-39820,
+  CVE-2026-33814, CVE-2026-33811, CVE-2026-39826,
+  CVE-2026-39823, CVE-2026-39825, CVE-2026-42507).
+
 * Thu Jun 04 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.3-alt1
 - New LTS version 2.39.3 (Fixes: CVE-2026-27141, CVE-2026-33814,
   CVE-2026-39830, CVE-2026-39831, CVE-2026-39832, CVE-2026-39833,
