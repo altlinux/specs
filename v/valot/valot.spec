@@ -2,8 +2,8 @@
 %define app_id com.odnoyko.valot
 
 Name: valot
-Version: 0.8.4
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 Summary: A modern time tracking application built with GTK4 and Adwaita.
 License: MIT
@@ -43,6 +43,7 @@ It offers a modern interface that follows GNOME Human Interface Guidelines.
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/symbolic/apps/%app_id-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%{app_id}*.svg
+%_iconsdir/hicolor/scalable/plugins/plugin_unavaible_icon.svg
 %_datadir/%name/
 %_datadir/dbus-1/services/%app_id.service
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
@@ -51,6 +52,9 @@ It offers a modern interface that follows GNOME Human Interface Guidelines.
 %doc README*
 
 %changelog
+* Wed Jun 24 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.9.3-alt1
+- Update to newest version.
+
 * Mon Oct 27 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.8.4-alt2
 - Changed summary to comply with upstream.
 
