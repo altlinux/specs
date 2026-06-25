@@ -3,7 +3,7 @@
 
 Name: gmsh
 Version: 4.15.2
-Release: alt1
+Release: alt2
 
 Summary: 3D finite element mesh generator
 License: GPL-2.0-or-later with Gmsh-exception
@@ -20,6 +20,7 @@ Requires: libgmsh%soname = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
+BuildRequires: ninja-build
 BuildRequires: fontconfig-devel
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
@@ -44,6 +45,7 @@ BuildRequires: libopenblas-devel
 BuildRequires: libpng-devel
 BuildRequires: opencascade-devel
 BuildRequires: zlib-devel
+BuildRequires: eigen3-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -117,20 +119,24 @@ xargs rm -rf
 
 %build
 # 1. Dynamic library and private API is needed for compiling getdb
-# 2. In Altlinux autodetection does not work correctly for
-#    libopenblas + liblapack, BLAS_LAPACK_LIBRARIES should be set.
-# blossoms is nonfree, see contrib/blossoms/README.txt
-%cmake_insource\
-   -DCMAKE_BUILD_TYPE=Release\
-   -DENABLE_BLOSSOM=NO \
-   -DENABLE_BUILD_DYNAMIC=1\
-   -DENABLE_PRIVATE_API=1\
-   -DBLAS_LAPACK_LIBRARIES="-lopenblas -llapack"
-
-%make_build VERBOSE=1
+# (ENABLE_PRIVATE_API=YES)
+# 2. blossoms is nonfree, see contrib/blossoms/README.txt
+%cmake -G Ninja \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DENABLE_SYSTEM_CONTRIB=YES \
+	-DENABLE_BUILD_SHARED=YES \
+	-DENABLE_BUILD_DYNAMIC=YES \
+	-DENABLE_EIGEN=YES \
+	-DENABLE_BLAS_LAPACK=YES \
+	-DBLAS_LIBRARIES="-lopenblas" \
+	-DLAPACK_LIBRARIES="-llapack -lopenblas" \
+	-DENABLE_BLOSSOM=NO \
+	-DENABLE_PRIVATE_API=YES \
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 mkdir -p %buildroot%python3_sitelibdir_noarch
 mv %buildroot%_libdir/*.py %buildroot%python3_sitelibdir_noarch
@@ -166,6 +172,9 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Tue Jun 02 2026 Ulysses Apokin <ulysses@altlinux.org> 4.15.2-alt2
+- NMU: built with eigen3 for FreeCAD FEM Workbench.
+
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 4.15.2-alt1
 - updated from 4.15.0 to 4.15.2
 

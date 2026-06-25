@@ -18,22 +18,22 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 7
 %endif
-%define git_rev 34a9716668
-%define git_date 24.03.2026
+%define git_rev 0108fd4b48
+%define git_date 14.04.2026
 
 Name: freecad
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Epoch: 1
-Summary: OpenSource 3D CAD modeller
-License: LGPL-2.0+
+
+Summary: Free and opensource multiplatform 3D parametric modeler
+License: LGPL-2.1-or-later
 Group: Graphics
-URL: http://free-cad.sourceforge.net/
-VCS: https://github.com/FreeCAD/FreeCAD
+Url: https://www.freecad.org/
+Vcs: https://github.com/FreeCAD/FreeCAD
 
 Source: %name-%version.tar
-Source1: freecad.1
-Source2: submodules.tar
+Source1: submodules.tar
 
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
@@ -46,6 +46,7 @@ Patch4: freecad-alt-python-modules-path.patch
 Patch9: freecad-1.0.0-upstream-findocc.patch
 Patch10: freecad-1.0.0-alt-print-attributes.patch
 Patch11: freecad-1.1.1-alt-revert-github-pr-25825.patch
+Patch12: freecad-1.1.1-alt-fix-cmake-helpers.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -89,7 +90,9 @@ BuildRequires: zlib-devel
 BuildRequires: libopencv2-devel libxerces-c-devel gcc-c++
 BuildRequires: java-devel-default
 BuildRequires: libXxf86misc-devel
-BuildRequires: opencascade-devel libgts-devel
+# Previous versions were compiled without the appropriate options for FreeCAD
+BuildRequires: opencascade-devel >= 7.9.3-alt2
+BuildRequires: libgts-devel
 BuildRequires: libode-devel libann-devel
 BuildRequires: doxygen graphviz
 BuildRequires: eigen3
@@ -109,7 +112,6 @@ BuildRequires: libglvnd-devel
 %else
 Requires: libEGL-devel libGLU-devel
 %endif
-#BuildRequires: texlive-extra-utils
 BuildRequires: libnetgen-devel netgen
 %if_with pybind11
 BuildRequires: pybind11-devel
@@ -117,6 +119,9 @@ BuildRequires: pybind11-devel
 %if_without bundled_pycxx
 BuildRequires: python3-module-pycxx-devel
 %endif
+# man page
+BuildRequires: help2man
+Requires: /proc
 # 1.0
 BuildRequires: libyaml-cpp-devel
 BuildRequires: python3-module-matplotlib
@@ -142,15 +147,20 @@ Requires: openscad
 Requires: python3-module-pyside6-devel
 Requires: python3-module-GitPython
 Requires: netgen
-Requires: libredwg
+# Previous versions crash with segfault
+Requires: libredwg >= 0.13.4.8295
 #1.1.1
+Requires: python3-module-ifcopenshell
 # for AddonManager
 Requires: pip
 # for CAM Workbench
 Requires: python3-module-yaml
 # for FEM Workbench
 Requires: python3-module-vtk
-Requires: gmsh
+# Previous versions were compiled without the appropriate options for FreeCAD
+Requires: gmsh >= 4.15.2-alt2
+Requires: calculix-ccx
+Requires: elmerfem
 
 Provides:  free-cad-docs = %version-%release
 Obsoletes: free-cad-docs < %version-%release
@@ -181,7 +191,7 @@ Group: Development/C++
 %patch1 -p1
 rm -rf src/3rdParty
 %else
-tar xf %SOURCE2
+tar xf %SOURCE1
 %endif
 %patch2 -p1
 %patch3 -p1
@@ -192,6 +202,7 @@ rm -rf src/CXX
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/CAM/App/CMakeLists.txt
@@ -221,7 +232,7 @@ export PATH=$PATH:%_qt6_bindir
 	-DOPENMPI_INCLUDE_DIRS=%_libdir/openmpi/include \
 	-DPYTHON_EXECUTABLE=%__python3 \
 %if_with pybind11
-    -DFREECAD_USE_PYBIND11=ON \
+	-DFREECAD_USE_PYBIND11=ON \
 %endif
 	-DFREECAD_LIBPACK_USEPYSIDE=OFF \
 	-DBUILD_QT6=ON \
@@ -242,10 +253,10 @@ export PATH=$PATH:%_qt6_bindir
 	-DPACKAGE_WCREF="%git_rev" \
 	-DPACKAGE_WCDATE="%git_date" \
 	-DPACKAGE_WCURL="https://github.com/FreeCAD/FreeCAD" \
-    -DUSE_OPENCV=ON \
+	-DUSE_OPENCV=ON \
 %if_without bundled_pycxx
-    -DPYCXX_INCLUDE_DIR=$(pkg-config --variable=includedir PyCXX) \
-    -DPYCXX_SOURCE_DIR=$(pkg-config --variable=srcdir PyCXX) \
+	-DPYCXX_INCLUDE_DIR=$(pkg-config --variable=includedir PyCXX) \
+	-DPYCXX_SOURCE_DIR=$(pkg-config --variable=srcdir PyCXX) \
 %endif
 	-Wno-dev \
 	-DENABLE_DEVELOPER_TESTS=OFF
@@ -263,6 +274,7 @@ export NPROCS=%build_parallel_jobs
 %makeinstall_std
 %endif
 
+
 # binaries
 mkdir -p %buildroot%ldir/bin
 mv %buildroot%_bindir/* %buildroot%ldir/bin
@@ -270,9 +282,6 @@ ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/freecad
 ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/freecadcmd
 ln -s ../%_lib/%name/bin/FreeCAD %buildroot%_bindir/FreeCAD
 ln -s ../%_lib/%name/bin/FreeCADCmd %buildroot%_bindir/FreeCADCmd
-
-# manpage
-install -Dm0644 %SOURCE1 %buildroot%_man1dir/%name.1
 
 # stuff
 cp -af %buildroot%_prefix/Mod/* %buildroot%ldir/Mod
@@ -296,6 +305,14 @@ rm -rf %buildroot%_includedir/{gmock,gtest}
 # remove buggy Tux mod
 rm -rf %buildroot%ldir/Mod/Tux
 
+# man page
+LD_LIBRARY_PATH=%buildroot%_libdir/%name/lib/ \
+	PYTHONPATH=%buildroot%_libdir/%name/Ext:%buildroot%_libdir/%name/Mod \
+	help2man -N -o %name.1 %buildroot%_bindir/FreeCADCmd
+sed -i 's/Revision: Unknown/Revision: %release/g' %name.1
+xz %name.1
+install -Dpm 0644 %name.1.xz %buildroot/%_man1dir/%name.1.xz
+
 %files -f %name.lang
 %doc README.md SECURITY.md
 %doc %ldir/doc
@@ -311,11 +328,11 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/org.freecad.FreeCAD.png
 %_iconsdir/hicolor/scalable/*/*.svg
-%_man1dir/*
 %_xdgdatadir/mime/packages/*
 %_pixmapsdir/%name.svg
 %_datadir/metainfo/*.metainfo.xml
 %_datadir/thumbnailers/FreeCAD.thumbnailer
+%_man1dir/%name.1.xz
 %python3_sitelibdir/%name
 
 %files devel
@@ -323,6 +340,15 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Wed Jun 24 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.1-alt3
+- Fix FTBFS.
+- Fix man page.
+- Fix bug with export to glTF format (ALT #54083).
+- Fix bug with export to Ifc format (ALT #55459).
+- Fix bug with export to Dwg format (ALT #43584).
+- Fix broken FEM Workbench dependencies (ALT #54081).
+- Fix broken CAM Workbench dependencies (ALT #54964).
+
 * Tue May 05 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.1-alt2
 - Fix import PySide6 python module (ALT #58888).
 

@@ -3,7 +3,7 @@
 
 Name: opencascade
 Version: 7.9.3
-Release: alt1
+Release: alt2
 
 Summary: SDK for development applications dealing with 3D CAD data
 License: LGPL-2.1-only with OCCT-exception-1.0
@@ -45,6 +45,8 @@ BuildRequires: tcl-devel
 BuildRequires: tcl-tix
 BuildRequires: tk-devel
 BuildRequires: zlib-devel
+# For FreeCAD
+BuildRequires: rapidjson-devel
 
 %description
 Open CASCADE Technology (OCCT) is a suite for 3D surface and solid
@@ -722,6 +724,7 @@ This package contains documentation for Open CASCADE.
 # DESTDIR.  Make DESTDIR and environment variable that can be passed
 # into the CMake config.
 export DESTDIR="%buildroot"
+# For FreeCAD: -DUSE_RAPIDJSON=ON
 %cmake_insource -GNinja \
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
@@ -729,7 +732,8 @@ export DESTDIR="%buildroot"
        -DINSTALL_DIR_DOC=%_datadir/doc/opencascade \
        -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-%vtk_version \
        -DINSTALL_DIR_LIB=%_lib \
-       -DINSTALL_DIR_CMAKE=%_lib/cmake/opencascade
+       -DINSTALL_DIR_CMAKE=%_lib/cmake/opencascade \
+       -DUSE_RAPIDJSON=ON
 %ninja_build
 
 %install
@@ -1037,6 +1041,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/opencascade
 
 %changelog
+* Tue Jun 23 2026 Ulysses Apokin <ulysses@altlinux.org> 7.9.3-alt2
+- NMU: Enable rapidjson option for FreeCAD.
+
 * Thu Dec 11 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.3-alt1
 - New version.
 
