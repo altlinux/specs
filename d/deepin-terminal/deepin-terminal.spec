@@ -1,10 +1,11 @@
+%define _cmake__builddir BUILD
 %define _libexecdir %_prefix/libexec
 %define twver 0
 # prevent bytes written limit by hasher-privd
 %global __find_debuginfo_files %nil
 
 Name: deepin-terminal
-Version: 6.5.28
+Version: 6.5.38
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -18,16 +19,13 @@ Vcs: https://github.com/linuxdeepin/deepin-terminal
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
-Requires: %name-data
-Requires: terminalwidget5-data
-Requires: libdqt5-widgets = %_dqt5_version
-#Recommends:     deepin-manual
-#Recommends:     zssh
+Requires: %name-data = %EVR
+Requires: terminalwidget6-data = %EVR
+Requires: libdqt6-gui = %_dqt6_version
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf rpm-macros-cmake
-BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel dlxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel libchardet-devel libuchardet-devel libwayland-client-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf rpm-macros-cmake
+BuildRequires: cmake dqt6-5compat-devel dqt6-lxqt-build-tools dqt6-tools-devel dtk6-common-devel libchardet-devel libdtk6widget-devel libicu-devel libsecret-devel libuchardet-devel libxcbutil-icccm-devel vulkan-headers
 
 %description
 %summary.
@@ -41,29 +39,31 @@ Requires: icon-theme-hicolor
 %description data
 The %name-data package provides shared data for Deepin Terminal.
 
-%package -n libterminalwidget5
+%package -n libterminalwidget6
 Summary: Qt5 terminal widget
 Group: System/Libraries
 
-%description -n libterminalwidget5
+%description -n libterminalwidget6
 QTermWidget is an opensource project based on KDE4 Konsole application.
 
 The main goal of this project is to provide unicode-enabled,
 embeddable QT5 widget for using as a built-in console or terminal emulation widget.
 
-%package -n terminalwidget5-data
+%package -n terminalwidget6-data
 Summary: Data files of QTermWidget
 Group: Other
 BuildArch: noarch
+Provides: terminalwidget5-data = %EVR
+Obsoletes: terminalwidget5-data < %EVR
 
-%description -n terminalwidget5-data
+%description -n terminalwidget6-data
 The terminalwidget5-data package provides shared data for QTermWidget.
 
-%package -n libterminalwidget5-devel
+%package -n libterminalwidget6-devel
 Summary: Qt5 terminal widget - development package
 Group: Development/KDE and QT
 
-%description -n libterminalwidget5-devel
+%description -n libterminalwidget6-devel
 Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
@@ -71,31 +71,16 @@ Development package for QTermWidget. Contains headers and dev-libs.
 %patch -p1
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:%_dqt5_datadir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DDTKCORE_TOOL_DIR=%_libexecdir/dtk5/DCore/bin \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DTERM_RPATH=OFF \
-    -DCMAKE_SKIP_RPATH=NO \
-    -DCMAKE_SKIP_INSTALL_RPATH=NO \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DVERSION=%version
-cmake --build "%_cmake__builddir" -j%__nprocs
-# remove broken build rpath from elfs
-patchelf %_host_alias/%name --shrink-rpath --allowed-rpath-prefixes %_dqt5_libdir
-# find requires for pc file
-sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|; s|Requires:.*|Requires:|;' \
-  %_host_alias/3rdparty/terminalwidget/terminalwidget5.pc
+export CMAKE_PREFIX_PATH=%_dqt6_datadir/cmake:$CMAKE_PREFIX_PATH
+%DQ6build -DDTKCORE_TOOL_DIR=%_libexecdir/dtk6/DCore/bin
+# find Qt6 libs in a non-standart location
+patchelf %_cmake__builddir/%name --add-rpath %_dqt6_libdir
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %name
-%find_lang --with-qt terminalwidget5
+%find_lang --with-qt terminalwidget6
+patchelf %buildroot%_libdir/libterminalwidget6.so.%twver --add-rpath %_dqt6_libdir
 
 %files
 %doc README.md
@@ -126,23 +111,27 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %dir %_datadir/%name/translations/
 %_datadir/%name/translations/%name.qm
 
-%files -n libterminalwidget5
-%_libdir/libterminalwidget5.so.%{twver}*
+%files -n libterminalwidget6
+%_libdir/libterminalwidget6.so.%{twver}*
 
-%files -n terminalwidget5-data -f terminalwidget5.lang
+%files -n terminalwidget6-data -f terminalwidget6.lang
 %doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG}
-%dir %_datadir/terminalwidget5/
-%dir %_datadir/terminalwidget5/translations/
-%_datadir/terminalwidget5/kb-layouts/
-%_datadir/terminalwidget5/color-schemes/
+%dir %_datadir/terminalwidget6/
+%dir %_datadir/terminalwidget6/translations/
+%_datadir/terminalwidget6/kb-layouts/
+%_datadir/terminalwidget6/color-schemes/
 
-%files -n libterminalwidget5-devel
-%_libdir/libterminalwidget5.so
-%_pkgconfigdir/terminalwidget5.pc
-%_libdir/cmake/terminalwidget5/
-%_includedir/terminalwidget5/
+%files -n libterminalwidget6-devel
+%_libdir/libterminalwidget6.so
+%_pkgconfigdir/terminalwidget6.pc
+%_libdir/cmake/terminalwidget6/
+%_includedir/terminalwidget6/
 
 %changelog
+* Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.38-alt1
+- New version 6.5.38.
+- Built on Qt6 for DDE.
+
 * Thu Feb 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.28-alt1
 - New version 6.5.28.
 - Built on separate lxqt-build-tools (no qt required).
