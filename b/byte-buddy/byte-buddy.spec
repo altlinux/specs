@@ -2,7 +2,7 @@
 
 Name: byte-buddy
 Version: 1.18.0
-Release: alt1
+Release: alt2
 
 Summary: Runtime code generation for the Java virtual machine
 License: Apache-2.0
@@ -36,6 +36,7 @@ BuildRequires: maven-shade-plugin
 BuildRequires: jna
 BuildRequires: jna-contrib
 BuildRequires: asm-jdk-bridge
+BuildRequires: jsr-305
 
 %description
 Byte Buddy is a code generation library for creating Java classes during the
@@ -135,6 +136,9 @@ cat .mfiles-%name-dep >> .mfiles-%name
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Jun 25 2026 Anton Meleshnikov <alton@altlinux.org> 1.18.0-alt2
+- FTBFS fix (added necessary requires for build).
+
 * Thu Nov 06 2025 Ivan Khanas <xeno@altlinux.org> 1.18.0-alt1
 - New version.
 
