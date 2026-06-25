@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.4.0
-Release: alt2
+Release: alt3
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -20,10 +20,12 @@ Source: %oname-%version.tar
 Source2: %name.xinetd
 Source3: saned.socket
 Source4: saned@.service
+Source5: 70-kyocera-mfp.rules
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
 Patch5: sane-backends-1.4.0-xerox-blacklist-workcentre-322x.patch
+Patch9: sane-backends-1.4.0-fix-ISO-C23.patch
 
 # Support for Avision FB2280E
 Patch6: sane-backends-1.0.32-avision-FB2280E.patch
@@ -40,6 +42,7 @@ BuildRequires: autoconf-archive
 
 Requires: lib%name = %version-%release
 Requires: udev
+Requires: acl
 Provides: %oname-drivers-scanners = %version-%release
 
 BuildRequires: rpm-build-intro
@@ -179,6 +182,7 @@ This package contains SANE static libraries.
 %patch6 -p2
 #patch7 -p2
 #patch8 -p1
+%patch9 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -228,6 +232,7 @@ sed -i "s|/path/to/your/firmware|%_libdir/hotplug/firmware|" %buildroot%_sysconf
 
 # install udev rules
 install -D -m0644 tools/udev/libsane.rules %buildroot%_udevrulesdir/25-libsane.rules
+install -D -m0644 %SOURCE5 %buildroot%_udevrulesdir/70-kyocera-mfp.rules
 # follow fix drops GROUP! (alt bug #29425)
 #remove ownership setup (was conflict with other services) see altbug #21808
 #sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_udevrulesdir/25-libsane.rules
@@ -301,6 +306,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Thu Jun 25 2026 Nikita Shmatko <nash@altlinux.org> 1.4.0-alt3
+- fixed FTBFS
+- add udev-rules for Kyocera (ALT bug 58282)
+
 * Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
 - add systemd socket and service files for saned (ALT bug 52492)
 
