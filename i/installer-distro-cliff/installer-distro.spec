@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt9
+Release: alt10
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -100,6 +100,10 @@ mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hook
 %files net-eth-stage3
 
 %changelog
+* Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt10
+- 52-installer-added-smem-1.sh: fix sed.
+- pkg-preinstall.d/00-pve.sh: fix grep word "pve".
+
 * Tue May 12 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt9
 - net-eth-stage3: fix dependencies.
 

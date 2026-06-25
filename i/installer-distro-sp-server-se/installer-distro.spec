@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt13
+Release: alt14
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -103,6 +103,10 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt14
+- 52-installer-added-smem-1.sh: fix sed.
+- pkg-preinstall.d/00-pve.sh: fix grep word "pve".
+
 * Thu May 28 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt13
 - 45-noexec-tmp.sh: add TMPDIR=/root/tmp to /etc/integrity/config.
 

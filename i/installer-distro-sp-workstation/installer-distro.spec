@@ -1,7 +1,7 @@
 %define distro sp-workstation
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt4
+Release: alt5
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -89,6 +89,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- 52-installer-added-smem-1.sh: fix sed.
+
 * Thu Feb 19 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
 - stage2: remove dependency on installer-feature-gnome-keymap-stage2.
 

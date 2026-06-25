@@ -1,7 +1,7 @@
 %define distro sp-workstation-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt9
+Release: alt10
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -93,6 +93,9 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files stage3
 
 %changelog
+* Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt10
+- 52-installer-added-smem-1.sh: fix sed.
+
 * Thu Jun 18 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt9
 - postinstall.d: add 60-enable-swap_cleaner.sh.
 
