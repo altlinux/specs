@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.30.1
+Version: 1.30.2
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -88,6 +88,13 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 1.30.2-alt1
+- New version 1.30.2 (Fixes: CVE-2026-47692, CVE-2026-47207,
+  CVE-2026-47205, CVE-2026-47220, CVE-2026-47221, CVE-2026-48044,
+  CVE-2026-48090, CVE-2026-47778, CVE-2026-47204, CVE-2026-48497,
+  CVE-2026-48706, CVE-2026-48743, CVE-2026-47775, CVE-2026-48042,
+  GHSA-p7c7-7c47-pwch).
+
 * Fri Jun 05 2026 Leontiy Volodin <lvol@altlinux.org> 1.30.1-alt1
 - New version 1.30.1 (Fixes: CVE-2026-47774).
 
