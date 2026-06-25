@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: scrot
-Version: 1.12.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Screen-shot capture using Imlib 2
@@ -13,7 +13,8 @@ Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: autoconf-archive imlib2-devel libXcomposite-devel libXext-devel libXinerama-devel
+BuildRequires: autoconf-archive imlib2-devel libXcomposite-devel
+BuildRequires: libXfixes-devel libXrandr-devel
 
 %description
 A nice and straightforward screen capture utility implementing the
@@ -34,9 +35,14 @@ dynamic loaders of imlib2.
 %files
 %_bindir/%name
 %_man1dir/%name.1.*
+%_datadir/bash-completion/completions/%name
+%_datadir/zsh/site-functions/_%name
 %_defaultdocdir/%name-%version/
 
 %changelog
+* Wed Jun 24 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Thu Apr 03 2025 Dmitriy Khanzhin <jinn@altlinux.org> 1.12.1-alt1
 - 1.12.1
 

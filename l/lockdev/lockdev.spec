@@ -1,6 +1,6 @@
 Name: lockdev
 Version: 1.0.3
-Release: alt4
+Release: alt5
 
 Summary: A library and a command-line tool for locking devices
 License: LGPL-2.1-only
@@ -122,6 +122,9 @@ cd LockDev
 %endif
 
 %changelog
+* Thu Jun 25 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.3-alt5
+- fixed FTBFS: -Werror=discarded-qualifiers
+
 * Sat Apr 25 2026 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.3-alt4
 - fixed build error: old-style function definition
 - fixed ambiguous license name for LGPL-2.1-only
