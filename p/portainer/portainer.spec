@@ -4,7 +4,7 @@
 
 Name: portainer
 Version: 2.39.4
-Release: alt1
+Release: alt2
 
 Summary: A lightweight docker management UI
 
@@ -36,7 +36,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.9"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.11"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -119,6 +119,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.4-alt2
+- Updated go version requirement.
+
 * Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.4-alt1
 - New LTS version 2.39.4 (Fixes: CVE-2026-45570, CVE-2026-45571,
   GHSA-w5pp-99ch-qj29, CVE-2026-42504, CVE-2026-27145,
