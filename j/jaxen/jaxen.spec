@@ -1,5 +1,5 @@
 Name:           jaxen
-Version:        2.0.3
+Version:        2.0.5
 Release:        alt1
 
 Summary:        An XPath engine written in Java
@@ -53,6 +53,9 @@ too.
 %doc LICENSE.txt *.md
 
 %changelog
+* Thu Jun 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.5-alt1
+- Updated to 2.0.5.
+
 * Wed May 27 2026 Evgeniy Serov <scala@altlinux.org> 2.0.3-alt1
 - Updated to 2.0.3.
 - Enabled tests.
