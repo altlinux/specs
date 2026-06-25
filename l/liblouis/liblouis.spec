@@ -3,7 +3,7 @@
 %define sover 20
 
 Name: liblouis
-Version: 3.37.0
+Version: 3.38.0
 Release: alt1
 Summary: Braille translation and back-translation library
 
@@ -53,7 +53,6 @@ Group: Accessibility
 License: LGPL-2.1-or-later AND LGPL-2.0-or-later
 Summary: Lib files for %name
 Provides: %name = %EVR
-Requires: %name-tables = %EVR
 
 %description -n %name%sover
 Lib files for %name
@@ -61,12 +60,20 @@ Lib files for %name
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %EVR
 License: LGPL-2.1-or-later
 
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package devel-doc
+Summary: Development files for %name
+Group: Documentation
+License: LGPL-2.1-or-later
+BuildArch: noarch
+
+%description devel-doc
+%summary
 
 %package data
 Summary: Data tables
@@ -91,7 +98,6 @@ Data tables for liblouis, containing attributes and dot patterns.
 %package utils
 Summary: Command-line utilities to test %name
 Group: Accessibility
-Requires: %name = %EVR
 # GPL-3.0-or-later: the source code in tools
 # LGPL-2.0-or-later AND LGPL-2.1-or-later: tools/gnulib
 # LGPL-3.0-or-later: tools/gnulib/version-etc.{c,h}
@@ -105,11 +111,25 @@ Six test programs are provided as part of the liblouis package. They
 are intended for testing liblouis and for debugging tables. None of
 them is suitable for braille transcription.
 
+%package utils-doc
+Summary: Doc fore command-line utilities to test %name
+Group: Documentation
+# GPL-3.0-or-later: the source code in tools
+# LGPL-2.0-or-later AND LGPL-2.1-or-later: tools/gnulib
+# LGPL-3.0-or-later: tools/gnulib/version-etc.{c,h}
+# LGPL-3.0-or-later OR GPL-2.0-or-later:
+# - tools/gnulib/unistr/u16-mbtoucr.c
+# - tools/gnulib/unistr/u16-to-u8.c
+License: GPL-3.0-or-later AND LGPL-3.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later AND (LGPL-3.0-or-later OR GPL-2.0-or-later)
+BuildArch: noarch
+
+%description utils-doc
+%summary
+
 %package -n python3-module-louis
 Summary: Python 3 language bindings for %name
 Group: Development/Python
 BuildArch: noarch
-Requires: %name = %EVR
 License: LGPL-2.1-or-later
 
 %description -n python3-module-louis
@@ -117,10 +137,8 @@ This package provides Python 3 language bindings for %name.
 
 %package doc
 Summary: Documentation for %name
-Group: Accessibility
-Requires: %name = %EVR
+Group: Documentation
 BuildArch: noarch
-
 # See doc/liblouis.texi
 License: LGPL-3.0-or-later
 
@@ -130,7 +148,6 @@ This package provides the documentation for liblouis.
 %prep
 %setup
 chmod 664 tables/*
-
 
 %build
 %autoreconf
@@ -163,23 +180,26 @@ mv %buildroot%python3_sitelibdir_noarch/louis-%version.dist-info %buildroot%pyth
 LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 
 %files -n %name%sover
-%doc README AUTHORS NEWS ChangeLog TODO COPYING.LESSER
 %_libdir/%name.so.%sover
 %_libdir/%name.so.%sover.*
 
 %files devel
-%doc HACKING
 %_includedir/%name/
-%_infodir/%name.info*
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+
+%files devel-doc
+%doc HACKING
+%_infodir/%name.info*
 
 %files data
 %_datadir/%name/
 
 %files utils
-%doc COPYING
 %_bindir/lou_*
+
+%files utils-doc
+%doc COPYING
 %_man1dir/lou_*.1*
 
 %files -n python3-module-louis
@@ -187,9 +207,12 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
   %python3_sitelibdir_noarch/%name-%version.dist-info
 
 %files doc
-%doc doc/%name.pdf
+%doc doc/%name.pdf README AUTHORS NEWS ChangeLog TODO COPYING.LESSER
 
 %changelog
+* Thu Jun 25 2026 Artem Semenov <savoptik@altlinux.org> 3.38.0-alt1
+- Updated to new version 3.38.0
+
 * Tue Mar 10 2026 Artem Semenov <savoptik@altlinux.org> 3.37.0-alt1
 - Updated to new version 3.37.0
 

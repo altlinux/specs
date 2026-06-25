@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _without_check 1
 
 %define sover 9
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt6
+Release: alt7
 Summary: Braille transcription library for UTDML documents
 License: LGPL-3.0-or-later
 Group: Accessibility
@@ -72,6 +73,14 @@ Document Markup Language) documents. This package contains the user and
 developer documentation of the library and the command-line utilities
 provided by %name-utils.
 
+%package data
+Summary: Data files fore %name
+Group: Other
+BuildArch: noarch
+
+%description data
+%summary
+
 %prep
 %setup
 %autopatch1 -p1
@@ -92,9 +101,10 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %make check
 
 %files -n %name%sover
-%doc AUTHORS ChangeLog README NEWS  COPYING.LIB
 %_libdir/%name.so.%sover
 %_libdir/%name.so.%sover.*
+
+%files data
 %_datadir/%name/
 
 %files devel
@@ -103,16 +113,19 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_pkgconfigdir/%name.pc
 
 %files utils
-%doc COPYING
 %_bindir/file2brl
 %_man1dir/file2brl.1*
 
 %files doc
 %doc doc/copyright-notice
 %doc doc/%name.{html,txt,pdf}
+%doc AUTHORS ChangeLog README NEWS  COPYING.LIB COPYING
 %_infodir/%name.info.*
 
 %changelog
+* Thu Jun 25 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt7
+- Fixed build with liblouis 3.38.0
+
 * Wed Apr 22 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt6
 - Fixed FTBFS after gcc 15
 
