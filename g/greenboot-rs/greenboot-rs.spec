@@ -4,7 +4,7 @@
 
 Name:    greenboot-rs
 Version: 0.16.3
-Release: alt1
+Release: alt2
 
 Summary: Generic Health Check Framework for systemd
 License: BSD-3-Clause
@@ -13,6 +13,7 @@ Url:     https://github.com/fedora-iot/greenboot-rs
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -115,5 +116,8 @@ install -DpZm 0644 usr/lib/systemd/system/greenboot-healthcheck.service.d/10-net
 %_unitdir/greenboot-healthcheck.service.d/10-network-online.conf
 
 %changelog
+* Thu Jun 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.16.3-alt2
+- Use grub-editenv instead of grub2-editenv for ALT Linux compatibility
+
 * Sun Jun 21 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.16.3-alt1
 - Initial build.
