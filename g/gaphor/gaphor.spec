@@ -3,7 +3,7 @@
 %def_with check
 
 Name: gaphor
-Version: 3.2.0
+Version: 3.3.2
 Release: alt1
 Summary: A powerful UML and SysML modeling tool in Python
 License: Apache-2.0
@@ -113,6 +113,9 @@ install -Dm644 data/logos/org.gaphor.Gaphor-symbolic.svg %buildroot%_iconsdir/hi
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Thu Jun 25 2026 Aleksandr A. Voyt <sobue@altlinux.org> 3.3.2-alt1
+- 3.2.0 -> 3.3.2
+
 * Mon Nov 10 2025 Aleksandr A. Voyt <sobue@altlinux.org> 3.2.0-alt1
 - 3.1.0 -> 3.2.0
 
