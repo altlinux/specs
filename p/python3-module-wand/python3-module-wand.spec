@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Ctypes-based simple MagickWand API binding for Python
@@ -63,6 +63,9 @@ sed -i -e 's/^\(VERSION_INFO[ \t]*=\).*/\1%version_tuple/' wand/version.py
 %doc README*
 
 %changelog
+* Thu Jun 25 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
