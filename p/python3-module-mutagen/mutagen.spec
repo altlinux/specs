@@ -1,5 +1,5 @@
 Name: python3-module-mutagen
-Version: 1.48.0
+Version: 1.48.1
 Release: alt1
 
 Summary: Python module to handle audio metadata
@@ -55,6 +55,9 @@ streams on an individual packet/page level.
 %_man1dir/*
 
 %changelog
+* Thu Jun 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.48.1-alt1
+- 1.48.1 released
+
 * Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.48.0-alt1
 - 1.48.0 released
 
