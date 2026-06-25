@@ -1,5 +1,5 @@
 Name:    ccsum
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Convenient Checksum Utility
@@ -33,6 +33,9 @@ file checksums with support for multiple hash algorithms.
 %_bindir/%name
 
 %changelog
+* Thu Jun 25 2026 Sergey Palcheh <minergenon@altlinux.org> 0.2.3-alt1
+- new version 0.2.3
+
 * Wed May 27 2026 Sergey Palcheh <minergenon@altlinux.org> 0.2.2-alt1
 - new version 0.2.2
 - switched to predownloaded-development (cargo vendor) packaging
