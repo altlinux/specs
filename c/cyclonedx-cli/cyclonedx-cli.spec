@@ -2,7 +2,7 @@
 %define dotnetver 10.0
 
 Name: cyclonedx-cli
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: Tool for CycloneDX Software Bill of Materials (SBOM) analysis and modification.
@@ -12,7 +12,7 @@ URL: https://github.com/CycloneDX/cyclonedx-cli
 
 ExclusiveArch: x86_64
 
-# DDOTNET_NUGET_SIGNATURE_VERIFICATION=false dotnet build --packages vendor
+# DOTNET_NUGET_SIGNATURE_VERIFICATION=false dotnet build --packages vendor
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: NuGet.Config
@@ -69,6 +69,9 @@ ln -srvf %_libdir/%name/cyclonedx %buildroot%_bindir/cyclonedx
 %_libdir/%name/
 
 %changelog
+* Thu Jun 25 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 0.32.0-alt1
+- Update to version 0.32.0.
+
 * Thu May 14 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 0.31.0-alt1
 - Update to version 0.31.0.
 
