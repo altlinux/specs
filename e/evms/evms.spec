@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt92
+Release: alt93
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Jun 03 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt93
+- new commit procedure fixes
+
 * Wed Apr 08 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt92
 - new commit procedure
 - LUKS: allow wrting objects underneath container
