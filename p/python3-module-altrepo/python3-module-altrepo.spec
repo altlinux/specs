@@ -1,7 +1,7 @@
 %define oname altrepo
 
 Name: python3-module-%oname
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 License: AGPL-3.0-or-later
 
@@ -43,6 +43,9 @@ Async Python client for ALT Linux repository services:
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Jun 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Fri Apr 03 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
 - new version 0.3.0
 
