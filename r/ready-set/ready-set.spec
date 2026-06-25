@@ -9,7 +9,7 @@
 %define girname ReadySet
 %define api_version 0
 %define major_version 9
-%define minor_version 1
+%define minor_version 2
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -274,6 +274,12 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/libwelcome.so
 
 %changelog
+* Thu Jun 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.2-alt1
+- Fixed dialog assertions.
+- Fixed context vars applying from options/config.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.9.2
+
 * Wed Jun 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.1-alt1
 - Fixed pages recreation.
 - Full release note here:
