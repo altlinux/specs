@@ -2,7 +2,7 @@
 %global import_path gogs.io/gogs
 
 Name: gogs
-Version: 0.13.3
+Version: 0.14.3
 Release: alt1
 Summary: Self Hosted Git Service written in Go
 License: MIT
@@ -79,5 +79,8 @@ install -D %SOURCE4 %buildroot%_sysusersdir/%name.conf
 %_sysusersdir/%name.conf
 
 %changelog
+* Wed Jun 24 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.14.3-alt1
+- 0.13.3 -> 0.14.3
+
 * Mon Aug 18 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.13.3-alt1
 - Initial build.
