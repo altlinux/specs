@@ -1,14 +1,11 @@
 %global pxbu_major_minor 84
 
-# TODO remove it, after fix sphinx
-%def_without man
-
-%define optflags_lto %nil
+%def_with man
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.4.0
-Release: alt1
+Release: alt2
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -25,7 +22,7 @@ Conflicts: percona-xtrabackup80
 # Automatically added by buildreq on Tue Jun 02 2026
 BuildRequires: cmake doxygen gcc-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel
 BuildRequires: libicu-devel libldap-devel liblz4-devel libncurses-devel libproc2-devel libprotobuf-lite-devel
-BuildRequires: libsasl2-devel libzstd-devel python3-dev
+BuildRequires: libsasl2-devel libzstd-devel python3-dev libtirpc-devel python3-module-sphinx
 %ifarch x86_64
 BuildRequires: libquadmath-devel
 %endif
@@ -47,6 +44,7 @@ sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/Encod
 tar xfv %SOURCE2 -C extra/libkmip
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %cmake -DWITH_BOOST=libboost -DBUILD_CONFIG=xtrabackup_release -DWITH_PROTOBUF=system \
   -DCMAKE_INSTALL_PREFIX=%prefix -DWITH_SSL=system -DINSTALL_MANDIR=%_mandir -DWITH_MAN_PAGES=1 \
   -DINSTALL_MYSQLTESTDIR=%_datadir/percona-xtrabackup-test-%pxbu_major_minor \
@@ -70,13 +68,13 @@ rm -rf %buildroot/usr/lib/private/libprotobuf*
 rm -rf %buildroot/usr/lib/libmysqlservices.a
 rm -rf %buildroot%_datadir/percona-xtrabackup-test-%pxbu_major_minor
 rm -rf %buildroot%_libdir/libmysqlservices.a
-rm -rf %buildroot%_mandir/man8
-rm -rf %buildroot%_mandir/man1/c*
-rm -rf %buildroot%_mandir/man1/m*
-rm -rf %buildroot%_mandir/man1/i*
-rm -rf %buildroot%_mandir/man1/l*
-rm -rf %buildroot%_mandir/man1/p*
-rm -rf %buildroot%_mandir/man1/z*
+rm -rf %buildroot%_man8dir
+rm -rf %buildroot%_man1dir/c*
+rm -rf %buildroot%_man1dir/m*
+rm -rf %buildroot%_man1dir/i*
+rm -rf %buildroot%_man1dir/l*
+rm -rf %buildroot%_man1dir/p*
+rm -rf %buildroot%_man1dir/z*
 rm -rf %buildroot%_libdir/private
 rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 
@@ -88,13 +86,19 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_bindir/xbcloud_osenv
 %doc README.md XB_VERSION LICENSE
 %if_with man
-%_mandir/man1/xtrabackup.1.*
-%_mandir/man1/xbstream.1.*
-%_mandir/man1/xbcrypt.1.*
+%_man1dir/xtrabackup.1*
+%_man1dir/xbstream.1*
+%_man1dir/xbcrypt.1*
 %endif
 %_libdir/xtrabackup
 
 %changelog
+* Thu Jun 25 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt2
+- 8.4.0-6
+- Add BR: libtirpc-devel
+- Enable LTO
+- Build with manpages
+
 * Tue Jun 02 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt1
 - Build for MySQL 8.4
 
