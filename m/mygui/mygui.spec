@@ -1,6 +1,6 @@
 Name: mygui
-Version: 3.4.3
-Release: alt2
+Version: 3.4.4
+Release: alt1
 
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
 
@@ -90,6 +90,11 @@ MyGUI api documentation
 %setup
 sed -i 's|/usr/lib/OGRE/cmake/|%_libdir/OGRE/cmake/|' \
   CMake/Packages/FindOGRE_Old.cmake
+sed -i 's|{CMAKE_INSTALL_PREFIX}/lib|%_libdir|' \
+  Platforms/Ogre/OgrePlatform/CMakeLists.txt
+sed -i 's|STATIC|SHARED|' \
+  Common/CMakeLists.txt \
+  Platforms/Ogre/OgrePlatform/CMakeLists.txt
 
 %build
 %cmake \
@@ -271,6 +276,9 @@ sed -i 's|libdir=${prefix}/lib|libdir=${prefix}/%_lib|g' \
 %doc Docs/html/*
 
 %changelog
+* Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 3.4.4-alt1
+- New version 3.4.4.
+
 * Fri Feb 20 2026 Pavel Petrykin <silverducks@altlinux.org> 3.4.3-alt2
 - Fix compatibility with OpenMW.
 
