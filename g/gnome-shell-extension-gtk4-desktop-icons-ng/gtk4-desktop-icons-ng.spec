@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 100.18
-Release: alt2
+Version: 100.24
+Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -87,6 +87,9 @@ popd
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 100.24-alt1
+- New version 100.24.
+
 * Thu Jun 18 2026 Anton Midyukov <antohami@altlinux.org> 100.18-alt2
 - Fix override for org.gnome.Shell.service on gnome 50.
 - Runtime dependency on gnome-shell >= 50.
