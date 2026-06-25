@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt30.git73674c429
+Release: alt31.git73674c429
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -207,7 +207,7 @@ tar xf %SOURCE2
 #sed -i -e 's|../fonts/|https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/fonts/|g' assets/cache/cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css
 #sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 #sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
-sed -i -e 's|https://|cache/|' -e 's|http://|cache/|' assets/assetpack.def
+#sed -i -e 's|https://|cache/|' -e 's|http://|cache/|' assets/assetpack.def
 sed -i -e 's,apache2\.service,httpd2\.service,g' systemd/*.service
 sed -i -e 's,"$(DESTDIR)"/etc/apache2/vhosts.d,"$(DESTDIR)"%_sysconfdir/httpd2/conf/sites-available,g' Makefile
 sed -i -e 's,/etc/apache2/vhosts.d,%_sysconfdir/httpd2/conf/sites-available,g' etc/apache2/vhosts.d/*
@@ -551,6 +551,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Thu Jun 25 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt31.git73674c429
+- update assets
+- Commit hash: 73674c429
+
 * Thu Jun 18 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt30.git73674c429
 - update to current version
 - Commit hash: 73674c429
