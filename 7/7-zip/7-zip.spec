@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: 7-zip
-Version: 26.01
+Version: 26.02
 Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
@@ -21,7 +21,6 @@ Provides: p7zip = %version-%release
 Obsoletes: p7zip < 25
 Provides: p7zip-standalone = %version-%release
 Obsoletes: p7zip-standalone < 25
-
 
 # Automatically added by buildreq on Fri Jul 02 2021
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python3-base sh4
@@ -141,6 +140,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Sat Jun 27 2026 Fr. Br. George <george@altlinux.org> 26.02-alt1
+- Autobuild version bump to 26.02
+
 * Wed Apr 29 2026 Vitaly Lipatov <lav@altlinux.ru> 26.01-alt1
 - new version 26.01 (ALT #58910)
 
