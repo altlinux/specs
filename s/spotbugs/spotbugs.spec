@@ -2,7 +2,7 @@
 
 Name: spotbugs
 Version: 4.9.8
-Release: alt1
+Release: alt2
 
 Summary: SpotBugs is the spiritual successor of FindBugs
 License: Apache-2.0
@@ -24,7 +24,7 @@ BuildRequires: google-gson
 BuildRequires: objectweb-asm
 BuildRequires: jsr-305
 BuildRequires: slf4j
-BuildRequires: bcel
+BuildRequires: apache-commons-bcel
 BuildRequires: apache-commons-lang3
 BuildRequires: apache-commons-text
 BuildRequires: apache-commons-cli
@@ -109,5 +109,8 @@ rm -rf buildSrc
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 26 2026 Anton Meleshnikov <alton@altlinux.org> 4.9.8-alt2
+- FTBFS fix (bcel was renamed).
+
 * Wed Nov 12 2025 Ivan Khanas <xeno@altlinux.org> 4.9.8-alt1
 - First build for ALT.
