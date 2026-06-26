@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt10
+Release: alt11
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -53,6 +53,7 @@ Requires: alterator-root
 Requires: installer-feature-powerbutton-stage3
 Requires: installer-feature-integalert-stage3
 Requires: alterator-luks
+Requires: alterator-notes
 
 %description stage3
 Cliff installer stage3 files.
@@ -100,6 +101,9 @@ mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hook
 %files net-eth-stage3
 
 %changelog
+* Fri Jun 26 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt11
+- stage3: Add missing dependency on alterator-notes.
+
 * Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt10
 - 52-installer-added-smem-1.sh: fix sed.
 - pkg-preinstall.d/00-pve.sh: fix grep word "pve".
