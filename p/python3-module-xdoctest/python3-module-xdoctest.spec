@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 Summary: Doctest runner with AST parsing and pytest plugin integration
 License: Apache-2.0
@@ -56,6 +56,9 @@ reports.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 26 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1.3.2-alt1
+- 1.3.0 -> 1.3.2
+
 * Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0
 
