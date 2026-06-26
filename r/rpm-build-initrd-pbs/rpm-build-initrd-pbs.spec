@@ -1,49 +1,21 @@
 %define imagedir /usr/libexec/proxmox-backup/file-restore
-
-%ifdef _priority_distbranch
-%define altbranch %_priority_distbranch
-%else
-%define altbranch %(rpm --eval %%_priority_distbranch)
-%endif
-%if "%altbranch" == "%nil"
-%define altbranch sisyphus
-%endif
-
 Name: rpm-build-initrd-pbs
-Version: 0.1
-Release: alt4
+Version: 0.2
+Release: alt1
 
-Summary: RPM helper post script for building PBS initrd image
+Summary: RPM helper filetrigger for building PBS initrd image
 License: GPL
 Group: Development/Other
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 
-Requires(pre): make-initrd
-Requires(pre): make-initrd-pbs
-Requires(pre): /proc
-
-%if "%altbranch" == "p10"
-Requires(pre): kernel >= 6.1
-# Force un-def kernel flavour (no ZFS for 6.12 in p10)
-Conflicts: kernel >= 6.2
-%elif "%altbranch" == "p11" || "%altbranch" == "c10f2"
-Requires(pre): kernel >= 6.12
-# There's no zfs module for 6.14 kernel
-Conflicts: kernel >= 6.13
-%else
-# Sisyphus
-Requires(pre): kernel >= 6.18
-# Force strict version
-Conflicts: kernel >= 6.19
-%endif
-
-Requires(pre): zfs-kernel-module
-
+Requires: make-initrd
+Requires: make-initrd-pbs
+Requires: /proc
 
 %description
-RPM helper post script for building PBS initrd image,
+RPM helper filetrigger for building PBS initrd image,
 required for file-restore feature
 
 %prep
@@ -51,27 +23,17 @@ required for file-restore feature
 
 %install
 install -p -D -m 0644 proxmox-backup-restore-image.mk %buildroot%imagedir/proxmox-backup-restore-image.mk
-
-%post
-mkdir -p %imagedir
-
-# Filter out bad kernel flavours in case they were installed (may happen during install-check)
-VMLINUZ=$(ls -1 /boot/vmlinuz-*alt* 2>/dev/null | grep -vE "(rocknix|pine|rpi|sunxi|repka|rk|mp|rt|talos)" | head -n 1)
-KVER="${VMLINUZ##*/vmlinuz-}"
-echo "VMLINUZ = $VMLINUZ"
-echo "KVER = $KVER"
-rm -f "%imagedir/initramfs.img"
-
-make-initrd --verbose --no-checks \
-    --config=%imagedir/proxmox-backup-restore-image.mk --kernel=$KVER
-cp /boot/vmlinuz-$KVER %imagedir/bzImage
-
-chmod 0644 %imagedir/{bzImage,initramfs.img}
+install -p -D -m 0755 rpm-build-initrd-pbs.filetrigger %buildroot/usr/lib/rpm/rpm-build-initrd-pbs.filetrigger
 
 %files
+%dir %imagedir
 %config(noreplace) %imagedir/proxmox-backup-restore-image.mk
+%_libexecdir/rpm/rpm-build-initrd-pbs.filetrigger
 
 %changelog
+* Tue Jun 23 2026 Anton Farygin <rider@altlinux.org> 0.2-alt1
+- moved initrd build from %%post to rpm filetrigger
+
 * Tue Feb 03 2026 Sergey Konev <darisishe@altlinux.org> 0.1-alt4
 - Update kernel dependencies for branches (FTBS fix)
 
