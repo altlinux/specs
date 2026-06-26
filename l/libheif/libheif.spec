@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.23.0
+Version: 1.23.1
 Release: alt1
 
 Summary: HEIF file format decoder and encoder
@@ -96,6 +96,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jun 26 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.23.1-alt1
+- 1.23.1
+
 * Tue Jun 02 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.23.0-alt1
 - 1.23.0
 
