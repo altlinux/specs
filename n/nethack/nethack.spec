@@ -1,149 +1,63 @@
 Name:           nethack
-License:        NetHack General Public License
-Group:          Games/Adventure 
-Version:        3.4.3
-%define ver	343
-Release:        alt1.qa1
+Version:        5.0.0
+%define ver     500
+%define Name    NetHack
+Release:        alt1
+Source:         %name-%ver-src.tgz
 Summary:        Character Based RPG
-Source0:        %name-%ver-src.tar.bz2
-Source1:        SuSE.tar.bz2
-Patch0:         %name-config.patch
-Patch1:         %name-decl.patch
-Patch2:         %name-misc.patch
-Patch3:         %name-syscall.patch
-Patch5:         %name-gzip.patch
-URL:            http://www.nethack.org/
-Packager: Fr. Br. George <george@altlinux.ru>
 
-# Automatically added by buildreq on Sun Jun 17 2007
-BuildRequires: flex libncurses-devel
-%add_findreq_skiplist %_libdir/nethack/recover-helper
+URL:            http://www.nethack.org
+License:        NGPL
+Group:          Games/Adventure
+
+%define luaver 5.4
+# Automatically added by buildreq on Sat Jun 20 2026
+# optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 libgcc15-devel libgpg-error libncurses-devel libtinfo-devel lua5.4 pkg-config python3 python3-base python3-dev sh5
+BuildRequires: git-core groff-base libncursesw-devel libuuid-devel lua-devel lua-devel-static python3-module-setuptools
+%filter_from_requires /^xset$/d
 
 %description
-This RPG is somewhat cryptic with its character based output. But a
-true fan knows and appreciates its complexity and possibilities.
-
-This package contains the text interface.
-
-
-
-Authors:
---------
-    Stephen L. Ericksen <stevee@cc.usu.edu>
+NetHack 5.0 is an enhancement to the dungeon exploration game NetHack,
+which is a distant descendent of Rogue and Hack, and a direct descendent
+of NetHack 3.6.
 
 %prep
-%setup
-%patch0
-%patch1
-%patch2
-%patch3
-%patch5
-tar xvf %SOURCE1
-#sed -i "s/^CFLAGS.*/& $RPM_OPT_FLAGS/" sys/unix/Makefile*
+%setup -n %Name-%version
+LVR=`rpmquery --queryformat "%%{version}\n" lua5.4 | ( export IFS=.; read A B C; printf "%%d%%02d%%02d" $A $B $C )`
+sed -i "s/#define NHL_VERSION_EXPECTED .*/#define NHL_VERSION_EXPECTED $LVR/" src/nhlua.c
+
+%define luasrc lib/lua-%luaver/src
+mkdir -p %luasrc
+ln -s /usr/include/lua* /usr/include/laux* %luasrc
+cp %_libdir/liblua.a %luasrc
 
 %build
-# create symlinks to makefiles
-sh sys/unix/setup.sh 1
-# tty
-make clean
-cp -f SuSE/tty/config.h include/config.h
-cp -f SuSE/tty/Makefile.src src/Makefile
-make nethack CFLAGS="$RPM_OPT_FLAGS -I../include -D_GNU_SOURCE"
-cp dat/options dat/options.tty
-# doc, data, recover...
-make Guidebook data oracles options quest.dat rumors dungeon spec_levs check-dlb x11tiles pet_mark.xbm rip.xpm mapbg.xpm
-cd util && make CFLAGS="$RPM_OPT_FLAGS -I../include -D_GNU_SOURCE" recover
+sys/unix/setup.sh sys/unix/hints/linux.500
+%make_build LUA_VERSION=%luaver PREFIX=%prefix HACKDIR=%_localstatedir/%name
 
 %install
-rm -rf $RPM_BUILD_ROOT
-# direcotries
-install -d $RPM_BUILD_ROOT%_libdir/nethack/
-install -d $RPM_BUILD_ROOT%_gamesbindir
-install -d $RPM_BUILD_ROOT%_datadir/games/nethack
-install -d $RPM_BUILD_ROOT/%_mandir/man6/
-# game directory
-install -d $RPM_BUILD_ROOT/var/games/nethack/save
-touch $RPM_BUILD_ROOT/var/games/nethack/perm \
-        $RPM_BUILD_ROOT/var/games/nethack/record \
-        $RPM_BUILD_ROOT/var/games/nethack/logfile
-chmod -R 0775 $RPM_BUILD_ROOT/var/games/nethack
-# binaries 
-install -m 2755 src/nethack.tty $RPM_BUILD_ROOT%_libdir/nethack/
-# scripts
-for STYLE in tty ; do 
-    install -m 755 SuSE/$STYLE/nethack.sh $RPM_BUILD_ROOT%_gamesbindir/nethack.$STYLE
-    if [ -r SuSE/$STYLE/nethack-tty.sh ] ; then
-        install -m 755 SuSE/$STYLE/nethack-tty.sh $RPM_BUILD_ROOT%_gamesbindir/nethack.tty.$STYLE
-    fi
-done
-# options
-install -m 644 dat/options.tty $RPM_BUILD_ROOT%_libdir/nethack/
-# man pages
-install -m 644 doc/{nethack,lev_comp,dlb,dgn_comp,recover}.6 $RPM_BUILD_ROOT/%_mandir/man6/
-# doc
-mkdir -p $RPM_BUILD_ROOT/%_defaultdocdir/nethack
-install -m 644 doc/Guidebook.{tex,txt} $RPM_BUILD_ROOT/%_defaultdocdir/nethack
-cd doc
-tar cvfj $RPM_BUILD_ROOT/%_defaultdocdir/nethack/fixes.tar.bz2 fixes*
-cd ..
-chmod 644 $RPM_BUILD_ROOT/%_defaultdocdir/nethack/fixes.tar.bz2
-install -m 644 dat/license $RPM_BUILD_ROOT/%_defaultdocdir/nethack
-install -m 644 SuSE/README.SuSE $RPM_BUILD_ROOT/%_defaultdocdir/nethack
-# common data
-for file in nhdat x11tiles pet_mark.xbm rip.xpm mapbg.xpm license;
-do 
-  install -m 644 dat/$file  $RPM_BUILD_ROOT%_datadir/games/nethack/
-done
-# configs
-install -m 755 -d $RPM_BUILD_ROOT%_sysconfdir/nethack
-for STYLE in tty ; do 
-    install -m 755 SuSE/$STYLE/nethackrc $RPM_BUILD_ROOT%_sysconfdir/nethack/nethackrc.$STYLE
-done
-# main launcher script
-install -m 755 SuSE/nethack $RPM_BUILD_ROOT%_gamesbindir/
-# recover helper
-install -m 755 SuSE/recover-helper $RPM_BUILD_ROOT%_libdir/nethack/
-# utils
-install -m 755 util/{dgn_comp,dlb,lev_comp,makedefs,recover,tile2x11} $RPM_BUILD_ROOT%_libdir/nethack/
-#install -m 755 util/tilemap $RPM_BUILD_ROOT%_libdir/nethack/
-# x11 app-defaults
-#mkdir -p $RPM_BUILD_ROOT/usr/X11R6/lib/X11/app-defaults
-#install -m 644 win/X11/NetHack.ad $RPM_BUILD_ROOT/usr/X11R6/lib/X11/app-defaults/NetHack
-# x11 font
-#/usr/bin/X11/bdftopcf -o nh10.pcf win/X11/nh10.bdf
-#mkdir -p $RPM_BUILD_ROOT/usr/X11R6/lib/X11/fonts/misc/
-#install -m 644 nh10.pcf $RPM_BUILD_ROOT/usr/X11R6/lib/X11/fonts/misc/
-#gzip $RPM_BUILD_ROOT/usr/X11R6/lib/X11/fonts/misc/nh10.pcf
-# the font is added into fonts.dir by SuSEconfig.fonts
-
-%post
-#%%run_permissions
-#
-%verifyscript
-#%%verify_permissions -e %_libdir/nethack/nethack.tty
+%makeinstall_std LUA_VERSION=%luaver PREFIX=%buildroot%prefix HACKDIR=%buildroot%_localstatedir/%name
+sed -i 's|%buildroot||' %buildroot%_gamesbindir/%name
+install -D %buildroot%_localstatedir/%name/%name %buildroot%_gamesbindir/%name.bin
+install -D %buildroot%_localstatedir/%name/recover %buildroot%_gamesbindir/%name.recover
+ln -srf %buildroot%_gamesbindir/%name.bin %buildroot%_localstatedir/%name/%name
+ln -srf %buildroot%_gamesbindir/%name.recover %buildroot%_localstatedir/%name/recover
+mkdir -p %buildroot%_sysconfdir
+ln -sr  %buildroot%_localstatedir/%name/sysconf %buildroot%_sysconfdir/%name
 
 %files
-%attr(02711,games,games) %_libdir/nethack/nethack.tty
-%_libdir/nethack/options.tty
-%_gamesbindir/nethack*.tty
-%config %_sysconfdir/nethack/nethackrc.tty
-%dir %_sysconfdir/nethack
-%dir %_libdir/nethack
-%_datadir/games/nethack
-%_libdir/nethack/recover-helper
-%_libdir/nethack/dgn_comp
-%_libdir/nethack/dlb
-%_libdir/nethack/lev_comp
-%_libdir/nethack/makedefs
-%_libdir/nethack/recover
-%_libdir/nethack/tile2x11
-#%_libdir/nethack/tilemap
-%_defaultdocdir/nethack
-%_mandir/man6/*
-%attr(-,games,games) /var/games/nethack
-%_gamesbindir/nethack
+%attr(02711, root, games) %_gamesbindir/%name.bin
+%_gamesbindir/%name.recover
+%_gamesbindir/%name
+%attr(02775, root, games) %_localstatedir/%name/save
+%dir %attr(0775, root, games) %_localstatedir/%name
+%attr(0664, root, games) %_localstatedir/%name/?[^a]*
+%_sysconfdir/%name
 
 %changelog
+* Sat Jun 20 2026 Fr. Br. George <george@altlinux.org> 5.0.0-alt1
+- Total new version recreation for ALT
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
