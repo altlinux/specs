@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.155.3
+Version: 6.155.7
 Release: alt1
 
 Summary: A library for property based testing
@@ -99,6 +99,9 @@ in your code with less work.
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Fri Jun 26 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.155.7-alt1
+- Updated to 6.155.7.
+
 * Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.155.3-alt1
 - Updated to 6.155.3.
 
