@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           rustnet
-Version:        1.3.0
+Version:        1.4.0
 Release:        alt1
 
 Summary:        A cross-platform network monitoring terminal UI tool
@@ -20,9 +20,9 @@ Patch:          %name-%version-%release.patch
 BuildRequires(pre): rpm-build-rust
 BuildRequires:      pkgconfig(libbpf)
 BuildRequires:      pkgconfig(libelf)
+BuildRequires:      pkgconfig(zlib)
+BuildRequires:      pkgconfig(libpcap)
 BuildRequires:      clang
-BuildRequires:      zlib-devel
-BuildRequires:      libpcap-devel
 
 %description
 A cross-platform network monitoring tool built with Rust.
@@ -36,9 +36,11 @@ deep packet inspection, and a terminal user interface.
 %rust_prep
 # Disabling vendor build of libbpf and elfutils dependencies:
 sed -i \
-  's/libbpf-rs.*optional = true/&, default-features = false/' Cargo.toml
+  's/libbpf-rs.*optional = true/&, default-features = false/' \
+  crates/rustnet-host/Cargo.toml
 sed -i \
-  's/libbpf-cargo.*optional = true/&, default-features = false/' Cargo.toml
+  's/libbpf-cargo.*optional = true/&, default-features = false/' \
+  crates/rustnet-host/Cargo.toml
 
 %build
 %rust_build
@@ -62,6 +64,9 @@ sed -i \
 %doc README.md CHANGELOG.md
 
 %changelog
+* Thu Jun 25 2026 Sergey Savelev <medovi@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Tue May 19 2026 Sergey Savelev <medovi@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
