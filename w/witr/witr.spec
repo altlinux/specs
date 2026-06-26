@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: witr
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Why is this running?
@@ -49,6 +49,9 @@ install -Dm 644 docs/cli/witr.1 %buildroot%_man1dir/witr.1
 %_man1dir/witr.1.*
 
 %changelog
+* Fri Jun 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Sun May 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
 - New version 0.3.2.
 
