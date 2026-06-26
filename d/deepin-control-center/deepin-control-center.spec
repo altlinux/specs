@@ -7,7 +7,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.95
+Version: 6.1.96
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -148,6 +148,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so
 %_includedir/%repo/
 
 %changelog
+* Fri Jun 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.96-alt1
+- New version 6.1.96.
+
 * Mon Jun 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.95-alt1
 - New version 6.1.95.
 
