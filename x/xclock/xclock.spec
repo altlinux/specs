@@ -1,6 +1,6 @@
 Name: xclock
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: analog / digital clock for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -23,7 +23,8 @@ continuously updated at a frequency which may be specified by the user.
 %setup -n %name-%version
 
 %build
-%autoreconf
+autopoint -f
+%autoreconf -I m4
 %configure
 %make
 
@@ -37,6 +38,9 @@ continuously updated at a frequency which may be specified by the user.
 %_mandir/man1/xclock.*
 
 %changelog
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 1.1.1-alt2
+- Fix new gettext build
+
 * Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
