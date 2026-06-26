@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 4.1.4
-Release: alt1
+Release: alt2
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.0-or-later
@@ -286,6 +286,9 @@ fi
 %endif
 
 %changelog
+* Fri Jun 26 2026 Paul Wolneykien <manowar@altlinux.org> 4.1.4-alt2
+- Fixed PID file path in audit.init.
+
 * Fri Mar 27 2026 Anton Farygin <rider@altlinux.org> 4.1.4-alt1
 - 4.1.3 -> 4.1.4
 
