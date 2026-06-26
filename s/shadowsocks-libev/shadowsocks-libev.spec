@@ -5,7 +5,7 @@
 
 Name: shadowsocks-libev
 Version: 3.3.5
-Release: alt4
+Release: alt5
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: GPL-3.0-or-later
 Group: Security/Networking
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Source1: libbloom-0.tar
 Source2: libcork-0.tar
 Source3: libipset-0.tar
+Patch: shadowsocks-libev-3.3.5-gcc13-comp.patch
 
 BuildRequires: asciidoc
 BuildRequires: libcares-devel
@@ -49,6 +50,7 @@ Group: System/Libraries
 
 %prep
 %setup
+%autopatch -p1
 tar xf %SOURCE1 -C .
 tar xf %SOURCE2 -C .
 tar xf %SOURCE3 -C .
@@ -98,6 +100,9 @@ install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.
 %_libdir/lib%name.so.*
 
 %changelog
+* Wed Jun 17 2026 Anton Vyatkin <toni@altlinux.org> 3.3.5-alt5
+- Fix FTBFS.
+
 * Sun Mar 20 2022 Vitaly Chikunov <vt@altlinux.org> 3.3.5-alt4
 - Hardened systemd units and configs (latter are made non-world readable).
 
