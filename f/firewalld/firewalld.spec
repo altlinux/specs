@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -77,6 +77,11 @@ This package provides the firewalld testsuite.
 %patch -p1
 
 %build
+# We need to run autopoint with gettext >= 1.0
+CMP_RES="$(rpmevrcmp "$(rpm -q --qf '%{VERSION}' gettext)" 1.0)"
+if [ -n "$CMP_RES" ] && [ $CMP_RES -ge 0 ]; then
+	autopoint -f
+fi
 %autoreconf
 export PYTHON=/usr/bin/python3
 %configure \
@@ -160,6 +165,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %endif
 
 %changelog
+* Thu Jun 25 2026 Mikhail Efremov <sem@altlinux.org> 2.4.3-alt1
+- Fixed build with gettext >= 1.0.
+- Updated to 2.4.3.
+
 * Wed Jun 10 2026 Mikhail Efremov <sem@altlinux.org> 2.4.2-alt1
 - Updated to 2.4.2.
 
