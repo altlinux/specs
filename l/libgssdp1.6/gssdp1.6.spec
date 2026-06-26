@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -140,6 +140,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Fri Jun 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
+- 1.6.6
+
 * Sun May 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.5-alt1
 - 1.6.5
 
