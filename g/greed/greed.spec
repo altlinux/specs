@@ -1,6 +1,6 @@
 Name: greed
 Version: 4.5
-Release: alt1
+Release: alt2
 Source: %name-%version.tar.gz
 License: BSD-2-Clause
 Group: Games/Puzzles
@@ -9,6 +9,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 # Automatically added by buildreq on Thu Dec 06 2007
 BuildRequires: libncursesw-devel asciidoc-a2x
 Patch: a2x.patch
+Patch1: gcc15.patch
 
 %description
 The strategy game of Greed.  Try to eat as much as possible of the board
@@ -17,6 +18,7 @@ before munching yourself into a corner.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %make SFILE=%_localstatedir/games/%name.hs
@@ -34,6 +36,9 @@ install /dev/null %buildroot%_localstatedir/games/%name.hs
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 4.5-alt2
+- Fix GCC15 build
+
 * Tue Mar 31 2026 Fr. Br. George <george@altlinux.org> 4.5-alt1
 - Autobuild version bump to 4.5
 
