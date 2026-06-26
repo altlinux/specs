@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.79
-Release: alt2
+Version: 1.1.82
+Release: alt1
 
 Summary: Set the theme and appearance of DDE
 
@@ -73,6 +73,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Fri Jun 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.82-alt1
+- New version 1.1.82.
+
 * Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.79-alt2
 - Fixed build on dqt6-base 6.10.3.
 
