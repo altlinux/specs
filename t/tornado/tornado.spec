@@ -1,12 +1,12 @@
 Name: tornado
 Version: 1.4
-Release: alt2
+Release: alt4
 
 Summary: Curses-based game of destroing enemy's house by controlling the weather
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 
-Url: http://kiza.kcore.de/software/tornado/
+Url: https://github.com/kouya/tornado
 Source: v%version.tar.gz
 Patch: %name-1.4.patch
 
@@ -25,6 +25,7 @@ original C64 game.
 %ifarch %e2k
 sed -i 's,-Og,-O%_optlevel,' Makefile.inc
 %endif
+sed -i 's/=CHARSET/=iso-8859-1/' po/pt.po po/no.po
 
 %build
 %make
@@ -42,6 +43,13 @@ mkdir -p %buildroot{%_bindir,%_datadir/locale,%_localstatedir/games}
 %doc [A-LN-Z]*
 
 %changelog
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 1.4-alt4
+- Fix GCC15 build
+
+* Mon Jul 17 2023 Fr. Br. George <george@altlinux.org> 1.4-alt3
+- Rebuild with linbcurses6
+- Fix UTF8 buffer underprovision
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 1.4-alt2
 - E2K: proper optimization level
 
