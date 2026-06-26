@@ -14,7 +14,7 @@
 
 Name: xscreensaver
 Version: 6.15
-Release: alt1
+Release: alt2
 
 Summary: A screen saver and locker for the X window system
 
@@ -177,7 +177,8 @@ mv -f merged_ru.po po/ru.po
 rm hacks/images/molecules/{cocaine,dthc}.pdb
 
 %build
-%autoreconf
+autopoint -f
+%autoreconf -I m4
 %configure \
   --without-motif \
   --with-pam \
@@ -204,6 +205,11 @@ subst 's,@install_sh@,install,' po/Makefile
 mkdir -p ad/hack.d/
 sed -nr "1,/%alt_xs_hacks_list_begin/p" %src_xs_conf >ad/xscreensaver.top
 sed -r "1,/%alt_xs_hacks_list_end/d" %src_xs_conf >ad/xscreensaver.bottom
+
+# Check that ad/xscreensaver.{top,bottom} file really generated
+[ "$(tail -1 ad/xscreensaver.top)" != "$(tail -1 %src_xs_conf)" ] || exit 1
+[ "$(head -1 ad/xscreensaver.bottom)" != "$(head -1 %src_xs_conf)" ] || exit 1
+
 sed -nr "/%alt_xs_hacks_list_begin/,/%alt_xs_hacks_list_end/{s;^[[:blank:]-]*(GL:)?[[:blank:]]+([^[:blank:]]+).*$;\2;p}" \
 		%src_xs_conf | while read hname; do
 	if grep -qs "^$hname\$" %SOURCE9; then
@@ -356,13 +362,21 @@ cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
 %_rpmmacrosdir/%name
 
 %files modules -f xscreensaver-modules-std
+%dir %_sysconfdir/X11/%name
+%dir %xss_ad_dir
 %dir %xss_hack_dir
+%dir %_datadir/%name
+%dir %xss_conf_dir
 %xss_hack_dir/webcollage-helper
 
 %files modules-gl -f xscreensaver-modules-gl
+%dir %_sysconfdir/X11/%name
+%dir %xss_ad_dir
+%dir %xss_hack_dir
+%dir %_datadir/%name
+%dir %xss_conf_dir
 %xss_hack_dir/%name-gl-visual
 %_man6dir/%name-gl-visual.6*
-%dir %xss_hack_dir
 %xss_hack_dir/mapscroller.pl
 %xss_hack_dir/xshadertoy
 %_man6dir/xshadertoy.6*
@@ -372,6 +386,11 @@ cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Fri Jun 26 2026 Mikhail Efremov <sem@altlinux.org> 6.15-alt2
+- Fixed build with gettext >= 1.0.
+- Check that ad/xscreensaver.{top,bottom} file really generated.
+- Own xcreensaver directories by modules subpackages too.
+
 * Mon Jun 15 2026 Mikhail Efremov <sem@altlinux.org> 6.15-alt1
 - Drop obsoleted rpm macros.
 - Squashed hacks subpackages to modules.
