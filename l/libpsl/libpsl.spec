@@ -2,8 +2,8 @@
 %def_enable builtin
 
 Name: libpsl
-Version: 0.21.5
-Release: alt2
+Version: 0.22.0
+Release: alt1
 
 Summary: C library for the Public Suffix List
 License: MIT
@@ -27,6 +27,7 @@ BuildRequires: publicsuffix-list-dafsa
 
 Requires: publicsuffix-list-dafsa
 
+%define sover 5
 %define _unpackaged_files_terminate_build 1
 
 %description
@@ -119,7 +120,8 @@ install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 
 %files
 %doc COPYING
-%_libdir/*.so.*
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files devel
 %_includedir/*
@@ -142,6 +144,9 @@ install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Fri Jun 26 2026 Mikhail Efremov <sem@altlinux.org> 0.22.0-alt1
+- Updated to 0.22.0.
+
 * Wed Mar 04 2026 Mikhail Efremov <sem@altlinux.org> 0.21.5-alt2
 - Enabled builtin PSL (closes: #44575).
 - Used macros from rpm-macros-meson.
