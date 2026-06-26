@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: minivi
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: A small application for viewing images
@@ -49,6 +49,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Fri Jun 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.1-alt1
+- 0.17.0 -> 0.17.1
+
 * Fri Jun 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.0-alt1
 - 0.16.0 -> 0.17.0
 
