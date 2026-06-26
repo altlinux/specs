@@ -2,7 +2,7 @@
 %define import_path github.com/alexballas/go2tv
 
 Name: go2tv
-Version: 1.19.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Cast media files to UPnP/DLNA Media Renderers and Smart TVs
@@ -27,6 +27,7 @@ BuildRequires: libXinerama-devel
 BuildRequires: libglvnd-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: ffmpeg
+BuildRequires: pipewire-libs-devel
 
 %description
 Cast media files to UPnP/DLNA Media Renderers and Smart TVs
@@ -49,6 +50,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 pushd $BUILDDIR/src/$IMPORT_PATH
+export CGO_CFLAGS_ALLOW='-fno-strict-overflow'
 %golang_build cmd/go2tv cmd/go2tv-lite
 popd
 
@@ -65,6 +67,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name-lite
 
 %changelog
+* Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Sat Nov 29 2025 Anton Farygin <rider@altlinux.com> 1.19.0-alt1
 - Updated to 1.19.0
 
