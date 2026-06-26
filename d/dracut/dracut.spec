@@ -12,7 +12,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 109
+Version: 111
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -265,9 +265,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dir %dracutlibdir
 %dir %dracutlibdir/modules.d
 %dracutlibdir/dracut-functions.sh
-%dracutlibdir/dracut-init.sh
 %dracutlibdir/dracut-functions
-%dracutlibdir/dracut-version.sh
 %dracutlibdir/dracut-logger.sh
 %dracutlibdir/dracut-initramfs-restore
 %dracutlibdir/dracut-install
@@ -275,15 +273,12 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/skipcpio
 %config(noreplace) %_sysconfdir/dracut.conf
 %dracutlibdir/dracut.conf.d/01-dist.conf
-%dracutlibdir/dracut.conf.d/hostonly/10-hostonly.conf
 %dir %_sysconfdir/dracut.conf.d
 %dir %dracutlibdir/dracut.conf.d
 %dracutlibdir/dracut.conf.d/generic
 %dracutlibdir/dracut.conf.d/hostonly
 %dracutlibdir/dracut.conf.d/no-network
-%dracutlibdir/dracut.conf.d/no-xattr
 %dracutlibdir/dracut.conf.d/rescue
-%dracutlibdir/dracut.conf.d/uki-virt
 
 %_datadir/pkgconfig/dracut.pc
 
@@ -310,20 +305,20 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/11systemd-battery-check
 %dracutlibdir/modules.d/11systemd-coredump
 %dracutlibdir/modules.d/11systemd-creds
-%dracutlibdir/modules.d/11systemd-cryptsetup
 %dracutlibdir/modules.d/11systemd-hostnamed
 %dracutlibdir/modules.d/11systemd-initrd
 %dracutlibdir/modules.d/11systemd-integritysetup
 %dracutlibdir/modules.d/11systemd-journald
 %dracutlibdir/modules.d/11systemd-ldconfig
 %dracutlibdir/modules.d/11systemd-modules-load
-%dracutlibdir/modules.d/11systemd-pcrphase
+%dracutlibdir/modules.d/11systemd-pcrextend
 %dracutlibdir/modules.d/11systemd-portabled
 %dracutlibdir/modules.d/11systemd-pstore
 %dracutlibdir/modules.d/11systemd-repart
 %dracutlibdir/modules.d/11systemd-resolved
 %dracutlibdir/modules.d/11systemd-sysext
 %dracutlibdir/modules.d/11systemd-sysctl
+%dracutlibdir/modules.d/11systemd-sysusers-service
 %dracutlibdir/modules.d/11systemd-timedated
 %dracutlibdir/modules.d/11systemd-timesyncd
 %dracutlibdir/modules.d/11systemd-tmpfiles
@@ -347,6 +342,8 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/70bluetooth
 %dracutlibdir/modules.d/70btrfs
 %dracutlibdir/modules.d/70crypt
+%dracutlibdir/modules.d/70crypt-lib
+%dracutlibdir/modules.d/70devicetree-firmware
 %dracutlibdir/modules.d/70dm
 %dracutlibdir/modules.d/70dmraid
 %dracutlibdir/modules.d/70fs-lib
@@ -355,6 +352,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/70kernel-modules-extra
 %dracutlibdir/modules.d/70lvm
 %dracutlibdir/modules.d/70mdraid
+%dracutlibdir/modules.d/70memdisk
 %dracutlibdir/modules.d/70multipath
 %dracutlibdir/modules.d/70numlock
 %dracutlibdir/modules.d/70nvdimm
@@ -364,6 +362,8 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %endif
 %dracutlibdir/modules.d/70pcmcia
 %dracutlibdir/modules.d/70qemu
+%dracutlibdir/modules.d/71overlayfs-crypt
+%dracutlibdir/modules.d/71systemd-cryptsetup
 %dracutlibdir/modules.d/73crypt-gpg
 %dracutlibdir/modules.d/73crypt-loop
 %dracutlibdir/modules.d/73fido2
@@ -433,9 +433,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/10systemd-network-management
 %dracutlibdir/modules.d/11systemd-networkd
 %dracutlibdir/modules.d/35connman
-%dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/40network
 %dracutlibdir/modules.d/45net-lib
+%dracutlibdir/modules.d/45systemd-import
 %dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/70kernel-network-modules
 %dracutlibdir/modules.d/70qemu-net
@@ -502,6 +502,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/dracut.conf.d/ima
 
 %changelog
+* Fri Jun 26 2026 Alexey Shabalin <shaba@altlinux.org> 111-alt1
+- 111
+
 * Tue Dec 30 2025 Alexey Shabalin <shaba@altlinux.org> 109-alt1
 - 109
 
