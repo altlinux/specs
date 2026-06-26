@@ -8,7 +8,7 @@
 %endif
 
 Name:    folderhost
-Version: 26.5.1
+Version: 26.6.0
 Release: alt1
 
 License: GPL-3.0
@@ -128,5 +128,8 @@ install -Dm 0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 %dir %attr(0750, _%name, _%name) %_sharedstatedir/%name
 
 %changelog
+* Thu Jun 25 2026 Sergey Savelev <medovi@altlinux.org> 26.6.0-alt1
+- New version 26.6.0.
+
 * Tue Jun 02 2026 Sergey Savelev <medovi@altlinux.org> 26.5.1-alt1
 - Initial build for Sisyphus.
