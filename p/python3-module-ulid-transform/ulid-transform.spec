@@ -1,5 +1,5 @@
 Name: python3-module-ulid-transform
-Version: 2.2.1
+Version: 2.2.9
 Release: alt1
 
 Summary: Fast ULID transformations
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/ulid_transform-%version.dist-info
 
 %changelog
+* Fri Jun 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.9-alt1
+- 2.2.9 released
+
 * Mon May 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.1-alt1
 - 2.2.1 released
 
