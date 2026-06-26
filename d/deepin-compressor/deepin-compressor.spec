@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.30
-Release: alt2
+Version: 6.5.31
+Release: alt1
 Epoch: 1
 
 Summary: Archive Manager for Deepin Desktop Environment
@@ -102,6 +102,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Fri Jun 26 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.31-alt1
+- New version 6.5.31.
+
 * Wed Jun 17 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.30-alt2
 - Fixed segmentation error when adding a file (ALT #59465).
 
