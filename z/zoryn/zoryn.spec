@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.42.0
+Version: 0.43.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -111,6 +111,22 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Fri Jun 26 2026 Anton Farygin <rider@altlinux.org> 0.43.0-alt1
+- added zoryn devenv profile list command (prints config profiles; --verbose shows resolved config)
+- added zoryn up --no-gpg-sign for zoryn's own automated commits
+- added GLM-claude-code devenv feature (Claude Code CLI with a separate profile)
+- added .gear/version-up template default values syntax {patch:0}
+- added zoryn devenv terminal window/tab title during build and use
+- fixed builder mountpoint auto-fix to classify device nodes vs mountpoints (allowed_devices vs allowed_mountpoints) (closes: #59656)
+- fixed devenv argv reordering to recognise the profile sub-command
+- fixed zoryn up --switch-to-upstream-git to force-stage .gear in gitignored repos
+- fixed zoryn up --switch-to-upstream-git to write a templated self-excluding tar: rule
+- fixed gen-pypi2spec, gen-opam2spec and gen-watch to force-stage generated .gear files
+- fixed ppx_shell_check to reject mixed escaped/raw shell concatenation
+- fixed devenv TOML parse errors to warn with line and column instead of silent empty config
+- fixed zoryn up automatic tag discovery to derive the spec version through the version-up template
+- fixed sandbox bwrap/hybrid runners to pass script and args as positional parameters
+
 * Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 0.42.0-alt1
 - added devenv: ephemeral dev shell with a package's build deps (bwrap and podman)
 - added devenv podman backend: derived image plus persistent keep-id container entered as your host user
