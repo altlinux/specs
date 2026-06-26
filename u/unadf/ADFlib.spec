@@ -1,13 +1,12 @@
 Summary: unzip like for .adf files (Amiga devices dumps)
 Name: unadf
-Version: 0.7.12
-Release: alt1.qa3
-URL: http://lclevy.free.fr/adflib
-Source0: http://lclevy.free.fr/adflib/adflib-%version.tar.bz2
+Version: 0.10.7
+Release: alt1
+Url: https://adflib.github.io/
+Source: ADFlib-%version.tar.gz
 Patch: %name-doublecomm-alt.patch
-License: GPL
+License: GPLv2
 Group: Archiving/Other
-Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Thu Nov 04 2010
 BuildRequires: gcc-c++
@@ -18,22 +17,22 @@ powered by ADFLib
 
 %package -n libadf
 Summary: unzip like for .adf files (Amiga devices dumps) -- the library
-License: GPL
 Group: Development/C
 
 %description -n libadf
-The ADFlib is a portable C library designed to manage Amiga formatted devices like harddisks and ZIP disks, or dump files of this kind of media via the .ADF format.
+The ADFlib is a portable C library designed to manage Amiga formatted
+devices like harddisks and ZIP disks, or dump files of this kind of
+media via the .ADF format.
 
 %package -n libadf-devel
 Summary: unzip like for .adf files (Amiga devices dumps) -- development suite
-License: GPL
 Group: Development/C
 
 %description -n libadf-devel
 Development suite for ADFLib
 
 %prep
-%setup -n adflib-%version
+%setup -n ADFlib-%version
 #patch -p1
 
 %build
@@ -42,37 +41,35 @@ Development suite for ADFLib
 %make_build
 
 %install
-#mkdir -p %buildroot%_bindir %buildroot%_libdir %buildroot%_includedir/%name %buildroot%_datadir/libadf
-#install Demo/%name %buildroot%_bindir/
-#install Lib/libadf.a %buildroot%_libdir/
-#install Lib/*.h %buildroot%_includedir/%name/
 %makeinstall
-mkdir -p %buildroot%_datadir/libadf
-cp -rp boot %buildroot%_datadir/libadf
-mkdir -p %buildroot%_includedir/adflib
-mv %buildroot%_includedir/*.* %buildroot%_includedir/adflib
-
 rm -fv %buildroot%_libdir/*.a
 
 %files
-%_bindir/%name
-%doc README
+%doc README *.md
+%_bindir/*
+%_man1dir/*
 
 %files -n libadf
 %_libdir/libadf.so.*
-%dir %_datadir/libadf
-%dir %_datadir/libadf/boot
-%_datadir/libadf/boot/*
 
 %files -n libadf-devel
 %doc %_datadir/doc/adflib
-%dir %_includedir/adflib
-%_includedir/adflib/*
+%dir %_includedir/adf
+%_includedir/adf/*
 %_libdir/lib*
 %_pkgconfigdir/*
 %exclude %_libdir/libadf.so.*
 
+%check
+make check
+
 %changelog
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 0.10.7-alt1
+- Autobuild version bump to 0.10.7
+
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 0.10.6-alt1
+- Change upsteam and full update
+
 * Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.12-alt1.qa3
 - Fixed FTBFS.
 
