@@ -13,7 +13,7 @@
 %def_without check
 
 Name: teleport
-Version: 18.7.0
+Version: 18.9.1
 Release: alt1
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
@@ -126,6 +126,7 @@ done
 install -pDm 0644 %SOURCE20 "%buildroot%_sysconfdir/%name/$(basename %SOURCE20)"
 
 mkdir -p %buildroot%_localstatedir/%name
+rm -rfv %buildroot/%_bindir/sessionhelper
 
 %check
 make test
@@ -156,6 +157,9 @@ make test
 %_bindir/tbot
 
 %changelog
+* Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 18.9.1-alt1
+- New version 18.9.1.
+
 * Thu Feb 19 2026 Artem Krasovskiy <aibure@altlinux.org> 18.7.0-alt1
 - New version 18.7.0.
 
