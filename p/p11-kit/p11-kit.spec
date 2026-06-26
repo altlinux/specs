@@ -11,7 +11,7 @@
 
 Name: p11-kit
 Version: 0.26.2
-Release: alt1
+Release: alt2.g5e81ed3
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -238,6 +238,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Fri Jun 26 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.2-alt2.g5e81ed3
+- Updated from upstream git (bugfixes and hardening).
+
 * Wed Jun 03 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.2-alt1
 - 0.26.2 (fixes: CVE-2026-2100).
 
