@@ -1,6 +1,6 @@
 Name: xwininfo
 Version: 1.1.6
-Release: alt1
+Release: alt2
 
 Summary: window information utility for X
 License: X11
@@ -21,7 +21,8 @@ information is displayed depending on which options are selected.
 %setup
 
 %build
-%autoreconf
+autopoint -f
+%autoreconf -I m4
 %configure
 
 %make_build
@@ -35,6 +36,9 @@ information is displayed depending on which options are selected.
 %_man1dir/*
 
 %changelog
+* Fri Jun 26 2026 Fr. Br. George <george@altlinux.org> 1.1.6-alt2
+- Fix build with new gettext
+
 * Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.6-alt1
 - Autobuild version bump to 1.1.6
 
