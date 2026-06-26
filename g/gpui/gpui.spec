@@ -1,7 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 Name: gpui
-Version: 0.2.55
+Version: 0.2.56
 Release: alt1
 
 Summary: Group policy editor
@@ -13,9 +22,18 @@ BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+BuildRequires: qt6-base-common
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-5compat-devel
+%else
+BuildRequires: qt5-base-common
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+%endif
 BuildRequires: libsmbclient-devel libsmbclient
 
 BuildRequires: samba-devel
@@ -24,11 +42,14 @@ BuildRequires: libsasl2-devel
 BuildRequires: libsmbclient-devel
 BuildRequires: libuuid-devel
 BuildRequires: glib2-devel
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+BuildRequires: libpcre2-devel
+%else
 BuildRequires: libpcre-devel
+%endif
 BuildRequires: libkrb5-devel
 BuildRequires: libgtest-devel
 
-BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
 BuildRequires: xsd
@@ -51,7 +72,11 @@ Group policy editor
 %setup -q
 
 %build
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 %cmake
+%else
+%cmake -DQT_VERSION_MAJOR=5
+%endif
 %cmake_build
 
 %install
@@ -113,6 +138,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Jun 23 2026 Vladimir Rubanov <august@altlinux.org> 0.2.56-alt1
+- 0.2.56-alt1
+- Fixes:
+  + Port to qt6.
+
 * Fri Oct 11 2024 Vladimir Rubanov <august@altlinux.org> 0.2.55-alt1
 - 0.2.54-alt1
 - Fixes:
