@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: The DuckDB Python package
@@ -73,5 +73,8 @@ export LDFLAGS='-lpython3'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.4-alt1
+- Updated to 1.5.4.
+
 * Thu May 28 2026 Anton Zhukharev <ancieg@altlinux.org> 1.5.3-alt1
 - Packaged for ALT Sisyphus.

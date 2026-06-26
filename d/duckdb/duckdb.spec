@@ -16,8 +16,8 @@
 %def_without check
 
 Name: duckdb
-Version: 1.5.3
-Release: alt2
+Version: 1.5.4
+Release: alt1
 
 Summary: An analytical in-process SQL database management system
 License: MIT
@@ -38,6 +38,10 @@ BuildRequires: cmake
 BuildRequires: libssl-devel
 BuildRequires: libicu-devel
 
+%package libduckdb
+Summary: Shared library for DuckDB
+Group: Development/C++
+
 %package devel-static
 Summary: Development static libraries for DuckDB
 Group: Development/C++
@@ -54,6 +58,9 @@ DuckDB provides a rich SQL dialect, with support far beyond basic SQL.
 DuckDB supports arbitrary and nested correlated subqueries, window functions,
 collations, complex types (arrays, structs, maps), and several extensions
 designed to make SQL easier to use.
+
+%description libduckdb
+This package contains the DuckDB shared library.
 
 %description devel-static
 This package contains the development static libraries
@@ -92,6 +99,8 @@ cp -r CMakeLists.txt extension src third_party tools %buildroot%_datadir/duckdb
 
 %files
 %_bindir/duckdb
+
+%files libduckdb
 %_libdir/libduckdb.so
 
 %files devel-static
@@ -105,6 +114,9 @@ cp -r CMakeLists.txt extension src third_party tools %buildroot%_datadir/duckdb
 %_datadir/duckdb
 
 %changelog
+* Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.4-alt1
+- New version 1.5.4.
+
 * Thu May 28 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.3-alt2
 - Reduce debuginfo on riscv64 and loongarch64 (thx iv@).
 
