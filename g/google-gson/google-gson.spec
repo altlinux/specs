@@ -1,6 +1,6 @@
 Name:           google-gson
-Version:        2.13.2
-Release:        alt1.1
+Version:        2.14.0
+Release:        alt1
 
 Summary:        Java lib for conversion of Java objects into JSON representation
 License:        Apache-2.0
@@ -13,16 +13,16 @@ Source:         %name-%version.tar
 BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
 
-BuildRequires:  mvn(kr.motd.maven:os-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
-BuildRequires:  mvn(com.google.guava:guava-testlib)
-BuildRequires:  mvn(com.google.errorprone:error_prone_annotation)
-BuildRequires:  mvn(com.google.truth:truth)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
 BuildRequires:  mvn(com.google.errorprone:error_prone_core)
 BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+
+#Requires for tests
+#BuildRequires:  mvn(com.google.guava:guava-testlib)
+#BuildRequires:  mvn(com.google.truth:truth)
 
 BuildArch:      noarch
 
@@ -42,7 +42,6 @@ pre-existing objects that you do not have source-code of.
 %pom_remove_plugin :spotless-maven-plugin
 %pom_remove_plugin :maven-artifact-plugin
 
-%pom_remove_plugin :copy-rename-maven-plugin gson
 %pom_remove_plugin :proguard-maven-plugin gson
 
 %pom_remove_plugin :templating-maven-plugin gson
@@ -72,6 +71,9 @@ sed 's/${project.version}/%version/' gson/src/main/java-templates/com/google/gso
 %doc README.md CHANGELOG.md UserGuide.md
 
 %changelog
+* Fri Jun 26 2026 Anton Meleshnikov <alton@altlinux.org> 2.14.0-alt1
+- Updated to 2.14.0.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.13.2-alt1.1
 - Cosmetic fixes.
 
