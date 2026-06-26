@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.6.0
-Release: alt2
+Release: alt3
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -19,7 +19,6 @@ Source3: m2.tar
 Patch0: opensearch-disable-test-reporting.patch
 Patch1: opensearch-disable-network.patch
 Patch2: opensearch-system-java.patch
-Patch3: opensearch-alt-restart-service.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
@@ -115,11 +114,8 @@ grant {
 };
 EOF.
 fi
-# Restart service
-%post_service %name.service
-
-# Restore backup copy of old jars
-find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i//.old}";done
+# Restart service after upgrade
+%post_systemd_postponed %name.service
 
 %files
 %doc README.md
@@ -139,6 +135,9 @@ find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jun 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt3
+- Used %%post_systemd_postponed for correct restart service.
+
 * Tue May 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt2
 - Fixed update.
 - Removed jars for other architectures.
