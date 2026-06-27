@@ -4,11 +4,12 @@
 %set_verify_elf_method strict
 
 Name:    eppic
+# TODO: upstream provides eppic 5.0 with broken tests
 # git tag 4.0 c2a25643ea2d479a450fc54339adba57b54516b9
 # git describe origin/master --tags
 # 4.0-13-gdc60e00
 Version: 4.0.0.13.gdc60e00
-Release: alt3
+Release: alt4
 Summary: Eppic is a C interpreter
 Group:   Development/C
 License: GPL-2.0-or-later
@@ -59,6 +60,9 @@ make ROOT=%buildroot LIBDIR=%_libdir install
 %_libdir/libeppic.a
 
 %changelog
+* Sat Jun 27 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.0.13.gdc60e00-alt4
+- Fix build with gcc-15 and glibc-2.42.
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.0.13.gdc60e00-alt3
 - Fix multiple definitions of 'lastv'.
 - Enabled LFS support.
