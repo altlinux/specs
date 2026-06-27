@@ -2,7 +2,7 @@
 %define sover 6
 
 Name:    bobcat
-Version: 6.13.00
+Version: 6.14.00
 Release: alt1
 
 Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
@@ -11,6 +11,9 @@ Group:   Development/C++
 Url:     https://gitlab.com/fbb-git/bobcat
 
 Source: %name-%version.tar
+
+# alt patches
+Patch0: %name-%version-i586-sys_t-cast.patch
 
 BuildRequires: icmake
 BuildRequires: gcc-c++
@@ -55,10 +58,13 @@ Group: Other
 
 %prep
 %setup
+%ifarch i586
+%patch0 -p1
+%endif
 
 %build
 %ifarch i586
-%add_optflags -Wno-return-local-addr
+%add_optflags -Wno-error=return-local-addr
 %endif
 
 export CXXFLAGS="%optflags --std=c++2a -Werror -fdiagnostics-color=never -ffat-lto-objects"
@@ -107,6 +113,9 @@ rm -v %buildroot%_libdir/lib%name.a
 %_man7dir/*
 
 %changelog
+* Mon Jun 22 2026 Artem Semenov <savoptik@altlinux.org> 6.14.00-alt1
+- Updated to new version 6.14.00
+
 * Sat May 23 2026 Artem Semenov <savoptik@altlinux.org> 6.13.00-alt1
 - Updated to new version 6.13.00
 
