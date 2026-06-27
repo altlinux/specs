@@ -1,8 +1,8 @@
-%define git_commit_short 454a6e2
+%define git_commit_short 6a7d096
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -28,6 +28,7 @@ BuildRequires(pre): clang-devel
 
 BuildRequires: alt-os-release
 BuildRequires: libadwaita-devel
+BuildRequires: libdisplay-info-devel
 BuildRequires: llvm-devel
 BuildRequires: rust-cargo
 
@@ -80,6 +81,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sat Jun 27 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
+- New version 0.9.1.
+
 * Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
