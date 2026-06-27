@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: A Python module for decorators, wrappers and monkey patching
@@ -89,6 +89,9 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Sat Jun 27 2026 Anton Vyatkin <toni@altlinux.org> 2.2.2-alt1
+- New version 2.2.2.
+
 * Tue Jun 09 2026 Anton Vyatkin <toni@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 
