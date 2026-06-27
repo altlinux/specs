@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gtksourceview
-Version: %ver_major.7.0
+Version: %ver_major.7.1
 Release: alt1
 
 Summary: Gedit Technology - Source code editing widget
@@ -161,6 +161,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 299.7.1-alt1
+- 299.7.1
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 299.7.0-alt1
 - 299.7.0
 

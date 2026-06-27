@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.57
+%define ver_major 1.58
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -25,7 +25,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -229,6 +229,9 @@ rm -f tests/layouts/valid-20.layout
 
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
+- 1.58.0
+
 * Mon Mar 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.57.1-alt1
 - 1.57.1
 

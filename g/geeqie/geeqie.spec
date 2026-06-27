@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -117,6 +117,9 @@ ExifTool.
 %doc NEWS README.*
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt1
+- 2.9
+
 * Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8-alt1
 - 2.8
 
