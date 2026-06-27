@@ -2,7 +2,7 @@
 
 Name:     netlabel_tools
 Version:  0.30.0
-Release:  alt3
+Release:  alt4
 Summary:  Configuration tools for the Linux NetLabel subsystem
 License:  %gpl2only
 Group:    System/Base
@@ -43,6 +43,9 @@ Kernel's NetLabel configuration.
 %_man8dir/netlabelctl.8*
 
 %changelog
+* Sat Jun 27 2026 Anton Midyukov <antohami@altlinux.org> 0.30.0-alt4
+- netlabel.service: After=network-pre.target.
+
 * Tue Dec 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.0-alt3
 - Added man pages translation by Olesya Gerasimenko.
 
