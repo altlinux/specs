@@ -1,58 +1,80 @@
-%define commit 08ff7e2b7
-%define date 20250827
+%define commit 01f3d4f2b
+%define date 20260605
+%define _unpackaged_files_terminate_build 1
 
-%global import_path github.com/arduino/arduino-cli
-Name:    arduino-cli
-Version: 1.3.1
+%define import_path github.com/arduino/arduino-cli
+%define version_package %import_path/internal/version
+%define globals_package %import_path/internal/arduino/globals
+
+%define package_index_url https://altlinux.space/arduino/library-registry/releases/download/latest/package_index.tar.bz2
+%define library_index_url https://altlinux.space/arduino/library-registry/releases/download/latest/library_index.tar.bz2
+
+Name: arduino-cli
+Version: 1.5.1
 Release: alt1
 
 Summary: Arduino command line tool
 License: GPL-3.0
-Group:   Other
-Url:     https://github.com/arduino/arduino-cli
+Group: Other
+Url: https://github.com/arduino/arduino-cli
+Vcs: https://github.com/arduino/arduino-cli.git
+ExclusiveArch: %go_arches
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Source: %name-%version.tar
-Source1: vendor.tar
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
 %description
-Arduino CLI is an all-in-one solution that provides Boards/Library Managers,
-sketch builder, board detection, uploader, and many other tools needed to use
-any Arduino compatible board and platform from command line or machine
-interfaces.
+Arduino CLI is an all-in-one solution that provides Boards and Library
+Managers, a sketch builder, board detection, an uploader, and other tools
+needed to use Arduino-compatible boards and platforms from the command line
+or through machine interfaces.
 
 %prep
-%setup
-subst 's/defaultVersionString *= .*/defaultVersionString = "%version"/' internal/version/version.go
-subst 's/commit *= .*/commit = "%commit"/' internal/version/version.go
-subst 's/date *= .*/date = "%date"/' internal/version/version.go
-tar xf %SOURCE1
+%setup -a1
+%autopatch -p1
 
 %build
+export GOROOT=%_libexecdir/golang
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export GOFLAGS="-buildvcs=false"
+export LDFLAGS="-X %version_package.defaultVersionString=%version \
+	-X %version_package.commit=%commit \
+	-X %version_package.date=%date \
+	-X %globals_package.DefaultIndexURL=%package_index_url \
+	-X %globals_package.LibrariesIndexURLString=%library_index_url"
 
 %golang_prepare
 
-cd .build/src/%import_path
+pushd "$BUILDDIR/src/$IMPORT_PATH"
 %golang_build .
+popd
 
 %install
+export GOROOT=%_libexecdir/golang
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 
 %golang_install
 
 %files
-%doc *.md
-%_bindir/*
+%doc LICENSE.txt README.md
+%_bindir/arduino-cli
 
 %changelog
+* Tue Jun 23 2026 Grant Makyan <karonus@altlinux.org> 1.5.1-alt1
+- Use ALT package index for Arduino Libraries.
+- New version.
+
+* Mon Jun 22 2026 Grant Makyan <karonus@altlinux.org> 1.3.1-alt2
+- Keep upstream sources, packaging metadata, and vendored modules in one branch.
+- Build upstream sources from the recorded v1.3.1 tag.
+
 * Mon Sep 08 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
 - New version.
 
