@@ -1,6 +1,6 @@
 Name:          prescanic
 Version:       0.8.3
-Release:       alt1
+Release:       alt1.1
 
 Summary:       IP Scanner that catalogs all information
 Summary(ru_RU.UTF-8): Сканер IP адресов, упорядочивающий все сведения
@@ -12,7 +12,6 @@ Source:        %name-%version.tar
 
 BuildRequires: libpcap-devel
 BuildRequires: libmysqlclient-devel
-BuildRequires: libmysqlclient21-devel
 
 %description
 Prescanic's goal was to an attempt to obtain as much information about
@@ -39,6 +38,9 @@ anonymous ftp detection, telnet banner parsing, and more.
 %_bindir/*
 
 %changelog
+* Sat Jun 27 2026 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1.1
+- ! fixed FTBFS by removing obsolete ep
+
 * Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
 - ^ 0.8.1 -> 0.8.3
 
