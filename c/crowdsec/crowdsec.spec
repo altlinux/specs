@@ -7,7 +7,7 @@
 
 Name: crowdsec
 Version: 1.7.7
-Release: alt1
+Release: alt2
 Summary: Security solution offering crowdsourced protection against malicious IPs
 License: MIT
 Group: System/Servers
@@ -16,6 +16,7 @@ VCS: https://github.com/crowdsecurity/crowdsec
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: alt-fix-build-vendor-cre2.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -31,6 +32,7 @@ access to the most advanced real-world CTI.
 # go mod vendor
 # git add vendor -f && git commit -m "Updated go vendor modules."
 %setup -a 1
+%patch -p1
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -144,6 +146,9 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %doc LICENSE
 
 %changelog
+* Sat Jun 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.7-alt2
+- FTBFS fixed.
+
 * Wed Apr 15 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.7.7-alt1
 - Updated to version 1.7.7.
 
