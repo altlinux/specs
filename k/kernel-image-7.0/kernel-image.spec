@@ -2,7 +2,7 @@ Name: kernel-image-7.0
 Release: alt1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.0
-%define kernel_sublevel	.13
+%define kernel_sublevel	.14
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Jun 27 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.14-alt1
+- v7.0.14 (2026-06-27).
+
 * Fri Jun 19 2026 Kernel Bot <kernelbot@altlinux.org> 7.0.13-alt1
 - v7.0.13 (2026-06-19).
 
