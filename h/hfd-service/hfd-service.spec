@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: hfd-service
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Tools to detect and configure human feedback devices
@@ -65,5 +65,8 @@ service.
 %_datadir/dbus-1/system-services/com.lomiri.hfd.service
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+
 * Fri Jul 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus

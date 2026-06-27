@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gmenuharness
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: GMenu harness library
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/gmenuharness
 
 Source: %name-%version.tar
 
-# sync with version 0.1.4-7 from Debian unstable
+# sync with version 0.1.6 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -96,6 +96,9 @@ This package contains the gmenuharness header files for development.
 %_pkgconfigdir/libgmenuharness.pc
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.6-alt1
+- New version 0.1.6.
+
 * Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.5-alt1
 - New version 0.1.5.
 

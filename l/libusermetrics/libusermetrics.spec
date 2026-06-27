@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libusermetrics
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: library for retrieving anonymous metrics about users
@@ -210,6 +210,9 @@ This package installs the libusermetrics API documentation.
 
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.2-alt1
+- New version 1.4.2.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
 - New version 1.4.1.
 

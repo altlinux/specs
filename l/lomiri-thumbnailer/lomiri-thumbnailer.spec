@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-thumbnailer
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: D-Bus service for out of process thumbnailing
@@ -114,7 +114,7 @@ This package provides the development files for the library.
 %_man1dir/lomiri-thumbnailer-admin.1.*
 %_man1dir/thumbnailer-service.1.*
 %_man5dir/thumbnailer-settings.5.xz
-%exclude /usr/etc/apport/blacklist.d/lomiri-thumbnailer
+%exclude /usr/etc/apport/report-ignore/lomiri-thumbnailer
 %dir %_qt5_qmldir/Lomiri/Thumbnailer.0.1
 %_qt5_qmldir/Lomiri/Thumbnailer.0.1/libLomiriThumbnailer-qml.so
 %_qt5_qmldir/Lomiri/Thumbnailer.0.1/qmldir
@@ -135,6 +135,9 @@ This package provides the development files for the library.
 %_libdir/liblomiri-thumbnailer-qt.so
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.2-alt1
+- New version 3.1.2.
+
 * Sat May 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
 - New version 3.1.1.
 

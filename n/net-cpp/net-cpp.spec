@@ -5,7 +5,7 @@
 %def_without check
 
 Name: net-cpp
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: A simple yet beautiful networking API for C++14
@@ -15,7 +15,7 @@ Url: https://gitlab.com/ubports/development/core/lib-cpp/net-cpp
 
 Source: %name-%version.tar
 
-# sync with version 3.1.1+dfsg-4 from Debian unstable
+# sync with version 3.2.2 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -109,6 +109,9 @@ sed -i "s/-std=c++17/-std=c++14/" CMakeLists.txt
 %_datadir/doc/net-cpp/*
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt1
+- New version 3.2.2.
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.1-alt1
 - New version 3.2.1.
 

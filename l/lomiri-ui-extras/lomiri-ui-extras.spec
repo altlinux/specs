@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-ui-extras
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Lomiri UI Extra Components (Qt5)
@@ -29,6 +29,8 @@ BuildRequires: pkgconfig(pam)
 
 %if_with check
 BuildRequires: ctest
+BuildRequires: /usr/bin/xvfb-run
+BuildRequires: lomiri-ui-toolkit
 %endif
 
 # qt5/qml/QtQml/Models.2/qmldir
@@ -73,6 +75,9 @@ This package contains the Qt5 QML module.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-ui-extras.mo
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 

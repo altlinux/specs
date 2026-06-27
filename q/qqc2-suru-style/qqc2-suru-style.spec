@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qqc2-suru-style
-Version: 0.20230630
+Version: 0.20260619
 Release: alt1
 
 Summary: Suru style for QtQuick Controls 2
@@ -40,5 +40,8 @@ elements.
 %_qt5_qmldir/QtQuick/Controls.2/Suru/*
 
 %changelog
+* Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 0.20260619-alt1
+- New version 0.20260619.
+
 * Sun Jul 20 2025 Nikolay Strelkov <snk@altlinux.org> 0.20230630-alt1
 - Initial build for Sisyphus
