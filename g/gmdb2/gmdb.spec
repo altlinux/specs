@@ -5,7 +5,7 @@
 
 Name: %{_name}2
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: M$ Access MDB File Viewer
 Group: Databases
@@ -38,12 +38,11 @@ gmdb 2 - The MDB File Viewer and debugger.
 
 %prep
 %setup -n %name-%version%beta
-# GTimeVal is deprecated sinc 2.62
-sed -i 's| \-Werror||' configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
+[ ! -d m4 ] && mkdir m4
+%autoreconf -I %_datadir/gettext/m4
 %configure
 %make_build
 
@@ -61,6 +60,9 @@ install -pD -m644 src/%_name.desktop %buildroot/%_desktopdir/%_name.desktop
 %doc AUTHORS README* TODO
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1.1
+- fixed build with gettext-1.0
+
 * Sat Nov 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - updated to v0.9.1-3-g60335e0 (ported to GTK 3)
 

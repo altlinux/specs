@@ -1,6 +1,6 @@
 Name: libcddb
 Version: 1.3.2
-Release: alt6
+Release: alt6.1
 
 Summary: Libcddb is a C library to access data on a CDDB server
 License: LGPL-2.0-or-later
@@ -41,7 +41,7 @@ This package contains the cddb_query is a simple app that use %name.
 %patch -p1
 
 %build
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 %configure --disable-static
 
 %make_build
@@ -65,6 +65,9 @@ This package contains the cddb_query is a simple app that use %name.
 %doc examples
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt6.1
+- fixed build with gettext-1.0
+
 * Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt6
 - fixed build with gcc-14
 

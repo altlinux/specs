@@ -1,6 +1,6 @@
 Name: chemical-mime-data
 Version: 0.1.94
-Release: alt3.1
+Release: alt3.2
 
 Summary: Chemical MIME types database
 Group: System/Libraries
@@ -36,7 +36,7 @@ proposed in 1995, though it seems they have never been registered with IANA.
 %patch1 -b .rsvg
 
 %build
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 %configure --disable-update-database \
            --without-gnome-mime \
            --without-pixmaps \
@@ -56,6 +56,9 @@ cp AUTHORS ChangeLog HACKING NEWS README THANKS TODO %buildroot%pkgdocdir
 %doc %pkgdocdir
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.94-alt3.2
+- fixed build with gettext-1.0
+
 * Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.94-alt3.1
 - fixed BR
 - used rsvg-convert instead of convert (from ImageMagick)

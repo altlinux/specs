@@ -4,7 +4,7 @@
 
 Name: mdbtools
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Utilities for use M$ Access databases under Linux
 Group: Databases
@@ -75,7 +75,7 @@ sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 # lcc 1.25.20 ftbfs workaround (cf. mcst#6021)
 %add_optflags -Wno-error=maybe-uninitialized
 %endif
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 %configure \
     %{subst_enable static} \
     --with-unixodbc=%_prefix \
@@ -110,6 +110,9 @@ sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 %endif
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1.1
+- fixed build with gettext-1.0
+
 * Fri Dec 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

@@ -10,7 +10,7 @@ Group: System/Libraries
 Summary:      LASH Audio Session Handler
 Name:         lash
 Version:      0.5.4
-Release:      alt1_51
+Release:      alt2_51
 License:      GPL-2.0-or-later
 URL:          http://www.nongnu.org/lash/
 Source0:      http://download.savannah.gnu.org/releases/lash/lash-%{version}.tar.gz
@@ -77,7 +77,8 @@ sed -i 's|1.3.31|4.0.0|g' configure*
 %endif
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE" %configure --disable-static --disable-serv-inst
+CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE -std=gnu17" \
+%configure --disable-static --disable-serv-inst
 %make_build
 
 
@@ -150,6 +151,9 @@ fi
 %{_libdir}/liblash.so.1.*
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.4-alt2_51
+- rebuilt with gcc-15 and -std=gnu17
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1:0.5.4-alt1_51
 - update to new release by fcimport
 

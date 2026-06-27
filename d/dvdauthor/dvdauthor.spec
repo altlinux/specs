@@ -6,7 +6,7 @@
 
 Name: dvdauthor
 Version: 0.7.2
-Release: alt5
+Release: alt5.1
 
 Summary: set of tools to author a DVD
 Group: Video
@@ -45,8 +45,10 @@ mpeg2 stream that should play when you put it in a DVD player.
 
 %build
 #%%add_optflags -Wl,-z,noexecstack
-./bootstrap
-%autoreconf
+#./bootstrap
+mkdir autotools m4
+cp %_datadir/gettext/config.rpath autotools/
+%autoreconf -I %_datadir/gettext/m4
 %configure --enable-default-video-format=%video_format \
        --with-%magick
 %make_build
@@ -70,6 +72,9 @@ touch %buildroot%_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt5.1
+- fixed build with gettext-1.0
+
 * Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt5
 - updated to 0.7.2-12-gfe8fe35
 
