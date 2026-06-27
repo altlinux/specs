@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.9.9
+Version: 0.4.9.11
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -147,6 +147,10 @@ fi
 %_var/cache/%name
 
 %changelog
+* Sat Jun 27 2026 Anton Farygin <rider@altlinux.org> 0.4.9.11-alt1
+- 0.4.9.9 -> 0.4.9.11
+- removed obsoleted Group option from unit file (Closes: #59572)
+
 * Fri Jun 05 2026 Anton Farygin <rider@altlinux.org> 0.4.9.9-alt1
 - 0.4.9.8 -> 0.4.9.9
 
