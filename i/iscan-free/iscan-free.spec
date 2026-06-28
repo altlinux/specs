@@ -3,7 +3,7 @@
 
 Name: iscan-free
 Version: 2.30.4
-Release: alt2
+Release: alt3
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
@@ -64,6 +64,8 @@ be used with this software.
 %build
 # won't fix stalled upstream
 %add_optflags -fcommon
+# old C code: keep pre-C23 semantics (bool/false/true) under gcc 15
+%add_optflags -std=gnu17
 %configure \
             -enable-dependency-reduction \
             --enable-jpeg \
@@ -105,6 +107,9 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.30.4-alt3
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 semantics)
+
 * Mon Apr 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.30.4-alt2
 - fix build
 
