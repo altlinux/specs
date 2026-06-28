@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        149.0.7827.196
+Version:        149.0.7827.200
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -721,8 +721,34 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sun Jun 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.200-alt1
+- New version (149.0.7827.200).
+- Fixes:
+  + CVE-2026-13281: Integer overflow in Mojo
+  + CVE-2026-13282: Use after free in Payments
+  + CVE-2026-13283: Use after free in AdFilter
+
 * Wed Jun 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.196-alt1
 - New version (149.0.7827.196).
+- Fixes:
+  + CVE-2026-13028: Use after free in WebGL
+  + CVE-2026-13032: Use after free in WebGL
+  + CVE-2026-13033: Out of bounds read in Blink>InterestGroups
+  + CVE-2026-13038: Use after free in Autofill
+  + CVE-2026-13021: Inappropriate implementation in DeviceBoundSessionCredentials
+  + CVE-2026-13022: Inappropriate implementation in Autofill
+  + CVE-2026-13023: Uninitialized Use in GPU
+  + CVE-2026-13024: Insufficient validation of untrusted input in Navigation
+  + CVE-2026-13025: Insufficient validation of untrusted input in DevTools
+  + CVE-2026-13026: Use after free in Digital Credentials
+  + CVE-2026-13027: Use after free in FileSystem
+  + CVE-2026-13029: Use after free in Web Authentication
+  + CVE-2026-13030: Uninitialized Use in GPU
+  + CVE-2026-13031: Use after free in Blink
+  + CVE-2026-13034: Inappropriate implementation in Passwords
+  + CVE-2026-13035: Use after free in Bluetooth
+  + CVE-2026-13036: Use after free in Blink
+  + CVE-2026-13037: Use after free in WebView
 
 * Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 149.0.7827.155-alt1
 - New version (149.0.7827.155).
