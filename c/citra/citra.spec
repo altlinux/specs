@@ -3,7 +3,7 @@
 
 Name: citra
 Version: 2104
-Release: alt2
+Release: alt2.1
 
 Summary: Nintendo 3DS emulator
 License: GPLv2
@@ -17,6 +17,8 @@ ExclusiveArch: x86_64 aarch64 %e2k
 # Source-url: https://github.com/%name-emu/%name-nightly/releases/download/nightly-%version/%name-unified-source-%git_date-%git_commit.tar.xz
 Source: %name-unified-source-%git_date-%git_commit.tar
 Patch1: alt-qt6.10.patch
+Patch2: alt-fix-openal-uint8_t.patch
+Patch3: alt-fix-glslang-uint32_t.patch
 
 BuildRequires: ctest
 BuildRequires: doxygen
@@ -43,6 +45,8 @@ Citra is an open-source Nintendo 3DS emulator and debugger, written with portabi
 %prep
 %setup -n %name-unified-source-%git_date-%git_commit
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 # Enforce package versioning in GUI
 sed -i \
@@ -82,6 +86,9 @@ src/common/scm_rev.cpp.in
 %_man6dir/%name-qt.6*
 
 %changelog
+* Sun Jun 28 2026 Nazarov Denis <nenderus@altlinux.org> 2104-alt2.1
+- Fix FTBFS
+
 * Tue Mar 17 2026 Sergey V Turchin <zerg@altlinux.org> 2104-alt2
 - NMU: fix to build with Qt-6.10
 - NMU: disable tests
