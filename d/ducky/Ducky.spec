@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: ducky
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Ducky - The Ultimate Networking Tool
@@ -58,6 +60,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Jun 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt1
+- 1.3.0 -> 1.5.0
+
 * Wed Feb 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
 - Initial build for Alt Linux.
 
