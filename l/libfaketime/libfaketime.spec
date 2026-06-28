@@ -1,6 +1,6 @@
 Name: libfaketime
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -10,6 +10,7 @@ Url: https://github.com/wolfcw/libfaketime
 # Source-url: https://github.com/wolfcw/libfaketime/archive/refs/tags/v%version.tar.gz
 Source: libfaketime-%version.tar
 Patch: libfaketime-symver.patch
+Patch1: libfaketime-gcc15.patch
 
 #Provides: faketime
 Conflicts: faketime
@@ -27,6 +28,7 @@ time system- wide.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 # use external uthash.h from libuthash-devel
 rm -v src/uthash.h
 
@@ -93,6 +95,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.12-alt2
+- fixed FTBFS with gcc 15 (const-qualified strchr/strstr results)
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.12-alt1
 - new version 0.9.12
 
