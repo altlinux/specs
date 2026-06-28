@@ -1,5 +1,5 @@
 Name: wsjtx
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Weak-signal communication for Amateur Radio using digital protocols
 License: GPL-3.0
@@ -9,10 +9,8 @@ Url: https://wsjt.sourceforge.io/wsjtx.html
 # Source-url: https://github.com/WSJTX/wsjtx/releases/download/v%version/wsjtx-%version-src.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-alt-translation-ru-fix.patch
-# Fedora patch for ALLCALL7.TXT and sounds/* files
-# https://src.fedoraproject.org/rpms/wsjtx/blob/rawhide/f/wsjtx-3.0.0-path-fix.patch
-# fixed for version 3.0.1
-Patch1: %name-%version-fedora-path-fix.patch
+# patch for sounds/* files
+Patch1: %name-%version-alt-path-fix.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires(pre): rpm-macros-qt5
@@ -25,6 +23,7 @@ BuildRequires: boost-log-devel
 BuildRequires: libgomp-devel
 BuildRequires: libfftw3-devel
 BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(Qt5Multimedia)
@@ -99,9 +98,9 @@ sed -i 's|Name=wsjtx|Name=WSJT-X|' wsjtx.desktop
 
 %build
 %define optflags_lto %nil
-%add_optflags -Wl,-z,noexecstack
 
 %cmake \
+    -DWSJT_RELEASE_CHANNEL=GA \
     -DCMAKE_Fortran_FLAGS:STRING='%optflags -frecursive'
 %cmake_build
 
@@ -114,8 +113,8 @@ for x in 16 32 48; do
 done
 
 # fix docs
-install -p -m 0644 -t %buildroot%_docdir/%name GUIcontrols.txt jt9.txt \
-  v1.7_Features.txt wsjtx_changelog.txt
+install -p -m 0644 -t %buildroot%_docdir/%name GUIcontrols.txt README.md \
+  Release_Notes.txt jt9.txt v1.7_Features.txt wsjtx_changelog.txt
 
 # add translations
 mkdir -p %buildroot%_qt5_translationdir
@@ -134,6 +133,12 @@ install -p -m 0644 -t %buildroot%_qt5_translationdir %_target_platform/wsjtx_*.q
 %_docdir/%name
 
 %changelog
+* Sun Jun 28 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.2-alt1
+- new version 3.0.2
+- update patch to fix some typos in russian translation
+- update patch to fix path of data files
+- remove "-z noexecstack" linker flags (ALT #59403)
+
 * Mon May 11 2026 Alexander Kovalev <alexvk@altlinux.org> 3.0.1-alt1
 - new version 3.0.1
 - update description and source URL
