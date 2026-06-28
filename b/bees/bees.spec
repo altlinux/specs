@@ -1,6 +1,6 @@
 Name: bees
 Version: 0.11
-Release: alt1
+Release: alt2
 
 Summary: Best-Effort Extent-Same, a btrfs deduplication agent
 
@@ -10,6 +10,7 @@ Url: https://github.com/Zygo/bees
 
 # Source-url: https://github.com/Zygo/bees/archive/v%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-openat2-glibc241.patch
 
 # [ppc64le] fiemap.cc:31:67: error: no matching function for call to 'min(__u64&, long long unsigned int)'
 ExcludeArch: ppc64le
@@ -36,6 +37,7 @@ Hilights:
 
 %prep
 %setup
+%patch -p1
 subst 's|CCFLAGS =.*|CCFLAGS = -Wall -Wextra %optflags|' makeflags
 
 %build
@@ -63,6 +65,9 @@ EOF
 %config(noreplace) %_sysconfdir/bees/beesd.conf.sample
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt2
+- fixed FTBFS with glibc 2.41: match openat2() signature (const open_how *)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt1
 - new version 0.11
 
