@@ -1,6 +1,6 @@
 Name: unifdef
 Version: 2.12
-Release: alt2
+Release: alt3
 Summary: A tool for removing ifdef'd lines
 License: BSD-2-Clause and BSD-3-Clause
 Group: Development/C
@@ -20,7 +20,8 @@ is inactive because it is inside a comment, or a single or double quote.
 
 %build
 # Check about -O0 in https://bugzilla.altlinux.org/43468
-%make_build CFLAGS='%optflags -O0'
+# -std=gnu17: code uses constexpr as identifier, a keyword since C23 (gcc 15)
+%make_build CFLAGS='%optflags -O0 -std=gnu17'
 
 %install
 %makeinstall_std prefix=/usr
@@ -33,6 +34,9 @@ make test
 %_man1dir/unifdef*
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12-alt3
+- fixed FTBFS with gcc 15: build with -std=gnu17 (constexpr is a C23 keyword)
+
 * Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2.12-alt2
 - NMU: fix build
 
