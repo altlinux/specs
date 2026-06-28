@@ -4,7 +4,7 @@
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
@@ -13,9 +13,19 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-php
-Requires: %name-mediawiki = %EVR
-Requires: %name-nextcloud = %EVR
-Requires: %name-moodle = %EVR
+BuildRequires: gettext-tools
+Requires: installed-db-office-server-mediawiki = %EVR
+Requires: installed-db-office-server-nextcloud = %EVR
+Requires: installed-db-office-server-moodle = %EVR
+
+%package common
+Summary: Common first-boot deploy orchestrator for office server
+Group: System/Configuration/Other
+Requires: gettext
+
+%description common
+Shared first-boot script that runs office-server deploy steps and
+reports progress to Plymouth.
 
 %description
 Databases and config files for moodle, mediawiki and nextcloud
@@ -23,6 +33,7 @@ Databases and config files for moodle, mediawiki and nextcloud
 %package mediawiki
 Summary: Databases and config files for mediawiki
 Group: System/Configuration/Other
+Requires: installed-db-office-server-common = %EVR
 Requires: %system_requires
 Requires: %deploy_requires
 Requires: %rule_requires
@@ -39,6 +50,7 @@ Databases and config files for mediawiki
 %package moodle
 Summary: Databases and config files for moodle
 Group: System/Configuration/Other
+Requires: installed-db-office-server-common = %EVR
 Requires: %system_requires
 Requires: %deploy_requires
 Requires: %rule_requires
@@ -56,6 +68,7 @@ Databases and config files for moodle
 %package nextcloud
 Summary: Databases and config files for nextcloud
 Group: System/Configuration/Other
+Requires: installed-db-office-server-common = %EVR
 Requires: %system_requires
 Requires: %deploy_requires
 Requires: %rule_requires
@@ -66,8 +79,8 @@ Requires: php%php_version-pdo_mysql
 Requires: python3-module-pymysql
 Requires: pwgen
 Requires: curl
-Provides: %name-owncloud = %EVR
-Obsoletes: %name-owncloud < %EVR
+Provides: installed-db-office-server-owncloud = %EVR
+Obsoletes: installed-db-office-server-owncloud < %EVR
 
 %description nextcloud
 Databases and config files for nextcloud
@@ -76,28 +89,54 @@ Databases and config files for nextcloud
 %setup
 
 %build
+for po in po/*.po; do
+    msgfmt -o "$(basename "$po" .po).mo" "$po"
+done
 
 %install
+# Progress orchestrator (run-parts runs it from /etc/firsttime.d).
+install -Dp -m755 server-apps-deploy \
+    %buildroot%_sysconfdir/firsttime.d/80-server-apps-deploy
+# The deploys live in a subdirectory run-parts does not descend into;
+# the orchestrator runs them while showing progress.
+install -d %buildroot%_sysconfdir/firsttime.d/server-apps.d
 for service in mediawiki nextcloud moodle; do
-    install -Dp -m755 $service %buildroot%_sysconfdir/firsttime.d/80-office-server-$service
-    install -Dp -m755 ${service}-password %buildroot%_libexecdir/alterator/hooks/root.d/$service
+    install -Dp -m755 $service \
+        %buildroot%_sysconfdir/firsttime.d/server-apps.d/80-office-server-$service
+    install -Dp -m755 ${service}-password \
+        %buildroot%_libexecdir/alterator/hooks/root.d/$service
 done
+# Localized Plymouth messages for the orchestrator (English msgid fallback).
+for po in po/*.po; do
+    lang=$(basename "$po" .po)
+    install -Dp -m644 "$lang.mo" \
+        %buildroot%_datadir/locale/$lang/LC_MESSAGES/installed-db-office-server.mo
+done
+%find_lang installed-db-office-server
 
 %files
 
+%files common -f installed-db-office-server.lang
+%dir %_sysconfdir/firsttime.d/server-apps.d
+%_sysconfdir/firsttime.d/80-server-apps-deploy
+
 %files mediawiki
-%_sysconfdir/firsttime.d/80-office-server-mediawiki
+%_sysconfdir/firsttime.d/server-apps.d/80-office-server-mediawiki
 %_libexecdir/alterator/hooks/root.d/mediawiki
 
 %files moodle
-%_sysconfdir/firsttime.d/80-office-server-moodle
+%_sysconfdir/firsttime.d/server-apps.d/80-office-server-moodle
 %_libexecdir/alterator/hooks/root.d/moodle
 
 %files nextcloud
-%_sysconfdir/firsttime.d/80-office-server-nextcloud
+%_sysconfdir/firsttime.d/server-apps.d/80-office-server-nextcloud
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.5.6-alt1
+- Add -common subpackage with a first-boot orchestrator that runs the
+  office-server deploys from server-apps.d/ and reports progress to Plymouth.
+
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
 - Used current supported PHP version in repository.
 

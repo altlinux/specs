@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt7
+Release: alt8
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -91,7 +91,7 @@ License:  Distributable
 Group:    System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme
 Requires: plymouth-theme-bgrt-alt
-Requires: plymouth-plugin-script
+Requires: plymouth-plugin-two-step
 Requires: plymouth-plugin-label
 Requires: fonts-ttf-dejavu
 Requires(pre): plymouth
@@ -380,7 +380,7 @@ sed -i '/pam_env\.so/ {
 #bootsplash
 %post bootsplash
 %ifarch %ix86 x86_64 aarch64
-subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %endif
 
 %post mate-settings
@@ -496,6 +496,11 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt8
+- bootsplash: switch active Plymouth theme to a localized two-step theme
+  (reuses bgrt-alt assets) with an [updates] section for server-apps
+  first-boot progress.
+
 * Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt7
 - kde-settings:
   + Add Home and Trash icons to the KDE desktop.
