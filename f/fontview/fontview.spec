@@ -1,6 +1,6 @@
 Name: fontview
 Version: 0.3.1
-Release: alt2.20191205
+Release: alt3.20191205
 
 Summary: Demo app that displays fonts with a free/libre/open-source text rendering stack: FreeType, HarfBuzz and Raqm
 
@@ -12,8 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/googlei18n/fontview/archive/v%version.tar.gz
 Source: %name-%version.tar
-
-# manually removed: mariadb-common python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs selinux-policy
+Patch: %name-cstdint.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -32,6 +31,7 @@ FreeType, HarfBuzz and Raqm.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %__python3 build.py
@@ -46,6 +46,9 @@ FreeType, HarfBuzz and Raqm.
 #%_desktopdir/%name.desktop
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt3.20191205
+- fixed FTBFS with gcc 15: include <cstdint> for uint32_t
+
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt2.20191205
 - NMU: rebuild with wxGTK3.2
 
