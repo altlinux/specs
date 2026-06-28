@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fastfetch
-Version: 2.65.1
+Version: 2.65.2
 Release: alt1
 
 Summary: Like neofetch, but much faster because written in c
@@ -87,6 +87,9 @@ BuildArch: noarch
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Mon Jun 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.65.2-alt1
+- 2.65.1 -> 2.65.2
+
 * Wed Jun 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.65.1-alt1
 - 2.64.2 -> 2.65.1
 
