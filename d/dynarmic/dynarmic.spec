@@ -2,7 +2,7 @@
 
 Name: dynarmic
 Version: 6.7.0
-Release: alt4
+Release: alt5
 
 Summary: A dynamic recompiler for ARM.
 License: 0BSD
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 Patch0: %name-mcl-alt.patch
 Patch1: %name-inc-alt.patch
+Patch2: %name-xbyak-7-tests-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-devel
@@ -71,6 +72,9 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Sun Jun 28 2026 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt5
+- Fix build with xbyak >= 7 (removed tAVX512_4FMAPS, tAVX512_4VNNIW, tAVX512ER, tAVX512PF, tPREFETCHWT1)
+
 * Thu Aug 21 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt4
 - Add optflag -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0
 
