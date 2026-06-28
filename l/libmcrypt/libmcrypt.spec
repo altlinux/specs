@@ -2,7 +2,7 @@
 
 Name: libmcrypt
 Version: 2.5.8
-Release: alt3
+Release: alt4
 
 Summary: Encryption/decryption library
 
@@ -73,6 +73,8 @@ rm -rv libltdl/
 mv -v configure.in configure.ac
 
 %build
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 %autoreconf
 # Since 2.5.4 libmcrypt does not use dynamic loading for the modules by default
 %configure %{subst_enable static} --disable-ltdl \
@@ -118,6 +120,9 @@ done
 # TODO: remove strange hacking for build & install
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt4
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt3
 - fix build with new autoconf 2.71 (remove libltdl)
 - BR: s/glibc-devel-static/glibc-devel
