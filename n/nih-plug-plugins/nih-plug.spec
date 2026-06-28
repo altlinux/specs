@@ -3,9 +3,9 @@
 %define _customdocdir %_docdir/%name
 
 # git log --oneline upstream/master | wc -l
-%define rev 2249
+%define rev 2253
 # just some first digits from upstream/master SHA
-%define snapshot 28b149ec
+%define snapshot f36931f7
 
 Name:    nih-plug-plugins
 Version: 0.0.0.r%rev.%snapshot
@@ -71,6 +71,17 @@ tar -xf %SOURCE1
 # one to preserve the aliases there.
 cat %SOURCE2 >> .cargo/config.toml
 
+# Our config.toml for cargo already contains vendoring setup,
+# so we can't use %%rust_prep directly. Pick some parts from it:
+cat >> .cargo/config.toml <<EOF
+[term]
+verbose = true
+quiet = false
+
+[profile.release]
+strip = false
+EOF
+
 %autopatch -p1
 
 
@@ -98,6 +109,9 @@ done
 %_libdir/vst3/*
 
 %changelog
+* Sun Jun 28 2026 Ivan A. Melnikov <iv@altlinux.org> 0.0.0.r2253.f36931f7-alt1
+- new snapshot (fixes building with recent rust)
+
 * Sat Oct 18 2025 Ivan A. Melnikov <iv@altlinux.org> 0.0.0.r2249.28b149ec-alt1
 - new snapshot (fixes building with recent rust)
 
