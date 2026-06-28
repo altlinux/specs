@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.1
-Release: alt5
+Release: alt6
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -122,6 +122,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt6
+- 10-vm-profile.sh: Fix swap cap and pad it for hibernation.
+
 * Tue Dec 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt5
 - Remove sysconfig-proxy step from installer steps.
 
