@@ -1,8 +1,10 @@
 %define luaver 5.3
 
+%def_without duckdb
+
 Name: lua%luaver-module-dbi
 Version: 0.7.5
-Release: alt2
+Release: alt3
 
 License: MIT
 Url: https://github.com/mwild1/luadbi
@@ -11,6 +13,7 @@ Summary: Database interface library for Lua
 
 Source0: luadbi-%version.tar
 Patch0: Fix-duckdb-install.patch
+Patch1: Fix-FTBS-duckdb.patch
 
 Provides: lua-dbi = %EVR
 Provides: lua%luaver-dbi = %EVR
@@ -21,8 +24,10 @@ BuildRequires: liblua%luaver-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libpq-devel
+%if_with duckdb
 %ifnarch %ix86
 BuildRequires: duckdb duckdb-devel-static
+%endif
 %endif
 
 %description
@@ -38,6 +43,7 @@ with native database drivers.
 %setup -n luadbi-%version
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 %make_build mysql \
@@ -53,10 +59,12 @@ with native database drivers.
 	CFLAGS="%optflags" \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir"
 
+%if_with duckdb
 %ifnarch %ix86
 %make_build duckdb \
 	CFLAGS="%optflags" \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir"
+%endif
 %endif
 
 %install
@@ -76,11 +84,13 @@ make install_sqlite3 INSTALL='install -p' \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
 	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch
 
+%if_with duckdb
 %ifnarch %ix86
 make install_duckdb INSTALL='install -p' \
 	CFLAGS="%optflags" \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
 	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch
+%endif
 %endif
 
 %check
@@ -95,6 +105,9 @@ lua%luaver -e \
 %lua_modulesdir_noarch/DBI.lua
 
 %changelog
+* Sun Jun 28 2026 Alexei Takaseev <taf@altlinux.org> 0.7.5-alt3
+- Disable duckdb support by default
+
 * Thu May 28 2026 Alexei Takaseev <taf@altlinux.org> 0.7.5-alt2
 - Change BR duckdb duckdb-devel -> duckdb duckdb-devel-static
 
