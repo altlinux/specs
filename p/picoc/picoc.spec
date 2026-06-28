@@ -1,6 +1,6 @@
 Name: picoc
 Version: 2.1.9
-Release: alt1
+Release: alt2
 
 Summary: PicoC is a very small C interpreter for scripting
 
@@ -37,7 +37,8 @@ ultrasparc, HP-PA and blackfin processors and is easy to port to new targets.
 %setup
 
 %build
-%make_build
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%make_build CC="%__cc -std=gnu17"
 
 %install
 install -D %name %buildroot%_bindir/%name
@@ -47,6 +48,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt2
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sat Dec 15 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.9-alt1
 - build latest git
 
