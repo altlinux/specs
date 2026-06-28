@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%def_without check
+%def_with check
 
 %define _libexecdir %_prefix/libexec
 
+%set_verify_elf_skiplist %_libexecdir/lomiri/tests/*
+
 Name: lomiri
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Shell of the Lomiri Operating Environment
 License: GPL-3.0
@@ -16,7 +18,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri
 
 Source: %name-%version.tar
 
-# sync with package version 0.5.0-2 from Debian unstable
+# sync with package version 0.5.0-14 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -60,6 +62,7 @@ BuildRequires: pkgconfig(libqtdbustest-1)
 BuildRequires: pkgconfig(libqtdbusmock-1)
 BuildRequires: dbus-test-runner
 BuildRequires: qtdbustest-runner
+BuildRequires: python3(dbusmock)
 %endif
 
 Requires: ayatana-indicator-bluetooth
@@ -227,6 +230,12 @@ echo "And then you can login to the Lomiri session using preffered login manager
 %check
 %ctest -j1 -VV
 
+# do not package lomiri-tests
+rm -vrf %buildroot%_libdir/lomiri/qml/mocks
+rm -vf  %buildroot%_bindir/lomiri-mock-indicator-service
+rm -vf  %buildroot%_libexecdir/lomiri/uqmlscene
+rm -vrf %buildroot%_libexecdir/lomiri/tests/
+
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog CODING COPYING COPYING.LGPL LGPL_EXCEPTION.txt README.md
 %_bindir/indicators-client
@@ -269,5 +278,9 @@ echo "And then you can login to the Lomiri session using preffered login manager
 %_datadir/dbus-1/interfaces/com.lomiri.shell.AccountsService.xml
 
 %changelog
+* Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
+- Updated to allow build with mir 2.28.0.
+- Enabled tests.
+
 * Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus

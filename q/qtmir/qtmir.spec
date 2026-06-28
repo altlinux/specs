@@ -5,7 +5,7 @@
 
 Name: qtmir
 # NOTE: use .gear/tagit.sh to get a tag name
-Version: 0.8.0_git20250626.c74a08da
+Version: 0.8.0_git20260226.fb30a11
 Release: alt1
 
 Summary: Qt platform abstraction (QPA) plugin for a Mir server
@@ -15,7 +15,7 @@ Url: https://gitlab.com/ubports/development/core/qtmir
 
 Source: %name-%version.tar
 
-# sync with version 0.8.0~git20250407.ea2f477-1 from Debian unstable + local fixes
+# sync with version 0.8.0~git20260226.fb30a11-8 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -117,13 +117,13 @@ the QtMir QPA.
 %ctest -j1 -VV
 
 %files
-%doc AUTHORS ChangeLog COPYING COPYING.LESSER NEWS README
+%doc AUTHORS COPYING COPYING.LESSER NEWS README
 %_qt5_plugindir/platforms/libqpa-mirserver.so
 %_qt5_qmldir/QtMir/Application/libqtmirapplicationplugin.so
 %_qt5_qmldir/QtMir/Application/qmldir
 %_desktopdir/xwayland.qtmir.desktop
 %_datadir/glib-2.0/schemas/com.canonical.qtmir.gschema.xml
-%_iconsdir/hicolor/256x256/apps/xwayland.qtmir.png
+%_iconsdir/hicolor/512x512/apps/xwayland.qtmir.png
 
 %files -n lib%{name}
 %_libdir/libqtmirserver.so.2*
@@ -151,9 +151,10 @@ the QtMir QPA.
 %_datadir/qtmir/qtmir-demo-client/*
 %dir %_datadir/qtmir/qtmir-demo-shell
 %_datadir/qtmir/qtmir-demo-shell/*
-%dir %_datadir/qtmir/benchmarks
-%_datadir/qtmir/benchmarks/*
 
 %changelog
+* Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0_git20260226.fb30a11-alt1
+- Updated to allow build with mir 2.28.0.
+
 * Wed Jul 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.8.0_git20250626.c74a08da-alt1
 - Initial build for Sisyphus

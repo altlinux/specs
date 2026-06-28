@@ -3,10 +3,17 @@
 
 %def_with check
 
+%ifarch x86_64 aarch64
+%def_with wasm
+%set_verify_elf_skiplist %_libdir/libmiracle-wm-plugins.so
+%else
+%def_without wasm
+%endif
+
 %define _libexecdir %_prefix/libexec
 
 Name: miracle-wm
-Version: 0.7.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Wayland tiling window manager built on Mir
@@ -29,7 +36,15 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(yaml-cpp)
 BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(gtk4-layer-shell-0)
 BuildRequires: libpcre2-devel-static
+
+%if_with wasm
+BuildRequires: wasmedge-devel
+%endif
+
+BuildRequires: boost-filesystem-devel
 
 %if_with check
 BuildRequires: pkgconfig(gtest)
@@ -68,6 +83,9 @@ cp -v %SOURCE1 ./config.yaml
        -DGTEST_INCLUDE_DIR=%_includedir/gtest/ \
        -DGTEST_LIBRARY=%_libdir/libgtest.so \
        -DGTEST_MAIN_LIBRARY=%_libdir/libgtest_main.so \
+%endif
+%if_without wasm
+       -DFEATURE_PLUGIN_SYSTEM=OFF \
 %endif
        -DSYSTEMD_INTEGRATION=ON
 %cmake_build
@@ -111,23 +129,37 @@ echo "      then logout and login to Miracle session using your favorite greeter
 %_bindir/miracle-wm-sensible-terminal
 %_bindir/miracle-wm-session
 %_bindir/miraclemsg
+%_bindir/miracle-wm-basic-error-reporter
+%_bindir/miracle-wm-debug-overlay
 %_datadir/wayland-sessions/miracle-wm.desktop
 %_userunitdir/miracle-wm-session-shutdown.target
 %_userunitdir/miracle-wm-session.target
 %_userunitdir/miracle-wm-xdg-autostart.target
 %_libexecdir/miracle-wm-session-setup
 %_libexecdir/miracle-wm-wait-sni-ready
+%dir %_datadir/miracle-wm
+%dir %_datadir/miracle-wm/shaders
+%dir %_datadir/miracle-wm/shaders/output_filter
+%_datadir/miracle-wm/shaders/output_filter/gray_scale.frag
+%_datadir/miracle-wm/shaders/output_filter/night_light.frag
 
 %files -n lib%{name}
-%_libdir/libmiracle-wm-config.so.0*
+%_libdir/libmiracle-wm-c.so.0*
+
+%if_with wasm
+%_libdir/libmiracle-wm-plugins.so
+%endif
 
 %files -n lib%{name}-devel
-%_libdir/libmiracle-wm-config.so
+%_libdir/libmiracle-wm-c.so
 %dir %_includedir/miracle/
 %_includedir/miracle/*
-%_pkgconfigdir/miracle-wm-config.pc
+%_pkgconfigdir/miracle-wm-c.pc
 
 %changelog
+* Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 

@@ -3,20 +3,20 @@
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%def_without check
+%def_with check
 
-%define commonlib_sover         11
+%define commonlib_sover         12
 %define mircore_sover            2
-%define mirplatform_sover       31
-%define lomiri_sover             7
+%define mirplatform_sover       34
+%define lomiri_sover             9
 %define miral_sover              7
-%define mirserver_sover         64
-%define mirwayland_sover         5
+%define mirserver_sover         67
+%define mirwayland_sover         6
 %define mirserverplatform_sover 23
 %define mirevdev_sover          10
 
 Name: mir
-Version: 2.21.1
+Version: 2.28.0
 Release: alt1
 
 Summary: The Mir compositor
@@ -32,9 +32,9 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: boost-program_options-devel
-BuildRequires: boost-filesystem-devel
 BuildRequires: pkgconfig(wayland-eglstream)
 BuildRequires: libglm-devel
+BuildRequires: pkgconfig(libapparmor)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(epoxy)
 BuildRequires: pkgconfig(gio-2.0)
@@ -57,11 +57,17 @@ BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(umockdev-1.0)
 BuildRequires: pkgconfig(wlcs)
 BuildRequires: pkgconfig(xkbcommon-x11)
-BuildRequires: pkgconfig(gmpxx)
 BuildRequires: doxygen
+BuildRequires: /usr/bin/Xwayland
+BuildRequires: pkgconfig(libdisplay-info)
+BuildRequires: /usr/bin/dot
+
+%if_with check
 BuildRequires: ctest
-BuildRequires: xkeyboard-config
-BuildRequires: wlcs
+BuildRequires: python3(dbusmock)
+BuildRequires: /proc
+BuildRequires: /dev/pts
+%endif
 
 %description
 Mir is a Wayland display server toolkit for Linux systems, with a focus
@@ -202,17 +208,29 @@ integration tests
 %build
 %cmake \
        -W no-dev \
-       -DMIR_PLATFORM='atomic-kms;gbm-kms;eglstream-kms;x11;wayland' \
+       -DMIR_PLATFORM='atomic-kms;gbm-kms;x11;wayland;eglstream-kms' \
        -DMIR_FATAL_COMPILE_WARNINGS=OFF \
        -DCMAKE_INSTALL_LIBEXECDIR="%_libdir/%name" \
-       -DMIR_USE_PRECOMPILED_HEADERS=OFF
+       -DMIR_USE_PRECOMPILED_HEADERS=OFF \
+       -DMIR_BUILD_INTERPROCESS_TESTS=OFF \
+       -DMIR_RUN_WLCS_TESTS=OFF \
+%ifarch riscv64
+       -DMIR_RUN_MIRAL_TESTS=OFF \
+       -DMIR_RUN_WINDOW_MANAGEMENT_TESTS=OFF \
+%endif
+%ifnarch aarch64
+       -DMIR_RUN_ACCEPTANCE_TESTS=OFF \
+%endif
+       -DMIR_ENABLE_RUST=OFF
+
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-%ctest -j1 -VV ||:
+export XDG_RUNTIME_DIR="%buildroot"
+%ctest
 
 %files devel
 %doc COPYING.*
@@ -232,7 +250,6 @@ integration tests
 %doc COPYING.LGPL* README.md
 %dir %_libdir/mir
 %_libdir/libmircommon.so.%{commonlib_sover}
-%_libdir/mir/miral*.so
 
 %files -n libmircore%{mircore_sover}
 %_libdir/libmircore.so.%{mircore_sover}
@@ -277,8 +294,11 @@ integration tests
 %_bindir/mir-*test*
 %_bindir/mir_*test*
 %_libdir/mir/tools/libmirserverlttng.so
-%_libdir/mir/server-platform/graphics-dummy.so
-%_libdir/mir/server-platform/input-stub.so
+%_libdir/mir/miral_wlcs_integration.so
+%_libdir/mir/server-platform/graphics-dummy.so.%{mirserverplatform_sover}
+%_libdir/mir/server-platform/input-stub.so.%{mirevdev_sover}
+%dir %_datadir/mir
+%_datadir/mir/expected_wlcs_failures.list
 
 %files test-libs-static
 %doc COPYING.GPL*
@@ -292,9 +312,11 @@ integration tests
 %_bindir/miral-*
 %_datadir/applications/miral-shell.desktop
 %_datadir/icons/hicolor/scalable/apps/spiral-logo.svg
-%dir %_datadir/%{name}
-%_datadir/%{name}/expected_wlcs_failures.list
 
 %changelog
+* Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.28.0-alt1
+- New version 2.28.0.
+- Enabled tests.
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 2.21.1-alt1
 - Initial build for Sisyphus
