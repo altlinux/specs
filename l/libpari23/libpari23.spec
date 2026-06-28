@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libpari23
 Version:	2.3.5
-Release:	alt1_19
+Release:	alt1_20
 Summary:	Number Theory-oriented Computer Algebra Library
 # No version is specified
 License:	GPL+
@@ -50,6 +50,9 @@ API.
 
 %prep
 %setup -q -n pari-%{version}
+
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 
 # Use our optflags, not upstream's
 %patch1
@@ -181,6 +184,9 @@ make dotest-round4
 %{_datadir}/%{name}/
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.5-alt1_20
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 2.3.5-alt1_19
 - fix build
 
