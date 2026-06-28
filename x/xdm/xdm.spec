@@ -2,11 +2,11 @@
 %define xf86 XFree86
 
 Name: xdm
-Version: 1.1.13
-Release: alt2
+Version: 1.1.17
+Release: alt1
 Epoch: 2
 Summary: X Display Manager with support for XDMCP, host chooser
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
@@ -14,6 +14,7 @@ Source: %name-%version.tar.gz
 Source1: %name.logrotate
 Source2: %name.pamd
 Source3: Xlogin
+Source4: %name.service
 
 Patch0: xdm-1.1.12-inpColor.patch
 Patch1: 0003-Fix-defaults-path.patch
@@ -22,10 +23,11 @@ Patch2: 0029-hackaround-for-23108.patch
 Obsoletes: %xf86-%name %xorg-%name < %epoch:%version-%release
 Provides: %xf86-%name = 4.4 %xorg-%name = %epoch:%version-%release
 
-# Automatically added by buildreq on Thu Mar 28 2019
-# optimized out: fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXmu-devel libXrender-devel libXt-devel libcrypt-devel libfreetype-devel perl pkg-config python-base sh4 xorg-proto-devel
-BuildRequires: libXaw-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libpam-devel
-BuildRequires: xorg-util-macros libbsd-devel 
+# Automatically added by buildreq on Sun Jun 28 2026
+# optimized out: bash5 fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libcap-ng libcrypt-devel libfreetype-devel libgcc15-devel libgpg-error libmd-devel perl pkg-config python3 python3-base sh5 xorg-proto-devel
+BuildRequires: libXaw-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libbsd-devel libpam-devel libsystemd-devel perl-parent
+
+BuildRequires: xorg-util-macros
 
 %description
 Xdm  manages a collection of X displays, which may be on the local host
@@ -35,14 +37,24 @@ Control Protocol.  Xdm provides services similar to those  provided  by
 init,  getty and login on character terminals: prompting for login name
 and password, authenticating the user, and running a ``session.''
 
+%package systemd
+Summary:        Sysmtemd %name build and service
+Group:          System/X11
+Requires:       %name = %EVR
+%description systemd
+%summary
+
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+sed -i 's/xdm -nodaemon/xdm-systemd -nodaemon/' xdm.service.in
 
 %build
 %autoreconf
+for sd in "" "--without-systemd-daemon"; do
+make clean || :
 %configure \
 	--with-xdmlibdir=%_libdir/X11/xdm \
 	--with-xdmconfigdir=%_sysconfdir/X11/xdm \
@@ -51,12 +63,16 @@ and password, authenticating the user, and running a ``session.''
 	--with-xft \
 	--enable-xdm-auth \
 	--enable-xdmshell \
-	--disable-static
+	--disable-static $sd
 
 %make_build CFLAGS+="-Wno-discarded-qualifiers"
+cp -a xdm/xdm "Xdm$sd"
+done
 
 %install
 %makeinstall_std
+install Xdm %buildroot%_bindir/xdm-systemd
+install -D %SOURCE4 %buildroot%_unitdir/%name.service
 
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/xdm
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/pam.d/xdm
@@ -73,13 +89,21 @@ ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 %_sysconfdir/X11/xdm/authdir
 %config(noreplace) %_sysconfdir/logrotate.d/xdm
 %config(noreplace) %_sysconfdir/pam.d/xdm
-%_bindir/*
+%_bindir/xdmshell
+%_bindir/xdm
 %_libdir/X11/xdm
 %_datadir/X11/xdm
 %dir %attr(700,root,root) %_localstatedir/xdm/
 %_man8dir/*
 
+%files systemd
+%_bindir/xdm-systemd
+%_unitdir/*
+
 %changelog
+* Sun Jun 28 2026 Fr. Br. George <george@altlinux.org> 2:1.1.17-alt1
+- Autobuild version bump to 1.1.17
+
 * Thu Jul  6 2023 Artyom Bystrov <arbars@altlinux.org> 2:1.1.13-alt2
 - Fix build
 
