@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameL plasmusic-toolbar
 %define nameLC plasma_applet_plasmusic.toolbar
 
 Name: plasma-applet-%nameL
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Plasma widget that shows playing song information and provide controls
@@ -31,9 +32,10 @@ mv src/translate %_builddir/%name-%version/
 install -d %buildroot%_datadir/plasma/plasmoids/%nameL
 cp -r src/* %buildroot%_datadir/plasma/plasmoids/%nameL/
 
-for locale in it nl uk fr tr es_ES; do
- msgfmt translate/${locale}.po -o translate/${locale}.mo
- install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
+for locale in translate/*.po; do
+ dirname=$(basename "$locale" .po)
+ mkdir -p %buildroot%_datadir/locale/${dirname}/LC_MESSAGES
+ msgfmt -o "%buildroot%_datadir/locale/${dirname}/LC_MESSAGES/%name.mo" "$locale"
 done
 
 %find_lang %name --with-kde --all-name
@@ -43,6 +45,9 @@ done
 %_datadir/plasma/plasmoids/%nameL
 
 %changelog
+* Sun Jun 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.2.0-alt1
+- 4.1.0 -> 4.2.0
+
 * Mon May 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.1.0-alt1
 - 4.0.0 -> 4.1.0
 
