@@ -11,7 +11,7 @@
 
 Name: %oname%abiversion
 Version: 4.3.5
-Release: alt2
+Release: alt3
 
 Summary: A lightweight C library for Websockets (legacy)
 
@@ -62,9 +62,7 @@ Legacy version of libwebsockets shared library (soname %abiversion).
     -DLWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
     -DLWS_USE_BUNDLED_ZLIB=OFF \
     -DLWS_WITHOUT_BUILTIN_SHA1=ON \
-%ifarch %e2k
     -DDISABLE_WERROR=ON \
-%endif
     -DLWS_WITH_STATIC=OFF
 %cmake_build
 
@@ -91,6 +89,9 @@ rm -v %buildroot%_libdir/%oname-evlib_*.so
 %_libdir/%oname.so.%abiversion
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.5-alt3
+- fixed FTBFS with gcc 15: disable -Werror on all arches (DISABLE_WERROR)
+
 * Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.5-alt2
 - build legacy package for libwebsockets.so.19
 - disable evlib_plugins build by default (unversioned plugin .so conflicts
