@@ -3,7 +3,7 @@
 %define libdnf5_dir %_sharedstatedir/libdnf5
 
 Name: dnf5
-Version: 5.4.2.0
+Version: 5.4.2.1
 Release: alt1
 
 Summary: Command-line package manager
@@ -18,6 +18,7 @@ ExcludeArch: %ix86
 Source: %name-%version.tar
 
 Patch1: %name-5.4.0.0-rpm-4.13-compat.patch
+Patch2: %name-cstring.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
@@ -160,6 +161,7 @@ Libdnf5 plugin that allows loading Python plugins.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
@@ -371,6 +373,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt1
+- new version 5.4.2.1
+- fixed FTBFS: include <cstring> for std::strcmp etc. (new libstdc++)
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.0-alt1
 - new version 5.4.2.0
 - pack zsh completion
