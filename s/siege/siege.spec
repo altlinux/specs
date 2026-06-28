@@ -1,6 +1,6 @@
 Name: siege
 Version: 4.1.7
-Release: alt1
+Release: alt2
 
 Summary: An HTTP regression testing/benchmarking utility
 
@@ -33,6 +33,8 @@ basis.
 %setup
 
 %build
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 utils/bootstrap
 %configure \
 	--localstatedir=/var \
@@ -57,6 +59,9 @@ mkdir -p %buildroot/%_sysconfdir/siege
 %_man1dir/*
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.7-alt2
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 4.1.7-alt1
 - new version 4.1.7 (ALT bug 53848)
 
