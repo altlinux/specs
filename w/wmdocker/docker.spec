@@ -5,7 +5,7 @@
 
 Name: wmdocker
 Version: 1.5
-Release: alt3
+Release: alt4
 
 Summary: Docker is a docking application (WindowMaker dock app) which acts as a system tray for KDE and GNOME2. 
 License: GPL
@@ -33,7 +33,8 @@ panel or environment.
 %patch -p1
 
 %build
-%make_build CC="%__cc" CFLAGS="%optflags"
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%make_build CC="%__cc -std=gnu17" CFLAGS="%optflags"
 
 %install
 %__mkdir_p %buildroot%_bindir
@@ -48,6 +49,9 @@ mv %buildroot/%_bindir/%oname %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt4
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Wed Nov 04 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt3
 - NMU: rename package and command to wmdocker (ALT bug 29990)
 
