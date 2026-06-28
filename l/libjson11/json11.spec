@@ -1,18 +1,19 @@
 %define oname json11
 Name: libjson11
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A tiny JSON library for C++11
 
 License: MIT
 Group: Development/C++
-Url: https://github.com/dropbox/%name
+Url: https://github.com/dropbox/json11
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: %url/archive/v%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-cstdint.patch
 
 BuildRequires: ninja-build
 BuildRequires: gcc-c++
@@ -32,6 +33,7 @@ Group: Development/C++
 
 %prep
 %setup
+%patch -p1
 %__subst 's@lib/@%_lib/@g' CMakeLists.txt
 %__subst 's@lib/@%_lib/@g' json11.pc.in
 echo "set_property(TARGET json11 PROPERTY SOVERSION 0)" >> CMakeLists.txt
@@ -60,6 +62,9 @@ echo "set_property(TARGET json11 PROPERTY SOVERSION 0)" >> CMakeLists.txt
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
+- fixed FTBFS with gcc 15: include <cstdint> for uint8_t
+
 * Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
