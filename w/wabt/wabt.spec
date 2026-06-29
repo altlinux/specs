@@ -4,12 +4,13 @@
 %set_verify_elf_method strict
 
 Name: wabt
-Version: 1.0.40
+Version: 1.0.41
 Release: alt1
 Summary: The WebAssembly Binary Toolkit
 License: Apache-2.0
 Group: Development/Other
 Url: https://github.com/WebAssembly/wabt
+Vcs: https://github.com/WebAssembly/wabt.git
 
 Source: %name-%version.tar
 Source1: gtest-0.tar
@@ -102,6 +103,9 @@ sed -i 's/run-tests\.py/& --timeout=600/' CMakeLists.txt
 %_cmakedir/%name
 
 %changelog
+* Mon Jun 29 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.0.41-alt1
+- Update to 1.0.41 (2026-05-06).
+
 * Sat Mar 21 2026 Vitaly Chikunov <vt@altlinux.org> 1.0.40-alt1
 - Update to 1.0.40 (2026-03-10).
 
