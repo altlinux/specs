@@ -5,8 +5,8 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.3.5
-Release:   alt3
+Version:   1.3.6
+Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -328,6 +328,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Jun 29 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.6-alt1
+- new vesion
+
 * Thu May 14 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.5-alt3
 - add free space check before package installation
 
