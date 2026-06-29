@@ -3,11 +3,11 @@
 %def_enable check
 
 %define ver_major 2
-%define ver_minor 4
+%define ver_minor 5
 
 Name: shared-mime-info
-Version: %ver_major.%ver_minor
-Release: alt1.1
+Version: %ver_major.%ver_minor.1
+Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name.filetrigger
 # https://gitlab.freedesktop.org/xdg/xdgmime.git
-Source2: xdgmime-1792967.tar
+Source2: xdgmime-04ce4cd.tar
 
 Patch: %name-2.3-alt-cachedir-param.patch
 Patch2: %name-2.3-alt-q_option.patch
@@ -70,7 +70,8 @@ This package provides pkg-config file for %name.
 %prep
 %setup
 cp %SOURCE1 .
-tar -xf %SOURCE2 --strip-components=1 -C xdgmime
+mkdir subprojects/xdgmime
+tar -xf %SOURCE2 --strip-components=1 -C subprojects/xdgmime
 
 %patch -p1 -b .cachedir
 %patch2 -p1 -b .quiet
@@ -78,9 +79,6 @@ tar -xf %SOURCE2 --strip-components=1 -C xdgmime
 rm -f freedesktop.org.xml
 
 %build
-pushd xdgmime
-CC=gcc %make_build
-popd
 %meson \
 %{?_enable_updatedb:-Dupdate-mimedb=true}
 %nil
@@ -134,6 +132,9 @@ multipart,text,video,XMLnamespaces}
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 29 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1.1
 - moved pc-file to new -devel subpackage
   to avoid dependency on pkgconfig
