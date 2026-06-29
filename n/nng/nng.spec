@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: nng
-Version: 1.11
+Version: 1.12.0
 Release: alt1
 
 Summary: Lightweight brokerless messaging
@@ -16,6 +16,7 @@ VCS: https://github.com/nanomsg/nng
 Source: %name-%version.tar
 
 Patch: nng-1.11-disable-htmldoc.patch
+Patch1: nng-1.12.0-bump-version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -89,5 +90,8 @@ mv %buildroot%_mandir/man3{compat,http,str,supp}/* %buildroot%_man3dir
 %_man1dir/*
 
 %changelog
+* Mon Jun 29 2026 Valery Zabrovsky <brow@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
 * Thu May 28 2026 Valery Zabrovsky <brow@altlinux.org> 1.11-alt1
 - Initial build for ALT Sisyphus.
