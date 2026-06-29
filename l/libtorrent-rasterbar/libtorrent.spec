@@ -9,7 +9,7 @@
 Name: libtorrent-rasterbar
 Epoch: 4
 Version: 2.0.13
-Release: alt1
+Release: alt2
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
@@ -112,6 +112,10 @@ python-3 bindings to libTorrent.
 
 %prep
 %setup -a1 -a2 -a3
+%ifarch %e2k
+# error: too few arguments in function call
+sed -i 's/auto&&\.\.\./Args.../' src/{session,torrent}_handle.cpp
+%endif
 
 %build
 %ifarch %mips32
@@ -165,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4:2.0.13-alt2
+- e2k build fix
+
 * Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 4:2.0.13-alt1
 - 2.0.12 -> 2.0.13
 
