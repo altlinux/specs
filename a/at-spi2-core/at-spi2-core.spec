@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -267,6 +267,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.5-alt1
+- 2.60.5
+
 * Sun May 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.4-alt1
 - 2.60.4
 

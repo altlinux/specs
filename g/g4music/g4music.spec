@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Play your music elegantly
@@ -69,6 +69,9 @@ appstreamcli metainfo-to-news --format text data/app.metainfo.xml.in NEWS
 
 
 %changelog
+* Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
+- 4.6.2
+
 * Wed Jun 10 2026 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
 - 4.6.1
 

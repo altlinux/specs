@@ -2,7 +2,7 @@
 
 %define __name Cine
 %define _name cine
-%define ver_major 1.6
+%define ver_major 1.7
 %define rdn_name io.github.diegopvlk.%__name
 
 %def_enable check
@@ -73,6 +73,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Tue Jun 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
