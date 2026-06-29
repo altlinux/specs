@@ -3,7 +3,7 @@
 
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.9.8
+Version: 2.9.9
 Release: alt1
 
 Summary: LinuxCNC controls CNC machines
@@ -31,7 +31,7 @@ BuildRequires: pkgconfig(libmodbus)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libgnomeprintui-2.2)
-BuildRequires: libncurses-devel libreadline-devel
+BuildRequires: libncurses-devel libedit-devel
 BuildRequires: libtirpc-devel
 BuildRequires: libgpiod-devel
 BuildRequires: kmod
@@ -254,6 +254,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Jun 29 2026 Anton Midyukov <antohami@altlinux.org> 2.9.9-alt1
+- New version 2.9.9.
+
 * Thu Jan 01 2026 Anton Midyukov <antohami@altlinux.org> 2.9.8-alt1
 - New version 2.9.8.
 
