@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 Summary: Implementation of JOSE Web standards
 License: LGPL-3
@@ -61,6 +61,9 @@ rm -rv %buildroot%python3_sitelibdir/jwcrypto/tests*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 29 2026 Stanislav Levin <slev@altlinux.org> 1.5.8-alt1
+- 1.5.7 -> 1.5.8
+
 * Tue Apr 07 2026 Stanislav Levin <slev@altlinux.org> 1.5.7-alt1
 - 1.5.6 -> 1.5.7.
 
