@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.6.0
-Release: alt3
+Release: alt4
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -84,7 +84,7 @@ subst "s|^OPENSEARCH_CLASSPATH=.*$|OPENSEARCH_CLASSPATH='${cp}'|" %buildroot%_da
 %pre
 getent group opensearch >/dev/null || /usr/sbin/groupadd -r opensearch
 getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
-  -g opensearch -d %_sharedstatedir/%name -s /bin/bash -c "Opensearch" opensearch
+  -g opensearch -d %_sharedstatedir/%name -s /sbin/nologin -c "Opensearch" opensearch
 
 %preun
 %preun_service %name.service
@@ -135,6 +135,9 @@ fi
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt4
+- Set /sbin/nologin as shell for user opensearch.
+
 * Fri Jun 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt3
 - Used %%post_systemd_postponed for correct restart service.
 
