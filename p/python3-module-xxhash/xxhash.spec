@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -51,6 +51,8 @@ export XXHASH_LINK_SO=1
 %pyproject_install
 
 %check
+# skip benchmark tests
+rm tests/test_benchmark.py
 %pyproject_run -- bash -s <<-'ENDUNITTEST'
 set -eu
 cd tests
@@ -62,6 +64,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 29 2026 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
+- 3.7.0 -> 3.8.0
+
 * Tue Apr 28 2026 Stanislav Levin <slev@altlinux.org> 3.7.0-alt1
 - 3.6.0 -> 3.7.0.
 
