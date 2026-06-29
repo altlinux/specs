@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.7
-Release: alt1
+Release: alt2
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -20,12 +20,14 @@ BuildArch: noarch
 AutoReq: nopython3
 
 Source: %name-%version.tar
+Patch: setup-alt-fixes.patch
 
 %description
 %summary. 
 
 %prep
 %setup
+%patch -p0
 
 %build
 %install
@@ -44,6 +46,9 @@ install -d %buildroot
 %_bindir/%%oname
 
 %changelog
+* Tue Jun 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt2
+- excluded HEAnet (ftp.heanet.ie) mirror (ALT #59673)
+
 * Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt1
 - 5.6.9 -> 5.7
 
