@@ -1,65 +1,53 @@
-
 %define oname node_exporter
-%global import_path github.com/prometheus/node_exporter
 
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.10.2
+Version: 1.11.1
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
 Group: Development/Other
 License: Apache-2.0
-Url: https://%import_path
-Source: %name-%version.tar
+Url: https://github.com/prometheus/node_exporter
 
+Source: %name-%version.tar
+Source1: vendor-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
 Source5: %name.socket
-Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires(pre): prometheus-common
+BuildRequires: rpm-build-golang golang >= 1.25
 BuildRequires: glibc-devel-static
-#BuildRequires: promu
-BuildRequires: /proc
-
-Requires(pre): prometheus-common
 
 %description
 There is varying support for collectors on each operating system.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -a 1
 
 %build
 export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
-#promu build
 export BUILDTAGS="netgo,osusergo,static_build"
 export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
          -X github.com/prometheus/common/version.Revision=%release \
          -X github.com/prometheus/common/version.Branch=tarball \
          -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
-
-%golang_prepare
 %golang_build .
 
 %install
 export BUILDDIR="$PWD/.gopath"
-#export GOPATH="%go_path"
 %golang_install
 rm -rf -- %buildroot%_datadir
 rm -rf -- %buildroot%go_root
 mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/sysconfig}
 
-#install -m0755 %oname %buildroot%_bindir/%oname
-install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -m0640 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -m0644 %SOURCE5 %buildroot%_unitdir/%name.socket
@@ -73,6 +61,12 @@ mkdir -p %buildroot%_man1dir
 sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Prometheus Node-Exporter' \
     %buildroot%_man1dir/%name.1
 
+%check
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+%gotest
 
 %post
 %post_service %name
@@ -87,10 +81,16 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %_initdir/%name
 %_man1dir/*.1*
 %_datadir/prometheus/node-exporter/example-rules.yml
-%dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/node-exporter
-%config(noreplace) %_sysconfdir/sysconfig/%name
+%dir %attr(0750,prometheus,prometheus) %_sharedstatedir/prometheus/node-exporter
+%config(noreplace) %attr(0640,root,prometheus) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu May 28 2026 Artyom Sinyugin <writers@altlinux.org> 1.11.1-alt1
+- New version 1.11.1.
+- Harden textfile collector directory and sysconfig permissions.
+- Allow the prometheus user to manage textfile collector metrics.
+- Add moderate systemd hardening.
+
 * Thu Jan 24 2026 Artyom Sinyugin <writers@altlinux.org> 1.10.2-alt1
 - 1.10.2
 

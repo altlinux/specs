@@ -1,18 +1,18 @@
-%global import_path github.com/prometheus/prometheus
 %global _unpackaged_files_terminate_build 1
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 3.9.1
+Version: 3.12.0
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
 License: Apache-2.0
-Url: https://%import_path
-Vcs: https://%import_path.git
-Source: %name-%version.tar
+Url: https://prometheus.io
+Vcs: https://github.com/prometheus/prometheus.git
 
+Source0: %name-%version.tar
+Source1: vendor-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
@@ -22,8 +22,7 @@ Patch0: %name-%version-%release.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.21
-#BuildRequires: promu
+BuildRequires: rpm-build-golang golang >= 1.25
 %if_disabled prebuilded_frontend
 BuildRequires: rpm-build-nodejs
 %endif
@@ -55,25 +54,15 @@ Prometheus is an open-source systems monitoring and alerting toolkit.
 This package contains the common files and settings for Prometheus.
 
 %prep
+%setup -a 1
+%patch0 -p1
 # Build the Front-end Assets
 # $ cd web/ui
 # $ npm install
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
-%setup
-%patch0 -p1
 
 %build
-export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-export TAGS="netgo,builtinassets"
-export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
-         -X github.com/prometheus/common/version.Revision=%release \
-         -X github.com/prometheus/common/version.Branch=tarball      \
-         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
-
-%golang_prepare
 %if_disabled prebuilded_frontend
 #building React app
 pushd web/ui
@@ -81,14 +70,17 @@ npm run build
 popd
 %endif
 
-#writing assets
-pushd web/ui
-go generate -x -v
-popd
+export BUILDDIR="$PWD/.gopath"
+export GOPATH="$BUILDDIR:%go_path"
+export TAGS="netgo,builtinassets"
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball      \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+# writing assets
 gofmt -w web/ui
 scripts/compress_assets.sh
-
-#promu build
+# building project
 %golang_build cmd/*
 
 %install
@@ -100,8 +92,8 @@ mkdir -p %buildroot{%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/sysconfig,{%_
 
 #install -m0755 prometheus %buildroot%_bindir/%name
 #install -m0755 promtool %buildroot%_bindir/promtool
-install -m0644 %SOURCE6 %buildroot%_sysconfdir/%name/%name.yml
-install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -m0640 %SOURCE6 %buildroot%_sysconfdir/%name/%name.yml
+install -m0640 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
@@ -116,6 +108,19 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus \\- The Prometheus monit
     %buildroot%_man1dir/prometheus.1
 sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Prometheus monitoring system' \
     %buildroot%_man1dir/promtool.1
+
+%check
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+        -X github.com/prometheus/common/version.Revision=%release \
+        -X github.com/prometheus/common/version.Branch=tarball \
+        -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+for dir in cmd/*; do
+    [ -d "$dir" ] || continue
+    pushd "$dir"
+        %gotest
+    popd
+done
+
 
 %pre common
 %_sbindir/groupadd -r -f %name > /dev/null 2>&1 ||:
@@ -132,16 +137,21 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %_bindir/*
 %_unitdir/%name.service
 %_initdir/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/sysconfig/%name
+%config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/*
 %_man1dir/*
 
 %files common
-%dir %_sysconfdir/%name
+%dir %attr(0750, root, %name) %_sysconfdir/%name
 %_tmpfilesdir/%name.conf
-%dir %attr(775, root, %name) %_localstatedir/%name
+%dir %attr(0750, %name, %name) %_localstatedir/%name
 
 %changelog
+* Mon Jun 25 2026 Artyom Sinyugin <writers@altlinux.org> 3.12.0-alt1
+- New version 3.12.0.
+- Restrict default web listener to localhost.
+- Harden systemd service and tighten permissions on configs and state dirs.
+
 * Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 3.9.1-alt1
 - 3.9.1
 

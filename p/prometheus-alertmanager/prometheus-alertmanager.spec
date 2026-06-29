@@ -1,29 +1,27 @@
 
 %define oname alertmanager
-%global import_path github.com/prometheus/alertmanager
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.30.1
+Version: 0.33.0
 Release: alt1
 Summary: Prometheus Alertmanager
 
 Group: Development/Other
 License: Apache-2.0
-Url: https://%import_path
-Source: %name-%version.tar
+Url: https://github.com/prometheus/alertmanager
 
+Source: %name-%version.tar
+Source1: vendor-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
 Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
-#BuildRequires: promu
-BuildRequires: /proc
-
-Requires(pre): prometheus-common
+BuildRequires(pre): rpm-macros-golang
+BuildRequires(pre): prometheus-common
+BuildRequires: rpm-build-golang golang >= 1.25
 
 %description
 The Alertmanager handles alerts sent by client applications such as the
@@ -32,15 +30,12 @@ them to the correct receiver integration such as email, PagerDuty, or
 OpsGenie. It also takes care of silencing and inhibition of alerts.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -a 1
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-%golang_prepare
-#promu build
 export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
          -X github.com/prometheus/common/version.Revision=%release \
          -X github.com/prometheus/common/version.Branch=tarball      \
@@ -53,16 +48,29 @@ export BUILDDIR="$PWD/.gopath"
 rm -rf -- %buildroot%_datadir
 rm -rf -- %buildroot%go_root
 
-mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus},%_localstatedir/prometheus/%oname}
-mkdir -p %buildroot%_sysconfdir/prometheus/alertmanager/templates
+mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus}}
+install -d -m0750 %buildroot%_localstatedir/prometheus/%oname
+install -d -m0750 %buildroot%_sysconfdir/prometheus/alertmanager/templates
 
 #install -m0755 %oname %buildroot%_bindir/%oname
 #install -m0755 amtool %buildroot%_bindir/amtool
-install -m0644 doc/examples/simple.yml %buildroot%_sysconfdir/prometheus/%oname.yml
-install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -m0640 doc/examples/simple.yml %buildroot%_sysconfdir/prometheus/%oname.yml
+install -m0640 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
-install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/templates/
+install -m0640 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/templates/
+
+%check
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball      \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+for dir in cmd/*; do
+    [ -d "$dir" ] || continue
+    pushd "$dir"
+        %gotest
+    popd
+done
 
 %post
 %post_service %name
@@ -75,12 +83,20 @@ install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/te
 %_bindir/*
 %_unitdir/%name.service
 %_initdir/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_sysconfdir/prometheus/%oname.yml
-%_sysconfdir/prometheus/alertmanager
-%dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
+%config(noreplace) %attr(0640,root,prometheus) %_sysconfdir/sysconfig/%name
+%config(noreplace) %attr(0640,root,prometheus) %_sysconfdir/prometheus/%oname.yml
+%dir %attr(0750,root,prometheus) %_sysconfdir/prometheus/alertmanager
+%dir %attr(0750,root,prometheus) %_sysconfdir/prometheus/alertmanager/templates
+%attr(0640,root,prometheus) %_sysconfdir/prometheus/alertmanager/templates/*
+%dir %attr(0750, prometheus, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Wed Jun 25 2026 Artyom Sinyugin <writers@altlinux.org> 0.33.0-alt1
+- New version 0.33.0.
+- Restricted default listeners and disabled HA cluster listener by default.
+- Hardened systemd service sandboxing.
+- Restricted permissions for configuration, templates and state directory.
+
 * Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 0.30.1-alt1
 - New version 0.30.1.
 
@@ -120,5 +136,5 @@ install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/te
 * Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.15.3-alt1
 - 0.15.3
 
-* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1%ubt
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1
 - Initial build for ALT.
