@@ -2,7 +2,7 @@
 
 Name: enca
 Version: 1.19
-Release: alt2
+Release: alt3
 
 Summary: A program that guesses encoding of text files
 License: GPL
@@ -16,6 +16,8 @@ Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Fri Mar 04 2011
 BuildRequires: gtk-doc librecode-devel perl-Encode perl-Unicode-Map
+# AM_ICONV macro for autoreconf (autoconf 2.72)
+BuildRequires: gettext-tools
 
 Summary(ru_RU.UTF-8): Программа, "угадывающая" кодировку текстовых файлов
 Summary(uk_UA.UTF-8): Програма, що "вгадує" кодування текстових файлів
@@ -91,6 +93,8 @@ linked programs using the Extremely Naive Charset Analyser library.
 %setup
 
 %build
+# gettext m4 macros (AM_ICONV) live here, not in aclocal's default path
+export ACLOCAL_PATH=/usr/share/gettext/m4
 %autoreconf
 %configure %{subst_enable static}
 %make_build
@@ -124,6 +128,9 @@ linked programs using the Extremely Naive Charset Analyser library.
 # - fix devel-docs/html/ build
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.19-alt3
+- NMU: fixed FTBFS: find gettext m4 macros (AM_ICONV) via ACLOCAL_PATH
+
 * Thu Sep 09 2021 Ilya Mashkin <oddity@altlinux.ru> 1.19-alt2
 - NMU: rebuild with new recode
 
