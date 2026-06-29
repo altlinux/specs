@@ -77,8 +77,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 11.1
-Release: alt2
+Version: 11.1.900
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -236,11 +236,10 @@ Distribution license and release notes
 дистрибутива "Просто Линукс" (Simply Linux).
 
 %package xfce-settings
-
 Summary: default settings for Xfce for Simply linux distribution
 License: GPLv2+
 Group: Graphical desktop/XFce
-Requires: PolicyKit-gnome
+Requires: polkit-gnome
 Requires: etcskel
 Requires: gtk2-theme-orchis gtk3-theme-orchis gtk4-theme-orchis xfwm4-theme-orchis
 Requires: icon-theme-Papirus
@@ -511,6 +510,11 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Jun 29 2026 Mikhail Efremov <sem@altlinux.org> 11.1.900-alt1
+- alterator: Add a border to the QScrollBar.
+- indexhtml: Add MAX channel link.
+- Minor spec cleanup.
+
 * Tue Apr 07 2026 Michael Shigorin <mike@altlinux.org> 11.1-alt2
 - E2K: skip menu-opacity setting for main menu
   to avoid artifacts on 801-PC with Radeon R5 230
