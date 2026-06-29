@@ -1,6 +1,6 @@
 Name:    maven-shade-plugin
 Version: 3.6.0
-Release: alt2
+Release: alt3
 Summary: Maven plugin for packaging artifacts in an uber-jar
 
 License: Apache-2.0
@@ -13,7 +13,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven-local
 BuildRequires: /proc
-BuildRequires: java-devel
+BuildRequires: java-11-openjdk-devel
 BuildRequires: unzip
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(junit:junit)
@@ -65,6 +65,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc LICENSE NOTICE
  
 %changelog
+* Mon Jun 22 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt3
+- Built with openjdk11.
+
 * Tue Dec 09 2025 Anton Meleshnikov <alton@altlinux.org> 3.6.0-alt2
 - Fixed FTBFS.
 
