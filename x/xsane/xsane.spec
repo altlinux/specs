@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt8
+Release: alt9
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -31,6 +31,8 @@ BuildRequires: libsane-devel
 BuildRequires: libgtk+2-devel
 
 %add_optflags -Wno-incompatible-pointer-types
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 
 %description
 XSane is a graphical frontend for SANE library,
@@ -136,6 +138,9 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %_docdir/%name/
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt9
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt8
 - update BR, drop build GIMP plugin
 
