@@ -1,56 +1,44 @@
-Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           jboss-parent
-Version:        20
-Release:        alt1_14jpp11
+Version:        52
+Release:        alt1
+
 Summary:        JBoss Parent POM
-License:        CC0
+License:        Apache-2.0
+Group:          Development/Java
 URL:            http://www.jboss.org/
-BuildArch:      noarch
+VCS:            https://github.com/jboss/jboss-parent-pom.
 
-Source0:        https://github.com/jboss/jboss-parent-pom/archive/%{name}-%{version}.tar.gz
-Source1:        http://repository.jboss.org/licenses/cc0-1.0.txt
+Source0:        %name-%version.tar
 
-BuildRequires:  maven-local
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
 The Project Object Model files for JBoss packages.
 
 %prep
-%setup -q -n %{name}-pom-%{name}-%{version}
+%setup
 
-# NOT available plugins
-%pom_remove_plugin :maven-clover2-plugin
-%pom_remove_plugin :cobertura-maven-plugin
-%pom_remove_plugin :findbugs-maven-plugin
-%pom_remove_plugin :javancss-maven-plugin
-%pom_remove_plugin :jdepend-maven-plugin
-%pom_remove_plugin :license-maven-plugin
-%pom_remove_plugin :sonar-maven-plugin
-
-%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :buildnumber-maven-plugin
-
-cp -p %SOURCE1 LICENSE
-sed -i 's/\r//' LICENSE
+%pom_remove_plugin :maven-enforcer-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
-%doc --no-dereference LICENSE
+%doc README.adoc
 
 %changelog
+* Wed Mar 25 2026 Evgeniy Serov <scala@altlinux.org> 52-alt1
+- Updated to 52.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:20-alt1_14jpp11
 - java11 build
 
