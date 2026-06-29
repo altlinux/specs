@@ -4,7 +4,7 @@
 
 Name: tcl-snack
 Version: 2.2.10
-Release: alt5
+Release: alt6
 
 Summary: Snack - a sound toolkit for scripting languages
 License: GPLv2
@@ -67,6 +67,10 @@ the features of Snack
 %build
 cd unix
 %add_optflags %optflags_debug
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
+# configure overwrites CFLAGS with $TCL_SHLIB_CFLAGS, dropping our %optflags; keep both
+subst 's|CFLAGS=$TCL_SHLIB_CFLAGS|CFLAGS="$CFLAGS $TCL_SHLIB_CFLAGS"|' configure
 %configure \
     --with-tcl=%_libdir \
     --with-tk=%_libdir \
@@ -108,6 +112,9 @@ chmod 0644 doc/*
 %_tcldatadir/%teaname%version/demos
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.10-alt6
+- NMU: fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sun Jan 19 2025 Leonid Znamenok <respublica@altlinux.org> 2.2.10-alt5
 - NMU: fixed FTBFS.
 
