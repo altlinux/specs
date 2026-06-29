@@ -1,6 +1,6 @@
 Name: xfce-wayland-protocols
 Version: 0.1.0
-Release: alt1.g6748e9f
+Release: alt2.g7dec3b0
 
 Summary: Wayland protocols that are private to the Xfce desktop environment
 License: MIT
@@ -9,7 +9,7 @@ Url: https://gitlab.xfce.org/xfce/xfce-wayland-protocolss
 
 Vcs: https://gitlab.xfce.org/xfce/xfce-wayland-protocols.git
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): meson rpm-macros-meson
@@ -28,7 +28,7 @@ protocols usually follow.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 %build
 %meson
@@ -42,5 +42,9 @@ protocols usually follow.
 %_datadir/xfce4/%name/
 
 %changelog
+* Tue Jun 23 2026 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2.g7dec3b0
+- Packaged xfce-input-device-list-private-v1.xml.
+- Updated to g7dec3b0.
+
 * Mon Jun 22 2026 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1.g6748e9f
 - Initial build.
