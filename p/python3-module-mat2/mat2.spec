@@ -3,7 +3,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 License: LGPL-3.0
 Group:   Development/Python3
@@ -12,6 +12,8 @@ VCS:	 https://github.com/jvoisin/mat2
 
 Summary: Metadata and privacy
 Summary(ru_RU.UTF-8): Метаданные и конфиденциальность
+
+Requires: libwebp-pixbuf-loader
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -54,6 +56,9 @@ metadata.
 %doc *.md LICENSE
 
 %changelog
+* Mon Jun 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt2
+- added libwebp-pixbuf-loader depencety (ALT #59668)
+
 * Wed Nov 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt1
 - 0.13.5 -> 0.14.0
 - change: VCS
