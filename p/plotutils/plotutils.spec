@@ -7,7 +7,7 @@
 
 Name: plotutils
 Version: 2.6
-Release: alt1.1.qa1
+Release: alt2
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -115,6 +115,8 @@ libxmi header files.
 %patch3 -p2
 
 %build
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 CXXFLAGS="-fno-rtti -fno-exceptions"
 %autoreconf
 %configure \
@@ -169,6 +171,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt2
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1.1.qa1
 - NMU: applied repocop patch
 
