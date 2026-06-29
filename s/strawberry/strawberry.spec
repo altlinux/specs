@@ -2,7 +2,7 @@
 %def_with tests
 
 Name: strawberry
-Version: 1.2.20
+Version: 1.2.21
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -109,6 +109,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Mon Jun 29 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.21-alt1
+- New version 1.2.21.
+
 * Tue Jun 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.20-alt1
 - New version 1.2.20.
 
