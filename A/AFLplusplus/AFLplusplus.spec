@@ -6,7 +6,7 @@
 %endif
 
 Name: AFLplusplus
-Version: 5.01c
+Version: 5.02c
 Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
@@ -119,6 +119,9 @@ cp -a include %buildroot%_datadir/afl/include
 %_includedir/afl
 
 %changelog
+* Mon Jun 29 2026 Egor Ignatov <egori@altlinux.org> 5.02c-alt1
+- New version 5.02c.
+
 * Fri Jun 19 2026 Egor Ignatov <egori@altlinux.org> 5.01c-alt1
 - New version 5.01c.
 
