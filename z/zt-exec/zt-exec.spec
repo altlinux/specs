@@ -1,6 +1,6 @@
 Name:           zt-exec
 Version:        1.12
-Release:        alt1
+Release:        alt2
 
 Summary:        ZeroTurnaround Process Executor
 License:        Apache-2.0
@@ -35,7 +35,7 @@ functionality from both java.lang.ProcessBuilder and Apache Commons Exec.
 rm src/test/java/org/zeroturnaround/exec/test/ProcessListenerThrowTest.java
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.release=17
 
 %install
 %mvn_install
@@ -44,5 +44,8 @@ rm src/test/java/org/zeroturnaround/exec/test/ProcessListenerThrowTest.java
 %doc LICENSE NOTICE.txt README.md
 
 %changelog
+* Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 1.12-alt2
+- Fixed FTBFS: switch build to Java 17.
+
 * Thu May 07 2026 Evgeniy Serov <scala@altlinux.org> 1.12-alt1
 - Initial build for Sisyphus.
