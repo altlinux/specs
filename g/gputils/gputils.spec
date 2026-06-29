@@ -1,6 +1,6 @@
 Name: gputils
 Version: 1.5.2
-Release: alt1
+Release: alt2
 
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
 
@@ -25,6 +25,8 @@ an up-to-date list of what gputils can do.
 %setup
 
 %build
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%add_optflags -std=gnu17
 %configure
 %make_build
 
@@ -34,10 +36,14 @@ an up-to-date list of what gputils can do.
 %files
 %_bindir/*
 %_man1dir/*
+%lang(fr) %_mandir/fr/man1/*
 %_datadir/%name/
 %doc AUTHORS ChangeLog NEWS README doc/gputils.pdf doc/gputils.ps
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt2
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 semantics)
+
 * Mon Jul 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.2-alt1
 - 1.5.2 released
 
