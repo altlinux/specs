@@ -2,7 +2,7 @@
 
 Name: awx
 Version: 24.6.1
-Release: alt7
+Release: alt8
 
 Summary: The official command line interface for Ansible AWX
 License: Apache-2.0
@@ -56,6 +56,7 @@ Requires: receptor
 Requires: python3-module-receptorctl
 Requires: uwsgi
 Requires: apache2-mod_wsgi-py3
+Requires: libxmlsec1-openssl
 
 %add_python3_req_skip defaults development
 
@@ -179,6 +180,9 @@ exit 0
 %ghost %apache2_sites_enabled/*.conf
 
 %changelog
+* Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 24.6.1-alt8
+- Required libxmlsec1-openssl.
+
 * Mon Jun 15 2026 Nikita Panov <nexxy@altlinux.org> 24.6.1-alt7
 - Receptor config fixes and improvements.
 
