@@ -22,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -132,6 +132,14 @@ Development static library for %libpq_name-devel
 %package -n %libpq_name-%postgresql_major
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
+
+Obsoletes: %libpq_name-13
+Obsoletes: %libpq_name-14
+Obsoletes: %libpq_name-15
+Obsoletes: %libpq_name-16
+Obsoletes: %libpq_name-17
+Obsoletes: %libpq_name-17-1C
+Obsoletes: %libpq_name-18-1C
 
 Conflicts: %libpq_name-13
 Conflicts: %libpq_name-14
@@ -547,12 +555,7 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 %make_build -C doc all
 
 %check
-%ifnarch %ix86
-QEMU_OPT='-m 4096 -object memory-backend-ram,id=ram-node0,size=4096M -numa node,nodeid=0,cpus=0-3,memdev=ram-node0'
-%else
-QEMU_OPT=""
-%endif
-vm-run --rootfs --user --sudo --cpu=4 --qemu="$QEMU_OPT" "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+vm-run --rootfs --user --sudo --cpu=1 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -1159,6 +1162,10 @@ fi
 %endif
 
 %changelog
+* Mon Jun 29 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt3
+- Obsolete the previous major version of libpq5-XY (ALT #59657)
+- Fix regress test
+
 * Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 18.4-alt2
 - Fix NUMA tests
 - Add conflicts for postgresqlXY and -server subpackages
