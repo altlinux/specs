@@ -1,6 +1,6 @@
 Name: rssh
 Version: 2.3.4
-Release: alt2
+Release: alt3
 
 Summary: Restricted shell for scp or sftp
 
@@ -35,6 +35,8 @@ both.
 %patch7 -p1
 
 %build
+# old K&R code: keep pre-C23 semantics (bool typedef) under gcc 15
+%add_optflags -std=gnu17
 %autoreconf
 %configure
 %make_build
@@ -55,6 +57,9 @@ mv %buildroot/%_sysconfdir/rssh.conf{.default,}
 
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt3
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 semantics)
+
 * Fri Jul 01 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.4-alt2
 - really update sources to 2.3.4 fixes (CVE-2012-3478 and CVE-2012-2252)
 - add patch for rsync3 compat
