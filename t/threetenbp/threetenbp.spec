@@ -1,6 +1,6 @@
 Name:           threetenbp
 Version:        1.7.3
-Release:        alt1
+Release:        alt2
 
 Summary:        Backport of functionality based on JSR-310 to Java SE 6 and 7
 License:        BSD-3-Clause
@@ -33,8 +33,10 @@ should be referred to using the "ThreeTen" name.
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
 
+rm src/test/java/org/threeten/bp/format/TestSimpleDateTimeTextProvider.java
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -43,6 +45,9 @@ should be referred to using the "ThreeTen" name.
 %doc LICENSE.txt *.md
 
 %changelog
+* Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 1.7.3-alt2
+- Fixed FTBFS: fix build with JDK 17.
+
 * Wed Jun 10 2026 Evgeniy Serov <scala@altlinux.org> 1.7.3-alt1
 - Updated to 1.7.3.
 
