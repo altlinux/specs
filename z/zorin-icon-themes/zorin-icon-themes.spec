@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zorin-icon-themes
-Version: 4.0.7
+Version: 4.0.8
 Release: alt1
 Summary: Zorin icon themes
 
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_iconsdir
 cp -a Zorin* %buildroot%_iconsdir
 
 %changelog
+* Thu Jun 25 2026 Kirill Izmestev <felixz@altlinux.org> 4.0.8-alt1
+- New version 4.0.8.
+
 * Sun Apr 05 2026 Kirill Izmestev <felixz@altlinux.org> 4.0.7-alt1
 - New version 4.0.7.
 
