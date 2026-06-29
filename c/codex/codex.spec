@@ -5,7 +5,7 @@
 
 Name: codex
 Version: 0.141.0
-Release: alt2
+Release: alt3
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
 Group: Development/Other
@@ -42,6 +42,9 @@ quiet = false
 
 [build]
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+
+[target.loongarch64-unknown-linux-gnu]
+rustflags = ["-Ccode-model=medium"]
 
 [profile.release]
 strip = false
@@ -90,6 +93,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Mon Jun 29 2026 Ilya Sorochan <k0tran@altlinux.org> 0.141.0-alt3
+- Fix linker error on loongarch64.
+
 * Mon Jun 22 2026 Alexey Shabalin <shaba@altlinux.org> 0.141.0-alt2
 - Rework packaging for zoryn.
 
