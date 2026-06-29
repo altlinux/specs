@@ -4,7 +4,7 @@
 
 Name: webcamoid
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: A webcam funny video tool
 
@@ -49,6 +49,9 @@ BuildRequires: pkgconfig(libswresample)
 BuildRequires: pipewire-libs-devel libjack-devel liborc-devel pipewire-libs-devel libalsa-devel
 
 Requires: %libname = %EVR
+# QML modules are imported from qrc resources, so autodep can't detect them
+Requires: libqt6-qmlcore
+Requires: libqt6-labssettings
 
 %description
 Webcamoid is a full featured webcam capture application.
@@ -110,6 +113,9 @@ sed -i -e 's|/qt/qml|/qt6/qml|' -e 's|/qt/plugins|/qt6/plugins|' CMakeLists.txt 
 %_libdir/*.so
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 9.3.0-alt2
+- add missing QML module deps libqt6-qmlcore, libqt6-labssettings (ALT bug 59028)
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 9.3.0-alt1
 - new version 9.3.0
 - exclude i586 build (SIMD intrinsics fail on i586 target)
