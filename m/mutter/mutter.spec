@@ -24,7 +24,7 @@
 
 Name: mutter
 Version: %ver_major.2
-Release: alt1.1%beta
+Release: alt1.2%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -43,6 +43,7 @@ Source: %name-%version%beta.tar
 
 # https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/5096
 Patch10: mutter-50.2-up-mr5091.diff
+Patch11: mutter-50.2-up-pango-1.58.patch
 
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
@@ -215,6 +216,7 @@ the functionality of the installed Mutter.
     mv gvdb-%gvdb_ver subprojects/gvdb}
 
 %patch10 -p1
+%patch11 -p1
 
 # disable KMS modifiers for baikal-vdu
 echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
@@ -318,6 +320,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.2-alt1.2
+- fixed build with pango-1.58
+
 * Sat Jun 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.2-alt1.1
 - applied https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/5096
   (ALT #59603)
