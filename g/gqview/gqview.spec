@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt11
+Release: alt12
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -19,6 +19,7 @@ Patch7: gqview-pixbuf-renderer-use-gdk_window_scroll.patch
 #https://gitweb.gentoo.org/repo/gentoo.git/tree/media-gfx/gqview/files/gqview-2.1.5-gcc-10.patch
 Patch8: gqview-2.1.5-gcc-10.patch
 Patch9: gqview-2.1.5-alt-gcc-14.patch
+Patch10: gqview-2.1.5-alt-fix-segfault_with_libgdk-pixbuf-2.44.6.patch
 
 # Automatically added by buildreq on Mon Feb 25 2008
 BuildRequires: libgtk+2-devel
@@ -43,10 +44,12 @@ editors, previewing images using thumbnails, and zoom.
 %patch7 -p2
 %patch8 -p1
 %patch9 -p2
+%patch10 -p2
 sed -i 's,^gqview_LDADD = ,&-lm ,' src/Makefile*
 
 %build
-export CFLAGS="-lm"
+export CFLAGS="-g -lm"
+%autoreconf
 %configure
 %make_build
 
@@ -65,6 +68,10 @@ install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Mon Jun 29 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.1.5-alt12
+- fixed segmentation fault that appeared with libgdk-pixbuf-2.44.6
+- added -g into CFLAGS for right build the debuginfo
+
 * Mon Mar 17 2025 Constantin Sunzow <protvin@altlinux.org> 2.1.5-alt11
 - Rebuild with lcms2.
 
