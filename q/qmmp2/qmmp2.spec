@@ -8,7 +8,7 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
@@ -117,7 +117,7 @@ Other features:
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
 Conflicts: qmmp1
-Requires: unzip winamplike-skins
+Requires: tar /usr/bin/unzip winamplike-skins
 %description -n qmmp
 Qmmp is an audio-player, written with help of Qt library.
 The user interface is similar to winamp or xmms.
@@ -258,6 +258,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:2.3.3-alt1
+- new version
+
 * Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:2.3.2-alt1
 - new version
 
