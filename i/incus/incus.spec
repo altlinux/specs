@@ -3,7 +3,7 @@
 %define incususer incusadm
 
 Name:		incus
-Version:	7.1.0
+Version:	7.2.0
 Release:	alt1
 Summary:	Incus is a system container and virtual machine manager
 
@@ -89,7 +89,6 @@ using an image based work-flow and with support for live migration.
 This package contains extra tools provided with Incus.
  - fuidshift - A tool to map/unmap filesystem uids/gids
  - lxc-to-incus - A tool to migrate LXC containers to Incus
- - lxd-to-incus - A tool to migrate an existing LXD environment to Incus
  - incus-benchmark - A Incus benchmark utility
  - incus-migrate - A physical to container migration tool
 	
@@ -115,7 +114,7 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 pushd $BUILDDIR/src/%import_path
-for i in incus fuidshift incus-benchmark lxc-to-incus lxd-to-incus incusd incus-user; do
+for i in incus fuidshift incus-benchmark lxc-to-incus incusd incus-user; do
 	CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)" TAGS="libsqlite3" %golang_build cmd/$i
 done
 CGO_ENABLED=0 TAGS="netgo" %golang_build cmd/incus-migrate
@@ -161,7 +160,6 @@ mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_man1dir
 help2man %buildroot%_bindir/fuidshift -n "uid/gid shifter" --no-info --no-discard-stderr > %buildroot%_man1dir/fuidshift.1
 help2man %buildroot%_bindir/lxc-to-incus -n "Convert LXC containers to Incus" --no-info --version-string=%version --no-discard-stderr > %buildroot%_man1dir/lxc-to-incus.1
-help2man %buildroot%_bindir/lxd-to-incus -n "Convert LXD containers to Incus" --no-info --version-string=%version --no-discard-stderr > %buildroot%_man1dir/lxd-to-incus.1
 help2man %buildroot%_bindir/incus-agent -n "Incus virtual machine guest agent" --no-info --no-discard-stderr > %buildroot%_man1dir/incus-agent.1
 help2man %buildroot%_bindir/incus-benchmark -n "Incus benchmark" --no-info --no-discard-stderr > %buildroot%_man1dir/incus-benchmark.1
 help2man %buildroot%_bindir/incus-migrate -n "Incus physical to instance migration tool" --no-info --no-discard-stderr > %buildroot%_man1dir/incus-migrate.1
@@ -215,18 +213,20 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_bindir/%name-benchmark
 %_bindir/%name-migrate
 %_bindir/lxc-to-%name
-%_bindir/lxd-to-%name
 %_man1dir/fuidshift.*
 %_man1dir/%name-benchmark.*
 %_man1dir/%name-migrate.*
 %_man1dir/lxc-to-%name.*
-%_man1dir/lxd-to-%name.*
 
 %files -n %name-agent
 %_bindir/%name-agent
 %_man1dir/%name-agent.*
 
 %changelog
+* Fri Jun 26 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.2.0-alt1
+- Updated to 7.2.0.
+- Remove lxd-to-incus.
+
 * Fri May 29 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.1.0-alt1
 - Updated to 7.1.0.
 
