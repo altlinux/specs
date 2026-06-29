@@ -1,7 +1,7 @@
 
 Name: sdlscav
 Version: 145.4_2015_01_05
-Release: alt1
+Release: alt2
 
 Group: Games/Arcade
 Summary: Cool arcade/thinking game very much like Lode Runner
@@ -34,7 +34,8 @@ to solve.
     mv data/regularguy.lbm data/regulargui.lbm
 
 %build
-%make_build CFLAGS="%optflags `sdl-config --cflags`"
+# old K&R code: keep pre-C23 empty-prototype semantics under gcc 15
+%make_build CFLAGS="%optflags -std=gnu17 `sdl-config --cflags`"
 
 %install
 mkdir -p %buildroot%_gamesbindir %buildroot%_gamesdatadir/%name
@@ -76,6 +77,9 @@ install -m 0644 %SOURCE12 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 145.4_2015_01_05-alt2
+- fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
+
 * Sun Aug 07 2022 Vitaly Lipatov <lav@altlinux.ru> 145.4_2015_01_05-alt1
 - new version (145.4_2015_01_05) with rpmgs script
 
