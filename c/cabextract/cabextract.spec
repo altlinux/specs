@@ -2,7 +2,7 @@
 
 Name: cabextract
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: Utility for extracting Microsoft Cabinet files
 
@@ -14,6 +14,8 @@ Source: http://cabextract.org.uk/cabextract-%version.tar.gz
 #Patch: cabextract-1.0-alt-fixes.patch
 
 BuildRequires: tzdata
+# AM_ICONV macro for autoreconf (autoconf 2.72)
+BuildRequires: gettext-tools
 %if_with libmspack
 BuildRequires: libmspack-devel >= 0.8alpha
 %endif
@@ -29,6 +31,8 @@ rm -rf mspack/
 %endif
 
 %build
+# gettext m4 macros (AM_ICONV) live here, not in aclocal's default path
+export ACLOCAL_PATH=/usr/share/gettext/m4
 %autoreconf
 %configure \
 %if_with libmspack
@@ -47,6 +51,9 @@ rm -rf mspack/
 %doc NEWS README
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt2
+- fixed FTBFS: find gettext m4 macros (AM_ICONV) via ACLOCAL_PATH
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - new version 1.11 (with rpmrb script)
 - build without external libmspack (headers is missed)
