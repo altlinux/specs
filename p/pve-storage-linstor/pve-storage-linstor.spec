@@ -1,6 +1,6 @@
 
 Name: pve-storage-linstor
-Version: 8.2.2
+Version: 8.3.0
 Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
@@ -57,6 +57,9 @@ fi
 %_cachedir/linstor-proxmox/
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.3.0-alt1
+- 8.3.0
+
 * Thu Jun 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.2.2-alt1
 - 8.2.2
 
