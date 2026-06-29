@@ -2,7 +2,7 @@
 
 Name: cvise
 Version: 2.12.0
-Release: alt2
+Release: alt3
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -15,6 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/marxin/cvise/archive/v%version.tar.gz
 #Source-url: https://github.com/marxin/cvise/archive/refs/heads/master.zip
 Source: %name-%version.tar
+Patch: %name-llvm21.patch
 
 BuildRequires: astyle
 
@@ -73,6 +74,7 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 
 %prep
 %setup
+%patch -p1
 # TODO: https://bugzilla.altlinux.org/show_bug.cgi?id=38660
 #__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
 
@@ -104,6 +106,9 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt3
+- fixed FTBFS with clang/LLVM 21: backport clang_delta API guards from upstream master
+
 * Wed Jan 21 2026 Ivan A. Melnikov <iv@altlinux.org> 2.12.0-alt2
 - NMU: add clang-tools (for clang-format) to BR and package
   requires (ALT#57584).
