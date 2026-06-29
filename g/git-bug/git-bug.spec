@@ -3,11 +3,11 @@
 
 Name: git-bug
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: Distributed, offline-first bug tracker embedded in git
-License: GPL-3.0
-Group: Development/Other
+License: GPL-3.0-or-later
+Group: Development/Tools
 Url: https://github.com/git-bug/git-bug
 Vcs: https://github.com/git-bug/git-bug
 
@@ -47,11 +47,31 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 %golang_install
 
+# Install shell completions
+install -Dpm 0644 misc/completion/bash/%name %buildroot%_datadir/bash-completion/completions/%name
+install -Dpm 0644 misc/completion/fish/%name %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+install -Dpm 0644 misc/completion/zsh/%name %buildroot%_datadir/zsh/site-functions/_%name
+
+# Install man pages
+pushd doc/man
+	for i in *.1 ;
+	do
+		install -Dpm 0644 $i %buildroot%_man1dir/$i
+	done
+popd
+
 %files
 %doc README.md LICENSE
 %_bindir/%name
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%name.fish
+%_datadir/zsh/site-functions/_%name
+%_man1dir/*
 
 %changelog
+* Fri Jun 26 2026 Ulysses Apokin <ulysses@altlinux.org> 0.10.1-alt2
+- Packaged man pages and shell completions.
+- Clarified license and group identifiers.
+
 * Thu Sep 18 2025 Artem Krasovskiy <aibure@altlinux.org> 0.10.1-alt1
 - Initial build for Sisyphus.
-
