@@ -5,7 +5,7 @@
 
 Name: pcsc-lite
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: PC/SC Lite smart card framework and applications
 License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
@@ -115,7 +115,7 @@ mkdir -p %buildroot%_sharedstatedir/%name
 %pre
 getent group pcscd >/dev/null || /usr/sbin/groupadd -r pcscd
 getent passwd pcscd >/dev/null || /usr/sbin/useradd -r \
-  -g pcscd -d %_sharedstatedir/%name -s /bin/bash -c "PCSC Lite" pcscd
+  -g pcscd -d %_sharedstatedir/%name -s /sbin/nologin -c "PCSC Lite" pcscd
 
 %preun
 if sd_booted; then
@@ -172,6 +172,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt2
+- Set /sbin/nologin to user pcscd (ALT #59646).
+
 * Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
 - New version.
 
