@@ -3,9 +3,10 @@
 %define sover 6
 %define libkirigamiaddonsstatefulapp libkirigamiaddonsstatefulapp%sover
 %define libkirigamiapp libkirigamiapp%sover
+%define libkirigamiaddonscomponents libkirigamiaddonscomponents%sover
 
 Name: kf6-%rname
-Version: 1.11.0
+Version: 1.12.1
 Release: alt1
 %K6init
 
@@ -66,6 +67,13 @@ Requires: %name-common >= %EVR
 %description -n %libkirigamiapp
 %name library
 
+%package -n %libkirigamiaddonscomponents
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiaddonscomponents
+%name library
+
 %prep
 %setup -n %rname-%version
 
@@ -99,7 +107,14 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiApp.so.%sover
 %_K6lib/libKirigamiApp.so.*
 
+%files -n %libkirigamiaddonscomponents
+%_K6lib/libKirigamiAddonsComponents.so.%sover
+%_K6lib/libKirigamiAddonsComponents.so.*
+
 %changelog
+* Tue Jun 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.12.1-alt1
+- new version
+
 * Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt1
 - new version
 
