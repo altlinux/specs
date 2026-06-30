@@ -50,7 +50,7 @@
 
 Name: vim
 %define branch 9.2
-Version: %branch.0541
+Version: %branch.0752
 Release: alt1
 Epoch: 4
 
@@ -1080,6 +1080,11 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue Jun 30 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0752-alt1
+- Updated to v9.2.0752 (fixes CVE-2026-55693, CVE-2026-55892, CVE-2026-55895,
+  CVE-2026-57451, CVE-2026-57452, CVE-2026-57453, CVE-2026-57454, CVE-2026-57455,
+  CVE-2026-57456).
+
 * Mon Jun 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.2.0541-alt1
 - Updated to v9.2.0541.
 - vim-console: disabled wayland support (ALT#59327).
