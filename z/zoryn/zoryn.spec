@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.43.0
+Version: 0.43.1
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -111,6 +111,12 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Jun 30 2026 Anton Farygin <rider@altlinux.org> 0.43.1-alt1
+- fixed builder shell to refuse when the builder's hasher chroot is uninitialized
+- fixed devenv for domain users whose UID/GID is out of range
+- fixed build to create hsh's effective workdir when the build command passes no hasher_dir
+- changed the installed Agent Skill reference to embed self-contained devenv build guidance
+
 * Fri Jun 26 2026 Anton Farygin <rider@altlinux.org> 0.43.0-alt1
 - added zoryn devenv profile list command (prints config profiles; --verbose shows resolved config)
 - added zoryn up --no-gpg-sign for zoryn's own automated commits
