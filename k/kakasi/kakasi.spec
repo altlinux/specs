@@ -1,6 +1,6 @@
 Name: kakasi
 Version: 2.3.6
-Release: alt3
+Release: alt4
 
 Summary: A Japanese character set conversion filter
 Summary(ru_RU.UTF-8): Преобразователь японского текста
@@ -8,7 +8,6 @@ License: GPLv2+
 Group: Text tools
 URL: http://kakasi.namazu.org/
 Source: %name-%version.tar.xz
-Patch: kakasi-2.3.4-fixdict.patch
 Patch1: kakasi-2.3.6-no-return-in-nonvoid-function.patch
 Patch2: kakasi-gcc14-fix.patch
 Patch4: kakasi-multilib.patch
@@ -43,14 +42,11 @@ set filter.
 
 %prep
 %setup -q
-#patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch4 -p1
+%autopatch -p1
 
 %build
 %add_optflags -std=gnu17
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 %configure --disable-static
 %make
 
@@ -78,6 +74,9 @@ install -pD -m644 man/kakasi.1 $RPM_BUILD_ROOT%_mandir/ja/man1/kakasi.1
 %_libdir/libkakasi.so
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.3.6-alt4
+- NMU: fix FTBFS with gettext 1.0
+
 * Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.3.6-alt3
 - NMU: fix FTBFS with gcc15
 
