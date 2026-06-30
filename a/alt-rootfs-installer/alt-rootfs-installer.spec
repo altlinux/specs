@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
-Version: 0.7.3
-Release: alt2
+Version: 0.7.4
+Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -41,6 +41,10 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Mon Jun 29 2026 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
+- Refactoring find of partitions (thanks Egor Shestakov).
+- Fix log to file (thanks Egor Shestakov).
+
 * Thu Mar 19 2026 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt2
 - Add starfive_visionfive2 and pine64_star64 boards (thx Ilya Sorochan).
 
