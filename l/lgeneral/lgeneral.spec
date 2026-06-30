@@ -1,7 +1,7 @@
 #define unpack tar
 Name: lgeneral
 Summary: Turn-based strategy inspired by Panzer General
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 License: GPL-2.0-or-later
 Group: Games/Strategy
@@ -13,8 +13,10 @@ Source3: scenarios.tar.bz2
 Source4: nicolas.zip
 Source5: newcampaign.zip
 Source6: APP-6A.zip
-Patch0: lgeneral-1.4.3-alt-gettext.patch
+
 Patch1: lgeneral-1.4.3-alt-link.patch
+Patch2: lgeneral-1.4.4-gettext-0.26.patch
+Patch3: lgeneral-1.4.4-update_autotools.patch
 
 Obsoletes: pg-data
 
@@ -26,12 +28,14 @@ Original data files can be downloaed from http://lgames.sourceforge.net/index.ph
 
 %prep
 %setup
-%patch0 -p2
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 touch config.rpath
 
 %build
+export ACLOCAL_PATH=%_datadir/gettext/m4
 %autoreconf
 %configure \
 	--disable-rpath \
@@ -64,9 +68,12 @@ cp %SOURCE2 %buildroot%_datadir/%name/NOTES.ALT
 %_man6dir/lgeneral.*
 
 %changelog
+* Tue Jun 30 2026 Anton Midyukov <antohami@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Tue May 05 2020 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
-- New version 1.4.3
-- Cleanup spec
+- New version 1.4.3.
+- Cleanup spec.
 
 * Tue Jul 04 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt5.2
 - Fix build with new toolchain
