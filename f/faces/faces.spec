@@ -1,6 +1,6 @@
 Name: faces
 Version: 1.7.7
-Release: alt9
+Release: alt10
 
 Summary: A list monitor with a visual output
 License: LGPL-2
@@ -71,7 +71,7 @@ sed -i 's|@GT_YES@|#NO#|g' */Makefile.in
 
 %build
 %add_optflags -Wno-error=implicit-function-declaration -std=gnu17
-%autoreconf
+%autoreconf -I m4
 %configure --disable-static
 %make_build
 
@@ -101,6 +101,9 @@ install -pD -m644 faces.desktop %buildroot%_desktopdir/%name.desktop
 %_man3dir/compface.3.*
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.7.7-alt10
+- NMU: fix FTBFS with gettext 1.0
+
 * Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.7.7-alt9
 - NMU: fix FTBFS with gcc15
 
