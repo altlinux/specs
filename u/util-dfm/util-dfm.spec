@@ -5,7 +5,7 @@
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.53
+Version: 1.3.59
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
@@ -69,6 +69,13 @@ Group: Development/Other
 
 %description -n libdfm6-mount-devel
 This package provides development files for libdfm-mount.
+
+%package -n dfm-burner
+Summary: dfm6-burner-client by %name
+Group: Graphical desktop/Other
+
+%description -n dfm-burner
+This package provides dfm6-burner-client aka dfm-burner.
 
 %package -n libdfm6-burn%sover
 Summary: Library for %name
@@ -163,6 +170,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/libdfm6-burn.so.%sover
 %_libdir/libdfm6-burn.so.%version
 
+%files -n dfm-burner
+%_bindir/dfm-burner
+
 %files -n libdfm6-burn-devel
 %_libdir/libdfm6-burn.so
 %dir %_includedir/dfm6-burn/
@@ -173,6 +183,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %files -n dfm-searcher
 %_bindir/dfm-searcher
+%dir %_datadir/deepin/
+%_datadir/deepin/dfm-search/
 
 %files -n libdfm6-search%sover
 %_libdir/libdfm6-search.so.%sover
@@ -187,6 +199,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Tue Jun 30 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.59-alt1
+- New version 1.3.59.
+- Added: dfm-searcher.
+
 * Wed Apr 29 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.53-alt1
 - New version 1.3.53.
 - Renamed: dfm6-search-client -> dfm-searcher.
