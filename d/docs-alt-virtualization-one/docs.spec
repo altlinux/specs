@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Jun 30 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt2
+- update to ALT Virtualization ONE 11.0RC2
+- update install packages (ALT 57879)
+
 * Mon Jan 26 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt1
 - update to ALT Virtualization ONE 11.0beta2
 
