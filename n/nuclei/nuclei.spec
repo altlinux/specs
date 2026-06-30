@@ -2,7 +2,7 @@
 %define import_path github.com/projectdiscovery/nuclei
 
 Name: nuclei
-Version: 3.9.0
+Version: 3.10.0
 Release: alt1
 
 Summary: Nuclei is a modern vulnerability scanner built on a simple YAML-based DSL
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/nuclei
 
 %changelog
+* Wed Jul 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.10.0-alt1
+- 3.9.0 -> 3.10.0
+
 * Wed Jun 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.9.0-alt1
 - automatic build: 3.8.0 -> 3.9.0
 
