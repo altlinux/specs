@@ -67,7 +67,7 @@
 
 Name: blender
 Version: 4.5.11
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -366,10 +366,6 @@ EOF
 
 %ifarch %e2k
 %patch2000 -p1
-# lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
-sed -i "/-Werror=return-type/d" CMakeLists.txt
-sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
-sed -i 's/-freciprocal-math//' intern/cycles{,/kernel}/CMakeLists.txt
 %endif
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
@@ -545,6 +541,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Sat Jun 27 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.5.11-alt2
+- e2k patch update, removed obsolete sed patches
+
 * Thu Jun 25 2026 Anton Farygin <rider@altlinux.org> 4.5.11-alt1
 - 4.5.10 -> 4.5.11
 
