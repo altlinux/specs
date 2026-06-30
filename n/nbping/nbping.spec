@@ -1,12 +1,12 @@
 %global srcname NBping
 
 Name:    nbping
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Nping mean NB Ping, A Ping Tool in Rust with Real-Time Data and Visualizations
 License: MIT
-Group:   Other
+Group:   Monitoring
 Url:     https://github.com/hanshuaikang/NBping
 VCS:     https://github.com/hanshuaikang/NBping.git
 
@@ -39,6 +39,9 @@ and other features.
 %_bindir/%name
 
 %changelog
+* Tue Jun 30 2026 Sergey Palcheh <minergenon@altlinux.org> 0.7.1-alt1
+- new version 0.7.1
+
 * Wed Jun 17 2026 Sergey Palcheh <minergenon@altlinux.org> 0.7.0-alt1
 - new version 0.7.0
 
