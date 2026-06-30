@@ -7,7 +7,7 @@ Group: Networking/WWW
 
 Name:       axel
 Version:    2.17.14
-Release:    alt1_3
+Release:    alt1_4
 Summary:    Light command line download accelerator for Linux and Unix
 
 # FedoraForgeMeta2ALT: generated meta
@@ -54,13 +54,14 @@ be useful as a wget clone on byte-critical systems.
 %setup -q -n axel-2.17.14
 
 %build
-autoreconf -vfi
+autopoint -f
+%autoreconf -I m4 -I %_datadir/gettext/m4
 %{configure}
 %make_build
 
 
 %install
-%makeinstall_std \
+%makeinstall_std
 
 mkdir -p %{buildroot}%{_sysconfdir}
 install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
@@ -77,6 +78,9 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.17.14-alt1_4
+- NMU: fix FTBFS with gettext 1.0
+
 * Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 2.17.14-alt1_3
 - update to new release by fcimport
 
