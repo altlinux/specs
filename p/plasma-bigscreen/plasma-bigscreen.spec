@@ -4,7 +4,7 @@
 %define _udevrulesdir /lib/udev/rules.d
 
 Name: plasma-bigscreen
-Version: 6.7.1
+Version: 6.7.2
 Release: alt1
 
 Summary: Plasma shell for TVs
@@ -148,6 +148,9 @@ mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
 %_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
 
 %changelog
+* Tue Jun 30 2026 Nikolay Strelkov <snk@altlinux.org> 6.7.2-alt1
+- New version 6.7.2.
+
 * Fri Jun 26 2026 Nikolay Strelkov <snk@altlinux.org> 6.7.1-alt1
 - New version 6.7.1.
 
