@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: dosfstools
 Version: 4.2
-Release: alt3
+Release: alt4
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPLv3
@@ -31,7 +31,6 @@ code.
 %patch -p1
 
 %build
-./autogen.sh
 %autoreconf
 %configure --prefix=/ --sbindir=/sbin --enable-compat-symlinks
 %make_build \
@@ -53,6 +52,9 @@ make check
 %doc doc/*
 
 %changelog
+* Tue Jun 30 2026 Anton Farygin <rider@altlinux.org> 4.2-alt4
+- fixed build with gettext 1.0
+
 * Wed Apr 03 2024 Anton Farygin <rider@altlinux.ru> 4.2-alt3
 - fixed homepage URL (Closes: #49684)
 - updated License according to SPDX
