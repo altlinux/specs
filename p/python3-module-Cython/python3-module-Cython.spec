@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 3.2.6
+Version: 3.2.8
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -138,6 +138,9 @@ done
 %endif
 
 %changelog
+* Tue Jun 30 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2.8-alt1
+- 3.2.8
+
 * Thu Jun 25 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt1
 - 3.2.6
 
