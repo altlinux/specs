@@ -2,22 +2,26 @@
 
 %define soversion 2
 
-%define oname nccl
+# NVCC is incompatible with GCC 15, use GCC 14 as host compiler.
+%define nvcc_host_gcc_version 14
+%define nvcc_host_cc  %_bindir/gcc-%nvcc_host_gcc_version
+%define nvcc_host_cxx %_bindir/g++-%nvcc_host_gcc_version
 
-Name:    nvidia-%oname
-Version: 2.28.3
+Name:    nvidia-nccl
+Version: 2.30.3
 Release: alt1
 
 Summary: Optimized primitives for collective multi-GPU communication
-License: NVIDIA
+License: Apache-2.0 AND BSD-3-Clause
 Group:   System/Libraries
 URL: 	 https://developer.nvidia.com/nccl
 Vcs:     https://github.com/NVIDIA/nccl.git
 
-Source: %name-%version.tar
+Source: nvidia-nccl-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
+BuildRequires: gcc%nvcc_host_gcc_version-c++
 BuildRequires: nvidia-cuda-devel
 BuildRequires: libcudart
 BuildRequires: python3
@@ -35,11 +39,11 @@ single- or multi-process (e.g., MPI) applications.
 
 For more information on NCCL usage, please refer to the NCCL documentation.
 
-%package 	-n lib%oname%soversion
+%package 	-n libnccl%soversion
 Group: System/Libraries
 Summary: Optimized primitives for collective multi-GPU communication
 
-%description 	-n lib%oname%soversion
+%description 	-n libnccl%soversion
 NCCL (pronounced "Nickel") is a stand-alone library
 of standard communication routines for GPUs, implementing all-reduce,
 all-gather, reduce, broadcast, reduce-scatter,
@@ -52,25 +56,22 @@ single- or multi-process (e.g., MPI) applications.
 
 For more information on NCCL usage, please refer to the NCCL documentation.
 
-%package 	-n lib%oname-devel
-Summary: Development files for lib%name
+%package 	-n libnccl-devel
+Summary: Development files for libnccl
 Group: Development/Other
-Requires: lib%oname%soversion = %EVR
+Requires: libnccl%soversion = %EVR
 
-%description 	-n lib%oname-devel
-%summary.
-
-%package 	-n lib%oname-static
-Summary: Static libraries for lib%name
-Group: Development/Other
-
-%description 	-n lib%oname-static
+%description 	-n libnccl-devel
 %summary.
 
 %prep
 %setup
 
 %build
+export CC=%nvcc_host_cc
+export CXX=%nvcc_host_cxx
+export NVCC_CCBIN=%nvcc_host_cxx
+
 export CUDARTLIB=cudart
 export CUDA_HOME=%_usr
 %make_build src.build
@@ -86,19 +87,29 @@ install -d %buildroot%_pkgconfigdir
 
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 
-%files 		-n lib%oname%soversion
+# Delete static library
+rm -rv %buildroot/%_libdir/libnccl_static.a
+
+%files 		-n libnccl%soversion
 %doc *.md LICENSE.txt
-%_libdir/lib%oname.so.*
+%_libdir/libnccl.so.%{soversion}*
 
-%files 		-n lib%oname-devel
+%files 		-n libnccl-devel
 %_bindir/ncclras
+%_bindir/ncclparam
 %_includedir/*
-%_pkgconfigdir/%oname.pc
-%_libdir/lib%oname.so
-
-%files 		-n lib%oname-static
-%_libdir/lib%{oname}_static.a
+%_pkgconfigdir/nccl.pc
+%_libdir/libnccl.so
 
 %changelog
+* Mon Jun 29 2026 Nikita Shmatko <nash@altlinux.org> 2.30.3-alt1
+- New version 2.30.3.
+- Used gcc 14 as NVCC host compiler to avoid gcc 15 incompatibility.
+- Dropped the unused static library subpackage.
+
+* Mon Apr 13 2026 Nikita Shmatko <nash@altlinux.org> 2.29.7-alt1
+- New version 2.29.7.
+- Changed license to relevant.
+
 * Wed Feb 04 2026 Nikita Shmatko <nash@altlinux.org> 2.28.3-alt1
 - Initial build for Sisyphus.
