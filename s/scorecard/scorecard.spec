@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: scorecard
-Version: 5.4.0
+Version: 5.5.0
 Release: alt1
 
 Summary: OpenSSF Scorecard - Security health metrics for Open Source
@@ -31,6 +31,10 @@ the maintainers to make improvements.
 
 %prep
 %setup -a1
+
+# Correction of the executable file name in the help message and autocompletion scripts.
+sed -i cmd/root.go -e 's|scorecardUse  = `./scorecard|scorecardUse  = `scorecard|'
+
 export BUILDDIR="$PWD/%build_dir"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -40,7 +44,13 @@ export GOPATH="$BUILDDIR:%go_path"
 export BUILDDIR="$PWD/%build_dir"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-cd %build_dir/src/%import_path
+buildDate="$(date -u -d "@${SOURCE_DATE_EPOCH}" +'%%Y-%%m-%%d')"
+export LDFLAGS="$LDFLAGS -w \
+             -X sigs.k8s.io/release-utils/version.gitVersion=%version-%release \
+             -X sigs.k8s.io/release-utils/version.gitCommit=%version \
+             -X sigs.k8s.io/release-utils/version.gitTreeState=clean \
+             -X sigs.k8s.io/release-utils/version.buildDate=$buildDate"
+cd %build_dir/src/%import_path 
 %golang_build .
 
 %install
@@ -65,5 +75,12 @@ tests_list=`go list ./... \
 %_bindir/scorecard
 
 %changelog
+* Tue Jun 30 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.5.0-alt1
+- New version 5.5.0.
+
+* Tue Apr 07 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.4.0-alt2
+- Display version correctly (closes #58489).
+- Fix autocompletion scripts (closes #58488).
+
 * Tue Mar 17 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.4.0-alt1
 - Initial build for ALT Linux Sisyphus.
