@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 Name:           libifp
 Version:        1.0.1.0
-Release:        alt1
+Release:        alt2
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -14,6 +14,7 @@ URL:            http://ifp-driver.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/project/ifp-driver/%{name}/%{version}-stable/%{name}-%{version}.tar.gz
 Source1:        libifp.hotplug
 Source2:        10-libifp.rules
+Source44:       import.info
 
 BuildRequires:  autoconf-common
 BuildRequires:  automake-common
@@ -22,7 +23,6 @@ BuildRequires:  libtool-common
 BuildRequires:  libusb-devel
 BuildRequires:  libusb-compat-devel
 BuildRequires:  journalctl libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-networkd systemd-services systemd-utils
-Source44: import.info
 
 %description
 libifp is a general-purpose library-driver for iRiver's iFP (flash-based)
@@ -44,7 +44,7 @@ libifp.
 
 %build
 %add_optflags -Wno-incompatible-pointer-types
-autoreconf -fiv
+%autoreconf -I m4
 %configure --with-libusb --disable-static
 sed -i -e '/^LDFLAGS/ s/$/ -lusb/' src/Makefile examples/Makefile
 %make_build
@@ -73,6 +73,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1.0-alt2
+- NMU: fix FTBFS with gettext 1.0
+
 * Tue Apr 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.1.0-alt1
 - NMU: update to new release
 
