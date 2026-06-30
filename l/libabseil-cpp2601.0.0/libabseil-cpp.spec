@@ -1,25 +1,17 @@
-%define _unpackaged_files_terminate_build 1
-
-%define soversion 2605.0.0
+%define soversion 2601.0.0
 
 %define cxx_standard 17
 
-# Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
-# And these tests are very long
-%ifarch %e2k
 %def_disable check
-%else
-%def_enable check
-%endif
 
-Name: libabseil-cpp
-Version: 20260526.0
-Release: alt1
+Name: libabseil-cpp%soversion
+Version: 20260107.1
+Release: alt2
 
 Summary: C++ Common Libraries
 
 License: Apache-2.0
-Group: Development/C++
+Group: System/Legacy libraries
 Url: https://abseil.io
 VCS: https://github.com/abseil/abseil-cpp
 Source: %name-%version.tar
@@ -36,8 +28,6 @@ BuildRequires: libgtest-devel >= 1.13.0
 BuildRequires: libgmock-devel ctest
 %endif
 
-# https://bugzilla.altlinux.org/42411
-Conflicts: libclickhouse-cpp-devel <= 1.2.2-alt1
 
 %description
 Abseil is an open-source collection of C++ library code designed to augment
@@ -54,43 +44,6 @@ Abseil is not meant to be a competitor to the standard library; we've just
 found that many of these utilities serve a purpose within our code base,
 and we now want to provide those resources to the C++ community as a whole.
 
-%package -n libabseil-cpp%soversion
-Summary: %summary
-Group: Development/C++
-
-%description -n  libabseil-cpp%soversion
-Abseil is an open-source collection of C++ library code designed to augment
-the C++ standard library. The Abseil library code is collected from
-Google's own C++ code base, has been extensively tested and used in
-production, and is the same code we depend on in our daily coding lives.
-
-In some cases, Abseil provides pieces missing from the C++ standard; in
-others, Abseil provides alternatives to the standard for special needs we've
-found through usage in the Google code base. We denote those cases clearly
-within the library code we provide you.
-
-Abseil is not meant to be a competitor to the standard library; we've just
-found that many of these utilities serve a purpose within our code base,
-and we now want to provide those resources to the C++ community as a whole.
-
-
-
-%package testing
-Summary:        Libraries needed for running tests on the installed %name
-Requires:       libabseil-cpp%soversion = %EVR
-Group: Development/C++
-
-%description testing
-%{summary}.
-
-
-%package devel
-Summary: Development files for %name
-Requires: libabseil-cpp%soversion = %EVR
-Group: Development/C++
-
-%description devel
-Development headers for %name
 
 %prep
 %setup
@@ -135,9 +88,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %doc FAQ.md README.md UPGRADES.md
 
 %_libdir/libabsl_base.so.%soversion
+%_libdir/libabsl_borrowed_fixup_buffer.so.%soversion
 %_libdir/libabsl_city.so.%soversion
 %_libdir/libabsl_civil_time.so.%soversion
-%_libdir/libabsl_clock_interface.so.%soversion
 %_libdir/libabsl_cord.so.%soversion
 %_libdir/libabsl_cord_internal.so.%soversion
 %_libdir/libabsl_cordz_functions.so.%soversion
@@ -209,12 +162,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_raw_hash_set.so.%soversion
 %_libdir/libabsl_raw_logging_internal.so.%soversion
 %_libdir/libabsl_scoped_set_env.so.%soversion
-%_libdir/libabsl_simulated_clock.so.%soversion
-%_libdir/libabsl_source_location.so.%soversion
 %_libdir/libabsl_spinlock_wait.so.%soversion
 %_libdir/libabsl_stacktrace.so.%soversion
 %_libdir/libabsl_status.so.%soversion
-%_libdir/libabsl_status_builder.so.%soversion
 %_libdir/libabsl_status_matchers.so.%soversion
 %_libdir/libabsl_statusor.so.%soversion
 %_libdir/libabsl_str_format_internal.so.%soversion
@@ -230,43 +180,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_utf8_for_code_point.so.%soversion
 %_libdir/libabsl_vlog_config_internal.so.%soversion
 
-%files testing
-%_libdir/libabsl_scoped_mock_log.so.%soversion
-%if_enabled check
-# TESTONLY libraries (that are actually installed):
-# absl/base/CMakeLists.txt
-%_libdir/libabsl_exception_safety_testing.so.%soversion
-%_libdir/libabsl_atomic_hook_test_helper.so.%soversion
-%_libdir/libabsl_spinlock_test_common.so.%soversion
-# absl/container/CMakeLists.txt
-%_libdir/libabsl_test_instance_tracker.so.%soversion
-%_libdir/libabsl_hash_generator_testing.so.%soversion
-# absl/debugging/CMakeLists.txt
-%_libdir/libabsl_stack_consumption.so.%soversion
-# absl/log/CMakeLists.txt
-%_libdir/libabsl_log_internal_test_actions.so.%soversion
-%_libdir/libabsl_log_internal_test_helpers.so.%soversion
-%_libdir/libabsl_log_internal_test_matchers.so.%soversion
-# absl/strings/CMakeLists.txt
-%_libdir/libabsl_pow10_helper.so.%soversion
-# absl/synchronization/CMakeLists.txt
-%_libdir/libabsl_per_thread_sem_test_common.so.%soversion
-# absl/time/CMakeLists.txt
-%_libdir/libabsl_time_internal_test_util.so.%soversion
-%endif
-
-%files devel
-%doc LICENSE
-%doc *.md
-%_libdir/libabsl_*.so
-#files devel
-%_includedir/absl/
-%_libdir/cmake/absl/
-%_pkgconfigdir/*.pc
-
 %changelog
-* Fri Jun 26 2026 Anton Farygin <rider@altlinux.org> 20260526.0-alt1
-- 20260107.1 -> 20260526.0
+* Tue Jun 30 2026 Anton Farygin <rider@altlinux.org> 20260107.1-alt2
+- built as legacy library without the devel package
 
 * Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 20260107.1-alt1
 - 20250127.1 -> 20260107.1
