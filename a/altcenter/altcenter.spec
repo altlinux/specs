@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.39
+Release: alt0.40
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Tue Jun 30 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.40
+- FSTEC: added new plugin.
+- Policy: rebuilt GRUB config for recovery mode blocking.
+- Policy: showed description for immutable policies.
+- Mainwindow: avoided PyQt SIP cleanup crash on exit.
+- Policy: fixed (ALT #59594) + mouse selection.
+
 * Mon Jun 22 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.39
 - Policy: added user console blocking.
 - Policy: added Podman policy and package availability check.
