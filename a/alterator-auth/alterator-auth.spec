@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 BuildRequires(pre): alterator >= 5.0
 BuildRequires(pre): alterator-lookout
 BuildRequires: guile22-devel
+BuildRequires: qt6-tools
 
 %filter_from_requires /^samba-common$/d;/^systemd/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -123,6 +124,7 @@ Contains basic roles: users, power and localadmins.
 
 %build
 %make_build libdir=%_libdir
+lrelease-qt6 alterator-framework/ts/auth_ru.ts
 
 %install
 export GUILE_LOAD_PATH=/usr/share/alterator/lookout
@@ -135,6 +137,13 @@ install -Dpm644 etc/role.d/localadmins.role %buildroot%_sysconfdir/role.d/locala
 install -Dpm755 sbin/system-auth %buildroot/%_sbindir/system-auth
 install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 rm -f %buildroot%_libexecdir/alterator/hooks/auth
+install -Dpm644 dbus-backends/auth.backend %buildroot%_datadir/alterator/backends/auth.backend
+install -Dpm644 dbus-backends/org.altlinux.alterator.auth.policy %buildroot%_datadir/polkit-1/actions/org.altlinux.alterator.auth.policy
+install -d %buildroot%_datadir/alterator-framework/modules/auth
+install -m 644 alterator-framework/manifest.json %buildroot%_datadir/alterator-framework/modules/auth/
+install -m 644 alterator-framework/main.qml %buildroot%_datadir/alterator-framework/modules/auth/
+install -d %buildroot%_datadir/alterator-framework/modules/auth/ts
+install -m 644 alterator-framework/ts/auth_ru.qm %buildroot%_datadir/alterator-framework/modules/auth/ts/
 
 %pre -n alterator-roles-common
 %_sbindir/groupadd -r -f -g 98 everyone 2> /dev/null ||:
@@ -160,6 +169,13 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %_sbindir/system-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
+%_datadir/alterator/backends/auth.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.auth.policy
+%dir %_datadir/alterator-framework/modules/auth
+%_datadir/alterator-framework/modules/auth/manifest.json
+%_datadir/alterator-framework/modules/auth/main.qml
+%dir %_datadir/alterator-framework/modules/auth/ts
+%_datadir/alterator-framework/modules/auth/ts/auth_ru.qm
 
 %files -n alterator-roles-common
 %config(noreplace) %_sysconfdir/role.d/users.role
@@ -175,6 +191,9 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jun 30 2026 Andrey Limachko <liannnix@altlinux.org> 0.53-alt1
+- Add alterator-framework UI support (thx Oleg Chagaev). 
+
 * Mon Jun 15 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.52-alt1
 - Fix fatal error when running system-auth without any arguments (ALT #48140).
 - Fix task-auth-ldap-sssd requirement for samba-dc-libs (ALT #56696).
