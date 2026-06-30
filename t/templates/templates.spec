@@ -1,13 +1,13 @@
 Name: templates
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Standard templates for the user directory
 Summary(ru_RU.UTF-8): Стандартные шаблоны для каталога пользователя
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: http://git.altlinux.org/people/antohami/packages/templates
 Source: %name-%version.tar
-Packager: Anton Midyukov <antohami@altlinux.org>
+
 BuildArch: noarch
 
 %description
@@ -46,6 +46,9 @@ cp -R locale %buildroot/%_datadir
 %_sysconfdir/xdg/autostart/update_templates.desktop
 
 %changelog
+* Tue Jun 30 2026 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
+- Add header to po file (fix FTBFS with gettext 1.0).
+
 * Mon Oct 20 2025 Pavel Mitrofanov <cobalt@altlinux.org> 1.3-alt1
 - Renamed files to follow style guidelines (Closes: #56365, #56379).
 
