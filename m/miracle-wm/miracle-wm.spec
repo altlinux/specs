@@ -13,7 +13,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: miracle-wm
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Wayland tiling window manager built on Mir
@@ -51,9 +51,9 @@ BuildRequires: pkgconfig(gtest)
 %endif
 
 %description
-miracle-wm is a Wayland compositor based on Mir. It features a tiling 
+miracle-wm is a Wayland compositor based on Mir. It features a tiling
 window manager at its core, very much in the style of i3 and sway. The
-intention is to build a compositor that is flashier and more 
+intention is to build a compositor that is flashier and more
 feature-rich than either of those compositors, like swayfx.
 
 %package -n lib%{name}
@@ -103,7 +103,7 @@ echo "      See details at https://wiki.miracle-wm.org/latest/ ."
 echo "      For quick start copy the example configuration file from"
 echo "      %_datadir/doc/%{name}-%{version}/config.yaml to ~/.config/%name/config.yaml"
 echo "      then install the following packages which are used in the configuration file:"
-echo "        waybar nwg-drawer nwg-bar nwg-panel nwg-dock swaybg nwg-shell-wallpapers"
+echo "        nwg-drawer nwg-bar nwg-panel nwg-dock swaybg sway"
 echo "      then logout and login to Miracle session using your favorite greeter."
 
 %systemd_user_post miracle-wm-session-shutdown.target
@@ -157,6 +157,9 @@ echo "      then logout and login to Miracle session using your favorite greeter
 %_pkgconfigdir/miracle-wm-c.pc
 
 %changelog
+* Tue Jun 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 
