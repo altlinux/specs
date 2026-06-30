@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: toolblex
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: A multiplatform Bluetooth Low Energy (and Classic) device scanner and analyzer
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(Qt6Sql)
 BuildRequires: pkgconfig(Qt6Svg)
 BuildRequires: pkgconfig(Qt6Bluetooth)
 BuildRequires: pkgconfig(Qt6Charts)
+BuildRequires: pkgconfig(Qt6Graphs)
 BuildRequires: qt6-tools-devel
 
 Requires: bluez
@@ -73,6 +74,9 @@ sed -i "s|assets/COPYING|COPYING|g" README.md
 %_pixmapsdir/toolBLEx.svg
 
 %changelog
+* Tue Jun 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.17-alt1
+- New version 0.17.
+
 * Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.16-alt1
 - New version 0.16.
 
