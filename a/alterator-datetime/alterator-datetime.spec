@@ -1,8 +1,8 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.9.3
-Release: alt3
+Version: 4.9.4
+Release: alt1
 
 Summary: alterator module for date/time setup
 License: GPL
@@ -26,6 +26,7 @@ BuildRequires(pre): alterator >= 5.0
 BuildRequires: alterator-fbi
 
 BuildRequires: guile-devel
+BuildRequires: qt6-tools
 
 %define _unpackaged_files_terminate_build 1
 %define _altdata_dir %_datadir/alterator
@@ -46,6 +47,7 @@ Helper functions for %name.
 
 %build
 %make_build
+lrelease-qt6 alterator-framework/ts/datetime_ru.ts
 
 %check
 %make_build check
@@ -63,11 +65,22 @@ Helper functions for %name.
 %_alterator_libdir/ui/*
 %_alterator_libdir/type/*
 %_datadir/install2/preinstall.d/*
+%_datadir/alterator/backends/datetime.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.datetime.policy
+%dir %_datadir/alterator-framework/modules/datetime
+%_datadir/alterator-framework/modules/datetime/manifest.json
+%_datadir/alterator-framework/modules/datetime/main.qml
+%_datadir/alterator-framework/modules/datetime/DateTimeUtils.js
+%dir %_datadir/alterator-framework/modules/datetime/ts
+%_datadir/alterator-framework/modules/datetime/ts/datetime_ru.qm
 
 %files functions
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Tue Jun 30 2026 Andrey Limachko <liannnix@altlinux.org> 4.9.4-alt1
+- add alterator-framework UI support (thx Oleg Chagaev)
+
 * Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 4.9.3-alt3
 - 20-datetime.sh: fix for alterator-setup
 
