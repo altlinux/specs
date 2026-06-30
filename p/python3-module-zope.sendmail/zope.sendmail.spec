@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.1
+Version: 7.2
 Release: alt1
 Summary: Zope sendmail
 License: ZPL-2.1
@@ -54,6 +54,9 @@ zope.sendmail is a package for email sending from Zope 3 applications.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Tue Jun 30 2026 Stanislav Levin <slev@altlinux.org> 7.2-alt1
+- 7.1.1 -> 7.2
+
 * Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
 - 7.1 -> 7.1.1
 
