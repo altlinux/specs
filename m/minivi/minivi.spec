@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: minivi
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 
 Summary: A small application for viewing images
@@ -22,7 +22,7 @@ BuildRequires: lazarus qt6pas-devel
 A small application for viewing images.
 Everything is minimalistic.
 Functionality:
-	- closing the application by pressing Esc / Q / Ctrl + Q
+	- closing the application by pressing Esc / Q / Ctrl + Q / mouse wheel
 	- opening images, both when associating files and from the application by pressing Ctrl + O / O
 	- setting an image as a desktop background by pressing W
 	- information about the image I
@@ -49,6 +49,9 @@ make install
 %_datadir/applications/%name.desktop
 
 %changelog
+* Tue Jun 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.2-alt1
+- 0.17.1 -> 0.17.2
+
 * Fri Jun 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.1-alt1
 - 0.17.0 -> 0.17.1
 
