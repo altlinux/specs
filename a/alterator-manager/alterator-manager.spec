@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.33
-Release: alt8
+Release: alt9
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,9 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Tue Jun 30 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt9
+- Update docs/modules/remote(-ru).md.
+
 * Fri Jun 19 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt8
 - Update docs/modules/remote(-ru).md.
 
