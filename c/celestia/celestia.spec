@@ -1,6 +1,6 @@
 Name: celestia
-Version: 1.6.4
-Release: alt1.1
+Version: 1.7.0
+Release: alt1
 Epoch: 1
 
 Summary: A real-time visual space simulation
@@ -9,177 +9,107 @@ License: GPL-2.0
 Group: Education
 Url: https://celestiaproject.space/
 
-Requires: celestia-common
-Provides: celestia-ui = %EVR
-Provides: celestia-qt = %EVR celestia-gtk = %EVR celestia-glut = %EVR
-Obsoletes: celestia-qt < %EVR celestia-gtk < %EVR celestia-glut < %EVR
-
-# Source-url: https://github.com/CelestiaProject/Celestia/archive/master.zip
+# Code: git snapshot of master a221a47d (2025-10-06)
+#   https://github.com/CelestiaProject/Celestia
+# The astronomical data files are shipped by the separate celestia-data package
+#   (built from https://github.com/CelestiaProject/CelestiaContent)
 Vcs: https://github.com/CelestiaProject/Celestia.git
+# Source-url: https://github.com/CelestiaProject/Celestia/commit/a221a47d
 Source: %name-%version.tar
 
-# due https://github.com/autotools-mirror/autoconf/commit/c8d6d6eb8be36144f1285f35901e325b56bac68f
-Patch: autoconf-2.72.patch
+# https://github.com/CelestiaProject/Celestia/pull/2407
+Patch1: celestia-eigen3-5.0.patch
 
-BuildRequires: cmake gcc-c++ libstdc++-devel
-BuildRequires: libGLEW-devel libXi-devel libXmu-devel libfreeglut-devel
+# base runtime data (config, fonts, shaders) is in celestia-common
+Requires: celestia-common = %EVR
+# astronomical content (stars, textures, models) lives in celestia-data
+Requires: celestia-data >= 1:%version
+Conflicts: celestia-data >= 1:1.8.0
+# compatibility with previous 1.6 layout
+Provides: celestia-ui = %EVR
+Provides: celestia-qt = %EVR
+Obsoletes: celestia-qt < %EVR
+Obsoletes: celestia-gtk < %EVR
+Obsoletes: celestia-glut < %EVR
 
-BuildRequires: eigen3
-
-BuildRequires: libjpeg-devel libpng-devel libtheora-devel
-BuildRequires: zlib-devel liblua5-devel libssl-devel
-BuildRequires: libfmt-devel
-
-BuildRequires: libgtk+2-devel libgtkglext-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: qt6-base-devel
+BuildRequires: eigen3-devel libfmt-devel libepoxy-devel
+BuildRequires: libpng-devel libjpeg-devel
+BuildRequires: liblua5-devel
+BuildRequires: libfreetype-devel
+BuildRequires: gperf boost-devel
+BuildRequires: libGL-devel
+BuildRequires: gettext-tools
 
 %description
 Celestia is a free real-time space simulation that
-lets you experienceour universe in three dimensions.
+lets you experience our universe in three dimensions.
 Unlike most planetarium software, Celestia does not
 confine you to the surface of the Earth. You can
-travelthroughout the solar system, to any of over
-100,000 stars, or even beyondthe galaxy.
+travel throughout the solar system, to any of over
+100,000 stars, or even beyond the galaxy.
+
+This package contains the Qt6 frontend. The base runtime data
+is in celestia-common, the astronomical content in celestia-data.
 
 %package common
+Summary: Base runtime data for Celestia (config, fonts, shaders)
 Group: Education
-Summary: A real-time visual space simulation (common part)
 BuildArch: noarch
+
 %description common
-This is a common part of Celestia
+Celestia is a free real-time space simulation.
 
-Celestia is a free real-time space simulation that
-lets you experienceour universe in three dimensions.
-Unlike most planetarium software, Celestia does not
-confine you to the surface of the Earth. You can
-travelthroughout the solar system, to any of over
-100,000 stars, or even beyondthe galaxy.
-
-%package qt
-Group: Education
-Summary: A real-time visual space simulation (Qt5 frontend)
-Requires: celestia-common = %EVR
-Provides: celestia-ui = %EVR
-Provides: celestia = %EVR
-Obsoletes: celestia < %EVR
-
-%description qt
-This is a Qt5 frontend to Celestia
-
-Celestia is a free real-time space simulation that
-lets you experienceour universe in three dimensions.
-Unlike most planetarium software, Celestia does not
-confine you to the surface of the Earth. You can
-travelthroughout the solar system, to any of over
-100,000 stars, or even beyondthe galaxy.
-
-%package gtk
-Group: Education
-Summary: A real-time visual space simulation (GTK frontend)
-Requires: celestia-common = %EVR
-Provides: celestia-ui = %EVR
-
-%description gtk
-This is a GTK frontend to Celestia
-
-Celestia is a free real-time space simulation that
-lets you experienceour universe in three dimensions.
-Unlike most planetarium software, Celestia does not
-confine you to the surface of the Earth. You can
-travelthroughout the solar system, to any of over
-100,000 stars, or even beyondthe galaxy.
-
-%package glut
-Group: Education
-Summary: A real-time visual space simulation (GLUT frontend)
-Requires: celestia-common = %EVR
-Provides: celestia-ui = %EVR
-
-%description glut
-This is a GLUT frontend to Celestia
-
-Celestia is a free real-time space simulation that
-lets you experienceour universe in three dimensions.
-Unlike most planetarium software, Celestia does not
-confine you to the surface of the Earth. You can
-travelthroughout the solar system, to any of over
-100,000 stars, or even beyondthe galaxy.
+This package contains the architecture-independent base runtime
+data (configuration, fonts, shaders, demo scripts) needed by
+Celestia. The astronomical content is in the celestia-data package.
 
 %prep
 %setup
-%patch -p1
-%autoreconf
+%patch1 -p1
 
 %build
-# drop some warnings from build log
-%add_optflags -Wno-int-in-bool-context
-%configure \
-    --with-gnu-ld \
-    --without-arts \
-    --with-lua \
-    --with-glut \
-    --with-gtk \
-    #
-%make_build
+%cmake \
+    -DENABLE_QT5:BOOL=OFF \
+    -DENABLE_QT6:BOOL=ON \
+    -DENABLE_NLS:BOOL=ON \
+    -DENABLE_MINIAUDIO:BOOL=ON \
+    -DENABLE_TOOLS:BOOL=OFF \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
 
 %install
-%makeinstall_std
-mkdir -p %buildroot%_desktopdir
-install src/celestia/gtk/data/%name.desktop %buildroot%_desktopdir/
-install -D -m 644 src/celestia/gtk/data/%name.png %buildroot%_liconsdir/%name.png
-install -D -m 644 src/celestia/gtk/data/%name.svg %buildroot%_iconsdir/hicolor/scalable/%name.svg
+%cmake_install
 
-#install -d %buildroot/etc/alternatives/packages.d
-#cat >%buildroot/etc/alternatives/packages.d/%name-qt <<__EOF__
-#%_bindir/celestia      %_bindir/celestia-qt 20
-#__EOF__
-#
-#cat >%buildroot/etc/alternatives/packages.d/%name-gtk <<__EOF__
-#%_bindir/celestia      %_bindir/celestia-gtk 10
-#__EOF__
-#
-#cat >%buildroot/etc/alternatives/packages.d/%name-glut <<__EOF__
-#%_bindir/celestia      %_bindir/celestia-glut 30
-#__EOF__
+# provide plain "celestia" command (the Qt6 frontend)
+ln -s celestia-qt6 %buildroot%_bindir/celestia
 
 %find_lang %name
 
-rm -fv %buildroot%_libdir/libcelmodel.a
-
-%pre
-[ ! -d %_datadir/apps/%name ] || rm -fr %_datadir/apps/%name
-
-%files -f %name.lang common
-#_datadir/apps/*
-#_datadir/applnk/*
-#_datadir/config/*
-##%_bindir/makestardb
-##%_bindir/makexindex
-##%_bindir/startextdump
-%_datadir/locale/*/*/celestia_constellations.mo
-#_datadir/mimelnk/*
-#_datadir/services/*
-%_datadir/%name/
-%_liconsdir/%name.png
-%_iconsdir/hicolor/scalable/%name.svg
-%_desktopdir/%name.desktop
-%doc ChangeLog TRANSLATORS README NEWS
-
 %files
+%doc README.md AUTHORS TRANSLATORS
 %_bindir/celestia
+%_bindir/celestia-qt6
+%_libdir/libcelestia.so.*
+%_datadir/applications/*.desktop
+%_datadir/metainfo/*.metainfo.xml
+%_datadir/pixmaps/%name.png
+%_man1dir/celestia-qt6.1*
 
-#%files gtk
-#%_bindir/celestia-gtk
-#/etc/alternatives/packages.d/%name-gtk
-
-#%files glut
-#%_bindir/celestia-glut
-#/etc/alternatives/packages.d/%name-glut
-
-#%files qt
-#%_bindir/celestia-qt
-#/etc/alternatives/packages.d/%name-qt
+%files common -f %name.lang
+%_datadir/%name/
 
 %changelog
+* Tue Jun 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
+- new version 1.7.0 (git snapshot a221a47, 2025-10-06)
+- switch build system from autotools to cmake
+- switch to Qt6 frontend (GTK and GLUT frontends dropped upstream)
+- provide plain celestia command (symlink to celestia-qt6)
+- split data out: base data to celestia-common, content to celestia-data
+- apply upstream PR #2407 to build with Eigen3 5.0
+
 * Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.4-alt1.1
 - fix .desktop category (closes #42030).
 
