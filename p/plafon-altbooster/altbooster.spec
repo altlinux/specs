@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.7
-Release: alt2
+Release: alt3
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -28,6 +28,7 @@ Patch: setup-alt-fixes.patch
 %prep
 %setup
 %patch -p0
+subst 's|/usr/local/share|/usr/share|' src/ui/help_altbooster.py
 
 %build
 %install
@@ -35,6 +36,9 @@ install -d %buildroot
 %make_install \
     SHAREDIR=%buildroot%_datadir \
     BINDIR=%buildroot%_bindir
+
+install -d %buildroot%_datadir/help/C/%oname
+cp -a help/C/*.page %buildroot%_datadir/help/C/%oname
 
 %find_lang --all-name %name
 
@@ -44,8 +48,12 @@ install -d %buildroot
 %_datadir/applications/%oname.desktop
 %_iconsdir/hicolor/*/*/*.svg
 %_bindir/%%oname
+%_datadir/help/C/%oname
 
 %changelog
+* Tue Jun 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt3
+- added help information (ALT #59679)
+
 * Tue Jun 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt2
 - excluded HEAnet (ftp.heanet.ie) mirror (ALT #59673)
 
