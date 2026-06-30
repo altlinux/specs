@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.7
-Release: alt6
+Release: alt7
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -94,7 +94,7 @@ session.screen0.windowScrollAction:\tNextTab
 ' data/init.in
 
 %build
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 %configure \
         --with-init=%_sysconfdir/X11/%name/init \
         --with-keys=%_sysconfdir/X11/%name/keys \
@@ -180,6 +180,9 @@ bzip2 ChangeLog
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.7-alt7
+- NMU: fix FTBFS with gettext 1.0
+
 * Sat Mar 26 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt6
 - src: Fix argb window decoration.
 - .desktop: fix exec param.
