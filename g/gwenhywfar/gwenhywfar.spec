@@ -1,6 +1,6 @@
 Name:     gwenhywfar
 Version:  5.14.1
-Release:  alt1
+Release:  alt2
 
 Summary:  A multi-platform helper library for other libraries
 License:  LGPL-2.1+
@@ -83,7 +83,7 @@ compiling programs using Gwenhywfar.
 
 %build
 %undefine _configure_gettext
-%autoreconf
+%autoreconf -I %_datadir/gettext/m4
 export PATH=$PATH:%_qt5_bindir
 %configure \
 	--disable-static \
@@ -141,6 +141,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.14.1-alt2
+- NMU: fix FTBFS with gettext 1.0
+
 * Tue Dec 09 2025 Andrey Cherepanov <cas@altlinux.org> 5.14.1-alt1
 - New version.
 
