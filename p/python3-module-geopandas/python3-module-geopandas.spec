@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Python tools for geographic data
@@ -91,6 +91,9 @@ and not test_predicates_vector_vector[geom_almost_equals-args10]"
 %python3_sitelibdir/%pypi_name/conftest.py
 
 %changelog
+* Mon Jun 29 2026 Nikita Panov <nexxy@altlinux.org> 1.1.4-alt1
+- New version 1.1.4.
+
 * Tue Mar 17 2026 Nikita Panov <nexxy@altlinux.org> 1.1.3-alt1
 - New version 1.1.3.
 
