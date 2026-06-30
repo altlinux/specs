@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.18
-Release: alt3
+Release: alt4
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -16,6 +16,10 @@ Patch3: %name-alt-fix-SMB-auth-fields-order.patch
 Patch4: %name-1.5.11-plugins.patch
 Patch5: %name-alt-cups-service-name.patch
 Patch6: %name-Makefile.am-cupshelpers.patch
+# Upstream fixes for gettext 1.0 support
+Patch7: system-config-printer-1.5.18-getext-part1.patch
+Patch8: system-config-printer-1.5.18-getext-part2.patch
+Patch9: system-config-printer-1.5.18-getext-part3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
@@ -81,6 +85,9 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 ./bootstrap
@@ -126,6 +133,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*.dist-info
 
 %changelog
+* Tue Jun 30 2026 Anton Midyukov <antohami@altlinux.org> 1.5.18-alt4
+- Fix build with gettext 1.0.
+
 * Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 1.5.18-alt3
 - NMU: use rpm-macros for udev directories (fix FTBFS)
 
