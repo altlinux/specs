@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.3-alt1
+- rpmlog: split joined sub-items separated by '-' onto new lines
+- rpmgs: drop 'ours' merge strategy that broke merging vendored sources
+- rpmlog: fix -n/-v not resetting release to <prefix>1
+
 * Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.2-alt1
 - rpmgs: vendor Go deps from submodule go.mod into top-level vendor (Closes #4)
 - rpmgs: add zig vendoring (Closes #6)
