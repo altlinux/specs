@@ -1,5 +1,5 @@
 Name: checksec
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Tool to check system for binary-hardening
@@ -46,6 +46,9 @@ install -pD -m755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version (3.1.0) via gear-uupdate
 - rewrite spec for Go build (upstream switched from bash to Go)
