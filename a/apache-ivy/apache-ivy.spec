@@ -2,7 +2,7 @@
 
 Name:           apache-ivy
 Version:        2.5.3
-Release:        alt1
+Release:        alt2
 
 Summary:        Java-based dependency manager
 License:        Apache-2.0
@@ -13,6 +13,7 @@ VCS:            https://github.com/apache/ant-ivy
 Source0:        %name-%version.tar
 
 Patch0:         00-global-settings.patch
+Patch1:         java17-pack200.patch
 
 BuildRequires(pre):  rpm-build-java
 BuildRequires:  jpackage-default
@@ -89,6 +90,9 @@ echo "apache-ivy/ivy" > %buildroot%_sysconfdir/ant.d/%name
 %_sysconfdir/ant.d/%name
 
 %changelog
+* Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 2.5.3-alt2
+- Fixed FTBFS: fix build on JDK 17 by avoiding Pack200 API.
+
 * Wed Apr 15 2026 Evgeniy Serov <scala@altlinux.org> 2.5.3-alt1
 - Updated to 2.5.3.
 
