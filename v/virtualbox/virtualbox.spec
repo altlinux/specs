@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.2.10
+Version: 7.2.12
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -112,7 +112,6 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch:		%name-%version-alt.patch
-Patch1:		vbox-enable-module-signing.patch
 
 BuildPreReq: iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel libSDL2-devel-static
@@ -354,7 +353,6 @@ This package contains VirtualBox SDK for XPCOM.
 %prep
 %setup -q -n %distarchive
 %patch -p1
-%patch1 -p1
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -931,6 +929,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Jul 01 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.12-alt1
+- Update to newest version 7.2.12
+
 * Wed Jun 24 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.10-alt1
 - Update to newest version 7.2.10
 
