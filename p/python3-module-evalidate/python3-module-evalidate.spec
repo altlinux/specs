@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.5
+Version: 2.1.4
 Release: alt1
 
 Summary: Safe and fast evaluation of untrusted user-supplied python expressions
@@ -43,6 +43,9 @@ user-supplied (possible malicious) python expressions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 01 2026 Egor Ignatov <egori@altlinux.org> 2.1.4-alt1
+- New version 2.1.4.
+
 * Thu Jul 24 2025 Egor Ignatov <egori@altlinux.org> 2.0.5-alt1
 - New version 2.0.5.
 
