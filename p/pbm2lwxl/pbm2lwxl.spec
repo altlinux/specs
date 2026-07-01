@@ -2,16 +2,17 @@ Summary: A driver for the CoStar Labelwriter XL
 
 Name: pbm2lwxl
 Version: 0
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
-License: GPL
+License: GPL-1.0+
 Group: Publishing
 URL: http://www.freelabs.com/~whitis/software/pbm2lwxl
 
 Source: http://www.freelabs.com/~whitis/software/pbm2lwxl/%name-%version.tar
 Patch:	pbm2lwxl-20040515-mdk-path.patch
+Patch1: pbm2lwxl-alt-gcc15.patch
 
 %description
 A driver for the CoStar printers:
@@ -36,6 +37,7 @@ And Avery Printers:
 
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 make CFLAGS="%optflags"
@@ -51,6 +53,9 @@ done
 %_bindir/*
 
 %changelog
+* Wed Jul 01 2026 Fr. Br. George <george@altlinux.org> 0-alt1.qa1.1
+- NMU: fixed license and build.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
