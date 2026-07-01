@@ -3,7 +3,7 @@
 %define plugindir %_libdir/%gitname/plugins
 
 Name: cutter-re
-Version: 2.5.0
+Version: 2.5.0.0
 Release: alt1
 
 Summary: GUI for Rizin reverse engineering framework
@@ -12,10 +12,11 @@ Group: Development/Tools
 Url: https://cutter.re
 VCS: https://github.com/rizinorg/cutter
 
+Requires: rizin >= 0.9.1
+
 # Source-url: https://github.com/rizinorg/%gitname/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %gitname-production-%version.tar
-Patch1: alt-fix-namespace-conflict-with-openssl.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: kf6-syntax-highlighting-devel
@@ -45,7 +46,6 @@ more information.
 %prep
 %setup
 %setup -D -T -a1
-%patch1 -p1
 
 mkdir -p src/translations
 %__cp -rf %gitname-translations/* src/translations/
@@ -90,6 +90,10 @@ sed -i 's/bin\/%gitname/bin\/%name/g' %buildroot%_libdir/cmake/Cutter/CutterTarg
 %dir %_libdir/cmake/Cutter
 
 %changelog
+* Wed Jul 01 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.5.0.0-alt1
+- Update to upstream v2.5.0. The old version `2.5.0-alt1` corresponds
+  to upstream `v2.5.0-rc1`.
+
 * Wed Jun 24 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.5.0-alt1
 - new version
 

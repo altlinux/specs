@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rizin
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: UNIX-like reverse engineering framework and command-line tool-set
@@ -126,6 +126,9 @@ more information
 %dir %_datadir/%name
 
 %changelog
+* Tue Jun 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.1-alt1
+- new version
+
 * Tue Jun 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.0-alt1
 - new version
 
