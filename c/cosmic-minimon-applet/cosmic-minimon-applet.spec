@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Minimon COSMIC Applet
@@ -28,7 +28,7 @@ Source: %_name-%version%beta.tar
 %endif
 Source1: %_name-%version%beta-cargo.tar
 
-Requires: gnome-system-monitor
+Requires: cosmic-monitor
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -72,6 +72,10 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+- requires cosmic-monitor instead of gnome-system-monitor
+
 * Wed Jun 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
