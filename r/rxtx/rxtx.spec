@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.24.20100211jpp11
+Release:	alt4
 License:	LGPLv2+
 URL:		http://rxtx.qbang.org/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -74,7 +74,10 @@ rm -f acinclude.m4 aclocal.m4 libtool ltconfig ltmain.sh \
 # Don't need to install jar file, mvn_install will do it
 sed -i -e '/JHOME/d' Makefile.in
 
-sed -i 's,-source 1.3 -target 1.3,-source 1.6 -target 1.6,g' configure.in configure
+sed -i 's,-source 1.3 -target 1.3,-source 1.8 -target 1.8,g' configure.in configure
+
+#fix build with java17
+sed -i 's/yield()/Thread.yield()/' src/gnu/io/LPRPort.java
 
 %build
 #export JAVA_HOME=%{java_home}
@@ -104,6 +107,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Wed Jul 01 2026 Anton Meleshnikov <alton@altlinux.org> 2.2-alt4
+- fixed build with java17
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_0.24.20100211jpp11
 - fixed build with java11
 
