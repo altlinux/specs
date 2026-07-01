@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.27.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,7 @@ Url: http://www.kde.org
 License: LGPL-2.1-or-later
 
 Provides: qqc2-desktop-style = %EVR
-Obsoletes: qqc2-desktop-style = %EVR
+Obsoletes: qqc2-desktop-style < %EVR
 
 Source: %rname-%version.tar
 
@@ -52,6 +52,9 @@ developing applications that use %name.
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt2
+- fix obsoletes
+
 * Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
 - new version
 
