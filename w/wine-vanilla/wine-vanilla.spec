@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.10
+%define major 11.11
 %define rel %nil
 
 # the packages will conflict with that
@@ -761,7 +761,6 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winesodir/ctapi32.so
 %libwinedir/%winesodir/dnsapi.so
 %libwinedir/%winesodir/dwrite.so
-%libwinedir/%winesodir/bcrypt.so
 %libwinedir/%winesodir/qcap.so
 %libwinedir/%winesodir/odbc32.so
 %libwinedir/%winesodir/crypt32.so
@@ -944,6 +943,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.11-alt1
+- new version 11.11
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.10-alt1
 - new version 11.10
 
