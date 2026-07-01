@@ -5,13 +5,14 @@
 
 Name: python3-module-%pypi_name
 Version: 2.3.0
-Release: alt2.1
+Release: alt3
 Summary: TPM 2.0 TSS Bindings for Python
 Group: Development/Python3
 License: BSD-2-Clause
 Url: https://github.com/tpm2-software/tpm2-pytss
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: tpm2-pytss-2.3.0-fix-cryptography-47-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
@@ -50,7 +51,7 @@ tpm2-tools based command line strings and loading tpm2-tools context files.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %build
@@ -71,6 +72,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 01 2026 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt3
+- Fix FTBFS.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.1
 - Demodernized packaging.
 
