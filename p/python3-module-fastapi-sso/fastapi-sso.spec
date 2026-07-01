@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-fastapi-sso
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 
 Summary: FastAPI plugin to enable SSO to most common providers
@@ -63,5 +63,8 @@ rm -f ./tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 23 2026 Egor Ignatov <egori@altlinux.org> 0.21.1-alt1
+- New version 0.21.1.
+
 * Thu Apr 30 2026 Egor Ignatov <egori@altlinux.org> 0.21.0-alt1
 - Initial build for ALT Linux.
