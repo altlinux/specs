@@ -6,7 +6,7 @@
 
 Name: ocaml-%pkgname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 BuildRequires: ocaml libcurl-devel
 BuildRequires: rpm-build-ocaml dune
 BuildRequires: ocaml-dune-configurator-devel
+BuildRequires: ocaml-lwt-devel
 
 %description
 The Ocaml Curl Library (Ocurl) is an interface library for the
@@ -35,10 +36,10 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build -p curl
+%dune_build --release @install
 
 %install
-%dune_install -p curl
+%dune_install --release
 
 %files -f ocaml-files.runtime
 %doc COPYING
@@ -47,6 +48,9 @@ developing applications that use %name.
 %doc examples/*
 
 %changelog
+* Wed Jul 01 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt2
+- built with lwt support
+
 * Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
 - 0.9.2 -> 0.10.0
 
