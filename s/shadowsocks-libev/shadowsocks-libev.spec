@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: shadowsocks-libev
-Version: 3.3.5
-Release: alt5
+Version: 3.3.6
+Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: GPL-3.0-or-later
 Group: Security/Networking
@@ -18,6 +18,7 @@ Source2: libcork-0.tar
 Source3: libipset-0.tar
 Patch: shadowsocks-libev-3.3.5-gcc13-comp.patch
 
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: asciidoc
 BuildRequires: libcares-devel
 BuildRequires: libev-devel
@@ -26,6 +27,8 @@ BuildRequires: libpcre-devel
 BuildRequires: libsodium-devel
 BuildRequires: libssl-devel
 BuildRequires: xmlto
+BuildRequires: gcc-c++
+BuildRequires: libpcre2-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: banner curl}}
 
 %description
@@ -57,12 +60,11 @@ tar xf %SOURCE3 -C .
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure --enable-shared
-%make_build
+%cmake -DWITH_STATIC=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 rm -rf %buildroot%_datadir/doc/%name
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name %buildroot%_sysconfdir/sysctl.d
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
@@ -100,6 +102,9 @@ install -m0644 .gear/sysctl.conf* %buildroot%_sysconfdir/sysctl.d/88-%name.conf.
 %_libdir/lib%name.so.*
 
 %changelog
+* Wed Jul 01 2026 Anton Vyatkin <toni@altlinux.org> 3.3.6-alt1
+- New version 3.3.6.
+
 * Wed Jun 17 2026 Anton Vyatkin <toni@altlinux.org> 3.3.5-alt5
 - Fix FTBFS.
 
