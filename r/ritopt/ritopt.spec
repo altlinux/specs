@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_21jpp11
+Release:        alt2
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Url:            http://ritopt.sourceforge.net/
@@ -50,7 +50,7 @@ sed -i 's/\r//' README
 
 # Compile the classes and make a jar file
 mkdir classes
-javac -d classes -source 1.6 -target 1.6 java/gnu/dtools/ritopt/*.java
+javac -d classes -source 1.8 -target 1.8 java/gnu/dtools/ritopt/*.java
 cd classes
 jar cvf %{name}-%{version}.jar gnu
 cd ..
@@ -77,6 +77,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jul 01 2026 Anton Meleshnikov <alton@altlinux.org> 0.2.1-alt2
+- fixed FTBFS
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 0.2.1-alt1_21jpp11
 - prepared for java11 migration
 
