@@ -5,7 +5,7 @@
 %filter_from_provides /^pkgconfig(%compat_name)/d
 
 Name: %compat_name-ng
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 Epoch: 1
 
@@ -206,6 +206,9 @@ sed \
 %_libdir/lib%compat_name.so
 
 %changelog
+* Wed Jul 01 2026 Nazarov Denis <nenderus@altlinux.org> 1:4.2.2-alt1
+- New version 4.2.2.
+
 * Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 1:4.2.1-alt1
 - New version 4.2.1.
 
