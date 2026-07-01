@@ -10,7 +10,7 @@
 
 
 Name:    alloy
-Version: 1.16.0
+Version: 1.17.1
 Release: alt1
 
 Summary: OpenTelemetry Collector distribution with programmable pipelines
@@ -63,6 +63,7 @@ export GO_TAGS="netgo embedalloyui promtail_journal_enabled external_libzstd"
 export RELEASE_BUILD=1
 export VERSION="v%version"
 export SKIP_UI_BUILD=1
+export SKIP_CODE_GENERATION=1
 export GOBIN="$BUILDDIR/bin"
 export GOFLAGS="${GOFLAGS-} -mod=vendor"
 export CGO_CFLAGS="%optflags"
@@ -110,6 +111,9 @@ useradd -r -g %name -c 'alloy user' \
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %changelog
+* Wed Jul 01 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.17.1-alt1
+- Update version to v1.17.1
+
 * Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.16.0-alt1
 - Update version to v1.16.0
 - Delete docs
