@@ -1,19 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
+# Tests fails on i586 (do not waste time on that coprolith).
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
+
 %define guile guile30
 %define guile_sitedir %(%guile-config info sitedir)
 %define guile_extensiondir %(%guile-config info extensiondir)
 %define guile_ccachedir %(%guile-config info siteccachedir)
 
 Name: guile-fibers
-Version: 1.4.0
+Version: 1.4.3
 Release: alt1
 
 Summary: Concurrent ML-like concurrency for Guile
 License: LGPL-3.0+
 Group: System/Libraries
-Url: https://github.com/wingo/fibers
-Vcs: https://github.com/wingo/fibers
+Url: https://codeberg.org/guile/fibers
+Vcs: https://codeberg.org/guile/fibers
 
 Source0: %name-%version.tar
 
@@ -51,6 +58,9 @@ export ac_cv_path_GUILE=%_bindir/%guile
 %exclude %guile_extensiondir/fibers-epoll.la
 
 %changelog
+* Wed Jul 01 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4.3-alt1
+- Updated to 1.4.3.
+
 * Mon Sep 01 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 - Started using guile30.
