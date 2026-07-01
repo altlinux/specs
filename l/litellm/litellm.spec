@@ -7,7 +7,7 @@
 %def_without proxy-extras
 
 Name: litellm
-Version: 1.89.0
+Version: 1.90.0
 Release: alt1
 
 Summary: LiteLLM CLI and AI Gateway (Proxy Server) utilities
@@ -74,7 +74,7 @@ AutoReq: yes, nopython3
 %add_pyproject_deps_runtime_filter a2a-sdk
 %add_pyproject_deps_runtime_filter google-cloud-iam
 %add_pyproject_deps_runtime_filter google-cloud-kms
-#%%add_pyproject_deps_runtime_filter prisma
+%add_pyproject_deps_runtime_filter prisma
 %add_pyproject_deps_runtime_filter redisvl
 %add_pyproject_deps_runtime_filter resend
 %pyproject_runtimedeps_metadata_extra extra-proxy
@@ -128,6 +128,7 @@ install -Dpm600 %SOURCE4 %buildroot%_sysconfdir/sysconfig/litellm
 
 %files
 %doc README.md LICENSE ARCHITECTURE.md security.md
+%_bindir/lite
 %_bindir/litellm
 %_bindir/litellm-proxy
 %_unitdir/litellm.service
@@ -146,6 +147,9 @@ install -Dpm600 %SOURCE4 %buildroot%_sysconfdir/sysconfig/litellm
 %endif
 
 %changelog
+* Sat Jun 27 2026 Egor Ignatov <egori@altlinux.org> 1.90.0-alt1
+- New version 1.90.0.
+
 * Mon Jun 15 2026 Egor Ignatov <egori@altlinux.org> 1.89.0-alt1
 - New version 1.89.0.
 
