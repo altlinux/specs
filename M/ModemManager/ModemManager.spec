@@ -7,11 +7,11 @@
 %def_enable qmi
 %def_enable mbim
 %def_enable introspection
-%def_disable vala
+%def_enable vala
 
 Name: ModemManager
 Version: 1.24.2
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -31,7 +31,7 @@ BuildRequires: libgio-devel
 %{?_enable_qmi:BuildRequires: libqmi-glib-devel >= 1.36.0}
 %{?_enable_mbim:BuildRequires: libmbim-glib-devel >= 1.32.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:BuildRequires: rpm-build-vala vala-tools}
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libsystemd-devel >= 209
@@ -134,6 +134,7 @@ Requires: libmm-glib-devel = %version-%release
 	-Dudevdir=%_udevdir \
 	-Dpolkit=strict \
 	-Dsystemdsystemunitdir=%_unitdir \
+	-Ddbus_policy_dir=%_datadir/dbus-1/system.d \
 	-Dsystemd_suspend_resume=true \
 	-Dsystemd_journal=true \
 	-Dudev=true \
@@ -183,7 +184,7 @@ fi
 %_bindir/mmcli
 %_datadir/%name/
 %_datadir/bash-completion/completions/mmcli
-%_sysconfdir/dbus-1/system.d/*.conf
+%_datadir/dbus-1/system.d/*.conf
 %_udev_rulesdir/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
@@ -221,10 +222,15 @@ fi
 
 %if_enabled vala
 %files -n libmm-glib-vala
-%_datadir/vala/vapi/*
+%_vapidir/*
 %endif
 
 %changelog
+* Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 1.24.2-alt2
+- Enabled vala bindings (closes: #59699).
+- Used rpm-build-vala.
+- Moved D-Bus policy file to /usr/share.
+
 * Tue Jul 29 2025 L.A. Kostis <lakostis@altlinux.ru> 1.24.2-alt1
 - Updated to 1.24.2 (to fix assertions in fibocom plugin).
 
