@@ -2,7 +2,7 @@
 
 Name: plafon-altbooster
 Version: 5.7
-Release: alt4
+Release: alt5
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -22,6 +22,7 @@ AutoReq: nopython3
 Source: %name-%version.tar
 Patch: setup-alt-fixes.patch
 Patch1: maintenance-alt-fixed.patch
+Patch2: window-alt-fixes.patch
 
 %description
 %summary. 
@@ -52,6 +53,9 @@ cp -a help/C/*.page %buildroot%_datadir/help/C/%oname
 %_datadir/help/C/%oname
 
 %changelog
+* Wed Jul 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt5
+- fixed show welcome page (ALT #59687)
+
 * Tue Jun 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt4
 - fixed: apply mount points (ALT #59683)
 
