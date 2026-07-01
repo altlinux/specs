@@ -1,10 +1,10 @@
-# git commit 9210d7e55836f239e7b9bb4e7f8b77b431b27bbf
+# git commit ba8cbe275f0bac5d9b3c6eb03ec997ef9ca42cf6
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 34.2.2
+Version: 34.3.0.1
 
 Release: alt1
 
@@ -44,6 +44,7 @@ Source7: firefox.c
 Source9: HISTORY_GIT
 Source10: Changelog
 Source11: content.tar
+Source12: Changelog_ru
 
 #Source12: xulstore.json
 #Source13: kde.js
@@ -90,12 +91,14 @@ Patch201: palemoon-33.7.2-UXP-Enable-LTO-to-work.patch
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
 BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
 
-# Automatically added by buildreq on Wed Mar 27 2024
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev sh5 xorg-proto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
-BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket
-BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools
-BuildRequires: unzip yasm zip
+# Automatically added by buildreq on Sun Jun 21 2026
+# optimized out: alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libfreetype-devel libgcc15-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel openssl-config perl pkg-config python-modules python2-base python3 python3-base python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildRequires: alt-os-release doxygen gcc-c++ libXt-devel libalsa-devel libdbus-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket nasm python3-dev unzip zip libgtk+2-devel yasm
+
+
+#BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket
+#BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools
+#BuildRequires: unzip yasm zip nasm
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
@@ -103,7 +106,7 @@ BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) per
 BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
 # END SourceDeps(oneline)
 
-BuildPreReq: %_bindir/python2.7 python2-base
+#BuildPreReq: %_bindir/python2.7 python2-base
 BuildPreReq: libXcomposite-devel libXdamage-devel
 
 %ifarch x86_64
@@ -113,7 +116,7 @@ BuildRequires: libcpuid-devel
 BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
-BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
+BuildPreReq: python-modules-json python-modules-wsgiref
 
 BuildPreReq: alsa-plugins libx264-devel libsox-devel transfig alsa-oss alsa-tools alsa-utils libogg-devel liboggz-devel xorg-proto-devel
 BuildPreReq: gstreamer-devel
@@ -294,6 +297,7 @@ echo "ac_add_options  --with-system-zlib" >> .mozconfig
 %ifarch %ix86
  echo "ac_add_options --with-arch=i586" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+ echo "ac_add_options --enable-libaom " >> .mozconfig
 %endif
 
 cat << EOF >> palemoon/app/profile/%sname.js
@@ -442,6 +446,14 @@ set -x
 # Add alternatives
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
+printf '%_bindir/x-www-browser\t%_bindir/%bname\t99\n' >> ./%_altdir/%bname
+
+#cat >%buildroot/%_altdir/%bname <<EOF
+#%_bindir/xbrowser	%_bindir/%bname	99
+#%_bindir/x-www-browser	%_bindir/%bname	99
+#EOF
+
+
 
 # Add real RPATH
 (set -x
@@ -470,6 +482,7 @@ printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
 # Add Doc
 install -D -m 644 %SOURCE9  %_builddir/%sname-%version
 install -D -m 644 %SOURCE10 %_builddir/%sname-%version
+install -D -m 644 %SOURCE12 %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/AUTHORS %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/LICENSE %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/README.md %_builddir/%sname-%version
@@ -489,7 +502,7 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %_niconsdir/%bname.png
 %_liconsdir/%bname.png
 
-%doc AUTHORS LICENSE HISTORY_GIT Changelog README.md
+%doc AUTHORS LICENSE HISTORY_GIT Changelog Changelog_ru README.md
 %_altdir/%bname
 %_bindir/%bname
 
@@ -501,6 +514,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sun Jun 21 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:34.3.0.1-alt1
+- Version 34.3.0.1 
+
 * Tue May 05 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:34.2.2-alt1
 - Version 34.2.2 
 
