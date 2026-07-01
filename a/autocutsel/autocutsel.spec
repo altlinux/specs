@@ -1,9 +1,9 @@
 Name: autocutsel
-Version: 0.9.0
-Release: alt1.1.qa1
+Version: 0.10.1
+Release: alt1
 
-Summary: Autocutsel synchronizes the two copy/paste buffers mainly used by X applications. It also unifies "clipboards" between VNC servers and Windows.
-License: GPL
+Summary: Autocutsel synchronizes the two copy/paste buffers mainly used by X applications. It also unifies "clipboards" between VNC servers and Windows
+License: GPLv2
 Group: System/X11
 Url: http://www.nongnu.org/autocutsel
 
@@ -14,10 +14,10 @@ BuildRequires: libX11-devel libXaw-devel libXt-devel libXmu-devel
 
 %description
 Autocutsel tracks changes in the server's cutbuffer and CLIPBOARD selection.
-When the CLIPBOARD is changed, it updates the cutbuffer. When the cutbuffer 
-is changed, it owns the CLIPBOARD selection. The cutbuffer and CLIPBOARD 
-selection are always synchronized. Since the VNC client synchronizes the 
-Windows' clipboard and the server's cutbuffer, all three "clipboards" are 
+When the CLIPBOARD is changed, it updates the cutbuffer. When the cutbuffer
+is changed, it owns the CLIPBOARD selection. The cutbuffer and CLIPBOARD
+selection are always synchronized. Since the VNC client synchronizes the
+Windows' clipboard and the server's cutbuffer, all three "clipboards" are
 always kept synchronized. When you copy some text in Windows, the cutbuffer
 and the CLIPBOARD selection are updated. When you copy text on the server
 using either the cutbuffer or the CLIPBOARD selection, the Windows's clipboard
@@ -32,7 +32,7 @@ autocutsel with the "-buttonup" option and it will only get the selection when
 the first mouse button is not pressed.
 
 %package autostart
-Summary: This package autostarts the %name utility in the user's X session.
+Summary: This package autostarts the %name utility in the user's X session
 Group: System/X11
 Requires: %name = %version
 
@@ -43,6 +43,7 @@ Requires: %name = %version
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -60,6 +61,9 @@ chmod 755 %buildroot%_x11sysconfdir/xinit.d/%name.sh
 %_x11sysconfdir/xinit.d/*
 
 %changelog
+* Wed Jul 01 2026 Fr. Br. George <george@altlinux.org> 0.10.1-alt1
+- Autobuild version bump to 0.10.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
