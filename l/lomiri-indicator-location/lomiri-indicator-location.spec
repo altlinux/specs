@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-indicator-location
-Version: 25.10.2
+Version: 26.6.19
 Release: alt1
 
 Summary: Indicator controlling access to physical location data
@@ -79,6 +79,9 @@ location data and allows the user to control the permissions on its use.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-indicator-location.mo
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.19-alt1
+- New version 26.6.19.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 25.10.2-alt1
 - New version 25.10.2.
 

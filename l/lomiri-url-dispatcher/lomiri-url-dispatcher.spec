@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-url-dispatcher
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Lomiri Operating Environment service for requesting URLs to be opened
@@ -44,6 +44,7 @@ BuildRequires: /usr/bin/dbus-test-runner
 BuildRequires: /usr/bin/xvfb-run
 BuildRequires: pkgconfig(dbustest-1)
 BuildRequires: python3(dbusmock)
+BuildRequires: python3(testtools)
 %endif
 
 Requires: qt5-declarative-devel
@@ -152,5 +153,8 @@ export G_MESSAGES_DEBUG=all
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.5-alt1
+- New version 0.1.5.
+
 * Tue Jul 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.4-alt1
 - Initial build for Sisyphus

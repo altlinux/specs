@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-history-service
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: History service to store messages and calls
@@ -132,5 +132,8 @@ library.
 %_pkgconfigdir/lomiri-history-service.pc
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.7-alt1
+- New version 0.7.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 0.6-alt1
 - Initial build for Sisyphus

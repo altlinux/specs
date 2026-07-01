@@ -3,7 +3,7 @@
 %def_with check
 
 Name: lomiri-settings-components
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Lomiri settings components
@@ -75,6 +75,9 @@ menus used in settings and VPN-related components.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-settings-components.mo
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 

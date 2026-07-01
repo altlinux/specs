@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-indicator-transfer
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Lomiri Indicator showing transfers
@@ -138,5 +138,8 @@ Lomiri Indicator Transfer.
 %_pkgconfigdir/lomiri-indicator-transfer.pc
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+
 * Sun Jul 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
