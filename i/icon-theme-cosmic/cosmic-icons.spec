@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name cosmic-icons
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 
 %def_disable check
@@ -47,6 +47,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

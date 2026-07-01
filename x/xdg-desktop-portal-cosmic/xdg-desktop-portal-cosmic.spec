@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define rdn_name com.system76.CosmicPortal
 %define dbus_name org.freedesktop.impl.portal.desktop.cosmic
@@ -32,7 +32,7 @@ Patch1: cosmic-files-1.0.0-alt-vendor-no-vergen.patch
 Requires: xdg-desktop-portal-gtk
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: make
+BuildRequires: just
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libpipewire-0.3) clang-devel
@@ -63,7 +63,7 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %install
 export VERGEN_GIT_SHA=%version
 export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
-%makeinstall_std prefix=%_prefix
+just rootdir=%buildroot install
 
 %check
 export VERGEN_GIT_SHA=%version
@@ -80,6 +80,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

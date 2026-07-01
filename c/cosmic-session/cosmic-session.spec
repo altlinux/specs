@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define rdn_name com.system76.CosmicSession
 
@@ -47,7 +47,8 @@ Requires: cosmic-workspaces
 Requires: fonts-ttf-open-sans
 Requires: switcheroo-control
 Requires: xdg-desktop-portal-cosmic
-#Requires: cosmic-edit
+Requires: cosmic-edit
+Requires: cosmic-monitor
 Requires: cosmic-files
 #Requires: cosmic-store
 Requires: cosmic-term
@@ -92,6 +93,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

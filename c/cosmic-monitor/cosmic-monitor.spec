@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define rdn_name com.system76.CosmicMonitor
 
@@ -25,10 +25,12 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 
+#ExcludeArch: %ix86 armh
+
+Provides: cosmic-system-monitor = %EVR
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
-#ExcludeArch: %ix86 armh
 
 %description
 System Monitor for COSMIC desktop.
@@ -57,6 +59,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
