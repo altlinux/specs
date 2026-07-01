@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.21.2
-Release: alt1
+Release: alt2.g6ad3e839
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -88,6 +88,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt2.g6ad3e839
+- Updated from upstream git (master branch): bugfix and touchscreen
+  support.
+
 * Mon Jun 22 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
 - Used system xfce-wayland-protocols.
 - Updated to 4.21.2.
