@@ -1,4 +1,4 @@
-%define java_home %_jvmdir/java-11-openjdk/
+%define java_home %_jvmdir/java-17-openjdk/
 
 Epoch: 0
 Group: Development/Java
@@ -16,10 +16,10 @@ BuildRequires: jpackage-default
 
 Name:             jansi
 Version:          2.4.0
-Release:          alt2
+Release:          alt3
 Summary:          Generate and interpret ANSI escape sequences in Java
 License:          ASL 2.0
-URL:              http://fusesource.github.io/jansi/
+URL:              https://fusesource.github.io/jansi/
 
 # ./generate-tarball.sh
 Source0:          %{name}-%{version}.tar.gz
@@ -126,6 +126,9 @@ ln -s %_libexecdir/java/jansi/jansi.jar \
 %doc --no-dereference license.txt
 
 %changelog
+* Wed Jul 01 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.4.0-alt3
+- Fix FTBFS: use java-17-openjdk.
+
 * Sun Nov 02 2025 Ivan Khanas <xeno@altlinux.org> 0:2.4.0-alt2
 - Fix FTBFS: define java_home macro.
 - Create symlink to /usr/share/java.
