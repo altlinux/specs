@@ -1,19 +1,21 @@
 Name: cryptmount
-Version: 6.2.0
+Version: 6.4.0
 Release: alt1
 Group: File tools
-Packager: Pavel Isopenko <pauli@altlinux.org>
 License: GPL-2.0
 Summary: Let ordinary users mount an encrypted file system
 Summary(ru_RU.UTF-8): Монтирование зашифрованной файловой системы с правами обычного пользователя
 Url: http://cryptmount.sourceforge.net
 Source: %name-%version.tar
+Patch1: cryptmount-6.4.0-remove-chown.patch
 
 BuildRequires: libdevmapper-devel libgcrypt-devel libuuid-devel
 BuildRequires: doxygen libudev-devel libcryptsetup-devel
 
 Requires(post): %post_service
 Requires(preun): %preun_service
+
+%filter_from_requires /^\/etc\/default\/cryptmount/d
 
 %description
 cryptmount is a utility for the GNU/Linux operating system which allows
@@ -31,6 +33,7 @@ cryptmount - утилита для операционной системы GNU/L
 
 %prep
 %setup
+%autopatch -p2
 
 %build
 %__aclocal
@@ -45,14 +48,16 @@ mkdir -p %buildroot{%_initdir,%_unitdir,%_modulesloaddir}
 %makeinstall_std
 install -m0644 sysinit/cryptmount.service %buildroot%_unitdir/
 mv %buildroot%_sysconfdir/modules-load.d/cryptmount.conf %buildroot%_modulesloaddir/
+rm -r -- %buildroot%_mandir/fr
 
 %find_lang --with-man %name
 %find_lang --with-man --append --output=%name.lang cmtab
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING README* RELNOTES
-%_mandir/man5/cmtab.5*
-%_mandir/man8/cryptmount*.8*
+%_man5dir/cmtab.5*
+%_man8dir/cryptmount*.8*
+%_docdir/%name
 
 %config(noreplace) %_sysconfdir/cryptmount/
 %_modulesloaddir/cryptmount.conf
@@ -63,6 +68,9 @@ mv %buildroot%_sysconfdir/modules-load.d/cryptmount.conf %buildroot%_modulesload
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.4.0-alt1
+- NMU: new version - fix FTBFS with gettext 1.0
+
 * Wed Apr 26 2023 Pavel Isopenko <pauli@altlinux.org> 6.2.0-alt1
 - new version 6.2.0
 - init script (ALT #37128)
