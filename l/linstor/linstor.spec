@@ -1,5 +1,5 @@
 %define GRADLE_TASKS installdist
-%define GRADLE_FLAGS --offline --gradle-user-home .gradlehome --no-daemon --exclude-task generateJava -PjavaHome=/usr/lib/jvm/jre-21
+%define GRADLE_FLAGS --offline --gradle-user-home .gradlehome --no-daemon --exclude-task generateJava -PdisableErrorProne -PjavaHome=/usr/lib/jvm/jre-21
 %define LS_PREFIX %_datadir/linstor-server
 %define FIREWALLD_SERVICES %_usr/lib/firewalld/services
 %define NAME_VERS %name-server-%version
@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.33.3
+Version: 1.34.0
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -58,6 +58,7 @@ cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/cont
 mkdir -p %buildroot%_unitdir
 sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-21-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
+sed -i -e 's!/usr/bin/chown!/bin/chown!' %buildroot%_unitdir/linstor-controller.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-satellite.service %buildroot%_unitdir
 mkdir -p %buildroot%FIREWALLD_SERVICES
 cp %_builddir/%NAME_VERS/scripts/firewalld/drbd.xml %buildroot%FIREWALLD_SERVICES
@@ -69,7 +70,8 @@ cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/dr
 mkdir -p %buildroot%_sysconfdir/linstor
 cp %_builddir/%NAME_VERS/scripts/linstor_satellite-example.toml %buildroot/%_sysconfdir/linstor/
 touch %buildroot%_sysconfdir/linstor/linstor.toml
-mkdir -p %buildroot/var/lib/linstor
+# dirs we expect (controller)
+for d in /var/lib/linstor /var/log/linstor-controller; do install -d -m750 %buildroot/$d; done
 
 ### common
 %package common
@@ -116,6 +118,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %LS_PREFIX/bin/controller.postinst.sh
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
+%dir /var/log/linstor-controller
 %ghost %config(noreplace) %_sysconfdir/linstor/linstor.toml
 
 
@@ -164,6 +167,9 @@ and creates drbd resource files.
 %preun_systemd linstor-satellite
 
 %changelog
+* Wed Jul 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.34.0-alt1
+- 1.34.0
+
 * Tue May 12 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.33.3-alt1
 - 1.33.3
 
