@@ -1,6 +1,6 @@
 Name:		jai-imageio-core
 Version:	1.4.0
-Release:	alt1
+Release:	alt2
 
 Summary:	JAI ImageIO Core
 License:	BSD-3-Clause
@@ -30,7 +30,7 @@ minus JPEG 2000, JAI Image I/O operations, and the C-based codecLib.
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -39,6 +39,9 @@ minus JPEG 2000, JAI Image I/O operations, and the C-based codecLib.
 %doc LICENSE.txt COPYRIGHT.txt README.md
 
 %changelog
+* Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 1.4.0-alt2
+- Fixed FTBFS: fix build with JDK 17.
+
 * Mon Mar 16 2026 Evgeniy Serov <scala@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 - Returned to Sisyphus.
