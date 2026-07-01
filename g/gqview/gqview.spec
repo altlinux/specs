@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt12
+Release: alt13
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -49,7 +49,6 @@ sed -i 's,^gqview_LDADD = ,&-lm ,' src/Makefile*
 
 %build
 export CFLAGS="-g -lm"
-%autoreconf
 %configure
 %make_build
 
@@ -68,6 +67,9 @@ install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Wed Jul 01 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.1.5-alt13
+- fixed build for p11 (reverted back to using the NULL macro)
+
 * Mon Jun 29 2026 Dmitriy Khanzhin <jinn@altlinux.org> 2.1.5-alt12
 - fixed segmentation fault that appeared with libgdk-pixbuf-2.44.6
 - added -g into CFLAGS for right build the debuginfo
