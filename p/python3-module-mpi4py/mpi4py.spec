@@ -3,7 +3,7 @@
 %define oname mpi4py
 
 Name: python3-module-%oname
-Version: 3.1.5
+Version: 4.1.2
 Release: alt1
 Summary: MPI bindings for Python
 License: Public
@@ -59,7 +59,7 @@ Documentation for mpi4py, MPI bindings for Python.
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-sed -i 's|(MPIDIR)|%mpidir|' setup.cfg
+#sed -i 's|(MPIDIR)|%mpidir|' setup.cfg
 %define optflags %optflags_default
 unset CFLAGS
 unset CXXFLAGS
@@ -94,6 +94,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Wed Jun 10 2026 Anton Vyatkin <toni@altlinux.org> 4.1.2-alt1
+- New version 4.1.2.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
 - Automatically updated to 3.1.5.
 
