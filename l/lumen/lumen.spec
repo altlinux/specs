@@ -2,7 +2,7 @@
 
 Name: lumen
 Version: 2.30.0
-Release: alt1
+Release: alt2
 Summary: A fast terminal diff viewer and code review TUI
 License: MIT
 Group: Development/Other
@@ -17,6 +17,8 @@ ExcludeArch: %ix86
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: libssl-devel
+
+Requires: github-cli
 
 %description
 Beautiful git diff viewer, generate commits with AI,
@@ -43,5 +45,8 @@ export OPENSSL_NO_VENDOR=1
 %_bindir/%name
 
 %changelog
+* Wed Jul 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.30.0-alt2
+- Added missing runtime require to github-cli.
+
 * Sun Jun 21 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.30.0-alt1
 - Initial build for ALT.
