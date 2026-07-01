@@ -4,7 +4,7 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.29
+Version: 6.5.32
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -132,6 +132,9 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %changelog
+* Wed Jul 01 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.32-alt1
+- New version 6.5.32.
+
 * Tue Apr 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.29-alt1
 - New version 6.5.29.
 
