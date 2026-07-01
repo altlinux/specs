@@ -2,13 +2,14 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.10
-Release: alt2
+Release: alt3
 VCS: https://gitlab.com/irill/cudf.git
 Source: %name-%version.tar
 Url: https://www.mancoosi.org/cudf/
 License: LGPLv3
 Group: Development/ML
 BuildRequires: ocaml dune ocaml-extlib-devel perl-podlators ocaml-ocamlbuild libncurses-devel glib2-devel
+BuildRequires(pre): rpm-build-ocaml
 %if_with check
 BuildRequires: ocaml-ounit-devel
 %endif
@@ -37,6 +38,18 @@ This package contains command line tools to manipulate CUDF and related
 documents. In particular it contains cudf-check, which enables checking of
 document properties such as installation consistency and matching of problems
 with their solutions.
+
+%package -n ocaml-%name
+Summary: CUDF (Common Upgradeability Description Format) OCaml  library
+Group: Development/ML
+
+%description -n ocaml-%name
+CUDF (for Common Upgradeability Description Format) is a format for describing
+upgrade scenarios in package-based Free and Open Source Software distribution.
+
+libCUDF is a library to manipulate so called CUDF documents. A CUDF document
+describe an upgrade problem, as faced by package managers in popular
+package-based GNU/Linux distributions.
 
 %package -n ocaml-%name-devel
 Summary: CUDF (Common Upgradeability Description Format) OCaml development stuff
@@ -69,10 +82,14 @@ programs.
 %_bindir/cudf-check
 %_bindir/cudf-parse-822
 
-%files -n ocaml-%name-devel
-%_libdir/ocaml/cudf
+%files -n ocaml-%name -f ocaml-files.runtime
+
+%files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Wed Jul 01 2026 Anton Farygin <rider@altlinux.org> 0.10-alt3
+- split devel package to runtime and devel part
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 0.10-alt2
 - made the launch of the tests in the release mode
 
