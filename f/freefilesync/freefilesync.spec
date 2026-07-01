@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.9
+Version: 14.10
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -55,17 +55,21 @@ author, as opposed to the "FreeFileSync Donation Edition".
 %prep
 %setup
 patch -p1 < %SOURCE1
-# In-place patching from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync
-sed -i 's|wxUSE_EXCEPTIONS|0|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
-sed -i '/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
-sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
-sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cpp} zen/zstring.cpp
-sed -i '/DisableAutomaticBoundingBoxUpdates/s|^|//|' wx+/dc.h
 
 %patch1 -p1
 %patch2 -p1
 %patch100 -p1
 %patch101 -p1
+
+# In-place patching from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync
+sed -i '/DisableAutomaticBoundingBoxUpdates/s|^|//|' wx+/dc.h
+sed -i '/soundLog/s|^|//|' FreeFileSync/Source/ui/{batch_status_handler,gui_status_handler,main_dlg}.cpp
+sed -i '/zipLog/s|^|//|' FreeFileSync/Source/localization.cpp wx+/image_resources.cpp
+
+echo '#undef wxUSE_EXCEPTIONS' >> zen/i18n.h
+sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cpp} zen/zstring.cpp
+sed -i -e's|const override|const|' -e'/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
+sed -i '/Bind\(.*onStartupUpdateCheck\)/s|^|//|' FreeFileSync/Source/ui/main_dlg.cpp
 
 %build
 export CXXFLAGS="%{optflags} -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 \
@@ -125,6 +129,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 14.10-alt1
+- New version 14.10.
+
 * Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 14.9-alt1
 - New version 14.9.
 
