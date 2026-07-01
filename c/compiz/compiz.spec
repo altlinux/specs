@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.2
-Release: alt3.1
+Release: alt3.4
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -70,7 +70,7 @@ cmake .. \
 	-DCOMPIZ_BUILD_TESTING=OFF
 popd
 find -name flags.make | while read l; do sed -i 's|\ -Werror\ | |g' $l; done
-%make -C %_target_platform
+%make_build -C %_target_platform
 
 %install
 %make -C %_target_platform DESTDIR=%buildroot install
@@ -128,6 +128,15 @@ rm -f %buildroot%_bindir/compiz-decorator
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Wed Jul 01 2026 Fr. Br. George <george@altlinux.org> 0.9.14.2-alt3.4
+- NMU: Fix gcc15 build
+
+* Thu Oct 30 2025 Fr. Br. George <george@altlinux.org> 0.9.14.2-alt3.3
+- NMU: Rebuild with Python 3.13
+
+* Sat May 03 2025 Fr. Br. George <george@altlinux.org> 0.9.14.2-alt3.2
+- NMU: Fix ccsm startup
+
 * Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 0.9.14.2-alt3.1
 - NMU: Switch to C++17 for new Protobuf and Abseil.
 
