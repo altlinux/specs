@@ -1,6 +1,6 @@
 Name: debmirror
-Version: 2.47
-Release: alt2
+Version: 2.48
+Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
 
@@ -57,6 +57,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.48-alt1
+- new version (2.48)
+
 * Sun Mar 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.47-alt2
 - fix hardcoded version in --version output
 
