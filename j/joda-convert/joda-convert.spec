@@ -1,6 +1,6 @@
 Name:           joda-convert
 Version:        2.2.4
-Release:        alt1
+Release:        alt2
 
 Summary:        Java library for conversion to and from standard string formats
 License:        Apache-2.0
@@ -31,7 +31,7 @@ Java library to enable conversion to and from standard string formats.
 %pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -40,6 +40,9 @@ Java library to enable conversion to and from standard string formats.
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt *.md
 
 %changelog
+* Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 2.2.4-alt2
+- Fixed FTBFS: fix build with JDK 17.
+
 * Thu Mar 12 2026 Evgeniy Serov <scala@altlinux.org> 2.2.4-alt1
 - Updated to 2.2.4.
 - Returned to Sisyphus.
