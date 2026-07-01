@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 0.137.1
+Version: 0.138.2
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -110,6 +110,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 01 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.138.2-alt1
+- Updated to 0.138.2.
+
 * Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.137.1-alt1
 - Updated to 0.137.1.
 

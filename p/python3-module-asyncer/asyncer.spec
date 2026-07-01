@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.17
+Version: 0.0.18
 Release: alt1
 
 Summary: Asyncer, async and await, focused on developer experience
@@ -71,6 +71,9 @@ view.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 01 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.18-alt1
+- Updated to 0.0.18.
+
 * Thu Mar 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.17-alt1
 - Initial build for ALT Sisyphus.
 
