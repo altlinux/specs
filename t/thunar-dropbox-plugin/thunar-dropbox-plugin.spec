@@ -1,12 +1,12 @@
 Name: thunar-dropbox-plugin
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Dropbox context-menu items for Thunar
 License: GPL-3.0-only
 Group: Graphical desktop/XFce
 
-URL: http://www.softwarebakery.com/maato/thunar-dropbox.html
+URL: https://github.com/Jeinzi/thunar-dropbox
 # Old upstream
 # https://github.com/Maato/thunar-dropbox.git
 Vcs: https://github.com/Jeinzi/thunar-dropbox
@@ -41,6 +41,10 @@ dropbox.
 %_miconsdir/*.png
 
 %changelog
+* Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Updated Url tag.
+- Updated to 0.3.2.
+
 * Tue Mar 31 2020 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Fixed plugin install path.
 - Added Vcs tag.
