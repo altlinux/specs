@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 50.0
+Version: 50.2
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -137,6 +137,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Jul 01 2026 Anton Zhukharev <ancieg@altlinux.org> 50.2-alt1
+- Updated to 50.2.
+
 * Tue Mar 17 2026 Anton Zhukharev <ancieg@altlinux.org> 50.0-alt1
 - Updated to 50.0.
 
