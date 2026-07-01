@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 
 Summary: Disk ARchive tool
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH+=`pwd`/src/libdar/.libs
 %_docdir/%name-%version/
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 2.8.5-alt1
+- new version 2.8.5
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.8.4-alt1
 - new version 2.8.4
 
