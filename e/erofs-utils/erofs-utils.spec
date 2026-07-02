@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name-utils
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: Userspace tools for EROFS
@@ -72,6 +72,9 @@ This package provides EROFS driver for FUSE3.
 %_man1dir/erofsfuse.1*}
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
+- 1.9.2
+
 * Wed Mar 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
