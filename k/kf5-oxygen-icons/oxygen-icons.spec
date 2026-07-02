@@ -1,7 +1,7 @@
 %define rname oxygen-icons
 
 Name: kf5-oxygen-icons
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 %K6init no_altplace
 
@@ -88,8 +88,12 @@ done
 %files -n icon-theme-oxygen
 %doc COPYING*
 %_iconsdir/oxygen*/
+%_datadir/metainfo/*oxygen*.xml
 
 %changelog
+* Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
+- new version
+
 * Tue Oct 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
 - new version
 
