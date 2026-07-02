@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_ivm
-Version: 1.14
+Version: 1.15
 Release: alt1
 Summary: The pg_ivm module provides Incremental View Maintenance (IVM) feature for PostgreSQL.
 License: PostgreSQL
@@ -31,6 +31,7 @@ changed.
 %makeinstall_std PG_CONFIG=%_bindir/pg_server_config USE_PGXS=1
 
 %files
+%_bindir/*
 %_libdir/pgsql/*.so
 %if %{enable_llvm}
 %_libdir/pgsql/bitcode/*
@@ -39,5 +40,8 @@ changed.
 %doc LICENSE README.md
 
 %changelog
+* Tue Jun 30 2026 Alexei Takaseev <taf@altlinux.org> 1.15-alt1
+- 1.15
+
 * Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 1.14-alt1
 - Initial build for ALT Linux
