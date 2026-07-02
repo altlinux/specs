@@ -1,6 +1,6 @@
 
 Name: rssguard
-Version: 5.1.2
+Version: 5.2.1
 Release: alt1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
@@ -110,6 +110,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Fri Jul 03 2026 Alexei Mezin <alexvm@altlinux.org> 5.2.1-alt1
+- New version
+
 * Mon May 11 2026 Alexei Mezin <alexvm@altlinux.org> 5.1.2-alt1
 - New version
 
