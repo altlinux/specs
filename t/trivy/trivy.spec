@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.70.0
+Version: 0.71.2
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -26,7 +26,7 @@ Source3: %name.sysconfig
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang wire golang >= 1.25
+BuildRequires: rpm-build-golang wire golang >= 1.26
 
 BuildRequires: /proc
 
@@ -115,6 +115,13 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Jun 29 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.71.2-alt1
+- 0.71.2
+- Fix order conditions bug in cpe detection.
+- Use normalized version for EOL check. (Closes: #59516)
+- Add `ALT Linux Team` to official vendor lists. (Closes: #59517)
+- Add sisyphus support. (Closes: #59518)
+
 * Wed Apr 22 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.70.0-alt1
 - 0.70.0
 
