@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 152.0
+Version: 152.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -382,6 +382,14 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Jul 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-57962: Denial-of-service via malicious LDAP address-book server
+  + CVE-2026-57963: Chat UI manipulation by injection
+- Disable the chat/instant-messaging feature by default via
+  mail.chat.enabled (Closes: 44712, 52473, 56109, 57572).
+
 * Wed Jun 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0-alt1
 - New version.
 - Fixes:
