@@ -3,8 +3,8 @@
 %def_with check
 
 Name:       dosage
-Version:    3.2
-Release:    alt2
+Version:    3.3
+Release:    alt1
 
 Summary:    dosage is a comic strip downloader and archiver
 License:    MIT
@@ -15,7 +15,6 @@ Vcs:        https://github.com/webcomics/dosage
 BuildArch:  noarch
 
 Source0:    %name-%version.tar
-Patch: dosage-3.2-imagesize2.0-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -44,7 +43,6 @@ webcomic's site layout makes this impossible).
 
 %prep
 %setup
-%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -64,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Thu Jul 02 2026 Anton Vyatkin <toni@altlinux.org> 3.3-alt1
+- New version 3.3.
+
 * Wed Mar 25 2026 Anton Vyatkin <toni@altlinux.org> 3.2-alt2
 - Fix compatibility with imagesize2.0.
 
