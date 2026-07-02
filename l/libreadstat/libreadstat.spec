@@ -2,7 +2,7 @@
 
 Name: libreadstat
 Version: 1.1.9
-Release: alt1
+Release: alt2
 
 Summary: C library for reading files from SAS, Stata, and SPSS
 Group: System/Libraries
@@ -12,6 +12,7 @@ VCS: https://github.com/WizardMac/ReadStat
 
 Source: %name-%version.tar
 Patch0: readstat-1.1.9-upstream-fix-use-after-free.patch
+Patch1: readstat-1.1.9-upstream-remove-gettext-iconv.patch
 
 BuildRequires: gcc
 BuildRequires: autoconf automake libtool
@@ -50,6 +51,7 @@ and SPSS. Includes readstat and extract_metadata utilities.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 autoreconf -fiv
@@ -77,5 +79,9 @@ rm -f %buildroot%_libdir/*.la
 %_man1dir/extract_metadata.1*
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 1.1.9-alt2
+- fixed build with gettext 1.0 (upstream PR #342): drop obsolete
+  AM_ICONV so autoreconf no longer needs the gettext m4 macros
+
 * Sat Feb 08 2026 Anton Farygin <rider@altlinux.org> 1.1.9-alt1
 - initial build for ALT Linux
