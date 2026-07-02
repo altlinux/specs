@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labwc
-Version: 0.9.8
+Version: 0.20.1
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -26,7 +26,7 @@ BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server) >= 0.19.0
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
-BuildRequires: pkgconfig(wlroots-0.19)
+BuildRequires: pkgconfig(wlroots-0.20)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xcb-icccm)
@@ -60,6 +60,9 @@ Conflicts: labwc < 0.8.1
 %meson_install
 %find_lang %name
 
+# remove unsupported locale
+rm -rv %buildroot%_datadir/locale/sr_Latn
+
 %files base -f %name.lang
 %doc NEWS.md
 %_bindir/%name
@@ -75,6 +78,9 @@ Conflicts: labwc < 0.8.1
 %_datadir/wayland-sessions/%name.desktop
 
 %changelog
+* Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 0.20.1-alt1
+- New version 0.20.1.
+
 * Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 0.9.8-alt1
 - New version 0.9.8.
 
