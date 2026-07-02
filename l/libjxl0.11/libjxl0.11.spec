@@ -6,28 +6,28 @@
 %define sover 0.11
 %define libname lib%_name%sover
 
-%def_enable tools
-%def_enable man
-%def_enable plugins
+%def_disable tools
+%def_disable man
+%def_disable plugins
 %def_disable gimp_plugin
 %def_disable tests
 %def_disable check
 
-Name: lib%_name
+Name: %libname
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: https://github.com/libjxl/libjxl
 
 Vcs: https://github.com/libjxl/libjxl.git
 
 %if_disabled snapshot
-Source: https://github.com/libjxl/libjxl/archive/v%version/%name-%version.tar.gz
+Source: https://github.com/libjxl/libjxl/archive/v%version/lib%_name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: lib%_name-%version.tar
 %endif
 
 %define gif_ver 5.1
@@ -47,15 +47,6 @@ BuildRequires: libavif-devel libbrotli-devel liblcms2-devel zlib-devel
 
 %description
 JPEG XL image format reference implementation Library.
-
-%package -n %libname
-Summary: JPEG XL image format reference implementation Library.
-Group: System/Libraries
-Requires: %name-pixbuf-loader = %EVR
-Obsoletes: %name < 0.9
-
-%description -n %libname
-This package provides shared JPEG XL libraries.
 
 %package pixbuf-loader
 Summary: JPEG XL image loader for GTK+ applications
@@ -91,7 +82,7 @@ Requires: gimp
 This package provides JPEG XL support for GIMP.
 
 %prep
-%setup
+%setup -n lib%_name-%version
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -100,7 +91,7 @@ This package provides JPEG XL support for GIMP.
     -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
     -DJPEGXL_FORCE_SYSTEM_GTEST=ON \
     -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
-    %{?_enable_tools:-DJPEGXL_ENABLE_TOOLS=ON} \
+    %{?_disable_tools:-DJPEGXL_ENABLE_TOOLS=OFF} \
     -DJPEGXL_ENABLE_MANPAGES=ON \
     %{?_enable_plugins:-DJPEGXL_ENABLE_PLUGINS=ON} \
     %{?_disable_tests:-DBUILD_TESTING=OFF} \
@@ -115,7 +106,7 @@ rm -f %buildroot%_libdir/*.a
 %cmake_build -t test
 
 %files -n %libname
-%_libdir/%{name}*.so.%{sover}*
+%_libdir/lib%{_name}*.so.%{sover}*
 %doc AUTHORS README* PATENTS
 
 %{?_enable_plugins:
@@ -128,10 +119,10 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/gimp/2.0/plug-ins/file-jxl/file-jxl}
 }
 
-%files devel
-%_libdir/%{name}*.so
-%_includedir/%_name/
-%_pkgconfigdir/%{name}*.pc
+#%files devel
+%exclude %_libdir/lib%{_name}*.so
+%exclude %_includedir/%_name/
+%exclude %_pkgconfigdir/lib%{_name}*.pc
 
 %if_enabled tools
 %files tools
@@ -146,6 +137,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt2
+- legacy library
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
 - 0.11.2 (fixed CVE-2025-12474, CVE-2026-1837)
 
