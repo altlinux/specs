@@ -4,14 +4,14 @@
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.py
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.rb
 
-%define sover_gen 40
+%define sover_gen 41
 %define libname lib%name
 %define libkookulargenerator_odp libkookulargenerator_odp%sover_gen
 %define libkookulargenerator_odt libkookulargenerator_odt%sover_gen
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 #Epoch: 0
 %K6init no_altplace
 
@@ -431,6 +431,9 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Wed May 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 25.12.3-alt2
 - fix saving created spreadsheet in different formats (closes: 49363)
 
