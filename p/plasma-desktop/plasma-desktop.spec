@@ -16,7 +16,7 @@
 %define libkglobalaccelmodel libkglobalaccelmodel%sover
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 %K6init
 
@@ -227,10 +227,8 @@ done
 %_datadir/qlogging-categories6/*.*categories
 
 %files
-%_K6dbus/system.d/*.conf
 %_K6bin/*
 %_K6libexecdir/ki*
-%_K6exec/kauth/*
 %_K6plug/kf6/kded/*.so
 %_K6plug/kf6/krunner/*.so
 %_K6plug/plasma/kcminit/
@@ -253,7 +251,7 @@ done
 %_K6data/plasma/shells/*/
 %_K6data/kglobalaccel/*.desktop
 %_K6data/knsrcfiles/*.knsrc
-%_K6dbus_sys_srv/*.service
+%_K6conf_up/*krunner-activate-typing.*
 %if_enabled accounts
 %_K6plug/attica_kde.so
 %_datadir/accounts/providers/kde/*.provider
@@ -261,9 +259,13 @@ done
 %endif
 %_datadir/metainfo/*.xml
 %_userunitdir/*.service
+# kcmclock
+#%_K6dbus/system.d/*.conf
+#%_K6exec/kauth/*
+#%_K6dbus_sys_srv/*.service
 
 %files -n polkit-kde-plasma-desktop
-%_datadir/polkit-1/actions/*kcmclock*.policy
+#%_datadir/polkit-1/actions/*kcmclock*.policy
 
 %files -n sddm-theme-breeze
 %_datadir/sddm/themes/breeze/
@@ -277,6 +279,12 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

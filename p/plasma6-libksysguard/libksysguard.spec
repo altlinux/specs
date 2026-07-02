@@ -7,7 +7,7 @@
 %def_enable qtwebengine
 %endif
 
-%define sover 10
+%define sover 11
 %define libksgrd libksgrd%sover
 %define libksignalplotter libksignalplotter%sover
 %define liblsofui liblsofui%sover
@@ -20,7 +20,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma6-%rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -173,6 +173,7 @@ Common polkit files for %name
 %files
 %dir %_K6plug/ksysguard/
 %dir %_K6plug/ksysguard/process/
+%_K6bin/ksysguard-*
 %_K6exec/kauth/*ksysguard*
 %_K6libexecdir/ksysguard/ksgrd_network_helper
 %_K6dbus/system.d/org.kde.ksysguard.processlisthelper.conf
@@ -226,6 +227,12 @@ Common polkit files for %name
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

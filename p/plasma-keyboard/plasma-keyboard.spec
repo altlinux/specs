@@ -1,7 +1,7 @@
 
 Name: plasma-keyboard
-Version: 6.6.5
-Release: alt2
+Version: 6.7.2
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -18,7 +18,8 @@ BuildRequires: cmake extra-cmake-modules
 BuildRequires: wayland-protocols
 BuildRequires: qt6-wayland-devel qt6-virtualkeyboard-devel qt6-virtualkeyboard
 BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kcmutils-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcolorscheme-devel
-BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kcrash-devel kf6-kpackage-devel kf6-kwindowsystem-devel
+BuildRequires: plasma6-lib-devel
 
 %description
 The plasma-keyboard is a virtual keyboard based on Qt Virtual Keyboard designed for Plasma integration.
@@ -44,6 +45,12 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Thu Jun 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
 - add russian translation
 

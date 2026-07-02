@@ -5,8 +5,8 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.6.5
-Release: alt2
+Version: 6.7.2
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -19,8 +19,8 @@ Requires: kf6-kirigami
 Requires: /usr/bin/coredumpctl
 #Requires: python3(psutil) python3(pygdbmi) python3(sentry_sdk)
 
-Provides: plasam5-drkonqi = 1:%version-%release
-Obsoletes: plasam5-drkonqi < 1:%version-%release
+#Provides: plasma5-drkonqi = 1:%version-%release
+#Obsoletes: plasma5-drkonqi < 1:%version-%release
 
 Source: %rname-%version.tar
 Patch1: alt-enable-debuginfod-support.patch
@@ -82,6 +82,15 @@ Compatibility package.
 %_K6notif/*drkonqi*.notifyrc
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
+* Tue May 19 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt3
+- clean deps
+
 * Mon May 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt2
 - build without global notifier
 

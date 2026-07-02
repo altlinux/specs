@@ -7,7 +7,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 #Epoch: 2
 %K6init
@@ -45,7 +45,7 @@ BuildRequires: glibc-devel
 BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel
 BuildRequires: libpam-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libXi-devel libxcb-devel libxcbutil-keysyms-devel
+BuildRequires: libXi-devel libxcb-devel libxcbutil-keysyms-devel libxcbutil-devel
 %if_enabled seccomp
 BuildRequires: libseccomp-devel
 %endif
@@ -166,6 +166,12 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

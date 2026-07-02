@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 %K6init
 
@@ -124,7 +124,7 @@ done
 %_K6plug/plasma/applets/*.so
 %_K6plug/kf6/kded/*mobile*.so
 %_K6plug/plasma/kcms/systemsettings/kcm_*.so
-%_K6qml/org/kde/plasma/mm/
+#%_K6qml/org/kde/plasma/mm/
 %_K6qml/org/kde/plasma/quicksetting/
 %_K6qml/org/kde/plasma/mobileinitialstart
 %_K6xdgapp/kcm_*.desktop
@@ -146,10 +146,17 @@ done
 %_datadir/polkit-1/actions/*mobile*.policy
 %_datadir/wayland-sessions/plasma-mobile.desktop
 %_datadir/metainfo/*.xml
+%_datadir/qlogging-categories6/*.*categories
 
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.*.xml
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

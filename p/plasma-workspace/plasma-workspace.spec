@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.6.5
-Release: alt2
+Version: 6.7.2
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -141,7 +141,7 @@ BuildRequires: wayland-protocols plasma-wayland-protocols
 BuildRequires: libdrm-devel libcups-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libxapian-devel libnm-devel libsysfs-devel fontconfig-devel libcanberra-devel
-BuildRequires: libxcbutil-image-devel libxcbutil-devel libxcbutil-cursor-devel
+BuildRequires: libxcbutil-image-devel libxcbutil-devel libxcbutil-cursor-devel libxcbutil-icccm-devel
 BuildRequires: libICE-devel libSM-devel libXcursor-devel libXfixes-devel libXft-devel libXrender-devel libXtst-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: libvulkan-devel
@@ -530,6 +530,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 %_datadir/zsh/site-functions/_*
 %_datadir/metainfo/*.xml
 %_datadir/xdg-desktop-portal/kde-portals.conf
+%_datadir/xdg-desktop-portal/portals/plasmanotify.portal
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
@@ -587,6 +588,12 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.1-alt1
+- new version
+
 * Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.5-alt2
 - drop spice-vdagent.conf to fix startup spice-vdagent
 

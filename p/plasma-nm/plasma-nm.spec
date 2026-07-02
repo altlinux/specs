@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -24,7 +24,9 @@ Requires: mobile-broadband-provider-info
 Requires: qca-qt6-ossl
 # prison qml
 Requires: libkf6prison
+Requires: qml6(org.kde.quickcharts.controls)
 Requires: kf6-kirigami
+Requires: qml6(org.kde.kirigamiaddons.formcard)
 #Requires: wireguard-tools
 
 Provides: plasma5-nm = 1:%version-%release
@@ -36,7 +38,6 @@ Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 Patch13: alt-is-live.patch
 Patch14: alt-revert.patch
-Patch15: alt-data-cifers.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -45,7 +46,7 @@ BuildRequires: qt6-webengine-devel qt6-webchannel-devel
 %endif
 BuildRequires: libcups-devel
 BuildRequires: libvulkan-devel
-BuildRequires: mobile-broadband-provider-info libqca-qt6-devel qcoro6-devel
+BuildRequires: mobile-broadband-provider-info libqca-qt6-devel qcoro6-devel libqtkeychain-qt6-devel
 BuildRequires: ModemManager-devel libopenconnect-devel
 BuildRequires: libnm-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
@@ -55,10 +56,11 @@ BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel
-BuildRequires: kf6-kunitconversion-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
+BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-prison-devel kf6-ksvg-devel
 BuildRequires: kf6-modemmanager-qt-devel kf6-networkmanager-qt-devel kf6-kcmutils-devel
+BuildRequires: qml6(org.kde.kirigamiaddons.formcard) kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel
 
 %description
@@ -218,7 +220,6 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
 
 %build
 %K6build \
@@ -280,6 +281,12 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

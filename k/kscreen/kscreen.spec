@@ -5,7 +5,7 @@
 %endif
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -16,7 +16,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: xrandr iio-sensor-proxy
-Requires: plasma6-libkscreen-utils
+Requires: libkf6itemmodels
+Requires: plasma6-libkscreen-utils plasma6-plasma5support
 Provides: plasma5-kscreen = %EVR
 Obsoletes: plasma5-kscreen < %EVR
 
@@ -36,7 +37,9 @@ BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kglobalaccel-deve
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kservice-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-ksvg-devel
 BuildRequires: kf6-sonnet-devel kf6-kdeclarative-devel kf6-kpackage-devel kf6-kcmutils-devel kf6-kirigami-devel
+BuildRequires: kf6-kitemmodels-devel
 BuildRequires: plasma6-layer-shell-qt-devel plasma6-libkscreen-devel plasma6-lib-devel
+BuildRequires: plasma6-plasma5support plasma6-plasma5support-devel
 
 %description
 KCM and KDED modules for managing displays in KDE.
@@ -81,6 +84,12 @@ rm -f po/ru/kscreen_common.po.tmp
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

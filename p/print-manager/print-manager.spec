@@ -6,7 +6,7 @@
 %define libkcups libkcups%sover
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 %K6init
 
@@ -19,10 +19,11 @@ Provides: kde5-print-manager = 1:%version-%release
 Obsoletes: kde5-print-manager < 1:%version-%release
 
 Requires: cups
-Requires: /usr/lib/cups/backend/smb
+Requires: /usr/lib/cups/backend/smb /usr/bin/smbspool
 #Requires: printer-drivers-X11
 Requires: system-config-printer-lib
 Requires: system-config-printer-udev
+Requires: libkf6itemmodels kf6-kdeclarative kf6-kconfig
 
 Source: %rname-%version.tar
 Source10: add-ppdtranslations-ru.po
@@ -42,7 +43,10 @@ BuildRequires: packagekit-qt6-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
-BuildRequires: kf6-solid-devel kf6-kirigami-devel
+BuildRequires: kf6-solid-devel kf6-kirigami-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kdeclarative kf6-kdeclarative-devel
+BuildRequires: kf6-kconfig kf6-kconfig-devel
+BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel
 
 %description
@@ -78,7 +82,7 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 
 tmp_file=`mktemp`
@@ -111,7 +115,7 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6--for-system-c
 
 %files
 %_K6bin/configure-printer
-%_K6bin/kde-print-queue
+%_K6bin/plasma-print-queue
 %_K6plug/plasma/kcms/systemsettings/*printer*.so
 %_K6plug/kf6/kded/*print*.so
 %_K6plug/plasma/applets/*print*.so
@@ -126,6 +130,12 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6--for-system-c
 %_K6lib/libkcups.so.*
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

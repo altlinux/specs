@@ -5,7 +5,7 @@
 
 %define rname libplasma
 Name: plasma6-lib
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 %K6init
 
@@ -24,10 +24,11 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: libvulkan-devel
-BuildRequires: qt6-tools-devel qt6-declarative-devel
+BuildRequires: qt6-tools-devel qt6-declarative-devel qt6-5compat-devel
 BuildRequires: qt6-wayland-devel libwayland-egl-devel plasma-wayland-protocols
 BuildRequires: kf6-kcmutils-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kirigami-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-ksvg-devel
+BuildRequires: kf6-kconfig kf6-kconfig-devel
 BuildRequires: plasma6-activities-devel
 
 %description
@@ -53,6 +54,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+Requires: kf6-kconfig
 %if "%sover" != "6"
 Obsoletes: libplasma6 < %EVR
 %endif
@@ -111,6 +113,12 @@ Obsoletes: libplasmaquick6 < %EVR
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

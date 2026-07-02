@@ -8,7 +8,7 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 %K6init
 
@@ -18,6 +18,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Requires: /usr/bin/openssl
+Requires: qml6(org.kde.kirigamiaddons.formcard)
 
 Source: %rname-%version.tar
 Patch1: kdebug-503474-avc444.patch
@@ -33,8 +34,8 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libpam0-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kcrash-devel kf6-kconfig-devel kf6-kdbusaddons-devel kf6-kcmutils-devel kf6-ki18n-devel
-BuildRequires: kf6-kcoreaddons-devel kf6-kstatusnotifieritem-devel kf6-kconfigwidgets-devel
-BuildRequires: kf6-kcolorscheme-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kstatusnotifieritem-devel kf6-kconfigwidgets-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kirigami-addons kf6-kirigami-addons-devel
 BuildRequires: plasma6-kpipewire-devel
 
 %description
@@ -103,6 +104,12 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

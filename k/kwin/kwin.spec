@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.6.5
-Release: alt4
+Version: 6.7.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -42,34 +42,14 @@ Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
 #Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
-Patch6: alt-gcc13.patch
+#Patch6: alt-gcc13.patch
 Patch7: alt-abort-with-nvidia-driver-older-500.patch
 # Ubuntu
 Patch100: fix-drm-open-fallback-to-logind-fd.patch
-# upstream
-Patch1001: 0001-plugins-eis-Release-buttons-keys-and-touches-when-de.patch
-Patch1002: 0003-scene-item-fix-use-after-free-in-framePainted.patch
-Patch1003: 0004-Snap-and-confine-interactive-move-geometry-when-proc.patch
-Patch1004: 0005-backends-drm-don-t-attempt-to-bypass-non-bypassable-.patch
-Patch1005: 0006-libinput-Add-guard-around-empty-outputs-when-assigni.patch
-Patch1006: 0007-xwayland-Send-a-SelectionNotify-if-there-is-no-wayla.patch
-Patch1007: 0008-xwayland-Make-Selection-handleSelectionRequest-make-.patch
-Patch1008: 0009-autotests-integration-fix-warnings-about-unsupported.patch
-Patch1009: 0010-wayland-move-the-fifo-fallback-timer-to-SurfaceInter.patch
-Patch1010: 0011-tiles-fix-incorrect-split-of-single-tile.patch
-Patch1011: 0012-Add-missing-qqml.h-include.patch
-Patch1012: 0013-Make-wheel-window-actions-work-as-expected-with-natu.patch
-Patch1013: 0014-Lower-ambient-CAP_SYS_NICE.patch
-Patch1014: 0015-fakeinput-Keep-modifiers-when-handling-keysyms.patch
-Patch1015: 0016-backends-drm-fix-addFB2-fallback.patch
-Patch1016: 0017-Prevent-focusing-an-unmanaged-X11Window.patch
-Patch1017: 0018-wayland-xdgdecoration-ignore-irrelevant-preferred-mo.patch
-Patch1018: 0019-backends-drm-disable-unused-objects-even-when-the-la.patch
-Patch1019: 0020-plugins-eis-Do-not-send-events-from-release-warp-to-.patch
-
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
+BuildRequires: librange-v3-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel qt6-5compat-devel
 BuildRequires: libqaccessibilityclient-qt6-devel
 BuildRequires: libcanberra-devel
@@ -159,6 +139,18 @@ KF6 library
 %setup -n %rname-%version
 %autopatch -p1
 
+# using librange-v3-devel for gcc-13 compatibility
+pushd src
+find -type f -name \*.cpp -o -name \*.h | \
+while read f ; do
+    if grep -q 'std::ranges::to<' $f ; then
+	grep -q '^namespace[[:space:]].*KWin$' $f || exit 1
+	sed -i 's|^namespace[[:space:]].*KWin$|#include <range/v3/range/conversion.hpp>\n\nnamespace KWin|g' $f
+	sed -i 's|std::ranges::to<|ranges::to<|g' $f
+    fi
+done
+popd
+
 %build
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
@@ -221,6 +213,12 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt4
 - add upstream fixes from 6.6 branch
 

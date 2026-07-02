@@ -14,7 +14,7 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.6.5
+Version: 6.7.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -129,8 +129,10 @@ Requires: %name-common >= %EVR
 sed -i "s|@PROJECT_VERSION@|%version|" wallpapers/potd/plugins/CMakeLists.txt
 sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" wallpapers/potd/plugins/CMakeLists.txt
 
-# exclude applet
+# exclude components
 sed -i '/^add_subdirectory(comic)/d' applets/CMakeLists.txt
+sed -i '/^add_subdirectory(kameleon)/d' kdeds/CMakeLists.txt
+sed -i '/find_package.*Corrosion/d' CMakeLists.txt
 
 # disable krunners by default
 for d in runners/*/*.json ; do
@@ -161,13 +163,11 @@ touch touch-%_arch
 %_datadir/qlogging-categories6/*.*categories
 
 %files
-%_K6exec/kauth/*
 %_K6plug/kf6/krunner/kcms/*.so
 %_K6plug/plasma/applets/*.so
 %_K6plug/plasmacalendarplugins/*
 %_K6plug/potd/
 %_K6plug/kf6/krunner/*.so
-%_K6plug/kf6/kded/*.so
 %_K6plug/kwin/effects/configs/*.so
 %dir %_K6plug/plasma/weather_ions/
 %_K6plug/plasma/weather_ions/*.so
@@ -178,9 +178,12 @@ touch touch-%_arch
 %_K6data/kwin/*
 %_K6notif/*
 %_datadir/metainfo/*.xml
-%_K6dbus_sys_srv/*.service
-%_K6dbus/system.d/*.conf
-%_datadir/polkit-1/actions/*.policy
+# kameleon
+#%_K6exec/kauth/*
+#%_K6plug/kf6/kded/*.so
+#%_K6dbus_sys_srv/*.service
+#%_K6dbus/system.d/*.conf
+#%_datadir/polkit-1/actions/*.policy
 
 # comic
 #%_K6data/knsrcfiles/*.knsrc
@@ -189,8 +192,10 @@ touch touch-%_arch
 
 %files devel
 %_K6inc/plasma/potdprovider/
+%_K6inc/plasma/weather/
 %_K6link/lib*.so
 %_libdir/cmake/PlasmaPotdProvider/
+%_libdir/cmake/PlasmaWeather/
 %_K6data/kdev*/templates/*.tar.*
 
 #%files -n %libplasmacomicprovidercore
@@ -208,6 +213,12 @@ touch touch-%_arch
 
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version
+
 * Tue May 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.6.5-alt1
 - new version
 

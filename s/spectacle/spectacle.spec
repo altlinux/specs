@@ -5,8 +5,8 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 6.6.5
-Release: alt2
+Version: 6.7.2
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -21,13 +21,13 @@ Obsoletes: kde5-spectacle < %EVR
 Requires: qml6(org.kde.kquickimageeditor)
 
 Source: %rname-%version.tar
-Patch1: alt-find-tesseract-lib.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
 BuildRequires: libopencv-devel libvulkan-devel
 BuildRequires: libcups-devel
+BuildRequires: tesseract-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-kdoctools-devel
@@ -45,7 +45,6 @@ can also be used in non-KDE X11 desktop environments.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build \
@@ -74,6 +73,12 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.2-alt1
+- new version
+
+* Mon Jun 29 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.1-alt1
+- new version
+
 * Tue Jun 09 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.6.5-alt2
 - fix find tesseract library
 
