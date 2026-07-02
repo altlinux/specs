@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -27,9 +27,6 @@ Requires: sfdisk polkit ntfs-3g exfatprogs btrfs-progs
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: gcc-c++ extra-cmake-modules >= %ecm_ver
 BuildRequires: %_bindir/appstreamcli
-#BuildRequires: libdbus-devel libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
-#BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel libqca-qt6-devel
-#BuildRequires: libpolkitqt6-qt6-devel
 BuildRequires: pkgconfig(blkid) >= %blkid_ver
 BuildRequires: pkgconfig(libparted)
 BuildRequires: pkgconfig(Qt6Core) >= %qt_ver
@@ -86,6 +83,9 @@ using %_name.
 
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 26.04.3-alt1
+- 26.04.3
+
 * Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 26.04.2-alt1
 - 26.04.2
 
