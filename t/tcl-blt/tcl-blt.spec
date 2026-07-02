@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5.3
-Release: alt3
+Release: alt4
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -54,6 +54,7 @@ the features of the %teaname.
 %setup -q -n %teaname%major
 
 %build
+%add_optflags -std=gnu17
 %__autoconf
 %configure --with-blt=%_tcldatadir --with-tcl=%_libdir --with-tk=%_libdir --libdir=%_tcllibdir
 %make_build
@@ -94,6 +95,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_docdir/%teaname%major/demos/*
 
 %changelog
+* Thu Jul 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.3-alt4
+- NMU: fixed FTBFS (add_optflags -std=gnu17).
+
 * Sat Nov 02 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.5.3-alt3
 - fix build with gcc14 (-Wincompatible-pointer-types)
 
