@@ -13,8 +13,8 @@
 %endif
 
 Name: clamav
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 %define abiversion 12
 
 Summary: Clam Antivirus scanner
@@ -392,6 +392,12 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Jul 02 2026 Alexei Takaseev <taf@altlinux.org> 1.5.3-alt1
+- 1.5.3
+- Update freshclam-config.patch:
+    * Remove LogVerbose yes
+    * LogSyslog yes
+
 * Thu Mar 05 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt2
 - Fix debug noise from freshclam update
 
