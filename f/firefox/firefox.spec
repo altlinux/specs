@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 152.0.3
+Version: 152.0.4
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jun 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.4-alt1
+- New version.
+- Fixes:
+  + CVE-2026-14241: Memory safety bugs fixed in Firefox 152.0.4
+
 * Fri Jun 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.3-alt1
 - New version.
 
