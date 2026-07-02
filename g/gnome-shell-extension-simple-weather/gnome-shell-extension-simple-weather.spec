@@ -14,7 +14,7 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.0.0
+Version: %ver_major.1.0
 Release: alt1
 
 Summary: Weather extension for the GNOME Shell
@@ -68,6 +68,9 @@ mv %git_name-%version-npm.tar %_sourcedir/}
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1.0-alt1
+- 50.1.0
+
 * Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0.0-alt1
 - 50.0.0
 
