@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -110,6 +110,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Sat Apr 18 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

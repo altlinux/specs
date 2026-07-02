@@ -1,13 +1,13 @@
 %define ver_major 1.0
 
 Name: mm-common
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
-Summary: Common build files of the C++ bindings
+Summary: Common build files of the GNOME C++ bindings
 Group: Development/Tools
-License: GPL-2.0
-Url: http://gtkmm.org
+License: LGPL-2.1-or-later
+Url: https://gtkmm.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/mm-common.git
 
@@ -29,7 +29,7 @@ building tarball releases, unless configured to use maintainer-mode.
 %package docs
 Summary: Documentation for %name, includes example mm module skeleton
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description docs
 Package contains short documentation for %name and example skeleton module,
@@ -62,6 +62,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Wed Jun 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 
