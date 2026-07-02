@@ -3,7 +3,7 @@
 %global sover 4
 
 Name: rabbitmq-c
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: RabbitMQ C client
@@ -83,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Thu Jul 02 2026 Egor Ignatov <egori@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+
 * Tue Jun 09 2026 Egor Ignatov <egori@altlinux.org> 0.16.0-alt1
 - New version 0.16.0.
 
