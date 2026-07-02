@@ -4,7 +4,7 @@
 %def_with check
 
 Name: isa-l
-Version: 2.32.0
+Version: 2.32.1
 Release: alt1
 
 Summary: Intelligent Storage Acceleration Library
@@ -64,7 +64,7 @@ sed -i "s/__x86_64__/__e2k__/" igzip/huffman.h
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static --enable-programs=yes
 %make
 %if_with doc
 %make doc
@@ -97,6 +97,9 @@ sed -i "s/__x86_64__/__e2k__/" igzip/huffman.h
 %_man1dir/igzip.1.xz
 
 %changelog
+* Thu Jul 02 2026 Leontiy Volodin <lvol@altlinux.org> 2.32.1-alt1
+- New version 2.32.1.
+
 * Fri Mar 06 2026 Leontiy Volodin <lvol@altlinux.org> 2.32.0-alt1
 - New version 2.32.0.
 
