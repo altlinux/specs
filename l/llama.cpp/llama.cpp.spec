@@ -12,7 +12,7 @@
 
 Name: llama.cpp
 Version: 9804
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
@@ -166,7 +166,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DGGML_CPU=ON \
 	-DGGML_RPC=ON \
 	-DLLAMA_USE_PREBUILT_UI=OFF \
-%ifarch x86_64
+%ifarch x86_64 riscv64
 	-DGGML_CPU_ALL_VARIANTS=ON \
 %endif
 %if_with cuda
@@ -284,6 +284,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Thu Jul 02 2026 Ilya Sorochan <k0tran@altlinux.org> 1:9804-alt2
+- NMU: fix riscv64 FTBFS.
+
 * Fri Jun 26 2026 Alexey Shabalin <shaba@altlinux.org> 1:9804-alt1
 - Update to b9804.
 
