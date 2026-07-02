@@ -3,7 +3,7 @@
 %def_with check
 
 Name: gitfourchette
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Comfortable Git UI for Linux
@@ -72,6 +72,9 @@ install -Dm644 pkg/appimage/gitfourchette.desktop %buildroot%_desktopdir/gitfour
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Thu May 21 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
