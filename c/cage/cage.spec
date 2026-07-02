@@ -1,5 +1,5 @@
 Name:    cage
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: A Wayland kiosk
@@ -9,6 +9,7 @@ URL:     https://github.com/cage-kiosk/cage
 VCS:     https://github.com/cage-kiosk/cage.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -28,6 +29,7 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -42,6 +44,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Sat Apr 11 2026 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
