@@ -6,13 +6,11 @@
 %def_enable syslog
 %def_enable lfs
 %def_disable sdp
-# https://github.com/NetworkBlockDevice/nbd/issues/149
-%def_disable gznbd
 %def_with setproctitle
 
 Name: nbd
 Version: 3.27.1
-Release: alt1
+Release: alt2
 Summary: Network Block Device user space tools
 License: GPLv2
 Group: Networking/Other
@@ -24,7 +22,7 @@ Source1: nbd-server.conf
 Source2: nbd.service
 Source3: nbd.sysconfig
 
-Patch1: %name-alt.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: glib2-devel docbook-utils
 BuildRequires: autoconf-archive bison flex
@@ -124,6 +122,10 @@ DELAY=10 make check
 %_man8dir/*
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 3.27.1-alt2
+- fixed "Invalid nbd device target" when connecting to /dev/nbdN in the
+  default (netlink) configuration; cherry-pick upstream a80304e (closes: #59703)
+
 * Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 3.27.1-alt1
 - 3.26.1 -> 3.27.1
 - enabled netlink support
