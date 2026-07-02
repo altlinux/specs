@@ -6,7 +6,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 
 Summary: OPC UA library for python >= 3.7
@@ -81,6 +81,9 @@ pytest3 -v -k "not (test_xml_import_companion_specifications[client]) \
 %_bindir/*
 
 %changelog
+* Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 2.0-alt1
 - New version 2.0.
 
