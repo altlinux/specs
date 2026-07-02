@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.184
+Version: 2.9.185
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Wed Jul 01 2026 Oleg Solovyov <mcpain@altlinux.org> 2.9.185-alt1
+- alterator-vm: move translations away
+
 * Thu Apr 30 2026 Andrey Limachko <liannnix@altlinux.org> 2.9.184-alt1
 - alterator-auth: update russian translation, add new messages
   and restore error messages (thx Ivan Korytov)

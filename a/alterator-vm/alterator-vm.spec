@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.51
+Version: 0.4.52
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,7 +37,27 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_alterator_libdir/interfaces/guile/backend/*
 %_cachedir/alterator/vm-profile.scm
 
+# extracted from alterator-l10n
+%lang(en) %_datadir/alterator/help/en_US/*.html
+%lang(ru) %_datadir/alterator/help/ru_RU/*.html
+%lang(tt_RU) %_datadir/alterator/help/tt_RU/*.html
+%lang(uk) %_datadir/alterator/help/uk_UA/*.html
+
+%lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
+%lang(tt_RU) %_datadir/locale/tt_RU/LC_MESSAGES/%name.mo
+%lang(uk) %_datadir/locale/uk/LC_MESSAGES/%name.mo
+%lang(pt_BR) %_datadir/locale/pt_BR/LC_MESSAGES/%name.mo
+%lang(es) %_datadir/locale/es/LC_MESSAGES/%name.mo
+%lang(kk) %_datadir/locale/kk/LC_MESSAGES/%name.mo
+%lang(de) %_datadir/locale/de/LC_MESSAGES/%name.mo
+%lang(da) %_datadir/locale/da/LC_MESSAGES/%name.mo
+%lang(uz) %_datadir/locale/uz/LC_MESSAGES/%name.mo
+
 %changelog
+* Wed Jul 01 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.52-alt1
+- ortodox: do not select disks by default
+- move translations into this package
+
 * Fri May 15 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.51-alt1
 - profile: add LUKS support
 
