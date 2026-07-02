@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.5
+Version: %branch.6
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,16 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Jul 01 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.6-alt1
+- New version 6.0.6.
+- Fixes for the following security vulnerabilities:
+  + CVE-2026-6873: Signed cookie salt namespace collision
+  + CVE-2026-7666: Potential unencrypted email transmission via STARTTLS in the SMTP backend
+  + CVE-2026-8404: Potential exposure of private data via case-sensitive Cache-Control directives
+  + CVE-2026-35193: Potential exposure of private data via missing Vary: Authorization
+  + CVE-2026-48587: Potential exposure of private data via whitespace padding in Vary header
+- Some bugfixes.
+
 * Wed May 06 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.5-alt1
 - New version 6.0.5.
 - Fixes for the following security vulnerabilities:

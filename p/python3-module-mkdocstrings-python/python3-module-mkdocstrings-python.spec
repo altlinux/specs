@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: A Python handler for mkdocstrings
@@ -75,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 01 2026 Alexander Burmatov <thatman@altlinux.org> 2.0.5-alt1
+- Updated to 2.0.5.
+
 * Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt1
 - Automatically updated to 2.0.3.
 

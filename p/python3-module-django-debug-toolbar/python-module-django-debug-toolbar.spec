@@ -1,7 +1,7 @@
 %define oname django-debug-toolbar
 
 Name: python3-module-%oname
-Version: 6.3.0
+Version: 7.0.0
 Release: alt1
 
 Summary: A configurable set of panels that display various debug information about the current request/response.
@@ -63,6 +63,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 #%%doc docs/_build/* example
 
 %changelog
+* Wed Jul 01 2026 Alexander Burmatov <thatman@altlinux.org> 7.0.0-alt1
+- new version 7.0.0.
+
 * Tue Apr 14 2026 Alexander Burmatov <thatman@altlinux.org> 6.3.0-alt1
 - new version 6.3.0.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 7.2.1
+Version: 7.2.2
 Release: alt1
 
 Summary: A Django app providing DB, form, and REST framework fields for zoneinfo and pytz timezone objects
@@ -48,6 +48,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 01 2026 Alexander Burmatov <thatman@altlinux.org> 7.2.2-alt1
+- New version 7.2.2.
+
 * Wed Dec 10 2025 Alexander Burmatov <thatman@altlinux.org> 7.2.1-alt1
 - New version 7.2.1.
 
