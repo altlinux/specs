@@ -1,14 +1,16 @@
 %def_disable static
+%define soname 25
 
 Name: libproj
-Version: 9.4.0
+Version: 9.8.1
 Release: alt1
 
 Summary: PROJ.4 - cartographic projections library
 Group: Sciences/Geosciences
 License: MIT
 Url: https://proj4.org/
-Source: proj-%version.tar.gz
+VCS: https://github.com/OSGeo/PROJ
+Source: %name-%version.tar
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake libgtest-devel libtiff-devel libcurl-devel
@@ -61,15 +63,16 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %cmake_install
 
 %files
-%doc NEWS AUTHORS COPYING README ChangeLog
-%_libdir/*.so.*
+%doc NEWS.md AUTHORS.md COPYING README.md ChangeLog
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 %_datadir/proj/*
 %dir %_datadir/proj
 
 %files -n proj
-%doc NEWS AUTHORS COPYING
 %_bindir/*
 %_mandir/man1/*.1*
+%_datadir/bash-completion/completions/projinfo
 
 %files devel
 %_includedir/*.h
@@ -90,6 +93,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 9.8.1-alt1
+- 9.4.0 -> 9.8.1
+
 * Tue Apr 30 2024 Vladislav Zavjalov <slazav@altlinux.org> 9.4.0-alt1
 - 9.4.0
 
