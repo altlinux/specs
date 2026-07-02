@@ -7,7 +7,7 @@
 
 Name: vtk
 Version: %ver.2
-Release: alt4
+Release: alt5
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -27,6 +27,7 @@ Patch4: vtk-9.4.2-alt-fmt-12.patch
 Patch5: vtk-9.5.2-alt-numpy2-in1d.patch
 Patch6: vtk-9.5.2-alt-streamtracer-use-after-free.patch
 Patch7: vtk-9.5.2-fix-gdal-conversion.patch
+Patch8: vtk-9.5.2-upstream-fmt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -1546,6 +1547,9 @@ EOF
 %endif
 
 %changelog
+* Thu Jul 02 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.5.2-alt5
+- Fixed FTBFS with fmt 12.2.
+
 * Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 9.5.2-alt4
 - fixed build with GDAL 3.13.1
 
