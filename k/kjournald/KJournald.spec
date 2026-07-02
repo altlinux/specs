@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameB kjournaldbrowser
 %define nameL org.kde.kjournaldbrowser
 
 Name: kjournald
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 
 Summary: Framework for interacting with systemd-journald
@@ -47,6 +48,9 @@ BuildRequires: kf6-kconfig-devel kf6-kirigami-devel kf6-kirigami-addons-devel
 %_datadir/qlogging-categories?/%name.categories
 
 %changelog
+* Thu Jul 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.04.3-alt1
+- 26.04.2 -> 26.04.3
+
 * Thu Jun 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.04.2-alt1
 - 26.04.1 -> 26.04.2
 
