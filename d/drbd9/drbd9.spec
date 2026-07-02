@@ -1,9 +1,9 @@
 %def_without check
 
 Name: drbd9
-Version: 9.3.2
-Release: alt2
-%define githash 0605140bf521251f4f362b5bad2eeaf33dba1e9f
+Version: 9.3.3
+Release: alt1
+%define githash 97da76040a6b31aaf9e12f1a167e77ca2b3cb43e
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -61,6 +61,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build CONFIG_DRBD_COMPAT_84=y
 %doc README.md COPYING
 
 %changelog
+* Wed Jul 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.3.3-alt1
+- 9.3.3
+
 * Mon Jun 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.3.2-alt2
 - fix FTBFS with 6.18.33
 

@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.3.2
+%define module_version  9.3.3
 %define module_release  alt1
 %define flavour         6.12
 %define karch x86_64 aarch64 ppc64le
@@ -25,6 +25,7 @@ BuildRequires(pre): kernel-headers-modules-6.12
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: coccinelle >= 1.0.8
+BuildRequires: /proc
 Requires: dmsetup
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
