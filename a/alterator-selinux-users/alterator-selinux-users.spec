@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-selinux-users
-Version: 0.2.5
-Release: alt2
+Version: 0.2.6
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -34,6 +34,9 @@ rm -f %buildroot/%_altdata_dir/applications/selinux-seusers.desktop
 %_bindir/*
 
 %changelog
+* Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt1
+- backend3: The minimum level cannot be higher than the maximum level.
+
 * Mon Mar 18 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.5-alt2
 - Ported to python3 using 2to3 tool.
 
