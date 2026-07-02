@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-pgauditlogtofile
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
@@ -58,6 +58,9 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Jul 02 2026 Alexei Takaseev <taf@altlinux.org> 1.8.5-alt1
+- 1.8.5
+
 * Mon Jun 08 2026 Alexei Takaseev <taf@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
