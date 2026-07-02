@@ -1,7 +1,7 @@
 %define pkgname ctypes
 Name: ocaml-%pkgname
 Version: 0.24.0
-Release: alt1
+Release: alt2
 Summary: Combinators for binding to C libraries without writing any C
 
 Group: Development/ML
@@ -31,10 +31,10 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build -p %pkgname
+%dune_build --release @install
 
 %install
-%dune_install %pkgname
+%dune_install --release
 
 %files -f ocaml-files.runtime
 %doc README.md
@@ -44,6 +44,9 @@ developing applications that use %name.
 %_libdir/ocaml/%pkgname/*.h
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 0.24.0-alt2
+- built ctypes-foreign
+
 * Fri Jan 23 2026 Anton Farygin <rider@altlinux.org> 0.24.0-alt1
 - 0.23.0 -> 0.24.0
 
