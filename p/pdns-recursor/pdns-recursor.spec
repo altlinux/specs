@@ -1,16 +1,15 @@
 %define _localstatedir %_var
 
 Name: pdns-recursor
-Version: 4.9.2
-Release: alt3.1
+Version: 5.2.11
+Release: alt1
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
 Group: System/Servers
 URL: https://powerdns.com
 Source0: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
 Source1: %name.watch
-
-Patch1: pdns-recursor-fix-build-with-boost-1.86.0.patch
+Source2: vendor.tar
 
 ExcludeArch: %arm %ix86
 
@@ -33,16 +32,27 @@ BuildRequires: libsodium-devel
 BuildRequires: libssl-devel
 BuildRequires: libsystemd-devel systemd
 BuildRequires: libudev-devel
+BuildRequires: rust-cargo
 
 %description
 PowerDNS Recursor is a non authoritative/recursing DNS server. Use this
 package if you need a dns cache for your network.
 
 %prep
-%setup
-%patch1 -p2
+%setup -a 2
+pushd settings/rust
+mkdir .cargo
+cat > .cargo/config.toml <<END
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+END
+popd
 
 %build
+%define optflags_lto %nil
 %configure \
     --sysconfdir=%_sysconfdir/%name \
     --with-libsodium \
@@ -62,7 +72,7 @@ package if you need a dns cache for your network.
 %install
 %makeinstall_std
 
-mv %buildroot%_sysconfdir/%name/recursor.conf{-dist,}
+mv %buildroot%_sysconfdir/%name/{recursor.yml-dist,recursor.yml}
 
 # add directories for newly-observed-domains/unique-domain-response
 install -p -d -m 0755 %buildroot/%_sharedstatedir/%name/nod
@@ -73,7 +83,7 @@ sed -i \
     -e 's/# setuid=/setuid=pdns-recursor/' \
     -e 's/# setgid=/setgid=pdns-recursor/' \
     -e 's/# security-poll-suffix=secpoll\.powerdns\.com\./security-poll-suffix=/' \
-    %buildroot%_sysconfdir/%name/recursor.conf
+    %buildroot%_sysconfdir/%name/recursor.yml
 
 %pre
 groupadd -r -f %name 2> /dev/null ||:
@@ -88,7 +98,7 @@ useradd -r -N -g %name -M -d %_sharedstatedir/%name -s /sbin/nologin \
 
 %files
 %doc README
-%config(noreplace) %_sysconfdir/%name/recursor.conf
+%config(noreplace) %_sysconfdir/%name/recursor.yml
 %_bindir/rec_control
 %_sbindir/pdns_recursor
 %_man1dir/pdns_recursor.1*
@@ -101,6 +111,9 @@ useradd -r -N -g %name -M -d %_sharedstatedir/%name -s /sbin/nologin \
 %dir %attr(0755,%name,%name) %_sharedstatedir/%name/udr
 
 %changelog
+* Thu Jul 02 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.11-alt1
+- New version.
+
 * Sat Oct 05 2024 Ivan A. Melnikov <iv@altlinux.org> 4.9.2-alt3.1
 - fix build with boost 1.86.0
 
