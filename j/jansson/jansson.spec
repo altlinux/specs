@@ -2,7 +2,7 @@
 %define soname 4
 
 Name: jansson
-Version: 2.15.0
+Version: 2.15.1
 Release: alt1
 
 Summary: C library for encoding, decoding and manipulating JSON data
@@ -65,6 +65,7 @@ It features:
 %cmake \
 	-DJANSSON_BUILD_SHARED_LIBS=ON \
 	-DJANSSON_INSTALL_LIB_DIR=%_libdir \
+	-DJANSSON_INSTALL_PKGCONF_DIR=%_pkgconfigdir \
 %if_with doc
 	-DJANSSON_BUILD_DOCS=ON \
 %endif
@@ -96,6 +97,9 @@ It features:
 %endif
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 2.15.1-alt1
+- 2.15.0 -> 2.15.1
+
 * Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 2.15.0-alt1
 - 2.14.1 -> 2.15.0
 
