@@ -3,7 +3,8 @@
 %def_enable gimp_plugin
 %{?_enable_gimp_plugin:%define gimpplugindir %(gimptool-3 --gimpplugindir)}
 %define gimpplugindir %_libdir/gimp/3.0
-%def_enable zart
+# not ready for 4.0.0 and QT6
+%def_disable zart
 %ifarch %e2k
 # it's impossible to use such a bad OpenMP implementation for such complex code
 %def_disable openmp
@@ -15,12 +16,12 @@
 # no tags
 %define zart_ver d014169
 # https://github.com/GreycLab/gmic-qt
-%define gmic_qt_ver v.3.5.0-12-g6e59612
+%define gmic_qt_ver v.3.5.0-15-g6ae9edc
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-558-g9820260a
+%define gmic_comm_ver gmic-3.4.3-625-ge81cf39b
 
 Name: gmic
-Version: 3.7.5
+Version: 4.0.0
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -55,8 +56,10 @@ BuildRequires: libcurl-devel
 BuildRequires: bash-completion
 %{?_enable_gimp_plugin:BuildRequires: libgimp-devel}
 # for qt
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires: qt5-base-devel qt5-tools-devel
+#BuildRequires(pre): rpm-macros-qt5
+#BuildRequires: qt5-base-devel qt5-tools-devel
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires: qt6-base-devel qt6-tools-devel
 %if_enabled zart
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
@@ -151,12 +154,10 @@ popd
 
 pushd %name-qt
 %define opt_qt CONFIG+=release GMIC_PATH=../src NOSTRIP=1
-%qmake_qt5 %opt_qt HOST=none gmic_qt.pro
+%qmake_qt6 %opt_qt HOST=none gmic_qt.pro
 %make_build
-%{?_enable_gimp_plugin:%qmake_qt5 %opt_qt HOST=gimp gmic_qt.pro
+%{?_enable_gimp_plugin:%qmake_qt6 %opt_qt HOST=gimp gmic_qt.pro
 %make_build}
-#%%cmake
-#%%cmake_build
 popd
 
 %if_enabled zart
@@ -227,6 +228,11 @@ popd
 %gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+- qt: build with QT6
+- disabled zart (not ready for 4.0.0)
+
 * Fri May 01 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.5-alt1
 - 3.7.5
 
