@@ -1,6 +1,6 @@
 Name: atrium
-Version: 0.3.0
-Release: alt1.512f5b5.2
+Version: 0.4.0
+Release: alt1
 
 Summary: A Wayland display manager for Linux with first-class multiseat support
 License: GPL-2.0-or-later
@@ -54,6 +54,9 @@ off to an independent user session per seat.
 %_datadir/atrium
 
 %changelog
+* Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1.512f5b5.2
 - Add pam config altlinux.
 - Add runtime dependencies on greetd and cage.
