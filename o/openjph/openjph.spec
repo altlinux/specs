@@ -1,9 +1,9 @@
-%define soname 0.27
+%define soname 0.30
 %def_with check
 
 Name: openjph
-Version: 0.27.4
-Release: alt2
+Version: 0.30.1
+Release: alt1
 Summary: High-throughput JPEG 2000 (HTJ2K) encoder/decoder and library
 License: BSD-2-Clause
 Group: Graphics
@@ -104,6 +104,9 @@ sed -i '/#else/,/#endif/ {
 %_libdir/cmake/openjph/
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 0.30.1-alt1
+- 0.27.4 -> 0.30.1
+
 * Mon Jun 08 2026 Michael Shigorin <mike@altlinux.org> 0.27.4-alt2
 - spec: fix build --without check (ilyakurdyukov@)
 
