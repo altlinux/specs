@@ -96,7 +96,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.1
-%define ver_minor 3
+%define ver_minor 4
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -329,6 +329,9 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 %ifarch %gallium_opencl_arches
 	-Dgallium-rusticl=true \
 %endif
+%ifarch aarch64
+	-Dteflon=true \
+%endif
 #
 
 %meson_build
@@ -358,11 +361,14 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %endif
 
+ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
+
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
 %doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
+%_libdir/libGLX_indirect.so.0
 %_libdir/libgallium-%version.so
 %dir %_libdir/gbm
 %_libdir/gbm/dri_gbm.so
@@ -474,6 +480,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_panfrost.so
 %_libdir/libvulkan_powervr_mesa.so
 %_libdir/libvulkan_kosmickrisp.so
+%ifarch aarch64
+%_libdir/libteflon.so
+%endif
 %_datadir/vulkan/icd.d/kosmickrisp_mesa_icd*.json
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
@@ -484,6 +493,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Jul 03 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.4-alt1
+- 26.1.4
+
 * Mon Jun 22 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.3-alt1
 - 26.1.3
 
