@@ -14,6 +14,7 @@
 %def_enable vala
 %def_enable nmcloudsetup
 %def_enable ifcfg
+%def_enable clat
 %ifnarch %e2k %mips
 %def_enable ovs
 %else
@@ -41,8 +42,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.56.1
-Release: alt1
+Version: 1.58
+Release: alt1.rc1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -90,6 +91,8 @@ BuildRequires: python3-module-pygobject3
 %{?_enable_bluez5dun:BuildRequires: libbluez-devel}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala}
 %{?_enable_vala:BuildRequires: vala-tools}
+# clang needed as bpf compiler
+%{?_enable_clat:BuildRequires: libbpf-devel bpftool clang}
 # For create-exports-NetworkManager.sh
 BuildRequires: /proc
 
@@ -331,12 +334,17 @@ GObject introspection devel data for the NetworkManager (libnm).
 %setup
 %patch -p1
 
+# Fix examples install path if NM version is not the same as rpm version (for example 1.58-rc1)
+VERS="$(sed -rn "/^project\(/,/^\)/ s/^[[:blank:]]*version:[[:blank:]]*'([^']+)',[[:blank:]]*$/\1/p" meson.build)"
+if [ -n "$VERS" ] && [ "$VERS" != "%version" ]; then
+	sed -i "s/nm_name + '-' + nm_version/nm_name + '-' + '%version'/" data/meson.build
+fi
+
 %build
 %meson \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	-Dcrypto=nss \
-	-Ddhclient=/sbin/dhclient \
 	-Ddhcpcd=true \
 	-Dconfig_dhcp_default=internal \
 	-Ddnsmasq=/usr/sbin/dnsmasq \
@@ -353,6 +361,7 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dsession_tracking=systemd \
 	-Dsuspend_resume=systemd \
 	-Dconfig_logging_backend_default=journal \
+	-Dsystemdsystemgeneratordir=%_gen_dir \
 %else
 	-Dsession_tracking=ck \
 	-Dsuspend_resume=upower \
@@ -388,6 +397,7 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dconfig_wifi_backend_default=wpa_supplicant \
 	-Dselinux=false \
 	-Dnbft=false \
+	%{subst_enable_meson_bool clat clat} \
 	-Ddist_version=%version-%release
 
 %meson_build -v
@@ -550,9 +560,12 @@ fi
 %endif
 %_usr/lib/firewalld/zones/*.xml
 
+# From Fedora spec:
+# Don't use the *-initrd.service files yet, wait dracut to support them
 %{?_enable_systemd:%exclude %_unitdir/NetworkManager-config-initrd.service}
 %{?_enable_systemd:%exclude %_unitdir/NetworkManager-initrd.service}
 %{?_enable_systemd:%exclude %_unitdir/NetworkManager-wait-online-initrd.service}
+%{?_enable_systemd:%exclude %_gen_dir/nm-initrd-generator.sh}
 
 %if_enabled ovs
 %{?_enable_systemd:%dir %_unitdir/NetworkManager.service.d/}
@@ -649,6 +662,11 @@ fi
 %endif
 
 %changelog
+* Fri Jul 03 2026 Mikhail Efremov <sem@altlinux.org> 1.58-alt1.rc1
+- Fixed examples install path.
+- Enabled CLAT support.
+- Updated to 1.58-rc1.
+
 * Mon May 25 2026 Mikhail Efremov <sem@altlinux.org> 1.56.1-alt1
 - Enabled iwd support.
 - NM-prestart: Don't fail if /etc/net/sysctl.conf is absent
