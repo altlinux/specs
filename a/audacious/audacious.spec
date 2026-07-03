@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 4.5.1
+Version: 4.6.1
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -23,6 +23,7 @@ Patch3: %name-2.5.0-alt-DSO.patch
 Requires(post,postun): desktop-file-utils
 BuildPreReq: desktop-file-utils
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++
 
 BuildRequires: glib2-devel libgio-devel
@@ -70,20 +71,13 @@ Development files required to develop plugins for audacious.
 %setup -n %name-%version%rel
 
 %build
-%configure \
-    --with-buildstamp="ALT Linux package"  \
-    --disable-rpath \
-    --enable-libarchive \
-    --disable-dependency-tracking \
-%ifnarch x86_64
-    --disable-sse2 \
-%endif
-    --enable-chardet
-
-%make_build
+%meson \
+    -Dbuildstamp="ALT Linux package" \
+    -Dlibarchive=true
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -91,6 +85,7 @@ Development files required to develop plugins for audacious.
 %_bindir/%name
 %_bindir/audtool
 %_desktopdir/*.desktop
+%_datadir/metainfo/*.metainfo.xml
 %_datadir/%name/
 %_iconsdir/hicolor/48x48/apps/audacious.png
 %_iconsdir/hicolor/scalable/apps/audacious.svg
@@ -115,6 +110,11 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
+- new version 4.6.1
+- switch build system to meson (upstream dropped autotools in 4.6)
+- package AppStream metainfo
+
 * Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5.1-alt1
 - new version 4.5.1 (with rpmrb script)
 

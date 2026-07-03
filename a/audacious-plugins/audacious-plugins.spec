@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.5.1
+Version: 4.6.1
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -19,6 +19,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Requires: %oname = %version
 
+BuildRequires(pre): meson
 BuildRequires: gcc-c++ libSDL2-devel libXcomposite-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-paranoia-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel libalsa-devel
 
 BuildRequires: lib%oname-devel = %version
@@ -59,22 +60,19 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %endif
 
 %build
-%configure \
-	--enable-amidiplug \
-	--enable-sid \
-	%{subst_enable pulse} \
-	%{subst_enable jack} \
+%meson \
+	-Damidiplug=true \
+	-Dsid=true \
+	%{subst_enable_meson_bool pulse pulse} \
+	%{subst_enable_meson_bool jack jack} \
 %ifarch armh
-	--disable-qtglspectrum \
-%endif
-%ifnarch x86_64
-	--disable-sse2 \
+	-Dgl-spectrum=false \
 %endif
 	#
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -83,6 +81,10 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
+- new version 4.6.1
+- switch build system to meson (upstream dropped autotools in 4.6)
+
 * Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5.1-alt1
 - new version 4.5.1 (with rpmrb script)
 - fix BR: projectm-devel
