@@ -2,7 +2,7 @@
 %define modulename Pyro5
 
 Name: pyro5
-Version: 5.16
+Version: 5.17
 Release: alt1
 Summary: Distributed object middleware for Python (RPC)
 License: MIT
@@ -76,6 +76,9 @@ py.test3 -m "not network"
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Fri Jul 03 2026 Anton Midyukov <antohami@altlinux.org> 5.17-alt1
+- New version 5.17.
+
 * Fri Jun 05 2026 Anton Midyukov <antohami@altlinux.org> 5.16-alt1
 - New version 5.16.
 
