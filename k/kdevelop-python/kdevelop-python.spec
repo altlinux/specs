@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: kdevelop-python
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 
 Summary: Python 3 language plugin for KDevelop
@@ -69,5 +69,8 @@ rm -v %buildroot%_datadir/kdevappwizard/templates/django_project.tar.bz2
 %_datadir/qlogging-categories6/kdevpythonsupport.categories
 
 %changelog
+* Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.3-alt1
+- New version 26.04.3.
+
 * Wed Jun 17 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
 - Initial build for Sisyphus

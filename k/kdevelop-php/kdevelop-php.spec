@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: kdevelop-php
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 
 Summary: PHP language plugin for KDevelop
@@ -69,5 +69,8 @@ rm -rfv %buildroot%_libdir/cmake
 %_datadir/qlogging-categories6/kdevphpsupport.categories
 
 %changelog
+* Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.3-alt1
+- New version 26.04.3.
+
 * Wed Jun 17 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.2-alt1
 - Initial build for Sisyphus
