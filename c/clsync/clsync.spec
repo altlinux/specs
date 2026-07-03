@@ -15,7 +15,7 @@
 
 Name: clsync
 Version: 0.4.5
-Release: alt5
+Release: alt6
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -180,6 +180,9 @@ mv doc/doxygen/html %buildroot%_docdir/%name/
 %_docdir/%name/html
 
 %changelog
+* Fri Jul 03 2026 Andrew Savchenko <bircoph@altlinux.org> 0.4.5-alt6
+- Fix build with gcc-15
+
 * Wed Nov 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.5-alt5
 - Disabled seccomp on LoongArch. As a side note the list of allowed syscalls
   looks wrong even for x86: it should have included openat, fchmodat, etc.
