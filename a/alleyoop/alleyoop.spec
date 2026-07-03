@@ -5,13 +5,14 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/emacs /usr/bin/emacsclient
 %define _localstatedir %{_var}
 Name:       alleyoop
 Version:    0.9.8
-Release:    alt1_9
+Release:    alt1_9.1
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
 URL:        http://alleyoop.sourceforge.net/
 Source0:    http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:    alleyoop.desktop
+Patch:      0001-Fix-bool-Bool.patch
 
 BuildRequires: valgrind >= 3.1.0
 BuildRequires: libgnomeui-devel gettext gettext-tools, intltool
@@ -39,6 +40,7 @@ editor.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %configure --disable-install-schemas
@@ -57,7 +59,7 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas
 
 
 %postun
-gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
+gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null || :
 
 
 %files -f %{name}.lang
@@ -68,6 +70,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Fri Jul 03 2026 Fr. Br. George <george@altlinux.ru> 0.9.8-alt1_9.1
+- NMU: fix GCC15 build
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1_9
 - update to new release by fcimport
 
