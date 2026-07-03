@@ -3,7 +3,7 @@
 %def_enable check
 
 Name:    yq
-Version: 3.4.3
+Version: 4.0.0
 Release: alt1
 Summary: Command-line YAML, XML and TOML processor
 License: Apache-2.0
@@ -12,9 +12,9 @@ URL:     https://github.com/kislyuk/yq
 
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3(pip) python3(setuptools_scm)
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-vcs)
 %if_enabled check
 BuildRequires: jq
 BuildRequires: python3-module-xmltodict >= 0.11.0
@@ -41,11 +41,11 @@ It is a jq wrapper for YAML, XML and TOML documents.
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
 %__python3 ./test/test.py -v
@@ -54,9 +54,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc README.rst
 %_bindir/*
 %python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Fri Jul 03 2026 Ivan A. Melnikov <iv@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Sat Apr 27 2024 Ivan A. Melnikov <iv@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
