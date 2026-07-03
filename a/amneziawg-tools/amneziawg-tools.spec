@@ -1,6 +1,6 @@
 Name: amneziawg-tools
 Version: 1.0.20260618
-Release: alt1
+Release: alt2
 Summary: Fast, modern, secure VPN tunnel
 License: GPLv2
 Group: System/Servers
@@ -10,17 +10,16 @@ Source0: %name-%version.tar
 BuildRequires: systemd
 
 %description
-%description
-AmneziaWG is a user-friendly VPN solution based on the WireGuard protocol, enhanced with
-additional features for seamless integration into the AmneziaVPN ecosystem. It leverages
-the same state-of-the-art cryptography as WireGuard (the "Noise" protocol), offering
-modern security, high performance, and simplicity compared to traditional VPN solutions
-like IPSec and OpenVPN. Designed for versatility, it works equally well on embedded systems,
-servers, and desktop environments, prioritizing both speed and ease of configuration.
-Like WireGuard, it operates over UDP for efficient data transmission.
+AmneziaWG management tools do not establish VPN connections themselves; they
+are designed solely for configuring and controlling the underlying kernel modules.
 
-This package provides customized management tools (awg) and utilities for configuring
-and interacting with AmneziaWG
+AmneziaWG is a user-friendly VPN solution based on the WireGuard protocol,
+enhanced for seamless integration with the AmneziaVPN ecosystem. It uses modern
+cryptography (the Noise protocol), providing strong security, high performance,
+and simpler configuration compared to traditional solutions such as IPSec and OpenVPN.
+
+This package includes management tools (awg) and utilities for configuring
+and interacting with AmneziaWG.
 
 %prep
 %setup
@@ -53,6 +52,9 @@ and interacting with AmneziaWG
 %_mandir/man8/awg-quick.8*
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 1.0.20260618-alt2
+- 1.0.20260618 -> 1.0.20260618-2
+
 * Fri Jun 19 2026 Anton Farygin <rider@altlinux.org> 1.0.20260618-alt1
 - 1.0.20260223 -> 1.0.20260618
 
