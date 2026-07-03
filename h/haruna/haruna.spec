@@ -4,7 +4,7 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.7.1
+Version: 1.8.1
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ Patch1: alt-smb.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
-BuildRequires: qt6-declarative-devel qt6-5compat-devel
+BuildRequires: qt6-shadertools-devel qt6-declarative-devel qt6-5compat-devel
 BuildRequires: mpvqt6-devel libkdsingleapplication-qt6-devel
 BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libavfilter-devel libswscale-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdoctools-devel kf6-kfilemetadata-devel
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt1
+- new version
+
 * Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
 - new version
 
