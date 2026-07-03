@@ -2,7 +2,7 @@
 
 Name: pioneerspacesim
 Version: 20260203
-Release: alt1
+Release: alt2
 
 Summary: A game of lonely space adventure
 License: GPLv3 and BSD and MIT and Apache-2.0 and ALT-Public-Domain and CC-BY-SA-3.0 and Bitstream-Vera and OFL-1.1
@@ -19,6 +19,7 @@ ExcludeArch: armh i586
 Source: %name-%version.tar
 
 Patch1: suse-use-system-fmt.patch
+Patch2: fix-includes-for-fmt-format-and-std-strlen.patch
 Patch3500: alt-profiler-loongarch-ftbfs-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -60,6 +61,7 @@ This package contains models, scripts and other data for the game.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %patch3500 -p1
 
 %build
@@ -104,6 +106,9 @@ find %buildroot%_bindir -type f ! -name 'pioneer*' -exec rename '' pioneer- {} \
 %_datadir/%name/
 
 %changelog
+* Fri Jul 03 2026 Anton Golubev <golubevan@altlinux.org> 20260203-alt2
+- fix includes for fmt::format and std::strlen
+
 * Thu Feb 05 2026 Anton Golubev <golubevan@altlinux.org> 20260203-alt1
 - new version
 
