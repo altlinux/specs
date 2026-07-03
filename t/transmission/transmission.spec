@@ -7,7 +7,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 
 Group: Networking/File transfer
@@ -261,6 +261,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt1
+- 4.1.2 -> 4.1.3
+
 * Tue Jun 16 2026 Anton Farygin <rider@altlinux.org> 4.1.2-alt1
 - 4.1.1 -> 4.1.2
 
