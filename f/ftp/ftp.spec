@@ -5,13 +5,13 @@
 
 Name: ftp
 Version: 0.18
-Release: alt0.pre1.3
+Release: alt0.pre1.4
 
 Summary: The standard UNIX FTP (file transfer protocol) client
 
 License: BSD
 Group: Networking/File transfer
-URL: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit-devel/
+Url: ftp://ftp.uk.linux.org/pub/linux/Networking/netkit-devel/
 #URL: http://www.hcs.harvard.edu/~dholland/computers/netkit.html
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
@@ -24,7 +24,7 @@ Patch2: %rname-0.17-alt-tinfo.patch
 Patch10: %rname-0.18-pre1-alt-usagi-ipv6.patch
 
 Patch11: %rname-0.17-acct.patch
-Patch12: %rname-0.17-pre20000412.pasv-security.patch 
+Patch12: %rname-0.17-pre20000412.pasv-security.patch
 Patch13: %rname-0.17-fedora-arg_max.patch
 
 Patch14: %rname-0.17-fedora-segv.patch
@@ -52,6 +52,14 @@ Patch35: %rname-0.17-fedora-acct_ovl.patch
 Patch36: %rname-0.17-fedora-linelen.patch
 Patch37: %rname-0.17-fedora-man.patch
 Patch38: %rname-0.17-fedora-remove-nested-include.patch
+Patch39: %rname-0.17-fedora-active-mode-option.patch
+Patch40: %rname-0.17-fedora-commands-leaks.patch
+Patch41: %rname-0.17-fedora-gcc15.patch
+Patch42: %rname-0.17-fedora-getlogin.patch
+Patch43: %rname-0.17-fedora-linelen-segfault.patch
+Patch44: %rname-0.17-fedora-lsn-timeout.patch
+Patch45: %rname-0.17-fedora-out-of-memory.patch
+Patch46: %rname-0.17-fedora-token.patch
 
 # Automatically added by buildreq on Sat Dec 13 2008
 BuildRequires: libreadline-devel libtinfo-devel
@@ -65,40 +73,8 @@ If your system is on a network, you should install %name in order to do
 file transfers.
 
 %prep
-%setup -q -n %rname-%rversion
-%patch1 -p1
-%patch2 -p1
-
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
+%setup -n %rname-%rversion
+%autopatch -p1
 
 %build
 CFLAGS=$RPM_OPT_FLAGS BINDIR=%_bindir MANDIR=%_mandir ./configure --enable-ipv6
@@ -115,6 +91,9 @@ mkdir -p $RPM_BUILD_ROOT{%_bindir,%_mandir/man{1,5}}
 %doc README BUGS
 
 %changelog
+* Fri Jul 03 2026 Fr. Br. George <george@altlinux.org> 0.18-alt0.pre1.4
+- Updated fedora patches.
+
 * Wed Feb 06 2019 Grigory Ustinov <grenka@altlinux.org> 0.18-alt0.pre1.3
 - Rebuild with libreadline7.
 
