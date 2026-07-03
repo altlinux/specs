@@ -1,5 +1,5 @@
 Name:    python3-module-libusb1
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: Python 3 ctype-based wrapper around libusb1
@@ -47,6 +47,9 @@ sed -i 's/\(^\s\+git_refnames = \).*$/\1"%version"/' usb1/_version.py
 %exclude %python3_sitelibdir/usb1/__pyinstaller
 
 %changelog
+* Fri Jul 03 2026 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+
 * Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 3.3.1-alt1
 - New version 3.3.1.
 
