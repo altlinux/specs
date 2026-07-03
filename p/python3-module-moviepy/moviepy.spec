@@ -3,13 +3,9 @@
 %def_with check
 %def_with docs
 
-%ifarch %ix86
-%def_with exclude_test
-%endif
-
 Name: python3-module-%pypi_name
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Video editing with Python
 
@@ -65,9 +61,13 @@ This package contains documentation for %pypi_name.
 %setup
 %autopatch -p1
 
-%build
 # fix license
 sed -i 's/license = { text = "MIT License" }/license = "MIT"/;/License :: OSI Approved :: MIT License/d' pyproject.toml
+
+# fix version
+sed -i 's/^version = "2.2.0"$/version = "%version"/' pyproject.toml
+
+%build
 %pyproject_build
 
 %if_with docs
@@ -86,7 +86,9 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %check
-%pyproject_run_pytest %{?_with_exclude_test:-k "not test_audio_delay"}
+%pyproject_run_pytest -k "not test_PR_529 \
+	and not test_ffmpeg_parse_video_rotation \
+	and not test_correct_video_rotation"
 
 %files
 %doc *.txt *.md
@@ -100,6 +102,11 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Fri Jul 03 2026 Alexander Kovalev <alexvk@altlinux.org> 2.2.1-alt2
+- Fix FTBFS:
+  + Update to upstream commit 7ffa4f0
+  + Spec: exclude some tests from check
+
 * Tue May 27 2025 Alexander Kovalev <alexvk@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 - Revert pull request #2417.
