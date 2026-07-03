@@ -3,7 +3,7 @@
 
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.9.9
+Version: 2.9.10
 Release: alt1
 
 Summary: LinuxCNC controls CNC machines
@@ -254,6 +254,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Fri Jul 03 2026 Anton Midyukov <antohami@altlinux.org> 2.9.10-alt1
+- New version 2.9.10.
+
 * Mon Jun 29 2026 Anton Midyukov <antohami@altlinux.org> 2.9.9-alt1
 - New version 2.9.9.
 
