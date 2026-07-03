@@ -21,8 +21,8 @@
 
 %define rname kdevelop
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.04.3
+Release: alt1
 Epoch: 3
 
 Summary: Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
@@ -326,6 +326,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKDevCompileAnalyzerCommon.so.*
 
 %changelog
+* Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 3:26.04.3-alt1
+- new version
+
 * Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 3:26.04.2-alt2
 - fix packaging
 
