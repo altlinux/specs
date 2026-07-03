@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 5.4.0
+Version: 5.6.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -235,6 +235,9 @@ rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
 %endif
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
+- new version 5.6.0
+
 * Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
 - new version 5.4.0
 - migrate to pyproject build system
