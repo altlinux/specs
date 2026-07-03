@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -74,8 +74,7 @@ Requires: shotwell
 %endif
 Requires: logisim
 Requires: basic256
-Requires: geany
-Requires: geany-themes
+Requires: geany >= 2.1
 %ifnarch %e2k
 Requires: geany-plugins
 %else
@@ -262,6 +261,11 @@ Requires: kgeography
 Requires: minuet
 Requires: abiword
 Requires: afce
+# Astronomy
+# stellarium is ExcludeArch: %%ix86 (translation encoding problems)
+%ifnarch %ix86
+Requires: stellarium
+%endif
 %description highschool
 %{summary}.
 
@@ -475,6 +479,10 @@ Requires: kde6-runtime
 Requires: kde-printing
 Requires: kde-scanning
 Requires: kdeconnect
+# Plasma weather applet (systray, enabled by default); arch-limited by package
+%ifarch x86_64 aarch64
+Requires: plasma-addon-alt-weather
+%endif
 %ifnarch %e2k ppc64le
 Requires: nextcloud-client-kde
 %endif
@@ -527,6 +535,8 @@ Requires: semaphore
 %endif
 Requires: mariadb-server
 Requires: mariadb-client
+Requires: postgresql16-server
+Requires: postgresql16-contrib
 Requires: nano
 Requires: dansguardian
 Requires: perl-DBD-mysql
@@ -643,6 +653,12 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Jul 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.2-alt1
+- kde: Add plasma-addon-alt-weather.
+- server-apps: Add postgresql16 alongside mariadb.
+- highschool: Add stellarium.
+- lite: Drop geany-themes, require geany >= 2.1 (themes now part of geany).
+
 * Thu Jun 04 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.1-alt1
 - Move touchegg from teacher to tools.
 
