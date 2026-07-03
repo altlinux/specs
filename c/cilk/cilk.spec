@@ -7,7 +7,7 @@
 
 Name: cilk
 Version: 5.4.6
-Release: alt13
+Release: alt13.1
 Summary: Language for multithreaded parallel programming based on ANSI C
 License: GPL-2.0+
 Group: Development/C
@@ -16,6 +16,7 @@ Url: http://supertech.csail.mit.edu/cilk/
 # http://supertech.csail.mit.edu/cilk/cilk-5.4.6.tar.gz
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
+Patch15: %name-GCC15.patch
 
 Requires: lib%name-devel = %EVR
 Conflicts: lib%name-devel-static < %EVR
@@ -154,6 +155,7 @@ This package contains documentation for Cilk.
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch15 -p1
 
 %build
 %add_optflags -DHAVE_SYS_TIME_H -fgnu89-inline
@@ -204,6 +206,9 @@ install -m644 FAQ/%name-faq.html/* \
 %doc examples
 
 %changelog
+* Fri Jul 03 2026 Fr. Br. George <george@altlinux.org> 5.4.6-alt13.1
+- Fix GCC15 build
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.4.6-alt13
 - Disabled LTO.
 
