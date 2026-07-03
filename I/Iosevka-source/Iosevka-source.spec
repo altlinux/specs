@@ -2,7 +2,7 @@
 %define family Iosevka
 
 Name:    %family-source
-Version: 34.4.0
+Version: 34.7.0
 Release: alt1
 
 Summary: Versatile typeface for code -- the sources
@@ -34,6 +34,15 @@ cp %SOURCE0 %SOURCE1 %SOURCE2 %buildroot%_usrsrc/%family/
 %_usrsrc/%family
 
 %changelog
+* Mon Jun 29 2026 Ivan A. Melnikov <iv@altlinux.org> 34.7.0-alt1
+- 34.7.0
+
+* Mon May 25 2026 Ivan A. Melnikov <iv@altlinux.org> 34.6.1-alt1
+- 34.6.1
+
+* Sat May 09 2026 Ivan A. Melnikov <iv@altlinux.org> 34.5.0-alt1
+- 34.5.0
+
 * Sun Apr 19 2026 Ivan A. Melnikov <iv@altlinux.org> 34.4.0-alt1
 - 34.4.0
 
