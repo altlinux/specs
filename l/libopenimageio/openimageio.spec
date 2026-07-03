@@ -13,7 +13,7 @@
 %endif
 
 Name:           lib%oname
-Version: 3.1.14.1
+Version: 3.1.15.0
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -27,6 +27,7 @@ Source0:        %name-%version.tar
 #Source1:        oiio-images.tar.gz
 
 Source2: %oname.watch
+Patch1: openimageio-3.1.15.0-alt-jxl-icc.patch
 
 Patch2000: %oname-e2k.patch
 
@@ -144,6 +145,7 @@ Development files for package %name
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -244,6 +246,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 3.1.15.0-alt1
+- 3.1.14.1 -> 3.1.15.0
+
 * Fri Jun 19 2026 Anton Farygin <rider@altlinux.org> 3.1.14.1-alt1
 - 3.1.13.1 -> 3.1.14.1
 
