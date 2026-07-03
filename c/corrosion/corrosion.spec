@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    corrosion
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
 Summary: Marrying Rust and CMake - Easy Rust and C/C++ Integration!
@@ -15,8 +15,8 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: config.toml
 
-# https://github.com/corrosion-rs/corrosion/pull/605
-Patch0: corrosion-0.5.2-upstream-fix-tests.patch
+# Make install-path test honour the multilib libdir (lib64) instead of lib
+Patch1: corrosion-0.6.1-alt-fix-tests.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: rust-cargo
@@ -32,10 +32,10 @@ manifest (Cargo.toml file).
 
 %prep
 %setup -a1
+%patch1 -p1
 install -vpD %SOURCE2 .cargo/config.toml
 # Check for non-source files
 find vendor \( -name '*.a' -o -name '*.lib' -o -name '*.dll' \) | grep . && exit 1
-%patch0 -p1
 
 %build
 %cmake
@@ -46,7 +46,10 @@ find vendor \( -name '*.a' -o -name '*.lib' -o -name '*.dll' \) | grep . && exit
 
 %check
 export CARGO_HOME="./.cargo"
-%ctest
+# custom_target builds std from source (-Zbuild-std), which needs the rust-src
+# component and network access for std's own dependencies -- neither is available
+# in the offline build root, so skip it.
+%ctest -E custom_target
 
 %files
 %doc *.md LICENSE
@@ -54,5 +57,8 @@ export CARGO_HOME="./.cargo"
 %_datadir/cmake/*
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 0.6.1-alt1
+- 0.5.2 -> 0.6.1
+
 * Tue Nov 18 2025 Ilya Sorochan <k0tran@altlinux.org> 0.5.2-alt1
 - Initial build.
