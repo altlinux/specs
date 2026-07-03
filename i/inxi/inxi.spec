@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.40.1
+Version: 3.3.41.1
 Release: alt1
 
 Summary: A full featured system information script
@@ -70,6 +70,9 @@ perl -c inxi
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Fri Jul 03 2026 Leontiy Volodin <lvol@altlinux.org> 3.3.41.1-alt1
+- New version 3.3.41.1.
+
 * Wed Nov 26 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.40.1-alt1
 - New version 3.3.40.1.
 
