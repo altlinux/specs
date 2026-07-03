@@ -1,10 +1,10 @@
 Summary: DFU Atmel USB programmer
 Name: dfu-programmer
-Version: 0.6.2
+Version: 1.1.0
 Release: alt1
-License: GPL
+License: GPLv2
 Group: Development/Other
-URL: http://dfu-programmer.sourceforge.net
+VCS: https://github.com/dfu-programmer/dfu-programmer
 Source0: %name-%version.tar.gz
 
 # Automatically added by buildreq on Wed Dec 25 2013
@@ -21,9 +21,11 @@ Check out the Atmel website for more information.  They are kind enough to
 provide generally correct specifications this implementation is based on.
 
 %prep
-%setup -q
+%setup
 
 %build
+touch ChangeLog
+%autoreconf
 %configure
 %make
 
@@ -31,10 +33,13 @@ provide generally correct specifications this implementation is based on.
 %makeinstall
 
 %files
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS *.txt NEWS *.md test
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Fri Jul 03 2026 Fr. Br. George <george@altlinux.org> 1.1.0-alt1
+- Autobuild version bump to 1.1.0
+
 * Wed Dec 25 2013 Grigory Milev <week@altlinux.ru> 0.6.2-alt1
 - Initial build for ALTLinux
