@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.4.6
+Version:  0.4.7
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -57,6 +57,12 @@ A script to update and commit RPM checksum files.
 %_man1dir/checksumbot.1.*
 
 %changelog
+* Fri Jul 03 2026 Paul Wolneykien <manowar@altlinux.org> 0.4.7-alt1
+- Make CHKSUMPATH be 'chksum' by default.
+- Added --init option (and others) to initialize the checksum
+  Git repository.
+- checksumbot: Fix: Don't show last commit if no new commit was made.
+
 * Thu Dec 18 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.6-alt1
 - Make data processing independent of the current locale
   (Fixes: OVE-20251218-0001).
