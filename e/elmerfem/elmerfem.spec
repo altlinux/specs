@@ -7,7 +7,7 @@
 
 Name: elmerfem
 Version: 26.2.1
-Release: alt2
+Release: alt3
 
 Summary: Elmer FEM software
 License: LGPL-2.0-only
@@ -41,7 +41,6 @@ BuildRequires: pkgconfig(hdf5)
 BuildRequires: pkgconfig(Qt5)
 BuildRequires: pkgconfig(Qt5Script)
 BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: libqwt6-qt5-devel
 BuildRequires: libGLU-devel
 
 BuildRequires: opencascade-devel
@@ -114,9 +113,8 @@ sed -i 's|SET(ElmerIce_SRC ${ElmerIce_SRC} CalvingRemeshMMG.F90 )|MESSAGE(STATUS
 %endif
        -DWITH_ElmerIce=TRUE \
        -DWITH_QT5=TRUE \
-       -DQWT_INCLUDE_DIR=%_includedir/qt5/qwt \
        -DWITH_ELMERGUI=TRUE \
-       -DWITH_QWT=TRUE \
+       -DWITH_QWT=FALSE \
        -DCMAKE_OpenGL_GL_PREFERENCE=GLVND \
        -DWITH_OCC=TRUE \
        -DWITH_VTK=TRUE \
@@ -203,6 +201,9 @@ echo "      Run -> Start ElmerVTK menu option to view results."
 %_datadir/elmersolver/lua-scripts/defaults.lua
 
 %changelog
+* Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt3
+- Build without libqwt6-qt5-devel (closes: #59717).
+
 * Mon Jun 22 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt2
 - Enable build on i586 and riscv64.
 - Added post-install message about using ElmerVTK as default instead of non-compilable ElmerPost.
