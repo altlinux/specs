@@ -1,96 +1,57 @@
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define _udevrulesdir /lib/udev/rules.d
+%ifndef _udev_rulesdir
+%define _udev_rulesdir /lib/udev/rules.d
+%endif
 
 Name: plasma-bigscreen
 Version: 6.7.2
-Release: alt1
+Release: alt2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
 Group: Graphical desktop/KDE
 Url: https://invent.kde.org/plasma/plasma-bigscreen
 
+ExcludeArch: %not_qt6_qtwebengine_arches
+
+Provides: libplasma-bigscreenlibs = %EVR
+Obsoletes: libplasma-bigscreenlibs < %EVR
+
+Requires: qt6-declarative qt6-multimedia qt6-webengine qt6-5compat
+#
+Requires: qml6(org.kde.kcmutils)
+Requires: qml6(org.kde.bluezqt)
+Requires: libkf6coreaddons libkf6itemmodels libkf6svg libkf6itemmodels
+Requires: kf6-kirigami kf6-kirigami-addons kf6-kdeclarative
+#
+Requires: qml6(org.kde.plasma.core)
+Requires: qqc2-breeze-style
+Requires: plasma-nm plasma6-plasma5support powerdevil plasma-pa plasma-workspace
+Requires: plasma6-layer-shell-qt plasma6-breeze plasma6-integration xdg-desktop-portal-kde
+Requires: kscreen milou
+#
+Requires: kdeconnect
+#
+Requires: kde-volume-control
+
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf6
-
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: extra-cmake-modules
-
-BuildRequires: pkgconfig(Qt6)
-BuildRequires: pkgconfig(Qt6Qml)
-BuildRequires: pkgconfig(Qt6Multimedia)
-BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: cmake extra-cmake-modules
 BuildRequires: pkgconfig(libcec)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(sdl3)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(vulkan)
-
-BuildRequires: kf6-bluez-qt-devel
-BuildRequires: kf6-ki18n-devel
-BuildRequires: kf6-kirigami-devel
-BuildRequires: kf6-kcmutils-devel
-BuildRequires: kf6-kglobalaccel-devel
-BuildRequires: kf6-knotifications-devel
-BuildRequires: kf6-kio-devel
-BuildRequires: kf6-kwindowsystem-devel
-BuildRequires: kf6-ksvg-devel
-BuildRequires: kf6-kdbusaddons-devel
-BuildRequires: kf6-kiconthemes-devel
-BuildRequires: plasma6-libkscreen-devel
-BuildRequires: plasma6-lib-devel
-BuildRequires: kf6-kpackage-devel
-BuildRequires: plasma6-activities-devel
-BuildRequires: plasma6-activities-stats-devel
-BuildRequires: plasma-workspace-devel
 BuildRequires: qcoro6-devel
-BuildRequires: qqc2-breeze-style-devel
-BuildRequires: kf6-kitemmodels-devel
-
-BuildRequires: kde5-plasma-wayland-protocols
-
-# make sure that all Qml imports will be satisfied
-Requires: qml6(org.kde.bluezqt)
-Requires: plasma-workspace-qml
-Requires: libkf6coreaddons
-Requires: qml6(org.kde.kcmutils)
-Requires: kdeconnect
-Requires: kf6-kirigami
-Requires: kf6-kirigami-addons
-Requires: libkf6itemmodels
-Requires: kf6-kdeclarative
-Requires: libkf6svg
-Requires: plasma6-layer-shell-qt
-Requires: milou
-Requires: qml6(org.kde.plasma.core)
-Requires: plasma-nm
-Requires: plasma6-plasma5support
-Requires: plasma-nano
-Requires: powerdevil
-Requires: plasma-pa
-Requires: plasma-workspace
-Requires: qt6-5compat
-Requires: qt6-multimedia
-Requires: qt6-declarative
-Requires: qt6-webengine
-Requires: qqc2-breeze-style
-Requires: libkf6itemmodels
-
-Requires: kwayland-integration
-Requires: plasma6-breeze
-Requires: plasma-desktop
-Requires: plasma6-integration
-Requires: xdg-desktop-portal-kde
-Requires: kscreen
-Requires: kde-volume-control-pipewire
-
-Requires: lib%{name}libs = %{version}-%{release}
-
-ExcludeArch: %ix86 riscv64
+BuildRequires: pkgconfig(Qt6) pkgconfig(Qt6Qml) pkgconfig(Qt6Multimedia) pkgconfig(Qt6WebEngineCore)
+BuildRequires: kf6-bluez-qt-devel kf6-ki18n-devel kf6-kirigami-devel kf6-kcmutils-devel kf6-kglobalaccel-devel
+BuildRequires: kf6-knotifications-devel kf6-kio-devel kf6-kwindowsystem-devel kf6-ksvg-devel kf6-kdbusaddons-devel
+BuildRequires: kf6-kiconthemes-devel kf6-kpackage-devel kf6-kitemmodels-devel
+BuildRequires: plasma-wayland-protocols
+BuildRequires: plasma6-libkscreen-devel plasma6-lib-devel plasma6-activities-devel plasma6-activities-stats-devel
+BuildRequires: plasma-workspace-devel qqc2-breeze-style-devel
 
 %description
 Plasma Bigscreen is an open-source user interface for TVs. Running on
@@ -98,18 +59,8 @@ top of a Linux distribution, Plasma Bigscreen turns your TV or set-top
 box into a fully hackable device. A big launcher giving you easy access
 to any installed apps and skills. Controllable via voice or TV remote.
 
-%package -n lib%{name}libs
-Group: System/Libraries
-Summary: libraries for %name
-
-%description -n lib%{name}libs
-This package contains libraries for %name.
-
 %prep
 %setup
-sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
-sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
-sed -i 's|PROJECT_DEP_VERSION "6.7.0"|PROJECT_DEP_VERSION "6.6.5"|g' CMakeLists.txt
 
 %build
 %K6build
@@ -117,37 +68,34 @@ sed -i 's|PROJECT_DEP_VERSION "6.7.0"|PROJECT_DEP_VERSION "6.6.5"|g' CMakeLists.
 %install
 %K6install
 
-%find_lang %name --with-kde --all-name
-
 # move udev-rule file to the correct location
-mkdir -pv %buildroot%_udevrulesdir/
-mv -v %buildroot%_libdir/udev/rules.d/40-uinput.rules %buildroot%_udevrulesdir/
+if ! [ -d "%buildroot/%_udev_rulesdir" ] ; then
+    mkdir -p %buildroot/%_udev_rulesdir/
+    mv %buildroot/%_libdir/udev/rules.d/*.rules %buildroot/%_udev_rulesdir/
+fi
+
+%find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc README.md
-%_K6bin/plasma-bigscreen-*
-%dir %_K6qml/org/kde/bigscreen
-%_K6qml/org/kde/bigscreen/*
+%_K6bin/*bigscreen*
+%_K6qml/org/kde/bigscreen/
 %_K6xdgapp/*.desktop
 %_K6data/metainfo/*.xml
-%dir %_K6data/plasma/look-and-feel/org.kde.plasma.bigscreen
-%_K6data/plasma/look-and-feel/org.kde.plasma.bigscreen/*
-%dir %_K6data/plasma/plasmoids/org.kde.bigscreen.homescreen
-%_K6data/plasma/plasmoids/org.kde.bigscreen.homescreen/*
-%dir %_K6data/plasma/shells/org.kde.plasma.bigscreen
-%_K6data/plasma/shells/org.kde.plasma.bigscreen/*
-%dir %_K6data/sounds/plasma-bigscreen
-%_K6data/sounds/plasma-bigscreen/*
+%_K6data/plasma/look-and-feel/org.kde.plasma.bigscreen/
+%_K6data/plasma/plasmoids/org.kde.bigscreen.homescreen/
+%_K6data/plasma/shells/org.kde.plasma.bigscreen/
+%_K6data/sounds/plasma-bigscreen/
 %_K6data/wayland-sessions/plasma-bigscreen-wayland.desktop
-%_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
-%_udevrulesdir/40-uinput.rules
-
-%files -n lib%{name}libs
 %_K6plug/plasma/applets/org.kde.bigscreen.homescreen.so
 %_K6plug/plasma/kcms/systemsettings/kcm_mediacenter_*.so
 %_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
+%_udev_rulesdir/40-uinput.rules
 
 %changelog
+* Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
+- fix packaging
+
 * Tue Jun 30 2026 Nikolay Strelkov <snk@altlinux.org> 6.7.2-alt1
 - New version 6.7.2.
 
