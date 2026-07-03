@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.19
+Version: 0.2.20
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -64,9 +64,14 @@ through apt and rpm.
 %dir %_datadir/polkit-1/actions
 %_datadir/dbus-1/interfaces/*.xml
 %_datadir/polkit-1/actions/*.policy
-%doc LICENSE CHANGELOG.md
+%doc CHANGELOG.md docs/*
 
 %changelog
+* Fri Jul 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.20-alt1
+- Add documentation to interfaces (thx Voropaev Dmitriy and Sergey Savelev).
+- Remove the LICENSE from the documentation, according to policy docs.
+- Add output for missing errors in rpm.
+
 * Fri May 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.19-alt1
 - Resolve virtual packages in pkgpriorities exclude list
   (closes: 59306).
