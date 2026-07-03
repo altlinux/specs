@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.43.1
+Version: 0.44.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -111,6 +111,25 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 0.44.0-alt1
+- added task manage keys o/O to insert a subtask after/before the current row
+- added task batch --batch-pkgs to build only the named packages from a batch config
+- added devenv --mount-bind for extra bind mounts on top of [devenv].mounts
+- added build watchdogs inactivity_timeout and max_log_mb for parallel builds
+- added stalled status to rebuild-stats.json with non-zero exit for incomplete runs
+- added submit --no-deps to skip automatic --deps on tasks in fresher repos
+- changed [devenv].mounts and --mount-bind to also apply to the bwrap backend
+- changed task genbatch to emit gear specsubst groups and valid TOML
+- changed Mozilla CVE lookup to scrape the mozilla.org security-advisories site
+- fixed oracle-csaf to drop CVEs whose fix is newer than the update target
+- fixed Oracle CSAF fetch to fall back to older quarters when the advisory is unpublished
+- fixed task manage deps screen (removal, stale lists, refresh, cache bypass)
+- fixed shell completion descriptions leaking ANSI escape codes
+- fixed devenv image rebuild on bind-mount-only changes and podman probes without podman
+- fixed task batch --test to write per-variant build logs again
+- fixed process group cleanup for interrupted rebuild workers
+- fixed hsh --printenv directory noise in builder status/clean/shell
+
 * Tue Jun 30 2026 Anton Farygin <rider@altlinux.org> 0.43.1-alt1
 - fixed builder shell to refuse when the builder's hasher chroot is uninitialized
 - fixed devenv for domain users whose UID/GID is out of range
