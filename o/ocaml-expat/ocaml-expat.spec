@@ -4,7 +4,7 @@
 %define ocamlstublib %_libdir/ocaml/stublibs
 Name: ocaml-%pkgname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: OCaml wrapper for the Expat XML parsing library
 License: MIT
 Group: Development/ML
@@ -12,6 +12,7 @@ Group: Development/ML
 Url: https://mmzeeman.home.xs4all.nl/ocaml/
 VCS: https://github.com/whitequark/ocaml-expat
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib-devel, libexpat-devel
@@ -34,6 +35,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 make depend
@@ -59,6 +61,9 @@ chrpath -d %buildroot%ocamlstublib/*.so
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 1.3.0-alt3
+- fixed build on i586 with OCaml 5.5
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.3.0-alt2
 - added support for bytecode-only version of the ocaml package
 
@@ -79,4 +84,3 @@ chrpath -d %buildroot%ocamlstublib/*.so
 
 * Tue May 15 2018 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - first build for ALT, based on RH spec
-
