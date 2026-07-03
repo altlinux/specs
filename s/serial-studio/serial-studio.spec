@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
@@ -58,6 +58,8 @@ sed -i "s|doc/screenshot.png|screenshot.png|" README.md
 sed -i "s|./doc/brand/||" README.md
 sed -i "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
 
+sed -i "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|" cmake/MiMalloc.cmake
+
 %build
 %cmake \
        -DUSE_SYSTEM_ZLIB=ON \
@@ -80,6 +82,9 @@ sed -i "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Fri Jun 19 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.1-alt1
 - New version 4.0.1.
 
