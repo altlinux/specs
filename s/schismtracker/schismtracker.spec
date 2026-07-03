@@ -1,5 +1,5 @@
 Name: schismtracker
-Version: 20251014
+Version: 20260524
 Release: alt1
 
 Summary: Schism Tracker is a free and open-source reimplementation of Impulse Tracker
@@ -84,6 +84,9 @@ desktop-file-edit --set-icon=%name %buildroot/%_desktopdir/%name.desktop
 %_desktopdir/*
  
 %changelog
+* Fri Jul 03 2026 Alexei Mezin <alexvm@altlinux.org> 20260524-alt1
+- New version
+
 * Sun Jan 04 2026 Alexei Mezin <alexvm@altlinux.org> 20251014-alt1
 - Initial build
 
