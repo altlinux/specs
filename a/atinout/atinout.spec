@@ -3,7 +3,7 @@
 
 Name: atinout
 Version: 0.9.1.0.15.g4013
-Release: alt1
+Release: alt2
 
 Summary: A command line tool for interation with AT modem
 
@@ -37,5 +37,8 @@ for the command will be output to file (or stdout).
 %doc Changelog README FAQ
 
 %changelog
+* Fri Jul 03 2026 Andrew Savchenko <bircoph@altlinux.org> 0.9.1.0.15.g4013-alt2
+- Fix ftbfs
+
 * Sat Dec 07 2024 Andrew Savchenko <bircoph@altlinux.org> 0.9.1.0.15.g4013-alt1
 - Initial version.
