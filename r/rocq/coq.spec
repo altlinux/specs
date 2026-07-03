@@ -1,6 +1,6 @@
 Name: rocq
 Version: 9.2.0
-Release: alt2
+Release: alt3
 
 Summary: Proof management system
 
@@ -21,6 +21,7 @@ Source2: rocq.xml
 Source3: org.rocq-prover.rocqide.metainfo.xml
 
 Patch1: rocq-ALT-58676.patch
+Patch2: rocq-backport-switch-to-rocq.theory-for-dune.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-cairo2-devel
@@ -121,6 +122,7 @@ development of interactive proofs.
 %setup
 
 %patch1 -p1
+%patch2 -p1
 
 sed -i "s|python2|python3|g" doc/tools/rocqrst/notations/fontsupport.py
 
@@ -245,6 +247,9 @@ ln -s ../../coq/coq_style.xml %buildroot%_datadir/gtksourceview-3.0/styles
 %_mandir/man1/coq*
 
 %changelog
+* Wed Jul 01 2026 Leonid Znamenok <respublica@altlinux.org> 9.2.0-alt3
+- Fixed FTBFS with dune 3.21.
+
 * Mon May 11 2026 Leonid Znamenok <respublica@altlinux.org> 9.2.0-alt2
 - Dropped dependency on python2-base (Closes: 59080).
 
