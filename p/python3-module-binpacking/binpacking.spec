@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 
 Summary: Contains greedy algorithms to solve two typical bin packing problems
 
@@ -74,6 +74,9 @@ Python module '%%pypi_name'.
 %_bindir/binpacking
 
 %changelog
+* Tue May 12 2026 Paul Wolneykien <manowar@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Tue Jan 20 2026 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt2
 - Extract the 'binpacking' utility into the separate package.
 - Require Python3 >= 3.10.
