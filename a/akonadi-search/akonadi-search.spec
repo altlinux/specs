@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -15,11 +15,14 @@ Obsoletes: kde5-akonadi-search < %EVR
 Requires: akonadi
 
 Source: %rname-%version.tar
+Source1: vendor.tar
+Patch1: alt-compile-htmlparser.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: boost-devel-headers libical-devel libxapian-devel
 BuildRequires: libvulkan-devel
+BuildRequires: /usr/bin/rustc rust-cargo corrosion
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kcalendarcore-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -80,7 +83,8 @@ Requires: %name-common
 
 
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version -a1
+%patch1 -p1
 
 # disable krunner by default
 sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json*
@@ -120,6 +124,9 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json*
 
 
 %changelog
+* Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- turn on htmlparser (thanks rider@alt)
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
