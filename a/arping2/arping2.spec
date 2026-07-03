@@ -2,7 +2,7 @@
 %define libnet_ver 2
 
 Name: arping2
-Version: 2.28
+Version: 2.29
 Release: alt1
 
 Summary: Layer2 Ethernet pinger
@@ -44,11 +44,14 @@ mv %buildroot%_sbindir/{%origname,%name}
 mv %buildroot%_man8dir/{%origname,%name}.8
 
 %files
-%doc LICENSE README extra/arping-scan-net.sh
+%doc LICENSE README* extra/arping-scan-net.sh
 %_sbindir/%name
 %_man8dir/*
 
 %changelog
+* Tue Jun 30 2026 Michael Shigorin <mike@altlinux.org> 2.29-alt1
+- new version (watch file uupdate)
+
 * Mon Dec 29 2025 Michael Shigorin <mike@altlinux.org> 2.28-alt1
 - new version (watch file uupdate)
 
