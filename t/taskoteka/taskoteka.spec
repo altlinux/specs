@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: taskoteka
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: Fast HTTP/JSON API for girar build tasks
 License: GPL-2.0-or-later
@@ -52,6 +52,11 @@ install -D -m 0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 1.6.0-alt1
+- added force task refresh via GET /tasks/{id}?refresh=1 with per-task
+  cooldown and global rate limit
+- access log now includes client IP and User-Agent
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
 - added approved_by and disapproved_by fields to list endpoint subtasks
 
