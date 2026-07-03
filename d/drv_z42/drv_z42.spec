@@ -1,7 +1,7 @@
 Summary: Printer driver for the Lexmark Z42, Z43 and Z52 printer
 Name: drv_z42
 Version: 0.4.3
-Release: alt1
+Release: alt2
 License: GPLv2
 
 Url: http://www.openprinting.org/driver/drv_z42/
@@ -9,6 +9,7 @@ Url: http://www.openprinting.org/driver/drv_z42/
 Source: %name-%version.tar
 Source1: z42-2.png
 Source2: z42tool.desktop
+Patch: drv_z42-gccx15.patch
 Group: System/Configuration/Printing
 
 BuildRequires: ImageMagick-tools libgtk+2-devel
@@ -27,6 +28,7 @@ IJ1200.
 
 %prep
 %setup
+%patch -p1
 
 %build
 pushd src
@@ -75,6 +77,9 @@ cp %SOURCE2 %buildroot%_desktopdir/
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Jul 03 2026 Fr. Br. George <george@altlinux.ru> 0.4.3-alt2
+- Fix GCC15 build
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 0.4.3-alt1
 - Initial build for ALT
 
