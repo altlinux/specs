@@ -9,7 +9,7 @@
 
 Name: quake3
 Version: 1.36
-Release: alt8.git3fb9006e
+Release: alt9.git3fb9006e
 
 Summary: Libre game engine compatible with Quake 3 Arena
 License: GPL-2.0-or-later
@@ -27,6 +27,7 @@ Source13: quake3-ctf.sysconfig
 Patch0: quake3-alt-no-pie.patch
 Patch1: quake3-alt-riscv64-loongarch64.patch
 Patch2: quake3-debian-modules-to-libs.patch
+Patch3: quake3-alt-constexpr-c23.patch
 
 Requires: quake3-server = %EVR
 Requires: quake3-common = %EVR
@@ -198,6 +199,9 @@ install -dm1700 %buildroot%_home/
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Sat Jul 04 2026 Anton Osipov <radiolamp@altlinux.org> 1.36-alt9.git3fb9006e
+- Fix FTBFS with GCC 15 (C23 constexpr keyword conflict).
+
 * Mon Feb 03 2025 Constantin Sunzow <protvin@altlinux.org> 1.36-alt8.git3fb9006e
 - Fix FTBFS: new intermediate release from upstream main branch.
 - Fix License tag according to SPDX.
@@ -314,4 +318,3 @@ install -dm1700 %buildroot%_home/
 
 * Fri Aug 26 2005 Igor Zubkov <icesik@altlinux.ru> 1.32b-alt1
 - Initial build for Sisyphus
-
