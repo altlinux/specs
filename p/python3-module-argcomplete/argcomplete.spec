@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-argcomplete
-Version: 3.6.3
-Release: alt2
+Version: 3.7.0
+Release: alt1
 
 Summary: Bash tab completion for argparse
 
@@ -64,12 +64,14 @@ export PIP_NO_BUILD_ISOLATION=NO
 %files
 %doc README.*
 %_bindir/activate-global-python-argcomplete
-%_bindir/python-argcomplete-check-easy-install-script
 %_bindir/register-python-argcomplete
 %python3_sitelibdir/argcomplete/
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jul 02 2026 Anton Vyatkin <toni@altlinux.org> 3.7.0-alt1
+- New version 3.7.0.
+
 * Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 3.6.3-alt2
 - NMU: fixed FTBFS (pip 25.3).
 
