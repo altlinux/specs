@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A modern Navidrome / Jellyfin client
@@ -40,16 +41,20 @@ but it's capable of installing and managing it's own Navidrome instance.
 %find_lang --all-name --output=%name.lang %name
 
 %files -f %name.lang
-%_bindir/%name
-%_desktopdir/%oname.desktop
-%_datadir/dbus-1/services/%oname.service
+%_bindir/%{name}*
+%_desktopdir/*.desktop
+%_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/%oname.*
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/%oname.*
 %_datadir/%name
+%_datadir/gnome-shell/search-providers/%oname.search-provider.ini
 %doc *.md
 
 %changelog
+* Sat Jul 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1
+
 * Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
 - automatic build: 1.2.2 -> 1.3.0
 
