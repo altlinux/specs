@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib3mf
-Version: 2.2.0
-Release: alt6
+Version: 2.5.0
+Release: alt1
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
@@ -13,15 +13,6 @@ VCS: https://github.com/3MFConsortium/lib3mf.git
 
 # Source-url: https://github.com/3MFConsortium/lib3mf/archive/v%version/lib3mf-%version.tar.gz
 Source: %name-%version.tar
-Patch0: lib3mf-2.2.0-unbundled_zip.patch
-
-# don't strip the library (breaks debuginfo)
-# https://github.com/3MFConsortium/lib3mf/pull/290.patch
-Patch1: not-to-strip-binaries.patch
-
-# Fix build with GCC 15, #include <cstdint> for uint64_t definition
-# https://github.com/3MFConsortium/lib3mf/pull/407.patch
-Patch2: gcc15.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -29,10 +20,9 @@ BuildRequires: act
 BuildRequires: libzip-devel
 BuildRequires: zlib-devel
 BuildRequires: libssl-devel
+BuildRequires: libfast_float-devel
 
-# fot tests
-#BuildRequires: libgtest-devel
-#BuildRequires: ctest
+BuildRequires: libgtest-devel
 
 %description
 lib3mf is a C++ implementation of the 3D Manufacturing Format standard.
@@ -49,9 +39,6 @@ This is a 3D printing standard for representing geometry as meshes.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p1
-%patch2 -p1
 
 # Set version
 %__subst 's|@PROJECT_VERSION@|%version|' lib3mf.pc.in 
@@ -60,23 +47,9 @@ This is a 3D printing standard for representing geometry as meshes.
 # https://github.com/google/googletest/issues/2065
 sed -i 's/INSTANTIATE_TEST_SUITE_P/INSTANTIATE_TEST_CASE_P/' Tests/CPP_Bindings/Source/*.cpp
 
-# A bundled x86 executable, we use the packaged one instead
-# https://github.com/3MFConsortium/lib3mf/issues/199
-rm AutomaticComponentToolkit/bin/act.linux
-ln -s %_bindir/act AutomaticComponentToolkit/bin/act.linux
-
-# c++11 does not work with gtest 1.13+
-sed -i 's/ -std=c++11//' CMakeLists.txt
-
-# remove unused bundled libraries
-rm {Include,Source}/Libraries/{libzip,zlib} -r
-sed -i -e 's|Libraries/libzip/zip.h|zip.h|' \
-       -e 's|Libraries/zlib/zlib.h|zlib.h|' \
-  {Include,Source}/Common/*/*
-
 %build
 %cmake \
-	-DLIB3MF_TESTS=OFF \
+	-DLIB3MF_TESTS=ON \
 	-DUSE_INCLUDED_ZLIB=OFF \
 	-DUSE_INCLUDED_LIBZIP=OFF \
 	-DUSE_INCLUDED_GTEST=OFF \
@@ -90,9 +63,7 @@ sed -i -e 's|Libraries/libzip/zip.h|zip.h|' \
 %cmake_install
 
 # Also include the other headers
-cp -a Include/* %buildroot%_includedir/%name/
-# ...but not the 3rd party libraries
-rm -r %buildroot%_includedir/%name/Libraries
+cp -a Include/* %buildroot%_includedir/lib3mf/
 
 # Backward compatibility links (compatibility with 2.0.x)
 ln -s Bindings/C/lib3mf.h \
@@ -106,21 +77,22 @@ ln -s Bindings/C/lib3mf.h \
   %buildroot%_includedir/%name/
 ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 
-%check
-#make_build -C %_cmake__builddir test
-
 %files
 %doc README.md
-%_libdir/%name.so.2
-%_libdir/%name.so.%version.0
+%_libdir/lib3mf.so.2
+%_libdir/lib3mf.so.%version.0
 
 %files devel
-%_libdir/%name.so
-%_includedir/%name/
+%_libdir/lib3mf.so
+%_libdir/cmake/lib3mf
+%_includedir/lib3mf/
 %_pkgconfigdir/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Sat Jul 04 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0 (Closes: 59727).
+
 * Thu Apr 23 2026 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt6
 - Fix build with gcc15.
 - Fix debuginfo.
