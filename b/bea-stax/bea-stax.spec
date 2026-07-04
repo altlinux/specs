@@ -48,7 +48,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-%{version}.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-%{apiver}.pom
 Name:           bea-stax
 Version:        1.2.0
-Release:        alt4_20jpp11
+Release:        alt5
 License:        ASL 1.1 and ASL 2.0
 BuildArch:      noarch
 
@@ -90,7 +90,7 @@ cp -p %{SOURCE1} pom.xml
 # Incorrectly scoped
 %pom_remove_dep :junit
 
-sed -i 's,source="1.2" target="1.2",source="1.6" target="1.6" encoding="iso8859-1",' build.xml
+sed -i 's,source="1.2" target="1.2",source="1.8" target="1.8" encoding="iso8859-1",' build.xml
 
 %build
 #export LANG=C.ISO8859-1
@@ -116,6 +116,9 @@ ant all
 #%doc --no-dereference ASF2.0.txt
 
 %changelog
+* Thu Jul 02 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.2.0-alt5
+- FTBFS fix with java17
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.2.0-alt4_20jpp11
 - java11 build
 
