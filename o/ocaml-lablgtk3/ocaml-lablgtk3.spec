@@ -1,7 +1,7 @@
 %define libname lablgtk3
 Name: ocaml-%libname
 Version: 3.1.5
-Release: alt2
+Release: alt3
 
 Summary: Objective Caml interface to gtk+
 
@@ -10,6 +10,7 @@ Group: Development/ML
 Url: https://github.com/garrigue/lablgtk
 VCS: https://github.com/garrigue/lablgtk
 Source: %name-%version.tar
+Patch0: ocaml-lablgtk3-3.1.5-alt-ocaml-5.5-build-fix.patch
 BuildRequires:  ocaml dune
 BuildRequires:  ocaml-dune-configurator-devel
 BuildRequires:  ocaml-cairo2-devel >= 0.6
@@ -42,6 +43,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build --release
@@ -63,6 +65,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Sat Jul 04 2026 Anton Farygin <rider@altlinux.org> 3.1.5-alt3
+- fixed build with OCaml 5.5
+
 * Sat Jan 25 2025 Leonid Znamenok <respublica@altlinux.org> 3.1.5-alt2
 - NMU: rebuild with goocanvas2, gtkspell3, rsvg2 and sourceview3
 
