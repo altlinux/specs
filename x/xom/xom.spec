@@ -46,13 +46,13 @@ BuildRequires: jpackage-default
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_13jpp11
+Release:        alt2
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
 Source0:        http://www.cafeconleche.org/XOM/%{name}-%{version}-src.tar.gz
 
-# Don't download jaxen, set javac target/source to 1.5
+# Don't download jaxen, set javac target/source to 1.8
 Patch0:         %{name}-build.patch
 
 BuildRequires:  ant >= 0:1.6
@@ -152,7 +152,7 @@ ln -sf $(build-classpath dom4j) dom4j.jar
 ln -sf $(build-classpath servlet) servlet.jar
 popd
 
-ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -v compile15 jar samples betterdoc maven2
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -v compile15 jar samples betterdoc maven2
 
 pushd build/apidocs
 for f in `find -name \*.css -o -name \*.html`; do
@@ -206,6 +206,9 @@ ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Thu Jul 02 2026 Anton Meleshnikov <alton@altlinux.org> 1:1.2.10-alt2
+- fixed build with java17
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1:1.2.10-alt1_13jpp11
 - fixed build with java11
 
