@@ -2,7 +2,7 @@
 
 Name: fonts-ttf-%fname
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Nerd Fonts patched IBM 3270 font
 License: BSD-3-Clause
@@ -27,10 +27,16 @@ cp -a %SOURCE1 %SOURCE2 .
 %install
 %ttf_fonts_install %fname
 
+%post
+%_bindir/fc-cache %_fontsdir ||:
+
 %files -f %fname.files
 %doc LICENSE.* README.*
 
 %changelog
+* Sat Jul 04 2026 Anton Kurachenko <srebrov@altlinux.org> 3.4.0-alt2
+- Added %post to update the font cache after installation.
+
 * Sat Apr 26 2025 Anton Kurachenko <srebrov@altlinux.org> 3.4.0-alt1
 - New version 3.4.0.
 
