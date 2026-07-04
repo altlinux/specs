@@ -1,5 +1,5 @@
 Name: copyq
-Version: 15.0.0
+Version: 16.0.0
 Release: alt1
 
 Summary: CopyQ - Advanced clipboard manager
@@ -63,6 +63,9 @@ support for image formats, command line control and more.
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 16.0.0-alt1
+- new version 16.0.0
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 15.0.0-alt1
 - new version 15.0.0
 - drop alt-qt6.10.patch (fixed in upstream)
