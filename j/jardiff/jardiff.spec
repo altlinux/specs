@@ -36,7 +36,7 @@ BuildRequires: javapackages-local
 
 Name:           jardiff
 Version:        0.2
-Release:	alt11_3jpp6
+Release:	alt12_3jpp6
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -98,7 +98,7 @@ objectweb-asm/asm \
 objectweb-asm/asm-commons \
 %endif
 )
-ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -Dbuild.sysclasspath=only jar test javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dbuild.sysclasspath=only jar test javadoc
 
 %if_with asm3
 %pom_change_dep org.ow2.asm: asm:
@@ -121,6 +121,9 @@ ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -Dbuild.sysclassp
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jun 25 2026 Anton Meleshnikov <alton@altlinux.org> 0:0.2-alt12_3jpp6
+- fixed build
+
 * Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0:0.2-alt11_3jpp6
 - java11 build
 - build with objectweb-asm 8

@@ -33,7 +33,7 @@ BuildRequires: jpackage-default
 
 Name:           jgraph
 Version:        5.12.1.0
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        JGraph Diagram Component
 License:        LGPLv2+
@@ -73,7 +73,7 @@ perl -pi -e 's/\r$//g' LICENSE
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Dbuild.sysclasspath=only
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 -Dbuild.sysclasspath=only
 
 %install
 
@@ -97,6 +97,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jun 25 2026 Anton Meleshnikov <alton@altlinux.org> 0:5.12.1.0-alt3_2jpp6
+- fixed build
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0:5.12.1.0-alt2_2jpp6
 - java11 build
 - added BR: unzip
