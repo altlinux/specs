@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde-rounded-corners-x11
-Version: 0.8.7
+Version: 0.9.0
 Release: alt1
 %K6init no_altplace
 
@@ -51,6 +51,9 @@ BuildRequires: qt6-declarative-devel
 %exclude %_K6data/kwin/shaders/shapecorners*.frag
 
 %changelog
+* Sat Jul 04 2026 Anton Kurachenko <srebrov@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Sun Apr 12 2026 Anton Kurachenko <srebrov@altlinux.org> 0.8.7-alt1
 - New version 0.8.7.
 
