@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.2.6
+Version: 4.3.4
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -43,7 +43,6 @@ BuildRequires: libexpat-devel libxml2-devel
 BuildRequires: libncurses-devel
 BuildRequires: jsoncpp-devel >= 1.6.0
 BuildRequires: doxygen graphviz zlib-devel
-BuildRequires: librhash-devel
 BuildRequires: libuv-devel >= 1.28.0
 BuildRequires: shared-mime-info rpm-build-vim
 
@@ -160,7 +159,7 @@ sed -i 's/ -O[23]/ -O%_optlevel/g' Modules/Compiler/*.cmake
 # TODO: Source/cm_get_date.c:11:10: fatal error: ../Utilities/cmlibarchive/libarchive/archive_getdate.c:
 # cmlibarchive
 # remove bundled sources
-rm -rv Utilities/{cmbzip2,cmcurl,cmexpat,cmliblzma,cmlibrhash,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
+rm -rv Utilities/{cmbzip2,cmcurl,cmexpat,cmliblzma,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
 %if_disabled jsoncpp_bootstrap
 rm -rv Utilities/cmjsoncpp/
 %endif
@@ -175,6 +174,7 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--verbose \
 	--parallel=%__nprocs \
 	--system-libs \
+	--no-system-librhash \
 	%{?_enable_gui:--qt-gui} \
 	%{?_enable_docs:--sphinx-man --sphinx-html} \
 	--prefix=%prefix \
@@ -192,6 +192,7 @@ popd
 %cmake \
     -DCMAKE_USE_SYSTEM_LIBRARY_CPPDAP=OFF \
     -DCMAKE_USE_SYSTEM_LIBRARIES=ON \
+    -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=OFF \
     -DCMAKE_DATA_DIR=share/%name \
     -DCMAKE_DOC_DIR=share/doc/%name-%version \
     -DCMAKE_MAN_DIR=share/man \
@@ -268,6 +269,7 @@ popd
 %dir %_docdir/%name-%version/
 %_docdir/%name-%version/LICENSE.rst
 %_docdir/%name-%version/CONTRIBUTORS.rst
+%_docdir/%name-%version/cmlibrhash/
 %_docdir/%name-%version/cmsys/
 %exclude %_datadir/%name/Modules/
 %if_enabled jsoncpp_bootstrap
@@ -327,6 +329,10 @@ popd
 
 
 %changelog
+* Thu Jul 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.4-alt1
+- new version 4.3.4
+- use bundled librhash (system 1.3.5 lacks rhash_get_version required since 4.3)
+
 * Thu May 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt1
 - new version 4.2.6
 
