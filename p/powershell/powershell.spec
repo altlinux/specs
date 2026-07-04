@@ -1,11 +1,11 @@
 # TODO: fix nuget to operate offline
 %def_with prebuild
 
-%define dotnetver 8.0
+%define dotnetver 9.0
 %define _dotnet_corerelease %{dotnetver}*
 
 Name: powershell
-Version: 7.4.1
+Version: 7.5.0
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -104,7 +104,8 @@ dotnet publish --configuration Linux "src/powershell-unix/" --output bin --runti
 %if_with prebuild
 mkdir -p %buildroot%_libdir/%name/
 cp -a %name-prebuild/* %buildroot%_libdir/%name/
-rm -rv %buildroot%_libdir/%name/runtimes/{linux-,win,osx,freebsd,illumos,ios,solaris,tvos}*
+# prune platform-specific runtimes, but KEEP unix/ (ships Microsoft.Management.Infrastructure.dll)
+find %buildroot%_libdir/%name/runtimes -mindepth 1 -maxdepth 1 -type d ! -name unix -exec rm -rv {} +
 #rm -v %buildroot%_libdir/%name/{libcrypto.so.1.0.0,libssl.so.1.0.0}
 mkdir -p %buildroot%_libdir/%name/runtimes/%_dotnet_rid/native/
 # hack to use latest runtime
@@ -125,7 +126,9 @@ cat <<EOF >%buildroot%_libdir/%name/Microsoft.PowerShell.GlobalTool.Shim
 exec dotnet %_libdir/%name/Microsoft.PowerShell.GlobalTool.Shim.dll "\$@"
 EOF
 
-#chmod 0755 %buildroot%_libdir/%name/pwsh
+# 7.5 tarball ships the wrapper shims 0644; make them executable
+chmod 0755 %buildroot%_libdir/%name/pwsh
+chmod 0755 %buildroot%_libdir/%name/Microsoft.PowerShell.GlobalTool.Shim
 
 # replace downloaded libs with system versions
 
@@ -155,6 +158,13 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Fri Jul 03 2026 Vitaly Lipatov <lav@altlinux.ru> 7.5.0-alt1
+- new version 7.5.0 (with rpmrb script)
+- build with .NET 9.0 (pwsh 7.5 targets net9.0)
+- fix startup crash: ship runtimes/unix/Microsoft.Management.Infrastructure.dll
+- make runtimes prune robust (find instead of failing brace glob)
+- chmod 0755 the pwsh/GlobalTool.Shim wrappers (7.5 tarball ships them 0644)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.4.1-alt1
 - new version 7.4.1 (with rpmrb script)
 - build with dotnet 8.0
