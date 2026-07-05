@@ -1,9 +1,9 @@
 Name:    xqf
 Version: 1.0.6.2
-Release: alt3
+Release: alt4
 Summary: X11 QStat Frontend
 Packager: Andrey Cherepanov <cas@altlinux.org>
-License: GPL
+License: GPL-2.0
 Group:   Networking/Other
 URL:     https://xqf.github.io/en/
 # VCS:   https://github.com/XQF/xqf
@@ -32,7 +32,6 @@ retrieve server info.
 %patch -p1
 
 %build
-sh autogen.sh
 %autoreconf
 %configure \
     --enable-bzip2 \
@@ -57,6 +56,10 @@ sh autogen.sh
 %_man6dir/%name.6*
 
 %changelog
+* Sun Jul 05 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.6.2-alt4
+- FTBFS: do not use deprecated autogen.sh.
+- Specified License version.
+
 * Fri Jan 15 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.6.2-alt3
 - Fix build with libgdk-pixbuf-xlib-devel.
 - Fix build by gcc10.
