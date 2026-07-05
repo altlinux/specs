@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.55
+%define ver_major 0.56
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -152,6 +152,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Mon May 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
 - 0.55.0
 

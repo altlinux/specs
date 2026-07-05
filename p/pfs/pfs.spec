@@ -20,7 +20,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Phosh File Selector Library
@@ -160,6 +160,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
+- 0.1.1
+
 * Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - 0.1.0
 

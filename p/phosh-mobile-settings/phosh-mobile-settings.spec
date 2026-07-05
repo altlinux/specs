@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.55
+%define ver_major 0.56
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -55,8 +55,8 @@ BuildRequires: gcc-c++ meson
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.84
 BuildRequires: pkgconfig(gtk4) >= 4.12.5
-BuildRequires: pkgconfig(gtk4-wayland) >= 4.4
-BuildRequires: pkgconfig(libadwaita-1) >= 1.7
+BuildRequires: pkgconfig(gtk4-wayland) >= 4.22
+BuildRequires: pkgconfig(libadwaita-1) >= 1.9
 BuildRequires: pkgconfig(wayland-client) >= 1.14
 BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
@@ -149,7 +149,8 @@ popd
 %build
 %meson \
     %{subst_enable_meson_bool man man} \
-    %{subst_enable_meson_bool examples examples}
+    %{subst_enable_meson_bool examples examples} \
+    -Dpolkit-group=wheel
 %nil
 %meson_build
 
@@ -200,6 +201,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- updated to v0.56.0-2-g2b98cc7
+
 * Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
 - 0.55.0
 

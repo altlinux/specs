@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.55
+%define ver_major 0.56
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -9,7 +9,7 @@
 
 %define dev_uid 500
 %define wlroots_ver_major 0.20
-%define wlroots_ver %wlroots_ver_major.0
+%define wlroots_ver %wlroots_ver_major.1
 # since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
@@ -154,6 +154,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
 - 0.55.0
 

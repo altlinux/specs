@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.55
+%define ver_major 0.56
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -283,6 +283,8 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/media-players.plugin
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-status-icon.so
 %_libdir/%name/plugins/simple-custom-status-icon.plugin
+%_libdir/%name/plugins/lib%name-plugin-load-meter-status-icon.so
+%_libdir/%name/plugins/load-meter-status-icon.plugin
 
 %{?_enable_searchd:
 %_libexecdir/%name-searchd
@@ -337,6 +339,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
+- 0.56.0
+
 * Sun May 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
 - 0.55.0
 
