@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: sdrangel
-Version: 7.26.1
+Version: 7.27.1
 Release: alt1
 
 Summary: Qt-based SDR front-end for various devices
@@ -211,5 +211,8 @@ patchelf %buildroot%_libdir/sdrangel/pluginssrv/*.so --add-rpath %_libdir/sdrang
 %_datadir/metainfo/org.sdrangel.SDRangel.metainfo.xml
 
 %changelog
+* Sun Jul 05 2026 Nikolay Strelkov <snk@altlinux.org> 7.27.1-alt1
+- New version 7.27.1.
+
 * Thu Jun 18 2026 Nikolay Strelkov <snk@altlinux.org> 7.26.1-alt1
 - Initial build for Sisyphus
