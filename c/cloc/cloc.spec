@@ -1,5 +1,5 @@
 Name:           cloc
-Version:        2.08
+Version:        2.10
 Release:        alt1
 Summary:        Count lines of code
 License:        GPL-2.0+
@@ -56,6 +56,9 @@ make install DESTDIR="%buildroot"
 %_mandir/man1/%name.1*
 
 %changelog
+* Sun Jul 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.10-alt1
+- New version.
+
 * Mon Jan 26 2026 Andrey Cherepanov <cas@altlinux.org> 2.08-alt1
 - New version.
 
