@@ -1,5 +1,5 @@
 Name: bibletime
-Version: 3.0.3
+Version: 3.2.0
 Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
@@ -21,8 +21,9 @@ BuildRequires: cmake libclucene-core-devel libssl-devel
 BuildRequires: libsword-devel >= 1.7
 BuildRequires: librsvg-utils
 
-BuildRequires: qt5-imageformats qt5-svg-devel qt5-tools-devel qt5-webkit-devel
-Requires: qt5-imageformats
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel qt6-declarative-devel
+BuildRequires: qt6-speech-devel qt6-imageformats
+Requires: qt6-imageformats
 
 # for docs
 BuildRequires: po4a xsltproc fop docbook-style-xsl
@@ -65,7 +66,7 @@ rsvg-convert -w 48 -h 48 pics/icons/bibletime.svg -f png -o %buildroot%_liconsdi
 rm -f %buildroot%_iconsdir/%name.svg
 
 %files
-%doc ChangeLog README.md
+%doc README.md
 %_bindir/*
 %_datadir/%name/
 %_desktopdir/*
@@ -74,9 +75,13 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_datadir/metainfo/info.bibletime.BibleTime.metainfo.xml
 
 %files doc
-%_docdir/%name/
+%_docdir/BibleTime/
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0
+- build with Qt6 (port from Qt5)
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
 - new version 3.0.3
 
