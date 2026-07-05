@@ -1,7 +1,7 @@
 %def_with check
 
 Name: gping
-Version: 1.20.2
+Version: 1.20.4
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
@@ -44,6 +44,9 @@ BuildRequires: iputils
 %doc LICENSE
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.20.4-alt1
+- Updated to version 1.20.4.
+
 * Fri Jun 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.20.2-alt1
 - Updated to version 1.20.2.
 
