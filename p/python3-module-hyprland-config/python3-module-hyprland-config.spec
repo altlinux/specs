@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-hyprland-config
-Version: 0.9.5
+Version: 0.9.11
 Release: alt1
 Summary: Round-trip parser and editor for Hyprland configuration files
 License: MIT
@@ -19,7 +19,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-hatchling
 
 %if_with check
@@ -48,6 +49,9 @@ doesn't rewrite the rest of the file.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.11-alt1
+- Updated to version 0.9.11.
+
 * Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.5-alt1
 - Updated to version 0.9.5.
 

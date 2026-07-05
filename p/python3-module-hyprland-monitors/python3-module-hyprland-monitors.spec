@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-hyprland-monitors
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Monitor management utilities for Hyprland
 License: MIT
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-hatchling
 
 %if_with check
@@ -45,6 +46,9 @@ hardware capability detection for Hyprland monitor management.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.0-alt1
+- Updated to version 0.8.0.
+
 * Sun May 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
 - Updated to version 0.7.0.
 
