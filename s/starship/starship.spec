@@ -5,7 +5,7 @@
 %endif
 
 Name: starship
-Version: 1.25.1
+Version: 1.26.0
 Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
@@ -56,6 +56,9 @@ cargo test -- --skip expiration_date_set
 %doc LICENSE
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.26.0-alt1
+- Updated to version 1.26.0.
+
 * Sat Jun 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.25.1-alt1
 - Updated to version 1.25.1.
 
