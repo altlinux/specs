@@ -1,6 +1,6 @@
 Name:    libcpp-hocon
 Version: 0.3.0
-Release: alt2
+Release: alt3
 Summary: A C++ port of the Typesafe Config library
 
 Group:   System/Libraries
@@ -10,6 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: cpp-hocon-%version.tar
 Patch1: libcpp-hocon-shared-library.patch
+Patch2: libcpp-hocon-gcc15.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -37,9 +38,10 @@ Development libraries for cpp-hocon.
 
 %prep
 %setup -n cpp-hocon-%version
-%patch1 -p1
+%autopatch1 -p1
 
 %build
+%add_optflags -Wno-error=deprecated-declarations
 %cmake
 %cmake_build
 
@@ -55,6 +57,9 @@ Development libraries for cpp-hocon.
 %_includedir/hocon
 
 %changelog
+* Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt3
+- FTBFS: fixed build with GCC 15.
+
 * Mon Jul 13 2020 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt2
 - Use boost-locale-devel for building.
 
