@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.4.4
-Release: alt1
+Release: alt2
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -89,7 +89,7 @@ xz -9 NEWS
 %undefine _configure_gettext
 %add_optflags -D_DEFAULT_SOURCE=1
 export ACLOCAL='aclocal -I .'
-%autoreconf
+%autoreconf -I /usr/share/gettext/m4
 %configure \
     --localstatedir=%_var \
     --with-moduledir=%_libdir/%name/modules \
@@ -218,6 +218,9 @@ fi
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Sun Jul 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt2
+- FTBFS: fixed build with new glibc.
+
 * Tue May 12 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt1
 - New version (fixes: CVE-2026-27851, CVE-2026-33603, CVE-2026-40020,
   CVE-2026-42006, CVE-2026-27857, CVE-2026-40016).
