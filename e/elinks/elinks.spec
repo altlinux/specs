@@ -3,21 +3,22 @@
 %def_with doc
 
 Name: elinks
-Version: 0.15.1
-Release: alt2
+Version: 0.19.1
+Release: alt1
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
 Group: Networking/WWW
 
 URL: http://elinks.cz
-# https://github.com/rkd77/elinks
+VCS: https://github.com/rkd77/elinks
+
 Source: %name-%version.tar
 Source1: elinks.conf
+
 Patch0: 0001-Make-gcc-happy.patch
 Patch1: 0002-less-info-in-user-ag-header.patch
-Patch2: 0003-Fix-OpenSSL-1.1-compat.patch
-Patch3: 0004-fix-dereference-error.patch
+#Patch3: 0004-fix-dereference-error.patch
 Patch4: 0006-fix-address-always-true-error.patch
 Patch5: 0007-fix-address-always-true-error.patch
 
@@ -57,8 +58,7 @@ with more open patches/features inclusion policy.
 %setup
 %patch0 -p2
 %patch1 -p2
-%patch2 -p2
-%patch3 -p2
+#%patch3 -p2
 %patch4 -p2
 %patch5 -p2
 
@@ -87,8 +87,7 @@ export ac_cv_prog_HAVE_SMBCLIENT=no
 	--without-idn \
 	--without-lzma \
 	#
-touch src/intl/gettext/plural.y
-make -C src/intl/gettext V=1 plural.c
+make -C src/intl/gettext V=1
 
 %add_optflags -Wno-error=builtin-declaration-mismatch
 %add_optflags -fno-strict-aliasing -Wno-pointer-sign -Werror
@@ -115,6 +114,8 @@ __EOF__
 
 install -pD -m644 %SOURCE1 %buildroot/etc/elinks/elinks.conf
 
+rm -v %buildroot%_datadir/locale/locale.alias
+
 %find_lang elinks
 
 %check
@@ -127,12 +128,16 @@ echo '<html><body>TEST</body></html>' | %buildroot%_bindir/elinks -no-numbering 
 %_man1dir/elinks.*
 %_man5dir/elinks*
 %_altdir/elinks
-%doc AUTHORS COPYING NEWS README THANKS
+%doc AUTHORS COPYING NEWS README.md THANKS
 %if_with doc
 %doc doc/manual.html
 %endif
 
 %changelog
+* Sun Jul 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.19.1-alt1
+- 0.15.1 -> 0.19.1
+- drop old patchs
+
 * Sun May 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15.1-alt2
 - elinks -dump fails without /proc, added /proc requirement.
 - Support build without lua, gmp, and documentation. Useful for bootstrapping.
