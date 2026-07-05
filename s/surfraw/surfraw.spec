@@ -1,12 +1,14 @@
 Name: surfraw
-Version: 2.2.7
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 Summary: Shell Users' Revolutionary Front Rage Against the Web
-License: GPL
+License: Public-domain
 Group: Networking/WWW
-Url: http://surfraw.sourceforge.net/
-Packager: Egor Glukhov <kaman@altlinux.org>
+
+Url: http://surfraw.sourceforge.net
+Vcs: https://gitlab.com/surfraw/Surfraw
+
 BuildArch: noarch
 BuildRequires: perl-Pod-Parser
 Source: %name-%version.tar
@@ -21,6 +23,7 @@ Forsake GUI idolatry! Aposate return!
 %setup
 
 %build
+%autoreconf
 %configure --with-text-browser=links --with-graphical-browser=firefox --with-elvidir=%_datadir/%name
 %make_build
 
@@ -35,6 +38,11 @@ Forsake GUI idolatry! Aposate return!
 %_man1dir/*
 
 %changelog
+* Mon Jul 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt1
+- 2.2.7 -> 2.3.0
+- added VCS
+- changed License
+
 * Tue Nov 16 2010 Egor Glukhov <kaman@altlinux.org> 2.2.7-alt2
 - Rebuilt with perl-Pod-Parser
 
