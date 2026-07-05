@@ -5,7 +5,7 @@
 %endif
 
 Name: ouch
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
@@ -51,6 +51,9 @@ export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_
 %doc README.md LICENSE
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt1
+- Updated to version 0.8.1.
+
 * Fri Jun 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.0-alt1
 - Updated to version 0.8.0.
 
