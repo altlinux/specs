@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: xfr
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
 Summary: A modern iperf3 alternative with a live TUI
 License: MIT or Apache-2.0
@@ -47,6 +47,9 @@ install -Dm 0644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.20-alt1
+- Updated to version 0.9.20.
+
 * Sun Jun 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.19-alt1
 - Updated to version 0.9.19.
 
