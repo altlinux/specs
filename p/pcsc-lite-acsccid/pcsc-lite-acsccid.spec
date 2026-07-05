@@ -2,7 +2,7 @@
 
 Name: pcsc-lite-acsccid
 Version: 1.1.13
-Release: alt2
+Release: alt3
 
 Summary: PCSC Driver for ACS CCID Based Smart Card Readers
 License: LGPLv2.1+
@@ -36,7 +36,8 @@ mkdir config
 cp /usr/share/gettext/config.rpath config
 
 %build
-%autoreconf
+mkdir m4
+%autoreconf -I %_datadir/gettext/m4
 %configure --enable-composite-as-multislot --enable-twinserial
 %make
 
@@ -54,6 +55,9 @@ install -Dp src/92_pcscd_acsccid.rules %buildroot%_udevrulesdir/92_pcscd_acsccid
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Sun Jul 05 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt3
+- FTBFS: fixed build with new glibc.
+
 * Tue Mar 10 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt2
 - Returned pcscd group in udev rules (ALT #58147).
 
