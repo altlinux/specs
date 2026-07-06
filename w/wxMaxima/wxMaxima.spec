@@ -1,6 +1,6 @@
 %undefine __cmake_in_source_build
 Name: wxMaxima
-Version: 26.05.0
+Version: 26.07.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -68,19 +68,19 @@ mkdir -p %buildroot%_datadir/wxmaxima
 
 
 # app icon
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/{scalable,48x48,64x64,128x128}/apps/
-cp -alf \
-  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.svg \
-  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
-cp -alf \
-  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.png \
-  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
-gm convert -resize 64x64 \
-  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
-  %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/io.github.wxmaxima_developers.wxMaxima.png
-gm convert -resize 48x48 \
-  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
-  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/io.github.wxmaxima_developers.wxMaxima.png
+#mkdir -p %{buildroot}%{_datadir}/icons/hicolor/{scalable,48x48,64x64,128x128}/apps/
+#cp -alf \
+#  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.svg \
+#  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
+#cp -alf \
+#  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.png \
+#  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
+#gm convert -resize 64x64 \
+#  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
+#  %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/io.github.wxmaxima_developers.wxMaxima.png
+#gm convert -resize 48x48 \
+#  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
+#  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/io.github.wxmaxima_developers.wxMaxima.png
 
 
 # icons
@@ -91,6 +91,7 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %files -f %name.lang
 %doc AUTHORS.md NEWS.md README.md
 %_bindir/wxmaxima
+%_bindir/wxmxdiff
 %_desktopdir/*%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
@@ -102,13 +103,19 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/mime/packages/x-wxmaxima-batch.xml
 %_docdir/wxmaxima/
 %_man1dir/wxmaxima.1*
+%_man1dir/wxmxdiff.1*
 %_mandir/de/man1/wxmaxima.1*
+%_mandir/de/man1/wxmxdiff.1*
 %_pixmapsdir/*.xpm
 %_pixmapsdir/*.png
 %_pixmapsdir/*.svg
 %_datadir/metainfo/*wxMaxima.appdata.xml
+#_datadir/lintian/overrides/wxmaxima
 
 %changelog
+* Mon Jul 06 2026 Ilya Mashkin <oddity@altlinux.ru> 26.07.0-alt1
+- 26.07.0
+
 * Tue May 05 2026 Ilya Mashkin <oddity@altlinux.ru> 26.05.0-alt1
 - 26.05.0
 
