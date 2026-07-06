@@ -21,7 +21,7 @@
 %define gmic_comm_ver gmic-3.4.3-625-ge81cf39b
 
 Name: gmic
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -228,6 +228,9 @@ popd
 %gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
