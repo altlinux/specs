@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 Summary: Jinxed Terminal Library
 License: MPL-2.0
@@ -48,6 +48,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 06 2026 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.4 -> 2.1.0
+
 * Tue May 26 2026 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
 - updated from 2.0.0 to 2.0.4
 
