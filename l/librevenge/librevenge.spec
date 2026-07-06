@@ -1,11 +1,13 @@
 Name: librevenge
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: A base library for writing document import filters
 Group: System/Libraries
 License: LGPL-2.0-or-later or MPL-2.0
 Url: http://sourceforge.net/p/libwpd/wiki/librevenge/
+
+Vcs: git://git.code.sf.net/p/libwpd/librevenge
 
 Source: %name-%version.tar
 
@@ -25,7 +27,7 @@ presentations.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -71,6 +73,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 %doc docs/doxygen/html
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.0.6-alt1
+- 0.0.6
+
 * Fri Dec 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.5-alt1
 - 0.0.5
 
