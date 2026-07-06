@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -374,6 +374,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Jul 06 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt3
+- indexhtml: fix BaseALT spelling.
+- indexhtml: add MAX channel link.
+- slideshow: fix product name on English installer slides.
+
 * Fri May 15 2026 Semen Fomchenkov <armatik@altlinux.org> 11.2-alt2
 - slideshow: add slide with Max QR code
 
