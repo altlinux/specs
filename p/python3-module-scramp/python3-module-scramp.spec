@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.4.10
+Version: 1.4.12
 Release: alt1
 
 Summary: Python implementation of the SCRAM protocol
@@ -48,6 +48,9 @@ sed -i '9a version = "%version"' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Jul 06 2026 Anton Vyatkin <toni@altlinux.org> 1.4.12-alt1
+- New version 1.4.12.
+
 * Sun Jun 28 2026 Anton Vyatkin <toni@altlinux.org> 1.4.10-alt1
 - New version 1.4.10.
 
