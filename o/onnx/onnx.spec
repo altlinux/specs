@@ -8,7 +8,7 @@
 
 %define abiversion 1
 Name: onnx
-Version: 1.21.0
+Version: 1.22.0
 Release: alt1
 
 Summary: Open standard for machine learning interoperability
@@ -23,7 +23,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires(pre): rpm-build-cmake
-%add_pyproject_deps_build_filter cmake
+%add_pyproject_deps_build_filter ninja
 %add_pyproject_deps_build_filter protobuf
 %pyproject_builddeps_build
 BuildRequires: python3-module-nanobind
@@ -113,6 +113,9 @@ python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 1.22.0-alt1
+- Updated to 1.22.0.
+
 * Mon Mar 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.21.0-alt1
 - Updated to 1.21.0 (fixes GHSA-hqmj-h5c6-369m).
 
