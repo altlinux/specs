@@ -1,221 +1,186 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           jline
-Version:        3.21.0
-Release:        alt3
+Version:        3.23.0
+Release:        alt1
+
 Summary:        Java library for handling console input
-License:        BSD
-URL:            https://github.com/jline/jline3
-BuildArch:      noarch
+License:        BSD-3-Clause
+Group:          Development/Java
+URL:            https://jline.org/
+VCS:            https://github.com/jline/jline3
 
-Source0:        https://github.com/jline/jline3/archive/jline-parent-%{version}.tar.gz
-# Adapt to changed package names in apache-sshd 2.8.0
-Patch0:         %{name}-apache-sshd.patch
+Source0:        %name-%version.tar
 
+Patch0:         0001-load-native-library-fix.patch
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.googlecode.juniversalchardet:juniversalchardet)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.java.dev.jna:jna)
+
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(com.github.albfernandez:juniversalchardet)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.sshd:sshd-core) >= 2.6.0
-BuildRequires:  mvn(org.apache.sshd:sshd-scp) >= 2.6.0
-BuildRequires:  mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-
-%global _desc \
-JLine is a Java library for handling console input.  It is similar in\
-functionality to BSD editline and GNU readline but with additional\
-features that bring it in par with the ZSH line editor.  Those familiar\
-with the readline/editline capabilities for modern shells (such as bash\
-and tcsh) will find most of the command editing features of JLine to be\
-familiar.
-Source44: import.info
 
 %description 
-%_desc
+JLine is a Java library for handling console input. It is similar in
+functionality to BSD editline and GNU readline but with additional features
+that bring it in par with ZSH line editor. People familiar with the
+readline/editline capabilities for modern shells (such as bash and tcsh) will
+find most of the command editing features of JLine to be familiar.
 
-This package contains the parent POM for the jline project
+JLine 3.x is an evolution of JLine 2.x.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for %{name}
-BuildArch: noarch
+%javadoc_package
 
-%description javadoc 
-%_desc
+%package        core
+Summary:        JLine core
+Group:          Development/Java
+BuildArch:      noarch
 
-This package contains the API documentation for %{name}.
-
-%package        terminal
-Group: Development/Java
-Summary:        JLine terminal
-
-%description    terminal 
-%_desc
-
-This package contains the basic terminal support for JLine.
-
-%package        terminal-jansi
-Group: Development/Java
-Summary:        JLine terminal with JANSI
-Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    terminal-jansi 
-%_desc
-
-This package contains a functioning terminal based on JANSI.
-
-%package        terminal-jna
-Group: Development/Java
-Summary:        JLine terminal with JNA
-Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    terminal-jna 
-%_desc
-
-This package contains a functioning terminal based on JNA.
-
-%package        reader
-Group: Development/Java
-Summary:        JLine reader
-Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    reader 
-%_desc
-
-This package supports reading lines from a console with customizable key
-bindings and input editing.
-
-%package        style
-Group: Development/Java
-Summary:        JLine style
-Requires:       %{name}-terminal = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    style 
-%_desc
-
-This package contains a style processor for JLine, which can apply
-colors to strings, for example.
+%description    core
+%summary.
 
 %package        builtins
-Group: Development/Java
 Summary:        JLine builtins
-Requires:       %{name}-reader = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-style = %{?epoch:%epoch:}%{version}-%{release}
-Requires:     mvn(com.googlecode.juniversalchardet:juniversalchardet)
+Group:          Development/Java
+BuildArch:      noarch
 
 %description    builtins 
-%_desc
-
-This package contains keybindings to emulate popular tools such as nano
-and less.
+%summary.
 
 %package        console
-Group: Development/Java
 Summary:        JLine console
-Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
+Group:          Development/Java
+BuildArch:      noarch
 
 %description    console 
-%_desc
+%summary.
 
-This package contains a console with command and script execution
-support, and tab completion.
+%package        native
+Summary:        JLine Native Library
+Group:          Development/Java
+
+%description    native
+%summary.
+
+%package        reader
+Summary:        JLine reader
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    reader 
+%summary.
 
 %package        remote-ssh
-Group: Development/Java
 Summary:        JLine remote SSH
-Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
-Requires:     mvn(org.apache.sshd:sshd-core) >= 2.6.0
-Requires:     mvn(org.apache.sshd:sshd-scp) >= 2.6.0
-Requires:     mvn(org.apache.sshd:sshd-sftp) >= 2.6.0
+Group:          Development/Java
+BuildArch:      noarch
 
-%description    remote-ssh 
-%_desc
-
-This package contains an ssh client.
+%description    remote-ssh
+%summary.
 
 %package        remote-telnet
-Group: Development/Java
 Summary:        JLine remote telnet
-Requires:       %{name}-builtins = %{?epoch:%epoch:}%{version}-%{release}
-Requires:     mvn(org.apache.sshd:sshd-core) >= 2.6.0
+Group:          Development/Java
+BuildArch:      noarch
 
-%description    remote-telnet 
-%_desc
+%description    remote-telnet
+%summary.
 
-This package contains a telnet client.
+%package        style
+Summary:        JLine style
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    style 
+%summary.
+
+%package        terminal
+Summary:        JLine terminal
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    terminal
+%summary.
+
+%package        terminal-jansi
+Summary:        JLine terminal with JANSI
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    terminal-jansi 
+%summary.
+
+%package        terminal-jna
+Summary:        JLine terminal with JNA
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    terminal-jna 
+%summary.
 
 %prep
-%setup -q -n jline3-jline-parent-%{version}
-# @viy: tmp til apache-ssh update
-%patch0
+%setup
+%autopatch -p1
 
+rm -r native/src/main/resources/org/jline/nativ/*/
 
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
-
-# We don't need the bundle
-%pom_disable_module jline
-
-# Missing dependencies in Fedora
-%pom_disable_module demo
-%pom_disable_module groovy
-%pom_disable_module graal
-%pom_remove_plugin :gmavenplus-plugin
-%pom_remove_dep :graal-sdk
-
-# Unnecessary plugins for an rpm build
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :maven-release-plugin
-%pom_remove_plugin :native-image-maven-plugin
+%pom_remove_plugin :spotless-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+%pom_remove_plugin :exec-maven-plugin native
+%pom_remove_dep :picocli-codegen native
+
+# fails
+rm terminal-jna/src/test/java/org/jline/terminal/impl/jna/JnaNativePtyTest.java
+
+%pom_disable_module groovy
+%pom_disable_module demo
+%pom_disable_module graal
+
+%mvn_package :%name-parent __noinstall
 
 %build
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# Build a native object
+%add_optflags -Wall -fPIC -fvisibility=hidden -shared 
+%add_optflags -I native/src/main/native 
+%add_optflags -I %_jvmdir/jre/include
+%add_optflags -I %_jvmdir/jre/include/linux %{?__global_ldflags}
+
+gcc %optflags -o libjlinenative.so native/src/main/native/jlinenative.c
+
+%mvn_build -s -- -Dlibrary.jline.path=$PWD
 
 %install
 %mvn_install
+install -d -m 755 %buildroot%_libdir/%name
+install -p -m 755 libjlinenative.so %buildroot%_libdir/%name/
 
-%files -f .mfiles-jline-parent
-%doc changelog.md README.md
-%doc --no-dereference LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc changelog.md README.md
-%doc --no-dereference LICENSE.txt
-
-%files terminal -f .mfiles-jline-terminal
-%doc changelog.md README.md
-%doc --no-dereference LICENSE.txt
-
-%files terminal-jansi -f .mfiles-jline-terminal-jansi
-
-%files terminal-jna -f .mfiles-jline-terminal-jna
-
-%files reader -f .mfiles-jline-reader
-
-%files style -f .mfiles-jline-style
+%files core -f .mfiles-jline
+%doc LICENSE.txt *.md
 
 %files builtins -f .mfiles-jline-builtins
-
 %files console -f .mfiles-jline-console
+%files native -f .mfiles-jline-native
+%_libdir/%name/libjlinenative.so
 
+%files reader -f .mfiles-jline-reader
 %files remote-ssh -f .mfiles-jline-remote-ssh
-
 %files remote-telnet -f .mfiles-jline-remote-telnet
+%files style -f .mfiles-jline-style
+%files terminal -f .mfiles-jline-terminal
+%files terminal-jansi -f .mfiles-jline-terminal-jansi
+%files terminal-jna -f .mfiles-jline-terminal-jna
 
 %changelog
+* Thu Jul 02 2026 Evgeniy Serov <scala@altlinux.org> 3.23.0-alt1
+- Updated to 3.23.0 (ty nash@).
+
 * Mon Apr 20 2026 Anton Meleshnikov <alton@altlinux.org> 0:3.21.0-alt3
 - fixed FTBFS: add necessary BuildRequires
 
