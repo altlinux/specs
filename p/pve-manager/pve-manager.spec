@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -175,6 +175,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Mon Jul 06 2026 Sergey Konev <darisishe@altlinux.org> 9.2.3-alt2
+- ceph: merge daemon metadata for FQDN hostnames
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.2.3-alt1
 - 9.2.3
 
