@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: zoxide
-Version: 0.9.9
+Version: 0.10.0
 Release: alt1
 
 Summary:  A smarter cd command. Supports all major shells.
@@ -71,6 +71,9 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Mon Jul 06 2026 Egor Ignatov <egori@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 0.9.9-alt1
 - New version 0.9.9.
 
