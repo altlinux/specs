@@ -31,7 +31,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: Firmware update daemon
@@ -178,6 +178,7 @@ might have mobile broadband hardware. It is probably not required on servers.
     -Dtests=false \
 %endif
     -Dplugin_modem_manager=enabled \
+    -Defi_app_location=%_libdir/efi \
     -Dbluez=enabled
 
 %meson_build
@@ -266,8 +267,6 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 %_sysusersdir/fwupd.conf
 
-%ghost %_localstatedir/fwupd
-
 %files -n libfwupd%sover
 %_libdir/libfwupd.so.%{sover}*
 
@@ -295,6 +294,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Wed Jul 01 2026 Egor Ignatov <egori@altlinux.org> 2.1.6-alt1
+- New version 2.1.6.
+
 * Wed Jun 10 2026 Egor Ignatov <egori@altlinux.org> 2.1.5-alt1
 - New version 2.1.5.
 
