@@ -1,12 +1,16 @@
 
 Name: libcdr
-Version: 0.1.7
+Version: 0.1.9
 Release: alt1
+
 Summary: A library providing ability to interpret and import Corel Draw drawings
-Group: System/Libraries
 License: MPL-2.0
-URL: http://www.freedesktop.org/wiki/Software/libcdr
+Group: System/Libraries
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libcdr
 Source: %name-%version.tar
+
+# https://git.libreoffice.org/libcdr
+Vcs: https://github.com/LibreOffice/libcdr.git
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1 pkgconfig(librevenge-generators-0.0) pkgconfig(librevenge-stream-0.0)
@@ -25,7 +29,7 @@ libreoffice.
 %package devel
 Summary: Development files for %{name}
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -42,7 +46,7 @@ The %name-doc package contains documentation files for %name.
 %package tools
 Summary: Tools to transform Corel Draw drawings into other formats
 Group: Publishing
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 Tools to transform Corel Draw drawings into other formats.
@@ -81,6 +85,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
+- 0.1.9
+
 * Tue May 18 2021 Alexey Shabalin <shaba@altlinux.org> 0.1.7-alt1
 - new version 0.1.7
 
