@@ -1,6 +1,6 @@
 Name: smcroute
-Version: 2.5.7
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: Static Multicast Routing Daemon
 License: GPLv2
@@ -21,6 +21,7 @@ should be maintained and/or no proper IGMP signaling exists.
 
 %prep
 %setup
+sed -i s,/default/,/sysconfig/, smcroute.service.in
 
 %build
 %autoreconf
@@ -30,7 +31,9 @@ should be maintained and/or no proper IGMP signaling exists.
 %install
 %makeinstall_std
 install -pm0755 -D smcroute.init %buildroot%_initdir/smcroute
+mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/smcroute.conf
+touch %buildroot%_sysconfdir/sysconfig/smcroute
 
 %post
 %post_service %name
@@ -38,15 +41,13 @@ touch %buildroot%_sysconfdir/smcroute.conf
 %preun
 %preun_service %name
 
-%define _systemunitdir %(pkg-config --variable systemdsystemunitdir systemd)
-
 %files
 %doc %docdir
 %config(noreplace) %_sysconfdir/smcroute.conf
+%ghost %config(noreplace) %_sysconfdir/sysconfig/smcroute
 %_initdir/smcroute
-%_systemunitdir/smcroute.service
+%_unitdir/smcroute.service
 
-%_sbindir/smcroute
 %_sbindir/smcrouted
 %_sbindir/smcroutectl
 
@@ -55,6 +56,9 @@ touch %buildroot%_sysconfdir/smcroute.conf
 %_man8dir/smcroutectl.*
 
 %changelog
+* Mon Jul 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.0-alt1
+- 2.6.0 released
+
 * Fri May 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.7-alt2
 - rebuilt with usrmerged paths
 
