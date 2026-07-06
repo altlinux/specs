@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	595.80
+%define package_version	595.84
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -325,6 +325,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 06 2026 Sergey V Turchin <zerg at altlinux dot org> 595.84-alt1
+- new version (595.84)
 
 * Tue Jun 09 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-alt2
 - new version (580.159.04)

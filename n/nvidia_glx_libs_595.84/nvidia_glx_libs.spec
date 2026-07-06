@@ -19,7 +19,7 @@
 %endif
 
 %define nv_version 595
-%define nv_release 80
+%define nv_release 84
 %define nv_minor   %nil
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
@@ -274,6 +274,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Mon Jul 06 2026 Sergey V Turchin <zerg@altlinux.org> 595.84-alt1
+- new version
+
 * Tue Jun 02 2026 Sergey V Turchin <zerg@altlinux.org> 595.80-alt1
 - new version
 - return libcuda.so
