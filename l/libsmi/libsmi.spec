@@ -7,12 +7,12 @@
 
 Name: libsmi
 Version: 0.5.0
-Release: alt3
+Release: alt4
 
 Summary: A library to access SMI MIB information
 License: BSD
 Group: System/Libraries
-URL: http://www.ibr.cs.tu-bs.de/projects/libsmi/index.html
+URL: https://www.ibr.cs.tu-bs.de/projects/libsmi/index.html
 
 Vcs: https://gitlab.ibr.cs.tu-bs.de/nm/libsmi.git
 Source0: %name-%version.tar
@@ -145,6 +145,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/smi.conf
 %_man1dir/*
 
 %changelog
+* Mon Jul 06 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt4
+- Fixed build with GCC 15
+
 * Mon Dec 23 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt3
 - Add patches from fedora
 - Fixed requires sh and bash
