@@ -1,12 +1,13 @@
 Name: amneziawg-tools
 Version: 1.0.20260618
-Release: alt2
+Release: alt3
 Summary: Fast, modern, secure VPN tunnel
 License: GPLv2
 Group: System/Servers
 URL: https://github.com/amnezia-vpn/amneziawg-tools
 VCS: https://github.com/amnezia-vpn/amneziawg-tools
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: systemd
 
 %description
@@ -23,6 +24,7 @@ and interacting with AmneziaWG.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make_build RUNSTATEDIR=/run -C src
@@ -52,6 +54,9 @@ and interacting with AmneziaWG.
 %_mandir/man8/awg-quick.8*
 
 %changelog
+* Mon Jul 06 2026 Anton Farygin <rider@altlinux.org> 1.0.20260618-alt3
+- fixed update to 1.0.20260618-2
+
 * Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 1.0.20260618-alt2
 - 1.0.20260618 -> 1.0.20260618-2
 
