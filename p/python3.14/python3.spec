@@ -105,7 +105,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.5
+Version: %{pybasever}.6
 Release: alt1
 
 %if 0%{?_python3_standalone:1}
@@ -147,7 +147,6 @@ BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %add_python3_path %pylibdir
 #Do not recompile .py files with old python3
 %add_python3_compile_exclude %pylibdir
-%filter_from_requires /gdb/d
 Obsoletes: %name-module-gdb_libpython
 Provides: %name-module-gdb_libpython
 
@@ -1227,6 +1226,10 @@ python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRock
 %endif
 
 %changelog
+* Sat Jul 04 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.6-alt1
+- Update to upstream 3.14.6.
+- Brought back runtime dependency on gdbm (thx to @grenka).
+
 * Thu May 28 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.5-alt1
 - Updated to upstream 3.14.15
 
