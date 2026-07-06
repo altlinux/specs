@@ -3,9 +3,8 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.6
-Release: alt1.1
-
+Version: 2.0
+Release: alt1
 Summary: Lazy attributes for Python objects
 License: BSD
 Group: Development/Python3
@@ -13,11 +12,15 @@ Url: https://pypi.org/project/lazy/
 Vcs: https://github.com/stefanholek/lazy
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 Lazy attributes are computed attributes that are evaluated only once,
@@ -33,9 +36,11 @@ endless.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%pyproject_build
+%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
 
 %install
 %pyproject_install
@@ -44,13 +49,12 @@ endless.
 %pyproject_run_unittest discover
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.6-alt1.1
-- Demodernized packaging.
+* Mon Jul 06 2026 Stanislav Levin <slev@altlinux.org> 2.0-alt1
+- 1.6 -> 2.0
 
 * Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 1.6-alt1
 - 1.3 -> 1.6.
