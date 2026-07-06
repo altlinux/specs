@@ -1,10 +1,10 @@
-%define version 1.0
-%global namedreltag  -alpha-8
+%define version 1.0.0
+%global namedreltag  %nil
 %global namedversion %version%namedreltag
 
 Name:           maven-native
-Version:        1.0
-Release:        alt3
+Version:        1.0.0
+Release:        alt4
 
 Summary:        Compile c and c++ source under Maven
 License:        Apache-2.0 and MIT
@@ -23,6 +23,7 @@ BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(commons-lang:commons-lang)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(bcel:bcel)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 
 BuildArch:      noarch
 
@@ -55,14 +56,11 @@ for d in LICENSE ; do
   sed -i 's/\r//' $d.txt
 done
 
-# use jvm apis
-%pom_remove_dep backport-util-concurrent:backport-util-concurrent
-%pom_remove_dep backport-util-concurrent:backport-util-concurrent maven-native-api
-sed -i "s|edu.emory.mathcs.backport.java.util.concurrent|java.util.concurrent|" \
- maven-native-api/src/main/java/org/codehaus/mojo/natives/compiler/AbstractCompiler.java
+%pom_remove_plugin com.github.ekryd.sortpom:sortpom-maven-plugin
 
-sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
-%pom_remove_dep :maven-project native-maven-plugin
+%pom_remove_dep org.codehaus.mojo.natives:maven-native-mingw
+%pom_remove_dep org.codehaus.mojo.natives:maven-native-mingw native-maven-plugin
+
 %pom_add_dep org.apache.maven:maven-compat native-maven-plugin
 %pom_add_dep org.apache.maven:maven-core native-maven-plugin
 
@@ -107,6 +105,9 @@ sed -i 's|<artifactId>maven-project|<artifactId>maven-compat|' pom.xml
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 06 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.0-alt4
+- Update to 1.0.0 release.
+
 * Mon Mar 30 2026 Evgeniy Serov <scala@altlinux.org> 1.0-alt3
 - Fix build with new sisu and plexus-containers.
 
