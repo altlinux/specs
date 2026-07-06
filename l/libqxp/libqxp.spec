@@ -1,17 +1,19 @@
 Name: libqxp
-Version: 0.0.1
-Release: alt2
+Version: 0.0.3
+Release: alt1
+
 Summary: Library for import of QuarkXPress documents
-Group:	Development/C++
+Group: System/Libraries
+License: MPL-2.0
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libqxp
 
-License: MPLv2.0
-Url: http://wiki.documentfoundation.org/DLP/Libraries/libqxp
-Source: http://dev-www.libreoffice.org/src/%name/%name-%version.tar.xz
+Vcs: git://gerrit.libreoffice.org/libqxp
 
-BuildRequires: cppunit-devel help2man
-# Automatically added by buildreq on Mon Feb 19 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel pkg-config python-base python-modules python3 python3-base xz
-BuildRequires: boost-devel-headers doxygen gcc-c++ libicu-devel librevenge-devel python3-dev
+Source: https://dev-www.libreoffice.org/src/%name/%name-%version.tar.xz
+
+BuildRequires: gcc-c++ cppunit-devel help2man
+BuildRequires: libicu-devel librevenge-devel
+BuildRequires: boost-devel-headers doxygen
 
 %description
 libqxp is library providing ability to interpret and import QuarkXPress
@@ -20,8 +22,8 @@ QuarkXPress 3.1-4.1.
 
 %package devel
 Summary: Development files for %name
-Requires: %name = %version-%release
-Group:	Development/C++
+Requires: %name = %EVR
+Group: Development/C++
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -30,16 +32,15 @@ developing applications that use %name.
 %package doc
 Summary: Documentation of %name API
 BuildArch: noarch
-Group:	Development/C++
+Group: Development/C++
 
 %description doc
 The %name-doc package contains documentation files for %name.
 
 %package tools
 Summary: Tools to transform QuarkXPress documents into other formats
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Group: Office
-
 
 %description tools
 Tools to transform QuarkXPress documents into other formats.
@@ -49,6 +50,7 @@ Currently supported: SVG, plain text, raw.
 %setup
 
 %build
+%autoreconf
 %configure --disable-silent-rules --disable-static
 %make_build
 
@@ -60,23 +62,24 @@ for tool in raw svg text; do
 done
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 rm -f %buildroot/%_libdir/*.la
 # we install API docs directly from build
 rm -rf %buildroot/%_docdir/%name
 
-install -m 0755 -d %buildroot/%_mandir/man1
-install -m 0644 qxp2*.1 %buildroot/%_mandir/man1
+install -m 0755 -d %buildroot/%_man1dir/
+install -m 0644 qxp2*.1 %buildroot/%_man1dir/
 
 %check
-LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} make check
+LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} \
+%make -k check VERBOSE=1
 
 %files
 %doc AUTHORS NEWS README
 %_libdir/%{name}*.so.*
 
 %files devel
-%doc ChangeLog
+%doc ChangeLog NEWS
 %_includedir/%{name}*
 %_libdir/%{name}*.so
 %_libdir/pkgconfig/%{name}*.pc
@@ -93,6 +96,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} make 
 %_mandir/man1/qxp2text.1*
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Mon Feb 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.1-alt2
 - drop libquadmath from BR, not really needed
 
