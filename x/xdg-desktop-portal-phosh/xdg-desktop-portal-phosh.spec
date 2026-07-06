@@ -16,7 +16,7 @@
 %def_disable bootstrap
 
 Name: xdg-desktop-portal-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Phosh Desktop Portal
@@ -100,6 +100,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %exclude %_datadir/locale/*/*/pfs.mo
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
+- 0.56.1
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - 0.56.0
 
