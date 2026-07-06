@@ -2,14 +2,14 @@
 
 Name: jsvg
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Java SVG renderer
 Group: Development/Java
 License: MIT
 Url: https://github.com/weisJ/jsvg
 Vcs: https://github.com/weisJ/jsvg
-BuildArch: noarch
+ExclusiveArch: %java_arches
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt-patch.patch
@@ -48,5 +48,8 @@ less memory than svgSalamander and ~98%% less than Batik.
 %files -f .mfiles
 
 %changelog
+* Mon Jul 06 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt2
+- Build only for %%java_arches.
+
 * Tue Apr 14 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt1
 - Initial build for ALT.

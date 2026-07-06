@@ -2,21 +2,21 @@
 
 Name: flatlaf
 Version: 3.7.1
-Release: alt2
+Release: alt3
 
 Summary: Flat Look and Feel
 Group: Development/Java
 License: Apache-2.0
 Url: https://www.formdev.com/flatlaf/
 Vcs: https://github.com/JFormDesigner/FlatLaf
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: %java_arches
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11-compat
 BuildRequires: gcc-c++
 BuildRequires: xgradle
 BuildRequires: libgtk+3-devel
@@ -127,6 +127,10 @@ gradle :flatlaf-natives-linux:build-natives -Prelease -Dtoolchain=11 -Ddisable.x
 %files intellij-themes -f .mfiles-flatlaf-intellij-themes
 
 %changelog
+* Mon Jul 06 2026 Arseniy Kostevich <faux@altlinux.org> 3.7.1-alt3
+- Fixed ftbfs: changed jpackage-default jpackage-11-compat.
+- Build only for %%java_arches.
+
 * Fri Apr 24 2026 Arseniy Kostevich <faux@altlinux.org> 3.7.1-alt2
 - Add core symlink to javadir.
 
