@@ -1,13 +1,14 @@
-
 Name: libmspub
-Version: 0.1.4
-Release: alt2
+Version: 0.1.5
+Release: alt1
+
 Summary: A library providing ability to interpret and import Microsoft Publisher files
-Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
+Group: System/Libraries
 Url: https://wiki.documentfoundation.org/DLP/Libraries/libmspub
 Source: %name-%version.tar
-Patch: gcc10.patch
+
+Vcs: https://github.com/LibreOffice/libmspub.git
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1 pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
@@ -26,7 +27,7 @@ in libreoffice.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -43,7 +44,7 @@ The %name-doc package contains documentation files for %name.
 %package tools
 Summary: Tools to transform Microsoft Publisher files into other formats
 Group: Publishing
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 Tools to transform Microsoft Publisher files into other formats.
@@ -51,7 +52,6 @@ Currently supported: XHTML, raw.
 
 %prep
 %setup
-%patch -p1
 
 %build
 mkdir -p m4
@@ -61,6 +61,9 @@ mkdir -p m4
 
 %install
 %makeinstall_std
+
+%check
+%make -k check VERBOSE=1
 
 %files
 %doc AUTHORS COPYING.*
@@ -80,6 +83,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
+- 0.1.5
+
 * Mon Apr 05 2021 Alexey Shabalin <shaba@altlinux.org> 0.1.4-alt2
 - Fix missing include for gcc-10
 
