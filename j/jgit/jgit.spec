@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global gittag 5.11.0.202103091610-r
 
 Name:           jgit
 Version:        5.11.0
-Release:        alt2
+Release:        alt3
 Summary:        A pure java implementation of git
 
 # We don't ship the EPL-licensed Eclipse features in this package
@@ -43,7 +43,11 @@ BuildRequires:  mvn(org.bouncycastle:bcpg-jdk15on) >= 1.65
 BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.65
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on) >= 1.65
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-util:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-http:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-io:9.4)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
@@ -77,6 +81,9 @@ BuildArch: noarch
 
 # Disable multithreaded build
 rm .mvn/maven.config
+
+# Use packaged Jetty 9 compat artifacts
+%pom_xpath_set "pom:properties/pom:jetty-version" "9.4"
 
 # Disable "errorprone" compiler that is not available in distro
 %pom_xpath_remove "pom:configuration/pom:annotationProcessorPaths"
@@ -149,6 +156,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jul 02 2026 Evgeniy Serov <scala@altlinux.org> 5.11.0-alt3
+- Fixed FTBFS: use Jetty 9 compat artifacts.
+
 * Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.11.0-alt2
 - fixed FTBFS (thx openSUSE Tumbleweed):
   + added patch to fix BouncyCastle-based GPG support
