@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.19.7
+Version: 0.19.8
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -16,10 +16,11 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://launchpad.net/%_name
 
+Vcs: https://github.com/martinpitt/umockdev.git
+
 %if_disabled snapshot
 Source: https://github.com/martinpitt/%_name/releases/download/%version/%_name-%version.tar.xz
 %else
-Vcs: https://github.com/martinpitt/umockdev.git
 Source: %_name-%version.tar
 %endif
 
@@ -130,6 +131,9 @@ export PATH=/sbin:$PATH
 %_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.8-alt1
+- 0.19.8
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.7-alt1
 - 0.19.7
 
