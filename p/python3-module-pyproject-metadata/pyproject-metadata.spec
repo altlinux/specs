@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
+Version: 0.12.1
 Release: alt1
 Summary: PEP 621 metadata parsing
 License: MIT
@@ -57,6 +57,9 @@ file (e.g. PKG-INFO).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 06 2026 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
+- 0.11.0 -> 0.12.1
+
 * Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
 - 0.10.0 -> 0.11.0.
 
