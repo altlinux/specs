@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.9a
-Release:      alt1
+Release:      alt2
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -58,6 +58,7 @@ XFig documentation
 %patch3 -p2
 
 %build
+%add_optflags -std=gnu99
 %autoreconf
 %configure --with-appdefaultdir=%_x11appconfdir
 %make
@@ -90,6 +91,9 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Mon Jul 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.2.9a-alt2
+- NMU: fixed FTBFS (add_optflags -std=gnu99).
+
 * Wed Jan 01 2025 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9a-alt1
 - 3.2.9a
 
