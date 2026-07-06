@@ -1,25 +1,23 @@
-%def_disable snapshot
+%def_enable snapshot
 %define pypi_name pyxdg
 %def_enable check
 
 Name: python3-module-%pypi_name
 Version: 0.28
-Release: alt1.2
+Release: alt2
 
 Summary: Implementations of freedesktop.org standards in Python 3
 License: LGPL-2.0
 Group: Development/Python3
 Url: http://freedesktop.org/Software/pyxdg
-Packager: Python Development Team <python@packages.altlinux.org>
+
+Vcs: https://gitlab.freedesktop.org/xdg/pyxdg.git
 
 %if_disabled snapshot
-Vcs: https://github.com/takluyver/pyxdg.git
 Source: https://github.com/takluyver/pyxdg/archive/rel-%version/%pypi_name-%version.tar.gz
 %else
-Vcs: https://gitlab.freedesktop.org/xdg/pyxdg.git
 Source: %pypi_name-%version.tar
 %endif
-
 BuildArch: noarch
 
 Requires: shared-mime-info
@@ -27,13 +25,16 @@ Provides: %pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: python3(pytest) python3(imp) shared-mime-info}
+%{?_enable_check:BuildRequires: python3(pytest) python3(imp) shared-mime-info icon-theme-hicolor}
 
 %description
 PyXDG contains implementations of freedesktop.org standards in Python 3.
 
 %prep
 %setup -n %pypi_name%{?_disable_snapshot:-rel}-%version
+
+# since 2.5.1 text/x-cython separated from x-python and not executable
+sed -i '/app_executable/s/^/#/' test/test_mime.py
 
 %build
 %pyproject_build
@@ -42,7 +43,7 @@ PyXDG contains implementations of freedesktop.org standards in Python 3.
 %pyproject_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir py.test-3
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/xdg/
@@ -51,6 +52,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test-3
 
 
 %changelog
+* Sat Jul 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.28-alt2
+- updated to rel-0.28-3-g63033ac
+
 * Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.28-alt1.2
 - updated BR
 
