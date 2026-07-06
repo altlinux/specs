@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lite-xl-plugin-manager
-Version: 1.4.0
+Version: 1.4.7
 Release: alt1
 
 Summary: A lite-xl plugin manager
@@ -60,6 +60,9 @@ Conforms to SCPS3.
 %_datadir/lite-xl/plugins/plugin_manager/
 
 %changelog
+* Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4.7-alt1
+- Updated to 1.4.7.
+
 * Wed Feb 19 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
@@ -71,4 +74,3 @@ Conforms to SCPS3.
 
 * Mon Apr 22 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.9-alt1
 - Built for ALT Sisyphus (closes: #50115).
-
