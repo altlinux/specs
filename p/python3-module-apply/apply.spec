@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7
+Version: 2.0
 Release: alt1
 
 Summary: An apply function for Python 2 and 3.
@@ -43,6 +43,9 @@ sed -i '/^tag_build =.*/d' setup.cfg
 
 
 %changelog
+* Mon Jul 06 2026 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
+- New version 2.0.
+
 * Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 1.7-alt1
 - New version 1.7.
 
