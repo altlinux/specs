@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-chksum
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: ALT distro checksum downloader
@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: shellcheck
 BuildArch: noarch
 
-Requires: verify-checksums >= 1.0.11
+Requires: verify-checksums >= 1.0.19
 
 %description
 Provides 'alt-chksum' command to download and verify the ALT checksum
@@ -38,6 +38,16 @@ shellcheck %name
 %_bindir/%name
 
 %changelog
+* Mon Jul 06 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt1
+- Require verify-checksums >= 1.0.19.
+- Call verify-checksums with --dir and --list for each branch.
+- Validate branches before calling verify-checksums.
+- New and updated GPG trusted keys (Fixes: OVE-20260706-0002).
+- Added ALT SP Bot public key.
+- Updated manowar@ public key.
+- Updated checksumbot's public key.
+- Fix: Run git init with advice.defaultBranchName=false.
+
 * Mon Nov 17 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
 - Notify the users about new security updates (Fixes: OVE-20251117-0001).
 - Display EOL.txt on validate if it exists.

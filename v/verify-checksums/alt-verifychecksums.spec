@@ -3,7 +3,7 @@
 
 Packager: Egor Boyko <nit@altlinux.org>
 Name:     verify-checksums
-Version:  1.0.18
+Version:  1.0.19
 Release:  alt1
 Summary: A utility for verify checksums in files
 License: GPL-2.0-only
@@ -31,6 +31,7 @@ Reads files containing hashes of rpm files and checks them.
 %setup
 
 %build
+%make_build
 %pyproject_build
 
 %install
@@ -48,6 +49,12 @@ Reads files containing hashes of rpm files and checks them.
 %doc README.md
 
 %changelog
+* Thu Jun 25 2026 Paul Wolneykien <manowar@altlinux.org> 1.0.19-alt1
+- Added --version option.
+- Fix: Updated translations.
+- Make '--list' an optional argument.
+- Rename option '--R' to '-R'.
+
 * Tue Jun 23 2026 Paul Wolneykien <manowar@altlinux.org> 1.0.18-alt1
 - Version 1.0.18.
 - Fix: Update locales (thx Egor Boyko).
