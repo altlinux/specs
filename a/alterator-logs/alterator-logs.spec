@@ -1,6 +1,6 @@
 Name: alterator-logs
-Version: 0.9.4
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: Alterator module for system logs
 License: GPL
@@ -26,6 +26,7 @@ BuildRequires: guile20-devel libguile20-devel
 BuildRequires: guile22-devel
 %endif
 BuildRequires: alterator-fbi
+BuildRequires: qt6-tools
 
 %description
 System logs alterator module.
@@ -35,6 +36,7 @@ System logs alterator module.
 
 %build
 %make_build
+lrelease-qt6 alterator-framework/ts/logs_ru.ts
 
 %install
 %makeinstall
@@ -44,11 +46,21 @@ System logs alterator module.
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/*
 %_sysconfdir/alterator/logs
+%_datadir/alterator/backends/logs.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.logs.policy
+%dir %_datadir/alterator-framework/modules/logs
+%_datadir/alterator-framework/modules/logs/manifest.json
+%_datadir/alterator-framework/modules/logs/main.qml
+%dir %_datadir/alterator-framework/modules/logs/ts
+%_datadir/alterator-framework/modules/logs/ts/logs_ru.qm
 
 %post
 touch /var/log/journald
 
 %changelog
+* Wed Jul 01 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.9.5-alt1
+- add alterator-framework UI support (thx Oleg Chagaev)
+
 * Mon Apr 01 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt2
 - require jq
 
