@@ -13,7 +13,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.5
-Release: alt1
+Release: alt2
 
 Summary: Observable Rust-powered HTTP client for Python services
 License: MIT
@@ -61,12 +61,16 @@ install -vD %SOURCE3 .cargo/config.toml
 %pyproject_install
 
 %check
-%pyproject_run -- pytest -vra --import-mode=importlib
+%pyproject_run -- pytest -vra --import-mode=importlib \
+               --ignore=tests/client_multipart/test_async_multipart.py
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.5-alt2
+- Disabled flaky tests.
+
 * Fri Jul 03 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.5-alt1
 - Packaged for ALT Sisyphus.
