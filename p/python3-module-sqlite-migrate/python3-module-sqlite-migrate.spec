@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name sqlite-migrate
-%define pypi_nname sqlite-migrate
 %define mod_name sqlite_migrate
 
 %def_with check
 
-Name: python3-module-%pypi_nname
-Version: 0.1b0
-Release: alt1.7.g2dc1485
+Name: python3-module-%pypi_name
+Version: 0.1b1
+Release: alt1
 
 Summary: A simple database migration system for SQLite, based on sqlite-utils
 License: Apache-2.0
@@ -52,7 +51,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1b1-alt1
+- Updated to 0.1b1.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1b0-alt1.7.g2dc1485
 - Built for ALT Sisyphus.
-
-

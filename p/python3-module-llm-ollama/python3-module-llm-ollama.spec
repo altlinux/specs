@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
+Version: 0.16.1
 Release: alt1
 
 Summary:  LLM plugin providing access to models running on an Ollama server
@@ -52,6 +52,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.16.1-alt1
+- Updated to 0.16.1.
+
 * Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.1-alt1
 - Updated to 0.15.1.
 
