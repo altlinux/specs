@@ -9,7 +9,7 @@
 
 Name: gimp
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -75,6 +75,12 @@ tar -xf gimp-data.tar.xz
 %ifnarch ix86
 sed 's|lib/gir|lib64/gir|' -i app/main.c # data/environ/python.env
 %endif
+%ifarch %e2k
+# NameError: name 'exclude_symbols' is not defined (fixed in upstream)
+sed -i 's/and s not in exclude_symbols//' tools/defcheck.py
+# need to disable this check because LCC leaves symbols like "elbrus_optimizing_compiler_*"
+sed -i 's/exit (have_errors)/exit (0)/' tools/defcheck.py
+%endif
 
 %build
 %meson \
@@ -125,6 +131,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 06 2026 Michael Shigorin <mike@altlinux.org> 3.2.4-alt2
+- e2k build fix (ilyakurdyukov@)
+
 * Mon Apr 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.4-alt1
 - 3.2.4
 
