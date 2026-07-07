@@ -8,12 +8,12 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	595.58.03
+%define package_version	595.84
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		talos
 %define karch x86_64 aarch64
 
@@ -26,7 +26,7 @@
 
 %define legacy8 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy8 580.142
+%define legacy8 580.159.04
 %endif
 %define legacy8_src %(echo %legacy8 | tr -d .)
 
@@ -97,7 +97,7 @@
 %define module_ext .o
 %endif
 
-Summary:	nVidia video card drivers
+Summary:	NVIDIA video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%package_version
 Release:	%module_release.%kcode.%kbuildrelease
@@ -119,6 +119,9 @@ BuildRequires: kernel-source-%module_name-open-%module_srcver
 %endif
 %if "%legacy8" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy8_src
+%ifnarch %ix86 armh
+BuildRequires: kernel-source-%module_name-open-%legacy8_src
+%endif
 %endif
 %if "%legacy7" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy7_src
@@ -177,8 +180,7 @@ Requires:       nvidia_glx_%legacy1
 %endif
 
 %description
-nVidia video card drivers that provide 3d and 2d graphics support for XFree86
-Xserver.
+NVIDIA video card drivers that provide 3d and 2d graphics support.
 
 
 %prep
@@ -273,11 +275,11 @@ ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%peermemmodule_name
-ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
-ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%module_version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
-ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%module_version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
-ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
-ln -s `relative %module_local_dir/peermem-%kversion-%flavour-%krelease-%module_version     %module_dir/%peermemmodule_name%module_ext` %buildroot/%module_dir/%peermemmodule_name%module_ext
+ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%{module_version}_open         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
+ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%{module_version}_open %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
+ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%{module_version}_open %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
+ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%{module_version}_open     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
+ln -s `relative %module_local_dir/peermem-%kversion-%flavour-%krelease-%{module_version}_open     %module_dir/%peermemmodule_name%module_ext` %buildroot/%module_dir/%peermemmodule_name%module_ext
 
 
 %post
@@ -323,6 +325,24 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 06 2026 Sergey V Turchin <zerg at altlinux dot org> 595.84-alt1
+- new version (595.84)
+
+* Tue Jun 09 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-alt2
+- new version (580.159.04)
+
+* Tue Jun 02 2026 Sergey V Turchin <zerg at altlinux dot org> 595.80-alt1
+- new version (595.80)
+
+* Tue May 12 2026 Sergey V Turchin <zerg at altlinux dot org> 595.71.05-alt1
+- new version (595.71.05)
+
+* Tue May 05 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt3
+- using open kernel module by default
+
+* Thu Apr 30 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt2
+- fix to build closed module for 580.142
 
 * Thu Apr 16 2026 Sergey V Turchin <zerg at altlinux dot org> 595.58.03-alt1
 - new release (595.58.03)
