@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.23.3
+Version: 0.24.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -44,6 +44,7 @@ Requires: libsasl2
 Requires: libsasl2-plugin-gssapi
 Requires: ad-integration-themes >= 3.0
 Requires: qt6-svg
+Requires: qt6-translations
 
 Source0: %name-%version.tar
 
@@ -125,6 +126,21 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Jul 01 2026 Semyon Knyazev <samael@altlinux.org> 0.24.0-alt1
+- "Delete subtree" permission is no longer required to delete an object
+  subtree (if the required permissions are granted).
+- Added group class selection to the OU "Managed By" properties tab when
+  assigning a manager (the "Change" button).
+- Added logon computer selection to the user account tab.
+- Fixed a connection error window appearing on startup when the
+  "Show login window on startup" setting is enabled.
+- Fixed long error messages being cut off in the authentication dialog.
+- A status message is now displayed in the status bar while loading tree
+  objects.
+- Added translations for the "Sites" container and the password settings
+  container. Renamed the password settings container in English.
+- Fixed whitespace issues in full name autocomplete when creating a user.
+
 * Sat May 16 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.23.3-alt1
 - Remove extra space in full name
 
