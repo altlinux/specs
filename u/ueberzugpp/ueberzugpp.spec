@@ -2,7 +2,7 @@
 %define short_name ueberzug
 
 Name: ueberzugpp
-Version: 2.9.8
+Version: 2.9.10
 Release: alt1
 
 Summary: Drop in replacement for ueberzug written in C++
@@ -58,6 +58,9 @@ ln -s %_man1dir/ueberzugpp.1 %buildroot%_man1dir/ueberzug.1
 %_man1dir/%{short_name}pp.1.*
 
 %changelog
+* Tue Jul 07 2026 Anton Kurachenko <srebrov@altlinux.org> 2.9.10-alt1
+- New version 2.9.10.
+
 * Wed Oct 29 2025 Anton Kurachenko <srebrov@altlinux.org> 2.9.8-alt1
 - New version 2.9.8.
 
