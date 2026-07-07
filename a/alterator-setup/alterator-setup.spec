@@ -2,7 +2,7 @@
 
 Name: alterator-setup
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -138,6 +138,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Tue Jul 07 2026 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt2
+- alterator-setup-run: add WLR_RENDERER=pixman for wayland without vnc also.
+
 * Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt1
 - Revert "alterator-setup-run: use last monitor on wayland".
 
