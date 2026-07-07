@@ -3,7 +3,7 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 2.0213
-Release: alt1
+Release: alt2
 
 Summary: Perl binding for libxml2
 License: Artistic-1.0 OR GPL-2.0-or-later
@@ -22,7 +22,7 @@ Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
 # Since the version of libxml2 is embedded into
 # XML::LibXML::LIBXML_VERSION() at build time, this package
 # has to be rebuilt every time the version of libxml2 is changed.
-Requires: %(rpmquery --qf '%%{NAME} = %%{VERSION}' libxml2)
+Requires: %(rpmquery --qf '%%{NAME} = %%{VERSION}' libxml2_16)
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport
@@ -69,6 +69,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Tue Jul 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0213-alt2
+- NMU: fix FTBFS with new libxml2
+
 * Mon May 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0213-alt1
 - NMU: new version
 
