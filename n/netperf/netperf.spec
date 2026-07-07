@@ -5,7 +5,7 @@
 
 Name: netperf
 Version: 2.7.0
-Release: alt2
+Release: alt3
 Summary: Network benchmarking tool
 License: MIT
 Group: Networking/Other
@@ -71,6 +71,10 @@ kill %%1
 %_man1dir/*.1*
 
 %changelog
+* Tue Jul 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.7.0-alt3
+- Update to upstream/master (2025-07-28).
+- Fix FTBFS.
+
 * Fri Feb 24 2023 Vitaly Chikunov <vt@altlinux.org> 2.7.0-alt2
 - Fix install warning from netperf.info.
 - Install sysv init script.
