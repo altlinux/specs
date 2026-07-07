@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Python Git Library
@@ -111,6 +111,9 @@ popd
 %python3_sitelibdir/%module_name/tests
 
 %changelog
+* Mon Jul 06 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.2.8-alt1
+- NMU updated to 1.2.8.
+
 * Wed Jun 17 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.2.7-alt1
 - NMU: updated to 1.2.7.
 
