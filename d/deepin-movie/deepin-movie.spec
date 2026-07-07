@@ -1,7 +1,7 @@
 %def_with clang
 
 Name: deepin-movie
-Version: 6.5.46
+Version: 6.5.52
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -16,7 +16,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 # Source-url: https://github.com/linuxdeepin/deepin-movie-reborn/archive/%version/%name-reborn-%version.tar.gz
 Source: %name-reborn-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: %name-6.5.34-alt-cxx-flags.patch
+Patch1: %name-6.5.52-alt-cxx-flags.patch
 Patch2: %name-6.5.6-alt-pkgconfig-find-requires.patch
 Patch3: %name-6.5.34-alt-overlinked-libs.patch
 
@@ -113,6 +113,9 @@ export CXX=g++
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Tue Jul 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.52-alt1
+- New version 6.5.52.
+
 * Wed Apr 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.46-alt1
 - New version 6.5.46.
 
