@@ -3,7 +3,7 @@
 
 Name: geany
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Summary: A fast and lightweight IDE using GTK3
 License: GPLv2
@@ -22,6 +22,8 @@ BuildPreReq: desktop-file-utils
 # Automatically added by buildreq on Sat Nov 07 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent pkg-config python-module-lxml python-modules python-modules-compiler python-modules-encodings python2-base sh4 shared-mime-info wayland-devel xorg-proto-devel
 BuildRequires: gcc-c++ git-core intltool libvte3-devel libgtk+3-devel python3-module-docutils time rpm-build-python3
+
+Obsoletes: geany-themes
 
 %description
 Geany is a small and lightweight integrated development environment.
@@ -132,6 +134,11 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Fri Jun 26 2026 Alexey Appolonov <alexey@altlinux.org> 2.1-alt2
+- The conflict with the geany-themes package is resolved - this version of geany
+  includes most, if not all, themes from geany-themes plus many other themes,
+  thus geany-themes is obsolete (closes: 59619).
+
 * Sat Jun 13 2026 Alexey Appolonov <alexey@altlinux.org> 2.1-alt1
 - New version 2.1.
 
