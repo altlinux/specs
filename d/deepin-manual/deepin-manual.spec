@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-manual
-Version: 6.5.48
+Version: 6.5.54
 Release: alt1
 
 Summary: Help files for DDE
@@ -81,6 +81,9 @@ Data files for %name.
 %endif
 
 %changelog
+* Tue Jul 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.54-alt1
+- New version 6.5.54.
+
 * Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.48-alt1
 - New version 6.5.48.
 
