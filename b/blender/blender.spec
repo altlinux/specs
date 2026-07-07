@@ -67,7 +67,7 @@
 
 Name: blender
 Version: 4.5.11
-Release: alt2
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -386,7 +386,7 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
 # Explicitly use python3 in hashbangs.
 pushd scripts/addons_core
-subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
+grep -Rl '#!.*python$' * | xargs -r subst '/^#!.*python$/s|python$|python3|'
 popd
 
 # needed due to non-standard location of pcre.h header
@@ -541,6 +541,10 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 4.5.11-alt3
+- fixed build with Python 3.14 (guard removed RETURN_CONST opcode)
+- multi-thread Cycles kernel zstd compression to speed up the build
+
 * Sat Jun 27 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.5.11-alt2
 - e2k patch update, removed obsolete sed patches
 
