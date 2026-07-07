@@ -1,26 +1,32 @@
-%define modulename markdown2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name markdown2
+%define mod_name %pypi_name
 
-%def_disable check
+%def_without check
 
-Name: python3-module-%modulename
-Version: 2.3.10
+Name: python3-module-%pypi_name
+Version: 2.5.5
 Release: alt1
 
 Summary: Another implementation of Markdown in Python
-License: %gpl2plus | %bsd
+License: MIT and BSD-3-Clause and GPL-2.0-or-later and Python-2.0
 Group: Development/Python3
-Url: http://code.google.com/p/python-markdown2/
+Url: https://pypi.org/project/markdown2/
+Vcs: https://github.com/trentm/python-markdown2.git
 BuildArch: noarch
 
-# https://github.com/trentm/python-markdown2.git
-Source: %modulename-%version.zip
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3 rpm-build-licenses
-BuildRequires: unzip python3-module-pytest
+Patch: %name-%version-alt.patch
 
-%py3_provides %modulename
-%py3_requires logging pygments
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-macros-pyproject
+%pyproject_builddeps_build
+BuildRequires: rpm-build-pyproject
+%if_with check
+%pyproject_builddeps_check
+%endif
 
 %description
 This project provides a converter written in Python that closely matches
@@ -28,48 +34,34 @@ the behaviour of the original Perl-implemented Markdown.pl. There is
 another Python markdown.py, but markdown2.py is faster and, to my
 knowledge, more correct.
 
-%package tests
-Summary: Tests for markdown2
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description tests
-This project provides a converter written in Python that closely matches
-the behaviour of the original Perl-implemented Markdown.pl. There is
-another Python markdown.py, but markdown2.py is faster and, to my
-knowledge, more correct.
-
-This package contains tests for markdown2.
-
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-rm -f %buildroot%python3_sitelibdir/*.pyo
+%pyproject_install
+rm -rf %buildroot%prefix/testing
 
 %check
-%__python3 setup.py test
-export PYTHONPATH=$PWD/lib
-py.test-%_python3_version -vv
+%pyproject_run_pytest -vca
 
 %files
-%doc *.txt
+%doc LICENSE.txt README.md
 %_bindir/markdown2
-%python3_sitelibdir/*
-
-%files tests
-%doc test/*
-
+%python3_sitelibdir_noarch/%mod_name.py
+%python3_sitelibdir_noarch/__pycache__/%mod_name.*.pyc
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 07 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.5.5-alt1
+- Updated to 2.5.5.
+- Switched to rpm-build-pyproject scheme.
+
 * Tue May 20 2025 Alexander Danilov <admsasha@altlinux.org> 2.3.10-alt1
 - Version 2.3.10 (Fixes: CVE-2018-5773, CVE-2020-11888).
 
