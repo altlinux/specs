@@ -1,8 +1,8 @@
 Name: kernel-image-7.1
-Release: alt0.rc6
-%define kernel_src_version	7.0
+Release: alt1
+%define kernel_src_version	7.1
 %define kernel_base_version	7.1
-%define kernel_sublevel	.0
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	mainline
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1.3-alt1
+- Update to v7.1.3 (2026-07-04).
+
 * Fri Jun 05 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1.0-alt0.rc6
 - Update to v7.1-rc6 (2026-05-31).
 - Applied patches adding support for enabling automatic lockdown in UEFI Secure
