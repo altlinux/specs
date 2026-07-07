@@ -1,6 +1,6 @@
 Name:    jogl
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Epoch: 1
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
@@ -119,7 +119,7 @@ xargs -t ant <<EOF
  -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
  -Dgluegen.jar=%{_javadir}/gluegen.jar
  -Dgluegen-rt.jar=%{_jnidir}/gluegen-rt.jar
- -Dswt.jar=%{_javadir}/swt.jar
+ -Dswt.jar=%{_jnidir}/swt.jar
 
  -Djava.excludes.all='com/jogamp/newt/util/applet*/**/*.java com/jogamp/audio/**/*.java jogamp/opengl/gl2/fixme/**/*.java com/jogamp/opengl/test/**/*.java'
 
@@ -155,6 +155,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.md LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1:2.6.0-alt2
+- FTBFS: change swt path.
+
 * Fri Jun 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.6.0-alt1
 - New version.
 - Renamed to jogl.
