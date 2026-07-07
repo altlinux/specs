@@ -1,6 +1,6 @@
 Name: bat
 Version: 0.26.1
-Release: alt1
+Release: alt2
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
@@ -9,6 +9,7 @@ VCS: https://github.com/sharkdp/bat
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Source2: RPM-Spec.sublime-syntax
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -29,17 +30,29 @@ programming and markup languages. It has git integration and automatic paging.
 %prep
 %setup -a 1
 %rust_prep
+# Keep RPM Spec syntax in a separate asset source directory. Passing
+# assets/syntaxes as --source would re-add bundled syntaxes and create duplicates.
+install -Dm 0644 %SOURCE2 alt-assets/syntaxes/RPM-Spec/RPM-Spec.sublime-syntax
 
 %build
+%rust_build
+# Bootstrap bat once to get `bat cache --build`, rebuild syntaxes.bin with the
+# RPM Spec syntax added, then rebuild bat so the updated syntaxes.bin is embedded.
+export PATH="$PWD/target/release:$PATH"
+export BAT_CACHE_PATH="$PWD/.bat-cache"
+bat cache --build --source=alt-assets --target=assets
 %rust_build
 
 %install
 %rust_install
-mkdir -p %buildroot%_man1dir
-install -m 0644 target/release/build/%name-*/out/assets/manual/%name.1 %buildroot%_man1dir
-install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.bash %buildroot%_datadir/bash-completion/completions/bat
-install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.zsh %buildroot%_datadir/zsh/site-functions/_bat
-install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %buildroot%_datadir/fish/vendor_completions.d/bat.fish
+# Two builds leave multiple target/release/build/bat-*/out directories.
+# Use one generated assets directory explicitly instead of a wildcard.
+assets_out="$(find target/release/build -path '*/out/assets/manual/%name.1' -print | sort | tail -n1)"
+assets_out="$(dirname "$(dirname "$assets_out")")"
+install -Dm 0644 "$assets_out"/manual/%name.1 %buildroot%_man1dir/%name.1
+install -Dm 0644 "$assets_out"/completions/bat.bash %buildroot%_datadir/bash-completion/completions/bat
+install -Dm 0644 "$assets_out"/completions/bat.zsh %buildroot%_datadir/zsh/site-functions/_bat
+install -Dm 0644 "$assets_out"/completions/bat.fish %buildroot%_datadir/fish/vendor_completions.d/bat.fish
 
 %check
 # Test no_args_doesnt_break failed in hasher with error "Couldn't open pty"
@@ -54,6 +67,9 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Tue Jul 07 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.1-alt2
+- Added RPM Spec syntax highlighting (closes: #59756).
+
 * Thu Dec 04 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.1-alt1
 - Updated to version 0.26.1.
 
