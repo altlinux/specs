@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define llvm_major_version 20
+%define llvm_major_version 22
 %define llvm_minor_version 1
 %define llvm_version %llvm_major_version.%llvm_minor_version
 
@@ -10,7 +10,7 @@
 
 Name: ZLUDA
 Version: 4
-Release: alt4
+Release: alt5
 
 Summary: CUDA on non-NVIDIA GPUs
 License: Apache-2.0 or MIT
@@ -77,6 +77,9 @@ chmod -v ugo+x %buildroot%_bindir/zluda_with
 %_bindir/zluda_with
 
 %changelog
+* Tue Jul 07 2026 Anton Zhukharev <ancieg@altlinux.org> 4-alt5
+- Built using LLVM 22.1.
+
 * Wed Jul 23 2025 Anton Zhukharev <ancieg@altlinux.org> 4-alt4
 - Built using LLVM 20.1.
 
