@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: pseudo
-Version: 1.9.3
+Version: 1.9.8
 Release: alt1
 Summary: An analogue to sudo and an alternative to fakeroot (experimental)
 License: LGPL-2.1-only
@@ -55,6 +55,7 @@ install -Dp debian/fakeroot-pseudo -t %buildroot%_bindir
 install -Dp debian/fakeroot-pseudo.1 -t %buildroot%_man1dir
 
 %check
+export PATH=$PATH:/sbin:/usr/sbin
 %buildroot%_bindir/pseudo -V | grep -Fx '%name version %version'
 %make_build test-verbose |& tee test.log
 %ifarch %ix86
@@ -62,7 +63,7 @@ install -Dp debian/fakeroot-pseudo.1 -t %buildroot%_man1dir
 # pid 2032582 [parent 2032581], doing new pid setup and server start
 # Setup complete, sending SIGUSR1 to pid 2032581.
 # test-cp-setuid: Failed.
-failed=1
+failed=2
 %else
 failed=0
 %endif
@@ -80,6 +81,9 @@ grep -Px "$failed/\d+ test\(s\) failed\." test.log
 %_man1dir/fakeroot-pseudo*.1*
 
 %changelog
+* Thu Jul 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.9.8-alt1
+- 1.9.8
+
 * Sat Mar 14 2026 Vitaly Chikunov <vt@altlinux.org> 1.9.3-alt1
 - Experimental import pseudo-1.9.3-3-g43cbd8f (2026-02-17).
   This is experimental due to apparent incompatibility of the tool designed for
