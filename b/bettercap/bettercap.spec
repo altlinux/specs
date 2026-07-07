@@ -3,7 +3,7 @@
 %global import_path github.com/bettercap/bettercap
 
 Name: bettercap
-Version: 2.41.5
+Version: 2.41.7
 Release: alt1
 
 Summary: Swiss army knife for network attacks and monitoring
@@ -52,6 +52,9 @@ install -Dpm 644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Tue Jul 07 2026 Denis Rastyogin <gerben@altlinux.org> 2.41.7-alt1
+- Updated to 2.41.7.
+
 * Tue Jan 13 2026 Denis Rastyogin <gerben@altlinux.org> 2.41.5-alt1
 - Updated to 2.41.5.
 
