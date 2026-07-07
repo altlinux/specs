@@ -1,7 +1,7 @@
 %define rname mint-y-icons
 
 Name: icon-themes-mint-y
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: The Mint-Y icon theme
@@ -46,6 +46,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-Y.json
 
 %changelog
+* Tue Jul 07 2026 Anton Kurachenko <srebrov@altlinux.org> 1.9.2-alt1
+- New version 1.9.2.
+
 * Tue Dec 23 2025 Anton Kurachenko <srebrov@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 
