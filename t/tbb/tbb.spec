@@ -6,7 +6,7 @@
 
 Name: tbb
 Version: 2023.0.0
-Release: alt2
+Release: alt3
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -148,7 +148,7 @@ if [ -f "%buildroot%_pkgconfigdir/tbb32.pc" ];then
 	mv "%buildroot%_pkgconfigdir/tbb32.pc" "%buildroot%_pkgconfigdir/tbb.pc"
 fi
 
-%ifnarch ppc64le aarch64 armh
+%ifnarch ppc64le armh
 %check
 %cmake_build -t test
 %endif
@@ -177,6 +177,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 2023.0.0-alt3
+- fixed test_eh_algorithms livelock (SIGXCPU build timeout)
+
 * Fri Jun 05 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2023.0.0-alt2
 - e2k build fix
 
