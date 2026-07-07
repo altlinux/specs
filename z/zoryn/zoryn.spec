@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.44.0
+Version: 0.45.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -24,7 +24,7 @@ BuildRequires: ocaml-toml-devel
 BuildRequires: ocaml-opam-file-format-devel >= 2.1.0
 BuildRequires: ocaml-parsexp-devel
 BuildRequires: ocaml-ppxlib-devel >= 0.28.0
-BuildRequires: ocaml-alt-releases-matrix-devel >= 0.2.0
+BuildRequires: ocaml-alt-releases-matrix-devel >= 0.2.8
 BuildRequires: ocaml-lambda-term-devel >= 3.0.0
 BuildRequires: ocaml-lwt-devel >= 5.0.0
 BuildRequires: ocaml-linenoise-devel
@@ -111,6 +111,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 0.45.0-alt1
+- added devenv enter without CONTAINER to enter the current directory's container
+- added devenv install --container to install into an existing podman container
+- added detection of hasher-priv wlimit kills as stalled in test-rebuild
+- changed gen environment packager prompts to explain their use with examples
+- changed alt_releases_matrix requirement to >= 0.2.8 (known_branches rename)
+- fixed spec version set to reset release to alt1 on version change
+- fixed devenv apt sources handling (empty sources warn, errors name the source)
+- fixed devenv enter/remove/inspect completion and --mount-bind relative paths
+- fixed submit -B branch completion and --replace/--with task reuse
+
 * Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 0.44.0-alt1
 - added task manage keys o/O to insert a subtask after/before the current row
 - added task batch --batch-pkgs to build only the named packages from a batch config
