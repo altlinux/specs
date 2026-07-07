@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 82.0.1
+Version: 83.0.0
 Release: alt1
 Summary: Most extensible Python build backend with support for C/C++ extension modules
 License: MIT
@@ -144,6 +144,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Mon Jul 06 2026 Stanislav Levin <slev@altlinux.org> 1:83.0.0-alt1
+- 82.0.1 -> 83.0.0
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1:82.0.1-alt1
 - 80.10.2 -> 82.0.1.
 
