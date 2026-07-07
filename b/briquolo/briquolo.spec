@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: briquolo
 Version: 0.5.7
-Release: alt7
+Release: alt8
 
 Group: Games/Arcade
 Summary: OpenGL-based 3D breakout
@@ -17,6 +17,7 @@ Source2: briquolo.32.png
 Source3: briquolo.48.png
 Patch01: briquolo-0.5.7-strncmp.patch
 Patch02: briquolo-0.5.7-alt-libpng15.patch
+Patch03: 0001-Define-CompareResolution-call-operator-as-const.patch
 
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: gcc-c++ imake libSDL_sound-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libfreetype-devel libpng-devel xorg-cf-files
@@ -40,6 +41,7 @@ BRIQUOLO гэта трохмерны арканоід. Цагліны і біт�
 %setup
 %patch01 -p1
 %patch02 -p2
+%patch03 -p1
 
 %build
 %add_optflags -std=gnu++14
@@ -91,6 +93,9 @@ ln -srf %buildroot%_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/
 %doc README*
 
 %changelog
+* Mon May 18 2026 Artyom Bystrov <arbars@altlinux.org> 0.5.7-alt8
+- Fix build with GCC15
+
 * Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt7
 - Fixed FTBFS.
 
