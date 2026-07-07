@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name-device-themes
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Device specific feedback themes for Feedbackd
@@ -15,11 +15,11 @@ Url: https://source.puri.sm/Librem5/feedbackd-device-themes
 
 BuildArch: noarch
 
-Vcs: https://gitlab.freedesktop.org/agx/feedbackd-device-themes.git
+Vcs: https://gitlab.freedesktop.org/feedbackd/feedbackd-device-themes.git
 
 %if_disabled snapshot
 #Source: https://storage.puri.sm/releases/%name/%name-%version.tar.xz
-Source: https://gitlab.freedesktop.org/agx/feedbackd-device-themes/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.freedesktop.org/feedbackd/feedbackd-device-themes/-/archive/v%version/%name-v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -52,6 +52,9 @@ specific feedback theme files.
 %doc README.* NEWS
 
 %changelog
+* Tue Jul 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
+- 0.8.9
+
 * Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 
