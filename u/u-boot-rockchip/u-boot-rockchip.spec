@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2026.04
+Version: 2026.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -84,6 +84,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.07-alt1
+- 2026.07 released
+
 * Tue Apr 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.04-alt1
 - 2026.04 released
 - added Anbernic RG DS board (closes: 58519)
