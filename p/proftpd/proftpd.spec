@@ -5,7 +5,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt2.a
+Release: alt3.b
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -772,6 +772,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Tue Jul 07 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt3.b
+- 1.3.9b with more fixes for SQL injection (CVE-2026-44331).
+
 * Wed May 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt2.a
 - 1.3.9a with SQL injection fix (CVE-2026-42167).
 
