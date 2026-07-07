@@ -3,14 +3,14 @@
 %define so_x509_version 9
 %define so_tfpsacrypto_version 2
 
-%define mbedtls_version 4.1.0
-%define tf_psa_crypto_version 1.1.0
+%define mbedtls_version 4.2.0
+%define tf_psa_crypto_version 1.2.0
 
 %def_disable static
 
 Name: mbedtls
 Version: %mbedtls_version
-Release: alt2
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -165,11 +165,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 
 %install
 %cmakeinstall_std
-%__ln_s -r %buildroot%_libdir/libmbedcrypto.so.%so_crypto_version %buildroot%_libdir/libmbedcrypto.so
-%__ln_s -r %buildroot%_libdir/libmbedcrypto.so.%version %buildroot%_libdir/libmbedcrypto.so.%so_crypto_version
-mkdir -p %buildroot%_libexecdir/%name
-mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
-rm -rf %buildroot%_bindir
+%__mkdir_p %buildroot%_libexecdir/%name
+%__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
+%__rm -rf %buildroot%_bindir
 
 %check
 %ctest ||:
@@ -224,6 +222,10 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Tue Jul 07 2026 Nazarov Denis <nenderus@altlinux.org> 4.2.0-alt1
+- Update mbedTLS to 4.2.0
+- Update TF PSA Crypto to 1.2.0
+
 * Sat May 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt2
 - Enable threading support
 
