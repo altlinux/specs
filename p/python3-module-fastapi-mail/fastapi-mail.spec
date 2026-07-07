@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: A simple lightweight mail system, for sending emails and attachments
@@ -67,6 +67,9 @@ custom domain blocking and te
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 06 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.6.5-alt1
+- Updated to new version 1.6.5.
+
 * Wed May 13 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.6.4-alt1
 - Updated to new version 1.6.4.
 
