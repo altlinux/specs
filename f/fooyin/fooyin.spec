@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.10.5
+Version: 0.11.1
 Release: alt1
 
 Summary: Music player built around customisation
@@ -10,8 +10,10 @@ Group: Sound
 Url: https://www.fooyin.org/
 Vcs: https://github.com/fooyin/fooyin.git
 
+ExclusiveArch: x86_64 aarch64
+
 Source: %name-%version.tar
-Patch1: %name-%version-alt-change-libdir.patch
+Patch: %name-%version-alt-change-libdir.patch
 
 Requires: icon-theme-hicolor
 
@@ -21,6 +23,10 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
+BuildRequires: qt6-sql-interbase
+BuildRequires: qt6-sql-mysql
+BuildRequires: qt6-sql-postgresql
+BuildRequires: qt6-sql-odbc
 #
 BuildRequires: libpostproc-devel
 BuildRequires: qcoro6-devel
@@ -37,12 +43,23 @@ BuildRequires: libavfilter-devel
 BuildRequires: libswscale-devel
 BuildRequires: libswresample-devel
 BuildRequires: libkdsingleapplication-qt6-devel
+#
+BuildRequires: libgtest-devel
+BuildRequires: ctest
 
 %description
 Fooyin is a music player built around customisation. It offers a growing list of
 widgets to manage and play your local music collection. It's extendable through
 the use of plugins and many widgets make use of FooScript to offer an even
 deeper level of control.
+
+%package devel
+Summary: Support for developing fooyin plugins
+Group: Development/C++
+Requires: %name = %EVR
+
+%description devel
+This package provides development files used to create plugins for fooyin.
 
 %prep
 %setup
@@ -52,7 +69,10 @@ deeper level of control.
 %ifarch %ix86
  %add_optflags -msse2
 %endif
-%cmake -DBUILD_LIBVGM=OFF
+%cmake \
+-DBUILD_LIBVGM=OFF \
+-DBUILD_TESTING=ON \
+-DINSTALL_HEADERS=ON
 %cmake_build
 
 %install
@@ -60,8 +80,8 @@ deeper level of control.
 %find_lang %name --with-qt
 echo '%%lang(zh) %_datadir/%name/translations/fooyin_zh_Hant.qm' >> %name.lang
 
-# Remove development libraries
-rm -fv %buildroot%_libdir/libfooyin*.so
+%check
+%ctest --test-dir %_target_platform/tests/
 
 %files -f %name.lang
 %dir %_docdir/%name
@@ -77,7 +97,17 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/%name/plugins/fyplugin_*.so
 %_libdir/libfooyin_*.so.*
 
+%files devel
+%_includedir/%name/
+%_libdir/libfooyin_*.so
+%_libdir/cmake/%name/
+
 %changelog
+* Tue Jul 07 2026 Anton Kurachenko <srebrov@altlinux.org> 0.11.1-alt1
+- New version 0.11.1.
+- Added tests and devel package.
+- Dropped i586 build.
+
 * Sun May 10 2026 Anton Kurachenko <srebrov@altlinux.org> 0.10.5-alt1
 - New version 0.10.5.
 
