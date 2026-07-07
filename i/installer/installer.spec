@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.36
+Version: 1.16.37
 Release: alt1
 
 Summary: Installer common parts
@@ -180,6 +180,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Tue Jul 07 2026 Anton Midyukov <antohami@altlinux.org> 1.16.37-alt1
+- install2: Always use software rendering when running on Wayland.
+
 * Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 1.16.36-alt1
 - install2: don' use option "-m last" in cage.
 - install: fix debug shell with systemd 257.
