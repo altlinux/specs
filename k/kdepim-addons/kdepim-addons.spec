@@ -18,10 +18,11 @@
 %define libopenurlwithconfigure libopenurlwithconfigure%sover
 %define libakonadidatasetools libakonadidatasetools%sover
 %define libkpim6autogeneratetext libkpim6autogeneratetext%sover
+%define libadblockplugin libadblockplugin%sover
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 %add_findreq_skiplist %_K6bin/kmail_*.sh
@@ -43,6 +44,8 @@ Requires: %name-kleopatra
 Requires: %name-plugins
 
 Source: %rname-%version.tar
+Source1: vendor.tar
+Patch1: alt-compile-adblock.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
@@ -50,6 +53,7 @@ BuildRequires: libpoppler-qt6-devel libdiscount-devel
 BuildRequires: libsasl2-devel libgpgme-devel libassuan-devel
 BuildRequires: libcups-devel
 BuildRequires: libqtkeychain-qt6-devel
+BuildRequires: /usr/bin/rustc rust-cargo corrosion
 BuildRequires: kf6-kdeclarative-devel  kf6-kdoctools-devel kf6-kio-devel kf6-kpackage-devel kf6-kparts-devel
 BuildRequires: kf6-kwallet-devel kf6-syntax-highlighting-devel kf6-prison-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kitemmodels-devel
@@ -262,8 +266,16 @@ Requires: %name-common >= %EVR
 %description -n %libkpim6autogeneratetext
 %name library
 
+%package -n %libadblockplugin
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libadblockplugin
+%name library
+
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version -a1
+%patch1 -p1
 
 %build
 %K6build \
@@ -353,10 +365,14 @@ Requires: %name-common >= %EVR
 %files -n %libkpim6autogeneratetext
 %_K6lib/libKPim6AutoGenerateText.so.%sover
 %_K6lib/libKPim6AutoGenerateText.so.*
-
-
+%files -n %libadblockplugin
+%_K6lib/libadblockplugin.so.%sover
+%_K6lib/libadblockplugin.so.*
 
 %changelog
+* Tue Jul 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- turn on adblock plugin
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
