@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -140,6 +140,9 @@ Requires: mysql-connector-java
 # Mozilla
 %ifarch %thunderbird_arches
 Requires: thunderbird
+%endif
+%ifarch x86_64 aarch64
+Requires: freeplane
 %endif
 %description lite
 %{summary}.
@@ -653,6 +656,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1.8.3-alt1
+- lite: Add freeplane.
+
 * Thu Jul 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.8.2-alt1
 - kde: Add plasma-addon-alt-weather.
 - server-apps: Add postgresql16 alongside mariadb.
