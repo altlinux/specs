@@ -9,7 +9,7 @@
 
 Name:    eclipse-swt
 Version: 4.38
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: Eclipse SWT: The Standard Widget Toolkit for GTK+
 
@@ -77,6 +77,20 @@ cp -r %{swtsrcdir}/Eclipse\ SWT\ PI/{common,gtk,cairo}/org/* %{swtsrcdir}/src/ma
 cp -r %{swtsrcdir}/Eclipse\ SWT\ Printing/{common,gtk}/org/* %{swtsrcdir}/src/main/java/org
 cp -r %{swtsrcdir}/Eclipse\ SWT\ Program/{common,gtk}/org/* %{swtsrcdir}/src/main/java/org
 cp -r %{swtsrcdir}/Eclipse\ SWT\ WebKit/gtk/org/* %{swtsrcdir}/src/main/java/org
+
+mkdir -p %{swtsrcdir}/src/main/resources
+cp %{swtsrcdir}/Eclipse\ SWT/common/version.txt %{swtsrcdir}/src/main/resources/
+cp %{swtsrcdir}/plugin.properties %{swtsrcdir}/src/main/resources/
+cp %{swtsrcdir}/about.html %{swtsrcdir}/src/main/resources/
+cp -r %{swtsrcdir}/about_files %{swtsrcdir}/src/main/resources/
+cp %{swtsrcdir}/../../binaries/org.eclipse.swt.gtk.linux.%{_arch}/fragment.properties %{swtsrcdir}/src/main/resources/
+
+mkdir -p %{swtsrcdir}/src/main/resources/org/eclipse/swt/internal
+cp %{swtsrcdir}/Eclipse\ SWT/common/org/eclipse/swt/internal/SWTMessages.properties %{swtsrcdir}/src/main/resources/org/eclipse/swt/internal/
+
+mkdir -p %{swtsrcdir}/src/main/resources/org/eclipse/swt/internal/gtk
+cp %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/org/eclipse/swt/internal/gtk/*.css %{swtsrcdir}/src/main/resources/org/eclipse/swt/internal/gtk/
+
 # Prepare maven build for fedora
 %pom_remove_parent
 %pom_remove_plugin org.eclipse.tycho:
@@ -104,6 +118,15 @@ rm .mvn/extensions.xml
 		<arg>\${project.build.outputDirectory}</arg>
 	</compilerArgs>
 </configuration>" bundles/org.eclipse.swt
+
+%pom_add_plugin :maven-jar-plugin bundles/org.eclipse.swt
+%pom_xpath_inject "//pom:plugin[pom:artifactId='maven-jar-plugin']" \
+"<configuration>
+    <archive>
+        <manifestFile>\${project.basedir}/../../binaries/org.eclipse.swt.gtk.linux.%{_arch}/META-INF/MANIFEST.MF</manifestFile>
+    </archive>
+</configuration>" bundles/org.eclipse.swt
+
 # Remove -SNAPSHOT in version
 %pom_xpath_set "//pom:project/pom:version" "%{major_version}.%{minor_version}.0" pom.xml
 %pom_xpath_set "//pom:project/pom:version" "%{swt_bundle_version}" bundles/org.eclipse.swt/pom.xml
@@ -120,6 +143,7 @@ export CFLAGS="${RPM_OPT_FLAGS} -std=gnu17 -Wno-deprecated-declarations"
 export LFLAGS="${RPM_LD_FLAGS}"
 cd Eclipse\ SWT\ PI/gtk/library/
 sh build.sh -gtk3
+cp *.so ../../../src/main/resources/
  
 # Build Java part
 cd ../../..
@@ -150,6 +174,9 @@ cp -a %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/*.so %{buildroot}/%{_libdir}/%{n
 %doc --no-dereference NOTICE
 
 %changelog
+* Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1:4.38-alt2
+- Package manifest, resources and native libraries in swt.jar (Closes: #59750).
+
 * Mon Feb 23 2026 Andrey Cherepanov <cas@altlinux.org> 1:4.38-alt1
 - New version.
 
@@ -189,4 +216,3 @@ cp -a %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/*.so %{buildroot}/%{_libdir}/%{n
 * Sun Jan 24 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
-
