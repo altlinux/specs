@@ -2,7 +2,7 @@
 # test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
 
 Name:    mdfried
-Version: 0.22.1
+Version: 0.22.4
 Release: alt1
 
 Summary: A markdown viewer for the terminal that renders images and Big Headers
@@ -48,5 +48,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri Jul 03 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.4-alt1
+- New version.
+
 * Tue Jun 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.1-alt1
 - Initial build for Sisyphus.

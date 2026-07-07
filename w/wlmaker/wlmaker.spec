@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.8
+Version: 0.8.1
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -57,7 +57,9 @@ sed -i 's/XkbConfigurationFile/\/\/ XkbConfigurationFile/g' etc/Config.plist
 
 %check
 %ctest \
+%ifarch %ix86
 -E backend_test
+%endif
 
 %files
 %doc *.md LICENSE
@@ -79,6 +81,9 @@ sed -i 's/XkbConfigurationFile/\/\/ XkbConfigurationFile/g' etc/Config.plist
 %_sysconfdir/xdg/%name
 
 %changelog
+* Tue Jul 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.8.1-alt1
+- 0.8 -> 0.8.1
+
 * Thu May 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.8-alt1
 - 0.7.1 -> 0.8
 
