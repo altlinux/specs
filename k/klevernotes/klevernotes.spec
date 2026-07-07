@@ -1,10 +1,8 @@
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -17,6 +15,9 @@ Vcs: https://invent.kde.org/office/klevernotes
 
 Source0: %name-%version.tar
 Source1: ru.tar
+
+#https://bugzilla.altlinux.org/59322
+Patch: 187.patch
 
 #AutoProv: no
 ExclusiveArch: x86_64 aarch64 loongarch64
@@ -35,6 +36,7 @@ KleverNotes is a note taking and management application for your mobile and desk
 
 %prep
 %setup
+%patch -p1
 
 tar -xf %SOURCE1 -C po/
 
@@ -54,6 +56,9 @@ tar -xf %SOURCE1 -C po/
 %doc *.md 
 
 %changelog
+* Tue Jul 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt2
+- Dedicated backend to save painting (ALT #59322)
+
 * Mon May 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt1
 - 1.3.0 -> 1.3.1
 
