@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.21.3
+Version: 1.21.4
 Release: alt1
 
 Summary: CLI arguments renderer for Sphinx
@@ -16,7 +16,7 @@ Vcs: https://github.com/tox-dev/sphinx-argparse-cli.git
 
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
-# tar -cf sphinx_argparse_cli-1.15.0-roots.tar roots/
+# tar -cf sphinx_argparse_cli-1.21.4-roots.tar roots/
 Source1: %pypi_name-%version-roots.tar
 %else
 Source: %pypi_name-%version.tar
@@ -55,6 +55,9 @@ py.test3
 
 
 %changelog
+* Tue Jul 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.21.4-alt1
+- 1.21.4
+
 * Tue Mar 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.21.3-alt1
 - 1.21.3
 
