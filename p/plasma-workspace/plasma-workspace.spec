@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.7.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -96,7 +96,7 @@ Patch121: alt-freememorynotifier.patch
 Patch123: alt-def-font.patch
 #
 Patch126: alt-add-using-the-altappstarter.patch
-Patch127: alt-plasma-5.17-crash.patch
+#
 Patch128: alt-soname.patch
 Patch129: alt-def-icons.patch
 #
@@ -314,7 +314,7 @@ Requires: %name-common >= %EVR
 %patch123 -p1
 #
 %patch126 -p1
-%patch127 -p2
+#
 %patch128 -p1
 #%patch129 -p1 -b .small_icons_size
 #
@@ -588,6 +588,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Tue Jul 07 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.2-alt2
+- remove alt-plasma-5.17-crash.patch (closes: 52069)
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.2-alt1
 - new version
 
