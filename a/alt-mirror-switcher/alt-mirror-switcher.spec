@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -74,7 +75,8 @@ fi
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name
-%_desktopdir/%name.desktop
+%_datadir/metainfo/%oname.metainfo.xml
+%_desktopdir/%oname.desktop
 %doc README.md
 
 %files lists-sisyphus
@@ -87,6 +89,12 @@ fi
 %_bindir/ams
 
 %changelog
+* Tue Jul 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
+- added metainfo file
+- cli: added automatic switch http -> https if http exists and choosed
+- cli: fixed showing active mirror and enabled protocol when used ams.list
+- added autofix if enabled >1 system repo list
+
 * Wed Jun 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
 - cli: added command for enable sources.list and disable or not disable all system lists
 - cli: added show command as an alternative active command
