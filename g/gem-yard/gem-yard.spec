@@ -5,8 +5,8 @@
 %define        gemname yard
 
 Name:          gem-yard
-Version:       0.9.36
-Release:       alt1.1
+Version:       0.9.43
+Release:       alt1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!"
 License:       MIT
 Group:         Development/Ruby
@@ -44,7 +44,7 @@ BuildConflicts: gem(rack) >= 4
 %ruby_use_gem_dependency rack >= 3.0,rack < 4
 Obsoletes:     ruby-yard < %EVR
 Provides:      ruby-yard = %EVR
-Provides:      gem(yard) = 0.9.36
+Provides:      gem(yard) = 0.9.43
 
 
 %description
@@ -55,14 +55,14 @@ custom Ruby constructs such as custom class level definitions.
 
 
 %package       -n yard
-Version:       0.9.36
+Version:       0.9.43
 Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета yard
 Group:         Documentation
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.36
+Requires:      gem(yard) = 0.9.43
 
 %description   -n yard
 YARD is a Ruby Documentation tool. The Y stands for "Yay!" executable(s).
@@ -77,14 +77,14 @@ custom Ruby constructs such as custom class level definitions.
 
 %if_enabled    doc
 %package       -n gem-yard-doc
-Version:       0.9.36
+Version:       0.9.43
 Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета yard
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.36
+Requires:      gem(yard) = 0.9.43
 
 %description   -n gem-yard-doc
 YARD is a Ruby Documentation tool. The Y stands for "Yay!" documentation
@@ -101,14 +101,14 @@ custom Ruby constructs such as custom class level definitions.
 
 %if_enabled    devel
 %package       -n gem-yard-devel
-Version:       0.9.36
+Version:       0.9.43
 Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета yard
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.36
+Requires:      gem(yard) = 0.9.43
 Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rdoc) >= 6.1.1
@@ -177,6 +177,9 @@ custom Ruby constructs such as custom class level definitions.
 
 
 %changelog
+* Wed Jul 08 2026 Alexander Danilov <admsasha@altlinux.org> 0.9.43-alt1
+- ^ 0.9.36 -> 0.9.43
+
 * Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 0.9.36-alt1.1
 - ! dep to rack gem
 
