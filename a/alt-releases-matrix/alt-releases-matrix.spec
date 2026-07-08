@@ -14,7 +14,7 @@
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.2.9
+Version: 0.3.0
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
@@ -50,11 +50,11 @@ developers native representations for multiple programming languages.
 
 %package devel
 BuildArch: noarch
-Summary: C header-only library from %name
+Summary: C/C++ header-only libraries from %name
 Group: Development/C
 
 %description devel
-Package contains a header-only C library with data definitions from from %name.
+Package contains header-only C/C++ libraries with data definitions from %name.
 
 %package -n python3-module-%oname
 BuildArch: noarch
@@ -62,7 +62,7 @@ Summary: Python library form %name
 Group: Development/Python3
 
 %description -n python3-module-%oname
-Package contains a Python library with data definitions from from %name.
+Package contains a Python library with data definitions from %name.
 
 %package -n node-%name-js
 BuildArch: noarch
@@ -70,7 +70,7 @@ Summary: JavaScript library form %name
 Group: Development/Other
 
 %description -n node-%name-js
-Package contains a JavaScript library with data definitions from from %name.
+Package contains a JavaScript library with data definitions from %name.
 
 %package -n node-%name-ts
 BuildArch: noarch
@@ -78,7 +78,7 @@ Summary: TypeScript library form %name
 Group: Development/Other
 
 %description -n node-%name-ts
-Package contains a typeScript library with data definitions from from %name.
+Package contains a typeScript library with data definitions from %name.
 
 %package -n ocaml-%name
 Summary: OCaml library from %name
@@ -117,6 +117,7 @@ cp -r generated/rust %buildroot%_datadir/%name/lib
 # C library files
 mkdir -p %buildroot%_includedir/%name
 cp generated/c/%oname.h %buildroot%_includedir/%name
+cp generated/cpp/%oname.hpp %buildroot%_includedir/%name
 # Python library files
 install -Dm0644 generated/python/%oname.py %buildroot%python3_sitelibdir/%oname.py
 # JavaScript library files
@@ -138,6 +139,7 @@ popd
 %files devel
 %dir %_includedir/%name
 %_includedir/%name/%oname.h
+%_includedir/%name/%oname.hpp
 
 %files -n python3-module-%oname
 %python3_sitelibdir/%oname.py
@@ -155,9 +157,13 @@ popd
 %files -n ocaml-%name -f generated/ocaml/ocaml-files.runtime
 
 %changelog
+* Tue Jul 07 2026 Danil Shein <dshein@altlinux.org> 0.3.0-alt1
+- added C++ header generation
+- removed compat known branches list definition
+
 * Mon Jul 06 2026 Danil Shein <dshein@altlinux.org> 0.2.9-alt1
 - added all_branch_names definition
-- add compat known branches list definition fixed in v0.2.8
+- added compat known branches list definition fixed in v0.2.8
 
 * Fri Jul 03 2026 Danil Shein <dshein@altlinux.org> 0.2.8-alt1
 - fixed known branches list name typo
@@ -197,4 +203,3 @@ popd
 
 * Wed Aug 06 2025 Danil Shein <dshein@altlinux.org> 0.0.4-alt1
 - Initial build for ALT.
-
