@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: %_name
-Version: 0.15.3
-Release: alt1.1
+Version: 0.15.4
+Release: alt1
 
 Summary: A fast high compression read-only file system
 License: MIT
@@ -133,6 +133,9 @@ ln -sf ../../sbin/%{_name}extract %buildroot%_bindir/%{_name}extract
 %exclude %_libdir/cmake/%_name/
 
 %changelog
+* Wed Jul 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.4-alt1
+- 0.15.4
+
 * Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.3-alt1.1
 - symlinked dwarfsextract to %%_bindir (ALT #59541)
 
