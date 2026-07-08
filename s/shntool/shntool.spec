@@ -1,6 +1,6 @@
 Name: shntool
 Version: 3.0.10
-Release: alt2
+Release: alt3
 
 Summary: Multi-purpose WAVE data processing and reporting utility
 License: GPLv2+
@@ -31,6 +31,7 @@ that particular file type.
 %autopatch -p1
 
 %build
+%add_optflags -std=gnu17
 %configure
 %make_build
 
@@ -48,6 +49,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Wed Jul 08 2026 Anton Farygin <rider@altlinux.org> 3.0.10-alt3
+- fixed build with GCC defaulting to C23
+
 * Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 3.0.10-alt2
 - applied fixes from Debian and upstream (closes: #56802):
   * support WAVE_FORMAT_EXTENSIBLE in WAV parser
