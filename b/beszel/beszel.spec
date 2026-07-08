@@ -15,7 +15,7 @@
 
 Name: beszel
 Version: 0.18.7
-Release: alt1
+Release: alt2
 Summary: Lightweight server monitoring hub
 License: MIT
 Group: System/Configuration/Networking
@@ -58,6 +58,7 @@ and manage connected systems and collect metrics from agents.
 %package agent
 Summary: System monitoring agent for Beszel hub
 Group: System/Configuration/Networking
+Requires: smartmontools
 
 %description agent
 Lightweight agent that runs on monitored systems and sends system
@@ -155,6 +156,9 @@ go test -tags=testing ./...
 %doc LICENSE readme.md
 
 %changelog
+* Wed Jul 08 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.18.7-alt2
+- Fixed SMART monitoring in beszel-agent (Closes: #59586).
+
 * Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.18.7-alt1
 - Updated to 0.18.7.
 - Removed self-update command incompatible with Sisyphus idea (Closes: #59273).
