@@ -1,18 +1,29 @@
+# no cmake dir in tarball
+%def_enable snapshot
 %def_disable static
 %define _name discid
 
 Name: lib%_name
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 
 Summary: A Library for creating MusicBrainz DiscIDs
 Group: System/Libraries
 License: LGPL-2.1-or-later
-Url: http://musicbrainz.org/doc/%name
+Url: https://musicbrainz.org/doc/%name
 
 Vcs: https://github.com/metabrainz/libdiscid.git
 
+%if_disabled snapshot
 Source: https://data.metabrainz.org/pub/musicbrainz/%name/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ ctest
+# for examples
+BuildRequires: pkgconfig(libmusicbrainz5)
 
 %description
 This C library %name creates MusicBrainz DiscIDs from audio CDs. It
@@ -42,11 +53,17 @@ Static libs for building statically linked software that uses %name.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%configure %{subst_enable static}
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENABLE_USE_HTTPS=OFF
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
+
+%check
+%cmake_build -t check
 
 %files
 %_libdir/%name.so.*
@@ -64,6 +81,9 @@ Static libs for building statically linked software that uses %name.
 
 
 %changelog
+* Wed Jul 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
 - 0.6.5
 
