@@ -2,7 +2,7 @@
 %define soversion 0.20
 
 Name: lib%_name-%soversion
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -104,6 +104,9 @@ This package provides development files for libwlroots library.
 %_pkgconfigdir/wlroots-%soversion.pc
 
 %changelog
+* Wed Jul 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.2-alt1
+- 0.20.2
+
 * Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
 - 0.20.1
 
