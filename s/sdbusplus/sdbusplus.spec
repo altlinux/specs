@@ -2,7 +2,7 @@
 
 Name:           sdbusplus
 Version:        1.0.0
-Release:        alt2.gitfe1ebd4
+Release:        alt3.gitfe1ebd4
 
 Summary:        C++ bindings for systemd dbus APIs
 
@@ -59,6 +59,7 @@ built on top of the sd-bus library from systemd.
 
 %prep
 %setup
+sed -i 's/using __decay_t = __decay(_Ty);/using __decay_t = std::decay_t<_Ty>;/g' include/sdbusplus/async/stdexec/__detail/__type_traits.hpp
 %autopatch -p1
 
 %build
@@ -89,6 +90,9 @@ popd
 %python3_sitelibdir_noarch/%name-1.0.dist-info
 
 %changelog
+* Mon Jul 06 2026 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt3.gitfe1ebd4
+- Fixed FTBFS.
+
 * Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gitfe1ebd4
 - NMU: Downgraded to commit from revision list.
 
