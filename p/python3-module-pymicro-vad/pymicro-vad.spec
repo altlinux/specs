@@ -1,6 +1,6 @@
 Name: python3-module-pymicro-vad
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Voice activity detector for Python
 License: Apache-2.0
@@ -46,6 +46,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pymicro_vad-%version.dist-info
 
 %changelog
+* Wed Jul 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0-alt1
+- 2.1.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.1-alt2
 - revert unsolicited packaging changes
 
