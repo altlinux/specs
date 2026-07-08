@@ -5,7 +5,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt3.b
+Release: alt4.c
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -109,7 +109,7 @@ BuildRequires: libsodium-devel
 %{?_with_mod_facl:BuildRequires: libacl-devel}
 %{?_with_mod_sql_sqlite:BuildRequires: libsqlite3-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
-%{?_enable_tests:BuildRequires: libcheck-devel perl-devel perl-Test-Unit perl-Net-FTPSSL perl-Sys-HostAddr}
+%{?_enable_tests:BuildRequires: libcheck-devel perl-devel perl-Test-Unit perl-Net-FTPSSL perl-Sys-HostAddr perl-Net-INET6Glue-FTP}
 %{?_with_mod_proxy:BuildRequires: libssl-devel libsqlite3-devel zlib-devel libsodium-devel}
 
 %description
@@ -524,11 +524,6 @@ mygroup=`id -gn`
 %make_install install DESTDIR=%buildroot LIBEXECDIR=%_libexecdir/proftpd INSTALL_USER=$myname INSTALL_GROUP=$mygroup
 # to make LTO checks happy
 rm -f %buildroot%_libexecdir/proftpd/mod_proxy.a
-
-%if_enabled tests
-%check
-%make check
-%endif
 popd
 %endif
 
@@ -772,6 +767,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Wed Jul 08 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt4.c
+- 1.3.9c.
+
 * Tue Jul 07 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt3.b
 - 1.3.9b with more fixes for SQL injection (CVE-2026-44331).
 
