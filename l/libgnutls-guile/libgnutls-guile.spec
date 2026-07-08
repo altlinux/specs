@@ -1,5 +1,5 @@
 Name: libgnutls-guile
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: Guile bindings for the GnuTLS library
@@ -35,7 +35,7 @@ printf "%%s" "%version" >.tarball-version
 %define _unpackaged_files_terminate_build 1
 
 %files
-%doc AUTHORS NEWS README.md
+%doc AUTHORS NEWS.md README.md
 %_libdir/guile/*/extensions/guile*.so*
 %_libdir/guile/*/site-ccache/*
 %_datadir/guile/site/*/*
@@ -43,6 +43,9 @@ printf "%%s" "%version" >.tarball-version
 %exclude %_libdir/guile/*/extensions/*.la
 
 %changelog
+* Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 5.0.2-alt1
+- Updated to 5.0.2.
+
 * Thu Feb 12 2026 Mikhail Efremov <sem@altlinux.org> 5.0.1-alt1
 - Created .tarball-version file.
 - Updated Url and Vcs tags.
