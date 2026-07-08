@@ -1,7 +1,7 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgearth
-Version: 3.8
+Version: 3.8.1
 Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
@@ -10,8 +10,6 @@ Group: Graphics
 
 Url: http://osgearth.org
 Source: %name-%version.tar
-Source1: submodules.tar
-Patch1: osgearth-disable-osgdb_zip.so.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -115,8 +113,6 @@ This package contains sample data files for osgEarth.
 
 %prep
 %setup
-tar xf %SOURCE1
-%autopatch -p1
 %ifarch %e2k
 # error: undefined reference to symbol '_ZTIN9osgViewer14GraphicsWindowE'
 sed -i 's/OSGUTIL_LIBRARY/& OSGVIEWER_LIBRARY/' \
@@ -167,6 +163,9 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Wed Jul 01 2026 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+
 * Thu Mar 05 2026 Andrey Cherepanov <cas@altlinux.org> 3.8-alt1
 - New version.
 
