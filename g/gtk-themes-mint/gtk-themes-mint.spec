@@ -1,7 +1,7 @@
 %define rname mint-themes
 
 Name: gtk-themes-mint
-Version: 2.3.8
+Version: 2.4.0
 Release: alt1
 Summary: Mint themes
 License: GPLv3+
@@ -87,6 +87,9 @@ cp -a %SOURCE1 %SOURCE2 %buildroot%_datadir/cinnamon/styles.d
 %_datadir/cinnamon/styles.d/22_mint-y.styles
 
 %changelog
+* Sun Jul 05 2026 Alexander Kovalev <alexvk@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sun Jan 18 2026 Alexander Kovalev <alexvk@altlinux.org> 2.3.8-alt1
 - 2.3.8
 - do separate packages for Mint-X and Mint-Y themes
