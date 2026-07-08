@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.6
+Version: 0.10.6.1
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -302,6 +302,11 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Tue Jul 07 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.6.1-alt1
+- New version (fixes: CVE-2026-41252, CVE-2026-41521, CVE-2026-44178,
+  CVE-2026-42218, CVE-2026-44978, CVE-2026-54538, CVE-2026-55238,
+  CVE-2026-55626, CVE-2026-55639, CVE-2026-55645).
+
 * Sun Apr 19 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.6-alt1
 - New version (fixes: CVE-2026-32105, CVE-2026-32107, CVE-2026-32623,
   CVE-2026-32624, CVE-2026-33145, CVE-2026-33516, CVE-2026-33689,
