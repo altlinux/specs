@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        150.0.7871.46
+Version:        150.0.7871.100
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -726,6 +726,9 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Jul 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.100-alt1
+- New version (150.0.7871.100).
+
 * Wed Jul 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.46-alt1
 - New version (150.0.7871.46).
 - Fixes:
