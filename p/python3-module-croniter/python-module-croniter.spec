@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2.2
+Version: 6.2.3
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -58,6 +58,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 07 2026 Stanislav Levin <slev@altlinux.org> 6.2.3-alt1
+- 6.2.2 -> 6.2.3
+
 * Mon Mar 16 2026 Stanislav Levin <slev@altlinux.org> 6.2.2-alt1
 - 6.0.0 -> 6.2.2.
 
