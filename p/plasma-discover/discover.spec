@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.7.2
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -222,7 +222,7 @@ KF6 library
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-#%patch19 -p1
+%patch19 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -352,6 +352,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
+- restore 3dpathy software warning
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 
