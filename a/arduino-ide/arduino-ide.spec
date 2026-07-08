@@ -5,7 +5,7 @@
 
 Name: arduino-ide
 Version: 2.3.8
-Release: alt2
+Release: alt3
 
 Summary: IDE for Arduino boards and compatible microcontroller platforms.
 Group: Education
@@ -20,19 +20,27 @@ Patch: %name-%version-%release.patch
 Patch1: system-electron-skip-theia-ffmpeg.patch
 Patch2: system-electron-drivelist-lazy-bindings.patch
 Patch3: system-electron-disable-node-pty-native.patch
+Patch4: system-native-node-modules.patch
 
-ExclusiveArch: x86_64
+ExcludeArch: %ix86
 
 BuildRequires: /proc
 BuildRequires: node
 BuildRequires: yarn
 BuildRequires: electron = %electron_version
-BuildRequires: arduino-cli
 BuildRequires: libsecret
 BuildRequires: libxkbfile
 
 Requires: electron = %electron_version
 Requires: arduino-cli
+Requires: arduino-fwuploader
+Requires: arduino-language-server
+Requires: clangd
+Requires: clang-tools
+Requires: ripgrep
+Requires: node-parcel-watcher
+Requires: node-keytar
+Requires: node-native-keymap
 
 %description
 The Arduino Integrated Development Environment (IDE) is the official software
@@ -47,17 +55,15 @@ both beginners and experienced developers.
 %build
 yarn --cwd arduino-ide-extension build
 yarn rebuild:browser
-yarn --cwd . electron-rebuild -f \
-  -w=native-keymap,keytar \
-  -o=native-keymap,keytar \
-  -v %electron_version \
-  --force-abi %electron_abi
 
 mkdir -p $TMPDIR/electron-dist
 find %_libdir/electron -mindepth 1 -maxdepth 1 ! -name chrome-sandbox \
   -exec cp -a -t $TMPDIR/electron-dist {} +
 
-THEIA_SYSTEM_ELECTRON=1 yarn --cwd electron-app build
+THEIA_SYSTEM_ELECTRON=1 \
+  THEIA_SYSTEM_PARCEL_WATCHER=1 \
+  THEIA_SYSTEM_NATIVE_NODE_MODULES=1 \
+  yarn --cwd electron-app build
 ARDUINO_CLI_VERSION=%arduino_cli_version \
   ELECTRON_VERSION=%electron_version \
   ELECTRON_DIST=$TMPDIR/electron-dist \
@@ -67,30 +73,20 @@ ARDUINO_CLI_VERSION=%arduino_cli_version \
 mkdir -p %buildroot%_libdir/arduino-ide/resources
 mkdir -p %buildroot%_bindir
 
-appdir=electron-app/dist/linux-unpacked/resources/app
-rm -f $appdir/plugins/cortex-debug/extension/options-doc.py
-rm -f $appdir/plugins/cortex-debug/extension/serial-port-build.sh
+appdir=$(find electron-app/dist -mindepth 3 -maxdepth 3 -type d \
+  -path '*/resources/app' -print -quit)
+test -n "$appdir"
+rm -f "$appdir"/plugins/cortex-debug/extension/options-doc.py
+rm -f "$appdir"/plugins/cortex-debug/extension/serial-port-build.sh
+rm -rf "$appdir"/plugins/cortex-debug/extension/binary_modules
 
-# Uses not exists libnode for no reason.
-cortex_modules=$appdir/plugins/cortex-debug/extension/binary_modules/v12.14.1/linux/x64/node_modules
-rm -rf $cortex_modules/@serialport/bindings/build
-rm -rf $cortex_modules/@serialport/bindings/src
-rm -rf $cortex_modules/nan
-
-mv $appdir %buildroot%_libdir/arduino-ide/resources/app
+mv "$appdir" %buildroot%_libdir/arduino-ide/resources/app
 
 cat << EOF > %buildroot%_bindir/arduino-ide
 #!/bin/bash
 exec %_bindir/electron %_libdir/arduino-ide/resources/app "\$@"
 EOF
 chmod +x %buildroot%_bindir/arduino-ide
-
-%ifarch x86_64
-rm -rf %buildroot%_libdir/arduino-ide/resources/app/plugins/cortex-debug/extension/binary_modules/v12.14.1/linux/arm
-rm -rf %buildroot%_libdir/arduino-ide/resources/app/plugins/cortex-debug/extension/binary_modules/v12.14.1/linux/arm64
-%else
-rm -rf %buildroot%_libdir/arduino-ide/resources/app/plugins/cortex-debug/extension/binary_modules/v12.14.1/linux/x64
-%endif
 
 install -m644 -D arduino-ide.desktop %buildroot%_desktopdir/arduino-ide.desktop
 install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/512x512.png %buildroot%_iconsdir/arduino-ide.png
@@ -103,6 +99,11 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Wed Jul 08 2026 Grant Makyan <karonus@altlinux.org> 2.3.8-alt3
+- Use system native Node.js modules.
+- Exclude ix86 from build.
+- Find packaged application resources by path.
+
 * Sat Jun 27 2026 Grant Makyan <karonus@altlinux.org> 2.3.8-alt2
 - Build with the system Electron package.
 - Drop vendored Electron runtime and cached Electron headers.
