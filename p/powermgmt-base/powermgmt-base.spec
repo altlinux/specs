@@ -1,5 +1,5 @@
 Name: powermgmt-base
-Version: 1.38
+Version: 1.39
 Release: alt1
 
 Summary: Common utils for power management
@@ -37,6 +37,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed Jul 08 2026 Mikhail Efremov <sem@altlinux.org> 1.39-alt1
+- Updated to 1.39.
+
 * Thu Sep 04 2025 Mikhail Efremov <sem@altlinux.org> 1.38-alt1
 - lspower: Use 'echo -e'.
 - lspower: Don't try to read non-existent files.
