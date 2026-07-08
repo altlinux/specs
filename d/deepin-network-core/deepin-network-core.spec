@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.88
+Version: 2.0.95
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -21,6 +21,8 @@ Patch: %name-%version-%release.patch
 ExcludeArch: i586
 
 Requires: libdqt6-qml = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-dqt6 patchelf
 %if_with clang
@@ -30,7 +32,7 @@ BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-dqt6-devel libwayland-client-devel libdqt6-qmlcompiler libcurl-devel vulkan-headers
+BuildRequires: extra-cmake-modules deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-dqt6-devel libwayland-client-devel libdqt6-qmlcompiler libcurl-devel vulkan-headers wayland-protocols libpolkitqt6-dqt6-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -55,7 +57,9 @@ This package provides development files for %name.
 %setup -n dde-network-core-%version
 %patch -p1
 sed -i '/DESTINATION/s|lib/dde|${LIB_DESTINATION}/dde|' \
-       $(find ./ -name 'CMakeLists.txt')
+  $(find ./ -name 'CMakeLists.txt')
+sed -i 's|WaylandClientPrivate|WaylandClient|' \
+  dock-network-plugin/CMakeLists.txt
 
 %build
 %if_with clang
@@ -65,7 +69,17 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CPLUS_INCLUDE_PATH=%_includedir/glib-2.0:%_libdir/glib-2.0/include:%_includedir/libnm:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH="\
+%_includedir/glib-2.0:\
+%_libdir/glib-2.0/include:\
+%_includedir/libnm:\
+%_dqt6_headerdir/QtWaylandClient/%_dqt6_version/QtWaylandClient:\
+%_dqt6_headerdir/QtWaylandClient/%_dqt6_version:\
+%_dqt6_headerdir/QtWaylandGlobal/%_dqt6_version:\
+%_dqt6_headerdir/QtGui/%_dqt6_version:\
+%_dqt6_headerdir/QtGui/%_dqt6_version/QtGui:\
+%_dqt6_headerdir/QtCore/%_dqt6_version:\
+$CPLUS_INCLUDE_PATH"
 %DQ6build \
   -DLIB_DESTINATION=%_lib \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -109,6 +123,7 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_datadir/deepin-service-manager/user/plugin-session-network.json
 %_datadir/dbus-1/system.d/org.deepin.dde.Network1.conf
 %_datadir/polkit-1/rules.d/50-dss-network-plugin.rules
+%_datadir/polkit-1/actions/com.deepin.dde.network.policy
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.network/
@@ -143,6 +158,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Wed Jul 08 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.95-alt1
+- New version 2.0.95.
+
 * Tue Apr 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.88-alt1
 - New version 2.0.88.
 - Built on separate gsettings-qt6 (no system qt6).
