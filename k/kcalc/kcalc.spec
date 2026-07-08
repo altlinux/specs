@@ -1,7 +1,7 @@
 %define rname kcalc
 
 Name: %rname
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ rm -f po/ru/kcalc.po.tmp
 
 
 %changelog
+* Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Thu Jun 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 

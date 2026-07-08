@@ -4,8 +4,8 @@
 %define rname audex
 
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Summary: Tool for ripping compact discs
@@ -30,16 +30,12 @@ BuildRequires: kf6-kio-devel
 BuildRequires: kf6-kconfigwidgets-devel
 BuildRequires: kf6-ktextwidgets-devel
 BuildRequires: kde6-libkcddb-devel
-
 %if_enabled testing
 BuildRequires: ctest
 BuildRequires: icon-theme-breeze
 BuildRequires: xauth
 BuildRequires: xvfb-run
 %endif
-
-Requires: plasma6-breeze
-Requires: icon-theme-breeze
 
 %description
 Audex is a CD ripper application. It lets you extract the audio from your
@@ -79,6 +75,9 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6data/solid/actions/*audex*.desktop
 
 %changelog
+* Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Mon Jun 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
 - update packaging
 
