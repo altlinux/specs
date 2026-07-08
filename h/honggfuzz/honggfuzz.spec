@@ -5,7 +5,7 @@
 
 Name: honggfuzz
 Version: 2.6
-Release: alt1
+Release: alt2
 Summary: Security oriented software fuzzer
 License: Apache-2.0
 Group: Development/Tools
@@ -70,6 +70,9 @@ hfuzz-gcc test.c -o t2 -fsanitize=address
 %docdir
 
 %changelog
+* Wed Jul 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.6-alt2
+- Fix FTBFS with new binutils and gcc 15.
+
 * Fri Sep 22 2023 Vitaly Chikunov <vt@altlinux.org> 2.6-alt1
 - Update to 2.6 (2023-09-21).
 
