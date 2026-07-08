@@ -1,8 +1,8 @@
-%def_with docs
+%def_without docs
 
 Name: txt2tags-python3
 Version: 3.9
-Release: alt1
+Release: alt2
 Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
 License: GPL-2.0
 Group: Text tools
@@ -15,7 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 %if_with docs
-BuildRequires: txt2tags
+BuildRequires: txt2tags-python3
 %endif
 
 Conflicts: txt2tags
@@ -54,6 +54,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 08 2026 Andrey Cherepanov <cas@altlinux.org> 3.9-alt2
+- Built without docs.
+
 * Wed Jan 03 2024 Andrey Cherepanov <cas@altlinux.org> 3.9-alt1
 - New version.
 
