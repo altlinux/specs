@@ -2,7 +2,7 @@
 
 Name: proxsave
 Version: 0.29.0
-Release: alt1
+Release: alt2
 
 Summary: Backup tool for Proxmox PBS & PVE System Files
 License: MIT
@@ -15,6 +15,9 @@ ExcludeArch: i586
 
 Source: %name-%version.tar
 Source1: vendor.tar
+
+Patch: main_runtime-alt-fixes.patch
+Patch1: security-alt-fixes.patch
 
 BuildRequires: golang
 
@@ -42,7 +45,12 @@ Documentation for the %name
 
 %prep
 %setup -a1
-subst 's|0.0.0-dev|%version|' Makefile
+# fixed: version number
+subst 's|0.0.0-dev.0+g$${desc}$$dirty|%version|' Makefile
+# skipped: update check
+subst 's|strings.TrimSpace(currentVersion)|""|' cmd/proxsave/main_update.go
+# disabled some warnings
+%autopatch -p0
 
 %build
 %make_build
@@ -58,6 +66,11 @@ install -Dm0755 build/%name %buildroot%_bindir/%name
 %doc docs
 
 %changelog
+* Wed Jul 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.29.0-alt2
+- fixed: version number
+- skipped: update check
+- disabled some warnings (ALT #59747) 
+
 * Fri Jul 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.29.0-alt1
 - 0.28.0 -> 0.29.0
 
