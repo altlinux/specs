@@ -24,7 +24,7 @@
 Name: edk2-%target_arch
 
 # See git for-each-ref --format="%%(creatordate:short)" refs/tags/TAGNAME
-Version: 20260213
+Version: 20260508
 Release: alt1
 Summary: UEFI firmware for %target_arch virtual machines
 
@@ -93,7 +93,7 @@ export PACKAGES_PATH=$WORKSPACE/edk2
 export EDK_TOOLS_PATH=$WORKSPACE/edk2/BaseTools
 export EXTRA_OPTFLAGS="%optflags"
 %if %_build_cpu != %target_arch
-export GCC5_%{efi_target}_PREFIX='%target_arch-linux-gnu-'
+export GCC_%{efi_target}_PREFIX='%target_arch-linux-gnu-'
 %endif
 
 make -C edk2/BaseTools
@@ -103,7 +103,7 @@ source ./edk2/edksetup.sh
 build \
     --arch=%efi_target \
     --platform=%efi_platform \
-    --tagname=GCC5 \
+    --tagname=GCC \
     --buildtarget=DEBUG \
     -n %__nprocs \
     --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor=L"https://www.altlinux.org" \
@@ -111,7 +111,7 @@ build \
     %nil
 
 %if_with qcow2
-for raw in Build/%efi_platform_name/DEBUG_GCC5/FV/*.fd; do
+for raw in Build/%efi_platform_name/DEBUG_GCC/FV/*.fd; do
     truncate -s 32M "$raw"
     qemu-img convert -f raw -O qcow2 "$raw" "${raw%%.fd}.qcow2"
 done
@@ -120,11 +120,11 @@ done
 %install
 mkdir -p %buildroot%install_dir
 install -pm 644 -t %buildroot%install_dir \
-    Build/%efi_platform_name/DEBUG_GCC5/FV/*.fd
+    Build/%efi_platform_name/DEBUG_GCC/FV/*.fd
 
 %if_with qcow2
 install -pm 644 -t %buildroot%install_dir \
-    Build/%efi_platform_name/DEBUG_GCC5/FV/*.qcow2
+    Build/%efi_platform_name/DEBUG_GCC/FV/*.qcow2
 %endif
 
 mkdir -p %buildroot%_datadir/qemu/firmware
@@ -136,6 +136,9 @@ install -pm 644 -t %buildroot%_datadir/qemu/firmware \
 %_datadir/qemu/firmware/*edk2-%{target_arch}*.json
 
 %changelog
+* Thu Jun 04 2026 Ivan A. Melnikov <iv@altlinux.org> 20260508-alt1
+- edk2-stable202605
+
 * Tue Feb 24 2026 Ivan A. Melnikov <iv@altlinux.org> 20260213-alt1
 - edk2-stable202602
 
