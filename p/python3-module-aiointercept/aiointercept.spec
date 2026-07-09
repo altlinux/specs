@@ -1,5 +1,5 @@
 Name: python3-module-aiointercept
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Mock aiohttp HTTP requests by routing them through a real aiohttp.web
@@ -46,6 +46,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/aiointercept-%version.dist-info
 
 %changelog
+* Thu Jul 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.9-alt1
+- 0.1.9 released
+
 * Wed Jul 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.8-alt1
 - 0.1.8 released
 
