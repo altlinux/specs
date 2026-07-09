@@ -2,13 +2,13 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.25
-Release: alt2
+Version: 1.0.26
+Release: alt1
 
 Summary: Document parser library by deepin
 Summary(ru): Библиотека синтаксического анализа документов от deepin
 
-License: LGPL-3.0-or-later and GPL-3.0-or-later
+License: LGPL-3.0-or-later and GPL-3.0-or-later and MIT and BSD-2-Clause
 Group: Text tools
 Url: https://github.com/linuxdeepin/docparser
 Vcs: https://github.com/linuxdeepin/docparser
@@ -18,7 +18,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake libpoppler-cpp-devel libzip-devel libpugixml-devel libxml2-devel libuuid-devel libtinyxml2-devel libfreetype-devel libmagic-devel
+BuildRequires: gcc-c++ cmake libpoppler-cpp-devel libzip-devel libpugixml-devel libxml2-devel libuuid-devel libtinyxml2-devel libfreetype-devel libmagic-devel libexpat-devel libminizip-devel
 
 %description
 The file content analysis library is provided for the full-text search function
@@ -93,6 +93,11 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Thu Jul 09 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.26-alt1
+- New version 1.0.26.
+- Updated license tag.
+- Applied fixes by upstream.
+
 * Wed Apr 08 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt2
 - Fixed FTBFS.
 
