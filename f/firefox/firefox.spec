@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 152.0.4
+Version: 152.0.5
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jul 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.5-alt1
+- New version.
+
 * Tue Jun 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.4-alt1
 - New version.
 - Fixes:
