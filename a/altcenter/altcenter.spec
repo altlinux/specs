@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.40
+Release: alt0.41
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.41
+- FSTEC: Graphical display changed.
+
 * Tue Jun 30 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.40
 - FSTEC: added new plugin.
 - Policy: rebuilt GRUB config for recovery mode blocking.
