@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: A Python wrapper for Proxmox REST API
@@ -15,6 +15,7 @@ VCS: https://github.com/proxmoxer/proxmoxer
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: fix-blocking-status-timeout-test.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -39,6 +40,7 @@ Proxmox Mail Gateway (PMG), and Proxmox Backup Server (PBS).
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -55,6 +57,9 @@ Proxmox Mail Gateway (PMG), and Proxmox Backup Server (PBS).
 %doc README.rst LICENSE.txt
 
 %changelog
+* Thu Jul 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.3.0-alt1
+- Updated to version 2.3.0.
+
 * Mon Dec 23 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.2.0-alt1
 - Updated to version 2.2.0.
 
