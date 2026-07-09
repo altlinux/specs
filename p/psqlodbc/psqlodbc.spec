@@ -1,16 +1,16 @@
 Name: psqlodbc
-Version: 16.00.0000
+Version: 18.00.0002
 Release: alt1
 
 Summary: The official PostgreSQL ODBC Driver
 License: LGPLv2+
 Group: Databases
 
-Url: http://www.postgresql.org
-Source: http://ftp.postgresql.org/pub/odbc/versions/src/%name-%version.tar.gz
+Url: http://odbc.postgresql.org
+Source: %name-%version.tar
 
 BuildRequires: libunixODBC-devel
-BuildRequires: postgresql-devel
+BuildRequires: libpq-devel
 
 %description
 The official PostgreSQL ODBC Driver
@@ -27,6 +27,7 @@ The official PostgreSQL ODBC Driver
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -38,6 +39,11 @@ The official PostgreSQL ODBC Driver
 %doc docs/*
 
 %changelog
+* Thu Jul 09 2026 Alexei Takaseev <taf@altlinux.org> 18.00.0002-alt1
+- 18.00.0000
+- Change Source: and URL:
+- Change BR: postgresql-devel -> libpq-devel to reduce the build environment
+
 * Sun Sep 17 2023 Alexei Takaseev <taf@altlinux.org> 16.00.0000-alt1
 - 16.00.0000
 
