@@ -1,6 +1,6 @@
 Name: python3-module-aioresponses
-Version: 0.7.8
-Release: alt3
+Version: 0.7.9
+Release: alt1
 
 Summary: Helper to mock/fake web requests in python aiohttp package
 License: MIT
@@ -50,6 +50,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/aioresponses-%version.dist-info
 
 %changelog
+* Thu Jul 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.9-alt1
+- 0.7.9 released
+
 * Thu Jun 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.8-alt3
 - revert unsolicited changes
 
