@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -109,6 +109,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %check
+# override auto mode, mypy tests fail on girar's i586 and aarch64 for unknown
+# reason, can't reproduce locally
+export PYTEST_XDIST_AUTO_NUM_WORKERS=4
 # https://github.com/mypyc/mypyc/issues/760
 %ifarch %ix86 armh
 %define pytest_args --ignore mypyc/test
@@ -135,6 +138,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Thu Jul 09 2026 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.0.0 -> 2.2.0
+
 * Thu May 07 2026 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.20.2 -> 2.0.0.
 
