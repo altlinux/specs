@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.21.2
+Version: 2.25.2
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -37,10 +37,13 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup -a2
 %autopatch -p1
-%SOURCE3 --check
+python3 %SOURCE3 --check
 mv vendor/_tombi_schemas/* ./
 mkdir .cargo
 cat < vendor_cargoconf.toml >> .cargo/config.toml
+# make this project build without vendor,
+# see pyproject-fmt/build_backend.py (build_wheel)
+rm -r toml-fmt-common/src/toml_fmt_common
 %pyproject_scm_init
 cd pyproject-fmt
 %pyproject_deps_resync_build
@@ -71,6 +74,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 09 2026 Stanislav Levin <slev@altlinux.org> 2.25.2-alt1
+- 2.21.2 -> 2.25.2
+
 * Mon May 18 2026 Stanislav Levin <slev@altlinux.org> 2.21.2-alt1
 - 2.21.1 -> 2.21.2.
 
