@@ -2,7 +2,7 @@
 
 Name: rustfs
 Version: 1.0.0
-Release: alt2.alpha.60
+Release: alt2.beta.8
 Summary: High-performance distributed object storage for MinIO alternative
 Group: System/Servers
 License: Apache-2.0
@@ -14,6 +14,7 @@ Source2: rustfs.service
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+BuildRequires: protobuf-compiler
 
 %ifarch loongarch64 riscv64
 # need to rebuild aws-lc-sys
@@ -35,7 +36,7 @@ distributed features for high-performance object storage.
 %rust_prep
 
 %build
-%rust_build -p %name
+RUSTFLAGS="--cfg tokio_unstable" %rust_build -p %name
 
 %install
 %rust_install
@@ -60,6 +61,7 @@ useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/nul
 %files
 %doc LICENSE
 %doc *.md
+%dir %_sysconfdir/%name
 %config(noreplace) %attr(640, root, _%name) %_sysconfdir/%name/%name
 %dir %attr(770, root, _%name) %_sharedstatedir/%name
 %dir %attr(770, root, _%name) %_logdir/%name
@@ -67,6 +69,9 @@ useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/nul
 %_bindir/%name
 
 %changelog
+* Wed Jun 24 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt2.beta.8
+- new version
+
 * Tue Sep 30 2025 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt2.alpha.60
 - new version
 
