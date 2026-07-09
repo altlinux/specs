@@ -17,14 +17,14 @@
 %define part0() %(v="%2"; v="${v%%%%%{1}*}"; echo "$v")
 
 # Versions:
-%define binutils_vr       2.43-alt0.port.1
+%define binutils_vr       2.46-alt0.port
 %define binutils_version  %{part0 - %binutils_vr}
 
-%define gcc_vr            14.3.1-alt0.port.2
+%define gcc_vr            15.2.1-alt0.port
 %define gcc_version       %{part0 - %gcc_vr}
 %define gcc_branch        %{part0 . %gcc_version}
 
-%define glibc_vr          2.40.0.142.2eb180-alt0.port
+%define glibc_vr          2.40.0.224.573a-alt1.0.port
 %define glibc_version     %{expand:%part0 - %glibc_vr}
 
 %define kernel_version    6.12
@@ -126,12 +126,12 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20260101
+Version: 20260522
 
 # The release of this package MUST not go down, unless you simultaniously
 # update binutils, glibc and gcc to new version, in which case you can
 # restart with alt1 if you want.
-Release: alt2
+Release: alt3
 
 
 Summary: GCC cross-toolchain for %target
@@ -791,6 +791,15 @@ export ASM_EXTRA_FLAGS="-Wl,-Ttext-segment=0x90000000"
 %test_data
 
 %changelog
+* Fri May 22 2026 Ivan A. Melnikov <iv@altlinux.org> 20260522-alt3
+- Update components to sync with Sisyphus:
+  + binutils 2.46;
+  + glibc 2.40.0.224.573a;
+  + gcc 15.2.1.
+- Update patches from sisyphus_loongarch64.
+- Fix glibc FTBFS with GCC 15 by backporting timezone code
+  update from upstream.
+
 * Mon Jan 19 2026 Ivan A. Melnikov <iv@altlinux.org> 20260101-alt2
 - Update components to sync with Sisyphus:
   + gcc 14.3.1;
