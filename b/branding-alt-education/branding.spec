@@ -35,8 +35,8 @@
 %endif
 
 Name: branding-%flavour
-Version: 11.1
-Release: alt8
+Version: 11.2
+Release: alt1
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -445,6 +445,8 @@ fi
 /etc/skel/.config/autostart/nm-applet.desktop
 /etc/skel/.config/k*
 /etc/skel/.config/plasma*
+%_datadir/wallpapers/alt-education/
+%_datadir/plasma/look-and-feel/org.altlinux.education.desktop/
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
@@ -463,6 +465,8 @@ fi
 /etc/skel/.face
 /etc/skel/.gtkrc-2.0
 /etc/skel/.local
+# License-agreement menu mask is owned by system-settings
+%exclude /etc/skel/.local/share/applications/alterator-notes-license.desktop
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -485,6 +489,10 @@ fi
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
+%dir /etc/skel/.local
+%dir /etc/skel/.local/share
+%dir /etc/skel/.local/share/applications
+/etc/skel/.local/share/applications/alterator-notes-license.desktop
 /etc/skel/.config/autostart/*.desktop
 %exclude /etc/skel/.config/autostart/nm-applet.desktop
 /etc/skel/.config/meditrc
@@ -496,6 +504,14 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Tue Jul 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt1
+- New version.
+- kde-settings:
+  + Drop stale snapshot cruft from skel configs.
+  + Set branding wallpaper on all monitors (Closes: 56605).
+- system-settings: Hide the alterator-notes License agreement launcher in DE menus.
+- os-release: Set RELEASE_TYPE=stable.
+
 * Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt8
 - bootsplash: switch active Plymouth theme to a localized two-step theme
   (reuses bgrt-alt assets) with an [updates] section for server-apps
