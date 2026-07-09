@@ -1,5 +1,5 @@
 Name: guile-evms
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: Guile bindings for EVMS
@@ -41,6 +41,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Wed Jul 08 2026 Oleg Solovyov <mcpain@altlinux.org> 0.6.8-alt1
+- use separate mount options for ESP (Closes: #59515)
+
 * Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 0.6.7-alt1
 - filter suggested mountpoints (Closes: #51884)
 - dev: pass 'usedsize' volume property
