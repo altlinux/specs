@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: lv2-mda-plugins
-Version: 1.2.10
+Version: 1.2.12
 Release: alt1
 
 Summary: A port of the MDA VST plugins to LV2
@@ -11,10 +11,11 @@ Group: Sound
 License: GPL-2.0-or-later
 Url: https://drobilla.net/software/mda-lv2
 
+Vcs: https://gitlab.com/drobilla/mda-lv2.git
+
 %if_disabled snapshot
 Source: https://download.drobilla.net/%_name-%version.tar.xz
 %else
-Vcs: https://gitlab.com/drobilla/mda-lv2.git
 Source: %_name-%version.tar
 %endif
 
@@ -46,6 +47,9 @@ LPF, HPF, phaser, reverb, and utilities, all featuring GUIs.
 %doc NEWS README*
 
 %changelog
+* Thu Jul 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.12-alt1
+- 1.2.12
+
 * Thu Sep 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.10-alt1
 - 1.2.10 (ported to Meson build system)
 
