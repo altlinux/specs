@@ -1,10 +1,10 @@
 %define module_name	ipt_netflow
-%define module_version	2.6
+%define module_version	2.8.0
 
-%define module_release alt3
+%define module_release alt1
 
 %define flavour		6.18
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64 aarch64 riscv64 loongarch64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.18
 
@@ -70,6 +70,9 @@ install ipt_NETFLOW.ko %buildroot/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jul 09 2026 Alexei Takaseev <taf@altlinux.org> 2.8.0-alt1
+- v2.8.0
 
 * Mon Dec 08 2025 Alexei Takaseev <taf@altlinux.org> 2.6-alt3
 - Update to git:13a2b84bccdafea3ff84dab341dc2a14615adada
