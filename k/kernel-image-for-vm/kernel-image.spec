@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.37
+%define kernel_sublevel 	.38
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -636,6 +636,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jul 08 2026 Anton Farygin <rider@altlinux.org> 6.18.38-alt1
+- 6.18.37 -> 6.18.38
+- vm flavour: enabled MGLRU (multi-gen LRU)
+
 * Sat Jun 27 2026 Anton Farygin <rider@altlinux.org> 6.18.37-alt1
 - 6.18.36 -> 6.18.37
 
