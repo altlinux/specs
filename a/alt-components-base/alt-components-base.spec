@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.5
+Version: 0.10.6
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -102,6 +102,9 @@ for d in categories/*/ ; do
         echo "%_alterator_datadir/components/categories/$d" >>install.vendors_components.list
         echo "$(alterator-entry get "$f" name)" >>vendors_categories.list
     fi
+
+    # Also add the 'vendors' category to the category list
+    echo "vendors" >>vendors_categories.list
 done
 
 for d in components/*/ vendors/*/*/ ; do
@@ -177,6 +180,9 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Thu Jul 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.6-alt1
+- editions: Drop education-uav from edition_education.
+
 * Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.5-alt1
 - Add components:
   + ca-certificates-espd and education-uav.
