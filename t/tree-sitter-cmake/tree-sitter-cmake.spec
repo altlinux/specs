@@ -1,5 +1,5 @@
 Name: tree-sitter-cmake
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: CMake parser for tree-sitter
@@ -22,6 +22,7 @@ gcc -shared %optflags %optflags_shared -Isrc src/parser.c src/scanner.c -o cmake
 install -pm0644 -D cmake.so %buildroot%_libdir/libtree-sitter-cmake.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-cmake/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-cmake
+cp -a queries %buildroot%_libdir/tree-sitter-cmake
 
 %files
 %doc LICENSE README*
@@ -29,6 +30,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-cmake
 %_libdir/tree-sitter-cmake
 
 %changelog
+* Thu Jul 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.4-alt1
+- 0.7.4 released
+
 * Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.2-alt1
 - 0.7.2 released
 
