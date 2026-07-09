@@ -10,7 +10,7 @@
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 96
+%define v_minor 97
 %define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
@@ -144,6 +144,7 @@ Requires: rustfmt
 Requires: rust-analyzer
 # Required to view std code and doc commentary through lsp support.
 Requires: rust-src
+BuildArch: noarch
 
 %description full
 %summary.
@@ -600,6 +601,13 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Thu Jul 09 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.97.0-alt1
+- New version (1.97.0).
+- Security fixes:
+    + CVE-2026-55200: libssh2 heap buffer over-read in SFTP handling allows memory disclosure or crash.
+    + CVE-2026-55199: libssh2 pre-authentication denial of service via CPU exhaustion in SSH_MSG_EXT_INFO handling
+    + CVE-2025-15661: libssh2 out-of-bounds write in SSH packet handling may enable remote code execution
+
 * Mon Jun 01 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.96.0-alt1
 - New version (1.96.0).
 - Security fixes:
