@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name pwvucontrol
 %define ver_major 0.5
 %define xdg_name com.saivert.%_name
@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -88,6 +88,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Thu Jul 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3-1-gcc84535
+
 * Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - 0.5.2
 
