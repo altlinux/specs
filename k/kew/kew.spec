@@ -1,11 +1,12 @@
 Name: kew
-Version: 4.1.7
+Version: 4.1.8
 Release: alt1
 
 Summary: A terminal music player
 License: GPL-2.0
 Group: Sound
-Url: https://github.com/ravachol/kew
+URL: https://www.kewplayer.com
+VCS: https://github.com/ravachol/kew
 
 Source: %name-%version.tar
 
@@ -51,6 +52,9 @@ Features:
 %_man1dir/kew.1*
 
 %changelog
+* Thu Jul 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.8-alt1
+- 4.1.8 released
+
 * Mon Jul 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.7-alt1
 - 4.1.7 released
 
