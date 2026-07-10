@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.15
+Version: 1.6.17
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -146,6 +146,15 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.17-alt1
+- new version 1.6.17 (with rpmrb script)
+- fixes vulnerabilities:
+ + Fix stored XSS via unescaped attachment MIME type [CVE-2026-54432]
+ + Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433]
+ + Fix various vulnerabilities in the password plugin
+ + Fix SSRF bypass via specific local address URLs
+ + Fix infinite loop and DoS via crafted TNEF (winmail.dat)
+
 * Sun Mar 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.15-alt1
 - new version 1.6.15
 
