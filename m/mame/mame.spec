@@ -1,7 +1,7 @@
 %global __find_debuginfo_files %nil
 
 Name: mame
-Version: 0.287
+Version: 0.288
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -25,7 +25,7 @@ Patch1: 0001-Add-update-for-russian-translation.patch
 BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel glibc-devel
 BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel eglexternalplatform-devel egl-wayland-devel libwayland-egl-devel wayland-devel
 BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler
-BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
+BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt6-base-devel libpulseaudio-devel
 BuildRequires: libuv-devel gettext-tools
 
 Provides: bundled(lua) = 5.3.4
@@ -111,6 +111,8 @@ HTML documentation for MAME.
 
 %patch0 -p1
 #%%patch1 -p1
+
+sed -i -e 's/qmake6/qmake-qt6/g' scripts/src/osd/modules.lua
 
 rm -rf 3rdparty/compat \
     3rdparty/dxsdk \
@@ -315,6 +317,9 @@ install -D -m 0644 docs/source/images/MAMElogo.svg %buildroot%_iconsdir/hicolor/
 %_datadir/%name/hash/*
 
 %changelog
+* Thu Jul  9  2026 Artyom Bystrov <arbars@altlinux.org> 0.288-alt1
+- Update version
+
 * Fri Apr  3 2026 Artyom Bystrov <arbars@altlinux.org> 0.287-alt1
 - Update version
 
