@@ -1,113 +1,61 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           jsoup
-Version:        1.14.3
-Release:        alt2_7jpp11
-Summary:        Java library for working with real-world HTML
+Version:        1.22.2
+Release:        alt1
+
+Summary:        Java HTML parser, built for HTML editing, cleaning, scraping, and XSS safety
 License:        MIT
+Group:          Development/Java
 URL:            http://jsoup.org/
+VCS:            https://github.com/jhy/jsoup
+
+Source0:        %name-%version.tar
+
+Patch0:         remove-re2j.patch
+
+BuildRequires(pre):  maven-local
+BuildRequires:  jpackage-default
+
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(io.netty:netty-bom:pom:)
+
 BuildArch:      noarch
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-# The sources contain non-free scraped web pages as test data
-Source1:        generate-tarball.sh
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-%endif
-BuildRequires: jsr-305
-
-Source44: import.info
-
 %description
-jsoup is a Java library for working with real-world HTML.
-It provides a very convenient API for extracting and manipulating data,
-using the best of DOM, CSS, and jquery-like methods.
+jsoup is a Java library that makes it easy to work with real-world HTML and XML.
+It offers an easy-to-use API for URL fetching, data parsing, extraction, and
+manipulation using DOM API methods, CSS, and xpath selectors.
 
-jsoup implements the WHATWG HTML5 specification,
-and parses HTML to the same DOM as modern browsers do.
-
- - scrape and parse HTML from a URL, file, or string
- - find and extract data, using DOM traversal or CSS selectors
- - manipulate the HTML elements, attributes, and text
- - clean user-submitted content against a safe white-list,
-   to prevent XSS attacks
- - output tidy HTML
-
-jsoup is designed to deal with all varieties of HTML found in the wild;
-from pristine and validating, to invalid tag-soup;
-jsoup will create a sensible parse tree.
-
-%{?module_package}
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-## Try common possible root names for upstream archive. If one fails, try next.
-## This covers archives that unpack to jsoup-1.14.3 or jsoup (no version) or jsoup-jsoup-1.14.3.
-#%define _try_setup(n) %{nil:%%{?__dummy:%%{expand:(%{?__dummy})}}}
-#%{!?_setup_done:%global _setup_done 0}
-#%{!?_setup_tried:%global _setup_tried 0}
-#
-## Try the most likely names; the first successful %setup will set _setup_done.
-#%if %{?_setup_done:0} == 0
-#%_setup_tried 0
-#%__try1:
-#%define _setup_name %{name}-%{version}
-#%setup -q -n %{_setup_name} || %{nil}
-#%if 0%{?rpmbuild_exit_status:0} == 0
-#%global _setup_done 1
-#%endif
-#%endif
-#
-#%if %{?_setup_done:0} == 0
-#%setup -q -n %{name} || %setup -q
-#%endif
-
-# Remove japicmp plugin safely (javapackages-tools macro).
-# Use "|| true" so absence of the plugin won't abort %prep (pom_remove_plugin exits non-zero if nothing to remove).
-%pom_remove_plugin -r :japicmp-maven-plugin || true
-#%pom_remove_plugin com.github.siom79.japicmp:japicmp-maven-plugin || true
+%setup
+%autopatch -p1
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :maven-failsafe-plugin
+%pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-failsafe-plugin
+%pom_remove_plugin :japicmp-maven-plugin
 
-# Expose internal packages in the OSGi metadata, clearly marking them as such
-# using the x-internal attribute
-%pom_xpath_inject "pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions" \
-  "<_exportcontents>*.internal;x-internal:=true,*</_exportcontents>"
+%pom_remove_dep com.google.re2j:re2j
 
 %build
-# skip japicmp mojo in offline builds (plugin tries to download from Maven Central)
-%mvn_build -f -- -Djapicmp.skip=true -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
 
-%files -n %{?module_prefix}%{name} -f .mfiles
-%doc README.md CHANGES
-%doc --no-dereference LICENSE
+%files -f .mfiles
+%doc LICENSE *.md
 
 %changelog
+* Fri Jul 10 2026 Evgeniy Serov <scala@altlinux.org> 1.22.2-alt1
+- Updated to 1.22.2.
+
 * Mon Apr 20 2026 Pavel Vasenkov <pav@altlinux.org> 1.14.3-alt2_7jpp11
-- NMU: Fixed FTBFS with jsr305 
+- NMU: Fixed FTBFS with jsr305
 
 * Tue Oct 28 2025 Pavel Vasenkov <pav@altlinux.org> 1.14.3-alt1_7jpp11
 - new version
