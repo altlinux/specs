@@ -5,7 +5,7 @@
 %global __find_debuginfo_files %nil
 
 Name: deepin-terminal
-Version: 6.5.38
+Version: 6.5.39
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -128,6 +128,9 @@ patchelf %buildroot%_libdir/libterminalwidget6.so.%twver --add-rpath %_dqt6_libd
 %_includedir/terminalwidget6/
 
 %changelog
+* Fri Jul 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.39-alt1
+- New version 6.5.39.
+
 * Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.38-alt1
 - New version 6.5.38.
 - Built on Qt6 for DDE.
