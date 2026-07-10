@@ -1,110 +1,80 @@
-Group: Other
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global version_id parent
-%global upstream_name client_java
+Name:           prometheus-simpleclient-java
+Version:        0.16.0
+Release:        alt1
 
-Name:          prometheus-simpleclient-java
-Version:       0.12.0
-Release:       alt1_4jpp11
-Summary:       Prometheus JVM Client
+Summary:        Prometheus instrumentation library for JVM applications
+License:        Apache-2.0
+Group:          Development/Java
+URL:            http://prometheus.github.io/client_java/
+VCS:            https://github.com/prometheus/client_java
 
-License:       ASL 2.0 and CC0
-URL:           https://github.com/prometheus/client_java/
+Source0:        %name-%version.tar
 
-Source0:       https://github.com/prometheus/client_java/archive/%{version_id}-%{version}.tar.gz
-# OpenTelemetry isn't in Fedora
-Patch1:        remove_opentelemetry_tracer.patch
+Patch0:         remove_opentelemetry_tracer.patch
 
-BuildArch:     noarch
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
-BuildRequires: maven-local
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(junit:junit)
-Source44: import.info
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(commons-math3:commons-math3)
+BuildRequires:  mvn(io.dropwizard.metrics:metrics-core)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(org.apache.logging.log4j:log4j-core)
+BuildRequires:  mvn(ch.qos.logback:logback-classic)
+
+BuildArch:      noarch
 
 %description
-Prometheus instrumentation library for JVM applications.
+It supports Java, Clojure, Scala, JRuby, and anything else that runs on the JVM.
+
+%javadoc_package
 
 %prep
-%setup -q -n %{upstream_name}-%{version_id}-%{version}
+%setup
+%autopatch -p1
 
-# Remove included jar files
-find . -name \*.jar -print0 | xargs -0 rm
+%pom_remove_plugin :maven-enforcer-plugin
 
-# Only build the following artefacts as these are actually dependencies
-# of prometheus_jmxexporter
-# 
-# io.prometheus:simpleclient
-# io.prometheus:simpleclient_hotspot
-# io.prometheus:simpleclient_httpserver
-# io.prometheus:simpleclient_common
-for m in simpleclient_caffeine \
-         simpleclient_dropwizard \
-         simpleclient_graphite_bridge \
-         simpleclient_hibernate \
-         simpleclient_guava \
-         simpleclient_log4j \
-         simpleclient_log4j2 \
-         simpleclient_logback \
-         simpleclient_pushgateway \
-         simpleclient_servlet \
-         simpleclient_spring_web \
-         simpleclient_spring_boot \
-         simpleclient_jetty \
-         simpleclient_jetty_jdk8 \
-         simpleclient_vertx \
-         simpleclient_bom \
-         integration_tests \
-         simpleclient_servlet_common \
-         simpleclient_servlet_jakarta \
-         benchmarks; do
-%pom_disable_module $m
-done
-# Only build simpleclient_tracer_common as it's being used by an Examplar class
+%pom_disable_module simpleclient_spring_web
+%pom_disable_module simpleclient_spring_boot
+%pom_disable_module integration_tests
 %pom_disable_module simpleclient_tracer_otel_agent simpleclient_tracer
 %pom_disable_module simpleclient_tracer_otel simpleclient_tracer
+%pom_disable_module simpleclient_caffeine
+%pom_disable_module simpleclient_hibernate
+%pom_disable_module simpleclient_pushgateway
+%pom_disable_module simpleclient_vertx
+%pom_disable_module simpleclient_vertx4
+%pom_disable_module simpleclient_httpserver
+%pom_disable_module benchmarks
 
-# Remove test dependencies for hotspot
-%pom_remove_dep io.prometheus:simpleclient_servlet simpleclient_hotspot
-%pom_remove_dep org.mockito:mockito-core simpleclient_hotspot
-%pom_remove_dep org.eclipse.jetty:jetty-servlet simpleclient_hotspot
-# Remove test dependencies for httpserver
-%pom_remove_dep org.assertj:assertj-core simpleclient_httpserver
-%pom_remove_dep javax.xml.bind:jaxb-api simpleclient_httpserver
-
-# Remove tests which wouldn't compile with removed deps (like mockito)
-for i in $(find simpleclient_hotspot/src/test/java/io/prometheus/client/hotspot -name \*.java); do
-  if ! echo $i | grep -q -E 'VersionInfoExportsTest\.java'; then
-    rm $i
-  fi
-done
-rm -rf simpleclient_httpserver/src/test/java
-
-# remove OpenTelemetry stuff, which we don't support
-%patch1 -p2
 %pom_remove_dep io.prometheus:simpleclient_tracer_otel simpleclient
 %pom_remove_dep io.prometheus:simpleclient_tracer_otel_agent simpleclient
-%pom_add_dep io.prometheus:simpleclient_tracer_common:%{version} simpleclient
+%pom_add_dep io.prometheus:simpleclient_tracer_common:%version simpleclient
 
-# Change compiler source/target version to JDK 8 level
-%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" "1.8" pom.xml
-%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" "1.8" pom.xml
+%pom_change_dep -r :hamcrest-all :hamcrest-core
 
+%pom_change_dep -r org.eclipse.jetty:jetty-servlet org.eclipse.jetty:jetty-servlet:9.4
+%pom_change_dep -r org.eclipse.jetty:jetty-server org.eclipse.jetty:jetty-server:9.4
+
+rm -f simpleclient_servlet/src/test/java/io/prometheus/client/exporter/ExampleBenchmark.java
+rm -f simpleclient_servlet_jakarta/src/test/java/io/prometheus/client/exporter/Example{Benchmark,Exporter}.java
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
-%doc NOTICE
+%doc LICENSE NOTICE *.md
 
 %changelog
+* Tue Jul 07 2026 Evgeniy Serov <scala@altlinux.org> 0.16.0-alt1
+- Updated to 0.16.0.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_4jpp11
 - new version
 
