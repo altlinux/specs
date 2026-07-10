@@ -11,7 +11,7 @@
 
 Name: gnome-boxes
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
@@ -46,6 +46,8 @@ Requires: gnome-keyring dconf
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt libvirt-daemon libvirt-kvm
 Requires: qemu-kvm
+# https://bugzilla.altlinux.org/59788
+Requires: libspice-gtk-tools
 
 # Needed for unattended installations
 Requires: fuseiso
@@ -132,6 +134,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Fri Jul 10 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1.1
+- added libspice-gtk-tools to runtime dependencies (ALT #59788)
+
 * Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
