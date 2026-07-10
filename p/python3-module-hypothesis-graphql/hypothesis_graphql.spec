@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.0
-Release: alt1.1
+Version: 0.13.0
+Release: alt1
 
 Summary: Hypothesis strategies for GraphQL queries
 License: MIT
@@ -16,16 +16,13 @@ Vcs: https://github.com/Stranger6667/hypothesis-graphql.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-graphql-core
-BuildRequires: python3-module-hypothesis
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-xdist
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -37,6 +34,8 @@ They expose edge cases in your code that are unlikely to be found otherwise.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -45,7 +44,7 @@ They expose edge cases in your code that are unlikely to be found otherwise.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not test_corpus_negative"
+%pyproject_run_pytest test -k "not test_corpus_negative"
 
 %files
 %doc LICENSE README.*
@@ -53,8 +52,8 @@ They expose edge cases in your code that are unlikely to be found otherwise.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1.1
-- Demodernized packaging.
+* Thu Jul 09 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.13.0-alt1
+- New version (0.13.0).
 
 * Tue Feb 10 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 0.12.0-alt1
 - New version (0.12.0).
