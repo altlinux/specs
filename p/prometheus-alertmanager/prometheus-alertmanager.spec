@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.33.0
+Version: 0.33.1
 Release: alt1
 Summary: Prometheus Alertmanager
 
@@ -20,8 +20,8 @@ Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires(pre): prometheus-common
 BuildRequires: rpm-build-golang golang >= 1.25
+Requires(pre): prometheus-common
 
 %description
 The Alertmanager handles alerts sent by client applications such as the
@@ -91,6 +91,9 @@ done
 %dir %attr(0750, prometheus, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Thu Jul 09 2026 Artyom Sinyugin <writers@altlinux.org> 0.33.1-alt1
+- updated from 0.33.0 to 0.33.1
+
 * Wed Jun 25 2026 Artyom Sinyugin <writers@altlinux.org> 0.33.0-alt1
 - New version 0.33.0.
 - Restricted default listeners and disabled HA cluster listener by default.
