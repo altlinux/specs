@@ -5,11 +5,11 @@
 
 %global _unpackaged_files_terminate_build 1
 
-# git rev-parse --short v3.5.28^{commit}
-%define git_commit f22ac30
+# git rev-parse --short v3.5.32^{commit}
+%define git_commit 32c8992
 
 Name: etcd
-Version: 3.5.28
+Version: 3.5.32
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
@@ -111,6 +111,13 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Fri Jul 10 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.32-alt1
+- 3.5.28 -> 3.5.32.
+- Fixes:
+  + CVE-2026-29181: OpenTelemetry-Go multi-value `baggage` header extraction causes excessive allocations (remote dos amplification)
+  + CVE-2026-39821: Invoking failure to reject ASCII-only Punycode-encoded labels in golang.org/x/net/idna
+  + CVE-2026-39883: OpenTelemetry-Go has an incomplete fix for CVE-2026-24051: BSD kenv command not using absolute path enables PATH hijacking
+
 * Wed Apr 01 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.28-alt1
 - 3.5.26 -> 3.5.28.
 - Fixes:
