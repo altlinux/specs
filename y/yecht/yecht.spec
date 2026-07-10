@@ -1,64 +1,46 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global commitversion 157cf13
-%global dlversion 0.0.2-0-g157cf13
-%global cluster jruby
+Name:           yecht
+Version:        1.1
+Release:        alt1
 
-Name:     yecht
-Version:  1.0
-Release:  alt1_16jpp11
-Summary:  A YAML processor based on Syck
-License:  MIT
-URL:      http://github.com/%{cluster}/%{name}
-Source0:  https://github.com/%{cluster}/%{name}/archive/%{name}-%{version}.zip
-Patch0:   disable-jruby-dep.patch
+Summary:        The "Yecht" implementation of Ruby 1.8's yaml parser "Syck"
+License:        MIT
+Group:          Development/Java
+URL:            https://github.com/jruby/yecht
+VCS:            https://github.com/jruby/yecht
 
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-Requires: jpackage-utils
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:      noarch
-Source44: import.info
 
 %description
-Yecht is a Syck port, a YAML 1.0 processor for Ruby.
+%summary.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
+%javadoc_package
 
 %prep
-%setup -n %{name}-%{name}-%{version}
-%patch0
+%setup
 
-find ./ -name '*.jar' -exec rm -f '{}' \; 
-find ./ -name '*.class' -exec rm -f '{}' \; 
-
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
+%pom_remove_plugin :build-helper-maven-plugin
+%pom_remove_dep :jruby-core
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Tue Jul 07 2026 Evgeniy Serov <scala@altlinux.org> 1.1-alt1
+- Updated to 1.1.
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_16jpp11
 - fc34 update
 
