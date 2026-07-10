@@ -24,7 +24,7 @@
 
 Name:    telegram-desktop
 Version: 6.9.3
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -38,6 +38,8 @@ Source: %name-%version.tar
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
 #Source1: %name-gsl-%version.tar
+
+Patch: toomanycooks-upstream-loongarch64-and-riscv64-support.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -249,6 +251,7 @@ test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incom
 %endif
 
 #patch9 -p1
+%patch -p1 -d Telegram/ThirdParty/TooManyCooks
 
 # See https://github.com/desktop-app/tg_owt/pull/82
 # TODO: there are incorrect using and linking libyuv
@@ -380,6 +383,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Fri Jul 10 2026 Ilya Sorochan <k0tran@altlinux.org> 6.9.3-alt2
+- NMU: fix bundled TooManyCooks FTBFS on loongarch64 and riscv64
+
 * Mon Jun 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.9.3-alt1
 - new version 6.9.3
 - build QRhi shaders with qt6-shadertools (qsb-qt6)
