@@ -1,21 +1,20 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           univocity-output-tester
-Summary:        Simple project to validate expected outputs of univocity parsers
-Version:        2.1
-Release:        alt1_5jpp11
-License:        ASL 2.0
+Version:        3.0
+Release:        alt1
 
+Summary:        Simple project to validate expected outputs of univocity parsers
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://github.com/uniVocity/univocity-output-tester
-Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+VCS:            https://github.com/uniVocity/univocity-output-tester
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildArch:      noarch
-
-BuildRequires:  maven-local
-Source44: import.info
 
 %description
 This very simple project was created by univocity to help you validate
@@ -25,43 +24,30 @@ non-trivial outputs, such as XML, CSV, collections and arrays, etc.
 It enforces a consistent and organized testing structure and enables
 you to easily see what is going on with your tests if you want to.
 
-
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-API documentation for %{name}.
-
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
-
+%pom_remove_plugin :nexus-staging-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :nexus-staging-maven-plugin
 
+sed -i -e 's|<source>1\.6</source>|<source>8</source>|' -e 's|<target>1\.6</target>|<target>8</target>|' pom.xml
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
-
+%mvn_build
 
 %install
 %mvn_install
 
-
 %files -f .mfiles
-%doc --no-dereference LICENSE-2.0.html
-%doc README.md
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-2.0.html
-%doc README.md
-
+%doc LICENSE-2.0.html README.md
 
 %changelog
+* Tue Jul 07 2026 Evgeniy Serov <scala@altlinux.org> 3.0-alt1
+- Updated to 3.0.
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_5jpp11
 - new version
 
