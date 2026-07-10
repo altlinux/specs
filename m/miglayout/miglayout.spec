@@ -1,75 +1,75 @@
-Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           miglayout
-Version:        4.2
-Release:        alt1_12jpp8
-Summary:        Versatile and flexible Swing layout manager
-URL:            http://www.miglayout.com/
-License:        BSD
+Version:        11.4.2
+Release:        alt1
 
-# Hidden in maven.org labyrinth, so no download URL's
-Source0:        miglayout-core-4.2-sources.jar
-Source1:        miglayout-swing-4.2-sources.jar
+Summary:        Official MiG Layout for Swing, SWT and JavaFX
+License:        BSD
+Group:          Development/Java
+URL:            http://www.miglayout.com/
+VCS:            https://github.com/mikaelgrev/miglayout
+
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
 BuildArch:      noarch
 
-Requires:       java
-# We no longer have an examples sub-package, note no provides as the examples
-# are no longer packaged, so we do not provide them
-Obsoletes:      %{name}-examples < %{version}-%{release}
-Source44: import.info
-
 %description
-MiGLayout is a versatile Swing layout manager.  It uses String or
-API type-checked constraints to format the layout. MiGLayout can
-produce flowing, grid based, absolute (with links), grouped and
-docking layouts. MiGLayout is created to be to manually coded layouts
+Official MiG Layout for Swing, SWT and JavaFX
+
+For Java developers writing GUI layouts by hand that wants simplicity, power and
+automatic per platform fidelity, that are dissatisfied with the current layout
+managers in Swing, JavaFX and SWT, MigLayout solves your layout problems. User
+interfaces created with MigLayout is easy to maintain, you will understand how
+the layout will look like just by looking at the source code.
+
+MigLayout is a superbly versatile JavaFX/SWT/Swing layout manager that makes
+layout problems trivial. It is using String or API type-checked constraints to
+format the layout. MigLayout can produce flowing, grid based, absolute (with
+links), grouped and docking layouts. You will never have to switch to another
+layout manager ever again! MigLayout is created to be to manually coded layouts
 what Matisse/GroupLayout is to IDE supported visual layouts.
 
+For documentation see http://miglayout.com
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadocs for MiGLayout
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for MiGLayout.
-
+%javadoc_package
 
 %prep
-%setup -q -c %{name}
-unzip -oq %{SOURCE1}
+%setup
 
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+
+%pom_disable_module nbm
+%pom_disable_module swt
+%pom_disable_module javafx
+%pom_disable_module demo
+%pom_disable_module examples
+
+# Disable Error Prone
+sed -i '/<annotationProcessorPaths>/,/<\/annotationProcessorPaths>/d; /Xplugin:ErrorProne/,/<\/arg>/d' pom.xml
+
+rm -f swing/src/test/java/net/miginfocom/swing/MigLayoutTest.java
 
 %build
-javac -encoding utf8 net/miginfocom/{layout,swing}/*.java
-
-jar cmf META-INF/MANIFEST.MF %{name}-core.jar net/miginfocom/layout/*.class
-jar cmf META-INF/MANIFEST.MF %{name}-swing.jar net/miginfocom/swing/*.class
-javadoc -Xdoclint:none -d doc net.miginfocom.{layout,swing}
-
+%mvn_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-mkdir -p %{buildroot}%{_javadocdir}
-cp -a %{name}-*.jar %{buildroot}%{_javadir}
-cp -a doc %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
-
-%files
-%{_javadir}/*.jar
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files -f .mfiles
+%doc README.md
 
 %changelog
+* Tue Jul 07 2026 Evgeniy Serov <scala@altlinux.org> 11.4.2-alt1
+- Updated to 11.4.2 (core and swing only).
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_12jpp8
 - fc update
 
