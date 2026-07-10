@@ -2,7 +2,7 @@
 %define xdg_name ru.ximperlinux.tuner.Displays
 
 Name: tuner-displays
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 License: GPL-3.0
 
@@ -56,6 +56,9 @@ Supported environments:
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Jul 10 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.3-alt1
+- Fix monitor settings being applied to the wrong display
+
 * Fri Jul 10 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.2-alt1
 - Fix continuous polling during display page initialization
 
