@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pgq
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 Summary: PgQ is PostgreSQL extension that provides generic, high-performance lockless queue with simple API based on SQL functions.
 License: PostgreSQL
@@ -37,5 +37,8 @@ queue with simple API based on SQL functions.
 %doc LICENSE README.rst docs
 
 %changelog
+* Fri Jul 10 2026 Alexei Takaseev <taf@altlinux.org> 3.5.2-alt1
+- 3.5.2
+
 * Wed Jun 24 2026 Alexei Takaseev <taf@altlinux.org> 3.5.1-alt1
 - Initial build for ALT Linux
