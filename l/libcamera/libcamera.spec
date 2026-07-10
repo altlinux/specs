@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Epoch: 1
 
@@ -135,6 +135,7 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %ifarch aarch64
 %_libexecdir/%name/raspberrypi_ipa_proxy
 %_libexecdir/%name/rkisp1_ipa_proxy
+%_libexecdir/%name/mali-c55_ipa_proxy
 %endif
 %ifarch armh
 %_libexecdir/%name/raspberrypi_ipa_proxy
@@ -169,6 +170,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
 
 %changelog
+* Fri Jul 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.2-alt1
+- 0.7.2
+
 * Wed Apr 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.1-alt1
 - 0.7.1
 

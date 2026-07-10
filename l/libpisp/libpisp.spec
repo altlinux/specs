@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libpisp
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 
 Summary: A helper library to generate run-time configuration for the Raspberry Pi ISP (PiSP) 
@@ -80,6 +80,12 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
+* Sat May 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Wed Mar 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
