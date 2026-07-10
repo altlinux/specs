@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
-Version: 3.0.2
-Release: alt5
+Version: 3.0.3
+Release: alt1
 
 License: Apache-2.0
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -80,6 +80,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Fri Jul 10 2026 Paul Wolneykien <manowar@altlinux.org> 3.0.3-alt1
+- Big-Endian platforms magma-mgm fix (thx Dmitry Belyavskiy).
+
 * Thu Jul 17 2025 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt5
 - Remove old (probably, wrong) openssl.cnf "HOME" fix.
 - Add GOST provider options to the control script.
