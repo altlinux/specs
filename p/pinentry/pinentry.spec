@@ -4,7 +4,7 @@
 %def_disable fltk
 
 Name: pinentry
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Group: File tools
@@ -266,6 +266,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Fri Jul 10 2026 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt1
+- new version
+
 * Thu Oct 16 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - new version
 
