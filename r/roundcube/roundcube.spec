@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.17
+Version: 1.7.2
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -16,7 +16,6 @@ Url: http://roundcube.net/
 # Source-url: https://github.com/roundcube/roundcubemail/releases/download/%version%rel/roundcubemail-%version%rel-complete.tar.gz
 Source: %name-%version.tar
 Source1: %name.apache.conf
-Source2: composer.json-dist
 Patch0: roundcube-1.2.4-sso-alt.patch
 BuildArch: noarch
 
@@ -85,7 +84,7 @@ BuildArch: noarch
 #sed -i 's,php_,php5_,' .htaccess
 
 # disable SymLinksIfOwnerMatch
-%__subst 's|\(.*SymLinksIfOwnerMatch.*\)|#\1|g' .htaccess
+%__subst 's|\(.*SymLinksIfOwnerMatch.*\)|#\1|g' public_html/.htaccess
 
 #if [ ! -s program/js/jquery.min.js ] ; then
 #    echo "run bin/install-jsdeps.sh after download new build"
@@ -94,10 +93,9 @@ BuildArch: noarch
 %install
 mkdir -p %buildroot%_datadir/%name/
 install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
-install -Dpm 0644 .htaccess %buildroot%_datadir/%name/.htaccess
 #install -Dpm 0644 jsdeps.json %buildroot%_datadir/%name/jsdeps.json
 #install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
-cp -ar SQL bin program installer plugins skins public_html vendor %buildroot%_datadir/%name/
+cp -ar SQL bin program installer plugins skins public_html vendor composer.json composer.lock %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
 # deny webserver access to this directory
@@ -116,9 +114,6 @@ ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
 ln -s  %_sysconfdir/%name/ %buildroot%_datadir/%name/config
-
-install -Dpm 0644 %SOURCE2 %buildroot%_sysconfdir/%name/composer.json
-ln -s  %_sysconfdir/%name/composer.json %buildroot%_datadir/%name/composer.json
 
 ln -s  %_docdir/%name-%version %buildroot%_datadir/%name/doc
 
@@ -140,12 +135,30 @@ service httpd2 condreload
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/enigma/
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
-%doc CHANGELOG.md SECURITY.md INSTALL LICENSE README.md UPGRADING SQL/
+%doc CHANGELOG.md README.md SQL/ docs/
 
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2
+- fixes vulnerabilities:
+ + Fix stored XSS via unescaped attachment MIME type [CVE-2026-54432]
+ + Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433]
+ + Fix various vulnerabilities in the password plugin
+ + Fix SSRF bypass via specific local address URLs
+ + Fix infinite loop and DoS via crafted TNEF (winmail.dat)
+
+* Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
+- new version 1.7.1
+- fixes vulnerabilities:
+ + Fix stored XSS via unescaped attachment MIME type [CVE-2026-54432]
+ + Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433]
+ + Fix various vulnerabilities in the password plugin
+ + Fix SSRF bypass via specific local address URLs
+ + Fix infinite loop and DoS via crafted TNEF (winmail.dat)
+
 * Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.17-alt1
 - new version 1.6.17 (with rpmrb script)
 - fixes vulnerabilities:
