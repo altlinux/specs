@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.131
+Version: 0.132
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -49,6 +49,7 @@ Provides: kernel-headers-modules-std-pae
 %ifnarch aarch64
 Provides: kernel-headers-modules-mp
 Provides: kernel-headers-modules-rk
+Provides: kernel-headers-modules-rockchip64
 %endif
 %ifnarch %e2k
 Provides: kernel-headers-modules-elbrus-def
@@ -98,6 +99,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Fri Jul 10 2026 Dmitry Terekhin <jqt4@altlinux.org> 0.132-alt1
+- Added fake P:kernel-headers-modules-rockchip64
+
 * Sat Dec 20 2025 Vitaly Chikunov <vt@altlinux.org> 0.131-alt1
 - Fix in-tree modules packages auto-dependency (kernel.req.files).
 
