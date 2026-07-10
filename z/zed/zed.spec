@@ -1,17 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
+
+# We disable debuginfo due to too big debuginfo rpm package size, which
+# leads to rpmbuild error: cpio archive too big - 4160M
+%add_debuginfo_skiplist %_libexecdir/* %_bindir/*
+
 %define app_id dev.zed.Zed
 %define app_cli zed-editor
 
 %define webrtc_basedir %_builddir
 # git grep WEBRTC_TAG
-%define webrtc_tar webrtc-0001d84-2
+%define webrtc_tag webrtc-0001d84-2
+%ifarch x86_64
 %define webrtc_source %SOURCE4
 %define webrtc_dir %webrtc_basedir/linux-x64-release
+%else
+%define webrtc_source %SOURCE5
+%define webrtc_dir %webrtc_basedir/linux-arm64-release
+%endif
 
 Name: zed
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -20,17 +29,16 @@ Group: Editors
 Url: https://zed.dev/
 Vcs: https://github.com/zed-industries/zed.git
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: config.toml
 Source3: update-metadata-releases.py
-Source4: https://github.com/livekit/rust-sdks/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
+Source4: https://github.com/livekit/rust-sdks/releases/download/%webrtc_tag/webrtc-linux-x64-release.zip
+Source5: https://github.com/livekit/rust-sdks/releases/download/%webrtc_tag/webrtc-linux-arm64-release.zip
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-rust
-BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: cargo-about
 BuildRequires: cmake
@@ -89,7 +97,7 @@ export ALLOW_MISSING_LICENSES=1
 ./script/generate-licenses
 
 export LK_CUSTOM_WEBRTC="%webrtc_dir"
-%rust_build --package zed --package cli
+cargo build --release %{?_smp_mflags} --offline --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
@@ -120,6 +128,11 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Fri Jul 10 2026 Anton Zhukharev <ancieg@altlinux.org> 1.10.1-alt1
+- Updated to 1.10.1.
+- Disabled debuginfo generation.
+- Included aarch64 architecture.
+
 * Thu Jul 09 2026 Anton Zhukharev <ancieg@altlinux.org> 1.10.0-alt1
 - Updated to 1.10.0.
 
