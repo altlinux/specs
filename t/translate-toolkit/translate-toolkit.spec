@@ -1,16 +1,19 @@
 %define modname translate
 
 Name: translate-toolkit
-Version: 3.12.2
+Version: 3.19.13
 Release: alt1
 
 Summary: Tools and API for translation and localization engineering.
 
 License: GPL-2.0-or-later
 Group: Development/Python
-Url: http://toolkit.translatehouse.org/
-# Source-url: https://github.com/translate/translate/releases/download/%version/%name-%version.tar.gz
+URL: https://toolkit.translatehouse.org/
+VCS: https://github.com/translate/translate
+
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-python3
@@ -19,11 +22,29 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3-devel
 BuildRequires: python3-module-BeautifulSoup4
+# docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3(sphinx_bootstrap_theme)
 BuildRequires: python3-module-Levenshtein
+BuildRequires: python3(sphinx_copybutton)
+BuildRequires: python3(sphinxext.opengraph)
+BuildRequires: python3(furo)
+BuildRequires: python3(a11y_pygments.a11y_light)
 
-Requires: python3-module-%modname = %version-%release
+# tests
+BuildRequires: python3(lxml)
+BuildRequires: python3(unicode_segmentation_rs)
+BuildRequires: python3(ruamel)
+BuildRequires: python3(tomlkit)
+#BuildRequires: python3(aeidon)
+BuildRequires: python3-module-phply
+BuildRequires: python3(mistletoe)
+BuildRequires: python3(iniparse)
+#BuildRequires: python3(fluent)
+BuildRequires: python3(vobject)
+BuildRequires: python3(syrupy)
+
+Requires: python3-module-%modname = %EVR
 
 # it is not really required for the work
 %add_python3_req_skip setuptools
@@ -66,10 +87,14 @@ Documentation for Translate Toolkit
 
 %prep
 %setup -n %name-%version
+%autopatch -p1
+
+#fix run tests
+sed -i 's/@uv run /@/' Makefile
 
 # fix build documentation
 pushd docs
-sed -i 's/= sphinx-build/= sphinx-build-3/' Makefile
+sed -i 's/= uv run sphinx-build/= sphinx-build-3/' Makefile
 sed -i '/sphinx.ext.intersphinx/d' conf.py
 popd
 
@@ -95,6 +120,15 @@ rm -fr %buildroot%python3_sitelibdir/%modname/docs/
 # remove optional fluent
 rm %buildroot%python3_sitelibdir/%modname/storage/fluent.py
 
+# remove tests with unsatisfied dependencies
+rm tests/translate/convert/test_fluent2po.py
+rm tests/translate/convert/test_po2sub.py
+rm tests/translate/storage/test_fluent.py
+rm tests/translate/storage/test_subtitles.py
+
+%check
+%pyproject_run_pytest
+
 %files
 %doc docs/{features,history,license}.rst
 %_bindir/*
@@ -108,15 +142,18 @@ rm %buildroot%python3_sitelibdir/%modname/storage/fluent.py
 %doc docs/_build/html
 
 %changelog
+* Sat Jul 11 2026 Anton Midyukov <antohami@altlinux.org> 3.19.13-alt1
+- New version 3.19.13.
+
 * Thu Feb 08 2024 Anton Midyukov <antohami@altlinux.org> 3.12.2-alt1
-- new version (3.12.2) with rpmgs script
+- New version 3.12.2.
 
 * Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt2
-- fix BuildRequires for build on p10
+- Fix BuildRequires for build on p10.
 
 * Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt1
-- new version (3.10.0) with rpmgs script
-- migration to PEP517
+- New version (3.10.0) with rpmgs script.
+- Migration to PEP517.
 
 * Fri May 7 2021 Vladimir Didenko <cow@altlinux.ru> 3.3.6-alt1
 - New version
