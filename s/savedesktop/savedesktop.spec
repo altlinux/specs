@@ -3,7 +3,7 @@
 %def_with check
 
 Name: savedesktop
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: Save your desktop configuration
@@ -87,6 +87,9 @@ sed -i "s|/data/screenshots/||g" README.md
 %_datadir/savedesktop/*
 
 %changelog
+* Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 4.1-alt1
+- New version 4.1.
+
 * Sat Feb 28 2026 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
 - New version 4.0.
 
