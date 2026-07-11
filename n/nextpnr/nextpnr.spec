@@ -5,7 +5,7 @@
 %def_enable OPENMP
 
 Name:     nextpnr
-Version:  0.9
+Version:  0.10
 Release:  alt1
 
 Summary:  portable FPGA place and route tool
@@ -64,15 +64,15 @@ route tool.
 %install
 %cmake_install
 
-%check
-#%%make_build -C %_cmake__builddir test
-
 %files
 %_bindir/nextpnr-*
 %_datadir/nextpnr
 %doc *.md docs/*
 
 %changelog
+* Sat Jul 11 2026 Anton Midyukov <antohami@altlinux.org> 0.10-alt1
+- New version 0.10.
+
 * Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 0.9-alt1
 - New version 0.9.
 - Build HIMBAECHEL gowin instead removed gowin.

@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Epoch:   1
-Version: 0.27
+Version: 0.32
 Release: alt1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
@@ -24,6 +24,8 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3(wheel)
 
+%py3_requires msgspec
+
 %description
 %summary.
 
@@ -43,6 +45,9 @@ BuildRequires: python3(wheel)
 %doc *.md doc/*
 
 %changelog
+* Sat Jul 11 2026 Anton Midyukov <antohami@altlinux.org> 1:0.32-alt1
+- New version 0.32.
+
 * Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 1:0.27-alt1
 - New version 0.27.
 
