@@ -25,7 +25,7 @@
 
 
 Name:    ZLEqualizer2
-Version: 1.1.1
+Version: 1.2.2
 Release: alt1
 
 Summary: %common_summary
@@ -34,7 +34,16 @@ Group:   Sound
 Url:     https://zl-audio.github.io/plugins/zlequalizer2/
 Vcs:     https://github.com/ZL-Audio/ZLEqualizer.git
 
-ExcludeArch: %ix86 ppc64le
+# For each architecture, a specific value for ZL_HWY_STATIC_TARGET
+# should be provided, and that value should be supported in CMakeLists.txt
+ExclusiveArch: x86_64 aarch64
+
+%ifarch x86_64
+%define zl_hwy_static_target AVX2
+%endif
+%ifarch aarch64
+%define zl_hwy_static_target NEON
+%endif
 
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 
@@ -123,14 +132,11 @@ export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
   -DFOOBAR_VERSION:string=%version \
   -DGIT_EXECUTABLE:string='' \
   -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
-  -DKFR_ENABLE_MULTIARCH:BOOL=ON \
-%ifarch x86_64
-  -DKFR_ARCHS="sse2;sse41;avx;avx2" \
-%endif
   -DZL_JUCE_FORMATS="VST3;LV2;Standalone" \
   -DZL_JUCE_COPY_PLUGIN=FALSE \
   -DCMAKE_CXX_FLAGS_RELWITHDEBINFO='%optflags' \
   -DCMAKE_C_FLAGS_RELWITHDEBINFO='%optflags' \
+  -DZL_HWY_STATIC_TARGET:string=%zl_hwy_static_target \
   %nil
 
 %cmake_build
@@ -159,6 +165,10 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Sat Jul 11 2026 Ivan A. Melnikov <iv@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- drop support for x86_64 CPUs w/o AVX2
+
 * Wed Apr 29 2026 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1
 - 1.1.1
 - build standalone plugin
