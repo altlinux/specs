@@ -1,5 +1,7 @@
+%define kiota_version v1.32.4
+
 Name:    keycloak
-Version: 26.6.4
+Version: 26.7.0
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -46,14 +48,11 @@ tar xf %SOURCE2 -C ~
 %pom_disable_module tests
 # Unpack node modules
 tar xf %SOURCE3
-mkdir -p js/libs/keycloak-admin-client/.kiota/v1.31.1
-cp js/kiota-binary/kiota js/libs/keycloak-admin-client/.kiota/v1.31.1
+mkdir -p js/libs/keycloak-admin-client/.kiota/%kiota_version
+cp js/kiota-binary/kiota js/libs/keycloak-admin-client/.kiota/%kiota_version
 
 %build
-#mvn -pl quarkus/deployment,quarkus/dist -am -DskipTests clean install
-#export KIOTA_SKIP_VERSION_CHECK=true
-#export KIOTA_DOWNLOAD_DIR="$PWD/js/kiota-binary"
-export KIOTA_VERSION=v1.31.1
+export KIOTA_VERSION=%kiota_version
 pushd quarkus
 mvn -f ../pom.xml clean install -am -DskipTestsuite -DskipExamples -DskipTests -DskipProtoLock=true
 popd
@@ -114,6 +113,10 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 26.7.0-alt1
+- New version (fixes: CVE-2026-9796, CVE-2026-9689, CVE-2026-9798,
+  CVE-2026-11986).
+
 * Fri Jun 26 2026 Andrey Cherepanov <cas@altlinux.org> 26.6.4-alt1
 - New version (fixes: CVE-2026-9099, CVE-2026-9083, CVE-2026-9086,
   CVE-2026-9705, CVE-2026-9795, CVE-2026-9799, CVE-2026-9800, CVE-2026-11800).
