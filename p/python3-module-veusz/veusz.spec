@@ -2,7 +2,7 @@
 %define oname veusz
 
 Name: python3-module-%oname
-Version: 4.2
+Version: 4.2.1
 Release: alt1
 
 Summary: A Scientific Plotting Package
@@ -147,6 +147,9 @@ cp translation/*.qm %buildroot/%_datadir/%oname/translation/
 %dir %_datadir/%oname/translation
 
 %changelog
+* Sat Jul 11 2026 Anton Midyukov <antohami@altlinux.org> 4.2.1-alt1
+- New version 4.2.1.
+
 * Sat Nov 01 2025 Anton Midyukov <antohami@altlinux.org> 4.2-alt1
 - New version 4.2.
 
