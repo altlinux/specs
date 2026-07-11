@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nmstate
-Version: 2.1.4
+Version: 2.2.60
 Release: alt2
 Summary: Declarative network manager API
 Group: System/Configuration/Networking
@@ -10,7 +10,6 @@ License: LGPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Patch3500: nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-rust
 BuildRequires: python3-devel python3-module-setuptools python3-module-yaml
@@ -63,31 +62,19 @@ This package contains the Python 3 library for Nmstate.
 %setup
 %patch -p1
 
-%patch3500 -p1
-diffstat -p1 -l < %PATCH3500 | \
-	sed -re 's@rust/vendor/@@' | \
-	xargs -r cargo-vendor-checksum --vendor rust/vendor -f
-
 pushd rust
-mkdir -p .cargo
-cat >.cargo/config.toml << EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 popd
 
 %build
 SKIP_PYTHON_INSTALL=1 PREFIX=%_prefix LIBDIR=%_libdir SYSCONFDIR=%_sysconfdir SYSTEMD_UNIT_DIR=%_unitdir %make
 pushd rust/src/python
-%python3_build
+%pyproject_build
 popd
 
 %install
 pushd rust/src/python
-%python3_install
+%pyproject_install
 popd
 SKIP_PYTHON_INSTALL=1 \
     PREFIX=%_prefix \
@@ -109,7 +96,7 @@ rm -f %buildroot%_libdir/*.{a,la}
 
 %files -n python3-module-lib%name
 %python3_sitelibdir_noarch/lib%name
-%python3_sitelibdir_noarch/%name-*.egg-info
+%python3_sitelibdir_noarch/%name-%version.dist-info/
 
 %files -n lib%name
 %_libdir/libnmstate.so.*
@@ -120,6 +107,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_pkgconfigdir/nmstate.pc
 
 %changelog
+* Thu Jul 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 2.2.60-alt2
+- Update to 2.2.60.
+
 * Thu Dec 21 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.4-alt2
 - NMU: fixed FTBFS on LoongArch.
 
