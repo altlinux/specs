@@ -9,7 +9,7 @@ There are also a few minor improvements and optimizations added.
 
 Name: vitalium-verb
 Version: 1.3.0
-Release: alt1
+Release: alt2.git6d6b6584
 
 Summary: %common_summary
 License: GPL-3.0-or-later
@@ -90,5 +90,10 @@ cp  -a -t %buildroot%_libdir/vst3/ ./target/bundled/*.vst3
 
 
 %changelog
+* Sun Jul 12 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.0-alt2.git6d6b6584
+- build a snapshot from upstream's main branch (commit
+  6d6b6584a604524c2c73167d59e6dfd7f8854218) to fix building
+  with recent rust
+
 * Sun Jan 04 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.0-alt1
 - build for Sisyphus
