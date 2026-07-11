@@ -4,8 +4,8 @@
 
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
-Version: 2.9.4
-Release: alt5
+Version: 2.9.6
+Release: alt1
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
@@ -84,6 +84,7 @@ BuildRequires: boost-beast-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libmount-devel
 BuildRequires: libmount-devel-static
+BuildRequires: libhidapi-devel
 
 BuildRequires: python3-module-glad2
 
@@ -170,6 +171,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Fri Jul 10 2026 Anton Midyukov <antohami@altlinux.org> 2.9.6-alt1
+- New version 2.9.6.
+
 * Mon Jun 08 2026 Anton Midyukov <antohami@altlinux.org> 2.9.4-alt5
 - Rebuild with libwebkit2gtk4.1-devel.
 
