@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: martchus-qtutilities
-Version: 6.21.2
+Version: 6.21.3
 Release: alt1
 
 Summary: Common Qt related C++ classes and routines used by my applications such as dialogs, widgets and models
@@ -132,6 +132,9 @@ you intend to compile programs that use this library.
 %dir %_datadir/martchus-qtutilities/translations
 
 %changelog
+* Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 6.21.3-alt1
+- New version 6.21.3.
+
 * Mon May 25 2026 Nikolay Strelkov <snk@altlinux.org> 6.21.2-alt1
 - New version 6.21.2.
 
