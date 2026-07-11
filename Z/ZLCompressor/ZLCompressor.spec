@@ -7,7 +7,7 @@
 %define _optlevel 3
 
 Name:    ZLCompressor
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: A compressor plugin from ZL Audio
@@ -16,7 +16,16 @@ Group:   Sound
 Url:     https://zl-audio.github.io/plugins/zlcompressor/
 Vcs:     https://github.com/ZL-Audio/ZLCompressor.git
 
-ExcludeArch: %ix86
+# For each architecture, a specific value for ZL_HWY_STATIC_TARGET
+# should be provided, and that value should be supported in CMakeLists.txt
+ExclusiveArch: x86_64 aarch64
+
+%ifarch x86_64
+%define zl_hwy_static_target AVX2
+%endif
+%ifarch aarch64
+%define zl_hwy_static_target NEON
+%endif
 
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 
@@ -110,9 +119,9 @@ export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
   -DFOOBAR_VERSION:string=%version \
   -DGIT_EXECUTABLE:string='' \
   -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
-  -DKFR_ENABLE_MULTIARCH:BOOL=ON \
   -DZL_JUCE_FORMATS="VST3;LV2;Standalone" \
   -DZL_JUCE_COPY_PLUGIN=FALSE \
+  -DZL_HWY_STATIC_TARGET:string=%zl_hwy_static_target \
   %nil
 
 %cmake_build
@@ -138,6 +147,10 @@ cp -a "VST3/ZL Compressor.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Sat Jul 11 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5.0-alt1
+- 0.5.0
+- drop support for x86_64 CPUs w/o AVX2
+
 * Sat Feb 07 2026 Ivan A. Melnikov <iv@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
