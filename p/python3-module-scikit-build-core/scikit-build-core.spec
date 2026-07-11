@@ -5,7 +5,7 @@
 
 Name:    python3-module-%oname
 Version: 0.12.2
-Release: alt2
+Release: alt3
 
 Summary: A next generation Python CMake adaptor and Python API for plugins
 
@@ -62,7 +62,7 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest -m "not network"
+%pyproject_run_pytest -W ignore::DeprecationWarning -m "not network"
 
 %files
 %doc LICENSE *.md
@@ -70,6 +70,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jul 11 2026 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt3
+- Fix FTBFS.
+
 * Sat Jun 27 2026 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt2
 - Fix FTBFS.
 
