@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qspeakers
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Loudspeaker design software
@@ -30,6 +30,7 @@ to a lesser extent, for loudspeaker engineering.
 %prep
 %setup
 sed -i "s|Categories=.*|Categories=Science;Physics;|" qspeakers.desktop
+sed -i "s|lrelease|lrelease-qt6|" qspeakers.pro
 
 %build
 lrelease-qt6 qspeakers.pro
@@ -53,6 +54,9 @@ qmake-qt6 \
 %_datadir/mime/packages/*%{name}.xml
 
 %changelog
+* Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.6-alt1
+- New version 1.8.6.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.5-alt1
 - New version 1.8.5.
 
