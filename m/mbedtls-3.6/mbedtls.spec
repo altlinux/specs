@@ -3,7 +3,7 @@
 %define so_tls_version 21
 %define so_crypto_version 16
 %define so_x509_version 7
-%define framework_commit dff9da04438d712f7647fd995bc90fadd0c0e2ce
+%define framework_commit dde0c4a0e448a0552f18817dcea633bb851fd288
 %def_disable static
 
 %filter_from_provides /^pkgconfig(mbedcrypto)/d
@@ -11,7 +11,7 @@
 %filter_from_provides /^pkgconfig(mbedx509)/d
 
 Name: %pkgname-3.6
-Version: 3.6.6
+Version: 3.6.7
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -21,7 +21,7 @@ Group: System/Legacy libraries
 Url: https://www.trustedfirmware.org/projects/mbed-tls/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/ARMmbed/%name/archive/v%version/%pkgname-%version.tar.gz
+# https://github.com/Mbed-TLS/%name/archive/v%version/%pkgname-%version.tar.gz
 Source: %pkgname-%version.tar
 # https://github.com/Mbed-TLS/%pkgname-framework/archive/%framework_commit/%pkgname-framework-%framework_commit.tar.gz
 Source1: %pkgname-framework-%framework_commit.tar
@@ -155,6 +155,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %endif
 
 %changelog
+* Sat Jul 11 2026 Nazarov Denis <nenderus@altlinux.org> 3.6.7-alt1
+- New version 3.6.7.
+
 * Tue Mar 31 2026 Nazarov Denis <nenderus@altlinux.org> 3.6.6-alt1
 - New version 3.6.6
 
