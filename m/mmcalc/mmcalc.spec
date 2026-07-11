@@ -1,6 +1,6 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20240208
+Version: 20260711
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
@@ -14,7 +14,8 @@ BuildArch: noarch
 
 BuildPreReq: perl-Module-Build >= 0.36
 
-BuildRequires: perl-File-BaseDir perl-Gtk2-Ex-Simple-List perl-Locale-Msgfmt perl-Locale-gettext perl-Gtk3 perl-Gtk3-SimpleList
+#BuildRequires: perl-File-BaseDir perl-Gtk2-Ex-Simple-List perl-Locale-Msgfmt perl-Locale-gettext perl-Gtk3 perl-Gtk3-SimpleList
+BuildRequires: perl-File-BaseDir perl-Locale-Msgfmt perl-Locale-gettext perl-Gtk3 perl-Gtk3-SimpleList
 
 %description
 This program calculates molar mass and percent of each
@@ -32,45 +33,46 @@ Pd(acac)2, h4edta.
 Using of parentheses, square brackets as well as braces
 is acceptable.
 
-%package gui-common
-Summary: Molar Mass Calculator
-Group: Sciences/Chemistry
-BuildArch: noarch
-Requires: %name = %version-%release
+#package gui-common
+#Summary: Molar Mass Calculator
+#Group: Sciences/Chemistry
+#BuildArch: noarch
+#Requires: %name = %version-%release
 
-%description gui-common
-The program calculates molar mass and percent of each element
-for the given chemical formula. This package contains common
-files for GUI version of calculator.
+#description gui-common
+#The program calculates molar mass and percent of each element
+#for the given chemical formula. This package contains common
+#files for GUI version of calculator.
 
 
-%package gtk2
-Summary: Molar Mass Calculator (Gtk+2 GUI)
-Group: Sciences/Chemistry
-BuildArch: noarch
-Requires: %name = %version-%release, %name-gui-common = %version-%release
+#package gtk2
+#Summary: Molar Mass Calculator (Gtk+2 GUI)
+#Group: Sciences/Chemistry
+#BuildArch: noarch
+#Requires: %name = %version-%release, %name-gui-common = %version-%release
 
-%description gtk2
-The program calculates molar mass and percent of each element
-for the given chemical formula. This package contains a Gtk+2
-GUI version of calculator.
-
-Examples of valid formulae: H2O, CuSO4*5h2o, hgcl2, c o,
-In(NO3)3*4.5H2O, Rb16Cd25,39Sb36.
-
-Acronyms are also supported: [Zn2(dabco)(bdc)2]*4DMF,
-Pd(acac)2, h4edta. It is possible to add, remove and
-change the acronyms.
-
-Using of parentheses, square brackets as well as braces
-is acceptable.
+#description gtk2
+#The program calculates molar mass and percent of each element
+#for the given chemical formula. This package contains a Gtk+2
+#GUI version of calculator.
+#
+#Examples of valid formulae: H2O, CuSO4*5h2o, hgcl2, c o,
+#In(NO3)3*4.5H2O, Rb16Cd25,39Sb36.
+#
+#Acronyms are also supported: [Zn2(dabco)(bdc)2]*4DMF,
+#Pd(acac)2, h4edta. It is possible to add, remove and
+#change the acronyms.
+#
+#Using of parentheses, square brackets as well as braces
+#is acceptable.
 
 
 %package gtk3
 Summary: Molar Mass Calculator (Gtk+3 GUI)
 Group: Sciences/Chemistry
 BuildArch: noarch
-Requires: %name = %version-%release, %name-gui-common = %version-%release
+#Requires: %name = %version-%release, %name-gui-common = %version-%release
+Requires: %name = %version-%release
 
 %description gtk3
 The program calculates molar mass and percent of each element
@@ -105,18 +107,23 @@ is acceptable.
 %_datadir/%name/*.dat
 %perl_vendor_privlib/*.pm
 
-%files gui-common -f %name.lang
-%_datadir/icons/hicolor/scalable/apps/%name.svg
+#files gui-common -f %name.lang
+#_datadir/icons/hicolor/scalable/apps/%name.svg
 
-%files gtk2
-%_bindir/g%name-gtk2
-%_desktopdir/g%name-gtk2.desktop
+#files gtk2
+#_bindir/g%name-gtk2
+#_desktopdir/g%name-gtk2.desktop
 
-%files gtk3
+%files gtk3 -f %name.lang
 %_bindir/g%name-gtk3
 %_desktopdir/g%name-gtk3.desktop
+%_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Jul 11 2026 Denis G. Samsonenko <ogion@altlinux.org> 20260711-alt1
+- new version
+- build without Gtk2
+
 * Thu Feb 08 2024 Denis G. Samsonenko <ogion@altlinux.org> 20240208-alt1
 - new version
 - atoms.dat: mass numbers correction for several elements
