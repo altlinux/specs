@@ -1,6 +1,6 @@
 Name:		nuclearchess
 Version:	1.0.0
-Release:	alt2.1
+Release:	alt2.2
 Summary:	NuclearChess is a chess variant
 License:	GPLv2
 Group:		Games/Boards
@@ -23,6 +23,7 @@ short and fun even for people who usually don't play chess.
 %patch -p2
 
 %build
+%add_optflags -std=gnu17
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
 %make_build
 
@@ -50,6 +51,9 @@ convert -resize 48x48 gfx/atom.png %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Jul 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt2.2
+- NMU: fixed FTBFS (add_optflags -std=gnu17).
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.1
 - Fixed build
 
