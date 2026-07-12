@@ -4,7 +4,7 @@
 %def_enable wayland
 
 Name: libva
-Version: 2.23.0
+Version: 2.24.1
 Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
@@ -76,6 +76,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 2.24.1-alt1
+- 2.23.0 -> 2.24.1
+
 * Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 2.23.0-alt1
 - 2.22.0 -> 2.23.0
 
