@@ -1,9 +1,9 @@
-%define git_short_commit 4127937
+%define git_short_commit 8dda19e
 %define import_path github.com/xjasonlyu/tun2socks
 
 Name: tun2socks
-Version: 2.6.0
-Release: alt2
+Version: 2.7.0
+Release: alt1
 Epoch: 1
 
 Summary: %name - powered by gVisor TCP/IP stack
@@ -63,6 +63,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Sun Jul 12 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.7.0-alt1
+- New version 2.7.0.
+
 * Sat Apr 18 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.6.0-alt2
 - Update to 2.6.0
 
