@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.1.3
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -68,7 +68,7 @@ BuildRequires: libpsl-devel publicsuffix-list-dafsa
 BuildRequires: libgio-devel
 %endif
 %if_enabled qt
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
 %endif
 
 %description
@@ -147,6 +147,7 @@ sed -ri 's/if \(static auto constexpr/if \(auto constexpr/;s/if \((static [^;]*;
 	-DENABLE_GTK=ON \
 %if_enabled qt
 	-DENABLE_QT=ON \
+	-DUSE_QT_VERSION=6 \
 %endif
 	-DENABLE_CLI=ON \
 	-DUSE_SYSTEM_EVENT2=ON \
@@ -261,6 +262,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt2
+- built with qt6
+
 * Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt1
 - 4.1.2 -> 4.1.3
 
