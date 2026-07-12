@@ -3,13 +3,18 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt101
+Release: alt102
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
 License: GPL-2.0-or-later
 Group: System/Configuration/Packaging
-URL: http://apt-rpm.org
+URL: https://git.altlinux.org/gears/a/apt.git?a=tree
+# http://apt-rpm.org used to be an active project for a while and our upstream;
+# now the project's website is available at https://apt-rpm.laiskiainen.org/
+# (Petr Akhlamov, https://bugzilla.altlinux.org/show_bug.cgi?id=50036#c1 ).
+# Before that, Conectiva was our upstream (the CNC releases).
+#
 # Known upstream "apt-rpm" Git repos:
 # -----------------------------------
 #
@@ -609,6 +614,10 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Sun Jul 12 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt102
+- Updated upstream URL (ALT#50036) (thx Anton Osipov radiolamp@).
+- Fixed a header guard. / Fixed the build with the recent GCC.
+
 * Wed Mar 11 2026 Leonid Znamenok <respublica@altlinux.org> 0.5.15lorg2-alt101
 - acquire-item.cc: added support for zst compressed {pkg,src}lists.
 - apt-cdrom.cc: added support of xz, gz and zstd compressed {pkg,src}lists.
