@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.45.0
+Version: 0.46.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -111,6 +111,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 0.46.0-alt1
+- added task refresh detection of subtasks built from a different source
+- added check upstream local worktree scan and copy:/bare watch file support
+- added clone_url API endpoint config via [clone] api_url
+- added stalled-build re-verification to --verify-failures
+- changed clone to resolve repo URL from RDB clone_url, dropped [clone] url
+- fixed task batch CONFIG argument TAB completion
+- fixed gen environment local build command to pass hasher_dir
+- fixed check upstream to probe .gear/watch without .gear/rules
+- fixed build parallel progress table showing stale log stages
+
 * Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 0.45.0-alt1
 - added devenv enter without CONTAINER to enter the current directory's container
 - added devenv install --container to install into an existing podman container
