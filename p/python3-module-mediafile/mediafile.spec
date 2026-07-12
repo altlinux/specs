@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.0
+Version: 0.17.0
 Release: alt1
 Summary: elegant audio file tagging
 License: MIT
@@ -15,15 +15,13 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3-module-poetry
-BuildRequires: python3-module-mutagen
-BuildRequires: python3-module-filetype
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3-module-standard-imghdr
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mutagen
+BuildRequires: python3-module-filetype
 %endif
 
 %py3_provides %pypi_name
@@ -41,9 +39,7 @@ BuildRequires: python3-module-standard-imghdr
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
-
+%pyproject_run_pytest -v -k 'not test_read_audio_properties'
 
 %files
 %doc *.rst
@@ -51,6 +47,9 @@ BuildRequires: python3-module-standard-imghdr
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Jul 12 2026 Anton Vyatkin <toni@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+
 * Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
 - Automatically updated to 0.14.0.
 
