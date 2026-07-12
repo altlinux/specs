@@ -1,8 +1,8 @@
 %define oname altbooster
 
 Name: plafon-altbooster
-Version: 5.7
-Release: alt5
+Version: 5.8
+Release: alt1
 
 Summary: GTK4 App Booster for ALT Linux
 License: MIT
@@ -20,17 +20,14 @@ BuildArch: noarch
 AutoReq: nopython3
 
 Source: %name-%version.tar
-Patch: setup-alt-fixes.patch
-Patch1: maintenance-alt-fixed.patch
-Patch2: window-alt-fixes.patch
 
 %description
 %summary. 
 
 %prep
 %setup
-%autopatch -p0
 subst 's|/usr/local/share|/usr/share|' src/ui/help_altbooster.py
+subst 's|/usr/local/share|%buildroot/usr/share|' Makefile
 
 %build
 %install
@@ -38,9 +35,6 @@ install -d %buildroot
 %make_install \
     SHAREDIR=%buildroot%_datadir \
     BINDIR=%buildroot%_bindir
-
-install -d %buildroot%_datadir/help/C/%oname
-cp -a help/C/*.page %buildroot%_datadir/help/C/%oname
 
 %find_lang --all-name %name
 
@@ -53,6 +47,10 @@ cp -a help/C/*.page %buildroot%_datadir/help/C/%oname
 %_datadir/help/C/%oname
 
 %changelog
+* Sun Jul 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.8-alt1
+- 5.7 -> 5.8 (closes: #59691, #59690, #59688, #59686, #59681, #59678, #59671)
+- drop patchs
+
 * Wed Jul 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7-alt5
 - fixed show welcome page (ALT #59687)
 
