@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -20,9 +20,9 @@ Source5: %name.socket
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires(pre): prometheus-common
 BuildRequires: rpm-build-golang golang >= 1.25
 BuildRequires: glibc-devel-static
+Requires(pre): prometheus-common
 
 %description
 There is varying support for collectors on each operating system.
@@ -85,6 +85,9 @@ export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
 %config(noreplace) %attr(0640,root,prometheus) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Jul 13 2026 Artyom Sinyugin <writers@altlinux.org> 1.12.0-alt1
+- updated from 1.11.1 to 1.12.0
+
 * Thu May 28 2026 Artyom Sinyugin <writers@altlinux.org> 1.11.1-alt1
 - New version 1.11.1.
 - Harden textfile collector directory and sysconfig permissions.
