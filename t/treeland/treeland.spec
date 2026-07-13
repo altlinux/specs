@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.8.13
+Version: 0.8.14
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -29,6 +29,7 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++ 
 %endif
 
+Requires: libdqt6-gui = %_dqt6_version
 Requires: libdqt6-qml = %_dqt6_version
 
 %add_findprov_lib_path %_dqt6_libdir
@@ -236,6 +237,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Mon Jul 13 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.14-alt1
+- New version 0.8.14.
+
 * Tue Jun 30 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.13-alt1
 - New version 0.8.13.
 
