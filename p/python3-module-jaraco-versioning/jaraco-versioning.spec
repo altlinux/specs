@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 1.1.0
-Release: alt1.1
+Release: alt2
 Summary: More sophisticated version manipulation (than packaging)
 License: MIT
 Group: Development/Python3
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 13 2026 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS (packaging 26.1).
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
