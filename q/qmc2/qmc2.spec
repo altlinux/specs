@@ -1,5 +1,5 @@
 Name:           qmc2
-Version:        0.243.14
+Version:        0.244
 Group: Games/Arcade
 Release:        alt1
 Summary:        M.A.M.E. Catalog / Launcher II
@@ -9,6 +9,7 @@ Summary:        M.A.M.E. Catalog / Launcher II
 #everything else is GPLv2
 License:        GPLv2 and ASL 2.0 and MIT
 URL:            http://qmc2.batcom-it.net
+Vcs:            https://github.com/belegdol/qmc2-mame-fe
 Source:        %name-%version.tar.gz
 #Fedora-specific configuration
 Patch0:         %{name}-ini.patch
@@ -22,13 +23,13 @@ BuildRequires:  libXmu-devel
 BuildRequires:  make
 BuildRequires:  libminizip-ng-compat-devel
 BuildRequires:  zlib-devel
-BuildRequires:  qt5-multimedia-devel qt5-declarative-devel
-BuildRequires:  qt5-svg-devel qt5-script-devel
-BuildRequires:  qt5-webengine-devel
-BuildRequires:  qt5-xmlpatterns-devel
+BuildRequires:  qt6-multimedia-devel qt6-declarative-devel
+BuildRequires:  qt6-svg-devel
+BuildRequires:  qt6-webengine-devel
+BuildRequires:  qt6-5compat-devel qt6-phonon-devel
 BuildRequires:  rsync
 BuildRequires:  libSDL2-devel
-Requires: mame mame-tools mame-data mame-data-software-lists qt5-declarative-devel
+Requires: mame mame-tools mame-data mame-data-software-lists qt6-declarative-devel
 
 ExclusiveArch: aarch64 x86_64
 
@@ -36,31 +37,30 @@ ExclusiveArch: aarch64 x86_64
 A Qt based multi-platform GUI front-end for MAME.
 
 
-%package -n qchdman
-Summary:        Qt CHDMAN GUI
-Group: Games/Arcade
-License:        GPLv2
-Requires:       mame-tools
+#package -n qchdman
+#Summary:        Qt CHDMAN GUI
+#Group: Games/Arcade
+#License:        GPLv2
+#Requires:       mame-tools
 
-%description -n qchdman
-A stand-alone graphical user interface / front-end to chdman
+#description -n qchdman
+#A stand-alone graphical user interface / front-end to chdman
 
 
-%package arcade
-Summary:        Arcade QMC2 GUI
-Group: Games/Arcade
-License:        GPLv2
+#package arcade
+#Summary:        Arcade QMC2 GUI
+#Group: Games/Arcade
+#License:        GPLv2
 
-%description arcade
-A QML-based standalone graphical arcade mode binary which utilizes the cached
-data of qmc2 to quickly display and launch emulators and get you "straight into
-the games"
-
+#description arcade
+#A QML-based standalone graphical arcade mode binary which utilizes the cached
+#data of qmc2 to quickly display and launch emulators and get you "straight into
+#the games"
 
 %prep
 %setup
 # %%patch0 -p1
-#% %patch1 -p1
+# %%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 #ensure system minizip and zlib are used
@@ -69,6 +69,7 @@ rm -rf src/minizip
 rm -rf src/zlib
 #fix opening documentation from the menu
 sed -i s@doc/html/@doc/@ src/qmc2main.cpp
+sed -i -e 's/qmake6/qmake-qt6/g' arch/default.cfg
 
 
 %build
@@ -76,12 +77,15 @@ sed -i s@doc/html/@doc/@ src/qmc2main.cpp
 %make_build DISTCFG=1 CC_FLAGS="$RPM_OPT_FLAGS" CXX_FLAGS="$RPM_OPT_FLAGS" \
     L_FLAGS="$RPM_LD_FLAGS" \
     SYSTEM_MINIZIP=1 \
+    MULTIMEDIA=0 \
     SYSTEM_ZLIB=1 LIBARCHIVE=1 GIT_REV=0
-%make_build arcade CXX_FLAGS="%{optflags}" \
-    L_FLAGS="$RPM_LD_FLAGS"  \
-    SYSTEM_MINIZIP=1 \
-    SYSTEM_ZLIB=1
-%make_build qchdman CXX_FLAGS="%{optflags}" SDL=2
+# Arcade mode still not ported to Qt6
+#make_build arcade CXX_FLAGS="{optflags}" \
+#    L_FLAGS="$RPM_LD_FLAGS"  \
+#    SYSTEM_MINIZIP=1 \
+#    MULTIMEDIA=0 \
+#    SYSTEM_ZLIB=1
+#make_build qchdman CXX_FLAGS="{optflags}" SDL=2
 
 %make_build doc DISTCFG=1
 
@@ -90,16 +94,16 @@ sed -i s@doc/html/@doc/@ src/qmc2main.cpp
 rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 PREFIX=%{_prefix}
-make arcade-install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 PREFIX=%{_prefix}
-make qchdman-install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 PREFIX=%{_prefix}
+#make arcade-install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 PREFIX=%{_prefix}
+#make qchdman-install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 PREFIX=%{_prefix}
 make doc-install DESTDIR=$RPM_BUILD_ROOT DISTCFG=1 MAN_DIR=%{_mandir}
 
 #remove docs since we are installing docs in %%doc
 
 #validate the desktop files
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qmc2-sdlmame.desktop
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qmc2-arcade.desktop
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qchdman.desktop
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/net.batcom-it.qmc2.qmc2-sdlmame.desktop
+#desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qmc2-arcade.desktop
+#desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qchdman.desktop
 
 
 %files
@@ -108,26 +112,29 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qchdman.desktop
 %config(noreplace) %{_sysconfdir}/qmc2
 %{_bindir}/qmc2
 %{_bindir}/qmc2-sdlmame
-%{_datadir}/applications/qmc2-sdlmame.desktop
+%{_datadir}/applications/net.batcom-it.qmc2.qmc2-sdlmame.desktop
 %{_mandir}/man6/qmc2-main-gui.6*
 %{_mandir}/man6/qmc2-sdlmame.6*
 %{_mandir}/man6/qmc2.6*
 %{_datadir}/qmc2
 
-%files arcade
-%doc data/doc/html/us/copying.html
-%{_bindir}/qmc2-arcade
-%{_datadir}/applications/qmc2-arcade.desktop
-%{_mandir}/man6/qmc2-arcade.6*
+#files arcade
+#doc data/doc/html/us/copying.html
+#{_bindir}/qmc2-arcade
+#{_datadir}/applications/qmc2-arcade.desktop
+#{_mandir}/man6/qmc2-arcade.6*
 
-%files -n qchdman
-%doc data/doc/html/us/copying.html
-%{_bindir}/qchdman
-%{_datadir}/applications/qchdman.desktop
-%{_mandir}/man6/qchdman.6*
-
+#files -n qchdman
+#doc data/doc/html/us/copying.html
+#{_bindir}/qchdman
+#{_datadir}/applications/qchdman.desktop
+#{_mandir}/man6/qchdman.6*
 
 %changelog
+* Mon Jul 13 2026 Artyom Bystrov <arbars@altlinux.org> 0.244-alt1
+- Update to new version from fork with initial Qt6 support (cause remove Qt5-webengine)
+- Temporarily disabled build of arcade mode and qchdman (still not ported to Qt6)
+
 * Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 0.243.14-alt1
 - Fix FTBFS
 - Switch to minizip-ng 4.0.8 
