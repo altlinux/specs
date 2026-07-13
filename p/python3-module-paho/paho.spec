@@ -1,11 +1,11 @@
 Name: python3-module-paho
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: MQTT Python client library
 License: EPL-1.0
 Group: Development/Python
-Url: https://pypi.org/project/paho-mqtt
+URL: https://pypi.org/project/paho-mqtt
 VCS: https://github.com/eclipse/paho.mqtt.python
 
 Provides: python3-module-paho-mqtt = %EVR
@@ -45,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/paho_mqtt-%version.dist-info
 
 %changelog
+* Mon Jul 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0-alt2
+- outdated tests skipped
+
 * Wed Oct 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0-alt1
 - 2.1.0 released
 
