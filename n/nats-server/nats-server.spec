@@ -3,7 +3,7 @@
 
 Name: nats-server
 Version: 2.14.3
-Release: alt1
+Release: alt2
 
 Summary: High-Performance server for NATS, the cloud and edge native messaging system
 License: Apache-2.0
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_runtimedir/nats
 %dir %attr(0750,nats,nats) %_runtimedir/nats/
 
 %changelog
+* Mon Jul 13 2026 Anton Zhukharev <ancieg@altlinux.org> 2.14.3-alt2
+- Fixed paths in nats-server-hardened.service (ALT#59811).
+
 * Thu Jul 09 2026 Alexander Danilov <admsasha@altlinux.org> 2.14.3-alt1
 - Updated to 2.14.3.
 
