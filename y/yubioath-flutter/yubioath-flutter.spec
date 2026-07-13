@@ -7,7 +7,7 @@
 %add_debuginfo_skiplist %yubioath_home/* %yubioath_home/lib/*
 
 Name: yubioath-flutter
-Version: 7.4.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Yubico Authenticator for Desktop
@@ -122,6 +122,9 @@ sed -i %buildroot%_desktopdir/%app_id.desktop \
 %yubioath_home/
 
 %changelog
+* Mon Jul 13 2026 Anton Zhukharev <ancieg@altlinux.org> 7.4.1-alt1
+- Updated to 7.4.1.
+
 * Thu Jun 18 2026 Anton Zhukharev <ancieg@altlinux.org> 7.4.0-alt1
 - Updated to 7.4.0.
 
