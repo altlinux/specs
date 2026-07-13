@@ -13,7 +13,7 @@
 %def_enable docs
 
 Name: libxfce4ui
-Version: 4.21.8
+Version: 4.21.9
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -206,6 +206,9 @@ This package conteins Xfce utilities for %name.
 %_bindir/xfce-open
 
 %changelog
+* Mon Jul 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.9-alt1
+- Updated to 4.21.9 (closes: #59486).
+
 * Mon Jun 08 2026 Mikhail Efremov <sem@altlinux.org> 4.21.8-alt1
 - Updated to 4.21.8.
 
