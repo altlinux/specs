@@ -5,7 +5,7 @@
 %define optflags_lto %{nil}
 
 Name: bear
-Version: 3.1.5
+Version: 4.1.5
 Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
@@ -18,24 +18,8 @@ Packager: Maxim Knyazev <mattaku@altlinux.org>
 
 Source: %name-%version.tar
 
-Patch1: %name-3.0.11-alt-protobuf-include.patch
-
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
-%if_with tests
-BuildRequires: ctest
-%endif
-BuildRequires: gcc-c++
-#BuildRequires: clang
-BuildRequires: libprotobuf-devel
-BuildRequires: protobuf-compiler
-BuildRequires: libgrpc++-devel
-BuildRequires: grpc-plugins
-BuildRequires: libsqlite3-devel
-BuildRequires: libfmt-devel
-BuildRequires: libspdlog-devel
-BuildRequires: nlohmann-json-devel
-BuildRequires: libgtest-devel libgmock-devel
+BuildRequires: rust rust-cargo
+BuildRequires: lld
 
 %description
 Build ear records the CLI flags passed to compilers for each translation unit
@@ -48,27 +32,40 @@ themselves and do not require this tool. Others, including plain Make, do not.
 
 %prep
 %setup
-%patch1 -p1
+
+mkdir -p .cargo
+cat >> .cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
-%cmake
-%cmake_build
+
+cargo build --frozen --release
+
+# generate shell completions
+./target/release/generate-completions target/release/completions
 
 %install
-%cmake_install
-
-for i in CODE_OF_CONDUCT.md CONTRIBUTING.md COPYING INSTALL.md README.md; do
-    rm -f %buildroot%_docdir/Bear/$i
-done
+DESTDIR="%buildroot" PREFIX=%_prefix ./scripts/install.sh
 
 %files
-%define _libexecdir %_prefix/libexec
 %_bindir/*
+%_prefix/libexec/%name
+%{_datadir}/elvish/lib/%name.elv
+%{_datadir}/bash-completion/completions/%name
+%{_datadir}/fish/vendor_completions.d/bear.fish
+%{_datadir}/zsh/site-functions/_bear
 %_man1dir/*.1*
-%_libdir/%name
-%doc COPYING README.md
+%{_datadir}/doc/%name
 
 %changelog
+* Mon Jul 13 2026 Vladimir Didenko <cow@altlinux.org> 4.1.5-alt1
+- New version
+
 * Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 3.1.5-alt1
 - New version
 
