@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.31
+Version: 10.32
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -10,6 +10,7 @@ Url: http://altlinux.org/alterator
 Source: %name-%version.tar
 
 BuildPreReq: alterator >= 4.10-alt5
+BuildRequires: qt6-tools
 
 Requires: alterator >= 4.10-alt5
 Requires: alterator-sh-functions >= 0.12
@@ -37,6 +38,7 @@ alterator module for system users administration
 %build
 %make_build
 %__cc alterator_users_helper.c -o alterator_users_helper %optflags %optflags_shared -pedantic
+lrelease-qt6 alterator-framework/ts/users_ru.ts
 
 %install
 %makeinstall
@@ -52,8 +54,20 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_datadir/alterator/ui/*/
 %_alterator_backend3dir/*
 %_bindir/alterator_users_helper
+%_datadir/alterator/backends/users.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.users.policy
+%dir %_datadir/alterator-framework/modules/users
+%_datadir/alterator-framework/modules/users/manifest.json
+%_datadir/alterator-framework/modules/users/main.qml
+%dir %_datadir/alterator-framework/modules/users/ts
+%_datadir/alterator-framework/modules/users/ts/users_ru.qm
 
 %changelog
+* Fri Jul 10 2026 Maria Alexeeva <alxvmr@altlinux.org> 10.32-alt1
+- Feat: Add alterator-framework UI support (thx Oleg Chagaev).
+- Feat: Add custom avatar selection for the alterator-framework version
+  (thx Oleg Chagaev).
+
 * Fri Mar 20 2026 Fedor Moseichuck <phobos@altlinux.org> 10.31-alt1
 - ui: fix password generation
 
