@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_wait_sampling
-Version: 1.1.9
+Version: 1.1.11
 Release: alt1
 Summary: pg_wait_sampling - sampling based statistics of wait events
 License: PostgreSQL
@@ -34,5 +34,8 @@ pg_wait_sampling - sampling based statistics of wait events
 %doc LICENSE README.md
 
 %changelog
+* Mon Jul 13 2026 Alexei Takaseev <taf@altlinux.org> 1.1.11-alt1
+- 1.1.11
+
 * Tue Jun 30 2026 Alexei Takaseev <taf@altlinux.org> 1.1.9-alt1
 - Initial build for ALT Linux
