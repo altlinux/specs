@@ -1,6 +1,6 @@
 Name: getdp
 Version: 3.5.0
-Release: alt2
+Release: alt3
 
 Summary: A General Environment for the Treatment of Discrete Problems
 License: GPLv2
@@ -15,6 +15,7 @@ BuildRequires: libopenblas-devel liblapack-devel
 BuildRequires: libarpack-ng-devel libgsl-devel
 BuildRequires: libsparskit-devel
 BuildRequires: libgmsh-devel
+BuildRequires: eigen3-compat-devel
 
 %description
 GetDP is a free finite element solver using mixed elements to discretize
@@ -34,7 +35,8 @@ sed -i 's,-lgfortran,& -lquadmath,' CMakeLists.txt
 #   libopenblas + liblapack, BLAS_LAPACK_LIBRARIES should be set.
 %cmake_insource -DENABLE_PETSC=0 -DENABLE_SPARSKIT=1 \
                 -DENABLE_GMSH=1 \
-                -DBLAS_LAPACK_LIBRARIES="-lopenblas -llapack"
+                -DBLAS_LAPACK_LIBRARIES="-lopenblas -llapack" \
+                -DCMAKE_CXX_FLAGS="-I/usr/include/eigen3-compat"
 
 %make_build VERBOSE=1
 
@@ -48,6 +50,9 @@ sed -i 's,-lgfortran,& -lquadmath,' CMakeLists.txt
 %_man1dir/getdp.*
 
 %changelog
+* Mon Jul 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.5.0-alt3
+- Builded with eigen3-compat (thnx ulysses@)
+
 * Mon Apr 17 2023 Michael Shigorin <mike@altlinux.org> 3.5.0-alt2
 - E2K: fix build with lcc 1.26.16
 - minor spec cleanup
