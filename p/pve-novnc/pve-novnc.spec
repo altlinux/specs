@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.7.0.1
+Version: 1.7.0.2
 Release: alt1
 License: Apache-2.0 and BSD-3-Clause and MPL-2.0
 Group: Networking/WWW
@@ -39,12 +39,20 @@ cp -a %sname/app/styles %buildroot%_datadir/%pname/app/
 install -m0644 %sname/app/error-handler.js %buildroot%_datadir/%pname/app/
 install -m0644 %sname/app.js %buildroot%_datadir/%pname/
 install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
+install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.hbs
+sed -i -re 's/\[% nodename %\]/{{ NodeName }}/g' %buildroot%_datadir/%pname/index.html.hbs
+sed -i -re 's/\[% username %\]/{{ UserName }}/g' %buildroot%_datadir/%pname/index.html.hbs
+sed -i -re 's/\[% token %\]/{{ CSRFPreventionToken }}/g' %buildroot%_datadir/%pname/index.html.hbs
 
 %files
 %doc debian/copyright
 %_datadir/%pname
 
 %changelog
+* Mon Jul 13 2026 Sergey Konev <darisishe@altlinux.org> 1.7.0.2-alt1
+- 1.7.0-2
+- Add Handlebars index template for PDM
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 1.7.0.1-alt1
 - 1.7.0-1
 
@@ -87,4 +95,3 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 
 * Tue Dec 15 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.5.5-alt1
 - initial release
-
