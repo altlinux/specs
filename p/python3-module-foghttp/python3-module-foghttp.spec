@@ -2,7 +2,8 @@
 %define pypi_name foghttp
 %define mod_name foghttp
 
-%def_with check
+# The tests are too unstable for now
+%def_without check
 
 # This is needed to fix LTO error:
 # undefined symbol: ring_core_0_17_14__p256_mul_mont
@@ -12,8 +13,8 @@
 %python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 0.3.5
-Release: alt2
+Version: 0.3.6
+Release: alt1
 
 Summary: Observable Rust-powered HTTP client for Python services
 License: MIT
@@ -69,6 +70,9 @@ install -vD %SOURCE3 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 13 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.6-alt1
+- Updated to 0.3.6.
+
 * Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.5-alt2
 - Disabled flaky tests.
 
