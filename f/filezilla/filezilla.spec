@@ -4,7 +4,7 @@
 
 Name: filezilla
 Version: 3.70.6
-Release: alt1
+Release: alt2
 Summary: FileZilla is a fast and reliable FTP client
 
 Group: Networking/File transfer
@@ -26,6 +26,11 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: boost-devel
 BuildRequires: xdg-utils
+%ifarch %e2k
+# LCC and Clang 19.1 can't compile
+BuildRequires: clang21.1
+%global _optlevel 2
+%endif
 
 %description
 FileZilla is a fast and reliable FTP client and server with lots
@@ -37,6 +42,9 @@ of useful features and an intuitive interface
 
 %build
 %autoreconf
+%ifarch %e2k
+export CC=clang-21; export CXX=clang++-21
+%endif
 %configure \
 	--disable-autoupdatecheck \
 	--with-pugixml=system \
@@ -63,6 +71,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Jul 12 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.70.6-alt2
+- e2k build fix
+
 * Sun Jun 14 2026 Anton Farygin <rider@altlinux.org> 3.70.6-alt1
 - 3.70.5 -> 3.70.6
 
