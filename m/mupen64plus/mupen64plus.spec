@@ -1,12 +1,12 @@
 Name: mupen64plus
-Version: 2.5
-Release: alt1.1
+Version: 2.6
+Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Summary: Nintendo 64 Emulator
 License: GPLv2+ and CC-BY-SA
 Group: Emulators
 Url: http://www.mupen64plus.org/
-Source: https://github.com/mupen64plus/mupen64plus-core/releases/download/2.5/mupen64plus-bundle-src-2.5.tar.gz
+Source: https://github.com/mupen64plus/mupen64plus-core/releases/download/2.5/mupen64plus-bundle-src-2.6.tar.gz
 Patch5: mupen64plus-multiple-definitions.patch
 Patch6: mupen64plus-make-archs.patch
 Patch7: mupen64plus-fix-for-boost-1.85.0.patch
@@ -23,10 +23,12 @@ BuildRequires: boost-devel
 BuildRequires: gzip
 BuildRequires: pkgconfig(glew)
 BuildRequires: binutils
+BuildRequires: libvulkan-devel
 BuildRequires: gcc-c++ boost-filesystem-devel
+BuildRequires: nasm
 
 Requires: hicolor-icon-theme
-ExcludeArch: armh
+ExcludeArch: armh %ix86
 
 
 %description
@@ -43,9 +45,9 @@ Development files for mupen64plus
 
 %prep
 %setup -n %name-bundle-src-%version
-%patch5 -p1
+#patch5 -p1
 %patch6 -p1
-%patch7 -p1
+#patch7 -p1
 
 # Need to avoid filename conflicts so they can be included in the package
 cp -a source/mupen64plus-rsp-hle/LICENSES LICENSE-rsp-hle
@@ -103,6 +105,9 @@ desktop-file-validate %buildroot/%_datadir/applications/mupen64plus.desktop
 %_libdir/libmupen64plus.so
 
 %changelog
+* Mon Jul 13 2026 Artyom Bystrov <arbars@altlinux.org> 2.6-alt1
+- Update to new version
+
 * Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 2.5-alt1.1
 - NMU: fix building with boost 1.85.0
 
