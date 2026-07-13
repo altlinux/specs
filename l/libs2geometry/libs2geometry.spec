@@ -20,7 +20,7 @@ ExcludeArch: i586
 
 Name: libs2geometry
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Computational geometry and spatial indexing on the sphere
 License: Apache-2.0
@@ -31,6 +31,7 @@ VCS: https://github.com/google/s2geometry.git
 Source: %name-%version.tar
 Patch0: libs2geometry-0.14.0-alt-use-external-gtest.patch
 Patch1: libs2geometry-0.14.0-alt-update-version-num.patch
+Patch2: libs2geometry-0.14.0-alt-fix-build-with-fresh-absl.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -77,6 +78,7 @@ Development libraries and headers for %name.
 %patch0 -p1
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 %cmake \
@@ -110,6 +112,9 @@ ctest --test-dir %_cmake__builddir \
 %_datadir/s2/
 
 %changelog
+* Mon Jul 13 2026 Ivan A. Melnikov <iv@altlinux.org> 0.14.0-alt2
+- NMU: fix FTBFS
+
 * Fri May 08 2026 Egor Shestakov <ved@altlinux.org> 0.14.0-alt1
 - Fix linkage with a new libabseil-cpp.
 
