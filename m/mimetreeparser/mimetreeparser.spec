@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libGLU-devel libvulkan-devel
 BuildRequires: libcups-devel
+BuildRequires: libgpgme-devel
 BuildRequires: kde6-libkleo-devel kf6-kcalendarcore-devel kf6-kcodecs-devel kf6-ki18n-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
 BuildRequires: kmbox-devel
@@ -86,6 +87,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- update build requires
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
