@@ -2,7 +2,7 @@
 %define mod_name alterator_backend_source
 
 Name: alterator-backend-source
-Version: 0.1.2
+Version: 0.1.4
 Release: alt1
 
 Summary: System software sources manager for Alterator
@@ -21,6 +21,7 @@ Requires: alterator-backend-systeminfo-utils
 Requires: alterator-interface-source = %EVR
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-entry
+Requires: apt-query
 
 BuildRequires(pre): rpm-build-pyproject rpm-macros-alterator
 BuildRequires: python3-devel
@@ -98,6 +99,15 @@ fi
 
 
 %changelog
+* Mon Jul 13 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt1
+- added Provides validation (thx Andrey Alekseev)
+
+* Tue Jun 23 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.3-alt1
+- Added a check for empty response
+- Fixed error printing
+- Fixed temporary files were not always deleted
+- Corrected apt methods calling logic
+
 * Tue Jun 09 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.2-alt1
 - Fix signature verification when apt-config returns an empty string.
 
