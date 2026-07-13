@@ -6,10 +6,10 @@
 
 %global import_path k8s.io/minikube
 
-%define git_commit 65318f4cfff9c12cc87ec9eb8f4cdd57b25047f3
+%define git_commit c93a4cb9311efc66b90d33ea03f75f2c4120e9b0
 
 Name: minikube
-Version: 1.37.0
+Version: 1.38.1
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -23,7 +23,9 @@ ExclusiveArch: %go_arches
 Source0: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+BuildRequires: libvirt-devel
 
 %description
 minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
@@ -68,6 +70,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_%name
 
 %changelog
+* Thu Jul 09 2026 Nikita Stavtsev <nst@altlinux.org> 1.38.1-alt1
+- 1.37.0 --> 1.38.1
+
 * Thu Oct 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.37.0-alt1
 - 1.36.0 -> 1.37.0
 - Fix image download errors on minikube start.
