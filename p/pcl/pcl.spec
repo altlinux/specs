@@ -1,6 +1,6 @@
 Name:    pcl
 Version: 1.15.1
-Release: alt1
+Release: alt2
 
 Summary: Point Cloud Library (PCL)
 License: BSD-3-Clause
@@ -13,6 +13,7 @@ Patch0: eigen3-version-compat.patch
 Patch1: system-gtest.patch
 Patch2: cuda-io-pkgconfig-no-openni.patch
 Patch3: cloud-composer-export-symbols.patch
+Patch4: pcl-config-fixes.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ gcc14-c++
@@ -76,6 +77,7 @@ Library.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Workaround: CUDA 12.9 CCCL _CCCL_PP_SPLICE_WITH_IMPL1 macro
 # has only 2 args (SEP, P1) but is called with 3 in some expansion
@@ -163,10 +165,6 @@ mv doc/advanced/html doc/advanced/advanced
 cp -fr ../doc/advanced/content/files/* doc/advanced/advanced
 popd
 
-mkdir -p %buildroot%_libdir/cmake/pcl
-mv %buildroot%_datadir/%name-*/*.cmake %buildroot%_libdir/cmake/pcl/
-mv %buildroot%_datadir/%name-*/Modules %buildroot%_libdir/cmake/pcl/
-
 %check
 # Run only headless computational tests (no display or GPU required)
 # enable_testing() is called in test/CMakeLists.txt (not top-level),
@@ -180,13 +178,14 @@ ${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 %files
 %doc LICENSE.txt README.md
 %_libdir/*.so.*
-%_datadir/%name-*
 
 %files devel
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
-%_libdir/cmake/pcl
+%dir %_datadir/%name-*
+%_datadir/%name-*/*.cmake
+%_datadir/%name-*/Modules
 
 %files tools
 %_bindir/pcl_*
@@ -197,6 +196,15 @@ ${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 %doc %_cmake__builddir/doc/advanced/advanced
 
 %changelog
+* Sun Jul 12 2026 Sergey Palcheh <minergenon@altlinux.org> 1.15.1-alt2
+- extend eigen3-version-compat.patch: also drop hardcoded Eigen3 3.3 requirement
+  in PCLConfig.cmake.in so downstream packages work with newer Eigen3
+- add pcl-config-fixes.patch:
+  + use configured @PCL_VERSION_MAJOR@.@PCL_VERSION_MINOR@ variables in
+    PCLConfig.cmake.in instead of runtime CMake variables
+  + handle absolute LIB_INSTALL_DIR to avoid duplicated prefix in
+    PCL_LIBRARY_DIRS
+
 * Wed Jul 08 2026 Sergey Palcheh <minergenon@altlinux.org> 1.15.1-alt1
 - initial build for ALT Sisyphus
 
