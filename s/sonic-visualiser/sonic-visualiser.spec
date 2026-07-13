@@ -1,6 +1,6 @@
 Name: sonic-visualiser
 Version: 4.5.2
-Release: alt1
+Release: alt2
 
 Summary: Application for viewing and analysing the contents of music audio files
 
@@ -14,6 +14,7 @@ Source0: %name-%version.tar
 Source1: %name.xml
 
 Patch0: sonic-visualiser-system-dataquay.patch
+Patch1: sonic-visualiser-alt-fix-missing-include.patch
 
 BuildRequires: bzlib-devel capnproto-devel dataquay-minefeld-devel
 BuildRequires: libfftw3-devel libfishsound-devel libid3tag-devel
@@ -40,6 +41,7 @@ file.
 # Make sure, that we use system dataquay
 rm -rfv dataquay
 %patch0 -p2
+%patch1 -p2
 
 %build
 %add_optflags %(pkg-config --libs dataquay)
@@ -82,6 +84,9 @@ install -Dm 644 x-sonicvisualiser-layer.desktop %buildroot/%_datadir/mimelnk/app
 %_datadir/mimelnk/application/x-sonicvisualiser*
 
 %changelog
+* Mon Jul 13 2026 Ivan A. Melnikov <iv@altlinux.org> 4.5.2-alt2
+- NMU: fix FTBFS
+
 * Tue Sep 05 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.2-alt1
 - Build new version.
 
