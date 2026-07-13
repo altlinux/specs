@@ -6,7 +6,7 @@
 %def_without check
 
 Name: kontainer
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: A Kirigami Distrobox GUI
@@ -36,6 +36,7 @@ BuildRequires: kf6-kirigami-addons
 Requires: kf6-kirigami
 Requires: kf6-kirigami-addons
 Requires: kf6-qqc2-desktop-style
+Requires: libkf6sonnetui
 
 Requires: distrobox
 
@@ -74,6 +75,9 @@ sed -i "s|Categories=.*|Categories=Emulator;System;|" io.github.DenysMb.Kontaine
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Mon Jul 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
 - New version 1.4.1.
 
