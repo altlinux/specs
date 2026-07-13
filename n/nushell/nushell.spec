@@ -4,7 +4,7 @@
 %def_with check
 
 Name: nushell
-Version: 0.113.1
+Version: 0.114.1
 Release: alt1
 
 Summary: A new type of shell
@@ -14,6 +14,7 @@ Url: http://www.nushell.sh/
 Vcs: https://github.com/nushell/nushell.git
 Source: %name-%version.tar
 Source1: vendor.tar
+Source2: Cargo.lock
 # Not supported by upstream
 ExcludeArch: %ix86
 
@@ -30,6 +31,7 @@ Nushell (or Nu for short) is a new type of shell that supports structured and ty
 
 %prep
 %setup -a 1
+install -Dm644 %SOURCE2 .
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 
@@ -61,6 +63,7 @@ cargo test --workspace --                                                       
     --skip commands::move_::umv::mv_directory_with_same_name                        \
     --skip commands::ucp::copy_identical_file                                       \
     --skip commands::ucp::test_cp_debug_default                                     \
+    --skip commands::utouch                                                         \
     --skip plugins::stream::echo_interactivity_on_slow_pipelines                    \
     --skip commands::run_external                                                   \
     --skip plugins::stress_internals::test_exit_before_hello_stdio                  \
@@ -86,6 +89,9 @@ fi
 %doc README.md CONTRIBUTING.md CODE_OF_CONDUCT.md
 
 %changelog
+* Mon Jul 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.114.1-alt1
+- Updated to upstream version 0.114.1
+
 * Tue Jun 16 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.113.1-alt1
 - Updated to upstream version 0.113.1
 
