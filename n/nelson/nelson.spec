@@ -3,7 +3,7 @@
 
 Name: nelson
 Version: 1.17.0
-Release: alt2
+Release: alt3
 
 Summary: The Nelson Programming Language
 License: LGPL-3.0 OR GPL-3.0
@@ -110,7 +110,8 @@ This package contains arch-independent files of Nelson.
 sed -i "s/Categories=.*/Categories=Science;Math;DataVisualization;NumericalAnalysis;/" desktop/io.github.nelson_lang.Nelson.desktop
 
 %build
-%cmake
+%cmake \
+       -DBUILD_HELP=ON
 %cmake_build
 
 %install
@@ -149,6 +150,9 @@ patchelf %buildroot%_bindir/nelson_f2c --add-rpath %_libdir/Nelson
 %_libdir/cmake/Nelson/*
 
 %changelog
+* Mon Jul 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt3
+- Build with help.
+
 * Mon Jun 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt2
 - Exclude loongarch64 as not buildable because of missed liblapacke.
 - Move arch-independent files to -common subpackage.
