@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -81,6 +81,9 @@ install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functi
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Jul 13 2026 Mikhail Tergoev <fidel@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Wed Jun 10 2026 Mikhail Tergoev <fidel@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
