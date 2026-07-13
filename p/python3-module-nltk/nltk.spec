@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.9.4
-Release: alt2
+Version: 3.10.0
+Release: alt1
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
@@ -67,6 +67,9 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 13 2026 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1
+- 3.9.4 -> 3.10.0
+
 * Mon Apr 06 2026 Stanislav Levin <slev@altlinux.org> 3.9.4-alt2
 - Added missing runtime dependency on sqlite3.
 
