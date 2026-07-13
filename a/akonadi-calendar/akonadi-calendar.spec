@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,6 +19,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: boost-devel-headers libsasl2-devel
+BuildRequires: libgpgme-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -105,6 +106,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- update build requries
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
