@@ -6,13 +6,13 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.9.4
+Version: 7.0.0
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/aiormq/
+Url: https://pypi.org/project/aiormq/
 Vcs: https://github.com/mosquito/aiormq
 
 BuildArch: noarch
@@ -30,7 +30,6 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
 %add_pyproject_deps_check_filter pytest-rst
-%add_pyproject_deps_check_filter types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -44,7 +43,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -61,6 +60,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 14 2026 Anton Zhukharev <ancieg@altlinux.org> 7.0.0-alt1
+- Updated to 7.0.0.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 6.9.4-alt1
 - Updated to 6.9.4.
 

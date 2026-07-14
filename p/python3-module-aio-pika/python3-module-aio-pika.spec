@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.6.2
+Version: 10.0.1
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -27,11 +27,13 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter autodoc
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
 %add_pyproject_deps_check_filter nox
 %add_pyproject_deps_check_filter pytest-rst
 %add_pyproject_deps_check_filter sphinx-autobuild
+%add_pyproject_deps_check_filter sphinxcontrib-googleanalytics
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -55,8 +57,11 @@ Features:
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
+
+# Set version instead of forgetful upstream
+sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -72,6 +77,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 14 2026 Anton Zhukharev <ancieg@altlinux.org> 10.0.1-alt1
+- Updated to 10.0.1.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 9.6.2-alt1
 - Updated to 9.6.2.
 
