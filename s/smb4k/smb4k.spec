@@ -5,8 +5,8 @@
 
 %define rname smb4k
 Name: %rname
-Version: 4.0.5
-Release: alt2
+Version: 4.0.6
+Release: alt1
 %K6init
 
 Group: Networking/Other
@@ -87,6 +87,9 @@ Group: System/Libraries
 %_K6lib/libsmb4kdialogs.so.*
 
 %changelog
+* Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 4.0.6-alt1
+- new version
+
 * Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 4.0.5-alt2
 - fix previous changelog
 
