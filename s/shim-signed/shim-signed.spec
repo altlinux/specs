@@ -1,6 +1,6 @@
 Name: shim-signed
 Version: 16.1
-Release: alt1
+Release: alt2
 
 Summary: UEFI Secure Boot shim signed by Microsoft
 License: BSD-2-Clause-Patent
@@ -10,14 +10,38 @@ Url: https://github.com/rhboot/shim
 VCS: https://github.com/rhboot/shim.git
 Source: %name-%version.tar
 
+BuildRequires: pesign
 BuildRequires: rpm-macros-uefi
 ExclusiveArch: x86_64 aarch64
+
+Requires: shim-signed-compat = %EVR
+Requires: shim-signed-dualsign = %EVR
 
 %description
 This package contains shim binaries signed by "Microsoft Corporation UEFI CA
 2011" and "Microsoft UEFI CA 2023" keys for x64, ia32 and aa64 efi
 architectures. MokManager (as mm*.efi) and fallback (as fb*.efi) utilities
 signed by "ALT Linux Secure Boot Signer" are provided as well.
+
+# temporarily needed for compatibility with grub <= 2.12-alt16
+%package compat
+Summary: Compatibility symlinks to signed shim binaries
+Group: System/Kernel and hardware
+
+%description compat
+This package makes signed shim binaries accessible by debian'ish paths
+under %_libexecdir/shim (as *.efi.signed symlinks) and provides
+BOOT<efi_arch>.CSV files for fallback boot variable creation.
+
+%package dualsign
+Summary: Shim binaries carrying both Microsoft UEFI CA 2011 and 2023 signatures
+Group: System/Kernel and hardware
+Requires: shim-signed = %EVR
+
+%description dualsign
+Shim binaries with two signatures in a single PE certificate table:
+"Microsoft Corporation UEFI CA 2011" first and "Microsoft UEFI CA 2023"
+second, merged with pesign from the Microsoft-signed binaries.
 
 %prep
 %setup
@@ -41,16 +65,65 @@ ln -svf msuefica2011/shimia32.efi %buildroot%_efi_bindir/shimia32.efi
 install -Dpm 0644 BOOTIA32.CSV -t %buildroot%_libexecdir/shim/
 %endif
 
+# dual-signed binaries for shim-signed-dualsign: "Microsoft Corporation
+# UEFI CA 2011" signature goes first because some firmware validates only
+# the first certificate table entry, "Microsoft UEFI CA 2023" goes second
+sign2011=%buildroot%_efi_bindir/msuefica2011
+sign2023=%buildroot%_efi_bindir/msuefica2023
+dualsign=%buildroot%_efi_bindir/dualsign
+mkdir -p "$dualsign"
+for pefile in "$sign2011"/*.efi; do
+    name="${pefile##*/}"
+
+    # both signatures must cover the same PE image
+    pesign -i "$sign2011/$name" --hash > "$name".h2011
+    pesign -i "$sign2023/$name" --hash > "$name".h2023
+    read hash2011 _ < "$name".h2011
+    read hash2023 _ < "$name".h2023
+    [ "$hash2011" = "$hash2023" ]
+
+    # export the 2023 signature and append it to the 2011-signed binary
+    pesign -i "$sign2023/$name" -u 0 --export-signature "$name".sig2023
+    pesign -i "$sign2011/$name" -u 1 --import-signature "$name".sig2023 \
+       -o "$dualsign/$name"
+
+    # verify both slots byte-for-byte against the source signatures
+    pesign -i "$sign2011/$name" -u 0 --export-signature "$name".sig2011
+    pesign -i "$dualsign/$name" -u 0 --export-signature "$name".v0
+    pesign -i "$dualsign/$name" -u 1 --export-signature "$name".v1
+    cmp "$name".v0 "$name".sig2011
+    cmp "$name".v1 "$name".sig2023
+done
+
+# compat symlinks for shim-signed-compat
+for pefile in %buildroot%_efi_bindir/*.efi; do
+    pefile="${pefile##*/}"
+    ln -sv %_efi_bindir/"$pefile" \
+       %buildroot%_libexecdir/shim/"$pefile".signed
+done
+
 %files
-%dir %attr(0755,root,root) %_libexecdir/shim
 %attr(0644,root,root) %_efi_bindir/*.efi
 %dir %attr(0755,root,root) %_efi_bindir/msuefica2011
 %attr(0644,root,root) %_efi_bindir/msuefica2011/*.efi
 %dir %attr(0755,root,root) %_efi_bindir/msuefica2023
 %attr(0644,root,root) %_efi_bindir/msuefica2023/*.efi
+
+%files compat
+%dir %attr(0755,root,root) %_libexecdir/shim
+%_libexecdir/shim/*.efi.signed
 %attr(0644,root,root) %_libexecdir/shim/BOOT*.CSV
 
+%files dualsign
+%dir %attr(0755,root,root) %_efi_bindir/dualsign
+%attr(0644,root,root) %_efi_bindir/dualsign/*.efi
+
 %changelog
+* Wed Jul 08 2026 Egor Ignatov <egori@altlinux.org> 16.1-alt2
+- restore *.efi.signed under %%_libexecdir/shim as symlinks
+- move %%_libexecdir/shim to new compat subpackage
+- add dualsign subpackage with both Microsoft signatures
+
 * Tue Jun 09 2026 Egor Ignatov <egori@altlinux.org> 16.1-alt1
 - new shim version
 - add aarch64 build
