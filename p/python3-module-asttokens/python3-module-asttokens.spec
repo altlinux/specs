@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Annotate AST trees with source code positions
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -52,11 +53,13 @@ refactoring or highlighting.
 %pyproject_run_pytest -ra
 
 %files
-%doc README*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 13 2026 Stanislav Levin <slev@altlinux.org> 3.0.2-alt1
+- 3.0.1 -> 3.0.2
+
 * Mon Nov 17 2025 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
 - 3.0.0 -> 3.0.1.
 
