@@ -23,7 +23,7 @@
 
 Name: seahorse
 Version: %ver_major.0.1
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: A password and encryption key manager
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -51,6 +51,10 @@ Source: %name-%version.tar
 
 Requires: dconf
 Requires: gnupg2 > %gnupg_ver gcr4 >= %gcr_ver
+# required old gcr
+# /usr/share/glib-2.0/schemas/org.gnome.crypto.pgp.gschema.xml
+# https://bugzilla.altlinux.org/58323
+Requires: gcr
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
@@ -119,6 +123,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc NEWS README* THANKS
 
 %changelog
+* Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt3
+- updated to 47.0.1-89-gea511665 (fixed build with gpgme >= 2.0.0)
+
 * Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt2
 - updated to 47.0.1-66-g2e47359c (ported to GTK4/Libadwaita/GCR-4)
 

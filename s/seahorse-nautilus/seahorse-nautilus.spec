@@ -8,12 +8,14 @@
 
 Name: %_name-nautilus
 Version: %ver_major.92
-Release: alt4
+Release: alt4.1
 
 Summary: PGP encryption and signing for Nautilus
 License: LGPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Seahorse
+
+Vcs: https://gitlab.gnome.org/Archive/seahorse-nautilus.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -21,6 +23,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 Patch: %name-3.11.92-alt-gnupg-2.4.patch
+# based on:
+# https://src.fedoraproject.org/rpms/seahorse-nautilus/raw/rawhide/f/seahorse-fix-building-w-gpgme2.patch
+Patch1: %name-3.11.92-alt-gpgme2.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson
@@ -36,6 +41,7 @@ and decryption of OpenPGP files using GnuPG.
 %prep
 %setup
 %patch -b .gnupg
+%patch1 -b .gpgme
 
 %build
 %meson \
@@ -59,6 +65,9 @@ and decryption of OpenPGP files using GnuPG.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt4.1
+- fixed build with gpgme >= 2.0.0
+
 * Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt4
 - updated to 3.11.92-99-gbd57374
 - fixed build with GnuPG-2.4.x
