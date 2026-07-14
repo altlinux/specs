@@ -5,7 +5,7 @@
 
 Name: libccd
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: Library for collision detection between two convex shapes
 License: BSD-3-Clause
@@ -20,11 +20,15 @@ Patch2: libccd-2.1-py3.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: ctest
+BuildRequires: python3
+%ifarch %valgrind_arches
 BuildRequires: valgrind
+%endif
 BuildRequires: /proc
 %endif
 
@@ -69,7 +73,11 @@ Group: Development/C
 rm -f %buildroot%_defaultdocdir/ccd/BSD-LICENSE
 
 %check
-%ctest
+%ctest \
+%ifnarch %valgrind_arches
+  -E 'ccdtest-valgrind.*' \
+%endif
+  #
 
 %files -n libccd%soversion
 %doc BSD-LICENSE README.md
@@ -83,6 +91,10 @@ rm -f %buildroot%_defaultdocdir/ccd/BSD-LICENSE
 %_libdir/ccd
 
 %changelog
+* Tue Jul 14 2026 Ivan A. Melnikov <iv@altlinux.org> 2.1-alt3
+- NMU: Don't run valgrind tests on architectures that valgrind
+  does not support (fixes FTBFS on loongarch64).
+
 * Fri Dec 12 2025 Pavel Petrykin <silverducks@altlinux.org> 2.1-alt2
 - Enable double precision.
 
