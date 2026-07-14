@@ -5,8 +5,8 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
-Release: alt6
+Version: 3.1.1
+Release: alt1
 
 Summary: Web application fuzzer
 License: GPL-2.0
@@ -20,7 +20,6 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 # ALT patches
 Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
-Patch1: wfuzz-3.1.0-Correct-dependency-specification-for-pyparsing.patch
 Patch2: python3-module-wfuzz-3.1.0-alt-do-not-use-distutils.patch
 Patch3: python3-module-wfuzz-3.1.0-alt-chardet-6-compat.patch
 # Debian patches
@@ -74,6 +73,9 @@ it's a tool by pentesters for pentesters ;)
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
+# Set version instead of forgetful upstream
+sed -i '/^__version__/s/= .*/= "%version"/' src/wfuzz/__init__.py
+
 %build
 %pyproject_build
 
@@ -92,6 +94,9 @@ it's a tool by pentesters for pentesters ;)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 14 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.1-alt1
+- Updated to 3.1.1.
+
 * Thu Mar 05 2026 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt6
 - Fixed FTBFS (chardet>=6.0.0).
 
