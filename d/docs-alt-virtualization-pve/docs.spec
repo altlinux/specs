@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jul 14 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt7
+- update to PVE 9.2
+- small improvements (ALT 58780, 58779, 58778, 58776)
+
 * Tue Apr 14 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt6
 - update to ALT Virtualization PVE 11.1rc4
 - small improvements (closes #58484)
