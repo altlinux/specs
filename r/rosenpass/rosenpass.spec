@@ -5,7 +5,7 @@
 
 Name: rosenpass
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: Post-quantum secure VPN with WireGuard
 License: MIT or Apache-2.0
 Group: Security/Networking
@@ -17,6 +17,8 @@ BuildRequires: rust-cargo
 BuildRequires: libsodium-devel
 BuildRequires: clang-devel
 BuildRequires: cmake
+
+Conflicts: RTags
 
 %description
 Rosenpass is a formally verified, post-quantum secure VPN that uses
@@ -89,6 +91,9 @@ kill %%1 %%2
 %_man1dir/rp.1*
 
 %changelog
+* Tue Jul 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.2-alt2
+- Added conflict with RTags package (closes: #59818).
+
 * Sat Jul 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.2.2-alt1
 - Security update to v0.2.2 (2024-06-05).
 
