@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.10.4
+Version: 4.11.0
 Release: alt1
 
 Summary: Open source computer monitoring and classroom management
@@ -18,7 +18,6 @@ Source3: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
 Source4: %name-%version-3rdparty-x11vnc.tar
 
 Source100: veyon-config-dm-login.sh
-Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
 Patch2: alt-fix-dm-login.patch
 
@@ -50,6 +49,11 @@ BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libproc2-devel
 BuildRequires: libvncserver-devel
+BuildRequires: libXi-devel
+BuildRequires: pipewire-libs-devel
+BuildRequires: libwayland-client-devel
+BuildRequires: wayland-protocols
+BuildRequires: wayland-devel
 
 %description
 Veyon is a free and open source software
@@ -116,6 +120,12 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %cmakeinstall_std
 %__install -D -m 0755 %SOURCE100 %buildroot%_datadir/veyon/
 
+%post
+if [ $DISPLAY != "" ]; then
+    flatpak permission-set kde-authorized screencast io.veyon.veyon-server yes
+    flatpak permission-set kde-authorized remote-desktop io.veyon.veyon-server yes
+fi
+
 %files
 %doc COPYING README.md
 %_libdir/*.so
@@ -127,8 +137,13 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/polkit-1/actions/io.veyon.veyon-*.policy
 %_iconsdir/hicolor/*/apps/veyon-*
 %_desktopdir/veyon-*.desktop
+%_desktopdir/io.veyon.veyon-server.desktop
+%_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Jul 14 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt1
+- New version.
+
 * Thu Jun 04 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.10.4-alt1
 - New version.
 - Exclude the local host from the screen lock broadcast so the master keeps
