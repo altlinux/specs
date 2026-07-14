@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.7
+Version: 0.10.8
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -180,6 +180,9 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.8-alt1
+- editions: Drop license reference from edition_education.
+
 * Sun Jul 12 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.7-alt1
 - editions: Up edition_education license version 11.1 -> 11.2.
 
