@@ -1,5 +1,5 @@
-%define ver_major 15.0
-%define api_ver_major 15
+%define ver_major 16.0
+%define api_ver_major 16
 %define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
 %define soname 1
@@ -16,6 +16,9 @@
 
 # Weston backend: RDP remote screensharing
 %def_enable backend_rdp
+
+# PipeWire backend: screencasting via PipeWire
+%def_enable backend_pipewire
 
 # Compositor: RDP screen-sharing support (deprecated)
 %def_disable screenshare
@@ -54,11 +57,11 @@
 # systemd service plugin: state notify, watchdog, socket activation
 %def_enable systemd
 
-# Virtual remote output with GStreamer on DRM backend
-%def_enable remoting
+# Virtual remote output with GStreamer on DRM backend (deprecated since 16.0.0)
+%def_disable remoting
 
-# Virtual remote output with Pipewire on DRM backend
-%def_enable pipewire
+# Virtual remote output with Pipewire on DRM backend (deprecated since 16.0.0)
+%def_disable pipewire
 
 # Weston shell UI: traditional desktop
 %def_enable shell_desktop
@@ -117,8 +120,8 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -130,8 +133,6 @@ Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
 #Source1: %name.ini
 Patch: %name-%version-%release.patch
-Patch1: %name-15.0-up-neatvnc-1.0.0.patch
-#Patch2: weston-9.0.0-alt-launch-group.patch
 
 Requires: lib%name = %EVR
 Requires: xkeyboard-config
@@ -140,22 +141,25 @@ Requires: xorg-dri-swrast
 %define pw_api_ver 0.3
 %define pw_ver 0.3
 %define gst_api_ver 1.0
-%define mesa_ver 21.1.1
+%define drm_ver 2.4.130
+%define mesa_ver 21.3
+%define wl_ver 1.24
+%define wp_ver 1.46
 
 BuildRequires(pre): meson rpm-build-xdg %{?_enable_shell_lua:rpm-build-lua}
 BuildRequires: gcc-c++
 %{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
 %{?_enable_launcher_libseat:BuildRequires: pkgconfig(libseat)}
 BuildRequires: libGLES-devel libglvnd-devel
-BuildRequires: libdrm-devel
+BuildRequires: libdrm-devel >= %drm_ver
 BuildRequires: libgbm-devel >= %mesa_ver
 BuildRequires: libdisplay-info-devel
 BuildRequires: libva-devel
-BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-client-devel >= %wl_ver
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
-BuildRequires: wayland-protocols
+BuildRequires: wayland-protocols >= %wp_ver
 BuildRequires: libpixman-devel
 BuildRequires: libcairo-devel
 BuildRequires: libpango-devel
@@ -175,7 +179,7 @@ BuildRequires: pkgconfig(xcb-shape) pkgconfig(xcb-xfixes) pkgconfig(xcb-cursor)
 BuildRequires: pkgconfig(xcursor) pkgconfig(cairo-xcb)}
 %{?_enable_backend_rdp:BuildRequires: libfreerdp3-devel}
 %{?_enable_backend_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb)}
-%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver}
+%{?_enable_backend_pipewire:BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver}
 %{?_enable_remoting:
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
@@ -224,7 +228,6 @@ Header files for doing development with the weston.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 %{?_enable_deprecated_weston_launch:%patch2 -p1 -b .launch_group}
 
 %build
@@ -236,11 +239,10 @@ Header files for doing development with the weston.
     %{subst_enable_meson_bool renderer_vulkan renderer-vulkan} \
     %{subst_enable_meson_bool backend_rdp backend-rdp} \
     %{subst_enable_meson_bool backend_vnc backend-vnc} \
+    %{subst_enable_meson_bool backend_pipewire backend-pipewire} \
     %{subst_enable_meson_bool xwayland xwayland} \
-    %{subst_enable_meson_bool remoting remoting} \
     %{subst_enable_meson_bool shell_ivi shell-ivi} \
     %{subst_enable_meson_bool shell_lua shell-lua} \
-    %{subst_enable_meson_bool pipewire pipewire} \
     %{subst_enable_meson_bool test_junit_xml test-junit-xml}
 %nil
 %meson_build -v
@@ -288,6 +290,8 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_man5dir/%{name}*
 %_man7dir/%{name}*
 
+%doc README*
+
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
@@ -311,7 +315,7 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %{?_enable_backend_wayland:%_libdir/lib%name-%api_ver/wayland-backend.so}
 %{?_enable_backend_x11:%_libdir/lib%name-%api_ver/x11-backend.so}
 %{?_enable_color_management_lcms:%_libdir/lib%name-%api_ver/color-lcms.so}
-%{?_enable_pipewire:%_libdir/lib%name-%api_ver/pipewire-backend.so}
+%{?_enable_backend_pipewire:%_libdir/lib%name-%api_ver/pipewire-backend.so}
 %{?_enable_backend_vnc:%_libdir/lib%name-%api_ver/vnc-backend.so}
 
 %files -n lib%name-devel
@@ -325,6 +329,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 16.0.0-alt1
+- 16.0.0
+
 * Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 15.0.1-alt2
 - adopted to aml/neatvnc-1.0.0
 
