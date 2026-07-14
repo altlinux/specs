@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: spek-rs
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Acoustic spectrum analyser
@@ -49,6 +51,9 @@ install -Dm 0644 assets/icon.png %buildroot%_iconsdir/hicolor/512x512/apps/%name
 %_datadir/applications/%name.desktop
 
 %changelog
+* Wed Jul 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.3.3-alt1
+- 0.3.2 -> 0.3.3
+
 * Tue May 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.3.2-alt1
 - Initial build for ALT Linux.
 
