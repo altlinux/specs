@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -53,7 +53,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 91
+%define ver_min 86
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -66,10 +66,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -82,7 +82,7 @@ Source: boost-%version.tar
 Patch65: boost-1.83.0-fedora-build-optflags.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1318383
-Patch82: boost-1.91.0-alt-no-rpath.patch
+Patch82: boost-1.85.0-alt-no-rpath.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1541035
 Patch83: boost-1.83.0-fedora-b2-build-flags.patch
@@ -90,21 +90,22 @@ Patch83: boost-1.83.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/boost/issues/1141
-Patch89: boost-1.91.0-alt-fix-b2-abort-on-loongarch64.patch
+# https://github.com/boostorg/charconv/issues/220
+Patch89: boost-1.86.0-upstream-ppc64le-charconv-workaround.patch
 
-# https://github.com/boostorg/optional/issues/146
-# https://github.com/boostorg/boost/issues/1143
-# https://github.com/boostorg/optional/commit/1fb60cb53bb2b86b2a9739a26a8be2c5e4c9e8fc
-Patch90: boost-1.91.0-fix-bug-in-copy-construction-of-optional.patch
+# https://github.com/boostorg/compute/issues/889
+Patch90: boost-1.86.0-upstream-compute-fixap-sha1-digest-type.patch
 
-# https://github.com/boostorg/boost/pull/1139
-Patch91: boost-1.91.0-fix-predef-install.patch
+# https://github.com/chriskohlhoff/asio/issues/1547
+# https://github.com/chriskohlhoff/asio/pull/1556
+Patch91: boost-1.86.0-alt-fix-asio-hpp-compilation.patch
 
-# https://github.com/boostorg/container/issues/334
-Patch92: boost-1.91.0-container-flat-set-fix-overload-resolution.patch
+# from https://github.com/boostorg/python
+Patch92: boost-1.86.0-upstream-support-numpy-2.patch
+Patch93: boost-1.86.0-upstream-another-fix-for-numpy-2.patch
 
-# Patch2000: boost-1.83-e2k-makecontext.patch
+
+Patch2000: boost-1.83-e2k-makecontext.patch
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
@@ -164,7 +165,6 @@ Requires: %name-math-devel = %EVR
 Requires: %name-mpi-devel = %EVR
 %endif
 Requires: %name-msm-devel = %EVR
-Requires: %name-mqtt5-devel = %EVR
 Requires: %name-mysql-devel = %EVR
 Requires: %name-polygon-devel = %EVR
 Requires: %name-program_options-devel = %EVR
@@ -241,6 +241,7 @@ Requires: libboost_process%version = %EVR
 Requires: libboost_random%version = %EVR
 Requires: libboost_regex%version = %EVR
 Requires: libboost_serialization%version = %EVR
+Requires: libboost_system%version = %EVR
 Requires: libboost_test%version = %EVR
 Requires: libboost_timer%version = %EVR
 Requires: libboost_thread%version = %EVR
@@ -580,25 +581,6 @@ and quickly define state machines of very high performance.
 
 It is header-only library. This package contains the headers.
 
-
-%package mqtt5-devel
-Summary: The Boost MQTT5 Library development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-Requires(pre,postun): %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-Requires: %name-beast-devel = %EVR
-
-%description mqtt5-devel
-Boost.MQTT5 is a C++17 client built on Boost.Asio. This client
-is designed for publishing or receiving messages from an MQTT 5.0
-compatible Broker. Boost.MQTT5 represents a comprehensive
-implementation of the MQTT 5.0 protocol standard, offering full
-support for publishing or receiving messages with QoS 0, 1, and 2.
-
-
 %package mysql-devel
 Summary: The Boost MySQL Library development files
 Group: Development/C++
@@ -758,14 +740,6 @@ Obsoletes: %name-jam < %EVR
 B2 (formerly Boost.Jam) is the low-level build engine tool for Boost.Build.
 Historically, B2 was based on on FTJam and on Perforce Jam but has grown
 a number of significant features and is now developed independently.
-
-%package predef-tools
-Summary: Boost.Predef tools
-Group: Development/C++
-
-%description predef-tools
-This package contains sources for predef_check programs, which can be used
-from Boost.Build to configure target requirements.
 %endif
 
 
@@ -835,6 +809,10 @@ This package contains static libraries.
 Summary: Boost.Atomic Library
 Group: Development/C++
 
+%if_with strict_deps
+Requires: libboost_system%version = %EVR
+%endif
+
 %description -n libboost_atomic%version
 Boost.Atomic is a library that provides atomic data types and operations
 on these data types, as well as memory ordering constraints required for
@@ -861,6 +839,10 @@ of the standard library <charconv>.
 Summary: Boost.Chrono Library
 Group: Development/C++
 
+%if_with strict_deps
+Requires: libboost_system%version = %EVR
+%endif
+
 %description -n libboost_chrono%version
 Boost.Chrono aims to implement the new time facilities in C++0x,
 as proposed in N2661 document. To make the timing facilities of
@@ -883,6 +865,10 @@ standard draft features for compilers that comply with C++03.
 %package -n libboost_contract%version
 Summary: Boost.Contract Library
 Group: Development/C++
+
+%if_with strict_deps
+Requires: libboost_system%version = %EVR
+%endif
 
 %description -n libboost_contract%version
 Boost.Contract library implements contract programming for C++.
@@ -909,6 +895,7 @@ Group: Development/C++
 %if_with strict_deps
 Requires: libboost_context%version = %EVR
 Requires: libboost_thread%version = %EVR
+Requires: libboost_system%version = %EVR
 %endif
 
 %description -n libboost_coroutine%version
@@ -943,6 +930,10 @@ time intervals.
 Summary: Filesystem Library
 Group: Development/C++
 Provides: boost-filesystem = %EVR
+
+%if_with strict_deps
+Requires: libboost_system%version = %EVR
+%endif
 
 %description -n libboost_filesystem%version
 The Boost Filesystem Library provides portable facilities to query and
@@ -997,6 +988,7 @@ Group: Development/C++
 
 %if_with strict_deps
 Requires: libboost_thread%version = %EVR
+Requires: libboost_system%version = %EVR
 %endif
 
 %description -n libboost_locale%version
@@ -1014,6 +1006,7 @@ Group: Development/C++
 Requires: libboost_filesystem%version = %EVR
 Requires: libboost_regex%version = %EVR
 Requires: libboost_thread%version = %EVR
+Requires: libboost_system%version = %EVR
 %endif
 
 %description -n libboost_log%version
@@ -1057,7 +1050,7 @@ Provides: boost-math = %EVR
 
 %description -n libboost_math_c99l%version
 Boost.Math shared library.
-%endif
+%endif // with long_double
 
 
 %package -n libboost_math_tr1%version
@@ -1228,6 +1221,16 @@ Group: Development/C++
 Boost.Stacktrace library is a simple C++03 library that provides
 information about call sequence in a human-readable form.
 
+%package -n libboost_system%version
+Summary: Boost System Library
+Group: Development/C++
+Provides: boost-system = %EVR
+
+%description -n libboost_system%version
+Boost.System library provides operating system support, including
+the diagnostics support that will be part of the C++0x standard library.
+
+
 %package -n libboost_test%version
 Summary: Test Library
 Group: Development/C++
@@ -1243,6 +1246,10 @@ is also useful in some production (non-test) environments.
 %package -n libboost_thread%version
 Group: Development/C++
 Summary: The Boost Threads Library (Boost.Threads)
+
+%if_with strict_deps
+Requires: libboost_system%version = %EVR
+%endif
 
 Obsoletes: boost-thread-gcc2, boost-thread-gcc3
 Provides: boost-thread-gcc2 = %EVR
@@ -1279,6 +1286,7 @@ Group: Development/C++
 Provides: boost-wave = %EVR
 
 %if_with strict_deps
+Requires: libboost_system%version = %EVR
 Requires: libboost_thread%version = %EVR
 %endif
 
@@ -1303,6 +1311,7 @@ Group: Development/C++
 Provides: boost-type_erasure = %EVR
 
 %if_with strict_deps
+Requires: libboost_system%version = %EVR
 Requires: libboost_thread%version = %EVR
 %endif
 
@@ -1538,6 +1547,30 @@ fi
 
 # some documentation have hyperlinks to real headers; this makes them work
 ln -rs %buildroot%_includedir/%name %buildroot%boost_doc/boost
+
+# Programs that link with Boost.Thread and Boost.Filesystem need to link
+# with Boost.System explicitly. For thread, this is new requirement since
+# boost 1.50.0. To avoid breaking build of too many Boost.Thread clients,
+# we introduce some linker scripts.
+
+boost_make_linker_script()
+{
+    local so_path="%buildroot%_libdir/libboost_${1}.so"
+
+    rm -f "${so_path}"
+    echo '/* GNU ld script */' > ${so_path}
+
+    echo -n 'GROUP(' >> ${so_path}
+    for name in "$@"; do
+        echo -n " %_libdir/libboost_${name}.so.%version" >> ${so_path}
+    done
+    echo ' )' >> ${so_path}
+}
+
+boost_make_linker_script thread system
+boost_make_linker_script filesystem system
+boost_make_linker_script filesystem-st system-st
+
 %endif
 
 %if_with boost_build
@@ -1597,7 +1630,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %endif
 %exclude %_includedir/%name/msm
 %exclude %_includedir/%name/mysql*
-%exclude %_includedir/%name/mqtt*
 %exclude %_includedir/%name/polygon
 %exclude %_includedir/%name/program_options*
 %if_with python
@@ -1725,9 +1757,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files msm-devel
 %_includedir/%name/msm
 
-%files mqtt5-devel
-%_includedir/%name/mqtt5*
-
 %files mysql-devel
 %_includedir/%name/mysql*
 
@@ -1771,9 +1800,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files build
 %_bindir/*
 %_datadir/b2
-
-%files predef-tools
-%_datadir/boost_predef
 %endif
 
 %if_with devel_static
@@ -1893,6 +1919,9 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files -n libboost_stacktrace%version
 %_libdir/*_stacktrace*.so.*
 
+%files -n libboost_system%version
+%_libdir/*_system*.so.*
+
 %files -n libboost_test%version
 %_libdir/*_test*.so.*
 %_libdir/*_prg_exec_monitor*.so.*
@@ -1957,37 +1986,11 @@ done
 
 
 %changelog
-* Wed Jul 08 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.91.0-alt3
-- Return installation of Boost.Predef (with an upstream fix)
-  and package it
-- Backport upstream fix for overload resolution in Boost.Container
-  set and flat_set
-
-* Tue Jul 07 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.91.0-alt2
-- Add a quick fix for b2 crash on loongarch64
-- Backport upstream fix for Boost.Optional copy constructor bug
-
-* Tue Jun 30 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.91.0-alt1
-- 1.91.0
-- Temporary drop e2k-makecontext patch
-- Drop packaging Boost.Predef (not installed by default) and
-  Boost.System shared libraries (Boost.System is header-only now).
+* Wed Jul 01 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt4
+- Rebuild as compat package without development files
 
 * Wed Jul 16 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt3
 - Fix building with new numpy
-
-* Mon Apr 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.88.0-alt1
-- 1.88.0
-- Separate package for Boost.MQTT5
-
-* Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.87.0-alt2
-- Backport upstream fix for operator<< for smart pointers
-- Fix ABI detection in Boost.Context, again (fixes building
-  on loongarch64)
-
-* Sat Dec 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.87.0-alt1
-- 1.87.0
-- Package Boost.Predef tools
 
 * Sun Nov 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt2
 - Fix asio.hpp compilation with c++20 but w/o concepts
