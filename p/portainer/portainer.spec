@@ -1,10 +1,6 @@
-# NOTE:
-# Do not send to the repository if binary files are packaged.
-# Only for the test tasks (pocket).
-
 Name: portainer
-Version: 2.39.4
-Release: alt2
+Version: 2.39.5
+Release: alt1
 
 Summary: A lightweight docker management UI
 
@@ -36,12 +32,6 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.25.11"
-%def_enable genbin
-%else
-%def_disable genbin
-%endif
-
 %define gover %(rpmquery --qf '%%{VERSION}' golang)
 
 %description
@@ -59,7 +49,6 @@ Requires: docker-compose-v2
 %patch -p1
 
 %build
-%if_enabled genbin
 go build -x \
    -mod=vendor \
    -buildmode=pie \
@@ -67,22 +56,12 @@ go build -x \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=90a3374c2e8e38a0e7ccb8318da166e690546f08' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=c0a1d11b2762d19fbd13afa490e2a828bb153ad5' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
-%else
-%ifarch loongarch64 riscv64
-echo >&2 "Using prebuild binearies is not supported on this architecture"
-exit 1
-%endif
-%endif
 
 %install
-%if_enabled genbin
 install -Dm755 bin/portainer %buildroot%_bindir/portainer
-%else
-install -Dm755 portainer/portainer %buildroot%_bindir/portainer
-%endif
 
 mkdir -p %buildroot%_datadir/portainer
 cp -rip portainer/public %buildroot%_datadir/portainer/public
@@ -119,6 +98,11 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Tue Jul 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.5-alt1
+- New LTS version 2.39.5 (Fixes: CVE-2026-53488, CVE-2026-53492,
+  CVE-2026-53489, CVE-2026-47262, CVE-2026-50195).
+- Discontinued the use of prebuilt binaries in test tasks too.
+
 * Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.4-alt2
 - Updated go version requirement.
 
