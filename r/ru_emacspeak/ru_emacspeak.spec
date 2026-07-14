@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt3
+Release: alt4
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Source1: 80keybindings.el
 Source2: 80site-defaults.el
 Source3: emacspeak.conf
+Source4: enable-emacspeak
 
 # alt patches
 Patch0: python-base-dep-remove.patch
@@ -23,6 +24,7 @@ Patch2: ru_emacspeak-fix-proced-cl-case-otherwise.patch
 
 Requires: multispeech
 Requires: tclx
+Requires: gcc
 Conflicts: emacspeak
 
 %filter_from_requires \,/etc/emacspeak.conf,d
@@ -227,7 +229,7 @@ install -m 644 sounds/pan-chimes/README %buildroot%_docdir/emacspeak/pan-chimes/
 install -m 755 sounds/pan-chimes/apply-pan.sh %buildroot%_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 # emacspeak
-install -D -m 644 debian/emacspeakconfig %buildroot%_sbindir/emacspeakconfig
+install -D -m 755 debian/emacspeakconfig %buildroot%_sbindir/emacspeakconfig
 install -D -m 644 debian/emacspeak.conf %buildroot%_sysconfdir/emacspeak
 install -m 755 debian/dtk-exp.blurb %buildroot%_emacspeakdir/blurbs/dtk-exp.blurb
 install -m 755 debian/ssh-dtk-exp.blurb %buildroot%_emacspeakdir/blurbs/ssh-dtk-exp.blurb
@@ -330,6 +332,10 @@ mkdir -pv %buildroot%_sysconfdir/emacs/site-start.d
 install -m 644 %SOURCE1 %buildroot%_sysconfdir/emacs/site-start.d/80keybindings.el
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/emacs/site-start.d/80site-defaults.el
 
+# enable script
+install -m 755 %SOURCE4 %buildroot%_bindir/enable-emacspeak
+
+
 # Clean up the installation tree
 pushd %buildroot%_emacspeakdir
     pushd lisp
@@ -343,13 +349,14 @@ pushd %buildroot%_emacspeakdir
     popd
 popd
 
+rm %buildroot%_sysconfdir/emacspeak
+
 %post
 chmod -R go+rX %_emacspeakdir/sounds
 chmod -R go+rX %_emacspeakdir/media
 
 %files
 %_sbindir/emacspeakconfig
-%config(noreplace) %_sysconfdir/emacspeak
 %config(noreplace) %_sysconfdir/emacspeak.conf
 %config(noreplace) %_sysconfdir/emacs/site-start.d/80keybindings.el
 %config(noreplace) %_sysconfdir/emacs/site-start.d/80site-defaults.el
@@ -384,6 +391,7 @@ chmod -R go+rX %_emacspeakdir/media
 %_emacspeakdir/servers/tts-lib.tcl
 %_emacspeakdir/servers/.servers
 %_bindir/emacspeak
+%_bindir/enable-emacspeak
 %_emacspeakdir/.nosearch
 
 %files classic
@@ -423,8 +431,12 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
-* Thu Jun 11 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt3
-- Added req to tclx
+* Tue Jul 14 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt4
+- Added req to gcc
+- Make the emacspeakconfig file executable (thx Aleksandr Dovydenkov)
+- Fix paths in the emacspeakconfig (thx Aleksandr Dovydenkov)
+- Unpackaged /etc/emacspeak
+- Added enable-emacspeak script
 
 * Fri Jun 05 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt2
 - Moved docs to doc subpackages
