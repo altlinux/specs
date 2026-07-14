@@ -2,8 +2,8 @@
 %define rdn_name dog.unix.cantata.Cantata
 
 Name: cantata
-Version: 3.4.0
-Release: alt2
+Version: 3.5.0
+Release: alt1
 Summary: Qt Graphical MPD Client
 License: GPL-3.0
 Group: Sound
@@ -47,6 +47,9 @@ export PATH="%_qt6_bindir:$PATH"
 %doc README*
 
 %changelog
+* Tue Jul 14 2026 Andrey Kovalev <ded@altlinux.org> 3.5.0-alt1
+- Updated to upstream version 3.5.0.
+
 * Thu Mar 26 2026 Andrey Kovalev <ded@altlinux.org> 3.4.0-alt2
 - Enabled building with bundled FontAwesome to fix incorrect icon display
   (closes: #58346).
