@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    pi-hole-ftl
-Version: 6.6.2
+Version: 6.7
 Release: alt1
 
 Summary: The Pi-hole FTL engine
@@ -23,7 +23,7 @@ BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(libidn2)
 BuildRequires: libgmp-devel
 BuildRequires: libidn-devel
-BuildRequires: libmbedtls-3.6-devel
+BuildRequires: libmbedtls-devel
 BuildRequires: libnettle-devel
 BuildRequires: libreadline-devel libreadline-devel-static
 BuildRequires: libunistring-devel
@@ -43,7 +43,7 @@ FTLDNS (pihole-FTL) provides an interactive API and also generates statistics fo
 
 %build
 export GIT_BRANCH="master"
-export GIT_HASH="82c58cc45435ddd77875daf368cf64398bc15966"
+export GIT_HASH="fa65a88f8cdef1013594d4de14108077954faea4"
 export GIT_VERSION="%version"
 export GIT_DATE=""
 export GIT_TAG="v%version"
@@ -84,6 +84,10 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Tue Jul 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.7-alt1
+- v6.7
+- build with modern libmbedtls, revert commit 24ac660a
+
 * Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.6.2-alt1
 - v6.6.2
 
