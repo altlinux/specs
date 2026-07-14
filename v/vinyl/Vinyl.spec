@@ -2,10 +2,10 @@
 %define nameU vinyl-player
 
 Name: vinyl
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
-Summary: Simple adwaita audio player
+Summary: Elegant music player
 License: GPL-3.0-only
 Group: Sound
 
@@ -26,14 +26,12 @@ BuildRequires: pkgconfig(gstreamer-video-1.0)
 BuildRequires: pkgconfig(gstreamer-play-1.0)
 
 %description
-Simple adwaita music player, developed on relm4 and gst-rs
-
-Vinyl inspired by another music player, Amberol. In other
-words, it just plays music. Nothing superfluous.
-
-One of the most important aim of Vinyl is a simple codebase
-that does not lag behind or overtake Amberol in functionality.
-Relm4 and GstPlayApi are responsible for this.
+Vinyl is a simple and elegant adwaita music player, which aims to
+provide a simple codebase for developers, while simple users get
+the same or more features as in other music players. Flawless integrated
+with the GNOME desktop, Vinyl provides a simple user-friendly interface,
+MPRIS support, lyrics support and more. Vinyl is the first player with a
+good lyrics (.lrc) support.
 
 %prep
 %setup -a1
@@ -65,6 +63,9 @@ install -Dm 644 data/hicolor/scalable/apps/%oname.svg \
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Wed Jul 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt1
+- 1.4.1 -> 1.5.0
+
 * Wed Jun 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.1-alt1
 - autobuild: 1.4.0 -> 1.4.1
 
