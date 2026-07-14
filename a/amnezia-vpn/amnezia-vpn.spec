@@ -1,12 +1,11 @@
-%define git_commit_hash 477afb9d
+%define git_commit_hash 72ee32af
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
-%define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 %define amnezia_xray_bindings_version 1.1.0
 
 Name: amnezia-vpn
-Version: 4.8.19.0
+Version: 4.8.21.0
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -23,12 +22,10 @@ Source0: amnezia-client-%version.tar
 Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 # https://github.com/frankosterfeld/qtkeychain/archive/%qtkeychain_commit/qtkeychain-%qtkeychain_commit.tar.gz
 Source2: qtkeychain-%qtkeychain_commit.tar
-# https://github.com/%name/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
-Source3: QSimpleCrypto-%qsimplecrypto_commit.tar
 # https://github.com/%name/amnezia-xray-bindings/archive/v%amnezia_xray_bindings_version/amnezia-xray-bindings-%amnezia_xray_bindings_version.tar.gz
-Source4: amnezia-xray-bindings-%amnezia_xray_bindings_version.tar
+Source3: amnezia-xray-bindings-%amnezia_xray_bindings_version.tar
 
-Source5: vendor.tar
+Source4: vendor.tar
 
 Patch0: %name-tun2-sudo.patch
 
@@ -72,12 +69,11 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 This package contains systemd service files.
 
 %prep
-%setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4 -b 5
+%setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4
 %patch0 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
-%__mv -Tf ../QSimpleCrypto-%qsimplecrypto_commit client/3rd/QSimpleCrypto
 
 %__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_version/vendor
 
@@ -170,6 +166,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Jul 14 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.21.0-alt1
+- Version 4.8.21.0
+
 * Tue Jun 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.19.0-alt1
 - Version 4.8.19.0
 
