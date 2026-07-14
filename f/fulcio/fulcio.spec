@@ -2,7 +2,7 @@
 %def_with check
 
 Name: fulcio
-Version: 1.8.7
+Version: 1.8.8
 Release: alt1
 
 Summary: Sigstore OIDC PKI
@@ -62,5 +62,8 @@ done
 %_datadir/fish/vendor_completions.d/certificate-maker.fish
 
 %changelog
+* Tue Jul 14 2026 Egor Ignatov <egori@altlinux.org> 1.8.8-alt1
+- New version 1.8.8.
+
 * Wed Jun 10 2026 Egor Ignatov <egori@altlinux.org> 1.8.7-alt1
 - First build for ALT.
