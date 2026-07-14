@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.4
-Release: alt2
+Version: 0.5.5
+Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -67,6 +67,22 @@ Requires: qt6-wayland
 %summary.
 Depends for wayland support.
 
+%package installer-features
+Summary: Apply the installer features to a system deployed as a rootfs
+Group: System/Configuration/Other
+
+Requires: %name-base = %EVR
+Requires: installer-common-functions
+
+Provides: rootfs-installer-features = %EVR
+Obsoletes: rootfs-installer-features < %EVR
+
+%description installer-features
+%summary.
+An OEM image or any other system deployed as a rootfs never runs the
+installer, so the postinstall features shipped by the installer-feature-*
+packages are applied by this hook at the end of the initial setup.
+
 %package -n installer-feature-%name-stage2
 Summary: Perform initial setup of an OEM installation (warning!)
 Group: System/Configuration/Other
@@ -112,10 +128,14 @@ EOF
 %_alterator_datadir/steps/*
 %_alterator_datadir/ui/*
 %_alterator_libdir/hooks/*/*
+%exclude %_alterator_libdir/hooks/setup-postinstall.d/90-run-installer-features.sh
 %_alterator_backend3dir/*
 %_datadir/alterator-setup/
 %_unitdir/setup.service
 %_unitdir/setup.target
+
+%files installer-features
+%_alterator_libdir/hooks/setup-postinstall.d/90-run-installer-features.sh
 
 %files wayland
 
@@ -138,6 +158,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.5.5-alt1
+- Take over the installer features hook from rootfs-installer-features.
+
 * Tue Jul 07 2026 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt2
 - alterator-setup-run: add WLR_RENDERER=pixman for wayland without vnc also.
 

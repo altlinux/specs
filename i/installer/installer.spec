@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.37
+Version: 1.16.38
 Release: alt1
 
 Summary: Installer common parts
@@ -14,12 +14,24 @@ BuildRequires: glibc-devel-static
 %description
 This package contains common installer parts.
 
+%package common-functions
+Summary: Installer shell function libraries
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description common-functions
+This package contains the install2 shell function libraries. Besides the
+installer stage2 itself, they are used by the tools which apply installer
+features to an already installed system, where the whole stage2 is neither
+present nor needed.
+
 %package common-base-stage2
 Summary: Installer common stage2 without dependency on Xorg
 Group: System/Configuration/Other
 
 # filter out unnecessary dependency
 %filter_from_requires /^alterator-wizardface-usermode/d
+Requires: installer-common-functions = %EVR
 # because of replace /var/run/alteratord -> /run/alteratord
 Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
@@ -152,9 +164,12 @@ popd
 
 touch %buildroot%_datadir/installer-livecd-steps
 
+%files common-functions
+%_sbindir/install2-action-functions
+%_sbindir/install2-init-functions
+%_sbindir/install2-sh-functions
+
 %files common-base-stage2
-%_sbindir/*
-%exclude %_sbindir/install2
 %_datadir/install2
 %_prefix/libexec/install2
 %_prefix/lib/systemd/system/install2.service
@@ -180,6 +195,10 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.16.38-alt1
+- Split the install2 shell functions into installer-common-functions.
+- Allow install2 functions to work with the running root as destination.
+
 * Tue Jul 07 2026 Anton Midyukov <antohami@altlinux.org> 1.16.37-alt1
 - install2: Always use software rendering when running on Wayland.
 

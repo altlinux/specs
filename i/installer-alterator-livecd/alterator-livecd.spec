@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-alterator-livecd
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Special steps for run installer in LiveCD desktop
@@ -36,7 +36,7 @@ This package contains common installer stage2 files and dependencies.
 Summary: %summary
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: rootfs-installer-features
+Requires: installer-common-functions
 
 %description stage3
 %summary.
@@ -60,6 +60,9 @@ This package contains common installer stage3 files and dependencies.
 %_alterator_backend3dir/livecd-finish
 
 %changelog
+* Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.1.3-alt1
+- Depend on installer-common-functions instead of rootfs-installer-features.
+
 * Mon Apr 07 2025 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
 - backend3/livecd-start: fix run $livecd_initinstall_dir/*
 - livecd-finish: make the log more informative
