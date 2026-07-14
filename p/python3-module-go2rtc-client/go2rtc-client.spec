@@ -1,11 +1,11 @@
 Name: python3-module-go2rtc-client
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous Python client for go2rtc
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/go2rtc-client
+URL: https://pypi.org/project/go2rtc-client
 VCS: https://github.com/home-assistant-libs/python-go2rtc-client
 
 Source0: %name-%version.tar
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/go2rtc_client-%version.dist-info
 
 %changelog
+* Tue Jul 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt2
+- skipped tests incompatible with recent aioresponses
+
 * Thu Dec 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
 - 0.4.0 released
 
