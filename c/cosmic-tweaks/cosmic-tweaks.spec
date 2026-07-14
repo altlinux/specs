@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: COSMIC Tweaks
@@ -63,6 +63,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Mon May 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
