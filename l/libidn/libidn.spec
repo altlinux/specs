@@ -1,6 +1,6 @@
 Name: libidn
-Version: 1.37
-Release: alt2
+Version: 1.44
+Release: alt1
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -135,9 +135,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 rm %buildroot%_infodir/*.png
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir/reference/html
-install -pm644 doc/*.pdf %buildroot%docdir/
 install -pm644 AUTHORS COPYING FAQ NEWS README THANKS %buildroot%docdir/
-install -pm644 doc/reference/*.pdf %buildroot%docdir/reference/
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 
 %if_enabled java
@@ -178,7 +176,6 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 
 %files devel-doc
 %dir %docdir/
-%docdir/*.pdf
 %docdir/reference/
 
 %if_with emacs
@@ -195,6 +192,9 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 %endif #java
 
 %changelog
+* Thu Jul 09 2026 Alexander Danilov <admsasha@altlinux.org> 1.44-alt1
+- 1.37 -> 1.44.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.37-alt2
 - Fixed FTBFS.
 
