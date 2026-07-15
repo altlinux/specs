@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname solitaire
 %define oname2 org.gnome.gitlab.wwarner.Solitaire
 
 Name: gnome-games-solitaire
-Version: 50.2.1
+Version: 50.3
 Release: alt1
 
 Summary: GNOME Solitaire game
@@ -22,6 +23,8 @@ BuildRequires: /proc rust-cargo meson cmake
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1) blueprint-compiler
 BuildRequires: /usr/bin/appstreamcli pkgconfig(libxml-2.0)
+# needed for automatic update vendor zoryn hook
+BuildRequires: cargo-vendor-filterer
 
 %description
 %summary.
@@ -58,6 +61,9 @@ EOF
 %_datadir/%oname
 
 %changelog
+* Thu Jul 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.3-alt1
+- 50.2.1 -> 50.3
+
 * Fri May 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.2.1-alt1
 - 50.2 -> 50.2.1
 
