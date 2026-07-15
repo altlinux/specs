@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        150.0.7871.114
+Version:        150.0.7871.124
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -113,7 +113,7 @@ Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
 Patch036: 0036-ALT-disable-lens-overlay.patch
 Patch037: 0037-ALT-clang-path.patch
 # Support extension manifest v2
-# Patch039: 0039-extensions-manifestv2_ifdef.patch
+Patch039: 0039-extensions-manifestv2_ifdef.patch
 
 Patch040: 0040-DEBIAN-foreach.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -724,8 +724,27 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Jul 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.124-alt1
+- New version (150.0.7871.124).
+- Fixes:
+  + CVE-2026-15764: Use after free in Ozone
+  + CVE-2026-15765: Use after free in Ozone
+  + CVE-2026-15766: Uninitialized Use in Skia
+  + CVE-2026-15767: Heap buffer overflow in libyuv
+  + CVE-2026-15768: Insufficient policy enforcement in HTML-in-Canvas
+  + CVE-2026-15769: Insufficient validation of untrusted input in Linux Toolkit Theming
+  + CVE-2026-15770: Uninitialized Use in V8
+  + CVE-2026-15771: Insufficient validation of untrusted input in Media
+  + CVE-2026-15772: Use after free in GPU
+  + CVE-2026-15773: Use after free in Core
+  + CVE-2026-15774: Use after free in Skia
+  + CVE-2026-15775: Insufficient policy enforcement in V8
+  + CVE-2026-15776: Type Confusion in V8
+  + CVE-2026-15777: Use after free in UI
+  + CVE-2026-15778: Insufficient validation of untrusted input in Navigation
+
 * Thu Jul 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.114-alt1
-- New version (150.0.7871.1114).
+- New version (150.0.7871.114).
 - Fixes:
   + CVE-2026-15112: Use after free in Ozone
   + CVE-2026-15129: Use after free in Views
