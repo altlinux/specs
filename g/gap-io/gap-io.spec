@@ -1,7 +1,7 @@
 %define repo io
 
 Name: gap-io
-Version: 4.9.3
+Version: 4.10.0
 Release: alt1
 Summary: GAP: Bindings for low level C library IO
 License: GPL-3.0-or-later
@@ -45,6 +45,9 @@ find . -type f -name "*.la" -print -delete
 %gap_sitearch/%repo/
 
 %changelog
+* Wed Jul 15 2026 Leontiy Volodin <lvol@altlinux.org> 4.10.0-alt1
+- New version 4.10.0.
+
 * Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 4.9.3-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Packaged for gap-4ti2Interface.
