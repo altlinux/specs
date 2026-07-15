@@ -2,7 +2,7 @@
 
 Name: caja-seahorse
 Version: 1.18.5
-Release: alt1
+Release: alt2
 
 Summary: Caja extension to encrypt/decrypt OpenPGP files using GnuPG
 License: GPLv2
@@ -36,6 +36,7 @@ on seahorse-nautilus.
 
 %prep
 %setup
+%patch -p1
 
 %build
 NOCONFIGURE=1 mate-autogen
@@ -62,5 +63,8 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %_datadir/glib-2.0/schemas/org.mate.seahorse.caja.*gschema.xml
 
 %changelog
+* Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.18.5-alt2
+- Fix building with gpgme-2 (closes #59829).
+
 * Fri Feb 07 2025 Nikolay Strelkov <snk@altlinux.org> 1.18.5-alt1
 - Initial build for Sisyphus
