@@ -1,17 +1,17 @@
 %global _unpackaged_files_terminate_build 1
 %define _libexecdir /usr/libexec
 
-Name:    proxmox-datacenter-manager
-Version: 1.0.2
-Release: alt1.1
+Name: proxmox-datacenter-manager
+Version: 1.1.6
+Release: alt1
 License: AGPL-3.0
 Summary: Manage multiple Proxmox VE cluster and other Proxmox projects
-Group:   System/Servers
-Url:     https://github.com/proxmox/proxmox-datacenter-manager
-Vcs:     git://git.proxmox.com/git/proxmox-datacenter-manager.git
+Group: System/Servers
+Url: https://github.com/proxmox/proxmox-datacenter-manager
+Vcs: git://git.proxmox.com/git/proxmox-datacenter-manager.git
 
 ExclusiveArch: x86_64 aarch64 loongarch64
-Source:   %name-%version.tar
+Source: %name-%version.tar
 
 # Git submodule
 Source12: pwt-assets.tar
@@ -36,10 +36,12 @@ BuildRequires: texlive-dist
 BuildRequires: fonts-ttf-google-lato
 BuildRequires: fonts-ttf-open-sans
 BuildRequires: fonts-ttf-dejavu
+BuildRequires: libnettle-devel
 
 Requires: proxmox-mini-journalreader
 Requires: pve-xtermjs
 Requires: proxmox-acme
+Requires: pve-novnc
 
 %description
 This package provides the API daemons of the Proxmox Datacenter Manager (PDM)
@@ -61,6 +63,7 @@ BuildRequires: esbuild
 BuildRequires: grass-sass
 BuildRequires: proxmox-wasm-builder
 BuildRequires: fonts-font-awesome
+BuildRequires: iso-codes
 
 Requires: pve-xtermjs
 Requires: fonts-font-awesome
@@ -72,7 +75,7 @@ which allows one to add multiple Proxmox VE and Proxmox Backup Server
 remotes and to manage these remotes from a central UI.
 
 %prep
-%setup -q
+%setup
 
 tar -xf %SOURCE12 -C ui/pwt-assets
 
@@ -109,11 +112,12 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 
 %files
 %doc debian/copyright
-%_man1dir/proxmox-datacenter-api.1.xz
-%_man1dir/proxmox-datacenter-manager-admin.1.xz
-%_man1dir/proxmox-datacenter-privileged-api.1.xz
-%_man5dir/remotes.cfg.5.xz
-%_man5dir/views.cfg.5.xz
+%_man1dir/pdmAtoB.1.*
+%_man1dir/proxmox-datacenter-api.1.*
+%_man1dir/proxmox-datacenter-manager-admin.1.*
+%_man1dir/proxmox-datacenter-privileged-api.1.*
+%_man5dir/remotes.cfg.5.*
+%_man5dir/views.cfg.5.*
 %_unitdir/proxmox-datacenter-api.service
 %_unitdir/proxmox-datacenter-privileged-api.service
 %_sbindir/%name-admin
@@ -126,7 +130,7 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 %config(noreplace) %_sysconfdir/pam.d/proxmox-datacenter-auth
 
 %files client
-%_man1dir/proxmox-datacenter-manager-client.1.xz
+%_man1dir/proxmox-datacenter-manager-client.1.*
 %_bindir/%name-client
 %_datadir/bash-completion/completions/%name-client.bash
 %_datadir/zsh/vendor-completions/_%name-client
@@ -137,6 +141,9 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 %_datadir/javascript/%name/
 
 %changelog
+* Mon Jul 06 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.1.6-alt1
+- new version
+
 * Tue Mar 10 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.2-alt1.1
 - adapt package upgrade
 - remove subscription/support cmds from report
