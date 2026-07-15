@@ -1,5 +1,5 @@
 Name:     spi-tools
-Version:  1.0.2
+Version:  1.1.0
 Release:  alt1
 
 Summary:  Simple command line tools to help using Linux spidev devices
@@ -33,6 +33,9 @@ Buildrequires: help2man
 %doc *.md
 
 %changelog
+* Wed Jul 15 2026 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Mon Nov 10 2025 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
 - New version 1.0.2.
 
