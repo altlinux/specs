@@ -1,11 +1,12 @@
 Name: qtractor
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: Audio/MIDI multi-track sequencer
 License: GPLv2
 Group: Sound
-Url: https://qtractor.org/
+URL: https://qtractor.org/
+VCS: https://git.code.sf.net/p/qtractor/code
 
 Source: %name-%version-%release.tar
 
@@ -72,6 +73,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Wed Jul 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.2-alt1
+- 1.6.2 released
+
 * Mon Jun 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt1
 - 1.6.1 released
 
