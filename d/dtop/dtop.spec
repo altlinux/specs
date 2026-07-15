@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dtop
-Version: 0.7.6
+Version: 0.7.9
 Release: alt1
 Summary: Terminal dashboard for Docker monitoring across multiple hosts with Dozzle integration.
 License: MIT
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 %summary
@@ -45,6 +44,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 0.7.9-alt1
+- 0.7.6 -> 0.7.9
+
 * Fri May 08 2026 Pavel Shilov <zerospirit@altlinux.org> 0.7.6-alt1
 - 0.7.2 -> 0.7.6
 

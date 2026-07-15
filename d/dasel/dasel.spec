@@ -2,7 +2,7 @@
 %global import_path github.com/tomwright/dasel/v2
 
 Name: dasel
-Version: 3.11.0
+Version: 3.11.2
 Release: alt1
 Summary: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool.
 License: MIT
@@ -14,7 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 %summary
@@ -45,6 +44,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 3.11.2-alt1
+- New version 3.11.2.
+
 * Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 3.11.0-alt1
 - New version 3.11.0.
 

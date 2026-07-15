@@ -2,7 +2,7 @@
 %global import_path github.com/mark3labs/mcphost
 
 Name: mcphost
-Version: 0.33.3
+Version: 0.34.0
 Release: alt1
 Summary: A CLI host application for the Model Context Protocol (MCP).
 License: MIT and Apache-2.0 and BSD-2-Clause and BSD-3-Clause
@@ -16,7 +16,6 @@ Patch: %name-%version-%release.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 A CLI host application that enables Large Language Models (LLMs) to interact
@@ -49,6 +48,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 0.34.0-alt1
+- Update to 0.34.0.
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.33.3-alt1
 - Update to 0.33.3.
 

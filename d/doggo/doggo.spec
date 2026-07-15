@@ -3,7 +3,7 @@
 #global build_date %(date -u +%%Y-%%m-%%d)
 
 Name: doggo
-Version: 1.1.7
+Version: 1.2.0
 Release: alt1
 Summary: Command-line DNS Client for Humans.
 License: GPL-3.0-only
@@ -16,7 +16,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %package web
 Summary: Web UI for %name
@@ -80,6 +79,9 @@ install -Dm644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_bindir/%name-web
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 1.2.0-alt1
+- Update to new version 1.2.0.
+
 * Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.1.7-alt1
 - Update to new version 1.1.7.
 

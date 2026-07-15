@@ -2,7 +2,7 @@
 %global import_path github.com/grafviktor/goto
 
 Name: goto
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: %name is console SSH client application
 Group: Networking/Remote access
@@ -14,7 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 Requires: openssh
 Conflicts: grip-grab
@@ -55,6 +54,9 @@ ln -s %buildroot_bindir/%name %buildroot%_bindir/gg
 %_bindir/gg
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 1.6.1-alt1
+- Update to new version 1.6.1.
+
 * Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.6.0-alt1
 - Update to new version 1.6.0.
 

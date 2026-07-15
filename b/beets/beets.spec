@@ -4,7 +4,7 @@
 %def_with check
 
 Name: beets
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 Summary: Music library manager and MusicBrainz tagger.
 License: MIT and ISC
@@ -51,7 +51,7 @@ BuildRequires: gstreamer1.0
 BuildRequires: ffmpeg
 BuildRequires: ffprobe
 BuildRequires: ImageMagick-tools
-BuildRequires: unrar
+BuildRequires: libunrar-devel
 BuildRequires: bash-completion
 BuildRequires: python3-module-factory_boy
 BuildRequires: python3-module-requests-ratelimiter
@@ -69,7 +69,6 @@ Requires: python3(requests)
 Requires: python3(pylast)
 Requires: gstreamer1.0
 Requires: ffmpeg
-Requires: ffprobe
 Requires: ImageMagick-tools
 Requires: python3(flask)
 Requires: python3(lap)
@@ -149,8 +148,11 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %python3_sitelibdir/beetsplug/
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 2.12.0-alt1
+- Update to new version 2.12.0.
+
 * Wed Jun 03 2026 Pavel Shilov <zerospirit@altlinux.org> 2.11.0-alt1
-- Update to new version 2.11.0
+- Update to new version 2.11.0.
 
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt1
 - Update to new version 2.7.1.
