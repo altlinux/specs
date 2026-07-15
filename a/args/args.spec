@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: args
-Version: 6.4.16
+Version: 6.5.0
 Release: alt1
 
 Summary: A simple header-only C++ argument parser library
@@ -8,6 +10,8 @@ Group: Development/C++
 
 Url: https://github.com/Taywee/args
 VCS: https://github.com/Taywee/args
+
+ExcludeArch: i586
 
 Source:  %name-%version.tar
 
@@ -46,6 +50,9 @@ subst 's|DESTINATION lib/|DESTINATION %_libdir/|' CMakeLists.txt
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jul 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.5.0-alt1
+- 6.4.16 -> 6.5.0
+
 * Fri May 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.4.16-alt1
 - 6.4.15 -> 6.4.16
 
