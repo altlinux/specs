@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 31
+%define _php_release_version 32
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -32,6 +32,7 @@ Source1: phpver.rpm.macros.standalone
 Source2: php-packaging.readme
 Source3: php.ini
 Source4: phpinfo.tar
+Source5: php-tmpfiles.conf
 
 Patch1: php-8.2.16-alt-always-link-extension-with-libphp.patch
 Patch2: php-8.2.16-shared-1.patch
@@ -42,6 +43,7 @@ Patch6: php-devel-scripts-alternatives.patch
 Patch8: php7-source-7.4-cxx.patch
 Patch9: php-8.0-no-static-program.patch
 Patch10: php-set-session-save-path.patch
+Patch24: php-8.5-set-opcache-lockfile-path.patch
 Patch11: php7-7.1.10-alt-lsattr.patch
 Patch12: php-7.4-save-ldlibs.patch
 Patch13: php-8.2-phar-phppath.patch
@@ -196,6 +198,7 @@ in use by other PHP-related packages.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p2
 
 %ifarch %e2k
 %patch2000 -p1
@@ -294,8 +297,12 @@ mkdir -p \
 	%buildroot/%php_sysconfdir/%php_sapi/php.d \
 	%buildroot/%php_extconf \
 	%buildroot/%php_servicedir/%php_sapi \
-	%buildroot/%_datadir/php/%_php_version/modules
+	%buildroot/%_datadir/php/%_php_version/modules \
+	%buildroot/%_localstatedir/php/sessions \
+	%buildroot/%_runtimedir/php \
+	%buildroot/%_tmpfilesdir
 
+install -m 644 %SOURCE5 %buildroot/%_tmpfilesdir/php.conf
 install -m 644 %SOURCE3                      %buildroot/%php_sysconfdir/%php_sapi/php.ini
 
 for f in \
@@ -392,6 +399,7 @@ EOF
 chmod 755 %buildroot/%_rpmlibdir/89-%name.filetrigger
 
 %check
+export TEST_PHP_ARGS="-d session.save_path=/tmp"
 export NO_INTERACTION=1 REPORT_EXIT_STATUS=1
 export SKIP_ONLINE_TESTS=1
 export SKIP_IO_CAPTURE_TESTS=1
@@ -466,6 +474,10 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %_libdir/libphp-%_php_version.so*
 %exclude %php_libdir/build
 %exclude %php_servicedir/cli
+%dir %_localstatedir/php
+%attr(1733,root,root) %dir %_localstatedir/php/sessions
+%ghost %dir %_runtimedir/php
+%_tmpfilesdir/php.conf
 
 %files mysqlnd
 %php_extdir/mysqlnd*.so
@@ -488,6 +500,13 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 8.2.32-alt1
+- 8.2.31 -> 8.2.32 (Fixes: CVE-2026-14355)
+- moved session.save_path and opcache.lockfile_path out of /tmp
+
+* Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 8.2.31-alt2
+- moved session.save_path and opcache.lockfile_path out of /tmp
+
 * Tue May 19 2026 Anton Farygin <rider@altlinux.org> 8.2.31-alt1
 - 8.2.30 -> 8.2.31 (Fixes: CVE-2026-6735, CVE-2026-7259, CVE-2025-14179,
 - CVE-2026-6722, CVE-2026-7261, CVE-2026-7262, CVE-2026-7568, CVE-2026-7258)
