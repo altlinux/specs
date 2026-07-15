@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.99
+Version: 6.1.100
 Release: alt1
 Epoch: 2
 
@@ -174,6 +174,7 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/polkit-1/actions/*.policy
 %_datadir/polkit-1/rules.d/org.deepin.dde.accounts.rules
 %_datadir/polkit-1/rules.d/org.deepin.dde.grub2.rules
+%_datadir/polkit-1/rules.d/org.deepin.dde.uadp.rules
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
 #%%_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
@@ -201,6 +202,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Wed Jul 15 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.100-alt1
+- New version 6.1.100.
+
 * Fri Jul 03 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.99-alt1
 - New version 6.1.99.
 
