@@ -2,7 +2,7 @@
 
 Name: moditect
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Tooling for the Java Module System 
 License: Apache-2.0
@@ -35,6 +35,7 @@ core library, Maven plugin, and common configuration POM.
 Summary: Parent POM for Moditect project
 Group: Development/Java
 BuildArch: noarch
+Obsoletes: moditect < %EVR
 
 %description parent
 Moditect is a tool for generating module descriptors (module-info.java) and
@@ -46,6 +47,7 @@ management for all Moditect subprojects.
 Summary: Core library for Moditect module system tooling
 Group: Development/Java
 BuildArch: noarch
+Obsoletes: moditect < %EVR
 
 %description core
 Core library of Moditect that provides the fundamental functionality for
@@ -58,6 +60,7 @@ used by the Maven plugin and other integration points.
 Summary: Aggregator POM for Moditect project
 Group: Development/Java
 BuildArch: noarch
+Obsoletes: moditect < %EVR
 
 %description aggregator
 The aggregator POM for the Moditect project.  This module serves as the
@@ -70,6 +73,7 @@ ensuring consistent versioning and integration across the Moditect toolset.
 Summary: Maven plugin for Moditect module system tooling
 Group: Development/Java
 BuildArch: noarch
+Obsoletes: moditect < %EVR
 
 %description maven-plugin
 Maven plugin for Moditect that integrates module system tooling into Maven
@@ -105,5 +109,8 @@ within Maven-based projects.
 %files maven-plugin -f .mfiles-moditect-maven-plugin
 
 %changelog
+* Wed Jul 15 2026 Ivan Khanas <xeno@altlinux.org> 1.3.0-alt2
+- Add obsoletes for compatibility with p11.
+
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 1.3.0-alt1
 - Fist build for ALT.
