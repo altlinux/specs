@@ -1,6 +1,6 @@
 Name: kew
 Version: 4.2.3
-Release: alt1
+Release: alt2
 
 Summary: A terminal music player
 License: GPL-2.0
@@ -52,6 +52,9 @@ Features:
 %_man1dir/kew.1*
 
 %changelog
+* Wed Jul 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.3-alt2
+- fixed breakage from buffer overflow detector
+
 * Wed Jul 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.3-alt1
 - 4.2.3 released
 
