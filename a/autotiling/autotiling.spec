@@ -3,7 +3,7 @@
 %def_without check
 
 Name: autotiling
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary: Automatically switch the window split orientation in sway and i3
@@ -52,5 +52,8 @@ install -pDm 644 %name.1 %buildroot%_man1dir/%name.1
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.4-alt1
+- New version 1.9.4.
+
 * Sat May 10 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.3-alt1
 - Initial build for Sisyphus
