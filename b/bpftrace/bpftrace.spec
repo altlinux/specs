@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict,lint=relaxed
+%set_verify_elf_method strict
 
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.25.1
+Version: 0.26.1
 Release: alt1
 Summary: High-level tracing language for Linux
 Group: Development/Debuggers
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Source1: libbpf-0.tar
 ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
-%define llvm_ver 19
+%define llvm_ver 21
 %define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: asciidoctor
@@ -31,14 +31,18 @@ BuildRequires: gcc-c++
 BuildRequires: libbcc-devel
 BuildRequires: libbpf-devel
 BuildRequires: libdw-devel
+BuildRequires: libedit-devel
 BuildRequires: libelf-devel
+BuildRequires: libffi-devel
 BuildRequires: libpcap-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
+BuildRequires: libxml2-devel
 BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: python3-module-setuptools
 BuildRequires: xxd
+BuildRequires: zip
 
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
@@ -102,10 +106,6 @@ rm docs/coding_guidelines.md \
 	docs/nix.md \
 	docs/release_process.md
 
-# Need to keep BEGIN_trigger and END_trigger
-# https://github.com/iovisor/bpftrace/issues/954
-%brp_strip_debug %_bindir/bpftrace
-
 %check
 %_cmake__builddir/src/bpftrace --version	 # not requires root
 vm-run %_cmake__builddir/src/bpftrace --info # should be fast enough even w/o kvm
@@ -130,6 +130,13 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Wed Jul 15 2026 Ivan A. Melnikov <iv@altlinux.org> 0.26.1-alt1
+- Update to v0.26.1 (2026-06-02).
+- Update bundled libbpf to v1.7.0 (f5dcbae, 2026-03-11) (fixes FTBFS).
+- spec: Switch build to Clang/LLVM 21.
+- spec: Fully strip bpftrace binaries, as it does not break
+  BEGIN/END probes anymore.
+
 * Thu Mar 26 2026 Vitaly Chikunov <vt@altlinux.org> 0.25.1-alt1
 - Update to v0.25.1 (2026-03-25).
 
