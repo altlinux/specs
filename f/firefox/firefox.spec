@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 152.0.5
+Version: 152.0.6
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jul 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.6-alt1
+- New version.
+- Fixes:
+  + CVE-2026-15718: Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-15719: Site isolation in the DOM: Navigation component
+
 * Wed Jul 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.5-alt1
 - New version.
 
