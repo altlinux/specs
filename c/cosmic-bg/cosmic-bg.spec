@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define rdn_name com.system76.CosmicBackground
 
@@ -28,6 +28,7 @@ Source1: %name-%version%beta-cargo.tar
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(dav1d) nasm
 
 #ExcludeArch: %ix86 armh
 
@@ -60,6 +61,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

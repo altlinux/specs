@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define rdn_name com.system76.CosmicSession
 
@@ -93,6 +93,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

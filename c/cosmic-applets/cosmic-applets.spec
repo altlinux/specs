@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define rdn_name com.system76.CosmicApplets
 
@@ -82,12 +82,16 @@ just rootdir=%buildroot install
 %_desktopdir/*.desktop
 %_userunitdir/com.system76.CosmicStatusNotifierWatcher.service
 %_datadir/dbus-1/services/com.system76.CosmicStatusNotifierWatcher.service
+%_datadir/dbus-1/system.d/com.system76.CosmicSettings.Applet.NetworkManager.SecretAgent.conf
 %_datadir/cosmic/com.system76.CosmicAppList/
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 #%doc README*
 
 %changelog
+* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

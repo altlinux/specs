@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define rdn_name com.system76.CosmicPlayer
 
@@ -68,6 +68,9 @@ just rootdir=%buildroot install
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define rdn_name com.system76.CosmicSettings
 
@@ -50,10 +50,11 @@ BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(libinput)
-BuildRequires: pkgconfig(libpipewire-0.3) clang-devel
+#BuildRequires: pkgconfig(libpipewire-0.3) clang-devel
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(dav1d)
 
 %description
 The settings application for the COSMIC desktop environment.
@@ -95,6 +96,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
