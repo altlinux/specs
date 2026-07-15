@@ -11,8 +11,8 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 9804
-Release: alt2
+Version: 10015
+Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
@@ -157,7 +157,9 @@ sed /test-recurrent-state-rollback/d -i tests/CMakeLists.txt
 %define optflags_debug -g1
 # Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake fails to strip build time RPATH
 # from (installed) binaries.
-export NVCC_PREPEND_FLAGS=-ccbin=g++-12
+# -Xcompiler=-g1: host-side debug info, otherwise libggml-cuda.so has
+# empty .debug_info and 056-debuginfo.brp terminates the build.
+export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
 %cmake \
 	-DCMAKE_SKIP_BUILD_RPATH=yes \
 	-DLLAMA_BUILD_TESTS=ON \
@@ -195,12 +197,10 @@ install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
 install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 # We need to run the tests, not install them.
 rm %buildroot%_bindir/test-*
-rm %buildroot%_bindir/export-graph-ops
 # Completions.
 install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-server
 printf '%%s\n' llama-cli llama-simple llama-run llama-mtmd-cli |
 	xargs -ti ln -s llama-server %buildroot%_datadir/bash-completion/completions/{}
-mv %buildroot%_bindir/rpc-server %buildroot%_bindir/llama-rpc-server
 install -Dpm644 llama-server.1 -t %buildroot%_man1dir
 # Parametric systemd template + config dir (see .gear/llama.env.example).
 install -Dpm644 .gear/llama-server@.service %buildroot%_unitdir/llama-server@.service
@@ -213,9 +213,9 @@ install -dm755 %buildroot%_sysconfdir/llama
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
-# test-eval-callback wants network.
+# test-eval-callback and test-tokenizers-ggml-vocabs want network.
 # test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
-%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented|test-save-load-state|test-llama-archs'
+%ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-llama-archs'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
@@ -256,6 +256,7 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs build-options.txt .gear/llama.env.example
 %_bindir/llama*
+%_bindir/ggml-rpc-server
 %_libdir/libllama-*-impl.so
 %_unitdir/llama-server@.service
 %dir %_sysconfdir/llama
@@ -284,6 +285,10 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Wed Jul 15 2026 Anton Farygin <rider@altlinux.org> 1:10015-alt1
+- Update to b10015.
+- llama-rpc-server renamed to ggml-rpc-server (follow upstream naming).
+
 * Thu Jul 02 2026 Ilya Sorochan <k0tran@altlinux.org> 1:9804-alt2
 - NMU: fix riscv64 FTBFS.
 
