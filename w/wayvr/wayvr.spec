@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    wayvr
-Version: 26.7.0
+Version: 26.7.1
 Release: alt1
 
 Summary: Your way to enjoy VR on Linux
@@ -113,6 +113,9 @@ install -Dm644 %name/%name.svg -t %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Jul 15 2026 Sergey Palcheh <minergenon@altlinux.org> 26.7.1-alt1
+- new version 26.7.1
+
 * Tue Jul 07 2026 Sergey Palcheh <minergenon@altlinux.org> 26.7.0-alt1
 - new version 26.7.0
 - added patch wayvr-26.7.0-openvr-system.patch
