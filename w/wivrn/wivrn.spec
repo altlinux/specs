@@ -4,7 +4,7 @@
 %global monado_version 25.1.0
 
 Name:    wivrn
-Version: 26.6.1
+Version: 26.6.2
 Release: alt1
 
 Summary: An OpenXR streaming application to a standalone headset
@@ -16,7 +16,7 @@ VCS:     https://github.com/WiVRn/WiVRn.git
 Source:  %name-%version.tar
 Source1: monado-src-%commit1.tar.bz2
 
-Patch: 0001-c-multi-early-wake-of-compositor.patch
+Patch0: 0001-c-multi-early-wake-of-compositor.patch
 Patch1: 0002-Use-extern-socket-fd.patch
 Patch2: 0003-change-environment-blend-mode-selection-logic.patch
 Patch3: 0004-st-oxr-forward-0-refresh-rate.patch
@@ -158,6 +158,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/io.github.wivrn.wivrn.svg
 
 %changelog
+* Wed Jul 15 2026 Sergey Palcheh <minergenon@altlinux.org> 26.6.2-alt1
+- new version 26.6.2
+
 * Sat Jun 20 2026 Sergey Palcheh <minergenon@altlinux.org> 26.6.1-alt1
 - new version 26.6.1
 
