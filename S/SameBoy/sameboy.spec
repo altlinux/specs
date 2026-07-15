@@ -6,7 +6,7 @@
 %brp_strip_none %_bindir/%lower_name
 
 Name: SameBoy
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: Game Boy and Game Boy Color emulator written in C  
 License:  MIT
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(protobuf)
 BuildRequires: rgbds
 BuildRequires: desktop-file-utils
 BuildRequires: libgio-devel
+BuildRequires: libpng17-devel
 BuildRequires: libgdk-pixbuf-devel
 
 %description
@@ -57,6 +58,9 @@ rm -f %buildroot%_datadir/%lower_name/LICENSE
 
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3
+
 * Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.2-alt1
 - 1.0.1 -> 1.0.2
 

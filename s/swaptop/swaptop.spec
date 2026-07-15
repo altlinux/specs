@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaptop
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: swap usage monitor written in rust
 License: MIT
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 A real-time swap usage monitor for Linux and Windows systems with TUI interface.
@@ -45,6 +44,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Jul 15 2026 Pavel Shilov <zerospirit@altlinux.org> 1.0.6-alt1
+- 1.0.5 -> 1.0.6
+
 * Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.5-alt1
 - 1.0.3 -> 1.0.5
 

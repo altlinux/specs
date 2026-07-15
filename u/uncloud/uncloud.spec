@@ -2,7 +2,7 @@
 %global import_path github.com/psviderski/uncloud
 
 Name: uncloud
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 Summary: A lightweight tool for deploying and managing containerised applications across a network of Docker hosts.
 License: Apache-2.0
@@ -14,7 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 %summary
@@ -31,7 +30,7 @@ export GOFLAGS="-mod=vendor"
 
 %golang_prepare
 
-%golang_build cmd/%name
+%golang_build cmd/*
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -41,9 +40,14 @@ export IGNORE_SOURCES=1
 
 %files
 %doc *.md
-%_bindir/%name
+%_bindir/uncloudd
+%_bindir/uc
+%_bindir/ucind
 
 %changelog
+* Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 0.20.0-alt1
+- 0.19.0 -> 0.20.0
+
 * Fri May 08 2026 Pavel Shilov <zerospirit@altlinux.org> 0.19.0-alt1
 - 0.17.1 -> 0.19.0
 

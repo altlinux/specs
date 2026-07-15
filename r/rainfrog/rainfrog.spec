@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rainfrog
-Version: 0.3.18
+Version: 0.3.20
 Release: alt1
 Summary: %name a database tool for the terminal
 License: MIT
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 BuildRequires: gcc-c++
 BuildRequires: libstdc++-devel
 
@@ -56,6 +55,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Jul 15 2026 Pavel Shilov <zerospirit@altlinux.org> 0.3.20-alt1
+- Update to new version 0.3.20.
+
 * Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 0.3.18-alt1
 - Update to new version 0.3.18.
 

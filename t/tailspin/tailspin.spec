@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: tailspin
-Version: 6.0.0
+Version: 7.0.0
 Release: alt1
 Summary: A log file highlighter
 License: MIT
@@ -18,7 +18,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 Tailspin works by reading through a log file line by line,
@@ -63,6 +62,9 @@ export CARGO_HOME=${PWD}/cargo
 %_datadir/fish/vendor_completions.d/tspin.fish
 
 %changelog
+* Wed Jul 15 2026 Pavel Shilov <zerospirit@altlinux.org> 7.0.0-alt1
+- 6.0.0 -> 7.0.0
+
 * Thu Apr 09 2026 Pavel Shilov <zerospirit@altlinux.org> 6.0.0-alt1
 - 5.5.0 -> 6.0.0
 

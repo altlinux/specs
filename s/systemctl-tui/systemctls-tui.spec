@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systemctl-tui
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 Summary: A fast, simple TUI for interacting with systemd services and their logs.
 License: MIT 
@@ -16,7 +16,6 @@ Patch1: vendored-nix-loongarch64-support.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 %summary
@@ -52,6 +51,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Wed Jul 15 2026 Pavel Shilov <zerospirit@altlinux.org> 0.6.1-alt1
+- 0.5.2 -> 0.6.1
+
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.5.2-alt1
 - 0.5.1 -> 0.5.2
 

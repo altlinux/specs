@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: serpl
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary: A simple terminal UI for search and replace.
 License: MIT
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 %summary
@@ -43,6 +42,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Jul 15 2026 Pavel Shilov <zerospirit@altlinux.org> 0.3.6-alt1
+- Update to new version 0.3.6.
+
 * Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 0.3.5-alt1
 - Update to new version 0.3.5.
 
