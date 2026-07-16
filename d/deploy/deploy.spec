@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.10
+Version: 0.5.0
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -33,6 +33,9 @@ echo "pg_ver: %pg_ver" > modules/vars/postgresql
 %_datadir/%name
 
 %changelog
+* Sun Jul 05 2026 Nikita Panov <nexxy@altlinux.org> 0.5.0-alt1
+- Added foreman role.
+
 * Wed Jun 24 2026 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
 - postgresql: replaced undefined var postgresql_data_dir.
 
