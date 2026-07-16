@@ -1,6 +1,6 @@
 Name: calculix-ccx
 Version: 2.23
-Release: alt1
+Release: alt2
 
 Summary: A Free Software Three-Dimensional Structural Finite Element Program
 License: GPL-2.0-or-later
@@ -14,7 +14,7 @@ Source99: %name.watch
 BuildRequires: gcc-fortran
 BuildRequires: libarpack-ng-devel
 BuildRequires: fdupes
-BuildRequires: liblapack3-devel
+BuildRequires: liblapack-devel
 BuildRequires: libopenblas-devel
 BuildRequires: libspooles-devel-static
 BuildRequires: libgomp-devel
@@ -49,5 +49,9 @@ install -Dpm 0755 ccx_*/src/ccx_*_MT %buildroot%_bindir/ccx
 %_bindir/ccx
 
 %changelog
+* Thu Jul 16 2026 Ivan A. Melnikov <iv@altlinux.org> 2.23-alt2
+- NMU: Build with liblapack-devel instead of obsolete
+  liblapack3-devel.
+
 * Wed Jun 03 2026 Ulysses Apokin <ulysses@altlinux.org> 2.23-alt1
 - Initial build for Sisyphus.
