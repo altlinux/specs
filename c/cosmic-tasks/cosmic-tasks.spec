@@ -4,14 +4,14 @@
 %define _name tasks
 %define binary_name %_name
 %define rdn_name dev.edfloreshz.%__name
-%define ver_major 0.2
+%define ver_major 0.3
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Tasks
@@ -62,6 +62,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Jul 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
