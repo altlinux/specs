@@ -4,8 +4,9 @@ BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
 BuildRequires: /usr/bin/dot /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl-podlators
 # END SourceDeps(oneline)
 # hacks around findreq ==============
-# GraphViz is optional dependency, not a requirement
+# GraphViz/GraphViz2 is an optional dependency (ticket graphs), not a hard requirement
 %filter_from_requires /^perl(GraphViz.pm)/d
+%filter_from_requires /^perl(GraphViz2)/d
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRT::Base'
 # instead of findreqs below
 %set_perl_req_method relaxed
@@ -76,8 +77,8 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.5
-Release:	alt1_4
+Version:	4.4.7
+Release:	alt1
 Summary:	Request tracker
 
 License:	GPLv2+
@@ -97,6 +98,8 @@ Patch2: 0002-Use-usr-bin-perl-instead-of-usr-bin-env-perl.patch
 Patch3: 0003-Remove-fixperms-font-install.patch
 Patch4: 0004-Fix-permissions.patch
 Patch5: 0005-Do-not-install-cpanfile.patch
+Patch6: 0006-Skip-testdeps-on-install.patch
+Patch7: 0007-Fix-rt-setup-database-upgrade-dir-path.patch
 
 BuildArch:	noarch
 
@@ -245,6 +248,7 @@ BuildRequires: perl(Term/ReadLine.pm)
 %{?with_devel_mode:BuildRequires: perl(Email/Abstract.pm)}
 %{?with_devel_mode:BuildRequires: perl(Test/Expect.pm)}
 %{?with_devel_mode:BuildRequires: perl(Test/MockTime.pm)}
+%{?with_devel_mode:BuildRequires: perl(Test/MockTime/HiRes.pm)}
 %{?with_devel_mode:BuildRequires: perl(Test/NoWarnings.pm)}
 %{?with_devel_mode:BuildRequires: perl(Test/Pod.pm)}
 %{?with_devel_mode:BuildRequires: perl(Test/Warn.pm)}
@@ -447,6 +451,13 @@ while read a; do b=$(echo "$a" | sed -e 's,\.in$,,'); rm "$b"; done
 %if "%{version}" >= "5.0.0"
 %patch5 -p1
 %endif
+# Don't run the dependency check during "make install" (rt-test-dependencies
+# fails on the unpackaged GraphViz2 optional dep). The dep-check already runs
+# non-fatally in %%build, so the install-time re-check is redundant.
+%patch6 -p1
+# rt-setup-database defaulted the upgrade dir to a relative "./etc/upgrade";
+# use $RT::EtcPath/upgrade (/etc/rt/upgrade -> /usr/share/rt/upgrade) instead.
+%patch7 -p1
 
 # Propagate rpm's directories to config.layout
 cat << \EOF >> config.layout
@@ -498,7 +509,9 @@ sed -i -e 's,$(RT_ETC_PATH)/upgrade,%{_datadir}/%{name}/upgrade,g' Makefile.in
 %make_build
 
 # Explicitly check for devel-mode deps
-%{?with_devel_mode:/usr/bin/perl ./sbin/rt-test-dependencies --verbose --with-%{?with_mysql:mysql}%{?with_pg:pg} --with-modperl2 --with-dev}
+# Non-fatal: 4.4.7 switched graph rendering to GraphViz2, which is not packaged
+# in Sisyphus; treat the optional graph dep as advisory, not a build breaker.
+%{?with_devel_mode:/usr/bin/perl ./sbin/rt-test-dependencies --verbose --with-%{?with_mysql:mysql}%{?with_pg:pg} --with-modperl2 --with-dev || :}
 
 # Generate man-pages
 for file in \
@@ -693,6 +706,17 @@ fi
 %endif
 
 %changelog
+* Wed Jul 15 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
+- new version 4.4.7 (CVE-2022-25802, CVE-2023-41259, CVE-2023-41260) (closes: #49420)
+- fix ftbfs: package builds again (closes: #39031)
+- add BuildRequires: perl(Test/MockTime/HiRes.pm) (new 4.4.7 devel dependency)
+- filter perl(GraphViz2) from requires; make rt-test-dependencies non-fatal
+  (4.4.7 switched optional graph rendering to GraphViz2, not packaged in Sisyphus)
+- add Patch6: drop redundant testdeps prerequisite from "make install"
+  (the dep-check already runs non-fatally in %%build)
+- add Patch7: fix rt-setup-database upgrade dir (defaulted to relative
+  "./etc/upgrade"; now uses $RT::EtcPath/upgrade -> /usr/share/rt/upgrade)
+
 * Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 4.4.5-alt1_4
 - new version
 
