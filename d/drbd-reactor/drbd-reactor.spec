@@ -2,7 +2,7 @@
 
 Name: drbd-reactor
 Version: 1.11.0
-Release: alt1
+Release: alt2
 Summary: React to DRBD events via plugins.
 
 Group: System/Servers
@@ -10,7 +10,7 @@ License: Apache-2.0
 URL: https://www.github.com/LINBIT/drbd-reactor
 Vcs: https://www.github.com/LINBIT/drbd-reactor.git
 Source: %name-%version.tar
-ExclusiveArch: x86_64 aarch64 loongarch64 ppc64le
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
 BuildRequires: rust-cargo
@@ -88,6 +88,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Thu Jul 16 2026 Ivan A. Melnikov <iv@altlinux.org> 1.11.0-alt2
+- NMU: replace ExclusiveArch with ExcludeArch to build on riscv64
+
 * Tue Mar 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.11.0-alt1
 - v1.11.0
 
