@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.11.0
-Release: alt1
+Release: alt2
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -20,6 +20,7 @@ Source4: %name-%version-3rdparty-x11vnc.tar
 Source100: veyon-config-dm-login.sh
 Patch1: alt-veyon-libdir.patch
 Patch2: alt-fix-dm-login.patch
+Patch3: alt-fix-reset-location-table.patch
 
 Requires: polkit qca-qt6-ossl qt6-translations
 Obsoletes: italc3
@@ -141,6 +142,9 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Thu Jul 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt2
+- Fix location table reset (closes: 37952).
+
 * Tue Jul 14 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt1
 - New version.
 
