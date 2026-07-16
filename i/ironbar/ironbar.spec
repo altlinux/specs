@@ -1,5 +1,5 @@
 Name: ironbar
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 License: MIT
 
@@ -13,6 +13,7 @@ ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
+Source2: config.toml
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -35,15 +36,7 @@ anything from a lightweight bar to a full desktop panel with ease.
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat <<EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %rust_build
@@ -56,6 +49,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.19.0-alt1
+- new version 0.19.0
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.18.0-alt1
 - new version (0.18.0) with rpmgs script
 
