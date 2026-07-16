@@ -9,9 +9,9 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
-%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
-%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
+%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
+%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
+%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
@@ -86,8 +86,10 @@
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
-%vulkan_drivers_add imagination
 %vulkan_drivers_add kosmickrisp
+%endif
+%ifarch %armsoc_arches riscv64
+%vulkan_drivers_add imagination
 %endif
 %ifarch loongarch64
 # LS7A1000 and LS7A2000 chipsets, and Loongson SoCs have vivante GPU
@@ -96,7 +98,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.1
-%define ver_minor 4
+%define ver_minor 5
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -227,6 +229,13 @@ Group: System/X11
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
 
+%package -n xorg-dri-powervr
+Summary: PowerVR DRI driver
+Group: System/X11
+
+%description -n xorg-dri-powervr
+DRI driver for Imagination Technologies PowerVR GPUs
+
 %package -n xorg-dri-vmwgfx
 Summary: VMWare DRI driver
 Group: System/X11
@@ -281,6 +290,9 @@ Requires: xorg-dri-vmwgfx = %epoch:%version-%release
 %endif
 %ifarch %virgl_arches
 Requires: xorg-dri-virtio = %epoch:%version-%release
+%endif
+%ifarch %armsoc_arches riscv64
+Requires: xorg-dri-powervr = %epoch:%version-%release
 %endif
 
 %description -n mesa-dri-drivers
@@ -478,7 +490,6 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/libvulkan_freedreno.so
 %_libdir/libvulkan_broadcom.so
 %_libdir/libvulkan_panfrost.so
-%_libdir/libvulkan_powervr_mesa.so
 %_libdir/libvulkan_kosmickrisp.so
 %ifarch aarch64
 %_libdir/libteflon.so
@@ -487,12 +498,23 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
+%endif
+
+%ifarch %armsoc_arches riscv64
+%files -n xorg-dri-powervr
+%_libdir/libvulkan_powervr_mesa.so
 %_datadir/vulkan/icd.d/powervr_mesa_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.5-alt1
+- 26.1.5
+
+* Thu Jul 09 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.4-alt2
+- new subpackage xorg-dri-powervr
+
 * Fri Jul 03 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.4-alt1
 - 26.1.4
 
