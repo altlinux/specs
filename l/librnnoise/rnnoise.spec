@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: 0.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Recurrent neural network for audio noise reduction
 License: BSD-2-Clause
@@ -43,6 +43,10 @@ Devel files for %name.
 %prep
 %setup -a1
 %patch -p1
+%ifarch %e2k
+# error: function "_mm256_dpbusds_epi32" declared implicitly
+sed -i 's/) _mm256_dpbusds_/&avx_/' src/vec_avx.h
+%endif
 
 cat > package_version << _EOF_
     PACKAGE_VERSION=%version
@@ -80,6 +84,9 @@ rm -rf %buildroot%_docdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 16 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.2-alt1.2
+- e2k build fix
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt1.1
 - fixed build for aarch64
 
