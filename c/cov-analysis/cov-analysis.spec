@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cov-analysis
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: afl-cov successor - simpler and using modern llvm tools
@@ -11,6 +11,9 @@ VCS: https://github.com/AFLplusplus/cov-analysis
 Url: https://github.com/AFLplusplus/cov-analysis
 
 BuildArch: noarch
+
+BuildRequires: python3
+BuildRequires: /proc
 
 Source: %name-%version.tar
 
@@ -33,6 +36,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/cov-analysis
 
 %changelog
+* Thu Jul 16 2026 Egor Ignatov <egori@altlinux.org> 1.1-alt1
+- New version 1.1.
+
 * Mon Jun 29 2026 Egor Ignatov <egori@altlinux.org> 1.0-alt1
 - New version 1.0.
 
