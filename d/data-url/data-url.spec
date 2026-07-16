@@ -3,7 +3,7 @@
 
 Name: data-url
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Support for data URLs as specified in RFC 2397
 Group: Development/Java
@@ -24,12 +24,13 @@ BuildRequires: maven-jar-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: i18n-maven-plugin
-BuildRequires: moditect-maven-plugin
 BuildRequires: robtimus-build-helper-maven-plugin
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-clean-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-deploy-plugin
+# Compatibility with p11
+BuildRequires: mvn(org.moditect:moditect-maven-plugin)
 %if_with check
 BuildRequires: junit5
 BuildRequires: hamcrest
@@ -68,5 +69,8 @@ Java library that adds support for the data protocol as specified in RFC 2397.
 %files -f .mfiles
 
 %changelog
+* Thu Jul 16 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.1-alt2
+- Replace BuildRequires moditect by using mvn prov.
+
 * Tue Mar 24 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.1-alt1
 - Initial build for ALT.

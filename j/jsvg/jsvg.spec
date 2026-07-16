@@ -2,7 +2,7 @@
 
 Name: jsvg
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: Java SVG renderer
 Group: Development/Java
@@ -20,6 +20,7 @@ BuildRequires: java-17-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: biz-aQute-bnd-gradle-plugins
 BuildRequires: jetbrains-annotations
+BuildRequires: google-error-prone-annotations
 
 %description
 JSVG is an SVG user agent using AWT graphics. Its aim is to provide a small
@@ -48,6 +49,9 @@ less memory than svgSalamander and ~98%% less than Batik.
 %files -f .mfiles
 
 %changelog
+* Thu Jul 16 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt3
+- Add missing BuildRequires google-error-prone-annotations.
+
 * Mon Jul 06 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt2
 - Build only for %%java_arches.
 
