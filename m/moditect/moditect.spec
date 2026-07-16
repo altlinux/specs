@@ -2,9 +2,9 @@
 
 Name: moditect
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
-Summary: Tooling for the Java Module System 
+Summary: Tooling for the Java Module System
 License: Apache-2.0
 Group: Development/Java
 Url: https://github.com/moditect/moditect
@@ -101,16 +101,18 @@ within Maven-based projects.
 %mvn_install
 
 %files parent -f .mfiles-moditect-parent
-
 %files core -f .mfiles-moditect
-
 %files aggregator -f .mfiles-moditect-aggregator
-
 %files maven-plugin -f .mfiles-moditect-maven-plugin
-
 %changelog
+* Thu Jul 16 2026 Ivan Khanas <xeno@altlinux.org> 1.3.0-alt3
+- Add missing changelog to pass SRPM inheritance check.
+
 * Wed Jul 15 2026 Ivan Khanas <xeno@altlinux.org> 1.3.0-alt2
 - Add obsoletes for compatibility with p11.
+
+* Fri Apr 10 2026 Anton Meleshnikov <alton@altlinux.org> 1.2.0-alt1
+- Initial build for p11 (thanks fedora for the spec).
 
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 1.3.0-alt1
 - Fist build for ALT.
