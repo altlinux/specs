@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
+# The end to end check builds an image and installs a system from it in KVM.
+%def_with vmcheck
 
 %define _common_libdir %prefix/lib
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -21,19 +23,31 @@ Requires: alterator
 Requires: alterator-setup
 Requires: alterator-sh-functions
 Requires: alterator-l10n
+# The progress bar of the CLI counts the width of the bar with bc.
+Requires: bc
 Requires: rsync
 Requires: grub-common
 Requires: mtools
 Requires: squashfs-tools
+Requires: make-initrd
 Requires: make-initrd-bootchain
+# The feature of data/initrd.mk that is not in the make-initrd package:
+Requires: make-initrd-plymouth
 Requires: alt-uefi-certs
+
+# The tools called from the shell scripts of the image build:
+Requires: dmsetup
+Requires: dosfstools
+Requires: e2fsprogs
+Requires: parted
+Requires: udev
 
 # Dependencies of the altinst squashfs image:
 Requires: alterator-vm
 Requires: alterator-grub
 Requires: libevms
 Requires: installer-alterator-fs >= 1.0.0
-Requires: installer-common-stage2
+Requires: installer-common-base-stage2
 Requires: installer-scripts-remount-stage2
 Requires: console-scripts
 Requires: kbd
@@ -50,6 +64,50 @@ BuildRequires: bats
 BuildRequires: /proc
 BuildRequires: /dev
 BuildRequires: shellcheck
+# The check verifies that the features of data/initrd.mk really exist.
+BuildRequires: make-initrd
+BuildRequires: make-initrd-bootchain
+BuildRequires: make-initrd-plymouth
+
+%if_with vmcheck
+%if "%_host_cpu" == "x86_64"
+# The image build needs the root, the loop devices and the running kernel of
+# a real machine, so it is run in KVM: vm-run boots the build chroot itself.
+BuildRequires(pre): rpm-build-vm
+# Its filetrigger runs as root and makes the /tmp/vm-ext4.img of the whole
+# chroot: the unprivileged builder cannot read the chroot on its own.
+BuildRequires(pre): rpm-build-vm-createimage
+BuildRequires: /dev/kvm
+# The built image is booted to check that a system installs from it.
+BuildRequires: qemu-system-x86-core
+# The image build copies the build chroot, hence everything the kopidel calls
+# at the run time has to be inside it. This repeats the Requires above, and
+# the check fails loudly when they diverge.
+BuildRequires: alterator-sh-functions
+BuildRequires: bc
+BuildRequires: rsync
+BuildRequires: grub-common
+BuildRequires: grub-pc
+BuildRequires: grub-efi
+BuildRequires: mtools
+BuildRequires: squashfs-tools
+BuildRequires: alt-uefi-certs
+BuildRequires: dmsetup
+BuildRequires: dosfstools
+BuildRequires: e2fsprogs
+BuildRequires: parted
+BuildRequires: udev
+# The altinst squashfs image of the installer is built out of these:
+BuildRequires: alterator-vm
+BuildRequires: alterator-grub
+BuildRequires: libevms
+BuildRequires: installer-alterator-fs >= 1.0.0
+BuildRequires: installer-common-base-stage2
+BuildRequires: installer-scripts-remount-stage2
+BuildRequires: console-scripts
+BuildRequires: kbd
+%endif
+%endif
 %endif
 
 %description
@@ -71,6 +129,11 @@ it on other machines, then you have found what you were looking for!
 %check
 %make test
 %make shellcheck
+%if_with vmcheck
+%if "%_host_cpu" == "x86_64"
+tests/vm/vmcheck.sh
+%endif
+%endif
 
 %post
 %post_service alteratord
@@ -87,6 +150,36 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Thu Jul 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.2-alt1
+- Fix the image build failing with "Module ub not found"
+  on machines that have a USB drive attached.
+- Never finish with a broken, unbootable image: a failed
+  build step now stops the build and its reason is shown.
+- Report a build failure in a popup without freezing the
+  window, keeping the form locked and the progress bar
+  alive while a build runs.
+- Show live progress while the initrd is built, instead of
+  a bar that sat still long enough to look like a hang.
+- Check that everything the build needs is installed before
+  it starts, and list what is missing instead of failing
+  halfway through.
+- Include the installer packages' dependencies in the image:
+  without them the installer failed to start and the
+  installed system was left with no bootloader.
+- Stop reporting a false failure at the end of a build
+  onto an external drive.
+- Clean up the image devices of a failed build so they no
+  longer appear as available working directories.
+- Power off the machine once an automatic installation is over.
+- Make the installer image smaller by dropping the X11 and
+  Qt packages from it.
+- Pick the custom ignored-files list with a file dialog or type
+  it by hand, check its content and show the check result right
+  in the form, with a popup for a failure reason too long for it.
+- Rework the form layout: choose the target mode with tabs,
+  group the settings shared by both modes, explain the options
+  with tooltips and mark the format warning with an icon.
+
 * Tue Mar 31 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.1-alt1
 - spec: Update Vcs tag.
 - create_squashfs_altinst: Log rsync output via expected_percentage_handler.
