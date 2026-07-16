@@ -3,7 +3,7 @@
 
 Name: wush
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: simplest & fastest way to transfer files between computers via WireGuard
 License: CC0-1.0
 Group: Networking/Remote access
@@ -14,7 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 Wush is a command line tool that lets you easily transfer files and open shells
@@ -46,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 0.4.1-alt2
+- Remove optional build dependency.
+
 * Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.1-alt1
 - 0.3.0 -> 0.4.1
 

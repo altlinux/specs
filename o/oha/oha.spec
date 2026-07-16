@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oha
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 Summary: Ohayou, HTTP load generator with tui animation
 License: MIT
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 BuildRequires: pkgconfig(openssl)
 
 %ifarch loongarch64 riscv64
@@ -50,6 +49,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.15.0-alt1
+- 1.14.0 -> 0.15.0
+
 * Fri May 08 2026 Pavel Shilov <zerospirit@altlinux.org> 1.14.0-alt1
 - 1.12.1 -> 1.14.0
 

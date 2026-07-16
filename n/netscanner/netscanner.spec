@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: netscanner
-Version: 0.6.41
+Version: 0.6.43
 Release: alt1
 Summary: Terminal Network scanner & diagnostic tool with modern TUI.
 License: MIT 
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 %summary
@@ -43,6 +42,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 0.6.43-alt1
+- 0.6.41 -> 0.6.43
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.6.41-alt1
 - 0.6.3 -> 0.6.41
 

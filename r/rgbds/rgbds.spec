@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rgbds
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Rednex Game Boy Development System - An assembly toolchain for the Nintendo Game Boy and Game Boy Color 
 License:  MIT
@@ -13,7 +13,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires:  gcc-c++
-BuildRequires:  cmake
 BuildRequires:  bison
 BuildRequires:  pkgconfig(libpng)
 
@@ -44,6 +43,9 @@ export CFLAGS="%optflags"
 %_man7dir/*.7.*
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1
+
 * Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.0-alt1
 - 0.9.4 -> 1.0.0
 

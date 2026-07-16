@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayimg
-Version: 5.2
+Version: 5.4
 Release: alt1
 Summary: Image viewer for Wayland.
 License: MIT
@@ -83,6 +83,9 @@ rm -v %buildroot/%_datadir/licenses/%name/LICENSE
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 5.4-alt1
+- Update to new version 5.4.
+
 * Thu Apr 30 2026 Pavel Shilov <zerospirit@altlinux.org> 5.2-alt1
 - Update to new version and fix buildrequires to close (ALT #58952).
 

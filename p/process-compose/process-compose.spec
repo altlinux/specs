@@ -2,8 +2,8 @@
 %global import_path github.com/F1bonacc1/process-compose
 
 Name: process-compose
-Version: 1.110.0
-Release: alt2
+Version: 1.120.0
+Release: alt1
 Summary: Process Compose is a simple and flexible scheduler and orchestrator to manage non-containerized applications.
 License: Apache-2.0
 Group: Monitoring
@@ -14,8 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
-BuildRequires: git
 
 Requires: nginx
 
@@ -59,6 +57,9 @@ ln -s %_sysconfdir/%name/process-compose.yaml %buildroot%_sysconfdir/xdg/%name/p
 %_sysconfdir/xdg/%name/process-compose.*
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.120.0-alt1
+- Update to new version 1.120.0.
+
 * Thu Jun 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.110.0-alt2
 - Add check step to skip failing src/app tests during build.
 

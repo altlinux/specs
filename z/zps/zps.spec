@@ -2,7 +2,7 @@
 
 Name: zps
 Version: 2.0.0
-Release: alt2
+Release: alt3
 Summary: A small utility for listing and reaping zombie processes on GNU/Linux
 License: GPL-3.0
 Group: Terminals
@@ -11,7 +11,6 @@ Url: https://github.com/orhun/zps
 Source: %name-%version.tar
 
 BuildRequires: desktop-file-utils
-BuildRequires: glibc >= 2.38
 
 %description
 zps lists the running processes with theirs stats and indicates/reaps
@@ -36,6 +35,9 @@ desktop-file-install --dir %buildroot%_datadir/applications/ .application/%name.
 %_datadir/applications/%name.desktop
 
 %changelog
+* Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt3
+- Remove optional build dependency.
+
 * Wed Nov 20 2024 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt2
 - update based on upstream
 
