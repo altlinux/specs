@@ -1,5 +1,5 @@
 Name: greetd-regreet
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 License: GPL-3.0
 
@@ -24,6 +24,7 @@ Source7: conf-hyprland
 
 Source8: regreet-niri.toml
 Source9: conf-niri
+Source10: config.toml
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -92,13 +93,7 @@ Provides: %name-config
 %setup -a1
 
 mkdir -p .cargo
-cat <<EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+install -vD %SOURCE10 .cargo/config.toml
 
 %build
 export REBOOT_CMD="systemctl reboot"
@@ -160,6 +155,9 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/regreet-niri.
 %config(noreplace) %_sysconfdir/greetd/regreet-conf-niri
 
 %changelog
+* Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
 - new version 0.3.0
 - config-cage: add -d flag to disable decorations (ALT bug 57432)
