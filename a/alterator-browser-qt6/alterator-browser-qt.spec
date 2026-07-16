@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.6
+Version: 3.7.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Jul 16 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.7-alt1
+- fix fileselect margins to more consistent layout (thanks rauty@alt)
+
 * Tue Feb 17 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.6-alt1
 - limit font resizing
 
