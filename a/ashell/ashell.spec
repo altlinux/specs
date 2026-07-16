@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.7.0
+Version: 0.9.0
 Release: alt1
 License: MIT
 
@@ -43,6 +43,9 @@ subst 's|"rfkill"|"%_sbindir/rfkill"|' src/services/bluetooth/mod.rs
 %_bindir/%name
 
 %changelog
+* Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.9.0-alt1
+- new version (0.9.0)
+
 * Fri Dec 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.0-alt1
 - new version (0.7.0) with rpmgs script
 - drop i586 support
