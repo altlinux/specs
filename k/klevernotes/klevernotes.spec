@@ -2,7 +2,7 @@
 
 Name: klevernotes
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -18,6 +18,9 @@ Source1: ru.tar
 
 #https://bugzilla.altlinux.org/59322
 Patch: 187.patch
+#https://bugzilla.altlinux.org/59320
+#https://bugzilla.altlinux.org/59321
+Patch1: 188.patch
 
 #AutoProv: no
 ExclusiveArch: x86_64 aarch64 loongarch64
@@ -36,7 +39,7 @@ KleverNotes is a note taking and management application for your mobile and desk
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 tar -xf %SOURCE1 -C po/
 
@@ -56,6 +59,10 @@ tar -xf %SOURCE1 -C po/
 %doc *.md 
 
 %changelog
+* Thu Jul 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt3
+- fixed: the text of the note is not highlighted as "Quote" (ALT #59321)
+- fixed: title tag is duplicated in the preview window (ALT #59320)
+
 * Tue Jul 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt2
 - Dedicated backend to save painting (ALT #59322)
 
