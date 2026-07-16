@@ -1,5 +1,5 @@
 Name:    python3-module-ansible-collections
-Version: 13.1.0
+Version: 13.2.0
 Release: alt1
 
 Summary: This repository contains the community.general and some other Ansible Collection
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-python3
 %filter_from_requires /python-base/d
 # Using only in tests
 %add_python3_req_skip nox
+# Using only in opennebula
+%add_python3_req_skip ansible_collections.community.library_inventory_filtering_v1.plugins.plugin_utils.inventory_filter
 
 %description
 This repository contains the community.general Ansible Collection. The
@@ -71,6 +73,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Wed Jul 15 2026 Andrey Cherepanov <cas@altlinux.org> 13.2.0-alt1
+- New version.
+
 * Wed Jun 17 2026 Andrey Cherepanov <cas@altlinux.org> 13.1.0-alt1
 - New version.
 
