@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Jul 16 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt4
+- update to ALT Workstation 11.2RC4
+- fix vm-profiles (closes #59597)
+
 * Wed Jun 03 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt3
 - update to ALT Workstation 11.2RC1
 
