@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2605
+Version: 6.2.2606
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -161,6 +161,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
 %python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Thu Jul 16 2026 Anton Farygin <rider@altlinux.org> 6.2.2606-alt1
+- 6.2.2605 -> 6.2.2606
+
 * Sun Jun 21 2026 Anton Farygin <rider@altlinux.org> 6.2.2605-alt1
 - 6.2.2604 -> 6.2.2605
 - excluded optional webgui and CUDA wrapper imports from python3 autorequires

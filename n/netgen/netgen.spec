@@ -20,7 +20,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2605
+Version: 6.2.2606
 Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
@@ -421,6 +421,9 @@ rm -f %buildroot%python3_sitelibdir/%name/__pycache__/webgui.*
 %endif #openmpi
 
 %changelog
+* Thu Jul 16 2026 Anton Farygin <rider@altlinux.org> 6.2.2606-alt1
+- 6.2.2605 -> 6.2.2606
+
 * Mon Jun 22 2026 Anton Farygin <rider@altlinux.org> 6.2.2605-alt1
 - 6.2.2604 -> 6.2.2605
 - Drop Jupyter netgen.webgui module (unmet python3(anywidget) dep, unused).
