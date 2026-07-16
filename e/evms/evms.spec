@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt93
+Release: alt94
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Jul 16 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt94
+- commit: fix multi-disk LVM
+
 * Wed Jun 03 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt93
 - new commit procedure fixes
 
