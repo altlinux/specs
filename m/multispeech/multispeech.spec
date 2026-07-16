@@ -2,8 +2,8 @@
 %define sover 5
 
 Name:    multispeech
-Version: 4.6.4
-Release: alt3
+Version: 4.6.5
+Release: alt1
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -13,8 +13,6 @@ VCS:     https://github.com/poretsky/multispeech.git
 
 Source: %name-%version.tar
 Source1: multispeech.blurb
-
-Patch0: fix-spd-module-dir.patch
 
 Requires: %name-common
 Requires: ru_tts
@@ -93,7 +91,6 @@ This package provides common configuration file used by all Multispeech
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %autoreconf -if
@@ -101,7 +98,7 @@ This package provides common configuration file used by all Multispeech
 %make_build
 
 %install
-%makeinstall_std sdmoduledir=%_libdir/speech-dispatcher-modules
+%makeinstall_std
 
 rm -v %buildroot%_libdir/lib%name.so
 install -D %SOURCE1 %buildroot%_datadir/emacs/site-lisp/emacspeak/blurbs/%name.blurb
@@ -134,6 +131,9 @@ ln -s %_bindir/%name %buildroot%_datadir/emacs/site-lisp/emacspeak/servers/multi
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Thu Jul 16 2026 Artem Semenov <savoptik@altlinux.org> 4.6.5-alt1
+- Updated to new version 4.6.5
+
 * Tue Jun 16 2026 Artem Semenov <savoptik@altlinux.org> 4.6.4-alt3
 - Packed the missing files.
 - Updated descriptions
