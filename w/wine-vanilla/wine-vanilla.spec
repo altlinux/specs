@@ -9,12 +9,12 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 11.1.0
+%define mono_version 11.2.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.11
+%define major 11.12
 %define rel %nil
 
 # the packages will conflict with that
@@ -943,6 +943,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.12-alt1
+- new version 11.12
+- set strict require wine-mono 11.2.0
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.11-alt1
 - new version 11.11
 
