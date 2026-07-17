@@ -1,6 +1,6 @@
 Name: yad
-Version: 14.1
-Release: alt2
+Version: 15.0
+Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
 Group: Graphical desktop/GNOME
@@ -55,9 +55,11 @@ desktop-file-install --remove-key Encoding     \
 %exclude %_datadir/aclocal/%name.m4
 %_man1dir/*
 %_desktopdir/*
-%_datadir/glib-2.0/schemas/yad.gschema.xml
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 15.0-alt1
+- Autobuild version bump to 15.0
+
 * Wed Nov 26 2025 Fr. Br. George <george@altlinux.org> 14.1-alt2
 - Build with GtkSourceView
 
