@@ -1,5 +1,5 @@
 Name: wayshot
-Version: 1.4.5
+Version: 1.5.0
 Release: alt1
 License: BSD-2-Clause
 
@@ -49,6 +49,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.4.5-alt1
 - new version 1.4.5 (with rpmrb script)
 
