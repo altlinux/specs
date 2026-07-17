@@ -1,5 +1,5 @@
 Name: safeeyes
-Version: 3.3.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Tool for reminding the user to take breaks
@@ -49,6 +49,9 @@ cp -a %name/platform/icons/* %buildroot%_iconsdir/
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
+- new version 3.5.0
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
 - new version 3.3.1 (with rpmrb script)
 - switch to pyproject build
