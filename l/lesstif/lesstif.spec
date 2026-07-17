@@ -1,6 +1,6 @@
 Name: lesstif
 Version: 0.95.2
-Release: alt5
+Release: alt5.1
 
 Summary: LessTif - a free replacement of OSF/Motif
 Group: System/Libraries
@@ -46,7 +46,9 @@ Source5: mwm.desktop
 Patch: lesstif-Makefile.in.diff
 # have motif-config honor libdir
 Patch1: lesstif-motif-config-use_libdir.diff
-Patch5: http://ftp.debian.org/debian/pool/main/l/lesstif2/lesstif2_0.95.0-2.diff.gz
+Patch2: lesstif-gcc15.diff
+# http://ftp.debian.org/debian/pool/main/l/lesstif2/lesstif2_0.95.0-2.diff.gz
+Patch5: lesstif2_0.95.0-2.diff
 
 Provides: motif, %name-compat = %version
 Obsoletes: %name-compat
@@ -73,7 +75,7 @@ Conflicts: openmotif-devel-static
 
 %package mwm
 Summary: Lesstif Motif window manager clone based on fvwm
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Motif
 Requires: %name = %version-%release
 Provides: motif-mwm
@@ -81,7 +83,7 @@ Conflicts: openmotif-mwm
 
 %package clients
 Summary: LessTif clients
-License: GPL
+License: GPLv2
 Group: Graphical desktop/Motif
 Requires: %name = %version-%release
 Provides: motif-clients
@@ -137,6 +139,7 @@ This package contains LessTif development documentation.
 chmod a-x COPYING* doc/www.lesstif.org/BUG-HUNTING.html
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch5 -p1
 
 # and pick up some fixes from Debian
@@ -270,6 +273,9 @@ install -p -m644 %SOURCE5 %buildroot%_datadir/xsessions/
 %doc %_docdir/%name-%version/lessdox
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 0.95.2-alt5.1
+- Fix gcc15 FTBS
+
 * Sun Dec 15 2024 Lenar Shakirov <snejok@altlinux.org> 0.95.2-alt5
 - Fix FTBS by CFLAGS="-Wno-incompatible-pointer-types"
 
