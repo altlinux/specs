@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-download-manager
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Lomiri Upload/Download Manager
@@ -136,16 +136,16 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_bindir/lomiri-upload-manager
 %_man1dir/lomiri-download-manager.1.*
 %_man1dir/lomiri-upload-manager.1.*
-%_sysconfdir/dbus-1/system.d/com.lomiri.applications.Downloader.conf
-%_sysconfdir/dbus-1/system.d/com.lomiri.applications.Uploader.conf
+%_datadir/dbus-1/system.d/com.lomiri.applications.Downloader.conf
+%_datadir/dbus-1/system.d/com.lomiri.applications.Uploader.conf
 %_userunitdir/lomiri-download-manager-systemd.service
 %_userunitdir/lomiri-upload-manager-systemd.service
 %dir %_qt5_qmldir/Ubuntu/DownloadManager
 %_qt5_qmldir/Ubuntu/DownloadManager/*
 %dir %_qt5_qmldir/Lomiri/DownloadManager
 %_qt5_qmldir/Lomiri/DownloadManager/*
-%_datadir/dbus-1/services/lomiri-download-manager.service
-%_datadir/dbus-1/services/lomiri-upload-manager.service
+%_datadir/dbus-1/services/com.lomiri.applications.Downloader.service
+%_datadir/dbus-1/services/com.lomiri.applications.Uploader.service
 %_datadir/dbus-1/system-services/com.lomiri.applications.Downloader.service
 %_datadir/dbus-1/system-services/com.lomiri.applications.Uploader.service
 %dir %_libdir/%name
@@ -181,6 +181,9 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_docdir/%name/*
 
 %changelog
+* Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
+
 * Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
 - New version 0.3.1.
 
