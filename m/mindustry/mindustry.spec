@@ -2,7 +2,7 @@
 %define xdg_name com.github.Anuken.Mindustry
 
 Name: mindustry
-Version: 150.1
+Version: 159.6
 Release: alt1
 License: GPL-3.0
 
@@ -46,13 +46,18 @@ Group: Games/Strategy
 
 %prep
 %setup -a1
-unzip %SOURCE3
-test -d ~/.gradle && rm -rf ~/.gradle
-tar xf %SOURCE2 -C ~
+mv Arc ..
+: > ios/build.gradle
+unzip -q %SOURCE3
+tar xf %SOURCE2
 
 %build
-./gradlew pack -Pbuildversion="%version"
-./gradlew  --no-daemon dist -Pbuildversion="%version" desktop:dist server:dist
+export GRADLE_USER_HOME="$PWD/.gradle"
+gradle="$PWD/gradle-%gradle_version/bin/gradle"
+
+"$gradle" --offline --no-daemon pack -Pbuildversion="%version"
+"$gradle" --offline --no-daemon dist -Pbuildversion="%version" \
+    desktop:dist server:dist
 
 cd core/assets/icons
 icns2png --extract icon.icns
@@ -93,6 +98,9 @@ done
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 159.6-alt1
+- new version 159.6
+
 * Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 150.1-alt1
 - new version (150.1) with rpmgs script
 
