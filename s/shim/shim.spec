@@ -4,7 +4,7 @@
 
 Name: shim
 Version: 16.1
-Release: alt2
+Release: alt3
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -17,6 +17,7 @@ Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
 
 Patch0: shim-16.1-upstream-Fix-build-with-binutils-2.46.patch
+Patch1: shim-16.1-upstream-test-fix-strrchr-usage.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -53,6 +54,7 @@ Includes both ia32 and x64 EFI binaries.
 %prep
 %setup -a 2
 %patch0 -p1
+%patch1 -p1
 
 echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,https://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
 
@@ -119,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 17 2026 Egor Ignatov <egori@altlinux.org> 16.1-alt3
+- Fix build with glibc 2.43
+
 * Tue Apr 28 2026 Egor Ignatov <egori@altlinux.org> 16.1-alt2
 - Fix build with binutils 2.46
 
