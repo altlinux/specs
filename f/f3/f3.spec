@@ -1,5 +1,5 @@
 Name:		f3
-Version:	9.0
+Version:	10.0
 Release:	alt1
 
 Summary:	Fight Flash Fraud / Fight Fake Flash
@@ -10,6 +10,8 @@ Url:		http://oss.digirati.com.br/f3/
 
 # Source-url: https://github.com/AltraMayor/f3/archive/v%version.tar.gz
 Source:		%name-%version.tar
+
+Patch0:		%name-i586-min-generic.patch
 
 # Automatically added by buildreq on Sun Mar 06 2016 (-bi)
 # optimized out: elfutils python-base
@@ -29,19 +31,20 @@ the actual storage capacity of fake drives as safely as possible.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-subst 's|-std=c99 -Wall -Wextra -pedantic -MMD -ggdb|%optflags|g' ./Makefile
+subst 's|-std=c17 -Wall -Wextra -pedantic -MMD -ggdb|%optflags|g' ./Makefile
 subst 's|/usr/local|%prefix|g' ./Makefile
 %make_build extra
 
 %install
 mkdir -p examples
 make DESTDIR=%buildroot install
-install -m 0755 f3write.h2w log-f3wr ./examples
+install -m 0755 scripts/f3write.h2w scripts/log-f3wr ./examples
 
-mkdir -p %buildroot%prefix/sbin
-install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
+mkdir -p %buildroot%_sbindir
+install -m 0755 build/f3probe build/f3brew build/f3fix %buildroot%_sbindir
 
 %files
 %doc changelog README.* LICENSE examples
@@ -50,6 +53,10 @@ install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
 %_man1dir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0-alt1
+- new version 10.0
+- fix build on i586: add unsigned int to MIN _Generic selector
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0-alt1
 - new version 9.0
 
