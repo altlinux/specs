@@ -2,7 +2,7 @@
 
 Name: sharutils
 Version: 4.15.2
-Release: alt1
+Release: alt1.1
 
 Summary: The GNU shar utilities for packaging and unpackaging shell archives
 Summary(ru_RU.KOI8-R): Утилиты GNU для создания и распаковки текстовых архивов
@@ -15,6 +15,7 @@ Patch0: %name-%version-fflush-adjust-to-glibc-2.28-libio.h-removal.patch
 Patch1: %name-%version-Fix-building-with-GCC-10.patch
 Patch2: %name-%version-Fix-a-heap-buffer-overflow-in-find_archive.patch
 Patch3: %name-%version-Do-not-include-lib-md5.c-into-src-shar.c.patch
+Patch4: %name-%version-Fix-building-with-GCC-15.patch
 
 BuildRequires: makeinfo
 
@@ -53,6 +54,7 @@ shar расшифровывается как shell archive, т.е. сценарий интерпретатора команд,
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -70,6 +72,9 @@ shar расшифровывается как shell archive, т.е. сценарий интерпретатора команд,
 %_mandir/man?/*
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 4.15.2-alt1.1
+- fixed GCC15 build
+
 * Fri Feb 19 2021 Egor Ignatov <egori@altlinux.org> 4.15.2-alt1
 - updated to new version 4.15.2
 
