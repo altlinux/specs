@@ -2,8 +2,8 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 9.6.0
-Release: alt2
+Version: 9.7.0
+Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -79,6 +79,9 @@ rm -vr %buildroot%_prefix/test/
 %_libdir/libmyodbc9w.so
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 9.7.0-alt1
+- new version 9.7.0
+
 * Fri Mar 13 2026 Ivan A. Melnikov <iv@altlinux.org> 9.6.0-alt2
 - NMU: use correct INSTALL_LIBDIR on all supported platforms
   (fixes FTBFS on loongarch64 and riscv64).
