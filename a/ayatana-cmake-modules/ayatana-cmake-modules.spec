@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ayatana-cmake-modules
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: Ayatana CMake modules
@@ -10,8 +10,6 @@ Group: Development/Tools
 Url: https://gitlab.com/ubports/development/core/cmake-extras
 
 Source: %name-%version.tar
-
-Patch: %name-%version-debian-python3-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -28,7 +26,6 @@ Extra CMake modules shared in Ubuntu Ayatana projects.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake
@@ -42,6 +39,9 @@ Extra CMake modules shared in Ubuntu Ayatana projects.
 %_datadir/cmake/*
 
 %changelog
+* Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.10-alt1
+- New version 1.10.
+
 * Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.9-alt1
 - New version 1.9.
 
