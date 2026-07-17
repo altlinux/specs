@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.3
+Version: 1.30.4
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -453,6 +453,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Jul 17 2026 Anton Farygin <rider@altlinux.org> 1.30.4-alt1
+- 1.30.3 -> 1.30.4 (Fixes: CVE-2026-42533, CVE-2026-60005, CVE-2026-56434)
+
 * Tue Jun 23 2026 Anton Farygin <rider@altlinux.org> 1.30.3-alt1
 - 1.30.2 -> 1.30.3 (Fixes: CVE-2026-42055, CVE-2026-48142)
 - added dav_ext module for full WebDAV support (closes: #59521)
