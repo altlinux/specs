@@ -1,8 +1,9 @@
 %def_disable snapshot
 %def_enable doc
+%def_enable book
 %def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.25.0
+%define main_ver 1.26.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -26,8 +27,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson >= 0.56
 BuildRequires: /proc meson gcc-c++ doxygen libexpat-devel libffi-devel
 BuildRequires: libxml2-devel xsltproc docbook-style-xsl
-%{?_enable_doc:BuildRequires: doxygen graphviz xmlto mdbook
+%{?_enable_doc:BuildRequires: doxygen graphviz xmlto
 BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
+%{?_enable_book:BuildRequires: mdbook}
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -131,7 +133,8 @@ Wayland-EGL development package
 %build
 %meson \
     %{subst_enable_meson_bool doc documentation} \
-    %{?_enable_check:-Dtests=true}
+    %{?_enable_check:-Dtests=true} \
+#    %{subst_enable_meson_bool book book} \
 %nil
 %meson_build
 
@@ -197,6 +200,9 @@ Wayland-EGL development package
 
 
 %changelog
+* Thu Jul 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1.1
+- 1.26.0
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1.1
 - 1.25.0
 
