@@ -2,7 +2,7 @@
 
 Name: pdf4qt
 Version: 1.6.0.0
-Release: alt1
+Release: alt2
 
 Summary: Open source PDF editor
 
@@ -62,6 +62,11 @@ subst 's|"lib"|"lib64"|' Pdf4QtLibGui/pdfprogramcontroller.cpp
 #fix: load translations
 subst 's|applicationDirectory.absolutePath()|"%_datadir/pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
 
+%ifarch %e2k
+# error: more than one operator "<" matches these operands
+sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnametounicode.h
+%endif
+
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
@@ -94,6 +99,9 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/pdf4qt/translations/"|' 
 %_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Fri Jul 17 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.0.0-alt2
+- e2k build fix
+
 * Mon Jun 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0.0-alt1
 - 1.5.3.1 -> 1.6.0.0
 
