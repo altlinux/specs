@@ -2,7 +2,7 @@
 
 Name: hibernate-validator
 Version: 9.1.0
-Release: alt1
+Release: alt2
 
 Summary: Jakarta Validation reference implementation
 License: Apache-2.0
@@ -28,7 +28,7 @@ BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-failsafe-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: sisu-mojos
+BuildRequires: sisu-maven-plugin
 BuildRequires: jacoco-maven-plugin
 BuildRequires: moditect-maven-plugin
 BuildRequires: maven-dependency-plugin
@@ -144,5 +144,8 @@ rm -f .mvn/extensions.xml .mvn/develocity.xml
 %files public-parent -f .mfiles-hibernate-validator-public-parent
 
 %changelog
+* Fri Jul 17 2026 Ivan A. Melnikov <iv@altlinux.org> 9.1.0-alt2
+- NMU: replace BR: sisu-mojos with sisu-maven-plugin (fixes FTBFS).
+
 * Wed Mar 25 2026 Ivan Khanas <xeno@altlinux.org> 9.1.0-alt1
 - Initial build for ALT Linux.
