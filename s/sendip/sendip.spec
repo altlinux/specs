@@ -1,15 +1,15 @@
 Name: sendip
 Version: 2.5
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: A command line tool to allow sending arbitrary IP packets
-License: GPL
+License: GPLv2
 Group: Networking/Other
 
 Url: http://www.earth.li/projectpurple/progs/sendip.html
 Source: http://www.earth.li/projectpurple/files/%name-%version.tar.gz
 Patch0: sendip-2.5-alt-makefile.patch
-#Patch1: sendip-2.5-alt-warnings.patch
+Patch1: sendip-2.5-gcc15.patch
 Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 
 %description
@@ -21,7 +21,7 @@ data to be added to the packet.
 %prep
 %setup -q
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 
 %build
 %make LIBDIR=%_libdir/%name
@@ -39,6 +39,9 @@ data to be added to the packet.
 %doc VERSION README CHANGES TODO contrib
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 2.5-alt4.qa2
+- Build with GCC15
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
