@@ -77,7 +77,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.7
+Version:	4.4.9
 Release:	alt1
 Summary:	Request tracker
 
@@ -706,6 +706,12 @@ fi
 %endif
 
 %changelog
+* Thu Jul 16 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.9-alt1
+- new version 4.4.9
+- security: CVE-2025-2545 (SMIME default cipher 3DES -> aes-128-cbc)
+- security: CVE-2025-30087 (XSS via malicious search URL params)
+- security: CVE-2025-61873 (CSV injection via ticket values in TSV export)
+
 * Wed Jul 15 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
 - new version 4.4.7 (CVE-2022-25802, CVE-2023-41259, CVE-2023-41260) (closes: #49420)
 - fix ftbfs: package builds again (closes: #39031)
