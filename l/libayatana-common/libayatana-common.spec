@@ -10,7 +10,7 @@
 %def_with check
 
 Name: libayatana-common
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 
 Summary: Common files and libraries used by Ayatana System Indicators
@@ -101,8 +101,6 @@ This package contains the development files.
 
 %prep
 %setup
-sed -i "s/gir-1.2/gir-1.0/" src/CMakeLists.txt
-sed -i "s/girepository-1.2/girepository-1.0/" src/CMakeLists.txt
 
 %build
 %cmake \
@@ -164,6 +162,9 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_libdir/%soname.so
 
 %changelog
+* Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.13-alt1
+- New version 0.9.13.
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.12-alt1
 - New version 0.9.12.
 - Enabled tests.
