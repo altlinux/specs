@@ -1,5 +1,5 @@
 Name: vault-tasks
-Version: 1.0.0
+Version: 2.0.4
 Release: alt1
 License: MPL-2.0
 
@@ -37,6 +37,9 @@ install -Dm 755 target/release/%name-tui \
 %_bindir/%name-tui
 
 %changelog
+* Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 2.0.4-alt1
+- new version 2.0.4
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.0.0-alt1
 - new version 1.0.0 (with rpmrb script)
 
