@@ -1,5 +1,5 @@
 Name: xwd
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 
 Summary: dump an image of an X window
@@ -37,6 +37,9 @@ the dump is completed.
 %_man1dir/*
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 1.0.10-alt1
+- Autobuild version bump to 1.0.10
+
 * Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.9-alt1
 - Autobuild version bump to 1.0.9
 
