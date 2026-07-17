@@ -4,30 +4,30 @@
 %def_with ssl
 %def_with xml
 #-------------------------------------------------------------
-%define subst_with_to() %{expand:%%{?_with_%{1}:--with-%{2}}} %{expand:%%{?_without_%{1}:--without-%{2}}}
+%define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
 
 Name: yaz
-Version: 5.25.0
-Release: alt4
+Version: 5.37.3
+Release: alt1
 
 Summary: Z39.50/SRW/SRU toolkit
 
-License: Revised BSD License
+License: BSD-3-Clause
 Group: Development/Other
-URL: http://www.indexdata.dk/%name/
+Url: http://www.indexdata.dk/%name/
 
 # Source-url: http://ftp.indexdata.dk/pub/%name/%name-%version.tar.gz
-Source: %name-%version.tar
-# missing header for glibc 2.39
-# https://github.com/indexdata/yaz/pull/105
-Patch: yaz-5.34.0-glibc-atoi-glibc.patch
+Source: %name-%version.tar.gz
+Source1: m4.tar
+Source2: id-docbook-common.tar
+Patch1: yaz-external-libstemmer.patch
 
 %define lname lib%name
 Requires: %lname = %version-%release
 
-# Automatically added by buildreq on Thu Jul 14 2011 (-bi)
-# optimized out: docbook-dtds libcom_err-devel libgpg-error libkrb5-devel libstdc++-devel libtinfo-devel libxml2-devel pkg-config
-BuildRequires: docbook-style-dsssl gcc-c++ libicu-devel libncurses-devel libreadline-devel libxslt-devel tcl
+# Automatically added by buildreq on Fri Jul 17 2026 (-bi)
+# optimized out: bash5 debugedit docbook-dtds elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libctf-nobfd0 libgcc15-devel libgpg-error libtinfo-devel libxml2-devel perl pkg-config python3 python3-base rpm-build-file sh5 termutils xml-common xz
+BuildRequires: docbook-style-dsssl docbook-style-xsl gcc-c++ libicu-devel libncurses-devel libreadline-devel libstemmer-devel libxslt-devel perl-parent tcl xsltproc
 
 BuildRequires: docbook-style-dsssl gcc-c++ libncurses-devel
 BuildRequires: libreadline-devel libxslt-devel tcl
@@ -35,20 +35,19 @@ BuildRequires: libreadline-devel libxslt-devel tcl
 %{?_enable_tcpd:BuildRequires: libwrap-devel}
 
 %description
-YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU 
+YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU
 clients and servers.  Z39.50-2003 (version 3) as well as SRW/SRU version
 1.1 are supported in both the client and server roles.
 
 This package contains both a test-server and clients (normal & ssl) for
 the ANSI/NISO Z39.50 protocol for Information Retrieval.
 
-
 %package -n %lname
 Summary: Z39.50 shared libraries
 Group: System/Libraries
 
 %description -n %lname
-YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU 
+YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU
 clients and servers.  Z39.50-2003 (version 3) as well as SRW/SRU version
 1.1 are supported in both the client and server roles.
 
@@ -61,7 +60,7 @@ Requires: %lname = %version-%release
 Requires: libxml2-devel
 
 %description -n %lname-devel
-YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU 
+YAZ is a programmers toolkit supporting the development of Z39.50/SRW/SRU
 clients and servers.  Z39.50-2003 (version 3) as well as SRW/SRU version
 1.1 are supported in both the client and server roles.
 
@@ -87,8 +86,8 @@ Online documentation for the %name package, a Z39.50 protocol
 server and client.
 
 %prep
-%setup
-%patch -p1
+%setup -a1 -a2
+%patch1 -p1
 # Fix tests linking.
 sed -i 's| ../src/libyaz_icu\.la | ../src/libyaz.la&|' test/Makefile*
 
@@ -146,6 +145,11 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 5.37.3-alt1
+- Autobuild version bump to 5.37.3
+- Vendor gitmodules
+- Provide build with system libstemmer
+
 * Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 5.25.0-alt4
 - Fixed FTBFS.
 
