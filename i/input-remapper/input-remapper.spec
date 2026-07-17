@@ -1,5 +1,5 @@
 Name: input-remapper
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: An easy to use tool to change the behaviour of your input devices
@@ -32,8 +32,6 @@ triggers, keys, mouse-movements and more. Maps any input to any other input.
 
 %prep
 %setup
-subst 's|/usr/lib/udev/rules.d|%_udevrulesdir|' setup.py
-subst 's|/usr/lib/systemd/system|%_unitdir|' setup.py
 
 %build
 %pyproject_build
@@ -41,11 +39,27 @@ subst 's|/usr/lib/systemd/system|%_unitdir|' setup.py
 %install
 %pyproject_install
 %python3_prune
-# hack 
-mv %buildroot%python3_sitelibdir/etc %buildroot
-mv %buildroot%python3_sitelibdir/usr/{bin,share} %buildroot/usr
-mv %buildroot%python3_sitelibdir/usr/lib/{systemd,udev} %buildroot/usr/lib
-chmod a+x %buildroot%_bindir/*
+
+# launcher scripts (no longer declared in pyproject.toml)
+install -D -m 0755 bin/input-remapper-gtk %buildroot%_bindir/input-remapper-gtk
+install -D -m 0755 bin/input-remapper-service %buildroot%_bindir/input-remapper-service
+install -D -m 0755 bin/input-remapper-control %buildroot%_bindir/input-remapper-control
+install -D -m 0755 bin/input-remapper-reader-service %buildroot%_bindir/input-remapper-reader-service
+
+# application data files (loaded by inputremapper from DATA_DIR)
+mkdir -p %buildroot%_datadir/input-remapper
+cp -a data/* %buildroot%_datadir/input-remapper/
+
+# system integration files
+install -D -m 0644 data/input-remapper-gtk.desktop %buildroot%_datadir/applications/input-remapper-gtk.desktop
+install -D -m 0644 data/io.github.sezanzeb.input_remapper.metainfo.xml %buildroot%_datadir/metainfo/io.github.sezanzeb.input_remapper.metainfo.xml
+install -D -m 0644 data/input-remapper.svg %buildroot%_iconsdir/hicolor/scalable/apps/input-remapper.svg
+install -D -m 0644 data/input-remapper.policy %buildroot%_datadir/polkit-1/actions/input-remapper.policy
+install -D -m 0644 data/input-remapper.service %buildroot%_unitdir/input-remapper.service
+install -D -m 0644 data/inputremapper.Control.conf %buildroot%_datadir/dbus-1/system.d/inputremapper.Control.conf
+install -D -m 0644 data/input-remapper-autoload.desktop %buildroot%_sysconfdir/xdg/autostart/input-remapper-autoload.desktop
+install -D -m 0644 data/99-input-remapper.rules %buildroot%_udevrulesdir/99-input-remapper.rules
+install -D -m 0644 data/69-input-remapper-forwarded.rules %buildroot%_udevrulesdir/69-input-remapper-forwarded.rules
 
 %files
 %doc README.md
@@ -58,6 +72,7 @@ chmod a+x %buildroot%_bindir/*
 %_sysconfdir/xdg/autostart/input-remapper-autoload.desktop
 %_unitdir/input-remapper.service
 %_udevrulesdir/99-input-remapper.rules
+%_udevrulesdir/69-input-remapper-forwarded.rules
 %_datadir/dbus-1/system.d/inputremapper.Control.conf
 %_datadir/applications/input-remapper-gtk.desktop
 %_datadir/metainfo/io.github.sezanzeb.input_remapper.metainfo.xml
@@ -66,6 +81,9 @@ chmod a+x %buildroot%_bindir/*
 %_iconsdir/hicolor/scalable/apps/input-remapper.svg
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- new version 2.2.1
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - new version 2.2.0
 
