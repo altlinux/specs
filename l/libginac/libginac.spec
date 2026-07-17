@@ -1,7 +1,7 @@
 %define oname ginac
 
 Name: libginac
-Version: 1.8.9
+Version: 1.8.10
 Release: alt1
 Epoch: 1
 
@@ -94,6 +94,9 @@ rm -fv %buildroot/usr/lib/ginac-excompiler
 %_infodir/*.info*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.10-alt1
+- new version 1.8.10
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.9-alt1
 - new version 1.8.9 (Source-url: moved to codeberg.org)
 
