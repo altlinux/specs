@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.11
 Release: alt1
 
 Summary: Remote connections manager
@@ -28,6 +28,7 @@ Source1: %__name-%version-cargo.tar
 
 ExcludeArch: %ix86
 
+Requires(pre): shared-mime-info
 Requires: openssh-clients
 Requires: sshpass
 
@@ -38,7 +39,7 @@ Requires: sshpass
 #Recommends:     picocom
 #Recommends:     kubectl
 
-BuildRequires(pre): rpm-build-rust
+BuildRequires(pre): rpm-build-rust rpm-build-xdg
 BuildRequires: rust-cargo >= 1.88
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(vte-2.91-gtk4)
@@ -63,12 +64,17 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build -p %name -p %name-cli
+%rust_build -p %name
+%rust_build -p rustconn-cli --features full
 
 %install
 %rust_install %name %name-cli
 install -Dm644 rustconn/assets/%rdn_name.desktop \
     %buildroot%_desktopdir/%rdn_name.desktop
+install -Dm644 rustconn/assets/%rdn_name-rdp.xml \
+    %buildroot%_xdgmimedir/packages/%rdn_name-rdp.xml
+install -Dm644 rustconn/assets/%rdn_name-vv.xml \
+    %buildroot%_xdgmimedir/packages/%rdn_name-vv.xml
 install -Dm644 rustconn/assets/%rdn_name.metainfo.xml \
     %buildroot/%_datadir/metainfo/%rdn_name.metainfo.xml
 install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/%rdn_name.svg \
@@ -95,6 +101,8 @@ done
 %_bindir/%name
 %_bindir/%name-cli
 %_desktopdir/%rdn_name.desktop
+%_xdgmimedir/packages/%rdn_name-rdp.xml
+%_xdgmimedir/packages/%rdn_name-vv.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %dir %_datadir/app-info/screenshots/%rdn_name
@@ -102,6 +110,9 @@ done
 %doc *.md docs/*.md
 
 %changelog
+* Fri Jul 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.18.11-alt1
+- 0.18.11
+
 * Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
