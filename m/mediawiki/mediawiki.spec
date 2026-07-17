@@ -1,6 +1,6 @@
 %define defphp php%php_defver
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.44
+%define major 1.45
 
 Name: mediawiki
 Version: %major.3
@@ -511,6 +511,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.45.3-alt1
+- new version 1.45.3
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.44.3-alt1
 - new version 1.44.3
 - drop php-mcrypt dependency (deprecated since PHP 7.1, removed in 8.x)
