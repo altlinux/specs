@@ -1,5 +1,6 @@
 %def_enable introspection
 %def_enable terminal
+%def_enable libcanberra
 %def_disable docs
 %define soname 0
 
@@ -10,7 +11,7 @@
 %endif
 
 Name: thunar
-Version: 4.21.5
+Version: 4.21.6
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -28,7 +29,7 @@ BuildRequires(pre): rpm-build-xfce4 >= 0.2.0 xfce4-dev-tools
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0 libxfconf-devel >= 4.12.0
 BuildRequires: libxfce4util >= 4.17.2
-BuildRequires: libxfce4ui-gtk3-devel >= 4.21.2
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
 BuildRequires: libSM-devel libpcre2-devel
 BuildRequires: libgexiv2-devel
 BuildRequires: libpango-devel
@@ -37,6 +38,7 @@ BuildRequires: xsltproc docbook-style-xsl
 BuildRequires: desktop-file-utils
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_terminal:BuildRequires: libvte3-devel}
+%{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_docs:BuildRequires: gtk-doc}
 # For /usr/share/gettext/its/polkit.{its,loc}
 # See https://gitlab.xfce.org/xfce/thunar/-/issues/1403
@@ -125,6 +127,7 @@ This package contains development documentation for lib%name.
 	-Dthunarx-dirs-envvar=false \
 	%{subst_enable_meson_bool introspection introspection} \
 	%{subst_enable_meson_feature terminal terminal} \
+	%{subst_enable_meson_feature libcanberra libcanberra} \
 	%{subst_enable_meson_bool docs gtk-doc} \
 	%{subst_enable_meson_bool tests tests}
 
@@ -183,6 +186,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Fri Jul 17 2026 Mikhail Efremov <sem@altlinux.org> 4.21.6-alt1
+- Enabled libcanberra support.
+- Updated to 4.21.6.
+
 * Mon Mar 30 2026 Mikhail Efremov <sem@altlinux.org> 4.21.5-alt1
 - Updated to 4.21.5.
 
