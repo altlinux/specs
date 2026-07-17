@@ -9,7 +9,7 @@
 %endif
 
 Name: pcr-oracle
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Predict TPM PCR values for future boot
@@ -94,6 +94,9 @@ EOF
 %_man8dir/pcr-oracle.*
 
 %changelog
+* Fri Jul 17 2026 Egor Ignatov <egori@altlinux.org> 0.6.4-alt1
+- New version 0.6.4.
+
 * Thu May 28 2026 Egor Ignatov <egori@altlinux.org> 0.6.3-alt1
 - New version 0.6.3.
 
