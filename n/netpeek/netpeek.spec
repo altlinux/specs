@@ -1,7 +1,7 @@
 %define xdg_name io.github.zingytomato.netpeek
 
 Name: netpeek
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 License: GPL-3.0
 
@@ -53,6 +53,9 @@ that helps you discover devices on your local network.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.7-alt1
+- new version 0.2.7
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.6-alt1
 - new version 0.2.6 (with rpmrb script)
 
