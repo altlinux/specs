@@ -1,14 +1,14 @@
 Name: pi-coding-agent
-Version: 0.73.0
+Version: 0.80.10
 Release: alt1
 
 Summary: Coding agent CLI with read, bash, edit, write tools and session management
 
 License: MIT
 Group: Development/Tools
-Url: https://github.com/badlogic/pi-mono
+Url: https://github.com/earendil-works/pi
 
-# Source-url: https://registry.npmjs.org/@mariozechner/pi-coding-agent/-/pi-coding-agent-%version.tgz
+# Source-url: https://registry.npmjs.org/@earendil-works/pi-coding-agent/-/pi-coding-agent-%version.tgz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from
@@ -56,6 +56,9 @@ chmod 0755 %buildroot%_bindir/pi
 %_datadir/%name/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.80.10-alt1
+- new version (0.80.10)
+
 * Thu May 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.73.0-alt1
 - initial build for ALT Sisyphus
 
