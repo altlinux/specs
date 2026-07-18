@@ -1,7 +1,7 @@
 %define pname canvas
 
 Name: node-canvas
-Version: 3.2.1
+Version: 3.2.3
 Release: alt1
 
 Summary: node-canvas is a Cairo-backed Canvas implementation for Node.js
@@ -12,8 +12,7 @@ Url: https://github.com/Automattic/node-canvas
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-##Source-url: https://github.com/Automattic/node-canvas/archive/v%version.tar.gz
-# Source-url: https://github.com/Automattic/node-canvas/commit/d0278832f70e0b0a06e1e3441596d402b75a7fe8
+# Source-url: https://github.com/Automattic/node-canvas/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -58,6 +57,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{prebuild,examples,src,test,binding.gyp
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- new version 3.2.3
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1
 
