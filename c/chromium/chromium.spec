@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        150.0.7871.124
+Version:        150.0.7871.128
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -724,6 +724,17 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sat Jul 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.128-alt1
+- New version (150.0.7871.128).
+- Fixes:
+  + CVE-2026-15899: Use after free in CameraCapture
+  + CVE-2026-15900: Use after free in GPU
+  + CVE-2026-15901: Use after free in Network
+  + CVE-2026-15902: Use after free in Cast
+  + CVE-2026-15903: Out of bounds read and write in V8
+  + CVE-2026-15904: Use after free in Ozone
+  + CVE-2026-15905: Use after free in Aura
+
 * Wed Jul 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.124-alt1
 - New version (150.0.7871.124).
 - Fixes:
