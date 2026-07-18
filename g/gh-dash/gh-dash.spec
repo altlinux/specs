@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/dlvhdr/gh-dash/v4
-%global git_commit 02ec6a7
-%global git_date 20260513
+%global commit_hash a613ef7
+%global build_date 20260717
 
 Name: gh-dash
-Version: 4.24.1
+Version: 4.25.2
 Release: alt1
 
 Summary: A rich terminal UI for GitHub that doesn't break your flow
@@ -34,8 +34,8 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="\
     -X %import_path/cmd.Version=%version \
-    -X %import_path/cmd.Commit=%git_commit \
-    -X %import_path/cmd.Date=%git_date \
+    -X %import_path/cmd.Commit=%commit_hash \
+    -X %import_path/cmd.Date=%build_date \
     -X '%import_path/cmd.BuiltBy=%packager'"
 %golang_prepare
 %golang_build .
@@ -45,11 +45,17 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 %golang_install
 
+%check
+%gotest ./...
+
 %files
 %doc CONTRIBUTING.md README.md
 %_bindir/%name
 
 %changelog
+* Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.25.2-alt1
+- Updated to version 4.25.2.
+
 * Mon May 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.24.1-alt1
 - Updated to version 4.24.1.
 
