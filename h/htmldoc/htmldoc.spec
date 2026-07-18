@@ -1,11 +1,11 @@
 # git commit 929606ce2da8d7fe67de708be900b270e8984077 
 
 Name: htmldoc
-Version: 1.9.16
-Release: alt2
+Version: 1.9.23
+Release: alt1
 Epoch: 1
 
-License: GPL with exceptions (see COPYING.txt)
+License: GPLv2
 Group: Text tools
 Url: https://github.com/michaelrsweet/htmldoc
 Summary: htmldoc creates pdf and ps from html
@@ -24,9 +24,9 @@ Requires: fonts-type1-htmldoc
 
 BuildpreReq: libfltk-devel libgnutlsxx-devel libjpeg-devel libpng-devel zlib-devel
 
-# Automatically added by buildreq on Sat Sep 17 2022
-# optimized out: fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXrender-devel libgpg-error libstdc++-devel perl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: gcc-c++ libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXinerama-devel libXpm-devel libfltk-devel libjpeg-devel libpng-devel
+# Automatically added by buildreq on Sat Jul 18 2026
+# optimized out: bash5 fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libXext-devel libXrender-devel libgcc15-devel libgpg-error libpng-devel libstdc++-devel perl pkg-config python3 python3-base sh5 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ libXcursor-devel libXfixes-devel libXft-devel libXinerama-devel libXpm-devel libcups-devel libfltk-devel libjpeg-devel perl-parent
 
 %description
 Htmldoc is a HTML processing program that generates HTML, PostScript, and PDF
@@ -46,8 +46,6 @@ from Irmologion project.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p2
 
 sed -i 's/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/g' configure.ac
 
@@ -166,6 +164,9 @@ fi
 %_datadir/%name/fonts
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 1:1.9.23-alt1
+- Update to 1.9.23
+
 * Fri Sep 01 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.16-alt2
 - sync sources with 1.9.16 release
 - fix FTBFS
