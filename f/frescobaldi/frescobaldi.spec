@@ -1,5 +1,5 @@
 Name: frescobaldi
-Version: 4.0.5
+Version: 4.0.7
 Release: alt1
 
 Summary: LilyPond music score editor
@@ -87,6 +87,9 @@ rsvg-convert -w 48 -h 48 frescobaldi/icons/org.frescobaldi.Frescobaldi.svg \
 %_man1dir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.7-alt1
+- new version 4.0.7
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
 - new version 4.0.5
 - switch to PyQt6, pyproject build (hatchling)
