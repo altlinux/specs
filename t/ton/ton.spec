@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2026.04
+Version: 2026.06
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -155,7 +155,7 @@ storage-daemon-cli
 %__subst 's|add_subdirectory(third-party/abseil-cpp EXCLUDE_FROM_ALL)|find_package(absl REQUIRED)|' CMakeLists.txt
 
 # disambiguate co_return {} for Task<Unit> with newer GCC
-find adnl overlay -name '*.cpp' -o -name '*.h' | xargs -r %__subst 's|co_return {};|co_return td::Unit{};|'
+find adnl http metrics overlay quic tdactor validator \( -name '*.cpp' -o -name '*.h' \) | xargs -r %__subst 's|co_return {};|co_return td::Unit{};|'
 
 %build
 %cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=ON -DUSE_QUIC=OFF
@@ -220,6 +220,10 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.06-alt1
+- new version 2026.06
+- extend co_return disambiguation to http/metrics/quic/validator
+
 * Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.04-alt1
 - new version 2026.04
 - enable libabseil-cpp-devel (now required by upstream)
