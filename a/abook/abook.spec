@@ -1,5 +1,5 @@
 Name: abook
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Text-based addressbook program for mutt
@@ -19,6 +19,7 @@ Patch2: 0002-doc-manpage-mention-of-the-f-option-fix-for-bug-8.patch
 Patch3: 0003-build-fix-compilation-when-used-with-GCC-std-gnu99-o.patch
 
 Patch6: abook-0.6.1.patch
+Patch7: abook-gcc15.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -39,10 +40,11 @@ Abook это небольшая и полнофункциональная тек
 %setup -n %name-%version
 #patch5 -p0
 %patch0 -p1 -b .p
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 #patch6 -p0
+%patch7 -p1
 
 %build
 #add_optflags -fcommon
@@ -67,6 +69,10 @@ autoreconf -vif
 # - 0.6.0pre2? (2006-09-07)
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 0.6.2-alt1
+- 0.6.2
+- fix gcc15 build
+
 * Tue Jun 08 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.1-alt1
 - 0.6.1
 - update license
