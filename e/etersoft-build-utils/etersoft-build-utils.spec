@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -61,6 +61,8 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %_bindir/*
 %_datadir/eterbuild/
 %attr(0755,root,root) %_sysconfdir/bashrc.d/*
+%_datadir/fish/vendor_completions.d/gita.fish
+%_datadir/zsh/site-functions/_gita
 %dir %_sysconfdir/eterbuild/
 %dir %_sysconfdir/eterbuild/apt/
 %dir %_sysconfdir/eterbuild/repos/
@@ -70,6 +72,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.4-alt1
+- gitask: add bash/fish/zsh completions for gita and gitask
+- gammit: skip commit-message editor when no controlling terminal
+- rpmrb: add -q flag to skip changelog and commit message editing
+- bin: quote dirname calls for SC2046 compliance
+- cleanup: update .gitignore, add shebang to gita-completion.sh
+- tests: migrate all shell tests to bats framework
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.3-alt1
 - rpmlog: split joined sub-items separated by '-' onto new lines
 - rpmgs: drop 'ours' merge strategy that broke merging vendored sources
