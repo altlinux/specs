@@ -1,5 +1,5 @@
 Name: patool
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: Portable command line archive file manager
@@ -53,6 +53,9 @@ and do not require helper applications to be installed.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
+- new version 4.0.5
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.4-alt1
 - new version 4.0.4
 
