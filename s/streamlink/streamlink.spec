@@ -1,7 +1,7 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 8.3.0
+Version: 8.4.0
 Release: alt1
 
 Summary: Python library for extracting streams from various websites
@@ -144,6 +144,10 @@ install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/
 #%license LICENSE
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 8.4.0-alt1
+- new version 8.4.0
+- (CVE-2026-44353) SECURITY: fix arbitrary local file read via file:// URI in HLS and DASH
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 8.3.0-alt1
 - new version 8.3.0
 
