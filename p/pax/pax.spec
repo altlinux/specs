@@ -2,7 +2,7 @@
 
 Name: pax
 Version: 3.4
-Release: alt9
+Release: alt9.1
 Summary: POSIX File System Archiver
 License: BSD
 Group: Archiving/Backup
@@ -34,7 +34,7 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %patch8 -p2
 
 %build
-%add_optflags -Wno-error=implicit-fallthrough
+%add_optflags -Wno-implicit-fallthrough -Wno-old-style-definition -Wno-discarded-qualifiers
 %configure
 %make_build
 
@@ -46,6 +46,9 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %_man1dir/*
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 3.4-alt9.1
+- Fixed build with gcc15
+
 * Fri Dec 04 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4-alt9
 - Fixed build with -fno-common.
 
