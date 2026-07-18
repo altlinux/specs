@@ -3,7 +3,7 @@
 %def_without check
 
 Name: writefreely
-Version: 0.15.1
+Version: 0.17.0
 Release: alt1
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
@@ -120,13 +120,20 @@ ssl_generate "writefreely"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %post
-echo "writefreely: database migration might be needed, see https://blog.writefreely.org/tag:release"
+echo "writefreely: for database migration see https://blog.writefreely.org/tag:release, 'sudo /usr/bin/writefreely -c /etc/writefreely/config.ini db migrate'"
 %post_systemd_postponed writefreely
 
 %preun
 %preun_systemd writefreely
 
 %changelog
+* Sat Jul 18 2026 Pavel Nakonechnyi <zorg@altlinux.org> 0.17.0-alt1
+- version 0.17.0
+- Fixes:
++ CVE-2025-24337: Fix config.ini defaults to world-readable
++ GHSA-cfcq-76gr-62x8: Fix Cross-User IDOR: Subscriber List Disclosure
++ UNASSIGNED: Prevent signups via /auth/signup with closed registrations
+
 * Sat Nov 23 2024 Pavel Nakonechnyi <zorg@altlinux.org> 0.15.1-alt1
 - version 0.15.1
 
