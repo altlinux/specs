@@ -3,7 +3,7 @@
 %def_with check
 
 Name: mise
-Version: 2026.6.12
+Version: 2026.7.7
 Release: alt1
 
 Summary: The front-end to your dev env
@@ -91,6 +91,9 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.7.7-alt1
+- Updated to version 2026.7.7.
+
 * Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.6.12-alt1
 - Updated to version 2026.6.12.
 - Added libatomic1 to requires (Closes: #58938).
