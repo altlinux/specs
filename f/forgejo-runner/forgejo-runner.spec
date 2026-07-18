@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 12.13.0
+Version: 12.13.1
 Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
@@ -138,6 +138,9 @@ fi
 %_userunitdir/%name-cache.service
 
 %changelog
+* Sat Jul 18 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.13.1-alt1
+- New version 12.13.1.
+
 * Thu Jul 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 12.13.0-alt1
 - New version 12.13.0.
 
