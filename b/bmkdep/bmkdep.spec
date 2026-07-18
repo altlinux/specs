@@ -1,6 +1,6 @@
 Name: bmkdep
 Version: 20140112
-Release: alt6
+Release: alt6.1
 
 Summary: NetBSD version of mkdep(1)
 
@@ -12,6 +12,7 @@ Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 # Source-url: http://bmkdep.googlecode.com/files/bmkdep-%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-gcc15.patch
 
 BuildRequires: bmake pkgsrc-mk-files
 
@@ -24,6 +25,7 @@ options not available in the original BSD mkdep.
 
 %prep
 %setup
+%patch -p1
 
 %ifarch mipsel
 %define machine_arch mipsel
@@ -53,6 +55,9 @@ install -pDm755 bmkdep %buildroot%_bindir/bmkdep
 %_bindir/bmkdep
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 20140112-alt6.1
+- fix gcc15 build
+
 * Thu Aug 12 2021 Ivan A. Melnikov <iv@altlinux.org> 20140112-alt6
 - fix build on mipsel
 - fix %%env macro definition
