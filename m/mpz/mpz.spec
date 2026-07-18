@@ -1,7 +1,7 @@
 %def_without qt5
 
 Name: mpz
-Version: 2.0.3
+Version: 2.0.17
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(Qt6Multimedia)
 BuildRequires: pkgconfig(Qt6Network)
 BuildRequires: pkgconfig(Qt6Concurrent)
 BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Svg)
 %endif
 
 BuildRequires: pkgconfig(yaml-cpp)
@@ -56,8 +57,14 @@ rm -v %buildroot/usr/share/licenses/mpz/license.txt
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.17-alt1
+- new version 2.0.17
+- add BR: Qt6Svg (new upstream dependency)
+- package scalable SVG icon
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - new version 2.0.3
 
