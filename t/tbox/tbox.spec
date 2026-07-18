@@ -5,8 +5,8 @@
 %define abiversion 1
 
 Name: tbox
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 
 Summary: A glib-like multi-platform c library
 License: Apache-2.0
@@ -15,8 +15,8 @@ Url: https://tboox.top
 VCS: https://github.com/tboox/tbox
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-fix-DESTDIR-configure.patch
-Patch1: %name-%version-alt-add-relwithdebinfo-mode.patch
+Patch: %name-1.8.0-alt-fix-DESTDIR-configure.patch
+Patch1: %name-1.8.0-alt-add-relwithdebinfo-mode.patch
 
 BuildRequires: gcc-c++
 BuildRequires: chrpath
@@ -119,6 +119,9 @@ install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.1-alt1
+- Updated to version 1.8.1.
+
 * Thu May 07 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.0-alt2
 - e2k build fix
 
