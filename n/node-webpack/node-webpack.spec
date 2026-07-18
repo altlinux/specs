@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack
-Version: 5.105.4
+Version: 5.108.4
 Release: alt1
 
 Summary: A bundler for javascript and friends
@@ -71,6 +71,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/examples/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 5.108.4-alt1
+- new version 5.108.4
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 5.105.4-alt1
 - new version 5.105.4
 - remove examples dir (contains ELF binary, breaks noarch)
