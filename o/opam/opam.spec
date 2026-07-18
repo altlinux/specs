@@ -1,6 +1,6 @@
 %def_with check
 Name: opam
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 Summary: A source-based package manager for OCaml
 Group: Development/ML
@@ -254,6 +254,9 @@ vm-run --user ./run-test-in-vm.sh
 %files -n ocaml-opam-state-devel -f ocaml-files.devel.opam-state
 
 %changelog
+* Sat Jul 18 2026 Anton Farygin <rider@altlinux.org> 2.5.2-alt1
+- 2.5.1 -> 2.5.2
+
 * Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 2.5.1-alt1
 - 2.5.0 -> 2.5.1
 
