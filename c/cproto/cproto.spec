@@ -1,5 +1,5 @@
 Name: cproto
-Version: 4.7s
+Version: 4.8
 Release: alt1
 
 Summary: Generates function prototypes and variable declarations from C code
@@ -47,6 +47,9 @@ implementing the entire C language grammar.
 %doc AUTHORS CHANGES README
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 4.8-alt1
+- Long time awaited update 4.7s -> ... -> 4.8
+
 * Thu Mar 04 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7s-alt1
 - 4.7q -> 4.7s.
 
