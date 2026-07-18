@@ -1,5 +1,5 @@
 Name: doctest
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: Feature-rich header-only C++ testing framework
@@ -53,6 +53,9 @@ ctest --test-dir %_cmake__builddir
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Jul 08 2026 Anton Farygin <rider@altlinux.org> 2.5.3-alt1
+- 2.5.2 -> 2.5.3
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 2.5.2-alt1
 - 2.5.1 -> 2.5.2
 
