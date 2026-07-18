@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: opencommit
-Version: 3.2.19
+Version: 3.3.9
 Release: alt1
 
 Summary: Auto-generate meaningful commits in a second
@@ -60,6 +60,9 @@ npm test
 %_libexecdir/%name
 
 %changelog
+* Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.3.9-alt1
+- Updated to version 3.3.9.
+
 * Tue May 05 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.2.19-alt1
 - Initial build for ALT.
 
