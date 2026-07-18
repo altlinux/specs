@@ -1,6 +1,6 @@
 Name: vice
-Version: 3.4
-Release: alt3
+Version: 3.10
+Release: alt1
 
 Summary: Versatile Commodore Emulator
 Summary(pl.UTF-8): Uniwersalny emulator Commodore
@@ -26,24 +26,9 @@ Patch0: vice-3.4-fix-build.patch
 Patch1: vice-3.4-fix-destination-path.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: flex gcc-c++
-BuildRequires: libGL-devel
-BuildRequires: libSDL2-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libesd-devel
-BuildRequires: libjpeg-devel
-BuildRequires: liblame-devel
-BuildRequires: libreadline-devel
-BuildRequires: libungif-devel
-BuildRequires: libpng-devel
-BuildRequires: zlib-devel
-BuildRequires: libX11-devel
-BuildRequires: libXxf86vm-devel
-BuildRequires: libalsa-devel
-BuildRequires: makeinfo
-BuildRequires: xa
-BuildRequires: libpulseaudio-devel
-BuildRequires: libavcodec-devel libswresample-devel
+# Automatically added by buildreq on Fri Jul 17 2026
+# optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libSDL2-devel libgcc15-devel libgpg-error libogg-devel libp11-kit libsasl2-3 libstdc++-devel perl pkg-config python3 python3-base sh5
+BuildRequires: dos2unix flex fontconfig gcc-c++ libSDL2_image-devel libalsa-devel libcurl-devel libflac-devel libpng-devel libpulseaudio-devel libvorbis-devel perl-parent xa zlib-devel
 
 %description
 VICE is a Versatile Commodore Emulator, i.e. a program that runs on a
@@ -61,15 +46,19 @@ pasował do tej linii), CBM-II (C610) oraz Plus4.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
+#patch0 -p2
+#patch1 -p2
 
 %build
 touch ABOUT-NLS config.rpath
 %add_optflags -fno-strict-aliasing -fcommon
 %autoreconf
 %configure \
-	--enable-sdlui2 \
+	--enable-sdl2ui \
+	--with-flac \
+	--with-vorbis \
+	--enable-x64-image \
+	--enable-platformdox \
 	--enable-external-ffmpeg
 
 %make_build
@@ -77,11 +66,11 @@ touch ABOUT-NLS config.rpath
 %install
 install -d %buildroot{%_desktopdir,%_pixmapsdir}
 
-perl -i -pe 's/SUBDIRS = html\n//' doc/Makefile
+## perl -i -pe 's/SUBDIRS = html\n//' doc/Makefile
 %make_install install DESTDIR=%buildroot 
 
-rm -f doc/html/{Makefile*,texi2html}
-rm -rf %buildroot%_datadir/vice/doc
+## rm -f doc/html/{Makefile*,texi2html}
+## rm -rf %buildroot%_datadir/vice/doc
 
 install -pm644 \
 	%SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 \
@@ -96,17 +85,19 @@ tar xjf %SOURCE13 -C %buildroot%_iconsdir/hicolor/16x16/apps
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog FEEDBACK NEWS README
-%doc doc/iec-bus.txt doc/html
+%doc NEWS README
+%doc doc/iec-bus.txt doc/html doc/readmes/Readme-SDL2.txt
 %_bindir/*
-%_prefix/lib/%name/
-%_mandir/man?/*
-%_infodir/*.info*
+%_datadir/%name
+##_mandir/man?/*
+##_infodir/*.info*
 %_desktopdir/*.desktop
-#_pixmapsdir/*
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 3.10-alt1
+- New version 3.10
+
 * Mon Apr 19 2021 Grigory Ustinov <grenka@altlinux.org> 3.4-alt3
 - Fixed FTBFS with -fcommon.
 
