@@ -1,9 +1,9 @@
 Name: enscript
 Version: 1.6.6
-Release: alt2
+Release: alt2.1
 
 Summary: Converts plain ASCII to PostScript
-License: GPL
+License: GPLv3
 Group: Publishing
 Url: http://www.gnu.org/software/enscript/
 
@@ -37,6 +37,7 @@ Patch501: enscript-1.6.4-alt-mail.patch
 Patch502: enscript-1.6.3-alt-fontpath.patch
 Patch503: enscript-1.6.3-alt-default-enc.patch
 Patch504: enscript-1.6.3-alt-encodings.patch
+Patch505: enscript-1.6.6-alt.gcc15.patch
 
 Patch666: enscript-1.6.6-default-encoding.patch
 
@@ -82,10 +83,12 @@ changing fonts.
 %patch502 -p1
 %patch503 -p1
 %patch504 -p1
+%patch505 -p1
 
 %patch666 -p0
 
 %build
+%add_optflags -Wno-old-style-definition
 export CPPFLAGS='-DPROTOTYPES'
 %autoreconf
 %configure --with-media=A4
@@ -114,6 +117,9 @@ ln -s %_bindir/enscript $RPM_BUILD_ROOT%_bindir/nenscript
 %_infodir/*.info*
 
 %changelog
+* Sat Jul 18 2026 Fr. Br. George <george@altlinux.org> 1.6.6-alt2.1
+- Fix gcc15 build
+
 * Mon Nov 26 2018 Grigory Ustinov <grenka@altlinux.org> 1.6.6-alt2
 - Fix using of default encoding (Closes: #17371).
 
