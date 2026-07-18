@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: shader-slang
-Version: 2026.11
+Version: 2026.13.1
 Release: alt1
 
 Summary: Slang shading language compiler
@@ -142,6 +142,9 @@ rm -v %buildroot%_libdir/libslang.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.13.1-alt1
+- new version 2026.13.1
+
 * Wed Jun 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.11-alt1
 - initial build for ALT Sisyphus (2026.11)
 - named the package shader-slang to match other distributions and to avoid
