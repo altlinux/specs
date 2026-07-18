@@ -1,9 +1,12 @@
+# If you want to suggest changes, please send PR on
+# https://altlinux.space/alt-atomic/apm to altlinux branch 
+
 %define _unpackaged_files_terminate_build 1
 
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Atomic Package Manager 
@@ -77,6 +80,18 @@ done
 %doc README.ru.md
 
 %changelog
+* Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.0-alt1
+- New version: 0.6.0.
+- Added switch command.
+- Added source command to download and install .src.rpm packages.
+- Added --pretty flag for image builds with per-module progress events.
+- Added --no-update flag to install command.
+- Added ImageSyncGroups API via DBus and HTTP.
+- Added OR filters and multi-field conditions.
+- Fixed some bugs.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.6.0
+
 * Sat Apr 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.5.0-alt1
 - New version: 0.5.0.
 - Added altfiles module for nss-altfiles support: split/merge /etc/passwd and
