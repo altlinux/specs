@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-mocha
-Version: 11.7.5
+Version: 11.7.7
 Release: alt1
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
@@ -76,6 +76,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 11.7.7-alt1
+- new version 11.7.7
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 11.7.5-alt1
 - new version 11.7.5
 
