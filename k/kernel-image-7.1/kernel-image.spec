@@ -2,10 +2,10 @@ Name: kernel-image-7.1
 Release: alt1
 %define kernel_src_version	7.1
 %define kernel_base_version	7.1
-%define kernel_sublevel	.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -226,7 +226,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
-AutoReqProv: nocpp
+AutoReqProv: nocpp nopython nopython3
 %if "%sub_flavour" == "def"
 Provides: kernel-headers-modules-%kernel_latest = %version-%release
 %endif
@@ -471,7 +471,9 @@ for f in $KbuildFiles; do
 	[ -x "$f" ] && mode=755 || mode=644
 	install -Dp -m$mode "$f" %buildroot%kbuild_dir/"$f"
 done
-cp -a scripts/gdb -t %buildroot%kbuild_dir/scripts
+cp -va	scripts/gdb \
+	scripts/livepatch \
+	-t %buildroot%kbuild_dir/scripts
 
 # Fix symlinks to kernel sources in /lib/modules
 rm -f %buildroot%modules_dir/{build,source}
@@ -601,6 +603,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 19 2026 Kernel Bot <kernelbot@altlinux.org> 7.1.4-alt1
+- v7.1.4 (2026-07-18).
+- config-aarch64: Add CONFIG_I2C_MUX_MULE=m
+- config-aarch64: Enable gpmux, ltc4306 i2c mux, and pinctrl i2c mux/demux devices
+- config: Enable CONFIG_LIVEPATCH=y.
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1.3-alt1
 - Update to v7.1.3 (2026-07-04).
 
