@@ -1,5 +1,5 @@
 Name: greetd-regreet
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 License: GPL-3.0
 
@@ -30,6 +30,7 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: /proc
 
+BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -155,6 +156,9 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/regreet-niri.
 %config(noreplace) %_sysconfdir/greetd/regreet-conf-niri
 
 %changelog
+* Sat Jul 18 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+
 * Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
 - new version 0.4.0
 
