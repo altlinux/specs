@@ -1,5 +1,5 @@
 Name: mpvpaper
-Version: 1.8
+Version: 1.9
 Release: alt1
 License: GPL-3.0
 
@@ -45,6 +45,9 @@ install -Dm644 %name.man %buildroot%_man1dir/%name.1
 %_man1dir/*.1.*
 
 %changelog
+* Sun Jul 19 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.9-alt1
+- new version 1.9
+
 * Tue May 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.8-alt1
 - new version 1.8 (with rpmrb script)
 
