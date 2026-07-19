@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.3
+%define ver_major 1.4
 
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(hyprutils) >= 0.2.6
 BuildRequires: pkgconfig(libpipewire-0.3) >= 1.2
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(sdbus-c++) >= 2.0.0
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: qt6-tools pkgconfig(Qt6Widgets)
@@ -69,6 +70,9 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Sun Jul 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.12-alt1
 - 1.3.12
 
