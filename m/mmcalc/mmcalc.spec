@@ -1,10 +1,10 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20260711
+Version: 20260719
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
-URL: http://www.ogion76.name/home/mmcalc
+URL: https://www.ogion76.name/home/mmcalc
 
 Packager: Denis G. Samsonenko <ogion@altlinux.org>
 
@@ -120,6 +120,10 @@ is acceptable.
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Jul 19 2026 Denis G. Samsonenko <ogion@altlinux.org> 20260719-alt1
+- new version
+- bug fixes, atomic weights little corrections
+
 * Sat Jul 11 2026 Denis G. Samsonenko <ogion@altlinux.org> 20260711-alt1
 - new version
 - build without Gtk2
