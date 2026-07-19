@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.95
+%define kernel_sublevel	.96
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 19 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.96-alt1
+- v6.12.96 (2026-07-18).
+- config-aarch64: Add CONFIG_I2C_MUX_MULE=m
+- config-aarch64: Enable gpmux, ltc4306 i2c mux, and pinctrl i2c mux/demux devices
+
 * Sat Jul 04 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.95-alt1
 - v6.12.95 (2026-07-04).
 
