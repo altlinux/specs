@@ -1,18 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.16.3
+Version: 1.16.4
 Release: alt1
 
 Summary: Boot and upgrade via container images
 License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
 Group: System/Base
-Url: https://github.com/containers/bootc
-Vcs: https://github.com/containers/bootc.git
+URL: https://github.com/containers/bootc
+VCS: https://github.com/containers/bootc.git
 
-# i586 not supported
-# https://github.com/containers/bootc/blob/main/lib/src/install/baseline.rs#L252
-ExclusiveArch: x86_64 ppc64le aarch64
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source10: vendor.tar
@@ -94,6 +92,9 @@ fi
 %_bindir/system-reinstall-%name
 
 %changelog
+* Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 1.16.4-alt1
+- New version: 1.16.4.
+
 * Tue Jul 07 2026 Vladimir Romanov <rirusha@altlinux.org> 1.16.3-alt1
 - New version: 1.16.3.
 
