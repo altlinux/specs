@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name ashpd
@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %_name-demo
-Version: %ver_major.0
+Version: %ver_major.13
 Release: alt1
 
 Summary: ASHPD Demo
@@ -82,6 +82,9 @@ cd client
 %doc ../README*
 
 %changelog
+* Sat Jul 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.13-alt1
+- 0.13.13
+
 * Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0-52-g3ee41bb02
 
