@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 8
+%define minor_version 9
 %define gir_name ApiBase
 
 %define yaml_api_version 0.1
@@ -139,8 +139,6 @@ Requires: %sname%api_version-gir = %EVR
 %_pkgconfigdir/%name-%api_version.pc
 %_vapidir/%name-%api_version.vapi
 %_vapidir/%name-%api_version.deps
-%_vapidir/%yaml_name-%yaml_api_version.vapi
-%_vapidir/%yaml_name-%yaml_api_version.deps
 %doc README.md
 
 %files -n %name%api_version-gir
@@ -148,7 +146,6 @@ Requires: %sname%api_version-gir = %EVR
 
 %files gir-devel
 %_girdir/%gir_name-%api_version.gir
-%_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %files -n %sname%api_version
 %_libdir/%sname-%api_version.so.*
@@ -159,21 +156,34 @@ Requires: %sname%api_version-gir = %EVR
 %_pkgconfigdir/%sname-%api_version.pc
 %_vapidir/%sname-%api_version.vapi
 %_vapidir/%sname-%api_version.deps
+%_vapidir/%yaml_name-%yaml_api_version.vapi
+%_vapidir/%yaml_name-%yaml_api_version.deps
 
 %files -n %sname%api_version-gir
 %_typelibdir/%gir_sname-%api_version.typelib
+%_typelibdir/%yaml_gir_name-%yaml_api_version.typelib
 
 %files -n %sname-gir-devel
 %_girdir/%gir_sname-%api_version.gir
+%_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %changelog
+* Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 7.9-alt1
+- New version: 7.9.
+- Added Yaml typelib.
+- Fixed yaml parts package location.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.9
+
 * Sat Jun 13 2026 Vladimir Romanov <rirusha@altlinux.org> 7.8-alt1
+- New version: 7.8.
 - Added yaml support.
 - Class TypeFamily now JsonTypeFamily for json and YamlTypeFamily for yaml.
 - Full release notes:
   https://altlinux.space/rirusha/libapi-base/releases/tag/v7.8
 
 * Tue Jun 09 2026 Vladimir Romanov <rirusha@altlinux.org> 7.7-alt1
+- New version: 7.7.
 - Added comments to generated vapi file.
 - Full release notes:
   https://altlinux.space/rirusha/libapi-base/releases/tag/v7.7
