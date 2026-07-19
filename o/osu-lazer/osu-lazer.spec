@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define dotnetver 8.0
+%define dotnetver 10.0
 
 Name: osu-lazer
-Version: 2026.429.0
+Version: 2026.711.0
 Release: alt1
 
 Summary: Rhythm is just a *click* away!
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Source2: NuGet.Config
 Source3: osu-lazer.desktop
+
+Patch0: %name-%version-alt.patch
 
 Requires: dotnet-%dotnetver
 
@@ -33,6 +35,9 @@ the release codename "lazer". As in sharper than cutting-edge.
 
 %prep
 %setup -a1
+# .gitattributes marks *.csproj as eol=crlf, so they land here with CRLF,
+# but the cumulative patch is generated with LF. Normalise before applying.
+find . -name '*.csproj' -exec sed -i 's/\r$//' {} +
 %autopatch -p1
 
 %build
@@ -78,6 +83,10 @@ echo 'Icon=%_libdir/osu-lazer/lazer.ico' >> %buildroot%_desktopdir/osu-lazer.des
 %_desktopdir/osu-lazer.desktop
 
 %changelog
+* Sun Jul 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 2026.711.0-alt1
+- New version.
+- Target .NET 10 instead of .NET 8 (Closes: 59860).
+
 * Wed Apr 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 2026.429.0-alt1
 - updated from 2026.406.0 to 2026.429.0
 
