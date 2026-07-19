@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: TextBlob is a Python3 library for processing textual data
@@ -46,6 +46,9 @@ py.test3
 %doc README* CHANGELOG*
 
 %changelog
+* Sun Jul 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
+- 0.20.1
+
 * Thu Apr 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
