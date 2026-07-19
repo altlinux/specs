@@ -4,12 +4,13 @@
 %define _name planify
 %define ver_major 4.19
 %define rdn_name io.github.alainm23.%_name
+%define chrono_ver 1.0.0
 
 %def_enable man
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Planify
@@ -24,16 +25,19 @@ Source: https://github.com/alainm23/planify/archive/v%version/%_name-%version.ta
 %else
 Source: %_name-%version.tar
 %endif
+#Source1: https://github.com/alainm23/chrono/archive/%chrono_ver/chrono-%chrono_ver.tar.gz
 
 %define gtk_ver 4.18
 %define adwaita_ver 1.7
 %define ecal_ver 3.45.1
+%define chrono_ver 1.0.0
 
 Requires: lib%_name = %EVR
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
 BuildRequires: meson vala-tools %{?_disable_snapshot:git}
+BuildRequires: pkgconfig(chrono) >= %chrono_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
@@ -71,6 +75,8 @@ This package contains files necessary to develop Planify plugins.
 
 %prep
 %setup -n %_name-%version
+#-a1
+#mv chrono-%chrono_ver subprojects/chrono
 
 %build
 %meson %{?_disable_snapshot:-Dprofile=default} \
@@ -101,6 +107,7 @@ This package contains files necessary to develop Planify plugins.
 
 %files -n lib%_name
 %_libdir/lib%name.so.*
+#%_libdir/libchrono.so
 
 %files -n lib%_name-devel
 %_includedir/*
@@ -109,6 +116,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Sun Jul 19 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.5-alt1
+- 4.19.5
+
 * Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 4.19.4-alt1
 - 4.19.4
 
