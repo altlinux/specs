@@ -4,24 +4,44 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.66
+Version: 0.67
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
 Group: Engineering
-Url: https://github.com/YosysHQ/yosys
+URL: https://github.com/YosysHQ/yosys
+VCS: https://github.com/YosysHQ/yosys
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-python3
+BuildRequires: cmake
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: libffi-devel
+BuildRequires: libreadline-devel
+BuildRequires: tcl-devel
+BuildRequires: zlib-devel
 BuildRequires: cxxopts-devel
+BuildRequires: libfmt-devel
+BuildRequires: libtomlplusplus-devel
+#BuildRequires: libslang2-devel
+BuildRequires: yosyshq-abc-devel >= %version
+BuildRequires: libedit-devel
+BuildRequires: libeditline-devel
+#BuildRequires: libgtest-devel
+#BuildRequires: ctest
+#BuildRequires: iverilog
 
 BuildPreReq: /proc
 
-Requires: alanmi-abc
+# yosyshq-abc not buildable on i586
+ExcludeArch: %ix86
+
+Requires: yosyshq-abc >= %version
 
 # For generating Graphviz representation of design (ALT bug 42631)
 Requires: graphviz
@@ -49,18 +69,22 @@ and programs needed to build yosys plugins.
 %prep
 %setup
 %autopatch -p1
+rm -r frontends/slang
 
 %build
-%define optflags_lto %nil
-make config-gcc
-echo "CXXFLAGS += %optflags" >> Makefile.conf
-%make_build ABCEXTERNAL=abc PRETTY=0 PREFIX=%prefix
+%cmake  -DYOSYS_ABC_EXECUTABLE=%_bindir/abc \
+	-DYOSYS_WITHOUT_SLANG=ON
+%cmake_build
 
 %install
-%makeinstall_std PREFIX=%prefix ABCEXTERNAL=abc
+%cmake_install
+
 mkdir -p %buildroot/%_man1dir/ %buildroot/%_includedir/
 install -m 644 %{name}*.1 %buildroot/%_man1dir/
 mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
+
+%check
+#%%cmake_build -t test
 
 %files -n yosys
 %_bindir/%name
@@ -68,16 +92,19 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_bindir/%name-smtbmc
 %_bindir/%name-witness
 %_datadir/%name
-%_man1dir/%name.1*
-%_man1dir/%name-filterlib.1*
-%_man1dir/%name-smtbmc.1*
+%_man1dir/%name.1.*
+%_man1dir/%name-filterlib.1.*
+%_man1dir/%name-smtbmc.1.*
 
 %files -n yosys-devel
 %_bindir/%name-config
 %_includedir/%name
-%_man1dir/%name-config.1*
+%_man1dir/%name-config.1.*
 
 %changelog
+* Sat Jul 11 2026 	Anton Midyukov <antohami@altlinux.org> 0.67-alt1
+- New version 0.67.
+
 * Tue Jun 09 2026 Anton Midyukov <antohami@altlinux.org> 0.66-alt1
 - New version 0.66.
 
