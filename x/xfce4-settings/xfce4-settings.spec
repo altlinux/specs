@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.21.2
-Release: alt2.g6ad3e839
+Release: alt3.gc20be1c6
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -12,13 +12,14 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/xfce/xfce4-settings.git
 Source: %name-%version.tar
 Source1: xfce4-fixkeyboard
+Source2: alt-ru.po
 Patch: %name-%version-%release.patch
 
 %def_enable upower
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.9
 BuildRequires: libxfconf-devel >= 4.19.3 libgarcon-devel >= 4.18.0
 BuildRequires: xfce-wayland-protocols
 BuildRequires: libX11-devel libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
@@ -54,6 +55,11 @@ for the Xfce desktop.
 %patch -p1
 %xfce4_cleanup_version
 
+# Merge our own and upstream Russian translations.
+# Upstream translation takes priority.
+msgcat --use-first -o merged_ru.po po/ru.po %SOURCE2
+mv -f merged_ru.po po/ru.po
+
 %build
 %meson \
 	-Dx11=enabled \
@@ -88,6 +94,11 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Mon Jul 20 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt3.gc20be1c6
+- Updated Russian translation (thx alevkarash@).
+- Fixed {chromium-gost,newmoon,yandex-browser}.desktop.
+- Updated from upstream git (closes: #59858).
+
 * Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt2.g6ad3e839
 - Updated from upstream git (master branch): bugfix and touchscreen
   support.
