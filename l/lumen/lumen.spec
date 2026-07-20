@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lumen
-Version: 2.30.0
-Release: alt2
+Version: 2.32.0
+Release: alt1
 Summary: A fast terminal diff viewer and code review TUI
 License: MIT
 Group: Development/Other
@@ -45,6 +45,9 @@ export OPENSSL_NO_VENDOR=1
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.32.0-alt1
+- Updated to version 2.32.0.
+
 * Wed Jul 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.30.0-alt2
 - Added missing runtime require to github-cli.
 
