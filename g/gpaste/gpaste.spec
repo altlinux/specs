@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gpaste
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -178,6 +178,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Mon Jul 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.6-alt1
+- 50.6
+
 * Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 50.5-alt1
 - 50.5
 
