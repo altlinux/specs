@@ -1,11 +1,12 @@
 Name: libaacs
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 
 Summary: BD AACS library
 License: LGPL-2.1
 Group: System/Libraries
-Url: https://www.videolan.org/developers/libaacs.html
+URL: https://www.videolan.org/developers/libaacs.html
+VCS: https://code.videolan.org/videolan/libaacs.git
 
 Source: %name-%version-%release.tar
 
@@ -52,6 +53,9 @@ rm -v %buildroot%_libdir/libaacs.a
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jul 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt1
+- 0.12.0 released
+
 * Thu Dec 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt1
 - 0.11.1 released
 
