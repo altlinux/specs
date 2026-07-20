@@ -1,8 +1,8 @@
 %define rname kontrast
 
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.04.3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Contrast inspection tool for Plasma and Plasma Mobile
@@ -55,6 +55,9 @@ are correctly accessible.
 %_datadir/metainfo/*kontrast*
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
 - update packaging
 

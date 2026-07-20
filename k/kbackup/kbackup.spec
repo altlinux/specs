@@ -1,8 +1,8 @@
 %define rname kbackup
 
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.04.3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Backup program with an easy-to-use interface
@@ -54,6 +54,9 @@ excluded from the backup process.
 %_K6xdgmime/*%{rname}*
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
 - update packaging
 

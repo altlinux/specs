@@ -6,8 +6,8 @@
 %define libaccessibilityinspector libaccessibilityinspector%accessibilityinspector_sover
 
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,7 @@ Summary: Inspect your application accessibility tree
 License: LGPL-2.0-or-later
 Url: https://invent.kde.org/accessibility/accessibility-inspector
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
@@ -28,16 +28,12 @@ BuildRequires: kf6-kcolorscheme-devel
 BuildRequires: kf6-kxmlgui-devel
 BuildRequires: kf6-kcrash-devel
 BuildRequires: libqaccessibilityclient-qt6-devel
-
 %if_with testing
 BuildRequires: ctest
 BuildRequires: icon-theme-breeze
 BuildRequires: xauth
 BuildRequires: xvfb-run
 %endif
-
-Requires: plasma6-breeze
-Requires: icon-theme-breeze
 
 %description
 Accessibility Inspector is as the name suggests an inspector for your
@@ -61,8 +57,7 @@ Requires: %name-common
 %name library
 
 %prep
-%setup
-sed -i "s|Categories=.*|Categories=Qt;KDE;Utility;Accessibility;|" org.kde.accessibilityinspector.desktop
+%setup -n %rname-%version
 
 %build
 %K6build \
@@ -98,6 +93,9 @@ xvfb-run -a --server-args="-screen 0 1024x768x24+32" %ctest -j1 -VV
 %_K6lib/libaccessibilityinspector.so.*
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Mon Jun 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
 - fix packaging
 

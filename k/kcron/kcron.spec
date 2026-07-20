@@ -1,7 +1,7 @@
 %define rname kcron
 
 Name: %rname
-Version: 26.04.2
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ BuildRequires: kf6-kirigami-addons-devel
 
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 
