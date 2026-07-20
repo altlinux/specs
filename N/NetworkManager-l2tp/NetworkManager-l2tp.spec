@@ -6,7 +6,7 @@
 %def_with gtk4
 
 Name: NetworkManager-l2tp
-Version: 1.52.2
+Version: 1.52.4
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -134,6 +134,9 @@ EOF
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 21 2026 Mikhail Efremov <sem@altlinux.org> 1.52.4-alt1
+- Updated to 1.52.4.
+
 * Mon Jun 01 2026 Mikhail Efremov <sem@altlinux.org> 1.52.2-alt1
 - Updated to 1.52.2.
 
