@@ -2,7 +2,7 @@
 
 Name: libpst
 Version: 0.6.76
-Release: alt6
+Release: alt7
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://www.five-ten-sg.com/libpst
 Source0: %url/packages/%name-%version.tar
 Source100: libpst.watch
 Patch1: %name-%version-alt-known-fields.patch
-Patch2: %name-%version-python3.13.patch
+Patch2: %name-%version-python3.patch
 
 Patch3: %name-%version-fedora-incompatible-pointer-i586.patch
 
@@ -89,6 +89,7 @@ Python interface to libpst (for reading Outlook files)
 %patch3 -p1
 
 %build
+%add_optflags -std=gnu17
 %autoreconf
 %configure \
 	--enable-libpst-shared \
@@ -133,6 +134,10 @@ rm -f %buildroot%_libdir/python*/site-packages/*.la
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.76-alt7
+- Added support for Python 3.14 and 3.15.
+- Switched to -std=gnu17 to fix build with gcc 15+.
+
 * Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.76-alt6
 - Fix building with python3.13.
 

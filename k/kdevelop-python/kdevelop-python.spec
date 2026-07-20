@@ -3,7 +3,7 @@
 
 Name: kdevelop-python
 Version: 26.04.3
-Release: alt1
+Release: alt2
 
 Summary: Python 3 language plugin for KDevelop
 License: GPL-2.0-or-later
@@ -11,6 +11,7 @@ Group: Graphical desktop/KDE
 Url: https://invent.kde.org/kdevelop/kdev-python
 
 Source: %name-%version.tar
+Patch: kdevelop-python-26.04.3-alt-python3.14-3.15.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-python3
@@ -37,6 +38,8 @@ This package contains the Python 3 language support plugin.
 
 %prep
 %setup
+%autopatch -p1
+
 sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/env python3|" documentation_src/pyqt/sip_to_xml5.py \
                                                            documentation_src/numpy/generate_numpy_doc.py \
                                                            documentation_src/introspection/introspect.py \
@@ -69,6 +72,9 @@ rm -v %buildroot%_datadir/kdevappwizard/templates/django_project.tar.bz2
 %_datadir/qlogging-categories6/kdevpythonsupport.categories
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 26.04.3-alt2
+- Added support for Python 3.14 and 3.15.
+
 * Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 26.04.3-alt1
 - New version 26.04.3.
 

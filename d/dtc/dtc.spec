@@ -4,7 +4,7 @@
 %global optflags_lto %nil
 
 Name: dtc
-Version: 1.7.2
+Version: 1.8.1
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
@@ -88,7 +88,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %ifarch %e2k
   -Dtests=false \
 %endif
-  -Dstatic-build=false
+  #
 
 %meson_build
 %if_with docs
@@ -138,6 +138,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.1-alt1
+- v1.7.2 -> v1.8.1.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.2-alt1
 - New version 1.7.2.
 

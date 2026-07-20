@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.6.1
-Release: alt1.1
+Release: alt2
 
 Summary: Confluent's Kafka Python Client
 
@@ -35,6 +35,7 @@ BuildRequires: python3-module-pyflakes-tests
 %endif
 
 Source:  %name-%version.tar
+Patch: confluent-kafka-upstream-fix-segfault.patch
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/confluent_kafka/kafkatest/verifiable_client.py
 
@@ -44,6 +45,7 @@ and the Confluent Platform.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -65,6 +67,9 @@ and the Confluent Platform.
 %python3_sitelibdir/%{pyproject_distinfo confluent_kafka}
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt2
+- Fixed FTBFS with python 3.14.
+
 * Wed Jul 16 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1.1
 - Fixed FTBFS.
 

@@ -2,7 +2,7 @@
 
 Name: geopmd
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: GEOPM daemon
 Group: System/Configuration/Other
@@ -19,6 +19,7 @@ BuildRequires: libgeopmd-devel = %version
 BuildRequires: libprotobuf-devel
 BuildRequires: protobuf-compiler
 BuildRequires: grpc-plugins
+BuildRequires: python3-module-cffi
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -112,5 +113,8 @@ popd
 %python3_sitelibdir/%prj_name-*.dist-info
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.2-alt2
+- Added BR: python3-module-cffi to fix FTBFS.
+
 * Thu Jan 15 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt1
 - first build for ALT

@@ -16,7 +16,7 @@
 
 Name: pcp
 Version: 6.2.1
-Release: alt1
+Release: alt2
 Summary: System-level performance monitoring and performance management
 License: GPLv2+ and LGPLv2+ and CC-BY-SA-3.0
 Group: Monitoring
@@ -281,6 +281,7 @@ PCP utilities and daemons, and the PCP graphical tools.
 %patch0 -p1
 
 %build
+%add_optflags -std=gnu17
 
 # Rename the libpcp library to libpcopilot in all files, 
 # because the pcp library is already in the pgpool-II package
@@ -1325,6 +1326,9 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/demos/tutorials/*.tar.gz
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.2.1-alt2
+- Switched to -std=gnu17 to fix build with gcc 15+.
+
 * Thu Apr 18 2024 Mikhail Chernonog <snowmix@altlinux.org> 6.2.1-alt1
 - 5.2.0 -> 6.2.1
 

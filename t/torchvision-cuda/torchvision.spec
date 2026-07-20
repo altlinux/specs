@@ -13,7 +13,7 @@
 
 Name:    %rname-cuda
 Version: 0.25.0
-Release: alt2
+Release: alt3
 
 Summary: Datasets, Transforms and Models specific to Computer Vision
 License: BSD-3-Clause
@@ -21,8 +21,10 @@ Group:   Development/ML
 URL: 	 https://docs.pytorch.org/vision
 VCS:     https://github.com/pytorch/vision.git
 
+%set_gcc_version 14
+
 BuildRequires(pre): cmake ninja-build rpm-build-python3 rpm-macros-ml
-BuildRequires: gcc-c++
+BuildRequires: gcc%_gcc_version-c++
 BuildRequires: libpng-devel
 BuildRequires: libjpeg-devel
 BuildRequires: nvidia-cuda-devel nvidia-cuda-devel-static
@@ -31,7 +33,7 @@ BuildRequires: pybind11-devel
 BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-torch-cuda-devel
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 
@@ -69,6 +71,8 @@ Requires: 	python3-module-torch-cuda
 %setup
 
 %build
+export CC=gcc
+export CXX=g++
 %cmake -G Ninja \
        -DTorch_DIR=%_torchdir \
        -DWITH_CUDA=ON \
@@ -100,6 +104,10 @@ export TORCH_CUDA_ARCH_LIST=%CUDA_ARCH_LIST
 %python3_sitelibdir/%{pyproject_distinfo %rname}
 
 %changelog
+* Mon Jul 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.25.0-alt3
+- Switched to GCC 14 as the current cuda toolchain doesn't support GCC 15+.
+- Excluded aarch64 build as there is no python3-module-torch-cuda on aarch64.
+
 * Tue Mar 03 2026 Nikita Shmatko <nash@altlinux.org> 0.25.0-alt2
 - Switched to rpm-macros-ml.
 - Build torchvision-cuda on aarch64.

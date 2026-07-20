@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 19.2.3
-Release: alt3
+Release: alt4
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1891,6 +1891,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 19.2.3-alt4
+- Backported upstream commit to fix build with Python 3.14.
+
 * Sat Apr 25 2026 Anton Farygin <rider@altlinux.org> 19.2.3-alt3
 - fix build with gcc 15: backport upstream zpp_bits.h fixes
   (ceph commits 830925f0, 9b8d72f1, 3fcd3536)

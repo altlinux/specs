@@ -6,7 +6,7 @@
 
 Name: python3-module-fastar
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: High-level bindings for the Rust tar crate
 License: MIT
@@ -27,11 +27,15 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: python3-dev
 BuildRequires: libzstd-devel
 BuildRequires: /proc
+# zstd is supported by python 3.14+.
+%add_pyproject_deps_build_filter backports-zstd
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: python3-module-typing-extensions
 %add_pyproject_deps_check_filter prek
 %pyproject_builddeps_metadata
+# zstd is supported by python 3.14+.
+%add_pyproject_deps_check_filter backports-zstd
 %pyproject_builddeps_check
 %endif
 
@@ -65,5 +69,9 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.0-alt2
+- Filtered backports-zstd from build dependencies as long as zstd is now shipped
+  with Python 3.14+.
+
 * Sun Apr 19 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt1
 - Initial build for ALT Sisyphus.

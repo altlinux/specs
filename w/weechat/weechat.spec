@@ -1,6 +1,6 @@
 Name: weechat
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 Summary: fast, light & extensible IRC client
 License: GPL-3.0
@@ -92,6 +92,7 @@ This package contains tcl plugin for weechat.
 find ./src/plugins -name "Makefile*" -print0 | xargs -r0 subst 's,\(\-module\),\1 -avoid-version,' --
 
 %build
+%add_optflags -std=gnu17
 %cmake \
 	-DENABLE_GUILE=OFF \
 	-DENABLE_PHP=OFF \
@@ -151,6 +152,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.5-alt2
+- Switched to -std=gnu17 to fix build with gcc 15+.
+
 * Thu Oct 05 2023 Alexey Gladkov <legion@altlinux.ru> 4.0.5-alt1
 - New version (4.0.5)
 

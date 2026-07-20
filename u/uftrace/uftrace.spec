@@ -5,7 +5,7 @@
 
 Name: uftrace
 Version: 0.19
-Release: alt1
+Release: alt2
 Summary: Function graph tracer for C/C++/Rust/Python
 License: GPL-2.0-only
 Group: Development/Debuggers
@@ -18,6 +18,8 @@ ExclusiveArch: aarch64 %ix86 x86_64 riscv64
 %add_python3_req_skip uftrace_python
 
 Source: %name-%version.tar
+Patch: 0001-test-Pass-arg-to-run_python_case.patch
+
 BuildRequires: libcapstone-devel
 BuildRequires: libdw-devel
 BuildRequires: libelf-devel
@@ -45,6 +47,7 @@ system events providing an integrated execution flow in a single timeline.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '1i\#! %__python3' python/uftrace.py
 
 %build
@@ -92,6 +95,9 @@ timeout 120 %make_build pytest V=1
 %_datadir/bash-completion/completions/uftrace
 
 %changelog
+* Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.19-alt2
+- Backported upstream commit to fix the testsuite with Python 3.14.
+
 * Mon Mar 02 2026 Vitaly Chikunov <vt@altlinux.org> 0.19-alt1
 - Update to v0.19 (2026-03-01).
 

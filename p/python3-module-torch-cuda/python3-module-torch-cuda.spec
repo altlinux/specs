@@ -16,7 +16,7 @@
 
 Name:    python3-module-%pypi_name-cuda
 Version: 2.10.0
-Release: alt3
+Release: alt4
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (with CUDA support)
 License: BSD-3-Clause
@@ -32,8 +32,9 @@ Patch1: 0002-Fixed-system-libs-cmake.patch
 Patch2: 0003-Added-support-for-system-installed-cuDNN-Frontend.patch
 Patch3: 0004-Used-system-cutlass-instead-of-bundled.patch
 Patch4: 0005-Use-system-valgrind-instead-of-bundled.patch
+Patch5: 0006-Link-libtorch_cuda-against-nvrtc.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 # Disable python3 autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: nopython3
 
@@ -46,8 +47,10 @@ AutoProv: nopython3
 %add_findreq_skiplist %_libdir/libshm.so
 %add_findreq_skiplist %_libdir/libtorch*.so
 
+%set_gcc_version 14
+
 BuildRequires(pre): cmake rpm-build-python3
-BuildRequires: gcc-c++
+BuildRequires: gcc%_gcc_version-c++
 BuildRequires: ninja-build
 BuildRequires: valgrind-devel
 BuildRequires: libfmt-devel
@@ -73,7 +76,7 @@ BuildRequires: nvidia-cuda-devel
 BuildRequires: libcudnn-devel
 BuildRequires: libnccl-devel
 BuildRequires: nvidia-cuda-devel-static
-BuildRequires: nvidia-cudnn-frontend
+BuildRequires: cudnn-frontend-devel
 BuildRequires: nvidia-cutlass-headers
 %endif
 # BuildRequires: pybind11-devel
@@ -162,7 +165,7 @@ Summary: 	%name shared libraries for CPU
 Group: 		System/Libraries
 # Disable python3 and lib autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: 	nopython3, nolib
-Requires: 	gcc-c++
+Requires: 	gcc%_gcc_version-c++
 Requires:      	libsleef-devel
 Requires:	libcpuinfo-devel
 Requires:	libprotobuf-devel
@@ -200,6 +203,7 @@ to run GPU-accelerated operations with %name.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 #Use system fmt
 
@@ -310,17 +314,16 @@ export USE_CUDNN=OFF
 export CMAKE_POLICY_VERSION_MINIMUM=3.5
 
 export NUM_PROC=%__nprocs
-[ "$NUM_PROC" -gt 8 ] && NUM_PROC=8
 export MAX_JOBS=$NUM_PROC
 export CMAKE_BUILD_PARALLEL_LEVEL=$NUM_PROC
 export NINJAFLAGS="-j$NUM_PROC -v"
-export NINJA_STATUS='[%f/%t %e] '
+export NINJA_STATUS='[%%f/%%t %%e] '
 
 # --- keepalive ---
 { %pyproject_build; } & build_pid=$!
 
 while kill -0 "$build_pid" 2>/dev/null; do
-    echo "torch-cuda: still building... $(date -u +'%F %T')" >&2
+    echo "torch-cuda: still building... $(date -u +'%%F %%T')" >&2
     sleep 300
 done
 
@@ -376,6 +379,10 @@ done
 %_libdir/lib%{pypi_name}_cuda_linalg.so
 
 %changelog
+* Mon Jul 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.0-alt4
+- Switched to GCC 14 as cuda toolchain doesn't support GCC 15+ at the moment.
+- Excluded aarch64 build as it doesn't fit in 8 hours limit.
+
 * Wed Mar 18 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt3
 - Added cuda-devel-static to requires (Closes: #58170).
 

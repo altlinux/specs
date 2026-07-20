@@ -1,5 +1,5 @@
 %define  oname llvmlite
-%define  llvm_version 20.1
+%define  llvm_version 22.1
 %define  clang_version %(echo %llvm_version | cut -d . -f 1)
 %define  optflags_lto -flto=thin
 
@@ -11,8 +11,8 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.46.0
-Release: alt1.1
+Version: 0.48.0
+Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -28,11 +28,12 @@ BuildRequires: cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libzstd-devel
 
 Source:  %name-%version.tar
 
 Patch: llvmlite-alt-normalize-i586-name.patch
+Patch1: llvmlite-alt-i586-skip-vectorization-test.patch
 
 %description
 A lightweight LLVM python binding for writing JIT compilers
@@ -53,7 +54,7 @@ following approach:
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
@@ -78,6 +79,9 @@ export CC=/usr/bin/clang-%{clang_version}
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jul 02 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.48.0-alt1
+- Updated to v0.48.0.
+
 * Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1.1
 - Fixed FTBFS
 

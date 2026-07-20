@@ -2,7 +2,11 @@
 %define mod_name setuptools_scm
 %define pypi_name setuptools-scm
 
-%def_with check
+%def_enable bootstrap
+
+%if_enabled bootstrap
+%def_without check
+%endif
 
 %define add_python_extra() \
 %{expand:%%package -n %%name+%1 \
@@ -18,7 +22,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%mod_name
 Version: 10.2.0
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -31,7 +35,10 @@ Patch1: %name-%version-alt.patch
 # manually manage extra dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-Requires: git-core mercurial
+Requires: git-core
+%if_disabled bootstrap
+Requires: mercurial
+%endif
 %py3_provides %pypi_name
 # mapping from PyPI name
 Provides: python3-module-%pypi_name = %EVR
@@ -91,6 +98,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.0-alt2
+- Readd boostrap switch and enable it for Python 3.14 bootstrap.
+
 * Tue Jun 30 2026 Stanislav Levin <slev@altlinux.org> 10.2.0-alt1
 - 10.0.5 -> 10.2.0
 

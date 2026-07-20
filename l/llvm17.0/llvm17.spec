@@ -104,7 +104,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt5
+Release: alt6
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -135,6 +135,7 @@ Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch22: clang-D142199.patch
 Patch23: clang-alt-riscv64-dynamic-linker-path.patch
 Patch24: llvm-support-python-3.13.patch
+Patch25: compiler-rt-upstream-glibc2.42.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
@@ -789,6 +790,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch22 -p1 -b .recommonmark
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1 -b .upstream-glibc2.42
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
@@ -1510,6 +1512,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.0.6-alt6
+- Backported upstream commit to fix build with glibc 2.42+.
+
 * Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt5
 - Fix FTBFS with gcc15.
 - Restructure openmp build.

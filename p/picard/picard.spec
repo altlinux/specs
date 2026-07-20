@@ -8,7 +8,7 @@
 
 Name: picard
 Version: 2.13.3
-Release: alt1
+Release: alt2
 Summary: MusicBrainz-based audio tagger
 License: GPL-2.0-or-later
 Group: Sound
@@ -16,6 +16,7 @@ Group: Sound
 URL: https://github.com/musicbrainz/picard/
 Vcs: https://github.com/musicbrainz/picard.git
 Source: %name-%version.tar
+Patch: 0001-PICARD-3079-Declare-support-for-Python-3.14-and-fix-.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -46,6 +47,7 @@ track-oriented.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 sed -r -i -e "s|%{autoupdate_on}|%{autoupdate_off}|g" \
@@ -81,6 +83,9 @@ cat %name-attributes.lang %name-constants.lang %name-countries.lang >> %name.lan
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.13.3-alt2
+- Backported upstream commit to fix test with Python 3.14.
+
 * Wed Apr 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.13.3-alt1
 - Initial build for ALT.
 

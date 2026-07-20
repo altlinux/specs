@@ -11,7 +11,7 @@
 
 Name: manifold
 Version: 3.3.2
-Release: alt2
+Release: alt3
 Summary: Geometry library for topological robustness
 License: Apache-2.0
 Group: System/Libraries
@@ -19,6 +19,7 @@ Url: https://github.com/elalish/manifold
 Vcs: https://github.com/elalish/manifold
 
 Source: %name-%version.tar
+Patch: manifold-3.3.2-alt-include-python-glibc-order.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -79,6 +80,7 @@ Python3 module for %name
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -122,6 +124,9 @@ Python3 module for %name
 %endif
 
 %changelog
+* Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.2-alt3
+- Fixed FTBFS with modern glibc.
+
 * Sat May 09 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.2-alt2
 - e2k build fix
 

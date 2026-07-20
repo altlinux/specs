@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.7.6
+Version: 0.8
 Release: alt1
 
 Summary: pgmagick is a yet another boost.python based wrapper for GraphicsMagick/ImageMagick
@@ -46,5 +46,8 @@ make -C test all clean
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8-alt1
+- 0.7.6 -> 0.8.
+
 * Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 0.7.6-alt1
 - Initial build for Sisyphus.

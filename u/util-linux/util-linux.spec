@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.39.2
-Release: alt2
+Release: alt3
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -103,6 +103,7 @@ Patch0003: 0003-ALT-Replace-vidattr-by-own-function-that-works-like-.patch
 Patch0004: 0004-ALT-Do-not-accept-gecos-field-sizes-longer-than-64.patch
 Patch0005: 0005-ALT-Allow-to-display-altlinux-release-in-the-message.patch
 Patch0006: 0006-ALT-Drop-documentation-about-journald-option-since-w.patch
+Patch0007: 0007-lsfd-bugfix-use-PRIu32-for-prining-lport-of-netlink-.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -972,6 +973,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.39.2-alt3
+- Backported upstream commit to fix the lsfd/mkfds-netlink-protocol test.
+
 * Tue Dec 31 2024 Sergey Konev <darisishe@altlinux.org> 2.39.2-alt2
 - Introduce a new python3-module-libmount subpackage that includes
   Python bindings for the libmount library.

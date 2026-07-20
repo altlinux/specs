@@ -18,7 +18,7 @@
 
 Name: gpgme
 Version: 1.24.3
-Release: alt2
+Release: alt3
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -39,6 +39,7 @@ Source: gpgme-%version.tar
 Patch3: gpgme-1.23.1-fix-easy_install.patch
 Patch11: gpgme-1.4.3-alt-version-script.patch
 Patch15: alt-revision.patch
+Patch16: gpgme-1.24.3-alt-add-python3.14-3.15-support.patch
 
 
 %def_disable static
@@ -155,9 +156,7 @@ GPGME-based statically linked applications.
 %patch3 -p2
 %patch11 -p1
 %patch15 -p2
-
-# Hot fix for python3.13
-sed -Ei 's/(\[3\.12\])/\1\,\[3\.13\]/' configure.ac
+%patch16 -p2
 
 %if_disabled beta
 sed -i -e 's/@BETA@/no/' configure.ac
@@ -278,6 +277,9 @@ popd
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.24.3-alt3
+- Added support of python 3.14 and 3.15.
+
 * Wed May 13 2026 Paul Wolneykien <manowar@altlinux.org> 1.24.3-alt2
 - Drop Python 2 modules (closes: 59083).
 - Drop random, mixed and unmaitained local changes.

@@ -4,7 +4,7 @@
 
 Name: qpid-proton
 Version: 0.36.0
-Release: alt2
+Release: alt3
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -14,6 +14,7 @@ Url: http://qpid.apache.org/proton/
 %define proton_datadir %_datadir/proton
 
 Source: %name-%version.tar
+Patch: qpid-proton-alt-fix-build-python3.14.patch
 
 BuildRequires: cmake >= 2.8.12
 BuildRequires: gcc-c++
@@ -103,6 +104,7 @@ Documentation for the Python language bindings for Qpid Proton
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 #%%add_optflags -Wno-error=return-type -Wno-error=format-security
@@ -180,6 +182,9 @@ rm -rf %buildroot%proton_datadir/CMakeLists.txt
 %endif
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.36.0-alt3
+- Backported upstream fix to fix build with Python 3.14.
+
 * Thu Sep 21 2023 Artyom Bystrov <arbars@altlinux.org> 0.36.0-alt2
 - Fix FTBFS (added -Wno-deprecated-declarations).
 

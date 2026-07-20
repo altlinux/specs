@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 6.0.0
+Version: 7.0.0
 Release: alt1
 
 Summary: Set of compression filters for h5py
@@ -16,8 +16,7 @@ VCS:     https://github.com/silx-kit/hdf5plugin
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source: %name-%version.tar
-
-Patch: fix-bzip2-name.patch
+Patch: hdf5plugin-alt-fix-test-i586.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -49,7 +48,7 @@ from h5py.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %if_with systemlibs
 rm -rv lib/hdf5
@@ -60,13 +59,14 @@ rm -rv lib/c-blosc2
 %endif
 
 %build
+%add_optflags -DBLOSC_STRICT_ALIGN
 export CFLAGS="%optflags"
 export HDF5PLUGIN_HDF5_DIR=%_prefix
+export HDF5PLUGIN_NATIVE=False
 
 %ifarch %ix86
 sed -i '/_get_sz_plugin,/d' setup.py
 sed -i '/_get_sz3_plugin,/d' setup.py
-export HDF5PLUGIN_NATIVE=False
 export HDF5PLUGIN_SSE2=False
 export HDF5PLUGIN_AVX=False
 export HDF5PLUGIN_AVX512=False
@@ -89,5 +89,8 @@ python3 test/test.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt1
+- 6.0.0 -> 7.0.0.
+
 * Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Initial build for Sisyphus.

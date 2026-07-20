@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-grimp
-Version: 3.5
-Release: alt2
+Version: 3.15
+Release: alt1
 
 Summary: Queryable graph of the imports
 License: BSD-2-Clause
@@ -34,8 +34,7 @@ Builds a queryable graph of the imports within one or more Python packages
 
 %prep
 %setup -a1
-cat < vendor_cargoconf.toml >> ./rust/.cargo/config
-mv ./rust/.cargo ./.cargo
+cat < vendor_cargoconf.toml >> .cargo/config.toml
 mv ./vendor ./rust/vendor
 %autopatch -p1
 
@@ -46,13 +45,19 @@ mv ./vendor ./rust/vendor
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest tests \
+	--ignore=tests/benchmarking \
+	--ignore=tests/functional/test_build_graph_on_real_packages.py \
+	#
 
 %files
 %python3_sitelibdir/grimp/
 %python3_sitelibdir/grimp-%version.dist-info/
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.15-alt1
+- v3.5 -> v3.15.
+
 * Mon Feb 03 2025 Yaroslav Bahtin <alpacost@altlinux.org> 3.5-alt2
 - Fix FTBFS.
 

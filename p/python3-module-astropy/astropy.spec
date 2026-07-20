@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 7.2.0
-Release: alt1
+Release: alt2
 
 Summary: Astronomy and astrophysics core library
 
@@ -29,6 +29,7 @@ BuildRequires: libexpat-devel
 Source: %name-%version.tar
 
 Patch: astropy-alt-remove-tests-dependency.patch
+Patch1: astropy-alt-fix-include-order.patch
 
 %description
 %summary.
@@ -43,7 +44,7 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 export CPATH="/usr/include/wcslib"
@@ -88,6 +89,9 @@ export ASTROPY_USE_SYSTEM_ALL=1
 %python3_sitelibdir/%pypi_name/*/*/*/*/tests
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2.0-alt2
+- Fixed build with glibc 2.43+.
+
 * Tue Jan 13 2026 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
 - Automatically updated to 7.2.0.
 

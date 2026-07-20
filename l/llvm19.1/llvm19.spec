@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.3
+Release: alt0.4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -124,6 +124,7 @@ Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
 Patch5: compiler-rt-alt-i586-arch.patch
+Patch6: compiler-rt-upstream-glibc2.42.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
@@ -750,6 +751,7 @@ These modules are used by llvm runtimes built outside of llvm tree.
 %patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch5 -p1 -b .alt-i586-arch
+%patch6 -p1 -b .upstream-glibc2.42
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch17 -p1
@@ -1509,6 +1511,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 19.1.7-alt0.4
+- Backported upstream commit to fix build with glibc 2.42+.
+
 * Mon May 04 2026 L.A. Kostis <lakostis@altlinux.ru> 19.1.7-alt0.3
 - Fix FTBFS with gcc15.
 - Restucture OpenMP build.

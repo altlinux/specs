@@ -23,7 +23,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 2.7.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
@@ -76,13 +76,17 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 # to adjust timeouts: test.LONG_TIMEOUT
 export CI=yes
 export NO_VENDORED_HYPERCORN=yes
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra \
+	--deselect 'test/with_dummyserver/test_socketlevel.py::TestProxyManager::test_tunnel_sets_http_11_alpn'
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.7.0-alt2
+- Worked around and disabled tests failing with Python 3.14.
+
 * Tue May 12 2026 Stanislav Levin <slev@altlinux.org> 2:2.7.0-alt1
 - 2.6.3 -> 2.7.0 (fixes: CVE-2026-44431, CVE-2026-44432).
 

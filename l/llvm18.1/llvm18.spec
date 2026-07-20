@@ -113,7 +113,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.4
+Release: alt0.5
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -138,6 +138,8 @@ Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch23: clang-alt-riscv64-dynamic-linker-path.patch
+Patch24: compiler-rt-upstream-glibc2.42.patch
+Patch25: llvm-upstream-cstdint.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
@@ -766,6 +768,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch20 -p1 -b .clang-rocm-device-path
 %patch23 -p1
+%patch24 -p1 -b .upstream-glibc2.42
+%patch25 -p1 -b .cstdint
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
@@ -1496,6 +1500,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 18.1.8-alt0.5
+- Backported upstream commit to fix build with glibc 2.42+.
+
 * Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.4
 - clang-doc: fix graphviz issue (see ALT#52353).
 

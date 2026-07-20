@@ -2,7 +2,7 @@
 %define pypi_name tiktoken
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
+Version: 0.13.0
 Release: alt1
 
 Summary: tiktoken is a fast BPE tokeniser for use with OpenAI's models
@@ -42,5 +42,8 @@ install -vD %SOURCE2 .cargo/config.toml
 %doc README.md
 
 %changelog
+* Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.13.0-alt1
+- 0.9.0 -> 0.13.0.
+
 * Sun Apr 13 2025 David Sultaniiazov <x1z53@altlinux.org> 0.9.0-alt1
 - Initial build

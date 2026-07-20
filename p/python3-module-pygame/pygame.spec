@@ -4,7 +4,7 @@
 
 Name: python3-module-pygame
 Version: 2.6.1
-Release: alt3
+Release: alt4
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -16,6 +16,7 @@ Url: https://pypi.org/project/pygame
 Source: %name-%version.tar
 Patch: pygame-2.1.0-docs.patch
 Patch1: pygame-fix-setuptools82-dry-run.patch
+Patch2: pygame-2.6.1-upstream-test-python3.14.patch
 
 %define python3_includedir %_includedir/python%_python3_version
 
@@ -88,6 +89,7 @@ Pygame documentation and example programs (Python3 version)
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 sed -i '811a\ \ \ \ @unittest.skip("https://github.com/pygame/pygame/issues/4274")' test/mixer_test.py
 
 %build
@@ -127,6 +129,9 @@ rm -rv %buildroot%python3_sitelibdir/%oname/tests
 %python3_includedir/%oname
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt4
+- Backported upstream test fix to add support for Python 3.14.
+
 * Wed Apr 01 2026 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt3
 - fix FTBFS with setuptools >= 82 (dry_run removed from Compiler)
 

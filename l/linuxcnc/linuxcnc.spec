@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.10
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -254,6 +254,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.9.10-alt2
+- Added support for Python 3.14 and 3.15.
+
 * Fri Jul 03 2026 Anton Midyukov <antohami@altlinux.org> 2.9.10-alt1
 - New version 2.9.10.
 
