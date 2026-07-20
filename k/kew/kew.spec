@@ -1,5 +1,5 @@
 Name: kew
-Version: 4.2.6
+Version: 4.2.7
 Release: alt1
 
 Summary: A terminal music player
@@ -52,6 +52,9 @@ Features:
 %_man1dir/kew.1*
 
 %changelog
+* Mon Jul 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.7-alt1
+- 4.2.7 released
+
 * Fri Jul 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.6-alt1
 - 4.2.6 released
 
