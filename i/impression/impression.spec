@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.7
+%define ver_major 3.8
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
@@ -33,6 +33,8 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(wimlib)
+BuildRequires: pkgconfig(libudf)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
@@ -75,6 +77,9 @@ _EOF_
 %doc PRESS* README*
 
 %changelog
+* Mon Jul 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
 - v3.7.0-1-g6aed634
 
