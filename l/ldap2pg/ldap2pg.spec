@@ -1,6 +1,6 @@
 %global import_path github.com/dalibo/ldap2pg
 Name:    ldap2pg
-Version: 6.5.1
+Version: 6.6.0
 Release: alt1
 
 Summary: Manage PostgreSQL roles and privileges from YAML or LDAP
@@ -69,5 +69,8 @@ install -D -m0644 %SOURCE3 \
 %_unitdir/ldap2pg.timer
 
 %changelog
+* Wed Jul 15 2026 Olesya Shuster <lesyafox@altlinux.org> 6.6.0-alt1
+- New version 6.6.0 (closes: #59812, #59810)
+
 * Sat Jun 27 2026 Olesya Shuster <lesyafox@altlinux.org> 6.5.1-alt1
 - Initial build for Sisyphus
