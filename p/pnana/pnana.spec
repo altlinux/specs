@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pnana
-Version: 0.0.6
-Release: alt2
+Version: 0.0.7
+Release: alt1
 
 Summary: Modern Terminal Text Editor
 License: MIT
@@ -75,9 +75,12 @@ chmod 755 %buildroot%_bindir/%name
 %dir %_datadir/%name
 %_bindir/%name
 %_libdir/%name/%name-bin
-%_datadir/%name/config.json
+%_datadir/%name/*.json
 
 %changelog
+* Tue Jul 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.7-alt1
+- new version
+
 * Thu Apr 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.0.6-alt2
 - save local cache in ~/.cache (closes: 58909)
 
