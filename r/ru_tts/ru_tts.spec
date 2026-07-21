@@ -2,7 +2,7 @@
 %define sover 7
 
 Name:    ru_tts
-Version: 6.3.2
+Version: 6.3.3
 Release: alt1
 Epoch: 1
 
@@ -86,6 +86,9 @@ BuildArch: noarch
 %_libdir/librutts.so
 
 %changelog
+* Mon Jul 20 2026 Artem Semenov <savoptik@altlinux.org> 1:6.3.3-alt1
+- Updated to new version 6.3.3
+
 * Fri May 29 2026 Artem Semenov <savoptik@altlinux.org> 1:6.3.2-alt1
 - Updated to new version 6.3.2
 
