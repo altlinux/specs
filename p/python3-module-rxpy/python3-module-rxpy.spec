@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.1.0
+Version: 5.0.0
 Release: alt1
 
 Summary: ReactiveX for Python
@@ -18,6 +18,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-poetry
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
 
@@ -47,6 +48,9 @@ subst 's/^version.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo reactivex}
 
 %changelog
+* Tue Jul 21 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Thu Nov 06 2025 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - New version.
 
