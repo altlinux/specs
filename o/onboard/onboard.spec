@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.4.3
+Version: 1.4.4.4
 Release: alt1
 
 Summary: Simple on-screen Keyboard
@@ -12,7 +12,6 @@ VCS: https://github.com/onboard-osk/onboard
 
 Source0: %name-%version.tar
 Source1: ru.po
-Patch: build-against-Ayatana-AppIndicator.patch
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-python3 rpm-build-pyproject
 BuildRequires: gcc-c++
@@ -38,6 +37,8 @@ Requires: iso-codes
 Requires: python3-module-pygobject3
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Onboard/pypredict
+%add_python3_req_skip AppIndicator3
+%filter_from_requires /typelib(AppIndicator3)/d
 
 %description
 An on-screen keyboard useful on tablet PCs or for mobility impaired
@@ -54,8 +55,8 @@ GNOME Shell support for onboard.
 
 %prep
 %setup -q
-%autopatch -p1
 install -Dpm0644 %SOURCE1 po/ru.po
+# Remove empty file
 rm settings_ui.py
 
 %build
@@ -108,6 +109,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Wed Jul 15 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.4-alt1
+- New version.
+
 * Mon Jun 08 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.3-alt1
 - New version.
 - Set upstream to https://github.com/onboard-osk/onboard.
