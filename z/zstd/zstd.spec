@@ -1,17 +1,21 @@
 Name: zstd
-Version: 1.5.5
-Release: alt2
+Version: 1.5.7
+Release: alt1
 Summary: Zstd compression library and tools
-License: BSD-3-Clause
+License: BSD-3-Clause or GPL-2.0-only
 Group: Archiving/Compression
 Url: https://facebook.github.io/zstd/
-# https://github.com/facebook/zstd
+Vcs: https://github.com/facebook/zstd.git
 # git://git.altlinux.org/gears/z/zstd.git
 Source: %name-%version-%release.tar
+# Patch from upstream git. Must be dropped
+# when new version will be released.
+Patch100: updated-man-pages-and-manual.patch
 Requires: lib%name = %EVR
 %def_enable pzstd
 %{?!_disable_pzstd:BuildRequires: gcc-c++}
 %{?!_disable_pzstd:%{?!_without_check:%{?!_disable_check:BuildRequires: libgtest-devel}}}
+BuildRequires: cmake
 
 # needed for cli-tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3 less}}
@@ -73,6 +77,7 @@ linked software that use the zstd compression and decompression library.
 
 %prep
 %setup -n %name-%version-%release
+%patch100 -p1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %ifarch %e2k
 # fine tuning for architecture and compiler
@@ -96,7 +101,7 @@ export CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 export CXXFLAGS="$CFLAGS"
 # profile-guided optimization (PGO) build
 # HASH_DIR is specified to use the same for tests
-%make_build HASH_DIR=zstd_build -C programs zstd-pgo %make_params
+%make_build HASH_DIR=zstd_build -C programs zstd-pgo %make_params MOREFLAGS="-fprofile-correction"
 # the rest is built without PGO
 %make_build -C lib all %make_params
 %{?!_disable_pzstd:%make_build -C contrib/pzstd %make_params}
@@ -120,6 +125,33 @@ if grep -Frsl /usr/local %buildroot; then
 	printf >&2 '%%s leaked into %%s\n' /usr/local %buildroot
 	exit 1
 fi
+
+# Create cmake files.
+# Do this in install section after library and programms installed:
+# cmake will change make files.
+# CC and CXX variables should be restored to pass cmake tests.
+CFLAGS="%optflags $(getconf LFS_CFLAGS)"
+unset CC CXX
+cmake \
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=yes \
+	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+	-DCMAKE_CXX_FLAGS:STRING="$CFLAGS" \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DINCLUDE_INSTALL_DIR:PATH=%_includedir \
+	-DLIB_INSTALL_DIR:PATH=%_libdir \
+	-DSYSCONF_INSTALL_DIR:PATH=%_sysconfdir \
+	-DSHARE_INSTALL_PREFIX:PATH=%_datadir \
+	-DLIB_DESTINATION=%_lib \
+	-DLIB_SUFFIX="%_libsuff" \
+	-DZSTD_LEGACY_SUPPORT:BOOL=OFF \
+	-DZSTD_ZLIB_SUPPORT:BOOL=OFF \
+	-S build/cmake
+# Install cmake files only
+sed -i '1i set(CMAKE_INSTALL_LOCAL_ONLY TRUE)' cmake_install.cmake
+mkdir cmake_files_install
+DESTDIR=cmake_files_install cmake --install . --verbose
+cp -a cmake_files_install/%_libdir/cmake %buildroot%_libdir/
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -152,11 +184,21 @@ export CXXFLAGS="$CFLAGS"
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/*
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Thu Jul 16 2026 Mikhail Efremov <sem@altlinux.org> 1.5.7-alt1
+- Fixed PGO build.
+- Fixed License tag (closes: #53042).
+- Generated and packaged cmake files (closes: #58691).
+- Added Vcs tag.
+- Patch from upstream:
+  + Updated man pages and manual.
+- 1.5.5 -> 1.5.7.
+
 * Wed Aug 23 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.5-alt2
 - Packaged static library (by Andrey Sokolov; closes: #47144).
 
