@@ -1,5 +1,5 @@
 Name: rpm-build-svace
-Version: 5.0.260525
+Version: 6.0.260714
 Release: alt1
 
 Summary: Downloads and installs svace static analyzer to /opt
@@ -62,6 +62,9 @@ fi
 %config(noreplace) %_sysconfdir/rpm-build-svace-version
 
 %changelog
+* Tue Jul 21 2026 Egor Ignatov <egori@altlinux.org> 6.0.260714-alt1
+- Update to 6.0.260714
+
 * Thu May 28 2026 Egor Ignatov <egori@altlinux.org> 5.0.260525-alt1
 - Update to 5.0.260525
 
