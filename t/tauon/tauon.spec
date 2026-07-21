@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tauon
-Version: 10.0.1
+Version: 11.0.0
 Release: alt1
 
 Summary: Play your music with style
@@ -43,6 +43,7 @@ BuildRequires: opencc
 BuildRequires: python3(setproctitle)
 BuildRequires: python3(unidecode)
 BuildRequires: python3(h11)
+BuildRequires: python3(rapidfuzz)
 %endif
 
 Requires: typelib(AyatanaAppIndicator3)
@@ -67,6 +68,8 @@ Requires: python3(OpenGL_accelerate)
 Requires: python3-module-pysdl3
 Requires: python3(natsort)
 Requires: python3(setproctitle)
+
+Requires: /usr/bin/xdg-open
 
 %add_python3_req_skip AppKit objc
 
@@ -147,6 +150,9 @@ install -Dm755 extra/tauonmb.sh %buildroot%_bindir/tauon
 %python3_sitelibdir/%{pyproject_distinfo tauon_music_box}
 
 %changelog
+* Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 11.0.0-alt1
+- New version 11.0.0.
+
 * Sat May 30 2026 Nikolay Strelkov <snk@altlinux.org> 10.0.1-alt1
 - New version 10.0.1.
 
