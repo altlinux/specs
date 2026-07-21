@@ -1,12 +1,12 @@
 Name: make-initrd
-Version: 2.58.0
-Release: alt2
+Version: 2.59.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
 Group: System/Base
-Url: https://github.com/osboot/make-initrd
-Vcs: https://github.com/osboot/make-initrd.git
+URL: https://github.com/osboot/make-initrd
+VCS: https://github.com/osboot/make-initrd.git
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -421,6 +421,14 @@ fi
 %endif
 
 %changelog
+* Mon Jul 20 2026 Anton Midyukov <antohami@altlinux.org> 2.59.0-alt1
+- Feature usb-storage:
+  + Detect UAS backed devices.
+- Feature uki:
+  + Add device-tree autoselection support.
+- Feature iscsi:
+  + Replace ISCSI_TARGET_LUN with ISCSI_TARGET_GROUP variable.
+
 * Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 2.58.0-alt2
 - guestfs: remove dependencies on reiserfsprogs.
 
