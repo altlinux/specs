@@ -10,7 +10,7 @@
 
 %define rname kpipewire
 Name: plasma6-%rname
-Version: 6.7.2
+Version: 6.7.3
 Release: alt1
 %K6init
 
@@ -55,21 +55,21 @@ developing applications that use %name.
 %package -n %libkpipewirerecord
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkpipewirerecord
 %name library
 
 %package -n %libkpipewire
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkpipewire
 %name library
 
 %package -n %libkpipewiredmabuf
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkpipewiredmabuf
 %name library
 
@@ -114,6 +114,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

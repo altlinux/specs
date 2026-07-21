@@ -5,6 +5,7 @@
 %else
 %def_enable qtwebengine
 %endif
+%def_enable kameleon
 
 %define sover 6
 %define libplasmacomicprovidercore libplasmacomicprovidercore%sover
@@ -14,8 +15,8 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.7.2
-Release: alt1
+Version: 6.7.3
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -38,10 +39,15 @@ Provides: plasma5-addons = 1:%version-%release
 Obsoletes: plasma5-addons < 1:%version-%release
 
 Source: %rname-%version.tar
+Source1: vendor.tar
+
 Patch1: alt-sover.patch
 Patch2: alt-def-dict.patch
 Patch3: alt-displayname-filter.patch
 Patch4: alt-del-ions.patch
+Patch5: alt-qmk-via-api-hidraw.patch
+# FC
+Patch100: kdeplasma-addons-6.7.0-qmk-via-api-0.8.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules gcc-c++ qt6-declarative-devel  qt6-declarative-devel qt6-svg-devel qt6-5compat-devel
@@ -50,6 +56,10 @@ BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: libxcbutil-image-devel libxcb-devel
 BuildRequires: libvulkan-devel
+BuildRequires: libudev-devel libhidapi-devel
+%if_enabled kameleon
+BuildRequires: /usr/bin/rustc rust-cargo corrosion
+%endif
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -120,19 +130,24 @@ Requires: %name-common >= %EVR
 %name library.
 
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version -a1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+#
+%patch100 -p1
 
 sed -i "s|@PROJECT_VERSION@|%version|" wallpapers/potd/plugins/CMakeLists.txt
 sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" wallpapers/potd/plugins/CMakeLists.txt
 
 # exclude components
 sed -i '/^add_subdirectory(comic)/d' applets/CMakeLists.txt
+%if_disabled kameleon
 sed -i '/^add_subdirectory(kameleon)/d' kdeds/CMakeLists.txt
 sed -i '/find_package.*Corrosion/d' CMakeLists.txt
+%endif
 
 # disable krunners by default
 for d in runners/*/*.json ; do
@@ -178,12 +193,14 @@ touch touch-%_arch
 %_K6data/kwin/*
 %_K6notif/*
 %_datadir/metainfo/*.xml
-# kameleon
-#%_K6exec/kauth/*
-#%_K6plug/kf6/kded/*.so
-#%_K6dbus_sys_srv/*.service
-#%_K6dbus/system.d/*.conf
-#%_datadir/polkit-1/actions/*.policy
+%if_enabled kameleon
+%_K6exec/*kameleon*
+%_K6exec/kauth/*kameleon*
+%_K6plug/kf6/kded/*kameleon*.so
+%_K6dbus_sys_srv/*kameleon*.service
+%_K6dbus/system.d/*kameleon*.conf
+%_datadir/polkit-1/actions/*kameleon*.policy
+%endif
 
 # comic
 #%_K6data/knsrcfiles/*.knsrc
@@ -213,6 +230,12 @@ touch touch-%_arch
 
 
 %changelog
+* Mon Jul 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
+- return kameleon
+
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

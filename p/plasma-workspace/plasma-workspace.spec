@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.7.2
-Release: alt2
+Version: 6.7.3
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -588,6 +588,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.3-alt1
+- new version
+
 * Tue Jul 07 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.2-alt2
 - remove alt-plasma-5.17-crash.patch (closes: 52069)
 

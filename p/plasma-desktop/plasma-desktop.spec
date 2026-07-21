@@ -16,7 +16,7 @@
 %define libkglobalaccelmodel libkglobalaccelmodel%sover
 
 Name: %rname
-Version: 6.7.2
+Version: 6.7.3
 Release: alt1
 %K6init
 
@@ -279,6 +279,9 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

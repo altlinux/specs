@@ -7,7 +7,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.7.2
+Version: 6.7.3
 Release: alt1
 #Epoch: 2
 %K6init
@@ -166,6 +166,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

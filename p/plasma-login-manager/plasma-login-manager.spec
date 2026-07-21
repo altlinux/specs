@@ -1,8 +1,9 @@
 %define rname plasma-login-manager
+%define login_defs_cut %_sysconfdir/plasmalogin/login.defs
 
 Name: %rname
-Version: 6.7.2
-Release: alt1
+Version: 6.7.3
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: QML based login manager from KDE
@@ -15,7 +16,7 @@ Requires: xinitrc >= 2.4.43 xauth /usr/share/design/current
 Requires: kf6-kimageformats
 Requires: kf6-filesystem
 Requires: kf6-kauth-common
-Requires(pre): shadow-utils
+Requires(post): shadow-utils
 Requires: kwin
 
 Source: %rname-%version.tar
@@ -47,8 +48,6 @@ BuildRequires: kf6-kconfig-devel kf6-kdbusaddons-devel kf6-kpackage-devel kf6-kw
 BuildRequires: kf6-kconfig-devel kf6-kcmutils-devel kf6-kpackage-devel kf6-kwindowsystem-devel kf6-ki18n-devel 
 BuildRequires: kf6-kauth-devel kf6-kio-devel kf6-kirigami-devel
 BuildRequires: plasma6-lib-devel plasma6-layer-shell-qt-devel plasma-workspace-devel plasma6-libkscreen-devel
-# verify presence to pull defaults from /etc/login.defs
-BuildRequires: shadow-utils
 
 %description
 Plasma Login provides a display manager for KDE Plasma
@@ -75,11 +74,9 @@ cat %SOURCE14 >data/scripts/Xsetup
 %build
 %K6cmake \
     -DDATA_INSTALL_DIR:PATH=%_K6data/plasmalogin \
-    -DUID_MIN=1000 \
-    -DUID_MAX=32000 \
     -DPAM_OS_CONFIGURATION:STRING="alt" \
     -DPAM_CONFIG_DIR:STRING=%_sysconfdir/pam.d \
-    -DLOGIN_DEFS_PATH:PATH=/dev/null \
+    -DLOGIN_DEFS_PATH:PATH=%login_defs_cut \
     -DSESSION_COMMAND:PATH=/etc/X11/Xsession \
     -DWAYLAND_SESSION_COMMAND:PATH=/etc/plasmalogin/wayland-session \
     #
@@ -100,6 +97,11 @@ install -Dpm 644 %SOURCE13 %buildroot/%_sysconfdir/plasmalogin.conf
 mkdir -p %buildroot/run/plasmalogin
 mkdir -p %buildroot/%_localstatedir/plasmalogin
 mkdir -p %buildroot/%_sysconfdir/plasmalogin/
+
+cat > %buildroot/%login_defs_cut <<__EOF__
+UID_MIN 1000
+UID_MAX 59999
+__EOF__
 
 rm -r %buildroot/%_datadir/plasmalogin/scripts/Xsession
 cp -a %buildroot/%_datadir/plasmalogin/scripts/* \
@@ -124,6 +126,9 @@ if [ $1 -eq 1 ] ; then
         # Initial installation
         $SYSTEMCTL preset plasmalogin.service > /dev/null 2>&1 ||:
 fi
+if [ -e /etc/login.defs ] ; then
+    grep '^UID_M[[:alpha:]][[:alpha:]][[:space:]]' /etc/login.defs > %login_defs_cut 2>/dev/null ||:
+fi
 
 %preun
 if [ $1 -eq 0 ] ; then
@@ -140,6 +145,7 @@ fi
 %dir %prefix/lib/plasmalogin
 %dir %prefix/lib/plasmalogin/plasmalogin.conf.d
 %config(noreplace) %_sysconfdir/plasmalogin/*
+%config(noreplace) %attr(0740, root, plasmalogin) %login_defs_cut
 %config(noreplace) %_sysconfdir/plasmalogin.conf
 %config(noreplace) %_sysconfdir/sysconfig/plasmalogin
 %config(noreplace) %_sysconfdir/pam.d/plasmalogin*
@@ -171,6 +177,12 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Tue Jul 21 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
+- fix detect min/max UID (closes: 58894)
+
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

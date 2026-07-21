@@ -5,8 +5,8 @@
 %endif
 
 Name: plasma-bigscreen
-Version: 6.7.2
-Release: alt2
+Version: 6.7.3
+Release: alt1
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -93,6 +93,9 @@ fi
 %_udev_rulesdir/40-uinput.rules
 
 %changelog
+* Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
+- new version
+
 * Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
 - fix packaging
 
