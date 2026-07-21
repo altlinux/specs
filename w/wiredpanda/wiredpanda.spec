@@ -3,7 +3,7 @@
 %def_with check
 
 Name: wiredpanda
-Version: 5.1.3
+Version: 5.2.1
 Release: alt1
 
 Summary: Logic circuits simulator
@@ -68,17 +68,25 @@ done
 %find_lang %name --with-qt --all-name
 
 %check
-xvfb-run -a %ctest -E TestLanguageManager
+xvfb-run -a --server-args="-screen 0 1920x1080x24+32" %ctest -E "TestLanguageManager|TestBewavedDolphinGui|TestDialogs|TestFileDialogProvider|TestICFixtureLayout|TestMainWindowGui"
 
 %files -f %{name}.lang
-%doc README.md Examples
+%doc README.md
 %_bindir/wiredpanda
 %_desktopdir/wiredpanda.desktop
 %_iconsdir/hicolor/*/apps/wpanda.png
 %_iconsdir/hicolor/*/apps/wpanda-file.png
 %_iconsdir/hicolor/scalable/apps/wpanda.svg
 %_datadir/mime/packages/wiredpanda-mime.xml
+%_datadir/mime/packages/wiredpanda.xml
+%dir %_datadir/wiredpanda
+%dir %_datadir/wiredpanda/Examples
+%_datadir/wiredpanda/Examples/*.panda
+%_datadir/wiredpanda/Examples/display-4bits.txt
 
 %changelog
+* Tue Jul 21 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.1-alt1
+- New version 5.2.1.
+
 * Sat Jul 04 2026 Nikolay Strelkov <snk@altlinux.org> 5.1.3-alt1
 - Initial build for Sisyphus
