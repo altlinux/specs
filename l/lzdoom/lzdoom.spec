@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: lzdoom
-Version: 4.14.3a
+Version: 4.14.4
 Release: alt2
 
 Summary: Enhanced Doom engine - version for old systems
@@ -11,7 +11,6 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
-ExcludeArch: %ix86
 Source: %name-%version.tar
 Source1: ico_%name.png
 
@@ -91,6 +90,12 @@ done
 %_datadir/mime/packages/org.zdoom.LZDoom-mime.xml
 
 %changelog
+* Tue Jul 21 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.4-alt2
+- Restore build for ix86
+
+* Mon Jul 20 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.4-alt1
+- disable build for x86 arch
+
 * Mon Apr 27 2026 Artyom Bystrov <arbars@altlinux.org> 4.14.3a-alt2
 - disable build for x86 arch
 
