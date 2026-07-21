@@ -5,7 +5,7 @@
 
 Name: kde6-%rname
 Version: 25.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -39,6 +39,7 @@ Obsoletes: kde5-libkleo-common < %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+BuildRequires: libgpgme-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -81,6 +82,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
+- update requires
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

@@ -1,5 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable legacy
+
 %define gpgme_sover 11
 %define libgpgme libgpgme%gpgme_sover
 %define gpgmepp_sover 6
@@ -18,7 +20,7 @@
 
 Name: gpgme
 Version: 1.24.3
-Release: alt3
+Release: alt4
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -26,6 +28,9 @@ Group: System/Libraries
 Url: http://www.gnupg.org/related_software/gpgme/index.html
 Vcs: git://git.gnupg.org/gpgme.git
 
+%if_enabled legacy
+%filter_from_provides /^pkgconfig/d
+%endif
 Conflicts: libgpgme-devel < 1.7
 Requires: %gpg_bin_path
 
@@ -96,19 +101,15 @@ Requires: %libgpgme
 Provides: libgpgme1 = %version-%release
 Obsoletes: libgpgme1 < %version-%release
 
-%package -n lib%name-devel
+%package -n gpgme1-devel
 Summary: Include files for development with GPGME
 Group: Development/C
 Requires: libgpg-error-devel
-Provides: libgpgme1-devel = %version-%release
-Obsoletes: libgpgme1-devel < %version-%release
 
-%package -n lib%name-devel-static
+%package -n gpgme1-devel-static
 Summary: Static libraries for development with GPGME
 Group: Development/C
-Requires: lib%name-devel = %version-%release
-Provides: libgpgme1-devel-static = %version-%release
-Obsoletes: libgpgme1-devel-static < %version-%release
+Requires: gpgme1-devel
 
 %package -n python3-module-gpg
 Summary: Python GpgME pindings
@@ -130,7 +131,7 @@ to public key crypto engines like GnuPG or GpgSM easier for
 applications.  GPGME provides a high-level crypto API for encryption,
 decryption, signing, signature verification and key management.
 
-%description -n lib%name-devel
+%description -n gpgme1-devel
 GnuPG Made Easy (GPGME) is a C language library that allows to add
 support for cryptography to a program.  It is designed to make access
 to public key crypto engines like GnuPG or GpgSM easier for
@@ -140,7 +141,7 @@ decryption, signing, signature verification and key management.
 This package contains include files required for development of
 GPGME-based applications.
 
-%description -n lib%name-devel-static
+%description -n gpgme1-devel-static
 GnuPG Made Easy (GPGME) is a C language library that allows to add
 support for cryptography to a program.  It is designed to make access
 to public key crypto engines like GnuPG or GpgSM easier for
@@ -186,11 +187,12 @@ pushd BUILD
 	--disable-fd-passing \
 	--with-gpg=%gpg_bin_path \
 	--with-gpgsm=%gpgsm_bin_path \
-	--enable-languages=cpp,python,qt5 \
+	--enable-languages=cpp,python%{!?_enable_legacy:,qt5} \
 	#
 %make_build MAKEINFOFLAGS=--no-split
 popd
 
+%if_disabled legacy
 mkdir -p BUILD-qt6
 ln -sf ../configure BUILD-qt6/configure
 pushd BUILD-qt6
@@ -205,14 +207,17 @@ pushd BUILD-qt6
 	#
 %make_build MAKEINFOFLAGS=--no-split
 popd
+%endif
 
 %install
 pushd BUILD
 %makeinstall_std
 popd
+%if_disabled legacy
 pushd BUILD-qt6
 %makeinstall_std
 popd
+%endif
 
 # Keep only PKG-INFO and *.txt files in egg-info dirs.
 find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
@@ -220,36 +225,56 @@ find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
      ! -name  'PKG-INFO' -a ! -name '*.txt' \
      -delete
 
+%if_enabled legacy
+rm -f %buildroot/%_bindir/gpgme-tool
+rm -f %buildroot/%_bindir/gpgme-json
+rm -f %buildroot/%_man1dir/gpgme-json.1*
+rm -f %buildroot/%_libdir/libqgpgme*.so* ||:
+rm -rf %buildroot/%_libdir/cmake/QGpgme*/
+rm -rf %buildroot/%_includedir/qgpgme-qt*
+if [ -n "`ls -1d %buildroot/%_libdir/python*`" ] ; then
+    rm -rf %buildroot/%_libdir/python* ||:
+fi
+%endif
+
 %check
 export PATH=$PWD/tmp_bin:$PATH
 pushd BUILD
 %make_build -k check
 popd
+%if_disabled legacy
 pushd BUILD-qt6
 %make_build -k check
 popd
+%endif
 
+%if_disabled legacy
 %files
 %_bindir/gpgme-tool
 %_bindir/gpgme-json
 %_man1dir/gpgme-json.1.*
+%endif
 
 %files common
 %doc AUTHORS NEWS README THANKS
 
+%if_disabled legacy
 %files -n python3-module-gpg
 %python3_sitelibdir/gpg-%version-py*egg-info
 %dir %python3_sitelibdir/gpg
 %python3_sitelibdir/gpg/*
+%endif
 
-%files -n lib%name-devel
+%files -n gpgme1-devel
 %_bindir/gpgme-config
 %_includedir/*.h
 %_includedir/gpgme++/
+%if_disabled legacy
 %_includedir/qgpgme-qt*
-%_libdir/*.so
-%_libdir/cmake/Gpgmepp/
 %_libdir/cmake/QGpgme*/
+%endif
+%_libdir/lib*.so
+%_libdir/cmake/Gpgmepp/
 %_datadir/aclocal/*.m4
 %_infodir/*.info*
 %_pkgconfigdir/%name.pc
@@ -258,7 +283,7 @@ popd
 #%_datadir/common-lisp/source/%name
 
 %if_enabled static
-%files -n lib%name-devel-static
+%files -n gpgme1-devel-static
 %_libdir/*.a
 %endif
 
@@ -269,14 +294,21 @@ popd
 %files -n %libgpgmepp
 %_libdir/libgpgmepp.so.%gpgmepp_sover
 %_libdir/libgpgmepp.so.%gpgmepp_sover.*
+%if_disabled legacy
 %files -n %libqgpgme
 %_libdir/libqgpgme.so.%qgpgme_sover
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 %files -n %libqgpgme6
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
+%endif
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 1.24.3-alt4
+- Move utils, Qt bindings and python module to gpgme2.
+- Don't provide pkgconfig() to resolve conflict with new version package.
+- Rename devel subpackage to allow remove in the future.
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.24.3-alt3
 - Added support of python 3.14 and 3.15.
 
