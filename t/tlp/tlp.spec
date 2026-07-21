@@ -3,7 +3,7 @@
 %define polkit_actions %_datadir/polkit-1/actions/
 
 Name: tlp
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Summary: Optimize laptop battery life
@@ -144,6 +144,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.2-alt1
+- new version 1.10.2
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt1
 - new version 1.10.1
 
