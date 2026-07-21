@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBI
 Name: perl-%dist
-Version: 1.647
+Version: 1.651
 Release: alt1
 
 Summary: Database independent interface for Perl
@@ -22,6 +22,7 @@ Patch2: DBD-alt-Changes.pod.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Devel-Leak perl-JSON-XS perl-List-MoreUtils perl-MLDBM perl-PlRPC perl-SQL-Statement perl-Test-Pod perl-Test-Pod-Coverage perl(autodie.pm) /usr/bin/podselect
+BuildRequires: perl-Module-Load
 
 %description
 The DBI is a database access module for the Perl programming language.
@@ -217,6 +218,9 @@ rm blib/lib/changes2pm.pl
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Fri Jul 17 2026 Alexander Danilov <admsasha@altlinux.org> 1.651-alt1
+- new version
+
 * Wed Apr 09 2025 Igor Vlasenko <viy@altlinux.org> 1.647-alt1
 - new version
 
