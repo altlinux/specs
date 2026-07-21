@@ -1,5 +1,5 @@
 %define module_name ixgbe
-%define module_version 6.4.4
+%define module_version 6.4.5
 
 %define module_source %module_name.tar
 
@@ -34,6 +34,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Tue Jul 21 2026 Alexei Takaseev <taf@altlinux.org> 6.4.5-alt1
+- 6.4.5
+
 * Thu Jul 02 2026 Alexei Takaseev <taf@altlinux.org> 6.4.4-alt1
 - 6.4.4
 
