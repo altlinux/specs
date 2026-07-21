@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.0.7
+Version: 2.1.3
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -30,7 +30,7 @@ Requires: %name-data = %version-%release
 %define _unpackaged_files_terminate_build 1
 
 %description
-PokerTH is a poker game written in C++/Qt5. You can play the popular
+PokerTH is a poker game written in C++/Qt6. You can play the popular
 "Texas Hold'em" poker variant against up to nine computer-opponents or
 play network games with people all over the world.
 
@@ -42,11 +42,39 @@ BuildArch: noarch
 Requires: %name = %version-%release
 
 %description data
-PokerTH is a poker game written in C++/Qt5. You can play the popular
+PokerTH is a poker game written in C++/Qt6. You can play the popular
 "Texas Hold'em" poker variant against up to nine computer-opponents or
 play network games with people all over the world.
 
 This package contents data files for %name.
+
+%package qml
+Summary: QML %name client
+Group: Games/Cards
+License: AGPL-3.0+
+Requires: %name-qml-data = %version-%release
+Requires: libqt6-quickcontrols2universal
+Requires: libqt6-quickvectorimage
+
+%description qml
+PokerTH is a poker game written in C++/Qt6. You can play the popular
+"Texas Hold'em" poker variant against up to nine computer-opponents or
+play network games with people all over the world.
+This package contains QML GUI client.
+
+%package qml-data
+Summary: Data files for QML %name client
+Group: Games/Cards
+License: ALT-Public-Domain and GPLv2+
+BuildArch: noarch
+Requires: %name-data = %version-%release
+
+%description qml-data
+PokerTH is a poker game written in C++/Qt6. You can play the popular
+"Texas Hold'em" poker variant against up to nine computer-opponents or
+play network games with people all over the world.
+
+This package contents data files for QML %name client.
 
 %prep
 %setup
@@ -84,13 +112,27 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 
 %files
 %_bindir/*
+%exclude %_bindir/pokerth_qml-client
+%_desktopdir/pokerth.desktop
 
 %files data
 %_datadir/pokerth
-%_desktopdir/pokerth.desktop
+%exclude %_datadir/pokerth/data/gfx/qml/
 %_pixmapsdir/pokerth.png
 
+%files qml
+%_bindir/pokerth_qml-client
+%_desktopdir/pokerth_qml.desktop
+
+%files qml-data
+%_datadir/pokerth/data/gfx/qml/
+
 %changelog
+* Wed Jul 22 2026 Mikhail Efremov <sem@altlinux.org> 2.1.3-alt1
+- Fixed description.
+- Built QML client and packaged as separate subpackage.
+- Updated to 2.1.3.
+
 * Mon Jun 01 2026 Mikhail Efremov <sem@altlinux.org> 2.0.7-alt1
 - Updated to 2.0.7.
 
