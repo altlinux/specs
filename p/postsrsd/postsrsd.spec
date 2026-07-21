@@ -1,5 +1,5 @@
 Name: postsrsd
-Version: 2.0.11
+Version: 2.3.0
 Release: alt1
 
 Summary: Sender Rewriting Scheme daemon for Postfix
@@ -55,6 +55,12 @@ fi
 /var/lib/postsrsd
 
 %changelog
+* Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0
+
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.7-alt1
+- new version (2.2.7) via gear-uupdate
+
 * Tue Mar 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
 - initial build for ALT Sisyphus
 
