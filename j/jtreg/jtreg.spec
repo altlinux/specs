@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define javaver 17
 %def_without check
 
 Name: jtreg
-Version: 8.2+1
+Version: 8.3+1
 Release: alt1
 
 Summary: Regression Test Harness for the OpenJDK platform: jtreg
@@ -11,7 +12,7 @@ Group: Development/Java
 Url: https://openjdk.org/projects/code-tools/jtreg
 Vcs: https://github.com/openjdk/jtreg
 
-ExcludeArch: i586
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 # Temporary solution while bug: 57053 is open
@@ -24,7 +25,7 @@ BuildRequires: openjdk-asmtools
 BuildRequires: hamcrest
 BuildRequires: jtharness
 BuildRequires: testng
-BuildRequires: java-21-openjdk-devel
+BuildRequires: java-%javaver-openjdk-devel
 BuildRequires: beust-jcommander
 BuildRequires: google-guice
 BuildRequires: apiguardian
@@ -74,13 +75,14 @@ mkdir -p %buildroot%_javadir/%name/{bin,doc}
 %install_tool_link doc/jtreg/usage.txt doc/usage.txt
 
 %check
-export JDKHOME=/usr/lib/jvm/java
+export JDKHOME=/usr/lib/jvm/java-%javaver-openjdk
 export JAVATEST_JAR=/usr/share/java/javatest.jar
 export ASMTOOLS_JAR=/usr/share/java/openjdk-asmtools/asmtools.jar
 export JUNIT_JARS=%SOURCE1
 export TESTNG_JARS=/usr/share/java/testng.jar
 export JCOMMANDER_JAR=/usr/share/java/beust-jcommander/jcommander.jar
 export GOOGLE_GUICE_JAR=/usr/share/java/guice/google-guice.jar
+export JAVA_SPECIFICATION_VERSION=%javaver
 
 cd ./make
 make test
@@ -95,6 +97,9 @@ make test
 %doc LICENSE README.md
 
 %changelog
+* Fri Jul 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 8.3+1-alt1
+- Updated to 8.3+1.
+
 * Tue Feb 10 2026 Timofei Fedotov <sovtouch@altlinux.org> 8.2+1-alt1
 - Updated to 8.2+1.
 

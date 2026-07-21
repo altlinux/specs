@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define javaver 21
+%define javaver 17
 %def_without check
 
 Name: jcov
 Version: 3.0
-Release: alt3
+Release: alt4
 
 Summary: The JCov open source project is used to gather quality metrics associated with the production of test suites
 License: GPL-2.0
@@ -58,6 +58,9 @@ ant test
 %doc LICENSE examples
 
 %changelog
+* Fri Jul 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt4
+- Change javaver to 17.
+
 * Tue Mar 30 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0-alt3
 - Fixed errors with String.formater (Closes: #57226).
 
