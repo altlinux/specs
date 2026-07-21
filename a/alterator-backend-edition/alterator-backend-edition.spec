@@ -2,7 +2,7 @@
 %define shortname edition
 
 Name: alterator-backend-%{shortname}
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Alterator backend for edition
@@ -78,6 +78,13 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Jul 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.3-alt1
+- Fix (thx Ajrat Makhmutov):
+  + edition resolution via dconf when VARIANT_ID does not match the
+    edition entity name (e.g., ALT Education);
+  + `editions license` fallback to legacy notes when edition-specific
+    license file is unresolved.
+
 * Fri Apr 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.2-alt1
 - Change (thx Ajrat Makhmutov):
   + the VARIANT key value in /etc/os-release from the edition's
