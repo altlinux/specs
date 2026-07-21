@@ -1,5 +1,5 @@
 Name: privoxy
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
@@ -65,7 +65,7 @@ export ac_cv_prog_MAN2HTML=man2html
 %install
 # From junkbuster.spec
 install -pD -m755 %name %buildroot%_sbindir/%name
-install -pD -m644 %name.8 %buildroot%_man8dir/%name.8
+install -pD -m644 man/%name.8 %buildroot%_man8dir/%name.8
 install -pD -m640 %name.log %buildroot%_sysconfdir/logrotate.d/%name
 install -pD -m755 %name.init %buildroot%_initdir/%name
 
@@ -143,6 +143,10 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0
+- fix manpage path (upstream moved to man/)
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - new version 4.1.0
 - switch to libpcre2
