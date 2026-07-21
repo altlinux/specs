@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt5
+Release: alt6
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -121,6 +121,9 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Thu Jul 16 2026 Alexander Danilov <admsasha@altlinux.org> 3.2.7-alt6
+- Apply upstream commit 7e5e1ef90c9c. (Fixes: CVE-2026-41035).
+
 * Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt5
 - Rebuilt with -std=gnu17 flag to fix ftbfs with compilers defaulting to C23+
   (gcc 15+).
