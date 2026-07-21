@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name httpbin
+%define mod_name httpbin
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
-Release: alt2
+Version: 0.10.4
+Release: alt1
 
 Summary: HTTP Request and Response Service
 License: ISC
@@ -19,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,11 +53,13 @@ All endpoint responses are JSON-encoded.
 %pyproject_run_pytest -vra
 
 %files
-%doc AUTHORS README.md LICENSE
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 0.10.4-alt1
+- Updated to 0.10.4.
+
 * Thu Apr 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt2
 - Fixed /bytes endpoint with newer werkzeug versions.
 
