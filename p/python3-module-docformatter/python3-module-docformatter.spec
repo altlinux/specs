@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.7
+Version: 1.7.8
 Release: alt1
 
 Summary: Formats docstrings to follow PEP 257
@@ -57,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 1.7.8-alt1
+- Updated to 1.7.8.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 1.7.7-alt1
 - Updated to 1.7.7.
 
