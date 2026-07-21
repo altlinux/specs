@@ -1,6 +1,6 @@
 %define oname PrismLauncher
 Name: prismlauncher
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
@@ -74,6 +74,9 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %_datadir/qlogging-categories6/
 
 %changelog
+* Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.3-alt1
+- new version 11.0.3 (with rpmrb script)
+
 * Wed May 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.2-alt1
 - new version
 
