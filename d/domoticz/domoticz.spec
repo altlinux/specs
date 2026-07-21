@@ -1,5 +1,5 @@
 Name: domoticz
-Version: 2023.2
+Version: 2026.2
 Release: alt1
 
 Summary: Open source Home Automation System
@@ -8,7 +8,7 @@ License: GPLv3+ and Apache-2.0 and Boost and BSD and MIT
 Group: Other
 Url: http://www.domoticz.com
 
-# Source-url: https://github.com/domoticz/domoticz/archive/%version.tar.gz
+# Source-url: https://github.com/domoticz/domoticz/releases/download/%version/domoticz_src_2026.18004.tar.gz
 Source: %name-%version.tar
 
 Source1: %name.service
@@ -16,14 +16,8 @@ Source2: %name.conf
 # Manually update version reported inside app
 Source3: %name-appversion
 
-# Use system tinyxpath (https://github.com/domoticz/domoticz/pull/1759)
-Patch1: %name-tinyxpath.patch
-# Fix python detection (https://github.com/domoticz/domoticz/pull/1749)
-Patch2: %name-python.patch
-# Python linking fix
-Patch3: %name-python-link.patch
-
-Patch4: %name-string.patch
+# Fix build with jsoncpp where valueToQuotedString takes single argument
+Patch1: %name-valueToQuotedString.patch
 
 AutoReq: yes, noperl, nolua
 AutoProv: no
@@ -32,7 +26,6 @@ BuildRequires: boost-program_options-devel boost-signals-devel boost-asio-devel
 BuildRequires: cereal-devel
 BuildRequires: cmake
 BuildRequires: curl-devel
-BuildRequires: libfmt-devel
 BuildRequires: fontpackages-devel
 BuildRequires: gcc-c++
 # TODO: remove
@@ -71,29 +64,23 @@ any mobile device
 
 %prep
 %setup
-#patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-# Add support for future versions of Python by replacing hardcoded version with macro
-%__subst 's/-lpythonVER/-lpython%__python3_version/' CMakeLists.txt
+%patch1 -p1
 cp -p %SOURCE3 ./appversion.h
 
 %build
 %cmake \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
- -DUSE_STATIC_LIBSTDCXX=NO \
  -DUSE_STATIC_OPENZWAVE=NO \
  -DUSE_OPENSSL_STATIC=NO \
  -DUSE_BUILTIN_JSONCPP=NO \
- -DUSE_BUILTIN_LIBFMT=NO \
- -DUSE_BUILTIN_LUA=NO \
  -DUSE_BUILTIN_MINIZIP=NO \
- -DUSE_BUILTIN_MQTT=NO \
  -DUSE_BUILTIN_SQLITE=NO \
- -DUSE_BUILTIN_TINYXPATH=NO \
+ -DUSE_BUILTIN_JWTCPP=YES \
+ -DUSE_LUA_STATIC=NO \
  -DUSE_STATIC_BOOST=NO \
+ -DUSE_STATIC_LIBSTDCXX=NO \
+ -DGIT_SUBMODULE=OFF \
+ -DDISABLE_UPDATER=YES \
  -DCMAKE_INSTALL_PREFIX=%_datadir/%name \
  %nil
 %cmake_build
@@ -121,9 +108,6 @@ cp -p %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 mkdir -p %buildroot%_sharedstatedir/%name/{backups,plugins,scripts,templates}
 mkdir -p %buildroot%_sharedstatedir/%name/scripts/{dzVents,lua,lua_parsers,python,templates}
 mkdir -p %buildroot%_sharedstatedir/%name/scripts/dzVents/{data,generated_scripts,scripts}
-
-# Disable the app's self-update script
-chmod 644 %buildroot%_datadir/%name/updatedomo
 
 # Unbundle DroidSans.ttf
 #rm -f %buildroot%_datadir/%name/www/styles/elemental/fonts/DroidSans.ttf
@@ -198,6 +182,9 @@ usermod -a -G uucp domoticz || :
 %_unitdir/%name.service
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.2-alt1
+- new version 2026.2 (with rpmrb script)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2023.2-alt1
 - initial build for ALT Sisyphus
 
@@ -262,7 +249,7 @@ usermod -a -G uucp domoticz || :
 * Thu Dec 16 2021 Michael Cronenworth <mike@cchtml.com> - 2021.1-7
 - Add patch for Python 3.10 support
 
-* Wed Nov 03 2021 Björn Esser <besser82@fedoraproject.org> - 2021.1-6
+* Wed Nov 03 2021 Bjoern Esser <besser82@fedoraproject.org> - 2021.1-6
 - Rebuild (jsoncpp)
 
 * Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 2021.1-5
@@ -283,7 +270,7 @@ usermod -a -G uucp domoticz || :
 * Wed Mar 31 2021 Jonathan Wakely <jwakely@redhat.com> - 2020.2-9
 - Rebuilt for removed libstdc++ symbols (#1937698)
 
-* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 2020.2-8
+* Tue Mar 02 2021 Zbigniew Jedrzejewski-Szmek <zbyszek@in.waw.pl> - 2020.2-8
 - Rebuilt for updated systemd-rpm-macros
   See https://pagure.io/fesco/issue/2583.
 
@@ -299,7 +286,7 @@ usermod -a -G uucp domoticz || :
 * Wed Jun 03 2020 Michael Cronenworth <mike@cchtml.com> - 2020.2-4
 - Rebuild for Boost 1.73 (RHBZ#1843104)
 
-* Sat May 30 2020 Björn Esser <besser82@fedoraproject.org> - 2020.2-3
+* Sat May 30 2020 Bjoern Esser <besser82@fedoraproject.org> - 2020.2-3
 - Rebuild (jsoncpp)
 - Add a patch to fix build with Python 3.9 (RHBZ#1842068)
 
@@ -344,7 +331,7 @@ usermod -a -G uucp domoticz || :
 * Thu Jan 24 2019 Jonathan Wakely <jwakely@redhat.com> - 4.9700-5
 - Rebuilt for Boost 1.69
 
-* Wed Jan 23 2019 Björn Esser <besser82@fedoraproject.org> - 4.9700-4
+* Wed Jan 23 2019 Bjoern Esser <besser82@fedoraproject.org> - 4.9700-4
 - Append curdir to CMake invokation. (#1668512)
 
 * Sun Nov 11 2018 Michael Cronenworth <mike@cchtml.com> - 4.9700-3
@@ -356,7 +343,7 @@ usermod -a -G uucp domoticz || :
 * Sun Jul 08 2018 Michael Cronenworth <mike@cchtml.com> - 4.9700-1
 - Version update
 
-* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 3.8153-7
+* Tue Jun 19 2018 Miro Hroncok <mhroncok@redhat.com> - 3.8153-7
 - Rebuilt for Python 3.7
 
 * Mon Jun 18 2018 Michael Cronenworth <mike@cchtml.com> - 3.8153-6
