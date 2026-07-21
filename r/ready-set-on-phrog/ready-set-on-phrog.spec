@@ -1,19 +1,19 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
 License: GPL-3.0-or-later
 Group: Other
-URL: https://altlinux.space/alt-gnome/ReadySet
-VCS: https://altlinux.space/alt-gnome/ReadySet.git
+URL: http://git.altlinux.org/gears/r/ready-set-on-phrog.git
+VCS: http://git.altlinux.org/gears/r/ready-set-on-phrog.git
 
 Source: %name-%version.tar
 
 Requires: phrog
-Requires: ready-set >= 0.5.0
+Requires: ready-set >= 0.10.0
 Requires: ready-set-plugin-language
 Requires: ready-set-plugin-keyboard
 Requires: ready-set-plugin-user-passwdqc
@@ -42,16 +42,16 @@ install -pDm0644 config \
 install -pDm0644 %name.conf \
 	%buildroot%_sysusersdir/%name.conf
 
-install -pDm0755 %name-system-post \
-	%buildroot%_datadir/ready-set/post-hooks/system/%name
-
 %files
 %_sysconfdir/dconf/db/local.d/50_*
 %_datadir/ready-set/config
 %_sysusersdir/%name.conf
-%_datadir/ready-set/post-hooks/system/%name
 
 %changelog
+* Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.2-alt1
+- Updated config for fresh ready-set.
+- Dropped system post hook.
+
 * Fri Mar 13 2026 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - Use dconf override instead ready-set hooks.
 

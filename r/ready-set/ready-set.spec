@@ -8,7 +8,7 @@
 %define libname lib%name
 %define girname ReadySet
 %define api_version 0
-%define major_version 9
+%define major_version 10
 %define minor_version 2
 %define gis_name gnome-initial-setup
 
@@ -23,6 +23,7 @@ URL: https://altlinux.space/alt-gnome/ReadySet
 VCS: https://altlinux.space/alt-gnome/ReadySet.git
 
 Source: %name-%version.tar
+Source1: %name.macros
 Patch: %name-%version-%release.patch
 
 Obsoletes: %name-translation <= 0.3.0-alt1
@@ -52,7 +53,7 @@ BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(ibus-1.0)
 BuildRequires: pkgconfig(libadwaita-1) >= 1.7
 BuildRequires: pkgconfig(libpeas-2)
-BuildRequires: pkgconfig(libserialize-7) >= 7.5
+BuildRequires: pkgconfig(libserialize-7) >= 7.9
 BuildRequires: pkgconfig(passwdqc)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
@@ -177,6 +178,13 @@ Requires: %name = %EVR
 %description plugin-welcome
 %summary.
 
+%package -n rpm-macros-%name
+Summary: RPM macros for %name plugins packages
+Group: Development/Other
+
+%description -n rpm-macros-%name
+%summary.
+
 %prep
 %setup
 %autopatch -p1
@@ -187,6 +195,7 @@ Requires: %name = %EVR
 
 %install
 %meson_install
+install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %find_lang %name
 
 %check
@@ -273,7 +282,21 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/steps/welcome.plugin
 %_libdir/%name/plugins/steps/libwelcome.so
 
+%files -n rpm-macros-%name
+%_rpmmacrosdir/%name
+
 %changelog
+* Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.10.2-alt1
+- New version: 0.10.1.
+- Added InstallerEndPage widget for final installation step.
+- Refactored hook system.
+- Added check for disabled password generation in User plugin.
+- Fixed segfault on empty installer.
+- Fixed segfault on wrong user configuration with proper error message.
+- Added rpm macros for plugins.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.10
+
 * Thu Jun 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.2-alt1
 - Fixed dialog assertions.
 - Fixed context vars applying from options/config.

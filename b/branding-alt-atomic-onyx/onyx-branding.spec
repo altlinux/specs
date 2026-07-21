@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260518
+Version: 20260720
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -31,7 +31,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-branding
+BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
+BuildRequires: pkgconfig(libready-set-0)
 
 %description
 %summary.
@@ -88,7 +90,7 @@ This package contains graphics for boot process for %pname
 (needs console splash screen enabled).
 
 %package graphics
-Summary: This package contains some graphics for %pname design.
+Summary: This package contains some graphics for %pname design
 Group: Graphics
 
 BuildArch: noarch
@@ -96,10 +98,26 @@ BuildArch: noarch
 Requires: icon-theme-alt-atomic-onyx
 Requires: wallpapers-alt-atomic-gnome
 
-Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour_onyx graphics
 
 %description graphics
+%summary.
+
+%package ready-set
+Summary: This package contains ready-set config
+Group: Other
+
+BuildArch: noarch
+
+Requires: ready-set-plugin-welcome
+Requires: ready-set-plugin-language
+Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-user-passwdqc
+Requires: ready-set-plugin-atomic-finalize
+
+%branding_add_conflicts %flavour_onyx ready-set
+
+%description ready-set
 %summary.
 
 %prep
@@ -136,10 +154,16 @@ plymouth-set-default-theme %theme
 
 %files graphics
 
+%files ready-set
+%__ready_set_datadir/config
+
 %files gnome-settings
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 20260720-alt1
+- Added ready-set config subpackage.
+
 * Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20260518-alt1
 - Fixed bugtracker link.
 
