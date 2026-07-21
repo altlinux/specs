@@ -3,8 +3,8 @@
 %def_with check
 
 Name: tremotesf
-Version: 2.9.1
-Release: alt3
+Version: 2.10.0
+Release: alt1
 
 Summary: Remote GUI for transmission-daemon
 License: GPL-3.0-or-later
@@ -88,6 +88,9 @@ sed -i "s/0.22.5/0.21/" data/CMakeLists.txt
 %_datadir/metainfo/org.equeim.Tremotesf.appdata.xml
 
 %changelog
+* Tue Jul 21 2026 Nikolay Strelkov <snk@altlinux.org> 2.10.0-alt1
+- New version 2.10.0.
+
 * Sat Jun 20 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt3
 - Fixed FTBFS.
 
