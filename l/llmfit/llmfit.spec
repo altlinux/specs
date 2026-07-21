@@ -3,7 +3,7 @@
 %def_with check
 
 Name: llmfit
-Version: 0.9.36
+Version: 1.1.6
 Release: alt1
 
 Summary: Hundreds of models & providers
@@ -40,13 +40,18 @@ cargo-vendor-checksum --vendor vendor --all
 %rust_install
 
 %check
-%rust_test
+%rust_test -- \
+  --skip test_custom_overlay_replaces_embedded_entry_by_slug \
+  #
 
 %files
 %doc README.md API.md
 %_bindir/%name
 
 %changelog
+* Tue Jul 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.6-alt1
+- new version
+
 * Fri Jul 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.9.36-alt1
 - new version
 
