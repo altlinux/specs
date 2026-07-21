@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.8
+Version: 3.2.11
 Release: alt1
 
 Summary: A Python 3.7+ port of the GraphQL.js reference implementation of GraphQL
@@ -58,6 +58,9 @@ created by Facebook.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 3.2.11-alt1
+- Updated to 3.2.11.
+
 * Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 3.2.8-alt1
 - Updated to 3.2.8.
 
