@@ -11,7 +11,7 @@
 
 Name:    appstream
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -22,6 +22,7 @@ Url:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 # VCS:   https://github.com/ximion/appstream
 Source:  appstream-%version.tar
 Patch1: alt-qt5.patch
+Patch2: alt-missing-include.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -169,6 +170,7 @@ BuildArch: noarch
 %prep
 %setup
 %patch1 -p1 -b .qt
+%patch2 -p1 -b .inc
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i 's/fromUtf8(res)/fromUtf8((gchar*)res)/' qt/*.cpp
@@ -294,6 +296,9 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Tue Jul 21 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt2
+- Fix FTBFS (see also: ALT #59885).
+
 * Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
 - New version.
 
