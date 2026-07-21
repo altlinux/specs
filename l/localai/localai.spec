@@ -1,5 +1,5 @@
 Name: localai
-Version: 4.4.3
+Version: 4.6.2
 Release: alt1
 
 Summary: LocalAI is the open-source AI engine. Run any model - LLMs, vision, voice, image, video - on any hardware.
@@ -15,7 +15,7 @@ Source1: localai.desktop
 Source2: launcher.png
 
 Patch0: %name-%version.patch
-Patch1: localai-4.3.6-alt1-prepare-for-alt.patch
+Patch1: localai-4.6.2-alt1-prepare-for-alt.patch
 Patch2: localai-4.3.6-alt1-fix-makefile-to-use-vendors.patch
 
 BuildRequires(pre): rpm-build-golang
@@ -55,6 +55,9 @@ make build-all VERSION=%version-%release \
 
 
 %changelog
+* Tue Jul 14 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.6.2-alt1
+- Updated from 4.4.3 to 4.6.2.
+
 * Tue Jun 16 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.4.3-alt1
 - Updated from 4.3.6 to 4.4.3.
 
