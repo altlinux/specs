@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10015
+Version: 10069
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -148,10 +148,6 @@ sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' src/C
 sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' tools/mtmd/CMakeLists.txt
 # We do not have Internet access (issues/13371).
 perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
-# This test requires GPU.
-sed /test-thread-safety/d -i tests/CMakeLists.txt
-# MTP test is not runnable w/o CUDA.
-sed /test-recurrent-state-rollback/d -i tests/CMakeLists.txt
 
 %build
 %define optflags_debug -g1
@@ -215,7 +211,9 @@ llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback and test-tokenizers-ggml-vocabs want network.
 # test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
-%ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-llama-archs'
+# test-thread-safety requires GPU; test-recurrent-state-rollback (MTP) is not runnable w/o CUDA.
+# test-generate-models (target test-llama-archs) needs a loadable ggml backend, absent in %check.
+%ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-generate-models|test-thread-safety|test-recurrent-state-rollback'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
@@ -285,6 +283,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Mon Jul 20 2026 Alexey Shabalin <shaba@altlinux.org> 1:10069-alt1
+- Update to b10069.
+
 * Wed Jul 15 2026 Anton Farygin <rider@altlinux.org> 1:10015-alt1
 - Update to b10015.
 - llama-rpc-server renamed to ggml-rpc-server (follow upstream naming).
