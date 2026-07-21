@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A deep merging tool for Python core data structures
@@ -53,5 +53,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.0-alt1
 - Packaged for ALT Sisyphus.
