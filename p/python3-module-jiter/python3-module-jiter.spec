@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Fast iterable JSON parser
@@ -43,7 +43,8 @@ install -vD %SOURCE3 .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+cd -
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -63,6 +64,9 @@ cd crates/jiter-python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 0.16.0-alt1
+- Updated to 0.16.0.
+
 * Wed Mar 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.13.0-alt1
 - Updated to 0.13.0.
 
