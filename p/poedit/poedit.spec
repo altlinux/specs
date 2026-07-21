@@ -3,18 +3,18 @@
 %define _libexecdir %_prefix/libexec
 %define rdn_name net.poedit.Poedit
 
-%def_with cpprest
+%def_without cpprest
 %def_without cld2
 
 Name: poedit
-Version: 3.9
+Version: 3.9.1
 Release: alt1
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
 Group: Editors
 License: MIT
-Url: http://www.poedit.net/
+Url: https://www.poedit.com
 
 Vcs: https://github.com/vslavik/poedit.git
 
@@ -60,6 +60,7 @@ sed -i 's,aarch64,&|e2k|loongarch64,' admin/ax_boost_base.m4
 
 %build
 %autoreconf
+%add_optflags -std=gnu++17
 %configure \
     %{subst_with cpprest} \
     %{subst_with cld2}
@@ -82,6 +83,13 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %doc AUTHORS NEWS README*
 
 %changelog
+* Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
+- 3.9.1
+- disabled cpprest support
+
+* Tue May 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9-alt1.1
+- rebuilt with gcc-15 & -std=gnu++17
+
 * Tue Mar 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9-alt1
 - 3.9
 

@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 3.0.9
-Release: alt3
+Release: alt4
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-asio-devel boost-interprocess-devel
-%{?_enable_check:BuildRequires: libgmock-devel}
+%{?_enable_check:BuildRequires: libgmock-devel ctest}
 
 %description
 An up to date C++ port of the popular Java Lucene library,
@@ -51,7 +51,7 @@ sed -i 's|2\.8\.12|3.5|' cmake/cotire.cmake
 %cmake_install
 
 %check
-#%%cmake_build -t test
+%ctest
 
 %files
 %_libdir/%name.so.*
@@ -67,6 +67,9 @@ sed -i 's|2\.8\.12|3.5|' cmake/cotire.cmake
 %_libdir/cmake/%{name}*
 
 %changelog
+* Thu Jul 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt4
+- updated to rel_3.0.9-49-g70e4696
+
 * Sat Apr 19 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt3
 - updated to rel_3.0.9-6-gc73fab5 (fixed build with boost-1.87)
 - fixed build with CMake-4.0.0
