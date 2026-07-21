@@ -1,5 +1,5 @@
 Name: libportmidi
-Version: 2.0.4
+Version: 2.0.8
 Release: alt1
 Epoch: 1
 
@@ -35,12 +35,7 @@ rm -f portmidi_cdt.zip */*.exe */*/*.exe
 # Fix permissons and encoding issues:
 find . -name "*.c" -exec chmod -x {} \;
 find . -name "*.h" -exec chmod -x {} \;
-for i in *.txt */*.txt */*/*.txt ; do
-   chmod -x $i
-   sed 's|\r||' $i > $i.tmp
-   touch -r $i $i.tmp
-   mv -f $i.tmp $i
-done
+find . -name "*.txt" -exec chmod -x {} \; -exec sed -i 's|\r||' {} \;
 
 %build
 %cmake_insource \
@@ -69,6 +64,9 @@ done
 %_libdir/libportmidi.so
 
 %changelog
+* Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.0.8-alt1
+- new version 2.0.8
+
 * Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1:2.0.4-alt1
 - new version (2.0.4) with rpmgs script (ALT bug 41760)
 - upstream changed version order, set epoch: 1
