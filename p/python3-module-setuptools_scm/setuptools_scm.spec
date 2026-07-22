@@ -2,10 +2,12 @@
 %define mod_name setuptools_scm
 %define pypi_name setuptools-scm
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 %if_enabled bootstrap
 %def_without check
+%else
+%def_with check
 %endif
 
 %define add_python_extra() \
@@ -22,7 +24,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%mod_name
 Version: 10.2.0
-Release: alt2
+Release: alt3
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -98,6 +100,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.0-alt3
+- Disabled the boostrap switch and properly reenabled the testsuite.
+
 * Wed Jul 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.0-alt2
 - Readd boostrap switch and enable it for Python 3.14 bootstrap.
 
