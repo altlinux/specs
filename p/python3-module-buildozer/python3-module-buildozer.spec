@@ -1,8 +1,8 @@
 %define oname buildozer
 
 Name: python3-module-buildozer
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Generic Python packager for Android and iOS
 
@@ -15,8 +15,6 @@ BuildArch: noarch
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-Patch1: python3-module-buildozer-remove-distutils.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -27,7 +25,6 @@ It automates the entire build process, download the prerequisites like python-fo
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %python3_build
@@ -44,6 +41,10 @@ It automates the entire build process, download the prerequisites like python-fo
 %python3_sitelibdir/%oname-*.egg-info/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- new version 1.6.0
+- drop distutils patch (merged upstream)
+
 * Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - remove distutils using (ALT bug 48243)
 
