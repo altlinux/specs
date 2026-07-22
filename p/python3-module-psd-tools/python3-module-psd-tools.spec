@@ -2,7 +2,7 @@
 %define  modulename psd_tools
 
 Name:    python3-module-psd-tools
-Version: 1.14.0
+Version: 1.17.4
 Release: alt1
 
 Summary: Python package for reading Adobe Photoshop PSD files
@@ -56,6 +56,11 @@ must be built with LITTLECMS or LITTLECMS2 support.
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.17.4-alt1
+- new version 1.17.4
+- SECURITY: fix arbitrary file write/read via smart-object filename (CVE-2026-49836)
+- SECURITY: fix uncontrolled memory allocation in composite/numpy via crafted PSD geometry (CVE-2026-59991)
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0
 
