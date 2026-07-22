@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.10.3
-Release: alt2
+Release: alt3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -36,7 +36,8 @@ BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libzstd-devel libicu-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libicu-devel
+BuildRequires: libzstd-devel libzstd-devel-static
 BuildRequires: qt6-base-devel qt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -326,6 +327,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
+- fix build requires for new libzstd
+
 * Wed May 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - hide qdbusviewer from menu (closes: 59114)
 
