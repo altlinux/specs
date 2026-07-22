@@ -2,7 +2,7 @@
 
 Name: ntp
 Version: 4.2.8p18
-Release: alt2
+Release: alt3
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -28,6 +28,7 @@ Source23: chrooted-ntpd.lib
 Patch1: %name-4.2.6p5-alt-compile-dirty-hack-NANO.patch
 Patch2: %name-4.2.8p14-MD5-to-SHA1-default.patch
 Patch3: %name-4.2.8p18-bug3926-gcc14.patch
+Patch4: %name-4.2.8p18-glibc-memchr-generic.patch
 
 Requires: ntp-doc = %version-%release
 Requires: ntp-utils = %version-%release
@@ -158,6 +159,7 @@ sed -i 's,-Wnormalized=id,,' sntp/libevent/configure*
 #patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 
 # Fix progname initialization when argc==0.
 fgrep -rl --include='*.c' 'progname = argv[0];' . |
@@ -361,6 +363,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Wed Jul 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.8p18-alt3
+- Fixed build with modern glibc.
+
 * Sun Oct 26 2025 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p18-alt2
 - disabled sntp's tests crypto,packetHandling,packetProcessing (ALT #56509)
 
