@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.3
-Release: alt3
+Release: alt4
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -104,7 +104,7 @@ BuildRequires: libinput-devel liblz4-devel liblzma-devel libmng-devel libmtdev-d
 BuildRequires: libpcre2-devel libproxy-devel libts-devel
 BuildRequires: libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
+BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel libzstd-devel-static
 BuildRequires: libat-spi2-core-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -869,6 +869,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt4
+- fix build requires for new libzstd
+
 * Wed Jun 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
 - don't generate SBOM by default
 
