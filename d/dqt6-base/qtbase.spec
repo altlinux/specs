@@ -36,7 +36,7 @@
 Name: dqt6-base
 %define major  6
 Version: 6.10.3
-Release: alt1.dde.2
+Release: alt1.dde.3
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -104,7 +104,7 @@ BuildRequires: libinput-devel liblz4-devel liblzma-devel libmng-devel libmtdev-d
 BuildRequires: libpcre2-devel libproxy-devel libts-devel
 BuildRequires: libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
+BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel-static
 BuildRequires: libat-spi2-core-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -891,6 +891,9 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Jul 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.3
+- fix build on zstd 1.5.7-alt1
+
 * Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.2
 - fix build on dqt6-declarative 6.10.3
 
