@@ -2,7 +2,7 @@
 %def_enable check
 
 Name:    rabbitvcs
-Version: 0.19.0.30.git0b4e201
+Version: 0.19.0.34.git08e7bbc
 Release: alt1
 
 Summary: Graphical user interface to version control systems
@@ -175,6 +175,9 @@ py.test-3 %name/tests/test_rabbitvcs.py::RabbitVCSTest
 %_datadir/nemo-python/extensions/*.py
 
 %changelog
+* Mon Jul 20 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.34.git08e7bbc-alt1
+- Update to last upstream commit from ref 08e7bbc.
+
 * Mon Oct 27 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.30.git0b4e201-alt1
 - Update to last upstream commit from ref 0b4e201d.
 - FTBFS: update nautilus-python requirement to v4.1.
