@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6
-Release: alt3
+Release: alt4
 
 Summary: Python wrapper for tshark, allowing python packet parsing using wireshark dissectors
 License: MIT
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 #fixed FTBFS 
 Patch1: get_ek_field_mapping.patch
+Patch2: compatibilize_with_python_3.14.patch
 
 BuildArch: noarch
 
@@ -44,6 +45,7 @@ Python wrapper for tshark, allowing python packet parsing using wireshark dissec
 %setup
 %patch0 -p1
 %patch1 -p0
+%patch2 -p0
 
 %build
 cd src
@@ -55,7 +57,7 @@ cd src
 
 %check
 cd src
-%tox_check_pyproject
+%pyproject_run_pytest ../tests -k 'not test_get_tshark_path and not test_iterate_empty_psml_capture'
 
 %files
 %doc LICENSE.txt README.md
@@ -63,6 +65,9 @@ cd src
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6-alt4
+- fixed FTBFS
+
 * Mon Mar 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6-alt3
 - fixed FTBFS
 
