@@ -2,7 +2,7 @@
 %def_with check
 
 Name: chezmoi
-Version: 2.70.5
+Version: 2.71.1
 Release: alt1
 
 Summary: Manage your dotfiles across multiple diverse machines, securely
@@ -13,6 +13,7 @@ Url: https://www.chezmoi.io/
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -30,6 +31,11 @@ repo including:
 
 %prep
 %setup -a1
+%patch0 -p1
+
+for file in $(find -name "*\[generated\]*"); do
+    mv -v "$file" "${file//\[generated\]/}"
+done
 
 %build
 export LDFLAGS="-compressdwarf=false \
@@ -61,6 +67,12 @@ install -vDm 644 completions/chezmoi.fish \
 %_datadir/fish/vendor_completions.d/chezmoi.fish
 
 %changelog
+* Tue Jul 21 2026 Egor Ignatov <egori@altlinux.org> 2.71.1-alt1
+- New version 2.71.1.
+
+* Wed Jul 08 2026 Egor Ignatov <egori@altlinux.org> 2.71.0-alt1
+- New version 2.71.0.
+
 * Thu Jun 04 2026 Egor Ignatov <egori@altlinux.org> 2.70.5-alt1
 - New version 2.70.5.
 
