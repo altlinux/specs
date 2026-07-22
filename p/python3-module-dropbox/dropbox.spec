@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.1.0
+Version: 12.2.1
 Release: alt1
 
 Summary: A Python SDK for integrating with the Dropbox API v2
@@ -21,13 +21,13 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-stone
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-six
 %endif
 
 %description
@@ -39,6 +39,7 @@ BuildRequires: python3-module-six
 sed -i 's/import mock/from unittest import mock/' test/unit/test_dropbox_unit.py
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -54,6 +55,9 @@ sed -i 's/import mock/from unittest import mock/' test/unit/test_dropbox_unit.py
 
 
 %changelog
+* Wed Jul 22 2026 Anton Vyatkin <toni@altlinux.org> 12.2.1-alt1
+- new version 12.2.1
+
 * Mon Jul 13 2026 Anton Vyatkin <toni@altlinux.org> 12.1.0-alt1
 - new version 12.1.0
 

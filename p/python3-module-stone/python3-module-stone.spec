@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.5.0
+Version: 3.5.3
 Release: alt1
 
 Summary: The Official API Spec Language for Dropbox API V2
@@ -20,6 +20,7 @@ Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
@@ -33,6 +34,7 @@ BuildRequires: python3-module-ply
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -48,6 +50,9 @@ BuildRequires: python3-module-ply
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Jul 20 2026 Anton Vyatkin <toni@altlinux.org> 3.5.3-alt1
+- New version 3.5.3.
+
 * Mon Jul 13 2026 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 
