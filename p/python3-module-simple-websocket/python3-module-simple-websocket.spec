@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Simple WebSocket server and client for Python.
 License: MIT
@@ -27,6 +27,8 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 
+Patch: fix-asyncio-pytest.patch
+
 %description
 Simple WebSocket server and client for Python.
 
@@ -42,6 +44,7 @@ This package contains documentation for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -64,6 +67,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt2
+- fixed FTBFS
+
 * Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
 - 1.0.0 -> 1.1.0
 
