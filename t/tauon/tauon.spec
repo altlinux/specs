@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tauon
-Version: 11.0.0
+Version: 11.1.1
 Release: alt1
 
 Summary: Play your music with style
@@ -150,6 +150,9 @@ install -Dm755 extra/tauonmb.sh %buildroot%_bindir/tauon
 %python3_sitelibdir/%{pyproject_distinfo tauon_music_box}
 
 %changelog
+* Wed Jul 22 2026 Nikolay Strelkov <snk@altlinux.org> 11.1.1-alt1
+- New version 11.1.1.
+
 * Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 11.0.0-alt1
 - New version 11.0.0.
 
