@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cbindgen
-Version: 0.29.2
+Version: 0.29.4
 Release: alt1
 
 Summary: A project for generating C bindings from Rust code.
@@ -47,6 +47,9 @@ EOF
 %_bindir/cbindgen
 
 %changelog
+* Wed Jul 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.29.4-alt1
+- New version.
+
 * Fri Oct 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.29.2-alt1
 - New version.
 
