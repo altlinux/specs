@@ -1,6 +1,6 @@
 %define oname huey
 Name: python3-module-%oname
-Version: 2.6.0
+Version: 3.2.1
 Release: alt1
 
 Summary: a little task queue for python
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
-# for test
-BuildRequires: python3-module-setuptools_scm
 
 %py3_use redis-py
 
@@ -53,10 +51,14 @@ rm -rfv %buildroot%python3_sitelibdir/huey/contrib/
 
 %files
 %_bindir/huey_consumer
-%_bindir/huey_consumer.py
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1
+- drop huey_consumer.py (entry-point only since 3.x)
+- drop setuptools_scm BR (version is now static __version__ attr)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
 - new version 2.6.0
 
