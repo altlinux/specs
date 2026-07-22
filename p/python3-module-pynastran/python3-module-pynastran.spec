@@ -2,9 +2,11 @@
 
 %define pypi_name pynastran
 
+%def_with check
+
 Name: python3-module-%pypi_name
 Version: 1.4.1
-Release: alt1.git20260717.a31c1b3
+Release: alt2.git20260717.a31c1b3
 
 Summary: A Python-based interface tool for Nastran's file formats
 License: BSD-3-Clause
@@ -16,6 +18,17 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-cpylog
+BuildRequires: python3-module-docopt
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-qtpy
+BuildRequires: python3-module-scipy
+BuildRequires: python3-module-contourpy
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-fonttools
+%endif
 
 %filter_from_requires /python3(OCC.Core.BRepPrimAPI)/d
 %filter_from_requires /python3(OCC.Display.SimpleGui)/d
@@ -61,6 +74,9 @@ OP2/F06 result files.
 %prep
 %setup -n %pypi_name-%version
 %patch -p1
+sed -i "s/docopt-ng>=0.9.0/docopt==0.6.2/" pyproject.toml \
+                                           requirements_docs.txt
+sed -i "s/docopt-ng/docopt/"               pyNastran/gui/menus/about/about.py
 
 # FIX versioning
 sed -i "s/'git'/'do-not-use-git-on-non-git-folder'/" pyNastran/__init__.py
@@ -88,6 +104,10 @@ Encoding=UTF-8
 Categories=Science
 EOF
 
+%check
+#%%tox_create_default_config
+%tox_check_pyproject
+
 %files
 %doc LICENSE.md README.md
 %python3_sitelibdir/pyNastran/
@@ -111,5 +131,8 @@ EOF
 %exclude %_bindir/bdf
 
 %changelog
+* Wed Jul 22 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt2.git20260717.a31c1b3
+- Enabled check.
+
 * Sun Jul 19 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1.git20260717.a31c1b3
 - Initial build for Sisyphus
