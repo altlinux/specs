@@ -18,7 +18,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.12.0
+Version: %ver_major.13.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -41,6 +41,8 @@ Patch2: bmo1973994-fix-os-dependent-headers.patch
 Patch3: js-arm-i386-no-simd.patch
 Patch4: Bug-1761665-Extend-x86-workaround-to-32-bit-ARM.patch
 Patch5: Fix-math_private.h-for-i386-FTBFS.patch
+# https://src.fedoraproject.org/rpms/mozjs140/blob/rawhide/f/D261512.1755672843.diff
+Patch6: mozjs-python-3.14.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -95,6 +97,7 @@ interface to the JavaScript engine.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -182,6 +185,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 140.13.0-alt1
+- 140.13.0
+
 * Tue Jun 23 2026 Yuri N. Sedunov <aris@altlinux.org> 140.12.0-alt1
 - 140.12.0
 
