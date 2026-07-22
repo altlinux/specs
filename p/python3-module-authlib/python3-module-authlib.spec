@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    python3-module-%modulename
-Version: 1.6.8
+Version: 1.7.2
 Release: alt1
 
 Summary: The ultimate Python library in building OAuth and OpenID Connect servers
@@ -90,6 +90,9 @@ authlib integration with django.
 %python3_sitelibdir/%modulename/integrations/flask_*/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
 - new version 1.6.8
 
