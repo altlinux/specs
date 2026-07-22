@@ -5,8 +5,8 @@
 %def_with python
 
 Name: tbb
-Version: 2023.0.0
-Release: alt3
+Version: 2023.1.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -177,6 +177,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 21 2026 Anton Farygin <rider@altlinux.org> 2023.1.0-alt1
+- 2023.0.0 -> 2023.1.0
+
 * Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 2023.0.0-alt3
 - fixed test_eh_algorithms livelock (SIGXCPU build timeout)
 
