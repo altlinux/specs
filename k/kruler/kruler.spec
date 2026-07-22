@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphics
@@ -14,6 +14,7 @@ Provides: kde5-kruler = %EVR
 Obsoletes: kde5-kruler < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-systray-click.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -27,6 +28,7 @@ BuildRequires: kf6-kcrash-devel
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -47,6 +49,9 @@ BuildRequires: kf6-kcrash-devel
 
 
 %changelog
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- fix show by system tray
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
