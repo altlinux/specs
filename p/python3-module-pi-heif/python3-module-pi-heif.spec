@@ -2,7 +2,7 @@
 %define mod_name pi_heif
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Python interface for libheif library
@@ -41,6 +41,9 @@ save operations.
 %python3_sitelibdir/%mod_name-%version.dist-info/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - initial build for ALT Sisyphus
 
