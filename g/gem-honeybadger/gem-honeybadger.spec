@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname honeybadger
 
 Name:          gem-honeybadger
 Version:       6.9.0
-Release:       alt1
+Release:       alt2
 Summary:       Full-stack error tracking, performance monitoring, logging, and more
 License:       MIT
 Group:         Development/Ruby
@@ -61,7 +61,7 @@ production issues faster-so you can focus on building, not debugging.
 
 %package       -n honeybadger
 Version:       6.9.0
-Release:       alt1
+Release:       alt2
 Summary:       Full-stack error tracking, performance monitoring, logging, and more executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета honeybadger
 Group:         Other
@@ -86,7 +86,7 @@ production issues faster-so you can focus on building, not debugging.
 %if_enabled    doc
 %package       -n gem-honeybadger-doc
 Version:       6.9.0
-Release:       alt1
+Release:       alt2
 Summary:       Full-stack error tracking, performance monitoring, logging, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета honeybadger
 Group:         Development/Documentation
@@ -112,7 +112,7 @@ production issues faster-so you can focus on building, not debugging.
 %if_enabled    devel
 %package       -n gem-honeybadger-devel
 Version:       6.9.0
-Release:       alt1
+Release:       alt2
 Summary:       Full-stack error tracking, performance monitoring, logging, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета honeybadger
 Group:         Development/Ruby
@@ -191,6 +191,9 @@ production issues faster-so you can focus on building, not debugging.
 
 
 %changelog
+* Wed Jul 08 2026 Alexander Burmatov <thatman@altlinux.org> 6.9.0-alt2
+- enable check
+
 * Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 6.9.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname guard
 
 Name:          gem-guard
 Version:       2.20.1
-Release:       alt1
+Release:       alt2
 Summary:       Guard keeps an eye on your file modifications
 License:       MIT
 Group:         Development/Ruby
@@ -80,7 +80,7 @@ modifications.
 
 %package       -n guard
 Version:       2.20.1
-Release:       alt1
+Release:       alt2
 Summary:       Guard keeps an eye on your file modifications executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета guard
 Group:         Other
@@ -101,7 +101,7 @@ Guard keeps an eye on your file modifications executable(s).
 %if_enabled    doc
 %package       -n gem-guard-doc
 Version:       2.20.1
-Release:       alt1
+Release:       alt2
 Summary:       Guard keeps an eye on your file modifications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета guard
 Group:         Development/Documentation
@@ -122,7 +122,7 @@ Guard keeps an eye on your file modifications documentation files.
 %if_enabled    devel
 %package       -n gem-guard-devel
 Version:       2.20.1
-Release:       alt1
+Release:       alt2
 Summary:       Guard keeps an eye on your file modifications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета guard
 Group:         Development/Ruby
@@ -187,6 +187,9 @@ Guard keeps an eye on your file modifications development package.
 
 
 %changelog
+* Wed Jul 08 2026 Alexander Burmatov <thatman@altlinux.org> 2.20.1-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 2.20.1-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

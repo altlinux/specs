@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname guard-rspec
 
 Name:          gem-guard-rspec
 Version:       4.7.3
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for RSpec
 License:       MIT
 Group:         Development/Ruby
@@ -53,7 +53,7 @@ Guard::RSpec automatically run your specs (much like autotest).
 %if_enabled    doc
 %package       -n gem-guard-rspec-doc
 Version:       4.7.3
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for RSpec documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета guard-rspec
 Group:         Development/Documentation
@@ -76,7 +76,7 @@ Guard::RSpec automatically run your specs (much like autotest).
 %if_enabled    devel
 %package       -n gem-guard-rspec-devel
 Version:       4.7.3
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for RSpec development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета guard-rspec
 Group:         Development/Ruby
@@ -134,6 +134,9 @@ Guard::RSpec automatically run your specs (much like autotest).
 
 
 %changelog
+* Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.3-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.3-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

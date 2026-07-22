@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname nenv
 
 Name:          gem-nenv
 Version:       0.3.0
-Release:       alt1
+Release:       alt2
 Summary:       Convenience wrapper for Ruby's ENV
 License:       MIT
 Group:         Development/Ruby
@@ -46,7 +46,7 @@ ends...
 %if_enabled    doc
 %package       -n gem-nenv-doc
 Version:       0.3.0
-Release:       alt1
+Release:       alt2
 Summary:       Convenience wrapper for Ruby's ENV documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nenv
 Group:         Development/Documentation
@@ -70,7 +70,7 @@ ends...
 %if_enabled    devel
 %package       -n gem-nenv-devel
 Version:       0.3.0
-Release:       alt1
+Release:       alt2
 Summary:       Convenience wrapper for Ruby's ENV development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nenv
 Group:         Development/Ruby
@@ -132,6 +132,9 @@ ends...
 
 
 %changelog
+* Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 0.3.0-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 0.3.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

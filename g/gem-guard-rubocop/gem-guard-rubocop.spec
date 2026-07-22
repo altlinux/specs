@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname guard-rubocop
 
 Name:          gem-guard-rubocop
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for RuboCop
 License:       MIT
 Group:         Development/Ruby
@@ -51,7 +51,7 @@ modified.
 %if_enabled    doc
 %package       -n gem-guard-rubocop-doc
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for RuboCop documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета guard-rubocop
 Group:         Development/Documentation
@@ -75,7 +75,7 @@ modified.
 %if_enabled    devel
 %package       -n gem-guard-rubocop-devel
 Version:       1.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for RuboCop development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета guard-rubocop
 Group:         Development/Ruby
@@ -137,6 +137,9 @@ modified.
 
 
 %changelog
+* Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

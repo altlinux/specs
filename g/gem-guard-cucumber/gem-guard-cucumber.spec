@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname guard-cucumber
 
 Name:          gem-guard-cucumber
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for Cucumber
 License:       MIT
 Group:         Development/Ruby
@@ -51,7 +51,7 @@ Guard::Cucumber automatically run your features (much like autotest)
 %if_enabled    doc
 %package       -n gem-guard-cucumber-doc
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for Cucumber documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета guard-cucumber
 Group:         Development/Documentation
@@ -74,7 +74,7 @@ Guard::Cucumber automatically run your features (much like autotest)
 %if_enabled    devel
 %package       -n gem-guard-cucumber-devel
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard plugin for Cucumber development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета guard-cucumber
 Group:         Development/Ruby
@@ -136,6 +136,9 @@ Guard::Cucumber automatically run your features (much like autotest)
 
 
 %changelog
+* Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 3.0.0-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 3.0.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

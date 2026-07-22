@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname guard-bundler
 
 Name:          gem-guard-bundler
 Version:       3.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for Bundler
 License:       MIT
 Group:         Development/Ruby
@@ -49,7 +49,7 @@ Guard::Bundler automatically install/update your gem bundle when needed
 %if_enabled    doc
 %package       -n gem-guard-bundler-doc
 Version:       3.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for Bundler documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета guard-bundler
 Group:         Development/Documentation
@@ -72,7 +72,7 @@ Guard::Bundler automatically install/update your gem bundle when needed
 %if_enabled    devel
 %package       -n gem-guard-bundler-devel
 Version:       3.1.0
-Release:       alt1
+Release:       alt2
 Summary:       Guard gem for Bundler development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета guard-bundler
 Group:         Development/Ruby
@@ -127,6 +127,9 @@ Guard::Bundler automatically install/update your gem bundle when needed
 
 
 %changelog
+* Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 3.1.0-alt2
+- enable check
+
 * Tue Jul 07 2026 Alexander Burmatov <thatman@altlinux.org> 3.1.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

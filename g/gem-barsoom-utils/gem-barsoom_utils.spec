@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable    check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname barsoom_utils
 
 Name:          gem-barsoom-utils
 Version:       0.2.0.75
-Release:       alt1
+Release:       alt2
 Summary:       Various helpful utils
 License:       MIT
 Group:         Development/Ruby
@@ -42,7 +42,7 @@ Various helpful utils
 %if_enabled    doc
 %package       -n gem-barsoom-utils-doc
 Version:       0.2.0.75
-Release:       alt1
+Release:       alt2
 Summary:       Various helpful utils documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета barsoom_utils
 Group:         Development/Documentation
@@ -63,7 +63,7 @@ Various helpful utils documentation files.
 %if_enabled    devel
 %package       -n gem-barsoom-utils-devel
 Version:       0.2.0.75
-Release:       alt1
+Release:       alt2
 Summary:       Various helpful utils development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета barsoom_utils
 Group:         Development/Ruby
@@ -121,6 +121,9 @@ Various helpful utils development package.
 
 
 %changelog
+* Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 0.2.0.75-alt2
+- enable check
+
 * Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 0.2.0.75-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
