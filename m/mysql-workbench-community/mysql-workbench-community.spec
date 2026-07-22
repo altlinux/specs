@@ -2,7 +2,7 @@
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt3
+Release: alt4
 
 Summary: A MySQL visual database modeling tool
 
@@ -24,6 +24,7 @@ Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-arm-fix.patch
 Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
 Patch5: %name-8.0.43-swig-4.3.patch
+Patch6: %name-8.0.47-alt-boost-1.91.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -89,7 +90,7 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: libmysqlclient-devel
 BuildConflicts: libmariadb-devel
 
-BuildRequires: boost-devel gcc-c++
+BuildRequires: boost-devel boost-devel-headers gcc-c++
 BuildRequires: liblua5-devel libpcre-devel libsqlite3-devel libxml2-devel libzip-devel
 
 BuildRequires: boost-signals-devel
@@ -135,6 +136,8 @@ BuildRequires: at-spi2-atk-devel libdbus-devel libat-spi2-core-devel libXtst-dev
 BuildRequires: python3-dev
 BuildRequires: libantlr4-devel
 
+BuildRequires: pkgconfig(libpcre2-8)
+
 # 8.0.33 antlr-4.11.1-complete.jar
 BuildRequires: java-21-openjdk
 
@@ -177,6 +180,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 %patch3 -p1
 %patch4 -p2
 %patch5 -p1
+%patch6 -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -190,6 +194,8 @@ sed -i "s/ -Wno-deprecated-copy//g" CMakeLists.txt
 sed -i "/token.h/d" library/grt/src/python_context.cpp
 
 %build
+
+%add_optflags -std=c++17
 
 %ifarch %ix86
 %add_optflags -Wno-error=format=
@@ -260,6 +266,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt4
+- NMU: fix FTBFS with new boost.
+
 * Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.47-alt3
 - Updated libgdal38 -> libgdal39.
 
