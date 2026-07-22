@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-xmldiff
-Version: 2.7.0
+Version: 3.0
 Release: alt1
 Summary: A library and command line utility for diffing xml
 License: MIT
@@ -61,6 +61,9 @@ provides tools to make human readable diffs in those situations.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 14 2026 Andrey Kovalev <ded@altlinux.org> 3.0-alt1
+- Updated to upstream version 3.0.
+
 * Tue Jul 15 2025 Andrey Kovalev <ded@altlinux.org> 2.7.0-alt1
 - Updated to upstream version 2.7.0.
 
