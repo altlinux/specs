@@ -7,8 +7,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: criu
-Version: 4.2
-Release: alt3
+Version: 4.2.1
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -200,6 +200,9 @@ rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %changelog
+* Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2.1-alt1
+- Updated to 4.2.1.
+
 * Thu Jun 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2-alt3
 - Fix FTBFS with glibc-2.43.0.35.fe0ccc-alt1.
 
