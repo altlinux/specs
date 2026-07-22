@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: yank
-Version: 1.3.0
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 Summary: Yank terminal output to clipboard
 License: MIT 
 Group: Other
@@ -39,6 +39,9 @@ install -m 0644 %name.1* %buildroot%_man1dir
 %doc README.md LICENSE
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 1.4.0-alt1
+- Update to new version 1.4.0.
+
 * Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.3.0-alt1.1
 - Update based on upstream. 
 

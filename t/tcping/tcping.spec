@@ -4,7 +4,7 @@
 
 Name: tcping
 Version: 2.8.0
-Release: alt1
+Release: alt2
 Summary: Ping TCP ports using tcping. Inspired by Linux's ping utility. Written in Go
 License: MIT
 Group: Networking/Other
@@ -16,7 +16,6 @@ Patch: %name-%version-%release.patch
 Patch1: alt-remove-seconds.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 TCPing will send TCP probes to an IP address or a hostname specified
@@ -72,6 +71,9 @@ mkdir -p %buildroot%_datadir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 2.8.0-alt2
+- Remove optional build dependency.
+
 * Tue May 12 2026 Pavel Shilov <zerospirit@altlinux.org> 2.8.0-alt1
 - Update to new version 2.8.0.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systing
-Version: 1.11.22
+Version: 1.11.26
 Release: alt1
 Summary: A libbpf based tracer to help figure out what an application is doing. 
 License: MIT
@@ -59,6 +59,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 1.11.26-alt1
+- Update to new version 1.11.26.
+
 * Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.11.22-alt1
 - Update to new version 1.11.22.
 

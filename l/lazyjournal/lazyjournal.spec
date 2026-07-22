@@ -3,7 +3,7 @@
 
 Name: lazyjournal
 Version: 0.8.6
-Release: alt1
+Release: alt2
 Summary: Terminal user interface for journalctl
 License: MIT
 Group: System/Configuration/Boot and Init
@@ -14,7 +14,6 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
 
 %description
 TUI for journalctl, logs in the file system, Docker and Podman containers for
@@ -46,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.6-alt2
+- Remove optional build dependency.
+
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.6-alt1
 - 0.8.5 -> 0.8.6
 

@@ -3,8 +3,8 @@
 %global pkg_name wtfutil
 
 Name: wtf
-Version: 0.47.1
-Release: alt2
+Version: 0.50.0
+Release: alt1
 Summary: The personal information dashboard for your terminal.
 License: MPL-2.0
 Group: Terminals
@@ -15,8 +15,6 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-golang 
-BuildRequires: golang
-BuildRequires: glibc
 
 Conflicts: bsd-games
 
@@ -55,6 +53,9 @@ cp -pr _sample_configs %buildroot%_docdir/
 %_docdir/_sample_configs
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.50.0-alt1
+- 0.47.1 -> 0.50.0
+
 * Thu Nov 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.47.1-alt2
 - Update non-code file from vendor to meet RF legal constraints.
 

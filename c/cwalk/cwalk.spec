@@ -3,7 +3,7 @@
 
 Name: cwalk
 Version: 1.2.9
-Release: alt1
+Release: alt2
 Summary: Path library for C/C++. Cross-Platform for Linux.
 License: MIT
 Group: Development/C
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: /proc
 
 %description
 This is a lighweight C path manipulation library.
@@ -70,5 +69,8 @@ export CFLAGS="%optflags"
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 1.2.9-alt2
+- Remove optional build dependency.
+
 * Tue Sep 30 2025 Pavel Shilov <zerospirit@altlinux.org> 1.2.9-alt1
 - Initial build for Sisyphus.

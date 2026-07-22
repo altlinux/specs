@@ -2,7 +2,7 @@
 
 Name: tukai
 Version: 0.2.3
-Release: alt1
+Release: alt2
 Summary: Terminal based touch typing application.
 License: MIT
 Group: Games/Educational
@@ -14,7 +14,6 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: rust-cargo
 
 %description
 The app provides an interactive typing experience with switchable templates,
@@ -43,6 +42,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.2.3-alt2
+- Remove optional build dependency.
+
 * Tue Aug 19 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.3-alt1
 - 0.2.2 -> 0.2.3
 
