@@ -8,9 +8,9 @@
 %def_without   xblas
 
 Name:          lib%nomen
-Epoch:         1
+Epoch:         2
 Version:       3.12.1
-Release:       alt1
+Release:       alt2
 Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra
 License:       BSD
 Group:         System/Libraries
@@ -238,6 +238,9 @@ real and complex matrices in both single and double precision.
 
 
 %changelog
+* Wed Jul 22 2026 Ivan A. Melnikov <iv@altlinux.org> 2:3.12.1-alt2
+- NMU: Bump epoch to complete loongarch64 bootstrap
+
 * Sat Apr 04 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.12.1-alt1
 - ^ 3.8.0 -> 3.12.1
 - + enabled lapacke and cblas packages (ALT #39238)
