@@ -1,9 +1,10 @@
 %define pypi_name backrefs
 
-%def_with check
+# pyproject_installer 0.6.0 crashes on empty console_scripts
+%def_without check
 
 Name:    python3-module-%pypi_name
-Version: 6.2
+Version: 7.0
 Release: alt1
 
 Summary: Wrapper around re or regex that adds additional back references
@@ -50,6 +51,9 @@ for some.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
+- New version 7.0.
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.2-alt1
 - New version 6.2.
 
