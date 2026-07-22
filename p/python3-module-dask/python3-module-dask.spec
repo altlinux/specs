@@ -1,7 +1,7 @@
 %define modulename dask
 
 Name: python3-module-dask
-Version: 2026.1.2
+Version: 2026.7.1
 Release: alt1
 
 Summary: Parallel PyData with Task Scheduling
@@ -43,6 +43,9 @@ Dask is a flexible parallel computing library for analytics.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.7.1-alt1
+- new version 2026.7.1
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.1.2-alt1
 - new version 2026.1.2
 - switch to pyproject build with setuptools-scm
