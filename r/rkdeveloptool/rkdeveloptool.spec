@@ -1,6 +1,6 @@
 Name: rkdeveloptool
-Version: 1.3
-Release: alt3
+Version: 1.32
+Release: alt1
 
 Summary: rkdeveloptool gives you a simple way to read/write rockusb device
 
@@ -39,6 +39,10 @@ install -D -m 644 %{SOURCE1} %buildroot%_udevrulesdir/99-rkdeveloptool.rules
 %_bindir/%name
 
 %changelog
+* Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.32-alt1
+- new version 1.32 (update master snapshot)
+- fix version: was 1.3, should be 1.32 (per configure.ac)
+
 * Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt3
 - drop -Werror
 
