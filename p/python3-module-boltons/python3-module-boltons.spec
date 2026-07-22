@@ -1,7 +1,7 @@
 %define modulename boltons
 
 Name: python3-module-boltons
-Version: 25.0.0
+Version: 26.0.0
 Release: alt1
 
 Summary: When they're not builtins, they're boltons.
@@ -41,6 +41,9 @@ Contains over 230 BSD-licensed utility types and functions that can be used as a
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 26.0.0-alt1
+- new version 26.0.0
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 25.0.0-alt1
 - new version 25.0.0 (with rpmrb script)
 - switch to pyproject build
