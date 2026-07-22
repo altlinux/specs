@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Imager
-Version: 1.031
+Version: 1.033
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -51,7 +51,8 @@ Imager - модуль  Perl для  создания  и работы с  гра
 %setup  -n Imager-%version
 %autopatch -p1
 # xt/x91manifest.t failed
-echo .perl.req >> MANIFEST.SKIP
+# upstream MANIFEST.SKIP may lack trailing newline, so start with one
+printf '\n.perl.req\n' >> MANIFEST.SKIP
 
 %build
 IM_SUPPRESS_PROM=1 \
@@ -71,6 +72,9 @@ IM_SUPPRESS_PROM=1 \
 %exclude /.perl.req
 
 %changelog
+* Wed Jul 22 2026 Anton Farygin <rider@altlinux.org> 1.033-alt1
+- 1.031 -> 1.033
+
 * Tue May 26 2026 Anton Farygin <rider@altlinux.org> 1.031-alt1
 - 1.029 -> 1.031
 
