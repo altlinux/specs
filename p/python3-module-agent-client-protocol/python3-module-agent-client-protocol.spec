@@ -3,7 +3,7 @@
 %define mod_name acp
 
 Name:    python3-module-%pypi_name
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Python SDK for Agent Client Protocol (ACP)
@@ -45,5 +45,8 @@ ACP clients, agents, transports and routers using pydantic models.
 %python3_sitelibdir/%{pyproject_distinfo %dist_name}
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- new version 0.11.0
+
 * Fri May 01 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - initial build for ALT Sisyphus
