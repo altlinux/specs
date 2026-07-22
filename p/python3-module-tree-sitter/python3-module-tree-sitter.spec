@@ -4,7 +4,7 @@
 %define mod_name tree_sitter
 
 Name:    python3-module-%pypi_name
-Version: 0.25.2
+Version: 0.26.0
 Release: alt1
 
 Summary: Python bindings to the Tree-sitter parsing library
@@ -49,5 +49,8 @@ C library (compiled as a CPython extension module).
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.0-alt1
+- new version 0.26.0 (with rpmrb script)
+
 * Thu May 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.25.2-alt1
 - initial build for ALT Sisyphus
