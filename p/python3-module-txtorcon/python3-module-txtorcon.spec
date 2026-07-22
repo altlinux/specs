@@ -1,7 +1,7 @@
 %define modulename txtorcon
 
 Name: python3-module-txtorcon
-Version: 24.8.0
+Version: 26.6.0
 Release: alt1
 
 Summary: txtorcon password-authenticated key exchange (pure python)
@@ -49,6 +49,9 @@ rm -rfv %buildroot%_datadir/%modulename/*.py
 %_datadir/%modulename/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 26.6.0-alt1
+- new version 26.6.0
+
 * Wed Mar 19 2025 Vitaly Lipatov <lav@altlinux.ru> 24.8.0-alt1
 - new version 24.8.0 (with rpmrb script)
 
