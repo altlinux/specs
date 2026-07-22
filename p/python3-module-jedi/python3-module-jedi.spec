@@ -1,28 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-
 %define pypi_name jedi
-%define mod_name %pypi_name
+%define mod_name jedi
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.2
-Release: alt2
+Version: 0.20.0
+Release: alt1
+
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/jedi/
 Vcs: https://github.com/davidhalter/jedi
+
 BuildArch: noarch
+
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Source2: modules.tar
+Source2: %name-%version-submodules.tar
 Patch0: %name-%version-alt.patch
+
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_enabled check
-%pyproject_builddeps_metadata_extra testing
+%if_with check
+%add_pyproject_deps_check_filter zuban
+%pyproject_builddeps_metadata_extra dev
 # sqlite3 is subpackaged but required by test_sqlite3_conversion
 BuildRequires: python3-modules-sqlite3
 %endif
@@ -50,14 +54,16 @@ bugs should be rare.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -vra
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 22 2026 Anton Zhukharev <ancieg@altlinux.org> 0.20.0-alt1
+- Updated to 0.20.0.
+
 * Mon Dec 29 2025 Anton Zhukharev <ancieg@altlinux.org> 0.19.2-alt2
 - NMU: Fixed FTBFS (Python 3.13).
 
@@ -103,4 +109,3 @@ bugs should be rare.
 
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.final0.git20150102
 - Initial build for Sisyphus
-

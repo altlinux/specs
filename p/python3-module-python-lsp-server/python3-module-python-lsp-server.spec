@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
@@ -62,6 +62,9 @@ export CI=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 22 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt2
+- Fixed FTBFS (jedi>=0.20.0).
+
 * Tue Mar 10 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
 - Updated to 1.14.0.
 
