@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ready-set-plugin-atomic-finalize
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: ALT Atomic finalization logic baked in pageless plugin
@@ -48,5 +48,9 @@ BuildRequires: pkgconfig(libready-set-0)
 %_datadir/polkit-1/rules.d/org.altlinux.ReadySet.Plugin.AtomicFinalize.rules
 
 %changelog
+* Wed Jul 22 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
+- New version: 0.2.
+- Fixed apm DBus action name.
+
 * Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1-alt1
 - Initail build.
