@@ -2,7 +2,7 @@
 %define soname 5.3.0
 
 Name: libminc
-Version: 2.4.07
+Version: 2.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -72,6 +72,9 @@ This package contains development files for libminc.
 %_includedir/*
 
 %changelog
+* Wed Jul 22 2026 Anton Farygin <rider@altlinux.org> 2.5.0-alt1
+- 2.4.07 -> 2.5.0
+
 * Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 2.4.07-alt1
 - 2.4.3 -> 2.4.07
 
