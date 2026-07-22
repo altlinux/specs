@@ -1,6 +1,6 @@
 Name: drawpile
 Version: 2.3.0
-Release: alt2
+Release: alt3
 
 Summary: A collaborative drawing program
 Summary(ru_RU.UTF-8): Программа для совместного рисования
@@ -40,6 +40,7 @@ BuildRequires: qt6-translations
 BuildRequires: qt6-websockets-devel
 BuildRequires: rust-cargo
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel-static
 
 %description
 Drawpile is a Free/Libre networked drawing program that allows multiple people
@@ -87,6 +88,9 @@ export CARGO_HOME=${PWD}/cargo
 %_datadir/mime/text/vnd.%name.recording.xml
 
 %changelog
+* Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt3
+- fixed FTBFS
+
 * Sun May 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt2
 - fixed FTBFS
 
