@@ -5,7 +5,7 @@
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 Version: 2.9.6
-Release: alt1
+Release: alt2
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
@@ -24,6 +24,11 @@ Patch10: PrusaSlicer-2.9.1-glad-system.patch
 Patch11: PrusaSlicer-2.9.1-glad-cmake-new.patch
 Patch20: PrusaSlicer-2.9.4-adapting-to-eigen5.patch
 Patch21: PrusaSlicer-2.9.4-occt_wrapper-make-fix.patch
+
+# from OpenSuSE; adapting to new boost
+Patch30: PrusaSlicer-2.9.2-boost-1.88.patch
+Patch31: PrusaSlicer-2.9.3-boost-1.89.0-asio.patch
+Patch32: PrusaSlicer-2.9.3-boost-1.89.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-intro
@@ -77,6 +82,7 @@ BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
 BuildRequires: bzlib-devel
 BuildRequires: libbrotli-devel
+BuildRequires: libcap-devel
 BuildRequires: libsystemd-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: libz3-devel
@@ -171,6 +177,10 @@ popd
 %doc README.md doc/
 
 %changelog
+* Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 2.9.6-alt2
+- Fix FTBFS with boost 1.91.0.
+- Rebuild with libcap-devel.
+
 * Fri Jul 10 2026 Anton Midyukov <antohami@altlinux.org> 2.9.6-alt1
 - New version 2.9.6.
 

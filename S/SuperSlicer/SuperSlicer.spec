@@ -6,7 +6,7 @@
 Name: SuperSlicer
 Summary: A PrusaSlicer fork (which is a slic3r fork) (previously Slic3r++)
 Version: 2.7.61.10
-Release: alt5
+Release: alt6
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://superslicer.net
@@ -18,6 +18,7 @@ ExcludeArch: %ix86
 
 Provides: super-slicer = %EVR
 
+Patch: %name-%version-%release.patch
 Patch1: 0001-Fix-libexpat-build-config.patch
 Patch2: 0011-Fix-GLEW-init.patch
 Patch3: 0005-cgal6.patch
@@ -76,6 +77,7 @@ BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
 BuildRequires: bzlib-devel
 BuildRequires: libbrotli-devel
+BuildRequires: libcap-devel
 BuildRequires: libsystemd-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: libz3-devel
@@ -151,6 +153,10 @@ popd
 %doc README.md doc/
 
 %changelog
+* Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 2.7.61.10-alt6
+- Fix FTBFS and compatibility with boost 1.91.0.
+- Rebuild with libcap-devel.
+
 * Mon Jun 08 2026 Anton Midyukov <antohami@altlinux.org> 2.7.61.10-alt5
 - Rebuild with libwebkit2gtk4.1-devel.
 
