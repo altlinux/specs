@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name appimage-thumbnailer
-%define ver_major 4.0
+%define ver_major 4.1
 
 # DwarFS tools: dwarfsextract, dwarfsck required
 %def_disable bundle_dwarfs
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: AppImage Thumbnailer
@@ -32,7 +32,7 @@ ExclusiveArch: x86_64 aarch64
 
 %define pixbuf_ver 2.42
 %define rsvg_ver 2.54
-%define dwarfs_ver 0.14.1
+%define dwarfs_ver 0.15.5
 
 Requires: dwarfs-tools >= %dwarfs_ver
 # if kernel < 3.18
@@ -72,6 +72,9 @@ freedesktop.org spec.
 %doc README*
 
 %changelog
+* Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 

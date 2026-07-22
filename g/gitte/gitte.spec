@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GTK4/libadwaita Git client for the GNOME desktop
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Thu Jul 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
