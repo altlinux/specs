@@ -1,6 +1,6 @@
 Name: cataclysm-dda
-Version: 0.H
-Release: alt2
+Version: 0.I
+Release: alt1
 
 Summary: Turn-based survival game set in a post-apocalyptic world
 License: CC-BY-SA-3.0 and GPLv2+ and OFL-1.1 and BSL-1.0 and Zlib and MIT and BSD-3-Clause
@@ -11,11 +11,11 @@ Vcs: https://github.com/CleverRaven/Cataclysm-DDA.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Patch from upstream master branch
-Patch1: gcc14-const-assignment.patch
-
 BuildRequires: gcc-c++ libncursesw-devel
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libfreetype-devel
+BuildRequires: libxxhash-devel
+# zstd is used with experimental features and needs static linking
+BuildRequires: libzstd-devel-static >= 1.5.7
 
 # Comment from Debian package:
 # Upstream maintainer confirmed in IRC and issue tracker that
@@ -101,7 +101,6 @@ Data files for %name-sdl.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' Makefile CMakeLists.txt
@@ -148,7 +147,7 @@ LC_ALL=C.UTF-8 make -k PCH=0 RUNTESTS=1 check
 %_datadir/%name/credits/
 %_datadir/%name/font/
 %_datadir/%name/fontdata.json
-%_datadir/%name/help/
+#_datadir/%name/help/
 %_datadir/%name/json/
 %_datadir/%name/mods/
 %_datadir/%name/motd/
@@ -167,6 +166,11 @@ LC_ALL=C.UTF-8 make -k PCH=0 RUNTESTS=1 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jul 08 2026 Mikhail Efremov <sem@altlinux.org> 0.I-alt1
+- Built with system zstd and xxhash.
+- Dropped obsoleted patches.
+- Updated to 0.I "Ito".
+
 * Mon Dec 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.H-alt2
 - Fixed build for Elbrus.
 
