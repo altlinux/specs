@@ -1,5 +1,5 @@
 Name: python3-module-qpageview
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: page-based viewer widget for Qt5/PyQt5
@@ -38,6 +38,9 @@ page-based viewer widget for Qt5/PyQt5.
 %python3_sitelibdir/%{pyproject_distinfo qpageview}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
+- new version 1.0.5
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - new version 1.0.3
 - switch to pyproject build (hatchling)
