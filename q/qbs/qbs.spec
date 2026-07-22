@@ -2,12 +2,12 @@
 
 %define _libexecdir %_usr/libexec
 
-%define abiversion 3
+%define abiversion 3.3
 
 %def_with check
 
 Name:    qbs
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Modern build tool for software projects
@@ -16,7 +16,7 @@ Group:   Development/Tools
 Url:  	 https://qbs.io
 Vcs:     https://github.com/qbs/qbs.git
 
-Source: %name-%version.tar
+Source: qbs-%version.tar
 
 BuildRequires(pre): cmake rpm-macros-qt6
 BuildRequires: ninja-build
@@ -32,8 +32,7 @@ BuildRequires: python3-module-beautifulsoup4
 BuildRequires: ctest
 %endif
 
-Provides: %name-common = %EVR
-Obsoletes: %name-common < %EVR
+Obsoletes: qbs-common < %EVR
 
 %description
 Qbs is a tool that helps simplify the build process for developing projects
@@ -44,23 +43,31 @@ Qbs is an all-in-one tool that generates a build graph from a high-level
 project description (like qmake or CMake) and additionally undertakes the task
 of executing the commands in the low-level build graph (like make).
 
-%package devel
-Summary: Development files for %name
-Group: Development/Tools
-Requires: %name = %EVR
+%package -n libqbs%abiversion
+Summary: Shared library for Qbs
+Group: System/Libraries
 
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%description -n libqbs%abiversion
+This package contains the shared runtime library for Qbs.
+
+%package -n libqbs-devel
+Summary: Development files for qbs
+Group: Development/Tools
+Provides: qbs-devel = %EVR
+Obsoletes: qbs-devel < %EVR
+
+%description -n libqbs-devel
+The libqbs-devel package contains libraries and header files for
+developing applications that use qbs.
 
 %package examples
-Summary: Example projects using %name
-Requires: %name = %EVR
+Summary: Example projects using qbs
 BuildArch: noarch
 Group: Development/Tools
+Requires: qbs = %EVR
 
 %description examples
-The %name-examples package contains example files for using %name.
+The qbs-examples package contains example files for using qbs.
 
 %prep
 %setup
@@ -99,10 +106,10 @@ export QTDIR=%_qt6_prefix;
 
 %install
 %cmake_install
-install -Dpm 0644 doc/man/%name.1 %buildroot%_man1dir/%name.1
+install -Dpm 0644 doc/man/qbs.1 %buildroot%_man1dir/qbs.1
 
 #Remove python dmgbuild directory, macOS specific utilites.
-rm -rfv %buildroot%_datadir/%name/python
+rm -rfv %buildroot%_datadir/qbs/python
 
 %if_with check
 %check
@@ -111,22 +118,28 @@ rm -rfv %buildroot%_datadir/%name/python
 
 %files
 %doc *.md LICENSE.LGPLv21 LICENSE.LGPLv3 LICENSE.GPL3-EXCEPT LGPL_EXCEPTION.txt
-%_bindir/%{name}*
-%_libdir/%name
-%_libdir/lib%{name}*.so.%{abiversion}*
-%_datadir/%name
-%_libexecdir/%name
-%_man1dir/%name.1*
-%exclude %_datadir/%name/examples
+%_bindir/qbs*
+%_libdir/qbs
+%_datadir/qbs
+%_libexecdir/qbs
+%_man1dir/qbs.1*
+%exclude %_datadir/qbs/examples
 
-%files devel 
-%_includedir/%name
-%_libdir/lib%{name}*.so
+%files -n libqbs%abiversion
+%_libdir/libqbscore.so.%{abiversion}*
+
+%files -n libqbs-devel 
+%_includedir/qbs
+%_libdir/libqbscore.so
 
 %files examples
-%_datadir/%name/examples
+%_datadir/qbs/examples
 
 %changelog
+* Tue Jul 21 2026 Nikita Shmatko <nash@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+- Split out the versioned shared library into a separate libqbs3.3 package.
+
 * Mon Apr 20 2026 Nikita Shmatko <nash@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
