@@ -6,7 +6,7 @@
 
 Name: util-dfm
 Version: 1.3.59
-Release: alt1
+Release: alt2
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
 
@@ -199,6 +199,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Wed Jul 22 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.59-alt2
+- Fixed build required packages with boost 1.91.0.
+
 * Tue Jun 30 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.59-alt1
 - New version 1.3.59.
 - Added: dfm-searcher.
