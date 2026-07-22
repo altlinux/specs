@@ -7,19 +7,17 @@
 %ifarch x86_64 aarch64
 %def_without firecracker
 %endif
-%def_enable prebuilded_sunstone
-%def_enable prebuilded_fireedge
+%def_disable prebuilded_fireedge
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.10.0.1
-Release: alt5
+Version: 7.2.0
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
 
 Source0: %name-%version.tar
-# Failed build js webpack for fireedge
 ExcludeArch: %ix86 %arm
 
 BuildRequires(pre): rpm-build-ruby rpm-build-python3 rpm-macros-nodejs rpm-macros-systemd
@@ -31,9 +29,16 @@ BuildRequires: libssl-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libvncserver-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libgnutls-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
+BuildRequires: libgrpc-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: protobuf-compiler
+BuildRequires: grpc-plugins
+BuildRequires: python3-module-grpcio-tools
 BuildRequires: openssh
 BuildRequires: scons
 BuildRequires: python3-module-setuptools
@@ -50,6 +55,7 @@ BuildRequires: gem(parse-cron)
 BuildRequires: gem(xmlrpc)
 BuildRequires: gem(sequel)
 BuildRequires: gem(rspec) >= 3
+BuildRequires: gem(grpc-tools)
 %if_with check
 BuildRequires: gem(json)
 BuildRequires: gem(xml-simple)
@@ -68,13 +74,6 @@ BuildRequires: gem(json) >= 2.0
 BuildRequires: gem(git) >= 1.5
 BuildRequires: gem(aws-sdk-ec2) >= 1.151
 BuildRequires: gem(aws-sdk-s3)
-BuildRequires: gem(aws-sdk-cloudwatch)
-BuildRequires: gem(azure_mgmt_compute)
-BuildRequires: gem(azure_mgmt_monitor)
-BuildRequires: gem(azure_mgmt_network)
-BuildRequires: gem(azure_mgmt_resources)
-BuildRequires: gem(azure_mgmt_storage)
-BuildRequires: gem(configparser)
 BuildRequires: gem(minitest)
 BuildRequires: gem(faraday_middleware) >= 1.2.0
 BuildRequires: gem(activesupport) >= 4.2
@@ -85,16 +84,7 @@ BuildRequires: gem(uuidtools)
 BuildRequires: gem(curb)
 BuildRequires: gem(ipaddress) >= 0.8.3
 BuildRequires: gem(treetop) >= 1.6.3
-BuildRequires: gem(webauthn)
-BuildRequires: gem(zendesk_api)
-BuildRequires: gem(rqrcode)
-BuildRequires: gem(memcache-client)
-BuildRequires: gem(dalli)
-BuildRequires: gem(rotp)
 BuildRequires: gem(ox)
-BuildRequires: gem(addressable)
-BuildRequires: gem(vsphere-automation-cis) >= 0.4.6
-BuildRequires: gem(vsphere-automation-vcenter) >= 0.4.6
 BuildRequires: gem(rbvmomi2) >= 3.7.0
 BuildRequires: gem(rake)
 BuildRequires: gem(webmock) >= 1.20
@@ -107,6 +97,15 @@ BuildRequires: gem(pry)
 BuildRequires: gem(faraday) >= 1.9.3
 BuildRequires: gem(polyglot) >= 0.3
 BuildRequires: gem(mini_portile2)
+BuildRequires: gem(grpc)
+BuildRequires: gem(ruby-saml)
+BuildRequires: gem(sinatra-contrib)
+BuildRequires: gem(puma)
+BuildRequires: gem(rackup)
+BuildRequires: gem(dry-validation) >= 1.10
+BuildRequires: gem(lockfile) >= 2.1
+BuildRequires: gem(hcl_parser) >= 0.2.2
+BuildRequires: gem(prometheus-client)
 BuildConflicts: gem(ffi-rzmq) >= 2.1
 BuildConflicts: gem(highline) >= 4
 BuildConflicts: gem(augeas) >= 1
@@ -115,8 +114,6 @@ BuildConflicts: gem(faraday_middleware) >= 1.3
 BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(i18n) >= 2
 BuildConflicts: gem(ipaddress) >= 0.9
-BuildConflicts: gem(vsphere-automation-cis) >= 0.5
-BuildConflicts: gem(vsphere-automation-vcenter) >= 0.5
 BuildConflicts: gem(rbvmomi) >= 3.1
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
@@ -125,7 +122,7 @@ BuildConflicts: gem(rdoc) >= 7
 BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(rubocop) >= 2
-BuildConflicts: gem(sinatra) >= 2
+BuildConflicts: gem(sinatra) >= 5
 %endif
 
 %ruby_use_gem_dependency i18n >= 1.0,i18n < 2
@@ -138,12 +135,13 @@ BuildConflicts: gem(sinatra) >= 2
 %ruby_use_gem_dependency activesupport >= 7.1.5.1,activesupport < 8
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-%add_findreq_skiplist %_libexecdir/one/sunstone/public/bower_components/**/*
 %add_findreq_skiplist %_libexecdir/one/fireedge/node_modules/**/*
+%add_findreq_skiplist /usr/lib/form/**/*
 %add_findreq_skiplist /var/lib/one/*
 
 %ruby_alias_names opennebula-common,install_gems
 %ruby_alias_names opennebula-flow,flow
+%ruby_alias_names opennebula-form,form
 %ruby_ignore_names packethost
 
 %description
@@ -260,7 +258,7 @@ Group: Development/Ruby
 BuildArch: noarch
 Provides: %name-ruby = %EVR ruby-%name = %EVR
 Obsoletes: %name-ruby < %EVR ruby-%name < %EVR
-Provides: gem(opennebula) = 6.10.0.1
+Provides: gem(opennebula) = %EVR
 Requires: gem(activesupport) >= 0
 Requires: gem(ffi-rzmq) >= 0
 Requires: gem(rack-protection) >= 0
@@ -305,28 +303,18 @@ Provides: python3-module-pyone = %EVR
 %description -n python3-module-%name
 Python 3 bindings for OpenNebula Cloud API (OCA).
 
-%package sunstone
-Summary: OpenNebula web interface Sunstone
-Group: System/Servers
-BuildArch: noarch
-
-Requires: %name-common = %EVR
-Requires: gem-%name = %EVR
-Requires: python3-module-numpy
-
-%description sunstone
-Browser based UI for OpenNebula cloud management and usage.
-
 %package fireedge
 Summary: OpenNebula web interface FireEdge
 Group: System/Servers
+Obsoletes: %name-sunstone < %EVR
 #BuildArch: noarch
 
 AutoReq: yes,noperl,nonodejs,noshell
 
 Requires: %name-common = %EVR
-Requires: %name-provision-data = %EVR
 Requires: guacamole-server
+Requires: node
+Requires: node-zeromq
 
 %description fireedge
 Browser based UI for OpenNebula application management.
@@ -349,7 +337,6 @@ BuildArch: noarch
 
 Requires: %name-common = %EVR
 Requires: gem-%name = %EVR
-Requires: %name-sunstone = %EVR
 Requires: gem(sinatra)
 Requires: gem(json)
 Requires: gem(xml-simple)
@@ -358,6 +345,28 @@ Requires: gem(parse-cron)
 
 %description flow
 Server for multi-VM orchestration.
+
+%package form
+Summary: OpenNebula Form server
+Group: System/Servers
+BuildArch: noarch
+
+Requires: %name-common = %EVR
+Requires: gem-%name = %EVR
+Requires: gem(sinatra)
+Requires: gem(sinatra-contrib)
+Requires: gem(puma)
+Requires: gem(rackup)
+Requires: gem(rack)
+Requires: gem(rexml)
+Requires: gem(parse-cron)
+Requires: gem(dry-validation) >= 1.10
+Requires: gem(lockfile) >= 2.1
+Requires: gem(hcl_parser) >= 0.2.2
+
+%description form
+OpenNebula Form server for IaC-based infrastructure provisioning
+via Ansible and Terraform drivers.
 
 %package -n docker-machine-opennebula
 Summary: OpenNebula driver for Docker Machine
@@ -459,35 +468,22 @@ Configures an OpenNebula node providing LXC.
 %package provision
 Summary: OpenNebula infrastructure provisioning
 Group: System/Servers
-#BuildArch: noarch
+BuildArch: noarch
 Requires: %name-common = %EVR
-Requires: %name-server = %EVR
-Requires: %name-provision-data = %EVR
+Obsoletes: %name-provision-data < %EVR
 
 %description provision
-OpenNebula provisioning tool
-
-%package provision-data
-Summary: OpenNebula infrastructure provisioning data
-Group: System/Servers
-BuildArch: noarch
-
-%description provision-data
-OpenNebula infrastructure provisioning data
+OpenNebula provisioning tool (oneprovision, oneprovider CLI).
 
 %prep
 %setup
-rm -rf src/sunstone/public/node_modules/node-gyp
-ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
 rm -rf src/fireedge/node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-gyp src/fireedge/node_modules/node-gyp
 %if_disabled prebuilded_fireedge
 rm -rf src/fireedge/node_modules/zeromq
-ln -sf %nodejs_sitelib/zeromq src/fireedge/node_modules/zeromq
 %endif
 
 rm -fr src/fireedge/node_modules/flatted/python
-rm -fr src/fireedge/node_modules/zeromq/prebuilds
 
 %build
 export PATH_DEFAULT="$PATH"
@@ -495,24 +491,10 @@ npm config set offline true
 #npm config set zmq_external true
 export npm_config_zmq_external=true
 
-%if_disabled prebuilded_sunstone
-pushd src/sunstone/public
-export PATH="$PATH_DEFAULT:$PWD/node_modules/.bin"
-npm rebuild
-
-# from ./build.sh
-bower -o install
-grunt --gruntfile ./Gruntfile.js sass
-grunt --gruntfile ./Gruntfile.js requirejs
-mv -f dist/main.js dist/main-dist.js
-popd
-%endif
-
 %if_disabled prebuilded_fireedge
 pushd src/fireedge
 export PATH="$PATH_DEFAULT:$PWD/node_modules/.bin"
 #npm install --production --zmq-external
-npm rebuild
 npm run build
 popd
 %endif
@@ -524,13 +506,12 @@ scons -j %__nprocs \
     mysql=yes \
     postgresql=yes \
     new_xmlrpc=yes \
-    sunstone=no \
     fireedge=no \
     systemd=yes \
     rubygems=yes \
     gitversion=%release \
-    enterprise=no
-
+    enterprise=no \
+    grpcproto=yes
 
 %ruby_build
 
@@ -548,22 +529,12 @@ popd
 export DESTDIR=%buildroot
 #./install.sh -p -P
 ./install.sh
-touch %buildroot%oneadmin_home/sunstone/main.js
-rm -f %buildroot%_libexecdir/one/sunstone/public/dist/main.js
-ln -r -s %buildroot%oneadmin_home/sunstone/main.js %buildroot%_libexecdir/one/sunstone/public/dist/main.js
 
 %ruby_install
 
-# delete duplicated with gems files
 ## opennebula
 rm -rf %buildroot%_libexecdir/one/ruby/opennebula
-rm -f  %buildroot%_libexecdir/one/ruby/ActionManager.rb
-rm -f  %buildroot%_libexecdir/one/ruby/CommandManager.rb
-rm -f  %buildroot%_libexecdir/one/ruby/DriverExecHelper.rb
-rm -f  %buildroot%_libexecdir/one/ruby/OpenNebulaDriver.rb
-rm -f  %buildroot%_libexecdir/one/ruby/VirtualMachineDriver.rb
 rm -f  %buildroot%_libexecdir/one/ruby/opennebula.rb
-rm -f  %buildroot%_libexecdir/one/ruby/vcenter_driver.rb
 rm -f  %buildroot%_libexecdir/one/ruby/cloud/CloudClient.rb
 
 ## opennebula-cli
@@ -573,6 +544,17 @@ rm -f  %buildroot%_libexecdir/one/ruby/cloud/CloudClient.rb
 rm -rf %buildroot%_libexecdir/ruby/gems/*/doc
 rm -rf %buildroot%_datadir/doc/one
 rm -rf %buildroot%_datadir/ri
+rm -rf %buildroot%ruby_gemsdocdir/%name-%version
+rm -rf %buildroot%ruby_gemsdocdir/%name-cli-%version
+# ruby code files misplaced to /etc/form/ by %ruby_install — not config, belongs in /usr/lib/form/config/
+rm -f %buildroot%_sysconfdir/form/config_loader.rb
+rm -f %buildroot%_sysconfdir/form/environment.rb
+rm -f %buildroot%_sysconfdir/form/log_config.rb
+
+# OpenNebula scripts bootstrap the Ruby load path via `require 'load_opennebula_paths'`,
+grep -rlI "require 'load_opennebula_paths'" %buildroot \
+    | xargs -r sed -i \
+        "s#require 'load_opennebula_paths'#RUBY_LIB_LOCATION ||= '%_libexecdir/one/ruby'\n\$LOAD_PATH << RUBY_LIB_LOCATION#"
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
@@ -583,10 +565,9 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-showback.service %buildroot%_unit
 install -p -D -m 644 share/pkgs/ALT/opennebula-showback.timer %buildroot%_unitdir/opennebula-showback.timer
 install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
+install -p -D -m 644 share/pkgs/ALT/opennebula-form.service %buildroot%_unitdir/opennebula-form.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-hem.service  %buildroot%_unitdir/opennebula-hem.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-sunstone.service %buildroot%_unitdir/opennebula-sunstone.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-fireedge.service %buildroot%_unitdir/opennebula-fireedge.service
 
 install -p -D -m 644 share/pkgs/tmpfiles/opennebula-common.conf %buildroot%_tmpfilesdir/opennebula-common.conf
@@ -628,7 +609,6 @@ install -p -D -m 644 share/etc/modules-load.d/opennebula-node-lxc.conf %buildroo
 
 # node-firecracker
 %if_with firecracker
-#install -p -D -m 755 src/svncterm_server/svncterm_server %%buildroot%%_bindir/svncterm_server
 install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-clean-firecracker-domain %buildroot%_sbindir/one-clean-firecracker-domain
 install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-prepare-firecracker-domain %buildroot%_sbindir/one-prepare-firecracker-domain
 %endif
@@ -638,13 +618,12 @@ rm -f %buildroot%_datadir/one/Gemfile
 rm -f %buildroot%_datadir/one/install_gems
 rm -rf %buildroot%_libexecdir/install_gems
 rm -rf %buildroot%_libexecdir/one/ruby/vendors
+rm -rf %buildroot%_libexecdir/form/lib
 rm -f %buildroot%_sbindir/install-firecracker
 
-rm -rf %buildroot%_libexecdir/one/sunstone/public/{node_modules,patches}
-rm -f %buildroot%_libexecdir/one/sunstone/public/{SConstruct,build.sh}
-#rm -rf %%buildroot%%_libexecdir/one/fireedge/node_modules
-#rm -rf %%buildroot%%_libexecdir/one/fireedge/src
-#rm -f %%buildroot%%_libexecdir/one/fireedge/package.json
+# Slim fireedge/node_modules
+find %buildroot%_libexecdir/one/fireedge/node_modules -mindepth 1 -maxdepth 1 \
+    ! -name tiny-worker ! -name esm -exec rm -rf {} +
 
 # fix placement
 mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
@@ -658,12 +637,6 @@ rm -f %buildroot%_datadir/flow/lib
 pushd src/oca/python
 PYTHON=%__python3 make install ROOT=%buildroot
 popd
-
-# fix ambiguous Python shebangs
-sed -i 's|/usr/bin/python|%__python3|' \
-    %buildroot/usr/lib/one/sunstone/public/bower_components/guacamole-common-js/guacamole/util/*.py
-sed -i 's|/usr/bin/env python|%__python3|' \
-    %buildroot/usr/lib/one/sunstone/public/bower_components/no-vnc/utils/*.py
 
 %pre common
 groupadd -r -f -g %oneadmin_gid oneadmin 2>/dev/null ||:
@@ -726,17 +699,17 @@ if [ ! -d "%oneadmin_home/.ssh-oneprovision/" ]; then
     fi
 fi
 
-%post sunstone
-%post_systemd_postponed %name-sunstone.service %name-novnc.service
-
-%preun sunstone
-%preun_systemd %name-sunstone.service %name-novnc.service
-
 %post fireedge
 %post_systemd_postponed %name-fireedge.service
 
 %preun fireedge
 %preun_systemd %name-fireedge.service
+
+%post form
+%post_systemd_postponed %name-form.service
+
+%preun form
+%preun_systemd %name-form.service
 
 %pre node-kvm
 usermod -a -G vmusers oneadmin  2>/dev/null ||:
@@ -909,52 +882,8 @@ fi
 %ruby_gemspecdir/%name-%version.gemspec
 %ruby_gemslibdir/%name-%version
 
-#%ruby_sitelibdir/opennebula.rb
-#%ruby_sitelibdir/opennebula
-#%ruby_sitelibdir/vcenter_driver.rb
-#%ruby_sitelibdir/VirtualMachineDriver.rb
-#%ruby_sitelibdir/OpenNebulaDriver.rb
-#%ruby_sitelibdir/CommandManager.rb
-#%ruby_sitelibdir/ActionManager.rb
-#%ruby_sitelibdir/DriverExecHelper.rb
-#%ruby_sitelibdir/HostSyncManager.rb
-#%ruby_sitelibdir/cloud/CloudClient.rb
-
-%_libexecdir/one/ruby/scripts_common.rb
-%_libexecdir/one/ruby/vcenter_driver
-%_libexecdir/one/ruby/nsx_driver.rb
-%_libexecdir/one/ruby/nsx_driver
-
-#%ruby_gemspecdir/opennebula*
-#%exclude %ruby_gemspecdir/opennebula-cli*
-
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
-
-%files sunstone
-%_libexecdir/one/sunstone
-%_libexecdir/one/ruby/OpenNebulaAddons.rb
-%_libexecdir/one/ruby/cloud/CloudAuth.rb
-%_libexecdir/one/ruby/cloud/CloudServer.rb
-%_libexecdir/one/ruby/cloud/CloudAuth
-
-%_bindir/sunstone-server
-%_bindir/novnc-server
-%_unitdir/opennebula-sunstone.service
-%_unitdir/opennebula-novnc.service
-
-%_datadir/one/websockify
-
-%dir %attr(0770, root, oneadmin) %oneadmin_home/sunstone
-%attr(0770, root, oneadmin) %oneadmin_home/sunstone/main.js
-
-%defattr(0640, root, oneadmin, 0750)
-%config(noreplace) %_sysconfdir/one/sunstone-server.conf
-%config(noreplace) %_sysconfdir/one/sunstone-logos.yaml
-%config(noreplace) %_sysconfdir/one/sunstone-views.yaml
-%config(noreplace) %_sysconfdir/one/sunstone-views/*
-%config(noreplace) %_sysconfdir/one/ec2_driver.conf
-%config %_sysconfdir/one/ec2_driver.default
 
 %files fireedge
 %_libexecdir/one/fireedge
@@ -964,23 +893,23 @@ fi
 %defattr(0640, root, oneadmin, 0750)
 %config(noreplace) %_sysconfdir/one/fireedge-server.conf
 %dir %_sysconfdir/one/fireedge
-%dir %_sysconfdir/one/fireedge/provision
-%config %_sysconfdir/one/fireedge/provision/provision-server.conf
-%dir %_sysconfdir/one/fireedge/provision/providers.d
-%config %_sysconfdir/one/fireedge/provision/providers.d/*
-%dir %_sysconfdir/one/fireedge/provision/providers.d-extra
-%config %_sysconfdir/one/fireedge/provision/providers.d-extra/*
 %dir %_sysconfdir/one/fireedge/sunstone
 %config %_sysconfdir/one/fireedge/sunstone/sunstone-server.conf
-%config %_sysconfdir/one/fireedge/sunstone/sunstone-views.yaml
-%dir %_sysconfdir/one/fireedge/sunstone/admin
-%config %_sysconfdir/one/fireedge/sunstone/admin/*
-%dir %_sysconfdir/one/fireedge/sunstone/user
-%config %_sysconfdir/one/fireedge/sunstone/user/*
-%dir %_sysconfdir/one/fireedge/sunstone/cloud
-%config %_sysconfdir/one/fireedge/sunstone/cloud/*
-%dir %_sysconfdir/one/fireedge/sunstone/groupadmin
-%config %_sysconfdir/one/fireedge/sunstone/groupadmin/*
+%config %_sysconfdir/one/fireedge/sunstone/default-labels.yaml
+%config %_sysconfdir/one/fireedge/sunstone/remotes-config.yaml
+%config %_sysconfdir/one/fireedge/sunstone/tab-manifest.yaml
+%dir %_sysconfdir/one/fireedge/sunstone/profiles
+%config %_sysconfdir/one/fireedge/sunstone/profiles/*
+%dir %_sysconfdir/one/fireedge/sunstone/views
+%config %_sysconfdir/one/fireedge/sunstone/views/sunstone-views.yaml
+%dir %_sysconfdir/one/fireedge/sunstone/views/admin
+%config %_sysconfdir/one/fireedge/sunstone/views/admin/*
+%dir %_sysconfdir/one/fireedge/sunstone/views/user
+%config %_sysconfdir/one/fireedge/sunstone/views/user/*
+%dir %_sysconfdir/one/fireedge/sunstone/views/cloud
+%config %_sysconfdir/one/fireedge/sunstone/views/cloud/*
+%dir %_sysconfdir/one/fireedge/sunstone/views/groupadmin
+%config %_sysconfdir/one/fireedge/sunstone/views/groupadmin/*
 
 %files gate
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/onegate-server.conf
@@ -996,6 +925,23 @@ fi
 %_datadir/flow
 %ruby_bindir/oneflow-server
 
+%files form
+%config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/oneform-server.conf
+%dir %attr(0750, root, oneadmin) %_sysconfdir/form
+%config(noreplace) %_sysconfdir/form/oneform-server.conf
+%_libexecdir/one/oneform
+%_libexecdir/form
+%_bindir/oneform
+%_bindir/oneform-server
+%ruby_bindir/oneform-server
+%_unitdir/opennebula-form.service
+%_datadir/one/ansible/plugins/inventory/opennebula_form.py
+%_datadir/one/ansible/plugins/lib/oneform_client.py
+%_datadir/one/ansible/plugins/lib/deployment_template.py
+%dir %attr(0750, oneadmin, oneadmin) %_localstatedir/one/oneform/drivers/.states
+%ghost %_localstatedir/one/oneform/drivers/.states/dummy.state
+%ghost %_localstatedir/one/oneform/drivers/.states/onprem.state
+
 %files provision
 %_bindir/oneprovision
 %_bindir/oneprovider
@@ -1003,12 +949,8 @@ fi
 %config(noreplace) %_sysconfdir/one/cli/oneprovider.yaml
 %_libexecdir/one/ruby/cli/one_helper/oneprovision_helper.rb
 %_libexecdir/one/ruby/cli/one_helper/oneprovider_helper.rb
-%_libexecdir/one/oneprovision
 %_man1dir/oneprovision.1*
 %_man1dir/oneprovider.1*
-
-%files provision-data
-%_datadir/one/oneprovision
 
 %files server
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-server
@@ -1020,20 +962,13 @@ fi
 %_unitdir/opennebula-ssh-socks-cleaner.timer
 %_unitdir/opennebula-showback.service
 %_unitdir/opennebula-showback.timer
-%_unitdir/opennebula-alertmanager.service
-%_unitdir/opennebula-exporter.service
-%_unitdir/opennebula-libvirt-exporter.service
-%_unitdir/opennebula-node-exporter.service
-%_unitdir/opennebula-prometheus.service
 
-%_bindir/mm_sched
 %_bindir/one
 %_bindir/oned
 %_bindir/onedb
 %_bindir/onehem-server
 %_bindir/onecfg
 
-%_datadir/one/examples
 %_datadir/one/follower_cleanup
 %_datadir/one/pre_cleanup
 %_datadir/one/start-scripts
@@ -1048,24 +983,24 @@ fi
 
 %_libexecdir/one/mads
 %_libexecdir/one/onehem
-%_libexecdir/one/ruby/az_driver.rb
-%_libexecdir/one/ruby/ec2_driver.rb
-%_libexecdir/one/ruby/aws_vnm.rb
-%_libexecdir/one/ruby/equinix.rb
-%_libexecdir/one/ruby/equinix_vnm.rb
-%_libexecdir/one/ruby/vultr_vnm.rb
 %_libexecdir/one/ruby/onedb
 %_libexecdir/one/ruby/one_vnm.rb
-%_libexecdir/one/ruby/opennebula_driver.rb
 %_libexecdir/one/ruby/ssh_stream.rb
-%_libexecdir/one/ruby/equinix_driver.rb
-%_libexecdir/one/ruby/PublicCloudDriver.rb
 %_libexecdir/one/ruby/HostSyncManager.rb
+%_libexecdir/one/ruby/DriverLogger.rb
+%_libexecdir/one/ruby/ActionManager.rb
+%_libexecdir/one/ruby/CommandManager.rb
+%_libexecdir/one/ruby/DriverExecHelper.rb
+%_libexecdir/one/ruby/OpenNebulaDriver.rb
+%_libexecdir/one/ruby/VirtualMachineDriver.rb
+%_libexecdir/one/ruby/load_opennebula_paths.rb
+%_libexecdir/one/ruby/cloud/CloudAuth.rb
+%_libexecdir/one/ruby/cloud/CloudServer.rb
+%_libexecdir/one/ruby/cloud/CloudAuth
 %_libexecdir/one/sh
 %_libexecdir/one/onecfg
 %_libexecdir/one/libvirt_exporter
 %_libexecdir/one/opennebula_exporter
-#%ruby_gemspecdir/opennebula-server/Gemfile
 
 %_man1dir/onedb.1.*
 
@@ -1081,17 +1016,16 @@ fi
 %config(noreplace) %_sysconfdir/one/tmrc
 %config(noreplace) %_sysconfdir/one/hm/*
 %config(noreplace) %_sysconfdir/one/oned.conf
-%config(noreplace) %_sysconfdir/one/sched.conf
 %config(noreplace) %_sysconfdir/one/guacd
 %config(noreplace) %_sysconfdir/one/monitord.conf
 %config(noreplace) %_sysconfdir/one/onehem-server.conf
 %config(noreplace) %_sysconfdir/one/vmm_exec/*
-%config(noreplace) %_sysconfdir/one/az_driver.conf
-%config %_sysconfdir/one/az_driver.default
-%config %_sysconfdir/one/vcenter_driver.default
 %config(noreplace) %_sysconfdir/one/auth/server_x509_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/ldap_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
+%config(noreplace) %_sysconfdir/one/auth/saml_auth.conf
+%config(noreplace) %_sysconfdir/one/schedulers/one_drs.conf
+%config(noreplace) %_sysconfdir/one/schedulers/rank.conf
 %config(noreplace) %_sysconfdir/one/alertmanager/alertmanager.yml
 %config(noreplace) %_sysconfdir/one/prometheus/prometheus.yml
 %config(noreplace) %_sysconfdir/one/prometheus/rules.yml
@@ -1103,6 +1037,7 @@ fi
 %config(noreplace) %_sysconfdir/one/cli/*
 %exclude %_sysconfdir/one/cli/oneprovision.yaml
 %exclude %_sysconfdir/one/cli/oneprovider.yaml
+%exclude %_sysconfdir/one/cli/oneform.yaml
 %_datadir/bash-completion/completions/one
 
 %_bindir/oneacct
@@ -1127,7 +1062,6 @@ fi
 %_bindir/onevntemplate
 %_bindir/onevrouter
 %_bindir/onezone
-%_bindir/onevcenter
 %_bindir/onesecgroup
 %_bindir/oneshowback
 %_bindir/oneflow
@@ -1137,12 +1071,6 @@ fi
 %exclude %_libexecdir/one/ruby/cli/one_helper/oneprovision_helper.rb
 %exclude %_libexecdir/one/ruby/cli/one_helper/oneprovider_helper.rb
 
-#%ruby_gemspecdir/opennebula-cli*
-#%ruby_sitelibdir/cli_helper.rb
-#%ruby_sitelibdir/one_helper.rb
-#%ruby_sitelibdir/command_parser.rb
-#%ruby_sitelibdir/one_helper
-
 %_datadir/one/onetoken.sh
 
 %_man1dir/one*
@@ -1151,6 +1079,18 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Fri Jun 05 2026 Alexander Burmatov <thatman@altlinux.org> 7.2.0-alt1
+- 7.2.0
+- fixed requres (ALT #57311)
+- removed Ruby Sunstone (replaced by FireEdge Sunstone)
+- removed vCenter driver
+- removed Hybrid Cloud drivers (Azure, EC2, Equinix, Vultr)
+- removed oneprovision (replaced by oneform)
+- new oneform service (IaC provisioning via Ansible/Terraform)
+- new scheduler framework with DRS support (rank.conf, one_drs.conf)
+- gRPC support for Resource Manager
+- SAML authentication support
+
 * Wed Mar 25 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt5
 - generate unique ssh-keys for all nodes
 

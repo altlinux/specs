@@ -1,7 +1,7 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
-Version: 6.10.0
-Release: alt2
+Version: 7.2.1
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 URL: http://opennebula.org
@@ -18,6 +18,7 @@ Requires: qemu-guest-agent
 Requires: sudo
 
 %filter_from_requires \,/etc/rc\.d/growfs,d
+%filter_from_requires /^sysvinit$/d
 
 BuildRequires(pre): rpm-build-ruby
 
@@ -45,8 +46,12 @@ To get support check the OpenNebula web page:
 
 cd context-linux
 
+install -p -D -m 755 src/etc/one-context.d/loc-04-run-dir \
+			%buildroot%_sysconfdir/one-context.d/loc-04-run-dir
 install -p -D -m 755 src/etc/one-context.d/loc-05-grow-rootfs \
 			%buildroot%_sysconfdir/one-context.d/loc-05-grow-rootfs
+install -p -D -m 755 src/etc/one-context.d/loc-06-mount-virtiofs \
+			%buildroot%_sysconfdir/one-context.d/loc-06-mount-virtiofs
 install -p -D -m 755 src/etc/one-context.d/loc-09-timezone \
 			%buildroot%_sysconfdir/one-context.d/loc-09-timezone
 install -p -D -m 755 src/etc/one-context.d/loc-10-network \
@@ -100,8 +105,9 @@ install -p -D -m 755 src/usr/bin/onegate %buildroot%_bindir/onegate
 install -p -D -m 755 src/usr/bin/onegate.rb %buildroot%_bindir/onegate.rb
 install -p -D -m 755 src/usr/sbin/one-context-run##one %buildroot%_sbindir/one-context-run
 install -p -D -m 755 src/usr/sbin/one-contextd %buildroot%_sbindir/one-contextd
+install -p -D -m 755 src/usr/sbin/onesysprep %buildroot%_sbindir/onesysprep
 
-install -p -D -m 644 src/lib/udev/rules.d/65-context.rules##rpm.systemd.one \
+install -p -D -m 644 src/usr/lib/udev/rules.d/65-context.rules##rpm.systemd.one \
 			%buildroot%_udevrulesdir/65-context.rules
 
 install -p -D -m 644 src/usr/lib/systemd/system/one-context-local.service##rpm.systemd.one \
@@ -110,6 +116,10 @@ install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure-delayed.
 			%buildroot%_unitdir/one-context-reconfigure-delayed.service
 install -p -D -m 644 src/usr/lib/systemd/system/one-context-reconfigure.service##systemd.one \
 			%buildroot%_unitdir/one-context-reconfigure.service
+install -p -D -m 644 src/usr/lib/systemd/system/one-context-force.service##systemd.one \
+			%buildroot%_unitdir/one-context-force.service
+install -p -D -m 644 src/usr/lib/systemd/system/one-context-online.service##systemd.one \
+			%buildroot%_unitdir/one-context-online.service
 install -p -D -m 644 src/usr/lib/systemd/system/one-context.service##alt.one \
 			%buildroot%_unitdir/one-context.service
 
@@ -120,10 +130,12 @@ udevadm control --reload >/dev/null 2>&1 || :
 
 # Register service
 systemctl enable one-context-local.service
+systemctl enable one-context-online.service
+systemctl enable one-context-force.service
 systemctl enable one-context.service
 
 %preun
-systemctl --no-reload disable one-context-local.service one-context.service >/dev/null 2>&1 || :
+systemctl --no-reload disable one-context-local.service one-context-online.service one-context-force.service one-context.service >/dev/null 2>&1 || :
 systemctl daemon-reload >/dev/null 2>&1 || :
 
 %files
@@ -135,6 +147,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Wed Jun 10 2026 Alexander Burmatov <thatman@altlinux.org> 7.2.1-alt1
+- 7.2.1
+
 * Wed Mar 25 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0-alt2
 - use grep instead of egrep (ALT #57840)
 - add netcfg files (ALT #57841)
