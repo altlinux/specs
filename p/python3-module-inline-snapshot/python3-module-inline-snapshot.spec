@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.34.2
+Version: 0.35.2
 Release: alt1
 
 Summary: Create and update inline snapshots in your python tests
@@ -60,6 +60,9 @@ BuildRequires: python3-module-isort
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 22 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.35.2-alt1
+- NMU: updated to 0.35.2.
+
 * Mon Jul 06 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.34.2-alt1
 - NMU: updated to 0.34.2.
 
