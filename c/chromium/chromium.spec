@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        150.0.7871.128
+Version:        150.0.7871.181
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -724,6 +724,22 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.181-alt1
+- New version (150.0.7871.181).
+- Fixes:
+  + CVE-2026-16420: Type Confusion in WebAudio
+  + CVE-2026-16421: Inappropriate implementation in WebAudio
+  + CVE-2026-16413: Out of bounds write in ANGLE
+  + CVE-2026-16414: Insufficient validation of untrusted input in Chromecast
+  + CVE-2026-16415: Insufficient validation of untrusted input in Extensions
+  + CVE-2026-16416: Integer overflow in Chromecast
+  + CVE-2026-16417: Uninitialized Use in Skia
+  + CVE-2026-16418: Stack buffer overflow in V8
+  + CVE-2026-16419: Out of bounds read and write in ANGLE
+  + CVE-2026-16422: Insufficient validation of untrusted input in Certificate
+  + CVE-2026-16423: Use after free in UI
+  + CVE-2026-16424: Use after free in GPU
+
 * Sat Jul 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.128-alt1
 - New version (150.0.7871.128).
 - Fixes:
