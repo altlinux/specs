@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 7.8.6
+Version: 8.0.0
 Release: alt1
 
 Summary: Tryton server
@@ -16,8 +16,9 @@ Source0: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-tryton
+BuildRequires: python3-module-rnc2rng
 %if_enabled check
 BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-lxml
@@ -32,6 +33,8 @@ BuildRequires: python3-module-simpleeval
 BuildRequires: python3-module-pwdlib
 BuildRequires: python3-module-argon2-cffi
 BuildRequires: python3-module-html2text
+BuildRequires: python3-module-rply
+BuildRequires: python3-module-psycopg
 %endif
 
 %py_provides %oname
@@ -71,7 +74,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir/
 python3 -m unittest discover -s trytond.tests -v
 
 %files
-%doc CHANGELOG LICENSE README.rst COPYRIGHT
+%doc LICENSE COPYRIGHT
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
@@ -81,6 +84,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Thu Apr 23 2026 Nikita Panov <nexxy@altlinux.org> 8.0.0-alt1
+- new version 8.0.0
+
 * Tue Mar 24 2026 Nikita Panov <nexxy@altlinux.org> 7.8.6-alt1
 - new version 7.8.6
 

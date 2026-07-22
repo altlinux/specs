@@ -2,7 +2,7 @@
 %define oname trytond_party
 
 Name: python3-module-%oname
-Version: 7.8.2
+Version: 8.0.0
 Release: alt1
 
 Summary: Tryton module with parties and addresses
@@ -14,8 +14,8 @@ Source0: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-tryton
 
 %description
 The party module of the Tryton application platform.
@@ -40,7 +40,7 @@ This package contains tests for %oname.
 %pyproject_install
 
 %files
-%doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
+%doc COPYRIGHT LICENSE
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/*/tests
 
@@ -49,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Thu Apr 23 2026 Nikita Panov <nexxy@altlinux.org> 8.0.0-alt1
+- version updated to 8.0.0
+
 * Thu Feb 12 2026 Nikita Panov <nexxy@altlinux.org> 7.8.2-alt1
 - version updated to 7.8.2
 
