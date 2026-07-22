@@ -1,6 +1,6 @@
 Name: metadata-extractor
 Version: 2.18.0
-Release: alt1
+Release: alt2
 
 Summary: Java library for extracting EXIF, IPTC, XMP, ICC and other metadata from image and video files.
 License: Apache-2.0
@@ -27,6 +27,10 @@ Java library for extracting EXIF, IPTC, XMP, ICC and other metadata from image a
 %prep
 %setup
 
+#fix with java17
+sed -i 's|<source>1.6<|<source>1.8<|' pom.xml
+sed -i 's|<target>1.6<|<target>1.8<|' pom.xml
+
 %pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
 
@@ -41,5 +45,8 @@ Java library for extracting EXIF, IPTC, XMP, ICC and other metadata from image a
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jul 22 2026 Anton Meleshnikov <alton@altlinux.org> 2.18.0-alt2
+- FTBFS fix with java17.
+
 * Wed Mar 25 2026 Anton Meleshnikov <alton@altlinux.org> 2.18.0-alt1
 - Initial build for Sisyphus.
