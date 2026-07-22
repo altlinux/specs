@@ -5,7 +5,7 @@
 
 Name: dqt6-tools
 Version: 6.10.3
-Release: alt1.dde.2
+Release: alt1.dde.3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -40,7 +40,7 @@ BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libzstd-devel libicu-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libzstd-devel-static libicu-devel
 BuildRequires: dqt6-base-devel dqt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -332,6 +332,9 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed Jul 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.3
+- fix build on zstd 1.5.7-alt1
+
 * Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.2
 - fix build on dqt6-declarative 6.10.3
 
