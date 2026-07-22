@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -89,8 +89,6 @@ exit 0
 %config(noreplace) %_sysconfdir/dbus-1/system.d/ddm_org.freedesktop.DisplayManager.conf
 %_bindir/ddm
 %_unitdir/ddm.service
-%dir %_unitdir/treeland.service.d/
-%_unitdir/treeland.service.d/10-dde-seatd.conf
 %_sysusersdir/dde.conf
 %_tmpfilesdir/ddm.conf
 %attr(750,dde,dde) %dir %_localstatedir/ddm/
@@ -118,6 +116,9 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %changelog
+* Mon Jul 20 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.7-alt1
+- New version 0.3.7.
+
 * Fri Jun 19 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.6-alt1
 - New version 0.3.6.
 
