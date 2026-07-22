@@ -1,11 +1,12 @@
 %define sover 9
+%def_disable boost
 %def_enable check
 
 %define stdxx 17
 
 Name: libphonenumber
 Version: 9.0.35
-Release: alt1
+Release: alt1.1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -21,7 +22,6 @@ Patch2: %name-9.0.16-alt-fix-nostatic-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: boost-devel
 BuildRequires: libicu-devel
 BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-devel
@@ -29,6 +29,7 @@ BuildRequires: libprotobuf-devel
 BuildRequires: libabseil-cpp-devel >= 20211102.0-alt3
 BuildRequires: /proc /dev/pts /usr/bin/java
 #BuildRequires: /usr/bin/mvn junit mockito
+%{?_enable_boost:BuildRequires: boost-devel}
 %{?_enable_check:BuildRequires: ctest libgtest-devel}
 
 %description
@@ -39,6 +40,7 @@ international phone numbers.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
+%{?_enable_boost:Requires: boost-devel}
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -60,7 +62,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %cmake \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
     -DBUILD_SHARED_LIBS=ON \
-    -DBUILD_STATIC_LIB=OFF
+    -DBUILD_STATIC_LIB=OFF \
+    -DCMAKE_CXX_STANDARD=%stdxx \
+    -DUSE_BOOST=OFF
 %nil
 %cmake_build
 
@@ -82,6 +86,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.35-alt1.1
+- rebuilt without boost
+
 * Thu Jul 16 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.35-alt1
 - 9.0.35
 
