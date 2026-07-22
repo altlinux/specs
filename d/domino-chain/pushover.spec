@@ -1,6 +1,6 @@
 Name: domino-chain
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Url: https://domino-chain.gitlab.io
 Vcs: https://gitlab.com/domino-chain/domino-chain.gitlab.io
@@ -13,6 +13,7 @@ Summary: Puzzle with ant pushing dominoes to fall
 Source: %name-%version.tar
 
 Patch: tools-1.2-alt-build.patch
+Patch1: boost_system.patch
 
 Obsoletes: pushover pushover-themes
 
@@ -47,6 +48,7 @@ team and to help with translations, levels, graphics and more.
 %prep
 %setup
 %patch -p0
+%patch1 -p1
 #switched to SDL2 path
 subst 's|<SDL.h>|<SDL2/SDL.h>|' src/domino-chain/editor.h
 subst 's|<SDL.h>|<SDL2/SDL.h>|' src/domino-chain/screen.h
@@ -79,6 +81,9 @@ sed -i 's/truetype/ttf/g' Makefile
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt2
+- fixed FTBFS
+
 * Tue Apr 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt1
 - added fonts-ttf-gnu-freefont-sans dependency
 
