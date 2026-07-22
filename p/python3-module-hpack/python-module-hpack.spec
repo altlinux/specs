@@ -1,7 +1,7 @@
 %define pypi_name hpack
 
 Name: python3-module-hpack
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Pure-Python HPACK header compression
@@ -37,6 +37,9 @@ layer that automatically enables the use of ``nghttp2`` if it's available.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - new version 4.1.0
 - switch to pyproject_build
