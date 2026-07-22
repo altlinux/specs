@@ -1,7 +1,7 @@
 %define oname python-ly
 
 Name: python3-module-ly
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Tool and library for manipulating LilyPond files
@@ -54,6 +54,9 @@ You can also read the docs online at http://python-ly.readthedocs.org/.
 
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.10-alt1
+- new version 0.9.10
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
 - new version 0.9.9
 - switch to hatchling build backend
