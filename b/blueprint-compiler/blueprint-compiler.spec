@@ -1,13 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 0.20
+%define ver_major 0.22
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_enable docs
 %def_enable check
+%define __meson_test_timeout_multiplier 2
 
 Name: blueprint-compiler
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
@@ -62,7 +63,7 @@ cp -a %__builddir/docs/en html
 %endif
 
 %check
-xvfb-run %__meson_test -t 2
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -71,6 +72,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Sat Jul 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.22.2-alt1
+- 0.22.2
+
 * Fri Mar 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
 - 0.20.4
 

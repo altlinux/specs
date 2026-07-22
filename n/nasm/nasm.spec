@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: nasm
-Version: 3.01
+Version: 3.02
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
@@ -69,6 +69,9 @@ ln -sf nasm00.html index.html
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
 
 %changelog
+* Mon Jun 29 2026 Yuri N. Sedunov <aris@altlinux.org> 3.02-alt1
+- 3.02
+
 * Tue Jan 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.01-alt1
 - 3.01
 
