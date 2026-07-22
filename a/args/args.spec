@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: args
-Version: 6.5.0
+Version: 6.6.0
 Release: alt1
 
 Summary: A simple header-only C++ argument parser library
@@ -50,6 +50,9 @@ subst 's|DESTINATION lib/|DESTINATION %_libdir/|' CMakeLists.txt
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Jul 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.6.0-alt1
+- 6.5.0 -> 6.6.0
+
 * Wed Jul 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.5.0-alt1
 - 6.4.16 -> 6.5.0
 
