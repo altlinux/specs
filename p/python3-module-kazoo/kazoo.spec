@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-kazoo
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: Higher Level Zookeeper Client
@@ -99,6 +99,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt1
 - new version 2.10.0
 - add sphinx-autodoc-typehints to BuildRequires
