@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 7.1.3
+Version: 7.2.2
 Release: alt1
 
 Summary: A process utilities module for Python
@@ -55,6 +55,9 @@ py.test-3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.2-alt1
+- new version 7.2.2
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 7.1.3-alt1
 - new version 7.1.3
 
