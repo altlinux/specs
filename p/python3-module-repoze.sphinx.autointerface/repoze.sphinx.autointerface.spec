@@ -1,7 +1,7 @@
 %define oname repoze.sphinx.autointerface
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Auto-generate Sphinx API docs from Zope interfaces (Python 3)
@@ -10,10 +10,8 @@ License: BSD
 Group: Development/Python3
 Url: https://github.com/repoze/repoze.sphinx.autointerface
 
-#Source0-url: %__pypi_url %oname
-# See https://github.com/repoze/repoze.sphinx.autointerface/pull/17/commits
-# Source0-url: https://github.com/stevepiercy/repoze.sphinx.autointerface/archive/refs/heads/sphinx-40-compat.zip
-Source0: %oname-%version.tar
+# Source-url: https://github.com/repoze/repoze.sphinx.autointerface/archive/refs/tags/%version.tar.gz
+Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -59,13 +57,15 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %files
 %doc *.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/repoze/sphinx/__init__.*
 
 %files -n python3-module-repoze.sphinx
 %python3_sitelibdir/repoze/sphinx/__init__.*
 
 %changelog
+* Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version (1.1.0)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version 1.0.0 (with rpmrb script)
 
