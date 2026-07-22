@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.11.0
-Release: alt2
+Release: alt3
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -142,6 +142,9 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Jul 21 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt3
+- Fix add computer button disabling (Closes: 37952).
+
 * Thu Jul 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt2
 - Fix location table reset (closes: 37952).
 
