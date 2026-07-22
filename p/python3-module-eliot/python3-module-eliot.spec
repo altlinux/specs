@@ -1,7 +1,7 @@
 %define modulename eliot
 
 Name: python3-module-eliot
-Version: 1.17.5
+Version: 1.18.0
 Release: alt1
 
 Summary: Logging library that tells you why it happened
@@ -66,6 +66,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.18.0-alt1
+- new version 1.18.0
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.17.5-alt1
 - new version 1.17.5 (with rpmrb script)
 
