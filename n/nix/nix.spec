@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.31.2
+Version: 2.35.1
 Release: alt1
 
 Summary: Nix software deployment system
@@ -17,8 +17,8 @@ Source1: %name.conf
 Source2: sysusers.conf
 
 Patch: nix-2.29.0-alt-remove-unused-sh-files.patch
-Patch1: nix-2.30.2-alt-drop-broken-ssl-path.patch
-Patch2: nix-2.31.2-alt-fix-build-with-mdbook-0.5.0.patch
+Patch1: nix-2.31.2-alt-fix-build-with-meson-1.11.patch
+
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -29,6 +29,8 @@ BuildRequires: bzlib-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-context-devel
 BuildRequires: boost-coroutine-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-asio-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libeditline-devel
 BuildRequires: flex
@@ -55,8 +57,9 @@ BuildRequires: rsync
 BuildRequires: curl
 BuildRequires: /proc
 BuildRequires: lowdown
-BuildRequires: mdbook-linkcheck
 BuildRequires: doxygen
+BuildRequires: libzstd-devel
+
 
 %ifarch x86_64
 BuildRequires: libcpuid-devel
@@ -99,13 +102,12 @@ The %name-doc package contains documentation files for %name.
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p2
 
 %build
-# Test disabled because rapidcheck is not builded
-# pkgconfig.prov: ERROR: %_usrsrc/tmp/librapidcheck-devel-buildroot/usr/lib64/pkgconfig/rapidcheck.pc: invalid pkg-config output: rapidcheck =
-# Perl bindings build requires to libnix
-%meson -Dnix:profile-dir=%_sysconfdir/profile.d -Dbindings=false -Ddoc-gen=true -Dunit-tests=false
+# unit-tests disabled because rapidcheck is not packaged
+# json-schema-checks disabled because jv is not packaged
+# html-manual disabled because json-schema-for-humans is not packaged
+%meson -Dnix:profile-dir=%_sysconfdir/profile.d -Ddoc-gen=true -Dnix-manual:html-manual=false -Dunit-tests=false -Djson-schema-checks=false
 %meson_build
 
 %install
@@ -136,6 +138,7 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_sysconfdir/profile.d/nix-daemon.fish
 %_sysconfdir/profile.d/nix-daemon.sh
 %_libexecdir/nix/build-remote
+%_libexecdir/nix-nswrapper
 %_unitdir/nix-daemon.service
 %_unitdir/nix-daemon.socket
 %_datadir/bash-completion/completions/nix
@@ -145,12 +148,14 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 
 %files devel
 %_includedir/nix/
+%_includedir/nix_api_store/
 %_includedir/*.h
 %_includedir/*.hh
 %_pkgconfigdir/*.pc
 
 %files -n lib%name
 %_libdir/*.so
+%_libdir/*.so.*
 
 %files doc
 %_docdir/nix/
@@ -159,9 +164,14 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Wed Jul 22 2026 Boris Yumankulov <boria138@altlinux.org> 2.35.1-alt1
+- new version 2.35.1
+- fix FTBFS with meson 1.11
+- replace ssl patch to nix.conf
+
 * Sat Nov 29 2025 Boris Yumankulov <boria138@altlinux.org> 2.31.2-alt1
 - new version 2.31.2
-- fix FTBS
+- fix FTBFS
 - drop noarch from nix-doc due to arch-dependent Sphinx searchindex file
 
 * Tue Sep 09 2025 Boris Yumankulov <boria138@altlinux.org> 2.31.1-alt1

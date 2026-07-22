@@ -1,6 +1,6 @@
 Name: libeditline
-Version: 1.17.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: A small compatible replacement for readline
 License: BSD
@@ -42,7 +42,7 @@ rm -v %buildroot%_man3dir/editline.3
 %files
 %doc LICENSE
 %_libdir/libeditline.so.1
-%_libdir/libeditline.so.1.0.2
+%_libdir/libeditline.so.1.1.1
 
 %files devel
 %doc ChangeLog.md README.md
@@ -51,6 +51,9 @@ rm -v %buildroot%_man3dir/editline.3
 %_pkgconfigdir/libeditline.pc
 
 %changelog
+* Mon Jul 20 2026 Boris Yumankulov <boria138@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Fri May 23 2025 Boris Yumankulov <boria138@altlinux.org> 1.17.1-alt2
 - Fix syntax error in configure.ac file
 
