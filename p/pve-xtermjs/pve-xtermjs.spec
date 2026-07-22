@@ -3,7 +3,7 @@
 
 Name: pve-xtermjs
 Summary: HTML/TypeScript based fully-featured terminal for Proxmox projects
-Version: 6.0.0.1
+Version: 6.0.0.2
 Release: alt1
 License: AGPL-3.0+
 Group: Networking/WWW
@@ -70,6 +70,9 @@ cp xterm.js/src/* %buildroot%_datadir/%name/
 %_bindir/termproxy
 
 %changelog
+* Wed Jul 22 2026 Sergey Konev <darisishe@altlinux.org> 6.0.0.2-alt1
+- pve-xtermjs 6.0.0.2
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 6.0.0.1-alt1
 - Update:
   + pve-xtermjs 6.0.0.1
