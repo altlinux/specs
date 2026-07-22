@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.8.10
+Version: 1.8.13
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -125,6 +125,9 @@ sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
 %make_build V=1
 
 %check
+# The test relies on unreleased post-1.3.1 changes in libnftnl.
+chmod -x iptables/tests/shell/testcases/nft-only/0009-needless-bitwise_0
+
 vm-run \
 	--kvm=cond \
 	--rootfs \
@@ -266,6 +269,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.13-alt1
+- v1.8.10 -> v1.8.13.
+
 * Wed Apr 17 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.10-alt1
 - v1.8.7 -> v1.8.10.
 - Utilized the rpm-build-vm-createimage package (thx Vitaly Chikunov) to run
