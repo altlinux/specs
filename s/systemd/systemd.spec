@@ -96,11 +96,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 258
+%define ver_major 259
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.9
+Version: %ver_major.7
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -168,6 +168,7 @@ Source91: systemd-tmpfiles-shared.alternatives
 Source92: systemd-tmpfiles-standalone.alternatives
 Source93: systemd-busctl-shared.alternatives
 Source94: systemd-busctl-standalone.alternatives
+Source96: cloud-altlinux.asc
 
 Patch1: %name-%version.patch
 
@@ -181,6 +182,7 @@ BuildRequires: gperf
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: libpam-devel
 BuildRequires: libacl-devel acl
+BuildRequires: gnupg
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds python3-module-lxml
 BuildRequires: python3(jinja2)
 BuildRequires: libdbus-devel >= %dbus_ver
@@ -791,6 +793,9 @@ sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdo
         -Dsulogin-path=/sbin/sulogin \
         -Dmount-path=/bin/mount \
         -Dumount-path=/bin/umount \
+        -Dagetty-path=/sbin/agetty \
+        -Dswapon-path=/sbin/swapon \
+        -Dswapoff-path=/sbin/swapoff \
         -Dloadkeys-path=/bin/loadkeys \
         -Dsetfont-path=/bin/setfont \
         -Dnologin-path=/sbin/nologin \
@@ -869,7 +874,8 @@ sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdo
         -Ddefault-timeout-sec=45 \
         -Ddefault-user-timeout-sec=45 \
         -Doomd=true \
-        -Dsysupdate=disabled \
+        -Dsysupdate=enabled \
+        -Dsysupdated=enabled \
         -Dstatus-unit-format-default=combined \
         -Dfallback-hostname=localhost \
         -Ddefault-dnssec=no \
@@ -961,6 +967,15 @@ install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
 ln -r -s %buildroot%_unitdir/altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants/altlinux-libresolv.path
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -r -s %buildroot%_unitdir/altlinux-first_time.service %buildroot%_unitdir/basic.target.wants/altlinux-first_time.service
+
+# Restore the ALT Cloud image-signing key (cloud@altlinux.org) into the vendor import
+# keyring used by importctl to verify pulled OCI images.
+GNUPGHOME="$(mktemp -d)"; export GNUPGHOME
+gpg --batch --no-tty --no-default-keyring \
+    --keyring %buildroot%_systemd_dir/import-pubring.pgp \
+    --import %SOURCE96
+rm -f %buildroot%_systemd_dir/import-pubring.pgp~
+rm -rf "$GNUPGHOME"
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
 ln -s systemd-reboot.service %buildroot%_unitdir/reboot.service
 ln -s systemd-halt.service %buildroot%_unitdir/halt.service
@@ -1671,7 +1686,8 @@ fi
 %_systemd_dir/user.conf.d/env-path.conf
 
 %config %_sysconfdir/profile.d/systemd.sh
-%_sysconfdir/profile.d/*
+%_sysconfdir/profile.d/70-systemd-shell-extra.sh
+%_sysconfdir/profile.d/80-systemd-osc-context.sh
 %_systemd_dir/profile.d/*
 
 %_tmpfilesdir/systemd-nologin.conf
@@ -1743,7 +1759,7 @@ fi
 
 %_bindir/systemd-sysusers.shared
 %_altdir/systemd-sysusers-shared
-%_mandir/*/*sysusers*
+%_man8dir/*sysusers*
 
 %_systemd_dir/systemd-modules-load
 %_altdir/systemd-modules-load-shared
@@ -2200,6 +2216,28 @@ fi
 %exclude %_kernel_installdir/50-depmod.install
 %exclude %_kernel_installdir/60-ukify.install
 
+%_bindir/systemd-mute-console
+%_man1dir/systemd-mute-console*
+
+%dir %_prefix/lib/nvpcr
+%_prefix/lib/nvpcr/*.nvpcr
+%_man8dir/systemd-pcrnvdone.service.*
+%_man8dir/systemd-pcrproduct.service.*
+
+%_man5dir/confext.conf*
+%_man5dir/sysext.conf*
+
+%if_enabled polkit
+%_datadir/polkit-1/rules.d/empower.rules
+%endif
+
+# systemd-sysupdate / sysupdated / updatectl
+%_systemd_dir/systemd-sysupdate
+%_systemd_dir/systemd-sysupdated
+%_bindir/updatectl
+%_mandir/*/*sysupdate*
+%_man1dir/updatectl.*
+
 %files -n libsystemd
 %_libdir/libsystemd.so.*
 
@@ -2321,7 +2359,10 @@ fi
 %exclude %_tmpfilesdir/systemd-resolve.conf
 %_unitdir/*networkd*
 %_unitdir/systemd-network-generator.service
-%_unitdir/*resolv*
+# Use *resolved* (trailing 'd') so systemd-networkd-resolve-hook.socket is not
+# double-listed here — it is already covered by *networkd* above.
+%_unitdir/*resolved*
+%_unitdir/altlinux-*resolv*
 %_unitdir/*/*resolv*
 %_systemd_dir/network/80-6rd-tunnel.network
 %_systemd_dir/network/80-auto-link-local.network.example
@@ -2408,7 +2449,6 @@ fi
 %_mandir/*/*nsresourced*
 %_mandir/*/*machine*
 %_mandir/*/*import*
-%_mandir/*/*nspawn*
 %_man1dir/mount.ddi.*
 %exclude %_man3dir/*machine*
 %exclude %_man8dir/*mymachines.*
@@ -2621,7 +2661,9 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/udevd
 %_initdir/udev*
 %_unitdir/*udev*
-%_unitdir/*/*udev*
+# Only *.wants/ symlinks; a bare */*udev* would double-list the udev-trigger drop-in
+# already pulled in by *udev* above.
+%_unitdir/*.wants/*udev*
 %dir %_systemd_dir/network
 %_systemd_dir/network/*.link
 %_tmpfilesdir/static-nodes-permissions.conf
@@ -2651,6 +2693,11 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sat Jul 18 2026 Alexey Shabalin <shaba@altlinux.org> 1:259.7-alt1
+- 259.7.
+- Enable systemd-sysupdate.
+- Restore the cloud@altlinux.org image-signing key in the vendor import keyring.
+
 * Wed Jul 08 2026 Alexey Shabalin <shaba@altlinux.org> 1:258.9-alt1
 - 258.9.
 - Accept NSS aliases for canonicalized user records (PR#42452).
