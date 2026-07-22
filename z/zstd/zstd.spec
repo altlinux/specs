@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.5.7
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD-3-Clause or GPL-2.0-only
 Group: Archiving/Compression
@@ -151,6 +151,10 @@ cmake \
 sed -i '1i set(CMAKE_INSTALL_LOCAL_ONLY TRUE)' cmake_install.cmake
 mkdir cmake_files_install
 DESTDIR=cmake_files_install cmake --install . --verbose
+# Make message non-fatal (otherwise it fails if libzstd.a not found).
+# See https://bugzilla.altlinux.org/59892.
+sed -i 's/message(FATAL_ERROR "The imported target/message(WARNING "The imported target/' \
+	cmake_files_install/%_libdir/cmake/zstd/zstdTargets.cmake
 cp -a cmake_files_install/%_libdir/cmake %buildroot%_libdir/
 
 %set_verify_elf_method strict
@@ -190,6 +194,9 @@ export CXXFLAGS="$CFLAGS"
 %_libdir/*.a
 
 %changelog
+* Wed Jul 22 2026 Mikhail Efremov <sem@altlinux.org> 1.5.7-alt2
+- cmake: Make message non-fatal (closes: #59892).
+
 * Thu Jul 16 2026 Mikhail Efremov <sem@altlinux.org> 1.5.7-alt1
 - Fixed PGO build.
 - Fixed License tag (closes: #53042).
