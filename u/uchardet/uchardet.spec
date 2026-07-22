@@ -1,22 +1,25 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
+%def_enable check
 
-Name:		uchardet
-Version:	0.0.7
-Release:	alt1
+Name: uchardet
+Version: 0.0.8
+Release: alt1
 
-Summary:	Universal charset detection
+Summary: Universal charset detection
+License: GPL-2.0-or-later and LGPL-2.1-or-later or MPL-1.1
+Group: Development/Tools
+Url: https://www.freedesktop.org/wiki/Software/uchardet/
 
-Group:		Development/Tools
-License:	MPLv1.1
-Url:		https://www.freedesktop.org/wiki/Software/uchardet/
+Vcs: https://gitlab.freedesktop.org/uchardet/uchardet.git
 
-Source:		https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.7.tar.xz
+#Source: https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.7.tar.xz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Requires:	lib%name = %EVR
+Requires: lib%name = %EVR
 
-# Automatically added by buildreq on Tue Oct 15 2013 (-bi)
-# optimized out: cmake-modules elfutils libstdc++-devel pkg-config
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ %{?_enable_check:ctest}
 
 %description
 uchardet is a C language binding of the original C++ implementation of the
@@ -30,12 +33,12 @@ Summary: %name shared library
 Group: System/Libraries
 
 %description -n lib%name
-This package contains shared library required by %name
+This package contains shared library required by %name.
 
 %package -n lib%name-devel
 Summary: Development files for uchardet
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Header files and Libraries for the package uchardet.
@@ -43,26 +46,32 @@ Header files and Libraries for the package uchardet.
 %package -n lib%name-devel-static
 Summary: Static library for uchardet
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
-Static library to build statically linked applications that lib%name
+Static library to build statically linked applications that lib%name.
 
 %prep
 %setup
+#%%patch -p1
 
 %build
-%cmake_insource -DCMAKE_BUILD_TYPE=Release \
-                -DCMAKE_INSTALL_LIBDIR=%_libdir
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
+
+%check
+%ctest
 
 %files
-%doc COPYING AUTHORS
 %_bindir/%name
 %_man1dir/%name.1.*
+%doc COPYING AUTHORS
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -70,12 +79,18 @@ Static library to build statically linked applications that lib%name
 %files -n lib%name-devel
 %_includedir/%name
 %_libdir/lib%name.so
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/
 
 %files -n lib%name-devel-static
 %_libdir/lib%name.a
 
 %changelog
+* Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.0.8-alt1
+- 0.0.8
+- switched build from tarball to upstream git, added Vcs tag
+- enabled %%check
+
 * Sat Sep 04 2021 Motsyo Gennadi <drool@altlinux.ru> 0.0.7-alt1
 - 0.0.7
 - fix LTO
