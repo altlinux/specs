@@ -20,7 +20,7 @@
 
 Name: gpgme
 Version: 1.24.3
-Release: alt4
+Release: alt5
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -50,7 +50,9 @@ Patch16: gpgme-1.24.3-alt-add-python3.14-3.15-support.patch
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
+%if_enabled legacy
 BuildRequires(pre): python3-devel python3(setuptools)
+%endif
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
 BuildRequires: swig
@@ -187,7 +189,7 @@ pushd BUILD
 	--disable-fd-passing \
 	--with-gpg=%gpg_bin_path \
 	--with-gpgsm=%gpgsm_bin_path \
-	--enable-languages=cpp,python%{!?_enable_legacy:,qt5} \
+	--enable-languages=cpp%{!?_enable_legacy:,python,qt5} \
 	#
 %make_build MAKEINFOFLAGS=--no-split
 popd
@@ -219,11 +221,13 @@ pushd BUILD-qt6
 popd
 %endif
 
+%if_disabled legacy
 # Keep only PKG-INFO and *.txt files in egg-info dirs.
 find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
      -mindepth 1 -maxdepth 1 \
      ! -name  'PKG-INFO' -a ! -name '*.txt' \
      -delete
+%endif
 
 %if_enabled legacy
 rm -f %buildroot/%_bindir/gpgme-tool
@@ -304,6 +308,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 1.24.3-alt5
+- Disable python on build.
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 1.24.3-alt4
 - Move utils, Qt bindings and python module to gpgme2.
 - Don't provide pkgconfig() to resolve conflict with new version package.
