@@ -1,7 +1,7 @@
 %define pypi_name cyclopts
 
 Name: python3-module-%pypi_name
-Version: 4.7.0
+Version: 4.21.1
 Release: alt1
 
 Summary: Intuitive, easy CLIs based on Python type hints
@@ -39,6 +39,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.21.1-alt1
+- new version 4.21.1
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.7.0-alt1
 - initial build
 
