@@ -11,7 +11,7 @@
 
 Name:    Uranium
 Version: 5.13.0
-Release: alt1
+Release: alt2
 
 Summary: A Python framework for building Desktop applications.
 License: LGPL-3.0-or-later
@@ -58,14 +58,18 @@ Patch: Uranium-4.7.1-set-default-languages.patch
 
 # from Fedora
 Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
-# https://github.com/Ultimaker/Uranium/issues/1030
+Patch3: 997.patch
+
+# https://github.com/Ultimaker/Uranium/pull/1031
 Patch5: Uranium-5.4.0-tests-replace-deprecated-path-parameter-for-pytest_i.patch
-# Fix asserts for called once in Python 3.12
+
 # https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
 Patch6: Uranium-5.12.1-python3.12.patch
 
-# https://github.com/Ultimaker/Uranium/issues/984
-Patch7: numpy-pad-fix.patch
+# https://github.com/Ultimaker/Uranium/pull/985
+Patch7: numpy-2.0-lib-pad.patch
+# https://github.com/Ultimaker/Uranium/pull/1028
+Patch8: numpy-2.3.0-tostring.patch
 
 %description
 %summary
@@ -132,6 +136,10 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt2
+- Fix FTBFS with python3.14.
+- Fix numpy 2.3.0+ compatibility.
+
 * Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt1
 - New version 5.13.0.
 

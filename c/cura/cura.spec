@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 5.13.0
-Release: alt1
+Release: alt3
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
 
@@ -31,6 +31,10 @@ Source8: com.ultimaker.cura.appdata.xml
 
 Patch4: gtk-qt-theme.patch
 Patch5: about-dialog-credits.patch
+Patch6: ru-translation-newlines.patch
+
+# https://github.com/Ultimaker/Cura/pull/21419
+Patch8: numpy-2.3.0-frombuffer.patch
 
 # Fedora patch
 # Skip forced loading SentryLogger to avoid an error on startup
@@ -162,6 +166,12 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt3
+- Fix numpy 2.3.0+ compatibility.
+
+* Fri Jun 05 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt2
+- Fix newlines.
+
 * Thu May 28 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt1
 - New version 5.13.0.
 - Remove dependencies version from about dialog, because these do not
