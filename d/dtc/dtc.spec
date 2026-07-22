@@ -5,7 +5,7 @@
 
 Name: dtc
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -138,6 +138,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Wed Jul 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.1-alt2
+- reverted graph_child_address check removal, users aren't ready yet
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.1-alt1
 - v1.7.2 -> v1.8.1.
 
