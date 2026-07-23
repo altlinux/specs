@@ -4,16 +4,17 @@
 
 Name: eclib
 Version: 20250627
-Release: alt1
+Release: alt2
 
 Summary: Tools for create the elliptic curve database
 
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://homepages.warwick.ac.uk/~masgaj/mwrank/
-Vcs: git://github.com/JohnCremona/eclib.git
+VCS: https://github.com/JohnCremona/eclib
 
 Source: https://github.com/JohnCremona/eclib/releases/download/%version/%name-%version.tar.bz2
+Patch0: %name-%version-%release.patch
 Patch1: ax_boost_base-loongarch64.patch
 
 # fail tests (check_qcurves)
@@ -56,6 +57,7 @@ curves defined over the rational numbers.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 
 %build
@@ -110,6 +112,9 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Thu Jul 23 2026 Leontiy Volodin <lvol@altlinux.org> 20250627-alt2
+- Fixed build on boost 1.91.
+
 * Mon Jul 14 2025 Leontiy Volodin <lvol@altlinux.org> 20250627-alt1
 - New version 20250627.
 
