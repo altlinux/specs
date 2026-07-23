@@ -43,7 +43,7 @@
 
 Name: NetworkManager
 Version: 1.58.0
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -662,6 +662,10 @@ fi
 %endif
 
 %changelog
+* Thu Jul 23 2026 Mikhail Efremov <sem@altlinux.org> 1.58.0-alt2
+- settings-connection: keep agent-owned secrets for GetSecrets
+  (by me at katze-942.ru) (closes: #59836).
+
 * Tue Jul 21 2026 Mikhail Efremov <sem@altlinux.org> 1.58.0-alt1
 - Updated to 1.58.0.
 
