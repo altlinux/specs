@@ -7,7 +7,7 @@
 %define optflags_lto %nil
 
 Name: nss
-Version: 3.124
+Version: 3.126
 Release: alt1
 
 Summary: Netscape Network Security Services(NSS)
@@ -277,6 +277,17 @@ popd
 %files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Wed Jul 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.126-alt1
+- New version.
+  + Add CN=SECOM SMIME RSA Root CA 2024
+  + Add CN=SECOM TLS ECC Root CA 2024
+  + Add CN=SECOM TLS RSA Root CA 2024
+  + Add CN=Telia EC Email Root CA v3
+  + Add CN=Telia EC TLS Root CA v3
+  + Add CN=Telia RSA Email Root CA v3
+  + Add CN=Telia RSA TLS Root CA v3
+  + Remove OU=ePKI Root Certification Authority
+
 * Tue May 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.124-alt1
 - New version.
 

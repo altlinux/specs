@@ -8,12 +8,12 @@
 %define gst_version   1.0
 %define nspr_version  4.35
 %define nss_version   3.98
-%define rust_version  1.65.0
-%define cargo_version 1.65.0
-%define llvm_version  17.0
+%define rust_version  1.90.0
+%define cargo_version 1.90.0
+%define llvm_version  21.1
 
 Name: firefox
-Version: 152.0.6
+Version: 153.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,75 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jul 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 153.0-alt1
+- New version.
+- Build with llvm21.1 (upstream requires clang >= 19.0).
+- Raise minimal rust/cargo version to 1.90.0.
+- Fixes:
+  + CVE-2026-16349: Same-origin policy bypass in the DOM: Navigation component
+  + CVE-2026-16350: Incorrect boundary conditions in the Audio/Video: cubeb component
+  + CVE-2026-16362: Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2026-16351: Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-16352: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16363: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-16364: Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-16365: Privilege escalation in the DOM: Workers component
+  + CVE-2026-16366: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-16353: Invalid pointer in the DOM: Bindings (WebIDL) component
+  + CVE-2026-16354: Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-16367: Sandbox escape due to invalid pointer in the Disability Access APIs component
+  + CVE-2026-16368: Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2026-16369: Integer overflow in the JavaScript: WebAssembly component
+  + CVE-2026-16355: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16356: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16357: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-16370: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-16371: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-16372: Privilege escalation in the DOM: Content Processes component
+  + CVE-2026-16373: Information disclosure in the Privacy component in Firefox for Android
+  + CVE-2026-16374: Information disclosure in the Framework component in DevTools
+  + CVE-2026-16375: Site isolation issue in the Networking: HTTP component
+  + CVE-2026-16376: Denial-of-service in the Graphics: WebGPU component
+  + CVE-2026-16377: Mitigation bypass in the PDF Viewer component
+  + CVE-2026-16378: Other issue in the DOM: Copy &amp; Paste and Drag &amp; Drop component
+  + CVE-2026-16379: Privilege escalation in the DOM: Content Processes component
+  + CVE-2026-16358: Site isolation issue in the Graphics: WebRender component
+  + CVE-2026-16380: Mitigation bypass in the Networking component
+  + CVE-2026-16381: Same-origin policy bypass in the Networking: DNS component
+  + CVE-2026-16382: Mitigation bypass in the DOM: Service Workers component
+  + CVE-2026-16383: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-16384: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16385: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16386: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16387: Site isolation issue in the Networking component
+  + CVE-2026-16388: Sandbox escape in the DOM: Networking component
+  + CVE-2026-16389: Incorrect boundary conditions, integer overflow in the Libraries component in NSS
+  + CVE-2026-16390: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-16391: Information disclosure in the Storage: IndexedDB component
+  + CVE-2026-16392: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16393: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-16359: Incorrect boundary conditions in the Audio/Video: GMP component
+  + CVE-2026-16394: Mitigation bypass in the DOM: Security component
+  + CVE-2026-16395: Integer overflow in the Audio/Video component
+  + CVE-2026-16396: Privilege escalation in WebExtensions
+  + CVE-2026-16397: Clickjacking issue in the WebExtensions component in Firefox for Android
+  + CVE-2026-16398: Site isolation issue in the Graphics component
+  + CVE-2026-16399: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-16400: Information disclosure in the DOM: Security component
+  + CVE-2026-16401: Privilege escalation in the Data Loss Prevention component
+  + CVE-2026-16402: Integer overflow in the Graphics: ImageLib component
+  + CVE-2026-16403: Spoofing issue in the Address Bar component
+  + CVE-2026-16404: Spoofing issue in Firefox for Android
+  + CVE-2026-16405: Information disclosure in the Networking: WebSockets component
+  + CVE-2026-16406: Mitigation bypass in the Networking component
+  + CVE-2026-16407: Mitigation bypass in the DOM: Service Workers component
+  + CVE-2026-16408: Integer overflow in the Audio/Video: Playback component
+  + CVE-2026-16409: Invalid pointer in the Security: PSM component
+  + CVE-2026-16410: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16411: Memory safety bugs fixed in Firefox 153
+  + CVE-2026-16412: Memory safety bugs fixed in Firefox ESR 140.13 and Firefox 153
+  + CVE-2026-16360: Memory safety bugs fixed in Firefox ESR 115.38, Firefox ESR 140.13 and Firefox 153
+
 * Tue Jul 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.6-alt1
 - New version.
 - Fixes:
