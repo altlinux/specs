@@ -2,7 +2,7 @@
 %define xdg_name com.github.Anuken.Mindustry
 
 Name: mindustry
-Version: 159.6
+Version: 159.7
 Release: alt1
 License: GPL-3.0
 
@@ -98,6 +98,9 @@ done
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Thu Jul 23 2026 Kirill Unitsaev <fiersik@altlinux.org> 159.7-alt1
+- new version 159.7
+
 * Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 159.6-alt1
 - new version 159.6
 
