@@ -81,7 +81,7 @@
 
 
 Name: gpupdate
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: GPT applier
@@ -152,11 +152,11 @@ settings in Linux environments.
 
 %install
 mkdir -p \
-	%buildroot%python3_sitelibdir/
+    %buildroot%python3_sitelibdir/
 cp -r gpoa \
-	%buildroot%python3_sitelibdir/
+    %buildroot%python3_sitelibdir/
 cp -r gpoa_lib/gpoa_lib \
-	%buildroot%python3_sitelibdir/gpoa_lib
+    %buildroot%python3_sitelibdir/gpoa_lib
 
 # Remove test directory and bytecode from gpoa-lib package
 find %buildroot%python3_sitelibdir/gpoa_lib -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null || true
@@ -164,41 +164,41 @@ find %buildroot%python3_sitelibdir/gpoa_lib -name '*.pyc' -delete 2>/dev/null ||
 
 # Generate translations
 msgfmt \
-	-o %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.mo \
-	%buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.po
+    -o %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.mo \
+    %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.po
 
 # Generate plugin translations for gpoa_lib
 for po_file in %buildroot%python3_sitelibdir/gpoa_lib/frontend_plugins/locale/*/LC_MESSAGES/*.po; do
-	mo_file="${po_file%%.po}.mo"
-	msgfmt -o "$mo_file" "$po_file"
+    mo_file="${po_file%%.po}.mo"
+    msgfmt -o "$mo_file" "$po_file"
 done
 
 mkdir -p \
-	%buildroot%_bindir/ \
-	%buildroot%_sbindir/ \
-	%buildroot%_cachedir/%name/ \
-	%buildroot%_cachedir/%{name}_file_cache/ \
-	%buildroot%_cachedir/%name/creds
+    %buildroot%_bindir/ \
+    %buildroot%_sbindir/ \
+    %buildroot%_cachedir/%name/ \
+    %buildroot%_cachedir/%{name}_file_cache/ \
+    %buildroot%_cachedir/%name/creds
 
 ln -s %python3_sitelibdir/gpoa/gpoa \
-	%buildroot%_sbindir/gpoa
+    %buildroot%_sbindir/gpoa
 ln -s %python3_sitelibdir/gpoa/gpupdate \
-	%buildroot%_bindir/gpupdate
+    %buildroot%_bindir/gpupdate
 
 ln -s %python3_sitelibdir/gpoa/gpupdate-setup \
-	%buildroot%_sbindir/gpupdate-setup
+    %buildroot%_sbindir/gpupdate-setup
 
 mkdir -p \
-	%buildroot%_prefix/libexec/%name
+    %buildroot%_prefix/libexec/%name
 
 ln -s %python3_sitelibdir/gpoa/pkcon_runner \
-	%buildroot%_prefix/libexec/%name/pkcon_runner
+    %buildroot%_prefix/libexec/%name/pkcon_runner
 ln -s %python3_sitelibdir/gpoa/scripts_runner \
-	%buildroot%_prefix/libexec/%name/scripts_runner
+    %buildroot%_prefix/libexec/%name/scripts_runner
 
 mkdir -p %buildroot%_datadir/%name
 mv %buildroot%python3_sitelibdir/gpoa/templates \
-	%buildroot%_datadir/%name/
+    %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/environment
@@ -219,11 +219,11 @@ install -Dm0644 completions/gpupdate %buildroot/%_datadir/bash-completion/comple
 install -Dm0644 completions/gpupdate-setup %buildroot/%_datadir/bash-completion/completions/gpupdate-setup
 
 for i in gpupdate-localusers \
-	 gpupdate-group-users \
-	 gpupdate-system-uids
+    gpupdate-group-users \
+    gpupdate-system-uids
 do
-	install -pD -m755 "dist/$i" \
-		"%buildroot%_sysconfdir/control.d/facilities/$i"
+    install -pD -m755 "dist/$i" \
+        "%buildroot%_sysconfdir/control.d/facilities/$i"
 done
 
 %preun
@@ -241,8 +241,8 @@ fi
 %triggerpostun -- %name < 0.9.13.6
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
-	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
-		%_sysconfdir/%name/%name.ini
+    sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
+        %_sysconfdir/%name/%name.ini
 fi
 
 %files
@@ -290,6 +290,13 @@ fi
 %doc README.md PLUGIN_DEVELOPMENT_GUIDE.md PLUGIN_DEVELOPMENT_GUIDE_RU.md EXAMPLES.md
 
 %changelog
+* Thu Jul 23 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.1-alt1
+- Fixed:
+  Pkcon_runner: fix import error via realpath and package-qualified imports
+  SecurePermissionsDisabled: fix key path slashes
+  GPP cleanup: fix registry_factory returning instance instead of class
+  GPP cleanup: fix cleanup_file path construction for individual files
+
 * Tue Jun 23 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.0-alt1
 - Added:
   gpoa-lib subpackage with public API (StorageAdapter, StorageWriter, ApplierRunner)
