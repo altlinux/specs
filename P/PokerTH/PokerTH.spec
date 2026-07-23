@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -39,7 +39,6 @@ Summary: Data files for %name
 Group: Games/Cards
 License: ALT-Public-Domain and GPLv2+
 BuildArch: noarch
-Requires: %name = %version-%release
 
 %description data
 PokerTH is a poker game written in C++/Qt6. You can play the popular
@@ -128,6 +127,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_datadir/pokerth/data/gfx/qml/
 
 %changelog
+* Thu Jul 23 2026 Mikhail Efremov <sem@altlinux.org> 2.1.4-alt1
+- Updated to 2.1.4.
+
 * Wed Jul 22 2026 Mikhail Efremov <sem@altlinux.org> 2.1.3-alt1
 - Fixed description.
 - Built QML client and packaged as separate subpackage.
