@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%modulename
-Version: 6.5.0
+Version: 6.7.0
 Release: alt1
 Summary: A python library to auditing and relabeling cross-distribution Linux wheels
 Group: Development/Python3
@@ -61,5 +61,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Wed Jul 22 2026 Polina Poidenko <polipoki@altlinux.org> 6.7.0-alt1
+- New version 6.7.0.
+
 * Wed Dec 10 2025 Polina Poidenko <polipoki@altlinux.org> 6.5.0-alt1
 - Initial build for Sisyphus.
