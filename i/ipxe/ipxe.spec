@@ -26,7 +26,7 @@
 
 Name: ipxe
 Version: %date
-Release: alt1.git%{hash}
+Release: alt2.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -34,7 +34,9 @@ License: GPL-2.0-only
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
-ExclusiveArch: x86_64
+
+# one primary architecture is enough
+ExcludeArch: i586 aarch64
 
 Provides: gpxe = %EVR
 Obsoletes: gpxe < %EVR
@@ -43,9 +45,17 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 Requires: ipxe-bootimgs
-BuildRequires: xorriso mtools syslinux binutils-devel edk2-tools
+BuildRequires: xorriso mtools syslinux-data binutils-devel edk2-tools
 BuildRequires: liblzma-devel
-BuildRequires: gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+%if %_build_cpu != aarch64
+BuildRequires: gcc-aarch64-linux-gnu
+%endif
+%if %_build_cpu != loongarch64
+BuildRequires: gcc-loongarch64-linux-gnu
+%endif
+%if %_build_cpu != x86_64
+BuildRequires: gcc-x86_64-linux-gnu
+%endif
 
 %description
 iPXE is the leading open source network boot firmware.
@@ -123,21 +133,39 @@ rm -rf drivers/net/ath/ath9k
 rm -rf drivers/net/ath/ath5k
 
 make_ipxe() {
+    local cross=''
+    local target_cpu="$1"
+    shift
+
+    if [ "$target_cpu" != "%_build_cpu" ]; then
+      cross="CROSS_COMPILE=$target_cpu-linux-gnu-"
+    fi
+
     %make_build \
+        $cross \
         NO_WERROR=1 V=1 \
         GITVERSION=%hash \
         "$@"
 }
 
-make_ipxe bin-i386-efi/ipxe.efi \
+make_ipxe x86_64 \
+        bin-i386-efi/ipxe.efi \
+        bin-i386-efi/snponly.efi \
         bin-x86_64-efi/ipxe.efi \
         bin-x86_64-efi/snponly.efi
 
-make_ipxe ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
+make_ipxe aarch64 \
+        ARCH=arm64 \
         bin-arm64-efi/ipxe.efi \
         bin-arm64-efi/snponly.efi
 
-make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
+make_ipxe loongarch64 \
+        ARCH=loong64 \
+        bin-loong64-efi/ipxe.efi \
+        bin-loong64-efi/snponly.efi
+
+make_ipxe x86_64 \
+        ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
         bin/undionly.kpxe \
         bin/ipxe.{dsk,iso,usb,lkrn} \
         allroms
@@ -147,8 +175,10 @@ mkdir bin-combined
 for romstr in %qemuroms; do
   rom=$(echo "$romstr" | cut -d ":" -f 1)
 
-  make_ipxe CONFIG=qemu bin/${rom}.rom
-  make_ipxe CONFIG=qemu bin-x86_64-efi/${rom}.efidrv
+  make_ipxe x86_64 CONFIG=qemu bin/${rom}.rom
+  make_ipxe x86_64 CONFIG=qemu bin-x86_64-efi/${rom}.efidrv
+
+
   vid="0x${rom%%????}"
   did="0x${rom#????}"
   EfiRom -f "$vid" -i "$did" --pci23 \
@@ -188,6 +218,9 @@ cp -a src/bin-x86_64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-x86_64.efi
 cp -a src/bin-x86_64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-x86_64.efi
 cp -a src/bin-arm64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-arm64.efi
 cp -a src/bin-arm64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-arm64.efi
+cp -a src/bin-loong64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-loongarch64.efi
+cp -a src/bin-loong64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-loongarch64.efi
+
 
 # the roms supported by qemu will be packaged separatedly
 # remove from the main rom list and add them to qemu.list
@@ -215,6 +248,8 @@ done
 %_datadir/%name/undionly.kpxe
 %_datadir/%name/ipxe-arm64.efi
 %_datadir/%name/snponly-arm64.efi
+%_datadir/%name/ipxe-loongarch64.efi
+%_datadir/%name/snponly-loongarch64.efi
 %doc COPYING COPYING.GPLv2 COPYING.UBDL
 
 %files roms -f rom.list
@@ -228,6 +263,11 @@ done
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Wed Jul 22 2026 Ivan A. Melnikov <iv@altlinux.org> 1:20260501-alt2.gitae8defc2
+- Build LoongArch EFI images (by asheplyakov@).
+- Cross-compile x86 and x86_64 images when build on other architectures
+  (thx asheplyakov@).
+
 * Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 1:20260501-alt1.gitae8defc2
 - Update to latest upstream snapshot.
 
