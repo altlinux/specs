@@ -22,10 +22,12 @@
 
 Name: uhd
 Version: 4.10.0.0
-Release: alt1
+Release: alt2
 Summary: Universal Hardware Driver for Ettus Research products
 License: GPL-3.0-or-later
 Group: Engineering
+URL: https://uhd.ettus.com
+VCS: https://github.com/EttusResearch/uhd
 
 Source: %name-%version.tar
 Source1: %name-limits.conf
@@ -243,6 +245,10 @@ install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usr
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 4.10.0.0-alt2
+- Fix generated CMake config to match Boost headers.
+- Spec: add URL and VCS tags.
+
 * Tue Jun 23 2026 Anton Midyukov <antohami@altlinux.org> 4.10.0.0-alt1
 - New version 4.10.0.0.
 

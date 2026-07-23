@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.10.12.0
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
@@ -17,6 +17,9 @@ VCS: https://github.com/gnuradio/gnuradio.git
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
+
+# https://github.com/gnuradio/gnuradio/pull/7918
+Patch1: boost-1.89-system.patch
 
 # uhd not available for i586, armh
 # also segfault when build on ppc64le
@@ -211,6 +214,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.12.0-alt2
+- Fix FTBFS with boost 1.91.0.
+
 * Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 3.10.12.0-alt1
 - New version 3.10.12.0.
 
