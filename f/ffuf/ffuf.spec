@@ -3,7 +3,7 @@
 %global import_path github.com/ffuf/ffuf/v2
 
 Name: ffuf
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Fast web fuzzer written in Go
@@ -49,6 +49,9 @@ mv %buildroot%_bindir/{v2,%name}
 %_bindir/%name
 
 %changelog
+* Wed Jul 22 2026 Artem Krasovskiy <aibure@altlinux.org> 2.2.1-alt1
+- Updated to 2.2.1.
+
 * Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
