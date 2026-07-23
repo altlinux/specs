@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: proxmox-datacenter-manager
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 License: AGPL-3.0
 Summary: Manage multiple Proxmox VE cluster and other Proxmox projects
@@ -141,6 +141,9 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 %_datadir/javascript/%name/
 
 %changelog
+* Wed Jul 22 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.1.7-alt1
+- new version
+
 * Mon Jul 06 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.1.6-alt1
 - new version
 
