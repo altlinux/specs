@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 152.0.1
+Version: 153.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -39,16 +39,12 @@ Patch003: 0003-Fix-types-defination.patch
 Patch004: 0004-Correction-of-the-Russian-translation.patch
 Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
-Patch007: 0007-Implement-systemProxyDirect-in-the-libproxy-backend.patch
-Patch008: 0008-Fix-OpenPGP-key-wizard-buttons-clipped-on-GNOME-Wayl.patch
-Patch009: 0009-Fix-OpenPGP-account-settings-buttons-clipped-when-pa.patch
-Patch010: 0010-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
-Patch011: 0011-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
-Patch012: 0012-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
-Patch013: 0013-Apply-chat-message-style-changes-to-already-open-con.patch
-Patch014: 0014-Disable-the-native-textarea-resize-handle-on-the-cha.patch
-Patch015: 0015-Fix-default-size-and-layout-of-the-chat-Accounts-win.patch
-Patch016: 0016-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
+Patch007: 0007-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
+Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
+Patch009: 0009-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
+Patch010: 0010-Apply-chat-message-style-changes-to-already-open-con.patch
+Patch011: 0011-Disable-the-native-textarea-resize-handle-on-the-cha.patch
+Patch012: 0012-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
 ### End Patches
 
 Provides: mailclient
@@ -190,10 +186,6 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
-%patch13 -p2
-%patch14 -p2
-%patch15 -p2
-%patch16 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -382,6 +374,71 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Jul 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 153.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-14899: Off-by-one out of bounds read in MIME header parser for forwarding
+  + CVE-2026-16349: Same-origin policy bypass in the DOM: Navigation component
+  + CVE-2026-16350: Incorrect boundary conditions in the Audio/Video: cubeb component
+  + CVE-2026-16362: Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2026-16351: Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-16352: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16363: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-16364: Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-16365: Privilege escalation in the DOM: Workers component
+  + CVE-2026-16366: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-16353: Invalid pointer in the DOM: Bindings (WebIDL) component
+  + CVE-2026-16354: Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-16367: Sandbox escape due to invalid pointer in the Disability Access APIs component
+  + CVE-2026-16368: Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2026-16369: Integer overflow in the JavaScript: WebAssembly component
+  + CVE-2026-16355: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16356: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16357: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-16370: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-16371: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-16372: Privilege escalation in the DOM: Content Processes component
+  + CVE-2026-16374: Information disclosure in the Framework component in DevTools
+  + CVE-2026-16375: Site isolation issue in the Networking: HTTP component
+  + CVE-2026-16376: Denial-of-service in the Graphics: WebGPU component
+  + CVE-2026-16377: Mitigation bypass in the PDF Viewer component
+  + CVE-2026-16378: Other issue in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-16379: Privilege escalation in the DOM: Content Processes component
+  + CVE-2026-16358: Site isolation issue in the Graphics: WebRender component
+  + CVE-2026-16380: Mitigation bypass in the Networking component
+  + CVE-2026-16381: Same-origin policy bypass in the Networking: DNS component
+  + CVE-2026-16382: Mitigation bypass in the DOM: Service Workers component
+  + CVE-2026-16383: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-16384: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16385: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16386: Information disclosure due to uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-16387: Site isolation issue in the Networking component
+  + CVE-2026-16388: Sandbox escape in the DOM: Networking component
+  + CVE-2026-16389: Incorrect boundary conditions, integer overflow in the Libraries component in NSS
+  + CVE-2026-16390: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-16391: Information disclosure in the Storage: IndexedDB component
+  + CVE-2026-16392: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16393: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-16359: Incorrect boundary conditions in the Audio/Video: GMP component
+  + CVE-2026-16394: Mitigation bypass in the DOM: Security component
+  + CVE-2026-16395: Integer overflow in the Audio/Video component
+  + CVE-2026-16396: Privilege escalation in WebExtensions
+  + CVE-2026-16398: Site isolation issue in the Graphics component
+  + CVE-2026-16399: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-16400: Information disclosure in the DOM: Security component
+  + CVE-2026-16401: Privilege escalation in the Data Loss Prevention component
+  + CVE-2026-16402: Integer overflow in the Graphics: ImageLib component
+  + CVE-2026-16403: Spoofing issue in the Address Bar component
+  + CVE-2026-16405: Information disclosure in the Networking: WebSockets component
+  + CVE-2026-16406: Mitigation bypass in the Networking component
+  + CVE-2026-16407: Mitigation bypass in the DOM: Service Workers component
+  + CVE-2026-16408: Integer overflow in the Audio/Video: Playback component
+  + CVE-2026-16409: Invalid pointer in the Security: PSM component
+  + CVE-2026-16410: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16411: Memory safety bugs fixed in Thunderbird 153
+  + CVE-2026-16412: Memory safety bugs fixed in Thunderbird ESR 140.13 and Thunderbird 153
+  + CVE-2026-16360: Memory safety bugs fixed in Thunderbird ESR 140.13 and Thunderbird 153
+
 * Wed Jul 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 152.0.1-alt1
 - New version.
 - Fixes:
