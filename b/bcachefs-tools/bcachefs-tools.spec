@@ -1,14 +1,18 @@
 Name: bcachefs-tools
-Version: 1.4.1
-Release: alt4
+Version: 1.38.6
+Release: alt1
 
 Summary: Userspace tools and docs for bcachefs
 License: GPLv2
 Group: System/Kernel and hardware
+URL: https://bcachefs.org/
+VCS: http://evilpiepirate.org/git/bcachefs-tools.git
 
-Url: https://bcachefs.org/
-Source: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: crates.tar
 
+BuildRequires: clang-devel
+BuildRequires: rust-bindgen rust-cargo /proc
 BuildRequires: pkgconfig(blkid)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(liburcu)
@@ -18,6 +22,7 @@ BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libkeyutils)
+BuildRequires: pkgconfig(libunwind)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: libaio-devel
 
@@ -28,40 +33,37 @@ on reliability and robustness and the complete set of features
 one would expect from a modern filesystem.
 
 %prep
-%setup
-sed -ri '/^VERSION/ s,v0.1-nogit,v%version,'  Makefile
-%ifarch %e2k
-# (lcc 1.29.14) error: type of cast must be integral (mcst#9685)
-sed -i '$a #undef __careful_cmp\n#define __careful_cmp __cmp' \
-	include/linux/minmax.h
+%setup -a1
+%ifdef bootstrap
+cargo vendor
+tar cf %SOURCE1 .cargo vendor
 %endif
+echo %version > .version
 
 %build
-%make_build NO_RUST=please EXTRA_CFLAGS='%optflags'
+%make_build PREFIX=%_prefix ROOT_SBINDIR=%_sbindir
 
 %install
-%make_install NO_RUST=please PREFIX=%_prefix ROOT_SBINDIR=%_sbindir DESTDIR=%buildroot install
-install -pm0755 mount.bcachefs.sh %buildroot%_sbindir/mount.bcachefs
-
-%define _udevdir %(pkg-config --variable=udevdir udev)
-%define _systemunitdir %(pkg-config --variable systemdsystemunitdir systemd)
+%make_install PREFIX=%_prefix ROOT_SBINDIR=%_sbindir DESTDIR=%buildroot install
+rm -f  %buildroot%_sbindir/*.fuse.bcachefs
+rm -rf %buildroot%_datadir/initramfs-tools
+rm -rf %buildroot%_usrsrc/bcachefs-%version
 
 %files
 %doc COPYING README*
-
-%_udevdir/rules.d/*.rules
-
-%_systemunitdir/bcachefsck@.service
-%_systemunitdir/system-bcachefsck.slice
-
+%_udevrulesdir/*.rules
+%_unitdir/bcachefs-wait-devices@.service
 %_sbindir/bcachefs
 %_sbindir/fsck.bcachefs
 %_sbindir/mkfs.bcachefs
 %_sbindir/mount.bcachefs
-
+%_datadir/bash-completion/completions/bcachefs
 %_man8dir/bcachefs.8*
 
 %changelog
+* Mon Jul 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.38.6-alt1
+- 1.38.6 released
+
 * Thu Sep 04 2025 Michael Shigorin <mike@altlinux.org> 1.4.1-alt4
 - E2K: lcc 1.29 ftbfs workaround (ilyakurdyukov@; mcst#9685)
 
