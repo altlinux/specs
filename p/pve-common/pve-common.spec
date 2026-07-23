@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 9.1.14
+Version: 9.1.18
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -73,6 +73,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 9.1.18-alt1
+- 9.1.18
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.1.14-alt1
 - 9.1.14
 

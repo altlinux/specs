@@ -4,7 +4,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 9.2
-%define ver_minor 3
+%define ver_minor 5
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -26,7 +26,7 @@ Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
 Requires: pve-vncterm pve-novnc >= 1.6.0.4 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
 Requires: pve-container >= 6.1.6 pve-firewall pve-ha-manager >= 5.2.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
 Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.1.0
-Requires: proxmox-widget-toolkit >= 5.2.1 proxmox-mini-journalreader >= 1.3.1
+Requires: proxmox-widget-toolkit >= 5.2.6 proxmox-mini-journalreader >= 1.7.0
 Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.10.4
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
@@ -175,6 +175,15 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt2
+- ceph: tolerate FQDN hostnames in OSD metadata checks (Closes: 59881)
+
+* Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt1
+- 9.2.5
+- UI/UX: allow setting 'nesting' for privileged container (Closes: 57922)
+- UI/UX: fix datacenter option dialog field layout (Closes: 57243, 57244)
+- Write node DNS settings through ifupdown2 (Closes: 55545)
+
 * Mon Jul 06 2026 Sergey Konev <darisishe@altlinux.org> 9.2.3-alt2
 - ceph: merge daemon metadata for FQDN hostnames
 

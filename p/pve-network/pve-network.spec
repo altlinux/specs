@@ -2,7 +2,7 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 1.6.6
+Version: 1.6.7
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -19,7 +19,7 @@ Requires: pve-common >= 9.1.1
 Requires: pve-cluster >= 9.0.1
 Requires: pve-firewall >= 5.1.0
 Requires: frr frr-pythontools
-Requires: dnsmasq
+Requires: dnsmasq wireguard-tools
 
 BuildRequires: pve-cluster
 BuildRequires: pve-firewall
@@ -76,6 +76,13 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 1.6.7-alt1
+- 1.6.7
+- Fix warning during deletion of fabric (Closes: 59714)
+- Add 'asn' parameter to node_properties (Closes: 59733)
+- Use proper path to /usr/sbin/wg utility (Closes: 59731)
+- Add Requires: wireguard-tools for fabric (Closes: 59730)
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 1.6.6-alt1
 - 1.6.6
 

@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 9.1.16
+Version: 9.2.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -90,6 +90,11 @@ touch /run/qemu-server/force-legacy-cleanup \
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Thu Jul 23 2026 Sergey Konev <darisishe@altlinux.org> 9.2.0-alt1
+- 9.2.0
+- API: QEMU: fail resize if disk is already at requested size (Closes: 57305)
+- cpu config: use default cputype when validating CPU config (Closes: 57358)
+
 * Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.16-alt1
 - 9.1.16
 

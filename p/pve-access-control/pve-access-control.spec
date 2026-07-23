@@ -6,7 +6,7 @@
 Name: pve-access-control
 Summary: PVE access control library
 Version: 9.1.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -71,6 +71,9 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Wed Jul 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.1-alt2
+- Normalize token expire and privsep return types (Closes: 57303)
+
 * Wed Jun 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.1-alt1
 -  9.1.1
 

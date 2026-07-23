@@ -3,7 +3,7 @@
 
 Name: proxmox-mini-journalreader
 Summary: Minimal systemd Journal Reader
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -42,6 +42,9 @@ ln -s %_libexecdir/%name %buildroot%_bindir/mini-journalreader
 %_man1dir/*
 
 %changelog
+* Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
