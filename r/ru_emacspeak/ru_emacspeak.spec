@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt4
+Release: alt5
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -62,6 +62,7 @@ Emacspeak is a speech output system that will allow someone who
 Summary: Doc files for %name
 Group: Documentation
 BuildArch: noarch
+Conflicts: emacspeak-doc
 
 %description doc
 Emacspeak is a speech output system that will allow someone who
@@ -74,6 +75,8 @@ Emacspeak is a speech output system that will allow someone who
 Summary: Espeak speech server for Emacspeak
 Group: Sound
 Requires: %name = %EVR
+Requires: espeak
+Conflicts: emacspeak-espeak
 
 %description espeak
 Emacspeak is a speech output system that will allow someone who
@@ -86,6 +89,7 @@ Emacspeak is a speech output system that will allow someone who
 Summary: IBM ViaVoice Outloud speech server for Emacspeak
 Group: Sound
 Requires: %name = %EVR
+Conflicts: emacspeak-outloud
 
 %description outloud
 Emacspeak is a speech output system that will allow someone who
@@ -97,7 +101,6 @@ Emacspeak is a speech output system that will allow someone who
 %package pan-chimes
 Summary: Pan-chimes auditory icons theme for Emacspeak
 Group: Sound
-Requires: %name = %EVR
 
 %description pan-chimes
 This theme is made up mostly of different chimes and short notes
@@ -119,7 +122,6 @@ BuildArch: noarch
 %package classic
 Summary: Classic auditory icons theme for Emacspeak
 Group: Sound
-Requires: %name = %EVR
 
 %description classic
 This theme is made up of the original default-8k sounds
@@ -202,23 +204,21 @@ cp -rv info/introducing-emacspeak %buildroot%_docdir/emacspeek/html/
 cp -rv info/turning-twenty %buildroot%_docdir/emacspeek/html/
 
 # espeak
-mkdir -pv %buildroot%_emacspeakdir/blurbs
-cp -v debian/espeak.blurb %buildroot%_emacspeakdir/blurbs/
-mkdir -pv %buildroot%_libdir/emacspeak/native-espeak
-cp -v servers/native-espeak/tclespeak.so %buildroot%_libdir/emacspeak/native-espeak/
-mkdir -pv %buildroot%_emacspeakdir/servers
-cp -rv servers/espeak %buildroot%_emacspeakdir/servers/
-ln -s %_libdir/emacspeak/native-espeak %buildroot%_emacspeakdir/servers/native-espeak
+#mkdir -pv %buildroot%_emacspeakdir/blurbs
+install -D -m 644 debian/espeak.blurb %buildroot%_emacspeakdir/blurbs/
+#mkdir -pv %buildroot%_libdir/emacspeak/native-espeak
+install -d -pv %buildroot%_emacspeakdir/servers/native-espeak
+install -D -m 644 servers/native-espeak/tclespeak.so %buildroot%_libdir/emacspeak/native-espeak/tclespeak.so
+install -D -m 755 servers/espeak %buildroot%_emacspeakdir/servers/espeak
 
 # outloud
-mkdir -pv %buildroot%_libdir/emacspeak/linux-outloud/
-cp -v servers/linux-outloud/atcleci.so %buildroot%_libdir/emacspeak/linux-outloud/
-cp -v servers/linux-outloud/eci.ini %buildroot%_libdir/emacspeak/linux-outloud/
-cp -v debian/outloud.blurb %buildroot%_emacspeakdir/blurbs/
-cp -v servers/outloud %buildroot%_emacspeakdir/servers/
-cp -v servers/linux-outloud/asoundrc %buildroot%_libdir/emacspeak/linux-outloud/asoundrc
-cp -v servers/linux-outloud/simple-asoundrc %buildroot%_libdir/emacspeak/linux-outloud/simple-asoundrc
-ln -s %_libdir/emacspeak/linux-outloud %buildroot%_emacspeakdir/servers/linux-outloud
+install -D -m 644 servers/linux-outloud/atcleci.so %buildroot%_libdir/emacspeak/linux-outloud/atcleci.so
+install -D -m 644 servers/linux-outloud/eci.ini %buildroot%_libdir/emacspeak/linux-outloud/
+install -D -m 644 debian/outloud.blurb %buildroot%_emacspeakdir/blurbs/outloud.blurb
+install -D -m 755 servers/outloud %buildroot%_emacspeakdir/servers/outloud
+install -D -m 644 servers/linux-outloud/asoundrc %buildroot%_libdir/emacspeak/linux-outloud/asoundrc
+install -D -m 644 servers/linux-outloud/simple-asoundrc %buildroot%_libdir/emacspeak/linux-outloud/simple-asoundrc
+install -d %buildroot%_emacspeakdir/servers/linux-outloud
 
 # pan-chimes
 mkdir -pv %buildroot%_emacspeakdir/sounds/pan-chimes
@@ -315,8 +315,8 @@ find -L . -type l -lname '*' -delete
 touch .nosearch
 
 # Create server symlinks AFTER emacsen cleanup
-ln -sr %buildroot%_libdir/emacspeak/native-espeak %buildroot%_emacspeakdir/servers/native-espeak
-ln -sr %buildroot%_libdir/emacspeak/linux-outloud %buildroot%_emacspeakdir/servers/linux-outloud
+ln -s %_libdir/emacspeak/native-espeak/tclespeak.so %buildroot%_emacspeakdir/servers/native-espeak/tclespeak.so
+ln -s %_libdir/emacspeak/linux-outloud/atcleci.so %buildroot%_emacspeakdir/servers/linux-outloud/atcleci.so
 
 make -ks EMACS=${FLAVOR}
 
@@ -356,13 +356,17 @@ chmod -R go+rX %_emacspeakdir/sounds
 chmod -R go+rX %_emacspeakdir/media
 
 %files
-%_sbindir/emacspeakconfig
 %config(noreplace) %_sysconfdir/emacspeak.conf
 %config(noreplace) %_sysconfdir/emacs/site-start.d/80keybindings.el
 %config(noreplace) %_sysconfdir/emacs/site-start.d/80site-defaults.el
+%_bindir/emacspeak
+%_bindir/enable-emacspeak
+%_sbindir/emacspeakconfig
+%dir %_emacspeakdir
+%_emacspeakdir/.nosearch
+%dir %_emacspeakdir/blurbs
 %_emacspeakdir/blurbs/dtk-exp.blurb
 %_emacspeakdir/blurbs/ssh-dtk-exp.blurb
-%_emacspeakdir/blurbs/ssh-outloud.blurb
 %dir %_emacspeakdir/etc
 %_emacspeakdir/etc/*
 %_emacspeakdir/etc/.nosearch
@@ -374,25 +378,23 @@ chmod -R go+rX %_emacspeakdir/media
 %dir %_emacspeakdir/js
 %_emacspeakdir/js/*
 %_emacspeakdir/js/.indium.json
-%dir %_emacspeakdir/xsl
-%_emacspeakdir/xsl/*
-%_emacspeakdir/xsl/.nosearch
 %_emacspeakdir/Makefile
 %_emacspeakdir/README
+%dir %_emacspeakdir/sounds
 %_emacspeakdir/sounds/emacspeak.mp3
 %dir %_emacspeakdir/sounds/3d
-%_emacspeakdir/sounds/3d/*.wav
-%_emacspeakdir/sounds/3d/define-theme.el
+%_emacspeakdir/sounds/3d/*
+%dir %_emacspeakdir/sounds/prompts
 %_emacspeakdir/sounds/prompts/*
+%dir %_emacspeakdir/servers
 %_emacspeakdir/servers/dtk-exp
 %_emacspeakdir/servers/speech-server
 %_emacspeakdir/servers/ssh-dtk-exp
-%_emacspeakdir/servers/ssh-outloud
 %_emacspeakdir/servers/tts-lib.tcl
 %_emacspeakdir/servers/.servers
-%_bindir/emacspeak
-%_bindir/enable-emacspeak
-%_emacspeakdir/.nosearch
+%dir %_emacspeakdir/xsl
+%_emacspeakdir/xsl/*
+%_emacspeakdir/xsl/.nosearch
 
 %files classic
 %dir %_emacspeakdir/sounds/classic
@@ -408,21 +410,26 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/install.org
 
 %files espeak
-%_emacspeakdir/blurbs/espeak.blurb
 %_libdir/emacspeak/native-espeak/tclespeak.so
+%_emacspeakdir/blurbs/espeak.blurb
 %_emacspeakdir/servers/espeak
-%_emacspeakdir/servers/native-espeak
+%dir %_emacspeakdir/servers/native-espeak
+%_emacspeakdir/servers/native-espeak/tclespeak.so
 
 %files outloud
 %_libdir/emacspeak/linux-outloud/atcleci.so
-%_libdir/emacspeak/linux-outloud/eci.ini
-%_emacspeakdir/blurbs/outloud.blurb
-%_emacspeakdir/servers/outloud
 %_libdir/emacspeak/linux-outloud/asoundrc
+%_libdir/emacspeak/linux-outloud/eci.ini
 %_libdir/emacspeak/linux-outloud/simple-asoundrc
-%_emacspeakdir/servers/linux-outloud
+%_emacspeakdir/blurbs/outloud.blurb
+%_emacspeakdir/blurbs/ssh-outloud.blurb
+%_emacspeakdir/servers/outloud
+%dir %_emacspeakdir/servers/linux-outloud
+%_emacspeakdir/servers/linux-outloud/atcleci.so
+%_emacspeakdir/servers/ssh-outloud
 
 %files pan-chimes
+%dir %_emacspeakdir/sounds/pan-chimes
 %_emacspeakdir/sounds/pan-chimes/*.wav
 %_emacspeakdir/sounds/pan-chimes/define-theme.el
 
@@ -431,6 +438,11 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Thu Jul 23 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt5
+- Added req to espeak fore espeak subpackage
+- Added conflicts to original emacspeak subpackages (Closes: 59900)
+- Updated file packaging
+
 * Tue Jul 14 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt4
 - Added req to gcc
 - Make the emacspeakconfig file executable (thx Aleksandr Dovydenkov)

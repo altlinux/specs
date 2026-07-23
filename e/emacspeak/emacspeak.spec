@@ -3,7 +3,7 @@
 
 Name:       emacspeak
 Version:    60.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Speech output interface to Emacs.
 License:    GPLv2+ and BSD
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 Source1: %name-profile.sh
 Source2: enable-%name
 
-Requires: espeak
+Requires: %name-espeak
 Requires: tclx
 Requires: gcc
 Conflicts: ru_emacspeak
@@ -37,6 +37,34 @@ BuildRequires: perl-HTML-TableExtract
 %description
 Emacspeak is a speech interface that allows visually impaired users to interact
 independently and efficiently with the computer.
+
+%package espeak
+Summary: Espeak speech server for %name
+Group: Sound
+Requires: espeak
+Conflicts: ru_emacspeak-espeak
+
+%description espeak
+%summary
+
+%package outloud
+Summary: IBM ViaVoice Outloud speech server for %name
+Group: Sound
+Requires: %name = %EVR
+Conflicts: ru_emacspeak-outloud
+
+%description outloud
+%summary
+
+%package doc
+Summary: Doc file fore %name
+Group: Documentation
+Conflicts: ru_emacspeak-doc
+BuildArch: noarch
+
+
+%description doc
+%summary
 
 %prep
 %setup
@@ -97,6 +125,7 @@ install -m 0755 servers/native-espeak/tclespeak.so \
                 %buildroot%_libdir/%name/servers/native-espeak
 ln -s %_libdir/%name/servers/native-espeak/tclespeak.so \
       %buildroot%_emacspeakdir/servers/native-espeak
+rm -v %buildroot%_emacspeakdir/servers/native-espeak/tclespeak.cpp
 
 install -m 0755 %SOURCE1 %buildroot%_sysconfdir/profile.d/%name.sh
 install -m 0755 %SOURCE2 %buildroot%_bindir/enable-%name
@@ -110,18 +139,54 @@ rm -f %buildroot%_emacspeakdir/media/.nosearch \
 install -m 0644 etc/forms/*.el %buildroot%_emacspeakdir/etc/forms
 install -m 0644 etc/tables/*.tab %buildroot%_emacspeakdir/etc/tables
 
+rm -rv %buildroot%_emacspeakdir/servers/log-*
+
 %post
 chmod -R go+rX %_emacspeakdir/sounds
 chmod -R go+rX %_emacspeakdir/media
 
 %files
-%doc README* info/*info*
-%_bindir/enable-%name
-%_libdir/%name/servers/native-espeak/*.so
-%_emacspeakdir/*
 %config %_sysconfdir/profile.d/*
+%_bindir/enable-%name
+%dir %_emacspeakdir
+%dir %_emacspeakdir/etc
+%_emacspeakdir/etc/*
+%dir %_emacspeakdir/lisp
+%_emacspeakdir/lisp/*
+%dir %_emacspeakdir/media
+%_emacspeakdir/media/*
+%dir %_emacspeakdir/servers
+%_emacspeakdir/servers/.servers
+%_emacspeakdir/servers/cloud
+%_emacspeakdir/servers/cloud-dtk
+%_emacspeakdir/servers/cloud-dtk-soft
+%_emacspeakdir/servers/cloud-mac
+%_emacspeakdir/servers/cloud-notify
+%_emacspeakdir/servers/cloud-swiftmac
+%_emacspeakdir/servers/speech-server
+%_emacspeakdir/servers/tts-lib.tcl
+%dir %_emacspeakdir/sounds
+%_emacspeakdir/sounds/*
+%dir %_emacspeakdir/xsl
+%_emacspeakdir/xsl/*
+
+%files espeak
+%_libdir/%name/servers/native-espeak/tclespeak.so
+%_emacspeakdir/servers/espeak
+%_emacspeakdir/servers/cloud-espeak
+%dir %_emacspeakdir/servers/native-espeak
+%_emacspeakdir/servers/native-espeak/tclespeak.so
+
+%files outloud
+%_emacspeakdir/servers/cloud-outloud
+
+%files doc
+%doc README* info/*info*
 
 %changelog
+* Thu Jul 23 2026 Artem Semenov <savoptik@altlinux.org> 60.0-alt2
+- Spleated to subpackages.
+
 * Tue Jun 30 2026 Artem Semenov <savoptik@altlinux.org> 60.0-alt1
 - new version 60.0 (thx: Aleksandr Dovydenkov)
 
