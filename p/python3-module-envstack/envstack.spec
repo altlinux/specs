@@ -2,8 +2,8 @@
 %def_with check
 
 Name: python3-module-%nameD
-Version: 1.0.2
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Summary: Stacked environment variable management system
 License: BSD-3-Clause
@@ -43,7 +43,7 @@ Stacked environment variable management system
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests -k 'not test_vars'
+%pyproject_run_pytest tests
 
 %files
 %doc LICENSE README.md
@@ -55,6 +55,9 @@ Stacked environment variable management system
 %_bindir/whichenv
 
 %changelog
+* Fri Jul 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3
+
 * Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt2
 - fixed FTBFS
 
