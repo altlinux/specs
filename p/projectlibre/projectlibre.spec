@@ -2,7 +2,7 @@
 
 Name:    projectlibre
 Version: 1.9.8
-Release: alt1
+Release: alt2
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 License: CPAL
@@ -121,6 +121,10 @@ install -Dm0644 projectlibre_build/resources/%name.png %buildroot%_pixmapsdir/%n
 %_pixmapsdir/*
 
 %changelog
+* Thu Jul 23 2026 Ivan Khanas <xeno@altlinux.org> 1.9.8-alt2
+- Fixed startup with Java 25 by avoiding the unsupported Security Manager reset
+  when no Security Manager is active (closes: #59392).
+
 * Mon Apr 20 2026 Ivan Khanas <xeno@altlinux.org> 1.9.8-alt1
 - Replace bundled upstream jars with system Java libraries where available.
 - Add explicit BuildRequires for ant/java dependencies.
