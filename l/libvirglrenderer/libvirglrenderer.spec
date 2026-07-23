@@ -1,6 +1,6 @@
 
 Name: libvirglrenderer
-Version: 1.1.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Virgl Rendering library
@@ -67,6 +67,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Thu Jul 23 2026 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- updated from 1.1.1 to 1.3.0
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - New version 1.1.1.
 
