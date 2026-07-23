@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.46.0
+Version: 2.47.0
 Release: alt1
 
 Summary: The official Python library for the OpenAI API
@@ -51,7 +51,9 @@ type definitions for all request params and response fields, and
 offers both synchronous and asynchronous clients powered by httpx.
 
 %add_python_extra aiohttp
+%add_python_extra bedrock
 %add_python_extra datalib
+%add_python_extra httpx2
 %add_python_extra realtime
 %add_python_extra voice-helpers
 
@@ -78,6 +80,9 @@ offers both synchronous and asynchronous clients powered by httpx.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.47.0-alt1
+- Updated to 2.47.0.
+
 * Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 2.46.0-alt1
 - Updated to 2.46.0.
 
