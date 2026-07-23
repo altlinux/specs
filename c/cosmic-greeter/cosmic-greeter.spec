@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.3
+%define ver_major 1.4
 %define beta %nil
 %define rdn_name com.system76.CosmicGreeter
 
@@ -24,6 +24,7 @@ Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
+Patch1: %name-1.3.0-alt-no-check-login.defs.patch
 
 Requires: greetd
 Requires: cosmic-comp
@@ -51,6 +52,7 @@ COSMIC greeter for greetd, which can be run inside cosmic-comp.
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
+%patch1 -b .no_login.defs
 
 %build
 export VERGEN_GIT_SHA=%version
@@ -88,6 +90,7 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %_bindir/%name
 %_bindir/%name-start
 %_bindir/%name-daemon
+#%attr(2711, root, chkpwd) %_bindir/%name-daemon
 %_altdir/greetd-%name
 %_unitdir/%name.service
 %_unitdir/%name-daemon.service
@@ -97,6 +100,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.3
+%define ver_major 1.4
 %define beta %nil
 %define rdn_name com.system76.CosmicInitialSetup
 
@@ -72,6 +72,9 @@ just rootdir=%buildroot install
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

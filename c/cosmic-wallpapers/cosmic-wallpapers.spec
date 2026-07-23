@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name cosmic-wallpapers
-%define ver_major 1.3
+%define ver_major 1.4
 %define beta %nil
 
 Name: %_name
@@ -37,6 +37,9 @@ Wallpapers for the COSMIC desktop environment.
 %doc README* LICENSE
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
