@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.10
+Version: 0.3.11
 Release: alt1
 
 Summary: Simple notification system
@@ -76,6 +76,12 @@ popd
 %_man1dir/rpmpeek*
 
 %changelog
+* Wed Jul 22 2026 Arseny Maslennikov <arseny@altlinux.org> 0.3.11-alt1
+- Stopped gzipping message body parts.
+- csv2tab: Explicitly set encoding of standard streams to UTF-8.
+  This gets rid of the "Wide character in print" Perl warning.
+- bugs: The default Product is now "Sisyphus" if no URL is specified.
+
 * Thu Nov 23 2023 Vitaly Chikunov <vt@altlinux.org> 0.3.10-alt1
 - rpmpeek: Add (bash) user-friendly mode.
 
