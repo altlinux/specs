@@ -2,8 +2,8 @@
 %global import_path github.com/AvengeMedia/DankMaterialShell/core
 
 Name: dms-shell
-Version: 1.4.6
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: DankMaterialShell - Material 3 inspired shell for Wayland compositors
 License: MIT
@@ -17,6 +17,8 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
+
+ExcludeArch: i586
 
 Requires: accountsservice
 Requires: dsearch
@@ -71,6 +73,8 @@ dms completion fish > %buildroot%_datadir/fish/vendor_completions.d/dms.fish || 
 
 install -Dm644 assets/systemd/dms.service %buildroot%_userunitdir/dms.service
 
+install -Dm644 assets/com.danklinux.dms.desktop %buildroot%_desktopdir/com.danklinux.dms.desktop
+install -Dm644 assets/com.danklinux.dms.notepad.desktop %buildroot%_desktopdir/com.danklinux.dms.notepad.desktop
 install -Dm644 assets/dms-open.desktop %buildroot%_desktopdir/dms-open.desktop
 install -Dm644 assets/danklogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/danklogo.svg
 
@@ -87,6 +91,7 @@ rm -f %buildroot%_datadir/quickshell/dms/scripts/verify-notifications.sh
 rm -f %buildroot%_datadir/quickshell/dms/translations/extract_settings_index.py
 rm -f %buildroot%_datadir/quickshell/dms/translations/extract_translations.py
 rm -f %buildroot%_datadir/quickshell/dms/translations/replace_qstr.py
+rm -f %buildroot%_datadir/quickshell/dms/translations/check_term_freeze.py
 
 echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 
@@ -97,10 +102,15 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 %_datadir/fish/vendor_completions.d/dms.fish
 %_datadir/quickshell/dms/
 %_userunitdir/dms.service
+%_desktopdir/com.danklinux.dms.desktop
+%_desktopdir/com.danklinux.dms.notepad.desktop
 %_desktopdir/dms-open.desktop
 %_iconsdir/hicolor/scalable/apps/danklogo.svg
 
 %changelog
+* Thu Jul 23 2026 Boris Yumankulov <boria138@altlinux.org> 1.5.2-alt1
+- new version 1.5.2 (ALT bug: 59886)
+
 * Tue May 19 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.6-alt2
 - add Hyprland to filter_from_require (ALT bug: 59253)
 
