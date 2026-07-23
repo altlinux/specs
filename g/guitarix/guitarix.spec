@@ -5,13 +5,16 @@
 
 Name: guitarix
 Version: 0.47.0
-Release: alt1
+Release: alt2
 Summary: Modular, virtual amplifier for Linux
 Group: Sound
 License: GPL-2.0-or-later
 Url: https://github.com/brummer10/guitarix
 # Source-url: https://github.com/brummer10/guitarix/releases/download/V%version/guitarix2-%version.tar.xz
 Source: %name-%version.tar
+
+# https://github.com/brummer10/guitarix/commit/94b4910896e595d197b989d4017c4a31f39c5e3f
+Patch1: guitarix-boost-1.91-system.patch
 
 BuildRequires: gcc-c++
 BuildRequires: faust-devel
@@ -139,6 +142,9 @@ rm -rf %buildroot%_libdir/libgxw*.so
 %_libdir/lv2/*
 
 %changelog
+* Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 0.47.0-alt2
+- Fix FTBFS with boost 1.91.0.
+
 * Fri Aug 29 2025 Anton Midyukov <antohami@altlinux.org> 0.47.0-alt1
 - new version 0.47.0
 - remove subpackage ladspa-guitarix-plugins
