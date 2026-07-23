@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -68,5 +68,8 @@ cargo test --release --locked --offline
 %config(noreplace) %_sysconfdir/%name/%name.conf
 
 %changelog
+* Thu Jul 23 2026 Anton Farygin <rider@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0
+
 * Tue Jul 21 2026 Anton Farygin <rider@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus (v1.1.0).
