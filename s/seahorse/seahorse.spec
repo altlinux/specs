@@ -23,7 +23,7 @@
 
 Name: seahorse
 Version: %ver_major.0.1
-Release: alt3%beta
+Release: alt3.1%beta
 
 Summary: A password and encryption key manager
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -37,6 +37,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+Patch1: %name-47.0.1-alt-add-keyserver-ui-savebutton-fix.patch
 
 %define glib_ver 2.82
 %define gtk_ver 3.24
@@ -54,7 +55,7 @@ Requires: gnupg2 > %gnupg_ver gcr4 >= %gcr_ver
 # required old gcr
 # /usr/share/glib-2.0/schemas/org.gnome.crypto.pgp.gschema.xml
 # https://bugzilla.altlinux.org/58323
-Requires: gcr
+#Requires: gcr
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
@@ -85,6 +86,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %prep
 %setup -n %name-%version%beta
+%patch1
 
 %build
 %meson \
@@ -123,6 +125,11 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc NEWS README* THANKS
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt3.1
+- cobalt@:
+ common/seahorse-add-keyserver.ui:
+ fixed "action-name" for "Save" button (ALT #59898)
+
 * Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt3
 - updated to 47.0.1-89-gea511665 (fixed build with gpgme >= 2.0.0)
 

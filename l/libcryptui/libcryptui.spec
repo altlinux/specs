@@ -9,7 +9,7 @@
 
 Name: libcryptui
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 Summary: Library for OpenPGP prompts
 
 Group: System/Libraries
@@ -22,6 +22,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 Patch: %name-3.12.2-alt-gnupg-2.4.patch
+Patch1: %name-3.12.2-alt-gpgme2.patch
 
 Obsoletes: seahorse-agent
 Provides:  seahorse-agent = %EVR
@@ -93,6 +94,7 @@ GObject introspection devel data for the %name library
 %prep
 %setup
 %patch -b .gnupg
+%patch1 -b .gpgme2
 
 %build
 export GNUPG=/usr/bin/gpg2
@@ -140,6 +142,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt3.1
+- fixed build with gpgme >= 2.0.0 (ALT #59832)
+
 * Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt3
 - updated to 3.12.2-73-g95c4c95b
 - fixed build with GnuPG-2.4.x
