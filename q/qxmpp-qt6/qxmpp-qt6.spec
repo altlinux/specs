@@ -6,12 +6,13 @@
 %def_enable omemo
 %def_with gstreamer
 %def_with qca
-%def_enable docs
+# extra-cmake-modules >= 6.11
+%def_disable docs
 # tst_qxmppiceconnection timed out in hasher
 %def_disable check
 
 Name: %_name-qt6
-Version: 1.14.2
+Version: 1.16.2
 Release: alt1
 
 Summary: Qt XMPP library
@@ -116,7 +117,7 @@ This package contains QXmpp library documentation.
     %{?_enable_omemo:-DBUILD_OMEMO=TRUE} \
     %{?_with_gstreamer:-DWITH_GSTREAMER=TRUE} \
     %{?_with_qca:-DWITH_QCA=TRUE} \
-    %{?_enable_docs:-DBUILD_DOCUMENTATION=TRUE} \
+    %{?_disable_docs:-DBUILD_DOCUMENTATION=FALSE}
 %nil
 %cmake_build
 
@@ -148,6 +149,9 @@ install -m644 AUTHORS CHANGELOG.md README.md %buildroot%_defaultdocdir/%_name/
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
 - 1.14.2
 

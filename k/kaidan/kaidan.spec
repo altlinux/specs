@@ -3,7 +3,7 @@
 %define xdg_name im.kaidan.kaidan
 
 Name: kaidan
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Modern Chat App for Every Device
@@ -22,8 +22,8 @@ Source: %name-v%version.tar
 
 %K6init no_altplace appdata
 
-%define qxmpp_ver 1.14.0
-%define qt_ver 6.6
+%define qxmpp_ver 1.16.0
+%define qt_ver 6.9
 %define kf_ver 6.11
 %define kr_ver 1.4.0
 %define gst_api_ver 1.0
@@ -56,6 +56,7 @@ BuildRequires: kf6-kirigami-devel
 BuildRequires: kf6-kirigami-addons-devel >= %kr_ver
 BuildRequires: kf6-knotifications-devel
 BuildRequires: kf6-qqc2-desktop-style-devel
+BuildRequires: kf6-kitemmodels-devel
 BuildRequires: libqtkeychain-qt6-devel
 # since 0.15 for audio/video calls
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver)
@@ -85,6 +86,9 @@ you are not dependent on one specific service provider.
 %doc NEWS.md README.md
 
 %changelog
+* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Sat Jan 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
 - 0.15.0
 
