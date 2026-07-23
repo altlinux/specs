@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.31
-Release: alt2
+Version: 0.0.32
+Release: alt1
 
 Summary: A streaming multipart parser for Python
 License: Apache-2.0
@@ -58,6 +58,9 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.32-alt1
+- Updated to 0.0.32.
+
 * Thu Jun 04 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.31-alt2
 - Fixed vulnerability identifier in 0.0.31-alt1.
 
