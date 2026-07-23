@@ -13,7 +13,7 @@
 %python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: Observable Rust-powered HTTP client for Python services
@@ -70,6 +70,9 @@ install -vD %SOURCE3 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.8-alt1
+- Updated to 0.3.8.
+
 * Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.7-alt1
 - Updated to 0.3.7.
 
