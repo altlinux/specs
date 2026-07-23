@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.46.0
+Version: 0.47.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -111,6 +111,14 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 23 2026 Anton Farygin <rider@altlinux.org> 0.47.0-alt1
+- added zoryn gitery command with gitoskop/SSH verbs and interactive manage TUI
+- added devenv --feature one-shot flag and devenv feature add for running containers
+- added TAB suggestion of last task id for submit --with
+- fixed task rebuild --parallel builder dedup per arch
+- fixed task batch "already added" handling and task lookup by spec Name
+- fixed Mozilla advisory CVE titles HTML entity decoding
+
 * Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 0.46.0-alt1
 - added task refresh detection of subtasks built from a different source
 - added check upstream local worktree scan and copy:/bare watch file support
