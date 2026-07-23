@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10069
+Version: 10103
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -283,6 +283,10 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Thu Jul 23 2026 Alexey Shabalin <shaba@altlinux.org> 1:10103-alt1
+- Update to b10103.
+- Embed prebuilt WebUI again (ALT#59598).
+
 * Mon Jul 20 2026 Alexey Shabalin <shaba@altlinux.org> 1:10069-alt1
 - Update to b10069.
 
