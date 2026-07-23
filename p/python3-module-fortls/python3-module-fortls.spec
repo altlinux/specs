@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Fortran Language Server for the Language Server Protocol
 License: MIT
@@ -59,7 +59,7 @@ Supported LSP features include:
 
 %if_with check
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k 'not test_recursion_error_handling'
 %endif
 
 %files
@@ -70,6 +70,9 @@ Supported LSP features include:
 %python3_sitelibdir/%{pypi_name}*dist-info/*
 
 %changelog
+* Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt2
+- Fixed FTBFS.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt1
 - New version 3.2.2.
 

@@ -6,18 +6,16 @@
 
 Name: biometryd
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Mediates and multiplexes access to biometric devices
 License: GPL-3.0-only
 Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/core/biometryd
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-# sync with version 0.3.1-6 from Debian unstable + build issues fix
+# sync with version 0.4.0-2 from Debian unstable + build issues fix
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -29,6 +27,7 @@ BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-program_options-devel
+BuildRequires: boost-asio-devel
 BuildRequires: pkgconfig(dbus-cpp)
 BuildRequires: pkgconfig(libapparmor)
 BuildRequires: pkgconfig(process-cpp)
@@ -115,6 +114,9 @@ biometryd.
 %_pkgconfigdir/biometryd.pc
 
 %changelog
+* Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
+- Fix build with boost 1.91.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 
