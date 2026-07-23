@@ -3,7 +3,7 @@
 
 Name: pcb2gcode
 Version: 3.0.4
-Release: alt1
+Release: alt2
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 Group: Engineering
 License: GPL-3.0-or-later
@@ -36,6 +36,7 @@ dynamic calibration of the milling depth.
 
 %prep
 %setup
+%patch -p1
 
 # set upstream commit
 sed -i 's/PCB2GCODE_GIT_VERSION "unknown"/PCB2GCODE_GIT_VERSION "%commit"/' \
@@ -59,6 +60,9 @@ sed -i 's/PCB2GCODE_GIT_VERSION "unknown"/PCB2GCODE_GIT_VERSION "%commit"/' \
 %doc AUTHORS README.md COPYING
 
 %changelog
+* Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.0.4-alt2
+- Fix FTBFS with boost 1.91.0.
+
 * Wed Apr 08 2026 Anton Midyukov <antohami@altlinux.org> 3.0.4-alt1
 - New version 3.0.4.
 
