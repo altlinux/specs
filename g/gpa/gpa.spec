@@ -1,5 +1,5 @@
 Name: gpa
-Version: 0.10.0
+Version: 0.11.1
 Release: alt1
 
 Summary: The GNU Privacy Assistant
@@ -19,8 +19,7 @@ Requires: gnupg
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Wed Mar 09 2011
-BuildRequires: gnupg libassuan-devel libgtk+2-devel subversion zlib-devel
+BuildRequires: gnupg libassuan-devel libgtk+3-devel subversion zlib-devel
 
 # libgpgme-devel removed from buildreq'ed line and added with version req:
 BuildRequires: libgpgme-devel >= 1.2.0
@@ -57,6 +56,9 @@ install -pD -m644 %_sourcedir/gpa32.png %buildroot%_niconsdir/gpa.png
 %_man1dir/*
 
 %changelog
+* Thu Jul 23 2026 Sergey V Turchin <zerg@altlinux.org> 0.11.1-alt1
+- NMU: new version (closes: 59823)
+
 * Sun Oct 28 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.10.0-alt1
 - New version
 
