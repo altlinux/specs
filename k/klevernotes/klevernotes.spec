@@ -2,7 +2,7 @@
 
 Name: klevernotes
 Version: 1.3.1
-Release: alt3
+Release: alt4
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -21,6 +21,8 @@ Patch: 187.patch
 #https://bugzilla.altlinux.org/59320
 #https://bugzilla.altlinux.org/59321
 Patch1: 188.patch
+#https://bugzilla.altlinux.org/59323
+Patch2: 191.patch
 
 #AutoProv: no
 ExclusiveArch: x86_64 aarch64 loongarch64
@@ -59,6 +61,9 @@ tar -xf %SOURCE1 -C po/
 %doc *.md 
 
 %changelog
+* Fri Jul 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt4
+- fixed: the "Adaptive Tag Size" feature doesn't work (ALT #59323)
+
 * Thu Jul 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt3
 - fixed: the text of the note is not highlighted as "Quote" (ALT #59321)
 - fixed: title tag is duplicated in the preview window (ALT #59320)
