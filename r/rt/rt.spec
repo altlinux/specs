@@ -4,9 +4,11 @@ BuildRequires(pre): rpm-build-perl rpm-macros-fedora-compat
 BuildRequires: /usr/bin/dot /usr/bin/gpg /usr/bin/openssl perl(Class/Accessor.pm) perl(Class/Accessor/Fast.pm) perl(Clone.pm) perl(Digest/SHA.pm) perl(Exception/Class.pm) perl(Exception/Class/Base.pm) perl(GSSAPI.pm) perl(HTTP/Date.pm) perl(I18N/LangTags/Detect.pm) perl(LWP/Authen/Negotiate.pm) perl(LWP/MediaTypes.pm) perl(Net/LDAP.pm) perl(Net/LDAP/Constant.pm) perl(Net/LDAP/Control/Paged.pm) perl(Net/LDAP/Filter.pm) perl(Net/LDAP/Util.pm) perl(Params/Validate.pm) perl(Pod/Simple/HTMLBatch.pm) perl(Pod/Simple/Search.pm) perl(Pod/Simple/XHTML.pm) perl(Term/EditorEdit.pm) perl-podlators
 # END SourceDeps(oneline)
 # hacks around findreq ==============
-# GraphViz/GraphViz2 is an optional dependency (ticket graphs), not a hard requirement
+# GraphViz (v1) is testsuite-only -- filtered from the main package (rt-tests
+# keeps an explicit Requires). GraphViz2 was filtered while unpackaged, but is
+# now in Sisyphus and RT hard-requires it for ticket graphs (RT/Graph/Tickets.pm)
+# -> declared as a Requires below.
 %filter_from_requires /^perl(GraphViz.pm)/d
-%filter_from_requires /^perl(GraphViz2)/d
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRT::Base'
 # instead of findreqs below
 %set_perl_req_method relaxed
@@ -77,7 +79,7 @@ BuildRequires: perl(Data/Perl/Role/Collection/Array.pm) perl(Encode/Guess.pm)
 %global RT_STATICDIR		%{_datadir}/%{name}/static
 
 Name:		rt
-Version:	4.4.9
+Version:	6.0.3
 Release:	alt1
 Summary:	Request tracker
 
@@ -176,6 +178,7 @@ BuildRequires: perl(HTML/Mason/PSGIHandler.pm)
 BuildRequires: perl(HTML/Quoted.pm)
 BuildRequires: perl(HTML/RewriteAttributes.pm)
 BuildRequires: perl(HTML/Scrubber.pm)
+BuildRequires: perl(HTML/Selector/XPath.pm)
 BuildRequires: perl(HTML/TreeBuilder.pm)
 BuildRequires: perl(HTTP/Request/Common.pm)
 BuildRequires: perl(HTTP/Status.pm)
@@ -303,10 +306,10 @@ BuildRequires:	/usr/share/fonts/ttf/google-droid/DroidSans.ttf
 
 
 # rpm doesn't catch these:
-Requires: perl(Apache/Session.pm)
+Requires: perl(Apache/Session.pm) >= 1.53
 Requires: perl(Business/Hours.pm)
 Requires: perl(Calendar/Simple.pm)
-Requires: perl(CSS/Squish.pm)
+Requires: perl(CSS/Squish.pm) >= 0.06
 Requires: perl(Data/Page.pm)
 Requires: perl(Data/Page/Pageset.pm)
 Requires: perl(Data/ICal.pm)
@@ -314,26 +317,71 @@ Requires: perl(Data/ICal/Entry/Event.pm)
 %{?with_mysql:Requires: perl(DBD/mysql.pm) >= 2.101.800}
 %{?with_pg:Requires: perl(DBD/Pg.pm)}
 Requires: perl(DateTime/Format/Natural.pm) >= 0.670
+Requires: perl(DateTime/Set.pm)
+Requires: perl(DateTime/Event/Recurrence.pm)
 Requires: perl(Log/Dispatch/Perl.pm)
 Requires: perl(GD/Text.pm)
 Requires: perl(GD/Graph/bars.pm)
 Requires: perl(GD/Graph/pie.pm)
+Requires: perl(GraphViz2.pm)
+Requires: perl(Hash/Merge/Extra.pm)
 Requires: perl(HTML/Quoted.pm)
 Requires: perl(HTML/Mason/Request.pm)
 Requires: perl(I18N/LangTags/List.pm)
 Requires: perl(IPC/Run3.pm)
 Requires: perl(LWP/MediaTypes.pm)
 Requires: perl(mod_perl2.pm)
-Requires: perl(Module/Versions/Report.pm)
+Requires: perl(Module/Versions/Report.pm) >= 1.05
 Requires: perl(Net/IP.pm)
 Requires: perl(PerlIO/eol.pm)
 Requires: perl(Plack/Middleware/Test/StashWarnings.pm) >= 0.060
 Requires: perl(Plack/Handler/Starlet.pm)
-Requires: perl(Text/Quoted.pm)
-Requires: perl(Text/WikiFormat.pm)
-Requires: perl(Time/ParseDate.pm)
+Requires: perl(Text/Quoted.pm) >= 2.07
+Requires: perl(Text/WikiFormat.pm) >= 0.76
+Requires: perl(Time/ParseDate.pm) >= 2026
 Requires: perl(URI/URL.pm)
-Requires: perl(XML/RSS.pm)
+Requires: perl(XML/RSS.pm) >= 1.05
+
+# cpanfile runtime requires missed by autodep (perl.req skips non-compiling .pm):
+Requires: perl(CGI/Emulate/PSGI.pm)
+Requires: perl(CGI/PSGI.pm) >= 0.12
+Requires: perl(Convert/Color.pm)
+Requires: perl(Crypt/Eksblowfish.pm)
+Requires: perl(CSS/Inliner.pm) >= 4027
+Requires: perl(Date/Extract.pm) >= 0.07
+Requires: perl(Date/Manip.pm)
+Requires: perl(DateTime/Locale.pm) >= 0.40
+Requires: perl(DBI.pm) >= 1.37
+Requires: perl(DBIx/SearchBuilder.pm) >= 1.85
+Requires: perl(Devel/StackTrace.pm) >= 1.19
+Requires: perl(Email/Address.pm) >= 1.912
+Requires: perl(Email/Address/List.pm) >= 0.06
+Requires: perl(HTML/FormatExternal.pm)
+Requires: perl(HTML/FormatText/WithLinks.pm) >= 0.14
+Requires: perl(HTML/FormatText/WithLinks/AndTables.pm) >= 0.06
+Requires: perl(HTML/RewriteAttributes.pm) >= 0.06
+Requires: perl(HTTP/Message.pm) >= 6.46
+Requires: perl(Imager.pm)
+Requires: perl(JSON.pm)
+Requires: perl(Log/Dispatch.pm) >= 2.30
+Requires: perl(LWP/Protocol/https.pm)
+Requires: perl(LWP/Simple.pm)
+Requires: perl(Mail/Header.pm) >= 2.12
+Requires: perl(Mail/Mailer.pm) >= 1.57
+Requires: perl(Module/Path.pm)
+Requires: perl(Module/Refresh.pm) >= 0.03
+Requires: perl(Mozilla/CA.pm)
+Requires: perl(Net/CIDR.pm)
+Requires: perl(Parallel/ForkManager.pm)
+Requires: perl(Plack.pm) >= 1.0002
+Requires: perl(Regexp/Common/net/CIDR.pm)
+Requires: perl(Regexp/IPv6.pm)
+Requires: perl(Scope/Upper.pm)
+Requires: perl(Text/Password/Pronounceable.pm)
+Requires: perl(Text/Template.pm) >= 1.44
+Requires: perl(Text/WordDiff.pm)
+Requires: perl(URI.pm) >= 1.59
+Requires: perl(URI/QueryParam.pm)
 
 # optional
 Requires:  perl(Encode/HanExtra.pm)
@@ -520,7 +568,6 @@ bin/rt-crontool \
 bin/rt-mailgate \
 sbin/rt-attributes-viewer \
 sbin/rt-clean-sessions \
-sbin/rt-dump-metadata \
 sbin/rt-email-dashboards \
 sbin/rt-email-digest \
 sbin/rt-email-group-admin \
@@ -549,7 +596,7 @@ make install DESTDIR=${RPM_BUILD_ROOT}
 # Work-around to regression in rpm >= 4.12.90:
 # Can't mix %%doc with directly installed docs, anymore.
 # Need to install all files directly.
-install -m 644 README README.fedora ${RPM_BUILD_ROOT}%{_docdir}/%{name}
+install -m 644 README.md README.fedora ${RPM_BUILD_ROOT}%{_docdir}/%{name}
 
 # We don't want CPAN
 rm -f ${RPM_BUILD_ROOT}%{_sbindir}/rt-test-dependencies
@@ -660,6 +707,8 @@ fi
 %{_sysconfdir}/%{name}/acl*
 %{_sysconfdir}/%{name}/schema*
 %{_sysconfdir}/%{name}/init*
+# AI feature grammar definitions (RT 6.0+)
+%{_sysconfdir}/%{name}/ai
 %{?!with_pg:%exclude %{_sysconfdir}/%{name}/*.Pg}
 %{?!with_pg:%exclude %{_datadir}/%{name}/upgrade/*/*.Pg}
 %exclude %{_sysconfdir}/%{name}/*.Oracle
@@ -706,6 +755,18 @@ fi
 %endif
 
 %changelog
+* Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
+- new version 6.0.3 (4.4 -> 6.0)
+- adapt to upstream changes:
+  - install README.md (renamed from README)
+  - drop sbin/rt-dump-metadata from pod2man list (removed upstream)
+  - package new AI feature files under /etc/rt/ai
+  - add BuildRequires: perl(HTML/Selector/XPath.pm) (new RT::Test dep)
+- add explicit Requires for runtime deps autodep misses, with version
+  constraints from cpanfile (incl. Hash::Merge::Extra, CSS::Inliner,
+  GraphViz2, DateTime::Locale, DBI, Plack, URI)
+- add Requires: perl(DBIx/SearchBuilder.pm) >= 1.85 (SelectAllColumns)
+
 * Thu Jul 16 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.9-alt1
 - new version 4.4.9
 - security: CVE-2025-2545 (SMIME default cipher 3DES -> aes-128-cbc)
