@@ -1,11 +1,11 @@
 Name: python3-module-hassil
-Version: 3.5.0
+Version: 3.7.0
 Release: alt1
 
 Summary: The Home Assistant Intent Language parser
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/hassil
+URL: https://pypi.org/project/hassil
 VCS: https://github.com/OHF-Voice/hassil
 
 Source0: %name-%version.tar
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/hassil-%version.dist-info
 
 %changelog
+* Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.7.0-alt1
+- 3.7.0 released
+
 * Fri Dec  5 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.0-alt1
 - 3.5.0 released
 
