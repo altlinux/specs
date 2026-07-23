@@ -2,7 +2,7 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -89,6 +89,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Thu Jul 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0
+
 * Tue Jul 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
 - added metainfo file
 - cli: added automatic switch http -> https if http exists and choosed
