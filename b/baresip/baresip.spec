@@ -1,6 +1,6 @@
 %define sover 28
 Name: baresip
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -14,10 +14,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 4.8.0
+BuildRequires: libre-devel >= 4.10.0
 
 Obsoletes: %{name}-mpa < 4.3.0
 Obsoletes: %{name}-g726 < 4.8.0
+Obsoletes: %{name}-directfb < 4.10.0
 
 %add_verify_elf_skiplist %_libdir/%name/modules/*.so
 
@@ -29,7 +30,7 @@ stdio, cons, and evdev user interfaces, codec2, g711, g722, ilbc, l16,
 and opus codecs, alsa, pulseaudio, pipewire, jack, coreaudio, gst, portaudio,
 winwave, opensles and sndio audio drivers, the audio filters, av1, h264, h265,
 vp8, vp9 video codec, avformat, acvapture and v4l2 video sources, sdl2,
-directfb and x11 video display drivers, and srtp media encoding.
+and x11 video display drivers, and srtp media encoding.
 
 %package devel
 Summary: Development files for %name library
@@ -145,17 +146,6 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the communication channel to control and monitor baresip via D-BUS.
-
-%package directfb
-Summary: DirectFB video output driver module for baresip
-Group: Communications
-BuildRequires: libdirectfb-devel
-Requires: %name = %version-%release
-
-%description directfb
-Baresip is a portable and modular SIP User-Agent with audio and video support
-
-This module provides the DirectFB video output driver.
 
 %package g722
 Summary: G.722 audio codec module for baresip
@@ -450,9 +440,6 @@ This module provides the X11 video output driver.
 %files ctrl_dbus
 %_libdir/%name/modules/ctrl_dbus.so
 
-%files directfb
-%_libdir/%name/modules/directfb.so
-
 %files g722
 %_libdir/%name/modules/g722.so
 
@@ -510,6 +497,10 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Thu Jul 23 2026 Ilya Demyanov <turbid@altlinux.org> 4.10.0-alt1
+- new version 4.9.0
+- delete depricated directfb module 
+
 * Thu Jun 18 2026 Ilya Demyanov <turbid@altlinux.org> 4.9.0-alt1
 - new version 4.9.0
 
