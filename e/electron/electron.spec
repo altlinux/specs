@@ -14,7 +14,7 @@
 
 Name: electron
 Version: 42.4.0
-Release: alt1
+Release: alt2
 
 Summary: Build cross-platform desktop apps with JavaScript, HTML, and CSS
 License: MIT
@@ -66,6 +66,7 @@ BuildRequires: libclang%llvm_major
 BuildRequires: gn >= 0.2384.1740f5c2
 BuildRequires: esbuild
 BuildRequires: nodejs >= 22.18.0
+BuildRequires: npm
 BuildRequires: rust
 BuildRequires: rust-bindgen
 BuildRequires: rustfmt
@@ -427,5 +428,9 @@ xvfb-run -a $EBIN --no-sandbox smoke-app
 %_libdir/electron/
 
 %changelog
+* Mon Jul 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 42.4.0-alt2
+- Fix the build on glibc without the SYS_SECCOMP enumerator (p11).
+- Require npm at build time explicitly to make builds reproducible.
+
 * Fri Jun 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 42.4.0-alt1
 - First build for ALT.
