@@ -2,7 +2,7 @@
 %define abiversion 2
 
 Name: netopeer2
-Version: 2.7.0
+Version: 2.8.7
 Release: alt1
 Summary: NETCONF server implementation in C.
 License: BSD-3-Clause
@@ -54,9 +54,12 @@ Netopeer2 is a set of tools implementing NETCONF protocol as stated in RFC 6241,
 This package contains the Netopeer2 Server and the netopeer2-cli client.
 
 %package -n %name-server
-Summary: Serer files for %name
+Summary: Server files for %name
 Group: Networking/Other
 Requires: %name-cli
+Requires: sysrepo-tools
+Requires: openssl
+Requires: libnetconf2-devel
 
 %description -n %name-server
 %name-server is a server for implementing network configuration management based
@@ -80,8 +83,9 @@ subst 's/common-auth/system-auth/g; s/common-account/system-auth/g; s/common-pas
 %build
 export CFLAGS="%optflags"
 %cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
    -DCMAKE_INSTALL_PREFIX=%_prefix \
-   -DSYSREPO_SETUP=OFF 
+   -DSYSREPO_SETUP=OFF
 %cmake_build
 
 %install
@@ -101,8 +105,14 @@ export CFLAGS="%optflags"
 %_man1dir/%name-cli.1.*
 
 %changelog
+* Thu Jul 23 2026 Pavel Shilov <zerospirit@altlinux.org> 2.8.7-alt1
+- New version 2.8.7.
+
+* Mon Apr 06 2026 Pavel Shilov <zerospirit@altlinux.org> 2.8.2-alt1
+- New version 2.8.2.
+
 * Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 2.7.0-alt1
-- New version 2.7.0
+- New version 2.7.0.
 
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.5-alt1
 - New version 2.4.5.

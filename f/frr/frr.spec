@@ -35,7 +35,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 10.6.0
+Version: 10.7.0
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -46,6 +46,7 @@ Source0: %name-%version.tar
 Source1: %name-tmpfiles.conf
 #Patch: %%name-%%version.patch
 Patch1001: 0001-update-init-script.patch
+Patch1002: 0002-libyang5-compat-from-pr-21459.patch
 
 # PVE patches
 Patch0001: 0001-enable-bgp-bfd-daemons.patch
@@ -147,6 +148,7 @@ Adds GRPC support to the individual FRR daemons.
 %setup
 #%%patch -p1
 %patch1001 -p1
+%patch1002 -p1
 
 #%%patch0001 -p1
 %patch0002 -p1
@@ -220,8 +222,8 @@ install -d -m 0775 %buildroot%_logdir/%name
 
 rm -rf %buildroot%_infodir/dir
 
-install -p -D -m 644 %SOURCE1 %buildroot%_tmpfilesdir/%name.conf
-sed -e "s|@frr_statedir@|%frr_statedir|g" -i %buildroot%_tmpfilesdir/%name.conf
+install -p -D -m 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
+sed -e "s|@frr_statedir@|%frr_statedir|g" -i %buildroot/lib/tmpfiles.d/%name.conf
 install -p -D -m 644 tools/etc/frr/daemons %buildroot%_sysconfdir/%name/daemons
 install -p -D -m 644 tools/frr.service %buildroot%_unitdir/%name.service
 install -p -D -m 644 tools/etc/logrotate.d/frr %buildroot%_logrotatedir/%name
@@ -255,7 +257,7 @@ useradd -r -g %frr_group -G %frrvty_group -d %frr_home -s /sbin/nologin -c "FRRo
 usermod -G %frrvty_group %frr_user >/dev/null 2>&1 ||:
 
 %post
-%tmpfiles_create %_tmpfilesdir/%name.conf ||:
+%tmpfiles_create /lib/tmpfiles.d/%name.conf ||:
 %post_service %name
 
 # Create dummy files if they don't exist so basic functions can be used.
@@ -289,7 +291,7 @@ fi
 %_unitdir/%name.service
 %_initdir/%name
 %_datadir/yang/*.yang
-%_tmpfilesdir/%name.conf
+/lib/tmpfiles.d/%name.conf
 
 %exclude %frr_daemondir/*.py
 %if_enabled rpki
@@ -333,6 +335,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Thu Jul 23 2026 Pavel Shilov <zerospirit@altlinux.org> 10.7.0-alt1
+- NMU: update to new version 10.7.0.
+
 * Tue Mar 31 2026 Pavel Shilov <zerospirit@altlinux.org> 10.6.0-alt1
 - NMU: update to new version 10.6.0 build based on libyang 4 
 

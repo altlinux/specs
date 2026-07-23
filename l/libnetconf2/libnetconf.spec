@@ -2,7 +2,7 @@
 %define abiversion 5
 
 Name: libnetconf2
-Version: 4.1.2
+Version: 4.4.10
 Release: alt1
 Summary: C NETCONF library 
 License: BSD-3-Clause  
@@ -12,12 +12,14 @@ Url: https://github.com/CESNET/libnetconf2
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: libssh-devel
 BuildRequires: libssl-devel
 BuildRequires: libcurl-devel
-BuildRequires: libpam0-devel
+#BuildRequires: libpam0-devel
 BuildRequires: pkgconfig(libyang) >= 2
+BuildRequires: pkgconfig(libidn2)
 
 %description
 libnetconf is a NETCONF library in C intended for building NETCONF
@@ -64,8 +66,14 @@ export CFLAGS="%optflags"
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Thu Jul 23 2026 Pavel Shilov <zerospirit@altlinux.org> 4.4.10-alt1
+- 4.2.14 -> 4.4.10.
+
+* Mon Apr 06 2026 Pavel Shilov <zerospirit@altlinux.org> 4.2.14-alt1
+- 4.1.2 -> 4.2.14.
+
 * Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 4.1.2-alt1
-- 3.7.10 -> 4.1.2
+- 3.7.10 -> 4.1.2.
 
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.10-alt1
 - New version 3.7.10.

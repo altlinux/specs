@@ -2,7 +2,7 @@
 %define abiversion 8
 
 Name: sysrepo
-Version: 4.2.10
+Version: 5.1.0
 Release: alt1
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
@@ -15,8 +15,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires: pkgconfig(libyang)
+#BuildRequires:  gcc-c++
+BuildRequires: pkgconfig(libyang) >= 5.4.0
 
 Requires: %name-tools
 %description
@@ -29,6 +29,7 @@ defined by YANG model.
 %package -n lib%name%abiversion
 Summary:  Shared library for %name
 Group: Development/C
+Requires(pre): shadow-utils
 
 %description -n lib%name%abiversion
 libs files for %name
@@ -54,15 +55,24 @@ Executable tools for %name.
 %build
 export CFLAGS="%optflags"
 %cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
     -DSYSREPO_UMASK=007 \
     -DSYSREPO_GROUP=sysrepo \
     -DNACM_SRMON_DATA_PERM=660 \
-    -DSYSTEMD_UNIT_DIR=%prefix
-%cmake_build 
+    -DNOTIFD_SETUP=OFF \
+    -DREPO_PATH=%_sysconfdir/sysrepo \
+    -DSYSTEMD_UNIT_DIR=%_unitdir
+%cmake_build
 
 %install
 %cmakeinstall_std
+mkdir -p %buildroot%_sysconfdir/sysrepo
+mkdir -p %buildroot%_libdir/sysrepo/plugins
+mkdir -p %buildroot%_libdir/sysrepo-plugind/plugins
+
+%pre -n lib%name%abiversion
+getent group sysrepo >/dev/null || groupadd -r sysrepo
 
 %files -n %name-devel
 %_libdir/*.so
@@ -75,12 +85,24 @@ export CFLAGS="%optflags"
 %files -n lib%name%abiversion
 %_libdir/*.so.%abiversion
 %_libdir/*.so.%abiversion.*
+%dir %attr(0770,root,sysrepo) %_sysconfdir/sysrepo
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
+%dir %_libdir/%name-plugind
+%dir %_libdir/%name-plugind/plugins
 
 %files -n %name-tools
 %_bindir/*
 %_man8dir/*.8.*
+%_datadir/%name/scripts/
 
 %changelog
+* Thu Jul 23 2026 Pavel Shilov <zerospirit@altlinux.org> 5.1.0-alt1
+- 4.5.4 -> 5.1.0
+
+* Mon Apr 06 2026 Pavel Shilov <zerospirit@altlinux.org> 4.5.4-alt1
+- 4.2.10 -> 4.5.4
+
 * Sat Dec 20 2025 Pavel Shilov <zerospirit@altlinux.org> 4.2.10-alt1
 - 3.7.11 -> 4.2.10
 
