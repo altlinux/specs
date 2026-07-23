@@ -1,11 +1,11 @@
 Name: python3-module-turbojpeg
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: A Python wrapper of libjpeg-turbo
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/PyTurboJPEG/
+URL: https://pypi.org/project/PyTurboJPEG/
 VCS: https://github.com/lilohuang/PyTurboJPEG
 
 Provides: python3-module-pyturbojpeg = %EVR
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pyturbojpeg-%version.dist-info
 
 %changelog
+* Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.3-alt1
+- 1.8.3 released
+
 * Thu Oct 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.2-alt1
 - 1.8.2 released
 
