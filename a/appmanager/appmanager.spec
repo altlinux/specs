@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: appmanager
-Version: 3.7.2
+Version: 3.7.3
 Release: alt1
 
 Summary: MacOS style AppImage installer and management application
@@ -63,5 +63,8 @@ sed -i "s|Categories=.*|Categories=GNOME;GTK;Settings;PackageManager;|" data/app
 %_datadir/metainfo/com.github.AppManager.metainfo.xml
 
 %changelog
+* Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.7.3-alt1
+- New version 3.7.3.
+
 * Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 3.7.2-alt1
 - Initial build for Sisyphus
