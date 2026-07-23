@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 4.5.9
+Version: 4.6.2
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -22,6 +22,7 @@ Requires: python3-module-ipykernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-hatch-jupyter-builder
+BuildRequires: python3-module-jupyter-builder
 BuildRequires: npm
 %if_with check
 BuildRequires: python3-module-pytest
@@ -106,6 +107,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Wed Jul 22 2026 Anton Vyatkin <toni@altlinux.org> 4.6.2-alt1
+- new version 4.6.2
+
 * Thu Jun 18 2026 Anton Vyatkin <toni@altlinux.org> 4.5.9-alt1
 - new version 4.5.9
 
