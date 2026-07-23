@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.22
+%define major 22.23
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -83,7 +83,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.2
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -519,6 +519,23 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.1-alt1
+- new version 22.23.1 (with rpmrb script)
+- 22.22.3 (2026-05-13): maintenance release, no CVE
+- 22.23.0 (2026-06-18, security release) fixed CVEs:
+ + CVE-2026-48618: tls: normalize hostname for server identity checks (High)
+ + CVE-2026-48933: crypto: guard WebCrypto cipher output length (High)
+ + CVE-2026-48937: deps: fix integration issues with the latest nghttp2 (Medium)
+ + CVE-2026-48930: dns,net: reject hostnames with embedded NUL bytes (Medium)
+ + CVE-2026-48619: http2: cap originSet size to prevent unbounded memory growth (Medium)
+ + CVE-2026-48615: lib,test: redact proxy credentials in tunnel errors (Medium)
+ + CVE-2026-48934: tls: bind reusable sessions to authenticated host (Medium)
+ + CVE-2026-48928: tls: fix case-sensitive SNI context matching (Medium)
+ + CVE-2026-48617: permission: handle process.chdir on writereport (Low)
+ + CVE-2026-48931: http: fix response queue poisoning in http.Agent (Low)
+ + CVE-2026-48935: permission: disable FileHandle utimes with permission model (Low)
+- 22.23.1 (2026-06-23): fix for a regression from the 22.23.0 security release, no CVE
+
 * Wed Apr 15 2026 Vitaly Lipatov <lav@altlinux.ru> 22.22.2-alt1
 - new version 22.22.2 (with rpmrb script)
 - set npm >= 10.9.7, libuv >= 1.51.0, c-ares >= 1.34.6
