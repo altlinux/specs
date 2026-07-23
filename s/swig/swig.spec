@@ -13,8 +13,8 @@
 
 # vim:set ft=spec:
 Name: swig
-Version: 4.3.1
-Release: alt2
+Version: 4.4.1
+Release: alt1
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -243,6 +243,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Thu Jul 23 2026 Anton Midyukov <antohami@altlinux.org> 1:4.4.1-alt1
+- New version 4.4.1.
+
 * Tue Jun 23 2026 Anton Midyukov <antohami@altlinux.org> 1:4.3.1-alt2
 - Remove build dependency on htmldoc.
 - Update URL, add VCS.
