@@ -2,21 +2,24 @@
 
 Name:           heroes-sdl
 Version:        0.21
-Release:        alt4
+Release:        alt5
 
 Summary:        Heroes - Game like Nibbles but different.
 License:        GPLv2
 Group:          Games/Arcade
 URL:            http://heroes.sourceforge.net/
 Source:         http://download.sourceforge.net/heroes/%_name-%version.tar.gz
-Packager:       Fr. Br. George <george@altlinux.ru>
 
 Patch1: heroes-0.21-gcc4.diff
 Patch2: heroes-0.21-gcc_warning.diff
 Patch3: heroes-0.21-menus.diff
 Patch4: heroes-0.21-debian-forward-declarations.diff
 Patch5: heroes-0.21-debian-autoreconf.diff
-Provides: heroes
+Patch6: heroes-0.21-debian-compilation-fixes.patch
+Patch7: heroes-0.21-debian-function-definitions.patch
+Patch8: heroes-0.21-debian-single-declaration.patch
+
+Provides: heroes = %EVR
 
 # Automatically added by buildreq on Wed Oct 04 2006
 BuildRequires: esound help2man liballegro-devel libmikmod-devel libSDL-devel libSDL_mixer-devel linux-libc-headers perl-Locale-gettext
@@ -42,15 +45,11 @@ of play are available, including "get-all-the-bonuses", deathmatch, and
 
 %prep
 %setup -n %_name-%version
-%patch1 -p1
-%patch2
-%patch3
-%patch4 -p1
-%patch5 -p1
+%autopatch -p1
 
 
 %build
-%add_optflags -fcommon
+%add_optflags -fcommon -std=gnu17
 %autoreconf
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir --without-ggi --without-gii --disable-debug --enable-html-doc=%customdocdir ;
 %make_build INTLLIBS=-lm
@@ -87,9 +86,13 @@ install -D misc/heroes-1.xpm %buildroot%_liconsdir/%name.xpm
 %pixdir/heroes-*.xpm
 %_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
+%_gamesdatadir/locale/*/*/heroes.mo
 
 
 %changelog
+* Thu Jul 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.21-alt5
+- NMU: fix FTBFS with gcc 15
+
 * Mon Feb 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.21-alt4
 - Fix FTBFS, again
   + add two debian patches to fix configure;
