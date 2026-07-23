@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rpmfile
-%define mod_name %pypi_name
+%define mod_name rpmfile
 
 # tests require share_network=1
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Read rmp archive files
@@ -21,6 +21,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Conflicts: qa-robot
 BuildRequires(pre): rpm-build-pyproject
@@ -52,12 +54,14 @@ This module is modeled after the tarfile module.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
-%_bindir/%pypi_name
+%_bindir/rpmfile
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.2.1-alt1
+- Updated to 2.2.1.
+
 * Thu Jul 25 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
@@ -66,4 +70,3 @@ This module is modeled after the tarfile module.
 
 * Fri Nov 17 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1
 - Built for ALT Sisyphus.
-
