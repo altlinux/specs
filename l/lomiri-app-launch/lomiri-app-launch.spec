@@ -6,7 +6,7 @@
 %def_with check
 
 Name: lomiri-app-launch
-Version: 0.1.12
+Version: 0.2.0
 Release: alt1
 
 Summary: User space daemon for launching applications
@@ -155,5 +155,8 @@ to generate dynamic bindings for liblomiri-app-launch0.
 %_typelibdir/LomiriAppLaunch-0.typelib
 
 %changelog
+* Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.12-alt1
 - Initial build for Sisyphus

@@ -8,8 +8,8 @@
 %set_verify_elf_skiplist %_libexecdir/lomiri/tests/*
 
 Name: lomiri
-Version: 0.5.0
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: Shell of the Lomiri Operating Environment
 License: GPL-3.0
@@ -18,7 +18,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri
 
 Source: %name-%version.tar
 
-# sync with package version 0.5.0-14 from Debian unstable
+# sync with package version 0.6.0-3 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -237,7 +237,7 @@ rm -vf  %buildroot%_libexecdir/lomiri/uqmlscene
 rm -vrf %buildroot%_libexecdir/lomiri/tests/
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog CODING COPYING COPYING.LGPL LGPL_EXCEPTION.txt README.md
+%doc AUTHORS COPYING COPYING.LGPL LGPL_EXCEPTION.txt README.md
 %_bindir/indicators-client
 %_bindir/lomiri
 %exclude %_datadir/locale/it_CARES/LC_MESSAGES/lomiri.mo
@@ -278,6 +278,9 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 %_datadir/dbus-1/interfaces/com.lomiri.shell.AccountsService.xml
 
 %changelog
+* Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
 - Updated to allow build with mir 2.28.0.
 - Enabled tests.
