@@ -1,5 +1,5 @@
 Name: python3-module-home-assistant-intents
-Version: 2026.1.28
+Version: 2026.6.24
 Release: alt1
 
 Summary: Intents for Home Assistant
@@ -41,6 +41,9 @@ mkdir -p $O && python3 script/merged_output.py $O
 %python3_sitelibdir/home_assistant_intents-%version.dist-info
 
 %changelog
+* Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.6.24-alt1
+- 2026.6.24 released
+
 * Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.1.28-alt1
 - 2026.1.28 released
 
