@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt7
+Release: alt8
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -13,6 +13,7 @@ Summary: The Programmers Solid 3D CAD Modeller
 License: GPLv2 with exceptions and CC0
 Group: Engineering
 Url: https://openscad.org/
+Vcs: https://github.com/openscad/openscad
 
 # Source0-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Source0: %name-%version.tar
@@ -32,6 +33,8 @@ Patch5: openscad-2021.01-alt-fix-for-boost-1.85.0.patch
 Patch6: openscad-2021.01-cgal-build-fix.patch
 # Update build to C++17
 Patch7: openscad-2021.01-cgal6-cpp17.patch
+# Linkage against boost_system disabled in boost 1.91.0+
+Patch8: openscad-2021.01-boost-system.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -180,6 +183,10 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 2021.01-alt8
+- Fix FTBFS with boost 1.91.0.
+- Spec: add VCS tag.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2021.01-alt7
 - fix build with cmake >= 4.0 (use macros %%cmake)
 
