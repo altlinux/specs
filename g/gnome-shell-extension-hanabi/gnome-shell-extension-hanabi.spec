@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define ext_id hanabi-extension@jeffshee.github.io
 %define ext_schema_id io.github.jeffshee.hanabi-extension
 
 Name: gnome-shell-extension-hanabi
-Version: 20260617
+Version: 20260724
 Release: alt1
 Epoch: 2
 
@@ -60,6 +61,9 @@ meson setup .build --prefix=%buildroot/usr/ && ninja -C .build install
 %doc README.md
 
 %changelog
+* Sat Jul 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260724-alt1
+- updated to git.fcdb794f05
+
 * Wed Jun 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260617-alt1
 - updated to git.6783f7aff4
 - Hanabi is migrating to TypeScript for GNOME 50+.
