@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-rignore
-Version: 0.7.6
+Version: 0.8.0
 Release: alt1
 
 Summary: Python bindings for the Rust ignore crate
@@ -62,5 +62,8 @@ Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Fri Jun 26 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.6-alt1
 - Initial build for ALT Sisyphus.

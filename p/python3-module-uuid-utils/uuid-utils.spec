@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.16.1
+Version: 0.17.0
 Release: alt1
 
 Summary: Fast, drop-in replacement for Python's uuid module, powered by Rust
@@ -16,6 +16,8 @@ Vcs: https://github.com/aminalaee/uuid-utils
 
 Source0: %name-%version.tar
 Source1: crates.tar
+Source2: cargo-vendor-config.py
+Source3: cargo-config.toml.in
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-python3
@@ -43,27 +45,7 @@ Available UUID versions:
 %prep
 %setup -a1
 %autopatch -p1
-mkdir -p .cargo
-cat << EOF > .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
-
-[profile.release]
-strip = false
-EOF
+%SOURCE2 --in %SOURCE3 --out .cargo/config.toml --root "%buildroot%prefix"
 
 %build
 %pyproject_build
@@ -87,6 +69,12 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.0-alt1
+- Updated to 0.17.0.
+
+* Fri Jul 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.16.2-alt1
+- Updated to 0.16.2.
+
 * Tue Jun 16 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.16.1-alt1
 - Updated to 0.16.1.
 

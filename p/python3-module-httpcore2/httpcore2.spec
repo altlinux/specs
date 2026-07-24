@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 2.7.0
 Release: alt1
 
 Summary: A minimal low-level HTTP client
@@ -106,6 +106,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.0-alt1
+- Updated to 2.7.0.
+
 * Fri Jul 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.5.0-alt1
 - Updated to 2.5.0.
 - Detached httpcore2 from the python3-module-httpx2 source package.
