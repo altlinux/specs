@@ -7,8 +7,8 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2025.4
-Release: alt1.1
+Version: 2026.2
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -18,10 +18,10 @@ Url: https://github.com/trikset/trik-studio
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 Patch1: gamepad.patch
-Patch2: alt-ftbfs.patch
-Patch3: fix-build-with-qt5-quazip1.patch
 Patch5: quazip.patch
 Patch6: Box2D.patch
+Patch7: use-system-quazip.patch
+Patch8: fix-programdata-datadir-default.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel chrpath
 BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
@@ -37,6 +37,7 @@ BuildRequires: rsync qt5-tools
 Requires: libqscintilla2-qt5-devel pythonqt-devel
 Requires: libhidapi lego-mindstorms-udev-rules
 Requires: %name-data = %version-%release
+Requires: lmsasm
 Conflicts: lib%name
 
 %description
@@ -94,6 +95,8 @@ sed -i "s/QOverload<QObject\*>::of/(void(*)(QObject*))/" qrkernel/settingsListen
 %endif
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
+PY_PATH=$(python3 -c 'import sys,os;print(os.pathsep.join(sys.path))')
+sed -e "3 a export TRIK_PYTHONPATH=\"$PY_PATH\"" -i installer/platform/trikStudio.sh
 
 tar -xf ./.gear/Box2D.tar.bz2
 tar -xf ./.gear/trikRuntime.tar.bz2
@@ -112,6 +115,8 @@ pushd thirdparty/gamepad
 popd
 
 %patch5 -p1
+%patch7 -p1
+%patch8 -p1
 
 %ifarch loongarch64 riscv64
 # gold does not work on these architectures
@@ -123,7 +128,7 @@ sed -e '/use_gold_linker/d' -i \
 %build
 export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
 %qmake_qt5 -r \
-    CONFIG+=use_system_quazip1-qt5 \
+    CONFIG+=use_system_quazip \
 %if_with debug
     CONFIG+=debug CONFIG-=release \
 %else
@@ -180,9 +185,12 @@ rm -rf %buildroot%_includedir/qt5/Qsci
 rm -rf %buildroot%_datadir/qt5/qsci/
 
 pushd bin
-for d in examples help translations images; do
+for d in examples help translations images templates; do
     cp -fr $d %buildroot%_datadir/%name/
 done
+# symlink system lmsasm into ev3-tools
+mkdir -p %buildroot%_datadir/%name/ev3-tools
+ln -sf %_bindir/lmsasm %buildroot%_datadir/%name/ev3-tools/lmsasm
 #cp -fr trikSharp %buildroot%_libdir/%name/
 cp -f gamepad %buildroot%_bindir/
 mv -f %buildroot/opt/checkapp/bin/checkapp %buildroot%_bindir/
@@ -222,6 +230,9 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.*.so.*'
 %endif
 
 %changelog
+* Wed Jul 22 2026 Valentin Sokolov <sova@altlinux.org> 2026.2-alt1
+- Update to 2026.2
+
 * Fri Apr 17 2026 Fedor Moseichuck <phobos@altlinux.org> 2025.4-alt1.1
 - NMU: changed desktop file comment to differ from trikStudioJunior
 
