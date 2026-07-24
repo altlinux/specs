@@ -24,7 +24,7 @@
 
 Name: mutter
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt2%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -40,6 +40,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 %{?_enable_snapshot:Source1: gvdb-%gvdb_ver.tar}
+Patch10: %name-50.3-up-screen-cast-stream-source-Handle-NULL-cursor-renderer.patch
 
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
@@ -217,6 +218,8 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 
 sed -i 's|/usr\(/bin/bash\)|\1|' src/tests/socket-launch.sh
 
+%patch10 -p1
+
 #sed -i 's/\.beta//' meson.build
 
 %ifarch %e2k
@@ -313,6 +316,11 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Fri Jul 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.3-alt2
+- applied:
+  https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/5169
+  (ALT #59805)
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.3-alt1
 - 50.3
 
