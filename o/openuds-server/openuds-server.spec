@@ -13,7 +13,7 @@
 
 Name: openuds-server
 Version: 4.0.0
-Release: alt7
+Release: alt8
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -223,6 +223,9 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Sat Jul 25 2026 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt8
+- Refactor RestStruct to use inspect.get_annotations for type extraction.
+
 * Fri Dec 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt7
 - Fix devel lib (ALT #57072).
 
