@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name sentencepiece
+%define mod_name %pypi_name
 
 %define sover 0
 
 Name: sentencepiece
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Unsupervised text tokenizer for neural network-based text generation
 License: Apache-2.0
@@ -19,6 +21,9 @@ BuildRequires: gcc-c++
 BuildRequires: ninja-build
 BuildRequires: libprotobuf-devel
 BuildRequires: libabseil-cpp-devel
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 SentencePiece is an unsupervised text tokenizer and detokenizer mainly
@@ -50,6 +55,17 @@ Requires: libprotobuf-devel
 This package contains headers, pkg-config metadata and linker files
 needed to build applications using SentencePiece.
 
+%package -n python3-module-%pypi_name
+Summary: Unsupervised text tokenizer and detokenizer
+Group: Development/Python3
+Requires: lib%name%sover = %EVR
+Url: https://pypi.org/project/sentencepiece/
+Vcs: https://github.com/google/sentencepiece
+
+%description -n python3-module-%name
+Python wrapper for SentencePiece. This API will offer the encoding,
+decoding and training of Sentencepiece.
+
 %prep
 %setup
 
@@ -68,6 +84,12 @@ sed -i '/init_test\.cc/d' src/CMakeLists.txt
 
 %cmake_build
 
+cd python
+export CPATH=../src # Points to headers dir
+export PKG_CONFIG_PATH=../%_cmake__builddir # Points to dir with pkg-conf file
+export LIBRARY_PATH=../%_cmake__builddir/src # Points to library dir
+%pyproject_build
+
 %install
 %cmake_install
 
@@ -76,8 +98,15 @@ sed -i '/init_test\.cc/d' src/CMakeLists.txt
 rm -f %buildroot%_libdir/libsentencepiece.a
 rm -f %buildroot%_libdir/libsentencepiece_train.a
 
+cd python
+%pyproject_install
+
 %check
 %ctest
+
+cd python
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%pyproject_run_pytest -ra
 
 %files
 %doc README.md
@@ -100,6 +129,13 @@ rm -f %buildroot%_libdir/libsentencepiece_train.a
 %_libdir/libsentencepiece_train.so
 %_pkgconfigdir/sentencepiece.pc
 
+%files -n python3-module-%name
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
 %changelog
+* Fri Jul 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt2
+- NMU: Packaged python bindings.
+
 * Wed May 20 2026 Artyom Sinyugin <writers@altlinux.org> 0.2.1-alt1
 - Initial build.
