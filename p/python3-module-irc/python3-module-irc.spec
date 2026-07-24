@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 20.5.0
-Release: alt2
+Release: alt3
 
 Summary: Full-featured Python IRC library for Python.
 License: MIT
@@ -15,6 +15,7 @@ VCS: https://github.com/jaraco/irc
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: fix-for-py314.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -34,6 +35,7 @@ BuildRequires: python3-module-jaraco.stream
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -53,6 +55,9 @@ install -Dpm0644 irc/codes.txt %buildroot%python3_sitelibdir/%pypi_name/codes.tx
 %exclude %python3_sitelibdir/%pypi_name/tests
 
 %changelog
+* Fri Jul 24 2026 Anton Vyatkin <toni@altlinux.org> 20.5.0-alt3
+- Fix FTBFS.
+
 * Mon Jul 29 2024 Andrey Cherepanov <cas@altlinux.org> 20.5.0-alt2
 - Packaged irc/codes.txt.
 
