@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 153.0
+Version: 153.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -374,6 +374,9 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Fri Jul 24 2026 Ajrat Makhmutov <rauty@altlinux.org> 153.0.1-alt1
+- New version.
+
 * Wed Jul 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 153.0-alt1
 - New version.
 - Fixes:
