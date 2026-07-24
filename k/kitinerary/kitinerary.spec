@@ -1,10 +1,10 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
-%_K6if_ver_lt %ubt_id M110
-%def_disable phonenumber
-%else
+%_K6if_ver_lt %ubt_id M120
 %def_enable phonenumber
+%else
+%def_disable phonenumber
 %endif
 
 %define rname kitinerary
@@ -13,7 +13,7 @@
 %define libkpimitinerary libkpim6itinerary%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -29,7 +29,7 @@ Patch2: alt-old-poppler.patch
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
 BuildRequires: libssl-devel
-BuildRequires: libpoppler-devel libxml2-devel xsltproc zlib-devel
+BuildRequires: libpoppler-devel libxml2-devel xsltproc zlib-devel boost-devel
 BuildRequires: libzxing-cpp-devel
 %if_enabled phonenumber
 BuildRequires: libphonenumber-devel
@@ -101,6 +101,13 @@ done
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+- temporary disable libphonenumber support because altbug#59891
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

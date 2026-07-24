@@ -5,7 +5,7 @@
 %define libkpim6mimetreeparserwidgets libkpim6mimetreeparserwidgets%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt2
 %K6init
 
@@ -19,10 +19,11 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libGLU-devel libvulkan-devel
+BuildRequires: libgpgme-devel
 BuildRequires: libcups-devel
 BuildRequires: libgpgme-devel
 BuildRequires: kde6-libkleo-devel kf6-kcalendarcore-devel kf6-kcodecs-devel kf6-ki18n-devel kf6-kwidgetsaddons-devel
-BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
+BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel kf6-kio-devel
 BuildRequires: kmbox-devel
 
 %description
@@ -87,8 +88,17 @@ Requires: %name-common
 
 
 %changelog
+* Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- update build requries
+
 * Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - update build requires
+
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
 
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version

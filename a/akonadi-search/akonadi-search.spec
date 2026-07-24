@@ -1,8 +1,8 @@
 %define rname akonadi-search
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -124,6 +124,12 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json*
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - turn on htmlparser (thanks rider@alt)
 

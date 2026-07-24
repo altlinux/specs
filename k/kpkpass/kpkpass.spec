@@ -4,8 +4,8 @@
 %define libkpimpkpass libkpimpkpass%sover
 
 Name: %rname
-Version: 26.04.1
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -78,6 +78,9 @@ Obsoletes: libkpimpkpass < %EVR
 %_K6qml/org/kde/pkpass/
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Mon Jul 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt2
 - don't package mime data
 

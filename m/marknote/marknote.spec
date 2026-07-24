@@ -1,8 +1,8 @@
 %define rname marknote
 
 Name: %rname
-Version: 1.3.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 %K6init
 
 Group: Text tools
@@ -24,7 +24,8 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel
 BuildRequires: libmd4c-devel
 BuildRequires: kf6-breeze-icons-devel kf6-kcolorscheme-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-ki18n-devel
-BuildRequires: kf6-kirigami-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kirigami-devel kf6-kxmlgui-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: kmime-devel
 BuildRequires: kf6-kirigami-addons-devel
 
@@ -37,10 +38,12 @@ making it easy to use your notes outside of Marknote as well as inside the app.
 
 %prep
 %setup -n %rname-%version
+sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' plasma-runner-marknote.desktop
 
 %build
 %K6build \
     #
+
 %install
 %K6install
 %find_lang %name --with-kde --all-name
@@ -48,12 +51,20 @@ making it easy to use your notes outside of Marknote as well as inside the app.
 %files -f %name.lang
 %doc LICENSES/*
 %_K6bin/*marknote*
+%_K6data/krunner/dbusplugins/*marknote*
 %_K6xdgapp/*marknote*
 %_K6icon/*/*/apps/*marknote*
+%_K6notif/*marknote*.notifyrc
 %_datadir/qlogging-categories6/*marknote*
 %_datadir/metainfo/*marknote*
 
 %changelog
+* Thu Jul 23 2026 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
+- new version
+
+* Thu Mar 19 2026 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt1
+- new version
+
 * Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
 - add russian translation
 

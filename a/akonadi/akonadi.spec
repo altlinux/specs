@@ -1,9 +1,12 @@
-%define rname akonadi
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
+%endif
 
+%define rname akonadi
 %def_enable tools
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -209,6 +212,7 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 %_K6qml/org/kde/akonadi/
 %_K6xdgapp/*akonadi*.desktop
 %_K6dbus_srv/org.freedesktop.Akonadi.Control.service
+%_userunitdir/akonadi_control.service
 %if_enabled tools
 %_K6bin/akonadi2xml
 %_K6bin/akonaditest
@@ -273,6 +277,12 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

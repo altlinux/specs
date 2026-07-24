@@ -4,7 +4,7 @@
 %define libgrantleethemeeditor libgrantleethemeeditor%pim_sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ Obsoletes: kde5-grantlee-editor < %EVR
 
 Source: %rname-%version.tar
 Patch0: alt-fix-display-theme-content.patch
+Patch1: alt-ki18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
@@ -66,6 +67,7 @@ Obsoletes: libgrantleethemeeditor5 < %EVR
 %prep
 %setup -n %rname-%version
 %patch0 -p1
+%patch1 -p1
 
 %build
 %K6build
@@ -96,6 +98,12 @@ Obsoletes: libgrantleethemeeditor5 < %EVR
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

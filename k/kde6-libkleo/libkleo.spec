@@ -4,8 +4,8 @@
 %define libkpim6libkleo libkpim6libkleo%sover
 
 Name: kde6-%rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: boost-devel extra-cmake-modules qt6-declarative-devel
-BuildRequires: libgpgme-devel libassuan-devel
+BuildRequires: gpgmeqt-devel libassuan-devel
 BuildRequires: kf6-kcompletion-devel kf6-kconfig-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-sonnet-devel kf6-kcodecs-devel kf6-kitemmodels-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcolorscheme-devel
@@ -39,7 +39,7 @@ Obsoletes: kde5-libkleo-common < %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-BuildRequires: libgpgme-devel
+Requires: gpgmeqt-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -82,8 +82,14 @@ Requires: %name-common
 
 
 %changelog
+* Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - update requires
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
 
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version

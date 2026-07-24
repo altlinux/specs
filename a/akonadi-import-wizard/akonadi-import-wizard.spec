@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpim6importwizard%sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -18,6 +18,7 @@ Provides: kde5-akonadi-import-wizard = %EVR
 Obsoletes: kde5-akonadi-import-wizard < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-ki18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -63,6 +64,7 @@ Obsoletes: libkpimimportwizard5 < %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDEDIR_KF6}/' src/libimportwizard/CMakeLists.txt
 
 %build
@@ -95,6 +97,12 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libmailfilteragentprivate libmailfilteragentprivate%pim_sover
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -134,6 +134,12 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

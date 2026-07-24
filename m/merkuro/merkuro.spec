@@ -6,7 +6,7 @@
 
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -88,9 +88,8 @@ Obsoletes: libmerkuro_contact5 < %EVR
 %files
 %_datadir/qlogging-categories6/*.*categories
 %_K6bin/merkuro-*
+%_K6plug/plasma/applets/*merkuro*.so
 %_K6qml/org/kde/merkuro/
-#%_K6qml/org/kde/akonadi/
-%_K6data/plasma/plasmoids/org.kde.merkuro.contact.applet/
 %_K6xdgapp/org.kde.merkuro*.desktop
 %_K6icon/*/*/apps/*merkuro*.*
 %_K6notif/*merkuro*
@@ -105,6 +104,12 @@ Obsoletes: libmerkuro_contact5 < %EVR
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 

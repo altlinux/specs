@@ -1,8 +1,8 @@
 %define rname akonadi-calendar
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -106,8 +106,14 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - update build requries
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
 
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version

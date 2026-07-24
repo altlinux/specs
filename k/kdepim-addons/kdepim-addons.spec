@@ -21,8 +21,8 @@
 %define libadblockplugin libadblockplugin%sover
 
 Name: %rname
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init
 
 %add_findreq_skiplist %_K6bin/kmail_*.sh
@@ -370,6 +370,12 @@ Requires: %name-common >= %EVR
 %_K6lib/libadblockplugin.so.*
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Tue Jul 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Tue Jul 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - turn on adblock plugin
 

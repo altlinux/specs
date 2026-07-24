@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: %rname
-Version: 25.12.3
+Version: 26.04.3
 Release: alt1
 %K6init
 
@@ -22,6 +22,7 @@ Requires: kdepim-runtime
 %endif
 
 Source: %rname-%version.tar
+Patch1: alt-ki18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -76,6 +77,7 @@ Obsoletes: libkpimaddressbookimportexport5 < %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -118,6 +120,12 @@ done
 
 
 %changelog
+* Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
+* Fri May 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.1-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt1
 - new version
 
