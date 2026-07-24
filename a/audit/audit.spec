@@ -5,8 +5,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: audit
-Version: 4.1.4
-Release: alt2
+Version: 4.2
+Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.0-or-later
@@ -228,7 +228,7 @@ fi
 %_man8dir/*
 %_man7dir/*
 
-%_sysconfdir/bash_completion.d/audit.bash_completion
+%_datadir/bash-completion/completions/audit.bash_completion
 
 %attr(700,root,root) %dir %_sysconfdir/audit
 %config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd.conf
@@ -286,6 +286,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 24 2026 Egor Ignatov <egori@altlinux.org> 4.2-alt1
+- New version 4.2.
+
 * Fri Jun 26 2026 Paul Wolneykien <manowar@altlinux.org> 4.1.4-alt2
 - Fixed PID file path in audit.init.
 
