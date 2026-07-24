@@ -2,8 +2,8 @@
 %global import_path github.com/blacknon/lssh
 
 Name: lssh
-Version: 0.7.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 Summary: TUI list select ssh client tools.
 License: MIT
 Group: Networking/Remote access
@@ -82,6 +82,9 @@ mv lssh.conf %buildroot%_datadir/%name/example/libssh-example.conf
 %_datadir/%name/example/libssh-example.conf
 
 %changelog
+* Thu Jul 23 2026 Pavel Shilov <zerospirit@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Wed Jul 30 2025 Pavel Shilov <zerospirit@altlinux.org> 0.7.0-alt2
 - Removed the assembly of obviously conflicting packages.
 
