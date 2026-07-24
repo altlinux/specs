@@ -5,8 +5,8 @@
 %def_enable hwloc
 
 Name: htop
-Version: 3.5.1
-Release: alt6
+Version: 3.5.2
+Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -111,6 +111,9 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Sat Jul 25 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.2-alt1
+- 3.5.2
+
 * Fri May 15 2026 Ivan A. Melnikov <iv@altlinux.org> 3.5.1-alt6
 - NMU: Drop unused libnvidia-ml BR (fixes FTBFS on riscv64 and loongarch64)
 
