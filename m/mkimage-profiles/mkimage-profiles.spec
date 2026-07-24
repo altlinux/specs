@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.9.5
+Version: 1.9.6
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 1.9.6-alt1
+- initrd-bootchain: do not rewrite STAGE1_BOOTARGS
+- profile.mk: export GLOBAL_BRANCH
+- Add variable GPG_KEY to copy into chroot
+- chksum: create signing git repo
+- mp-showref: improve branch description (thx mike@)
+- desktop+regular, rescue+misc, server+network: remove ntpdate, ntp-utils
+
 * Mon May 25 2026 Anton Midyukov <antohami@altlinux.org> 1.9.5-alt1
 - pkg.in/lists/Makefile: add substitution @BRANDING@.
 - grub/generate.mk: fix for BRANDING with multiple "-" in name.
