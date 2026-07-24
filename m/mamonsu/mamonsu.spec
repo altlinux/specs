@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name:    mamonsu
-Version: 3.5.16
+Version: 3.5.17
 Release: alt1
 
 Summary: mamonsu is an active agent for collecting PostgreSQL instance and operating system metrics that can interact with Zabbix
@@ -63,6 +63,9 @@ getent passwd mamonsu >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,mamonsu,mamonsu) %dir %_runtimedir/%name
 
 %changelog
+* Fri Jul 24 2026 Andrey Cherepanov <cas@altlinux.org> 3.5.17-alt1
+- New version.
+
 * Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 3.5.16-alt1
 - New version.
 
