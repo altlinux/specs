@@ -2,7 +2,7 @@
 %define import_path github.com/nats-io/nsc
 
 Name: nsc
-Version: 2.12.2
+Version: 2.15.0
 Release: alt1
 
 Summary: Tool for creating nkey/jwt based configurations
@@ -47,5 +47,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Jul 24 2026 Artem Krasovskiy <aibure@altlinux.org> 2.15.0-alt1
+- updated from 2.12.2 to 2.15.0
+
 * Thu Apr 02 2026 Artem Krasovskiy <aibure@altlinux.org> 2.12.2-alt1
 - Initial build for Sisyphus.
