@@ -2,7 +2,7 @@ Name: kernel-image-7.1
 Release: alt1
 %define kernel_src_version	7.1
 %define kernel_base_version	7.1
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -603,6 +603,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jul 24 2026 Kernel Bot <kernelbot@altlinux.org> 7.1.5-alt1
+- v7.1.5 (2026-07-24).
+
 * Sun Jul 19 2026 Kernel Bot <kernelbot@altlinux.org> 7.1.4-alt1
 - v7.1.4 (2026-07-18).
 - config-aarch64: Add CONFIG_I2C_MUX_MULE=m
