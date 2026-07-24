@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -32,20 +32,26 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=5a3337de
-cargo install %_smp_mflags --offline --no-track --path . --root=%buildroot%_prefix
+export GIT_HEAD=cb4ac69c
+cargo install %_smp_mflags --offline --no-track --path crates/radicle-httpd --root=%buildroot%_prefix
+cargo install %_smp_mflags --offline --no-track --path crates/radicle-search --root=%buildroot%_prefix
 
 mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
-install -pm0644 -D systemd/radicle-httpd.service %buildroot%_unitdir/radicle-httpd.service
-asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_man1dir radicle-httpd.1.adoc
+install -pm0644 -D crates/radicle-httpd/systemd/radicle-httpd.service %buildroot%_unitdir/radicle-httpd.service
+asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_man1dir crates/radicle-httpd/radicle-httpd.1.adoc
+cp crates/radicle-search/README.md README.radicle-search.md
 
 %files
-%doc LICENSE-*
+%doc CHANGELOG* LICENSE* README*
 %_bindir/radicle-httpd
+%_bindir/radicle-search
 %_man1dir/radicle-httpd.1*
 %_unitdir/radicle-httpd.service
 
 %changelog
+* Fri Jul 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.0-alt1
+- 0.26.0 released
+
 * Fri Apr 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.0-alt1
 - 0.25.0 released
 
