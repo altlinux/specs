@@ -5,8 +5,8 @@
 %define helperdir %_libexecdir/%name
 
 Name: waybar
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
 License: MIT
@@ -100,6 +100,9 @@ BuildRequires: libgps-devel
 %_man5dir/*
 
 %changelog
+* Fri Jul 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.0-alt1
+- Updated to 0.15.0 (ALT#59924).
+
 * Tue Dec 16 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt2
 - Remove sndio module (ALT#57240).
 
