@@ -3,7 +3,7 @@
 
 Name: trusttunnel
 Version: 1.0.33
-Release: alt1
+Release: alt2
 Summary: Modern, fast and obfuscated VPN protocol
 License: Apache-2.0
 Group: Security/Networking
@@ -47,9 +47,10 @@ cp %SOURCE5 README_ALT.md
 
 %build
 %rust_build
+mv target/release/{setup_wizard,trusttunnel_setup_wizard}
 
 %install
-%rust_install setup_wizard trusttunnel_endpoint
+%rust_install trusttunnel_setup_wizard trusttunnel_endpoint
 install -Dm 0644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -Dm 0644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 install -Dm 0600 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
@@ -68,7 +69,7 @@ mkdir -p %buildroot%_sysconfdir/%name
 %preun_service %name
 
 %files
-%_bindir/setup_wizard
+%_bindir/trusttunnel_setup_wizard
 %_bindir/trusttunnel_endpoint
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
@@ -77,5 +78,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %doc README.md README_ALT.md
 
 %changelog
+* Thu Jul 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.0.33-alt2
+- Renamed setup_wizard binary to trusttunnel_setup_wizard.
+- Updated README_ALT.md file.
+
 * Wed Jul 15 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.0.33-alt1
 - Initial build for ALT.
