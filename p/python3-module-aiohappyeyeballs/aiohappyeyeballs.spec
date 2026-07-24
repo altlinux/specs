@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.1
-Release: alt2
+Version: 2.7.1
+Release: alt1
 Summary: Happy Eyeballs
 License: PSF-2.0
 Group: Development/Python
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 24 2026 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1
+- 2.6.1 -> 2.7.1
+
 * Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
 - Fixed FTBFS (pytest-asyncio 1.1.0).
 
