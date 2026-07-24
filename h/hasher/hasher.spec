@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -70,6 +70,12 @@ fi
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Thu Jul 23 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.5-alt1
+- hsh-update-resolver-conf: added a new utility.
+- hsh-mkchroot: dropped busybox support.
+- hsh-install: added --print-uris option.
+- hsh-rebuild: added --save-build-deps option.
+
 * Wed Apr 17 2024 Arseny Maslennikov <arseny@altlinux.org> 1.7.4-alt1
 - create_entry_header: source /etc/default-environment in the chroot if
   present.
