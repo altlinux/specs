@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major.4
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: inkview.desktop
+Source2: gen-tutorial-filelist.sh
 
 # a program package can't have any provides
 AutoProv:no
@@ -222,6 +223,9 @@ rm -v %buildroot%_datadir/%name/extensions/other/extension-xaml/inkxaml/tester.p
 
 %find_lang %name
 
+# tag localized tutorials (.svg/.png) with %lang() -- %find_lang only sees .mo
+sh %SOURCE2 %buildroot%_datadir/inkscape/tutorials > %_builddir/%name-tutorial.list
+
 install -m644 %SOURCE1 %buildroot%_desktopdir/inkview.desktop
 
 %check
@@ -256,13 +260,16 @@ true
 %_libdir/inkscape/libinkscape_base.so.*
 %endif
 
-%files tutorial
+%files tutorial -f %_builddir/%name-tutorial.list
 %dir %_datadir/%name/
-%_datadir/inkscape/tutorials/
+%dir %_datadir/inkscape/tutorials/
 
 %files checkinstall
 
 %changelog
+* Fri Jul 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt2
+- tag localized tutorials with %lang() via generated %files list
+
 * Mon Jun 22 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
 - new version 1.4.4
 - drop poppler 26.01 patch (merged upstream)
