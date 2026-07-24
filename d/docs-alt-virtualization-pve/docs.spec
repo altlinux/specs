@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt7
+Release: alt8
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jul 24 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt8
+- small improvements (ALT 59936, 59937, 59939, 59946, 59940, 59938)
+- fix typos (ALT 59941, 59942, 59943, 59934)
+- fix punctuation (ALT 59931, 59932, 59933, 59935, 59944, 59945, 59947)
+
 * Tue Jul 14 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt7
 - update to PVE 9.2
 - small improvements (ALT 58780, 58779, 58778, 58776)
