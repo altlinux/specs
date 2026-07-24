@@ -4,7 +4,7 @@
 
 Name: photofilmstrip
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: PhotoFilmStrip creates movies out of your pictures
 Summary(ru_RU.UTF-8): PhotoFilmStrip создает фильмы из фотографий
@@ -14,26 +14,24 @@ Group: Video
 URL: https://www.photofilmstrip.org
 VCS: https://github.com/PhotoFilmStrip/PFS
 
-Packager: Alexander Kovalev <alexvk@altlinux.org>
-
 Source: %name-%version.tar
 # fix russian translation
 Source1: ru.po
 Source2: %name.desktop
 
-Requires: libges-gir
 Requires: python3-module-%name = %EVR
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-
+BuildRequires: rpm-build-gir
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx
 
 %if_with check
-BuildRequires: libges-gir
+BuildRequires: python3-module-pygobject3-nox
 BuildRequires: python3-module-wx
+BuildRequires: python3-modules-sqlite3
+BuildRequires: typelib(GES)
 %endif
 
 %description
@@ -106,6 +104,11 @@ rm -rv %buildroot%_docdir/%name/html/objects.inv
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Kovalev <alexvk@altlinux.org> 4.2.1-alt2
+- Fixed FTBFS: added BR python3 modules pygobject3-nox and sqlite3 to check.
+- Added BR rpm-build-gir to fix missing package dependencies.
+- Cleanup spec.
+
 * Fri Jan 30 2026 Alexander Kovalev <alexvk@altlinux.org> 4.2.1-alt1
 - Initial build for ALT.
 - Updated russian translation.
