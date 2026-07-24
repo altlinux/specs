@@ -4,13 +4,14 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: Basic platform-agnostic utilities for paths, clipboard, and stdout management
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/accessibleapps/platform_utils
+VCS:     https://github.com/accessibleapps/platform_utils.git
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -47,6 +48,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Artem Semenov <savoptik@altlinux.org> 1.6.3-alt1
+- Updated to new version 1.6.3
+
 * Mon Jan 19 2026 Artem Semenov <savoptik@altlinux.org> 1.6.2-alt1
 - Updated to new version 1.6.2
 
