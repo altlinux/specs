@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sniffnet
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Application to comfortably monitor your network traffic
@@ -73,6 +73,9 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Thu Jul 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.1-alt1
+- Updated to 1.5.1.
+
 * Wed Apr 22 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 
