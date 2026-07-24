@@ -1,14 +1,16 @@
 #%%def_with doc
 
 Name: gr-osmosdr
-Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
+URL: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
+VCS: https://github.com/osmocom/gr-osmosdr
 Version: 0.2.6
-Release: alt3
+Release: alt4
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
 
 Source: %name-%version.tar
+Patch: gr-osmosdr-0.2.6-remove-boost_system.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -70,6 +72,7 @@ Documentation files for gr-osmosdr.
 
 %prep
 %setup
+%autopatch -p1
 
 # TODO fix the lib location nicer way
 %__subst 's|/lib/|/%_lib/|g' CMakeLists.txt
@@ -132,6 +135,9 @@ EOF
 %endif
 
 %changelog
+* Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt4
+- Fix FTBFS with boost 1.91.
+
 * Sun May 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.6-alt3
 - split gr-osmosdr library onto own subpackage
 
