@@ -1,11 +1,11 @@
 Name: hass
-Version: 2026.2.0
+Version: 2026.6.4
 Release: alt1
 
 Summary: Home automation platform
 License: Apache-2.0
 Group: System/Servers
-Url: https://www.home-assistant.io/
+URL: https://www.home-assistant.io/
 VCS: https://github.com/home-assistant/core
 
 Source0: %name-%version.tar
@@ -87,6 +87,9 @@ sed -re 's,^,%%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.6.4-alt1
+- 2026.6.4 released
+
 * Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.2.0-alt1
 - 2026.2.0 released
 
