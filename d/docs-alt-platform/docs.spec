@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Jul 24 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt4
+- fix forgejo (ALT 59930, 59923, 59922, 59921, 59920)
+- fix regctl (ALT 59903)
+- fix some typos (ALT 59906)
+- fix zot ldap-creds (ALT 59878)
+
 * Thu Jul 16 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt3
 - update to alt-platform-builder 11.0
 - add forgejo
