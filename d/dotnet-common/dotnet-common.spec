@@ -14,7 +14,7 @@
 
 Name: dotnet-common
 Version: 6.0.1
-Release: alt2
+Release: alt3
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -76,6 +76,11 @@ cat <<EOF >macros
 EOF
 
 %install
+mkdir -p %buildroot%_sysconfdir/dotnet
+cat > %buildroot%_sysconfdir/dotnet/install_location << EOF
+%_libdir/dotnet
+EOF
+
 mkdir -p %buildroot%_libdir/dotnet/
 mkdir -p %buildroot%_libdir/dotnet/shared/Microsoft.NETCore.App/
 mkdir -p %buildroot%_libdir/dotnet/host/fxr/
@@ -85,6 +90,9 @@ mkdir -p %buildroot%_libdir/dotnet/templates/
 install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 
 %files
+%dir %_sysconfdir/dotnet
+%_sysconfdir/dotnet/install_location
+
 %dir %_libdir/dotnet/
 
 %dir %_libdir/dotnet/host/
@@ -100,6 +108,9 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Mon Jul 20 2026 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt3
+- Add config %%_sysconfdir/dotnet/install_location (Closes: 59825).
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt2
 - add dotnet_arches (as other *_arches)
 
