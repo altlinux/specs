@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.155.7
+Version: 6.160.0
 Release: alt1
 
 Summary: A library for property based testing
@@ -15,16 +15,21 @@ License: MPL-2.0-no-copyleft-exception
 Group: Development/Python3
 Url: https://pypi.org/project/hypothesis/
 VCS: https://github.com/HypothesisWorks/hypothesis
-BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: test.in
+Source3: cargo-vendor-config.py
+Source4: cargo-config.toml.in
+Source5: crates.tar
 Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+BuildRequires: rust-cargo
+BuildRequires: /proc
+BuildRequires: python3-dev
 %if_with check
 %if_without crosshair_check
 %add_pyproject_deps_check_filter hypothesis-crosshair
@@ -58,8 +63,9 @@ comprehensible examples that make your tests fail. This lets you find more bugs
 in your code with less work.
 
 %prep
-%setup
+%setup -a5
 %autopatch -p1
+%SOURCE3 --in %SOURCE4 --out .cargo/config.toml --root "%buildroot%prefix"
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -67,6 +73,7 @@ in your code with less work.
 %endif
 
 %build
+export CARGO_HOME=${PWD}/cargo
 %pyproject_build
 
 %install
@@ -99,6 +106,9 @@ in your code with less work.
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.160.0-alt1
+- Updated to 6.160.0.
+
 * Fri Jun 26 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.155.7-alt1
 - Updated to 6.155.7.
 
