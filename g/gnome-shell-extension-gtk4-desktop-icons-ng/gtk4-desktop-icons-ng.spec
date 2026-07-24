@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
 Version: 100.24
-Release: alt1
+Release: alt2
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -69,24 +69,17 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 rm -r %buildroot%_datadir/locale/zh-Hans
 rm -r %buildroot%_datadir/locale/zh-Hant
 
-# override for systemd user units for fix user session end
-mkdir -p %buildroot%_userunitdir/org.gnome.Shell@user.service.d
-pushd %buildroot%_userunitdir/org.gnome.Shell@user.service.d
-cat > gtk4-ding.conf << EOF
-[Unit]
-After=xdg-desktop-portal.service xdg-document-portal.service gvfs-daemon.service
-EOF
-popd
-
 %files -f gtk4-ding.lang
 %_datadir/gnome-shell/extensions/gtk4-ding@smedius.gitlab.com
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.gtk4-ding.gschema.xml
 %_desktopdir/com.desktop.ding.desktop
 %_iconsdir/hicolor/scalable/apps/com.desktop.ding.svg
-%_userunitdir/org.gnome.Shell@user.service.d/gtk4-ding.conf
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 100.24-alt2
+- Remove override for systemd user units (Closes: 59949).
+
 * Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 100.24-alt1
 - New version 100.24.
 
