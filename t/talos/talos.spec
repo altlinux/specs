@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      91c63991eb669602e379ff653ecc20212834390e
+%global commit      acf8380b37772b0664c8a60891c847d07d96ae8e
 %global shortcommit %(c=%commit; echo ${c:0:7})
 %global altkernel 6.18.26-talos
 %global latest_distro_tag v11.0
@@ -14,8 +14,8 @@
 %endif
 
 Name: talos
-Version: 1.12.7
-Release: alt5
+Version: 1.12.10
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -209,6 +209,10 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon Jul 20 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.10-alt1
+- New version 1.12.10.
+- Correct version logging in init process.
+
 * Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.12.7-alt5
 - NMU: Build for loongarch64.
 
