@@ -3,8 +3,8 @@
 %def_without pam
 
 Name: moodle
-Version: 5.2.0
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPL-3.0+
@@ -254,6 +254,13 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Sat Jun 06 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1
+- New version (fixes: CVE-2026-58348, CVE-2026-58347, CVE-2026-58346,
+  CVE-2026-58345, CVE-2026-58344, CVE-2026-58343, CVE-2026-58342,
+  CVE-2026-58341, CVE-2026-58340, CVE-2026-58339, CVE-2026-58338,
+  CVE-2026-58337, CVE-2026-58336, CVE-2026-58335, CVE-2026-58334,
+  CVE-2026-58333, CVE-2026-58332, CVE-2026-58331).
+
 * Tue May 05 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt2
 - Package localization (ALT #58352).
 

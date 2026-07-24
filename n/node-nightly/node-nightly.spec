@@ -13,7 +13,7 @@
 
 Name:          node-nightly
 Version:       %major.2
-Release:       alt2
+Release:       alt3
 Summary:       Evented I/O for V8 Javascript
 Group:         Development/Tools
 License:       MIT
@@ -167,6 +167,9 @@ mkdir -p %buildroot%nodejs_sitelib/
 mkdir -p %buildroot%_altdir %buildroot%_libdir/%name/bin %buildroot%_libexecdir/%name/ %buildroot%nodejs_sitelib/npm
 install -m 644 -D %SOURCE3 %buildroot%_rpmmacrosdir/node-nightly
 install -m 644 -D %SOURCE4 %buildroot%_altdir/%name
+%if %_lib != lib64
+sed 's@/usr/lib64@%_libdir@' -i %buildroot%_altdir/%name
+%endif
 install -m 644 -D %SOURCE5 %buildroot%_altdir/%name-devel
 
 cat <<EOF >> %buildroot%nodejs_sitelib/npm/.npmrc
@@ -230,6 +233,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 
 
 %changelog
+* Wed Jul 15 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 25.8.2-alt3
+- Fixed alternatives on %%ix86.
+
 * Fri May 15 2026 Ilya Sorochan <k0tran@altlinux.org> 25.8.2-alt2
 - NMU: switch from vendored simdjson to packaged
 
