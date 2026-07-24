@@ -1,5 +1,5 @@
 Name:    valijson
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Valijson is a header-only JSON Schema validation library for C++11
@@ -39,6 +39,9 @@ Group: Development/C++
 %_libdir/cmake/%name
 
 %changelog
+* Fri Jul 24 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- New version.
+
 * Thu Jul 16 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - New version.
 
