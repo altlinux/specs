@@ -2,14 +2,14 @@
 
 %define __name RustConn
 %define _name rustconn
-%define ver_major 0.18
+%define ver_major 0.19
 %define rdn_name io.github.totoshko88.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.11
+Version: %ver_major.3
 Release: alt1
 
 Summary: Remote connections manager
@@ -46,6 +46,7 @@ BuildRequires: pkgconfig(vte-2.91-gtk4)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(webkitgtk-6.0)
 %{?_enable_check:BuildRequires: clippy}
 
 %description
@@ -110,6 +111,9 @@ done
 %doc *.md docs/*.md
 
 %changelog
+* Fri Jul 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.3-alt1
+- 0.19.3
+
 * Fri Jul 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.18.11-alt1
 - 0.18.11
 

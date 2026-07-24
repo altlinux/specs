@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.2.7
+Version: 8.2.8
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -117,6 +117,9 @@ KDE/Kirigami frameworks.
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Fri Jul 24 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.8-alt1
+- 8.2.8
+
 * Tue Jun 30 2026 Yuri N. Sedunov <aris@altlinux.org> 8.2.7-alt1
 - 8.2.7
 
