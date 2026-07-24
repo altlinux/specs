@@ -1,19 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: discovery-service-rs
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 
 Summary: The alternative to original Talos Discovery Service
 License: AGPL-3.0
 Group: System/Configuration/Other
-Url: https://altlinux.space/alt-orchestra/discovery-service-rs.git
-Vcs: %url
+Url: https://altlinux.space/alt-orchestra/discovery-service-rs
 Packager: Artyom Sinyugin <writers@altlinux.org>
 
 Source: %name-%version.tar
-
-Requires: libssl3
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: protobuf-compiler libprotobuf-devel
@@ -52,15 +49,21 @@ useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "discovery-servi
 
 %preun
 %preun_service %name
+
 %files
 %doc *.md
 %_bindir/*
 %_datadir/%name/*
 %_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name/*
-%dir %attr(775, root, %name) %_localstatedir/%name
+%dir %attr(0750, %name, %name) %_localstatedir/%name
 
 %changelog
+* Fri Jul 24 2026 Artyom Sinyugin <writers@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+- Dependencies update.
+- Tighten permissions on state dir.
+
 * Tue Dec 26 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.3-alt1
 - Dependencies update.
 - Fix bug with too long affiliate endpoint.
