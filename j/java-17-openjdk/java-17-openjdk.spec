@@ -277,9 +277,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 19
+%global updatever 20
 %global patchver 0
-%global buildver 10
+%global buildver 8
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -463,7 +463,7 @@ Source9: jconsole.desktop.in
 
 # Release notes
 # https://mail.openjdk.org/pipermail/jdk-updates-dev/
-Source10: NEWS
+#Source10: NEWS
 
 # nss configuration file
 Source11: nss.cfg.in
@@ -1420,7 +1420,6 @@ fi
 # Install release notes
 commondocdir=${RPM_BUILD_ROOT}%{_defaultdocdir}/%{uniquejavadocdir -- $suffix}
 install -d -m 755 ${commondocdir}
-cp -a %{SOURCE10} ${commondocdir}
 
 # Install icons and menu entries
 for s in 16 24 32 48 ; do
@@ -1734,7 +1733,6 @@ fi
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue
 # all config/noreplace files (and more) have to be declared in pretrans. See pretrans
 %{_jvmdir}/%{sdkdir}/legal
-%doc %{_defaultdocdir}/%{uniquejavadocdir}/NEWS
 %dir %{_sysconfdir}/.java/.systemPrefs
 %dir %{_sysconfdir}/.java
 %dir %{_jvmdir}/%{sdkdir}
@@ -2019,6 +2017,12 @@ fi
 %endif
 
 %changelog
+* Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.20.0.8-alt1
+- New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
+  CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47059,
+  CVE-2026-47063, CVE-2026-60147).
+- Remove unsupported NEWS.
+
 * Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.19.0.10-alt1
 - New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
   CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
