@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD envstack
 %def_with check
 
 Name: python3-module-%nameD
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Stacked environment variable management system
@@ -55,6 +56,9 @@ Stacked environment variable management system
 %_bindir/whichenv
 
 %changelog
+* Sun Jul 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.4-alt1
+- 1.0.3 -> 1.0.4
+
 * Fri Jul 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.3-alt1
 - 1.0.2 -> 1.0.3
 
