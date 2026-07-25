@@ -1,6 +1,6 @@
 %define phpversion php%php_defver
 Name: cacti
-Version: 1.2.30
+Version: 1.2.31
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -164,6 +164,9 @@ fi
 %cactidir/install
 
 %changelog
+* Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 1.2.31-alt1
+- 1.2.30 -> 1.2.31
+
 * Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1.2.30-alt1
 - 1.2.30
 
