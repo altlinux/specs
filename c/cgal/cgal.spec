@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 6.1.1
+Version: 6.2
 Release: alt1
 
 Summary: Easy access to efficient and reliable geometric algorithms
@@ -103,6 +103,9 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 6.2-alt1
+- 6.1.1 -> 6.2
+
 * Mon Mar 16 2026 Anton Farygin <rider@altlinux.org> 6.1.1-alt1
 - 6.0.1 -> 6.1.1
 
