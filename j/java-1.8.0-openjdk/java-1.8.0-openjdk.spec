@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.492.b09
+%define version 1.8.0.502.b07
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u492-b09
+%global shenandoah_revision jdk8u502-b07
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -384,8 +384,8 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b09
-Release: alt2
+Version: %{javaver}.%{updatever}.b07
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -428,7 +428,7 @@ Source2: README.md
 
 # Release notes
 # https://mail.openjdk.org/pipermail/jdk8u-dev/
-Source7: NEWS
+#Source7: NEWS
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -546,7 +546,6 @@ Patch205: jdk8281098-pr3836-pass_compiler_flags_to_adlc.patch
 Patch206: jdk8282231-x86_32-missing_call_effects.patch
 Patch207: rh1582504-rsa_default_for_keytool.patch
 Patch208: rh1648249-add_commented_out_nss_cfg_provider_to_java_security.patch
-Patch209: 0001-8162545-Mac-build-failure.patch
 
 #############################################
 #
@@ -1055,7 +1054,6 @@ sh %{SOURCE12}
 %patch206
 %patch207
 %patch208
-%patch209 -d openjdk
 
 # System security policy fixes
 %patch400
@@ -1495,7 +1493,6 @@ fi
 # Install release notes
 commondocdir=${RPM_BUILD_ROOT}%{_defaultdocdir}/%{uniquejavadocdir}
 install -d -m 755 ${commondocdir}
-cp -a %{SOURCE7} ${commondocdir}
 
 # Install icons and menu entries
 for s in 16 24 32 48 ; do
@@ -1819,7 +1816,6 @@ fi
 %{_jvmdir}/%{jredir}/ASSEMBLY_EXCEPTION
 %{_jvmdir}/%{jredir}/LICENSE
 %{_jvmdir}/%{jredir}/THIRD_PARTY_README
-%doc %{_defaultdocdir}/%{uniquejavadocdir}/NEWS
 %dir %{_jvmdir}/%{sdkdir}
 %{_jvmdir}/%{jrelnk}
 %dir %{_jvmdir}/%{jredir}/lib/security
@@ -2149,6 +2145,12 @@ fi
 %endif
 
 %changelog
+* Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.502.b07-alt1
+- New version (fixes: CVE-2026-41254, CVE-2026-46968, CVE-2026-47010,
+  CVE-2026-47021, CVE-2026-47027, CVE-2026-47057, CVE-2026-47058,
+  CVE-2026-47059, CVE-2026-47063, CVE-2026-60147).
+- Remove unsupported NEWS.
+
 * Fri May 01 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.492.b09-alt2
 - Patched source of gcc >= 15.
 
