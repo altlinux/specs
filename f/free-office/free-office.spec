@@ -14,7 +14,7 @@
 
 Name:    free-office
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Free Office Application Suite
 License: Proprietary
@@ -53,14 +53,13 @@ computer owners to corporate clients and government employees.
 
 "Free Office" includes applications for creating and editing text documents,
 spreadsheets, presentations, mathematical formulas, and vector graphics. The
-"Surguch" tools and ALT CSP CryptoPro with the CryptoPro package allow signing
-and verifying documents with qualified electronic signatures directly within
-the office applications. The Chromium browser, supporting GOST encryption
-algorithms and pre-installed with the Ministry of Digital Development of
-Russia's root certificate, ensures secure access to government and corporate
-web services. The built-in mail client with calendar and address book enables
-sending and receiving emails, storing correspondence, scheduling meetings, and
-managing contacts.
+"Surguch" tool with the CryptoPro package allows signing and verifying documents
+with qualified electronic signatures directly within the office applications.
+The Chromium browser, supporting GOST encryption algorithms and pre-installed
+with the Ministry of Digital Development of Russia's root certificate, ensures
+secure access to government and corporate web services. The built-in mail
+client with calendar and address book enables sending and receiving emails,
+storing correspondence, scheduling meetings, and managing contacts.
 
 "Free Office" supports opening, editing, and saving documents in common
 formats, including DOCX, XLSX, PPTX, ODF, and others, allowing seamless file
@@ -75,7 +74,7 @@ issues.
 
 «Свободный офис» включает приложения для создания и редактирования текстовых
 документов, электронных таблиц, презентаций, математических формул и векторной
-графики. Инструменты «Сургуч» и ALT CSP КриптоПро с пакетом КриптоПро позволяют
+графики. Программа «Сургуч» с установленным пакетом КриптоПро позволяет
 подписывать и проверять документы квалифицированной электронной подписью прямо
 в офисных приложениях. Браузер Chromium с поддержкой ГОСТ-алгоритмов шифрования
 и предустановленным корневым сертификатом Минцифры России обеспечивает
@@ -112,6 +111,9 @@ install -Dpm0644 %name.menu %buildroot%_sysconfdir/xdg/menus/applications-merged
 %_sysconfdir/xdg/menus/applications-merged/free-office.menu
 
 %changelog
+* Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt3
+- Removed mention of ALT CSP CryptoPro (ALT #59695).
+
 * Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2
 - Universal package for Sisyphus and p11.
 
