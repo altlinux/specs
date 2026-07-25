@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.39
+%define kernel_sublevel	.40
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -598,6 +598,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jul 24 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.40-alt1
+- v6.18.40 (2026-07-24).
+
 * Sun Jul 19 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.39-alt1
 - v6.18.39 (2026-07-18).
 - config-aarch64: Add CONFIG_I2C_MUX_MULE=m
