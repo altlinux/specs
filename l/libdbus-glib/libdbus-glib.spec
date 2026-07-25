@@ -1,17 +1,21 @@
+%def_enable check
+
 Name: libdbus-glib
-Version: 0.110
+Version: 0.114
 Release: alt1
 Epoch: 1
-Summary: GLib bindings for D-BUS
-License: GPL or Academic Free License
+
+Summary: Deprecated D-Bus binding for GLib
+License: AFL-2.1 and GPL-2.0-or-later and LGPL-2.1-or-later
 Group: System/Libraries
-URL: http://www.freedesktop.org/wiki/Software/DBusBindings
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: http://www.freedesktop.org/wiki/Software/DBusBindings
+
+Vcs: https://gitlab.freedesktop.org/dbus/dbus-glib.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: dbus doxygen gcc-c++ glib2-devel libdbus-devel libexpat-devel libgio-devel xmlto gtk-doc
+BuildRequires: dbus gcc-c++ libdbus-devel libexpat-devel libgio-devel gtk-doc
 
 %description
 This package contains D-BUS library wrapper suitable for applications
@@ -20,8 +24,8 @@ which make use of GLib event loop.
 %package devel
 Summary: GLib bindings development files for D-BUS
 Group: Development/C
-Requires: %name = %version-%release
-PreReq: libdbus-devel >= 0.94
+Requires: %name = %EVR
+Requires: libdbus-devel >= 0.94
 Requires: glib2-devel
 
 %description devel
@@ -30,30 +34,33 @@ This package contains GLib bindings development files for D-BUS.
 %package doc
 Summary: GLib bindings documentation for D-BUS
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description doc
 This package contains GLib bindings documentation files for D-BUS.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 gtkdocize
 %autoreconf
 %configure \
-	--libexecdir=%_prefix/libexec/dbus-1 \
-	--enable-gtk-doc \
-	--disable-static
+    --libexecdir=%_prefix/libexec/dbus-1 \
+    --enable-gtk-doc \
+    --disable-static
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+
+%check
+%make -k check VERBOSE=1
 
 %files
-%doc AUTHORS HACKING NEWS README
+%doc AUTHORS NEWS README
 %_sysconfdir/bash_completion.d/*.sh
 %_libdir/lib*.so.*
 %_prefix/libexec/dbus-1/dbus-bash-completion-helper
@@ -69,6 +76,10 @@ gtkdocize
 %_datadir/gtk-doc/html/dbus-glib
 
 %changelog
+* Sun Jul 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.114-alt1
+- updated to 0.114-3-g6c42458, added Vcs tag
+- added %%check section
+
 * Sun Nov 08 2020 Valery Inozemtsev <shrek@altlinux.ru> 1:0.110-alt1
 - 0.110 (closes: #39224)
 
