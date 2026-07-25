@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 3.0.3
+Version: 3.0.5
 Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
@@ -157,6 +157,9 @@ py.test-3 -n auto \
 %endif
 
 %changelog
+* Fri Jul 24 2026 Anton Vyatkin <toni@altlinux.org> 3.0.5-alt1
+- New version 3.0.5.
+
 * Tue Jun 02 2026 Anton Vyatkin <toni@altlinux.org> 3.0.3-alt1
 - New version 3.0.3.
 
