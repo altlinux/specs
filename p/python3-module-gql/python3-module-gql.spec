@@ -4,7 +4,7 @@
 
 Name: python3-module-%module_name
 Version: 4.0.0
-Release: alt2
+Release: alt3
 Summary: A GraphQL client in Python
 License: MIT
 Group: Development/Python3
@@ -12,6 +12,7 @@ Url: https://pypi.org/project/gql
 VCS: https://github.com/graphql-python/gql
 
 Source: %name-%version.tar
+Patch: alt-fix-against-graphql-core-3.2.11.patch
 
 BuildArch: noarch
 
@@ -45,6 +46,7 @@ compatible with the spec.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -62,6 +64,9 @@ compatible with the spec.
 %doc LICENSE
 
 %changelog
+* Sat Jul 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt3
+- Fixed tests with graphql-core 3.2.11.
+
 * Thu Dec 04 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt2
 - NMU: fixed FTBFS (vcrpy 8.0.0).
 
