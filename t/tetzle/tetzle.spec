@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tetzle
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Jigsaw puzzle game
@@ -45,6 +45,9 @@ between currently in progress games.
 %_man6dir/%{name}.6*
 
 %changelog
+* Sat Jul 25 2026 Nikolay Strelkov <snk@altlinux.org> 3.0.5-alt1
+- New version 3.0.5.
+
 * Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 3.0.4-alt1
 - New version 3.0.4.
 
