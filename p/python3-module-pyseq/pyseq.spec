@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD pyseq
 
 Name: python3-module-%nameD
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Compressed sequence string module for Python
@@ -41,6 +42,9 @@ embedded in the name.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Sun Jul 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3-alt1
+- 0.9.2 -> 0.9.3
+
 * Thu Apr 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.2-alt1
 - 0.9.1 -> 0.9.2
 
