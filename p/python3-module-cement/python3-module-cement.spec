@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.14
-Release: alt3
+Version: 3.0.16
+Release: alt1
 
 Summary: Application Framework for Python
 License: BSD-3-Clause
@@ -88,6 +88,9 @@ fi
 %doc README.* LICENSE
 
 %changelog
+* Sat Jul 25 2026 Anton Vyatkin <toni@altlinux.org> 3.0.16-alt1
+- New version 3.0.16.
+
 * Fri Feb 20 2026 Grigory Ustinov <grenka@altlinux.org> 3.0.14-alt3
 - Fixed FTBFS.
 
