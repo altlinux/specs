@@ -1,15 +1,18 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define app_id org.qastools
+
 Name: qastools
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
 License: MIT
 Group: Sound
 
-Url: https://gitlab.com/sebholt/qastools
+URL: https://gitlab.com/sebholt/qastools
+VCS: https://gitlab.com/sebholt/qastools
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -71,14 +74,14 @@ Desktop mixer for ALSA's "Simple Mixer Interface" (alsamixer).
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %cmake -DSKIP_LICENSE_INSTALL:BOOL=ON
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 for file in %buildroot/%_desktopdir/*.desktop; do
     desktop-file-validate $file
 done
@@ -95,63 +98,66 @@ done
 %_desktopdir/qasconfig.desktop
 %_iconsdir/hicolor/*/apps/qasconfig.*
 %_man1dir/qasconfig.1.*
-%_datadir/metainfo/qasconfig.appdata.xml
+%_datadir/metainfo/%app_id.qasconfig.appdata.xml
 
 %files -n qashctl
 %_bindir/qashctl
 %_desktopdir/qashctl.desktop
 %_iconsdir/hicolor/*/apps/qashctl.*
 %_man1dir/qashctl.1.*
-%_datadir/metainfo/qashctl.appdata.xml
+%_datadir/metainfo/%app_id.qashctl.appdata.xml
 
 %files -n qasmixer
 %_bindir/qasmixer
 %_desktopdir/qasmixer.desktop
 %_iconsdir/hicolor/*/apps/qasmixer.*
 %_man1dir/qasmixer.1.*
-%_datadir/metainfo/qasmixer.appdata.xml
+%_datadir/metainfo/%app_id.qasmixer.appdata.xml
 
 %changelog
+* Sat Jul 25 2026 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
+- Nev version 1.5.0.
+
 * Thu Feb 15 2024 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
-- nev version 1.4.0
+- Nev version 1.4.0.
 
 * Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
-- nev version 1.3.0
-- fix License
-- update URL
+- Nev version 1.3.0.
+- Fix License.
+- Update URL.
 
 * Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
-- new version 1.2.0
+- New version 1.2.0.
 
 * Tue Dec 12 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
-- new version 1.1.0
+- New version 1.1.0.
 
 * Wed Dec 06 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
-- Requires: qt6-svg for qasconfig, qashctl, qasmixer
+- Requires: qt6-svg for qasconfig, qashctl, qasmixer.
 
 * Tue Dec 05 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
-- New version 1.0.0
-- build with qt6
-- Requires: qt6-svg
+- New version 1.0.0.
+- Build with qt6.
+- Requires: qt6-svg.
 
 * Fri Aug 07 2020 Anton Midyukov <antohami@altlinux.org> 0.23.0-alt1
-- new version 0.23.0
+- New version 0.23.0.
 
 * Tue Nov 19 2019 Anton Midyukov <antohami@altlinux.org> 0.22.0-alt1
-- new version 0.22.0
+- New version 0.22.0.
 
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.21.0-alt5
-- NMU: remove rpm-build-ubt from BR:
+- NMU: remove rpm-build-ubt from BR.
 
 * Fri May 31 2019 Michael Shigorin <mike@altlinux.org> 0.21.0-alt4
-- Dropped %%ubt
-- Minor spec cleanup
+- Dropped %%ubt.
+- Minor spec cleanup.
 
-* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt3%ubt
-- Rebuilt for aarch64
+* Sat Jun 16 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt3
+- Rebuilt for aarch64.
 
-* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt2%ubt
-- Disabled tray icon at startup
+* Sun Jan 14 2018 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt2
+- Disabled tray icon at startup.
 
-* Thu Dec 21 2017 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt1%ubt
+* Thu Dec 21 2017 Anton Midyukov <antohami@altlinux.org> 0.21.0-alt1
 - Initial build for ALT Sisyphus.
