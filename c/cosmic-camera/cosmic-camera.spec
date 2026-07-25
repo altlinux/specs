@@ -3,14 +3,14 @@
 %define _name camera
 %define binary_name %_name
 %define rdn_name io.github.cosmic_utils.%_name
-%define ver_major 0.3
+%define ver_major 1.0
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: COSMIC Camera
@@ -69,6 +69,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Sat Jul 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
