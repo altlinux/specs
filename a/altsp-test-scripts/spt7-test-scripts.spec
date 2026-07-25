@@ -1,6 +1,6 @@
 Name: altsp-test-scripts
 Version: 1.1
-Release: alt6
+Release: alt7
 
 Summary: Test scripts for SP distros
 License: GPLv2+
@@ -37,6 +37,9 @@ cp sysconfig-s_rm %buildroot/etc/sysconfig/s_rm
 /etc/sysconfig/*
 
 %changelog
+* Sat Jul 25 2026 Denis Medvedev <nbr@altlinux.org> 1.1-alt7
+- fix build on gcc >17 
+
 * Thu May 11 2023 Denis Medvedev <nbr@altlinux.org> 1.1-alt6
 - added kubernetes test scripts
 
