@@ -3,7 +3,7 @@
 %def_with check
 
 Name: workrave
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Repetitive Strain Injury prevention tool
@@ -193,6 +193,9 @@ install -pDm 644 %name.1 %buildroot%_man1dir/%name.1
 %_datadir/xfce4/panel/plugins/workrave-xfce-applet.desktop
 
 %changelog
+* Sat Jul 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.11.1-alt1
+- New version 1.11.1.
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 - Enabled check.
