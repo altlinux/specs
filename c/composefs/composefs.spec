@@ -1,9 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %define lname libcomposefs
+%define sover 1
 
 Name: composefs
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Summary: Tools to handle creating and mounting composefs images
 
 License: (GPL-2.0-or-later OR Apache-2.0) AND (GPL-2.0-only OR Apache-2.0) AND LGPL-2.1-or-later
@@ -19,6 +20,9 @@ BuildRequires: meson
 BuildRequires: go-md2man
 BuildRequires: pkgconfig(fuse3) >= 3.10.0
 BuildRequires: pkgconfig(libcrypto)
+# used for tests
+BuildRequires: valgrind
+BuildRequires: libcap-devel
 
 %description
 Tools to handle creating and mounting composefs images. The composefs
@@ -31,18 +35,19 @@ Summary: Devel files for %name
 Group: Development/C
 
 Requires: %name = %EVR
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
 %description -n lib%name-devel
 Devel files for %name.
 
-%package -n lib%name
+%package -n lib%name%sover
 Group: System/Libraries
 Summary: Libraries files for %name
 
-%description -n lib%name
-Library files for %name.
+Obsoletes: lib%name <= 1.0.8-alt1
 
+%description -n lib%name%sover
+Library files for %name.
 %prep
 %setup
 %autopatch -p1
@@ -50,6 +55,9 @@ Library files for %name.
 %build
 %meson -Dfuse=enabled -Dman=enabled
 %meson_build
+
+%check
+%meson_test
 
 %install
 %meson_install
@@ -62,8 +70,9 @@ rm -v %buildroot%_libdir/libcomposefs*.a
 %_libdir/%lname.so
 %_pkgconfigdir/%name.pc
 
-%files -n %lname
-%_libdir/%lname.so.*
+%files -n %lname%sover
+%_libdir/%lname.so.%sover
+%_libdir/%lname.so.%sover.*
 
 %files
 /sbin/mount.composefs
@@ -74,6 +83,10 @@ rm -v %buildroot%_libdir/libcomposefs*.a
 %doc README.md
 
 %changelog
+* Sat Jul 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.8-alt2
+- Fixed inconsistency with Shared Libs Policy.
+- Enable tests.
+
 * Tue Dec 02 2025 Vladimir Romanov <rirusha@altlinux.org> 1.0.8-alt1
 - New version: 1.0.8.
 - Fix package license.
@@ -83,3 +96,4 @@ rm -v %buildroot%_libdir/libcomposefs*.a
 
 * Tue Dec 19 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.2-alt1
 - Initial build for ALT 
+
