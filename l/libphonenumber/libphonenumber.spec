@@ -1,12 +1,12 @@
 %define sover 9
-%def_disable boost
+%def_enable boost
 %def_enable check
 
 %define stdxx 17
 
 Name: libphonenumber
 Version: 9.0.35
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -19,6 +19,8 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 # link libgeocoding against libphonenumber
 Patch1: %name-8.13.4-alt-link.patch
 Patch2: %name-9.0.16-alt-fix-nostatic-build.patch
+# https://github.com/google/libphonenumber/pull/3903
+Patch10: %name-9.0.35-up-boost-1.89.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -50,6 +52,7 @@ developing applications that use %name.
 %setup -n %name-%version/cpp
 %patch1 -b .link
 %patch2 -b .static
+%{?_enable_boost:%patch10 -p2 -b .boost-1.89}
 
 %ifarch %e2k
 # the problematic warning actually sits in protobuf (-Winvalid-offsetof)
@@ -64,7 +67,7 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_STATIC_LIB=OFF \
     -DCMAKE_CXX_STANDARD=%stdxx \
-    -DUSE_BOOST=OFF
+    %{?_disable_boost:-DUSE_BOOST=OFF}
 %nil
 %cmake_build
 
@@ -86,6 +89,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Jul 25 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.35-alt1.2
+- enabled build with boost again
+
 * Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.35-alt1.1
 - rebuilt without boost
 

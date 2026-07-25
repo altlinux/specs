@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.3
+Version: 1.3.5
 Release: alt1
 
 Summary: Reader for AES SOFA files to get better HRTFs 
@@ -75,6 +75,9 @@ export ARGS="--rerun-failed --output-on-failure"
 %_libdir/cmake/mysofa/
 
 %changelog
+* Sat Jul 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
+- 1.3.5
+
 * Sun Oct 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
