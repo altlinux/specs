@@ -1,14 +1,14 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_without java
 
-%def_with qt5
-%if_without qt5
+%def_with qt6
+%if_without qt6
 %def_without qt
 %endif
 
 Name: zbar
 Version: 0.23.93
-Release: alt1
+Release: alt2
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -17,11 +17,12 @@ Group: Graphics
 License: GPLv2+
 Url: https://github.com/mchehab/zbar
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: glibc-devel-static libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
 
-%if_with qt5
-BuildRequires: qt5-x11extras-devel
+%if_with qt6
+BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6Gui) pkgconfig(Qt6Widgets)
 %endif
 
 %description
@@ -138,19 +139,19 @@ Summary: Bar code camera reader GTK3 aplication
 %description gtk
 %summary
 
-%if_with qt5
-%package qt5
+%if_with qt6
+%package qt6
 Group: Graphics
 Summary: Bar code camera reader Qt5 aplication
 
-%description qt5
+%description qt6
 %summary
 
-%package -n %libname-qt5
+%package -n %libname-qt6
 Group: Development/KDE and QT
 Summary: Bar code reader Qt5 widget
 
-%description -n %libname-qt5
+%description -n %libname-qt6
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -160,11 +161,11 @@ with a minimal memory footprint.
 This package contains a bar code scanning widget for use with GUI
 applications based on Qt5.
 
-%package -n %libname-qt5-devel
+%package -n %libname-qt6-devel
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget extra development files
 
-%description -n %libname-qt5-devel
+%description -n %libname-qt6-devel
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -175,11 +176,11 @@ This package contains header files and additional libraries used for
 developing GUI applications based on Qt5 that include a bar code
 scanning widget.
 
-%package -n %libname-qt5-devel-static
+%package -n %libname-qt6-devel-static
 Group: Development/KDE and QT
 Summary: Bar code reader Qt5 widget extra development files and static libraries
 
-%description -n %libname-qt5-devel-static
+%description -n %libname-qt6-devel-static
 Zbar is a library for scanning and decoding bar codes from various
 sources such as video streams, image files or raw intensity sensors.
 It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5. The
@@ -193,16 +194,14 @@ scanning widget.
 
 %prep
 %setup
-
-# TODO
-sed -i 's/gtk+-2.0/gtk+-3.0/' zbar-gtk.pc.in
+%patch0 -p1
 
 %build
 %autoreconf
 export LIBS=-lm
 %configure \
 	%{subst_with qt} \
-	%{subst_with qt5} \
+	%{subst_with qt6} \
 	%{subst_with java} \
 	--with-python=python3 \
 	--with-gtk=gtk3 \
@@ -212,14 +211,19 @@ export LIBS=-lm
 
 %install
 %make_install DESTDIR=%buildroot install
+rm -f %buildroot%python3_sitelibdir/*.la
+%find_lang %name
 
-%files
+%files -f %name.lang
 %_bindir/zbarimg
 %_bindir/zbarcam
 %_man1dir/*
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.linuxtv.Zbar.conf
 
 %files -n %libname
 %_libdir/%libname.so.*
+%doc %_docdir/%name/ABOUT-NLS
+%doc %_docdir/%name/COPYING
 %doc %_docdir/%name/[^H]*.md
 
 %files -n %libname-devel
@@ -229,7 +233,7 @@ export LIBS=-lm
 %_includedir/%name.h
 %_includedir/%name/*.h
 %exclude %_includedir/%name/*gtk.h
-%if_with qt5
+%if_with qt6
 %exclude %_includedir/%name/Q*
 %endif
 
@@ -253,23 +257,26 @@ export LIBS=-lm
 %files gtk
 %_bindir/*gtk
 
-%if_with qt5
-%files qt5
+%if_with qt6
+%files qt6
 %_bindir/*qt
 
-%files -n %libname-qt5
+%files -n %libname-qt6
 %_libdir/libzbarqt.so.*
 
-%files -n %libname-qt5-devel
+%files -n %libname-qt6-devel
 %_libdir/libzbarqt.so
 %_pkgconfigdir/zbar-qt.pc
 %_includedir/%name/Q*.h
 
-%files -n %libname-qt5-devel-static
+%files -n %libname-qt6-devel-static
 %_libdir/libzbarqt.a
 %endif
 
 %changelog
+* Tue Jul 21 2026 Anton Farygin <rider@altlinux.org> 0.23.93-alt2
+- Built with qt6 (closes: #59887).
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.23.93-alt1
 - Automatically updated to 0.23.93.
 
