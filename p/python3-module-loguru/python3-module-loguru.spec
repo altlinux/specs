@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.7.3
-Release: alt5
+Release: alt6
 Summary: Python logging made (stupidly) simple
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,7 @@ VCS: https://github.com/Delgan/loguru
 
 Source: %name-%version.tar
 Patch: alt-fix-tests-with-mypy.patch
+Patch1: alt-fix-typing-union-repr-python314.patch
 
 BuildArch: noarch
 
@@ -32,6 +33,7 @@ Loguru is a library which aims to bring enjoyable logging in Python.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -48,6 +50,9 @@ Loguru is a library which aims to bring enjoyable logging in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jul 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.3-alt6
+- Fixed exception formatting test with Python 3.14.
+
 * Wed Jun 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.3-alt5
 - Fixed tests with mypy 2.0.0.
 
