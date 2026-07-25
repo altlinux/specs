@@ -41,7 +41,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.31.0.11
+%define version 11.0.32.0.9
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -302,9 +302,9 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global securityver 31
+%global securityver 32
 %global minorver    0
-%global buildver    11
+%global buildver    9
 %global rpmrelease  1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -458,7 +458,7 @@ Source9: jconsole.desktop.in
 
 # Release notes
 # https://mail.openjdk.org/pipermail/jdk-updates-dev
-Source10: NEWS
+#Source10: NEWS
 
 # nss configuration file
 Source11: nss.cfg.in
@@ -1224,7 +1224,6 @@ fi
 # Install release notes
 commondocdir=${RPM_BUILD_ROOT}%{_defaultdocdir}/%{uniquejavadocdir}
 install -d -m 755 ${commondocdir}
-cp -a %{SOURCE10} ${commondocdir}
 
 # Install icons and menu entries
 for s in 16 24 32 48 ; do
@@ -1484,7 +1483,6 @@ fi
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue
 # all config/noreplace files (and more) have to be declared in pretrans. See pretrans
 %{_jvmdir}/%{sdkdir}/legal
-%doc %{_defaultdocdir}/%{uniquejavadocdir}/NEWS
 %dir %{_sysconfdir}/.java/.systemPrefs
 %dir %{_sysconfdir}/.java
 %dir %{_jvmdir}/%{sdkdir}
@@ -1768,6 +1766,12 @@ fi
 %endif
 
 %changelog
+* Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.32.0.9-alt1
+- New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
+  CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47057,
+  CVE-2026-47058, CVE-2026-47059, CVE-2026-47063, CVE-2026-60147).
+- Remove unsupported NEWS.
+
 * Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.31.0.11-alt1
 - New version (fixes: CVE-2026-22016, CVE-2026-34282, CVE-2026-22021,
   CVE-2026-22013, CVE-2026-23865, CVE-2026-22018, CVE-2026-22007,
