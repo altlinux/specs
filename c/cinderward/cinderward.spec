@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cinderward
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: A simple, no-nonsense, init-agnostic, Wayland-friendly GUI for firewalld
-License: BSD-3-clause
+License: BSD-3-Clause
 Group: System/Configuration/Networking
 Url: https://github.com/Nitrux/cinderward
 
@@ -38,6 +38,7 @@ Requires: firewalld
 
 %prep
 %setup
+sed -i "s/REQUIRED_MAUIKIT_VERSION 4.0.4/REQUIRED_MAUIKIT_VERSION 4.0.2/" CMakeLists.txt
 
 %build
 %cmake
@@ -52,6 +53,9 @@ Requires: firewalld
 %_desktopdir/org.nitrux.cinderward.desktop
 
 %changelog
+* Sat Jul 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.5-alt1
+- New version 0.0.5.
+
 * Tue May 19 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.4-alt1
 - New version 0.0.4.
 
