@@ -66,8 +66,8 @@
 %endif
 
 Name: blender
-Version: 4.5.11
-Release: alt3
+Version: 4.5.12
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -541,6 +541,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 4.5.12-alt1
+- 4.5.11 -> 4.5.12
+
 * Tue Jul 07 2026 Anton Farygin <rider@altlinux.org> 4.5.11-alt3
 - fixed build with Python 3.14 (guard removed RETURN_CONST opcode)
 - multi-thread Cycles kernel zstd compression to speed up the build
