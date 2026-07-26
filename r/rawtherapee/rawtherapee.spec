@@ -9,8 +9,8 @@
 %define xdg_name com.rawtherapee.RawTherapee
 
 Name: rawtherapee
-Version: 5.12%{?_enable_snapshot:.%git_distance}
-Release: alt1.1%(echo %beta| tr - .)
+Version: 5.13%{?_enable_snapshot:.%git_distance}
+Release: alt1%(echo %beta| tr - .)
 
 Summary: THe Experimental RAw Photo Editor
 License: GPL-3.0-or-later
@@ -46,7 +46,9 @@ BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
 BuildRequires: liblensfun1-devel
 # since 5.11
-BuildRequires: libraw-devel libjxl-devel
+BuildRequires: libjxl-devel
+# since 5.13
+BuildRequires: libfmt-devel
 
 %description
 Raw Therapee is a free RAW converter and digital photo processing software.
@@ -84,6 +86,8 @@ sed -i 's/default(none)//' rtengine/libraw/src/preprocessing/raw2image.cpp
 %define optflags -O%_optlevel -g
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+    -DWITH_SYSTEM_FMT=ON \
+    -DWITH_SYSTEM_LIBRAW=OFF \
     %{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
     %{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
 %cmake_build
@@ -96,16 +100,19 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %files
 %_bindir/%name
 %_bindir/%name-cli
+%_desktopdir/%name.desktop
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS.txt LICENSE RELEASE_NOTES.txt
 
 %files data
-%_desktopdir/%name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Jul 26 2026 Yuri N. Sedunov <aris@altlinux.org> 5.13-alt1
+- 5.13
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12-alt1.1
 - ilyakurdyukov@: fixed build for E2K
 
