@@ -1,6 +1,6 @@
 Name: libgpg-error
-Version: 1.47
-Release: alt1
+Version: 1.61
+Release: alt2
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -9,6 +9,7 @@ URL: https://www.gnupg.org/
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define sover 0
 
 %set_verify_elf_method strict
 
@@ -17,6 +18,7 @@ Source: %name-%version.tar
 Patch0: libgpg-error-1.29-multilib.patch
 Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
 Patch2: 0002-ALT-version-is-not-beta.patch
+Patch100: %name-%version.patch
 
 BuildRequires: makeinfo
 BuildRequires: gettext-tools
@@ -61,21 +63,14 @@ rm -f -- m4/po.m4 po/Makefile.in.in
 %install
 %makeinstall_std
 
-# relocate shared libraries from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/libgpg-error.so; do
-        t=$(readlink -v "$f")
-        ln -rsnf %buildroot/%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-
 %find_lang %name
 
 %check
 %make check
 
 %files -f %name.lang
-/%_lib/lib*.so.*
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 %_bindir/gpg-error
 %_datadir/libgpg-error/
 %doc AUTHORS NEWS README
@@ -93,6 +88,15 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man1dir/gpg-error-config.1*
 
 %changelog
+* Sat Jul 25 2026 Paul Wolneykien <manowar@altlinux.org> 1.61-alt2
+- Don't relocate shared libraries from %%_libdir/ to /%%_lib/.
+
+* Thu Jun 18 2026 Paul Wolneykien <manowar@altlinux.org> 1.61-alt1
+- New version 1.61.
+
+* Thu Jun 18 2026 Paul Wolneykien <manowar@altlinux.org> 1.60-alt1
+- Fresh up to v1.60.
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.47-alt1
 - New version (1.47).
 

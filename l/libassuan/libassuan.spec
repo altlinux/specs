@@ -1,32 +1,42 @@
 Name: libassuan
-Version: 2.5.6
-Release: alt1
+Version: 3.0.2
+Release: alt2
 
 Summary: IPC library used by some GnuPG related software
 License: GPL-3.0-or-later AND LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://www.gnupg.org/
+Vcs: https://github.com/gpg/libassuan.git
 
 Source: libassuan-%version.tar
 Patch1: 0001-Fix-LFS-on-32-bit-systems.patch
 Patch2: 0002-ALT-version-is-not-beta.patch
+Patch100: %name-%version.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define sover 9
 
 %set_verify_elf_method strict
 
 BuildRequires: pkgconfig(gpg-error)
 BuildRequires: makeinfo
 
+%description
+This is the IPC library used by GnuPG 2, GPGME and a few other packages.
+
+%package -n %name%sover
+Summary: IPC library used by some GnuPG related software
+Group: System/Libraries
+
+%description -n %name%sover
+This is the IPC library used by GnuPG 2, GPGME and a few other packages.
+
 %package devel
 Summary: Development files for the libassuan library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name%sover = %version-%release
 Conflicts: libassuan0-devel
-
-%description
-This is the IPC library used by GnuPG 2, GPGME and a few other packages.
 
 %description devel
 This package contains development files for the libassuan library.
@@ -57,9 +67,10 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %check
 %make_build check
 
-%files
+%files -n %name%sover
 %doc AUTHORS NEWS README
-%_libdir/lib*.so.*
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files devel
 %_bindir/libassuan-config
@@ -70,6 +81,15 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 26 2026 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt2
+- Provide SO versioned package.
+
+* Mon Jun 22 2026 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
+* Fri Jun 19 2026 Paul Wolneykien <manowar@altlinux.org> 3.0.1-alt1
+- Fresh up to v3.0.1.
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.5.6-alt1
 - New version (2.5.6).
 

@@ -1,19 +1,22 @@
 Name: libksba
-Version: 1.6.4
-Release: alt1
+Version: 1.8.0
+Release: alt2
 
 Group: System/Libraries
 Summary: X.509 library
 URL: https://www.gnupg.org/
+Vcs: https://github.com/gpg/libksba.git
 License: (LGPL-3.0-or-later OR GPL-2.0-or-later) AND GPL-3.0-or-later AND MIT
 
 Source0: %name-%version.tar
 Patch1: %{name}-info.patch
 Patch2: 0002-Fix-LFS-on-32-bit-systems.patch
 Patch3: 0003-ALT-version-is-not-beta.patch
+Patch100: %name-%version.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define sover 8
 
 %set_verify_elf_method strict
 
@@ -26,11 +29,20 @@ BuildRequires: makeinfo
 KSBA is a library designed to build software based
 on the X.509 and CMS protocols.
 
-%package -n %name-devel
+%package -n %name%sover
+Group: System/Libraries
+Summary: X.509 library
+
+%description -n %name%sover
+KSBA is a library designed to build software based
+on the X.509 and CMS protocols.
+
+%package devel
 Summary: Development files for the %name package
 Group: Development/Other
-Requires: %name = %version-%release
-%description -n %name-devel
+Requires: %name%sover = %version-%release
+
+%description devel
 Development files for the %name package
 
 %prep
@@ -56,9 +68,10 @@ EOF
 %check
 %make_build check
 
-%files
+%files -n %name%sover
 %doc AUTHORS NEWS README
-%_libdir/*.so.*
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files -n %name-devel
 %_bindir/ksba-config
@@ -69,6 +82,15 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Sun Jul 26 2026 Paul Wolneykien <manowar@altlinux.org> 1.8.0-alt2
+- Provide SO versioned package.
+
+* Mon Jun 22 2026 Paul Wolneykien <manowar@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
+* Fri Jun 19 2026 Paul Wolneykien <manowar@altlinux.org> 1.7.0-alt1
+- Fresh up to v1.7.0.
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 1.6.4-alt1
 - New version (1.6.4).
 

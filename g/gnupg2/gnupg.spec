@@ -1,11 +1,12 @@
 Name: gnupg2
-Version: 2.4.3
+Version: 2.5.20
 Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
 License: GPL-3.0-or-later
 Url: https://www.gnupg.org/
+Vcs: git://git.gnupg.org/gnupg.git
 
 Source0: %name-%version.tar
 Source1: gnupg-agent.sh
@@ -49,13 +50,13 @@ Patch0010: 0010-scd-Avoid-memory-leaks-and-uninitialized-memory.patch
 Patch0011: 0011-tools-Avoid-memory-leaks.patch
 Patch0012: 0012-scd-Use-the-same-allocator-to-free-memory.patch
 Patch0013: 0013-Revert-the-introduction-of-the-RFC4880bis-draft-into.patch
-Patch0014: 0014-gpg-Report-BEGIN_-status-before-examining-the-input.patch
 Patch0015: 0015-ALT-replace-xloadimage-by-xli.patch
 Patch0016: 0016-ALT-replace-gnupg-by-gnupg2-in-texinfo.patch
 Patch0017: 0017-SUSE-set-umask-before-open-outfile.patch
 Patch0018: 0018-gpg-Prefer-SHA-512-and-SHA-384-in-personal-digest-pr.patch
 Patch0019: 0019-ALT-disable-warning-about-development-mode.patch
-Patch0020: 0020-ALT-Disable-own-copy-of-xtryreallocarray.patch
+Patch0020: 0020-ALT-gpg2-hack.patch
+Patch100:  %name-%version.patch
 
 BuildRequires: libldap-devel
 BuildRequires: libreadline-devel
@@ -96,7 +97,6 @@ functionality up into several modules.
 	--disable-doc \
 	--disable-rpath \
 	--enable-g13 \
-	--enable-gpg-is-gpg2 \
 	--enable-large-secmem \
 	--enable-maintainer-mode \
 	--enable-symcryptrun \
@@ -119,7 +119,9 @@ rm -r -- \
 	%buildroot%_sbindir/applygnupgdefaults \
 	#
 
-mv %buildroot%_bindir/gpg{,2}split
+mv -v %buildroot%_bindir/gpg{,2}
+mv -v %buildroot%_bindir/gpgv{,2}
+mv -v %buildroot%_bindir/gpg{,2}split
 
 install -D -m 0644 doc/examples/gpgconf.conf %buildroot%_sysconfdir/gnupg/gpgconf.conf
 install -D -m 0644 doc/gnupg.info %buildroot%_infodir/gnupg.info
@@ -168,6 +170,8 @@ ln -s gpg bin/gpg2 # hack
 %_bindir/gpgv2
 %_bindir/kbxutil
 %_bindir/watchgnupg
+%_bindir/gpg-authcode-sign.sh
+%_bindir/gpg-mail-tube
 %_sbindir/g13-syshelp
 %attr(2711,root,_gnupg) %_bindir/gpg-agent
 %attr(2711,root,_gnupg) %_bindir/gpg2
@@ -183,7 +187,6 @@ ln -s gpg bin/gpg2 # hack
 %_libexecdir/gnupg/scdaemon
 %dir %_datadir/gnupg
 %_datadir/gnupg/distsigkey.gpg
-%_datadir/gnupg/sks-keyservers.netCA.pem
 %_datadir/gnupg/help*.txt
 %_infodir/*.info*
 %_man1dir/*
@@ -194,6 +197,9 @@ ln -s gpg bin/gpg2 # hack
 %doc tools/addgnupghome tools/applygnupgdefaults
 
 %changelog
+* Mon Jun 22 2026 Paul Wolneykien <manowar@altlinux.org> 2.5.20-alt1
+- Fresh up to v2.5.20.
+
 * Mon Aug 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.4.3-alt1
 - New version (2.4.3).
 - Remove systemd user unit files which have been dropped upstream.

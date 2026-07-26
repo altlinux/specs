@@ -3,16 +3,17 @@
 %def_disable gnutls
 
 Name: gnupg-pkcs11-scd
-Version: 0.9.2
-Release: alt8
+Version: 0.11.0
+Release: alt1
 
 Summary: A GnuPG PKCS#11 token daemon
 Group: System/Configuration/Hardware
 License: BSD
 Url: https://github.com/alonbl/gnupg-pkcs11-scd
+Vcs: https://github.com/alonbl/gnupg-pkcs11-scd
 
 Source: %name-%version.tar
-Patch0: %name-%version-gost.patch
+Patch0: %name-%version.patch
 
 %if_enabled LibreSSL
 BuildRequires: LibreSSL-devel
@@ -26,8 +27,6 @@ BuildRequires: libassuan-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgpg-error-devel
 BuildRequires: libpkcs11-helper-devel
-
-Requires: libpkcs11-helper(vko) >= 2.0.0
 
 %description
 gnupg-pkcs11 is a project to implement a BSD-licensed smart-card daemon to
@@ -59,6 +58,10 @@ we strongly disagree with WK\'s attitude towards it.
 %_man1dir/*.1.*
 
 %changelog
+* Fri Jul 10 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+- Drop GOST patches.
+
 * Wed Oct 16 2019 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt8
 - GOST 2012 NIDs, OIDs and PKCS#11 mechanisms.
 - Require libpkcs11-helper(vko) >= 2.0.0.

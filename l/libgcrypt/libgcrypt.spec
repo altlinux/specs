@@ -1,16 +1,18 @@
 Name: libgcrypt
-Version: 1.10.4
-Release: alt1
+Version: 1.12.2
+Release: alt3
 
 Group: System/Libraries
 Summary: The GNU crypto library
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-3.0-or-later
 Url: http://www.gnupg.org/
+Vcs: https://github.com/gpg/libgcrypt.git
 
 Source: %name-%version.tar
 
 Patch0: 0001-Fix-LFS-on-32-bit-systems.patch
 Patch1: 0002-Remove-unknown-suffix-from-version.patch
+Patch100: %name-%version.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -76,6 +78,7 @@ EOF
 %build
 %autoreconf
 
+export ac_cv_path_FGREP='/bin/grep -F'
 %configure \
     --enable-shared \
     --enable-noexecstack \
@@ -97,14 +100,6 @@ sed -i -e '/ HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS /d' config.h
 install -D -m0644 doc/gcrypt.info %buildroot%_infodir/gcrypt.info
 install -D -m0644 doc/hmac256.1 %buildroot%_man1dir/hmac256.1
 
-# relocate shared libraries from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/libgcrypt.so; do
-        t=$(readlink -v "$f")
-        ln -rsnf %buildroot/%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-
 %check
 %ifnarch aarch64
 %make check
@@ -117,7 +112,8 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man1dir/hmac256.*
 
 %files -n %soname
-/%_lib/%name.so.*
+%_libdir/%name.so.%soversion
+%_libdir/%name.so.%soversion.*
 %doc AUTHORS NEWS README
 
 %files devel
@@ -129,6 +125,18 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/*.info*
 
 %changelog
+* Mon Jun 22 2026 Paul Wolneykien <manowar@altlinux.org> 1.12.2-alt3
+- Do not relocate shared libraries from %_libdir/ to %_lib/.
+
+* Mon Jun 22 2026 Paul Wolneykien <manowar@altlinux.org> 1.12.2-alt2
+- Fix: Require /bin/grep -F for fgrep.
+
+* Thu Jun 18 2026 Paul Wolneykien <manowar@altlinux.org> 1.12.2-alt1
+- New version 1.12.2.
+
+* Thu Jun 18 2026 Paul Wolneykien <manowar@altlinux.org> 1.12.1-alt1
+- Fresh up tp v1.12.1.
+
 * Tue Apr 28 2026 Alexander Danilov <admsasha@altlinux.org> 1.10.4-alt1
 - New version 1.10.4 (fixes: CVE-2026-41989).
 
