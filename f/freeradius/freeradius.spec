@@ -3,7 +3,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 3.2.8
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -15,6 +15,7 @@ Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
 Source104: freeradius-tmpfiles
 Source105: freeradius-service
+Source106: freeradius-bootstrap-service
 
 Patch1: %name-%version-%release.patch
 
@@ -273,6 +274,7 @@ install -m 644 %SOURCE102 %buildroot%_logrotatedir/radiusd
 install -m 644 %SOURCE103 %buildroot%_sysconfdir/pam.d/radiusd
 install -m 644 %SOURCE104 %buildroot%_tmpfilesdir/radiusd.conf
 install -m 644 %SOURCE105 %buildroot%_unitdir/radiusd.service
+install -m 644 %SOURCE106 %buildroot%_unitdir/radiusd-bootstrap.service
 
 # remove unneeded stuff
 rm -f %buildroot%_sbindir/rc.radiusd
@@ -342,6 +344,7 @@ fi
 %config(noreplace) %_logrotatedir/radiusd
 %_initdir/radiusd
 %_unitdir/radiusd.service
+%_unitdir/radiusd-bootstrap.service
 %_tmpfilesdir/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
 # configs
@@ -363,9 +366,9 @@ fi
 #%dir %attr(750,root,radiusd) %_sysconfdir/raddb/sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/users
 %dir %attr(770,root,radiusd) %_sysconfdir/raddb/certs
-%_sysconfdir/raddb/certs/Makefile
+%attr(640,root,radiusd) %_sysconfdir/raddb/certs/Makefile
 %_sysconfdir/raddb/certs/README.md
-%_sysconfdir/raddb/certs/xpextensions
+%attr(640,root,radiusd) %_sysconfdir/raddb/certs/xpextensions
 %dir %attr(770,root,radiusd) %_sysconfdir/raddb/certs/realms
 %_sysconfdir/raddb/certs/realms/README.md
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/*.cnf
@@ -722,6 +725,12 @@ fi
 %_libdir/freeradius/rlm_kafka.so
 
 %changelog
+* Sun Jul 26 2026 Anton Midyukov <antohami@altlinux.org> 3.2.8-alt2
+- NMU:
+  + Fix permissions on Makefile for create certificate (Closes: 59929).
+  + Add bootstrap service to work around the file system write restriction on
+    the radiusd.service.
+
 * Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 3.2.8-alt1
 - 3.2.8
 - Add kafka subpackage.
