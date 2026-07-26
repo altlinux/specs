@@ -1,7 +1,7 @@
 %define module_name	 evdi
-%define module_version 1.14.14
+%define module_version 1.15.0
 %define stage %nil
-%define rel 30
+%define rel 48
 
 %ifarch x86_64
 %define dl_dir x64-ubuntu-1604
@@ -17,8 +17,8 @@
 %endif
 
 Name: displaylink-driver
-Version: 6.2.0
-Release: alt2.%rel
+Version: 6.3.0
+Release: alt1.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
 
@@ -141,6 +141,12 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Sun Jul 26 2026 L.A. Kostis <lakostis@altlinux.ru> 6.3.0-alt1.48
+- New release (6.3.0).
+
+* Sun Jul 26 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.0-alt3.30
+- evdi: updated to 1.15.0.
+
 * Sat Feb 21 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.0-alt2.30
 - evdi: updated to v1.14.14.
 
