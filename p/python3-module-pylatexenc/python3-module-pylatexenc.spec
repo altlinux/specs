@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.10
+Version: 2.11
 Release: alt1
 
 Summary: Simple LaTeX parser providing latex-to-unicode and unicode-to-latex conversion
@@ -55,5 +55,8 @@ latexwalker).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Jul 26 2026 Nikolay Strelkov <snk@altlinux.org> 2.11-alt1
+- New version 2.11.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 2.10-alt1
 - Initial build for Sisyphus
