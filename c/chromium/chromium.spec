@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        150.0.7871.181
+Version:        150.0.7871.186
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -724,6 +724,14 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sun Jul 26 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.186-alt1
+- New version (150.0.7871.186).
+- Fixes:
+  + CVE-2026-16807: Out of bounds write in Codecs
+  + CVE-2026-16806: Use after free in WebMCP
+  + CVE-2026-16805: Use after free in Blink
+  + CVE-2026-16804: Use after free in Input
+
 * Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 150.0.7871.181-alt1
 - New version (150.0.7871.181).
 - Fixes:
