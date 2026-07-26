@@ -3,8 +3,8 @@
 %define mod_name clickhouse_driver
 
 Name:       python3-module-%pypi_name
-Version:    0.2.10
-Release:    alt2
+Version: 0.2.11
+Release: alt1
 License:    MIT
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
@@ -44,6 +44,9 @@ find . -name "*.c" | xargs rm -fv
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Jul 26 2026 Anton Farygin <rider@altlinux.org> 0.2.11-alt1
+- 0.2.10 -> 0.2.11
+
 * Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 0.2.10-alt2
 - rebuilt against vandalism
 

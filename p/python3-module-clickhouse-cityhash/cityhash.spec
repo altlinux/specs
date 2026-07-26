@@ -2,8 +2,8 @@
 %define oname clickhouse-cityhash
 
 
-Name:       python3-module-%oname
-Version: 1.0.2.5
+Name: python3-module-%oname
+Version: 1.0.2.6
 Release: alt1
 
 License:    %mit
@@ -12,7 +12,7 @@ Summary:    Python bindings for CityHash
 
 Url:        https://github.com/xzkostyan/python-cityhash
 Source:     %name-%version.tar
-Patch1:     0001-Fix-building-with-Python-3.13.patch
+Patch0:	    0001-python3-module-clickhouse-cityhash-1.0.2.6post1-upstream-version-fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -42,7 +42,7 @@ Package contains tests for %name.
 
 %prep
 %setup
-%patch1 -p1
+%patch0 -p1
 
 %build
 %python3_build
@@ -63,6 +63,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_cityhash/
 
 
 %changelog
+* Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 1.0.2.6-alt1
+- 1.0.2.5 -> 1.0.2.6
+
 * Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 1.0.2.5-alt1
 - 1.0.2.4 -> 1.0.2.5
 
