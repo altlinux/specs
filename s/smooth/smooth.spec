@@ -6,7 +6,7 @@
 
 Name: smooth
 Version: 0.9.10
-Release: alt2.gitce140ab9
+Release: alt3.git65e9aeed
 
 Summary: The smooth Class Library
 
@@ -14,8 +14,6 @@ License: Artistic-2.0
 Group: System/Libraries
 URL: http://www.smooth-project.org
 VCS: https://github.com/enzo1982/smooth
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -82,6 +80,9 @@ export OBJCXXFLAGS="$CFLAGS"
 %_libdir/*.so
 
 %changelog
+* Sat Jul 25 2026 Alexander Kovalev <alexvk@altlinux.org> 0.9.10-alt3.git65e9aeed
+- Update to git 65e9aeed.
+
 * Sun Jan 25 2026 Alexander Kovalev <alexvk@altlinux.org> 0.9.10-alt2.gitce140ab9
 - Update to git ce140ab9.
 

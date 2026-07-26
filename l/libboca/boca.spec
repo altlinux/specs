@@ -1,8 +1,12 @@
+%ifarch %ix86
+%global optflags_lto %nil
+%endif
+
 %define oname boca
 
 Name: lib%oname
 Version: 1.0.7
-Release: alt2.gitd98a4875
+Release: alt3.git5d0de9f4
 
 Summary: A component library used by the fre:ac audio converter
 
@@ -10,8 +14,6 @@ License: GPL-2.0
 Group: System/Libraries
 URL: https://www.freac.org
 VCS: https://github.com/enzo1982/BoCA
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -66,6 +68,9 @@ export OBJCXXFLAGS="$CFLAGS"
 %_libdir/*.so
 
 %changelog
+* Sun Jul 26 2026 Alexander Kovalev <alexvk@altlinux.org> 1.0.7-alt3.git5d0de9f4
+- Update to git 5d0de9f4.
+
 * Sun Jan 25 2026 Alexander Kovalev <alexvk@altlinux.org> 1.0.7-alt2.gitd98a4875
 - Update to git d98a4875.
 
