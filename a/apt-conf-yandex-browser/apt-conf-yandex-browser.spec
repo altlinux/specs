@@ -1,6 +1,6 @@
 Name: apt-conf-yandex-browser
 Version: 1.0
-Release: alt3
+Release: alt4
 
 Summary: Official repository of Yandex Browser
 License: Public-Domain
@@ -33,6 +33,9 @@ install -Dpm0644 yandex-browser.asc %buildroot%_datadir/pki/apt-gpg/sources/yand
 %_datadir/pki/apt-gpg/sources/yandex-browser.asc
 
 %changelog
+* Sun Jul 26 2026 Nazarov Denis <nenderus@altlinux.org> 1.0-alt4
+- Compatible vendor file with official repository
+
 * Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 1.0-alt3
 - Require ffmpeg-plugin-yandex-browser (separate package)
 
