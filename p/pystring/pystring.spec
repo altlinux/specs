@@ -2,7 +2,7 @@
 %define soname 0.0
 
 Name: pystring
-Version: 1.1.5
+Version: 1.2.0
 Release: alt1
 Summary: C++ functions matching the interface and behavior of python string methods with std::string
 License: BSD-3-Clause
@@ -109,6 +109,9 @@ popd
 %_includedir/*
 
 %changelog
+* Sun Jul 26 2026 Anton Farygin <rider@altlinux.org> 1.2.0-alt1
+- 1.1.5 -> 1.2.0
+
 * Mon Apr 13 2026 Anton Farygin <rider@altlinux.org> 1.1.5-alt1
 - 1.1.4 -> 1.1.5
 
