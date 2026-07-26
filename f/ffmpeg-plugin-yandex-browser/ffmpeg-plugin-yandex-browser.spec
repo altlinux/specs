@@ -173,7 +173,7 @@
 %endif
 
 Name:		ffmpeg-plugin-yandex-browser
-Version:	142
+Version:	146
 Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in Yandex Browser
@@ -721,6 +721,9 @@ tests/checkasm/checkasm
 %_libdir/yandex/browser/libffmpeg.so
 
 %changelog
+* Sun Jul 26 2026 Nazarov Denis <nenderus@altlinux.org> 146-alt1
+- new version
+
 * Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 142-alt1
 - build for yandex browser from official repo
 
