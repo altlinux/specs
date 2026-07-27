@@ -1,5 +1,5 @@
 Name: neocmakelsp
-Version: 0.10.4
+Version: 0.11.0
 Release: alt1
 
 Summary: CMake LSP implementation
@@ -37,6 +37,9 @@ install -pm0755 -D target/release/neocmakelsp \
 %_bindir/neocmakelsp
 
 %changelog
+* Mon Jul 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.11.0-alt1
+- 0.11.0 released
+
 * Mon Jul 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.4-alt1
 - 0.10.4 released
 
