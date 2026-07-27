@@ -4,7 +4,7 @@
 
 Name: xdg-user-dirs
 Version: 0.19
-Release: alt1
+Release: alt2
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
@@ -29,8 +29,10 @@ homedirectory based on the defaults configured by the administrator.
 %patch1 -p2
 %patch2 -p1
 
-%build
+export ACLOCAL_PATH=%_datadir/gettext/m4
 %autoreconf
+
+%build
 %configure
 %make_build
 
@@ -79,6 +81,9 @@ fi
 %_man5dir/*user-dir*
 
 %changelog
+* Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.19-alt2
+- fix to build with new gettext
+
 * Fri Mar 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.19-alt1
 - new version
 
