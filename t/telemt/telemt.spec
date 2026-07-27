@@ -1,5 +1,5 @@
 Name: telemt
-Version: 3.4.22
+Version: 3.4.24
 Release: alt1
 
 Summary: MTProxy for Telegram on Rust + Tokio
@@ -60,6 +60,9 @@ install -Dm0644 %{SOURCE3} %buildroot%_unitdir/%name.service
 %doc README.md docs/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.24-alt1
+- new version 3.4.24
+
 * Sun Jul 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.22-alt1
 - new version 3.4.22
 - fix License field to match upstream (TELEMT LICENSE 3.3)
