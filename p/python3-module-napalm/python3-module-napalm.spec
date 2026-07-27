@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.0.0
-Release: alt2
+Version: 5.1.0
+Release: alt1
 
 Summary: Network Automation and Programmability Abstraction Layer with Multivendor support
 License: Apache-2.0
@@ -69,6 +69,9 @@ rm -fr test/junos/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 27 2026 Alexander Burmatov <thatman@altlinux.org> 5.1.0-alt1
+- New 5.1.0 version.
+
 * Fri Oct 17 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
 - Fixed FTBFS.
 

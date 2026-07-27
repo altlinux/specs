@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: Multi-vendor library to simplify Paramiko SSH connections to network devices
@@ -15,6 +15,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-poetry
+
+Provides: python3(%pypi_name._telnetlib)
 
 BuildArch: noarch
 
@@ -48,6 +50,9 @@ sed -i 's|from typing.re import Pattern|from typing import Pattern|' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jul 25 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
+- New 4.7.0 version.
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 
