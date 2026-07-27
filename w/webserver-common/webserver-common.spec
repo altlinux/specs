@@ -5,7 +5,7 @@
 #%%define branch_switch Mxx
 
 Name: webserver-common
-Version: 1.4
+Version: 1.5
 Release: %branch_release alt1
 
 Summary: Common resources for the Web srvers
@@ -25,7 +25,7 @@ Source3: webserver-uploadsdir.control
 # include webserver-rpm-macros.spec.inc
 %include %SOURCE2
 
-PreReq: %name-control >= 1.4
+Requires(pre,postun): %name-control >= 1.4
 
 Provides: %webserver_datadir
 Provides: %webserver_htdocsdir
@@ -64,7 +64,7 @@ Summary: Control scripts for the Web srvers common resources
 Summary(ru_RU.KOI8-R): Скрипты control для ресурсов Web серверов 
 Group: System/Servers
 
-PreReq: %_controldir
+Requires(pre,postun): %_controldir
 
 %description control
 The package is the control scripts for Web servers common resources.
@@ -115,6 +115,7 @@ sed -e 's|@webserver_uploadsdir@|%webserver_uploadsdir|g' \
 	-e 's|@webserver_group@|%webserver_group|g' \
 	-e 's|@webserver_webmaster@|%webserver_webmaster|g' \
 	%SOURCE3 > webserver-uploadsdir.control
+echo "D /run/webserver 1775 root %webserver_group -" > tmpfiles.conf
 
 %install
 
@@ -127,6 +128,8 @@ install -d -m755 %buildroot%webserver_iconssmalldir/
 install -d -m755 %buildroot%webserver_vhostdir/
 install -d -m755 %buildroot%webserver_webappsdir/
 install -d -m755 %buildroot%webserver_uploadsdir/
+
+install -D tmpfiles.conf %buildroot%_tmpfilesdir/webserver.conf
 
 install -pD -m644 %SOURCE1 %buildroot%webserver_iconsdir/
 
@@ -171,6 +174,7 @@ EOF
 %_rpmlibdir/%name-files.req.list
 
 %files
+%_tmpfilesdir/webserver.conf
 %attr(-,root,%webserver_webmaster) %dir %webserver_datadir/
 %attr(2775,root,%webserver_webmaster) %dir %webserver_htdocsdir/
 %attr(2771,root,%webserver_webmaster) %dir %webserver_htdocsaddondir/
@@ -184,6 +188,9 @@ EOF
 %webserver_iconsdir/altlinux.png
 
 %changelog
+* Fri Jul 24 2026 Fr. Br. George <george@altlinux.org> 1.5-alt1
+- Add group writeable /run/webserver tmpfiles directory for non-root sockets
+
 * Tue Oct 12 2010 Aleksey Avdeev <solo@altlinux.ru> 1.4-alt1
 - Add %%webserver_uploadsdir dir
 - Add build %%name-control subpackage
