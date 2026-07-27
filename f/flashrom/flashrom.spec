@@ -2,7 +2,7 @@
 
 Name: flashrom
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Universal flash programming utility
 License: GPLv2
@@ -13,7 +13,8 @@ Vcs: https://review.coreboot.org/flashrom
 
 Source0: %name-%version.tar
 Source1: flashboot.sh
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: %name-alt-no-strnlen-check.patch
 
 BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-devel
 BuildRequires: libjaylink-devel libcmocka-devel libpci-devel
@@ -97,7 +98,7 @@ Bash completion for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 echo "VERSION = %version" >versioninfo.inc
@@ -153,6 +154,9 @@ echo "options spidev bufsiz=64" > %buildroot%_sysconfdir/modprobe.d/spidev.conf
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt2
+- Fix FTBFS with recent glibc.
+
 * Fri May 15 2026 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt1
 - 1.7.0.
 
