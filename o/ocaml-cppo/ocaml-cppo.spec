@@ -1,13 +1,20 @@
+%ifarch %ix86
+%def_disable check
+%else
+%def_enable check
+%endif
+
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
 Version: 1.8.0
-Release: alt2
+Release: alt4
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
 Url: https://github.com/mjambon/cppo 
 VCS: https://github.com/mjambon/cppo 
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune ocaml ocaml-ocamlbuild-devel ocaml-findlib-devel
 
 %description
@@ -39,7 +46,8 @@ The %name-ocamlbuild-devel package contains libraries and signature files for
 developing applications that use %name-ocamlbuild.
 
 %prep
-%setup 
+%setup
+%patch0 -p1
 
 %build
 %dune_build --release @install
@@ -63,6 +71,12 @@ developing applications that use %name-ocamlbuild.
 %exclude %_libdir/ocaml/cppo/dune-package
 
 %changelog
+* Mon Jul 27 2026 Anton Farygin <rider@altlinux.org> 1.8.0-alt4
+- applied fix from upstream against dune 3.24
+
+* Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 1.8.0-alt3
+- disabled check on 32-bit x86
+
 * Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 
