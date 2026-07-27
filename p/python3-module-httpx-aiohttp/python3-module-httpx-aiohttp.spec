@@ -7,7 +7,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.1.12
+Version: 0.2.0
 Release: alt1
 
 Summary: aiohttp-powered httpx client
@@ -61,5 +61,8 @@ aiohttp.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt1
+- Updated to 0.2.0.
+
 * Thu Mar 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.12-alt1
 - Packaged for ALT Sisyphus.
