@@ -1,7 +1,7 @@
 %define modulename pyrsistent
 
 Name: python3-module-pyrsistent
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: Persistent/Functional/Immutable data structures
@@ -10,7 +10,7 @@ Url: https://github.com/tobgu/pyrsistent/
 License: MIT
 Group: Development/Python3
 
-# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
+# Source-url: https://github.com/tobgu/pyrsistent.git
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
@@ -39,6 +39,9 @@ rm -rf %buildroot%python3_sitelibdir/integration/
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
+- new version 0.21.0
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt1
 - new version 0.20.0 (with rpmrb script)
 
