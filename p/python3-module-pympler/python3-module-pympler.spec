@@ -2,7 +2,7 @@
 
 %define modulename pympler
 Name: python3-module-pympler
-Version: 1.0.1
+Version: 1.1
 Release: alt1
 
 Summary: A development tool to measure, monitor and analyze the memory behavior of Python objects
@@ -13,7 +13,7 @@ Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %__pypi_url Pympler
+# Source-url: %__pypi_url pympler
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -54,6 +54,9 @@ Pympler is written entirely in Python, with no dependencies to external librarie
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- new version 1.1
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - initial build for ALT Sisyphus
 
