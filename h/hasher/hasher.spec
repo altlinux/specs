@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -70,6 +70,10 @@ fi
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Mon Jul 27 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.6-alt1
+- Packaged hsh-update-resolver-conf utility (fixes regression from
+  1.7.5 release).
+
 * Thu Jul 23 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.5-alt1
 - hsh-update-resolver-conf: added a new utility.
 - hsh-mkchroot: dropped busybox support.
