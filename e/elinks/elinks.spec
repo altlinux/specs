@@ -3,7 +3,7 @@
 %def_with doc
 
 Name: elinks
-Version: 0.19.1
+Version: 0.20.0
 Release: alt1
 
 Summary: Lynx-like text WWW browser with many features
@@ -134,6 +134,9 @@ echo '<html><body>TEST</body></html>' | %buildroot%_bindir/elinks -no-numbering 
 %endif
 
 %changelog
+* Mon Jul 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt1
+- 0.19.1 -> 0.20.0
+
 * Sun Jul 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.19.1-alt1
 - 0.15.1 -> 0.19.1
 - drop old patchs
