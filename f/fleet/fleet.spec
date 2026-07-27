@@ -1,6 +1,10 @@
+# XXX: Fill actual one from tag hash commit.
+%define FullCommit 89b1cb51fdaa7a95a5e97dcdbb2413bb4c74ee16
+%define branch sisyphus
+
 %global import_path github.com/fleetdm/fleet
 Name:     fleet
-Version:  4.84.0
+Version:  4.89.2
 Release:  alt1
 
 Summary:  Open-source platform for IT, security, and infrastructure teams
@@ -33,6 +37,12 @@ export GOPATH="$BUILDDIR:%go_path"
 
 cd .build/src/%import_path
 export LDFLAGS="$LDFLAGS -X github.com/kolide/kit/version.version=%version"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.appName=%name"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.version=%version"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.branch=%branch"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.revision=%FullCommit"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.buildDate=$(date --rfc-3339=date)"
+export LDFLAGS="$LDFLAGS -X github.com/fleetdm/fleet/v4/server/version.buildUser=$USER"
 %golang_build cmd/fleet cmd/fleetctl
 
 %install
@@ -46,6 +56,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Mon Jul 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.89.2-alt1
+- New version (Closes: #58993).
+
 * Tue Apr 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.84.0-alt1
 - New version.
 
