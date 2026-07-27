@@ -1,5 +1,5 @@
 Name:    espanso
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: A Privacy-first, Cross-platform Text Expander
@@ -141,5 +141,8 @@ install -Dm 644 espanso-wayland.service %buildroot%_userunitdir/espanso-wayland.
 %systemd_user_preun espanso-wayland.service
 
 %changelog
+* Mon Jul 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Tue Jul 14 2026 Sergey Palcheh <minergenon@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus
