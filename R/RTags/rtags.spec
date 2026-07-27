@@ -1,5 +1,5 @@
 Name: RTags
-Version: 2.44
+Version: 2.46
 Release: alt1
 
 Summary: Cross-reference client/server tool for C/C++
@@ -37,6 +37,9 @@ export CXX=clang++
 %_man7dir/rdm.7*
 
 %changelog
+* Mon Jul 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.46-alt1
+- 2.46 released
+
 * Mon Feb 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.44-alt1
 - 2.44 released
 
