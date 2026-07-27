@@ -1,8 +1,8 @@
 Name: sendmail
 
-%define tarbolversion 8.18.1
+%define tarbolversion 8.18.2
 
-Version: 8.18.1
+Version: 8.18.2
 Release: alt1
 
 Summary: A widely used Mail Transport Agent (MTA)
@@ -495,6 +495,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.2-alt1
+- NMU:
+  + New version 8.18.2 (to fix FTBFS with gcc15 and #59051).
+
 * Sat Oct 19 2024 Sergey Y. Afonin <asy@altlinux.org> 8.18.1-alt1
 - New version
 - updated BODY_7BIT_IGNORED-srvrsmtp.c.patch for 8.18.1

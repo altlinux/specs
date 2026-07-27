@@ -2,12 +2,13 @@
 
 Name: milter-greylist
 Version: 4.6.4
-Release: alt2
+Release: alt3
 Group: System/Servers
 License: BSD-3-Clause
 Summary: GreyList milter for milter-capable MTA
 Source0: ftp://ftp.espci.fr/pub/milter-greylist/%name-%version.tar
 Source1: %name.init.alt
+Source2: %name.systemd.service
 Patch0: %name.alt.patch
 Url: http://hcpnet.free.fr/milter-greylist/
 
@@ -77,6 +78,8 @@ mkdir -p %buildroot%_sysconfdir/{mail,sysconfig}
 mkdir -p %buildroot%_localstatedir/milter-greylist
 
 install -m 755 %SOURCE1 %buildroot%_initdir/milter-greylist
+install -D -p -m 0644 %SOURCE2 %buildroot%_unitdir/milter-greylist.service
+
 %if_disabled postfix
 mkdir -p %buildroot%_datadir/sendmail-cf/feature
 install -m 644 milter-greylist.m4 %buildroot%_datadir/sendmail-cf/feature/milter-greylist.m4
@@ -132,6 +135,7 @@ fi
 %config (noreplace) %_sysconfdir/mail/greylist.conf
 %config (noreplace) %_sysconfdir/sysconfig/%name
 %_initdir/%name
+%_unitdir/%name.service
 %_sbindir/%name
 %_man5dir/*
 %_man8dir/*
@@ -144,6 +148,9 @@ fi
 %attr(0600,%user,root) %ghost %_localstatedir/milter-greylist/greylist.db
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 4.6.4-alt3
+- Added systemd unit.
+
 * Tue Feb 15 2022 L.A. Kostis <lakostis@altlinux.ru> 4.6.4-alt2
 - init: fix socket permissions.
 - alt.patch: use postfix group by default.
