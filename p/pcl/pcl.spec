@@ -1,6 +1,6 @@
 Name:    pcl
 Version: 1.15.1
-Release: alt2
+Release: alt3
 
 Summary: Point Cloud Library (PCL)
 License: BSD-3-Clause
@@ -14,6 +14,7 @@ Patch1: system-gtest.patch
 Patch2: cuda-io-pkgconfig-no-openni.patch
 Patch3: cloud-composer-export-symbols.patch
 Patch4: pcl-config-fixes.patch
+Patch5: boost-system-header-only.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ gcc14-c++
@@ -78,6 +79,7 @@ Library.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Workaround: CUDA 12.9 CCCL _CCCL_PP_SPLICE_WITH_IMPL1 macro
 # has only 2 args (SEP, P1) but is called with 3 in some expansion
@@ -133,6 +135,7 @@ export CUDA_PATH=%_prefix
   -DCMAKE_CUDA_COMPILER=%_bindir/nvcc \
   -DCMAKE_CUDA_HOST_COMPILER=%_bindir/g++-14 \
   -DCUDAToolkit_ROOT=%_prefix \
+  -DBoost_USE_DEBUG_RUNTIME=OFF \
   -Wno-dev
 
 %cmake_build
@@ -196,6 +199,16 @@ ${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 %doc %_cmake__builddir/doc/advanced/advanced
 
 %changelog
+* Mon Jul 27 2026 Sergey Palcheh <minergenon@altlinux.org> 1.15.1-alt3
+- fix configure with boost 1.91: VTK config (built against boost 1.86) falls
+  back to module-mode FindBoost, which poisons Boost_USE_DEBUG_RUNTIME=TRUE
+  and makes all compiled boost components unusable for later config-mode
+  find_package(Boost); pass -DBoost_USE_DEBUG_RUNTIME=OFF
+- add boost-system-header-only.patch: Boost.System is header-only since 1.69
+  and ALT boost packaging ships no boost_system CMake config, so drop
+  Boost::system from pcl_outofcore link libraries and from the boost module
+  list exported to downstream PCLConfig.cmake
+
 * Sun Jul 12 2026 Sergey Palcheh <minergenon@altlinux.org> 1.15.1-alt2
 - extend eigen3-version-compat.patch: also drop hardcoded Eigen3 3.3 requirement
   in PCLConfig.cmake.in so downstream packages work with newer Eigen3
