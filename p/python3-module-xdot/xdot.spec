@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4
-Release: alt1.1
+Version: 1.6
+Release: alt1
 Summary: Interactive viewer for Graphviz dot files
 License: LGPLv3
 Group: Development/Python3
@@ -60,6 +60,9 @@ or as a library embedded in your Python application.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt1
+- new version 1.6
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.4-alt1.1
 - Demodernized packaging.
 
