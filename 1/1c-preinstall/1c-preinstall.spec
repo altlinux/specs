@@ -1,9 +1,9 @@
-%define tested_version 8.3.27.1688
+%define tested_version 8.5.1.1302
 %define ftrigger 1c.filetrigger
 
 Name:    1c-preinstall
-Version: 8.3
-Release: alt25
+Version: 8.5
+Release: alt1
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -47,7 +47,6 @@ Requires: libGL
 Requires: libGLU
 Requires: libglvnd
 Requires: libGLX
-Requires: libgpg-error
 Requires: libgraphite2
 Requires: libgst-plugins1.0
 Requires: libgstreamer1.0
@@ -77,6 +76,7 @@ Requires: libuuid
 Requires: libwayland-client
 Requires: libwayland-cursor
 Requires: libwayland-egl
+Requires: libwebkit2gtk
 Requires: libwxGTK3.2-gl
 Requires: libX11
 Requires: libXau
@@ -124,6 +124,11 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Mon Jul 27 2026 Pavel Isopenko <pauli@altlinux.org> 8.5-alt1
+- new version 8.5
+- plus libwebkit2gtk
+- minus libgpg-error
+
 * Tue Oct 21 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt25
 - minus libdatrie
 
