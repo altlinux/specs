@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.0.2
+Version: 8.1.0
 Release: alt1
 
 Summary: Instrument your FastAPI with Prometheus metrics
@@ -61,6 +61,9 @@ sed -i '/HELP process_cpu_seconds_total/d' tests/test_instrumentation.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 27 2026 Anton Zhukharev <ancieg@altlinux.org> 8.1.0-alt1
+- Updated to 8.1.0.
+
 * Wed Jun 24 2026 Anton Zhukharev <ancieg@altlinux.org> 8.0.2-alt1
 - Updated to 8.0.2.
 
