@@ -1,5 +1,5 @@
 Name:     leaf
-Version:  1.25.0
+Version:  1.26.2
 Release:  alt1
 
 Summary:  Terminal Markdown previewer with GUI-like experience
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-rust
 leaf lets you read Markdown files directly in the terminal with a clean, focused interface. Designed for developers, CLI users, and AI-assisted workflows.
 
 %description -l ru_RU.UTF-8
-leaf позволяет просматривать файлы Markdown непосредственно в терминале, предоставляя простой интерфейс. Создан для разработчиков, пользователей командной строки и интеграци с ИИ.
+leaf позволяет просматривать файлы Markdown непосредственно в терминале, предоставляя простой интерфейс. Создан для разработчиков, пользователей командной строки и для интеграции с ИИ.
 
 
 %prep
@@ -47,6 +47,9 @@ install -p -m 0644 completions/%name.bash %buildroot%_sysconfdir/bash_completion
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Tue Jul 28 2026 Alexei Mezin <alexvm@altlinux.org> 1.26.2-alt1
+- New version
+
 * Fri Jul 03 2026 Alexei Mezin <alexvm@altlinux.org> 1.25.0-alt1
 - New version
 
