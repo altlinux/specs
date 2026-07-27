@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.212
+Version: 4.0.4.213
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -40,7 +40,7 @@ Requires: bison
 Requires: bzip2 >= 1:1.0.2-alt4
 Requires: coreutils
 Requires: cpio
-Requires: elfutils >= 0.143-alt1
+Requires: elfutils >= 0.177-alt1
 Requires: gcc
 Requires: gettext-tools
 Requires: glibc-devel
@@ -454,6 +454,19 @@ fi
 %files checkinstall
 
 %changelog
+* Thu Jul 09 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.213-alt1
+- glebfm@:
+  + is_elf_so_executable: Started explicitly considering static PIE as executable.
+  + is_elf_so_executable: Dropped ancient workaround for x86_64 dynamic linker.
+- mike@:
+  + Merged various portability fixes for e2k by at@, mike@ and bircoph@ upstream.
+- radiolamp@:
+  + Got rid of hardcoded /usr where applicable.
+    + Added RPM_PREFIX fallback (defaults to /usr) to brp-*, fixup-* and verify-* scripts.
+    + Replaced hardcoded /usr paths with RPM macros in platform.in and macros.in.
+    + Enabled non-/usr prefix builds while maintaining backward compatibility.
+- The -frecord-gcc-switches option is now more portably passed down to $CC.
+
 * Thu Jun 11 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.212-alt1
 - Fixed ocaml.prov and other externally packaged find-provides methods.
 - Added an env var to override %%_rpmlibdir location.
@@ -2414,7 +2427,7 @@ fi
 - pam.req: implemented include control directive support.
 - brp-cleanup: PAM configuration policy enforcement.
 - Updated README.ALT-ru_RU.KOI8-R.
-  
+
 * Fri May 09 2003 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt19
 - Reduced amount of rpm subpackage dependencies.
 - Moved update-alternatives to separate package.
@@ -2613,8 +2626,8 @@ fi
 - Merged patches from Ivan Zakharyaschev:
   - Fixed a pair of swapped function dscriptions.
   - Fixed a pair of segfaults in query format parser.
-  - Added a pair of new things to the query format: 
-    the '>'-test, ':nothing' format variant and 
+  - Added a pair of new things to the query format:
+    the '>'-test, ':nothing' format variant and
     implemented '-q --changes-since=<e:v-r>' upon them (docs added).
 
 * Thu Jun 13 2002 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt0.7
@@ -2641,7 +2654,7 @@ fi
     by %%_build_display and %%_build_xauthority;
   + unset CCACHE_CC and CCACHE_DIR unless explicitly redefined
     by %%__ccache_cc and %%__ccache_dir (ab).
-  
+
 * Mon Apr 22 2002 Dmitry V. Levin <ldv@alt-linux.org> 4.0.4-alt0.6
 - Updated code to snapshot 2002-04-19 of 4_0 branch.
 
