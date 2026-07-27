@@ -1,7 +1,7 @@
 %define soname 11
 
 Name: netpbm
-Version: 10.86.49
+Version: 10.86.50
 Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
@@ -161,6 +161,9 @@ test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 %endif
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.50-alt1
+- 10.86.50.
+
 * Mon May 11 2026 L.A. Kostis <lakostis@altlinux.ru> 10.86.49-alt1
 - 10.86.49.
 
