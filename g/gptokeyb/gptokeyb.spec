@@ -1,6 +1,6 @@
 Name:    gptokeyb
 Version: 0.2.9
-Release: alt7.gitb85b098
+Release: alt8.gitb85b098
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
 License: GPLv2
@@ -74,6 +74,9 @@ install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
 %_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Mon Jul 27 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt8.gitb85b098
+- Add GameMT E6Plus support
+
 * Wed Apr 15 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt7.gitb85b098
 - Disable packaging /usr/lib/systemd/system-preset directory
 - Remove unneded preset file (closes #58747)
