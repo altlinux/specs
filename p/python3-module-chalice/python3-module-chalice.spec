@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.32.0
+Version: 1.33.0
 Release: alt1
 
 Summary: Python Serverless Microframework for AWS
@@ -70,6 +70,9 @@ quickly create and deploy applications that use AWS Lambda.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 1.33.0-alt1
+- New 1.33.0 version.
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.32.0-alt1
 - New 1.32.0 version.
 

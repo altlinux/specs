@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.9.5
-Release: alt2
+Version: 0.10.1
+Release: alt1
 
 Summary: Template Text Parser
 License: MIT
@@ -30,15 +30,13 @@ BuildRequires: python3-module-cerberus
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch1: fix-broken-tests.patch
 
 %description
 TTP is a Python library for semi-structured text parsing using templates.
 
 %prep
 %setup -n %pypi_name-%version
-rm -f ttp/utils/load_python_exec_py2.py
-%patch1 -p1
+sed -i 's/version = "0.10.0"/version = "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -58,6 +56,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 0.10.1-alt1
+- New 0.10.1 version.
+
 * Wed Nov 15 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.5-alt2
 - Enable check.
 

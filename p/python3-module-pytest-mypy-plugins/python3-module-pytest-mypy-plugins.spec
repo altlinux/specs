@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.0.1
+Version: 4.0.3
 Release: alt1
 
 Summary: pytest plugin for testing mypy types, stubs, and plugins
@@ -52,6 +52,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 4.0.3-alt1
+- New 4.0.3 version.
+
 * Thu Apr 16 2026 Alexander Burmatov <thatman@altlinux.org> 4.0.1-alt1
 - New 4.0.1 version.
 

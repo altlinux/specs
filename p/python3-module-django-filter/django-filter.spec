@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.2
+Version: 26.1
 Release: alt1
 
 Summary: A generic system for filtering Django QuerySets based on user selections
@@ -49,6 +49,9 @@ add dynamic QuerySet filtering from URL parameters.
 %python3_sitelibdir/django_filter-%version.dist-info
 
 %changelog
+* Thu Jul 23 2026 Alexander Burmatov <thatman@altlinux.org> 26.1-alt1
+- New version 26.1.
+
 * Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 25.2-alt1
 - New version 25.2.
 

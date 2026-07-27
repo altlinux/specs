@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.15.0
-Release: alt2
+Version: 4.16.0
+Release: alt1
 
 Summary: Python Typing Extensions
 
@@ -62,6 +62,9 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Wed Nov 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.15.0-alt2
 - Merge p11 branch into sisyphus.
 

@@ -8,7 +8,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 25.12.0
+Version: 25.12.1
 Release: alt1
 
 Summary: Accelerate your web app development | Build fast, run fast
@@ -71,6 +71,9 @@ webserver.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 25.12.1-alt1
+- 25.12.0 -> 25.12.1
+
 * Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 25.12.0-alt1
 - 25.3.0 -> 25.12.0
 

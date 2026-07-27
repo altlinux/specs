@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.7.0
 Release: alt1
 
 Summary: A universal web framework adapter for Python that lets you write code once and use it across multiple web frameworks
@@ -19,10 +19,11 @@ BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-django
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-fastapi
 BuildRequires: python3-module-quart
-BuildRequires: python3-module-httpx
+BuildRequires: python3-module-httpx2
 BuildRequires: python3-module-chalice
 BuildRequires: python3-module-django
 BuildRequires: python3-module-aiohttp
@@ -44,7 +45,7 @@ FastAPI, Flask, Django, and other popular Python web frameworks.
 
 %prep
 %setup -n %pypi_name-%version
-sed -i 's/version = "0.4.0"/version = "0.4.1"/' pyproject.toml
+sed -i 's/version = "0.6.0"/version = "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -53,6 +54,7 @@ sed -i 's/version = "0.4.0"/version = "0.4.1"/' pyproject.toml
 %pyproject_install
 
 %check
+#export DJANGO_SETTINGS_MODULE="testing._django_settings"
 %pyproject_run_pytest -k "not litestar"
 
 %files
@@ -61,5 +63,8 @@ sed -i 's/version = "0.4.0"/version = "0.4.1"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 0.7.0-alt1
+- New 0.7.0 version.
+
 * Mon Jan 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus.

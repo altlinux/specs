@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.6.4
+Version: 4.6.5
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -10,6 +10,8 @@ Group:   Networking/WWW
 URL:     https://github.com/netbox-community/netbox
 
 AutoReqProv: yes, nopython
+
+%add_python3_req_skip utilities.secret_key
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd
@@ -22,37 +24,37 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-mkdocs >= 1.6.1
 BuildRequires: python3-module-mkdocs-material >= 9.7.6
 BuildRequires: python3-module-mkdocs-material-extensions
-BuildRequires: python3-module-mkdocstrings >= 1.0.4
+BuildRequires: python3-module-mkdocstrings >= 1.0.6
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.5
-BuildRequires: python3-module-zensical >= 0.0.46
+BuildRequires: python3-module-zensical >= 0.0.50
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 6.0.6
+Requires: python3-module-django >= 6.0.7
 Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 7.0.0
-Requires: python3-module-django-filter >= 25.2
-Requires: python3-module-django-htmx >= 1.27.0
+Requires: python3-module-django-filter >= 26.1
+Requires: python3-module-django-htmx >= 1.28.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
 Requires: python3-module-django-mptt >= 0.18
 Requires: python3-module-django-pglocks >= 1.0.4
 Requires: python3-module-django-prometheus >= 2.4.0
 Requires: python3-module-django-redis >= 7.0.0
 Requires: python3-module-django-rich >= 2.2.0
-Requires: python3-module-django-rq >= 4.1.0
+Requires: python3-module-django-rq >= 4.1.1
 Requires: python3-module-django-storages >= 1.14.6
 Requires: python3-module-django-taggit >= 6.1.0
 Requires: python3-module-django-tables2 >= 2.8.0
 Requires: python3-module-django-timezone-field >= 7.2.2
 Requires: python3-module-djangorestframework >= 3.17.1
-Requires: python3-module-drf-spectacular >= 0.29.0
-Requires: python3-module-drf-spectacular-sidecar >= 2026.6.1
+Requires: python3-module-drf-spectacular >= 0.30.0
+Requires: python3-module-drf-spectacular-sidecar >= 2026.7.1
 Requires: python3-module-feedparser >= 6.0.12
 Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
 Requires: python3-module-markdown >= 3.10.2
 Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.6
-Requires: python3-module-pillow >= 12.2.0
+Requires: python3-module-pillow >= 12.3.0
 Requires: python3-module-psycopg >= 3.3.4
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-redis-py >= 7.4.1
@@ -61,11 +63,11 @@ Requires: python3-module-rq >= 2.10.0
 Requires: python3-module-social-app-django >= 5.9.0
 Requires: python3-module-social-core >= 4.8.7
 Requires: python3-module-sorl-thumbnail >= 13.0.0
-Requires: python3-module-strawberry-graphql >= 0.320.0
+Requires: python3-module-strawberry-graphql >= 0.321.0
 Requires: python3-module-strawberry-django >= 0.86.4
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
-Requires: python3-module-tzdata >= 2026.2
+Requires: python3-module-tzdata >= 2026.3
 Requires: python3-module-packaging
 Requires: python3-module-django-auth-ldap
 Requires: python3-module-sentry-sdk
@@ -210,6 +212,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Jul 23 2026 Alexander Burmatov <thatman@altlinux.org> 4.6.5-alt1
+- New 4.6.5 version.
+
 * Wed Jul 01 2026 Alexander Burmatov <thatman@altlinux.org> 4.6.4-alt1
 - New 4.6.4 version.
 

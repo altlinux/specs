@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.0.22
+Version: 4.5.0
 Release: alt1
 
 Summary: A plugin for MkDocs to generate API documentation
@@ -13,7 +13,7 @@ URL:     https://github.com/daizutabi/mkapi
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatchling python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -24,6 +24,7 @@ BuildRequires: python3-module-mkdocs-material
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-pytest-randomly
+BuildRequires: python3-module-astdoc
 %endif
 
 BuildArch: noarch
@@ -55,5 +56,8 @@ documentation.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.0-alt1
+- New 4.5.0 version.
+
 * Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 3.0.22-alt1
 - Initial build for Sisyphus.
