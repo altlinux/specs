@@ -4,7 +4,7 @@
 %def_enable    devel
 
 Name:          foreman
-Version:       3.18.1
+Version:       3.19.1
 Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
@@ -27,6 +27,7 @@ Source9:       foreman.po
 Source10:      public.tar
 Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
+Patch8:        foreman-fix-mail-notification-partial-with-rails-7.1.patch
 Patch7:        rails7.1.patch
 Patch6:        rails_6.patch
 Patch5:        asciidoctor-doc.patch
@@ -199,6 +200,7 @@ Autoreq:       yes,nopython3,nopython,noshell
 %ruby_use_gem_dependency shoulda-matchers >= 6.4.0,shoulda-matchers < 7
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
 %ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
+%ruby_use_gem_dependency wirb >= 3,wirb < 4
 Requires:      rake
 Requires:      wget
 Requires:      vixie-cron
@@ -315,7 +317,7 @@ Requires:      gem(patternfly-sass) >= 0
 Requires:      gem(gettext_i18n_rails_js) >= 0
 Requires:      gem(terser) >= 0
 Requires:      gem(sass-rails) >= 0
-Requires:      gem(wirb) >= 0
+Requires:      gem(wirb) >= 3
 Requires:      gem(sidekiq) >= 0
 Requires:      gem(gitlab-sidekiq-fetcher) >= 0
 Requires:      gem(fog-aws) >= 0
@@ -407,13 +409,13 @@ foundation.
 
 %if_enabled    doc
 %package       -n foreman-doc
-Version:       3.18.1
+Version:       3.19.1
 Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      foreman = 3.18.1-alt1
+Requires:      foreman = 3.19.1-alt1
 
 %description   -n foreman-doc
 An application that automates the lifecycle of servers documentation
@@ -435,13 +437,13 @@ foundation.
 
 %if_enabled    devel
 %package       -n foreman-devel
-Version:       3.18.1
+Version:       3.19.1
 Release:       alt1
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      foreman = 3.18.1-alt1
+Requires:      foreman = 3.19.1-alt1
 
 %description   -n foreman-devel
 Foreman is a free open source project that gives you the power to easily
@@ -574,6 +576,9 @@ rm -rf %_spooldir/%name/*
 exit 0
 
 %post
+# NOTE this section is for specific case only when all setup prerequesites are completed
+# and tests can't be accomplshed correctly with the only post script execution
+
 # ssl key generation
 puppetserver ca setup --certname $(hostname) --subject-alt-names $(hostname) >> /var/log/foreman/key_generation.log 2>&1
 
@@ -588,7 +593,7 @@ railsctl setup foreman 2>&1 >/dev/null || true
 %post_service foreman
 %post_service foreman-jobs
 
-echo 'NOTE: To complete update/install procedure, make sure you have followed manuals at https://www.altlinux.org/Связка_Puppet_и_Foreman' 1>&2
+echo 'NOTE: To complete update/install procedure, the only way is to follow manual instruction from here https://www.altlinux.org/Связка_Puppet_и_Foreman' 1>&2
 
 %preun
 railsctl cleanup %name
@@ -637,6 +642,11 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Jul 23 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1
+- ^ 3.18.1 -> 3.19.1
+- * required wirb ~> 3 (closes #59855)
+- ! fixed to build renderer on the user page (from pav@)
+
 * Fri Apr 24 2026 Pavel Skrylev <majioa@altlinux.org> 3.18.1-alt1
 - ^ 3.13.0 -> 3.18.1
 
