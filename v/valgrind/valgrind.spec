@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.27.0
+Version: 3.27.1
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -156,6 +156,9 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Mon Jul 27 2026 Ivan A. Melnikov <iv@altlinux.org> 3.27.1-alt1
+- 3.27.0 -> 3.27.1
+
 * Tue May 19 2026 Ivan A. Melnikov <iv@altlinux.org> 3.27.0-alt1
 - 3.26.0 -> 3.27.0
 
