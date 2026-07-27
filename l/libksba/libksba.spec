@@ -1,6 +1,6 @@
 Name: libksba
 Version: 1.8.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: X.509 library
@@ -32,6 +32,8 @@ on the X.509 and CMS protocols.
 %package -n %name%sover
 Group: System/Libraries
 Summary: X.509 library
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 
 %description -n %name%sover
 KSBA is a library designed to build software based
@@ -82,6 +84,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Mon Jul 27 2026 Paul Wolneykien <manowar@altlinux.org> 1.8.0-alt3
+- Fix: Replace the 'libksba' package (closes: 59966).
+
 * Sun Jul 26 2026 Paul Wolneykien <manowar@altlinux.org> 1.8.0-alt2
 - Provide SO versioned package.
 
