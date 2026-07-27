@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtorrent
-Version: 0.16.12
+Version: 0.16.18
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -62,6 +62,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_datadir/%name/lua
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 0.16.18-alt1
+- 0.16.18.
+
 * Sun May 24 2026 L.A. Kostis <lakostis@altlinux.ru> 0.16.12-alt1
 - 0.16.12.
 
