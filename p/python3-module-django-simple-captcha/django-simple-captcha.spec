@@ -3,7 +3,7 @@
 %define mod_name captcha
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
+Version: 0.6.2
 Release: alt1
 
 Summary: A very simple, yet powerful, Django captcha application
@@ -14,7 +14,7 @@ Url: https://pypi.org/project/django-simple-captcha/
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url %pypi_name
+# Source-url: https://github.com/mbi/django-simple-captcha/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Conflicts: python3-module-django-recaptcha
@@ -50,6 +50,9 @@ yet highly customizable Django application to add captcha images to any Django f
 
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
+- new version 0.6.2 (with rpmrb script)
+
 * Fri Jun 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - initial build for Sisyphus
 - disable AutoProv due missed python module alternatives support
