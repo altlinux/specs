@@ -12,7 +12,7 @@
 %def_with xslt
 
 Name: angie
-Version: 1.10.3
+Version: 1.12.1
 Release: alt1
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
@@ -269,6 +269,9 @@ mv %buildroot/html/{50x.html,index.html} \
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Mon Jul 27 2026 Anton Farygin <rider@altlinux.org> 1.12.1-alt1
+- 1.10.3 -> 1.12.1
+
 * Thu Dec 11 2025 Constantin Sunzow <protvin@altlinux.org> 1.10.3-alt1
 - New version.
 
