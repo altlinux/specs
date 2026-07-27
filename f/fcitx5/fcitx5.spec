@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.1.2
-Release:        alt1_1.3
+Release:        alt1_1.4
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -29,6 +29,7 @@ Source3:        fcitx5-xinput
 Source4:        fcitx5.sh
 
 Patch0:         fcitx5-fmt12.patch
+Patch1:		added_cstdint-alt-build.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  ninja-build python3-module-ninja_syntax
@@ -124,7 +125,7 @@ This package will setup autostart and environment needed for fcitx5 to work prop
 %prep
 %setup -q
 
-%patch0 -p1
+%autopatch -p1
 
 # bash4
 sed -i '1s,env bash,env bash4,' data/fcitx5-diagnose.sh
@@ -204,6 +205,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Mon Jul 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.1.2-alt1_1.4
+- NMU: fixed FTBFS
+
 * Mon Nov 24 2025 Nazarov Denis <nenderus@altlinux.org> 5.1.2-alt1_1.3
 - NMU: fix build with fmt 12
 

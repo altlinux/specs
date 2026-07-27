@@ -11,12 +11,14 @@ Group: Development/C
 Name:       libime  
 Version:    1.1.2
 License:    LGPLv2+ and MIT and BSD
-Release:    alt1_2
+Release:    alt1_3
 Summary:    This is a library to support generic input method implementation
 URL:        https://github.com/fcitx/libime
 Source:     https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}_dict.tar.xz
 Source1:    https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}_dict.tar.xz.sig
 Source2:    https://pgp.key-server.io/download/0x8E8B898CBF2412F9
+
+Patch: added_cstdint-alt-build.patch
 
 BuildRequires: gnupg2
 BuildRequires: ctest cmake
@@ -59,7 +61,7 @@ Development files for %{name}
 
 %prep
 %setup -q
-
+%patch -p1
 
 %build
 %{fedora_v2_cmake} -GNinja
@@ -104,9 +106,10 @@ Development files for %{name}
 %{_libdir}/cmake/LibIME*
 %{_includedir}/LibIME/
 
-
-
 %changelog
+* Mon Jul 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.2-alt1_3
+- NMU: fixed FTBFS
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_2
 - update to new release by fcimport
 
