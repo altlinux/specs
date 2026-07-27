@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librealsense
-Version: 2.58.2
+Version: 2.58.3
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
@@ -203,6 +203,10 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Mon Jul 20 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.3-alt1
+- new version 2.58.3
+- fix fastcdr v2 api patch for upstream 2.58.3
+
 * Wed Jun 17 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.2-alt1
 - new version 2.58.2
 - fix rsutils shared library patch for upstream 2.58.2
