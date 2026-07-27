@@ -1,10 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %define sover 0
+%define soverwl 0.19
 
 %def_disable clang
 
 Name: treeland
-Version: 0.8.15
+Version: 0.8.16
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -19,10 +20,10 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja patchelf
-# Automatically added by buildreq on Fri Feb 21 2025
-# optimized out: cmake-modules dqt6-base-common dqt6-base-devel dqt6-declarative-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcap-ng libcrypt-devel libddm-auth-devel libddm-auth0 libddm-common-devel libddm-common0 libdisplay-info libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-qml libdqt6-qmlcompiler libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickcontrols2 libdqt6-quickcontrols2basic libdqt6-quickcontrols2fusion libdqt6-quickcontrols2imagine libdqt6-quickcontrols2material libdqt6-quickcontrols2universal libdqt6-quickeffects libdqt6-quicklayouts libdqt6-quickshapes libdqt6-quicktemplates2 libdqt6-quicktest libdqt6-shadertools libdqt6-test libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libpixman-devel libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-errors libxcbutil-icccm libxkbcommon-devel ninja-build openssl-config pkg-config python3 python3-base sh5 vulkan-headers wayland-devel xorg-proto-devel xz
-BuildRequires: cmake ddm-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-declarative-devel dqt6-wayland-devel dtk6-common-devel libdtk6declarative-devel libdtk6systemsettings-devel libpam-devel libsystemd-devel libwayland-egl-devel libwlroots-devel libxcbutil-icccm-devel treeland-protocols wayland-protocols libdrm-devel wlr-protocols libinput-devel libXau-devel libmpv-devel dqt6-remoteobjects-devel
-BuildRequires: libdqt6-qmlcompiler libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest libdqt6-concurrent vulkan-headers
+# Automatically added by buildreq on Mon Jul 27 2026
+# optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools dtk6core gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 hwdata libX11-devel libcairo-gobject libcap-ng libcdio-paranoia libcrypt-devel libddm-common-devel libddm-common0 libdisplay-info libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickcontrols2 libdqt6-quicktemplates2 libdqt6-remoteobjects libdqt6-shadertools libdqt6-test libdqt6-waylandclient libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgcc15-devel libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c4 libraw1394-11 libsasl2-3 libspirv-tools0 libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libwayland-egl libwayland-server libx265-216 libxcb-devel libxcb-render-util libxcbutil-icccm libxkbcommon-devel ninja-build ocl-icd pipewire-jack-libs pipewire-libs pkg-config python3 python3-base samba-common-libs sh5 vulkan-headers wayland-devel xorg-proto-devel
+BuildRequires: ddm-devel dqt6-declarative-devel dqt6-remoteobjects-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-wayland-devel dtk6-common-devel glslang libXau-devel libdisplay-info-devel libdqt6-concurrent libdqt6-qmlcompiler libdqt6-quicktest libdrm-devel libdtk6declarative-devel libdtk6systemsettings-devel libgbm-devel libinput-devel liblcms2-devel libmpv-devel libpam-devel libpixman-devel libseat1-devel libsystemd-devel libvulkan-devel libwayland-egl-devel libwayland-server-devel libxcb-render-util-devel libxcbutil-errors-devel libxcbutil-icccm-devel libliftoff-devel treeland-protocols wayland-protocols wlr-protocols
+BuildRequires: hwdata-devel xorg-xwayland-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -130,6 +131,21 @@ Group: Development/C++
 %description -n libdwaylib-devel
 This package provides development files for waylib.
 
+%package -n libdwaylib-wlroots%soverwl
+Summary: waylib-wlroots library for %name
+Group: System/Libraries
+
+%description -n libdwaylib-wlroots%soverwl
+This package provides waylib-wlroots library for %name.
+
+%package -n libdwaylib-wlroots-devel
+Summary: Development files for waylib-wlroots library
+Group: Development/C++
+
+%description -n libdwaylib-wlroots-devel
+This package provides development files for
+waylib-wlroots library.
+
 %prep
 %setup
 %autopatch -p1
@@ -142,7 +158,8 @@ sed -i '/add_library(\${TARGET}/a SHARED' \
 sed -e 's|CMAKE_INSTALL_LIBDIR|DCMAKE_INSTALL_LIBDIR|g;' \
     -e 's|CMAKE_INSTALL_INCLUDEDIR|DCMAKE_INSTALL_INCLUDEDIR|g;' \
     -i $(find ./waylib -name 'CMakeLists.txt' -o -name '*.cmake') \
-       $(find ./qwlroots -name 'CMakeLists.txt' -o -name '*.cmake')
+    -i $(find ./qwlroots -name 'CMakeLists.txt' -o -name '*.cmake') \
+    -i $(find ./wlroots -name 'CMakeLists.txt' -o -name '*.cmake')
 
 %build
 %if_enabled clang
@@ -237,7 +254,17 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %files -n libdwaylib-devel
 %_dqt6_libdir/cmake/Waylib/
 
+%files -n libdwaylib-wlroots%soverwl
+%_dqt6_libdir/libwaylib-wlroots.so.%{soverwl}*
+
+%files -n libdwaylib-wlroots-devel
+%_dqt6_libdir/libwaylib-wlroots.so
+
 %changelog
+* Mon Jul 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.16-alt1
+- New version 0.8.16.
+- Added waylib-wlroots subpackages.
+
 * Fri Jul 17 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.15-alt1
 - New version 0.8.15.
 
