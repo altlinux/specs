@@ -7,7 +7,7 @@
 
 Name: plasma-%rname
 Version: 6.7.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -26,9 +26,8 @@ BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel kf6-kcoreaddons-devel kf
 BuildRequires: kf6-kiconthemes-devel kf6-kirigami-devel
 BuildRequires: libvulkan-devel
 BuildRequires: plasma6-breeze-devel
-#qt6-quick3d-devel  qt6-virtualkeyboard-devel qt6-webengine-devel
 #BuildRequires: libryml-devel
-#BuildRequires: cxx-rust-cssparser
+BuildRequires: rust-cssparser-devel
 
 %description
 Union is a style engine designed to provide a unified style description to a set
@@ -77,8 +76,7 @@ Requires: %name-common >= %EVR
 %build
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
-    -DBUILD_INPUT_CSS:BOOL=OFF \
-    -DBUILD_INPUT_PLASMASVG:BOOL=OFF \
+    -DBUILD_OUTPUT_QTWIDGETS=ON \
     #
 
 %install
@@ -94,9 +92,10 @@ Requires: %name-common >= %EVR
 %_K6qml/org/kde/kirigami/styles/org.kde.union/
 %_K6qml/org/kde/union/
 %_K6data/kstyle/themes/union.themerc
-%_datadir/qlogging-categories6/*.*categories
 %_K6plug/kf6/kirigami/platform/*union*.so
 %_K6plug/styles/*nion*.so
+%_K6data/union/
+%_datadir/qlogging-categories6/*.*categories
 
 %files devel
 %_K6inc/union/
@@ -114,6 +113,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libUnionQuickStyle.so.*
 
 %changelog
+* Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
+- build with css input (closes: 59948)
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 
