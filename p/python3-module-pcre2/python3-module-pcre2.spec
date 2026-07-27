@@ -7,7 +7,7 @@
 %python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
@@ -58,11 +58,13 @@ install -v %SOURCE2 setup.py
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt1
+- Updated to 0.7.1.
+
 * Thu Jun 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
 - Updated to 0.7.0.
 
@@ -86,4 +88,3 @@ install -v %SOURCE2 setup.py
 
 * Thu Sep 28 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
 - Built for ALT Sisyphus.
-
