@@ -1,5 +1,5 @@
 Name: vkQuake
-Version: 1.34.1
+Version: 1.35.0
 Release: alt1
 
 Summary: Quake I engine
@@ -7,7 +7,7 @@ License: GPL-2.0
 Group: Games/Arcade
 Url: https://github.com/Novum/vkQuake
 
-BuildRequires: glslang libSDL2-devel libvulkan-devel meson spirv-tools
+BuildRequires: glslang libSDL3-devel libvulkan-devel meson spirv-tools
 BuildRequires: libflac-devel libvorbis-devel libopusfile-devel libmpg123-devel libstb-devel
 
 Source: %name-%version.tar
@@ -49,6 +49,10 @@ install -pDm755 %__builddir/vkquake %buildroot%_bindir/vkquake
 %_bindir/vkquake
 
 %changelog
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 1.35.0-alt1
+- 1.35.0.
+- SDL2->SDL3.
+
 * Thu May 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.34.1-alt1
 - 1.34.1.
 
