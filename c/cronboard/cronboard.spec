@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: cronboard
-Version: 0.7.3
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: A terminal-based dashboard for managing cron jobs locally and on servers
 License: Apache-2.0
@@ -35,6 +37,9 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.7.3 -> 1.0.0
+
 * Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.3-alt2
 - changed license
 
