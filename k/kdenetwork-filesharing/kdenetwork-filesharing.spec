@@ -3,7 +3,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -26,6 +26,7 @@ Patch3: alt-i18n.patch
 Patch4: alt-max-domain-uid.patch
 Patch5: alt-share-under-domain-user.patch
 Patch6: alt-is-smb-installed.patch
+Patch7: alt-async-disable.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
@@ -48,6 +49,7 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # set SAMBA_PACKAGE_NAME
 sed -i 's|SAMBA_PACKAGE_NAME|"%req_samba_pkgs"|' samba/filepropertiesplugin/sambainstaller.cpp
@@ -78,6 +80,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- apply patch against altbug#59726
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
