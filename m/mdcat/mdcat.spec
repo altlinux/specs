@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mdcat
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 Summary: cat for markdown
 License: MPL-2.0
@@ -37,5 +37,8 @@ Fancy cat for Markdown.
 %_bindir/%name
 
 %changelog
+* Mon Jul 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.14.0-alt1
+- Updated to version 2.14.0.
+
 * Fri Jul 24 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.13.0-alt1
 - Initial build for ALT.
