@@ -5,7 +5,7 @@
 
 Name: kernel-source-%module_name
 Version: 1.3.6.9
-Release: alt1
+Release: alt2
 
 Summary: Wangxun 10 Gigabit Ethernet driver
 License: GPL-2.0
@@ -57,6 +57,10 @@ cp %name-%version/txgbe.7 %buildroot%_man7dir/
 %doc %name-%version/scripts/set_irq_affinity
 
 %changelog
+* Mon Jul 27 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.6.9-alt2
+- Avoid UDP_TUNNEL_NIC_INFO_MAY_SLEEP on 6.12 kernels
+  starting form v6.12.97 (fixes FTBFS for kernel-modules-6.12).
+
 * Tue Mar 24 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.6.9-alt1
 - 1.3.6.9
 - linux 6.17+ compatibility
