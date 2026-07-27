@@ -3,7 +3,7 @@
 %define major 4
 %define sover %major
 Name: projectm
-Version: 4.1.6
+Version: 4.1.7
 Release: alt1
 
 %define libprojectm libprojectm%{major}_%{sover}
@@ -77,6 +77,7 @@ mv projectm-eval vendor/
 %build
 %cmake \
 	-G "Unix Makefiles" \
+	-DCMAKE_BUILD_TYPE=Release \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
 	-DBUILD_TESTING:BOOL=FALSE \
 	-DENABLE_CXX_INTERFACE:BOOL=TRUE \
@@ -104,8 +105,12 @@ mv projectm-eval vendor/
 %_includedir/projectM-%{major}/
 %_libdir/lib*.so
 %_libdir/cmake/projectM%{major}*/
+%_pkgconfigdir/projectM*.pc
 
 %changelog
+* Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 4.1.7-alt1
+- new version
+
 * Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 4.1.6-alt1
 - new version
 
