@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _name Keypunch
-%define ver_major 6.3
-%define rdn_name dev.bragefuglseth.%_name
+%define ver_major 7.0
+%define rdn_name no.bragefuglseth.%_name
 
 %def_enable check
 %def_disable bootstrap
@@ -27,7 +27,7 @@ Source1: %name-%version-cargo.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= 1.8
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
 %description
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Mon Jul 27 2026 Yuri N. Sedunov <aris@altlinux.org> 7.0-alt1
+- 7.0
+
 * Wed Apr 30 2025 Yuri N. Sedunov <aris@altlinux.org> 6.3-alt1
 - 6.3
 
