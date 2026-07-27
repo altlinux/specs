@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: ReactiveX for Python
@@ -48,6 +48,9 @@ subst 's/^version.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo reactivex}
 
 %changelog
+* Mon Jul 27 2026 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+
 * Tue Jul 21 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version.
 
