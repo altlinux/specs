@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.7
+Release: alt0.8
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -59,8 +59,7 @@ Requires: libgpgme >= 1.7.0
 # then manually edited to remove libldap-devel and libpilot-link-devel
 # (conditional dependencies) and other crap
 BuildRequires: flex fontconfig glib2-devel libatk-devel libcompface-devel libgpg-error-devel libgpgme-devel libgtk+2-devel libpango-devel libssl-devel pkg-config
-BuildRequires: gcc13
-BuildRequires:  xdg-utils
+BuildRequires: xdg-utils
 #BuildRequires: libdbus-glib-devel
 
 %description
@@ -126,16 +125,12 @@ cp -a %SOURCE5 README.actions
 bzip2 -9fk ChangeLog
 
 %build
-%set_gcc_version 13
 %ifarch %e2k
 %add_optflags -lm
 %endif
-#rm -f missing
-aclocal -I ac
-libtoolize --force --copy
-autoheader
-automake --gnu --add-missing --copy
-autoconf
+%add_optflags -std=gnu17
+
+%autoreconf -I /usr/share/gettext/m4/ -I ac
 
 # --disable-shared is for noinst_LTLIBRARIES = libsylph.la
 %configure \
@@ -174,6 +169,11 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Tue Jul 28 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.0-alt0.8
+- NMU: fix FTBFS:
+  + use default GCC with -std=gnu17;
+  + use %%autoreconf.
+
 * Sun Feb 02 2025 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.7
 - Fix FTBFS
 
