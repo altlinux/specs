@@ -1,7 +1,7 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 7.3
+Version: 7.7
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -117,6 +117,19 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Wed Jul 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 7.7-alt1
+- Update to latest stable release.
+- Major fixes from upstream:
+  + mount.cifs: fix buffer overrun in set_password, retry mount on
+    -EINPROGRESS and adjust get_password_from_file() buf size.
+  + cifs.upcall: fix regression with krb5 + creduid, avoid int overflow
+    after year 2038, retry krb5 TGS request with uppercase service name
+    and add option to enable debug logs (fixes: CVE-2026-12505).
+  + smbinfo: add notify and filecompressioninfo subcommands, parse
+    action and filename from change notifications.
+  + cifscreds: fix parsing of commands and parameters.
+  + Various improvements to man pages.
+
 * Tue Mar 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 7.3-alt1
 - Update to latest stable release.
 - Major fixes from upstream:
