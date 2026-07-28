@@ -3,13 +3,13 @@
 %define        ruby_version %{ruby_version_core}.0
 %define        lname lib%name
 %define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-%define        _version %{ruby_version_core}.8
+%define        _version %{ruby_version_core}.12
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 %def_disable   html
 
 Name:          ruby
 Version:       %_version
-Release:       alt3
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -370,6 +370,11 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Mon Jul 27 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt1
+- ^ 3.3.8 -> 3.3.12
+- > rebased to upstream master
+- * expanded build actions from :build to :config,:make,:document,:predeps
+
 * Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt3
 - + regard path token feature for ruby env and macros
 - * move compilation require dep to rvm
