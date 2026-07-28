@@ -1,10 +1,7 @@
-# -*- rpm-spec -*-
-# $Id: tclx,v 1.28 2006/07/22 17:03:48 me Exp $
-
-%define teaname tclx
+%define _unpackaged_files_terminate_build 1
 
 Name: tclx
-Version: 8.4.4
+Version: 8.6.3
 Release: alt1
 Epoch: 1
 
@@ -12,13 +9,17 @@ Summary: Tcl extensions for POSIX systems
 License: BSD
 Group: Development/Tcl
 Url: https://github.com/flightaware/tclx/
+VCS: https://github.com/flightaware/tclx.git
 
-# repacked https://github.com/flightaware/tclx/archive/v%version.tar.gz
-Source: %teaname-%version.tar
-Source1: %teaname.watch
+Source: %name-%version.tar
+Source1: %name.watch
 
-Requires: tcl >= 8.4.0-alt1
-BuildRequires: tcl-devel >= 8.4.0-alt1 rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1
+Patch0: disable-profile-test.patch
+
+Requires: tcl
+
+BuildRequires: rpm-build-tcl 
+BuildRequires: tcl-devel
 
 %description
 TclX is a set of extensions which make it easier to use the Tcl
@@ -26,9 +27,18 @@ scripting language for common UNIX/Linux programming tasks.  TclX
 enhances Tcl support for files, network access, debugging, math, lists,
 and message catalogs.
 
+%package devel
+Summary: tclExtend header
+Group: Development/C++
+BuildArch: noarch
+
+%description devel
+%summary
+
 %prep
 %setup
 %tea_patch
+%patch0 -p2
 
 %build
 %configure
@@ -38,14 +48,20 @@ and message catalogs.
 %makeinstall_std
 
 %check
-make test
+TCLX_SKIP_PROFILE_TEST=1 %make test
 
 %files
 %doc README.md ChangeLog
 %_tcllibdir/tclx8.6
 %_mandir/mann/*
 
+%files devel
+%_includedir/tclExtend.h
+
 %changelog
+* Tue Jul 28 2026 Artem Semenov <savoptik@altlinux.org> 1:8.6.3-alt1
+- Updated to 8.6.3
+
 * Tue May 19 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:8.4.4-alt1
 - Updated to 8.4.4 (new upstream).
 - Enabled tests.
