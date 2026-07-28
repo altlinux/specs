@@ -1,6 +1,6 @@
 %define git	 e7b0afc
 %define ver      1.9.7
-%define rel      alt5.%git
+%define rel      alt6.%git
 
 Summary: Graphics file browser utility
 Name: gliv
@@ -31,6 +31,8 @@ sed -i 's/^#line 0 /#line 1 /' src/gliv-image.c
 %endif
 
 %build
+%add_optflags -std=c99
+gettextize -f -q
 %autoreconf
 %configure
 %make_build
@@ -54,6 +56,10 @@ install -m 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %_man1dir/%{name}.1*
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt6.e7b0afc
+- Fix FTBFS with recent gettext/autoconf (via gettextize call).
+- Fix FTBFS with gcc15 (use -std=c99).
+
 * Sat Sep 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9.7-alt5.e7b0afc
 - Fixed build for Elbrus.
 
