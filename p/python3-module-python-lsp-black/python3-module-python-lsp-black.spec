@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: python-lsp-server plugin that adds support to black autoformatter
 License: MIT
@@ -20,12 +20,13 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra dev
-%pyproject_builddeps_check
 BuildRequires: python3-module-black
 %endif
 
@@ -48,11 +49,13 @@ Black plugin for the Python LSP Server.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE CHANGELOG.md README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 28 2026 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt3
+- Fixed FTBFS (black>=26.5.0).
+
 * Tue Apr 09 2024 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt2
 - Fixed FTBFS (black 24.3.0).
 
@@ -61,4 +64,3 @@ Black plugin for the Python LSP Server.
 
 * Sat Oct 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Built for ALT Sisyphus.
-
