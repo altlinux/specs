@@ -3,7 +3,7 @@
 
 Name: vcmi
 Version: 1.7.4
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later AND Zlib
@@ -53,7 +53,7 @@ BuildRequires: tbb-devel
 BuildRequires: libfuzzylite-devel >= 6.0
 BuildRequires: libluajit-devel
 BuildRequires: libsquish-devel
-BuildRequires: libonnxruntime-devel
+#BuildRequires: libonnxruntime-devel
 BuildRequires: qt6-tools-devel
 #BuildRequires: git-core
 
@@ -114,7 +114,8 @@ mv innoextract launcher/lib/
 	-DFORCE_BUNDLED_FL=OFF \
 	-DENABLE_INNOEXTRACT=ON \
 	-DENABLE_GOLDMASTER=ON \
-	-DENABLE_DISCORD=OFF
+	-DENABLE_DISCORD=OFF \
+	-DENABLE_MMAI=OFF
 
 %cmake_build
 
@@ -138,6 +139,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Tue Jul 28 2026 Anton Midyukov <antohami@altlinux.org> 1.7.4-alt2
+- Rebuild without libonnxruntime.
+
 * Thu May 21 2026 Anton Midyukov <antohami@altlinux.org> 1.7.4-alt1
 - New version 1.7.4.
 
