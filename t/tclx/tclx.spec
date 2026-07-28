@@ -2,7 +2,7 @@
 
 Name: tclx
 Version: 8.6.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Tcl extensions for POSIX systems
@@ -27,14 +27,6 @@ scripting language for common UNIX/Linux programming tasks.  TclX
 enhances Tcl support for files, network access, debugging, math, lists,
 and message catalogs.
 
-%package devel
-Summary: tclExtend header
-Group: Development/C++
-BuildArch: noarch
-
-%description devel
-%summary
-
 %prep
 %setup
 %tea_patch
@@ -54,11 +46,12 @@ TCLX_SKIP_PROFILE_TEST=1 %make test
 %doc README.md ChangeLog
 %_tcllibdir/tclx8.6
 %_mandir/mann/*
-
-%files devel
-%_includedir/tclExtend.h
+%exclude %_includedir/tclExtend.h
 
 %changelog
+* Tue Jul 28 2026 Artem Semenov <savoptik@altlinux.org> 1:8.6.3-alt2
+- Built without devel subpackage.
+
 * Tue Jul 28 2026 Artem Semenov <savoptik@altlinux.org> 1:8.6.3-alt1
 - Updated to 8.6.3
 
