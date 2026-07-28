@@ -1,6 +1,6 @@
 Name: violetland
 Version: 0.5
-Release: alt3
+Release: alt4
 Summary: An open source cross-platform game similar to Crimsonland
 Group: Games/Arcade
 License: GPLv3
@@ -51,6 +51,7 @@ install -D %SOURCE2 lib/fcitx/cmake/FindLibintl.cmake
 
 subst "s|VERSION 2.6.0|VERSION 3.5|" CMakeLists.txt
 subst "s|VERSION 2.6.0|VERSION 3.5|" po/CMakeLists.txt
+subst "s|filesystem system|filesystem|" CMakeLists.txt
 
 %build
 %define warns -Wall -Wno-delete-non-virtual-dtor -Wno-narrowing
@@ -121,6 +122,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/*
 
 %changelog
+* Tue Jul 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt4
+- NMU: fixed build with new boost
+
 * Wed Jun 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt3
 - NMU: fixed FTBFS
 
