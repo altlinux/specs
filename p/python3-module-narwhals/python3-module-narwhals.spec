@@ -1,7 +1,7 @@
 %define pypi_name narwhals
 
 Name: python3-module-narwhals
-Version: 2.20.0
+Version: 2.24.0
 Release: alt1
 
 Summary: Extremely lightweight compatibility layer between dataframe libraries
@@ -16,8 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-uv-build
 
 # All these are optional backends imported lazily (TYPE_CHECKING / sys.modules).
 # Pull them in only via the corresponding extras, do not force them at runtime.
@@ -52,6 +51,10 @@ are pulled in only when actually used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt1
+- new version 2.24.0
+- switch build backend to uv_build (upstream switched from hatchling)
+
 * Thu May 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt1
 - initial build for ALT Sisyphus
 
