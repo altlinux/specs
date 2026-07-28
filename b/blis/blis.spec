@@ -11,7 +11,7 @@
 
 Name: blis
 Summary: BLAS-like Library Instantiation Software Framework
-Version: 2.0
+Version: 2.1
 Release: alt0.1
 License: BSD-3-Clause-Clear
 Group: Development/C
@@ -96,5 +96,8 @@ mv %buildroot%_datadir/pkgconfig %buildroot%_libdir/
 %_libdir/lib%{name}.a
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 2.1-alt0.1
+- 2.1.
+
 * Tue Mar 31 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0-alt0.1
 - Initial build for ALTLinux.
