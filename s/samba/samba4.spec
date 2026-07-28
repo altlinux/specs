@@ -128,7 +128,7 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.22.10
+Version: 4.22.11
 Release: alt1
 
 Group:   System/Servers
@@ -2376,6 +2376,28 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Tue Jul 28 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt1
+- Update to security release of Samba 4.22
+- Security fixes (Fixes: CVE-2026-6949,  CVE-2026-58216, CVE-2026-58218,
+                         CVE-2026-58221, CVE-2026-58222, CVE-2026-58224):
+  + CVE-2026-6949:  TSIG packet with name compression can crash DNS
+                    https://www.samba.org/samba/security/CVE-2026-6949.html
+  + CVE-2026-58216: An authenticated user could possibly crash a KDC process
+                    https://www.samba.org/samba/security/CVE-2026-58216.html
+  + CVE-2026-58218: DNS signing DoS via TKEY name cache exhaustion
+                    https://www.samba.org/samba/security/CVE-2026-58218.html
+  + CVE-2026-58221: Samba AD authenticated LDAP access domain takeover
+                    https://www.samba.org/samba/security/CVE-2026-58221.html
+  + CVE-2026-58222: Samba AD LDAP Compare filter injection and trusted-request
+                    confusion disclose protected attributes
+                    https://www.samba.org/samba/security/CVE-2026-58222.html
+  + CVE-2026-58224: The CTDB protocol has bounds checking issues
+                    https://www.samba.org/samba/security/CVE-2026-58224.html
+- Do not compress names for SRV and other non-allowlisted
+  RR types (thx Ivan Volchenko).
+- Fill creds REALM and principal in libsmbclient for DFS,
+  if no password is specified (thx Petr Usoltsev).
+
 * Fri Jun 05 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.10-alt1
 - Update to security release of Samba 4.22
 - Revert DRS replication fixes and improvements (enforcing schedules and
