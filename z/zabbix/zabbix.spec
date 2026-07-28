@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		86f12eab509
+%define svnrev		db132c325e9
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.28
+Version: 7.0.29
 Release: alt1
 Epoch: 1
 
@@ -38,7 +38,7 @@ BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
 BuildRequires: libcurl-devel libelf-devel libevent-devel libiksemel-devel libldap-devel libmysqlclient-devel libnet-snmp-devel libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel python3-base
-BuildRequires: perl-Switch zlib-devel /proc
+BuildRequires: perl-Switch zlib-devel /proc libzstd-devel
 %if_with ssh2
 BuildRequires: libssh2-devel
 %endif
@@ -901,6 +901,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Jul 28 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.29-alt1
+- 7.0.29
+
 * Tue Jul 07 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.28-alt1
 - 7.0.28
 
