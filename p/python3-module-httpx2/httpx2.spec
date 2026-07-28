@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.9.1
 Release: alt1
 
 Summary: A next generation HTTP client for Python
@@ -97,6 +97,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.9.1-alt1
+- Updated to 2.9.1.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.0-alt1
 - Updated to 2.7.0.
 

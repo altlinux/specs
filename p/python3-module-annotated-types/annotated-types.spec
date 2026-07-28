@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Reusable constraint types to use with typing.Annotated
@@ -64,6 +64,9 @@ this package.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Thu May 30 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.0-alt1
 - 0.6.0 -> 0.7.0.
 

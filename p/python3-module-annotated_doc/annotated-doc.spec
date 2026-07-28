@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Document parameters, class attributes, return types, and variables inline, with Annotated
@@ -66,7 +66,7 @@ Reasons to use annotated-doc:
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -84,5 +84,8 @@ Reasons to use annotated-doc:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.5-alt1
+- Updated to 0.0.5.
+
 * Sat Nov 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.4-alt1
 - Initial build for ALT Sisyphus.
