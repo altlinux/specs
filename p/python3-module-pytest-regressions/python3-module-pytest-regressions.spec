@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: Pytest plugin for regression testing
@@ -59,6 +59,9 @@ Fixtures to write regression tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 26 2026 Anton Zhukharev <ancieg@altlinux.org> 2.11.0-alt1
+- Updated to 2.11.0.
+
 * Mon Mar 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0.
 
