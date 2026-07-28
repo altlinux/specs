@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.8.2
+Version: 1.8.9
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -9,9 +9,9 @@ Group: System/Configuration/Hardware
 Url: https://github.com/benjamimgois/goverlay
 Source: https://github.com/benjamimgois/goverlay/archive/%version/%name-%version.tar.gz
 Patch: goverlay-enable-debuginfo-generation.patch
-
-BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt6pas-devel
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt6pas-devel libSDL2-devel
+ExcludeArch:    i586
 Requires: mangohud vulkan-tools vkBasalt
 Requires: qt6pas
 
@@ -38,8 +38,20 @@ Goverlay makes everything accessible in just a few clicks.
 %_iconsdir/hicolor/*/apps/*%name.png
 %_man1dir/%name.1*
 /usr/libexec/goverlay
+/usr/libexec/bgmod
+/usr/libexec/bgmod-uninstaller
+/usr/libexec/pascube
 %dir %_datadir/%name/assets/icons/
+%dir %_datadir/%name/assets/shaders/
+%dir %_datadir/%name/assets/textures/
+%dir %_datadir/%name/assets/video/
+%dir %_datadir/%name/bgmod/
 %_datadir/%name/assets/icons/*
+%_datadir/%name/assets/shaders/*
+%_datadir/%name/assets/textures/*
+%_datadir/%name/assets/video/*
+%_datadir/%name/assets/*
+%_datadir/%name/bgmod/*
 %dir %_datadir/%name/data/icons/
 %dir %_datadir/%name/data/icons/128x128/
 %dir %_datadir/%name/data/icons/256x256/
@@ -49,6 +61,9 @@ Goverlay makes everything accessible in just a few clicks.
 %_datadir/%name/data/icons/*/*
 
 %changelog
+* Wed Jul 29 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.9-alt1
+- 1.8.9
+
 * Tue Jun 16 2026 Ilya Mashkin <oddity@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
