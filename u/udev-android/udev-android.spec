@@ -1,8 +1,8 @@
 %define adbusersgroup adbusers
 
 Name:      udev-android
-Version:   20250525
-Release:   alt2
+Version:   20260423
+Release:   alt1
 
 Summary:   Udev rules for adb and fastboot
 
@@ -36,6 +36,9 @@ install -p -m644 51-android.rules %buildroot%_udevrulesdir
 %_udevrulesdir/51-android.rules
 
 %changelog
+* Tue Jul 14 2026 Grigory Ustinov <grenka@altlinux.org> 20260423-alt1
+- Automatically updated to 20260423.
+
 * Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 20250525-alt2
 - Added package VCS tag.
 

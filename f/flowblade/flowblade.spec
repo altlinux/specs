@@ -1,5 +1,5 @@
 Name: flowblade
-Version: 2.24.1
+Version: 2.24.2
 Release: alt1
 
 Summary: non-linear video editor
@@ -83,6 +83,9 @@ mv -v %buildroot%python3_sitelibdir/Flowblade/locale %buildroot%_datadir/Flowbla
 %_datadir/Flowblade
 
 %changelog
+* Tue Jul 14 2026 Grigory Ustinov <grenka@altlinux.org> 2.24.2-alt1
+- Automatically updated to 2.24.2.
+
 * Mon Apr 13 2026 Grigory Ustinov <grenka@altlinux.org> 2.24.1-alt1
 - Automatically updated to 2.24.1.
 

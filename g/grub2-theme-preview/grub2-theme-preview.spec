@@ -1,7 +1,7 @@
 %define modulename grub2_theme_preview
 
 Name:    grub2-theme-preview
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 
 Summary: Preview a full GRUB 2.x theme (or just a background image) using KVM / QEMU
@@ -49,5 +49,8 @@ sed -i "s|/usr/lib/grub|%_libdir/grub|" grub2_theme_preview/__main__.py
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Jul 14 2026 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Tue Mar 24 2026 Grigory Ustinov <grenka@altlinux.org> 2.9.1-alt1
 - Initial build for Sisyphus.
