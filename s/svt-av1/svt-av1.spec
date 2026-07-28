@@ -1,6 +1,6 @@
 %define abiversion 4
 Name: svt-av1
-Version: 4.0.1
+Version: 4.2.0
 Release: alt1
 
 Summary: Scalable Video Technology for AV1 Encoder
@@ -41,6 +41,7 @@ encoding / transcoding video applications.
 %package -n lib%name%abiversion
 Group: Video
 Summary: SVT-AV1 libraries
+Obsoletes: libsvt-av1 < 4.0.1
 
 %description -n lib%name%abiversion
 The Scalable Video Technology for AV1 Encoder (SVT-AV1 Encoder) is an
@@ -129,6 +130,12 @@ help2man -N --help-option=-help --no-discard-stderr --version-string=%version %b
 %doc Docs
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0
+
+* Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt2
+- add Obsoletes: libsvt-av1 to libsvt-av14 (ALT bug 58214)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
 - new version 4.0.1
 - rename libsvt-av1 to libsvt-av1-4 per Shared Libs Policy (soname 4)
