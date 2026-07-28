@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: A jQuery-like library for python
 License: BSD-3-Clause
@@ -24,6 +24,8 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cssselect
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-webtest
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-webob
 BuildRequires: python3-module-pytest
 %endif
 
@@ -42,8 +44,7 @@ manipulation.
 %pyproject_install
 
 %check
-# https://github.com/gawel/pyquery/issues/257
-%pyproject_run_pytest -k 'not (test_get or test_val_for_textarea or test_replaceWith or test_replaceWith_with_function or test_post)'
+%pyproject_run_pytest --ignore docs/pseudo_classes.rst -k 'not pyquery.cssselectpatch.JQueryTranslator.xpath_has_function'
 
 %files
 %doc *.rst *.txt
@@ -51,6 +52,9 @@ manipulation.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Jul 28 2026 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Fri Jan 23 2026 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
 - Fix FTBFS.
 
