@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname fplus 
+%define oname fplus
 
 Name:    lib%oname
-Version: 0.2.27
+Version: 0.2.28
 Release: alt1
 Summary: Functional Programming Library for C++. Write concise and readable C++ code
 Group:   Development/C++
@@ -31,7 +31,7 @@ pure and easy-to-use functions that free you from implementing commonly used
 flows of control over and over again.
 
 %package devel
-Summary: Functional Programming Library for C++. Write concise and readable C++ code 
+Summary: Functional Programming Library for C++. Write concise and readable C++ code
 Group:   Development/C++
 
 %description devel
@@ -61,5 +61,8 @@ flows of control over and over again.
 %_datadir/cmake/*
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 0.2.28-alt1
+- 0.2.28.
+
 * Sat Apr 11 2026 L.A. Kostis <lakostis@altlinux.ru> 0.2.27-alt1
 - Initial build for ALTLinux.
