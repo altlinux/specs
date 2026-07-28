@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hardinfo2
-Version: 2.2.16
-Release: alt2.ge49ec08d
+Version: 2.3.1
+Release: alt1
 
 Summary: System Information and Benchmark for Linux Systems
 License: GPL-2.0-or-later
@@ -11,6 +11,7 @@ Url: https://www.hardinfo2.org
 Vcs: https://github.com/hardinfo2/hardinfo2
 
 Source: %name-%version.tar
+Patch: alt-hardinfo2-ipmi-sensors.patch
 
 # addition tools according to upstream
 Requires: lm_sensors3
@@ -45,6 +46,7 @@ It can benchmark your system and compare to other machines online.
 
 %prep
 %setup
+%patch -p 1
 
 %build
 %cmake -DHARDINFO2_QT5=0
@@ -74,6 +76,9 @@ install -D %_builddir/%{name}-%{version}/tools/hardinfo2 %buildroot/%_initdir/%n
 %_initdir/%name
 
 %changelog
+* Tue Jul 28 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.1-alt1
+- Updated from 2.2.16 to 2.3.1
+
 * Mon Mar 23 2026 Vladislav Glinkin <smasher@altlinux.org> 2.2.16-alt2.ge49ec08d
 - Built from commit with memory leaks fixes (Closes: #58315)
 
