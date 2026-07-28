@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 4.2.1
+Version: 4.3.1
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -139,6 +139,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 4.3.1-alt1
+- 4.3.1.
+
 * Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 4.2.1-alt1
 - 4.2.1.
 
