@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 
 Summary: pytest plugin that allows to customize the test execution order
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -57,11 +59,13 @@ features like ordering relative to other tests.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE AUTHORS CHANGELOG.md README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 28 2026 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
@@ -73,4 +77,3 @@ features like ordering relative to other tests.
 
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.0-alt1
 - Built for ALT Sisyphus.
-
