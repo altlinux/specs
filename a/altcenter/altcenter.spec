@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.41
+Release: alt0.42
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,19 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Jul 27 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.42
+- Auditd logs settings: added localization.
+- Auditd logs settings: added custom rule management.
+- Auditd logs settings: added custom rule deletion.
+- Auditd logs settings: added custom rule descriptions.
+- Auditd logs settings: saved custom rules.
+- Auditd logs settings: added custom rules UI.
+- Auditd logs settings: enabled Apply only for changes.
+- FSTEC: added JSON export.
+- Policy: renamed policy (ALT #59594).
+- Components: implemented package-by-package installation (ALT #59410, ALT #59622).
+- Policy: fixed GRUB recovery mode blocking.
+
 * Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.41
 - FSTEC: Graphical display changed.
 
