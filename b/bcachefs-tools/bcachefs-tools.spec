@@ -1,5 +1,5 @@
 Name: bcachefs-tools
-Version: 1.38.6
+Version: 1.38.8
 Release: alt1
 
 Summary: Userspace tools and docs for bcachefs
@@ -7,6 +7,8 @@ License: GPLv2
 Group: System/Kernel and hardware
 URL: https://bcachefs.org/
 VCS: http://evilpiepirate.org/git/bcachefs-tools.git
+
+ExclusiveArch: aarch64 x86_64
 
 Source0: %name-%version.tar
 Source1: crates.tar
@@ -61,6 +63,9 @@ rm -rf %buildroot%_usrsrc/bcachefs-%version
 %_man8dir/bcachefs.8*
 
 %changelog
+* Sat Jul 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.38.8-alt1
+- 1.38.8 released
+
 * Mon Jul 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.38.6-alt1
 - 1.38.6 released
 
