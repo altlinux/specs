@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-wlr
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: xdg-desktop-portal backend for wlroots
@@ -63,6 +63,9 @@ mkdir -p %buildroot/%_xdgconfigdir/%name
 
 
 %changelog
+* Tue Jul 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4
+
 * Thu Jun 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
