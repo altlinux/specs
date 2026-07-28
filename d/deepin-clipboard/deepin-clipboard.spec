@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 6.1.27
+Version: 6.1.33
 Release: alt1
 
 Summary: Clipboard for DDE
@@ -57,10 +57,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dbus-1/services/org.deepin.dde.Clipboard1.service
 %_datadir/dbus-1/services/org.deepin.dde.ClipboardLoader1.service
 %_datadir/dbus-1/services/org.deepin.dde.daemon.Clipboard1.service
+%_sysconfdir/xdg/autostart/%repo.desktop
 %_userunitdir/%repo-daemon.service
 %_userunitdir/%repo.service
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/dde-clipboard.service
 %dir %_datadir/dde-dock/
 %dir %_datadir/dde-dock/icons/
 %dir %_datadir/dde-dock/icons/dcc-setting/
@@ -81,6 +80,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Tue Jul 28 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.33-alt1
+- New version 6.1.33.
+
 * Fri Apr 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.27-alt1
 - New version 6.1.27.
 
