@@ -1,8 +1,8 @@
 %def_with check
-%define abiver 34
+%define abiver 35
 
 Name:    albert
-Version: %abiver.0.10
+Version: %abiver.1.0
 Release: alt1
 
 Summary: A fast and flexible keyboard launcher
@@ -105,6 +105,12 @@ Shared libraries for running Albert launcher application
 %setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34
 %patch0 -p2
 
+# Avoid error: inconsistent deduction for 'auto': 'long long int' and then 'int'
+# on i568.
+%ifarch %ix86
+sed -i 's/0ll/0/g' src/util/querypreprocessing.cpp
+%endif
+
 %build
 %cmake \
     -DBUILD_APPLICATIONS_XDG=ON \
@@ -140,6 +146,9 @@ Shared libraries for running Albert launcher application
 %_libdir/lib%name.so.%abiver.*
 
 %changelog
+* Tue Jul 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 35.1.0-alt1
+- New version.
+
 * Thu Feb 26 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 34.0.10-alt1
 - New version.
 
