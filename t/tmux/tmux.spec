@@ -4,7 +4,7 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.6b
+Version: 3.7b
 Release: alt1
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
@@ -70,6 +70,9 @@ make -C regress ||
 %_man1dir/*
 
 %changelog
+* Tue Jul 28 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.7b-alt1
+- Update to tmux-3.7b (2026-07-28).
+
 * Fri May 22 2026 Vitaly Chikunov <vt@altlinux.org> 3.6b-alt1
 - Update to tmux-3.6b (2026-05-22).
 
