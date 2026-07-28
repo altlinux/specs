@@ -6,7 +6,7 @@
 
 Name: python3-module-fastar
 Version: 0.11.0
-Release: alt2
+Release: alt3
 
 Summary: High-level bindings for the Rust tar crate
 License: MIT
@@ -27,15 +27,11 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: python3-dev
 BuildRequires: libzstd-devel
 BuildRequires: /proc
-# zstd is supported by python 3.14+.
-%add_pyproject_deps_build_filter backports-zstd
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: python3-module-typing-extensions
 %add_pyproject_deps_check_filter prek
 %pyproject_builddeps_metadata
-# zstd is supported by python 3.14+.
-%add_pyproject_deps_check_filter backports-zstd
 %pyproject_builddeps_check
 %endif
 
@@ -46,6 +42,7 @@ uncompressed tar archives in Python.
 
 %prep
 %setup -a3
+%autopatch -p1
 %SOURCE2 --root "%buildroot%prefix"
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -69,6 +66,10 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 29 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt3
+- Reworked the previous change: instead of manually filtering out the
+  backports-zstd dependency, apply the upstream change of the pyproject.toml.
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.0-alt2
 - Filtered backports-zstd from build dependencies as long as zstd is now shipped
   with Python 3.14+.
