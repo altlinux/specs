@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Box of handy tools for Sphinx
@@ -43,5 +43,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo sphinx-toolbox}
 
 %changelog
+* Tue Jul 28 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.0-alt1
+- New version.
+
 * Sat Jun 06 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - Initial build for Sisyphus.
