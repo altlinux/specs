@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.4.12
+Version: 1.5.0
 Release: alt1
 
 Summary: non-blocking redis client for python
@@ -41,6 +41,9 @@ in Python. It uses Twisted for the asynchronous communication with redis.
 
 
 %changelog
+* Tue Jul 28 2026 Anton Vyatkin <toni@altlinux.org> 1:1.5.0-alt1
+- New version 1.5.0.
+
 * Thu May 07 2026 Anton Vyatkin <toni@altlinux.org> 1:1.4.12-alt1
 - New version 1.4.12.
 
