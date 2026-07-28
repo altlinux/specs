@@ -2,7 +2,7 @@
 %define soname 8
 
 Name: libffi
-Version: 3.5.2
+Version: 3.7.1
 Release: alt1
 Epoch: 1
 
@@ -73,7 +73,7 @@ Foreign Function Interface development.
 
 %build
 %autoreconf
-%configure --disable-exec-static-tramp
+%configure --enable-exec-static-tramp
 %make_build
 
 %check
@@ -99,6 +99,10 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 1:3.7.1-alt1
+- 3.5.2 -> 3.7.1
+- re-enabled exec static trampolines
+
 * Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 1:3.5.2-alt1
 - 3.5.1 -> 3.5.2
 
