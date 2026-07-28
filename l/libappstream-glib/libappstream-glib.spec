@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -167,6 +167,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Tue Jul 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4
+
 * Wed Jun 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
