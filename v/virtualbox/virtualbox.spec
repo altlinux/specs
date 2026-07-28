@@ -22,7 +22,7 @@
 %def_disable debug
 
 %def_with manual
-%def_without manualbuild
+%def_with manualbuild
 %def_without manualchm
 %def_without manualsdk
 %def_with additions
@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.2.12
+Version: 7.2.14
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -96,6 +96,9 @@ Source25:	virtualbox-vboxvideo.modprobe.conf
 Source26:	virtualbox-vboxguest.modprobe.conf
 Source27:	virtualbox-vmsvga.service
 Source28:	virtualbox-addition.conf
+
+# Cumulative patch adding Russian docs + help browser language switcher:
+Patch1:		add-ru-docs-with-lang-switcher.patch
 Source29:	virtualbox-vboxsf.modprobe.conf
 Source30:	vboxadd-service.service
 Source31:	virtualbox.role
@@ -165,8 +168,14 @@ BuildRequires: libpam-devel
 %if_with manualbuild
 BuildRequires: texlive-latex-recommended
 BuildRequires: texlive-fontsextra texlive-texmf
-BuildRequires: docbook-style-xsl
+BuildRequires: fonts-ttf-google-noto-sans fonts-ttf-google-noto-serif fonts-ttf-dejavu
+BuildRequires: docbook-style-xsl fontconfig
 BuildRequires: /usr/bin/chmcmd
+# DITA-OT toolkit + JVM: VirtualBox 7.1+ generates the user manual via the
+# DITA-OT Java pipeline (doc/manual/Makefile.kmk), producing HTML -> qhelp/PDF.
+BuildRequires: dita-ot java-17-openjdk-devel
+# qhelpgenerator drives .qch/.qhc production for the in-app Qt Assistant help.
+BuildRequires: qt6-tools
 %endif
 %if_with manualchm
 BuildRequires: i586-wine-vanilla
@@ -353,6 +362,7 @@ This package contains VirtualBox SDK for XPCOM.
 %prep
 %setup -q -n %distarchive
 %patch -p1
+%patch1 -p1
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -458,12 +468,41 @@ echo "VBOX_WITH_VBOX_IMG         := 1" >> LocalConfig.kmk
 
 echo "VBOX_PATH_DOCBOOK          := /usr/share/xml/docbook/xsl-stylesheets" >> LocalConfig.kmk
 echo "VBOX_PATH_DOCBOOK_DTD      := /usr/share/xml/docbook/dtd/4.5" >> LocalConfig.kmk
+%if_with manualbuild
+# VirtualBox looks up Java 17+ via VBOX_JAVA17PLUS_HOME; configure --disable-java
+# leaves that empty, so pin the system JVM explicitly. (VBOX_DITA_OT_PATH is set
+# via a tools/common/dita-ot/v4.0.2-r1 symlink in %build instead, because
+# doc/manual/Config.kmk unconditionally overrides the variable.)
+echo "VBOX_JAVA17PLUS_HOME       := /usr/lib/jvm/java-17" >> LocalConfig.kmk
+# Restore PDF output (was forcibly disabled when docs were turned off in 7.1.4-alt1).
+echo "VBOX_WITH_DOCS_PDF         := 1" >> LocalConfig.kmk
+# Build the Russian UserManual alongside en_US. The ru_RU translation ships
+# with this package (under doc/manual/ru_RU/dita/); Config.kmk enables
+# VBOX_WITH_DOCS_TRANSLATIONS by default, but the extra language list is
+# commented out upstream, so extend it here.
+echo "VBOX_MANUAL_ADD_LANGUAGES += ru_RU" >> LocalConfig.kmk
+%else
 echo "VBOX_WITH_DOCS_PDF         :=" >> LocalConfig.kmk
+%endif
 
 #source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 # Set NPROCS=1 due build server constraints:
 # https://lists.altlinux.org/pipermail/devel/2018-July/204964.html
+
+%if_with manualbuild
+# doc/manual/Config.kmk unconditionally rewrites VBOX_DITA_OT_PATH to
+# $(KBUILD_DEVTOOLS)/common/dita-ot/v4.0.2-r1, ignoring the LocalConfig.kmk
+# value. Satisfy it by symlinking the system dita-ot install into the expected
+# devtools path so the ant classpath resolves to the real jars.
+mkdir -p tools/common/dita-ot
+ln -sfn %_datadir/dita-ot tools/common/dita-ot/v4.0.2-r1
+# ALT's java-17 launcher relies on the $ORIGIN RPATH for libjli.so, which
+# does not expand in the hasher build chroot. Add the JVM lib dir to
+# LD_LIBRARY_PATH so java can start (needed by the DITA-OT pipeline).
+JH=$(readlink -f /usr/lib/jvm/java-17)
+export LD_LIBRARY_PATH="$JH/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+%endif
 
 NPROCS=1; kmk -j$NPROCS  VBOXDIR=%vboxdir
 
@@ -711,6 +750,10 @@ mkdir -p %buildroot%_defaultdocdir/%name-doc-%version
 %if_with manualbuild
 install -m644 UserManual.pdf %buildroot%_defaultdocdir/%name-doc-%version/
 cp -r ../obj/manual/en_US/qhelp/* %buildroot%_defaultdocdir/%name-doc-%version/
+install -m644 ../obj/manual/ru_RU/UserManual.pdf %buildroot%_defaultdocdir/%name-doc-%version/UserManual_ru_RU.pdf
+mkdir -p %buildroot%_defaultdocdir/%name-doc-%version/ru
+cp ../obj/manual/ru_RU/qhelp/UserManual.qch %buildroot%_defaultdocdir/%name-doc-%version/ru/UserManual.qch
+cp ../obj/manual/ru_RU/qhelp/UserManual.qhc %buildroot%_defaultdocdir/%name-doc-%version/ru/UserManual.qhc
 %endif
 %if_with manualchm
 install -m644 VirtualBox.chm %buildroot%_defaultdocdir/%name-doc-%version/
@@ -929,6 +972,15 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Jul 27 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.14-alt1
+- Update to newest version 7.2.14
+
+* Thu Jul 16 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.12-alt2
+- Full Russian UserManual translation (436 DITA topics)
+- Russian VBoxManage command descriptions (55 man pages)
+- Help browser language switcher with per-language Qt help staging
+- Fix qhelp HTML encoding for non-ASCII languages
+
 * Wed Jul 01 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.12-alt1
 - Update to newest version 7.2.12
 
