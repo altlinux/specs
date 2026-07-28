@@ -1,6 +1,6 @@
 Name: wmMoonClock
 Version: 1.27
-Release: alt5
+Release: alt6
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -17,6 +17,7 @@ Patch2: 02_update_time.diff
 Patch3: 03_add_southern_hemisphere_support.diff
 Patch4: 04_fix_hyphen_used_as_minus_sign.diff
 Patch5: %name-1.27-alt-vars.patch
+Patch6: %name-1.27-gcc15-c23.patch
 
 # Automatically added by buildreq on Thu Aug 27 2009
 BuildRequires: libXext-devel libXpm-devel
@@ -33,6 +34,7 @@ the icon brings up different displays -- there are 5 in all.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p2
+%patch6 -p2
 
 %build
 cd Src
@@ -49,6 +51,10 @@ install -p -D -pm644 %name.1 $RPM_BUILD_ROOT%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sat Jul 25 2026 Pavel Vasenkov <pav@altlinux.org> 1.27-alt6
+- FTBFS workaround
+- adopt package for GCC-15 C23
+
 * Thu Mar 11 2021 Pavel Vasenkov <pav@altlinux.org> 1.27-alt5
 - FTBFS workaround
 - changed global variables definitions
