@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define git 24d9c9d
+%define git %nil
 
 Name:    frugally-deep
-Version: 0.18.2
-Release: alt1.g%{git}
+Version: 0.20.0
+Release: alt1
 Summary: Use Keras models in C++ with ease
 Group:   Development/C++
 License: MIT
@@ -65,6 +65,9 @@ A small header-only library written in modern and pure C++.
 %_datadir/cmake/*
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 0.20.0-alt1
+- 0.20.0.
+
 * Sat Apr 11 2026 L.A. Kostis <lakostis@altlinux.ru> 0.18.2-alt1.g24d9c9d
 - Initial build for ALTLinux.
 
