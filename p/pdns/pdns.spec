@@ -5,7 +5,7 @@
 
 Name: pdns
 Version: 4.9.1
-Release: alt1.1
+Release: alt1.2
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -13,6 +13,7 @@ Url: http://powerdns.com
 Source0: %name-%version.tar
 Patch4: %name-4.2.2-alt-fix-missing-include.patch
 Patch5: pdns-4.9.1-fix-build-with-boost-1.86.0.patch
+Patch6: added_cstdint-alt-build.patch
 ExcludeArch: %ix86 %arm %mips32 ppc
 
 BuildRequires: gcc-c++ boost-program_options-devel curl libcurl-devel libsqlite3-devel
@@ -143,6 +144,7 @@ This package contains the ixfrdist program.
 %setup
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %ifarch %e2k
 sed -i 's/constexpr QClass QClass/inline &/' pdns/qtype.hh
 %endif
@@ -317,6 +319,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Tue Jul 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.9.1-alt1.2
+- NMU: fixed FTBFS
+
 * Sat Oct 19 2024 Ivan A. Melnikov <iv@altlinux.org> 4.9.1-alt1.1
 - NMU: fix build with boost 1.86.0
 
