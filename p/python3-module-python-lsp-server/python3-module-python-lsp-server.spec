@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.0
-Release: alt2
+Version: 1.15.0
+Release: alt1
 
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -56,12 +58,14 @@ export CI=1
     --deselect 'test/plugins/test_symbols.py::test_symbols_all_scopes_with_jedi_environment'
 
 %files
-%doc LICENSE CHANGELOG.md
 %_bindir/pylsp
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 26 2026 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
+- Updated to 1.15.0.
+
 * Wed Jul 22 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt2
 - Fixed FTBFS (jedi>=0.20.0).
 
