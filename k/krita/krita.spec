@@ -37,7 +37,7 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 6.0.2
+Version: 6.0.3
 Release: alt1
 %K5init no_altplace
 
@@ -53,8 +53,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_libdir/krita-python-libs
 %add_python3_path %_datadir/krita/pykrita
 %add_python3_req_skip PyKrita pykrita
-#Requires: kde5-kross-python
 Requires: create-resources
+Requires: kde5-runtime
 
 Provides: calligra-krita = %EVR
 Obsoletes: calligra-krita < %EVR
@@ -519,6 +519,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Tue Jul 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.3-alt1
+- new version
+
 * Thu May 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt1
 - new version
 
