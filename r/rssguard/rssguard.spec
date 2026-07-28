@@ -1,6 +1,6 @@
 
 Name: rssguard
-Version: 5.2.1
+Version: 5.2.3
 Release: alt1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
@@ -44,7 +44,7 @@ BuildRequires:  pkgconfig(Qt6WebEngineCore)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(mpv)
 BuildRequires:  cmake
-BuildRequires:  awk
+BuildRequires:  gawk
 
 
 Requires:       icon-theme-hicolor
@@ -110,6 +110,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Tue Jul 28 2026 Alexei Mezin <alexvm@altlinux.org> 5.2.3-alt1
+- New version
+
 * Fri Jul 03 2026 Alexei Mezin <alexvm@altlinux.org> 5.2.1-alt1
 - New version
 
