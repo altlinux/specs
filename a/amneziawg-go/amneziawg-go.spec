@@ -1,5 +1,5 @@
 Name: amneziawg-go
-Version: 0.2.18
+Version: 3.0.1
 Release: alt1
 Epoch: 1
 
@@ -44,6 +44,9 @@ go env
 %_bindir/%name
 
 %changelog
+* Mon Jul 27 2026 Nazarov Denis <nenderus@altlinux.org> 1:3.0.1-alt1
+- New version 3.0.1.
+
 * Thu Jun 11 2026 Nazarov Denis <nenderus@altlinux.org> 1:0.2.18-alt1
 - New version 0.2.18.
 

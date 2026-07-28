@@ -1,11 +1,11 @@
-%define git_commit_hash 72ee32af
+%define git_commit_hash 4d28f819
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
-%define amnezia_xray_bindings_version 1.1.0
+%define amnezia_xray_bindings_version 1.3.0
 
 Name: amnezia-vpn
-Version: 4.8.21.0
+Version: 5.0.0.5
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -47,7 +47,7 @@ Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
 Requires: amnezia-tun2socks >= 2.5.4
-Requires: amneziawg-go >= 0.2.18
+Requires: amneziawg-go >= 3.0.1
 Requires: cloak-client
 Requires: libnss-resolve
 Requires: openvpn
@@ -87,42 +87,50 @@ pushd ../amnezia-xray-bindings-%amnezia_xray_bindings_version
 %make_build
 popd
 
+# Create cmake config for amnezia-xray-bindings
+%__mkdir_p ../amnezia-xray-bindings-%amnezia_xray_bindings_version/cmake
+cat > ../amnezia-xray-bindings-%amnezia_xray_bindings_version/cmake/amnezia-xray-bindings-config.cmake << 'EOF'
+if(NOT TARGET amnezia::xray-bindings)
+    add_library(amnezia::xray-bindings STATIC IMPORTED)
+    set_target_properties(amnezia::xray-bindings PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/../build/amnezia_xray.a"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/../build"
+    )
+endif()
+EOF
+
 # Fix utilites exec path
 sed \
-    -e 's|return Utils::executable("../../client/bin/openvpn", true);|return Utils::usrExecutable("openvpn");|' \
-    -e 's|return Utils::executable("../../client/bin/tun2socks", true);|return Utils::usrExecutable("amnezia-tun2socks");|' \
-    -i client/utilities.cpp
+    -e 's|return Utils::executable("openvpn", true);|return Utils::usrExecutable("openvpn");|' \
+    -e 's|return Utils::executable("tun2socks", true);|return Utils::usrExecutable("amnezia-tun2socks");|' \
+    -i client/core/utils/utilities.cpp
+
+# Fix libssh target name (ALT provides 'ssh', upstream expects 'ssh::ssh')
+sed -i 's|ssh::ssh|ssh|g' client/cmake/3rdparty.cmake
 
 # Fix WireGuard GO exec path
-sed -e 's|m_tunnel.start(appPath.filePath("../../client/bin/wireguard-go"), wgArgs);|m_tunnel.start("%_bindir/amneziawg-go", wgArgs);|' -i client/platforms/linux/daemon/wireguardutilslinux.cpp
+sed -e 's|m_tunnel.start(appPath.filePath("amneziawg-go"), wgArgs);|m_tunnel.start("%_bindir/amneziawg-go", wgArgs);|' -i client/platforms/linux/daemon/wireguardutilslinux.cpp
 
 # Fix update resolv conf path
-sed -e 's|.arg(qApp->applicationDirPath());|.arg("%_libexecdir/%name");|' -i client/configurators/openvpn_configurator.cpp
-
-# Use system libs instead 3rd prebuild
-sed \
-    -e 's|set(ZLIB_LIB_PATH "${LIBSSH_ROOT_DIR}/linux/x86_64/libz.a")|set(ZLIB_LIB_PATH "%_libdir/libz.so")|' \
-    -e 's|set(LIBSSH_LIB_PATH "${LIBSSH_ROOT_DIR}/linux/x86_64/libssh.a")|set(LIBSSH_LIB_PATH "%_libdir/libssh.so")|' \
-    -e 's|set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/linux/include")|set(OPENSSL_INCLUDE_DIR "%_includedir")|' \
-    -e 's|set(OPENSSL_LIB_SSL_PATH "${OPENSSL_ROOT_DIR}/linux/x86_64/libssl.a")|set(OPENSSL_LIB_SSL_PATH "%_libdir/libssl.so")|' \
-    -e 's|set(OPENSSL_LIB_CRYPTO_PATH "${OPENSSL_ROOT_DIR}/linux/x86_64/libcrypto.a")|set(OPENSSL_LIB_CRYPTO_PATH "%_libdir/libcrypto.so")|' \
-    -e 's|set(OPENSSL_USE_STATIC_LIBS TRUE)|set(OPENSSL_USE_STATIC_LIBS FALSE)|' \
-    -i client/cmake/3rdparty.cmake
-sed \
-    -e 's|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../client/3rd-prebuilt/3rd-prebuilt/amnezia_xray")|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../amnezia-xray-bindings-%amnezia_xray_bindings_version")|' \
-    -e 's|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64/amnezia_xray.a")|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/build/amnezia_xray.a")|' \
-    -e 's|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64")|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/build")|' \
-    -e 's|set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/linux/include")|set(OPENSSL_INCLUDE_DIR "%_includedir")|' \
-    -e 's|set(OPENSSL_LIB_CRYPTO_PATH "${OPENSSL_ROOT_DIR}/linux/x86_64/libcrypto.a")|set(OPENSSL_LIB_CRYPTO_PATH "%_libdir/libcrypto.so")|' \
-    -e 's|set(OPENSSL_USE_STATIC_LIBS TRUE)|set(OPENSSL_USE_STATIC_LIBS FALSE)|' \
-    -i service/server/CMakeLists.txt
+sed -e 's|.arg(qApp->applicationDirPath());|.arg("%_libexecdir/%name");|' -i client/core/configurators/openVpnConfigurator.cpp
 
 # Set git commit
 sed -e 's|add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")|add_definitions(-DGIT_COMMIT_HASH="%git_commit_hash")|' -i client/CMakeLists.txt
 
+# Disable Conan provider
+sed -i '/set(CMAKE_PROJECT_TOP_LEVEL_INCLUDES/,/CACHE STRING "" FORCE)/d' CMakeLists.txt
+
+# Remove bundled binary copy/install (handled by system packages via Requires)
+sed -i '/# install non-linked dependencies/,/# install drivers/{
+    /# install drivers/!d
+}' service/server/CMakeLists.txt
+
 # Build Amnezia VPN
+export LC_ALL=C.UTF-8
 %add_optflags -Wno-error=return-type
-%cmake -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo
+%cmake \
+    -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+    -DCMAKE_PREFIX_PATH:PATH=%_builddir/amnezia-xray-bindings-%amnezia_xray_bindings_version/cmake
 %cmake_build
 
 %install
@@ -130,23 +138,21 @@ sed -e 's|add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")|add_definition
 
 %__install -Dp -m0755 %_cmake__builddir/client/AmneziaVPN %buildroot%_bindir/
 %__install -Dp -m0644 deploy/data/linux/AmneziaVPN.png %buildroot%_iconsdir/hicolor/512x512/apps/
+%__install -Dp -m0644 deploy/data/linux/AmneziaVPN.desktop %buildroot%_desktopdir/AmneziaVPN.desktop
+
+sed -i \
+    -e 's|/usr/share/pixmaps/AmneziaVPN.png|AmneziaVPN|' \
+    -e '/Version=/d' \
+    %buildroot%_desktopdir/AmneziaVPN.desktop
 
 sed \
-    -e 's|/usr/share/pixmaps/||' \
-    -e 's|.png||' \
-    deploy/installer/config/AmneziaVPN.desktop.in > %buildroot%_desktopdir/AmneziaVPN.desktop
-
-sed -i '/Version=/d' %buildroot%_desktopdir/AmneziaVPN.desktop
-
-sed \
-    -e 's|/opt/AmneziaVPN/service/||' \
-    -e 's|.sh||' \
+    -e 's|/opt/AmneziaVPN/bin/||' \
     deploy/data/linux/AmneziaVPN.service > %buildroot%_unitdir/AmneziaVPN.service
 
 sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 
 %__install -Dp -m0755 %_cmake__builddir/service/server/AmneziaVPN-service %buildroot%_bindir/
-%__install -Dp -m0755 deploy/data/linux/client/bin/update-resolv-conf.sh %buildroot%_libexecdir/%name/
+%__install -Dp -m0755 deploy/data/linux/update-resolv-conf.sh %buildroot%_libexecdir/%name/
 
 %post service
 %post_systemd_postponed AmneziaVPN.service
@@ -166,6 +172,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Jul 28 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.0.5-alt1
+- Version 5.0.0.5
+
 * Tue Jul 14 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.21.0-alt1
 - Version 4.8.21.0
 
