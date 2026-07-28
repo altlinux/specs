@@ -22,7 +22,7 @@
 
 Name: uhd
 Version: 4.10.0.0
-Release: alt2
+Release: alt3
 Summary: Universal Hardware Driver for Ettus Research products
 License: GPL-3.0-or-later
 Group: Engineering
@@ -201,7 +201,6 @@ popd
 install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 
 %files
-%exclude %_docdir/%name/doxygen
 %exclude %_datadir/uhd/images
 %doc _tmpdoc/*
 %_bindir/*
@@ -224,12 +223,11 @@ install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usr
 %files devel
 %_includedir/*
 %_libdir/lib*.so
-%dir %_libdir/cmake/uhd
-%_libdir/cmake/uhd/*.cmake
+%_cmakedir/%name
 %_pkgconfigdir/*.pc
 
 %files doc
-%doc %_docdir/%name/doxygen
+%doc %_docdir/%name
 
 %files tools
 %doc tools/README.md
@@ -245,6 +243,11 @@ install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usr
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Mon Jul 27 2026 Valery Zabrovsky <brow@altlinux.org> 4.10.0.0-alt3
+- Fix the fix for generated CMake config.
+  + The Boost components list was not actually exported.
+- Minor spec cleanup.
+
 * Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 4.10.0.0-alt2
 - Fix generated CMake config to match Boost headers.
 - Spec: add URL and VCS tags.
