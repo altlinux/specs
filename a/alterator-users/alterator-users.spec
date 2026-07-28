@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.32
+Version: 10.33
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -63,6 +63,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_datadir/alterator-framework/modules/users/ts/users_ru.qm
 
 %changelog
+* Tue Jul 28 2026 Ivan Khanas <xeno@altlinux.org> 10.33-alt1
+- Fix: validate home directory path (closes: #47387).
+
 * Fri Jul 10 2026 Maria Alexeeva <alxvmr@altlinux.org> 10.32-alt1
 - Feat: Add alterator-framework UI support (thx Oleg Chagaev).
 - Feat: Add custom avatar selection for the alterator-framework version
