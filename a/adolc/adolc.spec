@@ -7,7 +7,7 @@
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
 Version: 2.7.2
-Release: alt0.4
+Release: alt0.5
 Group: Sciences/Mathematics
 License: EPL-1.0 or GPL-2.0+
 Url: https://github.com/coin-or/ADOL-C
@@ -30,6 +30,7 @@ Source13: README
 
 Patch0: %name-2.7.2-alt-loongarch64-boost.patch
 Patch1: %name-2.7.2-alt-gcc14-fix.patch
+Patch2: %name-2.7.2-remove-boost-system.patch
 
 Requires: lib%name = %EVR
 Requires: %name-examples = %EVR
@@ -179,6 +180,9 @@ chrpath -d %buildroot%_libdir/*.so
 %_libdir/%name-examples
 
 %changelog
+* Tue Jul 28 2026 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.5
+- Fix FTBFS with new boost (remove boost::system).
+
 * Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.4
 - Fix FTBFS with gcc14.
 
