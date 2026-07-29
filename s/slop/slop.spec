@@ -1,6 +1,6 @@
 Name:          slop
-Version:       7.6.15
-Release:       alt0.2
+Version:       7.7
+Release:       alt1
 Summary:       slop (Select Operation) is an application that queries for a selection from the user and prints the region to stdout
 License:       GPLv3
 Group:         Graphics
@@ -14,12 +14,12 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libglm-devel
-BuildRequires: libX11-devel
-BuildRequires: libGLEW-devel
-BuildRequires: libXrender-devel
-BuildRequires: libXext-devel
-BuildRequires: libEGL-devel
-BuildRequires: libicu-devel
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(glew)
+BuildRequires: pkgconfig(xrender)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(egl)
+BuildRequires: pkgconfig(icu-uc)
 
 %description
 slop (Select Operation) is an application that queries for a selection from
@@ -114,6 +114,10 @@ Features:
 %_libdir/*.so.%version
 
 %changelog
+* Tue Jul 28 2026 Pavel Skrylev <majioa@altlinux.org> 7.7-alt1
+- ^ 7.6p15 -> 7.7
+- > used pkgconfig indirect deps for build stage
+
 * Tue Mar 18 2025 Ivan A. Melnikov <iv@altlinux.org> 7.6.15-alt0.2
 - NMU: build with recent libicu (fixes FTBFS on loongarch64)
 
