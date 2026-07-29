@@ -4,7 +4,7 @@
 
 Name: fmt
 Version: 12.2.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -54,6 +54,9 @@ sed -i 's/fegetexceptflag(&fe, FE_ALL_EXCEPT)/fe = 0/' test/format-test.cc
 sed -i 's/FMT_USE_BITINT 1/FMT_USE_BITINT 0/' include/fmt/base.h
 %endif
 
+# Restore original logo
+sed -i '1s/.*/# {fmt}/' README.md
+
 # Remove political badge
 sed -i '/\[!\[Support/,+1d' README.md
 
@@ -85,6 +88,9 @@ sed -i '/\[!\[Support/,+1d' README.md
 %_libdir/lib%name.so
 
 %changelog
+* Wed Jul 29 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt3
+- Restore original logo
+
 * Sat Jun 20 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt2
 - Pack libfmt-c.a into devel subpackage
 
