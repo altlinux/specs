@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.63b1
-Release: alt2
+Release: alt3
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -41,6 +41,7 @@ BuildArch: noarch
 %package -n python3-module-%mod_name-instrumentation
 Summary: OpenTelemetry Instrumentation
 Group: Development/Python3
+Provides: python3(opentelemetry.instrumentation)
 
 %description -n python3-module-%mod_name-instrumentation
 This package provides commands that help automatically instrument a program.
@@ -75,6 +76,34 @@ Group: Development/Python3
 %description -n python3-module-%mod_name-instrumentation-wsgi
 This library provides a WSGI middleware that can be used on any WSGI framework
 (such as Django / Flask) to track requests timing through OpenTelemetry.
+
+%package -n python3-module-%mod_name-instrumentation-celery
+Summary: OpenTelemetry Celery Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-celery
+This library allows tracing Celery tasks.
+
+%package -n python3-module-%mod_name-instrumentation-psycopg2
+Summary: OpenTelemetry Psycopg2 Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-psycopg2
+This library allows tracing PostgreSQL queries made by the psycopg2 library.
+
+%package -n python3-module-%mod_name-instrumentation-httpx
+Summary: OpenTelemetry HTTPX Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-httpx
+This library allows tracing HTTP requests made by the httpx library.
+
+%package -n python3-module-%mod_name-instrumentation-botocore
+Summary: OpenTelemetry Botocore Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-botocore
+This library allows tracing AWS API calls made by the botocore library.
 
 %package -n python3-module-%mod_name-propagator-aws-xray
 Summary: OpenTelemetry Propagator for AWS X-Ray Service
@@ -113,7 +142,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,django,requests,wsgi}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_build
     popd
@@ -136,7 +165,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,django,requests,wsgi}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_install
     popd
@@ -160,7 +189,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,django,requests,wsgi}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_run_pytest
     popd
@@ -215,6 +244,26 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/wsgi
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-wsgi}
 
+%files -n python3-module-%mod_name-instrumentation-celery
+%doc instrumentation/%mod_name-instrumentation-celery/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/celery
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-celery}
+
+%files -n python3-module-%mod_name-instrumentation-psycopg2
+%doc instrumentation/%mod_name-instrumentation-psycopg2/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/psycopg2
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-psycopg2}
+
+%files -n python3-module-%mod_name-instrumentation-httpx
+%doc instrumentation/%mod_name-instrumentation-httpx/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/httpx
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-httpx}
+
+%files -n python3-module-%mod_name-instrumentation-botocore
+%doc instrumentation/%mod_name-instrumentation-botocore/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/botocore
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-botocore}
+
 %files -n python3-module-%mod_name-propagator-aws-xray
 %doc propagator/%mod_name-propagator-aws-xray/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/propagators/aws
@@ -231,6 +280,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Wed Jul 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.63b1-alt3
+- NMU: Package instrumentation for celery, psycopg2, httpx and botocore.
+
 * Tue Jun 09 2026 Anton Zhukharev <ancieg@altlinux.org> 0.63b1-alt2
 - NMU: Package instrumentation for django, requests, and wsgi.
 
