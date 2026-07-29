@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -36,6 +36,8 @@ BuildRequires: gcc-c++
 # required for mypy/test/testpep561.py
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-editables
+# subpackaged in alt
+BuildRequires: python3-test
 %endif
 # Needed to generate the man pages
 BuildRequires: help2man
@@ -138,6 +140,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Wed Jul 29 2026 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.0 -> 2.3.0
+
 * Thu Jul 09 2026 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.0.0 -> 2.2.0
 
