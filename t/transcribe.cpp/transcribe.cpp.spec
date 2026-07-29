@@ -15,7 +15,7 @@
 
 Name: transcribe.cpp
 Version: 0.1.3
-Release: alt1
+Release: alt2
 
 Summary: Speech-to-text (ASR) inference in C/C++
 License: MIT
@@ -43,8 +43,6 @@ Requires: %name-vulkan = %EVR
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libcblas-devel
-BuildRequires: libopenblas-devel
 %if_with cuda
 # cuda requires gcc12
 BuildRequires: gcc12-c++
@@ -61,8 +59,8 @@ BuildRequires: ctest
 
 %description
 High-performance inference of speech-to-text (ASR) models in C/C++ on the
-ggml runtime, with CUDA and Vulkan backends for GPU inference and a
-BLAS-accelerated CPU path.
+ggml runtime, with the ggml CPU kernels for all supported instruction set
+variants and CUDA and Vulkan backends for GPU inference.
 
 Supported model families: Parakeet, Canary, Canary-Qwen, Whisper, GigaAM,
 Moonshine (batch and streaming), Qwen3-ASR, Cohere Transcribe, SenseVoice,
@@ -150,8 +148,6 @@ export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
 	-DTRANSCRIBE_BUILD_TESTS=ON \
 	-DTRANSCRIBE_BUILD_EXAMPLES=ON \
 	-DTRANSCRIBE_BUILD_TOOLS=ON \
-	-DTRANSCRIBE_USE_SYSTEM_BLAS=ON \
-	-DBLA_VENDOR=OpenBLAS \
 	-DTRANSCRIBE_GGML_BACKEND_DL=ON \
 	-DGGML_BACKEND_DIR=%backenddir \
 	-DGGML_NATIVE=OFF \
@@ -167,9 +163,6 @@ export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
 %endif
 	%nil
 grep -E '^TRANSCRIBE|^GGML' %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
-# The host decoder silently falls back to a scalar gemv (an order of magnitude
-# slower) when cblas.h is not found, so make a missing BLAS a build failure.
-grep -qx 'HAVE_CBLAS_H:INTERNAL=1' %_cmake__builddir/CMakeCache.txt
 %cmake_build
 
 %install
@@ -239,6 +232,8 @@ export PATH=$PWD/%_cmake__builddir/bin:$PATH
 %endif
 
 %changelog
+* Wed Jul 29 2026 Alexey Shabalin <shaba@altlinux.org> 0.1.3-alt2
+- Build without BLAS.
+
 * Tue Jul 28 2026 Alexey Shabalin <shaba@altlinux.org> 0.1.3-alt1
 - Initial build for ALT Sisyphus.
-
