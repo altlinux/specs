@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
@@ -34,12 +33,12 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.14
-%define sover2 414
-Name: lib%bname
+%define sover 4.13
+%define sover2 413
+Name: lib%bname%sover
 Epoch: 1
-Version: 4.14.0
-Release: alt1
+Version: 4.13.0
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -51,10 +50,10 @@ Source1: %bname-contrib-%version.tar
 Source2: expected_mods.list
 Source3: expected_mods_ppc64le_aarch64.list
 Patch0: %name-%version-%release.patch
-Patch1: %name-4.5.5-alt-python-paths.patch
-Patch2: %name-4.5.5-alt-build.patch
+Patch1: libopencv-4.5.5-alt-python-paths.patch
+Patch2: libopencv-4.5.5-alt-build.patch
 
-Patch2000: %name-e2k-simd.patch
+Patch2000: libopencv-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
@@ -115,141 +114,6 @@ popular Image Processing and Computer Vision algorithms.
 about 300 C functions and a few C++ classes. Also there are constantly
 improving Python bindings to %Name.
 
-%package -n lib%bname%sover
-Group: System/Libraries
-Summary: Open Source Computer Vision Library
-
-%description -n lib%bname%sover
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-%package devel
-Group: Development/C++
-Summary: Development files for %name
-Requires: lib%bname%sover = %EVR
-# generated cmake targets mention tbb, require it here explicitly
-Requires: tbb-devel
-Provides: lib%{bname}2.2-devel = %EVR
-Provides: lib%{bname}2-devel = %EVR
-Conflicts: lib%{bname}2.2-devel < %EVR
-Obsoletes: lib%{bname}2.2-devel < %EVR
-Conflicts: lib%{bname}2-devel < %EVR
-Obsoletes: lib%{bname}2-devel < %EVR
-Provides: lib%bname-devel-static = %EVR
-
-%description devel
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains header files and documentation needed to develop
-applications with %name.
-
-%package doc
-Summary: %name documentation
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains API Reference for develop with %name.
-
-%package tests
-Group: Video
-Summary: %Name tests
-Requires: lib%bname%sover = %EVR
-
-%description tests
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains %Name tests applications.
-
-%package utils
-Group: Video
-Summary: %Name utils
-Provides: lib%{bname}2-utils = %EVR
-Conflicts: lib%{bname}2-utils < %EVR
-Obsoletes: lib%{bname}2-utils < %EVR
-Provides: lib%{bname}3.4-utils = %EVR
-Conflicts: lib%{bname}3.4-utils < %EVR
-Obsoletes: lib%{bname}3.4-utils < %EVR
-
-%description utils
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains %Name demo applications.
-
-%if_with python3
-%package -n python3-module-%bname
-Group: Development/Python3
-Summary: Python3 modules for %Name
-Provides: python3-module-%{bname}3.4 = %EVR
-Conflicts: python3-module-%{bname}3.4 < %EVR
-Obsoletes: python3-module-%{bname}3.4 < %EVR
-%ifarch %arm aarch64 %ix86 x86_64
-    %py3_provides %(echo `cat %SOURCE2 2>/dev/null || echo unkwown`)
-%endif
-%ifarch ppc64le
-    %py3_provides %(echo `cat %SOURCE3 2>/dev/null || echo unkwown`)
-%endif
-# filter self provides
-%filter_from_requires /python3(cv2\(\..*\)\?)/d
-
-%description -n python3-module-%bname
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains an extension module for python that provides a
-Python3 language mapping for the %Name.
-%endif
-
-%package examples
-Group: Video
-Summary: %Name samples
-Conflicts: lib%bname-examples
-Conflicts: lib%{bname}2-examples
-Provides: lib%{bname}3.4-examples = %EVR
-Conflicts: lib%{bname}3.4-examples < %EVR
-Obsoletes: lib%{bname}3.4-examples < %EVR
-AutoReq:no
-
-%description examples
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains %Name examples.
-
 %prep
 %setup -b 1
 %patch0 -p1
@@ -305,10 +169,9 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 	%nil
 
 %cmake_build
-%cmake_build -t opencv_docs
 
 %install
-%cmakeinstall_std install_docs
+%cmakeinstall_std
 
 # compare expected provides against actual modules
 # fill the list of actual modules
@@ -348,7 +211,7 @@ EOF
 	{ echo 'Update expected list of modules' ; exit 1 ; }
 %endif
 
-%files -n lib%bname%sover
+%files
 %doc README.md
 %_libdir/*.so.%sover.*
 %_libdir/*.so.%sover2
@@ -356,39 +219,9 @@ EOF
 %dir %_datadir/%Name-%version
 %_datadir/%Name-%version/licenses
 
-%files devel
-%_libdir/*.so
-%_libdir/cmake/*
-%_includedir/*
-%_pkgconfigdir/*
-%_datadir/%Name/*.supp
-%ifarch %{ix86} x86_64 armh
-%dir %_libdir/%Name
-%dir %_libdir/%Name/3rdparty
-%dir %_libdir/%Name/3rdparty/%_lib
-%_libdir/%Name/3rdparty/%_lib/*.a
-%endif
-
-%files doc
-%_docdir/%name
-
-%files utils
-%_bindir/*
-
-%if_with python3
-%files -n python3-module-%bname
-%python3_sitelibdir/*
-%endif
-
-%files examples
-%_datadir/%Name/samples
-%_datadir/%Name/haarcascades
-%_datadir/%Name/lbpcascades
-%_datadir/%Name/quality
-
 %changelog
-* Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt1
-- 4.13.0 -> 4.14.0
+* Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 1:4.13.0-alt2
+- build as legacy package without devel
 
 * Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 1:4.13.0-alt1
 - 4.12.0 -> 4.13.0
