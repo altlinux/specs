@@ -1,6 +1,6 @@
 Name: openssh
 Version: 9.6p1
-Release: alt6
+Release: alt7
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -353,6 +353,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Jul 01 2026 Alexander Danilov <admsasha@altlinux.org> 9.6p1-alt7
+- Backported security fixes from upstream (fixes CVE-2026-35414).
+
 * Wed Nov 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt6
 - Backported upstream commit to support build with openssl >= 3.4.
 
