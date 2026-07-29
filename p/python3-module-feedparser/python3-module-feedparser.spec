@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 6.0.12
+Version: 6.0.13
 Release: alt1
 
 Summary: Universal feed parser for Python
@@ -14,12 +14,14 @@ Group: Development/Python3
 License: BSD-2-Clause
 Url: https://github.com/kurtmckee/%pypi_name
 
+Vcs: https://github.com/kurtmckee/feedparser.git
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel >= 3.8 python3(wheel) python3(setuptools)
+BuildRequires: python3-devel >= 3.10 python3(wheel) python3(setuptools)
 %{?_with_doc:BuildRequires: python3-module-sphinx python3-module-requests}
-%{?_enable_check:BuildRequires: python3(pytest) python3-module-requests}
+%{?_enable_check:BuildRequires: python3(pytest) python3-module-requests python3(feedparser.sgmllib)}
 
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/f/%pypi_name/%pypi_name-%version.tar.gz
@@ -80,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 6.0.13-alt1
+- 6.0.13
+
 * Wed Sep 10 2025 Yuri N. Sedunov <aris@altlinux.org> 6.0.12-alt1
 - 6.0.12
 
