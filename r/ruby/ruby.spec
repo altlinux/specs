@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -370,6 +370,9 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Wed Jul 29 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt2
+- * changed default doc to enabled in macros
+
 * Mon Jul 27 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt1
 - ^ 3.3.8 -> 3.3.12
 - > rebased to upstream master
