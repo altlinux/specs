@@ -69,7 +69,7 @@
 
 Name:    mpd
 Version: 0.24.13
-Release: alt1
+Release: alt1.1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -135,7 +135,7 @@ BuildRequires: meson gcc-c++ zlib-devel libfmt-devel
 BuildRequires: libavahi-glib-devel libdbus-devel
 %endif
 
-BuildRequires: boost-complete libicu-devel cmake libfmt-devel
+BuildRequires: boost-complete libicu-devel cmake libfmt-devel chrpath
 
 %description
 Music Player Daemon (%Name) allows remote access for playing music
@@ -229,7 +229,7 @@ sed -i 's/Buffer buffer{nullptr};/Buffer buffer;/' src/util/HugeAllocator.hxx
 
 %install
 %meson_install
-
+chrpath -d %buildroot%_bindir/%name
 install -d %buildroot{%_localstatedir/%name/playlists,{%_runtimedir,%_logdir}/%name,%_sysconfdir,%_initdir,%_tmpfilesdir}
 sed -e "s|@localstatedir@|%_localstatedir|g" -e "s|@logdir@|%_logdir|g" %SOURCE1 > %buildroot%_sysconfdir/%name.conf
 chmod 644 %buildroot%_sysconfdir/%name.conf
@@ -282,6 +282,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Wed Jul 29 2026 L.A. Kostis <lakostis@altlinux.ru> 0.24.13-alt1.1
+- mpd: remove built-in rpath.
+
 * Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 0.24.13-alt1
 - 0.24.13.
 
