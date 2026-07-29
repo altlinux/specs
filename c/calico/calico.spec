@@ -1,40 +1,41 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: calico
-Version: 3.32.0
+Version: 3.32.1
 Release: alt1
+
 Summary: Cloud native networking and network security
-License: Apache-2.0
+License: Apache-2.0 AND GPL-2.0-or-later
 Group: System/Configuration/Networking
-Url: https://docs.tigera.io
+Url: https://projectcalico.org
 Vcs: https://github.com/projectcalico/calico
 
 Source0: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: libpcap-devel
-BuildRequires: libbpf-devel
-BuildRequires: elfutils-devel
-BuildRequires: zlib-devel
-BuildRequires: golang
-BuildRequires: /proc
-BuildRequires: git
-BuildRequires: bsdcat
+# Calico uses runit internally, but we don't need /etc/rc.local in ALT Linux
+%filter_from_requires /\/etc\/rc\.local/d
 
 Requires: iproute2
 Requires: iptables
 Requires: kmod
 Requires: runit
+Requires: bird2
+
+BuildRequires(pre): rpm-build-golang
+BuildRequires: golang
+BuildRequires: make
+BuildRequires: iproute2-devel
+BuildRequires: /proc
+BuildRequires: git
+BuildRequires: bsdcat
 
 ExcludeArch: i586
 
 %description
-Calico is the main Calico CNI plugin binary used to configure container
-networking on Kubernetes nodes. It is invoked by the kubelet and
-integrates container network namespaces with Calico's networking
-fabric. This binary handles IP assignment,network policy enforcement,
-and virtual interfaces setup for pods.
+Calico is an open source networking and network security solution for containers,
+virtual machines, and native host-based workloads. It provides network policy
+enforcement, IP assignment, and routing for Kubernetes and other orchestrators.
 
 %package kube-controllers
 Summary: Calico kube-controllers
@@ -53,6 +54,7 @@ Tool to manage calico network parameters.
 %package cni
 Summary: Calico CNI plugin
 Group: System/Configuration/Networking
+Requires: iproute2
 
 %description cni
 Calico CNI plugin.
@@ -62,10 +64,8 @@ Calico CNI plugin.
 
 %build
 export GOPATH="%_libexecdir/golang"
-export CGO_CFLAGS="-I%_includedir/bpf -I/usr/include"
-export CGO_LDFLAGS="-L/%_libdir -lpcap -lelf -lz -lbpf"
 export CGO_ENABLED=0
-export DATE=$(date -u '+%%Y-%%m-%%d')
+export DATE=$(date -d @$SOURCE_DATE_EPOCH -u --rfc-3339=d)
 export HASH_COMMIT=$(bsdcat "%SOURCE0" | git get-tar-commit-id)
 export CALICO_LDFLAGS="-s -w \
 -X github.com/projectcalico/calico/pkg/buildinfo.Version=v%version \
@@ -104,11 +104,21 @@ install -D -m 755 bin/calico-apiserver %buildroot%_bindir/calico-apiserver
 install -D -m 755 bin/calico %buildroot%_bindir/calico
 install -D -m 755 bin/calico-cni-install %buildroot%_bindir/calico-cni-install
 
-mkdir -p %buildroot/%_sbindir
-mkdir -p %buildroot/%_sysconfdir
-install -D -m 755 ./node/filesystem/sbin/* %buildroot/%_sbindir/
-cp -r ./node/filesystem/etc/* %buildroot/%_sysconfdir/
-mv %buildroot/%_sysconfdir/nsswitch.conf %buildroot/%_sysconfdir/calico-nsswitch.conf
+install -d %buildroot%_sbindir
+install -m 755 ./node/filesystem/sbin/* %buildroot%_sbindir/
+
+install -d %buildroot%_sysconfdir
+cp -r ./node/filesystem/etc/* %buildroot%_sysconfdir/
+
+# Remove legacy and unused files
+rm -f %buildroot%_sysconfdir/rc.local
+rm -f %buildroot%_sysconfdir/nsswitch.conf
+
+# Install confd configs
+mkdir -p %buildroot%_sysconfdir/%name/confd/conf.d
+cp -r ./confd/etc/calico/confd/conf.d/bird* %buildroot%_sysconfdir/%name/confd/conf.d/
+mkdir -p %buildroot%_sysconfdir/%name/confd/templates
+cp -r ./confd/etc/calico/confd/templates/bird* %buildroot%_sysconfdir/%name/confd/templates/
 
 %files
 %_bindir/calico-typha
@@ -120,10 +130,8 @@ mv %buildroot/%_sysconfdir/nsswitch.conf %buildroot/%_sysconfdir/calico-nsswitch
 %_sbindir/restart-calico-confd
 %_sbindir/start_runit
 %_sbindir/versions
-%_sysconfdir/calico/
-%_sysconfdir/service/
-%_sysconfdir/calico-nsswitch.conf
-%_sysconfdir/rc.local
+%config(noreplace) %_sysconfdir/%name
+%_sysconfdir/service
 %doc LICENSE.md README.md
 
 %files kube-controllers
@@ -142,6 +150,10 @@ mv %buildroot/%_sysconfdir/nsswitch.conf %buildroot/%_sysconfdir/calico-nsswitch
 %doc LICENSE.md README.md
 
 %changelog
+* Tue Jul 21 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.32.1-alt1
+- Packaging fixes for ALT Linux RPM build.
+- Updated to 3.32.1.
+
 * Tue May 5 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.32.0-alt1
 - Updated to 3.32.0.
 
