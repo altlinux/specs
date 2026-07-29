@@ -1,10 +1,10 @@
-%define git_short_commit 8dda19e
+%define git_short_commit 96119a7
 %define import_path github.com/xjasonlyu/tun2socks
 
 Name: tun2socks
-Version: 2.7.0
-Release: alt1
-Epoch: 1
+Version: 2.6.0
+Release: alt3
+Epoch: 2
 
 Summary: %name - powered by gVisor TCP/IP stack
 License: MIT
@@ -63,6 +63,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Jul 29 2026 Nazarov Denis <nenderus@altlinux.org> 2:2.6.0-alt3
+- Rollback to 2.6.0 (v2.7.0 broken for Amnezia VPN Xray protocol)
+
 * Sun Jul 12 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.7.0-alt1
 - New version 2.7.0.
 

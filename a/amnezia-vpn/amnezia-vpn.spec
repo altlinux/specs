@@ -6,7 +6,7 @@
 
 Name: amnezia-vpn
 Version: 5.0.0.5
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -46,7 +46,6 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
-Requires: amnezia-tun2socks >= 2.5.4
 Requires: amneziawg-go >= 3.0.1
 Requires: cloak-client
 Requires: libnss-resolve
@@ -55,6 +54,7 @@ Requires: qt6-5compat
 Requires: qt6-declarative
 Requires: qt6-svg
 Requires: shadowsocks-libev
+Requires: tun2socks >= 2:2.6.0
 
 %description client
 Amnezia is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
@@ -102,7 +102,7 @@ EOF
 # Fix utilites exec path
 sed \
     -e 's|return Utils::executable("openvpn", true);|return Utils::usrExecutable("openvpn");|' \
-    -e 's|return Utils::executable("tun2socks", true);|return Utils::usrExecutable("amnezia-tun2socks");|' \
+    -e 's|return Utils::executable("tun2socks", true);|return Utils::usrExecutable("tun2socks");|' \
     -i client/core/utils/utilities.cpp
 
 # Fix libssh target name (ALT provides 'ssh', upstream expects 'ssh::ssh')
@@ -172,6 +172,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Wed Jul 29 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.0.5-alt2
+- Switch to use original tun2socks for XRay protocol
+
 * Tue Jul 28 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.0.5-alt1
 - Version 5.0.0.5
 
