@@ -1,15 +1,16 @@
 Name:    motoc
-Version: 0.3.6
+Version: 0.4.0
 Release: alt1
 
 Summary: Monado Tracking Origin Calibrator
-License: GPL-3.0
+License: GPL-3.0-only
 Group:   Other
-Url:     https://github.com/galister/motoc
+URL:     https://github.com/galister/motoc
 
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
 
+BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: openxr-devel
 
@@ -37,6 +38,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Wed Jul 29 2026 Sergey Palcheh <minergenon@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Sun Jun 07 2026 Sergey Palcheh <minergenon@altlinux.org> 0.3.6-alt1
 - new version 0.3.6
 
