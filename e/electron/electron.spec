@@ -14,7 +14,7 @@
 
 Name: electron
 Version: 42.4.0
-Release: alt2
+Release: alt3
 
 Summary: Build cross-platform desktop apps with JavaScript, HTML, and CSS
 License: MIT
@@ -25,7 +25,7 @@ Vcs: https://github.com/electron/electron.git
 Source0: %name-%version.tar.zst
 Source1: chromium.tar.zst
 Source2: chromium-third-party.tar.zst
-Source3: electron-yarn-cache.tar.zst
+Source3: electron-node-modules.tar.zst
 Patch0: %name-%version-alt.patch
 ### Start Patches
 Patch1: 0001-vendor-chromium-Narrow-GN-dep-graph-to-electron.patch
@@ -186,15 +186,8 @@ tar -xf %SOURCE2 -C src/third_party --strip-components=1
 %patch19 -p1 -d src
 ### End Apply Patches
 
-mkdir -p src/electron/.yarn/cache
-tar -xf %SOURCE3 -C src/electron/.yarn/cache --strip-components=1
-
-( cd src/electron && \
-    YARN_ENABLE_NETWORK=false \
-    YARN_ENABLE_GLOBAL_CACHE=0 \
-    YARN_ENABLE_TELEMETRY=false \
-    node .yarn/releases/yarn-*.cjs install \
-        --immutable --immutable-cache --mode=skip-build )
+tar -xf %SOURCE3 -C src/electron
+test -x src/electron/node_modules/.bin/tsc
 
 # ELECTRON_PATCH_NO_GIT switches the script from `git am` to GNU `patch`
 # so we don't need a git tree inside the build root.
@@ -428,6 +421,9 @@ xvfb-run -a $EBIN --no-sandbox smoke-app
 %_libdir/electron/
 
 %changelog
+* Mon Jul 27 2026 Grant Makyan <karonus@altlinux.org> 42.4.0-alt3
+- Vendor unpacked Node.js dependencies.
+
 * Mon Jul 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 42.4.0-alt2
 - Fix the build on glibc without the SYS_SECCOMP enumerator (p11).
 - Require npm at build time explicitly to make builds reproducible.
