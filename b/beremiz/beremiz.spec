@@ -3,8 +3,8 @@
 
 %def_with doc
 Name: beremiz
-Version: 1.5
-Release: alt0.1.20260619.1
+Version: 1.5.1
+Release: alt1
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -55,9 +55,6 @@ Requires: inkscape
 %add_python3_req_skip nodemanager
 %add_python3_req_skip subindextable
 
-Obsoletes: python-module-beremiz < 1.4
-Obsoletes: python-module-beremiz-tests < 1.4
-
 AutoProv: nopython3
 
 %add_python3_path %_datadir/%name
@@ -89,8 +86,8 @@ Beremiz опирается на открытые стандарты, котор�
 %build
 %if_with doc
 pushd doc
-make html
-make man
+%make_build html
+%make_build man
 popd
 %endif #doc
 
@@ -185,6 +182,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Wed Jul 29 2026 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt0.1.20260619.1
 - New snapshot.
 
