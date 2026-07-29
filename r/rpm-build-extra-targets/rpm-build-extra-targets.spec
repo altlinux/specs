@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-extra-targets
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Build packages for other platforms
@@ -65,6 +65,9 @@ find build -name macros |
 %doc README.md
 
 %changelog
+* Wed Jul 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.6-alt1
+- Sync with rpmbuild 4.0.4.213-alt1
+
 * Tue Feb 17 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5-alt1
 - Sync platform.in with rpmbuild 4.0.4.210-alt1
 
