@@ -15,7 +15,7 @@
 %endif
 
 Name: ostree
-Version: 2025.6
+Version: 2026.2
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -192,6 +192,12 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Jul 23 2026 Vladimir Romanov <rirusha@altlinux.org> 2026.2-alt1
+- 2026.2
+
+* Sat Nov 15 2025 Vladimir Romanov <rirusha@altlinux.org> 2025.6-alt2
+- Removed ALT patches.
+
 * Tue Sep 09 2025 Vladimir Vaskov <rirusha@altlinux.org> 2025.6-alt1
 - 2025.6
 
