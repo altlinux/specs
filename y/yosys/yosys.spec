@@ -5,7 +5,7 @@
 
 Name: yosys
 Version: 0.67
-Release: alt1
+Release: alt2
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -21,6 +21,9 @@ BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: gcc-c++
+%ifarch %e2k
+BuildRequires: clang
+%endif
 BuildRequires: libffi-devel
 BuildRequires: libreadline-devel
 BuildRequires: tcl-devel
@@ -73,7 +76,11 @@ rm -r frontends/slang
 
 %build
 %cmake  -DYOSYS_ABC_EXECUTABLE=%_bindir/abc \
-	-DYOSYS_WITHOUT_SLANG=ON
+	-DYOSYS_WITHOUT_SLANG=ON \
+%ifarch %e2k
+	-DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+%endif
+	%nil
 %cmake_build
 
 %install
@@ -102,6 +109,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1.*
 
 %changelog
+* Wed Jul 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.67-alt2
+- e2k build fix
+
 * Sat Jul 11 2026 	Anton Midyukov <antohami@altlinux.org> 0.67-alt1
 - New version 0.67.
 
