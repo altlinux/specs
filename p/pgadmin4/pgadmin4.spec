@@ -1,7 +1,7 @@
 %def_without   desktop
 
 Name:          pgadmin4
-Version:       8.14
+Version:       9.16
 Release:       alt1
 Summary:       pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL
 License:       MIT
@@ -20,7 +20,7 @@ Patch:         %name-%EVR.patch
 Autoprov:      yes,nopython
 %if_with       desktop
 ExclusiveArch: x86_64
-%else
+%else_without  desktop
 BuildArch:     noarch
 %endif
 %add_debuginfo_skiplist %_libdir/%name-desktop
@@ -30,8 +30,6 @@ BuildArch:     noarch
 %add_findreq_skiplist %_libdir/%name-desktop/**/*
 %add_findprov_skiplist %_libdir/%name-desktop/**/*
 BuildRequires(pre): rpm-build-python3
-BuildRequires: nodejs
-BuildRequires: npm
 # required for python web-server pre start
 #
 # required for nw.js
@@ -49,6 +47,8 @@ BuildRequires: pkgconfig(xcomposite)
 BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xdamage)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: nodejs
+BuildRequires: npm
 
 Requires:      nginx
 Requires:      python3(flask)
@@ -228,6 +228,14 @@ ln -sf %_sysconfdir/nginx/sites-available.d/%name.conf %_sysconfdir/nginx/sites-
 
 
 %changelog
+* Tue Jul 28 2026 Pavel Vasenkov <pav@altlinux.org> 9.16-alt1
+- New version
+
+* Fri Jul 03 2026 Pavel Vasenkov <pav@altlinux.org> 9.11-alt1
+- New version
+- Security fixes:
+      + CVE-2025-13780
+
 * Mon Apr 06 2026 Pavel Vasenkov <pav@altlinux.org> 8.14-alt1
 - New version
 
