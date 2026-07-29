@@ -1,7 +1,7 @@
 %global import_path github.com/dalibo/ldap2pg
 Name:    ldap2pg
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Summary: Manage PostgreSQL roles and privileges from YAML or LDAP
 License: PostgreSQL
@@ -12,6 +12,7 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: ldap2pg.service 
 Source3: ldap2pg.timer
+Patch0: 0001-Fix-subsearches-error-in-yaml.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -22,7 +23,8 @@ Requires(pre): systemd
 %summary
 
 %prep
-%setup -q -a1
+%setup -q -a1 
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -69,6 +71,9 @@ install -D -m0644 %SOURCE3 \
 %_unitdir/ldap2pg.timer
 
 %changelog
+* Mon Jul 27 2026 Olesya Shuster <lesyafox@altlinux.org> 6.6.0-alt2
+- Backported upstream fix for YAML subsearches validation 
+
 * Wed Jul 15 2026 Olesya Shuster <lesyafox@altlinux.org> 6.6.0-alt1
 - New version 6.6.0 (closes: #59812, #59810)
 
