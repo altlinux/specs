@@ -1,11 +1,12 @@
 Name: ocaml-camomile
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: Unicode library for OCaml
 License: LGPLv2+
 Group: Development/ML
 Url: https://github.com/yoriyuki/Camomile
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: ocaml >= 4.08
 BuildRequires: dune
 BuildRequires: ocaml-stdlib-random-devel
@@ -38,7 +39,8 @@ The %name-data package contains data files for developing
 applications that use %name.
 
 %prep
-%setup 
+%setup
+%patch0 -p1
 
 %build
 # This avoids a stack overflow in the OCaml > 4.05 compiler on POWER only.
@@ -63,6 +65,9 @@ ulimit -Ss 65536
 %_datadir/camomile/
 
 %changelog
+* Wed Jul 29 2026 Anton Farygin <rider@altlinux.org> 2.0.0-alt2
+- applied fix from upstream against dune 3.24
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
