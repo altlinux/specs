@@ -3,13 +3,13 @@
 
 Name: gatekeeper
 Version: 4.11.0
-Release: alt1
+Release: alt2
 
 Summary: An OpenID / Proxy service
 License: Apache-2.0
 Group: System/Servers
-Url: https://gogatekeeper.github.io/gatekeeper/
-Vcs: https://github.com/gogatekeeper/gatekeeper.git
+URL: https://gogatekeeper.github.io/gatekeeper/
+VCS: https://github.com/gogatekeeper/gatekeeper.git
 
 ExclusiveArch: %go_arches
 
@@ -33,7 +33,10 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
-export LDFLAGS="-X %import_path/pkg/proxy/core.release=%version-%release -X %import_path/pkg/proxy/core.gitsha=altlinux-package -X %import_path/pkg/proxy/core.compiled=$(date +%%s)"
+export LDFLAGS="\
+-X %import_path/pkg/proxy/core.release=%version-%release \
+-X %import_path/pkg/proxy/core.gitsha=altlinux-package \
+-X %import_path/pkg/proxy/core.compiled=$(date +%%s)"
 %golang_build cmd/keycloak
 
 %install
@@ -58,6 +61,7 @@ install -d %buildroot%_logdir/%name
 
 %preun
 %preun_service %name
+
 %files
 %doc README.md
 %_bindir/gatekeeper
@@ -68,6 +72,9 @@ install -d %buildroot%_logdir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 
 %changelog
+* Wed Jul 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.11.0-alt2
+- Cleaned up the spec file.
+
 * Wed Jul 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.11.0-alt1
 - New version (4.11.0).
 
