@@ -2,7 +2,7 @@
 %define oname trytond_company
 
 Name: python3-module-%oname
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 Summary: The company module of the Tryton application platform
@@ -49,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Jul 28 2026 Nikita Panov <nexxy@altlinux.org> 8.0.1-alt1
+- version updated to 8.0.1
+
 * Thu Apr 23 2026 Nikita Panov <nexxy@altlinux.org> 8.0.0-alt1
 - version updated to 8.0.0
 
