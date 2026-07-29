@@ -1,10 +1,13 @@
 %define libname libxmlrpc
-# libxml2 backend is broken
-%def_disable libxml2
+%define sonamecpp 9
+%define sonamessl 1
+%define sonamec   3
+%define sonameutil 4
+%def_enable libxml2
 
 Name: xmlrpc-c
-Version: 1.54.06
-Release: alt2
+Version: 1.67.02
+Release: alt1
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-3-Clause AND MIT
@@ -14,12 +17,7 @@ Url: http://xmlrpc-c.sourceforge.net/
 
 Source: %name-%version.tar
 
-
-Patch1: %name-1.12.00-alt-configure-fixes.patch
-Patch2: 0001-cleanup-and-fix-libxml2-backend.patch
-
 # Patches from fedora
-Patch101: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
 Patch102: 0002-Use-proper-datatypes-for-long-long.patch
 Patch103: 0003-allow-30x-redirections.patch
 
@@ -36,20 +34,24 @@ BuildRequires: libssl-devel zlib-devel
 XML-RPC for C/C++ is programming libraries and related tools to help you
 write an XML-RPC server or client in C or C++.
 
-%package -n %libname
+%package -n %libname%{sonamec}
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 Group: System/Libraries
+Provides: %libname = %EVR
+Obsoletes: %libname < %EVR
 
-%description -n %libname
+%description -n %libname%{sonamec}
 XML-RPC for C/C++ is programming libraries and related tools to help you
 write an XML-RPC server or client in C or C++.
 
-%package -n %libname-client
+%package -n %libname-client%{sonamec}
 Summary: C client libraries for xmlrpc-c
 Group: System/Libraries
-Requires: %libname = %version-%release
+Requires: %libname = %EVR
+Provides: %libname-client = %EVR
+Obsoletes: %libname-client < %EVR
 
-%description -n %libname-client
+%description -n %libname-client%{sonamec}
 XML-RPC is a quick-and-easy way to make procedure calls over the
 Internet. It converts the procedure call into XML document, sends it
 to a remote server using HTTP, and gets back the response as XML.
@@ -57,36 +59,60 @@ to a remote server using HTTP, and gets back the response as XML.
 This library provides a modular implementation of XML-RPC for C
 clients.
 
+%package -n %libname-util%{sonameutil}
+Summary: Xmlrpc-c utility functions library
+Group: System/Libraries
+Requires: %libname = %EVR
+Provides: %libname-util = %EVR
+
+%description -n %libname-util%{sonameutil}
+Xmlrpc-c utility functions library.
+
+%package -n %libname-openssl%{sonamessl}
+Summary: Openssl convenience function from Xmlrpc-c
+Group: System/Libraries
+Requires: %libname = %EVR
+Provides: %libname-openssl = %EVR
+
+%description -n %libname-openssl%{sonamessl}
+Openssl convenience function from Xmlrpc-c package.
+
 %package -n %libname-devel
 Summary: Files for developing applications that use %libname
-Requires: %libname = %version-%release
-Requires: %libname++ = %version-%release
-Requires: %libname-client = %version-%release
-Requires: %libname-client++ = %version-%release
+Requires: %libname = %EVR
+Requires: %libname++ = %EVR
+Requires: %libname-client = %EVR
+Requires: %libname-client++ = %EVR
+Requires: %libname-util = %EVR
+Requires: %libname-openssl = %EVR
 Group: Development/C
 
 %description -n %libname-devel
 The header file for developing applications that use
 %name.
 
-%package -n %libname++
+%package -n %libname++%{sonamecpp}
 Summary: XML-RPC C++ library - an implementation of the xmlrpc protocol
 Group: System/Libraries
-Requires: %libname = %version-%release
+Requires: %libname = %EVR
+Provides: %libname++ = %EVR
+Obsoletes: %libname++ < %EVR
 
-%description -n %libname++
+%description -n %libname++%{sonamecpp}
 XML-RPC for C/C++ is programming libraries and related tools to help you
 write an XML-RPC server or client in C or C++.
 
 This package contains C++ bindings for %libname.
 
-%package -n %libname-client++
+%package -n %libname-client++%{sonamecpp}
 Summary: C++ client libraries for xmlrpc-c
 Group: System/Libraries
-Requires: %libname-client = %version-%release
-Requires: %libname++ = %version-%release
+Requires: %libname-client = %EVR
+Requires: %libname++ = %EVR
+Provides: %libname-client++ = %EVR
+Obsoletes: %libname-client++ < %EVR
 
-%description -n %libname-client++
+%description -n %libname-client++%{sonamecpp}
 XML-RPC is a quick-and-easy way to make procedure calls over the
 Internet. It converts the procedure call into XML document, sends it
 to a remote server using HTTP, and gets back the response as XML.
@@ -96,8 +122,8 @@ clients.
 
 %package -n %libname++-devel
 Summary: Files for developing applications that use %libname++
-Requires: %libname++ = %version-%release
-Requires: %libname-devel = %version-%release
+Requires: %libname++ = %EVR
+Requires: %libname-devel = %EVR
 Group: Development/C++
 
 %description -n %libname++-devel
@@ -107,11 +133,6 @@ The header file for developing applications that use
 
 %prep
 %setup
-%patch1 -p1
-%if_enabled libxml2
-%patch2 -p1
-%endif
-%patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch201 -p1
@@ -137,24 +158,43 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 %exclude %_bindir/xmlrpc-c-config
 
-%files -n %libname
-%_libdir/libxmlrpc.so.*
-%_libdir/libxmlrpc_*.so.*
+%files -n %libname%{sonamec}
+%_libdir/libxmlrpc.so.%{sonamec}
+%_libdir/libxmlrpc_*.so.%{sonamec}
+%_libdir/libxmlrpc.so.%{sonamec}.*
+%_libdir/libxmlrpc_*.so.%{sonamec}.*
 %exclude %_libdir/libxmlrpc_cpp.so.*
 %exclude %_libdir/libxmlrpc_*++.so.*
 %exclude %_libdir/libxmlrpc_client.so.*
+%exclude %_libdir/libxmlrpc_util.so.*
+%exclude %_libdir/libxmlrpc_openssl.so.*
 
-%files -n %libname-client
-%_libdir/libxmlrpc_client.so.*
+%files -n %libname-client%{sonamec}
+%_libdir/libxmlrpc_client.so.%{sonamec}
+%_libdir/libxmlrpc_client.so.%{sonamec}.*
 
-%files -n %libname++
-%_libdir/libxmlrpc_cpp.so.*
-%_libdir/libxmlrpc++.so.*
-%_libdir/libxmlrpc_*++.so.*
+%files -n %libname-util%{sonameutil}
+%_libdir/libxmlrpc_util.so.%{sonameutil}
+%_libdir/libxmlrpc_util.so.%{sonameutil}.*
+
+%files -n %libname-openssl%{sonamessl}
+%_libdir/libxmlrpc_openssl.so.%{sonamessl}
+%_libdir/libxmlrpc_openssl.so.%{sonamessl}.*
+
+%files -n %libname++%{sonamecpp}
+%_libdir/libxmlrpc_cpp.so.%{sonamecpp}
+%_libdir/libxmlrpc++.so.%{sonamecpp}
+%_libdir/libxmlrpc_*++.so.%{sonamecpp}
+%_libdir/libxmlrpc_packetsocket.so.%{sonamecpp}
+%_libdir/libxmlrpc_cpp.so.%{sonamecpp}.*
+%_libdir/libxmlrpc++.so.%{sonamecpp}.*
+%_libdir/libxmlrpc_*++.so.%{sonamecpp}.*
+%_libdir/libxmlrpc_packetsocket.so.%{sonamecpp}.*
 %exclude %_libdir/libxmlrpc_client++.so.*
 
-%files -n %libname-client++
-%_libdir/libxmlrpc_client++.so.*
+%files -n %libname-client++%{sonamecpp}
+%_libdir/libxmlrpc_client++.so.%{sonamecpp}
+%_libdir/libxmlrpc_client++.so.%{sonamecpp}.*
 
 %files -n %libname-devel
 %_bindir/xmlrpc-c-config
@@ -164,6 +204,13 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed Jul 29 2026 L.A. Kostis <lakostis@altlinux.ru> 1.67.02-alt1
+- 1.67.2 (fixing CVE-2026-15928).
+- enable libxml2.
+- cleanup obsoleted/merged patches.
+- built according shared policy.
+- split -util/openssl due soname difference.
+
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.54.06-alt2
 - apply xml_parse_huge.patch for OpenNebula
 
