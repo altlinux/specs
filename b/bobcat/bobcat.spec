@@ -3,7 +3,7 @@
 
 Name:    bobcat
 Version: 6.14.00
-Release: alt1
+Release: alt2
 
 Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
 License: GPL-3.0-or-later
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: libssl-devel-static
 BuildRequires: libX11-devel
-BuildRequires: libmilter-devel
+BuildRequires: sendmail-devel
 BuildRequires: libreadline-devel
 BuildRequires: yodl
 
@@ -113,6 +113,9 @@ rm -v %buildroot%_libdir/lib%name.a
 %_man7dir/*
 
 %changelog
+* Wed Jul 29 2026 Artem Semenov <savoptik@altlinux.org> 6.14.00-alt2
+- Fixed FTBFS after #51788
+
 * Mon Jun 22 2026 Artem Semenov <savoptik@altlinux.org> 6.14.00-alt1
 - Updated to new version 6.14.00
 
