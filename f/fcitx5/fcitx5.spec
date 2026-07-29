@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.1.2
-Release:        alt1_1.4
+Release:        alt1_1.5
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -30,6 +30,7 @@ Source4:        fcitx5.sh
 
 Patch0:         fcitx5-fmt12.patch
 Patch1:		added_cstdint-alt-build.patch
+Patch2:		fixed_waylandimserver.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  ninja-build python3-module-ninja_syntax
@@ -205,6 +206,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Wed Jul 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.1.2-alt1_1.5
+- NMU: modifier state forwarded back to compositor (ALT #59732)
+
 * Mon Jul 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.1.2-alt1_1.4
 - NMU: fixed FTBFS
 
