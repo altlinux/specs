@@ -1,5 +1,5 @@
 Name: xfsdump
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Administrative utilities for the XFS filesystem
@@ -56,6 +56,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_mandir/*/*
 
 %changelog
+* Wed Jul 29 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.0-alt1
+- 3.3.0.
+
 * Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 3.2.0-alt1
 - 3.2.0.
 - Update Url again.
