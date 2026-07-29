@@ -1,6 +1,6 @@
 %define lwt_modules lwt,lwt_ppx,lwt_react
 Name: ocaml-lwt
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 Summary: OCaml lightweight thread library
 
@@ -9,6 +9,7 @@ License: MIT
 Url: http://ocsigen.org/lwt/
 VCS: https://github.com/ocsigen/lwt
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires:  ocaml-ocamldoc termutils ocaml-ssl ocaml-react-devel glib2-devel libev-devel chrpath
 BuildRequires: dune ocaml-cppo ocaml-bisect_ppx-devel ocaml-ppxlib-devel ocaml-ocplib-endian-devel
@@ -33,6 +34,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %dune_build -p %lwt_modules
@@ -50,6 +52,10 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Wed Jul 29 2026 Anton Farygin <rider@altlinux.org> 6.1.2-alt1
+- 6.1.1 -> 6.1.2
+- fixed build with fresh OCaml on 32-bit (intnat hash in libev stubs)
+
 * Sat Mar 07 2026 Anton Farygin <rider@altlinux.org> 6.1.1-alt1
 - 5.9.2 -> 6.1.1
 
