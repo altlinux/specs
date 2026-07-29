@@ -1,14 +1,13 @@
 %define libname stdcompat
 Name: ocaml-%libname
 Version: 21.1
-Release: alt1
+Release: alt2
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/thierry-martinez/stdcompat
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
-Patch2: ocaml-stdcompat-ocaml5.4.patch
+Patch2: ocaml-stdcompat-ocaml5.5.patch
 BuildRequires: dune ocaml
 
 %description
@@ -27,7 +26,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 %patch2 -p1
 
 %build
@@ -45,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jul 29 2026 Anton Farygin <rider@altlinux.org> 21.1-alt2
+- extended ocaml 5.4 compatibility patch with OCaml 5.5.0 support
+
 * Fri Mar 06 2026 Anton Farygin <rider@altlinux.org> 21.1-alt1
 - 19 -> 21.1
 
