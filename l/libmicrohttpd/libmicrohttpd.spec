@@ -1,5 +1,5 @@
 Name: libmicrohttpd
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
@@ -54,6 +54,9 @@ This package contains the headers and libraries for libmicrohttpd development.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.8-alt1
+- 1.0.8 released
+
 * Tue Jul 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.7-alt1
 - 1.0.7 released
 
