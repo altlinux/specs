@@ -3,10 +3,10 @@
 
 Name: d2
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: A modern diagram scripting language that turns text to diagrams
-License: MIT
+License: MPL-2.0
 Group: Publishing
 Url: https://d2lang.com/
 Vcs: https://github.com/terrastruct/d2
@@ -45,5 +45,8 @@ export IGNORE_SOURCES=1
 %_bindir/d2
 
 %changelog
+* Wed Jul 29 2026 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt2
+- Corrected license tag.
+
 * Wed Jul 29 2026 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt1
 - Packaged for ALT Sisyphus.
