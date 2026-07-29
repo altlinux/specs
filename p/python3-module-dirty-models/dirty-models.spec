@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.12.4
-Release: alt1.1
+Release: alt2
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
@@ -13,6 +13,8 @@ Url: https://pypi.org/project/dirty-models/
 
 # https://github.com/alfred82santa/dirty-models.git
 Source: %name-%version.tar
+Patch: py314.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -60,6 +62,7 @@ Features:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -76,6 +79,9 @@ Features:
 %python3_sitelibdir/dirty_models-%version.dist-info/
 
 %changelog
+* Wed Jul 29 2026 Anton Vyatkin <toni@altlinux.org> 0.12.4-alt2
+- Fix FTBFS.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.4-alt1.1
 - NMU: moved on modern pyproject macros.
 

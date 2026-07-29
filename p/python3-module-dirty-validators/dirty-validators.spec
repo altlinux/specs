@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.4
-Release: alt1.1
+Release: alt2
 Summary: Validate library for python 3
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,8 @@ Url: https://pypi.python.org/pypi/dirty-validators/
 
 # https://github.com/alfred82santa/dirty-validators.git
 Source0: %name-%version.tar
+Patch: py314.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -44,6 +46,7 @@ Features:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -62,6 +65,9 @@ rm tests/dirty_validators/tests_async_complex.py
 %python3_sitelibdir/dirty_validators-%version.dist-info/
 
 %changelog
+* Wed Jul 29 2026 Anton Vyatkin <toni@altlinux.org> 0.5.4-alt2
+- Fix FTBFS.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1.1
 - NMU: moved on modern pyproject macros.
 
