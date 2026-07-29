@@ -1,5 +1,5 @@
 Name: python3-module-uvicorn
-Version: 0.51.0
+Version: 0.52.0
 Release: alt1
 
 Summary: An ASGI web server, for Python
@@ -16,6 +16,7 @@ Autoreq: yes, nopython3
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter zttp
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra standard
@@ -52,6 +53,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed Jul 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.52.0-alt1
+- 0.52.0 released
+
 * Mon Jul 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.51.0-alt1
 - 0.51.0 released
 
