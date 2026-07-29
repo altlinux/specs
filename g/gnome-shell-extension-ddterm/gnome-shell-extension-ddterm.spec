@@ -7,14 +7,14 @@
 %define uuid %_name@amezin.github.com
 %define rdn_name com.github.amezin.%_name
 %define xdg_name org.gnome.shell.extensions.%_name
-%define gti_ver a4fd1ce4
+%define gti_ver 5b0771f
 
 %def_enable check
 
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.1.0
+Version: %ver_major.2.3
 Release: alt1%beta
 
 %define gettext_domain %name
@@ -76,6 +76,9 @@ xvfb-run %__meson_test
 %doc README* CHANGELOG*
 
 %changelog
+* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 63.2.3-alt1
+- 63.2.3
+
 * Wed Jun 03 2026 Yuri N. Sedunov <aris@altlinux.org> 63.1.0-alt1
 - 63.1.0
 
