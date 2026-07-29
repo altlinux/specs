@@ -5,21 +5,20 @@
 
 Name: notcurses
 Version: 3.0.17
-Release: alt1
+Release: alt2
 
 Summary: Character graphics and TUI library
 License: Apache-2.0
 Group: Terminals
-Url: https://nick-black.com/dankwiki/index.php/Notcurses
-Vcs: https://github.com/dankamongmen/notcurses.git
+URL: https://nick-black.com/dankwiki/index.php/Notcurses
+VCS: https://github.com/dankamongmen/notcurses.git
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-cmake
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-cmake
+BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: pkg-config
 BuildRequires: doctest-devel
 BuildRequires: libtinfo-devel
 BuildRequires: libncursesw-devel
@@ -118,7 +117,7 @@ CFLAGS="%optflags -I../include -L../%_cmake__builddir" \
 popd
 
 # Upstream CMake installs top-level markdown docs separately from rpm docs.
-rm -rf %buildroot%_defaultdocdir/notcurses
+rm -r %buildroot%_defaultdocdir/notcurses
 
 %files
 %doc README.md
@@ -185,5 +184,8 @@ rm -rf %buildroot%_defaultdocdir/notcurses
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Jul 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 3.0.17-alt2
+- Cleaned up the spec file.
+
 * Wed Jun 03 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 3.0.17-alt1
 - Initial build for ALT.
