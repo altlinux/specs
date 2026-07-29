@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.8
+Release: alt0.9
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -49,7 +49,6 @@ Patch27:         sylpheed-3.7.0-types.patch
 Patch1000: %name-0.9.3cvs9-alt-wm_race.patch
 
 Requires: mailcap
-Requires: libgpgme >= 1.7.0
 
 %{?_enable_ldap:BuildPreReq: libldap-devel}
 %{?_enable_jpilot:BuildPreReq: libpilot-link-devel}
@@ -58,7 +57,7 @@ Requires: libgpgme >= 1.7.0
 # Automatically added by buildreq on Mon May 29 2006,
 # then manually edited to remove libldap-devel and libpilot-link-devel
 # (conditional dependencies) and other crap
-BuildRequires: flex fontconfig glib2-devel libatk-devel libcompface-devel libgpg-error-devel libgpgme-devel libgtk+2-devel libpango-devel libssl-devel pkg-config
+BuildRequires: flex fontconfig glib2-devel libatk-devel libcompface-devel libgpg-error-devel libgpgme-devel >= 1.7.0 libgtk+2-devel libpango-devel libssl-devel pkg-config
 BuildRequires: xdg-utils
 #BuildRequires: libdbus-glib-devel
 
@@ -169,6 +168,9 @@ bzip2 -9fk ChangeLog
 %_includedir/sylpheed/
 
 %changelog
+* Wed Jul 29 2026 Sergey V Turchin <zerg@altlinux.org> 3.7.0-alt0.9
+- NMU: fix requires
+
 * Tue Jul 28 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.0-alt0.8
 - NMU: fix FTBFS:
   + use default GCC with -std=gnu17;
