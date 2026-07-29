@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.21
-Release: alt1.1
+Release: alt2
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group: Development/Python3
@@ -40,6 +40,9 @@ BuildRequires: fontconfig
 %setup
 %autopatch -p1
 
+# python 3.14 fix tests
+sed -i "s/assert str(w.message).startswith('invalid escape sequence')/assert 'invalid escape sequence' in str(w.message)/" tests/test_quoting.py
+
 %build
 %pyproject_build
 
@@ -55,6 +58,9 @@ BuildRequires: fontconfig
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 29 2026 Anton Vyatkin <toni@altlinux.org> 0.21-alt2
+- Fix FTBFS.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.21-alt1.1
 - Demodernized packaging.
 
