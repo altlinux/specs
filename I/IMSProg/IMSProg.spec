@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -10,7 +10,8 @@ Summary(ru_RU.UTF-8): I2C, SPI and MicroWire EEPROM/Flash программато
 License: GPL-3.0-or-later
 Group: Engineering
 
-Url: https://github.com/bigbigmdm/IMSProg
+URL: https://github.com/bigbigmdm/IMSProg
+VCS: https://github.com/bigbigmdm/IMSProg
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -69,12 +70,8 @@ lrelease-qt6 IMSProg_database_update/language/*.ts
 rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_database_update.metainfo.xml
 rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_editor.metainfo.xml
 
-# rename README
-cp IMSProg_editor/README.md IMSProg_editor.md
-cp IMSProg_programmer/README.md IMSProg_programmer.md
-
 %files
-%doc README.md IMSProg_editor.md IMSProg_programmer.md ChangeLog
+%doc README.md ChangeLog
 %_docdir/imsprog/
 %_bindir/IMSProg
 %_bindir/IMSProg_editor
@@ -91,6 +88,10 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Wed Jul 29 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.6-alt1
+- New version 1.8.6.
+- Spec: add VCS tag.
+
 * Tue Jun 09 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.5-alt1
 - New version 1.8.5.
 
