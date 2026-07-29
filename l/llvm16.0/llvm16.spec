@@ -89,7 +89,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt10
+Release: alt11
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -126,6 +126,9 @@ Patch26: compiler-rt-gcc15-build.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
+# https://github.com/llvm/llvm-project/pull/137403
+# glibc 2.42+ fix
+Patch104: compiler-rt-137403.patch
 
 Patch200: clang-D151339-add-cl_ext_image_raw10_raw12.patch
 # intel opencl-clang v16.0.8 patches
@@ -681,6 +684,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
+%patch104 -p1
 # intel opencl-clang patches
 %patch200 -p2
 %patch201 -p1
@@ -1291,6 +1295,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Wed Jul 29 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt11
+- Fix FTBFS with glibc > 2.42 (due removed termio, see llvm upstream #137321).
+
 * Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 16.0.6-alt10
 - Fix FTBFS with gcc15.
 
