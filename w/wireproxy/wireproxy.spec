@@ -2,7 +2,7 @@
 %def_with check
 
 Name: wireproxy
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Wireguard client that exposes itself as a socks5 proxy
@@ -49,5 +49,8 @@ cp -f systemd/README.md systemd/README.systemd.md
 %ghost %config(noreplace) %attr(600,root,root) %_sysconfdir/wireproxy.conf
 
 %changelog
+* Tue Jul 28 2026 Egor Ignatov <egori@altlinux.org> 1.1.3-alt1
+- New version 1.1.3.
+
 * Fri Jun 12 2026 Egor Ignatov <egori@altlinux.org> 1.1.2-alt1
 - First build for ALT.
