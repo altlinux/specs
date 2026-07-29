@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.12.0
+Version: 140.13.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -37,6 +37,9 @@ Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
 Patch005: 0005-firefox-140-glslopt-once-flag-libc.patch
 Patch006: 0006-firefox-140-fix-sys-seccomp-glibc.patch
+Patch100: 0100-firefox-140.13.0-python3.14-mach-ast.patch
+Patch101: 0101-firefox-140-python3.14-mozbuild-reader.patch
+Patch102: 0102-firefox-140-python3.14-jsonschema.patch
 ### End Patches
 
 Provides: webclient
@@ -469,6 +472,42 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jul 29 2026 Pavel Vasenkov <pav@altlinux.org> 140.13.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-15718 Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-15719 Site isolation issue in the DOM: Navigation component
+  + CVE-2026-16349 Same-origin policy bypass in the DOM: Navigation component
+  + CVE-2026-16350 Incorrect boundary conditions in the Audio/Video: cubeb component
+  + CVE-2026-16362 Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2026-16351 Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-16352 Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16363 JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-16353 Invalid pointer in the DOM: Bindings (WebIDL) component
+  + CVE-2026-16354 Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-16368 Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2026-16369 Integer overflow in the JavaScript: WebAssembly component
+  + CVE-2026-16355 JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-16356 Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-16357 Incorrect boundary conditions in the Graphics component
+  + CVE-2026-16371 Privilege escalation in the DOM: Navigation component
+  + CVE-2026-16374 Information disclosure in the Framework component in DevTools
+  + CVE-2026-16375 Site isolation issue in the Networking: HTTP component
+  + CVE-2026-16377 Mitigation bypass in the PDF Viewer component
+  + CVE-2026-16379 Privilege escalation in the DOM: Content Processes component
+  + CVE-2026-16358 Site isolation issue in the Graphics: WebRender component
+  + CVE-2026-16381 Same-origin policy bypass in the Networking: DNS component
+  + CVE-2026-16383 Mitigation bypass in the DOM: Networking component
+  + CVE-2026-16387 Site isolation issue in the Networking component
+  + CVE-2026-16390 Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-16391 Information disclosure in the Storage: IndexedDB component
+  + CVE-2026-16359 Incorrect boundary conditions in the Audio/Video: GMP component
+  + CVE-2026-16396 Privilege escalation in WebExtensions
+  + CVE-2026-16405 Information disclosure in the Networking: WebSockets component
+  + CVE-2026-16412 Memory safety bugs fixed in Firefox ESR 140.13 and Firefox 153
+  + CVE-2026-16360 Memory safety bugs fixed in Firefox ESR 115.38, Firefox ESR 140.13 and Firefox 153
+  + CVE-2026-16361 Memory safety bugs fixed in Firefox ESR 115.38 and Firefox ESR 140.13
+
 * Thu Jun 18 2026 Pavel Vasenkov <pav@altlinux.org> 140.12.0-alt1
 - New ESR version.
 - Security fixes:
