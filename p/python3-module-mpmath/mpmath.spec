@@ -2,15 +2,14 @@
 
 Name: python3-module-%oname
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Python library for arbitrary-precision floating-point arithmetic
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: http://mpmath.org/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+URL: https://mpmath.org/
+VCS: https://github.com/mpmath/mpmath
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
@@ -56,9 +55,13 @@ xvfb-run pytest3 --ignore=mpmath/tests/test_cli.py --ignore=mpmath/tests/test_de
 %files
 %doc README.rst
 %python3_sitelibdir/%oname/
+%exclude %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Jul 29 2026 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt2
+- Do not pack tests (Closes: 59961).
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1
 
