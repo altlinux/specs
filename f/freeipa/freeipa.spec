@@ -61,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.2
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1224,6 +1224,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 4.13.2-alt2
+- Added check for all the required PKI ports (closes: #44555).
+
 * Wed Jul 23 2026 Danila Skachedubov <skachedubov@altlinux.org> 4.13.2-alt1
 - 4.13.1 -> 4.13.2.
 
