@@ -1,6 +1,6 @@
 Name: supermodel
-Version: 0.3a
-Release: alt2.git4e7356a
+Version: 0.4
+Release: alt1
 Summary: A cross-platform Sega Model 3 arcade machine emulator
 Summary(ru_RU.UTF-8): Кросплатформенный эмулятор аркадного автомата Sega Model 3
 Group: Emulators
@@ -62,6 +62,9 @@ install -D -m 755 %SOURCE2  %buildroot%_bindir/supermodel
 %_man6dir/*
 
 %changelog
+* Mon Jul 20 2026 Artyom Bystrov <arbars@altlinux.org> 0.4-alt1
+- Update to new version
+
 * Mon Apr 27 2026 Artyom Bystrov <arbars@altlinux.org> 0.3a-alt2.git4e7356a
 - Fix build with GCC15
 
