@@ -2,7 +2,7 @@
 
 Name:          pgadmin4
 Version:       9.16
-Release:       alt1
+Release:       alt2
 Summary:       pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL
 License:       MIT
 Group:         Networking/WWW
@@ -17,6 +17,7 @@ Source4:       config_local.py
 Source5:       pgadmin4.conf
 Source10:      pgadmin4-%version-generated-js.tar.xz
 Patch:         %name-%EVR.patch
+Patch1:        %name-%version-cryptography-cfb8-compat.patch
 Autoprov:      yes,nopython
 %if_with       desktop
 ExclusiveArch: x86_64
@@ -228,6 +229,9 @@ ln -sf %_sysconfdir/nginx/sites-available.d/%name.conf %_sysconfdir/nginx/sites-
 
 
 %changelog
+* Thu Jul 30 2026 Pavel Vasenkov <pav@altlinux.org> 9.16-alt2
+- Added compatibility with the legacy cryptography CFB8 namespace.
+
 * Tue Jul 28 2026 Pavel Vasenkov <pav@altlinux.org> 9.16-alt1
 - New version
 
