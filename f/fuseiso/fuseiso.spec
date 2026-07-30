@@ -1,25 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fuseiso
-Version: 20070708
-Release: alt4
+Version: 20260614
+Release: alt1
 
 Summary: Mount ISO filesystem images as a non-root user
 License: GPL-2.0-or-later
 Group: File tools
-URL: http://sourceforge.net/projects/fuseiso/
+URL: https://git.sr.ht/~whynothugo/fuseiso
+VCS: https://git.sr.ht/~whynothugo/fuseiso
 
 Source0: %name-%version.tar
-Patch1: 0001-ALT-add-multithreading-and-libraries-flags-for-ld.patch
-Patch2: 0002-REDHAT-handle-larger-than-4GB-isos.patch
-Patch3: 0003-Fix-typo.patch
-Patch4: 0004-DEBIAN-CVE-2015-8837.patch
-Patch5: 0005-DEBIAN-prevent-integer-overflow-in-ZISO-code.patch
-Patch6: 0006-ALT-add-ISO9660-level-3-images-support.patch
+Patch1: 0001-ALT-add-ISO9660-level-3-images-support.patch
 
-BuildRequires: gcc-c++
+BuildRequires: meson
 BuildRequires: glib2-devel
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: zlib-devel
 
 %description
@@ -32,18 +28,23 @@ Supported image types: ISO, BIN (single track only), NRG, MDF, IMG (CCD).
 %autopatch -p2
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
-%doc AUTHORS ChangeLog NEWS README
 %_bindir/fuseiso
+%_datadir/doc/%name/
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 20260614-alt1
+- 20070708 -> 20260614.
+- Switch build system to meson (fuse3).
+- Drop patches merged upstream (4GB isos, typo, CVE fixes).
+- Rebase ISO9660 level 3 images support patch.
+
 * Thu Feb 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 20070708-alt4
 - Add ISO9660 level 3 images support (thanks proskur@).
 - Fix License tag according to SPDX.
