@@ -1,12 +1,13 @@
 Name: nfs
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
 License: GPLv2
 Group: Networking/Other
-Url: http://nfs.sourceforge.net/
+URL: http://nfs.sourceforge.net/
+VCS: git://linux-nfs.org/~steved/nfs-utils
 
 Source0: %name-%version-%release.tar
 
@@ -314,6 +315,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Jul 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.9.2-alt1
+- 2.9.2 released
+
 * Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.9.1-alt1
 - 2.9.1 released
 
