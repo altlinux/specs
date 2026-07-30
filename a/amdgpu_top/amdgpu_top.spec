@@ -2,7 +2,7 @@
 %define git %nil
 
 Name: amdgpu_top
-Version: 0.11.4
+Version: 0.11.5
 Release: alt1
 
 Summary: Tool that display AMD GPU utilization
@@ -30,9 +30,9 @@ cat > .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=7714cb3f810342d22c56154cf8501d072759709a"]
+[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=c87eff736523054247f1192796a5f47560cd35db"]
 git = "https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs"
-rev = "7714cb3f810342d22c56154cf8501d072759709a"
+rev = "c87eff736523054247f1192796a5f47560cd35db"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -58,6 +58,9 @@ install -pm644 docs/%name.1 %buildroot%_man1dir/
 %_man1dir/%name.1*
 
 %changelog
+* Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 0.11.5-alt1
+- 0.11.5.
+
 * Wed May 13 2026 L.A. Kostis <lakostis@altlinux.ru> 0.11.4-alt1
 - 0.11.4.
 
