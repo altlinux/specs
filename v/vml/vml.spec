@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.12
+Version:  0.1.13
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -59,6 +59,11 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Mon Jul 27 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.13-alt1
+- Fail on pulling unavailable images
+- Improve bash and zsh completions
+- Update ubuntu, fedora, and alt-gui images
+
 * Thu Mar 05 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.12-alt1
 - Fail on removing unexisting vm
 - Propagate image downloading errors
