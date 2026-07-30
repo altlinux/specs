@@ -1,6 +1,6 @@
 %define soname 8
 Name: libdvdread
-Version: 7.0.1
+Version: 7.1.1
 Release: alt1
 Summary: A library for reading DVD-Video images
 License: GPLv2
@@ -54,12 +54,15 @@ applications reading DVD-video images
 %_libdir/*.so.%soname.*
 
 %files devel
-%doc AUTHORS TODO README.md
+%doc AUTHORS README.md
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 7.1.1-alt1
+- 7.0.1 -> 7.1.1
+
 * Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 7.0.1-alt1
 - 6.1.3 -> 7.0.1
 
