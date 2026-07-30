@@ -6,10 +6,11 @@
 # dane_ta_usage requires openssl >= 1.1.0
 %def_with dane_ta_usage
 %define soname 3
+%set_autoconf_version 2.71
 
 Name: ldns
 Version: 1.9.2
-Release: alt1
+Release: alt2
 
 Summary: Lowlevel DNS(SEC) library with API
 
@@ -163,6 +164,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Thu Jul 30 2026 Alexander Danilov <admsasha@altlinux.org> 1.9.2-alt2
+- Set the version of autoconf to 2.71 to simplify the build.
+
 * Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 1.9.2-alt1
 - 1.9.0 -> 1.9.2 (Fixes: CVE-2026-10846)
 
