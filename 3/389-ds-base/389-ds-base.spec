@@ -18,7 +18,7 @@
 
 Name: 389-ds-base
 Version: 3.1.4
-Release: alt3.1
+Release: alt4
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -31,18 +31,10 @@ Source0: %name-%version.tar
 Source1: vendor_nodejs.tar
 %endif
 Source2: vendor_rust.tar
+Source3: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-python-ldap
-BuildRequires: python3-module-python-dateutil
-BuildRequires: python3-module-pyasn1-modules
-BuildRequires: python3-module-pyasn1
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-distro
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-argparse-manpage
-BuildRequires: python3-module-argcomplete
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: cracklib-devel
 BuildRequires: doxygen
 BuildRequires: gcc-c++
@@ -78,6 +70,7 @@ BuildRequires: libcmocka-devel
 %endif
 
 # rust deps
+BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
 
@@ -141,6 +134,7 @@ Group: Development/Python3
 BuildArch: noarch
 Requires: nss-utils
 Requires: %get_dep_ge libnss
+%pyproject_runtimedeps_metadata
 
 %description -n python3-module-lib389
 This module contains tools and libraries for accessing, testing, and
@@ -187,6 +181,8 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %setup %{?_with_cockpit:-a1} -a2
 %patch -p1
 pushd ./src/lib389
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 popd
 
 %build
@@ -432,8 +428,10 @@ fi
 %endif
 
 %changelog
-* Sat Mar 28 2026 Grigory Ustinov <grenka@altlinux.org> 3.1.4-alt3.1
-- Demodernized packaging.
+* Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt4
+- Backported upstream fixes for Python 3.14:
+  + https://github.com/389ds/389-ds-base/issues/7184
+  + https://github.com/389ds/389-ds-base/issues/7253
 
 * Thu Feb 26 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt3
 - Backported upstream fix for CVE (fixes: CVE-2025-14905).
