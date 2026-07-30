@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  2.7
+Version:  2.8
 Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
@@ -49,6 +49,9 @@ install -D -m 0644 licence.md %buildroot%_datadir/%name/
 %_datadir/appdata/denise.appdata.xml
 
 %changelog
+* Thu Jul 30 2026 Artyom Bystrov <arbars@altlinux.org> 2.8-alt1
+- Update to new version
+
 * Thu Jan 15 2026 Artyom Bystrov <arbars@altlinux.org> 2.7-alt1
 - Update to new version
 
