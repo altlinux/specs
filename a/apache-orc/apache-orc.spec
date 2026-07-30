@@ -3,7 +3,7 @@
 
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Name: apache-orc
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 License: Apache-2.0
 Url: http://orc.apache.org/
@@ -134,6 +134,9 @@ export ORC_FORMAT_URL=file://%SOURCE1
 %_libdir/cmake/orc
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1
+
 * Sat Apr 11 2026 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - updated from 2.1.3 to 2.3.0
 
