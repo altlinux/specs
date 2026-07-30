@@ -1,13 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%global bin_name btm
 %def_with check
 
 Name: bottom
-Version: 0.14.6
+Version: 0.14.7
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
 Group: Monitoring
-Url: https://clementtsang.github.io/bottom
-Vcs: https://github.com/ClementTsang/bottom
+URL: https://clementtsang.github.io/bottom
+VCS: https://github.com/ClementTsang/bottom
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -34,25 +36,32 @@ export BTM_GENERATE=true
 %rust_build
 
 %install
-%rust_install btm
-install -D -m 644 target/tmp/bottom/manpage/btm.1 %buildroot%_man1dir/btm.1
-install -D -m 644 target/tmp/bottom/completion/btm.bash %buildroot%_datadir/bash-completion/completions/btm
-install -D -m 644 target/tmp/bottom/completion/btm.fish %buildroot%_datadir/fish/vendor_completions.d/btm.fish
-install -D -m 644 target/tmp/bottom/completion/_btm %buildroot%_datadir/zsh/site-functions/_btm
+%rust_install %bin_name
+install -Dm 644 target/tmp/bottom/manpage/%bin_name.1 \
+				%buildroot%_man1dir/%bin_name.1
+install -Dm 644 target/tmp/bottom/completion/%bin_name.bash \
+				%buildroot%_datadir/bash-completion/completions/%bin_name
+install -Dm 644 target/tmp/bottom/completion/%bin_name.fish \
+				%buildroot%_datadir/fish/vendor_completions.d/%bin_name.fish
+install -Dm 644 target/tmp/bottom/completion/_%bin_name \
+				%buildroot%_datadir/zsh/site-functions/_%bin_name
 
 %check
 export RUST_BACKTRACE=full
 %rust_test -- --skip test_data_collection
 
 %files
+%_bindir/%bin_name
+%_man1dir/%bin_name.1.*
+%_datadir/bash-completion/completions/%bin_name
+%_datadir/fish/vendor_completions.d/%bin_name.fish
+%_datadir/zsh/site-functions/_%bin_name
 %doc LICENSE CHANGELOG.md README.md sample_configs
-%_bindir/btm
-%_man1dir/*
-%_datadir/bash-completion/completions/btm
-%_datadir/fish/vendor_completions.d/btm.fish
-%_datadir/zsh/site-functions/_btm
 
 %changelog
+* Thu Jul 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.7-alt1
+- Updated to version 0.14.7.
+
 * Mon Jul 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.6-alt1
 - Updated to version 0.14.6.
 
