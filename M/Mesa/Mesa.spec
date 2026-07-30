@@ -9,10 +9,10 @@
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
-%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
-%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
-%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
-%define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+%define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
+%define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
+%define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
+%define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel loongarch64 riscv64
@@ -98,7 +98,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.1
-%define ver_minor 5
+%define ver_minor 6
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -123,14 +123,14 @@ BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwaylan
 BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
 BuildRequires: llvm%llvmver-devel clang%llvmver-devel
-%ifarch %gallium_opencl_arches
+%ifarch %gallium_opencl_arches %vulkan_nouveau_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %endif
 %ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches %vulkan_nouveau_arches
 BuildRequires: libvulkan-devel
 %endif
 %ifarch %vulkan_nouveau_arches %gallium_opencl_arches
-BuildRequires: cbindgen rust rust-bindgen
+BuildRequires: cbindgen rust rust-bindgen rustfmt
 %endif
 %ifnarch %e2k
 BuildRequires: libunwind-devel
@@ -509,6 +509,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 30 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.6-alt1
+- 26.1.6
+
 * Thu Jul 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.5-alt1
 - 26.1.5
 
