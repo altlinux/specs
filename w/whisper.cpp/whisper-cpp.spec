@@ -15,7 +15,7 @@
 
 Name: whisper.cpp
 Version: 1.9.1
-Release: alt3
+Release: alt4
 
 Summary: Port of OpenAI's Whisper model in C/C++
 Group: Sound
@@ -90,13 +90,9 @@ NOTE:
 %package -n libwhisper%soversion
 Summary: Shared libraries for %name
 Group: System/Libraries
+# The CPU backend is the only one required: it always works and is small.
+# The CUDA and Vulkan backends are optional, install them explicitly.
 Requires: %name-cpu = %EVR
-%if_with cuda
-Requires: %name-cuda = %EVR
-%endif
-%if_with vulkan
-Requires: %name-vulkan = %EVR
-%endif
 Provides: lib%oldname%soversion = %EVR
 Obsoletes: lib%oldname%soversion < %EVR
 
@@ -285,6 +281,11 @@ whisper-bench -m models/ggml-base.bin
 %_bindir/whisper-command
 
 %changelog
+* Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt4
+- Make the CUDA and Vulkan backends optional: libwhisper0 now requires the
+  CPU backend only, so installing the library no longer pulls in the NVIDIA
+  and Vulkan stacks.
+
 * Mon Jul 27 2026 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt3
 - Refactor spec to match llama.cpp packaging structure.
 - Move gcc12-c++ and vulkan build requirements to their conditional blocks.
