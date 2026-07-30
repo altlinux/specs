@@ -1,11 +1,11 @@
 Name: python3-module-bleak-retry-connector
-Version: 4.6.1
+Version: 4.6.3
 Release: alt1
 
 Summary: A connector for Bleak Client
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bleak-retry-connector
+URL: https://pypi.org/project/bleak-retry-connector
 VCS: https://github.com/bluetooth-devices/bleak-retry-connector
 
 Source0: %name-%version.tar
@@ -45,6 +45,9 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/bleak_retry_connector-%version.dist-info
 
 %changelog
+* Thu Jul 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.3-alt1
+- 4.6.3 released
+
 * Fri May 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.1-alt1
 - 4.6.1 released
 
