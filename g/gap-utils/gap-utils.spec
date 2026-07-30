@@ -1,7 +1,7 @@
 %define repo utils
 
 Name: gap-utils
-Version: 0.96
+Version: 0.97
 Release: alt1
 Summary: GAP: Utility functions in GAP
 License: GPL-2.0+
@@ -18,7 +18,7 @@ BuildRequires: xz
 
 BuildArch: noarch
 # PackageInfo.g
-Requires: gap >= 4.10.1
+Requires: gap >= 4.12
 
 %description
 The Utils package provides a collection of utility functions gleaned
@@ -36,6 +36,9 @@ from many packages.
 %gap_sitelib/%repo/
 
 %changelog
+* Thu Jul 30 2026 Leontiy Volodin <lvol@altlinux.org> 0.97-alt1
+- New version 0.97.
+
 * Wed Jun 10 2026 Leontiy Volodin <lvol@altlinux.org> 0.96-alt1
 - New version 0.96.
 
