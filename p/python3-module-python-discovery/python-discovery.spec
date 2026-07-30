@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.4
+Version: 1.5.0
 Release: alt1
 Summary: Python interpreter discovery
 License: MIT
@@ -22,7 +22,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -34,6 +35,9 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -49,6 +53,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 29 2026 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.4.4 -> 1.5.0
+
 * Thu Jul 09 2026 Stanislav Levin <slev@altlinux.org> 1.4.4-alt1
 - 1.4.3 -> 1.4.4
 
