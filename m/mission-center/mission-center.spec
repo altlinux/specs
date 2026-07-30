@@ -1,14 +1,14 @@
-# magpie subproject
+# magpie subproject -> app-rummage subproject
 %def_enable snapshot
 # for ring
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name io.missioncenter.MissionCenter
 # nvtop for magpie
 # subprojects/magpie/platform-linux/3rdparty/nvtop/nvtop.json
-%define nvtop_ver 339ee0b10a64ec51f43d27357b0068a40f16e9e4
+%define nvtop_ver 3d4a953da02bc18886734613bb9f60ff80669de7
 
 %def_disable bootstrap
 
@@ -38,7 +38,7 @@ ExcludeArch: %ix86 armh ppc64le
 
 %define glib_ver 2.86
 %define gtk_ver 4.20
-%define adwaita_ver 1.8
+%define adwaita_ver 1.9
 
 Requires: dconf
 # no dmidecode required since 1.0.0
@@ -70,7 +70,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 pushd nvtop-%nvtop_ver
 for p in ../%nvtop_dir/patches/*.patch; do
-patch -p1 < $p; done
+echo $p
+patch -p1 < $p ||:
+done
 popd
 
 mkdir -p %__builddir/subprojects/magpie/src/debug/build/native
@@ -102,6 +104,9 @@ mv nvtop-%nvtop_ver %__builddir/subprojects/magpie/src/debug/build/native/nvtop-
 
 
 %changelog
+* Thu Jul 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
