@@ -2,19 +2,20 @@
 %define module_name aiowebostv
 
 Name: python3-module-%module_name
-Version: 0.7.5
+Version: 0.8.0
 Release: alt1
 Summary: Python library to control LG webOS based TV devices
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/aiowebostv
+URL: https://pypi.org/project/aiowebostv
 VCS: https://github.com/home-assistant-libs/aiowebostv
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
 
 %description
@@ -35,6 +36,9 @@ sed -i '/version/s/0.0.0/%version/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Thu Jul 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.0-alt1
+- Updated to version 0.8.0.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.5-alt1
 - Updated to version 0.7.5.
 
