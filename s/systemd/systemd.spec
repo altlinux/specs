@@ -100,8 +100,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2697,6 +2697,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1:259.8-alt1
+- 259.8.
+
 * Fri Jul 24 2026 Ivan A. Melnikov <iv@altlinux.org> 1:259.7-alt2
 - NMU: Package nvpcr only if bootloader and tpm2 are enabled
   (fixes FTBFS on riscv64 and loongarch64).
