@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4
-Release: alt1
+Release: alt1.8.g6bcd027
 
 Summary: Python module for handling PSKC files
 License: LGPL-2.1
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -67,7 +69,6 @@ export TZ='Europe/Amsterdam'
     -o=addopts='--doctest-modules --doctest-glob="*.doctest"'
 
 %files
-%doc COPYING ChangeLog NEWS README
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_bindir/csv2pskc
@@ -75,5 +76,8 @@ export TZ='Europe/Amsterdam'
 %_bindir/pskc2pskc
 
 %changelog
+* Thu Jul 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4-alt1.8.g6bcd027
+- Fixed FTBFS (signxml>=5.1.0).
+
 * Fri Jan 23 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4-alt1
 - Packaged for ALT Sisyphus.

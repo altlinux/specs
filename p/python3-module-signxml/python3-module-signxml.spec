@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.4.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Python XML Signature and XAdES library
@@ -59,6 +59,9 @@ recommended ones.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 29 2026 Anton Zhukharev <ancieg@altlinux.org> 5.1.0-alt1
+- Updated to 5.1.0.
+
 * Sat Mar 14 2026 Anton Zhukharev <ancieg@altlinux.org> 4.4.0-alt1
 - Updated to 4.4.0.
 
