@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-gapi
 Version: 0.4.9
-Release: alt1
+Release: alt2
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
@@ -16,6 +16,7 @@ BuildRequires: ocaml-camlp-streams-devel
 %if_with check
 BuildRequires: ocaml-ounit-devel >= 2.0.0
 BuildRequires: libcurl-devel
+BuildRequires: libgmp-devel
 %endif
 BuildRequires: ocaml-curl-devel
 BuildRequires: zlib-devel
@@ -70,6 +71,9 @@ sed -i 's,oUnit,ounit2,' src/test/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 0.4.9-alt2
+- fixed FTBFS on i586 by adding an explicit BuildRequires for libgmp-devel
+
 * Sat Mar 21 2026 Anton Farygin <rider@altlinux.org> 0.4.9-alt1
 - 0.4.8 -> 0.4.9
 
