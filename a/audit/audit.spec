@@ -5,7 +5,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: audit
-Version: 4.2
+Version: 4.2.1
 Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
@@ -228,7 +228,10 @@ fi
 %_man8dir/*
 %_man7dir/*
 
-%_datadir/bash-completion/completions/audit.bash_completion
+%_datadir/bash-completion/completions/auditctl
+%_datadir/bash-completion/completions/augenrules
+%_datadir/bash-completion/completions/aureport
+%_datadir/bash-completion/completions/ausearch
 
 %attr(700,root,root) %dir %_sysconfdir/audit
 %config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd.conf
@@ -286,6 +289,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 30 2026 Egor Ignatov <egori@altlinux.org> 4.2.1-alt1
+- New version 4.2.1 (closes: #59967).
+
 * Fri Jul 24 2026 Egor Ignatov <egori@altlinux.org> 4.2-alt1
 - New version 4.2.
 
