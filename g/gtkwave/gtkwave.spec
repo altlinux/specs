@@ -1,5 +1,5 @@
 Name: gtkwave
-Version: 3.3.127
+Version: 3.3.128
 Release: alt1
 Summary: GTKWave is a fully featured GTK+ based wave viewer
 License: GPL-2.0
@@ -90,6 +90,9 @@ hardlink -cv %buildroot%_iconsdir}/
 %_iconsdir/hicolor/scalable/apps/gtkwave.svg
 
 %changelog
+* Wed Jul 29 2026 Anton Midyukov <antohami@altlinux.org> 3.3.128-alt1
+- New version 3.3.128.
+
 * Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 3.3.127-alt1
 - New version 3.3.127.
 
