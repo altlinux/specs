@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.4.4
-Release: alt2
+Version: 1.4.5
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -72,6 +72,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Tue Jul 28 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.5-alt1
+- 1.4.5 release
+
 * Mon May 11 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.4-alt2
 - python3-module-llfuse instead of python3-module-pyfuse3
 
