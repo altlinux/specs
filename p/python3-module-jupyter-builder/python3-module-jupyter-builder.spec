@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Build tools for JupyterLab (and remixes)
@@ -49,5 +49,8 @@ BuildRequires: git-core
 %python3_sitelibdir/jupyter_builder-%version.dist-info
 
 %changelog
+* Thu Jul 30 2026 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Thu Jul 23 2026 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus.
