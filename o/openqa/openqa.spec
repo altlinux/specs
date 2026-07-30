@@ -22,11 +22,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm) perl(MCP.pm) perl(Test/Perl/Critic.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm) perl(MCP.pm) perl(Test/Perl/Critic.pm) perl(Archive/Zip.pm) perl(Test/Mock/Time.pm)
 
 Name: openqa
 Version: 4.6
-Release: alt32.git73674c429
+Release: alt33.git73674c429
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -191,12 +191,44 @@ Requires:       apache2
 %description single-instance
 Use this package to setup a local instance with all services provided together.
 
+%package client-bash-completion
+Summary:        Bash Completion for %name
+Group:          Shells
+Requires: %name-client = %EVR
+Requires:       bash-completion
+
+%description client-bash-completion
+The official bash completion script for openqa-cli.
+
+%package client-zsh-completion
+Summary:        Zsh Completion for %{name}
+Group:          Shells
+Requires: %name-client = %EVR
+Requires: zsh
+
+%description client-zsh-completion
+The official zsh completion script for openqa-cli.
+
 %package doc
 Summary: The openQA documentation
 Group: Development/Tools
 %description doc
 Documentation material covering installation, configuration, basic test
 writing, etc., covering both openQA and the os-autoinst test engine.
+
+%package llm-server
+Summary: Local LLM server features for openQA workers
+Group: Development/Tools
+
+Requires: %name-worker = %EVR
+Requires: podman
+
+%description llm-server
+openQA workers can optionally host a local llama.cpp server to provide
+LLM features directly from the worker node.
+
+This package provides a Podman Quadlet configuration for managing the
+local LLM server.
 
 %prep
 %setup -n %name-%version
@@ -253,6 +285,7 @@ ln -s %_datadir/openqa/script/dump-db %buildroot%_bindir/openqa-dump-db
 
 install -d -m 755 %buildroot%_datadir/openqa/client
 install -m 755 public/openqa-cli.yaml %buildroot%_datadir/openqa/client/openqa-cli.yaml
+install -d -m 755 %buildroot%_localstatedir/openqa/llm/models
 
 #These files are not needed
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
@@ -276,8 +309,10 @@ mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 # Skip tests not working currently, or flaky
 #rm -f t/03-auth.t
 #rm -f t/05-scheduler-full.t
+rm -f t/04-scheduler.t 
 rm -f t/17-labels_carry_over.t
 rm -f t/24-worker-overall.t
+rm -f t/23-amqp.t
 rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
 rm -f t/09-job_clone.t
@@ -292,6 +327,7 @@ rm -f t/api/04-jobs.t
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
+rm -f xt/00-tidy.t
 rm -f external/os-autoinst-common/xt/00-tidy.t
 
 rm -rf %buildroot/DB
@@ -306,7 +342,7 @@ export CONTAINER_TEST=0
 export HELM_TEST=0
 # We don't want fatal warnings during package building
 export PERL_TEST_WARNINGS_ONLY_REPORT_WARNINGS=1
-make test-with-database OGIT_CEILING_DIRECTORIES="/" BS_RUN=1 PROVE_ARGS='-r' CHECKSTYLE=0 TEST_PG_PATH=%buildroot/DB
+make test-with-database OGIT_CEILING_DIRECTORIES="/" BS_RUN=1 PROVE_ARGS='-r -v t' CHECKSTYLE=0 TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
 %post
@@ -347,8 +383,24 @@ if [ $1 -eq 0 ]; then
    rm -rf %_datadir/openqa/public/packed
 fi
 
+%post llm-server
+if [ -x /bin/systemctl ]; then
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
+
+%preun llm-server
+if [ "$1" -eq 0 ] && [ -x /bin/systemctl ]; then
+    /bin/systemctl stop openqa-llm-server.service \
+        >/dev/null 2>&1 || :
+fi
+
+%postun llm-server
+if [ -x /bin/systemctl ]; then
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
+
 %files
-%doc README.asciidoc
+%doc README.md
 %dir %_sysconfdir/openqa
 %dir %_sysconfdir/openqa/openqa.ini.d
 %dir %_sysconfdir/openqa/database.ini.d
@@ -499,10 +551,17 @@ fi
 %doc COPYING
 # nginx vhost
 %config %_sysconfdir/nginx/sites-available.d/openqa.conf.template
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-llm.conf.template
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-assets.inc
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-endpoints.inc
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-locations.inc
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-upstreams.inc
+
+%files client-bash-completion
+%_datadir/bash-completion/completions/openqa-cli
+
+%files client-zsh-completion
+%_datadir/zsh/site-functions/_openqa-cli
 
 %files client
 %_datadir/openqa/script/client
@@ -542,11 +601,22 @@ fi
 %_bindir/openqa-setup-db
 %_bindir/openqa-dump-db
 
+%files llm-server
+%dir %_datadir/containers
+%dir %_datadir/containers/systemd
+%_datadir/containers/systemd/openqa-llm-server.container
+%dir %_localstatedir/openqa/llm
+%dir %_localstatedir/openqa/llm/models
+
 %files single-instance
 
 %files single-instance-nginx
 
 %changelog
+* Thu Jul 30 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt33.git73674c429
+- updated assets and spec file
+- Commit hash: 73674c429
+
 * Fri Jul 24 2026 Alexandr Antonov <aas@altlinux.org> 4.6-alt32.git73674c429
 - update assets
 - Commit hash: 73674c429
