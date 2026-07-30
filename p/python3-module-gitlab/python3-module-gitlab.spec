@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 8.4.0
+Version: 8.5.0
 Release: alt1
 Summary: A python wrapper for the GitLab API
 License: LGPL-3.0
@@ -58,6 +58,9 @@ rm -rv tests/{install,functional,smoke}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 8.5.0-alt1
+- Updated to version 8.5.0.
+
 * Thu May 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 8.4.0-alt1
 - Updated to version 8.4.0.
 
