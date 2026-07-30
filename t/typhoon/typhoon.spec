@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: typhoon
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Stylish weather app based on Stormcloud
@@ -26,6 +26,7 @@ Requires: /usr/bin/convert
 Requires: /usr/bin/gsettings
 Requires: python3(dbus)
 Requires: python3(cairosvg)
+Requires: fonts-ttf-freefont
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=45638
 %def_disable girar_repacks_srpm
@@ -95,6 +96,9 @@ mkdir -p %buildroot%perl_vendor_autolib/%name
 %endif
 
 %changelog
+* Thu Jul 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Tue Jul 28 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
