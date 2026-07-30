@@ -5,7 +5,7 @@
 
 Name: itk
 Version: %itkver.5
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
@@ -1085,6 +1085,10 @@ sed -i 's/~ObiAttenuation() = default;//' \
 	Modules/Remote/RTK/include/rtkVarianObiRawImageFilter.h
 sed -i 's/~SoftThreshold() = default;//' \
 	Modules/Remote/RTK/include/rtkSoftThresholdImageFilter.h
+sed -i 's/~InvertIntensityTransform() = default;//' \
+	Modules/Filtering/ImageIntensity/include/itkInvertIntensityImageFilter.h
+sed -i 's/~IntensityWindowingTransform() = default;//' \
+	Modules/Filtering/ImageIntensity/include/itkIntensityWindowingImageFilter.h
 %endif
 
 # Save an unbuilt copy of the Example's sources for %%doc
@@ -1572,6 +1576,9 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %doc %_docdir/itk/
 
 %changelog
+* Wed Jul 29 2026 Michael Shigorin <mike@altlinux.org> 5.4.5-alt2
+- E2K: fix headers wrt alizams ftbfs (ilyakurdyukov@).
+
 * Thu Dec 11 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.5-alt1
 - New version.
 
