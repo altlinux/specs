@@ -2,6 +2,7 @@
 %define pypi_name aiohttp
 %define mod_name %pypi_name
 %def_with check
+%def_disable bootstrap
 
 %define add_python_extra() \
 %{expand:%%package -n %%name+%1 \
@@ -15,8 +16,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.14.1
-Release: alt2
+Version: 3.14.3
+Release: alt1
 
 Summary: http client/server for asyncio
 License: Apache-2.0
@@ -34,13 +35,13 @@ Obsoletes: python3-module-aiohttp-tests < %EVR
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter uvloop
 %pyproject_builddeps_build
 BuildRequires: python3-module-cython
 BuildRequires: libllhttp-devel
 %if_with check
-# not needed
+%if_enabled bootstrap
 %add_pyproject_deps_check_filter uvloop
+%endif
 # not packaged yet
 %add_pyproject_deps_check_filter python-on-whales
 %add_pyproject_deps_check_filter setuptools-git
@@ -96,6 +97,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 3.14.3-alt1
+- 3.14.1 -> 3.14.3
+
 * Wed Jul 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.14.1-alt2
 - Dropped redundant build and check dependency on uvloop.
 
