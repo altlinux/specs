@@ -60,8 +60,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.13.1
-Release: alt7
+Version: 4.13.2
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -80,6 +80,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: libcmocka-devel
+BuildRequires: chrpath
 BuildRequires: libini_config-devel
 BuildRequires: libkrb5-devel >= %krb5_version
 BuildRequires: libpopt-devel
@@ -258,6 +259,7 @@ Conflicts: freeipa-server <= 4.13.1-alt6
 %filter_from_provides /python3(migration\(\..*\)\?)/d
 # manually manage dependency on python-pki
 %filter_from_requires /python3(pki\(\..*\)\?)/d
+%filter_from_requires /libgse-private-samba/d
 
 %description server-core
 %desc_common
@@ -678,6 +680,14 @@ rm %buildroot/%plugin_dir/libtopology.la
 rm %buildroot/%_libdir/krb5/plugins/kdb/ipadb.la
 rm %buildroot/%_libdir/samba/pdb/ipasam.la
 
+# samba-devel 4.22.11 injects bogus RPATH via .pc files
+# https://bugzilla.altlinux.org/60003
+samba_libdir=$(pkg-config --variable=libdir samba-util)
+chrpath -r ${samba_libdir}/samba %buildroot%_libdir/samba/pdb/ipasam.so
+chrpath -d %buildroot%_libdir/krb5/plugins/kdb/ipadb.so
+chrpath -d %buildroot%_libexecdir/ipa/ipa-print-pac
+chrpath -d %buildroot%plugin_dir/libipa_cldap.so
+
 # So we can own our Apache configuration
 mkdir -p %buildroot%apache2_confdir/{sites-available,extra-available,extra-enabled}
 /bin/touch %buildroot%apache2_sites_available/ipa.conf
@@ -758,6 +768,8 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 %if_without only_client
 
 %post server-core
+# Create system users BEFORE restarting dbus and oddjob
+%sysusers_create ipa.conf
 /bin/systemctl daemon-reload 2>&1 ||:
 # upgrade
 if [ $1 -gt 1 ] ; then
@@ -787,15 +799,7 @@ if [ -e /usr/sbin/ipa_kpasswd ]; then
 fi
 
 %pre server-common
-# create users and groups
-# create kdcproxy group and user
-getent group kdcproxy >/dev/null || groupadd -f -r kdcproxy ||:
-getent passwd kdcproxy >/dev/null || useradd -r -g kdcproxy -s /sbin/nologin -d / -c "IPA KDC Proxy User" kdcproxy ||:
-# create ipaapi group and user
-getent group ipaapi >/dev/null || groupadd -f -r ipaapi ||:
-getent passwd ipaapi >/dev/null || useradd -r -g ipaapi -s /sbin/nologin -d / -c "IPA Framework User" ipaapi ||:
-# add apache to ipaaapi group
-id -Gn apache2 | grep '\bipaapi\b' >/dev/null || usermod apache2 -a -G ipaapi ||:
+# Users are created via systemd-sysusers in %post server-core
 
 %post server-dns
 # first installation
@@ -987,6 +991,7 @@ fi
 %attr(644,root,root) %_unitdir/ipa-custodia.service
 %ghost %attr(644,root,root) %etc_systemd_dir/httpd2.service.d/ipa.conf
 %_tmpfilesdir/ipa.conf
+%_sysusersdir/ipa.conf
 %attr(644,root,root) %_journal_catalogdir/ipa.catalog
 # END
 %attr(755,root,root) %plugin_dir/libipa_pwd_extop.so
@@ -1219,6 +1224,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Jul 23 2026 Danila Skachedubov <skachedubov@altlinux.org> 4.13.2-alt1
+- 4.13.1 -> 4.13.2.
+
 * Mon Apr 27 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt7
 - Made dogtag-less mode the package-based option.
 
