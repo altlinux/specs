@@ -3,7 +3,7 @@
 %define ext_schema_id io.github.jeffshee.hanabi-extension
 
 Name: gnome-shell-extension-hanabi
-Version: 20260725
+Version: 20260728
 Release: alt1
 Epoch: 2
 
@@ -61,6 +61,9 @@ meson setup .build --prefix=%buildroot/usr/ && ninja -C .build install
 %doc README.md
 
 %changelog
+* Thu Jul 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260728-alt1
+- updated to git.7863b102a6
+
 * Sun Jul 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260725-alt1
 - updated to git.5cd090d098
 
