@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitlogue
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Playback of Git commits in the terminal as an animated story
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: perl-IPC-Cmd
 BuildRequires: perl-Time-Piece
+BuildRequires: /dev/pts
 
 %description
 A cinematic Git commit replay tool for the terminal,
@@ -51,17 +52,26 @@ export LIBGIT2_NO_VENDOR=1
 %install
 %rust_install
 
+# These tests assume that piped stdio also means no controlling
+# terminal.
+# Local hasher builds retain a controlling TTY, causing the TUI
+# to wait for input.
 %check
 export OPENSSL_NO_VENDOR=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 export LIBGIT2_NO_VENDOR=1
-%rust_test
+%rust_test -- \
+    --skip default_playback_fails_only_after_ui_startup_without_tty \
+    --skip diff_subcommand_with_staged_changes_fails_only_after_ui_startup_without_tty
 
 %files
 %_bindir/*
 %doc README.md CHANGELOG.md
 
 %changelog
+* Wed Jul 29 2026 Sergey Savelev <medovi@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Tue May 19 2026 Sergey Savelev <medovi@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
