@@ -3,14 +3,15 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.9
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Summary: Python Netlink library
 
 Group: Development/Python3
 License: GPLv2+ and Apache-2.0
-Url: https://github.com/svinota/pyroute2
+URL: https://pypi.org/project/pyroute2
+VCS: https://github.com/svinota/pyroute2
 
 Source: %name-%version.tar
 
@@ -21,6 +22,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-modules-sqlite3
 %endif
 
@@ -48,15 +50,18 @@ so the name is pyroute2, but now it supports many netlink protocols.
 
 %files
 %doc *.rst
-%_bindir/%oname-cli
+%_bindir/dhcp-server-detector
+%_bindir/%oname-decoder
 %_bindir/%oname-dhcp-client
 %_bindir/%oname-test-platform
 %_bindir/ss2
 %python3_sitelibdir/%oname
-%python3_sitelibdir/pr2modules
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jul 30 2026 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt1
+- Automatically updated to 0.9.6 (Closes: #59909).
+
 * Thu Apr 09 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.9-alt2
 - Added filters to skip optional dateutil.*, pyrad.*, keystoneauth1.* and
   keystoneclient.* dependencies.
