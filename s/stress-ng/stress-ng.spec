@@ -9,7 +9,7 @@
 
 Name: stress-ng
 Version: 0.21.04
-Release: alt1
+Release: alt2
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -77,8 +77,9 @@ a precise benchmark test suite, so do NOT use it in this manner.
 %prep
 %setup
 %ifarch %e2k
-# lcc 1.23 can't do string attribute form (1.24.03 will; mcst#4061)
-sed -ri 's,"-O([0123])",\1,' stress-ng.h
+# error: failed to inline stress_put_long_double into stress_cpu_trig:
+#   -fassociative-math mode differ in calling and called functions
+%add_optflags -fno-error-always-inline
 %endif
 
 %build
@@ -119,6 +120,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Thu Jul 30 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.21.04-alt2
+- e2k build fix
+
 * Tue Jul 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.04-alt1
 - Updated to version 0.21.04.
 
