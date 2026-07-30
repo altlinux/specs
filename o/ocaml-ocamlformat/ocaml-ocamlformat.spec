@@ -1,7 +1,7 @@
 %define pkgname ocamlformat
 Name: ocaml-%pkgname
 Version: 0.29.0
-Release: alt1
+Release: alt2
 Summary: Auto-formatter for OCaml code 
 License: MIT
 Group: Development/ML
@@ -75,6 +75,9 @@ dune subst
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 0.29.0-alt2
+- fixed build against dune 3.24
+
 * Sat Mar 21 2026 Anton Farygin <rider@altlinux.org> 0.29.0-alt1
 - 0.28.1 -> 0.29.0
 
