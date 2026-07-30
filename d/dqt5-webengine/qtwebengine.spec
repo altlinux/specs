@@ -32,8 +32,8 @@
 #endif
 
 Name: dqt5-webengine
-Version: 5.15.18
-Release: alt0.dde.3
+Version: 5.15.19
+Release: alt2.dde.1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -42,8 +42,6 @@ License: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 ExclusiveArch: %dqt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
-Source100: pako.min.js
-Source101: d3.min.js
 # FC
 Patch4:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch5:  qtwebengine-everywhere-src-5.15.5-no-icudtl-dat.patch
@@ -61,9 +59,10 @@ Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 Patch41: verbose-gn-bootstrap.patch
 Patch42: sandbox-time64-syscalls.patch
 Patch43: disable-catapult.patch
-#
-Patch46: python3.13-pipes.patch
-Patch47: python3.12-imp.patch
+Patch44: ninja-1.12.patch
+Patch45: gcc-15.patch
+Patch46: glibc-2.43.patch
+Patch47: icu-78.patch
 Patch48: python3.12-six.patch
 Patch49: system-nspr-prtime.patch
 Patch50: system-icu-utf.patch
@@ -72,13 +71,12 @@ Patch52: system-openjpeg2.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
-Patch103: qtwebengine-everywhere-src-5.15.0-chromium-add-ppc64le-support.patch
-Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
+#
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 Patch107: alt-js-check-size.patch
 Patch108: alt-libre2-11.patch
-Patch200: alt-gcc15.patch
+Patch109: alt-no-rollup-terser-plugin.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -102,7 +100,7 @@ BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpuls
 BuildRequires: libre2-devel
 %endif
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
-BuildRequires: node-yargs node-terser
+BuildRequires: node node-yargs
 %if_enabled python3
 BuildRequires: python3-devel python3(six.moves)
 %else
@@ -221,10 +219,11 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
-#
-%if_enabled python3
+%patch44 -p1
+%patch45 -p1
 %patch46 -p1
 %patch47 -p1
+%if_enabled python3
 %patch48 -p1
 %endif
 %patch49 -p1
@@ -234,15 +233,14 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
-#%patch104 -p1
+#
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
 %if_enabled system_re2
 %patch108 -p1
 %endif
-%patch200 -p2
+%patch109 -p1
 
 # delete all "toolprefix = " lines from build/toolchain/linux/BUILD.gn, as we
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
@@ -283,10 +281,6 @@ for f in \
     src/3rdparty/chromium/third_party/catapult/common/py_vulcanize/third_party/rjsmin/bench/jsmin.py \
     src/3rdparty/chromium/third_party/web-animations-js/sources/web-animations-next-lite.min.js
 do mkdir -p `dirname $f`; touch $f; done
-mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
-install -m 0644 %SOURCE100 src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
-mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
-install -m 0644 %SOURCE101 src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
 pushd src/3rdparty/chromium/third_party/jstemplate
     cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
 popd
@@ -473,12 +467,24 @@ done
 %_dqt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Jul 30 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.19-alt2.dde.1
+- merge with new version
+
+* Tue Jul 28 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.19-alt3
+- fix to build with new environment
+
 * Wed Apr 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.3
 - fix build on gcc15
+
+* Thu Apr 23 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.19-alt2
+- add fix for gcc-15
 
 * Fri Feb 20 2026 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.2
 - enable dqml provides
 - fix build on shrinked dqt5
+
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.19-alt1
+- new version
 
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.1
 - merge with system qt5-webengine
