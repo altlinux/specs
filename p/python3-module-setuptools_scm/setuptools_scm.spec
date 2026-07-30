@@ -23,8 +23,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 10.2.0
-Release: alt3
+Version: 10.2.1
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -100,6 +100,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 10.2.1-alt1
+- 10.2.0 -> 10.2.1
+
 * Wed Jul 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 10.2.0-alt3
 - Disabled the boostrap switch and properly reenabled the testsuite.
 
