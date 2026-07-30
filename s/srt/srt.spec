@@ -3,7 +3,7 @@
 %def_disable check
 %endif
 Name: srt
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%_cmake__builddir ./%_cmake__builddir/test-srt
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 1.5.6-alt1
+- 1.5.5 -> 1.5.6
+
 * Tue May 19 2026 Anton Farygin <rider@altlinux.org> 1.5.5-alt1
 - 1.5.4 -> 1.5.5
 
