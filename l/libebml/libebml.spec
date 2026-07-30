@@ -1,21 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define soname 5
 %set_verify_elf_method strict
 
 Name: libebml
-Version: 1.4.5
+Version: 1.4.7
 Release: alt1
 Summary: Extensible Binary Meta Language access library
 License: LGPL-2.1-or-later and BSD
 Group: System/Libraries
 Url: http://www.matroska.org
+Vcs: https://github.com/Matroska-Org/libebml
 
 # https://github.com/Matroska-Org/libebml.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libutf8cpp-devel
 
 %description
+A library for reading and writing files with the Extensible Binary
+Meta Language, a binary pendant to XML.
+
+%package -n %name%soname
+Summary: Extensible Binary Meta Language access library
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %name%soname
 A library for reading and writing files with the Extensible Binary
 Meta Language, a binary pendant to XML.
 
@@ -39,10 +52,11 @@ Files needed to build programs using libebml
 %install
 %cmakeinstall_std
 
-%files
+%files -n %name%soname
 %doc LICENSE*
 %doc README* NEWS* CODE_OF_CONDUCT*
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%{soname}.*
 
 %files devel
 %_includedir/ebml
@@ -51,6 +65,11 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 1.4.7-alt1
+- 1.4.7.
+- BR: added utf8cpp.
+- Built according soname policy.
+
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.5-alt1
 - 1.4.5.
 

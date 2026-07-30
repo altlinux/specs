@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 98.0
+Version: 100.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -22,11 +22,12 @@ Vcs: https://codeberg.org/mbunkus/mkvtoolnix
 
 Source: %name-%version.tar
 Patch1: ax_boost_base_morearch.patch
+Patch2: utf8cpp-alt.patch
 
 Provides: mkvmerge = %EVR
 
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
+BuildRequires: gcc-c++ boost-devel boost-filesystem-devel boost-locale-devel zlib-devel libmagic-devel
 BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
 BuildRequires: libebml-devel >= 1.4.4 libmatroska-devel >= 1.7.1 libfmt-devel >= 6.1.0
@@ -35,7 +36,7 @@ BuildRequires: libpugixml-devel
 BuildRequires: po4a
 BuildRequires: libgtest-devel
 BuildRequires: libpcre2-devel
-BuildRequires: libutfcpp-devel
+BuildRequires: libutf8cpp-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: rake
 
@@ -87,6 +88,7 @@ about the codecs used.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # remove some bundled libraries
 rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
@@ -162,6 +164,11 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 100.0-alt1
+- 100.0.
+- BR: s/libutfcpp/libutf8cpp/.
+- BR: added boost-locale.
+
 * Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 98.0-alt1
 - 98.0.
 - apply build workaround for non-utf8 locales.
