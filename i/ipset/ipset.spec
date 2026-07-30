@@ -1,12 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define prefix /
-%define exec_prefix /
-%define _prefix /
 %define soname 13
 Name: ipset
 Version: 7.24
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -80,6 +77,8 @@ mv %name-%version kernel-source-%name-%version
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name-%version
 
+rm -f %buildroot%_libdir/*.la
+
 %files
 %doc ChangeLog ChangeLog.ippool README
 %_sbindir/ipset
@@ -99,6 +98,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Wed Jul 29 2026 Anton Farygin <rider@altlinux.org> 7.24-alt2
+- fixed FTBFS (remove .la files from libdir)
+
 * Sat May 31 2025 Anton Farygin <rider@altlinux.com> 7.24-alt1
 - 7.23 -> 7.24
 
