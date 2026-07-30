@@ -2,7 +2,7 @@
 %define oname dev.mohfy.quizbite
 
 Name: quizbite
-Version: 2.0.9
+Version: 2.1.0
 Release: alt1
 
 Summary: Informative quizzes, bite sized
@@ -16,6 +16,8 @@ BuildArch: noarch
 AutoProv: nopython3
 
 Source: %name-%version.tar
+
+Patch: fixed_build.patch
 
 %add_python3_path %_datadir/%name/%name
 
@@ -35,6 +37,8 @@ Export a quiz or flashcards to PDF.
 
 %prep
 %setup
+%patch -p0
+subst 's|2.0.9|%version|' meson.build
 
 %build
 %meson
@@ -56,6 +60,9 @@ Export a quiz or flashcards to PDF.
 %_datadir/%name
 
 %changelog
+* Thu Jul 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.1.0-alt1
+- 2.0.9 -> 2.1.0
+
 * Mon Jul 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.0.9-alt1
 - Initial build for ALT Linux.
 
