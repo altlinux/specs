@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.4
+%define ver_major 1.5
 %define beta %nil
 %define rdn_name com.system76.CosmicSettingsDaemon
 
@@ -66,6 +66,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/polkit-1/rules.d/%name.rules
 
 %changelog
+* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

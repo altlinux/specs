@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name cosmic-sound-theme
-%define ver_major 1.4
+%define ver_major 1.5
 %define beta %nil
 
 %def_enable check
@@ -51,6 +51,9 @@ BuildRequires: meson
 %doc README*
 
 %changelog
+* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - first build for Sisyphus
 
