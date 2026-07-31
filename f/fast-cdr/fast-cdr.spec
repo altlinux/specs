@@ -2,13 +2,13 @@
 %define srcname Fast-CDR
 
 Name:    fast-cdr
-Version: 2.3.6
+Version: 2.4.0
 Release: alt1
 
 Summary: Fast Common Data Representation (CDR) Serialization Library
 License: Apache-2.0
-Group:   Other
-URL:     https://github.com/eProsima/Fast-CDR
+Group:   System/Libraries
+URL:     https://www.eprosima.com
 VCS:     https://github.com/eProsima/Fast-CDR.git
 
 Source: %name-%version.tar
@@ -54,6 +54,9 @@ rm -f %buildroot%_datadir/fastcdr/LICENSE
 %_libdir/cmake/fastcdr/
 
 %changelog
+* Fri Jul 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Wed Jun 17 2026 Sergey Palcheh <minergenon@altlinux.org> 2.3.6-alt1
 - new version 2.3.6
 
