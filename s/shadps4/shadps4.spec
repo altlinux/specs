@@ -3,7 +3,10 @@
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
 %define dear_imgui_commit f4d9359095eff3eb03f685921edc1cf0e37b1687
 %define discord_rpc_commit 19f66e6dcabb2268965f453db9e5774ede43238f
-%define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
+%define libatrac9_commit 946e05a9212976626a9f5e52f29c0a7202871f29
+%define zarchive_commit 965b66c8d67b6b7e30fd63b3b75aa91a99ff303b
+%define protobuf_commit 5917ee224a7e47383a78acc129628511fe210dff
+%define abseil_version 20250512.1
 %define libusb_commit d087ea86539ab1f1ec42faf86e2357e2fad126a6
 %define hwinfo_commit 8660006e0ca4aae5dda7a29e585968b50b0273b7
 %define miniz_version 3.1.0
@@ -14,7 +17,7 @@
 %define minimp3_commit 7b590fdcfa5a79c033e76eacc05d0c3e4c79f536
 
 Name: shadps4
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -57,6 +60,12 @@ Source12: libressl-%libressl_commit.tar
 Source13: ImGuiFileDialog-%imguifiledialog_commit.tar
 # https://github.com/lieff/minimp3/archive/%minimp3_commit/minimp3-%minimp3_commit.tar.gz
 Source14: minimp3-%minimp3_commit.tar
+# https://github.com/shadexternals/ZArchive/archive/%zarchive_commit/ZArchive-%zarchive_commit.tar.gz
+Source15: ZArchive-%zarchive_commit.tar
+# https://github.com/shadexternals/protobuf/archive/%protobuf_commit/protobuf-%protobuf_commit.tar.gz
+Source16: protobuf-%protobuf_commit.tar
+# https://github.com/abseil/abseil-cpp/archive/refs/tags/20250512.1/abseil-cpp-20250512.1.tar.gz
+Source17: abseil-cpp-%abseil_version.tar
 
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
@@ -67,9 +76,12 @@ BuildRequires: glslang-devel
 BuildRequires: libSDL3-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
+BuildRequires: libcpp-httplib-devel
 BuildRequires: libfmt-devel
+BuildRequires: libfreetype-devel
 BuildRequires: libhalf-devel
 BuildRequires: libmagic_enum-devel
+BuildRequires: libminiupnpc-devel
 BuildRequires: libnss-systemd
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
@@ -96,12 +108,13 @@ BuildRequires: rapidjson-devel
 BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel
 
 %description
 shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14 -b 15 -b 16 -b 17
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
@@ -117,8 +130,15 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../libressl-%libressl_commit externals/libressl
 %__mv -Tf ../ImGuiFileDialog-%imguifiledialog_commit externals/ImGuiFileDialog
 %__mv -Tf ../minimp3-%minimp3_commit externals/minimp3
+%__mv -Tf ../ZArchive-%zarchive_commit externals/zarchive
+%__mv -Tf ../protobuf-%protobuf_commit externals/protobuf
+%__mv -Tf ../abseil-cpp-%abseil_version externals/abseil-cpp
 
 sed -i 's/find_package(glslang 15 CONFIG)/find_package(glslang 16 CONFIG)/g' CMakeLists.txt
+sed -i '/^# protobuf$/i add_subdirectory(abseil-cpp)' externals/CMakeLists.txt
+sed -i 's|add_subdirectory(zstd/build/cmake)|add_library(libzstd_static SHARED IMPORTED)\n    set_target_properties(libzstd_static PROPERTIES IMPORTED_LOCATION "%_libdir/libzstd.so" INTERFACE_INCLUDE_DIRECTORIES "%_includedir")|' externals/CMakeLists.txt
+sed -i '/target_include_directories(zarchive PRIVATE zstd\/lib)/d' externals/CMakeLists.txt
+sed -i 's|target_include_directories(Cpp_Httplib INTERFACE cpp-httplib/)|target_include_directories(Cpp_Httplib INTERFACE "%_includedir")\ntarget_link_libraries(Cpp_Httplib INTERFACE cpp-httplib)|' externals/CMakeLists.txt
 
 %build
 export CC="clang"
@@ -130,6 +150,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+	-DENABLE_SYSTEM_LIBRARIES:BOOL=TRUE \
 	-DENABLE_UPDATER:BOOL=FALSE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-GNinja \
@@ -144,6 +165,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Fri Jul 31 2026 Nazarov Denis <nenderus@altlinux.org> 0.17.0-alt1
+- Version 0.17.0
+
 * Thu Jun 04 2026 Nazarov Denis <nenderus@altlinux.org> 0.16.0-alt1
 - Version 0.16.0
 
