@@ -3,7 +3,7 @@
 
 Name: libgbinder
 
-Version: 1.1.44
+Version: 1.1.52
 Release: alt0.1
 Summary: Binder client library
 License: BSD
@@ -52,17 +52,17 @@ Binder command line utilities
 
 %build
 make %_smp_mflags CFLAGS="%optflags" LIBDIR=%_libdir KEEP_SYMBOLS=1 release pkgconfig
-make -C test/binder-bridge KEEP_SYMBOLS=1 release
-make -C test/binder-list KEEP_SYMBOLS=1 release
-make -C test/binder-ping KEEP_SYMBOLS=1 release
-make -C test/binder-call KEEP_SYMBOLS=1 release
+make -C tools/binder-bridge KEEP_SYMBOLS=1 release
+make -C tools/binder-list KEEP_SYMBOLS=1 release
+make -C tools/binder-ping KEEP_SYMBOLS=1 release
+make -C tools/binder-call KEEP_SYMBOLS=1 release
 
 %install
 make LIBDIR=%_libdir DESTDIR=%buildroot install-dev
-make -C test/binder-bridge DESTDIR=%buildroot install
-make -C test/binder-list DESTDIR=%buildroot install
-make -C test/binder-ping DESTDIR=%buildroot install
-make -C test/binder-call DESTDIR=%buildroot install
+make -C tools/binder-bridge DESTDIR=%buildroot install
+make -C tools/binder-list DESTDIR=%buildroot install
+make -C tools/binder-ping DESTDIR=%buildroot install
+make -C tools/binder-call DESTDIR=%buildroot install
 
 %if_enabled tests
 %check
@@ -86,6 +86,9 @@ make -C unit test
 %_bindir/binder-call
 
 %changelog
+* Fri Jul 31 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1.52-alt0.1
+- 1.1.52.
+
 * Mon Mar 09 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1.44-alt0.1
 - 1.1.44.
 
