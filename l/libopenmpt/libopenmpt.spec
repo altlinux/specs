@@ -1,5 +1,5 @@
 Name: libopenmpt
-Version: 0.7.1
+Version: 0.8.7
 Release: alt1
 License: BSD
 Group: System/Libraries
@@ -96,6 +96,9 @@ install -d %buildroot%_docdir/%name/examples
 
 
 %changelog
+* Fri Jul 31 2026 Artyom Bystrov <arbars@altlinux.org> 0.8.7-alt1
+- new version
+
 * Wed May 24 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.1-alt1
 - new version
 
@@ -105,6 +108,5 @@ install -d %buildroot%_docdir/%name/examples
 * Wed Aug 04 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.8-alt2
 - fix the loop deps
 
-%changelog
 * Mon Aug 02 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.8-alt1
 - initial build for ALT Sisyphus
