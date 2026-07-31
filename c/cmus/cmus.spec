@@ -1,23 +1,26 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 
-%define name cmus
-%define version 2.8.0
 %define rcname rc0
 %define release alt1
 %define debug 0
 
-Name: %name
-Version: %version
+Name: cmus
+Version: 2.12.0
 Release: alt1
 Summary: CMus - C* Music Player
-License: GPL
+License: GPL-2.0-only
 Group: Sound
+
 Url: https://cmus.github.io
+Vcs: https://github.com/cmus/cmus
 
 AutoReq: yes, nopython
 
 Source0: %name-%version.tar
 Source2: cmus.desktop
+
+Patch: ffmpeg8.patch
+Patch1: fixed_check_mp4v2.patch
 
 # User interface
 BuildRequires(build): libtinfo-devel
@@ -144,7 +147,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: FLAC plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-flac
 CMus is a small and fast music player using the ncurses library.
@@ -161,7 +164,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: Ogg/Vorbis plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-vorbis
 CMus is a small and fast music player using the ncurses library.
@@ -178,7 +181,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: Ogg/Opus plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-opus
 CMus is a small and fast music player using the ncurses library.
@@ -195,7 +198,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: libmodplug plugin for CMus (.mod, .x3m, ...)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-modplug
 CMus is a small and fast music player using the ncurses library.
@@ -212,7 +215,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: MPC plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-mpc
 CMus is a small and fast music player using the ncurses library.
@@ -230,7 +233,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: libmikmod plugin for CMus (.mod, .x3m, ...)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-mikmod
 CMus is a small and fast music player using the ncurses library.
@@ -247,7 +250,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: MPEG-4 AAC plugin for CMus (.mp4, .m4a, .m4b)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-mp4
 CMus is a small and fast music player using the ncurses library.
@@ -265,7 +268,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: AAC plugin for CMus (.aac, audio/aac, audio/aacp)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-aac
 CMus is a small and fast music player using the ncurses library.
@@ -283,7 +286,7 @@ audio/aac, audio/aacp).
 Summary: WavPack plugin for CMus (.wv, audio/x-wavpack)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-wavpack
 CMus is a small and fast music player using the ncurses library.
@@ -301,7 +304,7 @@ audio/x-wavpack).
 Summary: FFMPEG plugin for CMus (.shn, .wma)
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-ffmpeg
 CMus is a small and fast music player using the ncurses library.
@@ -313,7 +316,7 @@ to support more).
 Summary: CDIO plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-cdio
 CMus is a small and fast music player using the ncurses library.
@@ -324,7 +327,7 @@ This package contains plugin for CDIO support.
 Summary: CUE plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-cue
 CMus is a small and fast music player using the ncurses library.
@@ -341,7 +344,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: VTX plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description in-vtx
 CMus is a small and fast music player using the ncurses library.
@@ -358,7 +361,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: ALSA output plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description out-alsa
 CMus is a small and fast music player using the ncurses library.
@@ -374,7 +377,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: PulseAudio output plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description out-pulse
 CMus is a small and fast music player using the ncurses library.
@@ -390,7 +393,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: libao output plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description out-ao
 CMus is a small and fast music player using the ncurses library.
@@ -406,7 +409,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Summary: JACK plugin for CMus
 Group: Sound
 
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description out-jack
 CMus is a small and fast music player using the ncurses library.
@@ -414,16 +417,15 @@ CMus is a small and fast music player using the ncurses library.
 This package contains plugin for Jack Audio Connection Kit support.
 
 %prep
-%setup -n %name-%version
+%setup
+%autopatch -p1
 
 %build
 CFLAGS="${CFLAGS:--pipe -Wall -O2 -g}" ; export CFLAGS
 CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
 ./configure \
-%if %debug
-        DEBUG=2 \
-%endif
-        prefix=%prefix \
+        prefix="%_prefix" \
+	CONFIG_MIKMOD=y \
         CONFIG_MPRIS=y \
         CONFIG_FLAC=y \
         CONFIG_MAD=y \
@@ -447,7 +449,9 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_CDDB=y \
         CONFIG_DISCID=y \
         CONFIG_CDIO=y \
-        CONFIG_JACK=y
+        CONFIG_JACK=y \
+        %nil
+        
 %make_build
 
 %install
@@ -524,6 +528,11 @@ mv cmus-status-display examples
 %_libexecdir/%name/op/jack.so
 
 %changelog
+* Fri Jul 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.12.0-alt1
+- 2.8.0 -> 2.12.0 (ALT #58241)
+- changed license
+- added VCS
+
 * Mon Sep 23 2019 Terechkov Evgenii <evg@altlinux.org> 2.8.0-alt1
 - 2.8.0 final release (N.B.: cmus not actively maintained now)
 - Update Url: tag
