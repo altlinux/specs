@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -21,6 +21,7 @@ Requires: ready-set-plugin-user-passwdqc
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-systemd
+BuildRequires(pre): rpm-macros-ready-set
 
 %description
 %summary.
@@ -42,12 +43,20 @@ install -pDm0644 config \
 install -pDm0644 %name.conf \
 	%buildroot%_sysusersdir/%name.conf
 
+install -pDm0755 %name-system-post \
+	%buildroot%ready_set_system_post_hooks_dir/%name
+
 %files
 %_sysconfdir/dconf/db/local.d/50_*
 %_datadir/ready-set/config
 %_sysusersdir/%name.conf
+%ready_set_system_post_hooks_dir/%name
 
 %changelog
+* Mon Jul 27 2026 Vasiliy Doylov <neko@altlinux.org> 0.6.3-alt1
+- Added post hook back
+- Added window resizable flag
+
 * Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.2-alt1
 - Updated config for fresh ready-set.
 - Dropped system post hook.

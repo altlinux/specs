@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: startup-config-qualcomm
-Version: 2
+Version: 3
 Release: alt1
 Summary: Startup script for qualcomm
 License: MIT
@@ -13,9 +13,12 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-systemd
 
+Requires: kpartx
+
 %description
 This package provides a standart way to make device-specific config changes on
-qualcomm devices. It can set voice routing setup for q6voiced.
+qualcomm devices. It can set voice routing setup for q6voiced, discover userdata
+subpartitions and so on.
 
 %prep
 %setup
@@ -23,18 +26,25 @@ qualcomm devices. It can set voice routing setup for q6voiced.
 %install
 mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_udevdir/initramfs-rules.d
 install -m 0755 configure-firmware-path.sh %buildroot%_sbindir/configure-firmware-path
 install -m 0755 configure-q6voiced.sh %buildroot%_sbindir/configure-q6voiced
 install -m 0644 configure-firmware-path.service %buildroot%_unitdir
 install -m 0644 configure-q6voiced.service %buildroot%_unitdir
+install -m 0644 90-setup-userdata-subparts.rules %buildroot%_udevdir/initramfs-rules.d
 
 %files
 %_sbindir/configure-firmware-path
 %_sbindir/configure-q6voiced
 %_unitdir/configure-firmware-path.service
 %_unitdir/configure-q6voiced.service
+%_udevdir/initramfs-rules.d/90-setup-userdata-subparts.rules
 
 %changelog
+* Thu Jul 23 2026 Vasiliy Doylov <neko@altlinux.org> 3-alt1
+- Add configure-subpartitions service.
+- Add nothing-spacewar q6voiced configuration.
+
 * Sun Jun 28 2026 Vasiliy Doylov <neko@altlinux.org> 2-alt1
 - Split q6voice and firmware configuration.
 

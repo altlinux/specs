@@ -2,7 +2,7 @@
 
 Name: droid-juicer
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: Extract firmware from Android vendor partitions
 License: MIT
 Group: System/Kernel and hardware
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch0: v0.4.2-dhxx-firmware-add-compat-symlinks-for-backwards-compatibi.patch
 Patch1: v0.4.2-dhxx-configs-add-new-fw-paths-and-keep-the-original-paths.patch
+Patch2: v0.4.2-neko-configs-nothing-spacewar-add-missing-firmware.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires(pre): rpm-macros-systemd
@@ -28,8 +29,7 @@ firmware and the corresponding legal issues.
 %prep
 %setup -a1
 %rust_prep
-%patch0 -p 1
-%patch1 -p 1
+%autopatch -p 1
 
 %build
 %rust_build
@@ -47,5 +47,8 @@ cp -rv configs %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Sun Jul 26 2026 Vasiliy Doylov <neko@altlinux.org> 0.4.2-alt2
+- Improve Nothing Phone (1) config.
+
 * Sun May 17 2026 Vasiliy Doylov <neko@altlinux.org> 0.4.2-alt1
 - Initial build for ALT
