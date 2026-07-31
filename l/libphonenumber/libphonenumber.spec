@@ -5,8 +5,8 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.35
-Release: alt1.2
+Version: 9.0.36
+Release: alt1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -89,6 +89,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Jul 30 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.36-alt1
+- 9.0.36
+
 * Sat Jul 25 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.35-alt1.2
 - enabled build with boost again
 
