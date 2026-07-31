@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: SGML library for feedparser
@@ -43,10 +43,13 @@ Source: %pypi_name-%version.tar
 %pyproject_run_pytest
 
 %files
-%python3_sitelibdir/feedparser/sgmllib/
+%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 

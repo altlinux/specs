@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 6.0.13
+Version: 6.0.14
 Release: alt1
 
 Summary: Universal feed parser for Python
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 6.0.14-alt1
+- 6.0.14
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 6.0.13-alt1
 - 6.0.13
 
