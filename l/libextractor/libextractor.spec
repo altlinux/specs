@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: libextractor
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -24,7 +24,8 @@ Source: %name-%version.tar
 
 %define flac_ver 1.3
 
-BuildRequires: gcc-c++ chrpath
+BuildRequires: gcc-c++
+#BuildRequires: chrpath
 BuildRequires: zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel >= %flac_ver
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
 BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel librpm-devel
@@ -68,8 +69,7 @@ This package contains the files needed to build packages that depend on %name.
 %setup
 
 %build
-#gettext >= 23.1 required
-#%autoreconf
+%autoreconf
 %configure --disable-static \
     %{subst_enable ffmpeg}
 %nil
@@ -77,7 +77,7 @@ This package contains the files needed to build packages that depend on %name.
 
 %install
 %makeinstall_std
-chrpath -d %buildroot{%_libdir/%name/*.so,%_bindir/extract}
+#chrpath -d %buildroot{%_libdir/%name/*.so,%_bindir/extract}
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/%name/*.la
@@ -108,6 +108,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.19-alt1
+- 1.19
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18-alt1
 - 1.18
 
