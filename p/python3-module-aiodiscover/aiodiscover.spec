@@ -1,5 +1,5 @@
 Name: python3-module-aiodiscover
-Version: 3.2.4
+Version: 3.3.2
 Release: alt1
 
 Summary: Async Host discovery
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiodiscover-%version.dist-info
 
 %changelog
+* Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.3.2-alt1
+- 3.3.2 released
+
 * Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.4-alt1
 - 3.2.4 released
 
