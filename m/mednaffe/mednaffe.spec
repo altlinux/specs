@@ -1,5 +1,5 @@
 Name: mednaffe
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: A front-end (GUI) for mednafen emulator
@@ -34,5 +34,8 @@ Front-end (GUI) for mednafen emulator
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jul 31 2026 Artyom Bystrov <arbars@altlinux.org> 0.9.3-alt1
+- New version 0.9.3.
+
 * Fri Dec 16 2022 Artyom Bystrov <arbars@altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
