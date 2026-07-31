@@ -4,8 +4,6 @@
 
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 %add_findreq_skiplist %_kernel_installdir/*
-%add_findreq_skiplist %_unitdir/local.service
-%add_findreq_skiplist %_unitdir/rc-local.service
 %add_findreq_skiplist %_unitdir/quotaon.service
 %add_findreq_skiplist %_unitdir/initrd-switch-root.service
 %add_findreq_skiplist %_unitdir/systemd-volatile-root.service
@@ -96,11 +94,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 259
+%define ver_major 260
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.8
+Version: %ver_major.4
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -168,6 +166,7 @@ Source91: systemd-tmpfiles-shared.alternatives
 Source92: systemd-tmpfiles-standalone.alternatives
 Source93: systemd-busctl-shared.alternatives
 Source94: systemd-busctl-standalone.alternatives
+Source95: registry.altlinux.org.oci-registry
 Source96: cloud-altlinux.asc
 
 Patch1: %name-%version.patch
@@ -757,7 +756,6 @@ Conflicts: startup < 0.9.9.14
 %setup -q
 %patch1 -p1
 sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
-sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdown
 
 %build
 %meson \
@@ -777,9 +775,6 @@ sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdo
         -Dpamlibdir=/%_lib/security \
         -Dsplit-bin=true \
         -Dconfigfiledir=/usr/lib \
-        -Dsysvinit-path=%_initdir \
-        -Dsysvrcnd-path=%_sysconfdir/rc.d \
-        -Drc-local=%_sysconfdir/rc.d/rc.local \
         -Dsshdconfdir=%_sysconfdir/openssh/sshd_config.d \
         -Dsshconfdir=%_sysconfdir/openssh/ssh_config.d \
         -Dinstall-sysconfdir=true \
@@ -803,13 +798,24 @@ sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdo
         -Dadm-gid=4 \
         -Daudio-gid=81 \
         -Dcdrom-gid=22 \
+        -Dclock-gid=56 \
         -Ddisk-gid=6 \
+        -Dempower-gid=62 \
+        -Dinput-gid=57 \
         -Dkmem-gid=9 \
         -Dlp-gid=7 \
+        -Drender-gid=58 \
+        -Dsgx-gid=59 \
+        -Dtape-gid=60 \
         -Dtty-gid=5 \
         -Dusers-gid=100 \
         -Dutmp-gid=72 \
+        -Dvideo-gid=61 \
         -Dwheel-gid=10 \
+        -Dsystemd-journal-gid=84 \
+        -Dsystemd-network-uid=85 \
+        -Dsystemd-resolve-uid=86 \
+        -Dsystemd-timesync-uid=87 \
         -Dnobody-user=nobody \
         -Dnobody-group=nobody \
         -Dbump-proc-sys-fs-file-max=false \
@@ -934,6 +940,9 @@ rm -f %buildroot%_systemd_dir/boot/efi/linuxia32.elf.stub
 
 %if_disabled bpf_framework
 rm -f %buildroot%_systemd_dir/tests/unit-tests/manual/test-bpf-token
+
+# Drop mkosi CI fixtures: their unit files trip sisyphus_check.
+rm -rf %buildroot%_systemd_dir/tests/mkosi
 %endif
 
 %if_disabled tpm2
@@ -955,7 +964,6 @@ mkdir -p %buildroot%_unitdir/{basic,dbus,default,graphical,poweroff,rescue,reboo
 
 install -m755 %SOURCE2 %buildroot%_systemd_dir/systemd-sysv-install
 
-ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
 install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-openresolv.service
 install -m644 %SOURCE68 %buildroot%_unitdir/altlinux-simpleresolv.path
@@ -968,6 +976,9 @@ ln -r -s %buildroot%_unitdir/altlinux-libresolv.path %buildroot%_unitdir/multi-u
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -r -s %buildroot%_unitdir/altlinux-first_time.service %buildroot%_unitdir/basic.target.wants/altlinux-first_time.service
 
+# ALT OCI registry mapping for `importctl pull-oci`, plus a short "alt" image alias
+install -m644 %SOURCE95 %buildroot%_systemd_dir/oci-registry/registry.altlinux.org.oci-registry
+ln -s registry.altlinux.org.oci-registry %buildroot%_systemd_dir/oci-registry/image.alt.oci-registry
 # Restore the ALT Cloud image-signing key (cloud@altlinux.org) into the vendor import
 # keyring used by importctl to verify pulled OCI images.
 GNUPGHOME="$(mktemp -d)"; export GNUPGHOME
@@ -1218,10 +1229,11 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
 %meson_test
 
 %pre
-groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
-groupadd -r -f systemd-oom >/dev/null 2>&1 ||:
+groupadd -r -f -g 84 systemd-journal >/dev/null 2>&1 ||:
+groupadd -r -f -g 89 systemd-oom >/dev/null 2>&1 ||:
+groupadd -r -f -g 62 empower >/dev/null 2>&1 ||:
 useradd -g systemd-oom -c 'systemd Userspace OOM Killer' \
-    -d /var/empty -s /dev/null -r -l -M systemd-oom >/dev/null 2>&1 ||:
+    -d /var/empty -s /dev/null -r -l -M -u 89 systemd-oom >/dev/null 2>&1 ||:
 
 %post
 systemd-machine-id-setup >/dev/null 2>&1 || :
@@ -1362,13 +1374,13 @@ fi
 
 %if_enabled networkd
 %pre networkd
-groupadd -r -f systemd-network >/dev/null 2>&1 ||:
+groupadd -r -f -g 85 systemd-network >/dev/null 2>&1 ||:
 useradd -g systemd-network -c 'systemd Network Management' \
-    -d /var/empty -s /dev/null -r -l -M systemd-network >/dev/null 2>&1 ||:
+    -d /var/empty -s /dev/null -r -l -M -u 85 systemd-network >/dev/null 2>&1 ||:
 
-groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
+groupadd -r -f -g 86 systemd-resolve >/dev/null 2>&1 ||:
 useradd -g systemd-resolve -c 'systemd Resolver' \
-    -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
+    -d /var/empty -s /dev/null -r -l -M -u 86 systemd-resolve >/dev/null 2>&1 ||:
 
 %post networkd
 %post_systemd_postponed systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service systemd-resolved.service
@@ -1379,16 +1391,16 @@ useradd -g systemd-resolve -c 'systemd Resolver' \
 
 %if_enabled coredump
 %pre coredump
-groupadd -r -f systemd-coredump >/dev/null 2>&1 ||:
+groupadd -r -f -g 88 systemd-coredump >/dev/null 2>&1 ||:
 useradd -g systemd-coredump -c 'systemd Core Dumper' \
-    -d /var/empty -s /dev/null -r -l -M systemd-coredump >/dev/null 2>&1 ||:
+    -d /var/empty -s /dev/null -r -l -M -u 88 systemd-coredump >/dev/null 2>&1 ||:
 %endif
 
 %if_enabled timesyncd
 %pre timesyncd
-groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
+groupadd -r -f -g 87 systemd-timesync >/dev/null 2>&1 ||:
 useradd -g systemd-timesync -c 'systemd Time Synchronization' \
-    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
+    -d /var/empty -s /dev/null -r -l -M -u 87 systemd-timesync >/dev/null 2>&1 ||:
 
 
 %post timesyncd
@@ -1538,9 +1550,9 @@ update_chrooted all
 
 %if_enabled microhttpd
 %pre journal-remote
-groupadd -r -f systemd-journal-remote ||:
+groupadd -r -f -g 90 systemd-journal-remote ||:
 useradd -g systemd-journal-remote -c 'Journal Remote' \
-    -d %_logdir/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
+    -d %_logdir/journal/remote -s /dev/null -r -l -u 90 systemd-journal-remote >/dev/null 2>&1 ||:
 
 %post journal-remote
 %post_systemd_postponed systemd-journal-gatewayd.service systemd-journal-remote.service
@@ -1564,14 +1576,15 @@ fi
 %endif
 
 %pre -n udev
-groupadd -r -f cdrom >/dev/null 2>&1 ||:
-groupadd -r -f tape >/dev/null 2>&1 ||:
+groupadd -r -f -g 22 cdrom >/dev/null 2>&1 ||:
+groupadd -r -f -g 60 tape >/dev/null 2>&1 ||:
 groupadd -r -f dialout >/dev/null 2>&1 ||:
-groupadd -r -f input >/dev/null 2>&1 ||:
-groupadd -r -f video >/dev/null 2>&1 ||:
-groupadd -r -f render >/dev/null 2>&1 ||:
-groupadd -r -f sgx >/dev/null 2>&1 ||:
-groupadd -r -f vmusers >/dev/null 2>&1 ||:
+groupadd -r -f -g 57 input >/dev/null 2>&1 ||:
+groupadd -r -f -g 61 video >/dev/null 2>&1 ||:
+groupadd -r -f -g 58 render >/dev/null 2>&1 ||:
+groupadd -r -f -g 59 sgx >/dev/null 2>&1 ||:
+groupadd -r -f -g 36 vmusers >/dev/null 2>&1 ||:
+groupadd -r -f -g 56 clock >/dev/null 2>&1 ||:
 
 %post -n udev
 systemd-hwdb update &>/dev/null
@@ -1643,6 +1656,7 @@ fi
 %dir %_sysconfdir/systemd/user-generators
 %dir %_sysconfdir/systemd/system-preset
 %dir %_sysconfdir/systemd/user-preset
+%dir %_sysconfdir/user-tmpfiles.d
 %dir %_systemd_dir
 %dir %_systemd_dir/profile.d
 %dir %_systemd_dir/system.conf.d
@@ -1652,6 +1666,7 @@ fi
 %dir %_systemd_dir/system-shutdown
 %dir %_systemd_dir/system-sleep
 %dir %_systemd_dir/catalog
+%dir %_systemd_dir/varlink-bridges
 %dir %_env_dir
 %dir %_unitdir
 %dir %_user_unitdir
@@ -1662,6 +1677,7 @@ fi
 %dir %_env_gen_dir
 %dir %_presetdir
 %dir %_datadir/systemd
+%dir %_datadir/user-tmpfiles.d
 %dir %_sharedstatedir/%name
 %dir %_sharedstatedir/%name/catalog
 %dir %_sysconfdir/kernel
@@ -1681,7 +1697,6 @@ fi
 %_man8dir/reboot*
 %_man8dir/shutdown*
 %_man8dir/poweroff*
-%_initdir/README
 
 %_systemd_dir/user.conf.d/env-path.conf
 
@@ -2087,7 +2102,6 @@ fi
 %_man8dir/systemd-gpt-auto-generator*
 %_man8dir/systemd-growfs*
 %_man8dir/systemd-loop*
-%_man8dir/systemd-sysv-generator*
 %_man8dir/systemd-hibernate*
 %_man8dir/*sleep*
 %_man8dir/systemd-kexec*
@@ -2095,8 +2109,6 @@ fi
 %_man8dir/systemd-mkswap*
 %_man8dir/systemd-quota*
 %_man8dir/systemd-random-seed*
-%_man8dir/systemd-rc-local-generator*
-%_man8dir/rc-local.service*
 %_man8dir/systemd-remount*
 %_man8dir/systemd-rfkill*
 %_man8dir/systemd-run-generator*
@@ -2241,6 +2253,17 @@ fi
 %_bindir/updatectl
 %_mandir/*/*sysupdate*
 %_man1dir/updatectl.*
+
+%_bindir/systemd-mstack
+%_sbindir/mount.mstack
+%_man1dir/systemd-mstack.*
+%_man1dir/mount.mstack.*
+
+%_systemd_dir/systemd-report
+%_man1dir/systemd-report.*
+
+%_tmpfilesdir/20-systemd-varlink.conf
+%_datadir/user-tmpfiles.d/20-systemd-varlink.conf
 
 %files -n libsystemd
 %_libdir/libsystemd.so.*
@@ -2412,6 +2435,8 @@ fi
 %_bindir/systemd-nspawn
 %_sbindir/mount.ddi
 %_systemd_dir/import-pubring.pgp
+%dir %_systemd_dir/oci-registry
+%_systemd_dir/oci-registry/*.oci-registry
 %_tmpfilesdir/systemd-nspawn.conf
 %_unitdir/*.machine1.*
 %_unitdir/*.import1.*
@@ -2632,10 +2657,6 @@ fi
 %if_enabled tests
 %files tests
 %_systemd_dir/tests
-# TODO: fix sisyphus_check
-# sisyphus_check: check-systemd ERROR: systemd unit path violation
-%exclude %_systemd_dir/tests/mkosi/mkosi.*/%_unitdir/*.service
-%exclude %_systemd_dir/tests/mkosi/mkosi.*/*/*/%_unitdir/*.service
 %endif
 
 %files -n libudev1
@@ -2697,6 +2718,17 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1:260.4-alt1
+- 260.4.
+- Add registry.altlinux.org OCI registry mapping and an "alt" image alias for importctl pull-oci.
+- Drop SysV/rc-local generator packaging: removed upstream in v260.
+- Own new v260 directories: %_systemd_dir/varlink-bridges, %_datadir/user-tmpfiles.d
+  and %_sysconfdir/user-tmpfiles.d.
+- Backport upstream fix for systemd-update-utmp: libaudit 4.2 rejects the too long
+  "systemd-update-utmp" comm with EINVAL, breaking the service on boot and shutdown.
+- Create the "clock" group required by the rtc/ptp udev rules since v258.
+- Pin static uid/gid for the groups and service accounts.
+
 * Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1:259.8-alt1
 - 259.8.
 
