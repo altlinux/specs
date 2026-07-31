@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Agentic coding terminal
@@ -72,6 +72,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Fri Jul 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.2-alt1
+- Updated to 0.9.2.
+
 * Wed Jul 22 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1.
 
