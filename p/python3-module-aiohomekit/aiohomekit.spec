@@ -1,11 +1,11 @@
 Name: python3-module-aiohomekit
-Version: 3.2.20
+Version: 4.0.0
 Release: alt1
 
 Summary: This library implements the HomeKit protocol
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/aiohomekit
+URL: https://pypi.org/project/aiohomekit
 VCS: https://github.com/Jc2k/aiohomekit
 
 Source0: %name-%version.tar
@@ -45,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiohomekit-%version.dist-info
 
 %changelog
+* Fri Jul 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt1
+- 4.0.0 released
+
 * Fri Oct 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.20-alt1
 - 3.2.20 released
 
