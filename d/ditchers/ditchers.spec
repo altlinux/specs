@@ -1,6 +1,6 @@
 Name:		ditchers
 Version:	1.2
-Release:	alt6.2
+Release:	alt6.3
 Group:		Games/Arcade
 Summary:	Underground tanks dig tunnels in the soil and destroys opponents
 Source:		%name-%version.tar.gz
@@ -113,6 +113,9 @@ done
 %_gamesdatadir/%name/*
 
 %changelog
+* Fri Jul 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt6.3
+- NMU: rebuild with new boost
+
 * Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2-alt6.2
 - NMU: Fix building with boost 1.85.0.
 
