@@ -1,5 +1,5 @@
 Name: eureka
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 Summary: A cross-platform map editor for the classic DOOM games
 Summary(ru_RU.UTF-8): Кросплатформенный редактор карт классического Doom
@@ -55,18 +55,18 @@ Eureka - кросплатформенный редактор карт класс
 %setup -n %name-%version
 #%%patch0 -p1 
 
-%patch2 -p1
-%patch3 -p1
+#patch2 -p1
+#patch3 -p1
 
-# Remove CC0-licensed code
-rm -rf src/tl/
+# Removed by upstream
+# rm -rf src/tl/
 
 %ifarch aarch64
 %patch1 -p1
 %endif
 
 %build
-%cmake -DENABLE_UNIT_TESTS=OFF
+%cmake -DENABLE_UNIT_TESTS=OFF -DUSE_SYSTEM_FLTK=ON
 %cmake_build 
 
 
@@ -92,6 +92,11 @@ install -m 644 -p misc/eureka.desktop %{buildroot}%{_datadir}/applications/%{nam
 %_man6dir/%name.6.xz
 
 %changelog
+* Fri Jul 31 2026 Artyom Bystrov <arbars@altlinux.org> 2.1.0-alt1
+- Update to new version
+- Drop Patch0 (CXXFLAGS issues) - fixed upstream
+- Drop Patch1 (remove CC0 licensed code) - removed upstream
+
 * Tue Jan 14 2025 Artyom Bystrov <arbars@altlinux.org> 2.0.2-alt1
 - Update to new version
 
