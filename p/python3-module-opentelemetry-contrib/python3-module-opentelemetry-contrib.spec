@@ -5,8 +5,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.63b1
-Release: alt3
+Version: 0.65b0
+Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -221,6 +221,7 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/py.typed
 %python3_sitelibdir/%mod_name/instrumentation/sqlcommenter_utils.py
 %python3_sitelibdir/%mod_name/instrumentation/utils.py
+%python3_sitelibdir/%mod_name/instrumentation/log_utils.py
 %python3_sitelibdir/%mod_name/instrumentation/version.py
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation}
 
@@ -280,6 +281,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Thu Jul 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.65b0-alt1
+- New version.
+
 * Wed Jul 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.63b1-alt3
 - NMU: Package instrumentation for celery, psycopg2, httpx and botocore.
 

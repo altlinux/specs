@@ -1,10 +1,11 @@
 %define pypi_name opentelemetry
+%define contribver 0.65b0
 
 %def_with check
 %def_with tests
 
 Name:    python3-module-%pypi_name
-Version: 1.42.1
+Version: 1.44.0
 Release: alt1
 
 Summary: OpenTelemetry Python API and SDK
@@ -103,6 +104,74 @@ Group: Development/Python3
 This library allows to export data to the OpenTelemetry Collector using the
 OpenTelemetry Protocol using Protobuf over HTTP.
 
+%package -n python3-module-%pypi_name-exporter-opencensus
+Summary: OpenCensus Exporter
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-opencensus
+The OpenCensus Exporter allows to export traces using OpenCensus.
+
+%package -n python3-module-%pypi_name-exporter-otlp
+Summary: OpenTelemetry Collector Exporters
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-otlp
+This library allows to export tracing data to an OTLP collector.
+
+%package -n python3-module-%pypi_name-exporter-prometheus
+Summary: Prometheus Metric Exporter for OpenTelemetry
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-prometheus
+The OpenTelemetry Prometheus Exporter allows export of OpenTelemetry metrics to
+Prometheus.
+
+%package -n python3-module-%pypi_name-exporter-zipkin
+Summary: Zipkin Span Exporters for OpenTelemetry
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-zipkin
+The OpenTelemetry Zipkin JSON Exporter allows exporting of OpenTelemetry traces
+to Zipkin.
+
+%package -n python3-module-%pypi_name-exporter-zipkin-json
+Summary: Zipkin Span JSON Exporter for OpenTelemetry
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-zipkin-json
+The OpenTelemetry Zipkin JSON Exporter allows exporting of OpenTelemetry traces
+to Zipkin.
+
+%package -n python3-module-%pypi_name-exporter-zipkin-proto-http
+Summary: Zipkin Span Protobuf Exporter for OpenTelemetry
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-exporter-zipkin-proto-http
+This library allows export of tracing data to Zipkin using Protobuf for
+serialization.
+
+%package -n python3-module-%pypi_name-propagator-jaeger
+Summary: OpenTelemetry Jaeger Propagator
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-propagator-jaeger
+This library provides a propagator for the Jaeger format.
+
+%package -n python3-module-%pypi_name-propagator-b3
+Summary: OpenTelemetry B3 Propagator
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-propagator-b3
+This library provides a propagator for the B3 format.
+
+%package -n python3-module-%pypi_name-opencensus-shim
+Summary: OpenCensus Shim for OpenTelemetry
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name-opencensus-shim
+The OpenTelemetry OpenCensus shim is a library which allows an easy migration
+from OpenCensus to OpenTelemetry.
+
 %if_with tests
 %package -n python3-module-%pypi_name-test-utils
 Summary: OpenTelemetry Python Test Utilities
@@ -134,11 +203,37 @@ for dir in ./%pypi_name-{api,proto,sdk,semantic-conventions}; do
 done
 
 # Exporters pkg sources
-for edir in ./exporter/%pypi_name-exporter-otlp-proto-{common,grpc,http}; do
+for edir in ./exporter/%pypi_name-exporter-{opencensus,otlp,prometheus,zipkin}; do
     pushd $edir
         %pyproject_build
     popd
 done
+
+# Exporters OLTP-proto pkg sources
+for epdir in ./exporter/%pypi_name-exporter-otlp-proto-{common,grpc,http}; do
+    pushd $epdir
+        %pyproject_build
+    popd
+done
+
+# Exporters zipkin
+for zdir in ./exporter/%pypi_name-exporter-zipkin-{json,proto-http}; do
+    pushd $zdir
+        %pyproject_build
+    popd
+done
+
+# Propagators pks sources
+for pdir in ./propagator/%pypi_name-propagator-{b3,jaeger}; do
+    pushd $pdir
+        %pyproject_build
+    popd
+done
+
+# Shim pks sources
+pushd ./shim/%pypi_name-opencensus-shim
+    %pyproject_build
+popd
 
 %if_with tests
 pushd tests/%pypi_name-test-utils
@@ -154,9 +249,35 @@ for dir in ./%pypi_name-{api,proto,sdk,semantic-conventions}; do
     popd
 done
 
+# Exporters OLTP-proto pkg sources
+for epdir in ./exporter/%pypi_name-exporter-otlp-proto-{common,grpc,http}; do
+    pushd $epdir
+        %pyproject_install
+    popd
+done
+
 # Exporters pkg sources
-for edir in ./exporter/%pypi_name-exporter-otlp-proto-{common,grpc,http}; do
+for edir in ./exporter/%pypi_name-exporter-{opencensus,otlp,prometheus,zipkin}; do
     pushd $edir
+        %pyproject_install
+    popd
+done
+
+# Propagators pks sources
+for pdir in ./propagator/%pypi_name-propagator-{b3,jaeger}; do
+    pushd $pdir
+        %pyproject_install
+    popd
+done
+
+# Shims pks sources
+pushd ./shim/%pypi_name-opencensus-shim
+    %pyproject_install
+popd
+
+# Exporters zipkin
+for zdir in ./exporter/%pypi_name-exporter-zipkin-{json,proto-http}; do
+    pushd $zdir
         %pyproject_install
     popd
 done
@@ -189,7 +310,6 @@ done
 
 %files -n python3-module-%pypi_name-api
 %doc %pypi_name-api/{LICENSE,README.rst}
-%python3_sitelibdir/%pypi_name/_events/
 %python3_sitelibdir/%pypi_name/_logs/
 %python3_sitelibdir/%pypi_name/attributes/
 %python3_sitelibdir/%pypi_name/baggage/
@@ -219,6 +339,12 @@ done
 %python3_sitelibdir/%pypi_name/semconv
 %python3_sitelibdir/%{pypi_name}_semantic_conventions-*.dist-info
 
+%files -n python3-module-%pypi_name-exporter-otlp
+%doc exporter/%pypi_name-exporter-otlp/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/otlp/py.typed
+%python3_sitelibdir/%pypi_name/exporter/otlp/version
+%python3_sitelibdir/%{pypi_name}_exporter_otlp-%version.dist-info
+
 %files -n python3-module-%pypi_name-exporter-otlp-proto-common
 %doc exporter/%pypi_name-exporter-otlp-proto-common/{LICENSE,README.rst}
 %python3_sitelibdir/%pypi_name/exporter/otlp/proto/common
@@ -234,6 +360,46 @@ done
 %python3_sitelibdir/%pypi_name/exporter/otlp/proto/http
 %python3_sitelibdir/%{pypi_name}_exporter_otlp_proto_http-%version.dist-info
 
+%files -n python3-module-%pypi_name-exporter-opencensus
+%doc exporter/%pypi_name-exporter-opencensus/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/opencensus
+%python3_sitelibdir/%{pypi_name}_exporter_opencensus-%contribver.dist-info
+
+%files -n python3-module-%pypi_name-exporter-prometheus
+%doc exporter/%pypi_name-exporter-prometheus/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/prometheus
+%python3_sitelibdir/%{pypi_name}_exporter_prometheus-%contribver.dist-info
+
+%files -n python3-module-%pypi_name-exporter-zipkin
+%doc exporter/%pypi_name-exporter-zipkin/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/zipkin
+%exclude %python3_sitelibdir/%pypi_name/exporter/zipkin/json
+%exclude %python3_sitelibdir/%pypi_name/exporter/zipkin/proto
+%python3_sitelibdir/%{pypi_name}_exporter_zipkin-%version.dist-info
+
+%files -n python3-module-%pypi_name-exporter-zipkin-json
+%doc exporter/%pypi_name-exporter-zipkin-json/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/zipkin/json
+%python3_sitelibdir/%{pypi_name}_exporter_zipkin_json-%version.dist-info
+
+%files -n python3-module-%pypi_name-exporter-zipkin-proto-http
+%doc exporter/%pypi_name-exporter-zipkin-proto-http/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/exporter/zipkin/proto
+%python3_sitelibdir/%{pypi_name}_exporter_zipkin_proto_http-%version.dist-info
+
+%files -n python3-module-%pypi_name-propagator-jaeger
+%doc propagator/%pypi_name-propagator-jaeger/{LICENSE,README.rst}
+%python3_sitelibdir/%{pypi_name}_propagator_jaeger-%version.dist-info
+
+%files -n python3-module-%pypi_name-propagator-b3
+%doc propagator/%pypi_name-propagator-b3/{LICENSE,README.rst}
+%python3_sitelibdir/%{pypi_name}_propagator_b3-%version.dist-info
+
+%files -n python3-module-%pypi_name-opencensus-shim
+%doc shim/%pypi_name-opencensus-shim/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/shim/opencensus
+%python3_sitelibdir/%{pypi_name}_opencensus_shim-%contribver.dist-info
+
 %if_with tests
 %files -n python3-module-%pypi_name-test-utils
 %doc tests/%pypi_name-test-utils/README.rst LICENSE
@@ -245,6 +411,19 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Fri Jul 31 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.44.0-alt1
+- New version.
+- Added huge amount of subpackages:
+  + exporters:
+    - opencensus
+    - otlp
+    - prometheus
+    - zipkin-{json,proto-http}
+  + propagators:
+    - b3
+    - jaeger
+  + opencensus-shim
+
 * Fri Jun 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.42.1-alt1
 - New version.
 
