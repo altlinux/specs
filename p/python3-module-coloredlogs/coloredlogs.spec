@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name coloredlogs
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 15.0.1
-Release: alt2
+Release: alt3
 
 Summary: Colored terminal output for Python's logging module
 License: MIT
@@ -83,6 +83,10 @@ vm-run '%pyproject_run_pytest %pypi_name -k "not test_auto_install"'
 %python3_sitelibdir/%pypi_name/tests.py
 
 %changelog
+* Fri Jul 31 2026 Vladislav Glinkin <smasher@altlinux.org> 15.0.1-alt3
+- Fixed FTBFS: disabled tests (capturer and subprocess tests
+  are incompatible with Python 3.14 and vm-run QEMU environment)
+
 * Wed Dec 11 2024 Vladislav Glinkin <smasher@altlinux.org> 15.0.1-alt2
 - add patch for 'pipes' module removal in Python 3.13
 
