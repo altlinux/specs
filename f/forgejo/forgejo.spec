@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 11.0.16
+Version: 15.0.6
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 
 Source2: %name.service
 Source3: %name.service.d.conf
-# https://codeberg.org/forgejo/forgejo/pulls/8475
-Patch100: 8475.patch
 
 # fix c10f2 build https://github.com/msteinert/pam/pull/35
 Patch200: github-msteinert-pam-35.patch
@@ -40,11 +38,7 @@ and privacy.
 
 %prep
 %setup
-%patch100 -p1
 %patch200 -p1 -d vendor/github.com/msteinert/pam/v2
-
-# https://codeberg.org/forgejo/forgejo/src/branch/forgejo/release-notes-published/11.0.7.md#go-1-25-upgrade
-sed -i "s|^go 1.25.0|go 1.24|" go.mod
 
 sed -i \
     -e "s|^APP_NAME = ; Gitea: Git with a cup of tea|APP_NAME = Forgejo: Beyond coding. We Forge.|" \
@@ -85,10 +79,6 @@ mkdir -p %buildroot%_sysconfdir/systemd/system/%name.service.d
 install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/%name.service.d/port.conf
 install -Dm 0660 custom/conf/app.example.ini %buildroot%_sysconfdir/%name/app.ini
 
-# install docs
-mkdir -p %buildroot%_man1dir
-%buildroot%_bindir/%name docs --man > %buildroot%_man1dir/%name.1
-
 # install completions
 install -D -p -m 0644 contrib/autocompletion/bash_autocomplete %buildroot%_datadir/bash-completion/completions/%name
 install -D -p -m 0644 contrib/autocompletion/zsh_autocomplete %buildroot%_datadir/zsh/site-functions/_%name
@@ -115,11 +105,13 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %dir %_sysconfdir/systemd/system/%name.service.d
 %config(noreplace) %_sysconfdir/systemd/system/%name.service.d/port.conf
 %_unitdir/%name.service
-%_man1dir/*
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Jul 31 2026 Maxim Slipenko <maks1ms@altlinux.org> 15.0.6-alt1
+- 15.0.6.
+
 * Thu Jul 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 11.0.16-alt1
 - 11.0.16.
 
