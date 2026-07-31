@@ -2,11 +2,10 @@
 %define pypi_name logging-journald
 %define mod_name logging_journald
 
-# broken tests
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.11
+Version: 0.6.12
 Release: alt1
 
 Summary: Pure python logging handler for writing logs to the journald using native protocol
@@ -21,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -38,8 +39,11 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
+
+# Set version instead of forgetful upstream
+sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -51,12 +55,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md COPYING
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Fri Jul 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.6.12-alt1
+- Updated to 0.6.12.
+
 * Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.11-alt1
 - Updated to 0.6.11.
 
@@ -72,4 +78,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Sun May 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt1
 - Initial build for ALT Sisyphus.
-
