@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.188
+Version: 2.9.189
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Fri Jul 31 2026 Sergey Konev <darisishe@altlinux.org> 2.9.189-alt1
+- alterator-net-ng: add help page.
+
 * Tue Jul 28 2026 Ivan Khanas <xeno@altlinux.org> 2.9.188-alt1
 - alterator-users: add russian translation for home dir validation messages.
 
