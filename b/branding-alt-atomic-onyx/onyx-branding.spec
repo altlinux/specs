@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260720
+Version: 20260801
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -107,11 +107,13 @@ Requires: wallpapers-alt-atomic-gnome
 Summary: This package contains ready-set config
 Group: Other
 
-BuildArch: noarch
-
+Requires: ready-set-gdm
 Requires: ready-set-plugin-welcome
 Requires: ready-set-plugin-language
 Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-network
+Requires: ready-set-plugin-date-and-time
+Requires: ready-set-plugin-software
 Requires: ready-set-plugin-user-passwdqc
 Requires: ready-set-plugin-atomic-finalize
 
@@ -141,6 +143,7 @@ Requires: ready-set-plugin-atomic-finalize
 
 %install
 %meson_install
+%find_lang %variant-branding
 
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
@@ -154,13 +157,18 @@ plymouth-set-default-theme %theme
 
 %files graphics
 
-%files ready-set
+%files ready-set -f %variant-branding.lang
 %__ready_set_datadir/config
+%__ready_set_datadir/software/sources.d/flathub.yml
 
 %files gnome-settings
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sat Aug 01 2026 Vladimir Romanov <rirusha@altlinux.org> 20260801-alt1
+- Update for ready-set = 0.11.1.
+- Added software,date-and-time,network plugins.
+
 * Mon Jul 20 2026 Vladimir Romanov <rirusha@altlinux.org> 20260720-alt1
 - Added ready-set config subpackage.
 

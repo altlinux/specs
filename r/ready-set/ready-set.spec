@@ -7,9 +7,12 @@
 %define _libexecdir %_prefix/libexec
 %define libname lib%name
 %define girname ReadySet
+%define ser_name %name-service
+%define ser_libname %libname-service
+%define ser_girname %{girname}Service
 %define api_version 0
-%define major_version 10
-%define minor_version 2
+%define major_version 11
+%define minor_version 1
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -41,23 +44,31 @@ BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: blueprint-compiler
 BuildRequires: gir(Adw) = 1
-BuildRequires: gir(Gtk) = 4.0
-BuildRequires: gir(Peas) = 2
 BuildRequires: gir(Gdm) = 1.0
+BuildRequires: gir(Gtk) = 4.0
+BuildRequires: gir(NM) = 1.0
+BuildRequires: gir(Peas) = 2
 BuildRequires: gir(Serialize) = 7
+BuildRequires: gir(Tuner) = 1
+BuildRequires: typelib(Case) = 0
 BuildRequires: pkgconfig(accountsservice)
+BuildRequires: pkgconfig(flatpak)
 BuildRequires: pkgconfig(gdm)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(ibus-1.0)
 BuildRequires: pkgconfig(libadwaita-1) >= 1.7
+BuildRequires: pkgconfig(libcase-0)
+BuildRequires: pkgconfig(libnm)
+BuildRequires: pkgconfig(libnma-gtk4)
 BuildRequires: pkgconfig(libpeas-2)
-BuildRequires: pkgconfig(libserialize-7) >= 7.9
+BuildRequires: pkgconfig(libserialize-7) >= 7.5
 BuildRequires: pkgconfig(passwdqc)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(tuner-1)
 BuildRequires: pkgconfig(xkbcommon)
 
 %description
@@ -67,11 +78,23 @@ BuildRequires: pkgconfig(xkbcommon)
 Summary: Files needed for work as initial-setup in gdm
 Group: Graphical desktop/Other
 
+BuildArch: noarch
 Requires: %name = %EVR
 Requires: gdm
 Conflicts: %gis_name
 
 %description gdm
+%summary.
+
+%package phrog
+Summary: Files needed for work as initial-setup in phrog
+Group: Graphical desktop/Other
+
+BuildArch: noarch
+Requires: %name = %EVR
+Requires: phrog
+
+%description phrog
 %summary.
 
 %package -n %libname%api_version
@@ -107,6 +130,50 @@ BuildArch: noarch
 Requires: %libname%api_version-gir = %EVR
 
 %description -n %libname-gir-devel
+%summary.
+
+%package -n %ser_libname%api_version
+Summary: %ser_name library
+Group: System/Libraries
+
+%description -n %ser_libname%api_version
+%summary.
+
+%package -n %ser_libname-devel
+Summary: %ser_name development files
+Group: Development/C
+
+Requires: %ser_libname%api_version = %EVR
+
+%description -n %ser_libname-devel
+%summary.
+
+%package -n %ser_libname%api_version-gir
+Summary: %ser_name GIR introspection files
+Group: System/Libraries
+
+Requires: %ser_libname%api_version = %EVR
+
+%description -n %ser_libname%api_version-gir
+%summary.
+
+%package -n %ser_libname-gir-devel
+Summary: %ser_name GIR introspection development files
+Group: Development/GNOME and GTK+
+
+BuildArch: noarch
+Requires: %ser_libname%api_version-gir = %EVR
+
+%description -n %ser_libname-gir-devel
+%summary.
+
+%package plugin-network
+Summary: %name network plugin
+Group: Other
+
+Requires: %name = %EVR
+
+%description plugin-network
 %summary.
 
 %package plugin-keyboard
@@ -178,6 +245,41 @@ Requires: %name = %EVR
 %description plugin-welcome
 %summary.
 
+%package plugin-date-and-time
+Summary: %name date-and-time plugin
+Group: Other
+
+Requires: %name = %EVR
+
+%description plugin-date-and-time
+%summary.
+
+%package plugin-software
+Summary: %name software plugin
+Group: Other
+
+Requires: %name = %EVR
+
+%description plugin-software
+%summary.
+
+%package plugin-software-source-pot-generator
+Summary: Pot generator for source config files of %name software plugin
+Group: Development/Tools
+
+%description plugin-software-source-pot-generator
+%summary.
+
+%package -n tuner-ready-set-software
+Summary: Tuner plugin with %name software plugin functionality
+Group: Other
+
+Requires: tuner
+Requires: %name-plugin-software = %EVR
+
+%description -n tuner-ready-set-software
+%summary.
+
 %package -n rpm-macros-%name
 Summary: RPM macros for %name plugins packages
 Group: Development/Other
@@ -197,6 +299,7 @@ Group: Development/Other
 %meson_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %find_lang %name
+%find_lang %name-software
 
 %check
 %meson_test
@@ -220,6 +323,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %_datadir/bash-completion/completions/%name
+%doc README.*.md
 
 %files gdm
 %_libexecdir/%gis_name
@@ -233,6 +337,26 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_userunitdir/gnome-session@%gis_name.target.d
 %_sysusersdir/%gis_name.conf
 %_tmpfilesdir/%gis_name.conf
+
+%files phrog
+%_sysconfdir/glib-2.0/schemas/50_%app_id.PhrogFirstRun.gschema.override
+
+%files -n %ser_libname%api_version
+%_libdir/%ser_libname-%api_version.so.%api_version
+%_libdir/%ser_libname-%api_version.so.%api_version.*
+
+%files -n %ser_libname-devel
+%_pkgconfigdir/%ser_libname-%api_version.pc
+%_libdir/%ser_libname-%api_version.so
+%_includedir/%ser_libname-%api_version.h
+%_vapidir/%ser_libname-%api_version.deps
+%_vapidir/%ser_libname-%api_version.vapi
+
+%files -n %ser_libname%api_version-gir
+%_typelibdir/%ser_girname-%api_version.typelib
+
+%files -n %ser_libname-gir-devel
+%_girdir/%ser_girname-%api_version.gir
 
 %files -n %libname%api_version
 %_libdir/%libname-%api_version.so.%api_version
@@ -251,24 +375,34 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %files -n %libname-gir-devel
 %_girdir/%girname-%api_version.gir
 
+%files plugin-network
+%_datadir/polkit-1/rules.d/%app_id.Plugin.Network.rules
+%_libdir/%name/plugins/steps/network.plugin
+%_libdir/%name/plugins/steps/libnetwork.so
+%doc plugins/network/README.*.md
+
 %files plugin-keyboard
 %_datadir/polkit-1/rules.d/%app_id.Plugin.Keyboard.rules
 %_libdir/%name/plugins/steps/keyboard.plugin
 %_libdir/%name/plugins/steps/libkeyboard.so
+%doc plugins/keyboard/README.*.md
 
 %files plugin-language
 %_datadir/polkit-1/rules.d/%app_id.Plugin.Language.rules
 %_libdir/%name/plugins/steps/language.plugin
 %_libdir/%name/plugins/steps/liblanguage.so
+%doc plugins/language/README.*.md
 
 %files plugin-license-agreement
 %_libdir/%name/plugins/steps/license-agreement.plugin
 %_libdir/%name/plugins/steps/liblicense-agreement.so
+%doc plugins/license-agreement/README.*.md
 
 %files plugin-user-common
 %_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
-%_datadir/polkit-1/rules.d/%app_id.Plugin.User.SetRootPassword.rules
-%_libexecdir/%name-set-root-password
+%_libdir/%name/plugins/service/libuser-root.so
+%_libdir/%name/plugins/service/user-root.plugin
+%doc plugins/user/README.*.md
 
 %files plugin-user-passwdqc
 %_libdir/%name/plugins/steps/user-passwdqc.plugin
@@ -281,13 +415,55 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %files plugin-welcome
 %_libdir/%name/plugins/steps/welcome.plugin
 %_libdir/%name/plugins/steps/libwelcome.so
+%doc plugins/welcome/README.*.md
+
+%files plugin-date-and-time
+%_libdir/%name/plugins/steps/date-and-time.plugin
+%_libdir/%name/plugins/steps/libdate-and-time.so
+%_datadir/polkit-1/rules.d/%app_id.Plugin.DateAndTime.rules
+%doc plugins/date-and-time/README.*.md
+
+%files plugin-software
+%_libdir/%name/plugins/steps/software.plugin
+%_libdir/%name/plugins/steps/libsoftware.so
+%_libdir/%name/plugins/service/libsoftware-sources.so
+%_libdir/%name/plugins/service/software-sources.plugin
+%_datadir/%name/software
+%doc plugins/software/README.*.md
+
+%files plugin-software-source-pot-generator
+%_bindir/source-pot-generator
+
+%files -n tuner-%name-software -f %name-software.lang
+%_libdir/tuner/plugins/lib%name-software.so
+%_libdir/tuner/plugins/%name-software.plugin
+%_datadir/metainfo/org.altlinux.ReadySetSoftware.TunerPlugin.metainfo.xml
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Aug 01 2026 Vladimir Romanov <rirusha@altlinux.org> 0.11.1-alt1
+- New version: 0.11.1.
+- Added `network` plugin with network setup.
+- Added `date-and-time` plugin with time/date/timezone setup.
+- Added `software` plugin (with Tuner plugin) with third-party repositories
+  management.
+- Service now supports plugins, so `user` and `software` now uses dbus
+  service, not `pkexec`.
+- Added `apply-only` option to run ReadySet without GUI, only for applying
+  from config (NOTE: all context vars must be set).
+- Option `simple` replaces with `detailed`, `simple` now is default.
+- Plugin loading was optimized, now loaded only specified in `steps` plugins.
+- OSK button now not focusable, so it cant grab focus from OSK.
+- Added support for homed users created with accountsservice.
+- `no-enforce-security` was replaced with `enforce-password-quality`. If it
+  `false`, warning dialog will be shown on trying apply bad password.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.11.0
+
 * Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.10.2-alt1
-- New version: 0.10.1.
+- New version: 0.10.2.
 - Added InstallerEndPage widget for final installation step.
 - Refactored hook system.
 - Added check for disabled password generation in User plugin.
@@ -295,7 +471,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 - Fixed segfault on wrong user configuration with proper error message.
 - Added rpm macros for plugins.
 - Full release note here:
-  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.10
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.10.0
 
 * Thu Jun 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.2-alt1
 - Fixed dialog assertions.

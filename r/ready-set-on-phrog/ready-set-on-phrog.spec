@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -12,8 +12,8 @@ VCS: http://git.altlinux.org/gears/r/ready-set-on-phrog.git
 
 Source: %name-%version.tar
 
-Requires: phrog
-Requires: ready-set >= 0.10.0
+Requires: ready-set >= 0.11.1
+Requires: ready-set-phrog
 Requires: ready-set-plugin-language
 Requires: ready-set-plugin-keyboard
 Requires: ready-set-plugin-user-passwdqc
@@ -34,25 +34,22 @@ for i in 50_*; do
 	install -pDm0644 $i %buildroot%_sysconfdir/dconf/db/local.d/$i;
 done
 
-install -pDm0644 50_org.gnome.desktop.screensaver_lock-enabled \
-	%buildroot%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
-
 install -pDm0644 config \
 	%buildroot%_datadir/ready-set/config
 
 install -pDm0644 %name.conf \
 	%buildroot%_sysusersdir/%name.conf
 
-install -pDm0755 %name-system-post \
-	%buildroot%ready_set_system_post_hooks_dir/%name
-
 %files
 %_sysconfdir/dconf/db/local.d/50_*
-%_datadir/ready-set/config
+%__ready_set_datadir/config
 %_sysusersdir/%name.conf
-%ready_set_system_post_hooks_dir/%name
 
 %changelog
+* Sat Aug 01 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.4-alt1
+- Drop post hook and first-run override.
+  Now ready-set-phrog and ready-set handle it.
+
 * Mon Jul 27 2026 Vasiliy Doylov <neko@altlinux.org> 0.6.3-alt1
 - Added post hook back
 - Added window resizable flag
