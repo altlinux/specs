@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary: Hercules S/370, ESA/390, and z/Architecture emulator
 Name: hercules
 Version: 3.13
-Release: alt1
+Release: alt2
 License: QPL
 Group: Emulators
 URL: http://www.hercules-390.eu/
@@ -55,10 +55,11 @@ rm util/Makefile*
 
 
 %build
+export CFLAGS="-std=c17"
+export CXXFLAGS="-std=c++17"
 %configure \
     --enable-external-gui \
     --enable-optimization="%{optflags}"
-
 make %{?_smp_mflags} V=1
 
 
@@ -105,6 +106,9 @@ rm %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Sat Aug 01 2026 Denis Medvedev <nbr@altlinux.org> 3.13-alt2
+- fix FTBFS
+
 * Thu Oct 19 2017 Denis Medvedev <nbr@altlinux.org> 3.13-alt1
 - new version 3.13
 
