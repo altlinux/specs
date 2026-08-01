@@ -1,17 +1,17 @@
 %define optflags_lto %nil
 
-%define git_ver 19431
-%define git_commit 40e9ee5af0de7ca31691c58eebe64ba205a2900b
+%define git_ver 19675
+%define git_commit cd814f8c926400cf62dab7924f723e4eb7719e50
 
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
 %define yaml_cpp_commit 51a5d623e3fde1f58829a56ba910f1cb33596222
 %define soundtouch_commit a0fba77b6f9cfbdb71f8bbec58b6ac4e5e3b1097
-%define fusion_version 1.2.11
+%define fusion_version 1.3.2
 %define gamemode_version 1.8.2
 %define protobuf_version 33.4
 
 Name: rpcs3
-Version: 0.0.41
+Version: 0.0.42
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -68,6 +68,7 @@ BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwolfssl-devel
+BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: llvm-devel
@@ -147,6 +148,11 @@ sed -e 's|miniupnpc>=2.3.3|miniupnpc>=2.2.4|' -i 3rdparty/miniupnp/CMakeLists.tx
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Fri Aug 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.42-alt1
+- Version 0.0.42
+- Update Fusion to 1.3.2
+- Add xkbcommon-x11 dependency
+
 * Thu Jun 04 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.41-alt1
 - Version 0.0.41
 
