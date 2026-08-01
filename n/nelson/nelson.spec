@@ -3,7 +3,7 @@
 
 Name: nelson
 Version: 1.17.0
-Release: alt3
+Release: alt4
 
 Summary: The Nelson Programming Language
 License: LGPL-3.0 OR GPL-3.0
@@ -50,9 +50,6 @@ BuildRequires: boost-asio-devel
 BuildRequires: patchelf
 
 Requires: nelson-common
-
-# no liblapacke-devel on loongson
-ExcludeArch: loongarch64
 
 %description
 Nelson is a powerful, open-source numerical computational language,
@@ -150,6 +147,9 @@ patchelf %buildroot%_bindir/nelson_f2c --add-rpath %_libdir/Nelson
 %_libdir/cmake/Nelson/*
 
 %changelog
+* Sat Aug 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt4
+- Include loongarch64 since liblapacke is now available.
+
 * Mon Jul 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt3
 - Build with help.
 
