@@ -3,7 +3,7 @@
 
 Name: xorg-xwayland
 Version: 24.1.13
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT
 Summary: Wayland X server
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 
 Requires: xorg-server-common
 
-BuildRequires: meson egl-wayland-devel libEGL-devel libGL-devel libXaw-devel libXdmcp-devel libXfont-devel libXfont2-devel libXpm-devel
+BuildRequires: meson egl-wayland-devel libEGL-devel libGL-devel libXaw-devel libXdmcp-devel libXfont2-devel libXpm-devel
 BuildRequires: libXrender-devel libXres-devel libXtst-devel libXv-devel libaudit-devel libdbus-devel libdmx-devel libdrm-devel libepoxy-devel
 BuildRequires: libgbm-devel libpciaccess-devel libpixman-devel libselinux-devel libssl-devel libtirpc-devel libudev-devel libwayland-client-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbfile-devel
@@ -60,6 +60,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 01 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:24.1.13-alt2
+- update build dependensies
+
 * Wed Jul 08 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:24.1.13-alt1
 - 24.1.13
 

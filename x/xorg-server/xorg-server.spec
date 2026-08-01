@@ -26,7 +26,7 @@
 
 Name: xorg-server
 Version: 21.1.24
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT X11
 Summary: Xserver - X Window System display server
@@ -54,7 +54,7 @@ Obsoletes: xorg-drv-modesetting < %epoch:%version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
+BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXmu-devel
 BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libxcvt-devel libudev-devel libSM-devel
 BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel xorg-font-utils xorg-xtrans-devel xkbcomp
 BuildRequires: xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools libxshmfence-devel libdrm-devel libXfont2-devel
@@ -260,6 +260,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Sat Aug 01 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.24-alt2
+- update build dependensies
+
 * Wed Jul 08 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.24-alt1
 - 21.1.24
 
