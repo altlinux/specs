@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 7
 
 Name: libmatroska
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
@@ -22,6 +23,12 @@ Language), a kind of binary version of XML. This way the significant
 advantages in terms of future format extensability are gained without
 breaking file support in old parsers.
 
+%package -n %name%soname
+Summary: an extensible open standard Audio/Video container format
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
 %package devel
 Summary: Development files for libmatroska
 Group: Development/C++
@@ -31,6 +38,13 @@ Requires: libmatroska = %EVR
 Summary: Matroska Project Documentation (doxygenized HTML)
 Group: Development/C++
 Requires: libmatroska-devel = %EVR
+
+%description -n %name%soname
+Matroska is aiming to become the standard of Multimedia Container
+Formats one day. It is based on EBML (Extensible Binary Meta
+Language), a kind of binary version of XML. This way the significant
+advantages in terms of future format extensability are gained without
+breaking file support in old parsers.
 
 %description devel
 Matroska is aiming to become the standard of Multimedia Container
@@ -61,8 +75,9 @@ This package contains Matroska Development Documenation
 %install
 %cmakeinstall_std
 
-%files
-%_libdir/*.so.*
+%files -n %name%soname
+%_libdir/*.so.%soname
+%_libdir/*.so.%{soname}.*
 
 %files devel
 %_includedir/matroska
@@ -71,6 +86,10 @@ This package contains Matroska Development Documenation
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 01 2026 L.A. Kostis <lakostis@altlinux.ru> 1.7.2-alt1
+- 1.7.2.
+- Built according shared policy.
+
 * Thu Dec 29 2022 L.A. Kostis <lakostis@altlinux.ru> 1.7.1-alt1
 - NMU:
   + 1.6.3 -> 1.7.1.
