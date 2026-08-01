@@ -10,7 +10,7 @@
 
 Name: %pkgname-compat
 Version: 2.28.10
-Release: alt1
+Release: alt2
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -99,7 +99,7 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %build
-%add_optflags -Wno-error=calloc-transposed-args
+%add_optflags -Wno-error=calloc-transposed-args -Wno-error=unterminated-string-initialization
 %cmake .. \
 	-DENABLE_ZLIB_SUPPORT:BOOL=TRUE \
 	-DLIB_INSTALL_DIR:PATH=%_libdir \
@@ -147,6 +147,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Sat Aug 01 2026 Anton Vyatkin <toni@altlinux.org> 2.28.10-alt2
+- Fix FTBFS.
+
 * Mon Mar 24 2025 Nazarov Denis <nenderus@altlinux.org> 2.28.10-alt1
 - New version 2.28.10.
 - Security fixes:
