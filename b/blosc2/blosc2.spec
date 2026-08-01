@@ -6,7 +6,7 @@
 
 Name:    blosc2
 Version: 2.23.1
-Release: alt1
+Release: alt2
 
 Summary: A fast, compressed, persistent binary data store library for C
 License: BSD-3-Clause
@@ -16,6 +16,7 @@ VCS:     https://github.com/Blosc/c-blosc2
 
 Source:  %name-%version.tar
 Patch1:  0001-init_shuffle_implementation-use-a-proper-synchroniza.patch
+Patch2:  0002-Link-shared-libzstd.patch
 
 BuildRequires(pre): cmake gcc-c++
 BuildRequires: zlib-devel liblz4-devel libzstd-devel ctest
@@ -57,7 +58,7 @@ This package contains development files of Blosc2 library.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch1 -p1
 %ifarch %e2k
 # why is libdl used but not linked?
 sed -i '1i set(LIBS ${LIBS} "dl")' blosc/CMakeLists.txt
@@ -98,6 +99,9 @@ rm -rf internal-complibs
 %_libdir/cmake/Blosc2
 
 %changelog
+* Sat Aug 01 2026 Anton Vyatkin <toni@altlinux.org> 2.23.1-alt2
+- Fix FTBFS.
+
 * Tue Mar 03 2026 Anton Vyatkin <toni@altlinux.org> 2.23.1-alt1
 - New version 2.23.1.
 
