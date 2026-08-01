@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xwaylandvideobridge
-Version: 0.5.0
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: Utility to allow streaming Wayland windows to X applications
 License: (GPL-2.0-only or GPL-3.0-only) and LGPL-2.0-or-later and BSD-3-Clause
@@ -63,6 +63,9 @@ the control of the user at all times.
 %_K6data/qlogging-categories6/*.*categories
 
 %changelog
+* Sat Aug 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.1-alt1
+- New version 0.5.1.
+
 * Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
 - Updated license tag.
 
