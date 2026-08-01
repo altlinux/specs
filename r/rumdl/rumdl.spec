@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rumdl
-Version: 0.2.47
+Version: 0.2.48
 Release: alt1
 Summary: A high-performance Markdown linter
 License: MIT
@@ -12,7 +12,6 @@ VCS: https://github.com/rvben/rumdl
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Patch: 0001-avoid-changing-cwd-in-init-test.patch
 
 ExcludeArch: %ix86
 
@@ -31,7 +30,6 @@ speed and developer experience improvements to the Markdown ecosystem.
 
 %prep
 %setup -a1
-%patch -p1
 %rust_prep
 
 %build
@@ -51,6 +49,9 @@ speed and developer experience improvements to the Markdown ecosystem.
 %_bindir/%name
 
 %changelog
+* Sat Aug 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.48-alt1
+- Updated to version 0.2.48.
+
 * Sat Aug 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.47-alt1
 - Updated to version 0.2.47.
 
