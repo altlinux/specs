@@ -3,7 +3,7 @@
 
 Name:          regard3d
 Version:       1.0.0
-Release:       alt2
+Release:       alt3
 Summary:       A open source structure-from-motion program based on OpenMVG
 License:       MIT
 Group:         Graphics
@@ -11,7 +11,6 @@ Url:           http://www.regard3d.org/
 Vcs:           https://github.com/rhiestan/Regard3D.git
 
 Source:        %name-%version.tar
-Patch:         %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake
@@ -121,7 +120,6 @@ projects, I decided to release Regard3D to the public.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 cd src
@@ -143,6 +141,10 @@ cd src
 %_bindir/%name
 
 %changelog
+* Sun Aug 02 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt3
+- ^ requirement for boost to 1.69
+- - requires for boost system
+
 * Tue Jan 27 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt2
 - ![NBTFS] by upgrade to wx3.2
 - ^ updated to novel openMVG about oct 2025

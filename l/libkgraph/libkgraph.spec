@@ -1,33 +1,35 @@
 %define        _unpackaged_files_terminate_build 1
-%define        origname KGraph
+%define        nomen KGraph
 %define        pkgname kgraph
 %define        pypiname %pkgname
 
+%def_disable   python
+
 Name:          lib%{pkgname}
-Version:       0.1
-Release:       alt0.git2143fd6.3
+Version:       0.1p2
+Release:       alt0.1
 Summary:       A library for k-nearest neighbor search
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
 Url:           https://github.com/aaalgo/kgraph
 Vcs:           https://github.com/aaalgo/kgraph.git
-ExclusiveArch: aarch64 %ix86 x86_64
 
 Source:        %name-%version.tar
-Patch:         %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
 BuildRequires: boost-devel
 BuildRequires: boost-program_options-devel
+BuildRequires: pkgconfig(openblas)
 #BuildRequires: xsimd-devel
+%if_enabled python
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(numpy)
 BuildRequires: libnumpy-py3-devel
-BuildRequires: libopenblas-devel
+%endif
 
 %description
 KGraph: A Library for Approximate Nearest Neighbor Search.
@@ -50,6 +52,21 @@ rows of NumPy matrices.
 %package       devel
 Group:         Development/C++
 Summary:       A library for k-nearest neighbor search development files.
+
+Requires:      cmake
+Requires:      gcc-c++
+Requires:      libgomp-devel
+Requires:      boost-devel
+Requires:      boost-program_options-devel
+Requires:      pkgconfig(openblas)
+#Requires:      xsimd-devel
+%if_enabled python
+Requires:      rpm-build-pyproject
+Requires:      python3(setuptools)
+Requires:      python3(wheel)
+Requires:      python3(numpy)
+Requires:      libnumpy-py3-devel
+%endif
 
 %description   devel
 A library for k-nearest neighbor search development files.
@@ -75,6 +92,8 @@ rows of NumPy matrices.
 Group:         Development/C++
 Summary:       A library for k-nearest neighbor search static files.
 
+Requires:      %name-devel = %EVR
+
 %description   devel-static
 A library for k-nearest neighbor search static files.
 
@@ -95,6 +114,7 @@ under the module name kgraph, which supports Euclidean and Angular distances on
 rows of NumPy matrices.
 
 
+%if_enabled python
 %package       -n python3-module-%pypiname
 Summary:       Python interface to kgraph
 Group:         Development/Python3
@@ -117,20 +137,24 @@ that are extremely generic and fast:
 For best generality, the C++ API should be used. A python wrapper is provided
 under the module name kgraph, which supports Euclidean and Angular distances on
 rows of NumPy matrices.
+%endif
 
 
 %prep
 %setup
-%autopatch -p1
 
 %build
-%cmake_insource
+%cmake
 %cmake_build
+%if_enabled python
 %pyproject_build
+%endif
 
 %install
 %cmakeinstall_std
+%if_enabled python
 %pyproject_install
+%endif
 
 
 %files
@@ -141,19 +165,25 @@ rows of NumPy matrices.
 %doc README*
 %_libdir/%{name}*.so
 %_includedir/%{pkgname}*
-%_datadir/cmake/Modules/Find%{origname}.cmake
+%_datadir/cmake/Modules/Find%{nomen}.cmake
 
 %files         devel-static
 %doc README*
 %_libdir/%{name}*.a
 
+%if_enabled python
 %files         -n python3-module-%pypiname
 %doc README*
 %python3_sitelibdir/%{pypiname}*.so
 %python3_sitelibdir/%{pypiname}*/METADATA
+%endif
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.1p2-alt0.1
+- ^ 0.1-alt0.git2143fd6 -> 0.1p2
+- - disabled python
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.1-alt0.git2143fd6.3
 - NMU: added missing build dependency on setuptools.
 
