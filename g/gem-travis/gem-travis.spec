@@ -5,8 +5,8 @@
 %define        gemname travis
 
 Name:          gem-travis
-Version:       1.14.0
-Release:       alt2
+Version:       1.14.0.6
+Release:       alt0.1
 Summary:       Travis CI client
 License:       MIT
 Group:         Development/Ruby
@@ -16,7 +16,6 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(rspec) >= 3.10.0
@@ -37,7 +36,7 @@ BuildRequires: gem(launchy) >= 2.5.2
 BuildRequires: gem(pusher-client) >= 0.6.2
 BuildRequires: gem(rack-test) >= 1.1.0
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rspec-its) >= 1.4
+BuildConflicts: gem(rspec-its) >= 3
 BuildConflicts: gem(sinatra) >= 5
 BuildConflicts: gem(gh) >= 1
 BuildConflicts: gem(activesupport) >= 8
@@ -59,6 +58,7 @@ BuildConflicts: gem(rack-test) >= 2.2
 %ruby_use_gem_dependency sinatra >= 4,sinatra < 5
 %ruby_use_gem_dependency highline >= 3.1.1,highline < 4
 %ruby_use_gem_dependency faraday >= 2.7.2,json_pure < 3
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 Requires:      gem(gh) >= 0
 Requires:      gem(faraday) >= 2.6.0
 Requires:      gem(faraday-rack) >= 2
@@ -75,27 +75,35 @@ Conflicts:     gem(json_pure) >= 3
 Conflicts:     gem(launchy) >= 2.6
 Conflicts:     gem(pusher-client) >= 0.7
 Conflicts:     gem(rack-test) >= 2.2
-Provides:      gem(travis) = 1.14.0
+Provides:      gem(travis) = 1.14.0.6
 
+%ruby_use_gem_version travis:%version
 
 %description
-CLI and Ruby client library for Travis CI
+The travis gem includes both a command line client and a Ruby library to
+interface with a Travis CI service using GitHub account. Both work with
+travis-ci.com or any custom Travis CI setup you might have. Check out the
+installation instructions to get it running in no time.
 
 
 %package       -n travis
-Version:       1.14.0
-Release:       alt2
+Version:       1.14.0.6
+Release:       alt0.1
 Summary:       Travis CI client executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета travis
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0
+Requires:      gem(travis) = 1.14.0.6
 
 %description   -n travis
 Travis CI client executable(s).
 
-CLI and Ruby client library for Travis CI
+The travis gem includes both a command line client and a Ruby library to
+interface with a Travis CI service using GitHub account. Both work with
+travis-ci.com or any custom Travis CI setup you might have. Check out the
+installation instructions to get it running in no time.
+
 
 %description   -n travis -l ru_RU.UTF-8
 Исполнямка для самоцвета travis.
@@ -103,19 +111,23 @@ CLI and Ruby client library for Travis CI
 
 %if_enabled    doc
 %package       -n gem-travis-doc
-Version:       1.14.0
-Release:       alt2
+Version:       1.14.0.6
+Release:       alt0.1
 Summary:       Travis CI client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета travis
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0
+Requires:      gem(travis) = 1.14.0.6
 
 %description   -n gem-travis-doc
 Travis CI client documentation files.
 
-CLI and Ruby client library for Travis CI
+The travis gem includes both a command line client and a Ruby library to
+interface with a Travis CI service using GitHub account. Both work with
+travis-ci.com or any custom Travis CI setup you might have. Check out the
+installation instructions to get it running in no time.
+
 
 %description   -n gem-travis-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета travis.
@@ -124,14 +136,14 @@ CLI and Ruby client library for Travis CI
 
 %if_enabled    devel
 %package       -n gem-travis-devel
-Version:       1.14.0
-Release:       alt2
+Version:       1.14.0.6
+Release:       alt0.1
 Summary:       Travis CI client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета travis
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0
+Requires:      gem(travis) = 1.14.0.6
 Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(rspec-its) >= 1.3.0
 Requires:      gem(sinatra) >= 3.0.6
@@ -142,14 +154,18 @@ Requires:      gem(rubocop-performance) >= 0
 Requires:      gem(rubocop-rspec) >= 0
 Requires:      gem(simplecov-console) >= 0
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rspec-its) >= 1.4
+Conflicts:     gem(rspec-its) >= 3
 Conflicts:     gem(sinatra) >= 5
 Conflicts:     gem(activesupport) >= 8
 
 %description   -n gem-travis-devel
 Travis CI client development package.
 
-CLI and Ruby client library for Travis CI
+The travis gem includes both a command line client and a Ruby library to
+interface with a Travis CI service using GitHub account. Both work with
+travis-ci.com or any custom Travis CI setup you might have. Check out the
+installation instructions to get it running in no time.
+
 
 %description   -n gem-travis-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета travis.
@@ -158,7 +174,6 @@ CLI and Ruby client library for Travis CI
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %ruby_build
@@ -191,6 +206,9 @@ CLI and Ruby client library for Travis CI
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.14.0.6-alt0.1
+- ^ 1.14.0 -> 1.14.0p6
+
 * Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 1.14.0-alt2
 - ! fixed deps for activesupport gem
 
