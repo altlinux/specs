@@ -1,10 +1,11 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.4.1
-Release: alt2
+Version: 2.4.2
+Release: alt1
 Epoch: 2
 
-Url: https://bluefish.openoffice.nl
+URL: https://bluefish.openoffice.nl
+VCS: https://sourceforge.net/p/bluefish/code/HEAD/tree/trunk/bluefish/
 License: GPL-3.0-or-later
 Group: Editors
 
@@ -21,7 +22,8 @@ Source: %name-%version.tar
 Patch0: bluefish-2.2.13-strict-aliasing.patch
 Patch1: bluefish-2.4.1-shellbang.patch
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
-Patch4: bluefish-2.4.1-russian-translation.patch
+#Patch4: bluefish-2.4.1-russian-translation.patch
+Patch5: bluefish-2.4.2-alt1-gettext1.0.patch
 
 Obsoletes: bluefish-common =< %EVR
 
@@ -52,7 +54,8 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1 -p2
 %patch3 -p2
-%patch4 -p2
+#patch4 -p2
+%patch5 -p2
 
 # Update russian translation
 #cp %SOURCE1 po/ru.po
@@ -69,10 +72,12 @@ msgfmt src/plugin_htmlbar/po/ru.po -o src/plugin_htmlbar/po/ru.gmo
 %autoreconf
 %configure --disable-update-databases --disable-xml-catalog-update
 %make_build
+%make_build -C po/ update-gmo
 
 %install
 # No makeinstall macros here, because of hardcoded DESTDIR-only
 make install DESTDIR=%buildroot
+make install DESTDIR=%buildroot -C po
 
 # Unpackaged files
 rm %buildroot%_libdir/%name/*.la
@@ -100,6 +105,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Sun Aug 02 2026 Anton Midyukov <antohami@altlinux.org> 2:2.4.2-alt1
+- New version 2.4.2.
+- Add gettext 1.0 support (Closes: 60056).
+
 * Mon Jun 22 2026 Anton Midyukov <antohami@altlinux.org> 2:2.4.1-alt2
 - Update russian translations (thanks Olesya Gerasimenko).
 
