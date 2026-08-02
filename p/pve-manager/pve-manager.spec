@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -175,6 +175,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Sun Aug 02 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt3
+- Adapt 'pveceph install' (Closes: 60054)
+
 * Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt2
 - ceph: tolerate FQDN hostnames in OSD metadata checks (Closes: 59881)
 
