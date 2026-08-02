@@ -1,8 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    devel
 %define        gemname zoom
 
 Name:          gem-zoom
-Version:       0.5.0
-Release:       alt3.2
+Version:       0.5.0.2
+Release:       alt0.1
 Summary:       Ruby binding to the Z39.50 Object-Orientation Model (ZOOM)
 License:       LGPLv2.1
 Group:         Development/Ruby
@@ -11,17 +14,19 @@ Vcs:           https://github.com/bricestacey/ruby-zoom.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires: libyaz-devel
 BuildRequires: zlib-devel
 BuildRequires: libgcrypt-devel
+BuildRequires: libstemmer-devel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-zoom < %EVR
 Provides:      ruby-zoom = %EVR
-Provides:      gem(zoom) = 0.5.0
+Provides:      gem(zoom) = 0.5.0.2
 
+%ruby_use_gem_version zoom:%version
 
 %description
 Ruby/ZOOM provides a Ruby binding to the Z39.50 Object-Orientation Model (ZOOM),
@@ -34,18 +39,19 @@ implementation of the Z39.50/SRW/SRU standards, but could be easily ported to
 any ZOOM compliant implementation.
 
 
+%if_enabled    devel
 %package       -n gem-zoom-devel
-Version:       0.5.0
-Release:       alt3.2
+Version:       0.5.0.2
+Release:       alt0.1
 Summary:       Ruby binding to the Z39.50 Object-Orientation Model (ZOOM) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета zoom
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(zoom) = 0.5.0
 Requires:      libyaz-devel
 Requires:      zlib-devel
 Requires:      libgcrypt-devel
+Requires:      gem(zoom) = 0.5.0.2
 
 %description   -n gem-zoom-devel
 Ruby binding to the Z39.50 Object-Orientation Model (ZOOM) development
@@ -62,6 +68,7 @@ any ZOOM compliant implementation.
 
 %description   -n gem-zoom-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета zoom.
+%endif
 
 
 %prep
@@ -77,17 +84,22 @@ any ZOOM compliant implementation.
 %ruby_test
 
 %files
-%doc README.md
+%doc ChangeLog README.md LICENSE
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    devel
 %files         -n gem-zoom-devel
-%doc README.md
+%doc ChangeLog README.md LICENSE
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.5.0.2-alt0.1
+- ^ 0.5.0 -> 0.5.0p2
+
 * Mon Oct 11 2021 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt3.2
 - ! spec
 
