@@ -3,7 +3,7 @@
 %def_without check
 
 Name: writefreely
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
@@ -127,6 +127,9 @@ echo "writefreely: for database migration see https://blog.writefreely.org/tag:r
 %preun_systemd writefreely
 
 %changelog
+* Sun Aug 02 2026 Pavel Nakonechnyi <zorg@altlinux.org> 0.17.1-alt1
+- version 0.17.1
+
 * Sat Jul 18 2026 Pavel Nakonechnyi <zorg@altlinux.org> 0.17.0-alt1
 - version 0.17.0
 - Fixes:
