@@ -6,7 +6,7 @@
 
 Name:          gem-inspec-core
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library
 License:       LicenseRef-Chef-EULA
 Group:         Development/Ruby
@@ -84,7 +84,7 @@ BuildConflicts: gem(parslet) >= 3
 BuildConflicts: gem(progress_bar) >= 1.4
 BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rspec) > 3.14
-BuildConflicts: gem(rspec-its) >= 2
+BuildConflicts: gem(rspec-its) >= 3
 BuildConflicts: gem(rubyzip) >= 3
 BuildConflicts: gem(semverse) >= 4
 BuildConflicts: gem(sslshake) >= 2
@@ -109,6 +109,7 @@ BuildConflicts: gem(tty-table) >= 1
 %ruby_use_gem_dependency parslet >= 2.0,parslet < 3
 %ruby_use_gem_dependency faraday_middleware >= 1.2.1,faraday_middleware < 2
 %ruby_use_gem_dependency train-winrm >= 0.4,train-winrm < 1
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 Requires:      ruby >= 3.1.0
 Requires:      gem(addressable) >= 2.4
 Requires:      gem(chef-licensing) >= 1.0.2
@@ -149,7 +150,7 @@ Conflicts:     gem(parallel) >= 2
 Conflicts:     gem(parslet) >= 3
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rspec) > 3.14
-Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(rspec-its) >= 3
 Conflicts:     gem(rubyzip) >= 3
 Conflicts:     gem(semverse) >= 4
 Conflicts:     gem(sslshake) >= 2
@@ -172,7 +173,7 @@ full support.
 
 %package       -n gem-inspec
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -211,7 +212,7 @@ Infrastructure and compliance testing. Core library.
 %if_enabled    doc
 %package       -n gem-inspec-doc
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета inspec
 Group:         Development/Documentation
@@ -232,7 +233,7 @@ Infrastructure and compliance testing. Core library documentation files.
 %if_enabled    devel
 %package       -n gem-inspec-devel
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета inspec
 Group:         Development/Ruby
@@ -267,7 +268,7 @@ Infrastructure and compliance testing. Core library development package.
 
 %package       -n gem-inspec-bin
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -285,7 +286,7 @@ Infrastructure and compliance testing. Core library.
 
 %package       -n inspec
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета inspec-bin
 Group:         Other
@@ -305,7 +306,7 @@ Infrastructure and compliance testing. Core library executable(s).
 %if_enabled    doc
 %package       -n gem-inspec-bin-doc
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета inspec-bin
 Group:         Development/Documentation
@@ -326,7 +327,7 @@ Infrastructure and compliance testing. Core library documentation files.
 %if_enabled    devel
 %package       -n gem-inspec-bin-devel
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета inspec-bin
 Group:         Development/Ruby
@@ -347,7 +348,7 @@ Infrastructure and compliance testing. Core library development package.
 
 %package       -n gem-inspec-core-bin
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -366,7 +367,7 @@ Infrastructure and compliance testing. Core library.
 %if_enabled    doc
 %package       -n gem-inspec-core-bin-doc
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета inspec-core-bin
 Group:         Development/Documentation
@@ -387,7 +388,7 @@ Infrastructure and compliance testing. Core library documentation files.
 %if_enabled    devel
 %package       -n gem-inspec-core-bin-devel
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета inspec-core-bin
 Group:         Development/Ruby
@@ -409,7 +410,7 @@ Infrastructure and compliance testing. Core library development package.
 %if_enabled    doc
 %package       -n gem-inspec-core-doc
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета inspec-core
 Group:         Development/Documentation
@@ -437,7 +438,7 @@ full support.
 %if_enabled    devel
 %package       -n gem-inspec-core-devel
 Version:       6.8.45
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Infrastructure and compliance testing. Core library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета inspec-core
 Group:         Development/Ruby
@@ -559,6 +560,9 @@ full support.
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 6.8.45-alt1.2
+- ! fixed dep to rspec-its gem
+
 * Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 6.8.45-alt1.1
 - ! fixed spec to filter out ombinus and rake-tests sources
 
