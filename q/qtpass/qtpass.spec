@@ -1,11 +1,13 @@
 # SPEC file for QtPass
 #
 
+%define _unpackaged_files_terminate_build 1
+
 %define real_name    QtPass
 
 Name:     qtpass
-Version:  1.4.0
-Release:  alt1.1
+Version:  1.7.0
+Release:  alt1
 
 Summary: a multi-platform GUI for pass, the standard unix password manager
 Summary(ru_RU.UTF-8): кросс-платформенный интерфейс к менеджеру паролей pass
@@ -27,14 +29,15 @@ Source2: %name-32.png
 Source3: %name-48.png
 
 BuildRequires(pre): rpm-build-licenses desktop-file-utils
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 
 
-# Automatically added by buildreq on Tue Jan 28 2020
-# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libqt5-core libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel ruby ruby-stdlibs sh4
-BuildRequires: kf5-kwallet-devel python3-module-mpl_toolkits qt5-multimedia-devel qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel
+# Automatically added by buildreq on Sun Aug 02 2026
+# optimized out: gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgcc15-devel libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-qml libqt6-test libqt6-widgets libsasl2-3 libstdc++-devel python3 python3-base qt6-base-devel qt6-tools sh5
+BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-tools-devel
+
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
 %endif
 
 Requires: gnupg gnupg2 git-core pwgen
@@ -72,17 +75,11 @@ QtPass -  кроссплатформенный графический интер
 
 %patch1
 
-## TEMPORARY FIX program version - 1.3.3 not released yet:
-sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i Doxyfile
-sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.iss
-sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.pri
-sed -e 's#1\.3\.3#1.3.2-371-gcfac4db8#' -i qtpass.plist
-
 mv -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
 
 %build
-%qmake_qt5  PREFIX=%buildroot%prefix
+%qmake_qt6  PREFIX=%buildroot%prefix
 %make_build
 
 %install
@@ -108,6 +105,12 @@ install -D -m0644 -- qtpass.appdata.xml %buildroot%_datadir/appdata/%name.appdat
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Aug 02 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.7.0-alt1
+- New version
+   - Switch to Qt 6
+   - Auto-detect Git in existing password-store
+   - Use ed25519 for GPG key generation when available
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.4.0-alt1.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
 
