@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-ExtUtils-Builder-Compiler
-Version: 0.036
+Version: 0.037
 Release: alt1
 
 Summary: an interface around different compilers
@@ -47,5 +47,8 @@ ExtUtils::Builder::Autodetect::C.
 %perl_vendor_privlib/ExtUtils/Builder/*
 
 %changelog
+* Sun Aug 02 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.037-alt1
+- New version
+
 * Thu Apr 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.036-alt1
 - Initial build for ALT Linux Sisyphus
