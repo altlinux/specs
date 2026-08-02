@@ -1,14 +1,14 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
-License: GPLv2
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
-Url: http://www.altlinux.org/Alterator
+URL: https://www.altlinux.org/Alterator
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -158,6 +158,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Sun Aug 02 2026 Anton Midyukov <antohami@altlinux.org> 0.5.6-alt1
+- systemd/setup.service: add conflict with kmsconvt@tty1.service.
+
 * Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.5.5-alt1
 - Take over the installer features hook from rootfs-installer-features.
 

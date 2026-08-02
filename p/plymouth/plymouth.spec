@@ -10,8 +10,8 @@
 %define _localstatedir %_var
 
 Name: plymouth
-Version: 24.004.60
-Release: alt7.20251219.1
+Version: 26.134.222
+Release: alt1
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -482,44 +482,48 @@ fi \
 %files system-theme
 
 %changelog
+* Sun Aug 02 2026 Anton Midyukov <antohami@altlinux.org> 1:26.134.222-alt1
+- New version 26.134.222.
+- systemd-units: Run after kmsconvt@tty1
+
 * Sat Jan 03 2026 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt7.20251219.1
-- new snapshot
-- add depend on plymouth to plymouth-plugin-* (Closes: 53880)
+- New snapshot.
+- Add depend on plymouth to plymouth-plugin-* (Closes: 53880).
 
 * Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt6.20250516.1
-- new snapshot
+- New snapshot.
 
 * Sun Jun 09 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt5.20240608
-- new snapshot
+- New snapshot.
 
 * Thu Jun 06 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt4
-- do not use full PATH for systemd-tty-ask-password-agent
+- Do not use full PATH for systemd-tty-ask-password-agent.
 
 * Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt3
-- don't put plymouth client and daemon in the prefix
+- Don't put plymouth client and daemon in the prefix.
 
 * Mon Apr 15 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt2
-- Set paths for systemd via meson options
+- Set paths for systemd via meson options.
 
 * Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt1
-- New version
-- build with meson
+- New version.
+- Build with meson.
 
 * Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt3.20221016
 - Add upstream commit:
-  "drm: Use first output for panel info if there is no builtin display"
+  "drm: Use first output for panel info if there is no builtin display".
 
 * Mon May 22 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt2.20221016
 - Revert "Revert "Revert "drm: Remove explicit set_scan_out_buffer() from
-  activate()"""
+  activate()""".
 
 * Fri Apr 28 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt1.20221016
-- snapshot 4bd41a355fa017afa4db86282b90eb67bbf9db59 (Closes: 44297)
-- Revert "Revert "drm: Remove explicit set_scan_out_buffer() from activate()""
-- src/main.c: set ignore_serial_consoles = true (Closes: 39326)
-- bgrt-alt: add bgrt-fallback.png
-- Revert "Fix daemon install ignoring configured runstatedir"
-- Revert "Use standard runstatedir vs custom flag"
+- snapshot 4bd41a355fa017afa4db86282b90eb67bbf9db59 (Closes: 44297).
+- Revert "Revert "drm: Remove explicit set_scan_out_buffer() from activate()"".
+- src/main.c: set ignore_serial_consoles = true (Closes: 39326).
+- bgrt-alt: add bgrt-fallback.png.
+- Revert "Fix daemon install ignoring configured runstatedir".
+- Revert "Use standard runstatedir vs custom flag".
 
 * Mon Feb 28 2022 Oleg Solovyov <mcpain@altlinux.org> 1:0.9.5-alt9
 - bgrt-alt: move text block further
