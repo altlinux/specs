@@ -6,7 +6,7 @@
 
 Name:          gem-puppet
 Version:       8.10.0.39
-Release:       alt0.3
+Release:       alt0.4
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -61,7 +61,7 @@ BuildConflicts: gem(multi_json) >= 2
 BuildConflicts: gem(puppet-resource_api) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rspec-its) >= 2
+BuildConflicts: gem(rspec-its) >= 3
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-i18n) >= 4
 BuildConflicts: gem(rubocop-performance) >= 2
@@ -81,6 +81,7 @@ BuildConflicts: gem(webrick) >= 2
 %ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
 %ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
 %ruby_use_gem_dependency puppet-resource_api >= 2.0.0,puppet-resource_api < 3
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 Requires:      facter
 Requires:      ruby >= 3.1.0
 Requires:      rubygems > 1.3.1
@@ -116,7 +117,7 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       8.10.0.39
-Release:       alt0.3
+Release:       alt0.4
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -149,7 +150,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    doc
 %package       -n gem-puppet-doc
 Version:       8.10.0.39
-Release:       alt0.3
+Release:       alt0.4
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -173,7 +174,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    devel
 %package       -n gem-puppet-devel
 Version:       8.10.0.39
-Release:       alt0.3
+Release:       alt0.4
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
@@ -218,7 +219,7 @@ Conflicts:     gem(multi_json) >= 2
 Conflicts:     gem(puppet-resource_api) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(rspec-its) >= 3
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-i18n) >= 4
 Conflicts:     gem(rubocop-performance) >= 2
@@ -384,6 +385,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.4
+- ! fixed dep to rspec-its gem
+
 * Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.3
 - ! fixed dep to puppet-resource_api gem
 
