@@ -1,7 +1,7 @@
 #set_verify_elf_method none
 
 Name: tesseract
-Version: 5.5.2
+Version: 5.5.3
 Release: alt1
 
 Summary: Tesseract Open Source OCR Engine
@@ -77,7 +77,7 @@ models.
 
 %prep
 %setup
-%patch -p2
+%patch -p1
 %ifarch %e2k
 # LCC autovectorization perform better than these brief SIMD snippets
 sed -i "/CHECK_COMPILE_FLAG/{N;/_OPT/s/=true/=false/}" configure.ac
@@ -118,6 +118,9 @@ rm -I %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Sat Aug 01 2026 Andrey Cherepanov <cas@altlinux.org> 5.5.3-alt1
+- New version.
+
 * Mon Dec 29 2025 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt1
 - New version.
 
