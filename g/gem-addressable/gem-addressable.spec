@@ -5,51 +5,49 @@
 %define        gemname addressable
 
 Name:          gem-addressable
-Version:       2.8.7
+Version:       2.9.0
 Release:       alt1
-Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library
+Summary:       URI Implementation
 Summary(ru_RU.UTF-8): "Адресуемь" как замена стандартного рубимодуля URI
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/sporkmonger/addressable
 Vcs:           https://github.com/sporkmonger/addressable.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 1.0
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
+BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(launchy) >= 2.4.3
 BuildRequires: gem(memory_profiler) >= 0
 BuildRequires: gem(public_suffix) >= 2.0.2
 BuildRequires: gem(rake) >= 12.3.3
-BuildRequires: gem(yard) >= 0
-BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(launchy) >= 3
-BuildConflicts: gem(public_suffix) >= 7.0
-%if_enabled check
-BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(rspec) >= 3.8
 BuildRequires: gem(rspec-its) >= 1.3
-BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(yard) >= 0
+BuildConflicts: gem(launchy) >= 3
+BuildConflicts: gem(public_suffix) >= 8.0
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rspec-its) >= 2
+BuildConflicts: gem(rspec-its) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.2
 Requires:      gem(public_suffix) >= 2.0.2
-Conflicts:     gem(public_suffix) >= 7.0
+Conflicts:     gem(public_suffix) >= 8.0
 Obsoletes:     ruby-addressable < %EVR
 Provides:      ruby-addressable = %EVR
-Provides:      addressable = %EVR
-Provides:      gem(addressable) = 2.8.7
+Provides:      gem(addressable) = 2.9.0
+
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 
 %description
-Addressable is a replacement for the URI implementation that is part of Ruby's
-standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
-(level 4), providing support for IRIs and URI templates.
+Addressable is an alternative implementation to the URI implementation that is
+part of Ruby's standard library. It is flexible, offers heuristic parsing, and
+additionally provides extensive support for IRIs and URI templates.
 
 %description         -l ru_RU.UTF-8
 "Адресуемый" есть замена воплощения URI, который является частью стандартной
@@ -59,22 +57,21 @@ RFC 6570 (уровня 4), поддержиивая IRI и URI шаблоны.
 
 %if_enabled    doc
 %package       -n gem-addressable-doc
-Version:       2.8.7
+Version:       2.9.0
 Release:       alt1
-Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library documentation files
+Summary:       URI Implementation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета addressable
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(addressable) = 2.8.7
+Requires:      gem(addressable) = 2.9.0
 
 %description   -n gem-addressable-doc
-Addressable is a replacement for the URI implementation that is part of Ruby's
-standard library documentation files.
+URI Implementation documentation files.
 
-Addressable is a replacement for the URI implementation that is part of Ruby's
-standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
-(level 4), providing support for IRIs and URI templates.
+Addressable is an alternative implementation to the URI implementation that is
+part of Ruby's standard library. It is flexible, offers heuristic parsing, and
+additionally provides extensive support for IRIs and URI templates.
 
 %description   -n gem-addressable-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета addressable.
@@ -83,35 +80,31 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 
 %if_enabled    devel
 %package       -n gem-addressable-devel
-Version:       2.8.7
+Version:       2.9.0
 Release:       alt1
-Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library development package
+Summary:       URI Implementation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета addressable
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(addressable) = 2.8.7
+Requires:      gem(addressable) = 2.9.0
 Requires:      gem(bigdecimal) >= 0
-Requires:      gem(bundler) >= 1.0
 Requires:      gem(launchy) >= 2.4.3
 Requires:      gem(memory_profiler) >= 0
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 3.8
 Requires:      gem(rspec-its) >= 1.3
-Requires:      gem(simplecov) >= 0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(launchy) >= 3
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(rspec-its) >= 3
 
 %description   -n gem-addressable-devel
-Addressable is a replacement for the URI implementation that is part of Ruby's
-standard library development package.
+URI Implementation development package.
 
-Addressable is a replacement for the URI implementation that is part of Ruby's
-standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
-(level 4), providing support for IRIs and URI templates.
+Addressable is an alternative implementation to the URI implementation that is
+part of Ruby's standard library. It is flexible, offers heuristic parsing, and
+additionally provides extensive support for IRIs and URI templates.
 
 %description   -n gem-addressable-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета addressable.
@@ -148,6 +141,9 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.9.0-alt1
+- ^ 2.8.7 -> 2.9.0
+
 * Mon Jan 20 2025 Pavel Skrylev <majioa@altlinux.org> 2.8.7-alt1
 - ^ 2.8.1 -> 2.8.7
 
