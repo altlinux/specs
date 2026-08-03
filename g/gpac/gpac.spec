@@ -9,7 +9,7 @@ MP4/ISOBMFF capabilities and is popular among video enthusiasts, academic\
 researchers, standardization bodies, and professional broadcasters.
 
 Name: gpac
-Version: 26.02.0
+Version: 26.07.0
 Release: alt1
 Epoch: 1
 
@@ -151,5 +151,8 @@ rm %buildroot%_includedir/%name/00_doxy.h
 %endif
 
 %changelog
+* Mon Aug 03 2026 Ulysses Apokin <ulysses@altlinux.org> 1:26.07.0-alt1
+- New version.
+
 * Tue Apr 21 2026 Ulysses Apokin <ulysses@altlinux.org> 1:26.02.0-alt1
 - Return the package to Sisyphus (ALT #58007).
