@@ -1,5 +1,5 @@
 %define module_name	amneziawg
-%define module_version	1.0.20260329
+%define module_version	3.0.20260731.04
 %define module_release	alt1
 
 %define flavour		for-vm
@@ -63,6 +63,9 @@ install amneziawg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.0.20260731.04-alt1
+- 1.0.20260329 -> 3.0.20260731.04
 
 * Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1.0.20260329-alt1
 - 1.0.20251104 -> 1.0.20260329
