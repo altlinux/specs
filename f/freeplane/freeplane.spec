@@ -2,7 +2,7 @@
 
 Name: freeplane
 Version: 1.13.2
-Release: alt3
+Release: alt4
 
 Summary: Application for Mind Mapping
 Group: Office
@@ -113,6 +113,9 @@ ln -s %_javadir/freeplane/freeplanelauncher.jar %buildroot%_datadir/freeplane/fr
 %_iconsdir/hicolor/scalable/apps/freeplane.svg
 
 %changelog
+* Mon Aug 03 2026 Arseniy Kostevich <faux@altlinux.org> 1.13.2-alt4
+- Fix launcher packaging to avoid NPE (Closes: #60041).
+
 * Thu Apr 30 2026 Arseniy Kostevich <faux@altlinux.org> 1.13.2-alt3
 - Fix docs runtime search
 
