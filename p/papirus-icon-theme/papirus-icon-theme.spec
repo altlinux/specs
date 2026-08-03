@@ -1,7 +1,7 @@
 Name:     papirus-icon-theme
 
-Version:  20250501
-Release:  alt2
+Version:  20260801
+Release:  alt1
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -363,6 +363,9 @@ cp -a Papirus* %buildroot%_iconsdir
 %_iconsdir/Papirus-Light-*
 
 %changelog
+* Mon Aug 03 2026 Kirill Izmestev <felixz@altlinux.org> 20260801-alt1
+- New version 20260801.
+
 * Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 20250501-alt2
 - Make Papirus-Edu file manager icon (Dolphin) match the orange folder.
 
