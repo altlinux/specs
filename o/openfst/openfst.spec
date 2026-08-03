@@ -1,8 +1,8 @@
 %def_with check
 
-%global soversion 26
+%global soversion 27
 
-%global release_date "July 2018"
+%global release_date "March 2026"
 
 %global descr OpenFst is a library for constructing, combining, optimizing,\
 and searching weighted finite-state transducers (FSTs). Weighted\
@@ -26,8 +26,8 @@ finite-state composition, and the best results can be selected by\
 shortest-path algorithms.
 
 Name: openfst
-Version: 1.8.4
-Release: alt2
+Version: 1.8.5
+Release: alt1
 
 Summary: Weighted finite-state transducer library
 License: Apache-2.0
@@ -329,6 +329,9 @@ sed -e '2s/"1" "[[:alpha:]]* [[:digit:]]*"/"1" %release_date/' \
 %_man1dir/pdtshortestpath.1.xz
 
 %changelog
+* Mon Aug 03 2026 Ulysses Apokin <ulysses@altlinux.org> 1.8.5-alt1
+- New version.
+
 * Mon Nov 10 2025 Ulysses Apokin <ulysses@altlinux.org> 1.8.4-alt2
 - Symlink libfst.so moved to -devel package
 
