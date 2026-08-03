@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt14
+Release: alt15
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -284,6 +284,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Mon Aug 03 2026 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt15
+- lightdm.service: Add conflict with kmsconvt@tty1.service
+  (thx Anton Midyukov) (closes: 60058).
+
 * Wed Jun 03 2026 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt14
 - cancel authentication when greeter session stops
 - test launch of fallback greeter
