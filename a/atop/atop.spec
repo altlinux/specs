@@ -5,8 +5,8 @@
 %define _systemddir /usr/lib/systemd
 
 Name: atop
-Version: 2.12.1
-Release: alt2
+Version: 2.13.0
+Release: alt1
 
 Summary: AT Computing's System & Process Monitor
 License: GPL-2.0-or-later
@@ -77,6 +77,9 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Mon Aug 03 2026 Ulysses Apokin <ulysses@altlinux.org> 2.13.0-alt1
+- atop 2.13.0
+
 * Fri May 08 2026 Ulysses Apokin <ulysses@altlinux.org> 2.12.1-alt2
 - Fix Time-of-Check to Time-of-Use error.
 
