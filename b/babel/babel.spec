@@ -10,7 +10,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt8.1
+Release: alt9
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
@@ -35,6 +35,7 @@ BuildRequires: gcc%_gcc_version-c++ gcc%_gcc_version
 BuildRequires: %mpiimpl-devel libltdl7-devel
 BuildRequires: libxml2-devel libparsifal-devel
 BuildRequires: jpackage-utils gnu-getopt
+BuildRequires: xml-commons-apis
 %ifnarch %e2k
 BuildRequires: gcc%_gcc_version-fortran
 %endif
@@ -175,6 +176,7 @@ Group: Development/Java
 BuildArch: noarch
 Requires: lib%name = %EVR
 Requires: java >= 1.5.0
+Requires: xml-commons-apis
 
 %description j
   Babel is a language interoperability tool intended for use by
@@ -268,13 +270,25 @@ This package contains user manual for Babel.
 %setup
 find -name Makefile.in -exec sed 's/-traditional/& -Ubool -Uvector/' -i {} \;
 
+# Disable vendoring xml-apis.jar
+rm -f lib/xml-apis.jar
+sed -i \
+	-e '/xml-apis\.jar/d' \
+	lib/Makefile.am lib/Makefile.in
+sed -i \
+	-e 's|:../lib/xml-apis\.jar|:'"$(build-classpath xml-apis)"'|' \
+	compiler/Makefile.am compiler/Makefile.in
+sed -i \
+	-e 's|:${prefix}/lib/xml-apis\.jar|:%_javadir/xml-apis.jar|' \
+	bin/babel.in
+
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %add_optflags -std=c++14
 %add_optflags -Wno-error=int-conversion -Wno-deprecated
 
 export JAVAPREFIX="%_libexecdir/jvm/java"
-export CLASSPATH=".:$(build-classpath gnu-getopt):$(pwd)/compiler"
+export CLASSPATH=".:$(build-classpath gnu-getopt):$(build-classpath xml-apis):$(pwd)/compiler"
 export JAVACFLAGS="-classpath $CLASSPATH"
 export JAVAFLAGS=""
 export MPI_VENDOR=%mpiimpl
@@ -409,6 +423,9 @@ done
 %_docdir/%name
 
 %changelog
+* Mon Aug 03 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt9
+- Replace vendored xml-apis by using xml-commons-apis (Closes: #60044).
+
 * Mon Mar 31 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt8.1
 - NMU: build with gcc13 (fixes FTBFS on loongarch64)
 
@@ -524,4 +541,3 @@ done
 
 * Fri Apr 17 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus
-
