@@ -6,7 +6,7 @@
 %define _runstatedir /run
 
 Name: kea
-Version: 3.0.3
+Version: 3.2.0
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -18,7 +18,6 @@ Source0: %name-%version.tar
 Source1: kea-dhcp4.service
 Source2: kea-dhcp6.service
 Source3: kea-dhcp-ddns.service
-Source4: kea-ctrl-agent.service
 #Patch: %%name-%%version.patch
 
 Requires: %name-admin
@@ -54,6 +53,8 @@ Summary: Kea shared libraries, LFC, and runstate files used by Kea DHCP server
 Group: System/Servers
 Requires: lib%name = %EVR
 Conflicts: %name < 3.0.0
+# Control Agent was removed upstream in 3.2.0
+Obsoletes: %name-ctrl-agent < %EVR
 
 %description common
 Contains the Lease File Cleanup script, and various
@@ -105,18 +106,6 @@ Requires: %name-common = %EVR
 
 %description dhcp6
 The Kea DHCPv6 Server.
-
-%package ctrl-agent
-Summary: Kea Control Agent - REST service for controlling Kea DHCP server
-Group: System/Servers
-Requires: %name-common = %EVR
-
-%description ctrl-agent
-The Kea Control Agent (CA) is a daemon which exposes a RESTful control
-interface for managing Kea servers. The daemon can receive control commands
-over HTTP and either forward these commands to the respective Kea servers or
-handle these commands on its own. Control Agent is deprecated and will
-be removed from future releases.
 
 %package perfdhcp
 Summary: Kea Optional Utils - perfdhcp
@@ -247,7 +236,6 @@ rm -v %buildroot%_mandir/man8/kea-netconf.8
 install -Dpm 0644 %SOURCE1 %buildroot%_unitdir/kea-dhcp4.service
 install -Dpm 0644 %SOURCE2 %buildroot%_unitdir/kea-dhcp6.service
 install -Dpm 0644 %SOURCE3 %buildroot%_unitdir/kea-dhcp-ddns.service
-install -Dpm 0644 %SOURCE4 %buildroot%_unitdir/kea-ctrl-agent.service
 
 # Start empty lease databases
 mkdir -p %buildroot%_sharedstatedir/kea
@@ -266,7 +254,6 @@ EOF
 
 # change log destination from /var/log/... to STDOUT and enable shortened log format
 sed -i'' 's/"output":.*/"output": "stdout",/;s@// "pattern":\([^,]*\),*@"pattern":\1@' \
-    %buildroot%_sysconfdir/%name/kea-ctrl-agent.conf \
     %buildroot%_sysconfdir/%name/kea-dhcp6.conf \
     %buildroot%_sysconfdir/%name/kea-dhcp4.conf \
     %buildroot%_sysconfdir/%name/kea-dhcp-ddns.conf
@@ -278,11 +265,6 @@ sed -i'' 's/"output":.*/"output": "stdout",/;s@// "pattern":\([^,]*\),*@"pattern
 %pre common
 groupadd -r -f _kea
 useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user" -g _kea _kea >/dev/null 2>&1 ||:
-
-%post ctrl-agent
-%post_systemd kea-ctrl-agent.service
-%preun ctrl-agent
-%preun_systemd kea-ctrl-agent.service
 
 %post dhcp-ddns
 %post_systemd kea-dhcp-ddns.service
@@ -325,12 +307,6 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %_datadir/kea/scripts
 %_sbindir/kea-shell
 %_man8dir/kea-shell.*
-
-%files ctrl-agent
-%_sbindir/kea-ctrl-agent
-%_unitdir/kea-ctrl-agent.service
-%_man8dir/kea-ctrl-agent.*
-%attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-ctrl-agent.conf
 
 %files dhcp-ddns
 %_sbindir/kea-dhcp-ddns
@@ -389,6 +365,11 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.2.0-alt1
+- 3.0.3 -> 3.2.0
+- drop ctrl-agent subpackage (Control Agent removed upstream,
+  use control-socket of type "http" in the daemons instead)
+
 * Mon Mar 30 2026 Anton Farygin <rider@altlinux.org> 3.0.3-alt1
 - 3.0.2 -> 3.0.3 (Fixes: CVE-2026-3608)
 
