@@ -1,6 +1,6 @@
 Name: xwayland-satellite
-Version: 0.8.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Xwayland outside your Wayland
 License: MPL-2.0
@@ -31,6 +31,7 @@ for rootless Xwayland themselves.
 install -vpD %SOURCE2 .cargo/config.toml
 
 %build
+export VERGEN_GIT_DESCRIBE=%version
 %rust_build
 
 %install
@@ -43,6 +44,9 @@ install -Dpm0644 xwayland-satellite.man %buildroot%_man1dir/xwayland-satellite.1
 %_man1dir/xwayland-satellite.1.*
 
 %changelog
+* Mon Aug 03 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.2-alt1
+- Update version.
+
 * Thu Mar 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.8.1-alt2
 - NMU: Fixed man-page packaging (ALT#58263).
 
