@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.3
-Release: alt4
+Release: alt5
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -69,6 +69,7 @@ Patch202: qtbase-wayland-optimize-scroll-operations.patch
 Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
 Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
 Patch205: QTBUG-145310.patch
+Patch206: QT-78a7fc3.diff
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -104,7 +105,7 @@ BuildRequires: libinput-devel liblz4-devel liblzma-devel libmng-devel libmtdev-d
 BuildRequires: libpcre2-devel libproxy-devel libts-devel
 BuildRequires: libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel libzstd-devel-static
+BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
 BuildRequires: libat-spi2-core-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -416,6 +417,7 @@ Requires: %name-common
 %patch203 -p1
 %patch204 -p1
 %patch205 -p1
+%patch206 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -869,6 +871,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Aug 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt5
+- add upstream fix to avoid resetting clipboard (closes: 60071)
+
 * Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt4
 - fix build requires for new libzstd
 
