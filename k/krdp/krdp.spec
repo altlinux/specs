@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.7.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -23,7 +23,7 @@ Requires: qml6(org.kde.kirigamiaddons.formcard)
 Source: %rname-%version.tar
 Patch1: kdebug-503474-avc444.patch
 Patch2: alt-use_nla_security.patch
-
+Patch3: kdebug-521776.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -67,6 +67,7 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 %build
 %K6build
@@ -104,6 +105,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Mon Aug 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
+- add upstream fix for KDEBUG#521776
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 
