@@ -1,9 +1,15 @@
 %global import_path github.com/cilium/cilium
 %global _unpackaged_files_terminate_build 1
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
+
 Name:    cilium
 Version: 1.19.3
-Release: alt2
+Release: alt3
 
 Summary: eBPF-based Networking, Security, and Observability
 License: Apache-2.0
@@ -26,7 +32,12 @@ BuildRequires: buf, protobuf-go, gcc, binutils, glibc-devel, coreutils
 Requires: ipset, iproute2, iptables, libipset-devel, net-tools
 Requires: conntrack-tools, cni-plugins
 Requires: bpftool, libbpf
-Requires: mount, delve, clang, jq, kmod
+Requires: mount, delve, jq, kmod
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+Requires: clang21.1
+%else
+Requires: clang20.1
+%endif
 Requires: ca-certificates
 
 %description
@@ -65,6 +76,7 @@ export GOBIN="$BUILDDIR/bin"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="-X github.com/cilium/cilium/pkg/version.ciliumVersion=%version"
+export CGO_ENABLED=0
 
 %golang_prepare
 # cilium
@@ -78,8 +90,8 @@ SUBDIRS_CILIUM_CONTAINER="cilium-dbg \
 	tools/sysctlfix \
 	plugins/cilium-cni"
 
-for sub in $SUBDIRS_CILIUM_CONTAINER 
-do 
+for sub in $SUBDIRS_CILIUM_CONTAINER
+do
    %golang_build $sub
 done
 
@@ -152,6 +164,10 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_localstatedir/%name/etcd-config.yaml
 
 %changelog
+* Tue Jul 14 2026 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.3-alt3
+- Require compatible clang version for BPF alignchecker
+- Transition from dynamic to static linking.
+
 * Wed May 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt2
 - NMU: Build on loongarch64.
 
