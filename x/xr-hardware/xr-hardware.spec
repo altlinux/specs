@@ -1,19 +1,17 @@
-Name: xr-hardware
-Version: 1.1.1
+Name:    xr-hardware
+Version: 1.1.2
 Release: alt1
 
 Summary: Udev rules files for normal user access to XR input devices
 License: BSL-1.0
-Group: System/Configuration/Hardware
-URL: https://gitlab.freedesktop.org/monado/utilities/xr-hardware
+Group:   System/Configuration/Hardware
+URL:     https://gitlab.freedesktop.org/monado/utilities/xr-hardware
 
 Source: %name-%version.tar
 
 BuildRequires: make
 BuildRequires: python3
-BuildRequires: python3-module-attrs
-BuildRequires: python3-module-black
-BuildRequires: python3-module-flake8
+Requires: udev
 
 BuildArch: noarch
 
@@ -39,6 +37,9 @@ make test
 %_udevrulesdir/70-xrhardware.rules
 
 %changelog
+* Mon Aug 03 2026 Sergey Palcheh <minergenon@altlinux.org> 1.1.2-alt1
+- new version 1.1.2
+
 * Tue Jan 14 2025 Sergey Palcheh <minergenon@altlinux.org> 1.1.1-alt1
 - initial build for ALT Sisyphus
 
