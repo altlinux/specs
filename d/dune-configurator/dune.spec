@@ -25,13 +25,13 @@
 %def_with check
 %endif
 
-%if_with ocaml_bootstrap
+%if 0%{?ocaml_bootstrap}
 %undefine _with_check
 %def_without check
 %endif
 
 Name: dune%subpackagename
-Version: 3.24.1
+Version: 3.24.2
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -49,12 +49,20 @@ BuildRequires: ocaml-csexp-devel
 %endif
 
 %if "%dune_pkg" == "bootstrap"
+# dune's META holds only a deprecated dune.configurator -> dune-configurator
+# redirect, which makes rpm-build-ocaml emit a bogus dune-configurator require
+# (circular with the dune-configurator package). The real dune-configurator
+# findlib package is provided by ocaml-dune-configurator, not by dune, and
+# opam's "dune" package does not depend on it either.
+%add_ocaml_req_skip dune-configurator
 %if_with check
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-spawn-devel
 BuildRequires: ocaml-csexp-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-pp-devel
+BuildRequires: ocaml-ppx_optcomp-devel
+BuildRequires: ocaml-ppx_expect-devel
 %endif
 %package -n emacs-dune
 Summary: Emacs support for Ocaml Dune
@@ -361,6 +369,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.24.2-alt1
+- 3.24.1 -> 3.24.2
+
 * Wed Jul 22 2026 Anton Farygin <rider@altlinux.org> 3.24.1-alt1
 - 3.24.0 -> 3.24.1
 
