@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-webob
-Version: 1.8.10
-Release: alt2
+Version: 1.8.11
+Release: alt1
 
 Summary: WSGI request and response object
 License: MIT
@@ -48,6 +48,9 @@ environment.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 03 2026 Anton Vyatkin <toni@altlinux.org> 1.8.11-alt1
+- New version 1.8.11.
+
 * Fri Jul 24 2026 Anton Vyatkin <toni@altlinux.org> 1.8.10-alt2
 - Fix FTBFS.
 
