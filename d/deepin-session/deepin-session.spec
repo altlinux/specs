@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.18
+Version: 2.0.29
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -85,12 +85,16 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_userunitdir/dde-version-checker.service
 %_userunitdir/dde-xsettings-checker.service
 %_userunitdir/dde-version-checker@quick-login.service
+%_userunitdir/dde-keyring.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.session/
 %_datadir/dsg/configs/org.deepin.dde.session/org.deepin.dde.session.oom-score-adj.json
 
 %changelog
+* Mon Aug 03 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.29-alt1
+- New version 2.0.29.
+
 * Wed Mar 04 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.18-alt1
 - New version 2.0.18.
 - Fixed build on shrinked dqt6.
