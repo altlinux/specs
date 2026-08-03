@@ -1,13 +1,14 @@
 Name:    bino
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: 3D video player
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group:   Video
-Url:     https://github.com/marlam/bino
+URL:     https://bino3d.org
+VCS:     https://github.com/marlam/bino
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -24,7 +25,6 @@ multi-projector setups.
 %setup
 
 %build
-
 %cmake
 %cmake_build
 
@@ -33,20 +33,24 @@ multi-projector setups.
 
 %check
 desktop-file-validate \
-    %buildroot%_datadir/applications/org.bino3d.bino.desktop
+    %buildroot%_desktopdir/org.bino3d.bino.desktop
 appstream-util validate-relax --nonet \
    %buildroot%_datadir/metainfo/org.bino3d.bino.metainfo.xml
 
 %files
 %doc LICENSE.md README.md NEWS.md
 %_bindir/%name
-%_datadir/applications/org.bino3d.bino.desktop
-%_datadir/icons/hicolor/*/apps/org.bino3d.bino.*
+%_desktopdir/org.bino3d.bino.desktop
+%_iconsdir/hicolor/*/apps/org.bino3d.bino.*
 %_datadir/metainfo/org.bino3d.bino.metainfo.xml
+%docdir %_datadir/doc/%name
 %_datadir/doc/%name
-%_man1dir/*
+%_man1dir/%name.1*
 
 %changelog
+* Mon Aug 03 2026 Sergey Palcheh <minergenon@altlinux.org> 2.8-alt1
+- new version 2.8
+
 * Wed May 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.7-alt1
 - new version (2.7)
 
