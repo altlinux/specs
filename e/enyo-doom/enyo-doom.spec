@@ -1,5 +1,5 @@
 Name: enyo-doom
-Version: 1.1.1
+Version: 2.0.2
 Release: alt1
 Summary: Frontend for Doom engines
 Summary(ru_RU.UTF-8): Оболочка для движков Doom
@@ -56,5 +56,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Aug  3 2026 Artyom Bystrov <arbars@altlinux.org> 2.0.2-alt1
+- Update to last version
+
 * Fri Feb 28 2020 Artyom Bystrov <arbars@altlinux.org> 1.1.1-alt1
 - initial build for ALT Sisyphus
