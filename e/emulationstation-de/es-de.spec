@@ -4,8 +4,8 @@
 %define _localedir %_datadir/locale
 Summary: A cross-platform graphical front-end for emulators - desktop edition
 Name: emulationstation-de
-Version: 3.4.0
-Release: alt2
+Version: 3.4.1
+Release: alt1
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -112,6 +112,9 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Mon Aug  3 2026 Artyom Bystrov <arbars@altlinux.org> 3.4.1-alt1
+- Update to new version
+
 * Mon Dec 29 2025 Artyom Bystrov <arbars@altlinux.org> 3.4.0-alt2
 - Remove unneded pachage from BR
 
