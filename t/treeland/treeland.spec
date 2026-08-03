@@ -5,7 +5,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.8.16
+Version: 0.8.17
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -261,6 +261,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/libwaylib-wlroots.so
 
 %changelog
+* Mon Aug 03 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.17-alt1
+- New version 0.8.17.
+
 * Mon Jul 27 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.16-alt1
 - New version 0.8.16.
 - Added waylib-wlroots subpackages.
