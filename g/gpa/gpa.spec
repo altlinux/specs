@@ -1,6 +1,6 @@
 Name: gpa
 Version: 0.11.1
-Release: alt1
+Release: alt2
 
 Summary: The GNU Privacy Assistant
 License: %gpl3plus
@@ -13,13 +13,12 @@ Source0: %name-%version.tar
 Source1: gpa16.png
 Source2: gpa32.png
 Patch1: gpa-0.9.0-desktop.patch
-
-Requires: gnupg
-
+Patch2: gpa-0.11.1-keylist-view-actions.patch
+Patch3: gpa-0.11.1-key-generation-completion.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: gnupg libassuan-devel libgtk+3-devel subversion zlib-devel
+BuildRequires: libassuan-devel libgtk+3-devel subversion zlib-devel
 
 # libgpgme-devel removed from buildreq'ed line and added with version req:
 BuildRequires: libgpgme-devel >= 1.2.0
@@ -33,6 +32,8 @@ management.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -56,6 +57,10 @@ install -pD -m644 %_sourcedir/gpa32.png %buildroot%_niconsdir/gpa.png
 %_man1dir/*
 
 %changelog
+* Mon Aug 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.11.1-alt2
+- NMU: fix keylist view actions (closes: 60009)
+- NMU: fix key generation ending (closes: 60011)
+
 * Thu Jul 23 2026 Sergey V Turchin <zerg@altlinux.org> 0.11.1-alt1
 - NMU: new version (closes: 59823)
 
