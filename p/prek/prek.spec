@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name prek
 
 %def_with check
 
 Name: prek
-Version: 0.4.5
+Version: 0.4.12
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
@@ -16,7 +17,10 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
+BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-rust
+BuildRequires: rpm-build-python3
+BuildRequires: python3(maturin)
 
 %if_with check
 BuildRequires: git
@@ -31,27 +35,39 @@ prek is a reimagined version of pre-commit, built in Rust. It is
 designed to be a faster, dependency-free and drop-in alternative for it,
 while also providing some additional long-requested features.
 
+%package -n python3-module-%pypi_name
+Summary: Python bindings for %name
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description -n python3-module-%pypi_name
+This package contains python bindings for %name.
+
 %prep
 %setup -a1
 %rust_prep
 
 %build
-%rust_build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%pyproject_build
+./target/release/%name util generate-shell-completion bash > %name.bash
+./target/release/%name util generate-shell-completion fish > %name.fish
+./target/release/%name util generate-shell-completion zsh > %name.zsh
 
 %install
-%rust_install
-
-# generate shell completions and strip buildroot path
-COMPLETE=bash %buildroot%_bindir/%name | sed 's|%buildroot||g' > %name.bash
-COMPLETE=fish %buildroot%_bindir/%name | sed 's|%buildroot||g' > %name.fish
-COMPLETE=zsh %buildroot%_bindir/%name | sed 's|%buildroot||g' > %name.zsh
+%pyproject_install
 install -Dm 644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
 install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 
 %check
+# snapshot test fails on i586 due to hash map ordering
+%ifarch %ix86
+%define skip_ix86_tests --skip hook_builder_build_fills_and_merges_attributes
+%endif
+
 # most tests require network access, run only unit tests
-%rust_test --bin prek -- --skip http
+%rust_test --bin prek -- --skip http %{?skip_ix86_tests}
 
 %files
 %doc CHANGELOG.md CONTRIBUTING.md README.md
@@ -60,7 +76,15 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 
+%files -n python3-module-%pypi_name
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+
 %changelog
+* Mon Aug 03 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.4.12-alt1
+- Updated to version 0.4.12.
+- Added python3-module-prek subpackage (closes: #59643).
+
 * Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.4.5-alt1
 - Updated to version 0.4.5.
 
