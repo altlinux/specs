@@ -6,12 +6,11 @@
 %define sover_qt 3
 %define libappstream libappstream%sover
 %define libappstream_compose libappstream-compose%sover_compose
-%define libappstreamqt5 libappstreamqt5_%sover_qt
 %define libappstreamqt6 libappstreamqt6_%sover_qt
 
 Name:    appstream
-Version: 1.0.6
-Release: alt2
+Version: 1.1.5
+Release: alt1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -21,8 +20,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Url:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 # VCS:   https://github.com/ximion/appstream
 Source:  appstream-%version.tar
-Patch1: alt-qt5.patch
-Patch2: alt-missing-include.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -45,7 +42,6 @@ BuildRequires: protobuf-compiler
 BuildRequires: daps
 %endif
 BuildRequires: qt6-base-devel qt6-tools
-BuildRequires: qt5-base-devel qt5-tools
 BuildRequires: xmlto
 BuildRequires: gtk-doc
 BuildRequires: libsoup-devel
@@ -59,6 +55,10 @@ BuildRequires: libpango-devel
 BuildRequires: librsvg-devel
 BuildRequires: libzstd-devel
 BuildRequires: gi-docgen
+BuildRequires: libfyaml-devel
+BuildRequires: libblake3-devel
+BuildRequires: bash-completion
+BuildRequires: docbook5-style-xsl
 
 #Requires: appstream-data
 
@@ -125,16 +125,6 @@ Obsoletes: %name-devel < %EVR
 %description -n libappstream-devel
 %summary.
 
-%package -n %libappstreamqt5
-Summary: Qt bindings for %name
-Group: System/Libraries
-Requires: %name
-Provides: %name-qt = %EVR
-Obsoletes: %name-qt < %EVR
-
-%description -n %libappstreamqt5
-%summary.
-
 %package -n %libappstreamqt6
 Summary: Qt bindings for %name
 Group: System/Libraries
@@ -143,19 +133,12 @@ Requires: %name
 %description -n %libappstreamqt6
 %summary.
 
-%package -n libappstream-qt-devel
+%package -n libappstream-qt6-devel
 Summary: Development files for %name-qt bindings
 Group: Development/KDE and QT
 Provides: %name-qt-devel = %EVR
 Obsoletes: %name-qt-devel < %EVR
-
-%description -n libappstream-qt-devel
-%summary.
-
-%package -n libappstream-qt6-devel
-Summary: Development files for %name-qt bindings
-Group: Development/KDE and QT
-
+Obsoletes: libappstream-qt-devel < %EVR
 %description -n libappstream-qt6-devel
 %summary.
 
@@ -169,8 +152,6 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch1 -p1 -b .qt
-%patch2 -p1 -b .inc
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i 's/fromUtf8(res)/fromUtf8((gchar*)res)/' qt/*.cpp
@@ -178,14 +159,7 @@ find -name '*.cpp' -type f -exec \
 	sed -E -i 's/g_autofree (gchar \**)\*/g_autofree_edg(\1) /' {} \;
 sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
 %endif
-# prepare qt5 build
-cp -ar qt/cmake/AppStreamQt{,6}Config.cmake.in
-cp -ar qt/cmake/AppStreamQt{,6}ConfigVersion.cmake.in
-cat qt/cmake/AppStreamQt5Config.cmake.in >qt/cmake/AppStreamQtConfig.cmake.in
-cat qt/cmake/AppStreamQt5ConfigVersion.cmake.in >qt/cmake/AppStreamQtConfigVersion.cmake.in
-sed -i 's|libAppStreamQt|libAppStreamQt6|g' qt/cmake/AppStreamQt6Config.cmake.in
-cp -ar qt qt5
-sed -i 's|qt-versions|qt-versions5|' qt5/meson.build
+sed -i "s|'AppStreamQt'|'AppStreamQt6'|" qt/meson.build
 
 %build
 %meson -Dqt=true \
@@ -209,14 +183,14 @@ touch %buildroot/var/cache/app-info/cache.watch
 rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
 pushd %buildroot/%_libdir/cmake/
-cp -ar AppStreamQt5 AppStreamQt
-mv AppStreamQt/AppStreamQt{5,}Config.cmake
-mv AppStreamQt/AppStreamQt{5,}ConfigVersion.cmake
-sed -i 's|AppStreamQt5|AppStreamQt|g' AppStreamQt/AppStreamQtConfig.cmake
-sed -i 's|AppStreamQt|AppStreamQt5|g' AppStreamQt/AppStreamQtConfig.cmake
+cp -ar AppStreamQt6 AppStreamQt
+mv AppStreamQt6/AppStreamQt{,6}Config.cmake
+mv AppStreamQt6/AppStreamQt{,6}ConfigVersion.cmake
+sed -i 's|AppStreamQt|AppStreamQt6|g' AppStreamQt6/AppStreamQt6Config.cmake
+sed -i 's|libAppStreamQt|libAppStreamQt6|g' AppStreamQt/AppStreamQtConfig.cmake
 popd
-cp -ar %buildroot/%_includedir/AppStreamQt5 %buildroot/%_includedir/AppStreamQt
-ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
+cp -ar %buildroot/%_includedir/AppStreamQt6 %buildroot/%_includedir/AppStreamQt
+ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 
 %find_lang %name
 
@@ -238,6 +212,7 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_man1dir/appstreamcli.1.*
 %_datadir/gettext/its/metainfo.*
 %_datadir/metainfo/org.freedesktop.appstream.cli.*.xml
+%_datadir/bash-completion/completions/*appstream*
 
 %files -n %libappstream
 %_libdir/libappstream.so.*
@@ -252,24 +227,16 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_libdir/pkgconfig/appstream.pc
 %_datadir/gir-1.0/AppStream-1.0.gir
 
-%files -n %libappstreamqt5
-%_libdir/libAppStreamQt5.so.*
-%_libdir/libAppStreamQt5.so.%sover_qt
 %files -n %libappstreamqt6
 %_libdir/libAppStreamQt6.so.*
 %_libdir/libAppStreamQt6.so.%sover_qt
 
-%files -n libappstream-qt-devel
-%_includedir/AppStreamQt/
-%_includedir/AppStreamQt5/
-%_libdir/cmake/AppStreamQt/
-%_libdir/cmake/AppStreamQt5/
-%_libdir/libAppStreamQt5.so
-%_libdir/libAppStreamQt.so
-
 %files -n libappstream-qt6-devel
+%_includedir/AppStreamQt/
 %_includedir/AppStreamQt6/
+%_libdir/cmake/AppStreamQt/
 %_libdir/cmake/AppStreamQt6/
+%_libdir/libAppStreamQt.so
 %_libdir/libAppStreamQt6.so
 
 %files doc
@@ -296,6 +263,9 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Thu Jul 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.5-alt1
+- NMU: new version
+
 * Tue Jul 21 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt2
 - Fix FTBFS (see also: ALT #59885).
 
