@@ -7,7 +7,7 @@
 %def_enable obex
 %def_enable btpclient
 # since 5.44 the following tools marked as deprecated:
-# hciattach hciconfig hcitool hcidump rfcomm sdptool ciptool gatttool
+# hciattach hciconfig hcitool rfcomm sdptool ciptool gatttool
 %def_enable deprecated
 %def_enable experimental
 %ifarch %e2k %ix86 %arm mipsel
@@ -17,8 +17,8 @@
 %endif
 
 Name: bluez
-Version: 5.86
-Release: alt3
+Version: 5.87
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -156,7 +156,7 @@ export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 %install
 %makeinstall_std
 %{?_enable_deprecated:install -m755 attrib/gatttool %buildroot%_bindir/}
-%{?_enable_btpclient:install -m755 tools/btpclient %buildroot%_bindir/}
+%{?_enable_btpclient:install -m755 client/btpclient/{btpclient,btpclientctl} %buildroot%_bindir/}
 %{?_enable_obex:install -m755 tools/obexctl %buildroot%_bindir/}
 install -m755 tools/bneptest %buildroot%_bindir/
 install -m755 tools/btmgmt %buildroot%_bindir/
@@ -222,7 +222,6 @@ fi
 %_bindir/gatttool
 %_bindir/hciattach
 %_bindir/hciconfig
-%_bindir/hcidump
 %_bindir/hcitool
 %_bindir/rfcomm
 %_bindir/sdptool
@@ -247,6 +246,7 @@ fi
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man5dir/*.5*
+%_man7dir/btsnoop.7*
 %_man7dir/hci.7*
 %_man7dir/iso.7*
 %_man7dir/l2cap.7*
@@ -263,6 +263,7 @@ fi
 %if_enabled btpclient
 %files btpclient
 %_bindir/btpclient
+%_bindir/btpclientctl
 %endif
 
 %files mpris-proxy
@@ -281,6 +282,11 @@ fi
 %endif
 
 %changelog
+* Mon Aug 03 2026 L.A. Kostis <lakostis@altlinux.ru> 5.87-alt1
+- 5.87.
+- Fix btpclient install.
+- Remove legacy hcidump (upstream decision).
+
 * Wed Apr 29 2026 Valery Inozemtsev <shrek@altlinux.ru> 5.86-alt3
 - revert e73bf58, see https://github.com/bluez/bluez/issues/1896
 
