@@ -4,7 +4,7 @@
 
 Name:    python3-module-%srcname
 Version: 3.13.1
-Release: alt1
+Release: alt1.1
 
 Summary: A copy of the `crypt` module that was removed in Python 3.13
 
@@ -53,11 +53,14 @@ Unix passwords with a dictionary.
 %files
 %doc *.rst
 %python3_sitelibdir/__pycache__
-%python3_sitelibdir/_crypt_r.cpython-*.so
+%python3_sitelibdir/_crypt_r.abi3.so
 %python3_sitelibdir/crypt.py
 %python3_sitelibdir/crypt_r.py
 %python3_sitelibdir/crypt_r-%version.dist-info
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.1-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Wed Jul 30 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.1-alt1
 - Initial build for Sisyphus.

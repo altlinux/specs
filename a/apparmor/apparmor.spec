@@ -11,7 +11,7 @@
 
 Name: apparmor
 Version: 4.1.7
-Release: alt1
+Release: alt1.1
 
 Summary: Name-based Mandatory Access Control
 
@@ -284,7 +284,7 @@ make -C profiles check-parser
 
 %files -n python3-module-libapparmor
 %python3_sitelibdir/LibAppArmor.py
-%python3_sitelibdir/_LibAppArmor.cpython-3*.so
+%python3_sitelibdir/_LibAppArmor.abi3.so
 %python3_sitelibdir/__pycache__/LibAppArmor.cpython-3*.pyc
 %python3_sitelibdir/LibAppArmor-%version-py3*.egg-info
 %endif
@@ -296,6 +296,9 @@ make -C profiles check-parser
 %endif
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 4.1.7-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Sun Mar 15 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.7-alt1
 - New version 4.1.7.
 

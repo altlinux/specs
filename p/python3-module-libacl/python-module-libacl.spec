@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
@@ -50,10 +50,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files
 %doc *.md doc/html
-%python3_sitelibdir/posix1e.cpython-*.so
+%python3_sitelibdir/posix1e.abi3.so
 %python3_sitelibdir/pylibacl-%version.dist-info
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.7.3-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.3-alt1
 - Automatically updated to 0.7.3.
 

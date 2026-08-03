@@ -3,7 +3,7 @@
 
 Name: libtalloc
 Version: 2.4.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The talloc library
@@ -84,7 +84,7 @@ make test
 
 %files -n python3-module-talloc
 %_libdir/libpytalloc-util.cpython*.so.*
-%python3_sitelibdir/talloc.cpython*.so
+%python3_sitelibdir/talloc.abi3.so
 
 %files -n python3-module-talloc-devel
 %_includedir/pytalloc.h
@@ -92,6 +92,9 @@ make test
 %_libdir/libpytalloc-util.cpython*.so
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1:2.4.3-alt1.1
+- NMU: pack *.abi3.so talloc extension module instead of *.cpython-*.so
+
 * Sat Sep 13 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:2.4.3-alt1
 - Update to latest release for samba-4.22
 

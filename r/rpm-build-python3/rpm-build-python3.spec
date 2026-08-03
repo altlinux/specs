@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.29
+Version: 0.1.30
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -25,6 +25,11 @@ Requires: %_rpmlibdir/python3-site-packages-files.req.list
 
 # For convenience of the developers:
 Requires: tests-for-installed-python3-pkgs
+
+# process_so
+Requires: python3-stable_abi
+# for tests
+BuildRequires: python3-stable_abi
 
 Conflicts: python3 < 3.5
 
@@ -82,6 +87,8 @@ install -pD -m0755 python3.prov.py -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.prov.files -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.req -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.req.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 process_so.py -t %buildroot%_rpmlibdir/
+install -pD -m0755 process_so.py  %buildroot%_rpmlibdir/brp.d/process_so.py
 install -pD -m0755 python3.req.constraint.py -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.req.files -t %buildroot%_rpmlibdir/
 install -pD -m0755 python3.compileall.py -t %buildroot%_rpmlibdir/
@@ -92,6 +99,7 @@ install -pD -m0755 brp-bytecompile_python3 -T %buildroot%_rpmlibdir/brp.d/096-by
 # It's like brp.d/128-hardlink_pyo_pyc.brp from rpm-build (but for python3-3.5):
 install -pD -m0755 brp-hardlink_opt_pyc -T %buildroot%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
 install -pD -m0755 brp-fix_python3_site-packages_location -T %buildroot%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
+install -pD -m0755 brp-check_python3_abi.py -T %buildroot%_rpmlibdir/brp.d/256-check_python3_abi.brp
 #install -pd -m0755 %buildroot%python_tooldir/rpm-build
 #install -pD -m0644 bdist_altrpm.py -t %buildroot%_libdir/python%__python_version/distutils/command/
 #install -pD -m0755 tools/*py -t %buildroot%python_tooldir/rpm-build
@@ -115,6 +123,9 @@ pushd %buildroot/%_rpmlibdir
 "$rpm_builddir"/test_check-provs-importable.sh
 popd
 
+# Run additional tests, requires only python3 stdlib
+python3 -m unittest test_extensions.py --verbose
+
 %files -n rpm-macros-python3
 %_rpmmacrosdir/python3
 %_rpmmacrosdir/python3.env
@@ -128,10 +139,14 @@ popd
 %_rpmlibdir/brp.d/096-bytecompile_python3.brp
 %_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
 %_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
+%_rpmlibdir/brp.d/process_so.py
+%_rpmlibdir/brp.d/256-check_python3_abi.brp
 %_rpmlibdir/python3.compileall.py
 %_rpmlibdir/python3.req.py
 %_rpmlibdir/python3.req.constraint.py
 %_rpmlibdir/python3.prov.py
+%_rpmlibdir/process_so.py
+%_rpmlibdir/__pycache__/process_so.*.pyc
 
 %files -n tests-for-installed-python3-pkgs
 %_rpmlibdir/check-python3-provs-importable
@@ -139,6 +154,17 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Sun Jul 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.30-alt1
+- Implement new 256-check_python3_abi.brp script (thx Ivan Zakharyaschev)
+- Implement %%_python3_limited_api
+- Implement %%python3_stable_ABI_dep
+- Implement %%_python3_verify_abi
+- Implement %%_python3_modules_rename (thx Grigory Ustinov)
+- Form ABI dependency taking into account required symbols and module ABI-suffix (thx imz)
+- Provide new tests for C-extension modules for:
+    + python3.req.py
+    + 256-check_python3_abi.brp
+
 * Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.29-alt1
 - Form provs/reqs with python3 submajor suffix according to PYTHON3_STANDALONE (thx Ivan Zakharyaschev)
 - Make python3.{req,prov}.file compatible with any python3 version

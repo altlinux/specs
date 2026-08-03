@@ -101,7 +101,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3%{?_python3_standalone}
 Version: %{pybasever}.6
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -174,6 +174,10 @@ Patch1007: python3-sslv2-compat.patch
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
 
+
+# Include headers even if Py_LIMITED_API is turned on
+Patch1012: python3-limited_api-missing_headers.patch
+
 # ======================================================
 # Additional metadata, and subpackages
 # ======================================================
@@ -187,6 +191,11 @@ Provides: python(abi) = %pybasever
 # if a new weird arch-ABI arises, at least, we'll have
 # a weird suffix here, not coinciding with another existing one.)
 Provides: %python3_ABI_dep
+
+# This dependency should be satisfied only by the main one
+# python3
+#{?!_python3_standalone:Provides: %python3_stable_ABI_dep}
+%{?!_python3_standalone:Provides: python3-ABI%{?_is_libsuff:(%{_libsuff}bit)} == %{pybasever}}
 
 Requires: %name-base = %EVR
 
@@ -353,6 +362,14 @@ and bundled module library in the HTML format.
 и распространяемой с ним библиотеке модулей, в формате HTML.
 %endif
 
+%package stable_abi
+Summary: Provide list of symbols from python3 Stable ABI
+Group: Development/Python3
+BuildArch: noarch
+
+%description stable_abi
+%summary.
+
 %prep
 %setup -n python3-%version
 
@@ -381,6 +398,8 @@ rm -r Modules/_decimal/libmpdec || exit 1
 %patch1007 -p2
 
 %patch1011 -p2
+
+%patch1012 -p2
 
 %ifarch %e2k
 # add e2k arch
@@ -714,6 +733,10 @@ rm -v %buildroot/%_libdir/libpython%pybasever%pyabi.a
     rm -rf %buildroot/%_libdir/pkgconfig/python3.pc
     rm -rf %buildroot/%_libdir/pkgconfig/python3-embed.pc
 %endif
+
+
+mkdir -p %buildroot%_rpmlibdir
+install Misc/stable_abi.toml %buildroot%_rpmlibdir/python3.%{submajor}_stable_abi.toml
 
 %check
 # ALT#32008:
@@ -1103,7 +1126,15 @@ $(pwd)/python -m test.regrtest \
 %doc html/*
 %endif
 
+%files stable_abi
+%_rpmlibdir/python3.%{submajor}_stable_abi.toml
+
 %changelog
+* Fri Jul 10 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.6-alt2
+- Packed stable_abi.toml inside new subpackage.
+- Provided %%python3_stable_ABI_dep.
+- Provided required headers even with Py_LIMITED_API turned on.
+
 * Wed Jul 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.14.6-alt1
 - Updated to upstream 3.14.6.
 

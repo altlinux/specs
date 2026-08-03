@@ -1,9 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+# Set Py_LIMITED_API to the running python3 version
+%set_python3_limited_api
+
 Name:    blueman
 Version: 2.4.6
-Release: alt3
+Release: alt3.1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
 License: GPL-3.0-or-later
@@ -104,6 +107,9 @@ echo 'enable blueman-mechanism.service' >%buildroot%_presetdir/80-blueman.preset
 %_sysconfdir/xdg/autostart/blueman.desktop
 
 %changelog
+* Thu Jul 23 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 2.4.6-alt3.1
+- NMU: turn on Py_LIMITED_API
+
 * Wed Apr 29 2026 Ivan Khanas <xeno@altlinux.org> 2.4.6-alt3
 - Fix(blueman-adapters): show actionable no-adapter dialog.
 

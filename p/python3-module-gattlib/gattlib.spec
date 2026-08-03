@@ -2,7 +2,7 @@
 
 Name: python3-module-gattlib
 Version: 0.20150805
-Release: alt3
+Release: alt3.1
 
 Summary: Python library to access Bluetooth LE devices
 License: BSD
@@ -35,10 +35,13 @@ sed -i -e "s:@PY3VER@:%{python_version_nodots python3}:g" setup.py
 %python3_install
 
 %files
-%python3_sitelibdir/gattlib.cpython-3*.so
+%python3_sitelibdir/gattlib.abi3.so
 %python3_sitelibdir/gattlib-%version-*-info
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.20150805-alt3.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.20150805-alt3
 - Fix building with python3.13.
 

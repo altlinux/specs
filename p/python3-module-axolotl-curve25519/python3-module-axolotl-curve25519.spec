@@ -2,7 +2,7 @@
 
 Name:	 python3-module-axolotl-curve25519
 Version: 0.4.1.post2
-Release: alt3
+Release: alt3.1
 
 Summary: python wrapper for curve25519 library with ed25519 signatures
 
@@ -34,10 +34,13 @@ code was pulled from libaxolotl-android.
 # no tests suite
 
 %files
-%python3_sitelibdir/%modulename.cpython-*.so
+%python3_sitelibdir/%modulename.abi3.so
 %python3_sitelibdir/python_%modulename-%version-py*.egg-info/
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.4.1.post2-alt3.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.1.post2-alt3
 - Fixed FTBFS.
 

@@ -5,7 +5,7 @@
 
 Name: libtevent
 Version: 0.16.2
-Release: alt1
+Release: alt1.1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -85,11 +85,14 @@ make test < /dev/null
 %_pkgconfigdir/tevent.pc
 
 %files -n python3-module-tevent
-%python3_sitelibdir/_tevent.cpython*.so
+%python3_sitelibdir/_tevent.abi3.so
 %python3_sitelibdir/tevent.py
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.16.2-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Sun Sep 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.16.2-alt1
 - New version for samba-4.22
 

@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: This repository provides python3 bindings for the LXC container API.
 
@@ -35,10 +35,13 @@ package contains the Python3 binding for LXC.
 %files
 %doc README.md examples COPYING
 %python3_sitelibdir/%oname
-%python3_sitelibdir/_lxc.cpython*.so
+%python3_sitelibdir/_lxc.abi3.so
 %python3_sitelibdir/python3_lxc-%version.dist-info
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 5.0.0-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 

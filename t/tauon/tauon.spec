@@ -5,7 +5,7 @@
 
 Name: tauon
 Version: 11.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Play your music with style
 License: GPL-3.0-or-later
@@ -145,11 +145,14 @@ install -Dm755 extra/tauonmb.sh %buildroot%_bindir/tauon
 %_iconsdir/hicolor/scalable/apps/tauonmb.svg
 %_iconsdir/hicolor/symbolic/apps/tauonmb-symbolic.svg
 %python3_sitelibdir/%name/
-%python3_sitelibdir/phazor.cpython*.so
-%python3_sitelibdir/phazor-pw.cpython*.so
+%python3_sitelibdir/phazor.abi3.so
+%python3_sitelibdir/phazor-pw.abi3.so
 %python3_sitelibdir/%{pyproject_distinfo tauon_music_box}
 
 %changelog
+* Thu Jul 23 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 11.1.1-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Wed Jul 22 2026 Nikolay Strelkov <snk@altlinux.org> 11.1.1-alt1
 - New version 11.1.1.
 

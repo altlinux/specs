@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.6
-Release: alt1
+Release: alt1.1
 
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
@@ -58,10 +58,13 @@ sed -i "s/if .--inplace. in sys.argv:/if True:/" setup.py
 %doc LICENSE AUTHORS.md CHANGELOG.md *.rst examples
 %python3_sitelibdir/__pycache__
 %python3_sitelibdir/%oname-%version.dist-info
-%python3_sitelibdir/%oname.cpython*.so
+%python3_sitelibdir/%oname.abi3.so
 %python3_sitelibdir/test_pycosat.py
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.6-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.6-alt1
 - Automatically updated to 0.6.6.
 - Build with check.

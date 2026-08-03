@@ -2,7 +2,7 @@
 
 Name: python3-module-%mname
 Version: 1.0.25.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface for smbclient
 
@@ -32,11 +32,14 @@ CFLAGS=-I/usr/include/samba-4.0/ %pyproject_build
 
 %files
 %doc README.md NEWS
-%python3_sitelibdir/_smbc.cpython*.so
+%python3_sitelibdir/_smbc.abi3.so
 %python3_sitelibdir/%mname
 %python3_sitelibdir/pysmbc-%version.dist-info
 
 %changelog
+* Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.25.1-alt1.1
+- NMU: pack *.abi3.so extension module instead of *.cpython-*.so
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.25.1-alt1
 - Build new version.
 
