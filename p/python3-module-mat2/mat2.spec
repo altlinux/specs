@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name mat2
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 License: LGPL-3.0
 Group:   Development/Python3
@@ -53,9 +54,13 @@ metadata.
 %_datadir/man/man1/%pypi_name.1.xz
 %python3_sitelibdir/lib%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/doc
 %doc *.md LICENSE
 
 %changelog
+* Wed Aug 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.0-alt1
+- 0.14.0 -> 0.15.0
+
 * Mon Jun 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt2
 - added libwebp-pixbuf-loader depencety (ALT #59668)
 
