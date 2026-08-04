@@ -5,7 +5,7 @@
 %define        gemname sneakers
 
 Name:          gem-sneakers
-Version:       2.12.0
+Version:       2.12.0.158
 Release:       alt1
 Summary:       Fast background processing framework for Ruby and RabbitMQ
 License:       MIT
@@ -60,22 +60,23 @@ Requires:      gem(thor) >= 0
 Conflicts:     gem(serverengine) >= 3
 Conflicts:     gem(bunny) >= 3
 Conflicts:     gem(concurrent-ruby) >= 2
-Provides:      gem(sneakers) = 2.12.0
+Provides:      gem(sneakers) = 2.12.0.158
 
+%ruby_use_gem_version sneakers:2.12.0.158
 
 %description
 Fast background processing framework for Ruby and RabbitMQ
 
 
 %package       -n sneakers
-Version:       2.12.0
+Version:       2.12.0.158
 Release:       alt1
 Summary:       Fast background processing framework for Ruby and RabbitMQ executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета sneakers
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(sneakers) = 2.12.0
+Requires:      gem(sneakers) = 2.12.0.158
 
 %description   -n sneakers
 Fast background processing framework for Ruby and RabbitMQ executable(s).
@@ -86,14 +87,14 @@ Fast background processing framework for Ruby and RabbitMQ executable(s).
 
 %if_enabled    doc
 %package       -n gem-sneakers-doc
-Version:       2.12.0
+Version:       2.12.0.158
 Release:       alt1
 Summary:       Fast background processing framework for Ruby and RabbitMQ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sneakers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sneakers) = 2.12.0
+Requires:      gem(sneakers) = 2.12.0.158
 
 %description   -n gem-sneakers-doc
 Fast background processing framework for Ruby and RabbitMQ documentation files.
@@ -105,14 +106,14 @@ Fast background processing framework for Ruby and RabbitMQ documentation files.
 
 %if_enabled    devel
 %package       -n gem-sneakers-devel
-Version:       2.12.0
+Version:       2.12.0.158
 Release:       alt1
 Summary:       Fast background processing framework for Ruby and RabbitMQ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sneakers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sneakers) = 2.12.0
+Requires:      gem(sneakers) = 2.12.0.158
 Requires:      gem(ruby-prof) >= 0
 Requires:      gem(rabbitmq_http_api_client) >= 0
 Requires:      gem(redis) >= 0
@@ -161,6 +162,7 @@ Fast background processing framework for Ruby and RabbitMQ development package.
 %files         -n sneakers
 %doc README.md
 %_bindir/sneakers
+%_logdir/%gemname
 
 %if_enabled    doc
 %files         -n gem-sneakers-doc
@@ -175,5 +177,9 @@ Fast background processing framework for Ruby and RabbitMQ development package.
 
 
 %changelog
+* Wed Aug 05 2026 Pavel Skrylev <majioa@altlinux.org> 2.12.0.158-alt1
+- ^ 2.12.0 -> 2.12.0p158
+- + log folder link
+
 * Tue Apr 23 2024 Pavel Skrylev <majioa@altlinux.org> 2.12.0-alt1
 - + packaged gem with Ruby Policy 2.0
