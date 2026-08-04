@@ -30,7 +30,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -347,6 +347,15 @@ LookAndFeelPackage=org.basealt.altoslight.desktop
 DefaultLightLookAndFeel=org.basealt.altoslight.desktop
 DefaultDarkLookAndFeel=org.basealt.altosdark.desktop
 __EOF__
+# apply kde settings into system config file
+mkdir -p %buildroot/%_sysconfdir/firsttime.d/
+cat <<__EOF__ >%buildroot/%_sysconfdir/firsttime.d/%{theme}-kde-settings.sh
+#!/bin/sh
+if [ -f /etc/xdg/kdeglobals -a -f %_sysconfdir/skel/.config/kdeglobals ] ; then
+    qmergeinifiles /etc/xdg/kdeglobals %_sysconfdir/skel/.config/kdeglobals ||:
+fi
+__EOF__
+chmod 0755 %buildroot/%_sysconfdir/firsttime.d/%{theme}-kde-settings.sh
 # disable annoing autostart
 mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
 for n in \
@@ -467,6 +476,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_sysconfdir/skel/.config/autostart
 %_sysconfdir/skel/.config/kdeglobals
 %_sysconfdir/skel/.local/share/applications
+%_sysconfdir/firsttime.d/%{theme}-kde-settings.sh
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -511,6 +521,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Aug 03 2026 Sergey V Turchin <zerg at altlinux dot org> 11.4.0-alt2
+- apply kde global settings at first run
+
 * Fri Jun 05 2026 Sergey V Turchin <zerg at altlinux dot org> 11.4.0-alt1
 - clear status
 - set RELEASE_TYPE stable for releases
