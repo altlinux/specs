@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: Access large language models from the command-line
@@ -52,8 +52,7 @@ on your own machine.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=-Wignore \
-    -k 'not (test_gpt4o_mini_sync_and_async or test_embed_multi_files_encoding)'
+%pyproject_run_pytest -vra
 
 %files
 %_bindir/llm
@@ -61,6 +60,9 @@ on your own machine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.32-alt1
+- Updated to 0.32.
+
 * Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.31-alt1
 - Updated to 0.31.
 

@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 3.39
+Version: 4.1.1
 Release: alt1
 
 Summary: Python CLI utility and library for manipulating SQLite databases
@@ -21,12 +21,16 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Requires: python3-modules-sqlite3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%add_pyproject_deps_check_filter data-science-types
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: python3-modules-sqlite3
 %endif
 
@@ -38,6 +42,9 @@ BuildRequires: python3-modules-sqlite3
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -49,12 +56,14 @@ BuildRequires: python3-modules-sqlite3
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc README.md
 %_bindir/sqlite-utils
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 27 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.1-alt1
+- Updated to 4.1.1.
+
 * Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 3.39-alt1
 - Updated to 3.39.
 
@@ -63,4 +72,3 @@ BuildRequires: python3-modules-sqlite3
 
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 3.38-alt1
 - Built for ALT Sisyphus.
-
