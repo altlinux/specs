@@ -5,7 +5,7 @@
 %define        gemname json
 
 Name:          gem-json
-Version:       2.7.2
+Version:       2.21.2
 Release:       alt1
 Summary:       JSON parser and generator
 License:       Ruby
@@ -15,111 +15,43 @@ Vcs:           https://github.com/flori/json.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(bigdecimal) >= 0
+BuildRequires: gem(ostruct) >= 0
 BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(ruby_memcheck) >= 0
+BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(test-unit-ruby-core) >= 0
-BuildRequires: gem(all_images) >= 0
-BuildConflicts: gem(all_images) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 2.7
 Obsoletes:     ruby-json < %EVR
 Obsoletes:     ruby-json-utils < %EVR
 Provides:      ruby-json = %EVR
 Provides:      ruby-json-utils = %EVR
-Provides:      gem(json) = 2.7.2
-
+Provides:      json = %EVR
+Provides:      gem(json) = 2.21.2
 
 %description
 This library can parse JSON texts and generate them from ruby data structures.
 
 
-%package       -n gem-json-pure
-Version:       2.7.2
-Release:       alt1
-Summary:       JSON parser and generator
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Obsoletes:     ruby-json-pure
-Provides:      ruby-json-pure
-Provides:      gem(json_pure) = 2.7.2
-
-%description   -n gem-json-pure
-This library can parse JSON texts and generate them from ruby data
-structures.
-
-The package is the compiled-less version of the json gem.
-
-
-%if_enabled    doc
-%package       -n gem-json-pure-doc
-Version:       2.7.2
-Release:       alt1
-Summary:       JSON parser and generator documentation files
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета json_pure
-Group:         Development/Documentation
-BuildArch:     noarch
-
-Requires:      gem(json_pure) = 2.7.2
-
-%description   -n gem-json-pure-doc
-JSON parser and generator documentation files.
-
-This library can parse JSON texts and generate them from ruby data
-structures.
-
-The package is the compiled-less version of the json gem.
-
-%description   -n gem-json-pure-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета json_pure.
-%endif
-
-
-%if_enabled    devel
-%package       -n gem-json-pure-devel
-Version:       2.7.2
-Release:       alt1
-Summary:       JSON parser and generator development package
-Summary(ru_RU.UTF-8): Файлы для разработки самоцвета json_pure
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Requires:      gem(json_pure) = 2.7.2
-Requires:      gem(rake) >= 0
-Requires:      gem(test-unit) >= 0
-Requires:      gem(test-unit-ruby-core) >= 0
-Requires:      gem(all_images) >= 0
-Requires:      gem(json) >= 2.3.0
-Conflicts:     gem(all_images) >= 1
-Conflicts:     gem(json) >= 3
-
-%description   -n gem-json-pure-devel
-JSON parser and generator development package.
-
-This library can parse JSON texts and generate them from ruby data
-structures.
-
-The package is the compiled-less version of the json gem.
-
-%description   -n gem-json-pure-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета json_pure.
-%endif
-
-
 %if_enabled    doc
 %package       -n gem-json-doc
-Version:       2.7.2
+Version:       2.21.2
 Release:       alt1
 Summary:       JSON parser and generator documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета json
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(json) = 2.7.2
+Requires:      gem(json) = 2.21.2
 
 %description   -n gem-json-doc
 JSON parser and generator documentation files.
@@ -133,19 +65,19 @@ This library can parse JSON texts and generate them from ruby data structures.
 
 %if_enabled    devel
 %package       -n gem-json-devel
-Version:       2.7.2
+Version:       2.21.2
 Release:       alt1
 Summary:       JSON parser and generator development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета json
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(json) = 2.7.2
-Requires:      gem(rake) >= 0
-Requires:      gem(test-unit) >= 0
-Requires:      gem(test-unit-ruby-core) >= 0
-Requires:      gem(all_images) >= 0
-Conflicts:     gem(all_images) >= 1
+Requires:      gem(json) = 2.21.2
+Requires:      gem(bigdecimal) >= 0
+Requires:      gem(ostruct) >= 0
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(ruby_memcheck) >= 0
+Requires:      gem(simplecov) >= 0
 
 %description   -n gem-json-devel
 JSON parser and generator development package.
@@ -170,41 +102,28 @@ This library can parse JSON texts and generate them from ruby data structures.
 %ruby_test
 
 %files
-%doc README.md
+%doc COPYING README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         -n gem-json-pure
-%doc README.md
-%ruby_gemspecdir/json_pure-2.7.2.gemspec
-%ruby_gemslibdir/json_pure-2.7.2
-
-%if_enabled    doc
-%files         -n gem-json-pure-doc
-%doc README.md
-%ruby_gemsdocdir/json_pure-2.7.2
-%endif
-
-%if_enabled    devel
-%files         -n gem-json-pure-devel
-%doc README.md
-%endif
-
 %if_enabled    doc
 %files         -n gem-json-doc
-%doc README.md
+%doc COPYING README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-json-devel
-%doc README.md
+%doc COPYING README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.21.2-alt1
+- ^ 2.7.2 -> 2.21.2
+
 * Thu Jul 25 2024 Pavel Skrylev <majioa@altlinux.org> 2.7.2-alt1
 - ^ 2.6.3 -> 2.7.2
 

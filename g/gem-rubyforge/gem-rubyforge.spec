@@ -2,8 +2,8 @@
 %define        gemname rubyforge
 
 Name:          gem-rubyforge
-Version:       2.0.4
-Release:       alt1.1
+Version:       2.0.5
+Release:       alt1
 Summary:       A script which automates a limited set of rubyforge operations
 License:       MIT
 Group:         Development/Ruby
@@ -13,15 +13,14 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         hoe-setup.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(json_pure) >= 1.1.7
+BuildRequires: gem(json) >= 1.1.7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(json_pure) >= 1.1.7
+Requires:      gem(json) >= 1.1.7
 Provides:      gem(rubyforge) = 2.0.4
 
 
@@ -30,14 +29,14 @@ A script which automates a limited set of rubyforge operations.
 
 
 %package       -n rubyforge
-Version:       2.0.4
-Release:       alt1.1
+Version:       2.0.5
+Release:       alt1
 Summary:       A script which automates a limited set of rubyforge operations executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rubyforge
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubyforge) = 2.0.4
+Requires:      gem(rubyforge) = 2.0.5
 
 %description   -n rubyforge
 A script which automates a limited set of rubyforge operations executable(s).
@@ -47,14 +46,14 @@ A script which automates a limited set of rubyforge operations executable(s).
 
 
 %package       -n gem-rubyforge-doc
-Version:       2.0.4
-Release:       alt1.1
+Version:       2.0.5
+Release:       alt1
 Summary:       A script which automates a limited set of rubyforge operations documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubyforge
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubyforge) = 2.0.4
+Requires:      gem(rubyforge) = 2.0.5
 
 %description   -n gem-rubyforge-doc
 A script which automates a limited set of rubyforge operations documentation
@@ -65,14 +64,14 @@ files.
 
 
 %package       -n gem-rubyforge-devel
-Version:       2.0.4
-Release:       alt1.1
+Version:       2.0.5
+Release:       alt1
 Summary:       A script which automates a limited set of rubyforge operations development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubyforge
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubyforge) = 2.0.4
+Requires:      gem(rubyforge) = 2.0.5
 
 %description   -n gem-rubyforge-devel
 A script which automates a limited set of rubyforge operations development
@@ -84,7 +83,6 @@ package.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -113,6 +111,9 @@ package.
 
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.5-alt1
+- ^ 2.0.4 -> 2.0.5
+
 * Sun Jan 29 2023 Pavel Skrylev <majioa@altlinux.org> 2.0.4-alt1.1
 - ! of closing build deps under check condition
 

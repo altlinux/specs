@@ -5,7 +5,7 @@
 %define        gemname travis
 
 Name:          gem-travis
-Version:       1.14.0.6
+Version:       1.14.0.6.1
 Release:       alt0.1
 Summary:       Travis CI client
 License:       MIT
@@ -31,7 +31,7 @@ BuildRequires: gem(simplecov-console) >= 0
 BuildRequires: gem(faraday) >= 2.6.0
 BuildRequires: gem(faraday-rack) >= 2
 BuildRequires: gem(highline) >= 2.1.0
-BuildRequires: gem(json_pure) >= 2.6.3
+BuildRequires: gem(json) >= 2.9
 BuildRequires: gem(launchy) >= 2.5.2
 BuildRequires: gem(pusher-client) >= 0.6.2
 BuildRequires: gem(rack-test) >= 1.1.0
@@ -43,7 +43,7 @@ BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(faraday-rack) >= 3
 BuildConflicts: gem(highline) >= 4
-BuildConflicts: gem(json_pure) >= 3
+BuildConflicts: gem(json) >= 3
 BuildConflicts: gem(launchy) >= 2.6
 BuildConflicts: gem(pusher-client) >= 0.7
 BuildConflicts: gem(rack-test) >= 2.2
@@ -57,13 +57,12 @@ BuildConflicts: gem(rack-test) >= 2.2
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency sinatra >= 4,sinatra < 5
 %ruby_use_gem_dependency highline >= 3.1.1,highline < 4
-%ruby_use_gem_dependency faraday >= 2.7.2,json_pure < 3
 %ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 Requires:      gem(gh) >= 0
 Requires:      gem(faraday) >= 2.6.0
 Requires:      gem(faraday-rack) >= 2
 Requires:      gem(highline) >= 2.1.0
-Requires:      gem(json_pure) >= 2.6.3
+Requires:      gem(json) >= 2.9
 Requires:      gem(launchy) >= 2.5.2
 Requires:      gem(pusher-client) >= 0.6.2
 Requires:      gem(rack-test) >= 1.1.0
@@ -71,11 +70,11 @@ Conflicts:     gem(gh) >= 1
 Conflicts:     gem(faraday) >= 3
 Conflicts:     gem(faraday-rack) >= 3
 Conflicts:     gem(highline) >= 4
-Conflicts:     gem(json_pure) >= 3
+Conflicts:     gem(json) >= 3
 Conflicts:     gem(launchy) >= 2.6
 Conflicts:     gem(pusher-client) >= 0.7
 Conflicts:     gem(rack-test) >= 2.2
-Provides:      gem(travis) = 1.14.0.6
+Provides:      gem(travis) = 1.14.0.6.1
 
 %ruby_use_gem_version travis:%version
 
@@ -87,14 +86,14 @@ installation instructions to get it running in no time.
 
 
 %package       -n travis
-Version:       1.14.0.6
+Version:       1.14.0.6.1
 Release:       alt0.1
 Summary:       Travis CI client executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета travis
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0.6
+Requires:      gem(travis) = 1.14.0.6.1
 
 %description   -n travis
 Travis CI client executable(s).
@@ -111,14 +110,14 @@ installation instructions to get it running in no time.
 
 %if_enabled    doc
 %package       -n gem-travis-doc
-Version:       1.14.0.6
+Version:       1.14.0.6.1
 Release:       alt0.1
 Summary:       Travis CI client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета travis
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0.6
+Requires:      gem(travis) = 1.14.0.6.1
 
 %description   -n gem-travis-doc
 Travis CI client documentation files.
@@ -136,14 +135,14 @@ installation instructions to get it running in no time.
 
 %if_enabled    devel
 %package       -n gem-travis-devel
-Version:       1.14.0.6
+Version:       1.14.0.6.1
 Release:       alt0.1
 Summary:       Travis CI client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета travis
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(travis) = 1.14.0.6
+Requires:      gem(travis) = 1.14.0.6.1
 Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(rspec-its) >= 1.3.0
 Requires:      gem(sinatra) >= 3.0.6
@@ -206,6 +205,10 @@ installation instructions to get it running in no time.
 
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.14.0.6.1-alt0.1
+- ^ 1.14.0p6 -> 1.14.0p6.1
+- * changed dep from json_pure to json
+
 * Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.14.0.6-alt0.1
 - ^ 1.14.0 -> 1.14.0p6
 

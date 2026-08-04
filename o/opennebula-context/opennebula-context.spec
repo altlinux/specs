@@ -1,7 +1,7 @@
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
 Version: 7.2.1
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 URL: http://opennebula.org
@@ -13,7 +13,8 @@ Provides: one-context = %EVR
 Conflicts: cloud-init udev-rule-generator-net udev-rule-generator-cdrom
 
 Requires: util-linux bind-utils cloud-utils-growpart parted
-Requires: ruby ruby-json-pure
+Requires: ruby
+Requires: gem(json)
 Requires: qemu-guest-agent
 Requires: sudo
 
@@ -147,6 +148,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 7.2.1-alt2
+- ! fixed targets requires list for AltLinux
+
 * Wed Jun 10 2026 Alexander Burmatov <thatman@altlinux.org> 7.2.1-alt1
 - 7.2.1
 
