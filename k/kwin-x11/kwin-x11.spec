@@ -16,7 +16,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 %K6init
 
@@ -185,6 +185,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 

@@ -1,13 +1,15 @@
 %define rname union
 
+%def_disable in_plasmasvg
+
 %define sover 6
 %define libunion libunion%sover
 %define libunionquickimpl libunionquickimpl%sover
 %define libunionquickstyle libunionquickstyle%sover
 
 Name: plasma-%rname
-Version: 6.7.3
-Release: alt2
+Version: 6.7.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -26,7 +28,9 @@ BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel kf6-kcoreaddons-devel kf
 BuildRequires: kf6-kiconthemes-devel kf6-kirigami-devel
 BuildRequires: libvulkan-devel
 BuildRequires: plasma6-breeze-devel
-#BuildRequires: libryml-devel
+%if_enabled in_plasmasvg
+BuildRequires: libryml-devel
+%endif
 BuildRequires: rust-cssparser-devel
 
 %description
@@ -77,6 +81,9 @@ Requires: %name-common >= %EVR
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
     -DBUILD_OUTPUT_QTWIDGETS=ON \
+%if_enabled in_plasmasvg
+    -DBUILD_INPUT_PLASMASVG=ON \
+%endif
     #
 
 %install
@@ -113,6 +120,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libUnionQuickStyle.so.*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
 - build with css input (closes: 59948)
 

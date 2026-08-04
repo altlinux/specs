@@ -1,7 +1,7 @@
 %define rname kwrited
 
 Name: %rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 %K6init
 
@@ -42,6 +42,9 @@ Watch for messages from local users sent with write(1) or wall(1)
 %_K6notif/*writed*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 

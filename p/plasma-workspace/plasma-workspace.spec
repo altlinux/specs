@@ -24,7 +24,7 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 Epoch: 1
 %K6init
@@ -588,6 +588,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.3-alt1
 - new version
 

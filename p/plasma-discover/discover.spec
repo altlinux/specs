@@ -20,7 +20,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 %K6init no_altplace
 
@@ -352,6 +352,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname qqc2-breeze-style
 
 Name: %rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 
 Summary: Breeze inspired QQC2 Style
@@ -62,6 +62,9 @@ developing applications that use %name.
 %_libdir/cmake/QQC2BreezeStyle/
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 

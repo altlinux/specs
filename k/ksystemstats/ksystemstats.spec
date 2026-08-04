@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: %rname
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 

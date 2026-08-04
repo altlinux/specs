@@ -15,8 +15,8 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.7.3
-Release: alt2
+Version: 6.7.4
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -230,6 +230,9 @@ touch touch-%_arch
 
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Mon Jul 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
 - return kameleon
 

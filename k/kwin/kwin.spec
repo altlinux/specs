@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.7.3
-Release: alt2
+Version: 6.7.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -211,6 +211,9 @@ popd
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Thu Jul 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt2
 - fix compile with gcc-13
 

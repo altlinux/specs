@@ -2,7 +2,7 @@
 %filter_from_requires /inkscape/d
 
 Name: plasma-sdk
-Version: 6.7.3
+Version: 6.7.4
 Release: alt1
 %K6init
 
@@ -61,6 +61,9 @@ Applications useful for Plasma Development.
 
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.3-alt1
 - new version
 
