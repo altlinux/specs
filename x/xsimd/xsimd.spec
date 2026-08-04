@@ -1,5 +1,5 @@
 Name: xsimd
-Version: 14.1.0
+Version: 14.3.0
 Release: alt1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
@@ -76,6 +76,9 @@ sed -i 's/<T, A>::batch.*(register_type reg/& __attribute__((unused))/' \
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Aug 04 2026 Anton Farygin <rider@altlinux.org> 14.3.0-alt1
+- 14.1.0 -> 14.3.0
+
 * Sun Apr 19 2026 Anton Farygin <rider@altlinux.org> 14.1.0-alt1
 - 14.0.0 -> 14.1.0
 
