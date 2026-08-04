@@ -1,17 +1,15 @@
 %define        oname CCTag
 
 Name:          cctag
-Version:       1.0.3
-Release:       alt1.2
+Version:       1.0.4.42
+Release:       alt0.1
 Summary:       Detection of CCTag markers made up of concentric circles
 License:       MPL-2.0
 Group:         System/Libraries
 Url:           https://github.com/alicevision/CCTag
 Vcs:           https://github.com/alicevision/CCTag.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         cctag-alt-fix-build-with-boost-1.85.0.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -85,7 +83,6 @@ The library is the implementation of the paper:
 %prep
 %setup
 %autopatch -p1
-subst 's/3\.3\.4/5.0.0/' CMakeLists.txt
 
 %build
 %cmake -DCCTAG_WITH_CUDA:BOOL=OFF \
@@ -110,6 +107,9 @@ subst 's/3\.3\.4/5.0.0/' CMakeLists.txt
 
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.4.42-alt0.1
+- ^ 1.0.3 -> 1.0.4p42
+
 * Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1.2
 - FTBFS: fixed build with eigen 5.0.0.
 
