@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt5
+Release: alt6
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -351,6 +351,19 @@ popd
 
 rm %buildroot%_sysconfdir/emacspeak
 
+%pretrans -p <lua>
+-- Define the path to the symlink being replaced below.
+path = "%_emacspeakdir/servers/native-espeak"
+st = posix.stat(path)
+if st and st.type == "link" then
+  os.remove(path)
+end
+path = "%_emacspeakdir/servers/linux-outloud"
+st = posix.stat(path)
+if st and st.type == "link" then
+  os.remove(path)
+end
+
 %post
 chmod -R go+rX %_emacspeakdir/sounds
 chmod -R go+rX %_emacspeakdir/media
@@ -438,6 +451,9 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Tue Aug 04 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt6
+- Fixed file conflicts
+
 * Thu Jul 23 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt5
 - Added req to espeak fore espeak subpackage
 - Added conflicts to original emacspeak subpackages (Closes: 59900)
