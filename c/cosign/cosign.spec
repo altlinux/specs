@@ -1,12 +1,12 @@
 %global import_path github.com/sigstore/cosign/v3
 %global _unpackaged_files_terminate_build 1
 
-%define revision 7914231b348c4057891edeb321772aad3ed04fce
+%define revision 193d2153431f8bb0d945a4c1ee721872f73add67
 
 %def_with check
 
 Name:    cosign
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -47,6 +47,7 @@ DATE_FMT="+%%Y-%%m-%%dT%%H:%%M:%%SZ"
 SOURCE_DATE_EPOCH=$(date +%%s)
 BUILD_DATE=$(date -u -d "@${SOURCE_DATE_EPOCH}" "${DATE_FMT}" 2>/dev/null || date -u -r "${SOURCE_DATE_EPOCH}" "${DATE_FMT}" 2>/dev/null || date -u "${DATE_FMT}")
 
+export GOFLAGS="-trimpath"
 export LDFLAGS="-X ${RU_PKG}.gitVersion=%{version} -X ${RU_PKG}.gitCommit=%{revision} -X ${RU_PKG}.gitTreeState=release -X ${RU_PKG}.buildDate=${BUILD_DATE}"
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -70,6 +71,10 @@ export BUILDDIR="$PWD/.gopath"
 %_bindir/%name
 
 %changelog
+* Tue Aug 04 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.2-alt1
+- New version 3.1.2.
+- Skip tests with Internet access requirements.
+
 * Wed Jun 10 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.1-alt1
 - New version 3.1.1.
 
