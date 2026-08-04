@@ -6,7 +6,7 @@
 
 Name:          gem-solargraph
 Version:       0.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby language server
 License:       MIT
 Group:         Development/Ruby
@@ -44,7 +44,7 @@ BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(webmock) >= 4
 BuildConflicts: gem(backport) >= 2
 BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(diff-lcs) >= 2
+BuildConflicts: gem(diff-lcs) >= 3
 BuildConflicts: gem(jaro_winkler) >= 2
 BuildConflicts: gem(kramdown) >= 3
 BuildConflicts: gem(kramdown-parser-gfm) >= 2
@@ -62,6 +62,7 @@ BuildConflicts: gem(tilt) >= 3
 %ruby_use_gem_dependency public_suffix >= 4.0.3,public_suffix < 5
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 %ruby_use_gem_dependency rbs >= 3.5.2,rbs < 4
+%ruby_use_gem_dependency diff-lcs >= 2.0.0,diff-lcs < 3
 Requires:      gem(backport) >= 1.2
 Requires:      gem(benchmark) >= 0
 Requires:      gem(bundler) >= 2.0
@@ -79,7 +80,7 @@ Requires:      gem(tilt) >= 2.0
 Requires:      gem(yard) >= 0.9
 Conflicts:     gem(backport) >= 2
 Conflicts:     gem(bundler) >= 3
-Conflicts:     gem(diff-lcs) >= 2
+Conflicts:     gem(diff-lcs) >= 3
 Conflicts:     gem(jaro_winkler) >= 2
 Conflicts:     gem(kramdown) >= 3
 Conflicts:     gem(kramdown-parser-gfm) >= 2
@@ -98,7 +99,7 @@ IDE tools for code completion, inline documentation, and static analysis
 
 %package       -n solargraph
 Version:       0.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby language server executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета solargraph
 Group:         Other
@@ -118,7 +119,7 @@ IDE tools for code completion, inline documentation, and static analysis
 %if_enabled    doc
 %package       -n gem-solargraph-doc
 Version:       0.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby language server documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета solargraph
 Group:         Development/Documentation
@@ -139,7 +140,7 @@ IDE tools for code completion, inline documentation, and static analysis
 %if_enabled    devel
 %package       -n gem-solargraph-devel
 Version:       0.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby language server development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета solargraph
 Group:         Development/Ruby
@@ -200,6 +201,9 @@ IDE tools for code completion, inline documentation, and static analysis
 
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 0.50.0-alt1.1
+- ! fixed deps to lcs-diff gem
+
 * Tue Jul 30 2024 Pavel Skrylev <majioa@altlinux.org> 0.50.0-alt1
 - ^ 0.49.0 -> 0.50.0
 
