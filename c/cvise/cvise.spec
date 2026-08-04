@@ -2,7 +2,7 @@
 
 Name: cvise
 Version: 2.12.0
-Release: alt3
+Release: alt4
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -75,6 +75,9 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+%endif
 # TODO: https://bugzilla.altlinux.org/show_bug.cgi?id=38660
 #__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
 
@@ -106,6 +109,9 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Tue Aug 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.12.0-alt4
+- e2k build fix
+
 * Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt3
 - fixed FTBFS with clang/LLVM 21: backport clang_delta API guards from upstream master
 
