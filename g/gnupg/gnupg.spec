@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.23
-Release: alt5
+Release: alt6
 
 Summary: The GNU Privacy Guard
 # see e.e. keyserver subdirectory
@@ -138,6 +138,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Wed Jul 29 2026 Alexander Danilov <admsasha@altlinux.org> 1.4.23-alt6
+- Append upstream patch (fixes: CVE-2025-68973).
+
 * Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt5
 - Fix FTBFS with gcc14.
 
