@@ -8,7 +8,7 @@
 %endif
 
 Name: realrtcw
-Version: 5.2
+Version: 5.4
 Release: alt1
 Summary: RealRTCW is a community single-player overhaul project for Return to Castle Wolfenstein
 License: GPL-3.0-only AND RTCW SP Additions
@@ -20,6 +20,7 @@ Source1: %name.desktop
 
 Patch0: fix-steam-typo.patch
 Patch1: unbundle-zlib.patch
+Patch2: ffmpeg-ldflags.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkg-config
@@ -33,6 +34,10 @@ BuildRequires: libopusfile-devel
 BuildRequires: zlib-devel
 BuildRequires: libminizip-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libavcodec-devel
+BuildRequires: libavformat-devel
+BuildRequires: libswscale-devel
+BuildRequires: libswresample-devel
 
 # TODO - need to check aarch64/ppc64le
 ExclusiveArch: %ix86 x86_64
@@ -70,12 +75,12 @@ $HOME/.realrtcw/
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 CFLAGS="%optflags" \
 USE_INTERNAL_LIBS=0 \
+STEAM=1 \
 ARCH=%barch \
 %make_build V=1
 
@@ -83,15 +88,15 @@ ARCH=%barch \
 mkdir -p %buildroot%_gamesbindir/
 mkdir -p %buildroot%_gamesdatadir/%name
 mkdir -p %buildroot%_libdir/%name/main
-install -m 0755 build/release-linux-%barch/RealRTCW.%barch %buildroot%_gamesbindir/
+install -m 0755 build/release-linux-%barch-steam/RealRTCW.%barch %buildroot%_gamesbindir/
 cat > %buildroot%_gamesbindir/%name << EOF
 cd %_libdir/%name
 RealRTCW.%barch "$@"
 cd -
 EOF
 chmod 755 %buildroot%_gamesbindir/%name
-install -m 0644 build/release-linux-%barch/renderer_sp_opengl1_*.so %buildroot%_libdir/%name/
-install -m 0644 build/release-linux-%barch/main/*.so %buildroot%_libdir/%name/main
+install -m 0644 build/release-linux-%barch-steam/renderer_sp_opengl1_*.so %buildroot%_libdir/%name/
+install -m 0644 build/release-linux-%barch-steam/main/*.so %buildroot%_libdir/%name/main
 
 # install menu entry
 mkdir -p %buildroot%_desktopdir
@@ -110,6 +115,9 @@ install -m 0644 misc/wolf.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Aug 04 2026 L.A. Kostis <lakostis@altlinux.ru> 5.4-alt1
+- 5.4.
+
 * Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 5.2-alt1
 - 5.2.
 
