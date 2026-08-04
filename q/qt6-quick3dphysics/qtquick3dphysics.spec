@@ -4,10 +4,10 @@
 
 Name: qt6-quick3dphysics
 Version: 6.10.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
-Summary: Qt6 - Support for rendering and displaying SVG
+Summary: Qt6 - High-level API for physics simulation
 Url: http://qt.io/
 License: GPL-3.0-only WITH Qt-GPL-exception-1.0
 
@@ -18,9 +18,10 @@ BuildRequires: qt6-base-devel
 BuildRequires: cmake qt6-declarative-devel qt6-shadertools-devel qt6-quick3d-devel
 
 %description
-Scalable Vector Graphics (SVG) is an XML-based language for describing
-two-dimensional vector graphics. Qt provides classes for rendering and
-displaying SVG drawings in widgets and on other paint devices.
+Qt Quick 3D Physics provides a high-level API for physics simulation.
+It supports simulating interactive rigid bodies as well as static meshes
+and non-colliding bodies used for detecting overlaps. Every simulated body
+can have its own physical properties like mass, density and friction.
 
 %package common
 Summary: Common package for %name
@@ -141,6 +142,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- fix package description
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 
