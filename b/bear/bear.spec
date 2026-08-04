@@ -5,7 +5,7 @@
 %define optflags_lto %{nil}
 
 Name: bear
-Version: 4.1.5
+Version: 4.2.0
 Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
@@ -63,6 +63,9 @@ DESTDIR="%buildroot" PREFIX=%_prefix ./scripts/install.sh
 %{_datadir}/doc/%name
 
 %changelog
+* Tue Aug 4 2026 Vladimir Didenko <cow@altlinux.org> 4.2.0-alt1
+- New version
+
 * Mon Jul 13 2026 Vladimir Didenko <cow@altlinux.org> 4.1.5-alt1
 - New version
 
