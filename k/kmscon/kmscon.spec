@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 9.3.2
+Version: 10.0.1
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 1.1
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: xkeyboard-config
-BuildRequires: pkgconfig(libtsm) >= 4.0.0
+BuildRequires: pkgconfig(libtsm) >= 4.6.0
 BuildRequires: pkgconfig(libudev) >= 172
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: libsystemd-devel pkgconfig(libsystemd)
@@ -26,6 +26,8 @@ BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(pango) pkgconfig(pangoft2)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(check)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: termutils-devel
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
 %description
@@ -59,12 +61,14 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example %buildroot/%_sysconfdir/%na
 %_unitdir/*.service
 %dir %_libdir/%name
 %_libdir/%name/mod-*.so
-%dir %_libexecdir/kmscon
-%_libexecdir/kmscon/kmscon
+%_datadir/terminfo/k/kmscon
 %_man1dir/%name.1*
 %_man5dir/%name.conf.5*
 
 %changelog
+* Mon Aug 03 2026 Anton Midyukov <antohami@altlinux.org> 10.0.1-alt1
+- New version 10.0.1.
+
 * Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 9.3.2-alt1
 - updated from 9.1.0 to 9.3.2
 
