@@ -6,7 +6,7 @@
 
 Name:          gem-license-finder
 Version:       7.2.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Audit the OSS licenses of your application's dependencies
 License:       MIT
 Group:         Development/Ruby
@@ -50,7 +50,7 @@ BuildConflicts: gem(mime-types) >= 4
 BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rspec-its) >= 1.4
+BuildConflicts: gem(rspec-its) >= 3
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(webmock) >= 4
@@ -76,6 +76,7 @@ BuildConflicts: gem(xml-simple) >= 1.2
 %ruby_use_gem_dependency rack-test >= 1.1.0,rack-test < 2
 %ruby_use_gem_dependency addressable >= 2.8.0,addressable < 3
 %ruby_use_gem_dependency capybara >= 3.40,capybara < 4
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 %ruby_alias_names license_finder,license-finder
 Requires:      gem(bundler) >= 0
 Requires:      gem(csv) >= 3.2
@@ -100,7 +101,7 @@ list of permitted licenses, and give you an actionable exception report.
 
 %package       -n license-finder
 Version:       7.2.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Audit the OSS licenses of your application's dependencies executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета license_finder
 Group:         Other
@@ -123,7 +124,7 @@ list of permitted licenses, and give you an actionable exception report.
 %if_enabled    doc
 %package       -n gem-license-finder-doc
 Version:       7.2.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Audit the OSS licenses of your application's dependencies documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета license_finder
 Group:         Development/Documentation
@@ -147,7 +148,7 @@ list of permitted licenses, and give you an actionable exception report.
 %if_enabled    devel
 %package       -n gem-license-finder-devel
 Version:       7.2.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Audit the OSS licenses of your application's dependencies development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета license_finder
 Group:         Development/Ruby
@@ -179,7 +180,7 @@ Conflicts:     gem(mime-types) >= 4
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rspec-its) >= 1.4
+Conflicts:     gem(rspec-its) >= 3
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(webmock) >= 4
@@ -234,6 +235,9 @@ list of permitted licenses, and give you an actionable exception report.
 
 
 %changelog
+* Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 7.2.1-alt1.1
+- ! fixed deps to rspec-its
+
 * Sat Aug 03 2024 Pavel Skrylev <majioa@altlinux.org> 7.2.1-alt1
 - ^ 7.1.0 -> 7.2.1
 
