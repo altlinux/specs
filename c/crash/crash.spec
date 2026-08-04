@@ -5,7 +5,7 @@
 
 Name:    crash
 Version: 9.0.2
-Release: alt1
+Release: alt2.gitf336dfa79e
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -113,6 +113,10 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Tue Aug 04 2026 Ivan A. Melnikov <iv@altlinux.org> 9.0.2-alt2.gitf336dfa79e
+- Update to 9.0.2-35-gf336dfa79e (2026-07-08) for working
+  linux 7.1+ support.
+
 * Sat Apr 25 2026 Vitaly Chikunov <vt@altlinux.org> 9.0.2-alt1
 - Update to 9.0.2 (2026-04-24).
 
