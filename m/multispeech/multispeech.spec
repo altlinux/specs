@@ -2,7 +2,7 @@
 %define sover 5
 
 Name:    multispeech
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1
 
 Summary: Multilingual speech server for Emacspeak
@@ -94,7 +94,7 @@ This package provides common configuration file used by all Multispeech
 
 %build
 %autoreconf -if
-%configure
+%configure --with-freespeech-dir=%_datadir/freespeech
 %make_build
 
 %install
@@ -131,6 +131,9 @@ ln -s %_bindir/%name %buildroot%_datadir/emacs/site-lisp/emacspeak/servers/multi
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Tue Aug 04 2026 Artem Semenov <savoptik@altlinux.org> 4.6.6-alt1
+- Updated to new version 4.6.6
+
 * Thu Jul 16 2026 Artem Semenov <savoptik@altlinux.org> 4.6.5-alt1
 - Updated to new version 4.6.5
 
