@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260801
+Version: 20260804
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -112,6 +112,7 @@ Requires: ready-set-plugin-welcome
 Requires: ready-set-plugin-language
 Requires: ready-set-plugin-keyboard
 Requires: ready-set-plugin-network
+Requires: ready-set-plugin-privacy
 Requires: ready-set-plugin-date-and-time
 Requires: ready-set-plugin-software
 Requires: ready-set-plugin-user-passwdqc
@@ -165,6 +166,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Tue Aug 04 2026 Vladimir Romanov <rirusha@altlinux.org> 20260804-alt1
+- Added privacy step to ready-set.
+
 * Sat Aug 01 2026 Vladimir Romanov <rirusha@altlinux.org> 20260801-alt1
 - Update for ready-set = 0.11.1.
 - Added software,date-and-time,network plugins.

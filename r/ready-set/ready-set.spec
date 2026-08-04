@@ -11,7 +11,7 @@
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
 %define api_version 0
-%define major_version 11
+%define major_version 12
 %define minor_version 1
 %define gis_name gnome-initial-setup
 
@@ -70,6 +70,7 @@ BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(tuner-1)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libapi-base-7)
 
 %description
 %summary.
@@ -245,10 +246,20 @@ Requires: %name = %EVR
 %description plugin-welcome
 %summary.
 
+%package plugin-privacy
+Summary: %name privacy plugin
+Group: Other
+
+Requires: %name = %EVR
+
+%description plugin-privacy
+%summary.
+
 %package plugin-date-and-time
 Summary: %name date-and-time plugin
 Group: Other
 
+Requires: gnome-control-center-data
 Requires: %name = %EVR
 
 %description plugin-date-and-time
@@ -267,6 +278,8 @@ Requires: %name = %EVR
 Summary: Pot generator for source config files of %name software plugin
 Group: Development/Tools
 
+BuildArch: noarch
+
 %description plugin-software-source-pot-generator
 %summary.
 
@@ -283,6 +296,8 @@ Requires: %name-plugin-software = %EVR
 %package -n rpm-macros-%name
 Summary: RPM macros for %name plugins packages
 Group: Development/Other
+
+BuildArch: noarch
 
 %description -n rpm-macros-%name
 %summary.
@@ -314,6 +329,11 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_libexecdir/%app_id
 %_sysconfdir/%name
 %_datadir/%name
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
+%dir %_libdir/%name/plugins/steps
+%dir %_libdir/%name/plugins/installers
+%dir %_libdir/%name/plugins/service
 %_sharedstatedir/%name
 %_sysconfdir/dbus-1/system.d/%app_id.conf
 %_datadir/polkit-1/actions/%app_id.policy
@@ -417,6 +437,11 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_libdir/%name/plugins/steps/libwelcome.so
 %doc plugins/welcome/README.*.md
 
+%files plugin-privacy
+%_libdir/%name/plugins/steps/privacy.plugin
+%_libdir/%name/plugins/steps/libprivacy.so
+%doc plugins/privacy/README.*.md
+
 %files plugin-date-and-time
 %_libdir/%name/plugins/steps/date-and-time.plugin
 %_libdir/%name/plugins/steps/libdate-and-time.so
@@ -443,6 +468,15 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Aug 04 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.1-alt1
+- New version: 0.12.1.
+- Added `privacy` plugin.
+- Changed "weak password" dialog.
+- Fixed `software` plugin work with flatpak repos.
+- Fixed saving `performed-steps` after `initial-setup` done.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.12.0
+
 * Sat Aug 01 2026 Vladimir Romanov <rirusha@altlinux.org> 0.11.1-alt1
 - New version: 0.11.1.
 - Added `network` plugin with network setup.
