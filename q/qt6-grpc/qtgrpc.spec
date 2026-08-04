@@ -4,7 +4,7 @@
 
 Name: qt6-grpc
 Version: 6.10.3
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt6 - Grpc component
@@ -110,6 +110,12 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%ifarch %e2k
+# error: convert to incomplete class "QLatin1StringView"
+sed -i '1i #include <QLatin1StringView>' src/protobuf/qprotobuf*.cpp
+# error: protected function is not accessible
+sed -i 's/protected:/public:/' src/protobuf/qprotobuflazymessagepointer.h
+%endif
 
 %build
 %Q6build \
@@ -168,6 +174,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.10.3-alt4
+- e2k build fix
+
 * Mon Jun 01 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
 - don't build examples
 
