@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -14,13 +14,14 @@ Url: https://altlinux.space/alt-gnome/TunerTweaks
 Vcs: https://altlinux.space/alt-gnome/TunerTweaks
 Source: %name-%version.tar
 
-Requires: tuner
+Requires: tuner >= 0.7.2
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gnome-desktop-4)
+BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(tuner-1)
 BuildRequires: gir(Tuner)
 
@@ -45,6 +46,9 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Tue Aug 04 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.4-alt1
+- added touchpad tweaks
+
 * Mon Apr 20 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.2-alt1
 - added always show log out option switch
 
