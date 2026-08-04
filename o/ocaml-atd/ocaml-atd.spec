@@ -4,7 +4,7 @@
 %def_without check
 %endif
 Name: ocaml-atd
-Version: 4.0.0
+Version: 4.2.0
 Release: alt1
 Summary: Parser for the ATD data format description language
 Group: Development/ML
@@ -12,6 +12,7 @@ License: MIT
 Url: https://github.com/ahrefs/atd
 VCS: https://github.com/ahrefs/atd
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: ocaml >= 4.08
 BuildRequires: dune >= 2.8
@@ -202,6 +203,7 @@ Development files for ocaml-atdts.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build -p atd,atdcpp,atdd,atdgen-codec-runtime,atdgen-runtime,atdgen,atdj,atdpy,atds,atdts
@@ -253,6 +255,9 @@ Development files for ocaml-atdts.
 %files -n ocaml-atdts-devel -f ocaml-files.devel.atdts
 
 %changelog
+* Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 4.2.0-alt1
+- 4.0.0 -> 4.2.0
+
 * Sun Apr 05 2026 Anton Farygin <rider@altlinux.org> 4.0.0-alt1
 - 3.0.1 -> 4.0.0
 
