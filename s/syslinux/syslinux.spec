@@ -1,16 +1,20 @@
 %define optflags_lto %nil
 
+%ifnarch %ix86 x86_64
+%def_with cross
+%else
+%def_without cross
+%endif
+
 Name: syslinux
 Version: 4.04
-Release: alt19
+Release: alt20
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
 License: GPL
 Group: System/Kernel and hardware
 Url: http://syslinux.zytor.com/
-
-ExclusiveArch: %ix86 x86_64
 
 Requires: mtools
 Requires: %name-data = %serial:%version-%release
@@ -44,12 +48,19 @@ Patch22: remove-note-gnu-section.patch
 Patch23: syslinux-4.04-lzo.diff
 Patch24: syslinux-4.04-gcc10.diff
 Patch25: syslinux-4.04-fno-pie.diff
+Patch26: syslinux-4.04-gpxe-respect-cflags.diff
+Patch27: syslinux-4.04-fix-build-with-nasm3.diff
+Patch28: syslinux-4.04-libinstaller-fix-non-x86.patch
+Patch3500: syslinux-4.04-crossbuild.patch
 
 #BuildPrereq: nasm perl-base
 BuildRequires: rpm-build-python3
 BuildRequires: nasm perl-Crypt-PasswdMD5 perl-Digest-SHA1 libe2fs-devel
 #linux-libc-headers
 BuildRequires: libuuid-devel
+%if_with cross
+BuildRequires: gcc-x86_64-linux-gnu
+%endif
 
 #set_gcc_version 4.7
 
@@ -118,19 +129,36 @@ architectures.
 %patch23 -p0
 %patch24 -p0
 %patch25 -p2
+%patch26 -p2
+%patch27 -p2
+%patch28 -p2
+%patch3500 -p1
 install -m 0644 %SOURCE2 .
 sed -i 's,GCC_VERSION,_&,g' gpxe/src/arch/i386/Makefile
 
 %build
-export CFLAGS="%optflags -fno-stack-protector"
+export CFLAGS="%optflags -fno-stack-protector -std=gnu17"
+%if_with cross
+export CC="x86_64-linux-gnu-gcc"
+export CROSS_COMPILE='x86_64-linux-gnu-'
+%else
 export CC="gcc"
-export HOST_CC="$CC"
+%endif
+export HOST_CC="gcc"
+export V=1
 %make_build spotless
-%make
+%make_build
 
 
 %install
-%make \
+%if_with cross
+export CC="x86_64-linux-gnu-gcc"
+export CROSS_COMPILE='x86_64-linux-gnu-'
+%else
+export CC="gcc"
+%endif
+export HOST_CC="gcc"
+%make_build \
 	INSTALLDIR=%buildroot \
 	INSTALLROOT=%buildroot \
 	BINDIR=%_bindir \
@@ -171,6 +199,11 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Tue Aug 04 2026 Ivan A. Melnikov <iv@altlinux.org> 2:4.04-alt20
+- NMU:
+  + support cross-compilation on non-x86 architectures (asheplyakov@)
+  + fix FTBFS with recent GCC and Nasm 3.x
+
 * Mon Aug 30 2021 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt19
 - build without LTO
 
