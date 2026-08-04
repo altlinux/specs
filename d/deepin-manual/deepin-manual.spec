@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-manual
-Version: 6.5.54
+Version: 6.5.56
 Release: alt1
 
 Summary: Help files for DDE
@@ -18,8 +18,10 @@ License: GPL-3.0-or-later and CC0-1.0 and BSD-3-Clause
 # src/web*/*/qwebchannel.js: BSD-3-Clause or Qt.Commercial
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-manual
+Vcs: https://github.com/linuxdeepin/deepin-manual
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-manual/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 Provides: deepin-help
@@ -73,6 +75,10 @@ Data files for %name.
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_userunitdir/%name.service
 %_datadir/metainfo/org.deepin.manual.metainfo.xml
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.manual/
+%_datadir/dsg/configs/org.deepin.manual/org.deepin.manual.customui.json
 %endif
 
 %files data
@@ -81,6 +87,10 @@ Data files for %name.
 %endif
 
 %changelog
+* Tue Aug 04 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.56-alt1
+- New version 6.5.56.
+- Added vcs tag.
+
 * Tue Jul 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.54-alt1
 - New version 6.5.54.
 
