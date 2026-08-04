@@ -3,7 +3,7 @@
 %define abiversion 1
 
 Name: resvg
-Version: 0.47.0
+Version: 0.48.1
 Release: alt1
 
 Summary: An SVG rendering library writen in rust
@@ -69,11 +69,12 @@ directory = "vendor"
 verbose = true
 quiet = false
 
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=2"]
-
 [profile.release]
 strip = false
+opt-level = 3
+debug = 2
+lto = true
+codegen-units = 1
 EOF
 
 %build
@@ -98,32 +99,35 @@ install -Dm 755 crates/c-api/ResvgQt.h %buildroot%_includedir/ResvgQt.h
 %rust_test --all --all-features
 
 %files
-%doc crates/resvg/LICENSE-*
+%doc crates/resvg/LICENSE-MIT
 %doc README.md docs/
 %_bindir/resvg
 
 %files -n usvg
-%doc crates/usvg/LICENSE-*
+%doc crates/usvg/LICENSE-MIT
 %doc crates/usvg/docs/
 %doc crates/usvg/README.md
 %_bindir/usvg
 
 %files -n libresvg%abiversion
-%doc crates/c-api/LICENSE-*
+%doc crates/c-api/LICENSE-MIT
 %_libdir/libresvg.so.%abiversion
 
 %files -n libresvg-devel
-%doc crates/c-api/LICENSE-*
+%doc crates/c-api/LICENSE-MIT
 %doc crates/c-api/README.md
 %_libdir/libresvg.so
 %_includedir/resvg.h
 
 %files -n qt-resvg-devel
-%doc crates/c-api/LICENSE-*
+%doc crates/c-api/LICENSE-MIT
 %doc crates/c-api/README.md
 %_includedir/ResvgQt.h
 
 %changelog
+* Tue Aug 04 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.48.1-alt1
+- New version (0.48.1).
+
 * Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.47.0-alt1
 - New version (0.47.0).
 
