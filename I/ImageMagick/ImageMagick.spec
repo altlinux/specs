@@ -16,7 +16,7 @@
 %endif
 
 Name: ImageMagick
-Version: 7.1.2.27
+Version: 7.1.2.29
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -229,11 +229,8 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %dir %_docdir/%name-%dversion
 %dir %_docdir/%name-%dversion/www
 %_docdir/%name-%dversion/LICENSE
-%_docdir/%name-%dversion/images
 %_docdir/%name-%dversion/index.html
 %_docdir/%name-%dversion/www/*
-%exclude %_docdir/%name-%dversion/www/api
-%exclude %_docdir/%name-%dversion/www/Magick++
 
 %files -n lib%name%mversion.%soname
 %doc LICENSE
@@ -249,10 +246,6 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %_libdir/*++*.so.%{sonamepp}*
 
 %files -n lib%name-devel
-%dir %_docdir/%name-%dversion
-%dir %_docdir/%name-%dversion/www
-%_docdir/%name-%dversion/www/api
-%_docdir/%name-%dversion/www/Magick++
 %_bindir/*-config
 %_includedir/*
 %_libdir/*.so
@@ -261,7 +254,6 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %_man1dir/*-config.1*
 
 %files -n perl-Magick
-%doc www/perl-magick.html images/examples.jpg PerlMagick/demo
 %perl_vendor_archlib/Image
 %perl_vendor_autolib/Image
 
@@ -271,6 +263,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue Aug 04 2026 Anton Farygin <rider@altlinux.org> 7.1.2.29-alt1
+- 7.1.2.27 -> 7.1.2.29
+
 * Sat Jul 11 2026 Anton Farygin <rider@altlinux.org> 7.1.2.27-alt1
 - 7.1.2.25 -> 7.1.2.27
 
