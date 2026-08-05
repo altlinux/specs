@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.30.0
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -105,6 +105,8 @@ BuildRequires: libswscale-devel
 BuildRequires: liburiparser-devel
 BuildRequires: libjansson-devel
 BuildRequires: libjson-c-devel
+BuildRequires: libcbor-devel
+BuildRequires: libfido2-devel
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -370,7 +372,7 @@ the RDP protocol.
   -DWITH_OPENCL=OFF \
   -DWITH_OPENH264_LOADING=OFF \
   -DWITH_OPENSSL=ON \
-  -DWITH_OPUS=OFF \
+  -DWITH_OPUS=ON \
   -DWITH_OSS=ON \
   -DWITH_PCSC=ON \
   -DWITH_PKCS11=ON \
@@ -421,6 +423,19 @@ the RDP protocol.
 %if_without uwac
   -DUWAC_FORCE_STATIC_BUILD=ON \
 %endif
+  -DCHANNEL_URBDRC=ON \
+  -DCHANNEL_URBDRC_CLIENT=ON \
+  -DCHANNEL_RDP2TCP=ON \
+  -DCHANNEL_RDP2TCP_CLIENT=ON \
+  -DCHANNEL_RDPECAM=ON \
+  -DCHANNEL_RDPECAM_CLIENT=ON \
+  -DCHANNEL_RDPEAR=ON \
+  -DCHANNEL_RDPEAR_CLIENT=ON \
+  -DCHANNEL_RDPEWA=ON \
+  -DCHANNEL_RDPEWA_CLIENT=ON \
+  -DCHANNEL_SSHAGENT=ON \
+  -DCHANNEL_SSHAGENT_CLIENT=ON \
+  -DWITH_CAIRO=ON \
 %ifarch %e2k
   -DCMAKE_C_FLAGS_RELEASE="-O%_optlevel -DNDEBUG"
 %endif
@@ -549,6 +564,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Aug 05 2026 Andrey Cherepanov <cas@altlinux.org> 3.30.0-alt2
+- Built with all channels and support for Opus and Cairo.
+
 * Tue Jul 28 2026 Andrey Cherepanov <cas@altlinux.org> 3.30.0-alt1
 - New version (fixes: GHSA-m37j-jcr2-8gcc, GHSA-vv64-95pc-vj9v,
   GHSA-rqgv-grx4-xm6x).
