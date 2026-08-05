@@ -1,13 +1,15 @@
 Name:    sscg
 Version: 4.0.3
-Release: alt1
+Release: alt2
 
 Summary: Simple SSL certificate generator
 License: GPL-3.0-only
 Group:   Security/Networking
-Url:     https://github.com/sgallagher/sscg
+URL:     https://github.com/sgallagher/sscg
+VCS:     https://github.com/sgallagher/sscg.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -28,6 +30,7 @@ false signatures from the service certificate.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -45,6 +48,10 @@ false signatures from the service certificate.
 %_man8dir/%name.*
 
 %changelog
+* Wed Aug 05 2026 Anton Midyukov <antohami@altlinux.org> 4.0.3-alt2
+- Applied upstream fix:
+  + Avoid segfault on receiving bad CLI arguments (Closes: 60094).
+
 * Tue Feb 17 2026 Andrey Limachko <liannnix@altlinux.org> 4.0.3-alt1
 - Update to upstream version 4.0.3.
 - Breaking changes:
