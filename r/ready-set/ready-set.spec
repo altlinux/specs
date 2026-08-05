@@ -12,7 +12,7 @@
 %define ser_girname %{girname}Service
 %define api_version 0
 %define major_version 12
-%define minor_version 1
+%define minor_version 2
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -453,6 +453,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_libdir/%name/plugins/steps/libsoftware.so
 %_libdir/%name/plugins/service/libsoftware-sources.so
 %_libdir/%name/plugins/service/software-sources.plugin
+%_datadir/polkit-1/actions/%app_id.Software.policy
 %_datadir/%name/software
 %doc plugins/software/README.*.md
 
@@ -468,6 +469,14 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Aug 05 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.2-alt1
+- New version: 0.12.2.
+- Fixed segfault in finalization stage.
+- Fixed flatpak permissions at `software` plugin.
+- Fixed wrong days at `date-and-time` plugin.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.12.2
+
 * Tue Aug 04 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.1-alt1
 - New version: 0.12.1.
 - Added `privacy` plugin.
