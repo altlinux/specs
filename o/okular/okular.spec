@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -28,7 +28,7 @@ Patch1: alt-chm-encoding.patch
 Patch2: alt-def-memory-level.patch
 Patch3: alt-print-truncate-title.patch
 Patch4: alt-add-indication-for-document-loading-process.patch
-Patch5: alt-cryptopro-verifying.patch
+Patch5: alt-add-crypropro-option.patch
 Patch6: alt-xdg-current-desktop.patch
 Patch7: alt-fix-revision-preview-crash.patch
 
@@ -112,7 +112,7 @@ Summary: %name library
 %if_enabled progress
 %patch4 -p2
 %endif
-#%patch5 -p2 -b .csp
+%patch5 -p1
 %patch6 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 sed -i '/^find_package.*QMobipocket/d' CMakeLists.txt
@@ -194,6 +194,9 @@ fi
 
 
 %changelog
+* Wed Aug 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- add cryptopro backend option to pdf settings
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
