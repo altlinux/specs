@@ -8,7 +8,7 @@
 %endif
 
 Name: glances
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -130,6 +130,15 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 %endif
 
 %changelog
+* Wed Aug 05 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 4.5.6-alt1
+- New version 4.5.6.
+- Fixes:
+  + CVE-2026-68520 Credentail leak via /api/4/config
+  + CVE-2026-68519 Config flag does not cover on-alert action command
+  + CVE-2026-68518 Command injection bypass of action-template sanitizer
+  + CVE-2026-62982 Incomplete fix of CVE-2026-32608: action-template sanitizer bypass
+  + CVE-2026-68517 REST API CORS Credentials Guard Uses Exact-Match Instead of Membership Test
+
 * Sun Jun 14 2026 Egor Ignatov <egori@altlinux.org> 4.5.5-alt1
 - New version 4.5.5.
 
