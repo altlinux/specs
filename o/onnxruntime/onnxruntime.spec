@@ -5,8 +5,10 @@
 
 %define dnnl_arches x86_64 aarch64
 
+%define soname 1
+
 Name: onnxruntime
-Version: 1.23.0
+Version: 1.24.4
 Release: alt1
 
 Summary: Cross-platform, high performance inference and training machine-learning accelerator
@@ -21,10 +23,11 @@ BuildRequires: chrpath
 BuildRequires: ninja-build
 BuildRequires: gcc-c++ >= 9.1
 BuildRequires: libabseil-cpp-devel
+# Do NOT add libflatbuffers-devel here: spec uses bundled flatbuffers,
+# and system flatbuffers-config.cmake lacks the flatbuffers::flatbuffers target.
 BuildRequires: pkgconfig(re2)
 BuildRequires: protobuf-compiler
 BuildRequires: pkgconfig(protobuf)
-#BuildRequires: pkgconfig(protobuf-lite)
 BuildRequires: cmake(date)
 BuildRequires: boost-devel
 BuildRequires: pkgconfig(nlohmann_json)
@@ -41,6 +44,7 @@ BuildRequires: libgomp-devel
 %endif
 
 Source: %name-%version.tar
+Source1: %name-%version-cmake-external-onnx.tar
 Patch1: use-system-dnnl.patch
 
 %description
@@ -59,11 +63,11 @@ hardware, drivers, and operating systems, and provides optimal performance by
 leveraging hardware accelerators where applicable alongside graph optimizations
 and transforms.
 
-%package -n libonnxruntime
+%package -n libonnxruntime%soname
 Summary: libonnxruntime shared library
-Group: Sciences/Computer science
+Group: System/Libraries
 
-%description -n libonnxruntime
+%description -n libonnxruntime%soname
 Open Neural Network Exchange (ONNX) is an open ecosystem that empowers AI
 developers to choose the right tools as their project evolves. ONNX provides an
 open source format for AI models, both deep learning and traditional ML. It
@@ -75,6 +79,7 @@ This package contains the libonnxruntime shared library.
 %package -n libonnxruntime-devel
 Summary: Development files for onnxruntime
 Group: Development/C++
+Requires: libonnxruntime%soname = %EVR
 
 %description -n libonnxruntime-devel
 Open Neural Network Exchange (ONNX) is an open ecosystem that empowers AI
@@ -100,14 +105,14 @@ This package contains the "execution providers" for this onnxruntime, built
 as loadable plugin shared objects.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
 
 # Remove win32 binaries shipped by upstream.
 rm -rf cmake/external/git.Win32.2.41.03.patch
 
 # Use system abseil.
-subst '/NAMES absl/s!20250512 !!g' cmake/external/abseil-cpp.cmake
+subst '/NAMES absl/s![0-9]\{8\} !!g' cmake/external/abseil-cpp.cmake
 
 # Use system nlohmann-json.
 subst '/NAMES nlohmann_json/s!3.10 !!g' cmake/external/onnxruntime_external_deps.cmake
@@ -130,13 +135,14 @@ subst '/NAMES "SafeInt.hpp"/s!)! PATHS "%_includedir/safeint")!g' cmake/external
 printf >&2 '%%s\n' "Substituting local copy of 'flatbuffers'."
 printf >&2 '%%s: %%s\n' "* Original URL" "$(grep '^flatbuffers;' cmake/deps.txt)"
 subst '/^flatbuffers;/s!;[^;]*/archive/refs/tags/!;'"$(pwd)/cmake/"'flatbuffers-!' cmake/deps.txt
+# System flatbuffers-config.cmake only ships flatbuffers::flatbuffers_shared,
+# which would break the bundled build; never fall back to find_package.
+subst '/FIND_PACKAGE_ARGS 23.5.9 NAMES Flatbuffers flatbuffers/d' cmake/external/onnxruntime_external_deps.cmake
 
-# Use bundled ONNX.
+# Use bundled ONNX from Source1 (cmake/external/onnx).
 # The onnx project does not know how to produce or maintain useful shared libraries.
 # See also: https://bugzilla.altlinux.org/55423.
-printf >&2 '%%s\n' "Substituting local copy of 'onnx'."
-printf >&2 '%%s: %%s\n' "* Original URL" "$(grep '^onnx;' cmake/deps.txt)"
-subst '/^onnx;/s!;[^;]*/archive/refs/tags/!;'"$(pwd)/cmake/"'onnx-!' cmake/deps.txt
+# The source tree is passed via FETCHCONTENT_SOURCE_DIR_ONNX in %%build.
 
 # Use bundled Eigen3.
 printf >&2 '%%s\n' "Substituting local copy of 'eigen'."
@@ -153,7 +159,11 @@ subst '/static void SafeIntOn[A-Za-z]\+/s!static ![[noreturn]] static !' onnxrun
 
 %build
 %ifarch %ix86
-%add_optflags -msse2
+# -msse2 is required by mlas x86 kernels. -U__SSE2__ keeps abseil headers on
+# the portable hash-table group implementation, matching the system abseil
+# (built without SSE2); otherwise linking fails with undefined references to
+# absl::container_internal::PrepareInsertLarge and friends.
+%add_optflags -msse2 -U__SSE2__
 %endif
 %ifarch %dnnl_arches
 USE_DNNL=ON
@@ -168,6 +178,7 @@ USE_DNNL=OFF
   -Donnxruntime_ENABLE_DLPACK=ON \
   -Donnxruntime_USE_DNNL=$USE_DNNL \
   -DONNX_CUSTOM_PROTOC_EXECUTABLE=%_bindir/protoc \
+  -DFETCHCONTENT_SOURCE_DIR_ONNX:PATH="$(pwd)/cmake/external/onnx" \
   -DBUILD_TESTING=OFF
 %cmake_build
 
@@ -175,9 +186,9 @@ USE_DNNL=OFF
 %cmake_install
 chrpath -d %buildroot%_libdir/libonnxruntime.so.*
 
-%files -n libonnxruntime
-%_libdir/libonnxruntime.so.1.23.0
-%_libdir/libonnxruntime.so.1
+%files -n libonnxruntime%soname
+%_libdir/libonnxruntime.so.%version
+%_libdir/libonnxruntime.so.%soname
 
 %files -n libonnxruntime-providers
 %_includedir/onnxruntime/provider_options.h
@@ -194,6 +205,7 @@ chrpath -d %buildroot%_libdir/libonnxruntime.so.*
 %_includedir/onnxruntime/onnxruntime_cxx_api.h
 %_includedir/onnxruntime/onnxruntime_cxx_inline.h
 %_includedir/onnxruntime/onnxruntime_ep_c_api.h
+%_includedir/onnxruntime/onnxruntime_env_config_keys.h
 %_includedir/onnxruntime/onnxruntime_ep_device_ep_metadata_keys.h
 %_includedir/onnxruntime/onnxruntime_float16.h
 %_includedir/onnxruntime/onnxruntime_lite_custom_op.h
@@ -201,6 +213,9 @@ chrpath -d %buildroot%_libdir/libonnxruntime.so.*
 %_includedir/onnxruntime/onnxruntime_session_options_config_keys.h
 
 %changelog
+* Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 1.24.4-alt1
+- 1.23.0 -> 1.24.4
+
 * Mon Aug 04 2025 Arseny Maslennikov <arseny@altlinux.org> 1.23.0-alt1
 - Initial build for ALT Sisyphus.
   This is a prerelease revision from rel-1.23.0.
