@@ -12,7 +12,7 @@
 %define ser_girname %{girname}Service
 %define api_version 0
 %define major_version 12
-%define minor_version 2
+%define minor_version 3
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -359,7 +359,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_tmpfilesdir/%gis_name.conf
 
 %files phrog
-%_sysconfdir/glib-2.0/schemas/50_%app_id.PhrogFirstRun.gschema.override
+%_datadir/glib-2.0/schemas/50_%app_id.PhrogFirstRun.gschema.override
 
 %files -n %ser_libname%api_version
 %_libdir/%ser_libname-%api_version.so.%api_version
@@ -469,6 +469,12 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Aug 05 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.3-alt1
+- New version: 0.12.3.
+- Fixed phrog override.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.12.3
+
 * Wed Aug 05 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.2-alt1
 - New version: 0.12.2.
 - Fixed segfault in finalization stage.
