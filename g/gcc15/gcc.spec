@@ -3,8 +3,8 @@
 %define gcc_branch 15
 
 Name: gcc%gcc_branch
-Version: 15.2.1
-Release: alt2
+Version: 15.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20260409
+%define snapshot 20260804
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -47,7 +47,7 @@ Url: https://gcc.gnu.org/
 
 %define ada_binaries gnatbind gnatchop gnatclean gnatkr gnatlink gnatls gnatmake gnatname gnatprep
 
-%define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
+%define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x loongarch64 riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 
@@ -1702,6 +1702,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/libtsan_preinit.o
 %endif
 %ifarch %liblsan_arches
+%gcc_target_libdir/include/sanitizer/lsan_interface.h
 %gcc_target_libdir/liblsan.so
 %gcc_target_libdir/liblsan_preinit.o
 %endif
@@ -1839,9 +1840,6 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n liblsan%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/liblsan%gcc_branch-devel-static
 %dir %gcc_target_libdir/
-%dir %gcc_target_libdir/include/
-%dir %gcc_target_libdir/include/sanitizer/
-%gcc_target_libdir/include/sanitizer/lsan_interface.h
 %gcc_target_libdir/liblsan.a
 %endif
 
@@ -2121,6 +2119,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Aug 04 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.3.1-alt1
+- Updated to 15.3.1.
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + releases/gcc-14 (snapshot 20260804)
+  commit r15-11455-g1069adc2e1f9691876253b2fd612837b02927b4e.
+- Moved sanitizer/lsan_interface.h header from liblsan%%gcc_branch-devel-static
+  into libgcc%%gcc_branch-devel.
+
 * Wed Apr 29 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.2.1-alt2
 - Moved C runtime, library symlinks and headers to a new
   libgcc%gcc_branch-devel package (ALT#39379).
