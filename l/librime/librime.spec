@@ -1,6 +1,6 @@
 %define soversion 1
 Name: librime
-Version: 1.16.1
+Version: 1.17.0
 Release: alt1
 License: GPL-3.0-only
 Summary: Rime Input Method Engine Library
@@ -90,6 +90,9 @@ The %name-tools package contains tools for %name.
 %_bindir/rime_table_decompiler
 
 %changelog
+* Wed Aug 05 2026 Anton Farygin <rider@altlinux.org> 1.17.0-alt1
+- 1.16.1 -> 1.17.0
+
 * Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 1.16.1-alt1
 - 1.16.0 -> 1.16.1
 
