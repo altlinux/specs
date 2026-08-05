@@ -19,8 +19,8 @@
 %endif
 
 %define nv_version 595
-%define nv_release 84
-%define nv_minor   %nil
+%define nv_release 91
+%define nv_minor   07
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
@@ -274,6 +274,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Wed Aug 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt1
+- new version
+
 * Mon Jul 06 2026 Sergey V Turchin <zerg@altlinux.org> 595.84-alt1
 - new version
 

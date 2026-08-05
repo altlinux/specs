@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 595
-%define nv_release 84
-%define nv_minor %nil
-%define pkg_rel alt318
+%define nv_release 91
+%define nv_minor 07
+%define pkg_rel alt319
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Wed Aug 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt319
+- new version
+
 * Mon Jul 06 2026 Sergey V Turchin <zerg@altlinux.org> 595.84-alt318
 - new version
 
