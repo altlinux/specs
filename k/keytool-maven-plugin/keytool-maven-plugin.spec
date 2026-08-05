@@ -2,7 +2,7 @@
 
 Name: keytool-maven-plugin
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: A plugin that wraps the keytool program and allows to manipulate keystores
 Group: Development/Other
@@ -22,7 +22,7 @@ BuildRequires: maven-plugin-plugin
 BuildRequires: bouncycastle-pkix
 BuildRequires: slf4j
 BuildRequires: atinject
-BuildRequires: sisu-mojos
+BuildRequires: sisu-maven-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-invoker-plugin
 
@@ -53,6 +53,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Aug 05 2026 Anton Meleshnikov <alton@altlinux.org> 2.0.2-alt2
+- Fix FTBFS (renamed obsoleted require: sisu-mojos on sisu-maven-plugin).
+
 * Mon Jun 08 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.2-alt1
 - New version (Closes: #59468).
 
