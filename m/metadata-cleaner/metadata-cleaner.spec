@@ -3,7 +3,7 @@
 %define _name io.gitlab.metadatacleaner.metadatacleaner
 
 Name: metadata-cleaner
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary:  Metadata Cleaner
@@ -58,6 +58,9 @@ This tool allows you to view metadata in your files and to get rid of it, as muc
 %doc *.md
 
 %changelog
+* Thu Aug 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt1
+- 4.0.0 -> 4.0.1
+
 * Sat Jun 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.0-alt1
 - 2.5.6 -> 4.0.0
 - changed url && vcs
