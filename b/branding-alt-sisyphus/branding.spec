@@ -16,10 +16,10 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20260316
+Version: 20260803
 Release: alt1
 
-Url: http://en.altlinux.org
+URL: http://en.altlinux.org
 
 BuildRequires(pre): rpm-macros-branding
 
@@ -179,6 +179,24 @@ Requires(post): indexhtml-common
 %description indexhtml
 ALT index.html welcome page.
 
+%package ready-set
+Summary: This package contains ready-set config
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+BuildArch: noarch
+
+Requires: ready-set-gdm
+Requires: ready-set-plugin-language
+Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-network
+Requires: ready-set-plugin-date-and-time
+Requires: ready-set-plugin-user-passwdqc
+
+%branding_add_conflicts %flavour ready-set
+
+%description ready-set
+%summary.
+
 %prep
 %setup -n branding
 cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes/
@@ -224,6 +242,17 @@ popd
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
+
+# ready-set
+mkdir -p %buildroot%_datadir/ready-set/
+cat > %buildroot%_datadir/ready-set/config << EOF
+[Application]
+steps=language,keyboard,network,date-and-time,user-passwdqc
+
+[Context]
+user.with-root=true
+keyboard.additinal-layout-grp=grp:alt_shift_toggle
+EOF
 
 %ifarch %grub_arches
 #bootloader
@@ -287,7 +316,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
+%files ready-set
+%_datadir/ready-set/config
+
 %changelog
+* Mon Aug 03 2026 Anton Midyukov <antohami@altlinux.org> 20260803-alt1
+- Add ready-set subpackage.
+
 * Mon Mar 16 2026 Anton Midyukov <antohami@altlinux.org> 20260316-alt1
 - os-release: fix NAME, add VARIANT.
 
