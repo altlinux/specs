@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.51
+Version: 0.0.53
 Release: alt1
 
 Summary: A modern static site generator by the Material for MkDocs team
@@ -61,6 +61,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 05 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.53-alt1
+- Updated to 0.0.53.
+
 * Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.51-alt1
 - Updated to 0.0.51.
 

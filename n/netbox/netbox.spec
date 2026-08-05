@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.6.5
+Version: 4.6.7
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -22,11 +22,11 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs >= 1.6.1
-BuildRequires: python3-module-mkdocs-material >= 9.7.6
+BuildRequires: python3-module-mkdocs-material >= 9.7.7
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.6
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.5
-BuildRequires: python3-module-zensical >= 0.0.50
+BuildRequires: python3-module-zensical >= 0.0.52
 %endif
 Requires: python3-module-colorama >= 0.4.6
 Requires: python3-module-django >= 6.0.7
@@ -48,7 +48,7 @@ Requires: python3-module-django-timezone-field >= 7.2.2
 Requires: python3-module-djangorestframework >= 3.17.1
 Requires: python3-module-drf-spectacular >= 0.30.0
 Requires: python3-module-drf-spectacular-sidecar >= 2026.7.1
-Requires: python3-module-feedparser >= 6.0.12
+Requires: python3-module-feedparser >= 6.0.14
 Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
 Requires: python3-module-markdown >= 3.10.2
@@ -63,8 +63,8 @@ Requires: python3-module-rq >= 2.10.0
 Requires: python3-module-social-app-django >= 5.9.0
 Requires: python3-module-social-core >= 4.8.7
 Requires: python3-module-sorl-thumbnail >= 13.0.0
-Requires: python3-module-strawberry-graphql >= 0.321.0
-Requires: python3-module-strawberry-django >= 0.86.4
+Requires: python3-module-strawberry-graphql >= 0.323.2
+Requires: python3-module-strawberry-django >= 0.86.5
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2026.3
@@ -212,6 +212,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Aug 05 2026 Alexander Burmatov <thatman@altlinux.org> 4.6.7-alt1
+- New 4.6.7 version.
+
 * Thu Jul 23 2026 Alexander Burmatov <thatman@altlinux.org> 4.6.5-alt1
 - New 4.6.5 version.
 
