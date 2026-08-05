@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -33,7 +33,7 @@ Patch6: Fix-build-proccess.patch
 Patch9: cmakeblur-1.7.1-alt-build.patch
 Patch10: cmakegeom-1.7.1-alt-build.patch
 Patch11: cmakemultiplugin-1.7.1-alt-build.patch
-Patch12: stylepickertool-1.8.0-alt-build.patch
+Patch12: stylepickertool-1.8.0-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -128,9 +128,6 @@ pushd toonz/sources
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DTIFF_LIBRARY="%_builddir/%name-%version/thirdparty/tiff-4.0.3/libtiff/.libs/libtiff.a" \
-	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-	-DCMAKE_CXX_STANDARD=17 \
-	-DCMAKE_C_STANDARD=99
 	%nil
 
 %cmake_build
@@ -177,6 +174,10 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Wed Aug 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt2
+- updated opentoonz 1.8.0 build patch
+- rebuilded without some cmake configure
+
 * Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt1
 - 1.7.1.1 -> 1.8.0
 
