@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.11
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1022,6 +1022,7 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 	--with-privatedir=/var/lib/samba/private \\\
 	--with-shared-modules=%_samba4_modules \\\
 	--bundled-libraries=%_samba4_libraries \\\
+	--disable-rpath-install \\\
 	--with-ads \\\
 	--with-pie \\\
 	--with-relro \\\
@@ -2376,6 +2377,10 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Jul 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt2
+- Fix samba-devel pkgconfig: drop RPATH from Libs flags to avoid standard
+  library path violations (Closes: #60003)
+
 * Tue Jul 28 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt1
 - Update to security release of Samba 4.22
 - Security fixes (Fixes: CVE-2026-6949,  CVE-2026-58216, CVE-2026-58218,
