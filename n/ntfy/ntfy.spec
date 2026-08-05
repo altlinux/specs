@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/binwiederhier/ntfy
-%global commit_hash 311138e
+%global commit_hash 4c2b69e
 %def_with check
 %def_with docs
 
@@ -27,7 +27,7 @@
 %endif
 
 Name: ntfy
-Version: 2.26.3
+Version: 2.27.0
 Release: alt1
 Summary: Send push notifications to your phone or desktop using PUT/POST
 License: Apache-2.0 and GPL-2.0
@@ -40,6 +40,8 @@ Source1: vendor.tar
 Source2: node_modules.tar
 Source3: %name.service
 Source4: %name.sysusers
+Patch: 0001-web-hide-emoji-picker.patch
+Patch1: 0002-web-translate-date-time-formats-ru.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -71,6 +73,8 @@ do so since ntfy is open source.
 %else
 %setup -a1
 %endif
+%patch -p1
+%patch1 -p1
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -144,6 +148,11 @@ npm --prefix web run test
 %dir %attr(0750, _%name, _%name) %_cachedir/%name
 
 %changelog
+* Wed Aug 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.27.0-alt1
+- Updated to version 2.27.0.
+- Hide emoji picker to prevent exposing inappropriate content.
+- Fixed russian translation.
+
 * Thu Jul 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.26.3-alt1
 - Updated to version 2.26.3.
 
