@@ -1,5 +1,5 @@
 Name:    vdu_controls
-Version: 2.6.5
+Version: 2.6.8
 Release: alt1
 
 Summary: Visual Display Unit virtual control panel
@@ -22,13 +22,14 @@ Requires: python3-module-serial
 Requires: python3-module-opencv
 Requires: ImageMagick-tools
 Requires: v4l-utils
+Requires: xdg-utils
 
 BuildArch: noarch
 
 %description
 vdu_controls is a virtual control panel for externally connected
-VDUs (visual display units).  Controls are included for backlight
-brightness, and contrast.  vdu_controls uses the ddcutil command
+VDUs (visual display units). Controls are included for backlight
+brightness, and contrast. vdu_controls uses the ddcutil command
 line utility to interact with external displays via VESA Display
 Data Channel (DDC) Virtual Control Panel (VCP) standards.
 
@@ -84,6 +85,9 @@ install -m755 packaging/%name.wrapper %buildroot/%_bindir/%name
 %_datadir/%name/sample-scripts/__pycache__/
 
 %changelog
+* Wed Aug 05 2026 Sergey Palcheh <minergenon@altlinux.org> 2.6.8-alt1
+- new version 2.6.8
+
 * Sat Jul 11 2026 Sergey Palcheh <minergenon@altlinux.org> 2.6.5-alt1
 - new version 2.6.5
 - switch to PyQt6 and the new src/vdu_controls package layout
