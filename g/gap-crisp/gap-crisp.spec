@@ -1,7 +1,7 @@
 %define repo crisp
 
 Name: gap-crisp
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 Summary: GAP: Computing with Radicals, Injectors, Schunck classes and Projectors
 License: BSD-2-Clause
@@ -42,6 +42,9 @@ belonging to a given group class.
 %gap_sitelib/%repo/
 
 %changelog
+* Wed Aug 05 2026 Leontiy Volodin <lvol@altlinux.org> 1.4.9-alt1
+- New version 1.4.9.
+
 * Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.4.8-alt1
 - New version 1.4.8.
 - Updated url tag.
