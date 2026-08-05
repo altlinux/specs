@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 32
+%define _php_release_version 33
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -498,6 +498,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Wed Aug 05 2026 Anton Farygin <rider@altlinux.org> 8.3.33-alt1
+- 8.3.32 -> 8.3.33 (Fixes: CVE-2026-9672, CVE-2026-17543, CVE-2026-7260)
+
 * Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 8.3.32-alt1
 - 8.3.31 -> 8.3.32 (Fixes: CVE-2026-12184)
 - moved session.save_path and opcache.lockfile_path out of /tmp (Closes: #59565)

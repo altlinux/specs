@@ -8,7 +8,7 @@
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%php_version
-Release:	%php_release.3
+Release:	%php_release.4
 
 Summary:	Zend Opcache extension for opcode caching and optimization
 
@@ -19,6 +19,9 @@ Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 
 Patch0: php8-opcache-sapi-names.patch
+# backport of upstream 9ff6220e0661 (PHP >= 8.3), needed while
+# default opcache.lockfile_path (/var/run/php) may not exist
+Patch1: php8.2-opcache-memfd-lockfile.patch
 
 BuildRequires(pre): rpm-build-php8.3-version
 BuildRequires: gcc-c++
@@ -41,6 +44,10 @@ cp -pr -- %php_extsrcdir/%php_extension/* .
 
 %if "%_php_suffix" != "8.5"
 %patch0 -p1
+%endif
+
+%if "%_php_suffix" == "8.2"
+%patch1 -p1
 %endif
 
 # Fix path to pdo*.h
