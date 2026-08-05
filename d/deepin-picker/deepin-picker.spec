@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 6.0.11
+Version: 6.0.12
 Release: alt1
 
 Summary: Color picker tool for deepin
@@ -59,6 +59,9 @@ export LC_ALL=C.UTF-8
 %_datadir/%name/translations/deepin-picker_es_419.qm
 
 %changelog
+* Wed Aug 05 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
+- New version 6.0.12.
+
 * Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
 - New version 6.0.11.
 
