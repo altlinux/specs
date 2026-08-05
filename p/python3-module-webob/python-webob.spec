@@ -4,7 +4,7 @@
 
 Name: python3-module-webob
 Version: 1.8.11
-Release: alt1
+Release: alt2
 
 Summary: WSGI request and response object
 License: MIT
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3-module-legacy-cgi
+BuildRequires: python3(cgi)
 %endif
 
 %description
@@ -48,6 +48,9 @@ environment.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 05 2026 Anton Midyukov <antohami@altlinux.org> 1.8.11-alt2
+- NMU: Fix BR to compatibility with p11.
+
 * Mon Aug 03 2026 Anton Vyatkin <toni@altlinux.org> 1.8.11-alt1
 - New version 1.8.11.
 
