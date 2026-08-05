@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.144.4
+Version: 0.146.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -25,6 +25,16 @@ BuildRequires: help2man
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
 BuildRequires: libcap-devel
+# Code Mode embeds V8, which is built from the vendored sources (V8_FROM_SOURCE):
+# gn/ninja drive that build, clang compiles it, libclang is used by bindgen and
+# python3 runs the V8 build scripts.
+BuildRequires: gn
+BuildRequires: ninja-build
+BuildRequires: clang
+BuildRequires: clang-devel
+BuildRequires: lld
+BuildRequires: llvm
+BuildRequires: python3
 
 %description
 Codex CLI is a coding agent from OpenAI that runs locally on your computer.
@@ -56,6 +66,18 @@ perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and
 	END { die unless $x }' codex-rs/tui/src/updates.rs
 
 %build
+# Build V8 from the vendored sources rather than downloading a prebuilt blob.
+# Pointing GN/NINJA/CLANG_BASE_PATH at the system tools also stops the v8 crate
+# from fetching its own copies, which the offline build could not do anyway.
+export V8_FROM_SOURCE=1
+export GN=/usr/bin/gn
+export NINJA=/usr/bin/ninja
+export CLANG_BASE_PATH=%_prefix
+export PYTHON=/usr/bin/python3
+# glib is a Chromium build default that V8 itself does not need, the system
+# clang has no Chromium plugins, and the Chromium sysroot is not used because
+# we build against the system one.
+export GN_ARGS="use_glib=false clang_use_chrome_plugins=false use_sysroot=false fatal_linker_warnings=false"
 RUST_BACKTRACE=full \
 cargo build \
 	--config=.cargo/vendor-config.toml \
@@ -93,6 +115,11 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Wed Aug 05 2026 Alexey Shabalin <shaba@altlinux.org> 0.146.0-alt1
+- Update to rust-v0.146.0.
+- Build the V8 runtime from the vendored sources instead of stubbing Code Mode
+  out of the build, so Code Mode works and the downstream patches are dropped.
+
 * Tue Jul 14 2026 Alexey Shabalin <shaba@altlinux.org> 0.144.4-alt1
 - Update to rust-v0.144.4.
 - Re-apply the downstream Code Mode stub (keep rusty_v8 out of the build).
