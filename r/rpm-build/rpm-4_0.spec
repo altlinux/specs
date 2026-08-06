@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.213
+Version: 4.0.4.214
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -454,6 +454,10 @@ fi
 %files checkinstall
 
 %changelog
+* Thu Aug 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.214-alt1
+- Added support and enabled SHA256 hash in file digests.
+- Changed rpm-build to store hashes for empty files in built packages.
+
 * Thu Jul 09 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.213-alt1
 - glebfm@:
   + is_elf_so_executable: Started explicitly considering static PIE as executable.
