@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.6.0
 Release: alt1
 Summary: hf-xet xet client tech, used in huggingface_hub
 License: Apache-2.0
@@ -95,6 +95,9 @@ cd %mod_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.6.0-alt1
+- Update to new version 1.6.0.
+
 * Fri Mar 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.4.2-alt1
 - Update to new version 1.4.2.
 

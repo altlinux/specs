@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.26.0
+Version: 2.0.0
 Release: alt1
 Summary: The official Python SDK for Model Context Protocol servers and clients.
 License: MIT
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: mcp-fastmcp-compat.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -26,7 +27,7 @@ BuildRequires: python3(pip)
 BuildRequires: python3(anyio)
 BuildRequires: python3(httpx)
 BuildRequires: python3-module-httpx-sse
-BuildRequires: python3(pydantic) 
+BuildRequires: python3(pydantic)
 BuildRequires: python3(starlette)
 BuildRequires: python3-module-python-multipart
 BuildRequires: python3-module-sse-starlette
@@ -34,13 +35,14 @@ BuildRequires: python3-module-pydantic-settings
 BuildRequires: python3(jsonschema)
 BuildRequires: python3(typer)
 BuildRequires: python3(uv)
-BuildRequires: python3-module-uv-build  
+BuildRequires: python3-module-uv-build
 BuildRequires: python3(websockets)
 BuildRequires: python3-module-inline-snapshot
 BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-pydantic-core
 BuildRequires: python3-module-ruff
 BuildRequires: python3(httpcore)
+BuildRequires: python3-module-typing_extensions
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -50,6 +52,7 @@ BuildRequires: python3(uvicorn)
 BuildRequires: python3(requests)
 %endif
 
+Requires: python3-module-mcp-types = %{version}-%{release}
 Requires: python3(anyio)
 Requires: python3(httpx)
 Requires: python3(uvicorn)
@@ -72,15 +75,32 @@ This Python SDK implements the full MCP specification, making it easy to:
 - Use standard transports like stdio, SSE, and Streamable HTTP
 - Handle all MCP protocol messages and lifecycle events
 
+%package -n python3-module-mcp-types
+Group: Development/Python3
+Summary: Model Context Protocol wire types
+Requires: python3(pydantic)
+Requires: python3-module-typing_extensions
+%py3_provides mcp_types
+
+%description -n python3-module-mcp-types
+Standalone MCP protocol wire types used by python3-module-mcp.
+
 %prep
 %setup
 %autopatch -p1
 sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' pyproject.toml
+sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' src/mcp-types/pyproject.toml
 
 %build
+pushd src/mcp-types
+%pyproject_build
+popd
 %pyproject_build
 
 %install
+pushd src/mcp-types
+%pyproject_install
+popd
 %pyproject_install
 
 %check
@@ -92,7 +112,14 @@ sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' pyproject.toml
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
+%files -n python3-module-mcp-types
+%python3_sitelibdir/mcp_types/
+%python3_sitelibdir/%{pyproject_distinfo mcp-types}/
+
 %changelog
+* Tue Aug 04 2026 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt1
+- 1.26.0 -> 2.0.0
+
 * Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 1.26.0-alt1
 - 1.18.0 -> 1.26.0
 
