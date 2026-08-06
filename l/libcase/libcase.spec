@@ -9,9 +9,9 @@
 
 Name: libcase
 Version: %soversion.2
-Release: alt1
+Release: alt2
 
-Summary: Unofficial Yandex Music client (Devel build)
+Summary: Library with various useful widgets for your application
 License: GPL-3.0-or-later
 Group: Sound
 URL: https://altlinux.space/rirusha/libcase
@@ -42,7 +42,7 @@ Group: Other
 %summary.
 
 %package -n %name%soversion
-Summary: Base objects for API libraries
+Summary: Library with various useful widgets for your application
 Group: Development/C
 
 %description -n %name%soversion
@@ -115,6 +115,9 @@ Requires: %name%soversion-gir = %EVR
 %_girdir/%girname-%soversion.gir
 
 %changelog
+* Thu Aug 06 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt2
+- Fixed summary.
+
 * Thu Jul 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
 - ComboRow: Added navigation-sidebar style to nested ListView.
 - ComboRow: Added sheet-title property.
