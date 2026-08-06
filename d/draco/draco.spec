@@ -1,6 +1,6 @@
 Name:    draco
 Version: 1.5.7
-Release: alt1
+Release: alt1.1
 
 Summary: Draco is a library for compressing and decompressing 3D geometric meshes and point clouds. It is intended to improve the storage and transmission of 3D graphics
 License: Apache-2.0
@@ -10,6 +10,7 @@ Url:     https://github.com/google/draco
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-alt-no-static.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -49,6 +50,7 @@ Group: Development/C++
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake -GNinja -Wno-dev \
@@ -59,8 +61,6 @@ Group: Development/C++
 
 %install
 %ninja_install -C "%_cmake__builddir"
-# Remove static library
-rm -f %buildroot%_libdir/*.a
 
 %files
 %doc AUTHORS README.md
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Aug 06 2026 L.A. Kostis <lakostis@altlinux.ru> 1.5.7-alt1.1
+- cmake: remove static library deps (closes #51076).
+
 * Sun Jan 21 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
 - New version.
 
