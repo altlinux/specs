@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname io.github.seja_arctic_fox.vidcom
 
 Name: vidcom
-Version: 0.82
+Version: 0.83
 Release: alt1
 
 Summary: Archive your videos easily
@@ -55,10 +56,14 @@ or specifying their paths in the command (CLI).
 %doc *.md
 %_bindir/%name
 %_desktopdir/%oname.desktop
-%_iconsdir/hicolor/*/apps/%oname.svg
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%oname.metainfo.xml
+%_datadir/glib-2.0/schemas/%oname.gschema.xml
 
 %changelog
+* Fri Aug 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.83-alt1
+- 0.82 -> 0.83
+
 * Fri Jun 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.82-alt1
 - Initial build for ALT Linux.
 
