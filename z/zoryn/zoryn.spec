@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.47.0
+Version: 0.48.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -17,7 +17,6 @@ BuildRequires: libcurl-devel
 BuildRequires: dune >= 3.0
 BuildRequires: ocaml-cmdliner-devel >= 2.1.0
 BuildRequires: ocaml-re-devel >= 1.10.0
-BuildRequires: ocaml-yaml-devel >= 3.0.0
 BuildRequires: ocaml-yojson-devel >= 1.7.0
 BuildRequires: ocaml-curl-devel >= 0.9.0
 BuildRequires: ocaml-toml-devel
@@ -111,6 +110,41 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Aug 06 2026 Anton Farygin <rider@altlinux.org> 0.48.0-alt1
+- added devenv port publishing on loopback and filtered LAN access ([devenv.lan])
+- added devenv timezone and dns/dns_search/dns_option settings
+- added building a task batch on all builders matched by -b, to check the
+  batch on several architectures in one run
+- added task batch --skip-built to skip packages already built on the builder
+- added task test-rebuild --mkrepo to run the rebuilds against a merged
+  repository of the task, as task mkrepo builds it
+- added in-gears merge marks, a full git-log view and per-branch/tag actions
+  to gitery manage
+- added deriving the gitery login from an @altlinux.org git user.email
+- added sisyphus as the default target repository of task new
+- fixed up/check to reject upstream URLs with unsafe schemes (ext::, file://)
+  declared in the repository, before they reach git ls-remote
+- fixed the RDB task API parser to drop package names and versions carrying
+  path traversal before they turn into download and clone paths
+- fixed hook sandboxes to detach from the terminal (--new-session), closing
+  TIOCSTI keystroke injection into the user's shell
+- fixed the spec path taken from .gear/rules to stay inside the repository
+- fixed gear tag naming in submit: the tag name now comes from git config
+  gear.create-tag.name, exactly as gear-create-tag builds it
+- fixed submit --replace=TASK:N to always replace the named subtask
+- fixed submit repo creation on gitery for packages removed from sisyphus
+  or last built from an srpm
+- fixed check version/up remote-tag checks: pick the tag by the
+  .gear/version-up pattern, report errors instead of "Already up to date!"
+- fixed Builder.find_srpm to accept versions starting with a letter (used by
+  task rebuild, task test-rebuild and task batch in rebuild mode)
+- fixed devenv to operate on the git repository root when run from a
+  subdirectory
+- fixed devenv pids_limit to also raise podman's low nproc ulimit that
+  parallel builds were hitting
+- fixed re-entering a stopped devenv container to not re-resolve
+  BuildRequires every time
+
 * Thu Jul 23 2026 Anton Farygin <rider@altlinux.org> 0.47.0-alt1
 - added zoryn gitery command with gitoskop/SSH verbs and interactive manage TUI
 - added devenv --feature one-shot flag and devenv feature add for running containers
