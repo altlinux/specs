@@ -1,5 +1,5 @@
 Name:     Seamly2D
-Release:  alt2
+Release:  alt3
 Version:  2026.3.9.214
 
 Summary:  Open source patternmaking software to democratize fashion
@@ -35,6 +35,10 @@ in guiding the fashion world toward a more inclusive and sustainable future.
 
 %prep
 %setup
+%ifarch %e2k
+# error: cannot open source file "obj/vtools"
+sed -i '/+= precompile_header/d' common.pri
+%endif
 
 %build
 %qmake_qt6 Seamly2D.pro
@@ -54,6 +58,9 @@ chrpath -d %buildroot/%_bindir/{seamly2d,seamlyme}
 %_datadir/seamly2d
 
 %changelog
+* Mon Aug 03 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2026.3.9.214-alt3
+- e2k build fix
+
 * Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 2026.3.9.214-alt2
 - Improved package description.
 
