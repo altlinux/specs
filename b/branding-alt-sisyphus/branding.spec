@@ -16,7 +16,7 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20260803
+Version: 20260806
 Release: alt1
 
 URL: http://en.altlinux.org
@@ -191,6 +191,7 @@ Requires: ready-set-plugin-keyboard
 Requires: ready-set-plugin-network
 Requires: ready-set-plugin-date-and-time
 Requires: ready-set-plugin-user-passwdqc
+Requires: ready-set-plugin-license-agreement
 
 %branding_add_conflicts %flavour ready-set
 
@@ -247,11 +248,13 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 mkdir -p %buildroot%_datadir/ready-set/
 cat > %buildroot%_datadir/ready-set/config << EOF
 [Application]
-steps=language,keyboard,network,date-and-time,user-passwdqc
+steps=language,keyboard,license-agreement,network,date-and-time,user-passwdqc
 
 [Context]
 user.with-root=true
 keyboard.additinal-layout-grp=grp:alt_shift_toggle
+license-agreement.file-path=/usr/share/alt-notes/license.LANG.html
+license-agreement.language-fallback=all
 EOF
 
 %ifarch %grub_arches
@@ -320,6 +323,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/ready-set/config
 
 %changelog
+* Thu Aug 06 2026 Anton Midyukov <antohami@altlinux.org> 20260806-alt1
+- ready-set: add license-aggreement step.
+
 * Mon Aug 03 2026 Anton Midyukov <antohami@altlinux.org> 20260803-alt1
 - Add ready-set subpackage.
 
