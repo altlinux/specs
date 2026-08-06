@@ -37,6 +37,7 @@
 %def_enable libcdio
 %def_enable libcodec2
 %def_enable libdav1d
+%def_enable libsvtav1
 %ifarch %e2k
 %def_disable libdc1394
 %else
@@ -164,7 +165,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version: 8.1.2
-Release: alt1
+Release: alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -200,6 +201,7 @@ BuildRequires:	yasm
 %{?_enable_libcelt:BuildRequires: libcelt-devel}
 %{?_enable_libcodec2:BuildRequires: libcodec2-devel}
 %{?_enable_libdav1d:BuildRequires: libdav1d-devel}
+%{?_enable_libsvtav1:BuildRequires: libsvt-av1-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
 %{?_enable_libdrm:BuildRequires: libdrm-devel}
 %{?_enable_libfreetype:BuildRequires: libfreetype-devel}
@@ -584,6 +586,7 @@ xz Changelog
 	%{subst_enable libcelt} \
 	%{subst_enable libcodec2} \
 	%{subst_enable libdav1d} \
+	%{subst_enable libsvtav1} \
 	%{subst_enable libdavs2} \
 	%{subst_enable libdc1394} \
 	%{subst_enable libdrm} \
@@ -821,6 +824,15 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Wed Aug 05 2026 Anton Farygin <rider@altlinux.org> 2:8.1.2-alt2
+- Fixes:
+  * CVE-2027-64830 heap buffer overflow vulnerability in the VobSub subtitle demuxer
+  * CVE-2026-64831 stack buffer overflow vulnerability in the Vulkan HEVC hardware decoder
+  * CVE-2026-64832 double-free vulnerability in the NVIDIA NVDEC hardware decoder
+  * CVE-2026-64833 out-of-bounds read vulnerability in the S/PDIF muxer
+  * CVE-2026-64834 infinite loop vulnerability in the RTP/ASF demuxer
+  * CVE-2026-64835 out-of-bounds memory access vulnerability in the ADX audio decoder
+
 * Mon Jun 22 2026 Anton Farygin <rider@altlinux.org> 2:8.1.2-alt1
 - 8.1.1 -> 8.1.2
 
