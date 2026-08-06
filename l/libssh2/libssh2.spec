@@ -2,7 +2,7 @@
 
 Name: libssh2
 Version: 1.11.1
-Release: alt3
+Release: alt4
 
 Summary: A library implementing the SSH2 protocol
 Group: Networking/Remote access
@@ -13,6 +13,10 @@ Source: %name-%version.tar
 Patch0: libssh2-1.11.1-CVE-2026-7598.patch
 Patch1: libssh2-1.11.1-CVE-2026-55200.patch
 Patch2: libssh2-1.11.1-CVE-2026-55199.patch
+Patch3: libssh2-1.11.1-CVE-2026-66032.patch
+Patch4: libssh2-1.11.1-CVE-2026-66033.patch
+Patch5: libssh2-1.11.1-CVE-2026-66034.patch
+
 
 BuildRequires: libssl-devel zlib-devel
 # for tests
@@ -48,6 +52,9 @@ developing applications that use %name.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 # set version
@@ -79,6 +86,10 @@ LC_ALL=en_US.UTF-8 %make -C tests check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 27 2026 Alexander Danilov <admsasha@altlinux.org> 1.11.1-alt4
+- Applied security fix from upstream (Fixes: CVE-2026-66032, CVE-2026-66033,
+  CVE-2026-66034).
+
 * Tue Jun 30 2026 Alexander Danilov <admsasha@altlinux.org> 1.11.1-alt3
 - Applied security fix from upstream (Fixes: CVE-2026-55199, CVE-2026-55200).
 
