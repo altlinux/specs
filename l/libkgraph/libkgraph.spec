@@ -3,11 +3,11 @@
 %define        pkgname kgraph
 %define        pypiname %pkgname
 
-%def_disable   python
+%def_enable    python
 
 Name:          lib%{pkgname}
 Version:       0.1p2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A library for k-nearest neighbor search
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
@@ -180,6 +180,9 @@ rows of NumPy matrices.
 
 
 %changelog
+* Thu Aug 06 2026 Pavel Skrylev <majioa@altlinux.org> 0.1p2-alt0.2
+- + enabled python
+
 * Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.1p2-alt0.1
 - ^ 0.1-alt0.git2143fd6 -> 0.1p2
 - - disabled python
