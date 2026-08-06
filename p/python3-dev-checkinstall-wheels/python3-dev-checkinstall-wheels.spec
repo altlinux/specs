@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%global submajor 14
+%global submajor 15
 %global tool_dir %_datadir/python3.%{submajor}/Tools
 
 
@@ -40,5 +40,8 @@ done
 %tool_dir/wheels_for_checkinstall-%version
 
 %changelog
+* Sat Jul 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15-alt1
+- Update for python3.15
+
 * Wed May 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14-alt1
 - Initial release for Sisyphus
