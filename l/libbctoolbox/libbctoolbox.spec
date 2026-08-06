@@ -1,10 +1,11 @@
 Name: libbctoolbox
-Version: 5.4.120
+Version: 5.4.124
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
 License: GPLv3
 Url: https://gitlab.linphone.org/BC/public/bctoolbox
+Vcs: https://github.com/BelledonneCommunications/bctoolbox
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -28,11 +29,6 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 
 %prep
 %setup
-# /usr/src/RPM/BUILD/libbctoolbox-5.4.0/src/crypto/mbedtls.cc:61:24:
-# error: 'MBEDTLS_ERR_THREADING_BAD_INPUT_DATA' was not declared in this scope;
-# did you mean 'MBEDTLS_ERR_SHA1_BAD_INPUT_DATA'?
-# Revert "Update to mbedtls3.6"
-# 672bdf495fb834ac4df2e196385656b1a42e1956
 %patch0 -p1
 
 %build
@@ -56,6 +52,11 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCToolbox
 
 %changelog
+* Thu Aug 06 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.124-alt1
+- New version 5.4.124.
+- Added vcs tag.
+- Fixed build on gcc 15.3.1.
+
 * Thu Jun 11 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.120-alt1
 - 5.4.120.
 
