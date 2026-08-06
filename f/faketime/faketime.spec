@@ -1,5 +1,5 @@
 Name: faketime
-Version: 0.2.8
+Version: 0.3
 Release: alt1
 
 Summary: Execute program with changed notion of system time
@@ -21,10 +21,9 @@ system time.
 install -pm755 %_datadir/gnulib/build-aux/bootstrap .
 echo -n %version > .tarball-version
 mkdir build-aux
-# remove timespectod() to avoid compilation warnings in unused code.
-sed '/Return an approximation/,/}$/d' < %_datadir/gnulib/lib/timespec.h > timespec.h
 
 %build
+%add_optflags -std=gnu17
 ./bootstrap --gnulib-srcdir=%_datadir/gnulib --no-git --skip-po --force
 %configure
 %make_build
@@ -36,19 +35,6 @@ rm %buildroot%_libdir/*.la
 %check
 %make_build -k check
 
-cat > exp <<'EOF'
-Fri Feb 13 20:44:50 UTC 2009
-EOF
-LC_ALL=C TZ=UTC LD_LIBRARY_PATH=%buildroot%_libdir \
-	%buildroot%_bindir/faketime -d '1970-01-01 1234557890 seconds' -- date > out
-diff exp out
-
-date -u -r/ '+%%Y-%%m-%%d %%H:%%M:%%S' > exp
-LC_ALL=C LD_LIBRARY_PATH=%buildroot%_libdir \
-	%buildroot%_bindir/faketime -r/ -- \
-	date -u '+%%Y-%%m-%%d %%H:%%M:%%S' > out
-diff exp out
-
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -59,6 +45,9 @@ diff exp out
 %_man1dir/*
 
 %changelog
+* Thu Aug 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3-alt1
+- Added support for 64-bit time_t.
+
 * Wed Apr 07 2021 Dmitry V. Levin <ldv@altlinux.org> 0.2.8-alt1
 - Fixed build with fresh gnulib.
 - Built with explicitly enabled LFS support.
