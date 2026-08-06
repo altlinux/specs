@@ -1,6 +1,6 @@
 %global import_path github.com/rootless-containers/rootlesskit
 Name:     rootlesskit
-Version:  3.0.2
+Version:  3.1.0
 Release:  alt1
 
 Summary:  Linux-native "fake root" for implementing rootless containers
@@ -61,6 +61,9 @@ EOF
 %doc *.md
 
 %changelog
+* Wed Aug 05 2026 Mikhail Gordeev <obirvalger@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+
 * Mon Jul 13 2026 Mikhail Gordeev <obirvalger@altlinux.org> 3.0.2-alt1
 - new version 3.0.2
 
