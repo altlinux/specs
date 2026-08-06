@@ -1,10 +1,10 @@
-%define ver	2.9.2
+%define ver	2.9.3
 %define subver  rel.0
-%define bver	2-9-2
+%define bver	2-9-3
 
 Name: lynx
 Version: %ver
-Release: alt2.%subver
+Release: alt1.%subver
 
 Summary: Text based browser for the world wide web
 License: GPLv2
@@ -32,7 +32,7 @@ Provides: webclient, lynx-ssl = %version
 Obsoletes: lynx-ssl
 
 # Automatically added by buildreq on Wed Apr 03 2002
-BuildRequires: lclint libncursesw-devel libssl ncompress openssl-devel postfix sharutils telnet unzip zip zlib-devel
+BuildRequires: libncursesw-devel libssl ncompress openssl-devel postfix sharutils telnet unzip zip zlib-devel
 
 %description
 This a terminal based WWW browser. While it does not make any attempt
@@ -163,6 +163,9 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Thu Aug 06 2026 Alexei Takaseev <taf@altlinux.org> 2.9.3-alt1.rel.0
+- 2.9.3
+
 * Fri Mar 21 2025 Constantin Sunzow <protvin@altlinux.org> 2.9.2-alt2.rel.0
 - Use unicode by default in lynx.cfg (ALT 51483).
 
