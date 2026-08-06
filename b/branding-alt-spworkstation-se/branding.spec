@@ -1,13 +1,15 @@
+%def_without slideshow
+
 %define brand alt
 %define Brand ALT
 %define theme spworkstation-se
 %define Theme SP Workstation
 # NB: it'd be not noarch anymore on a shared girar instance
-%ifarch %e2k
-%define LKNV 11102-01
-%else
+#ifarch %e2k
+#define LKNV 11102-01
+#else
 %define LKNV 11103-01
-%endif
+#endif
 %define altbranch %_priority_distbranch
 %define status %nil
 %define status_en ALPHA
@@ -29,9 +31,9 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.50
+Release: alt0.52
 Epoch: 1
-Url: https://altsp.su
+URL: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -39,7 +41,7 @@ BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 
-BuildRequires: distro-licenses >= 1.3.2
+BuildRequires: distro-licenses >= 1.4.4
 
 Source: branding.tar
 
@@ -262,7 +264,7 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
-cp /usr/share/distro-licenses/ALT_SP_License/license.{all,ru}.html.in notes/
+cp /usr/share/distro-licenses/ALT_SP_A2_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -362,9 +364,14 @@ fi
 %files menu
 %_sysconfdir/xdg/menus/applications-merged/50-applications.menu
 
+%if_with slideshow
 %files slideshow
 %_sysconfdir/alterator/slideshow.conf
 %_datadir/install2/slideshow
+%else
+%exclude %_sysconfdir/alterator/slideshow.conf
+%exclude %_datadir/install2/slideshow
+%endif
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -377,265 +384,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
-* Wed May 20 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.50
-- Initial new branding with LKNV 11103-01.
-
-* Wed May 20 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.15
-- os-release: add VARIANT_ID, update BUILD_ID (add LKNV).
-- indexhtml: add LKNV VERSION to title.
-- notes: add LKNV.
-
-* Fri May 01 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.14
-- browser-qt: update from ALT Workstation.
-
-* Tue Mar 17 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.13
-- mate-settings: Add dependency on lightdm-conf-greeter-hide-users.
-- os-release: fix NAME, add VARIANT.
-- Split PRODUCT_NAME into BRAND and PRODUCT_NAME.
-
-* Tue Feb 10 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.12
-- Add menu subpackage.
-
-* Fri Jan 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.11
-- gnome-settings: show generic names in arcmenu by default.
-
-* Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.10
-- gnome-settings: enable a11y indicator on panel.
-
-* Sat Nov 29 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.09
-- Add slideshow.
-- Update images.
-- Build with qt6.
-
-* Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.08
-- Update images.
-
-* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.07
-- browser-qt: update images
-
-* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.06
-- use images/product-logo as system-logo too
-- browser-qt: add width distr logo
-
-* Tue Jul 08 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.05
-- use a monotone background for installer
-- browser-qt: stretch installer background
-
-* Tue Jul 08 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.04
-- add gnome-settings subpackage
-
-* Mon Jul 07 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.03
-- Update images
-
-* Thu Jun 26 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.02
-- os-release: change NAME="ALT Linux"
-- os-release: add LOGO
-- indexhtml.desktop: use xdg-open instead xbrowser
-
-* Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.01
-- 11.0ALPHA
-- indexhtml: replace absolute links of license with relative links
-
-* Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt1
-- 10.2.1
-- os-release: use STATUS_EN instead STATUS
-
-* Thu Nov 28 2024 Michael Shigorin <mike@altlinux.org> 1:10.2-alt7.1
-- E2K: 11102-01
-
-* Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt7
-- bootsplash: set plymouth theme to bgrt-alt, when upgrade package
-  branding-alt-spworkstation-bootsplash < 1:10-alt7
-
-* Mon Oct 14 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt6
-- Update system-logo.png
-
-* Thu Oct 03 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5
-- mate-settings: set icon theme Papirus-Light
-
-* Thu Sep 12 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt4
-- indexhtml: update links (thanks black@)
-- indexhtml: add dependency on shared-desktop-icons
-
-* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt3
-- indexhtml/index-en.html: update links
-
-* Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt2
-- bump version to 10.2
-- convert License fields to SPDX format
-
-* Wed Jan 03 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt9
-- index-en.html: fix unclosed quote
-
-* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt8
-- indexhtml: update links
-
-* Tue Nov 07 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt7
-- add system-logo.png for plymouth-theme-bgrt-alt
-- bootsplash: use plymouth-theme-bgrt-alt
-
-* Fri Oct 27 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
-- mate-settings: add settings for lightdm-gtk-greeter:
-  + add keyboard layout indicator
-  + enable screen keyboard (onboard)
-
-* Tue Oct 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
-- indexhtml: update link to official telegram chat
-- indexhtml: add link to Mailing Lists
-
-* Fri Sep 22 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt4
-- copy licenses from distro-licenses
-
-* Wed Apr 26 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt3
-- indexhtml/index-en.html.in: fix html tag for "Report a bug"
-- os-release: add BUG_REPORT_URL
-
-* Mon Apr 17 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt2
-- indexhtml: add link "Report a Bug"
-- notes: use word 'release' instead 'version'
-
-* Sun Apr 09 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt1
-- set version 10, Epoch 1
-- remove codename, add LKNV in altlinux-release
-- notes: change product name to english name in release-notes.all.html
-- notes: add word 'version' in release-notes
-- notes: exclude alt-notes/livecd-*
-- os-release: add BUILD_ID
-- os-release: add ALT_BRANCH_ID
-
-* Tue Mar 14 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
-- notes: update license
-
-* Mon Feb 27 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt3
-- branding.spec: indexhtml: do'nt require shared-desktop-icons
-- images: update wallpapers
-- release-notes.all.html.in: update format from russian version
-- indexhtml: remove link to bugs.altlinux.org
-- os-release.in: remove link to bugs.altlinux.org
-
-* Tue Jan 24 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt2
-- disable gfxboot for syslinux and slideshow for installer
-- bootloader subpackage noarch again
-- cleanup unused images
-- update images
-- add LKNV to os-release
-- define BRANCH from %%_priority_distbranch
-
-* Fri Nov 11 2022 Anton Midyukov <antohami@altlinux.org> 10.1-alt1
-- version bump
-- replace distro_name 'ALT 8 SP Workstation' with 'ALT SP Workstation'
-- save BUILD_ID in /etc/os-release with alt-os-release
-- indexhtml: update for new release
-- indexhtml: do not require docs-alt-spworkstation
-- add icons for indexhtml.desktop
-- do not create symlinks on documentation
-
-* Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 9.2-alt2
-- set gtk_theme=BlueMenta, icon_theme=mate, window_theme=BlueMenta
-- update Conflicts for release
-- set black-white colours for grub
-- disable GRUB_BACKGROUND, GRUB_WALLPAPER
-
-* Fri Oct 22 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.2-alt1
-- version bump
-
-* Tue Sep 21 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt1
-- version bump
-- os-release updating
-
-* Wed Sep 08 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt2
-- design changed
-
-* Thu Jul 15 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.3-alt1
-- version bump
-
-* Thu Oct 29 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt6
-- 'Next' button size fixed
-
-* Fri Sep 25 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt5
-- licenses replaced from c8.1
-
-* Tue Sep 15 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt4
-- conflicts on altlinux-release-{sisyphus,p9} added
-
-* Fri Sep  4 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt3
-- mate-settings resurrected
-- obsoletes fixed
-
-* Wed May 20 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt2
-- bootmenu bar color fixed
-
-* Wed May 13 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.2-alt1
-- spworkstation version based on alt-server
-
-* Thu Nov 14 2019 Alexey Shabalin <shaba@altlinux.org> 9.0-alt2
-- sync spec with branding-alt-workstation
-- Package system-logo.png for Plymouth
-- add black border for focused buttons
-
-* Thu Oct 17 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.0-alt1
-- version set to 9.0
-
-* Thu Sep  5 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.99-alt1
-- dependence on xdg-utils in indexhtml removed
-
-* Fri Aug 16 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.98-alt1
-- unset "beta" status
-
-* Tue Jul 23 2019 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.95-alt1
-- set status to beta
-
-* Wed Jul 10 2019 Alexey Shabalin <shaba@altlinux.org> 8.91-alt1
-- Replace license.all.html.in with English page
-- Put status banner to NorthEast
-
-* Fri Jun 14 2019 Alexey Shabalin <shaba@altlinux.org> 8.90-alt3
-- update background4x3 with logo
-
-* Thu Jun 13 2019 Alexey Shabalin <shaba@altlinux.org> 8.90-alt2
-- Do not requires pam-limits-desktop (fixed ATL#36875)
-- Drop settings for WM
-
-* Wed May 29 2019 Alexey Shabalin <shaba@altlinux.org> 8.90-alt1
-- Alpha version of ALT Server 9.0 (based on Education by cas@).
-
-* Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 8.2-alt0.M80P.2
-- Add Droid fonts used in XFCE.
-- Remove overrided desktop file for system-config-printer.
-- Fix menu on window key.
-- Add xfce4-clipman.desktop.
-- Replace standard XFCE menu by Whisker menu, mixer plugin by pulseaudio plugin.
-- Simplify panel in XFCE.
-- Remove Simply Linux logo and wallpapers.
-
-* Fri May 12 2017 Andrey Cherepanov <cas@altlinux.org> 8.2-alt0.M80P.1
-- New release
-- Use pam-limits-desktop instead of own limits rules
-- Remove altlinux.ru from files
-
-* Fri Oct 21 2016 Andrey Cherepanov <cas@altlinux.org> 8.1-alt0.M80P.1
-- Increase release number
-
-* Thu Oct 20 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.5.M80P.1
-- Complete Russian localization of menu
-- Update indexhtml: fix URLs of official site sections URL and books location
-
-* Mon Sep 05 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.4.M80P.1
-- Use bright Education icon suitable both for light and dark backgrounds
-- Rename kde4-settings to kde-settings, package Konsole profile and
-  disable nm-applet.desktop autostart in KDE
-
-* Tue Aug 30 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.3.M80P.1
-- Set yellow labels for gfxboot
-- Use predefined boot.png with logo for grub
-- Set bright color for menubar in grub
-
-* Fri Aug 26 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.2.M80P.1
-- Do not require polkit-gnome
-- Set SimpleSL icon theme in XFCE settings
-
-* Fri Aug 26 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.1.M80P.2
-- Rebuild with conflict with branding-xalt-kworkstation
-
-* Fri Jul 22 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt0.1.M80P.1
-- Initial build
+* Thu Aug 06 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.52
+- indexhtml: replacement Telegram Channel with MAX Channel.
+- branding.spec: use ALT_SP_A2_License.
+
+* Tue Aug 04 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.51
+- Disable slideshow package.
+
+* Thu May 21 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.50
+- Initial new branding from alt-spworkstation.

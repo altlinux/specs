@@ -1,3 +1,5 @@
+%def_without slideshow
+
 %define brand alt
 %define Brand ALT
 %define theme spserver-se
@@ -24,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.50
+Release: alt0.52
 URL: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -33,7 +35,7 @@ BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 
-BuildRequires: distro-licenses >= 1.3.2
+BuildRequires: distro-licenses >= 1.4.4
 
 Source: branding.tar
 
@@ -210,7 +212,7 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
-cp /usr/share/distro-licenses/ALT_SP_License/license.{all,ru}.html.in notes/
+cp /usr/share/distro-licenses/ALT_SP_A2_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -276,9 +278,14 @@ fi
 %_datadir/alt-notes/release-notes.*
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
+%if_with slideshow
 %files slideshow
 %_sysconfdir/alterator/slideshow.conf
 %_datadir/install2/slideshow
+%else
+%exclude %_sysconfdir/alterator/slideshow.conf
+%exclude %_datadir/install2/slideshow
+%endif
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -291,5 +298,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Aug 06 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.52
+- indexhtml: replacement Telegram Channel with MAX Channel.
+- branding.spec: use ALT_SP_A2_License.
+
+* Tue Aug 04 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.51
+- Disable slideshow package.
+
 * Thu May 21 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.50
 - Initial new branding from alt-sp-server.
