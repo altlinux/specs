@@ -4,7 +4,7 @@
 
 Name: jtreg
 Version: 8.3+1
-Release: alt1
+Release: alt2
 
 Summary: Regression Test Harness for the OpenJDK platform: jtreg
 License: Apache-2.0
@@ -97,6 +97,9 @@ make test
 %doc LICENSE README.md
 
 %changelog
+* Fri Aug 7 2026 Timofei Fedotov <sovtouch@altlinux.org> 8.3+1-alt2
+- Replaced hardcoded paths and versions with dynamic lookups.
+
 * Fri Jul 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 8.3+1-alt1
 - Updated to 8.3+1.
 
