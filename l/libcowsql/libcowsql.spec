@@ -2,7 +2,7 @@
 %define soname 0
 
 Name: libcowsql
-Version: 1.15.8
+Version: 1.15.9
 Release: alt1
 Summary: Library for distributed SQLite database
 
@@ -76,6 +76,11 @@ with no dependency on external databases.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.15.9-alt1
+- 1.15.8 -> 1.15.9.
+- Fix FTBFS: -Wdiscarded-qualifiers with C23 memchr
+  in glibc 2.43 (backported from upstream).
+
 * Mon Jun 23 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.15.8-alt1
 - 1.15.6 -> 1.15.8
 - Fix build-in float_t conflict with recent libuv.
