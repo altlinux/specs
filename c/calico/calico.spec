@@ -1,8 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch riscv64
+# On riscv64, pie buildmode requires cgo, which is disabled in this package
+%define golang_buildmode_pie %nil
+%endif
+
 Name: calico
 Version: 3.32.1
-Release: alt1
+Release: alt2
 
 Summary: Cloud native networking and network security
 License: Apache-2.0 AND GPL-2.0-or-later
@@ -150,6 +155,9 @@ cp -r ./confd/etc/calico/confd/templates/bird* %buildroot%_sysconfdir/%name/conf
 %doc LICENSE.md README.md
 
 %changelog
+* Fri Aug 07 2026 Ivan A. Melnikov <iv@altlinux.org> 3.32.1-alt2
+- NMU: Fix building on riscv64.
+
 * Tue Jul 21 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.32.1-alt1
 - Packaging fixes for ALT Linux RPM build.
 - Updated to 3.32.1.
