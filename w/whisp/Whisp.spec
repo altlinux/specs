@@ -2,7 +2,7 @@
 %define oname io.github.tanaybhomia.Whisp
 
 Name: whisp
-Version: 1.3.8
+Version: 1.4.0
 Release: alt1
 
 Summary: The Anti-Note for GNOME
@@ -18,6 +18,9 @@ AutoProv: nopython3
 Source: %name-%version.tar
 
 %add_python3_path %_datadir/%name/%name
+
+Requires: pytesseract
+Requires: python3-module-pillow
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson pkgconfig(gtk4) pkgconfig(libadwaita-1) typelib(Adw)
@@ -44,6 +47,10 @@ A fluid, gesture-driven scratchpad designed for absolute speed.
 %_datadir/%name
 
 %changelog
+* Sat Aug 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.0-alt1
+- 1.3.8 -> 1.4.0
+- added dependencies for OCR functions
+
 * Mon Jul 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.8-alt1
 - 1.3.7 -> 1.3.8
 
