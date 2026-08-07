@@ -6,7 +6,7 @@
 %define sover 2
 
 Name: liburing
-Version: 2.14
+Version: 2.15
 Release: alt1
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -114,6 +114,9 @@ TEST_EXCLUDE="
 %_man7dir/io_uring*.7*
 
 %changelog
+* Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 2.15-alt1
+- 2.14 -> 2.15
+
 * Wed Feb 11 2026 Vitaly Chikunov <vt@altlinux.org> 2.14-alt1
 - Update to liburing-2.14 (2026-02-04).
 
