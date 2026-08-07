@@ -1,6 +1,6 @@
 Name: media-downloader
 Version: 5.4.6
-Release: alt1
+Release: alt2
 
 Summary: GUI frontend to multiple CLI based downloading programs
 License: GPL-2.0-or-later
@@ -46,6 +46,10 @@ Features offered:-
 
 subst 's|"DownloadUrl": "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"||' extensions/yt-dlp*.json
 subst 's|mainObj.insert( "DownloadUrl","https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest" ) ;||' src/engines/yt-dlp.cpp
+%ifarch %e2k
+# error: cannot deduce the return type of function "process::errorSignal"
+subst 's|this->errorSignal()|\&QProcess::errorOccurred|' src/utils/qprocess.hpp
+%endif
 
 %build
 %cmake -DBUILD_WITH_QT6=ON
@@ -65,6 +69,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Aug 07 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.4.6-alt2
+- e2k build fix
+
 * Mon Dec 01 2025 Ivan Mazhukin <vanomj@altlinux.org> 5.4.6-alt1
 - new version 5.4.6 (with rpmrb script)
 
