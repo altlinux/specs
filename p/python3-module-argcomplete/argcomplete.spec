@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-argcomplete
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -69,6 +69,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Aug 07 2026 Anton Vyatkin <toni@altlinux.org> 3.7.2-alt1
+- New version 3.7.2.
+
 * Tue Aug 04 2026 Anton Vyatkin <toni@altlinux.org> 3.7.1-alt1
 - New version 3.7.1.
 
