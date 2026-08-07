@@ -3,14 +3,14 @@
 %global import_path github.com/seaweedfs/seaweedfs
 
 Name: seaweedfs
-Version: 4.40
+Version: 4.41
 Release: alt1
 
 Summary: Enterprise-Grade Distributed Storage with Self-Healing
 License: Apache-2.0
 Group: System/Servers
-Url: https://seaweedfs.com/
-Vcs: https://github.com/seaweedfs/seaweedfs.git
+URL: https://seaweedfs.com/
+VCS: https://github.com/seaweedfs/seaweedfs.git
 
 ExclusiveArch: %go_arches
 ExcludeArch: %ix86
@@ -125,6 +125,9 @@ install -d %buildroot%_logdir/%name
 %config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%rust_volume_name
 
 %changelog
+* Fri Aug 07 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.41-alt1
+- New version (4.41).
+
 * Mon Jul 20 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.40-alt1
 - New version (4.40).
 
