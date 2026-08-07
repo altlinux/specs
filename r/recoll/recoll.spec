@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.44.1
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -116,7 +116,7 @@ Requires: perl-Image-ExifTool
 Requires: antiword unrtf wv
 Requires: python3-module-%name
 Requires: python3-module-pychm python3-module-lxml
-Requires: aspell aspell-ru-rk aspell-en aspell-ru
+Requires: aspell aspell-en aspell-ru
 Requires: xpdf-utils ghostscript-utils
 Requires: mutagen
 
@@ -226,6 +226,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Aug 07 2026 Anton Midyukov <antohami@altlinux.org> 1.44.1-alt2
+- recoll-full: Remove depend on aspell-ru-rk (KOI8-R).
+
 * Sat Jul 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1.44.1-alt1
 - 1.44.1
 
