@@ -1,6 +1,6 @@
 Name: panzerchasm
 Version: 0.3
-Release: alt4
+Release: alt5
 
 Summary: Free software reconstruction of game "Chasm: The Rift"
 License: GPL-3.0-only
@@ -45,6 +45,10 @@ You have to put them under '~/.config/panzerchasm/'.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+# error: declared using a type with no linkage, must be defined in this translation unit
+sed -i 's/decltype(Difficulty::Easy)/unsigned/' PanzerChasm/fwd.hpp
+%endif
 
 %build
 mkdir BUILD
@@ -80,6 +84,9 @@ install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Aug 07 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3-alt5
+- e2k build fix
+
 * Thu Apr 23 2026 Artyom Bystrov <arbars@altlinux.org> 0.3-alt4
 - Fix build with GCC15
 
