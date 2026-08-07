@@ -5,7 +5,7 @@
 %define	TDSVER 7.4
 %define	name freetds
 %define	release alt1
-%define	version 1.5.17
+%define	version 1.5.18
 
 Name:		%name
 Version:	%version
@@ -20,9 +20,9 @@ Source0:	%name-%version.tar
 Source1:	%name.sh
 Source2:	%name.csh
 
-# Automatically added by buildreq on Sun Aug 19 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libncurses-devel libtinfo-devel libunixODBC-devel-compat perl pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3
-BuildRequires: doxygen glibc-devel-static libgnutls-devel libreadline-devel libssl-devel libunixODBC-devel libkrb5-devel
+# Automatically added by buildreq on Tue Aug 04 2026
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libgcc15-devel libgpg-error libunixODBC-devel-compat perl pkg-config python3 python3-base sh5
+BuildRequires: doxygen glibc-devel-static libgnutls-devel libkrb5-devel libreadline-devel libssl-devel libunixODBC-devel perl-parent
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -115,7 +115,7 @@ useful utilities.
 
 %build
 %add_optflags -fno-strict-aliasing
-%autoreconf
+%autoreconf -I /usr/share/gettext/m4
 %configure \
 	--sysconfdir=%_sysconfdir/%name \
 	--with-tdsver=%TDSVER \
@@ -170,6 +170,9 @@ useful utilities.
 
 
 %changelog
+* Tue Aug 04 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.5.18-alt1
+- New version
+
 * Tue Apr 28 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.5.17-alt1
 - New version
 
