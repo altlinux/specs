@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -46,6 +46,9 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Fri Aug 07 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.6-alt1
+- fixed missing translations
+
 * Thu Aug 06 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.5-alt1
 - changed mouse & touchpad page position
 
