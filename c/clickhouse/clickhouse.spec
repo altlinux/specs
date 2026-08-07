@@ -28,20 +28,22 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 26.3.12.3
+Version: 26.3.17.110
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
 Url: https://clickhouse.com
 VCS: https://github.com/ClickHouse/ClickHouse.git
-Source: %name-%version.tar.xz
+Source: %name-%version.tar
 
 Source100: %name-contrib-%version-%release.tar.xz
 
 Source1000: clickhouse.watch
 
 Patch0: %name-%version-%release.patch
+# Fix `struct open_how` redefinition in liburing compat.h with system kernel headers
+Patch1: clickhouse-liburing-openat2-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 %if_with clang
@@ -109,6 +111,7 @@ rm -rf contrib/*
 tar --strip-components=1 -xf %SOURCE100 -C contrib/
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 if [ %__nprocs -gt 6 ] ; then
@@ -264,6 +267,10 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 26.3.17.110-alt1
+- 26.3.12.3 -> 26.3.17.110
+- fixed liburing build with system kernel headers (`struct open_how` redefinition)
+
 * Fri May 29 2026 Anton Farygin <rider@altlinux.org> 26.3.12.3-alt1
 - 25.8.24.21 -> 26.3.12.3
 
