@@ -11,7 +11,7 @@
 
 Name: libdqlite
 Version: 1.18.2
-Release: alt1
+Release: alt2
 Summary: Library for distributed SQLite database
 License: Apache-2.0
 Group: Development/Databases
@@ -19,6 +19,7 @@ URL: https://github.com/CanonicalLtd/dqlite
 VCS: https://github.com/CanonicalLtd/dqlite
 
 Source: %name-%version.tar
+Patch: %name-%version.patch
 
 BuildRequires: libuv-devel
 BuildRequires: libsqlite3-devel
@@ -51,6 +52,7 @@ of peers, using the Raft algorithm.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -77,6 +79,10 @@ sed -i '/ raft-uv-unit-test$(EXEEXT)/d' Makefile
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Fri Aug 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.18.2-alt2
+- Fix FTBFS: -Werror=discarded-qualifiers on const-generic
+  memchr with glibc 2.43 (backported from upstream).
+
 * Fri Sep 12 2025 Ulysses Apokin <ulysses@altlinux.org> 1.18.2-alt1
 - new version 1.18.2
 - fixed FTBFS
