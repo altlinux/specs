@@ -1,7 +1,7 @@
 %define kiota_version v1.32.4
 
 Name:    keycloak
-Version: 26.7.0
+Version: 26.7.1
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -44,8 +44,15 @@ fine-grained authorization, and more.
 test -d ~/.m2 && rm -rf ~/.m2
 test -d js/node_modules && rm -rf js/{node,node_modules}
 tar xf %SOURCE2 -C ~
+
+# Disable build test modules
 %pom_disable_module test-framework
 %pom_disable_module tests
+%pom_disable_module tests authzen
+%pom_disable_module tests rest/admin-v2
+%pom_disable_module tests scim
+%pom_disable_module tests ssf
+
 # Unpack node modules
 tar xf %SOURCE3
 mkdir -p js/libs/keycloak-admin-client/.kiota/%kiota_version
@@ -113,6 +120,12 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu Aug 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.7.1-alt1
+- New version (fixes: CVE-2026-9793, CVE-2026-4629, CVE-2026-14209,
+  CVE-2026-14614, CVE-2026-14615).
+- Disabled all test modules.
+- Removed org/keycloak vendoring libraries.
+
 * Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 26.7.0-alt1
 - New version (fixes: CVE-2026-9796, CVE-2026-9689, CVE-2026-9798,
   CVE-2026-11986).
