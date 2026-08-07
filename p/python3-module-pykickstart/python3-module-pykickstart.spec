@@ -3,14 +3,14 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.76
+Version: 3.77
 Release: alt1
 
 Summary: python module for parsing and writing kickstart configs
 License: GPL-2.0
 Group:   Development/Python3
-Url:     https://pypi.org/project/pykickstart/
-Vcs:     https://github.com/pykickstart/pykickstart
+URL:     https://pypi.org/project/pykickstart/
+VCS:     https://github.com/pykickstart/pykickstart
 
 Source: %name-%version.tar
 
@@ -55,6 +55,9 @@ Python utilities for manipulating kickstart files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 07 2026 Sergey Palcheh <minergenon@altlinux.org> 3.77-alt1
+- new version 3.77
+
 * Wed Jul 29 2026 Sergey Palcheh <minergenon@altlinux.org> 3.76-alt1
 - new version 3.76
 
