@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: vym
-Version: 2.9.26
-Release: alt1.1
+Version: 3.0.1
+Release: alt1
 
 Summary: QT based MindMap editor
 Url: http://www.insilmaril.de/vym/
@@ -13,19 +15,21 @@ Group: Office
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-2.8.7-alt-pdf_path.patch
-Patch2: %name-2.9.22-alt-VYMBASEDIR.patch
+Patch2: %name-3.0.1-alt-VYMBASEDIR.patch
+Patch3: %name-3.0.1-alt-Git.patch
 
 Source1: %name.desktop
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-xdg
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 
-# Automatically added by buildreq on Sun Oct 29 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python-modules python2-base python3 python3-base python3-dev qt5-base-devel qt5-tools sh5
-BuildRequires: cmake libdbus-devel qt5-script-devel qt5-svg-devel qt5-tools-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel
+# Automatically added by buildreq on Sun Aug 02 2026
+# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgcc15-devel libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-printsupport libqt6-qml libqt6-qmlcompiler libqt6-svg libqt6-svgwidgets libqt6-waylandclient libqt6-widgets libqt6-wlshellintegration libqt6-xml libsasl2-3 libstdc++-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 vulkan-headers
+BuildRequires: libdbus-devel qt6-declarative-devel qt6-svg-devel qt6-tools-devel
+
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
 %endif
 
 # For PDF docs generation
@@ -43,22 +47,11 @@ over complex contexts.
 
 %patch1
 %patch2
+%patch3
 
 %build
 %cmake -DCMAKE_INSTALL_DATAROOTDIR:PATH=%_datadir/vym
 %cmake_build
-
-#pushd lang
-#for i in *.ts; do
-#    lconvert-qt5 $i -o `basename $i .ts`.qm
-#done
-#popd
-
-#pushd tex
-#texi2dvi -p vym.tex    > /dev/null
-#texi2dvi -p vym_es.tex > /dev/null
-#texi2dvi -p vym_fr.tex > /dev/null
-#popd
 
 %install
 %cmake_install
@@ -67,21 +60,6 @@ install -D -m0644 doc/%name.1.gz %buildroot%_man1dir/%name.1.gz
 install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.desktop
 
-#mkdir %buildroot%_datadir/%name/lang/
-#pushd lang
-#for i in *.qm; do
-#    install -D -m0664 $i %buildroot%_datadir/%name/lang/$i
-#done
-#popd
-
-#mkdir -p %buildroot%_datadir/%name/doc/
-#pushd tex
-#for i in *.pdf; do
-#    install -D -m0644 $i %buildroot%_datadir/%name/doc/$i
-#done
-#popd
-
-
 %files
 %doc README.md LICENSE.txt
 
@@ -89,7 +67,6 @@ sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.deskto
 %_man1dir/%{name}*
 
 %_datadir/%name/*
-%exclude %_datadir/%name/scripts
 %exclude %_datadir/%name/man
 
 %_desktopdir/%name.desktop
@@ -98,6 +75,18 @@ sed -e 's#ICONDIR#%_datadir/%name/icons#' -i %buildroot%_desktopdir/%name.deskto
 
 
 %changelog
+* Sun Aug 02 2026 Nikolay A. Fetisov <naf@altlinux.org> 3.0.1-alt1
+- New version
+  - Switch to Qt6
+  - New layout engine
+  - Introducing MapDesign
+  - More personalization options, dark mode support
+  - RichText in headings of branches
+  - Improved color handling
+  - Improved text handling in NoteEditor and HeadingEditor
+  - Updated keyboard shortcuts
+  - New scripting engine via QJSEngine
+
 * Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.9.26-alt1.1
 - NMU: fixed FTBFS on LoongArch
 
