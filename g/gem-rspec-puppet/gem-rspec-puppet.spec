@@ -5,13 +5,13 @@
 %define        gemname rspec-puppet
 
 Name:          gem-rspec-puppet
-Version:       5.0.0
-Release:       alt1
+Version:       5.0.0.8.1
+Release:       alt0.1
 Summary:       RSpec tests for your Puppet manifests
 License:       MIT
 Group:         Development/Ruby
-Url:           https://github.com/rodjek/rspec-puppet/
-Vcs:           https://github.com/rodjek/rspec-puppet.git
+Url:           https://github.com/puppetlabs/rspec-puppet
+Vcs:           https://github.com/puppetlabs/rspec-puppet.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(facter) >= 0
 BuildRequires: gem(fuubar) >= 0
-BuildRequires: gem(json_pure) >= 0
+BuildRequires: gem(json) >= 0
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(pry-stack_explorer) >= 0
 BuildRequires: gem(puppet) >= 0
@@ -44,15 +44,17 @@ Requires:      gem(rspec) >= 3.0
 Conflicts:     gem(rspec) >= 4
 Obsoletes:     ruby-rspec-puppet < %EVR
 Provides:      ruby-rspec-puppet = %EVR
-Provides:      gem(rspec-puppet) = 5.0.0
+Provides:      gem(rspec-puppet) = 5.0.0.8.1
+
+%ruby_use_gem_version rspec-puppet:5.0.0.8.1
 
 %description
 RSpec tests for your Puppet manifests & modules.
 
 
 %package       -n rspec-puppet-init
-Version:       5.0.0
-Release:       alt1
+Version:       5.0.0.8.1
+Release:       alt0.1
 Summary:       RSpec tests for your Puppet manifests executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rspec-puppet
 Group:         Other
@@ -60,7 +62,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(rspec-puppet) = 5.0.0
+Requires:      gem(rspec-puppet) = 5.0.0.8.1
 
 %description   -n rspec-puppet-init
 RSpec tests for your Puppet manifests executable(s).
@@ -73,8 +75,8 @@ RSpec tests for your Puppet manifests & modules.
 
 %if_enabled    doc
 %package       -n gem-rspec-puppet-doc
-Version:       5.0.0
-Release:       alt1
+Version:       5.0.0.8.1
+Release:       alt0.1
 Summary:       RSpec tests for your Puppet manifests documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rspec-puppet
 Group:         Development/Documentation
@@ -82,7 +84,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(rspec-puppet) = 5.0.0
+Requires:      gem(rspec-puppet) = 5.0.0.8.1
 
 %description   -n gem-rspec-puppet-doc
 RSpec tests for your Puppet manifests documentation files.
@@ -96,8 +98,8 @@ RSpec tests for your Puppet manifests & modules.
 
 %if_enabled    devel
 %package       -n gem-rspec-puppet-devel
-Version:       5.0.0
-Release:       alt1
+Version:       5.0.0.8.1
+Release:       alt0.1
 Summary:       RSpec tests for your Puppet manifests development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rspec-puppet
 Group:         Development/Ruby
@@ -105,8 +107,20 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(rspec-puppet) = 5.0.0
+Requires:      gem(rspec-puppet) = 5.0.0.8.1
+Requires:      gem(facter) >= 0
+Requires:      gem(fuubar) >= 0
+Requires:      gem(json) >= 0
+Requires:      gem(pry) >= 0
+Requires:      gem(pry-stack_explorer) >= 0
+Requires:      gem(puppet) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rspec) >= 3.0
+Requires:      gem(simplecov) >= 0
+Requires:      gem(simplecov-console) >= 0
+Requires:      gem(sync) >= 0
 Requires:      gem(voxpupuli-rubocop) >= 3.0.0
+Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(voxpupuli-rubocop) >= 6
 
 %description   -n gem-rspec-puppet-devel
@@ -153,6 +167,9 @@ RSpec tests for your Puppet manifests & modules.
 
 
 %changelog
+* Fri Aug 07 2026 Pavel Skrylev <majioa@altlinux.org> 5.0.0.8.1-alt0.1
+- ^ 5.0.0 -> 5.0.0p8.1
+
 * Sun Mar 22 2026 Pavel Skrylev <majioa@altlinux.org> 5.0.0-alt1
 - ^ 4.0.2 -> 5.0.0
 
