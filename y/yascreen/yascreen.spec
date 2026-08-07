@@ -2,7 +2,7 @@
 %define abiversion 0
 
 Name:    yascreen
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: Yet Another Screen Library (lib(n)curses alternative)
 License: LGPL-3.0
@@ -73,6 +73,9 @@ Files for development with %name.
 
 
 %changelog
+* Fri Aug 07 2026 Pavel Shilov <zerospirit@altlinux.org> 2.14-alt1
+- updated from 2.13 to 2.14
+
 * Fri Jul 24 2026 Pavel Shilov <zerospirit@altlinux.org> 2.13-alt1
 - Update version to 2.13.
 
