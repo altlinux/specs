@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1 
+
 Name: goaccess
 
 Summary: real-time web log analyzer
-Version: 1.10.2
+Version: 1.11
 Release: alt1
 
 URL: https://goaccess.io/
@@ -60,6 +62,18 @@ report on the fly.
 
 
 %changelog
+* Fri Aug 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.11-alt1
+- New version
+  - New persistent storage format version 3
+  - Reduced storage memory usage by about 20%% and parsing time by about 35%%
+  - Added configured zlib and AddressSanitizer options to the version output
+  - Added fullscreen expand and collapse controls to geolocation maps
+  - Added a new "Text-based" browser category
+  - Fixed unique visitor undercounting
+  - Fixed WebSocket payload size checks for large and fragmented messages
+  - Fixed a heap buffer overflow when parsing malformed Opera user agents
+  - Other bugfixes
+
 * Mon Apr 06 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.2-alt1
 - New version
   - Added detection for Arc and Zen browsers in the HTML report
