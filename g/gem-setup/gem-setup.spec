@@ -2,7 +2,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.7
+Version:       5.999.8
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -78,6 +78,12 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Wed Aug 05 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.8-alt1
+- + enabled :if condition for scheme installation
+- ! fixed sequence to derpath so lib before installation
+- ! fixed search over files including beginning dot
+- ! fixed predep generation for complex deps
+
 * Tue May 26 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.7-alt1
 - ^ 5.999.6 -> 5.999.7
 - * optimized command run to support multiple commands

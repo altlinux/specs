@@ -5,7 +5,7 @@
 
 Name:          foreman
 Version:       3.19.1
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -208,7 +208,7 @@ Requires:      postgresql-server
 Requires:      dynflow
 Requires:      node
 Requires:      nginx
-Requires:      railsctl >= 1.0.1-alt1
+Requires:      railsctl >= 1.0.1-alt1.1
 Requires:      ruby >= 3.1.2
 Requires:      gem(activerecord-nulldb-adapter) >= 0
 Requires:      gem(activerecord-session_store) >= 2.0.0
@@ -410,12 +410,12 @@ foundation.
 %if_enabled    doc
 %package       -n foreman-doc
 Version:       3.19.1
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1
+Requires:      foreman = 3.19.1-alt1.1
 
 %description   -n foreman-doc
 An application that automates the lifecycle of servers documentation
@@ -438,12 +438,12 @@ foundation.
 %if_enabled    devel
 %package       -n foreman-devel
 Version:       3.19.1
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1
+Requires:      foreman = 3.19.1-alt1.1
 
 %description   -n foreman-devel
 Foreman is a free open source project that gives you the power to easily
@@ -538,22 +538,26 @@ pushd %buildroot%_datadir/%name
 find assets -type f | while read -r f
 do
    if [[ "$f" =~ \.css(|.gz)$ ]]; then
-      folder=stylesheets
+      folder=stylesheets/
    elif [[ "$f" =~ \.js(|.gz)$ ]]; then
-      folder=javascripts
+      folder=javascripts/
    elif [[ "$f" =~ \.(woff2?|ttf|eot)(|.gz)$ ]]; then
-      folder=fonts
+      folder=fonts/
+   elif [[ "$f" =~ \.(svg|jpg|png|webp|gif)(|.gz)$ ]]; then
+      folder=images/
    else
-      folder=images
+      folder=
    fi
 
-   sub=$(echo "$f" |sed "s/assets\(.*\)\/[^\/]*-[a-f0-9]\{64,\}\.[^\/]*$/\1/")
+   if [[ -n "$folder" ]]; then
+      sub=$(echo "$f" |sed "s/assets\(.*\)\/[^\/]*-[a-f0-9]\{64,\}\.[^\/]*$/\1/")
 
-   mkdir -p "$folder$sub"
-   target="$folder$sub/$(echo "$f" |sed "s/.*\/\([^\/]*\)-[a-f0-9]\{64,\}/\1/")"
+      mkdir -p "$folder$sub"
+      target="$folder$sub/$(echo "$f" |sed "s/.*\/\([^\/]*\)-[a-f0-9]\{64,\}/\1/")"
 
-   if [[ ! -e "$target" ]]; then
-      ln -rvs "$f" "$target"
+      if [[ ! -e "$target" ]]; then
+         ln -rvs "$f" "$target"
+      fi
    fi
 done
 popd
@@ -626,8 +630,8 @@ railsctl cleanup %name
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/apipie-cache
 %dir %attr(770,_foreman,foreman) %_cachedir/%name/_
 %dir %attr(770,_foreman,foreman) /run/%name
-%dir %attr(770,_foreman,foreman) %_logdir/%name
 %dir %attr(770,_foreman,foreman) %_spooldir/%name
+%attr(770,_foreman,foreman) %_logdir/%name
 # %_man8dir/*.8*
 
 %if_enabled    doc
@@ -642,6 +646,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Aug 06 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1.1
+- ! fixed symlinkings
+
 * Thu Jul 23 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1
 - ^ 3.18.1 -> 3.19.1
 - * required wirb ~> 3 (closes #59855)
