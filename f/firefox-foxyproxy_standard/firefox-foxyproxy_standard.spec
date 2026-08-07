@@ -4,7 +4,7 @@
 %define cid	foxyproxy@eric.h.jung
 
 Name:		%firefox_name-%rname
-Version:	9.2
+Version:	9.5
 Release:	alt1
 
 Summary:	Firefox extension for proxy management
@@ -51,6 +51,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Tue Aug 04 2026 Nikolay A. Fetisov <naf@altlinux.org> 9.5-alt1
+- New version
+
 * Mon Feb 23 2026 Nikolay A. Fetisov <naf@altlinux.org> 9.2-alt1
 - New version
 
