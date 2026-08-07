@@ -2,9 +2,9 @@
 %define module_version 0.0.95.bef3
 %define module_release alt1
 
-%define flavour 6.18
+%define flavour 6.12
 %define karch x86_64 aarch64 ppc64le loongarch64
-BuildRequires(pre): kernel-headers-modules-6.18
+BuildRequires(pre): kernel-headers-modules-6.12
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/kernel/drivers/net/wireless/%module_name
