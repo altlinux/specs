@@ -1,7 +1,7 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.15.2
+Version: 1.16.0
 Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
@@ -24,9 +24,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 14 2012
-# optimized out: perl-DBI perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: perl-DBD-mysql perl-Pod-Parser perl-Term-ReadKey perl-devel perl-unicore
+# Automatically added by buildreq on Fri Aug 07 2026
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-DBI perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python3 python3-base sh5
+BuildRequires: perl-DBD-mysql perl-JSON-PP perl-Pod-Usage perl-TermReadKey perl-devel
 
 
 Requires: perl-DBD-mysql
@@ -69,6 +69,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Fri Aug 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.16.0-alt1
+- New version
+
 * Sat Jan 10 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.15.2-alt1
 - New version
 
