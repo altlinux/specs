@@ -7,20 +7,21 @@
 %def_enable lua
 
 Name: haproxy
-Version: 3.2.10
+Version: 3.4.0
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
 Group: System/Servers
 
-URL: http://www.haproxy.org/
+URL: https://www.haproxy.org/
+VCS: https://github.com/haproxy/haproxy/
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 Source1: %name.cfg
 Source2: %name.init
-Source3: %name.logrotate
-Source4: %name.service
-Source5: %name.sysconfig
+Source3: %name.service
+Source4: %name.sysconfig
 
 BuildRequires: libpcre2-devel zlib-devel libssl-devel
 %{?_enable_lua:BuildRequires: liblua5-devel >= 5.3}
@@ -43,13 +44,14 @@ risking the system's stability.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 export VERDATE="$(date '+%%+4Y/%%m/%%d')"
 export VERSION="%version"
 export SUBVERS="-%release"
 %make_build V=1 CPU="generic" TARGET="linux-glibc" \
-    USE_OPENSSL=1 USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1 USE_ENGINE=1 \
+    USE_OPENSSL=1 USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1 \
     USE_PCRE2=1 USE_PCRE2_JIT=1 \
     USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
 %ifarch mipsel
@@ -65,9 +67,8 @@ export SUBVERS="-%release"
 install -p -D -m 0644 %SOURCE1 %buildroot%haproxy_confdir/%name.cfg
 install -d -m 0755 %buildroot%haproxy_confdir/conf.d
 install -D -m 0755 %SOURCE2 %buildroot%_initrddir/haproxy
-install -p -D -m 0644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
-install -p -D -m 0644 %SOURCE4 %buildroot%_unitdir/%name.service
-install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
+install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
+install -p -D -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 install -d -m 0755 %buildroot%haproxy_home
 install -d -m 0755 %buildroot%haproxy_datadir
 install -d -m 0755 %buildroot%_bindir
@@ -75,10 +76,13 @@ install -p -m 0755 admin/halog/halog %buildroot%_bindir/halog
 cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
 
+%check
+%buildroot%_sbindir/%name -vv
+
 %pre
 %_sbindir/groupadd -r -f %haproxy_group >/dev/null 2>&1 ||:
 %_sbindir/useradd -g %haproxy_group -c 'HA Proxy' \
-    -d %haproxy_home -s /dev/null -r -l -M %haproxy_user >/dev/null 2>&1 ||:
+    -d %haproxy_home -s /sbin/nologin -r -l -M %haproxy_user >/dev/null 2>&1 ||:
 
 %post
 %post_service haproxy
@@ -92,7 +96,6 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %dir %haproxy_confdir/conf.d
 %config(noreplace) %haproxy_confdir/%name.cfg
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_logrotatedir/%name
 %haproxy_datadir
 %_initrddir/%name
 %_unitdir/%name.service
@@ -102,6 +105,23 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 3.4.0-alt1
+- 3.2.10 -> 3.4.0
+- fixes:
+  * CVE-2026-55204: null pointer dereference vulnerability in hpack_dht_insert()
+  * CVE-2026-55203: integer overflow vulnerability in the fcgi_conn structure's 
+  * CVE-2026-33555: HTTP/3 request smuggling via incorrect body length check
+- config: log to journald via stdout by default (log /dev/log does not
+  work under chroot), drop 'daemon' directive (incompatible with -Ws),
+  set mode 660 on the stats socket, expose no external listeners on a
+  fresh install (loopback-only stats frontend instead)
+- systemd unit: extra hardening (PrivateTmp, ProtectClock, ProtectHostname,
+  ProtectKernelLogs, LockPersonality, RestrictRealtime, RestrictSUIDSGID,
+  RestrictAddressFamilies, SystemCallArchitectures) and RestartSec=1s
+- init script: fix undefined $name variable, quote pidfile read
+- drop unused logrotate config
+- drop USE_ENGINE (deprecated with OpenSSL 3)
+
 * Thu Jan 08 2026 Alexey Shabalin <shaba@altlinux.org> 3.2.10-alt1
 - 3.2.10.
 
