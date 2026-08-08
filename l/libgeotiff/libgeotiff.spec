@@ -1,15 +1,16 @@
 %define soversion 5
 Name: libgeotiff
-Version: 1.6.0
-Release: alt2
+Version: 1.7.4
+Release: alt1
 
 Summary: Library for reading and writing GeoTIFF information tags.
-License: Public domain
+License: ALT-Public-Domain and X11
 Group: System/Libraries
-Url: http://trac.osgeo.org/geotiff/
-Packager: Dmitry Derjavin <dd@altlinux.org>
+Url: https://github.com/OSGeo/libgeotiff
 
 Source: %name-%version.tar
+# upstream fix: testlistgeo robust to PROJ 9.8 changes
+Patch0: %name-1.7.4-testlistgeo-proj9.8.patch
 
 %def_disable static
 %def_disable data
@@ -72,8 +73,10 @@ This package contains CSV data files derived from the EPSG Tables.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+pushd libgeotiff
 %autoreconf
 %configure \
 	--prefix=%{_prefix}	\
@@ -85,7 +88,13 @@ This package contains CSV data files derived from the EPSG Tables.
 
 %make_build
 
+%check
+pushd libgeotiff
+%make check
+popd
+
 %install
+pushd libgeotiff
 %makeinstall_std
 
 # install manualy some file
@@ -110,10 +119,9 @@ install -p -m 644 geotiff.pc %buildroot%_pkgconfigdir/
 
 
 %files -n %name%soversion
+%doc libgeotiff/LICENSE
 %_libdir/%name.so.%{soversion}
 %_libdir/%name.so.%{soversion}.*
-%doc README
-%doc LICENSE
 
 %files utils
 %_bindir/*
@@ -122,9 +130,8 @@ install -p -m 644 geotiff.pc %buildroot%_pkgconfigdir/
 %files devel
 %_libdir/%name.so
 %_pkgconfigdir/geotiff.pc
+%_pkgconfigdir/libgeotiff.pc
 %_includedir/%name
-# EPSG data files. Check license!
-#%_includedir/%name/*.inc*
 
 %if_enabled static
 %files devel-static
@@ -137,6 +144,9 @@ install -p -m 644 geotiff.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Mon Jul 06 2026 Anton Farygin <rider@altlinux.org> 1.7.4-alt1
+- 1.6.0 -> 1.7.4
+
 * Wed Jun 30 2021 Igor Vlasenko <viy@altlinux.org> 1.6.0-alt2
 - install makegeo
 - pkgconfig should be geotiff.pc
