@@ -5,7 +5,7 @@
 %define        gemname foreman_maintain
 
 Name:          gem-foreman-maintain
-Version:       1.7.5
+Version:       1.16.0
 Release:       alt1
 Summary:       Foreman maintenance tool belt
 License:       GPL-3.0
@@ -16,27 +16,30 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.17
-BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(clamp) >= 0
+BuildRequires: gem(highline) >= 0
+BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(minitest-reporters) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
 BuildRequires: gem(mocha) >= 0
 BuildRequires: gem(rake) >= 0
-BuildRequires: gem(theforeman-rubocop) >= 0
 BuildRequires: gem(rexml) >= 0
-BuildRequires: gem(clamp) >= 0
-BuildRequires: gem(highline) >= 0
+BuildRequires: gem(theforeman-rubocop) >= 0
+BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names foreman_maintain,foreman-maintain
+Requires:      ruby >= 2.7
 Requires:      gem(clamp) >= 0
 Requires:      gem(highline) >= 0
-Provides:      gem(foreman_maintain) = 1.7.5
-
+Requires:      gem(rexml) >= 0
+Conflicts:     ruby >= 4
+Provides:      gem(foreman_maintain) = 1.16.0
 
 %description
 Provides various features that helps keeping the Foreman/Satellite up and
@@ -44,14 +47,15 @@ running.
 
 
 %package       -n foreman-maintain
-Version:       1.7.5
+Version:       1.16.0
 Release:       alt1
 Summary:       Foreman maintenance tool belt executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета foreman_maintain
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(foreman_maintain) = 1.7.5
+Requires:      gem(foreman_maintain) = 1.16.0
+Requires:      gem(rexml) >= 0
 
 %description   -n foreman-maintain
 Foreman maintenance tool belt executable(s).
@@ -65,14 +69,14 @@ running.
 
 %if_enabled    doc
 %package       -n gem-foreman-maintain-doc
-Version:       1.7.5
+Version:       1.16.0
 Release:       alt1
 Summary:       Foreman maintenance tool belt documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_maintain
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_maintain) = 1.7.5
+Requires:      gem(foreman_maintain) = 1.16.0
 
 %description   -n gem-foreman-maintain-doc
 Foreman maintenance tool belt documentation files.
@@ -87,22 +91,22 @@ running.
 
 %if_enabled    devel
 %package       -n gem-foreman-maintain-devel
-Version:       1.7.5
+Version:       1.16.0
 Release:       alt1
 Summary:       Foreman maintenance tool belt development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_maintain
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_maintain) = 1.7.5
+Requires:      gem(foreman_maintain) = 1.16.0
 Requires:      gem(bundler) >= 1.17
-Requires:      gem(minitest) >= 0
+Requires:      gem(minitest) >= 5.0
 Requires:      gem(minitest-reporters) >= 0
 Requires:      gem(minitest-stub-const) >= 0
 Requires:      gem(mocha) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(theforeman-rubocop) >= 0
-Requires:      gem(rexml) >= 0
+Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-foreman-maintain-devel
 Foreman maintenance tool belt development package.
@@ -128,29 +132,31 @@ running.
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n foreman-maintain
-%doc README.md
+%doc LICENSE README.md
 %_bindir/foreman-maintain
 %_bindir/foreman-maintain-complete
-%_bindir/foreman-maintain-rotate-tar
 
 %if_enabled    doc
 %files         -n gem-foreman-maintain-doc
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-foreman-maintain-devel
-%doc README.md
+%doc LICENSE README.md
 %endif
 
 
 %changelog
+* Sat Aug 08 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt1
+- ^ 1.7.5 -> 1.16.0
+
 * Fri Oct 04 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.5-alt1
 - ^ 1.1.6 -> 1.7.5
 
