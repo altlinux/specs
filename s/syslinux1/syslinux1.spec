@@ -2,20 +2,19 @@
 Summary: Simple kernel loader which boots from a FAT filesystem
 Name: %{rname}1
 Version: 1.62
-Release: alt4.2.qa1
+Release: alt4.3.qa1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
-Packager: Kachalov Anton <mouse@altlinux.ru>
 Url: http://syslinux.zytor.com
 
 Source: ftp://ftp.kernel.org/pub/linux/utils/boot/syslinux/Old/%rname-%version.tar.bz2
 Patch: %rname-%version.patch.bz2
 Patch1: %rname-%version-stdlib.patch
-
-BuildPrereq: nasm, perl, libpng3
+Patch2: %rname-%version-nasm.patch
+Patch3: %rname-%version-gcc15.patch
 
 # Automatically added by buildreq on Mon Jun 23 2003
-BuildRequires: nasm netpbm
+BuildRequires: nasm netpbm perl libpng3
 
 %description
 Syslinux is a simple kernel loader. It normally loads the kernel (and an
@@ -24,8 +23,7 @@ PXE bootloader during network boots.
 
 %prep
 %setup -n %rname-%version
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 chmod +x add_crc
@@ -35,7 +33,7 @@ make
 %install
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_libdir/%rname
-#make INSTALLROOT=%buildroot install
+#make INSTALLROOT=%%buildroot install
 install -c ppmtolss16 %buildroot%_bindir
 install -c syslinux %buildroot%_bindir
 install -c gethostip %buildroot%_bindir
@@ -55,6 +53,9 @@ install -c pxelinux.0 %buildroot%_libdir/%rname
 %_libdir/syslinux
 
 %changelog
+* Sat Aug 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.62-alt4.3.qa1
+- NMU: fix FTBFS with gcc15 and nasm
+
 * Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.62-alt4.2.qa1
 - NMU: fix FTBFS with gcc14
 
