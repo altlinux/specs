@@ -5,8 +5,8 @@
 %define	libaprver 1.7.6
 
 Name: aprutil%aprver
-Version: 1.6.3
-Release: alt4
+Version: 1.6.4
+Release: alt1
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -15,6 +15,7 @@ Url: https://apr.apache.org/
 
 # Source-url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
 Source: apr-util-%version.tar
+Source999: watch
 
 Patch1: aprutil1-1.6.1-alt-mysql8-transition.patch
 Patch2: apr-util-1.6.3-lmdb-support.patch
@@ -211,6 +212,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_crypto_openssl*.so
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 1.6.4-alt1
+- 1.6.3 -> 1.6.4
+
 * Fri Dec 05 2025 Anton Farygin <rider@altlinux.com> 1.6.3-alt4
 - bumped minimal APR requirements to 1.7.6 and updated BuildRequires/Requires
   accordingly to ensure compatibility with the current APR build system
