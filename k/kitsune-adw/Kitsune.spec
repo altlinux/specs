@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname net.armatik.Kitsune
 %define nameS kitsune
 
 %def_without check
 
 Name: kitsune-adw
-Version: 0.8.5
+Version: 1.0.0
 Release: alt1
 
 Summary: Kitsune is an unofficial client for watching AniLiberty anime
@@ -23,14 +24,25 @@ Requires: libwebp-pixbuf-loader
 Requires: gst-plugin-gtk4
 %add_python3_path %_datadir/%nameS
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson pkgconfig(gtk4) pkgconfig(libadwaita-1) 
-BuildRequires: typelib(Adw) blueprint-compiler /usr/bin/glib-compile-schemas
-BuildRequires: /usr/bin/gtk4-update-icon-cache /usr/bin/update-desktop-database
-BuildRequires: python3(gi) python3(cairo)
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
+BuildRequires: meson
+BuildRequires: python3(gi)
+BuildRequires: typelib(Adw)
+BuildRequires: python3(cairo)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: python3(keyring)
+BuildRequires: blueprint-compiler
+BuildRequires: pkgconfig(libadwaita-1) 
+BuildRequires: /usr/bin/glib-compile-schemas
+BuildRequires: /usr/bin/gtk4-update-icon-cache
+BuildRequires: /usr/bin/update-desktop-database
 
 %if_with check
-BuildRequires: python3-module-pytest typelib(Soup) xvfb-run
+BuildRequires: xvfb-run
+BuildRequires: typelib(Soup)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -61,6 +73,9 @@ BuildRequires: python3-module-pytest typelib(Soup) xvfb-run
 %doc *.md
 
 %changelog
+* Sun Aug 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.8.5 -> 1.0.0
+
 * Fri Mar 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt1
 - 0.8.4 -> 0.8.5
 
