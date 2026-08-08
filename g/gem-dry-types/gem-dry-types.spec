@@ -6,7 +6,7 @@
 
 Name:          gem-dry-types
 Version:       1.9.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Type system for Ruby supporting coercions, constraints and complex types like structs, value objects, enums etc
 License:       MIT
 Group:         Development/Ruby
@@ -16,9 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bigdecimal) >= 3.0
 BuildRequires: gem(bundler) >= 0
@@ -46,7 +44,7 @@ BuildConflicts: gem(zeitwerk) >= 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      ruby >= 3.2
+Requires:      ruby >= 3.3
 Requires:      gem(bigdecimal) >= 3.0
 Requires:      gem(concurrent-ruby) >= 1.0
 Requires:      gem(dry-core) >= 1.0
@@ -69,14 +67,12 @@ structs, value objects, enums etc
 %if_enabled    doc
 %package       -n gem-dry-types-doc
 Version:       1.9.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Type system for Ruby supporting coercions, constraints and complex types like structs, value objects, enums etc documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dry-types
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(dry-types) = 1.9.1
 
 %description   -n gem-dry-types-doc
@@ -94,19 +90,35 @@ structs, value objects, enums etc
 %if_enabled    devel
 %package       -n gem-dry-types-devel
 Version:       1.9.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Type system for Ruby supporting coercions, constraints and complex types like structs, value objects, enums etc development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dry-types
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(dry-types) = 1.9.1
+Requires:      gem(bigdecimal) >= 3.0
 Requires:      gem(bundler) >= 0
+Requires:      gem(concurrent-ruby) >= 1.0
+Requires:      gem(dry-core) >= 1.0
+Requires:      gem(dry-inflector) >= 1.0
+Requires:      gem(dry-logic) >= 1.4
+Requires:      gem(dry-monads) >= 0
+Requires:      gem(dry-struct) >= 0
 Requires:      gem(lefthook) >= 0
+Requires:      gem(rake) >= 12.3.3
+Requires:      gem(rexml) >= 0
 Requires:      gem(rspec) >= 0
+Requires:      gem(simplecov) >= 0
+Requires:      gem(simplecov-cobertura) >= 0
+Requires:      gem(warning) >= 0
 Requires:      gem(yard) >= 0
+Requires:      gem(zeitwerk) >= 2.6
+Conflicts:     gem(concurrent-ruby) >= 2
+Conflicts:     gem(dry-core) >= 2
+Conflicts:     gem(dry-inflector) >= 2
+Conflicts:     gem(dry-logic) >= 2
+Conflicts:     gem(zeitwerk) >= 3
 
 %description   -n gem-dry-types-devel
 Type system for Ruby supporting coercions, constraints and complex types like
@@ -136,6 +148,7 @@ structs, value objects, enums etc
 %doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
+%_logdir/%gemname
 
 %if_enabled    doc
 %files         -n gem-dry-types-doc
@@ -150,6 +163,9 @@ structs, value objects, enums etc
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 1.9.1-alt1.1
+- + gem required log dir
+
 * Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 1.9.1-alt1
 - ^ 1.7.2 -> 1.9.1
 
