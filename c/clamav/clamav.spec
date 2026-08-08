@@ -13,7 +13,7 @@
 %endif
 
 Name: clamav
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 %define abiversion 12
 
@@ -392,6 +392,12 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Sat Aug 08 2026 Alexei Takaseev <taf@altlinux.org> 1.5.4-alt1
+- 1.5.3 (Fixes CVE-2025-8088,  CVE-2026-20031, CVE-2026-20213, CVE-2026-20214,
+               CVE-2026-20216, CVE-2026-20217, CVE-2026-20243, CVE-2026-20244,
+               CVE-2026-20337, CVE-2026-20338, CVE-2026-20339, CVE-2026-20345,
+               CVE-2026-20346, CVE-2026-20347, CVE-2026-20348)
+
 * Thu Jul 02 2026 Alexei Takaseev <taf@altlinux.org> 1.5.3-alt1
 - 1.5.3
 - Update freshclam-config.patch:
