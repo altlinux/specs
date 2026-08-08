@@ -9,7 +9,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:		coturn
-Version: 4.16.0
+Version: 4.17.1
 Release:	alt1
 Summary:	Coturn TURN Server
 
@@ -237,6 +237,9 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %coturn_examplesdir/scripts/readme.txt
 %coturn_examplesdir/scripts/pack.sh
 %coturn_examplesdir/scripts/mobility_resume_flood.py
+%coturn_examplesdir/scripts/mobility_quota_flood.py
+%coturn_examplesdir/scripts/stateless_binding_probe.py
+%coturn_examplesdir/scripts/stateless_nonce_forged_mi.py
 %dir %coturn_examplesdir/scripts/basic
 %coturn_examplesdir/scripts/basic/dos_attack.sh
 %coturn_examplesdir/scripts/basic/relay.sh
@@ -307,6 +310,9 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 4.17.1-alt1
+- 4.16.0 -> 4.17.1
+
 * Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 4.16.0-alt1
 - 4.15.0 -> 4.16.0
 
