@@ -6,19 +6,16 @@
 
 Name:          gem-openvox
 Version:       8.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       OpenVox, a community implementation of Puppet -- an automated configuration management tool
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/OpenVoxProject/openvox
 Vcs:           https://github.com/openvoxproject/openvox.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(base64) >= 0.1
 BuildRequires: gem(benchmark) >= 0.2
@@ -64,7 +61,7 @@ BuildConflicts: gem(puppet-resource_api) >= 3
 BuildConflicts: gem(racc) >= 2
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rspec-its) >= 2
+BuildConflicts: gem(rspec-its) >= 3
 BuildConflicts: gem(rspec-mocks) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-i18n) >= 4
@@ -85,6 +82,7 @@ BuildConflicts: gem(webrick) >= 2
 %ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
 %ruby_use_gem_dependency rspec-mocks >= 3.10.2,rspec-mocks < 4
 %ruby_use_gem_dependency ffi >= 1.17.0,ffi < 2
+%ruby_use_gem_dependency rspec-its >= 2.0.0,rspec-its < 3
 Requires:      ruby >= 3.1.0
 Requires:      rubygems > 1.3.1
 Requires:      gem(base64) >= 0.1
@@ -124,14 +122,12 @@ based on a centralized specification.
 
 %package       -n openvox
 Version:       8.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       OpenVox, a community implementation of Puppet -- an automated configuration management tool executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета openvox
 Group:         Other
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(openvox) = 8.25.0
 Requires:      gem(openfact) >= 5.0
 Requires:      gem(puppet-resource_api) >= 2.0
@@ -157,14 +153,12 @@ based on a centralized specification.
 %if_enabled    doc
 %package       -n gem-openvox-doc
 Version:       8.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       OpenVox, a community implementation of Puppet -- an automated configuration management tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета openvox
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(openvox) = 8.25.0
 
 %description   -n gem-openvox-doc
@@ -184,14 +178,12 @@ based on a centralized specification.
 %if_enabled    devel
 %package       -n gem-openvox-devel
 Version:       8.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       OpenVox, a community implementation of Puppet -- an automated configuration management tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета openvox
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(openvox) = 8.25.0
 Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(json-schema) >= 2
@@ -213,7 +205,7 @@ Conflicts:     gem(ffi) >= 2
 Conflicts:     gem(json-schema) >= 6
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rspec-its) >= 2
+Conflicts:     gem(rspec-its) >= 3
 Conflicts:     gem(rspec-mocks) >= 4
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-i18n) >= 4
@@ -274,6 +266,9 @@ based on a centralized specification.
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 8.25.0-alt1.1
+- ! fixed deps to rspec-its
+
 * Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 8.25.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
