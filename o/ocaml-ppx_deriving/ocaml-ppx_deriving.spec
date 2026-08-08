@@ -1,6 +1,6 @@
 %define libname ppx_deriving
 Name: ocaml-%libname
-Version: 6.1.1
+Version: 6.1.3
 Release: alt1
 Summary: Type-driven code generation for OCaml >=4.02
 License: MIT
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 6.1.3-alt1
+- 6.1.1 -> 6.1.3
+
 * Thu Jul 02 2026 Anton Farygin <rider@altlinux.org> 6.1.1-alt1
 - 4.4.1 -> 6.1.1
 
