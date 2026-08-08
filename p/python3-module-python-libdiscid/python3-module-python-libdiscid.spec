@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.1
 Release: alt1
 
 Summary: Python bindings for libdiscid
@@ -46,5 +46,8 @@ cd /tmp && py.test-3 --pyargs libdiscid
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Aug 08 2026 Anton Vyatkin <toni@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Wed Apr 15 2026 Anton Vyatkin <toni@altlinux.org> 2.0.3-alt1
 - Initial build for Sisyphus.
