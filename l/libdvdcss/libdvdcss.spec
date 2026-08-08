@@ -1,6 +1,6 @@
 %define soname 2
 Name: libdvdcss
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: A portable abstraction library for DVD decryption
 License: GPLv2
@@ -55,6 +55,9 @@ This package contains development files required for building
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 1.6.0-alt1
+- 1.5.0 -> 1.6.0
+
 * Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 1.5.0-alt1
 - 1.3.0 -> 1.5.0
 
