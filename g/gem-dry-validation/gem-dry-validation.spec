@@ -6,7 +6,7 @@
 
 Name:          gem-dry-validation
 Version:       1.11.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Validation library
 License:       MIT
 Group:         Development/Ruby
@@ -62,7 +62,7 @@ Validation library
 %if_enabled    doc
 %package       -n gem-dry-validation-doc
 Version:       1.11.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Validation library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dry-validation
 Group:         Development/Documentation
@@ -83,7 +83,7 @@ Validation library documentation files.
 %if_enabled    devel
 %package       -n gem-dry-validation-devel
 Version:       1.11.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Validation library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dry-validation
 Group:         Development/Ruby
@@ -124,6 +124,7 @@ Validation library development package.
 %doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md changelog.yml
 %ruby_gemspec
 %ruby_gemlibdir
+%_logdir/%gemname
 
 %if_enabled    doc
 %files         -n gem-dry-validation-doc
@@ -138,6 +139,9 @@ Validation library development package.
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 1.11.1-alt1.1
+- + added log folder
+
 * Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 1.11.1-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
