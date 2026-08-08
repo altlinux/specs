@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without jbig
+%def_disable jbig
 %define soname 6
 
 Name: libtiff
-Version: 4.7.1
+Version: 4.7.2
 Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
@@ -30,7 +30,7 @@ BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
 BuildRequires: python3-module-sphinx
 
-%if_with jbig
+%if_enabled jbig
 BuildRequires: libjbig-devel
 %else
 BuildConflicts: libjbig-devel
@@ -59,9 +59,7 @@ Requires: libtiff%soname = %version-%release
 %package devel
 Summary: Development files for programs which will use the tiff library
 Group: Development/C
-Requires: libtiff%soname = %version-%release
-Provides: libtiff%soname-devel
-Obsoletes: libtiff%soname-devel
+Requires: libtiff%soname = %EVR
 
 %package doc
 Summary: Documentation files for programs which will use the tiff library
@@ -71,12 +69,12 @@ BuildArch: noarch
 %package -n libtiffxx%soname
 Summary: TIFF I/O C++ shared library
 Group: System/Libraries
-Requires: libtiff%soname = %version-%release
+Requires: libtiff%soname = %EVR
 
 %package -n libtiffxx-devel
 Summary: TIFF I/O C++ development library and header files
 Group: Development/C
-Requires: libtiffxx%soname = %version-%release
+Requires: libtiffxx%soname = %EVR
 
 %description -n libtiff%soname
 This package contains a library of functions for manipulating
@@ -108,14 +106,6 @@ This package contains TIFF I/O C++ development library and header files.
 %prep
 %setup
 %autopatch -p1
-rm -f libtool.m4
-
-libtoolize --force --copy
-aclocal -I . -I m4
-touch config/config.h.in
-automake --add-missing --copy
-autoconf
-autoheader
 
 %build
 %add_optflags -Wl,--no-undefined
@@ -124,20 +114,22 @@ autoheader
   --prefix=%_prefix \
   --enable-ld-version-script \
   --enable-static=no \
+  --disable-lerc \
+  %{subst_enable jbig} \
   %{subst_enable cxx} \
   #
 
-%make_build X_PRE_LIBS= GLUT_CFLAGS= GLUT_CFLAGS= GLUT_LIBS='-lglut -lGL' \
-	GLU_CFLAGS= GLU_LIBS= GL_CFLAGS= GL_LIBS=
+%make_build
 
 %install
 %makeinstall_std
 
 %check
+# configure disables a codec silently when its dependency is missing
+[ "$(grep -Ec '^#define (ZIP|LIBDEFLATE|JPEG|OJPEG|LZMA|ZSTD|WEBP)_SUPPORT 1' config/config.h)" = 7 ]
 %make_build -k check
 
 %files doc
-%dir %_datadir/doc/tiff-%version
 %_datadir/doc/tiff-%version/
 
 %files -n libtiff%soname
@@ -169,6 +161,11 @@ autoheader
 %endif
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 4.7.2-alt1
+- 4.7.1 -> 4.7.2
+- Fixes:
+  + CVE-2026-4775 Integer overflow in YCbCr TIFF image processing
+
 * Fri Sep 19 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.1-alt1
 - Fixes:
   + CVE-2025-8961 Improper bounds checking on memory operations
