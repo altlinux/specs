@@ -25,7 +25,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -55,18 +55,18 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 %define meson_ver 1.2
-%define glib_ver 2.82
+%define glib_ver 2.88
 %define cairo_ver 1.18
 %define gi_docgen_ver 2021.3
 %define xft_ver 2.0.0
 %define fontconfig_ver 2.17.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 8.4.0
+%define hb_ver 11
 %define thai_ver 0.1.9
 %define fribidi_ver 1.0.6
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver gcc-c++ /proc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libharfbuzz-devel >= %hb_ver
@@ -229,6 +229,9 @@ rm -f tests/layouts/valid-20.layout
 
 
 %changelog
+* Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.2-alt1
+- 1.58.2
+
 * Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
 - 1.58.0
 
