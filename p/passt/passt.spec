@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: passt
-Version: 20260120
+Version: 20260728
 Release: alt1
 Summary: User-mode networking daemons for virtual machines and namespaces
 License: GPL-2.0-or-later AND BSD-3-Clause
 Group: System/Configuration/Other
-Vcs: git://passt.top/passt
+Vcs: https://passt.top/passt
 Url: https://passt.top/
 Source: %name-%version.tar
 
@@ -28,13 +28,19 @@ requiring any capabilities or privileges.
 # The Makefile creates symbolic links for pasta, but we need actual copies for
 # SELinux file contexts to work as intended. Same with pasta.avx2 if present.
 # Build twice, changing the version string, to avoid duplicate Build-IDs.
-%make_build VERSION="%version-%release.%_arch-pasta"
+# CFLAGS=-g for usable debuginfo; passing %%optflags would override the -Ofast
+# the Makefile sets for the avx2 build.
+%define mkflags CPPFLAGS="-D_FILE_OFFSET_BITS=64" CFLAGS="-g"
+%make_build %mkflags VERSION="%version-%release.%_arch-pasta"
 mv -f passt pasta
+# passt-repair and pesto are neither passt nor pasta: rebuild them in the second
+# pass so they don't keep the pasta version string.
+rm -f passt-repair pesto
 %ifarch x86_64
 mv -f passt.avx2 pasta.avx2
-%make_build passt passt.avx2 VERSION="%version-%release.%_arch"
+%make_build passt passt.avx2 passt-repair pesto %mkflags VERSION="%version-%release.%_arch"
 %else
-%make_build passt VERSION="%version-%release.%_arch"
+%make_build passt passt-repair pesto %mkflags VERSION="%version-%release.%_arch"
 %endif
 
 %install
@@ -49,7 +55,6 @@ rm -rf %buildroot%_docdir/%name
 %ifarch x86_64
 ln -sr %buildroot%_mandir/man1/passt.1 %buildroot%_mandir/man1/passt.avx2.1
 ln -sr %buildroot%_mandir/man1/pasta.1 %buildroot%_mandir/man1/pasta.avx2.1
-install -p -m 755 %buildroot%_bindir/passt.avx2 %buildroot%_bindir/pasta.avx2
 %endif
 
 %files
@@ -59,11 +64,11 @@ install -p -m 755 %buildroot%_bindir/passt.avx2 %buildroot%_bindir/pasta.avx2
 %_bindir/passt
 %_bindir/passt-repair
 %_bindir/pasta
-%_bindir/qrap
+%_bindir/pesto
 %_man1dir/passt.1*
 %_man1dir/passt-repair.1*
 %_man1dir/pasta.1*
-%_man1dir/qrap.1*
+%_man1dir/pesto.1*
 %ifarch x86_64
 %_bindir/passt.avx2
 %_man1dir/passt.avx2.1*
@@ -72,6 +77,15 @@ install -p -m 755 %buildroot%_bindir/passt.avx2 %buildroot%_bindir/pasta.avx2
 %endif
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 20260728-alt1
+- 20260120 -> 20260728
+- upstream replaced qrap with pesto: packaged accordingly.
+- build with -g: debuginfo was built without debug sources.
+- don't overwrite pasta.avx2 with passt.avx2: it made both share one Build-ID.
+- build passt-repair and pesto with the plain version string, not the pasta one.
+- build with -D_FILE_OFFSET_BITS=64 (non-LFS functions on 32-bit).
+- Vcs: use https instead of the git:// protocol.
+
 * Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 20260120-alt1
 - 2026_01_20.386b5f5.
 
