@@ -19,7 +19,7 @@
 %def_enable smart
 
 Name: %{_name}2
-Version: 2.11.1
+Version: 2.11.2
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -310,6 +310,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt1
+- 2.11.2 (fixed CVE-2026-7867)
+
 * Thu Feb 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
 - 2.11.1 (fixed CVE-2026-26103, CVE-2026-26104)
 
