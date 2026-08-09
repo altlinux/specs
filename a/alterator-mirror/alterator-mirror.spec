@@ -2,7 +2,7 @@
 
 Name: alterator-mirror
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -67,6 +67,9 @@ install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
 %changelog
+* Sun Aug 09 2026 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt2
+- Bump release.
+
 * Tue Mar 24 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 0.7.2-alt1
 - Add noarch support for an additional repo (ALT #58343).
 

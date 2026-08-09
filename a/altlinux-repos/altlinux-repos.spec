@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 11.0
-Release: alt4
+Release: alt5
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Sun Aug 09 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- Bump release.
+
 * Fri Mar 13 2026 Ivan A. Melnikov <iv@altlinux.org> 11.0-alt4
 - Added p11_loongarch64 repository.
 - Dropped heanet.ie mirror (ALT#56851).

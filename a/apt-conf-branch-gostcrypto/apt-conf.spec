@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro-gostcrypto
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Sun Aug 09 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt3
+- Bump release.
+
 * Wed May 13 2026 Ivan A. Melnikov <iv@altlinux.org> 11.0-alt2
 - Add keys for loongarch64 repostories to vendor.list.
 
