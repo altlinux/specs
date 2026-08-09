@@ -6,7 +6,7 @@
 
 Name:          gem-dry-schema
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Coercion and validation for data structures
 License:       MIT
 Group:         Development/Ruby
@@ -16,9 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(concurrent-ruby) >= 1.0
@@ -53,7 +51,7 @@ BuildConflicts: gem(zeitwerk) >= 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      ruby >= 3.2
+Requires:      ruby >= 3.3
 Requires:      gem(concurrent-ruby) >= 1.0
 Requires:      gem(dry-configurable) >= 1.0.1
 Requires:      gem(dry-core) >= 1.1
@@ -69,6 +67,7 @@ Conflicts:     gem(dry-initializer) >= 4
 Conflicts:     gem(dry-logic) >= 2
 Conflicts:     gem(dry-types) >= 2
 Conflicts:     gem(zeitwerk) >= 3
+Provides:      dry-schema = %EVR
 Provides:      gem(dry-schema) = 1.16.0
 
 %description
@@ -81,14 +80,12 @@ schema engine in dry-validation.
 %if_enabled    doc
 %package       -n gem-dry-schema-doc
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Coercion and validation for data structures documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dry-schema
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(dry-schema) = 1.16.0
 
 %description   -n gem-dry-schema-doc
@@ -107,14 +104,12 @@ schema engine in dry-validation.
 %if_enabled    devel
 %package       -n gem-dry-schema-devel
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Coercion and validation for data structures development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dry-schema
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(dry-schema) = 1.16.0
 Requires:      gem(bundler) >= 0
 Requires:      gem(json_schemer) >= 0
@@ -152,6 +147,7 @@ schema engine in dry-validation.
 %doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
+%_logdir/%gemname
 
 %if_enabled    doc
 %files         -n gem-dry-schema-doc
@@ -166,6 +162,9 @@ schema engine in dry-validation.
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt1.1
+- + added link to logged file
+
 * Fri Jul 03 2026 Alexander Burmatov <thatman@altlinux.org> 1.16.0-alt1
 - ^ 1.13.3 -> 1.16.0
 
