@@ -5,52 +5,50 @@
 %define        gemname dry-monads
 
 Name:          gem-dry-monads
-Version:       1.6.0
+Version:       1.10.0
 Release:       alt1
 Summary:       Common monads for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://dry-rb.org/gems/dry-monads
 Vcs:           https://github.com/dry-rb/dry-monads.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
+BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(concurrent-ruby) >= 1.0
+BuildRequires: gem(debug_inspector) >= 0
+BuildRequires: gem(dry-core) >= 1.1
+BuildRequires: gem(dry-types) >= 0
 BuildRequires: gem(rake) >= 12.3.3
+BuildRequires: gem(rexml) >= 0
+BuildRequires: gem(rspec) >= 0
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(simplecov-cobertura) >= 0
-BuildRequires: gem(rexml) >= 0
+BuildRequires: gem(super_diff) >= 0
 BuildRequires: gem(warning) >= 0
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(rspec) >= 0
-BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(pry-byebug) >= 0
-BuildRequires: gem(redcarpet) >= 0
-BuildRequires: gem(yard) >= 0
-BuildRequires: gem(yard-junk) >= 0
-BuildRequires: gem(concurrent-ruby) >= 1.0
-BuildRequires: gem(dry-core) >= 1.0
 BuildRequires: gem(zeitwerk) >= 2.6
-BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(concurrent-ruby) >= 2
 BuildConflicts: gem(dry-core) >= 2
+BuildConflicts: gem(rdoc) >= 8.0
 BuildConflicts: gem(zeitwerk) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+Requires:      ruby >= 3.3
 Requires:      gem(concurrent-ruby) >= 1.0
-Requires:      gem(dry-core) >= 1.0
+Requires:      gem(dry-core) >= 1.1
+Requires:      gem(rake) >= 12.3.3
 Requires:      gem(zeitwerk) >= 2.6
 Conflicts:     gem(concurrent-ruby) >= 2
 Conflicts:     gem(dry-core) >= 2
+Conflicts:     gem(rdoc) >= 8.0
 Conflicts:     gem(zeitwerk) >= 3
-Provides:      gem(dry-monads) = 1.6.0
-
+Provides:      dry-monads = %EVR
+Provides:      gem(dry-monads) = 1.10.0
 
 %description
 dry-monads is a set of common monads for Ruby. Monads provide an elegant way of
@@ -67,14 +65,14 @@ say, using functions.
 
 %if_enabled    doc
 %package       -n gem-dry-monads-doc
-Version:       1.6.0
+Version:       1.10.0
 Release:       alt1
 Summary:       Common monads for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dry-monads
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(dry-monads) = 1.6.0
+Requires:      gem(dry-monads) = 1.10.0
 
 %description   -n gem-dry-monads-doc
 Common monads for Ruby documentation files.
@@ -97,29 +95,31 @@ say, using functions.
 
 %if_enabled    devel
 %package       -n gem-dry-monads-devel
-Version:       1.6.0
+Version:       1.10.0
 Release:       alt1
 Summary:       Common monads for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dry-monads
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(dry-monads) = 1.6.0
+Requires:      gem(dry-monads) = 1.10.0
+Requires:      gem(bundler) >= 0
+Requires:      gem(concurrent-ruby) >= 1.0
+Requires:      gem(debug_inspector) >= 0
+Requires:      gem(dry-core) >= 1.1
+Requires:      gem(dry-types) >= 0
 Requires:      gem(rake) >= 12.3.3
+Requires:      gem(rexml) >= 0
+Requires:      gem(rspec) >= 0
 Requires:      gem(simplecov) >= 0
 Requires:      gem(simplecov-cobertura) >= 0
-Requires:      gem(rexml) >= 0
+Requires:      gem(super_diff) >= 0
 Requires:      gem(warning) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(bundler) >= 0
-Requires:      gem(rspec) >= 0
-Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(pry) >= 0
-Requires:      gem(pry-byebug) >= 0
-Requires:      gem(redcarpet) >= 0
-Requires:      gem(yard) >= 0
-Requires:      gem(yard-junk) >= 0
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(zeitwerk) >= 2.6
+Conflicts:     gem(concurrent-ruby) >= 2
+Conflicts:     gem(dry-core) >= 2
+Conflicts:     gem(rdoc) >= 8.0
+Conflicts:     gem(zeitwerk) >= 3
 
 %description   -n gem-dry-monads-devel
 Common monads for Ruby development package.
@@ -153,22 +153,26 @@ say, using functions.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
+%_logdir/%gemname
 
 %if_enabled    doc
 %files         -n gem-dry-monads-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-dry-monads-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %endif
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
+- ^ 1.6.0 -> 1.10.0
+
 * Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - + packaged gem with Ruby Policy 2.0
