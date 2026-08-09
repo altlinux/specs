@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -144,6 +144,9 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %endif
 
 %changelog
+* Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.6-alt1
+- 1.28.6 (fixed CVE-2026-18649)
+
 * Thu Jul 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.5-alt1
 - 1.28.5
 
