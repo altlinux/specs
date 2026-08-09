@@ -6,7 +6,7 @@
 
 Name:          gem-train
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -16,9 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb
 %if_enabled check
 BuildRequires: gem(activesupport) >= 6.0.3.1
 BuildRequires: gem(addressable) >= 2.5
@@ -92,6 +90,7 @@ Requires:      gem(docker-api) >= 1.26
 Requires:      gem(google-api-client) >= 0.23.9
 Requires:      gem(googleauth) >= 0.6.6
 Requires:      gem(inifile) >= 3.0
+Requires:      gem(train-core) = 3.11.5
 Requires:      gem(train-winrm) >= 0.2
 Conflicts:     gem(azure_graph_rbac) >= 1
 Conflicts:     gem(azure_mgmt_key_vault) >= 1
@@ -130,13 +129,11 @@ Train supports:
 
 %package       -n gem-train-core
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      ruby >= 2.7
 Requires:      gem(addressable) >= 2.5
 Requires:      gem(ffi) >= 1.13.0
@@ -150,7 +147,6 @@ Conflicts:     gem(json) >= 3.0
 Conflicts:     gem(mixlib-shellout) >= 4.0
 Conflicts:     gem(net-scp) >= 5.0
 Conflicts:     gem(net-ssh) >= 8.0
-Provides:      train-core = %EVR
 Provides:      gem(train-core) = 3.11.5
 
 %description   -n gem-train-core
@@ -160,14 +156,12 @@ Transport Interface to unify communication over SSH, WinRM, and friends.
 %if_enabled    doc
 %package       -n gem-train-core-doc
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета train-core
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(train-core) = 3.11.5
 
 %description   -n gem-train-core-doc
@@ -182,14 +176,12 @@ documentation files.
 %if_enabled    devel
 %package       -n gem-train-core-devel
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета train-core
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(train-core) = 3.11.5
 Requires:      gem(bcrypt_pbkdf) >= 0
 Requires:      gem(berkshelf) >= 6.0
@@ -224,13 +216,11 @@ development package.
 
 %package       -n gem-train-test-fixture
 Version:       0.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Test train plugin. Not intended for use as an example
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Provides:      gem(train-test-fixture) = 0.1.0
 
 %description   -n gem-train-test-fixture
@@ -243,14 +233,12 @@ https://github.com/inspec/train/tree/master/examples/plugins
 %if_enabled    doc
 %package       -n gem-train-test-fixture-doc
 Version:       0.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Test train plugin. Not intended for use as an example documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета train-test-fixture
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(train-test-fixture) = 0.1.0
 
 %description   -n gem-train-test-fixture-doc
@@ -270,14 +258,12 @@ https://github.com/inspec/train/tree/master/examples/plugins
 %if_enabled    doc
 %package       -n gem-train-doc
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета train
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(train) = 3.11.5
 
 %description   -n gem-train-doc
@@ -313,14 +299,12 @@ Train supports:
 %if_enabled    devel
 %package       -n gem-train-devel
 Version:       3.11.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Transport Interface to unify communication over SSH, WinRM, and friends development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета train
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(train) = 3.11.5
 Requires:      gem(bcrypt_pbkdf) >= 0
 Requires:      gem(berkshelf) >= 6.0
@@ -431,6 +415,9 @@ Train supports:
 
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 3.11.5-alt1.1
+- + dep to train-core gem (closes ALT #60125)
+
 * Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 3.11.5-alt1
 - ^ 3.11.1 -> 3.11.5
 
