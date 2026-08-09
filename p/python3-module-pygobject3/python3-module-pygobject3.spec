@@ -15,7 +15,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -146,7 +146,7 @@ mv gobject-introspection-tests-%gi_tests_ver subprojects/gobject-introspection-t
 xvfb-run %__meson_test -t 2
 
 %files
-%{?_enable_pycairo:%python3_sitelibdir/gi/_gi_cairo.cpython-*.so}
+%{?_enable_pycairo:%python3_sitelibdir/gi/_gi_cairo.*.so}
 
 %files nox
 %dir %python3_sitelibdir/gi/
@@ -154,7 +154,7 @@ xvfb-run %__meson_test -t 2
 %python3_sitelibdir/gi/repository/
 %python3_sitelibdir/gi/*.py
 %python3_sitelibdir/gi/_gi.cpython-*.so
-%{?_enable_pycairo:%exclude %python3_sitelibdir/gi/_gi_cairo.cpython-*.so}
+%{?_enable_pycairo:%exclude %python3_sitelibdir/gi/_gi_cairo.*.so}
 %python3_sitelibdir/gi/__pycache__/
 %python3_sitelibdir/*.dist-info
 %{?_enable_pygtkcompat:%exclude %python3_sitelibdir/gi/pygtkcompat.py*}
@@ -176,6 +176,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.3-alt1.1
+- fixed %%files
+
 * Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.3-alt1
 - 3.56.3
 
