@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.9
+Version: 3.1
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -40,23 +40,20 @@ Requires: evince
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
-BuildRequires: evince
 BuildRequires: python3-module-markdown pandoc docbook-dtds
-BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
+BuildRequires: libgtk4-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
 BuildRequires: pkgconfig(OpenEXR)
 BuildRequires: pkgconfig(cfitsio)
-BuildRequires: libwebp-pixbuf-loader
 %ifnarch armh
 BuildRequires: libjxl-devel
 %endif
 BuildRequires: libpoppler-glib-devel libheif-devel
 BuildRequires: libraw-devel libgomp-devel
 BuildRequires: libexiv2-devel zlib-devel libarchive-devel
-BuildRequires: libgspell-devel
-BuildRequires: libdw-devel
+BuildRequires: pkgconfig(libspelling-1)
 %{?_enable_lua:BuildRequires: liblua%lua_ver-devel}
-%{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
+%{?_enable_map:BuildRequires: pkgconfig(shumate-1.0)}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_check:BuildRequires: xvfb-run shellcheck}
 
@@ -117,6 +114,9 @@ ExifTool.
 %doc NEWS README.*
 
 %changelog
+* Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1 (ported to GTK4)
+
 * Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.9-alt1
 - 2.9
 

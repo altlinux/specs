@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name-%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -131,6 +131,9 @@ This package provides Python3 bindings for the gexiv2 library.
 %endif
 
 %changelog
+* Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
+- 0.16.2
+
 * Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
 - 0.16.1
 
