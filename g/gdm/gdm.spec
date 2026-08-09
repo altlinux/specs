@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -50,6 +50,9 @@ Patch2: gdm-40.beta-alt-Xsession.patch
 Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 # for p11
 Patch9: gdm-48-Revert-Disable-Xorg-session-by-default.patch
+
+# https://gitlab.gnome.org/GNOME/gdm/-/merge_requests/357
+Patch10: gdm-51-up-kmsconvt.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %EVR
@@ -168,6 +171,7 @@ This package contains user documentation for Gdm.
 %setup -n %name-%version%beta
 %patch2 -p1 -b .XSession
 %patch8 -p1 -b .XSession-Xterm
+%patch10 -p1
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -276,6 +280,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
+- 50.2
+
 * Fri May 29 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 
