@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname libaccess_bittorrent_plugin
 
 Name: vlc-plugin-bittorrent
-Version: 2.16
+Version: 2.17
 Release: alt1
 
 Summary: A bittorrent plugin for VLC
@@ -38,6 +39,9 @@ install -D %_arch-alt-linux/src/%oname.so \
 %doc *.md LICENSE
 
 %changelog
+* Mon Aug 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.17-alt1
+- 2.16 -> 2.17
+
 * Thu Apr 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.16-alt1
 - Initial build for ALT Linux.
 
