@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ready-set-plugin-atomic-finalize
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: ALT Atomic finalization logic baked in pageless plugin
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
 BuildRequires: vala
-BuildRequires: pkgconfig(libready-set-0)
+BuildRequires: pkgconfig(libready-set-0.13)
 
 %description
 %summary that should be applied as final step.
@@ -48,6 +48,9 @@ BuildRequires: pkgconfig(libready-set-0)
 %_datadir/polkit-1/rules.d/org.altlinux.ReadySet.Plugin.AtomicFinalize.rules
 
 %changelog
+* Tue Aug 11 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3-alt1
+- New version: 0.3.
+
 * Wed Jul 22 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
 - New version: 0.2.
 - Fixed apm DBus action name.

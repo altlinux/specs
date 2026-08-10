@@ -10,13 +10,12 @@
 %define ser_name %name-service
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
-%define api_version 0
-%define major_version 12
-%define minor_version 3
+%define soversion 0.13
+%define minor_version 0
 %define gis_name gnome-initial-setup
 
 Name: ready-set
-Version: %api_version.%major_version.%minor_version
+Version: %soversion.%minor_version
 Release: alt1
 
 Summary: Modular (System Installer | Initial Setup Wizard)
@@ -98,29 +97,29 @@ Requires: phrog
 %description phrog
 %summary.
 
-%package -n %libname%api_version
+%package -n %libname%soversion
 Summary: %name library
 Group: System/Libraries
 
-%description -n %libname%api_version
+%description -n %libname%soversion
 %summary.
 
 %package -n %libname-devel
 Summary: %name development files
 Group: Development/C
 
-Requires: %libname%api_version = %EVR
+Requires: %libname%soversion = %EVR
 
 %description -n %libname-devel
 %summary.
 
-%package -n %libname%api_version-gir
+%package -n %libname%soversion-gir
 Summary: %name GIR introspection files
 Group: System/Libraries
 
-Requires: %libname%api_version = %EVR
+Requires: %libname%soversion = %EVR
 
-%description -n %libname%api_version-gir
+%description -n %libname%soversion-gir
 %summary.
 
 %package -n %libname-gir-devel
@@ -128,34 +127,34 @@ Summary: %name GIR introspection development files
 Group: Development/GNOME and GTK+
 
 BuildArch: noarch
-Requires: %libname%api_version-gir = %EVR
+Requires: %libname%soversion-gir = %EVR
 
 %description -n %libname-gir-devel
 %summary.
 
-%package -n %ser_libname%api_version
+%package -n %ser_libname%soversion
 Summary: %ser_name library
 Group: System/Libraries
 
-%description -n %ser_libname%api_version
+%description -n %ser_libname%soversion
 %summary.
 
 %package -n %ser_libname-devel
 Summary: %ser_name development files
 Group: Development/C
 
-Requires: %ser_libname%api_version = %EVR
+Requires: %ser_libname%soversion = %EVR
 
 %description -n %ser_libname-devel
 %summary.
 
-%package -n %ser_libname%api_version-gir
+%package -n %ser_libname%soversion-gir
 Summary: %ser_name GIR introspection files
 Group: System/Libraries
 
-Requires: %ser_libname%api_version = %EVR
+Requires: %ser_libname%soversion = %EVR
 
-%description -n %ser_libname%api_version-gir
+%description -n %ser_libname%soversion-gir
 %summary.
 
 %package -n %ser_libname-gir-devel
@@ -163,7 +162,7 @@ Summary: %ser_name GIR introspection development files
 Group: Development/GNOME and GTK+
 
 BuildArch: noarch
-Requires: %ser_libname%api_version-gir = %EVR
+Requires: %ser_libname%soversion-gir = %EVR
 
 %description -n %ser_libname-gir-devel
 %summary.
@@ -356,44 +355,44 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_userunitdir/%gis_name.service
 %_userunitdir/gnome-session@%gis_name.target.d
 %_sysusersdir/%gis_name.conf
-%_tmpfilesdir/%gis_name.conf
 
 %files phrog
-%_datadir/glib-2.0/schemas/50_%app_id.PhrogFirstRun.gschema.override
+%_sysconfdir/dconf/db/local.d/50_org.altlinux.ReadySet.phrog_first-run
+%_sysusersdir/%name-phrog.conf
 
-%files -n %ser_libname%api_version
-%_libdir/%ser_libname-%api_version.so.%api_version
-%_libdir/%ser_libname-%api_version.so.%api_version.*
+%files -n %ser_libname%soversion
+%_libdir/%ser_libname-%soversion.so.%soversion
+%_libdir/%ser_libname-%soversion.so.%soversion.*
 
 %files -n %ser_libname-devel
-%_pkgconfigdir/%ser_libname-%api_version.pc
-%_libdir/%ser_libname-%api_version.so
-%_includedir/%ser_libname-%api_version.h
-%_vapidir/%ser_libname-%api_version.deps
-%_vapidir/%ser_libname-%api_version.vapi
+%_pkgconfigdir/%ser_libname-%soversion.pc
+%_libdir/%ser_libname-%soversion.so
+%_includedir/%ser_libname-%soversion.h
+%_vapidir/%ser_libname-%soversion.deps
+%_vapidir/%ser_libname-%soversion.vapi
 
-%files -n %ser_libname%api_version-gir
-%_typelibdir/%ser_girname-%api_version.typelib
+%files -n %ser_libname%soversion-gir
+%_typelibdir/%ser_girname-%soversion.typelib
 
 %files -n %ser_libname-gir-devel
-%_girdir/%ser_girname-%api_version.gir
+%_girdir/%ser_girname-%soversion.gir
 
-%files -n %libname%api_version
-%_libdir/%libname-%api_version.so.%api_version
-%_libdir/%libname-%api_version.so.%api_version.*
+%files -n %libname%soversion
+%_libdir/%libname-%soversion.so.%soversion
+%_libdir/%libname-%soversion.so.%soversion.*
 
 %files -n %libname-devel
-%_pkgconfigdir/%libname-%api_version.pc
-%_libdir/%libname-%api_version.so
-%_includedir/%libname-%api_version.h
-%_vapidir/%libname-%api_version.deps
-%_vapidir/%libname-%api_version.vapi
+%_pkgconfigdir/%libname-%soversion.pc
+%_libdir/%libname-%soversion.so
+%_includedir/%libname-%soversion.h
+%_vapidir/%libname-%soversion.deps
+%_vapidir/%libname-%soversion.vapi
 
-%files -n %libname%api_version-gir
-%_typelibdir/%girname-%api_version.typelib
+%files -n %libname%soversion-gir
+%_typelibdir/%girname-%soversion.typelib
 
 %files -n %libname-gir-devel
-%_girdir/%girname-%api_version.gir
+%_girdir/%girname-%soversion.gir
 
 %files plugin-network
 %_datadir/polkit-1/rules.d/%app_id.Plugin.Network.rules
@@ -443,6 +442,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %doc plugins/privacy/README.*.md
 
 %files plugin-date-and-time
+%_datadir/%name/date-and-time/default-timezones.json
 %_libdir/%name/plugins/steps/date-and-time.plugin
 %_libdir/%name/plugins/steps/libdate-and-time.so
 %_datadir/polkit-1/rules.d/%app_id.Plugin.DateAndTime.rules
@@ -469,6 +469,15 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Aug 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.0-alt1
+- New version: 0.13.0.
+- Fixed `phrog` subpackage.
+- Used hardcoded locale(country)->timezone values as fallback in `date-and-time`.
+- Fixed connections to the same Wi-Fi network from different adapters.
+- Fixed `date-and-time` date carousel refilling due to month/year changing.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.13.0
+
 * Wed Aug 05 2026 Vladimir Romanov <rirusha@altlinux.org> 0.12.3-alt1
 - New version: 0.12.3.
 - Fixed phrog override.
