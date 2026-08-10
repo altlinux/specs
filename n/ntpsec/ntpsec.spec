@@ -1,5 +1,5 @@
 Name: ntpsec
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: NTP daemon and utilities
 Group: System/Servers
@@ -15,6 +15,8 @@ Url: https://www.ntpsec.org/
 Source0: https://ftp.ntpsec.org/pub/releases/ntpsec-%version.tar
 Source3: ntp.conf
 
+Patch: %name-alt-dns_sd.patch
+
 BuildRequires: bison
 BuildRequires: gcc
 BuildRequires: gnupg2
@@ -29,8 +31,11 @@ BuildRequires: python3-modules-curses
 BuildRequires: asciidoctor
 BuildRequires: libsystemd-devel
 BuildRequires: waf
+# optional but nice to hve
+BuildRequires: libavahi-devel
+BuildRequires: python3-module-gps
 
-Conflicts: ntp ntpd perl-NTP-Util ntpdate openntpd
+Conflicts: ntp ntpd perl-NTP-Util ntpdate openntpd ntpq
 Provides: python3-module-%name = %EVR
 
 Requires: logrotate
@@ -44,6 +49,7 @@ Protocol derived from the original NTP project.
 
 %prep
 %setup
+%patch -p1
 
 # Fix egg info to use a shorter version which will work as an rpm provide
 sed -i 's|NTPSEC_VERSION_EXTENDED|NTPSEC_VERSION|' pylib/ntp-in.egg-info
@@ -69,6 +75,7 @@ export LDFLAGS="$RPM_LD_FLAGS"
 export PYTHONDIR=%python3_sitelibdir
 
 %waf configure \
+	--pyshebang=%__python3 \
         --enable-debug \
         --disable-doc \
         --refclock=all \
@@ -102,8 +109,6 @@ pushd %buildroot
 
 install -pm640 %SOURCE3 .%_sysconfdir/ntp.conf
 subst 's,VARNTP,%_localstatedir/ntp,' .%_sysconfdir/ntp.conf
-
-subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 # Move ntpq to sbin for better compatibility with ntp package
 mv .%_bindir/ntpq .%_sbindir/ntpq
@@ -169,9 +174,7 @@ sed -i.bak -E '/^restrict/s/no(e?peer|trap)//g' %_sysconfdir/ntp.conf
 %_bindir/ntp*
 %_sbindir/ntp*
 %_libdir/libntpc.so*
-%_mandir/man1/ntp*.1*
-%_mandir/man5/ntp*.5*
-%_mandir/man8/ntp*.8*
+%_mandir/man?/ntp*.*
 %_unitdir/ntp*.service
 %_unitdir/ntp*.timer
 %dir %_systemd_dir/ntp-units.d
@@ -184,6 +187,11 @@ sed -i.bak -E '/^restrict/s/no(e?peer|trap)//g' %_sysconfdir/ntp.conf
 %python3_sitelibdir/ntp
 
 %changelog
+* Mon Aug 10 2026 L.A. Kostis <lakostis@altlinux.ru> 1.2.5-alt1
+- 1.2.5.
+- Security fixes: CVE-2026-18321.
+- BR: added libavahi (for dns_sd) and python3-module-gps.
+
 * Sat Jul 25 2026 L.A. Kostis <lakostis@altlinux.ru> 1.2.4-alt1
 - Initial build for ALTLinux.
 
