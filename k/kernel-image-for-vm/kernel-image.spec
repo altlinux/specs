@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.43
+%define kernel_sublevel 	.44
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -35,6 +35,7 @@ Summary: The Linux kernel (the core of the Linux operating system)
 License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://www.kernel.org/
+VCS: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
@@ -636,8 +637,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Aug 10 2026 Anton Farygin <rider@altlinux.org> 6.18.44-alt1
+- 6.18.43 -> 6.18.44
+
 * Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 6.18.43-alt1
 - 6.18.42 -> 6.18.43
+- fixes:
+  + CVE-2026-64564 sctp: don't free the ASCONF's own transport in DEL-IP processing
 
 * Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 6.18.42-alt1
 - 6.18.41 -> 6.18.42
