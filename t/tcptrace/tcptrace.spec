@@ -1,8 +1,8 @@
 %global optflags_lto %nil
 
 Name: tcptrace
-Version: 6.6.7
-Release: alt5
+Version: 6.6.8
+Release: alt1
 
 Summary: Tool for analysis of TCP dump files
 License: GPLv2+
@@ -10,7 +10,10 @@ Group: Monitoring
 
 URL: http://www.tcptrace.org/
 Source0: http://www.tcptrace.org/download/tcptrace-%version.tar.gz
-Patch0: http://ftp.de.debian.org/debian/pool/main/t/tcptrace/tcptrace_6.6.7-3.diff.gz
+# Patch0: http://ftp.de.debian.org/debian/pool/main/t/tcptrace/tcptrace_6.6.7-3.diff.gz
+Patch1: tcptrace-508f73-return.patch
+Patch2: tcptrace-6.6.7-pcap-ftbfs.patch
+
 
 # Automatically added by buildreq on Thu Feb 26 2009
 BuildRequires: flex libpcap-devel
@@ -45,6 +48,9 @@ install -pD -m644 tcptrace.man %buildroot%_man1dir/tcptrace.1
 %_man1dir/*
 
 %changelog
+* Mon Aug 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.6.8-alt1
+- NMU: 6.6.8
+
 * Fri Apr 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.6.7-alt5
 - NMU: fix FTBFS with gcc15
 
