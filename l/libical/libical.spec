@@ -17,25 +17,11 @@
 %def_enable docs
 %def_with cxx
 
-%ifdef _priority_distbranch
-%define altbranch %_priority_distbranch
-%else
-%define altbranch %(rpm --eval %%_priority_distbranch)
-%endif
-
-%if "%altbranch" == "%nil"
-%define altbranch sisyphus
-%endif
-
-%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 %def_with system_tzdata
-%else
-%def_without system_tzdata
-%endif
 
 Name: libical
 Version: 3.0.20
-Release: alt1
+Release: alt2
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -227,6 +213,9 @@ library.
 
 
 %changelog
+* Mon Aug 10 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.20-alt2
+- Enabled system tzdata switch regardless of target repository (ALT#60123).
+
 * Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.20-alt1
 - 3.0.20
 
