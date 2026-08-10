@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    cilium-cli
-Version: 0.19.4
+Version: 0.19.7
 Release: alt1
 
 Summary: CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Aug 10 2026 Alexander Stepchenko <geochip@altlinux.org> 0.19.7-alt1
+- 0.19.4 -> 0.19.7.
+
 * Wed May 27 2026 Nadezhda Fedorova <fedor@altlinux.org> 0.19.4-alt1
 - New version 0.19.4.
 
