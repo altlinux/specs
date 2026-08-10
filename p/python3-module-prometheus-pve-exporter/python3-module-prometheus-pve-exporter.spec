@@ -2,8 +2,8 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.9.0
-Release: alt2
+Version: 3.10.0
+Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
 License: Apache-2.0
@@ -67,6 +67,9 @@ useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.9.0-alt2
 - fix service restart (Closes: #59897)
 
