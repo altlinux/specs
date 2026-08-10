@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: alpaca
-Version: 5.3.0
-Release: alt2
+Version: 9.2.3
+Release: alt1
 
 Summary: Chat with AI models
 License: GPL-3.0-or-later
@@ -20,12 +20,12 @@ Source: %name-%version.tar
 %add_python3_path %_datadir/%_name
 
 Requires: python3-module-pygobject3
-Requires: typelib(Adw) = 1 typelib(GtkSource) = 5 typelib(Vte) = 3.91
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson
-BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: meson blueprint-compiler typelib(GtkSource)
+BuildRequires: pkgconfig(gio-2.0) typelib(Adw) typelib(Vte)
 BuildRequires: /usr/bin/glib-compile-resources
+BuildRequires: libwebkitgtk6.0-gir
 BuildRequires: /usr/bin/gtk4-update-icon-cache
 %if_enabled check
 BuildRequires: desktop-file-utils
@@ -111,6 +111,9 @@ by any models.
 %files local
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 9.2.3-alt1
+- 5.3.0 -> 9.2.3
+
 * Tue Sep 23 2025 Ivan A. Melnikov <iv@altlinux.org> 5.3.0-alt2
 - build on architectures except %%ix86
 
