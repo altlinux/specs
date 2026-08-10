@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.21.2
-Release: alt3.gc20be1c6
+Version: 4.21.3
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -21,14 +21,13 @@ BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.21.9
 BuildRequires: libxfconf-devel >= 4.19.3 libgarcon-devel >= 4.18.0
-BuildRequires: xfce-wayland-protocols
+BuildRequires: xfce-wayland-protocols >= 0.1.0-alt3.g55dbf3e
 BuildRequires: libX11-devel libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
 BuildRequires: libxkbcommon-devel >= 1.6.0
 Buildrequires: libXext-devel
 BuildRequires: libwayland-client-devel wayland-devel >= 1.20 wlr-protocols libgtk-layer-shell-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= 0.99.10}
 BuildRequires: libcolord-devel
-BuildRequires: xorg-drv-libinput-devel
 BuildRequires: xml-utils
 # For xfce4-compose-mail script
 BuildRequires: rpm-build-python3
@@ -94,6 +93,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Mon Aug 10 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1
+- Updated to 4.21.3.
+
 * Mon Jul 20 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt3.gc20be1c6
 - Updated Russian translation (thx alevkarash@).
 - Fixed {chromium-gost,newmoon,yandex-browser}.desktop.
