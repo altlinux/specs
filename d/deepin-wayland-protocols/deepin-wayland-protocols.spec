@@ -1,5 +1,5 @@
 Name: deepin-wayland-protocols
-Version: 1.10.0.31
+Version: 1.10.0.32
 Release: alt1
 
 Summary: Wayland protocols for DDE
@@ -7,9 +7,10 @@ Summary: Wayland protocols for DDE
 License: LGPL-2.1+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-wayland-protocols
-Vcs: https://github.com/linuxdeepin/deepin-wayland-protocols.git
+Vcs: https://github.com/linuxdeepin/deepin-wayland-protocols
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-wayland-protocols/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ extra-cmake-modules
@@ -45,6 +46,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DeepinWaylandProtocols/*.cmake
 
 %changelog
+* Mon Aug 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.10.0.32-alt1
+- New version 1.10.0.32.
+
 * Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.10.0.31-alt1
 - New version 1.10.0.31.
 
