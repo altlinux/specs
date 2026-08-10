@@ -2,7 +2,7 @@
 
 
 Name: sqlite3
-Version: 3.50.4
+Version: 3.53.3
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -20,7 +20,7 @@ Patch5: 0005-ALT-run-func7-pg-181-test-only-on-x86_64.patch
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
 # need for test
-BuildRequires: zlib-devel unzip
+BuildRequires: zlib-devel unzip /proc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -155,6 +155,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 mkdir -p %buildroot%_libdir/tcl/sqlite3
 mv %buildroot/%_tcllibdir/pkgIndex.tcl  %buildroot%_tcllibdir/sqlite3 
 sed -Ei 's/dir/dir \.\. /' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
+sed -Ei 's/libsqlite3\.so\.[0-9.]*/libtclsqlite%version.so/' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
+sed -Ei 's/libsqlite/libtclsqlite/' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
+
+mv %buildroot/%_tcllibdir/libsqlite%version.so %buildroot%_tcllibdir/libtclsqlite%version.so
 
 
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
@@ -197,7 +201,7 @@ cp -ar doc/* %buildroot%pkgdocdir/
 %endif # static
 
 %files -n tcl-sqlite3
-%_tcllibdir/libtclsqlite3.so*
+%_tcllibdir/libtclsqlite%version.so*
 %_tcllibdir/sqlite3
 
 %files doc
@@ -210,6 +214,10 @@ cp -ar doc/* %buildroot%pkgdocdir/
 %_datadir/lemon
 
 %changelog
+* Thu Jul 16 2026 Denis Medvedev <nbr@altlinux.org> 3.53.3-alt1
+- 3.53.3
+Fixes: CVE-2026-11822, CVE-2026-11824
+
 * Mon Aug 04 2025 Denis Medvedev <nbr@altlinux.org> 3.50.4-alt1
 - 3.50.4
 Fixes: CVE-2025-6965
