@@ -1,5 +1,5 @@
 Name: unrar
-Version: 7.1.6
+Version: 7.2.7
 Release: alt1
 
 Summary: RAR unarchiver
@@ -61,6 +61,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Mon Aug 10 2026 Alexander Danilov <admsasha@altlinux.org> 7.2.7-alt1
+- Update version to 7.2.7 (Fixes: CVE-2026-14191).
+
 * Thu May 22 2025 Fr. Br. George <george@altlinux.org> 7.1.6-alt1
 - Autobuild version bump to 7.1.6
 
