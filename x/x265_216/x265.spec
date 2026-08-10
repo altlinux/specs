@@ -1,12 +1,12 @@
-%define soversion 217
-Name: x265
-Version: 4.3
-Release: alt1
+%define soversion 216
+Name: x265_216
+Version: 4.2
+Release: alt2
 Summary: H.265/HEVC encoder
 License: GPLv2
 Group: Video
 Url: https://www.x265.org/
-VCS: https://github.com/Multicorewareinc/x265
+VCS: https://bitbucket.org/multicoreware/x265_git.git
 Source: %name-%version.tar
 BuildRequires: cmake gcc-c++ nasm libnuma-devel
 BuildRequires: /proc
@@ -19,16 +19,8 @@ Summary: H.265/HEVC encoder library
 Group: System/Libraries
 Obsoletes: libx265 = 2.5-alt1
 
-%package -n libx265-devel
-Summary: Development files of H.265/HEVC encoder library
-Group: Development/C
-Requires: libx265-%soversion = %EVR
-
 %description -n libx265-%soversion
 H.265/HEVC encoder library
-
-%description -n libx265-devel
-Development files of H.265/HEVC encoder library
 
 %prep
 %setup
@@ -108,21 +100,12 @@ find %buildroot -name "*.a" -delete
 pushd 8bit
 test/TestBench || :
 
-%files
-%_bindir/x265
-
 %files -n libx265-%soversion
 %_libdir/libx265.so.%soversion
 
-%files -n libx265-devel
-%_libdir/libx265.so
-%_includedir/x265.h
-%_includedir/x265_config.h
-%_pkgconfigdir/*
-
 %changelog
-* Sun Aug 09 2026 Anton Farygin <rider@altlinux.org> 4.3-alt1
-- 4.2 -> 4.3
+* Mon Aug 10 2026 Anton Farygin <rider@altlinux.org> 4.2-alt2
+- built as legacy library without devel package
 
 * Sun Apr 26 2026 Anton Farygin <rider@altlinux.org> 4.2-alt1
 - 4.1 -> 4.2
