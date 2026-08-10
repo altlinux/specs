@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD httpx_socks
 %def_with check
 
 Name: python3-module-httpx-socks
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Proxy (HTTP, SOCKS) transports for httpx
@@ -50,6 +51,9 @@ proxy functionality.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.0-alt1
+- 0.11.0 -> 0.12.0
+
 * Sat Dec 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.11.0-alt1
 - 0.10.1 -> 0.11.0
 
