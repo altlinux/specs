@@ -99,7 +99,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -1022,6 +1022,14 @@ ln -r -s %buildroot%_unitdir/machines.target %buildroot%_unitdir/multi-user.targ
 ln -r -s %buildroot%_unitdir/systemd-pstore.service %buildroot%_unitdir/sysinit.target.wants
 %endif
 
+%if_enabled timesyncd
+# Upstream installs the dbus-org.freedesktop.* aliases as static symlinks for all
+# the other services, but for timesyncd it only ships [Install]Alias=, so the alias
+# is missing until the unit is enabled -- and dbus activation of
+# org.freedesktop.timesync1 needs it (ALT#53694).
+ln -s systemd-timesyncd.service %buildroot%_unitdir/dbus-org.freedesktop.timesync1.service
+%endif
+
 # create drop-in to prevent tty1 to be cleared
 mkdir -p %buildroot%_unitdir/getty@tty1.service.d
 cat > %buildroot%_unitdir/getty@tty1.service.d/noclear.conf << EOF
@@ -1370,6 +1378,15 @@ fi
 
 
 %post_systemd_postponed systemd-timedated.service systemd-hostnamed.service systemd-journald.service systemd-localed.service systemd-userdbd.service systemd-oomd.service
+
+# v260 dropped the static autovt@.service alias, logind needs it to start a getty
+# on every VT.  Enable getty@.service once on upgrade, unless the alias is already
+# there -- it may point to kmsconvt@.service (ALT#60052).
+%triggerpostun -- systemd < 1:260.4-alt2
+if [ ! -e %_unitdir/autovt@.service ] && \
+   [ ! -e %_sysconfdir/systemd/system/autovt@.service ]; then
+        systemctl --no-reload enable getty@.service >/dev/null 2>&1 ||:
+fi
 
 
 %if_enabled networkd
@@ -1991,6 +2008,7 @@ fi
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
 %exclude %_unitdir/*time-wait-sync*
+%exclude %_unitdir/dbus-org.freedesktop.timesync1.service
 %endif
 %if_enabled microhttpd
 %exclude %_unitdir/systemd-journal-gatewayd*
@@ -2515,6 +2533,7 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
 %_unitdir/systemd-timesyncd.service
 %_unitdir/systemd-time-wait-sync.service
+%_unitdir/dbus-org.freedesktop.timesync1.service
 %_mandir/*/*timesync*
 %_mandir/*/*time-wait-sync*
 %ghost %dir %_sharedstatedir/%name/timesync
@@ -2718,6 +2737,12 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Aug 10 2026 Alexey Shabalin <shaba@altlinux.org> 1:260.4-alt2
+- Enable getty@.service on upgrades to restore the autovt@.service alias dropped
+  upstream in v260, unless it is already set up, e.g. taken over by kmscon (ALT#60052).
+- Ship the dbus-org.freedesktop.timesync1.service alias, needed for dbus
+  activation of org.freedesktop.timesync1 (ALT#53694).
+
 * Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1:260.4-alt1
 - 260.4.
 - Add registry.altlinux.org OCI registry mapping and an "alt" image alias for importctl pull-oci.
