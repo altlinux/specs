@@ -1,7 +1,7 @@
 %define repo smallgrp
 
 Name: gap-smallgrp
-Version: 1.5.5
+Version: 1.6.0
 Release: alt1
 Summary: GAP: Small Groups Library
 License: Artistic-2.0
@@ -17,7 +17,7 @@ BuildArch: noarch
 BuildRequires: rpm-macros-gap
 
 # PackageInfo.g
-Requires: gap >= 4.9
+Requires: gap >= 4.12
 
 %description
 The SmallGrp package provides the library of groups of certain
@@ -41,6 +41,9 @@ perl -i -pe 's{#!%_bindir/env }{#!/bin/}' doc/clean
 %gap_sitelib/%repo/
 
 %changelog
+* Mon Aug 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Thu Jul 30 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.5-alt1
 - New version 1.5.5.
 
