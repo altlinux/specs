@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %def_with fftw
-%define slicerver 5.10
+%define slicerver 5.12
 
 Name: slicer
-Version: %slicerver.0
+Version: 5.12.3
 Release: alt1
 Summary: Medical Visualization and Processing Environment for Research
 %if_with fftw
@@ -26,6 +26,9 @@ Source: %name-%version.tar
 Source2: FindPythonQt.cmake
 
 Source3: slicer.desktop
+
+# Shim for CMake >= 4.0 (CMP0148 removed builtin FindPythonLibs)
+Source4: FindPythonLibs.cmake
 
 Patch1: slicer-5.3.0-upstream-wc-last-change-date-fix.patch
 Patch2: slicer-5.6.1-alt-itk-compat.patch
@@ -139,6 +142,14 @@ grep -rl 'SetNthControlPointPositionMissing' |\
   xargs sed -i 's/SetNthControlPointPositionMissing/SetControlPointPositionMissing/'
 
 install %SOURCE2 ./CMake/
+install %SOURCE4 ./CMake/
+
+# Upstream dropped *Configure.h but still references it in install()
+sed -i 's|${configure_header_file}|vtkTeemExport.h|' Libs/vtkTeem/CMakeLists.txt
+sed -i 's|${configure_header_file}|vtkMRMLCLIExport.h|' Libs/MRML/CLI/CMakeLists.txt
+sed -i 's|${configure_header_file}|itkMRMLIDIOExport.h|' Libs/MRML/IDImageIO/CMakeLists.txt
+sed -i 's|${configure_header_file}|vtkMRMLLogicExport.h|' Libs/MRML/Logic/CMakeLists.txt
+sed -i 's|${configure_header_file}|vtkRemoteIOExport.h|' Libs/RemoteIO/CMakeLists.txt
 
 # change python shebangs to python3
 find . -name '*.py' | xargs sed -i \
@@ -172,6 +183,7 @@ find . -name '*.py' | xargs sed -i \
 	-DSlicer_BUILD_WEBENGINE_SUPPORT:BOOL=%{?_qt5_qtwebengine_arches:ON}%{!?_not_qt5_qtwebengine_arches:OFF} \
 	-DSlicer_USE_SYSTEM_ITK:BOOL=ON \
 	-DSlicer_USE_SYSTEM_LibArchive:BOOL=ON \
+	-DSlicer_USE_SYSTEM_OpenJPEG:BOOL=ON \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION:PATH=%_libdir/Slicer-%slicerver/cli-modules \
 	-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION:PATH=%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cli-modules \
 	-DSlicer_STORE_SETTINGS_IN_APPLICATION_HOME_DIR:BOOL=OFF \
@@ -210,6 +222,11 @@ install -m644 Resources/3DSlicer-DesktopIcon.png %buildroot%_datadir/%name/
 # remove unpackaged files
 find %buildroot%_libdir -name '*.a' -delete
 find %buildroot%_libdir/Slicer-%slicerver/share/Slicer-%slicerver/Wizard/Templates -name '*.h' -delete
+rm -f %buildroot%_prefix/Slicer.png
+
+# replace absolute CTKAppLauncher symlinks with relative ones
+ln -snf ../../bin/CTKAppLauncher %buildroot%_libdir/Slicer-%slicerver/Slicer
+ln -snf ../../../bin/CTKAppLauncher %buildroot%_libdir/Slicer-%slicerver/bin/SlicerDesigner
 
 # Disable CTKAppLauncher splash screen (Slicer has its own Qt splash)
 sed -i 's/launcherNoSplashScreen=false/launcherNoSplashScreen=true/' \
@@ -246,6 +263,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 5.12.3-alt1
+- 5.10.0 -> 5.12.3
+
 * Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 5.10.0-alt1
 - 5.8.1 -> 5.10.0
 
