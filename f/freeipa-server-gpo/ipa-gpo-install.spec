@@ -1,8 +1,5 @@
-%add_python3_req_skip parse_admx_structure
-%add_python3_req_skip utils
-
 Name:           freeipa-server-gpo
-Version:        0.0.8
+Version:        0.1.0
 Release:        alt1
 
 Summary:        Prepare FreeIPA for Group Policy Management
@@ -16,9 +13,18 @@ BuildRequires: gettext-tools
 
 Requires: python3-module-freeipa
 Requires: python3-module-ipaserver
+Requires: freeipa-server-core
 Requires: freeipa-server-trust-ad
 Requires: samba-common-tools
 Requires: admx-basealt
+Requires: python3-module-admix >= 0.1.0
+Requires: python3-module-admix < 0.2.0
+Requires: acl
+Requires: coreutils
+Requires: libgio
+Requires: oddjob
+Requires: systemd
+Requires: util-linux
 Source0: %name-%version.tar
 
 %description
@@ -39,14 +45,13 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %files -f ipa-gpo-install.lang
 %doc README.md
 %doc README.ru.md
+%doc doc/ARCHITECTURE.md
+%doc doc/ARCHITECTURE.ru.md
 %_bindir/ipa-gpo-install
-%_bindir/ipa-gpo-update-paths
 %python3_sitelibdir/ipa_gpo_install/
 %python3_sitelibdir/ipaserver/plugins/gpo.py*
 %python3_sitelibdir/ipaserver/plugins/chain.py*
 %python3_sitelibdir/ipaserver/plugins/gpmaster.py*
-%python3_sitelibdir/ipaclient/plugins/gpo_client.py*
-%python3_sitelibdir/ipaclient/plugins/__pycache__/gpo_client.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpo.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/chain.*
 %python3_sitelibdir/ipaserver/plugins/__pycache__/gpmaster.*
@@ -63,14 +68,30 @@ make install PREFIX=%_prefix DESTDIR=%buildroot PYTHON_SITELIBDIR=%python3_sitel
 %_mandir/man8/ipa-gpo-install.8*
 %_mandir/ru/man8/ipa-gpo-install.8*
 %_datadir/bash-completion/completions/ipa-gpo-install
-%python3_sitelibdir/gpui_service/
-%_prefix/sbin/gpuiservice
-%_prefix/lib/systemd/system/gpuiservice.service
-%config(noreplace) %_sysconfdir/dbus-1/system.d/org.altlinux.gpuiservice.conf
-%_datadir/glib-2.0/schemas/org.altlinux.gpuiservice.gschema.xml
-
 
 %changelog
+* Fri Aug 07 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.1.0-alt1
+- feat: fix info help (thx vladimirovicp)
+- chore(web): temporarily hide Preferences from tree (thx Korney Gedert)
+- packaging: include ARCHITECTURE.md in RPM docs
+- docs: add technical architecture documentation (en + ru)
+- fix:list of children files, if the name is long and the infowindow
+  is open , the information merges (thx vladimirovicp)
+- feat: list of children, added scrolling for large lists (thx vladimirovicp)
+  text than a block (thx vladimirovicp)
+  is now at a9afdf0 fix:admx window height 100% (thx vladimirovicp)
+- fix:indents in the tree structure (thx vladimirovicp)
+- feat(ui): show chain description in web interface
+- refactor: replace displayName with description for chain entity
+
+* Fri Jul 24 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.9-alt1
+- feat: migrate to libadmix editor API, remove gpuiservice (thx Korney Gedert)
+- feat: add structured GPUI editor UI and script editor API (thx Korney Gedert)
+- fix: move chains to dedicated cn=Chains,cn=System container
+- fix: restore two-step LDAP write for chain/gpo reorder
+- fix: add D-Bus activation file, copy UI assets on install (thx Korney Gedert)
+- fix: preserve ADMX value types in Registry.pol (thx Korney Gedert)
+
 * Mon Jun 15 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.8-alt1
 - feat: add unsaved changes confirmation modal on tree navigation (thx vladimirovicp)
 - feat(admx): implemented package management (thx vladimirovicp)
