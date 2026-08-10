@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1%beta
 
 Summary: Python library to interact with KeePass databases
@@ -57,6 +57,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 
 
 %changelog
+* Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
 - v4.1.1.post1
 
