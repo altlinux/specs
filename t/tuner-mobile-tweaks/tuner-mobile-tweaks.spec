@@ -4,7 +4,7 @@
 %define plugin_name mobile-tweaks
 
 Name: tuner-%plugin_name
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Extra Mobile settings
@@ -23,6 +23,7 @@ BuildRequires: pkgconfig(tuner-1)
 BuildRequires: pkgconfig(libportal)
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(libserialize-7)
 BuildRequires: gir(Tuner) = 1
 
 Requires: tuner
@@ -48,6 +49,19 @@ Unified Settings Center as a Tuner plugin.
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sat Aug 08 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.3-alt1
+- Fix translation domain
+- Update translations
+- Hide C warnings
+- Use translated plugin info
+- Rename `Feedback` to `Haptic feedback`
+- Added:
+  + Notch tweaks section
+  + Performance/Animations switch
+  + High contrast switch
+  + Sensors page
+  + Email and Button press switch
+
 * Thu May 07 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.2-alt1
 - Add Feedback settings per application.
 - Remove "Show battery percentage".
