@@ -4,7 +4,7 @@
 %define soname 0
 
 Name: libxfce4windowing
-Version: 4.20.6
+Version: 4.20.7
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -16,10 +16,11 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/libxfce4windowing.git
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: xfce-wayland-protocols >= 0.1.0-alt3.g55dbf3e
 BuildRequires: libgtk+3-devel libgdk-pixbuf-devel
 BuildRequires: libX11-devel libwnck3-devel libdisplay-info-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-client-devel wlr-protocols wayland-protocols
@@ -47,6 +48,16 @@ Requires: %name = %version-%release
 
 %description devel
 Header files for the %name library.
+
+%if_enabled docs
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+This package contains development documentation for %name.
+%endif
 
 %if_enabled introspection
 %package gir
@@ -81,7 +92,7 @@ Vala bindings for %name.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 %build
 %meson \
@@ -103,12 +114,14 @@ Vala bindings for %name.
 %_libdir/*.so.%soname.*
 
 %files devel
-%if_enabled docs
-%doc %_datadir/gtk-doc/html/%{name}*
-%endif
 %_includedir/xfce4/
 %_pkgconfigdir/*.pc
 %_libdir/*.so
+
+%if_enabled docs
+%files devel-doc
+%doc %_datadir/gtk-doc/html/%{name}*
+%endif
 
 %if_enabled introspection
 %files gir
@@ -124,6 +137,11 @@ Vala bindings for %name.
 %endif 
 
 %changelog
+* Tue Aug 11 2026 Mikhail Efremov <sem@altlinux.org> 4.20.7-alt1
+- Used system xfce-wayland-protocols.
+- Splitted out documentation to separate devel-doc subpackage.
+- Updated to 4.20.7.
+
 * Mon May 25 2026 Mikhail Efremov <sem@altlinux.org> 4.20.6-alt1
 - Explicitly disabled tests.
 - Enabled vala support
