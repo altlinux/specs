@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.28
+Version: 1.0.29
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -25,8 +25,10 @@ alt-server-v \
 alt-sisyphus \
 alt-spserver \
 alt-spserver-se \
+alt-spserver-fsb \
 alt-spworkstation \
 alt-spworkstation-se \
+alt-spworkstation-fsb \
 alt-spcontainer \
 alt-starterkit \
 alt-virtualization-pve \
@@ -96,6 +98,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Aug 07 2026 Anton Midyukov <antohami@altlinux.org> 1.0.29-alt1
+- Added alt-spserver-fsb, alt-spworkstation-fsb.
+
 * Tue May 19 2026 Anton Midyukov <antohami@altlinux.org> 1.0.28-alt1
 - Added alt-spserver-se, alt-spworkstation-se.
 
