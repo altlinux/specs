@@ -2,14 +2,15 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 6.4
-Release: alt7
+Release: alt8
 
 Summary: XS wrapper and C library plug-in for Date::Calc
-License: GPL or Artistic
+License: GPL-1.0-or-later OR Artistic-1.0-Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/ST/STBEY/Date-Calc-XS-%{version}.tar.gz
+Patch: 0001-Fix-bool-detection.patch
 
 BuildRequires: perl-devel perl-Carp-Clan perl-Bit-Vector
 
@@ -26,6 +27,7 @@ calendar (the one used in all western countries today).
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -45,6 +47,9 @@ calendar (the one used in all western countries today).
 	%perl_vendor_autolib/Date/Calc/XS/XS.so
 
 %changelog
+* Mon Aug 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.4-alt8
+- fixed FTBFS
+
 * Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 6.4-alt7
 - unbootstrap
 
