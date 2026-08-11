@@ -1,35 +1,47 @@
-%define mpiimpl openmpi
-%define mpidir %_libdir/%mpiimpl
+%define        _unpackaged_files_terminate_build 1
 
-%define somver 0
-%define sover %somver.2.20
+Name:          hypre
+Version:       3.1.0
+Release:       alt1
+Summary:       Scalable algorithms for solving linear systems of equations
+License:       LGPLv2.1
+Group:         Sciences/Mathematics
+Url:           http://www.llnl.gov/casc/hypre/
+Vcs:           https://github.com/hypre-space/hypre.git
 
-# TODO: improve me
-%def_without docs
-
-Name: hypre
-Version: 2.20.0
-Release: alt2
-
-Summary: Scalable algorithms for solving linear systems of equations
-
-License: LGPLv2.1
-Group: Sciences/Mathematics
-Url: http://www.llnl.gov/casc/hypre/
-
-# Source-url: https://github.com/hypre-space/hypre/archive/v%version.tar.gz
-Source: %name-%version.tar
-Patch: hypre-2.20.0-shared.patch
-
-BuildRequires(pre): rpm-build-java rpm-macros-cmake /proc
-BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel emacs-nox
-BuildRequires: liblapack-devel netpbm
-BuildRequires: libsuperlu-devel cmake
-BuildRequires: java-devel-default
-BuildRequires: libxml2-devel
-BuildRequires: libltdl-devel
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-build-cmake /proc
+BuildRequires: gcc-fortran
+BuildRequires: gcc-c++
+BuildRequires: openmpi-devel
+BuildRequires: liblapack-devel
+BuildRequires: libgomp-devel
+BuildRequires: libsuperlu-devel
+# BuildRequires: hip-devel
+# BuildRequires: llvm-rocm-devel
 
 %description
+Livermore's hypre library of linear solvers makes possible larger, more detailed
+simulations by solving problems faster than traditional methods at large scales.
+It offers a comprehensive suite of scalable solvers for large-scale scientific
+simulations, featuring parallel multigrid methods for both structured and
+unstructured grid problems. The open-source hypre library is highly portable and
+supports a number of languages.
+
+Work on hypre began in the late 1990s. It has since been used by research
+institutions and private companies to simulate groundwater flow, magnetic fusion
+energy plasmas in tokamaks and stellarators, blood flow through the heart, fluid
+flow in steam generators for nuclear power plants, and pumping activity in oil
+reservoirs, to name just a few application areas. In 2007, hypre won an R&D100
+Award from R&D Magazine as one of the year's most significant technological
+breakthroughs.
+
+The hypre team was one of the first to develop algebraic multigrid algorithms
+and software for extreme-scale parallel supercomputers, including LLNL's El
+Capitan system. The team maintains an active role in the multigrid research
+community and is recognized for its leadership in both algorithm and software
+development.
+
 The goal of the Scalable Linear Solvers project is to develop scalable
 algorithms and software for solving large, sparse linear systems of equations on
 parallel computers. The primary software product is Hypre, a library of high
@@ -38,11 +50,35 @@ structured and unstructured grid problems. The problems of interest arise in the
 simulation codes being developed at LLNL and elsewhere to study physical
 phenomena in the defense, environmental, energy, and biological sciences.
 
-%package -n lib%name
-Summary: Shared libraries of Hypre
-Group: System/Libraries
+
+%package       -n lib%name
+Summary:       Scalable algorithms for solving linear systems of equations shared library files
+Group:         System/Libraries
 
 %description -n lib%name
+Scalable algorithms for solving linear systems of equations shared library files
+
+Livermore's hypre library of linear solvers makes possible larger, more detailed
+simulations by solving problems faster than traditional methods at large scales.
+It offers a comprehensive suite of scalable solvers for large-scale scientific
+simulations, featuring parallel multigrid methods for both structured and
+unstructured grid problems. The open-source hypre library is highly portable and
+supports a number of languages.
+
+Work on hypre began in the late 1990s. It has since been used by research
+institutions and private companies to simulate groundwater flow, magnetic fusion
+energy plasmas in tokamaks and stellarators, blood flow through the heart, fluid
+flow in steam generators for nuclear power plants, and pumping activity in oil
+reservoirs, to name just a few application areas. In 2007, hypre won an R&D100
+Award from R&D Magazine as one of the year's most significant technological
+breakthroughs.
+
+The hypre team was one of the first to develop algebraic multigrid algorithms
+and software for extreme-scale parallel supercomputers, including LLNL's El
+Capitan system. The team maintains an active role in the multigrid research
+community and is recognized for its leadership in both algorithm and software
+development.
+
 The goal of the Scalable Linear Solvers project is to develop scalable
 algorithms and software for solving large, sparse linear systems of equations on
 parallel computers. The primary software product is Hypre, a library of high
@@ -51,17 +87,37 @@ structured and unstructured grid problems. The problems of interest arise in the
 simulation codes being developed at LLNL and elsewhere to study physical
 phenomena in the defense, environmental, energy, and biological sciences.
 
-This package contains shared libraries of Hypre.
 
-%package -n lib%name-devel
-Summary: Development files of Hypre
-Group: Development/Other
-Requires: libbabel-devel libltdl7-devel libsuperlu-devel
-Requires: lib%name = %version-%release
-Provides: %name = %version-%release
-Obsoletes: %name
+%package       -n lib%name-devel
+Summary:       Development files of Hypre
+Group:         Development/C
+Provides:      %name = %EVR
+Obsoletes:     %name < %EVR
 
 %description -n lib%name-devel
+Scalable algorithms for solving linear systems of equations development files.
+
+Livermore's hypre library of linear solvers makes possible larger, more detailed
+simulations by solving problems faster than traditional methods at large scales.
+It offers a comprehensive suite of scalable solvers for large-scale scientific
+simulations, featuring parallel multigrid methods for both structured and
+unstructured grid problems. The open-source hypre library is highly portable and
+supports a number of languages.
+
+Work on hypre began in the late 1990s. It has since been used by research
+institutions and private companies to simulate groundwater flow, magnetic fusion
+energy plasmas in tokamaks and stellarators, blood flow through the heart, fluid
+flow in steam generators for nuclear power plants, and pumping activity in oil
+reservoirs, to name just a few application areas. In 2007, hypre won an R&D100
+Award from R&D Magazine as one of the year's most significant technological
+breakthroughs.
+
+The hypre team was one of the first to develop algebraic multigrid algorithms
+and software for extreme-scale parallel supercomputers, including LLNL's El
+Capitan system. The team maintains an active role in the multigrid research
+community and is recognized for its leadership in both algorithm and software
+development.
+
 The goal of the Scalable Linear Solvers project is to develop scalable
 algorithms and software for solving large, sparse linear systems of equations on
 parallel computers. The primary software product is Hypre, a library of high
@@ -70,89 +126,62 @@ structured and unstructured grid problems. The problems of interest arise in the
 simulation codes being developed at LLNL and elsewhere to study physical
 phenomena in the defense, environmental, energy, and biological sciences.
 
-This package contains development files of Hypre.
-
-%package -n lib%name-devel-doc
-Summary: Development documentation for Hypre
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n lib%name-devel-doc
-The goal of the Scalable Linear Solvers project is to develop scalable
-algorithms and software for solving large, sparse linear systems of equations on
-parallel computers. The primary software product is Hypre, a library of high
-performance preconditioners that features parallel multigrid methods for both
-structured and unstructured grid problems. The problems of interest arise in the
-simulation codes being developed at LLNL and elsewhere to study physical
-phenomena in the defense, environmental, energy, and biological sciences.
-
-This package contains development documentation for Hypre.
 
 %prep
 %setup
-%patch -p2
 
 %build
-mpi-selector --set %mpiimpl --yes
-source /etc/profile.d/mpi-selector.sh
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
-
-export includedir=%_includedir
-export JNI_INCLUDES="%_libexecdir/jvm/java/include"
-export MPIDIR=%mpidir
 cd src
 
-%add_optflags %optflags %optflags_shared -I%_includedir/numpy
-
-# TODO: CMakeFiles was rewritten and broken since 2.20
 %cmake \
-	-DHYPRE_ENABLE_SHARED=ON \
-	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DHYPRE_INSTALL_PREFIX:PATH=%buildroot%prefix \
-	-DMPIDIR=%mpidir \
-	-DSOMVER=%somver \
-	-DSOVER=%sover \
-	-DHYPRE_USING_HYPRE_BLAS:BOOL=OFF \
-	-DHYPRE_USING_HYPRE_LAPACK:BOOL=OFF \
-	..
+   -DBUILD_SHARED_LIBS=ON \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DHYPRE_USING_HYPRE_BLAS=OFF \
+   -DHYPRE_USING_HYPRE_LAPACK=OFF \
+   -DHYPRE_ENABLE_OPENMP=ON \
+   -DHYPRE_ENABLE_LTO=ON \
+   -DHYPRE_ENABLE_COMPLEX=OFF \
+   -DHYPRE_ENABLE_MIXED_PRECISION=OFF \
+   -DHYPRE_ENABLE_FORTRAN=ON \
+   -DHYPRE_ENABLE_HIP=OFF \
+   -DHYPRE_ENABLE_GPU_AWARE_MPI=ON \
+   -DHYPRE_ENABLE_UNIFIED_MEMORY=ON \
+   -DHYPRE_ENABLE_DEVICE_MALLOC_ASYNC=ON \
+   -DHYPRE_ENABLE_THRUST_NOSYNC=ON \
+   -DHYPRE_ENABLE_GPU_PROFILING=OFF \
+   -DHYPRE_ENABLE_UMPIRE=OFF \
+   -DHYPRE_ENABLE_UMPIRE_HOST=OFF \
+   -DHYPRE_ENABLE_UMPIRE_PINNED=OFF \
+   -DHYPRE_ENABLE_UMPIRE_DEVICE=OFF \
+   -DHYPRE_ENABLE_UMPIRE_UM=OFF \
+   -DHYPRE_ENABLE_SUPERLU=ON \
+   -DHYPRE_ENABLE_DSUPERLU=OFF \
+   -DHYPRE_ENABLE_MAGMA=OFF \
+   -DHYPRE_ENABLE_CALIPER=OFF \
+   %nil
 
 %cmake_build
 
 %install
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 cd src
-
 %cmake_install
 
-install -d %buildroot%_includedir/%name
-mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
+%files         -n lib%name
+%_libdir/lib*.so.*
 
-%if_with docs
-install -d %buildroot%_docdir/lib%name-devel-doc
-cp -fR ../../docs/* %buildroot%_docdir/lib%name-devel-doc/
-%endif
-
-rm -f %buildroot%_libdir/libsidl*
-
-%files -n lib%name
-%_libdir/lib*.so.0
-%_libdir/lib*.so.%sover
-
-%files -n lib%name-devel
+%files         -n lib%name-devel
 %doc README.md SUPPORT.md CHANGELOG NOTICE LICENSE* COPYRIGHT
 %_libdir/lib*.so
-%_includedir/%name/
+%_includedir/_hypre*
+%_includedir/HYPRE*
 %_libdir/cmake/HYPRE/
 
-%if_with docs
-%files -n lib%name-devel-doc
-%_docdir/lib%name-devel-doc
-%endif
 
 %changelog
+* Sun Aug 09 2026 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
+- ^ 2.20.0 -> 3.1.0
+- > rebased to upstream
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt2
 - cleanup BR
 
