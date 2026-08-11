@@ -6,7 +6,7 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.38.3
+Version: 1.38.4
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -193,6 +193,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 1.38.4-alt1
+- 1.38.3 -> 1.38.4
+
 * Fri May 29 2026 Anton Farygin <rider@altlinux.org> 1.38.3-alt1
 - 1.38.1 -> 1.38.3
 
