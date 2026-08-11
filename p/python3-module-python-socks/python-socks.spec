@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-python-socks
-Version: 2.8.2
+Version: 3.0.0
 Release: alt1
 
 Summary: Core proxy client (SOCKS4, SOCKS5, HTTP) functionality for Python
@@ -14,13 +14,19 @@ Url: https://pypi.org/project/python-socks
 Vcs: https://github.com/romis2012/python-socks
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-trustme python3-module-flask
-BuildRequires: python3-module-anyio python3-module-tiny-proxy
-BuildRequires: python3-module-yarl python3-module-pytest-trio
+BuildRequires: python3-module-trustme
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-anyio
+BuildRequires: python3-module-tiny-proxy
+BuildRequires: python3-module-yarl
+BuildRequires: python3-module-pytest-trio
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-starlette
 %endif
 
 BuildArch: noarch
@@ -51,6 +57,9 @@ directly. It is used internally by aiohttp-socks and httpx-socks packages.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Wed Aug 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt1
+- 2.8.2 -> 3.0.0
+
 * Tue Jun 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.8.2-alt1
 - 2.8.1 -> 2.8.2
 
