@@ -1,10 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+%define oname org.kde.karton
+
 Name: karton
-Version: 20250722
+Version: 20260804
 Release: alt1
 
 Summary: A libvirt-based Virtual Machine Manager for KDE
 
-License: GPL-3.0-or-later and CC0-1.0 and BSD-2-Clause and CC-BY-SA-4.0
+License: GPL-3.0-or-later and CC0-1.0 and BSD-2-Clause and CC-BY-SA-4.0 and BSD-3-Clause and GPL-2.0-or-later
 Group: Emulators
 
 Url: https://invent.kde.org/kenoi/karton
@@ -16,12 +19,25 @@ Requires: libvirt-daemon-driver-qemu
 Requires: qemu
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: cmake extra-cmake-modules libvirt-devel libosinfo-devel
-BuildRequires: qt6-base-devel qt6-declarative-devel qt6-multimedia-devel
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(spice-client-glib-2.0)
-BuildRequires: pkgconfig(libpcre2-8) kf6-kirigami-devel kf6-kcoreaddons-devel
-BuildRequires: kf6-ki18n-devel kf6-qqc2-desktop-style-devel pkgconfig(libffi)
-BuildRequires: kf6-kiconthemes-devel qml6(org.kde.kirigami) kf6-kio-devel
+BuildRequires: cmake
+BuildRequires: extra-cmake-modules
+BuildRequires: libvirt-devel
+BuildRequires: libosinfo-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(spice-client-glib-2.0)
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: kf6-kirigami-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-qqc2-desktop-style-devel
+BuildRequires: pkgconfig(libffi)
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: qml6(org.kde.kirigami)
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kirigami-addons-devel
 
 %description
 %summary.
@@ -38,12 +54,15 @@ BuildRequires: kf6-kiconthemes-devel qml6(org.kde.kirigami) kf6-kio-devel
 
 %files
 %_bindir/%name
-%_datadir/applications/*%name.desktop
-%_iconsdir/hicolor/scalable/apps/*.png
+%_desktopdir/%oname.desktop
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/qlogging-categories?/%name.categories
 %doc *.md LICENSES
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260804-alt1
+- updated to git.bd0e933af4
+
 * Sun Sep 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250722-alt1
 - Initial build for ALT Linux.
 
