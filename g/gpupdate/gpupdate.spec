@@ -81,7 +81,7 @@
 
 
 Name: gpupdate
-Version: 0.16.1
+Version: 0.16.2
 Release: alt1
 
 Summary: GPT applier
@@ -290,6 +290,26 @@ fi
 %doc README.md PLUGIN_DEVELOPMENT_GUIDE.md PLUGIN_DEVELOPMENT_GUIDE_RU.md EXAMPLES.md
 
 %changelog
+* Mon Aug 10 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.2-alt1
+- Added:
+  ApplierResult status system with per-item success/failure/skip tracking (I37-I40)
+  Per-applier and per-phase performance profiling (I41-I43, D331-D333)
+  dconf key validation - skip invalid keys/sections with warning (W58/W59)
+  dconf numeric segment encoding for path compatibility (AlexandorXiao)
+- Changed:
+  systemd_applier: shared D-Bus, single Reload()
+  gsettings_applier: skip glib-compile-schemas when override unchanged
+  Plugin manager: summary only when results available
+- Fixed:
+  LAPS: Get-LapsADPassword t field - hex FILETIME
+  LAPS: msLAPS-EncryptedPasswordHistory on password rotation
+  dconf_registry: return [] instead of None on empty keys
+  freeipa_backend: apply local policy without domain GPOs
+  gpupdate-setup: proper inifile object on freeipa enable
+  kde_applier: Plasma/Update read from global registry
+  kde_applier: D-Bus reload on target user session bus
+  kde_applier: kinfo with HOME preserved + lazy version detection
+
 * Thu Jul 23 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.1-alt1
 - Fixed:
   Pkcon_runner: fix import error via realpath and package-qualified imports
