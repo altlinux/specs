@@ -4,7 +4,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.36
+Version: 1.0.38
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -19,7 +19,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake rpm-build-python3 dqt6-base-devel dqt6-tools-devel dtk6-common-devel libdtk6gui-devel libX11-devel libwayland-client-devel wayland-protocols wlr-protocols treeland-protocols libxcbutil-keysyms-devel libdqt6-test
+BuildRequires: cmake rpm-build-python3 dqt6-base-devel dqt6-tools-devel dtk6-common-devel libdtk6gui-devel libX11-devel libwayland-client-devel libwayland-server-devel libwayland-egl-devel wayland-protocols wlr-protocols treeland-protocols libxcbutil-keysyms-devel libXtst-devel libdqt6-test vulkan-headers
 %if_with ipwatchd
 BuildRequires: libsystemd-devel glib2-devel libpcap-devel libnet2-devel
 %endif
@@ -121,6 +121,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeShortcutI18n/DdeShortcutI18nConfig.cmake
 
 %changelog
+* Tue Aug 11 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.38-alt1
+- New version 1.0.38.
+
 * Tue Jul 28 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.36-alt1
 - New version 1.0.36.
 
