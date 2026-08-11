@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Rust-inspired implementations of Result<T, E>, Option<T> and Iter<T> data types for Python
@@ -53,5 +53,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 11 2026 Danil Shein <dshein@altlinux.org> 0.2.0-alt1
+- updated from 0.1.1 to 0.2.0
+
 * Fri Jul 10 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
 - Packaged for ALT Sisyphus.
