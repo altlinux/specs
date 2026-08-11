@@ -1,5 +1,5 @@
 Name: xfwl4
-Version: 4.21.0
+Version: 4.21.1
 Release: alt1
 
 Summary: Xfce's Wayland Compositor
@@ -94,15 +94,16 @@ rustflags = ["-Copt-level=2", "-Cdebuginfo=1"]
 [profile.release]
 strip = false
 
-[source."git+https://github.com/smithay/smithay?rev=4645e03d6bd9377aa368de20e91d69951450392d"]
+[source."git+https://github.com/smithay/smithay?rev=0a29aecf9e07a2227712ab470b0ab0ee56752272"]
 git = "https://github.com/smithay/smithay"
-rev = "4645e03d6bd9377aa368de20e91d69951450392d"
+rev = "0a29aecf9e07a2227712ab470b0ab0ee56752272"
 replace-with = "vendored-sources"
 EOF
 
 %build
 %meson \
 	--buildtype=release \
+	--debug \
 	-Degl=true \
 	-Dxwayland=true \
 	-Duse-system-gettext=true \
@@ -116,12 +117,16 @@ EOF
 %find_lang %name
 
 %files -f %name.lang
+%doc NEWS README.md CONTRIBUTING.md
 %_bindir/*
 %_datadir/wayland-sessions/%name.desktop
 %dir %_datadir/xfce4/%name/
 %config %_datadir/xfce4/%name/defaults
 
 %changelog
+* Tue Aug 11 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Updated to 4.21.1.
+
 * Mon Jun 29 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
 - Initial build.
 
