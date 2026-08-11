@@ -5,7 +5,7 @@
 %define        gemname websocket-driver
 
 Name:          gem-websocket-driver
-Version:       0.8.0
+Version:       0.8.2
 Release:       alt1
 Summary:       WebSocket protocol handler with pluggable I/O
 License:       Apache-2.0
@@ -31,7 +31,7 @@ Requires:      gem(base64) >= 0
 Requires:      gem(websocket-extensions) >= 0.1.0
 Obsoletes:     websocket-driver-ruby < %EVR
 Provides:      websocket-driver-ruby = %EVR
-Provides:      gem(websocket-driver) = 0.8.0
+Provides:      gem(websocket-driver) = 0.8.2
 
 %description
 This module provides a complete implementation of the WebSocket protocols that
@@ -44,14 +44,14 @@ pluggable I/O.
 
 %if_enabled    doc
 %package       -n gem-websocket-driver-doc
-Version:       0.8.0
+Version:       0.8.2
 Release:       alt1
 Summary:       WebSocket protocol handler with pluggable I/O documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета websocket-driver
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(websocket-driver) = 0.8.0
+Requires:      gem(websocket-driver) = 0.8.2
 Obsoletes:     websocket-driver-ruby-doc < %EVR
 Provides:      websocket-driver-ruby-doc = %EVR
 
@@ -65,14 +65,14 @@ WebSocket protocol handler with pluggable I/O documentation files.
 
 %if_enabled    devel
 %package       -n gem-websocket-driver-devel
-Version:       0.8.0
+Version:       0.8.2
 Release:       alt1
 Summary:       WebSocket protocol handler with pluggable I/O development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета websocket-driver
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(websocket-driver) = 0.8.0
+Requires:      gem(websocket-driver) = 0.8.2
 Requires:      gem(eventmachine) >= 0
 Requires:      gem(permessage_deflate) >= 0
 Requires:      gem(rake-compiler) >= 0
@@ -117,6 +117,9 @@ WebSocket protocol handler with pluggable I/O development package.
 
 
 %changelog
+* Tue Aug 11 2026 Alexander Danilov <admsasha@altlinux.org> 0.8.2-alt1
+- ^ 0.8.0 -> 0.8.2
+
 * Thu Oct 16 2025 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - ^ 0.7.6 -> 0.8.0
 
