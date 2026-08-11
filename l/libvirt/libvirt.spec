@@ -170,7 +170,7 @@
 %endif
 
 Name: libvirt
-Version: 11.10.0
+Version: 12.6.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -814,6 +814,10 @@ tar -xf %SOURCE2 -C subprojects/keycodemapdb --strip-components 1
 %patch1 -p1
 %patch2 -p1
 
+# Autoreq doesn't see /usr/bin/sh and /bin/sh as same entity so new "unmet" introduced.
+# Remove when either autoreq is fixed or when sh start to provide /usr/bin/sh.
+sed -i "s|/usr/bin/sh|/bin/sh|g" src/secret/virt-secret-init-encryption.service.in
+
 %build
 %meson \
     -Drootprefix=%rootprefix \
@@ -948,6 +952,7 @@ install -pD -m644 %SOURCE10 %buildroot%_sysconfdir/modules-load.d/libvirt-dm-mod
 %endif
 
 %find_lang %name
+echo %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo >> %name.lang
 
 %check
 VIR_TEST_DEBUG=1 %__meson_test --no-suite syntax-check --timeout-multiplier 10
@@ -1289,10 +1294,14 @@ fi
 
 %files daemon-driver-secret
 %config(noreplace) %_sysconfdir/libvirt/virtsecretd.conf
+%config(noreplace) %_sysconfdir/libvirt/secret.conf
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/secrets
 %_datadir/augeas/lenses/virtsecretd.aug
 %_datadir/augeas/lenses/tests/test_virtsecretd.aug
+%_datadir/augeas/lenses/libvirt_secrets.aug
+%_datadir/augeas/lenses/tests/test_libvirt_secrets.aug
 %_unitdir/virtsecretd*
+%_unitdir/virt-secret-init-encryption.service
 %_sbindir/virtsecretd
 %_libdir/%name/connection-driver/libvirt_driver_secret.so
 %_man8dir/virtsecretd.*
@@ -1527,6 +1536,15 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Aug 04 2026 Sergey Zhidkih <rx1513@altlinux.org> 12.6.0-alt1
+- 12.6.0
+- Security fixes:
+  + CVE-2026-63623: create images with a private umask during qemu-img create/convert
+  + CVE-2026-63622: virFileChownFiles: do not follow symlinks
+  + CVE-2026-15268: block use of URI transport in scheme
+  + CVE-2026-61477: reject line breaks in DNS TXT/SRV fields and dnsmasq config emitter
+  + CVE-2026-61478: fix crash searching for XML context string on errors
+
 * Tue Dec 02 2025 Sergey Zhidkih <rx1513@altlinux.org> 11.10.0-alt1
 - 11.10.0 (Fixes: CVE-2025-12748, CVE-2025-13193)
 
