@@ -1,7 +1,7 @@
 %define nameD magika
 
 Name: python3-module-%nameD
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Fast and accurate AI powered file content types detection
@@ -36,6 +36,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %nameD}
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3
+
 * Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt1
 - Initial build for ALT Linux.
 
