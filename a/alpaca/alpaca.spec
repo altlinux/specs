@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: alpaca
-Version: 9.2.3
+Version: 9.2.5
 Release: alt1
 
 Summary: Chat with AI models
@@ -111,6 +111,9 @@ by any models.
 %files local
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 9.2.5-alt1
+- 9.2.3 -> 9.2.5
+
 * Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 9.2.3-alt1
 - 5.3.0 -> 9.2.3
 
