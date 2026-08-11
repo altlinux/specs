@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20250314
+Version: 20260811
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -21,6 +21,8 @@ BuildRequires: gettext
 Requires: bsdtar
 # /usr/bin/convert
 Requires: ImageMagick-tools
+# /usr/bin/fc-scan
+Requires: fontconfig
 
 %description
 Collection of tools for generation of appstream-data
@@ -43,6 +45,13 @@ Collection of tools for generation of appstream-data
 %_datadir/locale/*/LC_MESSAGES/appstream-data.mo
 
 %changelog
+* Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 20260811-alt1
+- Generate appdata for font packages without metainfo when --usefontfiles is used (Closes: #55531).
+- Skip desktop files with NoDisplay=true or Hidden=true (Closes: #54365).
+- Skip desktop files with X-AppStream-Ignore=true (Closes: #53341).
+- Harden unpack_package against path traversal in archive member names.
+- Added fontconfig to requirements (fc-scan).
+
 * Wed Mar 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250314-alt1
 - Fixed missing app icons in app stores.
 
