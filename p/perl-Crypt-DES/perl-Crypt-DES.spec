@@ -1,7 +1,7 @@
 %define dist Crypt-DES
 Name: perl-Crypt-DES
-Version: 2.07
-Release: alt3
+Version: 2.09
+Release: alt1
 
 Summary: Perl DES encryption module
 License: BSD
@@ -9,7 +9,6 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/D/DP/DPARIS/Crypt-DES-%{version}.tar.gz
-Patch0: perl-Crypt-DES-fedora-c99.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Crypt-CBC perl-devel
@@ -19,7 +18,6 @@ Crypt::DES - an XS-based DES implimentation for Perl.
 
 %prep
 %setup -q -n %dist-%version
-%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +31,9 @@ Crypt::DES - an XS-based DES implimentation for Perl.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Tue Aug 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.09-alt1
+- NMU: 2.09
+
 * Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.07-alt3
 - NMU: fix FTBFS (thnx Fedora)
 
