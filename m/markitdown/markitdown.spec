@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD markitdown
 
 Name: %nameD
-Version: 0.1.5
+Version: 0.1.7
 Release: alt1
 
 Summary: Python tool for converting files and office documents to Markdown
@@ -50,6 +51,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %nameD}
 
 %changelog
+* Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.7-alt1
+- 0.1.5 -> 0.1.7
+
 * Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.5-alt1
 - Initial build for ALT Linux.
 
