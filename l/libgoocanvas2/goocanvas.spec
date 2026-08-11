@@ -7,7 +7,7 @@
 
 Name: lib%{_name}2
 Version: %ver_major.4
-Release: alt3
+Release: alt4
 
 Summary: A canvas widget for GTK+3 that uses cairo for drawing
 Group: System/Libraries
@@ -91,8 +91,7 @@ This package provides Python language bindings for for the GooCanvas library.
 %patch0 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-gettextize -f
+autopoint -f
 %autoreconf
 %configure %{subst_enable static} \
 	--enable-gtk-doc \
@@ -131,6 +130,9 @@ gettextize -f
 %endif
 
 %changelog
+* Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 2.0.4-alt4
+- fixed build with gettext 1.0
+
 * Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 2.0.4-alt3
 - fixed FTBFS via patch from Debian with fix casting to GooCanvasItemModelSimple
 
