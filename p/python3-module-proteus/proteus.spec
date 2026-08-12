@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.8.0
+Version: 8.0.0
 Release: alt1
 
 Summary: Library to access Tryton server as a client
@@ -17,9 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-tryton
 %if_with check
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-pytest
@@ -32,8 +31,6 @@ BuildRequires: python3-module-pydot
 %if_without bootstrap
 Requires: python3-module-trytond python3-module-trytond_party
 %endif
-
-%py_provides %oname
 
 %description
 A library to access Tryton's models like a client.
@@ -64,7 +61,7 @@ This package contains tests for %oname.
 %pyproject_run_pytest -v
 
 %files
-%doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
+%doc
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -73,6 +70,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Aug 12 2026 Anton Vyatkin <toni@altlinux.org> 8.0.0-alt1
+- new version 8.0.0
+
 * Wed Dec 24 2025 Anton Vyatkin <toni@altlinux.org> 7.8.0-alt1
 - Version updated to 7.8.0.
 
