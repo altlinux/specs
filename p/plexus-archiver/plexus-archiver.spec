@@ -1,6 +1,6 @@
 Name:           plexus-archiver
-Version:        4.11.0
-Release:        alt2
+Version:        4.12.0
+Release:        alt1
 
 Summary:        Plexus Archiver Component
 License:        Apache-2.0
@@ -56,6 +56,9 @@ rm src/test/java/org/codehaus/plexus/archiver/manager/ArchiverManagerTest.java
 %doc *.md LICENSE
 
 %changelog
+* Tue Aug 04 2026 Evgeniy Serov <scala@altlinux.org> 4.12.0-alt1
+- Updated to 4.12.0.
+
 * Thu Mar 19 2026 Evgeniy Serov <scala@altlinux.org> 4.11.0-alt2
 - Cosmetic fixes.
 - Fix build with new guava.
