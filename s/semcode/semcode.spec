@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: semcode
-Version: 20260211
+Version: 20260802
 Release: alt1
 Summary: Semantic Code Search
 License: Apache-2.0 or MIT
@@ -77,5 +77,8 @@ cargo test --release
 %_bindir/semcode-*
 
 %changelog
+* Wed Aug 12 2026 Andrew A. Vasilyev <andy@altlinux.org> 20260802-alt1
+- NMU: import f5ebe16 (2026-08-02).
+
 * Thu Mar 26 2026 Vitaly Chikunov <vt@altlinux.org> 20260211-alt1
 - Experimental import b4f1282b (2026-02-11).
