@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -82,7 +82,7 @@ CMP_RES="$(rpmevrcmp "$(rpm -q --qf '%{VERSION}' gettext)" 1.0)"
 if [ -n "$CMP_RES" ] && [ $CMP_RES -ge 0 ]; then
 	autopoint -f
 fi
-%autoreconf
+./autogen.sh
 export PYTHON=/usr/bin/python3
 %configure \
 	--enable-sysconfig \
@@ -97,13 +97,10 @@ export PYTHON=/usr/bin/python3
 	--with-ebtables-restore=/sbin/ebtables-restore \
 	--with-ipset=/sbin/ipset
 %make
-make update-po
+%make_build
 
 %install
 %makeinstall_std PYTHON=/usr/bin/python3
-pushd po
-make install DESTDIR=%buildroot
-popd
 %find_lang %name
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
@@ -165,6 +162,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %endif
 
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 2.5.1-alt1
+- Fixed GETTEXT_PACKAGE substitution.
+- Updated to 2.5.1.
+
 * Thu Jul 09 2026 Mikhail Efremov <sem@altlinux.org> 2.5.0-alt1
 - Updated to 2.5.0.
 
