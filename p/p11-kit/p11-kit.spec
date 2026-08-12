@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.26.2
-Release: alt3.g0eedd4d
+Version: 0.26.5
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -238,6 +238,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.5-alt1
+- 0.26.5 (fixes: CVE-2026-18938).
+
 * Wed Jul 08 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.2-alt3.g0eedd4d
 - Updated from upstream git (fixes: CVE-2026-13757).
 
