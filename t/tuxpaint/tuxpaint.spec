@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.35
-Release: alt1
+Release: alt2
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -16,6 +16,7 @@ Source1: %name.desktop
 Patch0: desktop.patch
 Patch1: tuxpaint-0.9.32-e2k-fix_bad_elf_symbol.patch
 Patch2: tuxpaint-pango-cflags.patch
+Patch3: tuxpaint-0.9.35-alt-fix-compilation.patch
 
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
 BuildRequires: libSDL2_ttf-devel libSDL2_pango-devel ImageMagick-tools xdg-utils
@@ -61,6 +62,7 @@ Development shared library for %name
 # we can do it not only on e2k
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
@@ -124,6 +126,9 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Wed Aug 12 2026 Anton Meleshnikov <alton@altlinux.org> 0.9.35-alt2
+- Fixed FTBFS.
+
 * Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.35-alt1
 - Build new version.
 
