@@ -2,17 +2,25 @@
 Summary: MoinMoin is a Python clone of WikiWiki
 Name: moin
 Version: 1.9.11
-Release: alt3
+Release: alt5
 License: GPLv2+
 Group: Networking/Other
 Url: http://moinmo.in/
 Source0: http://static.moinmo.in/files/%name-%version.tar.gz
 Source1: moin-instance-setup.in
-Packager: Fr. Br. George <george@altlinux.ru>
+Source2: moin-uwsgi-setup
+Source3: uwsgi.ini
+# TODO separate directory + archive
+Source4: WikiLicense.moin
+Source5: MainPage.moin
+Patch1: 0001-ALT-move-htdocs-out-of-python-module.patch
+Patch2: 0002-ALT-enconding-and-security.patch
+Patch3: 0003-UNEEX.org-features.patch
 BuildArch: noarch
 Provides: MoinMoin
 
-BuildRequires: python-devel
+Requires: webserver-common
+BuildRequires: python-devel asciimathml
 
 %define htdocs %_datadir/%name/htdocs
 
@@ -59,34 +67,55 @@ Obsoletes: python-modules-MoinMoin
 Python module for MoinMoin WikiWikiWeb engine
 
 %package instance-setup
-Summary: Shellscript for deploing moin under Apache2
+Summary: Shellscript for deploying moin under Apache2
 Group: Networking/Other
 %description instance-setup
-Shellscript for deploing moin under Apache2
+%summary
+
+%package uwsgi-setup
+Summary: Shellscript for deploying moin under uswgi-py2 + nginx
+Group: Networking/Other
+Requires: uwsgi-py2
+Requires: %name = %version-%release
+%description uwsgi-setup
+%summary
 
 %prep
 %setup
-sed -i 's@^STATIC_FILES_PATH = .*@STATIC_FILES_PATH = "%htdocs"@' MoinMoin/web/static/__init__.py
+%autopatch -p1
 
 rm -fv MoinMoin/support/pygments/sphinxext.py
 
 %build
 sed 's|@HTDOCS@|%htdocs|' < %SOURCE1 > moin-instance-setup
 python2 setup.py build
+sed 's/loglevel=INFO/loglevel=WARNING/' < wiki/config/logging/stderr > wiki/config/logging/err
 
 %install
 mkdir -p %buildroot%_datadir/%name
 python2 setup.py install --root=%buildroot
 mkdir -p %buildroot/%_sbindir/
-install -m755  moin-instance-setup %buildroot/%_sbindir/
+install moin-instance-setup %buildroot/%_sbindir/
+install %SOURCE2 %buildroot/%_sbindir/
+install %SOURCE3 %buildroot%_datadir/%name/config/
+mkdir -p %buildroot%_datadir/%name/ALT
+install %SOURCE4 %buildroot%_datadir/%name/ALT/
+install %SOURCE5 %buildroot%_datadir/%name/ALT/
+
 rm -rf %buildroot%htdocs
 cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
+sed -E 's|"(\\*)`"|"\1$\1$"|g' /usr/share/javascript/ASCIIMathML.js > %buildroot%htdocs/ASCIIMathML.js
 ln -s config/wikiconfig.py %buildroot%_datadir/%name/wikiconfig.py
 install wikiserver.py %buildroot%_datadir/%name/
+install wikiserverlogging.conf %buildroot%_datadir/%name/
 
 sed -i 1s,python,python2, \
  %buildroot/usr/share/moin/server/moin* \
  %buildroot/usr/share/moin/wikiserver.py
+
+%pre
+groupadd -f moin
+useradd -g moin -m -c "Moinmoin admin user" -G _webserver,webmaster moin 2> /dev/null || :
 
 %files
 %doc README* docs/CHANGES* docs/INSTALL.html docs/README.migration
@@ -98,6 +127,8 @@ sed -i 1s,python,python2, \
 %if_with jabber
 %files -n python-module-moin-jabberbot
 %python_sitelibdir/jabberbot
+%else
+%exclude %python_sitelibdir/jabberbot
 %endif
 
 %files -n python-module-MoinMoin
@@ -107,11 +138,20 @@ sed -i 1s,python,python2, \
 %python_sitelibdir/*.egg-info
 
 %files instance-setup
-%_sbindir/*
+%_sbindir/*instance*
+
+%files uwsgi-setup
+%_sbindir/*uwsgi*
 
 %changelog
+* Wed Jul 29 2026 Fr. Br. George <george@altlinux.org> 1.9.11-alt5
+- Build with UNEEX.org features
+
+* Mon Jul 27 2026 Fr. Br. George <george@altlinux.org> 1.9.11-alt4
+- Provide uwsgi-py2 setup
+
 * Thu Jul 02 2026 Fr. Br. George <george@altlinux.org> 1.9.11-alt3
-- Reenable crutical moin package requirements
+- Reenable critical moin package requirements
 
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.11-alt2
 - NMU: disable text_rst.py parser (due docutils)
