@@ -6,13 +6,15 @@
 %def_enable installed_tests
 
 Name: xdg-dbus-proxy
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: D-Bus connections proxy
 Group: System/Kernel and hardware
 License: LGPL-2.1-or-later
-Url: https://github.com/flatpak/%name
+Url: https://github.com/flatpak/xdg-dbus-proxy
+
+Vcs: https://github.com/flatpak/xdg-dbus-proxy.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -64,6 +66,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Wed Aug 12 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
+- 0.1.8
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
 - 0.1.7
 

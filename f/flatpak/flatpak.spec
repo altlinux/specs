@@ -2,6 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define xdg_name org.freedesktop.Flatpak
+%define namespace Flatpak
 %define api_ver 1.0
 
 %def_enable p2p
@@ -14,7 +15,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.18.0
+Version: 1.18.1
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -38,7 +39,7 @@ Patch1: flatpak-1.16.1-alt-flatpak.sh.patch
 %define malcontent_ver 0.4.0
 %define curl_ver 7.29
 %define appstream_ver 0.12
-%define dbus_proxy_ver 0.1.6
+%define dbus_proxy_ver 0.1.8
 
 Requires: lib%name = %version-%release
 Requires: %_bindir/fusermount3
@@ -209,14 +210,14 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 %files -n lib%name
 %_libdir/lib%name.so.*
-%_typelibdir/Flatpak-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-devel
 %_includedir/%name/
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
 %_datadir/dbus-1/interfaces/%xdg_name.xml
-%_girdir/Flatpak-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -225,6 +226,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Wed Aug 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Mon Jun 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
