@@ -1,5 +1,5 @@
 Name: alterator-officer
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -37,6 +37,10 @@ alterator module for edit system  security officer properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/officer.d
 
 %changelog
+* Wed Aug 12 2026 Anton Midyukov <antohami@altlinux.org> 1.2-alt1
+- backend3/officer: add iscrypted parameter to allow pass crypted password to
+  module.
+
 * Mon Feb 16 2026 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - Do not change home directory and do not add group.
 
