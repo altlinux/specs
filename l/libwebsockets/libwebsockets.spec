@@ -9,8 +9,8 @@
 %endif
 
 Name: libwebsockets
-Version: 4.5.2
-Release: alt2
+Version: 4.5.8
+Release: alt1
 
 Summary: A lightweight C library for Websockets
 
@@ -119,6 +119,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.8-alt1
+- new version 4.5.8
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.2-alt2
 - fixed FTBFS with gcc 15: disable -Werror on all arches (DISABLE_WERROR)
 
