@@ -1,10 +1,12 @@
 Name:     procdump
-Version:  1.1.1
-Release:  alt2
+Version:  3.5.2
+Release:  alt1
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
 
 License:  MIT
+
+ExclusiveArch: x86_64 aarch64
 Group:    Other
 Url:      https://github.com/Microsoft/ProcDump-for-Linux
 
@@ -13,11 +15,17 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/Microsoft/ProcDump-for-Linux/archive/%version.tar.gz
 Source:   %name-%version.tar
 
-BuildRequires: zlib-devel
+Patch1: procdump-system-libbpf.patch
+Patch2: procdump-no-werror.patch
 
-# Fix for GCC 10 (Fedora 32) builds
-# https://github.com/microsoft/ProcDump-for-Linux/pull/79
-Patch0:         0001-Fix-for-build-on-GCC-10.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: clang
+BuildRequires: libstdc++-devel
+BuildRequires: libelf-devel
+BuildRequires: libbpf-devel
+BuildRequires: bpftool
+BuildRequires: zlib-devel
 
 Requires: gdb >= 7.7.1
 
@@ -27,29 +35,38 @@ ProcDump provides a convenient way for Linux developers to create core dumps of 
 
 %prep
 %setup
-%patch0 -p1
-
-#__subst "s|^INSTALLDIR=.*|INSTALLDIR=%buildroot%_bindir|g" Makefile
-#__subst "s|^MANDIR=.*|MANDIR=%buildroot%_man1dir|g" Makefile
-%__subst "s|^CFLAGS=\(.*\)|CFLAGS=\1 %optflags|g" Makefile
+%patch1 -p1
+%patch2 -p1
 
 %build
-#configure
-%make_build build
+export PATH=/usr/sbin:$PATH
+export CC=clang
+export CXX=clang++
+# corex is a static archive; LTO bitcode in .a breaks ld's archive index
+%add_optflags -fno-lto
+VERSION=%version %cmake -DCMAKE_BUILD_TYPE=Release
+%cmake_build
 
 %install
-#mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/
-%makeinstall_std
-
-#check
-#make_build check
+install -D -m 0755 %_cmake__builddir/procdump %buildroot%_bindir/procdump
+install -D -m 0644 %_cmake__builddir/procdump.1.gz %buildroot%_man1dir/procdump.1.gz
 
 %files
-%_bindir/*
+%_bindir/procdump
 %_man1dir/*
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt1
+- new version 3.5.2
+- switch to cmake build, use system libbpf
+- use %cmake/%cmake_build macros (BR(pre): rpm-macros-cmake)
+- drop upstream -Werror (unused-symbol warnings fail under %cmake's -Wall)
+- disable LTO (corex static archive; LTO bitcode breaks ld's archive index)
+
+* Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
+- new version 3.5.0
+
 * Fri Feb 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
 - fix build (thanks, Fedora!)
 
