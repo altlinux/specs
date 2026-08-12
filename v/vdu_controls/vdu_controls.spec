@@ -1,5 +1,5 @@
 Name:    vdu_controls
-Version: 2.6.8
+Version: 2.6.9
 Release: alt1
 
 Summary: Visual Display Unit virtual control panel
@@ -85,6 +85,9 @@ install -m755 packaging/%name.wrapper %buildroot/%_bindir/%name
 %_datadir/%name/sample-scripts/__pycache__/
 
 %changelog
+* Wed Aug 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.6.9-alt1
+- new version 2.6.9
+
 * Wed Aug 05 2026 Sergey Palcheh <minergenon@altlinux.org> 2.6.8-alt1
 - new version 2.6.8
 
