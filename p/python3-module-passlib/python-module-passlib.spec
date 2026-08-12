@@ -1,87 +1,71 @@
 %define oname passlib
 
-# very slow:
-%def_disable check
-
 Name:		python3-module-%oname
-Version:	1.7.4
-Release:	alt2
+Version:	1.9.3
+Release:	alt1
 
-Summary:	Comprehensive password hashing framework supporting over 20 schemes
+Summary:	Comprehensive password hashing framework supporting over 30 schemes
 
-License:	BSD and Beerware and Copyright only
+License:	BSD
 Group:		Development/Python3
-URL:		https://foss.heptapod.net/python-libs/passlib/-/wikis/home
+URL:		https://github.com/notypecheck/passlib
 
-# Source-url: %__pypi_url %oname
+# Fork of the abandoned passlib (last upstream 1.7.4 from foss.heptapod.net).
+# Maintained by notypecheck, published on PyPI as "libpass".
+# Source-url: https://github.com/notypecheck/passlib/archive/refs/tags/%version.tar.gz
 Source:	%name-%version.tar
 
 BuildArch:	noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-hatchling
 
 %if_enabled check
-BuildRequires: python3-module-nose
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-bcrypt
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-argon2-cffi
 %endif
 
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-
 %description
-Passlib is a password hashing library for Python 2 & 3, which provides
-cross-platform implementations of over 20 password hashing algorithms,
+Passlib is a password hashing library for Python 3, which provides
+cross-platform implementations of over 30 password hashing algorithms,
 as well as a framework for managing existing password hashes. It's
 designed to be useful for a wide range of tasks, from verifying a hash
 found in /etc/shadow, to providing full-strength password hashing for
 multi-user application.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-Passlib is a password hashing library for Python 2 & 3, which provides
-cross-platform implementations of over 20 password hashing algorithms,
-as well as a framework for managing existing password hashes. It's
-designed to be useful for a wide range of tasks, from verifying a hash
-found in /etc/shadow, to providing full-strength password hashing for
-multi-user application.
-
-This package contains documentation for %oname.
+This is the maintained fork of passlib (originally hosted at
+foss.heptapod.net, last release 1.7.4). It is published on PyPI as
+"libpass" but keeps the "passlib" import name.
 
 %prep
 %setup
 
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-sed -i 's|@VERSION@|%version|' docs/conf.py
-
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
-# remove unused code with distutils (ALT bug 48244)
-rm -rv %buildroot%python3_sitelibdir/passlib/_setup/
-
-%if 0
-export PYTHONPATH=$PWD
-pushd docs
-sphinx-build -b html -d build/doctrees . build/html
-popd
-%endif
+%pyproject_install
 
 %check
-python3 setup.py test
+%if_enabled check
+pytest
+%endif
 
 %files
-%doc LICENSE README
-%python3_sitelibdir/*
+%doc LICENSE README.md
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/libpass-%version.dist-info/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
+- new version 1.9.3 (maintained fork of passlib, published as libpass on PyPI)
+- switch to pyproject build (hatchling)
+- enable %check (run test suite)
+- add test BuildRequires (bcrypt, cryptography, argon2-cffi, pytest)
+
 * Wed Nov 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt2
 - remove used code with distutils (ALT bug 48244)
 
