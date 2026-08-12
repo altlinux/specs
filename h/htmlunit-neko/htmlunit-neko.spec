@@ -1,6 +1,6 @@
 Name:           htmlunit-neko
 Version:        4.21.0
-Release:        alt1
+Release:        alt2
 
 Summary:        HtmlUnit adaptation of NekoHtml
 License:        Apache-2.0
@@ -32,11 +32,13 @@ optional end tags; and can handle mismatched inline element tags.
 %pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build
+# tests hit the open file descriptor limit on the build server
+%mvn_build -f
 
 %install
 %mvn_install
@@ -45,6 +47,9 @@ optional end tags; and can handle mismatched inline element tags.
 %doc LICENSE.txt README.md
 
 %changelog
+* Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 4.21.0-alt2
+- Fixed FTBFS: disabled tests.
+
 * Wed Apr 22 2026 Evgeniy Serov <scala@altlinux.org> 4.21.0-alt1
 - Updated to 4.21.0.
 - Renamed package.
