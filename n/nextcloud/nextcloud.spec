@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 34.0.0
+Version: 34.0.2
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -172,6 +172,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Aug 12 2026 Andrey Cherepanov <cas@altlinux.org> 34.0.2-alt1
+- New version (fixes: CVE-2026-61527, CVE-2026-61527)
+
 * Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 34.0.0-alt1
 - New version (fixes: CVE-2026-45154, CVE-2026-45155, CVE-2026-45156,
   CVE-2026-45157, CVE-2026-45159, CVE-2026-45281, CVE-2026-45282,
