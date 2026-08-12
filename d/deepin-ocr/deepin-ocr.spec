@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: deepin-ocr
-Version: 6.5.16
-Release: alt2
+Version: 6.5.17
+Release: alt1
 
 Summary: Base character recognition ability on DDE
 
@@ -84,6 +84,9 @@ export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtTest:$CPLUS_INCLUDE_PATH
 %_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Wed Aug 12 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.17-alt1
+- New version 6.5.17.
+
 * Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.16-alt2
 - Fixed build on dqt6-declarative 6.10.3.
 
