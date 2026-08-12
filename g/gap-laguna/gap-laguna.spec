@@ -1,7 +1,7 @@
 %define repo laguna
 
 Name: gap-laguna
-Version: 3.9.7
+Version: 3.10.0
 Release: alt1
 Summary: GAP: Lie AlGebras and UNits of group Algebras
 License: GPL-2.0+
@@ -17,7 +17,6 @@ BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
 Requires: gap >= 4.9
-Requires: gap-gapdoc >= 1.6.1
 #Recommends: gap-sophus >= 1.24
 
 %description
@@ -44,6 +43,9 @@ rm -Rf scripts
 %gap_sitelib/%repo/
 
 %changelog
+* Wed Aug 12 2026 Leontiy Volodin <lvol@altlinux.org> 3.10.0-alt1
+- New version 3.10.0.
+
 * Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 3.9.7-alt1
 - New version 3.9.7.
 - Added VCS tag.
