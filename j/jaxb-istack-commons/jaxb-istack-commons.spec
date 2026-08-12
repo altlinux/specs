@@ -1,6 +1,6 @@
 Name:           jaxb-istack-commons
 Version:        4.2.0
-Release:        alt1.1
+Release:        alt2
 
 Summary:        iStack Common Utility Code
 License:        BSD-3-Clause
@@ -10,7 +10,8 @@ VCS:            https://github.com/eclipse-ee4j/jaxb-istack-commons
 
 Source:         %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  maven-local
 BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
@@ -22,51 +23,59 @@ BuildRequires:  mvn(org.apache.ant:ant-junit)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(args4j:args4j)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 
 BuildArch:      noarch
 
 %description
 Code shared between JAXP, JAXB, SAAJ, and JAX-WS projects.
 
-%package -n istack-commons-maven-plugin
+%package -n     istack-commons-maven-plugin
 Group:          Development/Java
 Summary:        istack-commons Maven Mojo
+
 %description -n istack-commons-maven-plugin
 This package contains the istack-commons Maven Mojo.
 
-%package -n import-properties-plugin
+%package -n     import-properties-plugin
 Group:          Development/Java
 Summary:        istack-commons import properties plugin
+
 %description -n import-properties-plugin
 This package contains the istack-commons import properties Maven Mojo.
 
-%package -n istack-commons-runtime
+%package -n     istack-commons-runtime
 Group:          Development/Java
 Summary:        istack-commons runtime
+
 %description -n istack-commons-runtime
 This package contains istack-commons runtime.
 
-%package -n istack-commons-tools
+%package -n     istack-commons-tools
 Group:          Development/Java
 Summary:        istack-commons tools
+
 %description -n istack-commons-tools
 This package contains istack-commons tools.
 
-%package -n istack-commons-buildtools
+%package -n     istack-commons-buildtools
 Group:          Development/Java
 Summary:        istack-commons buildtools
+
 %description -n istack-commons-buildtools
 This package contains istack-commons buildtools.
 
-%package -n istack-commons-soimp
+%package -n     istack-commons-soimp
 Group:          Development/Java
 Summary:        istack-commons soimp
+
 %description -n istack-commons-soimp
 This package contains istack-commons soimp.
 
-%package -n istack-commons-test
+%package -n     istack-commons-test
 Group:          Development/Java
 Summary:        istack-commons test
+
 %description -n istack-commons-test
 This package contains istack-commons test.
 
@@ -78,10 +87,12 @@ This package contains istack-commons test.
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
+%mvn_package :istack-commons-runtime:jar:sources: istack-commons-runtime
+%mvn_package :istack-commons-tools:jar:sources: istack-commons-tools
 %mvn_package :istack-commons __noinstall
 
 %build
-%mvn_build -j -s
+%mvn_build -j -s -- org.apache.maven.plugins:maven-source-plugin:jar-no-fork
 
 %install
 %mvn_install
@@ -108,6 +119,9 @@ This package contains istack-commons test.
 %doc ../LICENSE.md ../NOTICE.md
 
 %changelog
+* Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt2
+- Added sources artifact for istack-commons-runtime and istack-commons-tools.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt1.1
 - Cosmetic fixes.
 

@@ -1,6 +1,6 @@
 Name:           jaxb-stax-ex
 Version:        2.1.0
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Extended StAX API
 License:        BSD-3-Clause
@@ -10,12 +10,14 @@ VCS:            https://github.com/eclipse-ee4j/jaxb-stax-ex
 
 Source:         %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 
 BuildArch:      noarch
 
@@ -36,10 +38,14 @@ the following areas:
 %setup
 
 %pom_remove_parent
+
 %pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+%mvn_package :stax-ex:jar:sources:
 
 %build
-%mvn_build
+%mvn_build -- org.apache.maven.plugins:maven-source-plugin:jar-no-fork
 
 %install
 %mvn_install
@@ -49,6 +55,9 @@ the following areas:
 %doc README.md
 
 %changelog
+* Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt2
+- Added sources artifact for stax-ex.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1.1
 - Cosmetic fixes.
 
