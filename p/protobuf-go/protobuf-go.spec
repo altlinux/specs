@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    protobuf-go
-Version: 1.36.11
+Version: 1.36.12
 Release: alt1
 
 Summary: Go support for Google's protocol buffers
@@ -55,6 +55,9 @@ export IGNORE_SOURCES=1
 %_bindir/protoc-gen-go
 
 %changelog
+* Wed Aug 12 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.36.12-alt1
+- New version 1.36.12.
+
 * Wed Aug 05 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.36.11-alt1
 - New version 1.36.11.
 - Enable tests.
