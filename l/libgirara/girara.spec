@@ -2,14 +2,8 @@
 %define _soname 5
 %define _unpackaged_files_terminate_build 1
 
-%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
-%def_enable tests
-%else
-%def_disable tests
-%endif
-
 Name: lib%_name
-Version: 2026.02.04
+Version: 2026.07.18
 Release: alt1
 
 Summary: Common components for zathura
@@ -43,8 +37,7 @@ developing applications that use %name.
 %patch -p1
 
 %build
-%meson \
-	%{subst_enable_meson_feature tests tests}
+%meson
 
 %meson_build -v
 
@@ -65,6 +58,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.07.18-alt1
+- Updated to 2026.07.18.
+
 * Wed Feb 11 2026 Mikhail Efremov <sem@altlinux.org> 2026.02.04-alt1
 - Updated to 2026.02.04.
 

@@ -1,5 +1,5 @@
 Name: zathura-pdf-mupdf
-Version: 2026.05.10
+Version: 2026.07.18
 Release: alt1
 
 Summary: PDF support for zathura (mupdf)
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 
-BuildRequires: libgirara-devel zathura-devel >= 2026.01.30
+BuildRequires: libgirara-devel zathura-devel >= 2026.07.18
 BuildRequires: libcairo-devel
 BuildRequires: libmupdf-devel >= 1.24
 # For tests
@@ -51,6 +51,9 @@ the mupdf rendering library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.07.18-alt1
+- Updated to 2026.07.18.
+
 * Thu May 14 2026 Mikhail Efremov <sem@altlinux.org> 2026.05.10-alt1
 - Updated to 2026.05.10.
 

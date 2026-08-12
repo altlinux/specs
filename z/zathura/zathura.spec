@@ -7,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 2026.05.20
+Version: 2026.07.18
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -20,11 +20,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 BuildRequires: libgirara-devel >= 2026.02.03-alt1
-BuildRequires: libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
+BuildRequires: libgtk4-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libcairo-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libjson-glib-devel
+BuildRequires: libxxhash-devel
 # For man pages
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 # To create icons
@@ -32,11 +33,11 @@ BuildRequires: librsvg-utils
 #For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: xvfb-run appstream desktop-file-utils}}
 
-Conflicts: zatura-pdf-poppler < 2026.02.03-alt1
-Conflicts: zatura-pdf-mupdf < 2026.02.03-alt1
-Conflicts: zatura-djvu < 2026.02.03-alt1
-Conflicts: zatura-ps < 2026.02.03-alt1
-Conflicts: zatura-cb < 2026.02.03-alt1
+Conflicts: zathura-pdf-poppler < 2026.07.18-alt1
+Conflicts: zathura-pdf-mupdf < 2026.07.18-alt1
+Conflicts: zathura-djvu < 2026.07.18-alt1
+Conflicts: zathura-ps < 2026.07.18-alt1
+Conflicts: zathura-cb < 2026.07.18-alt1
 
 %description
 Zathura is a highly customizable and functional document viewer.
@@ -50,7 +51,7 @@ from https://pwmt.org.
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libgtk+3-devel libgirara-devel
+Requires: libgtk4-devel libgirara-devel
 
 %description devel
 This package contains libraries and header files for
@@ -61,8 +62,10 @@ developing applications that use %name.
 %patch -p1
 
 %build
+# Wayland test disabled: weston failed with SIGSEGV sometimes
 %meson \
-	-Dtests=%tests
+	-Dtests-x11=%tests \
+	-Dtests-wayland=disabled
 
 %meson_build -v
 
@@ -94,6 +97,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.07.18-alt1
+- Updated to 2026.07.18.
+
 * Mon Jun 01 2026 Mikhail Efremov <sem@altlinux.org> 2026.05.20-alt1
 - Updated to 2026.05.20.
 
