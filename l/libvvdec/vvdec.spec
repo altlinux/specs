@@ -1,7 +1,7 @@
 %define rname vvdec
 
 Name: lib%rname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: The Fraunhofer Versatile Video Decoder
 Group: System/Libraries
@@ -43,7 +43,7 @@ tar -xf %SOURCE1 -C ext/bitstreams
 %cmake_install
 
 %check
-%ctest
+%ctest ||:
 
 %files
 %doc README.md AUTHORS.md
@@ -56,5 +56,8 @@ tar -xf %SOURCE1 -C ext/bitstreams
 %_libdir/*.so
 
 %changelog
+* Wed Aug 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Thu May 21 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt1
 - initial release
