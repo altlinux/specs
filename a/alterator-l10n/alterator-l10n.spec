@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.189
+Version: 2.9.190
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Tue Aug 11 2026 Ivan Khanas <xeno@altlinux.org> 2.9.190-alt1
+- alterator-net-eth: add russian translation for host name format message.
+
 * Fri Jul 31 2026 Sergey Konev <darisishe@altlinux.org> 2.9.189-alt1
 - alterator-net-ng: add help page.
 

@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.11
+Version: 5.2.12
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Aug 11 2026 Ivan Khanas <xeno@altlinux.org> 5.2.12-alt1
+- backend3/net-eth: do not allow '_' in host name (closes: #45686).
+
 * Fri May 23 2025 Anton Midyukov <antohami@altlinux.org> 5.2.11-alt1
 - backend3/net-eth: set DURING_INSTALL=1 if determined that installer
   is running
