@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Modern password hashing for Python
@@ -48,6 +48,9 @@ sed -i 's/^dynamic = \["version"\]$/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 12 2026 Anton Vyatkin <toni@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Mon Oct 27 2025 Anton Vyatkin <toni@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
