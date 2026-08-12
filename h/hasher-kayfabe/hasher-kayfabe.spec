@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: hasher-kayfabe
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 Summary: Run hasher inside a rootless container
 Group: Development/Other
@@ -51,6 +51,7 @@ kernel refused it.
 %_sbindir/kayfabe-deactivate
 %dir %_libexecdir/%name
 %_libexecdir/%name/kayfabe-wrapper
+%_libexecdir/%name/kayfabe-in-container
 # Unreadable to everyone, runnable only by hasher's own group: it starts the
 # daemon for a caller who has no other way to reach root, and does nothing else.
 %attr(4710,root,hashman) %_libexecdir/%name/kayfabe-start
@@ -59,5 +60,8 @@ kernel refused it.
 %_libdir/%name/libkayfabe.so
 
 %changelog
+* Wed Aug 12 2026 Anton Farygin <rider@altlinux.org> 0.2.0-alt1
+- activation, the wrappers and the setuid helper now refuse outside a container
+
 * Wed Aug 12 2026 Anton Farygin <rider@altlinux.org> 0.1.0-alt1
 - Initial build.
