@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.65b0
-Release: alt1
+Release: alt2
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -84,9 +84,18 @@ Group: Development/Python3
 %description -n python3-module-%mod_name-instrumentation-celery
 This library allows tracing Celery tasks.
 
+%package -n python3-module-%mod_name-instrumentation-dbapi
+Summary: OpenTelemetry DBAPI Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-dbapi
+This library provides common instrumentation functionality for Python
+Database API Specification compatible libraries.
+
 %package -n python3-module-%mod_name-instrumentation-psycopg2
 Summary: OpenTelemetry Psycopg2 Instrumentation
 Group: Development/Python3
+Requires: python3-module-%mod_name-instrumentation-dbapi = %EVR
 
 %description -n python3-module-%mod_name-instrumentation-psycopg2
 This library allows tracing PostgreSQL queries made by the psycopg2 library.
@@ -142,7 +151,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_build
     popd
@@ -165,7 +174,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_install
     popd
@@ -189,7 +198,7 @@ pushd ./util/%mod_name-util-http
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
     pushd $idir
         %pyproject_run_pytest
     popd
@@ -250,6 +259,11 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/celery
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-celery}
 
+%files -n python3-module-%mod_name-instrumentation-dbapi
+%doc instrumentation/%mod_name-instrumentation-dbapi/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/dbapi
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-dbapi}
+
 %files -n python3-module-%mod_name-instrumentation-psycopg2
 %doc instrumentation/%mod_name-instrumentation-psycopg2/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/instrumentation/psycopg2
@@ -281,6 +295,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Wed Aug 12 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.65b0-alt2
+- NMU: Package instrumentation for dbapi (closes: #60142).
+
 * Thu Jul 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.65b0-alt1
 - New version.
 
