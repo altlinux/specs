@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 0.40.4
-Release: alt2
+Release: alt2.1
 
 Summary: Highly concurrent networking library
 License: MIT
@@ -22,6 +22,7 @@ Url: https://pypi.org/project/eventlet/
 Source: %name-%version.tar
 
 Patch: 0001-Revert-Emit-warning-on-startup-that-eventlet-is-depr.patch
+Patch1: 0002-Fix-compatibility-with-greenlet-3.4.patch
 
 BuildArch: noarch
 
@@ -101,6 +102,7 @@ This package contains documentation for Eventlet.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # requires thrift, python 2.7 only
 rm -rv eventlet/zipkin
@@ -142,6 +144,9 @@ and not test_raise_dns_tcp"
 %endif
 
 %changelog
+* Wed Aug 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.40.4-alt2.1
+- NMU: fix compatibility with greenlet >= 3.4.
+
 * Tue Feb 03 2026 Grigory Ustinov <grenka@altlinux.org> 0.40.4-alt2
 - NMU: suppress warnings, that ruins tests in other packages (Closes: #57743).
 
@@ -277,4 +282,3 @@ and not test_raise_dns_tcp"
 
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.16-alt1
 - Initial build for Sisyphus
-
