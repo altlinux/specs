@@ -4,7 +4,7 @@
 
 Name:    skara
 Version: 20260810
-Release: alt2.%githash
+Release: alt3.%githash
 
 Summary: The goal of this Project is to investigate alternative SCM and code review options for the JDK source code
 License: GPL-2.0
@@ -13,6 +13,7 @@ Url:     https://openjdk.org/projects/skara
 VCS:     https://github.com/openjdk/skara.git
 
 Source: %name-%version.tar
+Source1: enable-skara-fore-current-user
 
 Patch0: %name-publish-modules.patch
 
@@ -75,17 +76,19 @@ find %buildroot%_bindir -type f -exec sed -i '1a export SKARA_JAVA_OPTS=\"--modu
 mkdir -pv %buildroot%_sysconfdir/%name
 install -m 644 %name.gitconfig %buildroot%_sysconfdir/%name/%name.gitconfig
 
-%post
-echo "Fore using skara cli tools run:"
-echo "\$ git config --global include.path /etc/skara/skara.gitconfig"
+install -m 755 %SOURCE1 %buildroot%_bindir/enable-skara-fore-current-user
 
 %files -f .mfiles
 %doc README.md
+%dir %_sysconfdir/%name
 %_sysconfdir/%name/%name.gitconfig
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Aug 12 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt3.4b951a3c
+- Added script fore connect skara to git
+
 * Wed Aug 12 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt2.4b951a3c
 - Change group to Development/Java
 
