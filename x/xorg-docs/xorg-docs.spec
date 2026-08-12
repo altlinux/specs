@@ -8,7 +8,7 @@
 
 Name: xorg-docs
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Serial: 1
 Summary: Documentation on various X11 programming interfaces
 License: X11
@@ -33,12 +33,15 @@ the font server API, etc.
 
 %prep
 %setup
+cp -aLt . -- /usr/share/automake/config.{guess,sub}
 
 %build
+if [ -n "$(cc -dM -E -xc /dev/null | grep -Fw __EDG__)" ]; then
+%add_optflags -D__INTEL_COMPILER
+:
+fi
 %autoreconf
 %configure \
-	--build=%_arch-alt-linux \
-	--host=%_arch-alt-linux \
 	--enable-man \
 	%{subst_enable pdf} \
 	%{subst_enable txt} \
@@ -48,13 +51,16 @@ the font server API, etc.
 %make
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc %_docdir/%name
 %_man7dir/*
 
 %changelog
+* Mon Aug 03 2026 Michael Shigorin <mike@altlinux.org> 1:1.7.3-alt2
+- Fix build on newer arches (and some older compilers)
+
 * Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1:1.7.3-alt1
 - Autobuild version bump to 1.7.3
 
