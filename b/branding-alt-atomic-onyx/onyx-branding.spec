@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20260804
+Version: 20260812
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-branding
 BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
-BuildRequires: pkgconfig(libready-set-0)
+BuildRequires: pkgconfig(libready-set-0.13)
 
 %description
 %summary.
@@ -67,10 +67,7 @@ Requires: nautilus-open-any-terminal
 Requires: dconf
 Requires: %name-graphics = %EVR
 Requires(post): libgio
-# From ALT Workstation branding
-Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
 Conflicts: branding-simply-linux-system-settings
-Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
 %branding_add_conflicts %flavour_onyx gnome-settings
 
 %description gnome-settings
@@ -166,6 +163,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Wed Aug 12 2026 Vladimir Romanov <rirusha@altlinux.org> 20260812-alt1
+- Fixed ready-set pkgconfig version.
+
 * Tue Aug 04 2026 Vladimir Romanov <rirusha@altlinux.org> 20260804-alt1
 - Added privacy step to ready-set.
 
