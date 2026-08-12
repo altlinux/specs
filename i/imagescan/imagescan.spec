@@ -2,14 +2,12 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt7
+Release:  alt8
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
 Group:    Other
 Url:      http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Download manually from http://support.epson.net/linux/src/scanner/imagescanv3/common/
 Source:   %{name}_%version.orig.tar.gz
@@ -22,6 +20,8 @@ Patch3:   %name-alt-boost-1.73.0-compat.patch
 Patch4:   %name-alt-check-sane-compatibility.patch
 Patch5:   %name-alt-autoconf2.71.patch
 Patch6:   %name-alt-ImageMagick7.patch
+Patch7:   %name-gentoo-boost-1.84-headers.patch
+Patch8:   %name-gentoo-boost-1.89.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -140,8 +140,11 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Wed Aug 12 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.65.0-alt8
+- NMU: FTBFS with new boost.
+
 * Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt7
-- FTBFS: used %_udevdir location.
+- FTBFS: used %%_udevdir location.
 
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt6
 - FTBFS: fixed build with ImageMagick 7.x.
