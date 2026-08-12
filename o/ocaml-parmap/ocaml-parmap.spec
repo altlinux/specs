@@ -4,7 +4,7 @@
 
 Name: ocaml-parmap
 Version: 1.2.5
-Release: alt1
+Release: alt2
 Summary: Small OCaml library allowing to exploit multicore architectures
 Group: Development/ML
 # Parmap is distributed under the LGPL licence version 2, with the usual special linking exception to section 6 for OCaml programs.
@@ -55,6 +55,9 @@ dune exec -p parmap tests/simplescalefold.exe
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jul 02 2026 Anton Farygin <rider@altlinux.ru> 1.2.5-alt2
+- Fixed build with OCaml 5.5 on 32-bit architectures.
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
@@ -94,4 +97,3 @@ dune exec -p parmap tests/simplescalefold.exe
 
 * Sun Jun 10 2018 Vitaly Chikunov <vt@altlinux.ru> 1.0-alt1.rc9
 - First build of ocaml-parmap for ALT.
-

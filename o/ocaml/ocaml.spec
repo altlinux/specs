@@ -20,7 +20,7 @@
 
 
 Name: ocaml
-Version: 5.4.1
+Version: 5.5.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -30,10 +30,10 @@ Group: Development/ML
 Url: https://caml.inria.fr/
 Vcs: https://github.com/ocaml/ocaml
 Source0: %name-%version.tar
+Source1: %name-%version-testsuite-tests.tar
 
 Patch1: %name-%version-%release.patch
 Patch2: ocaml-5.3.0-fedora-configure-Allow-user-defined-C-compiler-flags.patch
-Patch3: ocaml-4.14.1-more-source-artifacts.patch
 Patch4: ocaml-5.2.0-alt-ocamldoc-install-all-cmti.patch
 Patch5: ocaml-5.2.0-fedora-Reload-exception-pointer-register-in-caml_c_call.patch
 
@@ -46,7 +46,7 @@ Obsoletes: ocaml4
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
 
-BuildRequires: binutils-devel
+BuildRequires: binutils-devel gcc-c++
 
 Requires: %name-runtime = %EVR
 
@@ -105,11 +105,10 @@ Summary: RPM macros containing the current OCaml version
 RPM macros %%ocaml_version providing the current OCaml version
 
 %prep
-%setup 
+%setup -a1
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 %build
@@ -123,7 +122,7 @@ autoconf
 	--datarootdir=%_datadir \
 	--mandir %_mandir \
 	--enable-flambda \
-%ifarch x86_64,aarch64
+%ifarch x86_64 aarch64
 	--enable-frame-pointers \
 %endif
 %if_without nativeocaml
@@ -207,10 +206,12 @@ popd
 %_libdir/ocaml/*.cmx
 %_libdir/ocaml/*.o
 %_libdir/ocaml/libasmrun_shared.so
+%_libdir/ocaml/libasmrun-*.so
 %endif
 %_libdir/ocaml/*.mli
 %_libdir/ocaml/sys.ml.in
 %_libdir/ocaml/libcamlrun_shared.so
+%_libdir/ocaml/libcamlrun-*.so
 
 %_libdir/ocaml/dynlink/*.mli
 %_libdir/ocaml/runtime_events/*.mli
@@ -271,13 +272,18 @@ popd
 %_bindir/ocamlrun
 %_bindir/ocamlrund
 %_bindir/ocamlruni
+%_bindir/ocamlrun-*
+%_bindir/ocamlrund-*
+%_bindir/ocamlruni-*
+%_bindir/*-ocamlrun-*
+%_bindir/*-ocamlrund-*
+%_bindir/*-ocamlruni-*
 %dir %_libdir/ocaml
 %_libdir/ocaml/runtime-launch-info
 %_libdir/ocaml/*.cmo
 %_libdir/ocaml/*.cmi
 %_libdir/ocaml/*.cma
 %_libdir/ocaml/stublibs
-%dir %_libdir/ocaml/stublibs
 %dir %_libdir/ocaml/dynlink
 %dir %_libdir/ocaml/profiling
 %dir %_libdir/ocaml/runtime_events
@@ -304,8 +310,6 @@ popd
 %_libdir/ocaml/unix/*.cmi
 %_libdir/ocaml/unix/*.cma
 
-%_libdir/ocaml/stublibs/dllthreads.so
-%dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
 
 %files ocamldoc
@@ -317,6 +321,9 @@ popd
 %_sysconfdir/rpm/macros.d/*
 
 %changelog
+* Sat Jun 27 2026 Anton Farygin <rider@altlinux.org> 5.5.0-alt1
+- 5.4.1 -> 5.5.0
+
 * Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 5.4.1-alt1
 - 5.3.0 -> 5.4.1
 
@@ -756,4 +763,3 @@ in cwd
 * Wed Nov 10 1998 Alexey Nogin <ayn2@cornell.edu>
 - Changed SRPM according to RHCN Package Requirements
 - Added LICENSE, Changelog and README files to the doc directory
-

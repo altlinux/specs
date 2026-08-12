@@ -1,11 +1,11 @@
-%if_with ocaml_bootstrap
+%if 0%{?ocaml_bootstrap}
 %def_without check
 %else
 %def_with check
 %endif
 Name: ocaml-re
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Summary: A regular expression library for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/ocaml-re
@@ -59,6 +59,9 @@ sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 1.14.0-alt2
+- updated ocaml_bootstrap check
+
 * Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 1.14.0-alt1
 - 1.13.3 -> 1.14.0
 

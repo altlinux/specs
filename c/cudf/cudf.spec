@@ -2,7 +2,7 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.10
-Release: alt3
+Release: alt4
 VCS: https://gitlab.com/irill/cudf.git
 Source: %name-%version.tar
 Url: https://www.mancoosi.org/cudf/
@@ -54,6 +54,7 @@ package-based GNU/Linux distributions.
 %package -n ocaml-%name-devel
 Summary: CUDF (Common Upgradeability Description Format) OCaml development stuff
 Group: Development/ML
+Requires: ocaml-cudf = %EVR
 
 %description -n ocaml-%name-devel
 CUDF (for Common Upgradeability Description Format) is a format for describing
@@ -87,6 +88,9 @@ programs.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Jul 04 2026 Anton Farygin <rider@altlinux.org> 0.10-alt4
+- added devel to runtime dependency
+
 * Wed Jul 01 2026 Anton Farygin <rider@altlinux.org> 0.10-alt3
 - split devel package to runtime and devel part
 

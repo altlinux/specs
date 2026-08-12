@@ -1,19 +1,27 @@
-Name: rpm-build-ocaml
-Version: 1.6.7
-Release: alt1
-BuildArch: noarch
+# Bootstrap knob (default: WITH). Normal builds include the OCaml
+# ocaml-meta-reqprov binary; `rpmbuild --without ocaml_meta` drops it (and the
+# ocaml/findlib BuildRequires) to break the ocaml <-> rpm-build-ocaml build
+# cycle. The %%{?!_without_ocaml_meta:...} guards below implement the switch.
+%def_with ocaml_meta
 
+Name: rpm-build-ocaml
+Version: 1.7.0
+Release: alt1
 Summary: RPM helpers to rebuild OCaml packages
 License: GPL-2.0-or-later
 Group: Development/ML
+Url: https://git.altlinux.org/gears/r/rpm-build-ocaml.git
+VCS: https://git.altlinux.org/gears/r/rpm-build-ocaml.git
 
-Source: scripts-%version.tar
+Source: %name-%version.tar
 
 # for proper dependencies
 BuildPreReq: rpm-build >= 4.0.4-alt81
 BuildRequires: rpm-macros-ocaml-version
+%{?!_without_ocaml_meta:BuildRequires: ocaml ocaml-findlib-devel}
 
-Requires: %_bindir/ocamlrun
+# ocaml-reqprov lives in ocaml-runtime, which also ships %_bindir/ocamlrun,
+# so an explicit Requires on ocamlrun is redundant.
 Requires: %_rpmlibdir/ocaml-reqprov
 Requires: rpm-macros-ocaml-version
 Obsoletes: rpm-build-ocaml4
@@ -22,16 +30,18 @@ Obsoletes: rpm-build-ocaml4
 RPM macros and reqprov helpers to be used in OCaml packages.
 
 %prep
-%setup -n scripts-%version
+%setup
 
 %build
-subst 's/@ocamlsver@/%{ocaml_version}/' ocaml
+subst 's/@ocamlsver@/%{ocaml_version}/' scripts/ocaml
+%{?!_without_ocaml_meta:make}
 
 %install
 mkdir -p %buildroot%_rpmlibdir
-install -pD -m644 ocaml %buildroot%_rpmmacrosdir/ocaml
-install -pD -m644 ocaml.env %buildroot%_rpmmacrosdir/ocaml.env
-install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-multi %buildroot%_rpmlibdir/
+install -pD -m644 scripts/ocaml %buildroot%_rpmmacrosdir/ocaml
+install -pD -m644 scripts/ocaml.env %buildroot%_rpmmacrosdir/ocaml.env
+install -p -m755 scripts/ocaml.{req,prov}{.files,} scripts/ocaml-functions scripts/ocaml-find-files-multi %buildroot%_rpmlibdir/
+%{?!_without_ocaml_meta:install -p -m755 ocaml-meta-reqprov %buildroot%_rpmlibdir/}
 
 %files
 %_rpmmacrosdir/ocaml
@@ -39,6 +49,29 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 %_rpmlibdir/ocaml*
 
 %changelog
+* Thu Apr 09 2026 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
+- added ocaml-meta() Provides/Requires generation from META files
+  using Fl_metascanner.lookup with predicate-aware resolution
+- moved META from devel to runtime package for findlib support
+- ocaml-meta-reqprov built as standalone ELF (-output-complete-exe)
+- dropped ocaml-cmt() Provides/Requires generation: redundant with
+  ocaml-cmx() for native packages; .cmt/.cmti still shipped for tooling
+- route C stub static archives (lib*.a) to the runtime package next to
+  their dll*.so, so -output-complete-exe / -custom static linking finds
+  them via the already-pulled runtime dep; OCaml native .a stay in devel
+- move dune-package to the runtime package next to META: it is dune's
+  library-resolution metadata (like findlib META), so building against a
+  library with dune works with only its runtime installed (the ocaml-meta
+  graph then pulls the whole transitive dune-package closure)
+- honor findlib exists_if in ocaml-meta-reqprov: skip META subpackages whose
+  guard file is absent (e.g. topkg's `care` subpackage under ../topkg-care
+  when only topkg is built), so we stop emitting false ocaml-meta() provides
+  and spurious requires for subpackages that were not installed
+- skip requires guarded by toploop/create_toploop/syntax/preprocessor
+  predicates: these are toplevel- or camlp4/camlp5-only deps, not general
+  package requires (avoids over-pulling camlp5 onto every consumer)
+- honor an explicit findlib `name = "..."` for the root Provides name
+
 * Thu Mar 05 2026 Anton Farygin <rider@altlinux.org> 1.6.7-alt1
 - renamed %%ocaml_bootstrap -> %%_with_ocaml_bootstrap to use in %%if_with macro
 
@@ -53,7 +86,7 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 - uses .install files from _build when available for accurate file lists
 
 * Mon Jan 20 2025 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
-- enabled parallel build in Dune with %_smp_mflags
+- enabled parallel build in Dune with %%_smp_mflags
 - remove ocaml-cmi dependencies for .cmt and .cmti files in devel packages
 - refined OCaml packaging logic to accurately include/exclude relevant files
 - moved .cma and .cmi files to the devel package and .cmo files to the runtime
@@ -110,7 +143,7 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 - ocaml.req: check "ccopt" libaray paths when resolving "cclib" dependencies
 
 * Fri Apr 04 2008 Alexey Tourbin <at@altlinux.ru> 1.1-alt2
-- added dependency on %_rpmlibdir/ocaml-reqprov
+- added dependency on %%_rpmlibdir/ocaml-reqprov
 
 * Thu Apr 03 2008 Alexey Tourbin <at@altlinux.ru> 1.1-alt1
 - major revision, implemented new types of dependencies:
@@ -121,4 +154,3 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-mult
 
 * Mon Jan 21 2007 Alex V. Myltsev <avm@altlinux.ru> 1-alt1
 - Initial build for Sisyphus.
-

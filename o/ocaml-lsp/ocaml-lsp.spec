@@ -1,6 +1,6 @@
 %define pkgname lsp
 Name: ocaml-%pkgname
-Version: 1.26.0
+Version: 1.27.0
 Release: alt1
 Summary: LSP Server for OCaml
 License: MIT
@@ -69,6 +69,9 @@ make test-ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 1.27.0-alt1
+- 1.26.0 -> 1.27.0
+
 * Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1.26.0-alt1
 - 1.25.0 -> 1.26.0
 
