@@ -1,8 +1,8 @@
-%define git_commit_short 6a7d096
+%define git_commit_short 2aa6d0d
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -78,9 +78,13 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_iconsdir/hicolor/512x512/apps/io.github.ilya_zlobintsev.LACT.png
 %_iconsdir/hicolor/scalable/apps/io.github.ilya_zlobintsev.LACT.svg
 %_datadir/metainfo/io.github.ilya_zlobintsev.LACT.metainfo.xml
+%_datadir/polkit-1/actions/io.github.ilya_zlobintsev.LACT.policy
 %_unitdir/%{name}d.service
 
 %changelog
+* Wed Aug 12 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sat Jun 27 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
 - New version 0.9.1.
 
