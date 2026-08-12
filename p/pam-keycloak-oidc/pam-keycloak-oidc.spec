@@ -1,6 +1,6 @@
 %global import_path github.com/zhaow-de/pam-keycloak-oidc
 Name:    pam-keycloak-oidc
-Version: 1.1.5
+Version: 1.4.0
 Release: alt1
 
 Summary: PAM module connecting to Keycloak for user authentication using OpenID Connect/OAuth2, with MFA/2FA/TOTP support
@@ -52,5 +52,8 @@ install -Dpm 0640 %SOURCE2 %buildroot%_sysconfdir/security/pam-keycloak-oidc.tml
 %_bindir/*
 
 %changelog
+* Wed Aug 12 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- Mew version.
+
 * Tue Jun 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus
