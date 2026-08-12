@@ -2,7 +2,7 @@
 %def_enable builtin
 
 Name: libpsl
-Version: 0.22.0
+Version: 0.23.2
 Release: alt1
 
 Summary: C library for the Public Suffix List
@@ -144,6 +144,9 @@ install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 0.23.2-alt1
+- Updated to 0.23.2.
+
 * Fri Jun 26 2026 Mikhail Efremov <sem@altlinux.org> 0.22.0-alt1
 - Updated to 0.22.0.
 
