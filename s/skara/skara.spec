@@ -4,11 +4,11 @@
 
 Name:    skara
 Version: 20260810
-Release: alt1.%githash
+Release: alt2.%githash
 
 Summary: The goal of this Project is to investigate alternative SCM and code review options for the JDK source code
 License: GPL-2.0
-Group:   Other
+Group:   Development/Java
 Url:     https://openjdk.org/projects/skara
 VCS:     https://github.com/openjdk/skara.git
 
@@ -86,5 +86,8 @@ echo "\$ git config --global include.path /etc/skara/skara.gitconfig"
 %_man1dir/*
 
 %changelog
+* Wed Aug 12 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt2.4b951a3c
+- Change group to Development/Java
+
 * Tue Aug 11 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt1.4b951a3c
 - Initial build for Sisyphus
