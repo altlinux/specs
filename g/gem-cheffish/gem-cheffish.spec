@@ -5,19 +5,18 @@
 %define        gemname cheffish
 
 Name:          gem-cheffish
-Version:       17.1.8
-Release:       alt1
+Version:       17.2.0.4.1
+Release:       alt0.1
 Summary:       Resources and tools for testing and interacting with Chef and Chef Server
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/cheffish
 Vcs:           https://github.com/chef/cheffish.git
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(chef) >= 0
 BuildRequires: gem(chef-utils) >= 17.0
@@ -34,35 +33,35 @@ BuildConflicts: gem(rspec) >= 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency logger >= 1.7,logger < 2
 Requires:      ruby >= 3.1
+Requires:      gem(chef) >= 0
 Requires:      gem(chef-utils) >= 17.0
 Requires:      gem(chef-zero) >= 14.0
 Requires:      gem(logger) >= 1.6
 Requires:      gem(net-ssh) >= 0
+Requires:      gem(syslog) >= 0
 Conflicts:     gem(logger) >= 2
 Obsoletes:     ruby-cheffish < %EVR
 Provides:      ruby-cheffish = %EVR
-Provides:      gem(cheffish) = 17.1.8
+Provides:      gem(cheffish) = 17.2.0.4.1
+
+%ruby_use_gem_version cheffish:17.2.0.4.1
 
 %description
 This library provides a variety of convergent resources for interacting with the
 Chef Server; along the way, it happens to provide some very useful and
 sophisticated ways of running Chef resources as recipes in RSpec examples.
 
-
 %if_enabled    doc
 %package       -n gem-cheffish-doc
-Version:       17.1.8
-Release:       alt1
+Version:       17.2.0.4.1
+Release:       alt0.1
 Summary:       Resources and tools for testing and interacting with Chef and Chef Server documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cheffish
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(cheffish) = 17.1.8
+Requires:      gem(cheffish) = 17.2.0.4.1
 
 %description   -n gem-cheffish-doc
 Resources and tools for testing and interacting with Chef and Chef Server
@@ -79,16 +78,14 @@ sophisticated ways of running Chef resources as recipes in RSpec examples.
 
 %if_enabled    devel
 %package       -n gem-cheffish-devel
-Version:       17.1.8
-Release:       alt1
+Version:       17.2.0.4.1
+Release:       alt0.1
 Summary:       Resources and tools for testing and interacting with Chef and Chef Server development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cheffish
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(cheffish) = 17.1.8
+Requires:      gem(cheffish) = 17.2.0.4.1
 Requires:      gem(chef) >= 0
 Requires:      gem(chef-utils) >= 17.0
 Requires:      gem(chef-zero) >= 14.0
@@ -144,6 +141,9 @@ sophisticated ways of running Chef resources as recipes in RSpec examples.
 
 
 %changelog
+* Wed Aug 12 2026 Pavel Skrylev <majioa@altlinux.org> 17.2.0.4.1-alt0.1
+- ^ 17.1.8 -> 17.2.0p4.1
+
 * Tue Mar 31 2026 Pavel Skrylev <majioa@altlinux.org> 17.1.8-alt1
 - ^ 17.1.4 -> 17.1.8
 

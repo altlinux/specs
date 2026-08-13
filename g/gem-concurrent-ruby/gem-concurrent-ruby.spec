@@ -5,23 +5,25 @@
 %define        gemname concurrent-ruby
 
 Name:          gem-concurrent-ruby
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 License:       MIT
 Group:         Development/Ruby
 Url:           http://www.concurrent-ruby.com
 Vcs:           https://github.com/ruby-concurrency/concurrent-ruby.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Source1:       concurrent_ruby.jar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires: fakegit
 %if_enabled check
+BuildRequires: gem(pry) >= 0.11
 BuildRequires: gem(rake) >= 13.0
-BuildRequires: gem(rake-compiler) >= 1.0.7
+BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rake-compiler-dock) >= 1.0
+BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
@@ -29,13 +31,14 @@ BuildConflicts: gem(rake-compiler-dock) >= 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 Requires:      ruby >= 2.3
 Obsoletes:     ruby-concurrent-ruby < %EVR
 Provides:      ruby-concurrent-ruby = %EVR
-Provides:      gem(concurrent-ruby) = 1.3.5
-
-%ruby_on_build_rake_tasks repackage:all
+Provides:      concurrent-ruby = %EVR
+Provides:      gem(concurrent-ruby) = 1.3.8
 
 %description
 Modern concurrency tools for Ruby. Inspired by Erlang, Clojure, Scala, Haskell,
@@ -61,11 +64,10 @@ Version:       0.7.2
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 Group:         Development/Ruby
-BuildArch:     noarch
 
 Requires:      ruby >= 2.3
-Requires:      gem(concurrent-ruby) >= 1.3
-Conflicts:     gem(concurrent-ruby) >= 2
+Requires:      gem(concurrent-ruby) = 1.3.8
+Requires:      gem(concurrent-ruby-edge) = 0.7.2
 Provides:      concurrent-ruby-edge = %EVR
 Provides:      gem(concurrent-ruby-edge) = 0.7.2
 
@@ -135,16 +137,16 @@ Please see http://concurrent-ruby.com for more information.
 
 
 %package       -n gem-concurrent-ruby-ext
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 Group:         Development/Ruby
 
 Requires:      ruby >= 2.3
-Requires:      gem(concurrent-ruby) = 1.3.5
+Requires:      gem(concurrent-ruby) = 1.3.8
 Requires:      gem(concurrent-ruby-edge) = 0.7.2
 Provides:      concurrent-ruby-ext = %EVR
-Provides:      gem(concurrent-ruby-ext) = 1.3.5
+Provides:      gem(concurrent-ruby-ext) = 1.3.8
 
 %description   -n gem-concurrent-ruby-ext
 C extensions to optimize the concurrent-ruby gem when running under MRI. Please
@@ -153,14 +155,14 @@ see http://concurrent-ruby.com for more information.
 
 %if_enabled    doc
 %package       -n gem-concurrent-ruby-ext-doc
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета concurrent-ruby-ext
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(concurrent-ruby-ext) = 1.3.5
+Requires:      gem(concurrent-ruby-ext) = 1.3.8
 
 %description   -n gem-concurrent-ruby-ext-doc
 Modern concurrency tools including agents, futures, promises, thread pools,
@@ -176,14 +178,14 @@ see http://concurrent-ruby.com for more information.
 
 %if_enabled    devel
 %package       -n gem-concurrent-ruby-ext-devel
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета concurrent-ruby-ext
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(concurrent-ruby-ext) = 1.3.5
+Requires:      gem(concurrent-ruby-ext) = 1.3.8
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) > 1.2.4
 Requires:      gem(rake-compiler-dock) >= 1.0
@@ -204,14 +206,14 @@ see http://concurrent-ruby.com for more information.
 
 %if_enabled    doc
 %package       -n gem-concurrent-ruby-doc
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета concurrent-ruby
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(concurrent-ruby) = 1.3.5
+Requires:      gem(concurrent-ruby) = 1.3.8
 
 %description   -n gem-concurrent-ruby-doc
 Modern concurrency tools including agents, futures, promises, thread pools,
@@ -241,14 +243,14 @@ which is better or why
 
 %if_enabled    devel
 %package       -n gem-concurrent-ruby-devel
-Version:       1.3.5
+Version:       1.3.8
 Release:       alt1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета concurrent-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(concurrent-ruby) = 1.3.5
+Requires:      gem(concurrent-ruby) = 1.3.8
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) > 1.2.4
 Requires:      gem(rake-compiler-dock) >= 1.0
@@ -289,8 +291,6 @@ which is better or why
 
 %install
 %ruby_install
-# TODO: de-build-in
-install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurrent/concurrent_ruby.jar
 
 %check
 %ruby_test
@@ -318,14 +318,14 @@ install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurre
 
 %files         -n gem-concurrent-ruby-ext
 %doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md
-%ruby_gemspecdir/concurrent-ruby-ext-1.3.5.gemspec
-%ruby_gemslibdir/concurrent-ruby-ext-1.3.5
-%ruby_gemsextdir/concurrent-ruby-ext-1.3.5
+%ruby_gemspecdir/concurrent-ruby-ext-1.3.8.gemspec
+%ruby_gemslibdir/concurrent-ruby-ext-1.3.8
+%ruby_gemsextdir/concurrent-ruby-ext-1.3.8
 
 %if_enabled    doc
 %files         -n gem-concurrent-ruby-ext-doc
 %doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md
-%ruby_gemsdocdir/concurrent-ruby-ext-1.3.5
+%ruby_gemsdocdir/concurrent-ruby-ext-1.3.8
 %endif
 
 %if_enabled    devel
@@ -347,6 +347,9 @@ install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurre
 
 
 %changelog
+* Wed Aug 12 2026 Pavel Skrylev <majioa@altlinux.org> 1.3.8-alt1
+- ^ 1.3.5 -> 1.3.8
+
 * Thu Mar 06 2025 Pavel Skrylev <majioa@altlinux.org> 1.3.5-alt1
 - ^ 1.2.3 -> 1.3.5
 

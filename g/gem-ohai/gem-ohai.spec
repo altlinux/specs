@@ -5,27 +5,24 @@
 %define        gemname ohai
 
 Name:          gem-ohai
-Version:       19.1.15
+Version:       19.1.45
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       Apache-2.0
 Group:         Development/Ruby
-Url:           https://github.com/chef/ohai
+Url:           https://github.com/chef/ohai/
 Vcs:           https://github.com/chef/ohai.git
 Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(appbundler) >= 0
 BuildRequires: gem(base64) >= 0
 BuildRequires: gem(chef-config) >= 14.12
 BuildRequires: gem(chef-utils) >= 16.0
-BuildRequires: gem(cookstyle) >= 7.32.8
-BuildRequires: gem(ffi) >= 1.15.5
+BuildRequires: gem(ffi) >= 1.17.0
 BuildRequires: gem(ffi-yajl) >= 2.2
 BuildRequires: gem(ipaddr_extensions) >= 0
 BuildRequires: gem(ipaddress) >= 0
@@ -48,10 +45,10 @@ BuildRequires: gem(wmi-lite) >= 1.0
 BuildConflicts: gem(chef-config) >= 20
 BuildConflicts: gem(chef-utils) >= 20
 BuildConflicts: gem(ffi) >= 2
-BuildConflicts: gem(ffi-yajl) >= 3
+BuildConflicts: gem(ffi-yajl) >= 4.0
 BuildConflicts: gem(mixlib-config) >= 4.0
 BuildConflicts: gem(mixlib-log) >= 4.0
-BuildConflicts: gem(mixlib-shellout) >= 4
+BuildConflicts: gem(mixlib-shellout) >= 3.5.0
 BuildConflicts: gem(plist) >= 4
 BuildConflicts: gem(rspec-collection_matchers) >= 2
 BuildConflicts: gem(rspec-core) >= 4
@@ -64,12 +61,13 @@ BuildConflicts: gem(wmi-lite) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
 %ruby_use_gem_dependency mixlib-shellout >= 3.4.9,mixlib-shellout < 4
+%ruby_use_gem_dependency ffi-yajl >= 3.1,ffi-yajl < 4
 Requires:      ruby >= 3.1
 Requires:      gem(appbundler) >= 0
 Requires:      gem(base64) >= 0
 Requires:      gem(chef-config) >= 14.12
 Requires:      gem(chef-utils) >= 16.0
-Requires:      gem(ffi) >= 1.15.5
+Requires:      gem(ffi) >= 1.17.0
 Requires:      gem(ffi-yajl) >= 2.2
 Requires:      gem(ipaddress) >= 0
 Requires:      gem(mixlib-cli) >= 1.7.0
@@ -82,15 +80,13 @@ Requires:      gem(wmi-lite) >= 1.0
 Conflicts:     gem(chef-config) >= 20
 Conflicts:     gem(chef-utils) >= 20
 Conflicts:     gem(ffi) >= 2
-Conflicts:     gem(ffi-yajl) >= 3
+Conflicts:     gem(ffi-yajl) >= 4.0
 Conflicts:     gem(mixlib-config) >= 4.0
 Conflicts:     gem(mixlib-log) >= 4.0
-Conflicts:     gem(mixlib-shellout) >= 4
+Conflicts:     gem(mixlib-shellout) >= 3.5.0
 Conflicts:     gem(plist) >= 4
 Conflicts:     gem(wmi-lite) >= 2
-Obsoletes:     ohai < %EVR
-Provides:      ohai = %EVR
-Provides:      gem(ohai) = 19.1.15
+Provides:      gem(ohai) = 19.1.45
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then provide
@@ -99,20 +95,18 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n ohai
-Version:       19.1.15
+Version:       19.1.45
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
-Group:         Development/Other
+Group:         Other
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ohai) = 19.1.15
+Requires:      gem(ohai) = 19.1.45
 Requires:      gem(appbundler) >= 0
 Requires:      gem(chef-config) >= 14.12
 Requires:      gem(chef-utils) >= 16.0
-Requires:      gem(ffi) >= 1.15.5
+Requires:      gem(ffi) >= 1.17.0
 Conflicts:     gem(chef-config) >= 20
 Conflicts:     gem(chef-utils) >= 20
 Conflicts:     gem(ffi) >= 2
@@ -130,16 +124,14 @@ is required by the chef-client and must be present on a node.
 
 %if_enabled    doc
 %package       -n gem-ohai-doc
-Version:       19.1.15
+Version:       19.1.45
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ohai) = 19.1.15
+Requires:      gem(ohai) = 19.1.45
 
 %description   -n gem-ohai-doc
 Ohai profiles your system and emits JSON documentation files.
@@ -155,16 +147,28 @@ is required by the chef-client and must be present on a node.
 
 %if_enabled    devel
 %package       -n gem-ohai-devel
-Version:       19.1.15
+Version:       19.1.45
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(ohai) = 19.1.15
+Requires:      gem(ohai) = 19.1.45
+Requires:      gem(ipaddr_extensions) >= 0
+Requires:      gem(pry) >= 0
+Requires:      gem(pry-byebug) >= 0
+Requires:      gem(pry-stack_explorer) >= 0
+Requires:      gem(rake) >= 10.1.0
+Requires:      gem(rb-readline) >= 0
+Requires:      gem(rspec-collection_matchers) >= 1.0
+Requires:      gem(rspec-core) >= 3.0
+Requires:      gem(rspec-expectations) >= 3.0
+Requires:      gem(rspec-mocks) >= 3.0
+Conflicts:     gem(rspec-collection_matchers) >= 2
+Conflicts:     gem(rspec-core) >= 4
+Conflicts:     gem(rspec-expectations) >= 4
+Conflicts:     gem(rspec-mocks) >= 4
 
 %description   -n gem-ohai-devel
 Ohai profiles your system and emits JSON development package.
@@ -212,6 +216,9 @@ is required by the chef-client and must be present on a node.
 
 
 %changelog
+* Wed Aug 12 2026 Pavel Skrylev <majioa@altlinux.org> 19.1.45-alt1
+- ^ 19.1.15 -> 19.1.45
+
 * Sat Nov 22 2025 Pavel Skrylev <majioa@altlinux.org> 19.1.15-alt1
 - ^ 19.0.4 -> 19.1.15
 
