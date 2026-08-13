@@ -2,10 +2,10 @@
 %define oname xarray
 
 Name: python3-module-xarray
-Version: 2026.2.0
+Version: 2026.7.0
 Release: alt1
 
-License: MIT
+License: Apache-2.0
 Group: Development/Python
 Url: https://github.com/pydata/xarray
 
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools_scm
 
 %if_with test
 BuildRequires: python3-module-cloudpickle python3-module-flaky
@@ -29,21 +29,16 @@ BuildRequires: python3-module-rasterio >= 1.1
 %add_python3_req_skip dask.distributed distributed.client distributed.utils_test
 
 %description
-Package that provides Jupyter kernels for use with the consoles of Spyder,
-the Scientific Python Development Environment.
-
-These kernels can launched either through Spyder itself
-or in an independent Python session, and allow for interactive
-or file-based execution of Python code inside Spyder.
+N-D labeled arrays and datasets in Python.
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %if_with test
@@ -52,9 +47,15 @@ or file-based execution of Python code inside Spyder.
 %endif
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.7.0-alt1
+- new version 2026.7.0
+- switch to pyproject build
+- change license to Apache-2.0
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.2.0-alt1
 - new version 2026.2.0
 
