@@ -1,5 +1,5 @@
 Name: kubo
-Version: 0.41.0
+Version: 0.42.0
 Release: alt1
 
 Summary: IPFS implementation in Go
@@ -87,6 +87,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.42.0-alt1
+- new version 0.42.0
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.41.0-alt1
 - new version 0.41.0
 
