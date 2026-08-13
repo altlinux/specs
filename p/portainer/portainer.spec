@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.39.5
+Version: 2.39.6
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -56,7 +56,7 @@ go build -x \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=c0a1d11b2762d19fbd13afa490e2a828bb153ad5' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=723d1a2268f0fefe70d57f5981ce15d5d1ffc679' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 
@@ -98,6 +98,12 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Aug 13 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.6-alt1
+- New LTS version 2.39.6 (Fixes: CVE-2026-42505, CVE-2026-39822,
+  CVE-2026-71556, CVE-2026-71557, CVE-2026-50163, CVE-2026-41178,
+  CVE-2026-46600, CVE-2026-56852, CVE-2026-53488, CVE-2026-47262,
+  GHSA-259r-337f-4rfw, GHSA-hrxh-6v49-42gf).
+
 * Tue Jul 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.5-alt1
 - New LTS version 2.39.5 (Fixes: CVE-2026-53488, CVE-2026-53492,
   CVE-2026-53489, CVE-2026-47262, CVE-2026-50195).
