@@ -1,5 +1,5 @@
 Name: pdfarranger
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 Url: https://github.com/pdfarranger/pdfarranger
 Group: Publishing
@@ -51,6 +51,9 @@ cp -a data/icons/* %buildroot/%_iconsdir/
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
+- new version 1.14.0
+
 * Fri Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
 - new version 1.13.0 (ALT bug 58242)
 - fix Source-url, switch to tar format in .gear/rules
