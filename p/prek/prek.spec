@@ -4,13 +4,13 @@
 %def_with check
 
 Name: prek
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
 License: MIT
 Group: Development/Tools
-Url: https://prek.j178.dev
+URL: https://prek.j178.dev
 VCS: https://github.com/j178/prek
 
 Source: %name-%version.tar
@@ -81,6 +81,9 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 13 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.4.13-alt1
+- Updated to version 0.4.13.
+
 * Mon Aug 03 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.4.12-alt1
 - Updated to version 0.4.12.
 - Added python3-module-prek subpackage (closes: #59643).
