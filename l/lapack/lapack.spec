@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt10
+Release: alt10.1
 Epoch: 1
 
 %define sover 4
@@ -25,11 +25,6 @@ BuildRequires: libopenblas-devel
 %package -n lib%{name}3
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: System/Libraries
-
-%package -n lib%{name}3-devel
-Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
-Group: Development/Other
-Requires: libopenblas-devel
 
 %package -n blas-man
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
@@ -59,18 +54,6 @@ not general sparse matrices. Similar functionality is provided for
 real and complex matrices in both single and double precision.
 
 %description -n lib%{name}3
-LAPACK (Linear Algebra PACKage) is a standard library for numerical
-linear algebra. LAPACK provides routines for solving systems of
-simultaneous linear equations, least-squares solutions of linear
-systems of equations, eigenvalue problems, and singular value
-problems. Associated matrix factorizations (LU, Cholesky, QR, SVD,
-Schur, and generalized Schur) and related computations (i.e.,
-reordering of Schur factorizations and estimating condition numbers)
-are also included. LAPACK can handle dense and banded matrices, but
-not general sparse matrices. Similar functionality is provided for
-real and complex matrices in both single and double precision.
-
-%description -n lib%{name}3-devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
 simultaneous linear equations, least-squares solutions of linear
@@ -160,13 +143,13 @@ rm -rf %buildroot%_libdir/cmake
 %doc LICENSE README.md
 %_libdir/%soname
 
-%files -n lib%{name}3-devel
-%_libdir/liblapack.so
-
 %files -n blas-man -f blas-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Mon Apr 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.8.0-alt10.1
+- - drop devel package
+
 * Mon Apr 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.8.0-alt10
 - ! fixed names to update lapack
 
