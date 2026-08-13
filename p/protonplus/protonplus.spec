@@ -4,7 +4,7 @@
 %def_without check
 
 Name: protonplus
-Version: 0.5.20
+Version: 0.6.3
 Release: alt1
 
 Summary: Simple and powerful manager for Wine, Proton, DXVK and VKD3D
@@ -19,12 +19,15 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala
 BuildRequires: /proc
 
+BuildRequires: pkgconfig(appstream)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libadwaita-1) >= 1.4
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libsoup-3.0)
+BuildRequires: pkgconfig(sdl3)
+BuildRequires: pkgconfig(libnotify)
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: %_bindir/appstream-util %_bindir/desktop-file-validate}}
 
@@ -62,6 +65,9 @@ Supports Steam, Lutris, Heroic and Bottles.
 %_iconsdir/hicolor/*/apps/%xdg_name.png
 
 %changelog
+* Wed Aug 12 2026 Boris Yumankulov <boria138@altlinux.org> 0.6.3-alt1
+- new version 0.6.3
+
 * Wed Apr 29 2026 Boris Yumankulov <boria138@altlinux.org> 0.5.20-alt1
 - new version 0.5.20
 
@@ -112,5 +118,4 @@ Supports Steam, Lutris, Heroic and Bottles.
 
 * Sat May 25 2024 Boris Yumankulov <boria138@altlinux.org> 0.4.10-alt1
 - Initial build for Sisyphus
-
 
