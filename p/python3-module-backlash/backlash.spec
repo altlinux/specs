@@ -3,7 +3,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Backlash is a swiss army knife for web applications debugging
@@ -44,5 +44,8 @@ replacement for TurboGears 2.3.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 13 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.5.0-alt1
+- Initial build for ALT Sisyphus.
+
 * Tue Jan 27 2026 Maxim Tulskiy <tulskijms@altlinux.org> 0.4.0-alt1
 - Initial build for ALT Sisyphus.
