@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: nlopt
-Version: 2.10.1
+Version: 2.11.0
 Release: alt1
 
 Summary: Library for nonlinear optimization
@@ -127,6 +127,9 @@ This package contains development documentation for NLopt.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt1
 - new version 2.10.1
 - rename libnlopt to libnlopt1 per Shared Libs Policy (soname 1)
