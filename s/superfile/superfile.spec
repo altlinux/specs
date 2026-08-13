@@ -5,7 +5,7 @@
 
 Name: superfile
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: Pretty fancy and modern terminal file manager
 License: MIT
 Group: File tools
@@ -18,6 +18,9 @@ Patch: alt-disabled-checking-upstream-version.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
+
+# https://bugzilla.altlinux.org/60049
+Requires: fonts-ttf-fira-code-nerd
 
 %if_with check
 %ifnarch i586
@@ -62,6 +65,9 @@ cd "$BUILDDIR/src/$IMPORT_PATH"
 %doc README.md LICENSE
 
 %changelog
+* Thu Aug 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.0-alt2
+- Added requires to nerd fonts (closes: #60049).
+
 * Sat Jul 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.0-alt1
 - Updated to version 1.6.0.
 - Renamed binary to spf to match upstream.
