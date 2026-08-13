@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -141,6 +141,21 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Tue Aug 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
+- new version (1.7.3) via gear-uupdate
+- fixes vulnerabilities:
+ + Fix SSRF bypass via specific local address URLs (100.64.0.0/10, fe80::/10)
+ + Fix SSRF filter bypass via nip.io/sslip.io hostnames evading is_local_url()
+ + Fix remote content blocking bypass via unclosed url() in FuncIRI attribute
+ + Fix LDAP filter injection via unescaped %u/%fu/%d substitution in search_filter
+ + Fix arbitrary Sieve script injection via filter rule name bypassing managesieve_disabled_actions
+ + Fix RCE via cmd_learn driver of markasjunk plugin
+ + Fix IMAP command injection via mail search and LITERAL+ byte-count desynchronization
+ + Fix password's modoboa driver leak of authentication token to user-controlled host
+ + Fix stored XSS in "Add to address book" action
+ + Fix HTML/CSS sanitization bypass via SVG animate by attribute
+ + Add basic validation for content proxied by the css proxy
+
 * Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
 - new version 1.7.2
 - fixes vulnerabilities:
@@ -153,11 +168,14 @@ service httpd2 condreload
 * Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1
 - new version 1.7.1
 - fixes vulnerabilities:
- + Fix stored XSS via unescaped attachment MIME type [CVE-2026-54432]
- + Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433]
- + Fix various vulnerabilities in the password plugin
+ + Fix stored XSS/HTML/CSS injection in subject field of draft restore dialog
+ + Fix CSS injection bypass in HTML sanitizer via SVG animate attributeName="style"
+ + Fix pre-auth SQL injection in virtuser_query plugin via preg_replace backslash escape bypass
  + Fix SSRF bypass via specific local address URLs
- + Fix infinite loop and DoS via crafted TNEF (winmail.dat)
+ + Fix local/private URL fetch bypass when remote resources were not allowed
+ + Fix bypass of remote image blocking via CSS var()
+ + Fix pre-auth arbitrary file delete via redis/memcache session poisoning bypass
+ + Fix code injection vulnerability - remove support for code evaluation in LDAP autovalues option
 
 * Fri Jul 10 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.17-alt1
 - new version 1.6.17 (with rpmrb script)
