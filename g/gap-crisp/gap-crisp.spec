@@ -1,7 +1,7 @@
 %define repo crisp
 
 Name: gap-crisp
-Version: 1.4.9
+Version: 1.4.11
 Release: alt1
 Summary: GAP: Computing with Radicals, Injectors, Schunck classes and Projectors
 License: BSD-2-Clause
@@ -9,7 +9,7 @@ Group: Sciences/Mathematics
 Url: https://github.com/bh11/crisp
 VCS: https://github.com/bh11/crisp
 
-# Source-url: https://github.com/bh11/crisp/archive/refs/tags/CRISP-%version.tar.gz
+# Source-url: https://github.com/bh11/crisp/releases/download/CRISP-%version/crisp-%version.tar.gz
 Source: crisp-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -42,6 +42,9 @@ belonging to a given group class.
 %gap_sitelib/%repo/
 
 %changelog
+* Thu Aug 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.4.11-alt1
+- New version 1.4.11.
+
 * Wed Aug 05 2026 Leontiy Volodin <lvol@altlinux.org> 1.4.9-alt1
 - New version 1.4.9.
 

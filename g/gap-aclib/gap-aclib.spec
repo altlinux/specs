@@ -1,6 +1,6 @@
 Name: gap-aclib
-Version: 1.3.3
-Release: alt2
+Version: 1.4
+Release: alt1
 Summary: GAP: Almost Crystallographic Groups
 License: Artistic-2.0
 Group: Sciences/Mathematics
@@ -34,6 +34,9 @@ nilpotent-by-finite and has no non-trivial finite normal subgroups.
 %gap_sitearch/aclib/
 
 %changelog
+* Thu Aug 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.4-alt1
+- New version 1.4.
+
 * Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.3-alt2
 - Moved files from aclib-version to aclib.
 
