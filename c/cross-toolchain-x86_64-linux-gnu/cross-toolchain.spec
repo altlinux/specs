@@ -20,11 +20,11 @@
 %define binutils_vr       2.46-alt0.port
 %define binutils_version  %{part0 - %binutils_vr}
 
-%define gcc_vr            15.2.1-alt0.port
+%define gcc_vr            15.3.1-alt0.port
 %define gcc_version       %{part0 - %gcc_vr}
 %define gcc_branch        %{part0 . %gcc_version}
 
-%define glibc_vr          2.40.0.224.573a-alt1.0.port
+%define glibc_vr          2.43.0.35.fe0ccc-alt0.port
 %define glibc_version     %{expand:%part0 - %glibc_vr}
 
 %define kernel_version    6.12
@@ -126,12 +126,12 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20260522
+Version: 20260811
 
 # The release of this package MUST not go down, unless you simultaniously
 # update binutils, glibc and gcc to new version, in which case you can
 # restart with alt1 if you want.
-Release: alt3
+Release: alt4
 
 
 Summary: GCC cross-toolchain for %target
@@ -791,6 +791,11 @@ export ASM_EXTRA_FLAGS="-Wl,-Ttext-segment=0x90000000"
 %test_data
 
 %changelog
+* Tue Aug 11 2026 Ivan A. Melnikov <iv@altlinux.org> 20260811-alt4
+- Update components to sync with Sisyphus:
+  + glibc 2.43.0.35.fe0ccc;
+  + gcc 15.3.1.
+
 * Fri May 22 2026 Ivan A. Melnikov <iv@altlinux.org> 20260522-alt3
 - Update components to sync with Sisyphus:
   + binutils 2.46;
