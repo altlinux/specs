@@ -5,6 +5,7 @@
 %define angie_spool %_spooldir/angie
 %define angie_log %_logdir/angie
 %define modpath %_libdir/angie/modules
+%define perlpath %_libdir/angie/perl5
 %def_with debug
 %def_with geoip
 %def_with image_filter
@@ -13,7 +14,7 @@
 
 Name: angie
 Version: 1.12.1
-Release: alt1
+Release: alt2
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
 License: BSD-2-Clause
@@ -24,6 +25,7 @@ VCS: https://git.angie.software/web-server/angie.git
 Source: %name-%version.tar
 # from upstream
 Source1: %name-dist-%version.tar
+Patch0: %name-%version-%release.patch
 
 Provides: webserver
 
@@ -32,6 +34,8 @@ BuildRequires: libpcre2-devel
 BuildRequires: LibreSSL-devel
 BuildRequires: make
 BuildRequires: perl-devel
+BuildRequires: perl-JSON
+BuildRequires: perl-Test-Deep
 BuildRequires: zlib-devel
 %{?_with_geoip:BuildRequires: libGeoIP-devel}
 %{?_with_image_filter:BuildRequires: libgd-devel}
@@ -82,21 +86,11 @@ XSLT module for Angie
 
 %prep
 %setup -a1
-%if_with perl
-sed -i auto/lib/perl/make \
-  -e 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' \
-  -e 's/nginx/angie/g' \
-  #
-mv src/http/modules/perl/{nginx,angie}.pm
-mv src/http/modules/perl/{nginx,angie}.xs
-sed -i 's/nginx/angie/g' \
-  src/http/modules/perl/Makefile.PL \
-  src/http/modules/perl/angie.pm \
-  #
-%endif
+%patch0 -p1
 
 # https://en.angie.software/angie/docs/installation/sourcebuild/#paths
 %build
+export PERL_MM_OPT=INSTALLSITEARCH=%perlpath
 ./configure \
   --prefix=/ \
   --group=%angie_user \
@@ -127,6 +121,7 @@ sed -i 's/nginx/angie/g' \
   %{?_with_image_filter:--with-http_image_filter_module=dynamic} \
   --with-http_mp4_module \
   %{?_with_perl:--with-http_perl_module=dynamic} \
+  %{?_with_perl:--with-perl_modules_path=%perlpath} \
   --with-http_random_index_module \
   --with-http_realip_module \
   --with-http_secure_link_module \
@@ -150,6 +145,9 @@ sed -i 's/nginx/angie/g' \
 
 %make_build DESTDIR=%buildroot
 
+%check
+prove -Itests/lib tests/module_paths.t
+
 %install
 mkdir -p \
   %buildroot%angie_etc/conf-{enabled,available}.d \
@@ -163,6 +161,11 @@ mkdir -p \
   #
 
 %makeinstall_std
+
+%if_with perl
+rm -rf %buildroot%perlpath/auto/nginx/.packlist \
+       %buildroot%perlpath/*-linux-thread-multi
+%endif
 
 for s in %buildroot/%modpath/*.so; do
   fn=${s##*/}
@@ -260,8 +263,7 @@ mv %buildroot/html/{50x.html,index.html} \
 %files perl
 %config(noreplace) %angie_etc/modules-available.d/http_perl.conf
 %modpath/ngx_http_perl_module.so
-%perl_vendor_archlib/angie.pm
-%perl_vendor_autolib/angie
+%perlpath
 %endif
 
 %files xslt
@@ -269,6 +271,11 @@ mv %buildroot/html/{50x.html,index.html} \
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Aug 12 2026 Anton Farygin <rider@altlinux.org> 1.12.1-alt2
+- Fixed dynamic module discovery in tests (closes: #60140).
+- Fixed Perl module packaging by using a private upstream-compatible path.
+- Hardened the systemd unit.
+
 * Mon Jul 27 2026 Anton Farygin <rider@altlinux.org> 1.12.1-alt1
 - 1.10.3 -> 1.12.1
 
