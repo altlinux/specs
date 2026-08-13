@@ -2,7 +2,7 @@
 
 Name: CTK
 Version: 2026.08.06
-Release: alt1
+Release: alt2
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -19,7 +19,7 @@ Patch1: %name-alt-build.patch
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5-webengine
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ cmake ctest
 BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-multimedia-devel qt5-svg-devel
 %ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
@@ -133,6 +133,17 @@ sed -i 's|QT_VERSION_CHECK(5,|QT_VERSION_CHECK(6,|' Libs/CommandLineModules/Fron
 
 %cmake_build
 
+%check
+QT_PLUGIN_PATH=$PWD/%_cmake__builddir/bin QT_QPA_PLATFORM=offscreen ctest \
+	--test-dir %_cmake__builddir \
+	--output-on-failure \
+	--parallel 1 \
+	-L '^(CMake|CTKCommandLineModulesFrontendQtGui|CTKImageProcessingITKCore)$'
+QT_QPA_PLATFORM=offscreen ctest \
+	--test-dir %_cmake__builddir \
+	--output-on-failure \
+	-R '^CTKCorePythonQtStandaloneImport$'
+
 %install
 %cmakeinstall_std
 
@@ -170,6 +181,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 2026.08.06-alt2
+- fixed standalone CTKCorePythonQt import (ALT #60111)
+
 * Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 2026.08.06-alt1
 - 0.1.0 -> 2026.08.06
 
