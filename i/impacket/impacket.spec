@@ -3,7 +3,7 @@
 %def_with check
 
 Name: %pypi_name
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 Summary: Collection of Python classes for working with network protocols
 Group: Development/Python3
@@ -73,6 +73,9 @@ rm -rf %buildroot%_docdir/%name
 %_bindir/*
 
 %changelog
+* Thu Aug 13 2026 L.A. Kostis <lakostis@altlinux.ru> 0.13.1-alt1
+- 0.13.1.
+
 * Tue Mar 10 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.13.0-alt1
 - 0.13.0.
 
