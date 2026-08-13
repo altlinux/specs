@@ -1,5 +1,5 @@
 Name: amneziawg-tools
-Version: 3.0.20260805
+Version: 3.1.20260812
 Release: alt1
 Summary: Fast, modern, secure VPN tunnel
 License: GPLv2
@@ -54,6 +54,9 @@ and interacting with AmneziaWG.
 %_mandir/man8/awg-quick.8*
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 3.1.20260812-alt1
+- 3.0.20260805 -> 3.1.20260812
+
 * Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 3.0.20260805-alt1
 - 3.0.20260730 -> 3.0.20260805
 
