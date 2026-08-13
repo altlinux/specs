@@ -171,7 +171,7 @@
 
 Name: libvirt
 Version: 12.6.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -1168,6 +1168,8 @@ fi
 %dir %attr(0711, root, root) %_localstatedir/lib/libvirt/filesystems
 %dir %attr(0711, root, root) %_localstatedir/lib/libvirt/boot
 %dir %attr(0700, root, root) %_localstatedir/cache/libvirt
+%dir %attr(0700, root, root) %_localstatedir/lib/libvirt/secrets
+%ghost %dir %attr(0700, root, root) %_runtimedir/libvirt/secrets
 %dir %_libdir/%name
 %dir %_libdir/%name/connection-driver
 %dir %_libdir/%name/storage-backend
@@ -1536,6 +1538,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Aug 12 2026 Sergey Zhidkih <rx1513@altlinux.org> 12.6.0-alt2
+- Add state dir for secrets (thx andy@) (Fixes: 60139)
+
 * Tue Aug 04 2026 Sergey Zhidkih <rx1513@altlinux.org> 12.6.0-alt1
 - 12.6.0
 - Security fixes:
