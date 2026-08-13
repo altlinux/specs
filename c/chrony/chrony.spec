@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 4.8
-Release: alt1
+Release: alt2
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -53,8 +53,8 @@ echo %version > version.txt
 # regenerate the file from getdate.y
 rm -f getdate.c
 
-# use our vendor zone
-sed -e 's|\([0-3]\.\)\(pool.ntp.org\)|\1%{vendorzone}\2|' \
+# use our vendor zone; the 2. prefix is the only one with AAAA records (IPv6)
+sed -e 's|^pool \(pool\.ntp\.org.*\)|pool 2.%{vendorzone}\1|' \
         < examples/chrony.conf.example2 > chrony.conf
 
 echo '# Keys used by chronyd for command and NTP authentication' > chrony.keys
@@ -160,6 +160,11 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.com> 4.8-alt2
+- default chrony.conf: restore the vendor zone prefix lost after
+  the upstream example switched to a single pool directive, use
+  2.ru.pool.ntp.org (the only prefix with AAAA records)
+
 * Mon Sep 08 2025 Anton Farygin <rider@altlinux.com> 4.8-alt1
 - 4.7 -> 4.8
 
