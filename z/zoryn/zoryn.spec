@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.48.0
+Version: 0.49.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -19,7 +19,7 @@ BuildRequires: ocaml-cmdliner-devel >= 2.1.0
 BuildRequires: ocaml-re-devel >= 1.10.0
 BuildRequires: ocaml-yojson-devel >= 1.7.0
 BuildRequires: ocaml-curl-devel >= 0.9.0
-BuildRequires: ocaml-toml-devel
+BuildRequires: ocaml-otoml-devel
 BuildRequires: ocaml-opam-file-format-devel >= 2.1.0
 BuildRequires: ocaml-parsexp-devel
 BuildRequires: ocaml-ppxlib-devel >= 0.28.0
@@ -64,8 +64,8 @@ It also spins up reproducible per-package development environments (devenv)
 on podman or bwrap, resolving a package's BuildRequires inside the environment
 so rpm macros and conditionals are honoured, with reusable feature bundles and
 configuration profiles. Local AI coding agents (Claude Code, Codex, opencode,
-Kimi) can be installed into a devenv and wired up via the bundled zoryn Agent
-Skill.
+Kimi, pi) can be installed into a devenv and wired up via the bundled zoryn
+Agent Skill.
 
 %package -n ocaml-%name
 Summary: OCaml libraries for %name
@@ -110,6 +110,32 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 0.49.0-alt1
+- added bundled devenv features for the pi.dev agent, package builds with
+  hasher, nested podman, opt-in sudo access and headless Chromium
+- added publishing devenv ports on a selected host interface or address
+- added tmpfs mounts and feature-provided container capabilities and devices
+  to devenv
+- added feature and profile columns to 'devenv list'; --verbose now explains
+  why several environments exist for one project
+- added --dependent-on and --abi-break to 'task add rebuild' for rebuilding
+  packages affected by a dependency update
+- added auto mode to 'task batch' to choose rebuild, source build or skip from
+  the package version already available in each target repository
+- added upstream branch pinning to 'up' and hexadecimal components to version
+  tag patterns
+- added using the last worked task in 'task delete' and 'task delsub' when the
+  task ID is omitted, with confirmation before deletion
+- fixed 'devenv' to install BuildRequires generated from files in .gear
+- fixed 'devenv' startup when several features mount the same directory
+- fixed 'task mkrepo --clean' to work when girar is unavailable
+- fixed 'task test-rebuild' parsing for versions beginning with a letter
+- fixed 'gen pypi2spec' repository URL lookup and the branch left after cloning
+- added a scrollable, copyable popup for multi-line girar errors in
+  'task manage'
+- cleaned up temporary gear tarballs when parallel 'build' or 'up' runs were
+  interrupted
+
 * Thu Aug 06 2026 Anton Farygin <rider@altlinux.org> 0.48.0-alt1
 - added devenv port publishing on loopback and filtered LAN access ([devenv.lan])
 - added devenv timezone and dns/dns_search/dns_option settings
