@@ -1,6 +1,6 @@
 Name: procps
-Version: 4.0.6
-Release: alt2.g2f525764
+Version: 4.0.7
+Release: alt1
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -128,6 +128,9 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 13 2026 Mikhail Efremov <sem@altlinux.org> 4.0.7-alt1
+- Updated to v4.0.7.
+
 * Thu Jun 11 2026 Mikhail Efremov <sem@altlinux.org> 4.0.6-alt2.g2f525764
 - Fixed build with glibc >= 2.43.0.35.fe0ccc-alt1.
 - Fixed sysctl test for ALT-specific.
