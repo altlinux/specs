@@ -98,7 +98,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.1
-%define ver_minor 6
+%define ver_minor 7
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -509,6 +509,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Aug 13 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.7-alt1
+- 26.1.7
+
 * Thu Jul 30 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.6-alt1
 - 26.1.6
 
