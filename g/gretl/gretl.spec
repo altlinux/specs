@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2025c
+Version: 2026a
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -113,6 +113,12 @@ export LD_LIBRARY_PATH=$(pwd)/lib/.libs:$LD_LIBRARY_PATH
 %make_build
 
 %install
+%if_with openmpi
+. %_libdir/openmpi/bin/mpivars.sh
+%endif
+# Addons packaging runs gretlcli, which needs libgretl from the build tree
+# (rpath is disabled, so LD_LIBRARY_PATH is required at runtime).
+export LD_LIBRARY_PATH=$(pwd)/lib/.libs:$LD_LIBRARY_PATH
 %makeinstall_std
 %find_lang %name
 rm -rv %buildroot/%_libdir/libgretl*.la
@@ -162,6 +168,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026a-alt1
+- new version 2026a
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2025c-alt1
 - new version 2025c
 
