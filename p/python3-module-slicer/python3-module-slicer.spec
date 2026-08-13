@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.8
-Release: alt3
+Release: alt4
 
 Summary: Unified slicing for all Python data structures
 License: MIT
@@ -27,6 +27,8 @@ ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
 
+Patch: python3-module-slicer-0.0.8-alt-pandas3.patch
+
 %description
 slicer wraps tensor-like objects and provides a uniform
 slicing interface via __getitem__.
@@ -35,7 +37,8 @@ It supports many data types including:
    numpy | pandas | scipy | pytorch | list | tuple | dict
 
 %prep
-%setup -n %name-%version
+%setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -52,6 +55,9 @@ It supports many data types including:
 %python3_sitelibdir/%pypi_name-%version-*.egg-info
 
 %changelog
+* Tue Aug 11 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt4
+- Fixed compatibility with pandas 3.0.
+
 * Wed Feb 25 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt3
 - Switched to rpm-macros-ml.
 
