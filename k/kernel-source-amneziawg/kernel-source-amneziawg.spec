@@ -2,7 +2,7 @@
 
 Name: kernel-source-amneziawg
 
-Version: 3.0.20260731.04
+Version: 3.1.20260812
 Release: alt1
 
 Summary: AmneziaWG kernel module source for Amnezia VPN based on WireGuard
@@ -36,6 +36,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 .
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 3.1.20260812-alt1
+- 3.0.20260731.04 -> 3.1.20260812
+
 * Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.0.20260731.04-alt1
 - 1.0.20260329 -> 3.0.20260731.04
 
