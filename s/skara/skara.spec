@@ -4,7 +4,7 @@
 
 Name:    skara
 Version: 20260810
-Release: alt3.%githash
+Release: alt4.%githash
 
 Summary: The goal of this Project is to investigate alternative SCM and code review options for the JDK source code
 License: GPL-2.0
@@ -20,6 +20,7 @@ Patch0: %name-publish-modules.patch
 ExclusiveArch: %java_arches
 
 Requires: java-%javaver-openjdk-headless
+Conflicts: git-publish
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires(pre): rpm-macros-gradle
@@ -86,6 +87,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/enable-skara-fore-current-user
 %_man1dir/*
 
 %changelog
+* Fri Aug 14 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt4.4b951a3c
+- Added conflicts to git-publish
+
 * Wed Aug 12 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt3.4b951a3c
 - Added script fore connect skara to git
 
