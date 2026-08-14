@@ -1,6 +1,6 @@
 Name:    libgtsam
 Version: 4.2.2
-Release: alt1
+Release: alt2
 
 Summary: GTSAM: C++ library for SAM in robotics/vision via factor graphs & Bayes nets
 License: BSD-3-Clause
@@ -95,6 +95,20 @@ Python 3 bindings for the GTSAM library.
 # It is only needed to build unit tests, so drop it from the install tree.
 rm -f %buildroot%_libdir/libCppUnitLite.a
 
+# GTSAM's installed CMake exports still reference the deleted libCppUnitLite.a
+# via the imported target "CppUnitLite", which makes find_package(GTSAM) fail
+# with "references the file ... but this file does not exist". The target is
+# an internal test helper, not part of the public API, so strip it from the
+# installed export files.
+sed -i '/foreach(_cmake_expected_target IN ITEMS metis-gtsam-if CppUnitLite gtsam)/s/ CppUnitLite//' \
+    %buildroot%_libdir/cmake/GTSAM/GTSAM-exports.cmake
+sed -i '/^# Create imported target CppUnitLite/,/^# Create imported target gtsam$/{/^# Create imported target gtsam$/!d}' \
+    %buildroot%_libdir/cmake/GTSAM/GTSAM-exports.cmake
+sed -i '/# Import target "CppUnitLite"/,/^$/d' \
+    %buildroot%_libdir/cmake/GTSAM/GTSAM-exports-release.cmake
+sed -i '/_cmake_import_check_targets CppUnitLite/d; /_cmake_import_check_files_for_CppUnitLite/d' \
+    %buildroot%_libdir/cmake/GTSAM/GTSAM-exports-release.cmake
+
 # gtwrap/pybind11 are only needed to generate the Python wrappers during the
 # build; they should not be shipped as installed files.
 rm -rf %buildroot/usr/bin/gtwrap
@@ -146,5 +160,9 @@ rm -rf %buildroot%python3_sitelibdir/gtsam_unstable/tests/usr
 %python3_sitelibdir/gtsam_unstable/
 
 %changelog
+* Thu Aug 13 2026 Sergey Palcheh <minergenon@altlinux.org> 4.2.2-alt2
+- Strip stale CppUnitLite target from installed CMake exports so that
+  find_package(GTSAM) does not fail on the missing libCppUnitLite.a
+
 * Sun Jul 12 2026 Sergey Palcheh <minergenon@altlinux.org> 4.2.2-alt1
 - Initial build for Sisyphus
