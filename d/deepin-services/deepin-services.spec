@@ -4,7 +4,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.38
+Version: 1.0.39
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -121,6 +121,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeShortcutI18n/DdeShortcutI18nConfig.cmake
 
 %changelog
+* Fri Aug 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.39-alt1
+- New version 1.0.39.
+
 * Tue Aug 11 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.38-alt1
 - New version 1.0.38.
 
