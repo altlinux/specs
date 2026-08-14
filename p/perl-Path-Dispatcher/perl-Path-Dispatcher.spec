@@ -3,11 +3,11 @@
 
 Name: perl-%module_name
 Version: 1.08
-Release: alt1
+Release: alt2
 
 Summary: Flexible and extensible dispatch
 
-License: GPL or Artistic
+License: GPL-1.0-or-later OR Artistic-1.0-clause
 Group: Development/Perl
 URL: %CPAN %module_name
 # Source-url: https://cpan.metacpan.org/authors/id/E/ET/ETHER/%module_name-%version.tar.gz
@@ -40,6 +40,9 @@ the corresponding handler.
 %perl_vendor_privlib/Path/Dispatcher.pm
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.08-alt2
+- fix License to SPDX expression
+
 * Thu Jul 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.08-alt1
 - initial build for ALT Sisyphus
 
