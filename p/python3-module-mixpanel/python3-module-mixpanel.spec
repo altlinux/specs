@@ -1,7 +1,7 @@
 %define pypi_name mixpanel
 
 Name: python3-module-mixpanel
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Official Mixpanel library for Python
@@ -30,6 +30,8 @@ callers to customize the IO characteristics of their tracking.
 
 %prep
 %setup
+# openfeature-provider is a separate sub-project, not part of the mixpanel package
+rm -rf openfeature-provider
 
 %build
 %pyproject_build
@@ -45,6 +47,10 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/flags/test_*.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
+- new version 5.2.0
+- exclude openfeature-provider subproject from install
+
 * Thu May 07 2026 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - initial build for ALT Sisyphus
 
