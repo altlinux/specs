@@ -9,9 +9,10 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.7
+Version: %branch.8
 Release: alt1
 Source0: %origname-%version.tar
+Patch0: fix-flaky-double-squash-test.patch
 License: BSD-3-Clause
 Group: Development/Python3
 BuildArch: noarch
@@ -116,6 +117,7 @@ Conflicts: python3-module-django1.11-doc
 
 %prep
 %setup -n %origname-%version
+%patch0 -p1
 
 # Use system six instead of bundled
 find -type f -name '*.py*' -exec sed -i 's|django.utils.six|six|'  -- '{}' +
@@ -184,6 +186,15 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.8-alt1
+- New version 6.0.8.
+- Fixes for the following security vulnerabilities:
+  + CVE-2026-15307: Server-side file-write and request forgery via spatial lookups
+  + CVE-2026-15337: Potential denial-of-service vulnerability in check_for_language
+  + CVE-2026-15830: Potential denial-of-service vulnerability via nested geometry collections
+  + CVE-2026-15920: Potential cross-site scripting via URLField values in the admin
+- Some bugfixes.
+
 * Thu Jul 23 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Fixes for the following security vulnerabilities:

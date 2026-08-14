@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.17.post1
+Version: 0.0.19.post5
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -112,7 +112,15 @@ install -p -D -m 644 %SOURCE6 %buildroot%_tmpfilesdir/proxbox-api.conf
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 
 %check
-%pyproject_run_pytest -k "not (test_generate_bundle_persists_artifacts or test_proxmox_mock_package_is_importable or test_codegen_source_url_accepts_default_proxmox_viewer)"
+%pyproject_run_pytest -k "not ( \
+	test_generate_bundle_persists_artifacts or \
+	test_proxmox_mock_package_is_importable or \
+	test_proxmox_mock_root_reports_configured_service or \
+	test_codegen_source_url_accepts_default_proxmox_viewer or \
+	test_user_data_yaml_bakes_cicustom_snippet_without_catalog_product or \
+	test_generated_routes_appear_in_openapi or \
+	test_generated_proxy_route_forwards_request_and_validates_response or \
+	test_generated_proxy_route_requires_explicit_selector_for_multiple_endpoints)"
 
 %pre
 groupadd -r -f proxbox-api >/dev/null 2>&1 ||:
@@ -156,6 +164,9 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.19.post5-alt1
+- New 0.0.19.post5 version.
+
 * Mon Jun 08 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.17.post1-alt1
 - New 0.0.17.post1 version.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 
 Summary: Extensions for using Django with htmx
@@ -14,6 +14,7 @@ URL:     https://github.com/adamchainz/django-htmx
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-django
@@ -45,6 +46,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 1.29.0-alt1
+- New version 1.29.0.
+
 * Thu Jul 23 2026 Alexander Burmatov <thatman@altlinux.org> 1.28.0-alt1
 - New version 1.28.0.
 
