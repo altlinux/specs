@@ -5,7 +5,7 @@
 
 Name: libblake3
 Version: 1.8.3
-Release: alt1
+Release: alt2
 Summary: The official C implementations of the BLAKE3 cryptographic hash function
 License: CC0-1.0 or Apache-2.0 or Apache-2.0 with LLVM-exception
 Group: System/Libraries
@@ -23,6 +23,9 @@ BuildRequires: tbb-devel
 BuildRequires: /proc
 BuildRequires: python3
 }}
+%ifarch %e2k
+BuildRequires: libasan-devel-static
+%endif
 
 %description
 BLAKE3 is a cryptographic hash function that is:
@@ -62,6 +65,10 @@ sed -i 's/"blake3.h"/<blake3.h>/' example*.c
 sed -i '/PKG_CONFIG_LIBS/s/-lstdc++//' CMakeLists.txt
 # Incorrect `Requires:` only causing problems.
 sed -i '/PKG_CONFIG_REQUIRES/d' libblake3.pc.in
+%ifarch %e2k
+# error: "This file should be compiled with C++ exceptions disabled."
+sed -i 's/BLAKE3_CXX_COMPILER_FRONTEND_VARIANT/"GNU"/' CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -111,6 +118,9 @@ rm example test.blob
 %files checkinstall
 
 %changelog
+* Fri Aug 14 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.3-alt2
+- e2k build fix
+
 * Mon Jan 12 2026 Vitaly Chikunov <vt@altlinux.org> 1.8.3-alt1
 - Update to 1.8.3 (2026-01-08).
 
