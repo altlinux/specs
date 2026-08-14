@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2026.07
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -45,6 +45,9 @@ rm configs/generic-rk33*_defconfig
 %build
 export PYTHON=python3
 export DTC=%_bindir/dtc
+# dtc >= 1.8 errors on binman template nodes like @atf-SEQ (empty node name);
+# they are intentional and removed by binman after template expansion
+export DTC_FLAGS=-Eno-node_name_not_empty
 export RKBIN=%_datadir/rkbin/bin/rk35
 export CROSS_COMPILE=aarch64-none-elf-
 
@@ -84,6 +87,10 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 2026.07-alt2
+- fixed build with dtc 1.8.1: disabled node_name_not_empty check
+  (binman template nodes like @atf-SEQ are intentional)
+
 * Tue Jul 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.07-alt1
 - 2026.07 released
 
