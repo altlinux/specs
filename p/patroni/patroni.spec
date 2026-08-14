@@ -1,5 +1,5 @@
 Name:    patroni
-Version: 4.1.4
+Version: 4.1.5
 Release: alt1
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
@@ -72,6 +72,9 @@ install -D /dev/null %buildroot%_sysconfdir/patroni/env.conf
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Aug 14 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.5-alt1
+- New version.
+
 * Tue Jul 07 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.4-alt1
 - New version.
 
