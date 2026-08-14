@@ -1,6 +1,6 @@
 Name:     procdump
 Version:  3.5.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
 
@@ -57,11 +57,14 @@ install -D -m 0644 %_cmake__builddir/procdump.1.gz %buildroot%_man1dir/procdump.
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Thu Aug 13 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt2
+- escape RPM macros in changelog
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt1
 - new version 3.5.2
 - switch to cmake build, use system libbpf
-- use %cmake/%cmake_build macros (BR(pre): rpm-macros-cmake)
-- drop upstream -Werror (unused-symbol warnings fail under %cmake's -Wall)
+- use %%cmake/%%cmake_build macros (BR(pre): rpm-macros-cmake)
+- drop upstream -Werror (unused-symbol warnings fail under %%cmake's -Wall)
 - disable LTO (corex static archive; LTO bitcode breaks ld's archive index)
 
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
