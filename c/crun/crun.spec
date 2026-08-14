@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define git_commit d66af6a0fc2ab5fabd951b427a292344632ce074
+%define git_commit f0d911de5587342cfeb16473bf32ecdfeaf25957
 %define __nprocs 8
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.29
+Version: 1.29.1
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -18,6 +18,7 @@ Source12: image-spec.tar
 Source13: runtime-spec.tar
 
 Patch0: crun-1.28-GENTOO-export-json_gen.patch
+Patch1: crun-1.29.1-ALT-libcrun_container_spec.patch
 
 BuildRequires: libcap-devel
 BuildRequires: libsystemd-devel
@@ -86,6 +87,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Fri Aug 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.29.1-alt1
+- 1.29.1 (ALT #60166)
+
 * Mon Aug 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.29-alt1
 - 1.29
 
