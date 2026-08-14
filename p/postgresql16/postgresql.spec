@@ -21,8 +21,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     16
-%define postgresql_minor     14
-%define postgresql_altrel    2
+%define postgresql_minor     15
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -542,7 +542,7 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 %make_build -C doc all
 
 %check
-vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=1024M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -1150,6 +1150,15 @@ fi
 %endif
 
 %changelog
+* Thu Aug 13 2026 Alexei Takaseev <taf@altlinux.org> 16.15-alt1
+- 16.15 (Fixes CVE-2026-6464,  CVE-2026-6469,  CVE-2026-6470,  CVE-2026-6471,
+               CVE-2026-14662, CVE-2026-14663, CVE-2026-14664, CVE-2026-14666,
+               CVE-2026-14668, CVE-2026-14669, CVE-2026-14670, CVE-2026-14671,
+               CVE-2026-14672, CVE-2026-14673, CVE-2026-14676, CVE-2026-14677,
+               CVE-2026-14678, CVE-2026-14679, CVE-2026-14680, CVE-2026-14681,
+               CVE-2026-15741, CVE-2026-15742, CVE-2026-16238, CVE-2026-16239,
+               CVE-2026-16241, CVE-2026-18024, CVE-2026-18408, CVE-2026-19385)
+
 * Sat May 16 2026 Alexei Takaseev <taf@altlinux.org> 16.14-alt2
 - Add conflicts for postgresqlXY and -server subpackages
 
