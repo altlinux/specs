@@ -1,7 +1,7 @@
 %define soversion 2
 Name: libcupsfilters
-Version: 2.1.1
-Release: alt2
+Version: 2.2.1
+Release: alt1
 Summary: Library for developing printing filters
 License: Apache-2.0 WITH LLVM-exception
 Group: System/Libraries
@@ -14,6 +14,7 @@ BuildRequires: automake
 BuildRequires: gcc-c++
 BuildRequires: gettext-devel
 BuildRequires: ghostscript
+BuildRequires: poppler
 BuildRequires: git-core
 BuildRequires: libtool
 BuildRequires: pkg-config
@@ -23,9 +24,11 @@ BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libexif)
 BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libjxl)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libqpdf)
 BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(pdfio)
 BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: fonts-ttf-dejavu
 Requires: ghostscript
@@ -118,6 +121,12 @@ rm -rf %buildroot/usr/share/doc/libcupsfilters
 %_libdir/pkgconfig/libcupsfilters.pc
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1
+
+* Mon Aug 10 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.1.1 -> 2.2.0
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 2.1.1-alt2
 - applied security fixes from upstream git (Fixes: CVE-2025-57812,
   CVE-2025-64503)
