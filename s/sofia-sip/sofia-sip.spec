@@ -4,8 +4,8 @@
 %define major 1.13
 
 Name: sofia-sip
-Version: 1.13.17
-Release: alt2
+Version: 1.13.18
+Release: alt1
 BuildRequires:  gcc-c++
 BuildRequires:  openssl-devel >= 0.9.7
 BuildRequires:  glib2-devel >=  2.4
@@ -148,6 +148,9 @@ install -pm0644 man/man1/* %buildroot/%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 1.13.18-alt1
+- 1.13.17 -> 1.13.18
+
 * Thu Nov 07 2024 Anton Farygin <rider@altlinux.ru> 1.13.17-alt2
 - fix build with gcc 14
 
