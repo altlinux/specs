@@ -4,7 +4,7 @@
 
 Name:		incus
 Version:	7.3.0
-Release:	alt1
+Release:	alt2
 Summary:	Incus is a system container and virtual machine manager
 
 Group:		Development/Other
@@ -33,7 +33,7 @@ BuildRequires: golang >= 1.19
 BuildRequires: libacl-devel
 BuildRequires: libattr-devel
 BuildRequires: liblz4-devel
-BuildRequires: pkgconfig(lxc) 
+BuildRequires: pkgconfig(lxc)
 BuildRequires: liblxc-devel >= 6.0.0
 BuildRequires: libsqlite3-devel
 BuildRequires: libraft-devel
@@ -69,7 +69,7 @@ Summary:        Container hypervisor based on LXC - Client
 License:        Apache-2.0
 Group:          Development/Other
 Requires:       gettext
-	
+
 %description -n %name-client
 Incus offers a REST API to remotely manage containers over the network,
 using an image based work-flow and with support for live migration.
@@ -78,11 +78,11 @@ This package contains the command line client.
 %package -n %name-tools
 Summary:        Container hypervisor based on LXC - Extra Tools
 License:        Apache-2.0
-Group:          Development/Other	
+Group:          Development/Other
 Requires:       %name = %version-%release
 # fuidshift is also shipped with lxd
 Conflicts:      lxd
-	
+
 %description -n %name-tools
 Incus offers a REST API to remotely manage containers over the network,
 using an image based work-flow and with support for live migration.
@@ -91,18 +91,18 @@ This package contains extra tools provided with Incus.
  - lxc-to-incus - A tool to migrate LXC containers to Incus
  - incus-benchmark - A Incus benchmark utility
  - incus-migrate - A physical to container migration tool
-	
+
 %package -n %name-agent
 Summary:        Incus guest agent
 License:        Apache-2.0
-Group:          Development/Other	
+Group:          Development/Other
 Requires:       %name = %version-%release
 
 %description -n %name-agent
 This packages provides an agent to run inside Incus virtual machine guests.
 It has to be installed on the Incus host if you want to allow agent
 injection capability when creating a virtual machine.
-	
+
 %prep
 %setup
 %patch -p1
@@ -128,13 +128,13 @@ export IGNORE_SOURCES=1
 %golang_install
 
 #configuration
-install -p -D %SOURCE16 %buildroot%_sysusersdir/%name.conf
+install -p -Dm 0644 %SOURCE16 %buildroot%_sysusersdir/%name.conf
 #configuration for dnsmasq called in lxd-bridge
-install -p -D %SOURCE17 %buildroot%_sysconfdir/%name/dnsmasq.conf
+install -p -Dm 0644 %SOURCE17 %buildroot%_sysconfdir/%name/dnsmasq.conf
 #configuration for temp files
 mkdir -p %buildroot%_tmpfilesdir/
-install -p -D %SOURCE18 %buildroot%_tmpfilesdir/%name.conf
-install -p -D %SOURCE19 %buildroot%_sysconfdir/sysconfig/incus
+install -p -Dm 0644 %SOURCE18 %buildroot%_tmpfilesdir/%name.conf
+install -p -Dm 0644 %SOURCE19 %buildroot%_sysconfdir/sysconfig/incus
 
 #services systemd
 mkdir -p %buildroot%_unitdir
@@ -189,6 +189,7 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %files
 %doc *.md
 %_bindir/incusd
+%_sysconfdir/%name
 %_bindir/%name-user
 %config(noreplace) %_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/%name/dnsmasq.conf
@@ -223,8 +224,11 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_man1dir/%name-agent.*
 
 %changelog
+* Thu Aug 13 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.3.0-alt2
+- Fix config files permissions.
+
 * Mon Aug 03 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.3.0-alt1
-Updated to 7.3.0.
+- Updated to 7.3.0.
 
 * Fri Jun 26 2026 Mikhail Gordeev <obirvalger@altlinux.org> 7.2.0-alt1
 - Updated to 7.2.0.
