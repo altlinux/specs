@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: redis
-Version: 8.6.4
+Version: 8.6.5
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -18,7 +18,7 @@ Group: Databases
 # fast_float: MIT
 # xxhash: BSD-2-Clause
 License: AGPLv3
-Url: http://redis.io/
+Url: https://redis.io/
 Vcs: https://github.com/redis/redis.git
 
 Source0: %name-%version.tar
@@ -210,6 +210,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 8.6.5-alt1
+- 8.6.4 -> 8.6.5 (Fixes: CVE-2026-66373)
+
 * Mon Jun 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 8.6.4-alt1
 - 8.6.4 (Fixes: CVE-2026-23479, CVE-2026-25243, CVE-2026-23631).
 
