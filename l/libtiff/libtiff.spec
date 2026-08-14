@@ -5,7 +5,7 @@
 
 Name: libtiff
 Version: 4.7.2
-Release: alt1
+Release: alt2
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
@@ -14,6 +14,7 @@ Url: https://libtiff.gitlab.io/libtiff/
 VCS: https://gitlab.com/libtiff/libtiff.git
 
 Source: %name-%version.tar
+Patch: libtiff-4.7.2-alt-tiffgt-remove-unimplemented-options.patch
 
 %def_enable cxx
 
@@ -161,6 +162,10 @@ This package contains TIFF I/O C++ development library and header files.
 %endif
 
 %changelog
+* Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 4.7.2-alt2
+- tiffgt: removed unimplemented -c/-r options from usage and man page,
+  left over from the pre-OpenGL X11 version (Closes: 47531)
+
 * Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 4.7.2-alt1
 - 4.7.1 -> 4.7.2
 - Fixes:
