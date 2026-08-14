@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     ttyd
-Version:  1.7.3
+Version:  1.7.7
 Release:  alt1
 
 Summary:  Share your terminal over the web
 License:  MIT
 Group:    Terminals
-Url:      https://github.com/tsl0922/ttyd.git
+Url:      https://github.com/tsl0922/ttyd
+Vcs:      https://github.com/tsl0922/ttyd
+
 Source:   %name-%version.tar
+Patch0:   ttyd-1.7.7-fedora-use-system-libuv.patch
 
 BuildRequires: libjson-c-devel
 BuildRequires: cmake
@@ -25,9 +28,10 @@ ttyd is a simple command-line tool for sharing terminal over the web.
 
 %prep
 %setup
+%patch0 -p0
 
 %build
-%cmake
+%cmake -DLWS_WITH_LIBUV=ON
 %cmake_build
 
 %install
@@ -40,6 +44,11 @@ ttyd is a simple command-line tool for sharing terminal over the web.
 
 
 %changelog
+* Fri Aug 14 2026 Anton Meleshnikov <alton@altlinux.org> 1.7.7-alt1
+- 1.7.7 released (thanks fedora for the patch)
+- switched to use .gear/tags
+- added vcs tag
+
 * Tue Apr 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.3-alt1
 - 1.7.3 released
 
