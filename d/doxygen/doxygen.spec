@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.17.0
+Version: 1.18.0
 Release: alt1
 Epoch: 1
 
@@ -17,9 +17,6 @@ Patch101: Ubuntu-manpages.patch
 Patch102: Ubuntu-dot-config.patch
 Patch107: Ubuntu-libatomic.patch
 Patch108: Ubuntu-reproducible_manpages.patch
-
-# https://github.com/doxygen/doxygen/pull/12117
-Patch109: doxygen-1.17.0-upstream-fix-tagfile-test.patch
 
 ## ALT patches
 
@@ -111,6 +108,9 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Fri Aug 14 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.18.0-alt1
+- 1.18.0
+
 * Mon May 04 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.17.0-alt1
 - 1.17.0
 
