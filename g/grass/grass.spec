@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 8.5.0
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -60,7 +60,7 @@ BuildRequires: proj-devel libgdal-devel libproj-nad proj
 BuildRequires: tcl-devel tk-devel
 BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel
 BuildRequires: libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel
-BuildRequires: libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel
+BuildRequires: libXfont2-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel
 BuildRequires: libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel
 BuildRequires: libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel
 BuildRequires: libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel
@@ -328,6 +328,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Thu Aug 13 2026 Anton Meleshnikov <alton@altlinux.org> 8.5.0-alt2
+- NMU: fix build with libXfont2.
+
 * Sat May 09 2026 Andrey Cherepanov <cas@altlinux.org> 8.5.0-alt1
 - New version.
 
