@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libwrc
-Version: 20140328
+Version: 20260705
 Release: alt1
 
 Summary: Library to support the Windows Resource Compiler format
@@ -38,16 +38,16 @@ BuildRequires: pkgconfig(libfdatetime) >= 20130317
 BuildRequires: pkgconfig(libfguid) >= 20130317
 BuildRequires: pkgconfig(libuna) >= 20130728
 #  The following packages cause build failures if factory version is used, verified Oct 23, 2013
-#BuildRequires:  pkgconfig(libcerror) >= 20120425
+BuildRequires:  pkgconfig(libcerror) >= 20120425
 #  The following packages cause build failures if the internal version is not used
 #  These libraries are not yet released as standalone packages by upstream
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
-#BuildRequires:  pkgconfig(libexe) >= 20120405
-#BuildRequires:  pkgconfig(libfcache) >= 20120405
-#BuildRequires:  pkgconfig(libfdata) >= 20120405
-#BuildRequires:  pkgconfig(libfvalue) >= 20120428
-#BuildRequires:  pkgconfig(libfwevt) >= 20120426
-#BuildRequires:  pkgconfig(libfwnt) >= 20120426
+BuildRequires:  pkgconfig(libexe) >= 20120405
+BuildRequires:  pkgconfig(libfcache) >= 20120405
+BuildRequires:  pkgconfig(libfdata) >= 20120405
+BuildRequires:  pkgconfig(libfvalue) >= 20120428
+BuildRequires:  pkgconfig(libfwevt) >= 20120426
+BuildRequires:  pkgconfig(libfwnt) >= 20120426
 
 %description
 libwrc is a library to support the Windows Resource Compiler format.
@@ -98,6 +98,9 @@ reading Windows Resource Compiler files.
 %_man1dir/*
 
 %changelog
+* Thu Aug 13 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260705-alt1
+- new version 20260705
+
 * Sun May 11 2014 Michael Shigorin <mike@altlinux.org> 20140328-alt1
 - new version (watch file uupdate)
 

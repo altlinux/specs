@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libuna
-Version: 20240414
+Version: 20260602
 Release: alt1
 
 Summary: Library to support Unicode and ASCII (byte string) conversions
@@ -21,7 +21,7 @@ License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libuna
-#DL-URL: https://github.com/libyal/libuna/releases/download/20240414/libuna-alpha-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libuna/releases/download/%version/libuna-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -86,6 +86,9 @@ applications that want to make use of libuna.
 %_man3dir/*
 
 %changelog
+* Tue Aug 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260602-alt1
+- New version 20260602.
+
 * Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 

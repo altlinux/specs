@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libcnotify
-Version: 20240414
+Version: 20260703
 Release: alt1
 
 Summary: Library for cross-platform C notify functions
@@ -21,7 +21,7 @@ License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libcnotify
-#DL-URL: https://github.com/libyal/libcnotify/releases/download/20240414/libcnotify-beta-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libcnotify/releases/download/%version/libcnotify-beta-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -69,6 +69,9 @@ applications that want to make use of libcnotify.
 %_man3dir/*
 
 %changelog
+* Tue Aug 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 

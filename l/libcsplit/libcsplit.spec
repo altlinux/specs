@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libcsplit
-Version: 20240414
+Version: 20260703
 Release: alt1
 
 Summary: Library for cross-platform C split string functions
@@ -21,7 +21,7 @@ License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libcsplit
-#DL-URL: https://github.com/libyal/libcsplit/releases/download/20240414/libcsplit-beta-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libcsplit/releases/download/%version/libcsplit-beta-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -82,6 +82,9 @@ applications that want to make use of libcsplit.
 %_man3dir/*
 
 %changelog
+* Tue Aug 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 

@@ -13,14 +13,14 @@
 # published by the Open Source Initiative.
 
 Name: libfguid
-Version: 20240415
+Version: 20260521
 Release: alt1
 
 Summary: A library for GUID/UUID data types
 License: LGPLv3+
 Group: Development/C
 Url: https://github.com/libyal/libfguid
-#DL-URL: https://github.com/libyal/libfguid/releases/download/20240415/libfguid-alpha-20240415.tar.gz
+#DL-URL: https://github.com/libyal/libfguid/releases/download/%version/libfguid-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -68,6 +68,9 @@ applications that want to make use of libfguid.
 %_man3dir/*
 
 %changelog
+* Mon Aug 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260521-alt1
+- New version 20260521.
+
 * Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240415-alt1
 - New version 20240415.
 

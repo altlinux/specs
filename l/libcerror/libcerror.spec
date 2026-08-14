@@ -15,14 +15,14 @@
 %set_autoconf_version 2.71
 
 Name: libcerror
-Version: 20240413
-Release: alt2
+Version: 20260703
+Release: alt1
 
 Summary: Library for cross-platform C error functions
 License: LGPLv3+
 Group: Development/C
 
-#DL-URL: https://github.com/libyal/libcerror/releases/download/20240413/libcerror-beta-20240413.tar.gz
+#DL-URL: https://github.com/libyal/libcerror/releases/download/20240413/libcerror-beta-%version.tar.gz
 Url: https://github.com/libyal/libcerror
 Source: %name-alpha-%version.tar.gz
 
@@ -73,6 +73,9 @@ applications that want to make use of libcerror.
 %_man3dir/%name.3.*
 
 %changelog
+* Mon Aug 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Mon May 26 2025 Alexander Danilov <admsasha@altlinux.org> 20240413-alt2
 - Set the version of autoconf to 2.71 to simplify the build.
 

@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libevt
-Version: 20240421
+Version: 20260705
 Release: alt1
 
 Summary: Library and tools to access the Windows Event Log (EVT) format
@@ -21,7 +21,7 @@ License: LGPLv3+ and GFDLv1.3+
 Group: File tools
 
 Url: https://github.com/libyal/libevt
-#DL-URL: https://github.com/libyal/libevt/releases/download/20240421/libevt-alpha-20240421.tar.gz
+#DL-URL: https://github.com/libyal/libevt/releases/download/%version/libevt-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 Source1: Windows_Event_Log_(EVT).pdf
 Source2: %name.watch
@@ -52,13 +52,13 @@ BuildRequires: pkgconfig(libcerror) >= 20130904
 # not released as a package by upstream
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 #BuildRequires:  pkgconfig(libcsystem) >= 20120425
-#BuildRequires:  pkgconfig(libcdirectory) >= 20120423
-#BuildRequires:  pkgconfig(libfwnt) >= 20120426
-#BuildRequires:  pkgconfig(libfwevt) >= 20120426
-#BuildRequires:  pkgconfig(libfvalue) >= 20120428
-#BuildRequires:  pkgconfig(libfdata) >= 20120405
-#BuildRequires:  pkgconfig(libfcache) >= 20120405
-#BuildRequires:  pkgconfig(libexe) >= 20120405
+BuildRequires:  pkgconfig(libcdirectory) >= 20120423
+BuildRequires:  pkgconfig(libfwnt) >= 20120426
+BuildRequires:  pkgconfig(libfwevt) >= 20120426
+BuildRequires:  pkgconfig(libfvalue) >= 20120428
+BuildRequires:  pkgconfig(libfdata) >= 20120405
+BuildRequires:  pkgconfig(libfcache) >= 20120405
+BuildRequires:  pkgconfig(libexe) >= 20120405
 
 %description
 libevt is a library and tools to access the Windows Event Log
@@ -121,18 +121,21 @@ cp -a "%SOURCE1" .
 
 %files devel
 %doc AUTHORS ChangeLog README Windows_Event_Log*.pdf
-%_includedir/*
-%_includedir/*
+%_includedir/%name
+%_includedir/%name.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
 %files -n python3-module-%name
 %doc AUTHORS ChangeLog README
-%python3_sitelibdir/pyevt.so
+%python3_sitelibdir/pyevt.abi3.so
 %python3_sitelibdir/pyevt.la
 
 %changelog
+* Thu Aug 13 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260705-alt1
+- New version 20260705.
+
 * Thu Jan 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240421-alt1
 - New version 20240421.
 

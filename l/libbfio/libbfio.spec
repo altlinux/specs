@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libbfio
-Version: 20240414
+Version: 20260623
 Release: alt1
 
 Summary: Library to provide basic file input/output abstraction
@@ -21,7 +21,7 @@ License: LGPLv3+
 Group: Development/C++
 
 Url: https://github.com/libyal/libbfio
-#DL-URL: https://github.com/libyal/libbfio/releases/download/20240414/libbfio-alpha-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libbfio/releases/download/%version/libbfio-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -82,6 +82,9 @@ applications that want to make use of libbfio.
 %_man3dir/*
 
 %changelog
+* Tue Aug 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260623-alt1
+- New version 20260623.
+
 * Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 

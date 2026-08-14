@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libregf
-Version: 20240421
+Version: 20260526
 Release: alt1
 
 Summary: Library to access Windows REGF-type Registry files
@@ -21,7 +21,7 @@ License: LGPL-3.0+ and GFDL-1.3+
 Group: File tools
 
 Url: https://github.com/libyal/libregf
-#DL-URL: https://github.com/libyal/libregf/releases/download/20240421/libregf-alpha-20240421.tar.gz
+#DL-URL: https://github.com/libyal/libregf/releases/download/%version/libregf-alpha-%version.tar.gz
 Source0: %name-alpha-%version.tar.gz
 Source1: Windows_NT_Registry_File_(REGF)_format.pdf
 
@@ -46,9 +46,9 @@ BuildRequires: pkgconfig(libcerror) >= 20120425
 # These packages are not yet released by upstream as standalone packages
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 #BuildRequires:  pkgconfig(libcsystem) >= 20120425
-#BuildRequires:  pkgconfig(libfcache) >= 20120425
-#BuildRequires:  pkgconfig(libfdata) >= 20120425
-#BuildRequires:  pkgconfig(libfwnt) >= 20120426
+BuildRequires:  pkgconfig(libfcache) >= 20120425
+BuildRequires:  pkgconfig(libfdata) >= 20120425
+BuildRequires:  pkgconfig(libfwnt) >= 20120426
 #BuildRequires:  pkgconfig(libfwsi) >= 20120426
 
 %description
@@ -124,6 +124,9 @@ cp -a "%SOURCE1" .
 %python3_sitelibdir/pyregf.la
 
 %changelog
+* Wed Aug 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260526-alt1
+- New version 20260526.
+
 * Thu Jan 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240421-alt1
 - New version 20240421.
 

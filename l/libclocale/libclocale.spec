@@ -12,8 +12,10 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%set_autoconf_version 2.71
+
 Name: libclocale
-Version: 20240414
+Version: 20260703
 Release: alt1
 
 Summary: Library for cross-platform C locale functions
@@ -45,6 +47,7 @@ applications that want to make use of libclocale.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-wide-character-type
@@ -67,6 +70,9 @@ applications that want to make use of libclocale.
 %_man3dir/*
 
 %changelog
+* Mon Aug 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 

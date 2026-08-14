@@ -15,19 +15,20 @@
 %set_autoconf_version 2.71
 
 Name: libcdata
-Version: 20240414
-Release: alt2
+Version: 20260703
+Release: alt1
 
 Summary: Library for cross-platform C generic data functions
 License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libcdata
-#DL-URL: https://github.com/libyal/libcdata/releases/download/20240414/libcdata-alpha-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libcdata/releases/download/20240414/libcdata-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20240101
+BuildRequires: pkgconfig(libcthreads)
 #not (yet) released as a standalone package by upstream
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 
@@ -76,6 +77,9 @@ applications that want to make use of libcdata.
 %_man3dir/*
 
 %changelog
+* Mon Aug 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Mon May 26 2025 Alexander Danilov <admsasha@altlinux.org> 20240414-alt2
 - Set the version of autoconf to 2.71 to simplify the build.
 

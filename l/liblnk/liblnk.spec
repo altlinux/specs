@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: liblnk
-Version: 20240423
+Version: 20260525
 Release: alt1
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
@@ -32,18 +32,20 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: pkgconfig(libbfio) >= 20240414
 BuildRequires: pkgconfig(libcdata) >= 20240414
+BuildRequires: pkgconfig(libcerror) >= 20240413
 BuildRequires: pkgconfig(libcfile) >= 20240414
 BuildRequires: pkgconfig(libclocale) >= 20240414
 BuildRequires: pkgconfig(libcnotify) >= 20240414
 BuildRequires: pkgconfig(libcpath) >= 20240414
 BuildRequires: pkgconfig(libcsplit) >= 20240414
+BuildRequires: pkgconfig(libcthreads) >= 20240413
 BuildRequires: pkgconfig(libfdatetime) >= 20240415
 BuildRequires: pkgconfig(libfguid) >= 20240415
+BuildRequires: pkgconfig(libfole)
+BuildRequires: pkgconfig(libfwps)
+BuildRequires: pkgconfig(libfwsi)
 BuildRequires: pkgconfig(libuna) >= 20240414
-BuildRequires: pkgconfig(libcerror) >= 20240413
-BuildRequires: pkgconfig(libcthreads) >= 20240413
 # the below are not released as standalone packages by upstream
-#BuildRequires:  pkgconfig(libfwsi) >= 20120426
 #BuildRequires:  pkgconfig(libcsystem) >= 20120425
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 
@@ -116,6 +118,9 @@ cp -a "%SOURCE1" .
 %python3_sitelibdir/pylnk.la
 
 %changelog
+* Fri Aug 14 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260525-alt1
+- New version 20260525 (Closes: #59822).
+
 * Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240423-alt1
 - New version 20240423 (Closes #45855).
 

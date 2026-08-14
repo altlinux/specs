@@ -12,8 +12,10 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%set_autoconf_version 2.71
+
 Name: libcthreads
-Version: 20240413
+Version: 20260703
 Release: alt1
 
 Summary: Library for cross-platform C threads functions
@@ -21,7 +23,7 @@ License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libcthreads
-#DL-URL: https://github.com/libyal/libcthreads/releases/download/20240413/libcthreads-alpha-20240413.tar.gz
+#DL-URL: https://github.com/libyal/libcthreads/releases/download/%version/libcthreads-alpha-%version.tar.gz
 Source: %name-experimental-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -49,6 +51,7 @@ applications that want to make use of libcthreads.
 %setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-wide-character-type
@@ -71,6 +74,9 @@ applications that want to make use of libcthreads.
 %_man3dir/*
 
 %changelog
+* Mon Aug 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260703-alt1
+- New version 20260703.
+
 * Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240413-alt1
 - New version 20240413.
 

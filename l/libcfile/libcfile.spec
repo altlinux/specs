@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libcfile
-Version: 20240414
+Version: 20260704
 Release: alt1
 
 Summary: Library for cross-platform C file functions
@@ -21,7 +21,7 @@ License: LGPLv3+
 Group: Development/C
 
 Url: https://github.com/libyal/libcfile
-#DL-URL: https://github.com/libyal/libcfile/releases/download/20240414/libcfile-alpha-20240414.tar.gz
+#DL-URL: https://github.com/libyal/libcfile/releases/download/%version/libcfile-alpha-%version.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -29,7 +29,7 @@ BuildRequires: pkgconfig(libcerror) >= 20130609
 BuildRequires: pkgconfig(libclocale) >= 20130609
 BuildRequires: pkgconfig(libcnotify) >= 20130103
 # This can cause a build loop.  The internal version should be used.
-#BuildRequires:  pkgconfig(libuna) >= 20120425
+BuildRequires:  pkgconfig(libuna) >= 20120425
 # The below have not been released as standalone packages by upstream
 #BuildRequires:  pkgconfig(libcstring)
 
@@ -73,6 +73,9 @@ applications that want to make use of libcfile.
 %_man3dir/*
 
 %changelog
+* Wed Aug 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260704-alt1
+- New version 20260704.
+
 * Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240414.
 
