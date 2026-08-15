@@ -5,7 +5,7 @@
 %endif
 
 Name: unison
-Version: 2.53.8
+Version: 2.54.0
 Release: alt1
 
 Summary: File-synchronization tool
@@ -49,22 +49,7 @@ other.
 %make_build tui fsmonitor manpage gui docs %unison_native
 
 %install
-%makeinstall PREFIX=%_prefix %unison_native
-
-install -Dpm0644 icons/U.svg %buildroot%_iconsdir/hicolor/scalable/apps/unison.svg
-
-mkdir -p %buildroot%_datadir/applications
-cat > %buildroot%_datadir/applications/%{name}.desktop << EOF
-[Desktop Entry]
-Name=Unison
-GenericName=File Synchronizer
-Comment=File-synchronization tool
-Exec=%{name}-gui
-Icon=%name
-Terminal=false
-Type=Application
-Categories=Utility;System;
-EOF
+%makeinstall_std PREFIX=%_prefix %unison_native
 
 %check
 make test %unison_native
@@ -79,10 +64,13 @@ make test %unison_native
 %files gui
 %doc LICENSE
 %_bindir/unison-gui
-%_datadir/applications/%name.desktop
-%_iconsdir/hicolor/scalable/apps/unison.svg
+%_datadir/applications/unison-gui.desktop
+%_iconsdir/hicolor/*/apps/unison-gui.*
 
 %changelog
+* Thu May 21 2026 Anton Farygin <rider@altlinux.org> 2.54.0-alt1
+- 2.53.8 -> 2.54.0
+
 * Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 2.53.8-alt1
 - 2.53.7 -> 2.53.8
 
