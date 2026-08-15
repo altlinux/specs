@@ -3,7 +3,7 @@
 
 Name: apache-poi
 Version: 5.4.1
-Release: alt1
+Release: alt2
 Summary: The Java API for Microsoft Documents
 License: Apache-2.0 and MIT
 Group: Development/Java
@@ -12,17 +12,20 @@ URL: http://poi.apache.org/
 ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source0: https://dlcdn.apache.org/poi/release/src/%{name}-src-%{version}-%{?reldate}.tar.gz
-Source1: gradle-8.7-rc-4-bin.zip
-Source2: gradle-cache.tar
+Source1: gradle-cache.tar
 
 # Supported Java version 
 Patch0: apache-poi-alt-java-version.patch
+# Remove version from pom filenames
+Patch1: apache-poi-alt-remove-version-from-pom-filename.patch
 
 BuildArch: noarch
 
 BuildRequires: gcc-c++ rpm-build-java swig unzip
 BuildRequires: java-21-openjdk-devel
+BuildRequires: gradle
 BuildRequires: maven-local
+BuildRequires: pom2metadata
 
 #Fonts for testing
 BuildRequires: fontconfig fonts-ttf-liberation fonts-ttf-liberation
@@ -59,36 +62,49 @@ There are also projects for Visio (HDGF) and Publisher (HPBF).
 
 %prep
 %setup -n %{name}-src-%{version}-%{?reldate}
-unzip %SOURCE1
 test -d ~/.gradle && rm -rf ~/.gradle
 %if_without bootstrap
-tar xf %SOURCE2 -C ~
+tar xf %SOURCE1 -C ~
 %endif
-
 %patch0 -p1
+%patch1 -p2
 
 %build
-export PATH=$PATH:$PWD/gradle-8.7-rc-4/bin
 %global gradle_target srcDistTar generatePomFileForPOIPublication
 %if_without bootstrap
 gradle --no-daemon --offline %gradle_target
+gradle --no-daemon --offline poi-ooxml:generatePomFileForPOIPublication
 %else
 gradle --no-daemon %gradle_target
+gradle --no-daemon poi-ooxml:generatePomFileForPOIPublication
 %endif
 find build/dist -name \*sources.\* -delete
+# Generate metadata for maven-metadata
+mkdir maven-metadata
+for i in build/dist/maven/*/*.pom;do 
+	d="$(dirname $i)"
+	n="$(basename $d)"
+	pom2metadata $i maven-metadata/$n.xml poi
+done
 
 %install
 mkdir -p %buildroot%_javadir/poi
-find build/dist -name \*.jar -exec cp '{}' %buildroot%_javadir/poi ';'
+find build/dist -name \*.jar | grep -Ev 'tests\.jar' | while read i; do n="$(basename $i)";cp "$i" "%buildroot%_javadir/poi/${n/-%version/}";done
 mkdir -p %buildroot%_mavenpomdir
 find build/dist -name \*.pom -exec cp '{}' %buildroot%_mavenpomdir ';'
+mkdir -p %buildroot%_datadir/maven-metadata
+cp maven-metadata/*.xml %buildroot%_datadir/maven-metadata
 
 %files
 %doc README.rst KEYS
 %_javadir/poi/*
 %_mavenpomdir/*
+%_datadir/maven-metadata/*.xml
 
 %changelog
+* Mon Jan 12 2026 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt2
+- Packaged xmvn metainfo files.
+
 * Sun Jul 06 2025 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
 - new version
 - build with java 21
