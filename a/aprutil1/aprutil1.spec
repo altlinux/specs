@@ -5,7 +5,7 @@
 %define	libaprver 1.7.6
 
 Name: aprutil%aprver
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: Apache Portable Runtime Utility shared library
@@ -212,6 +212,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_crypto_openssl*.so
 
 %changelog
+* Sat Aug 15 2026 Anton Farygin <rider@altlinux.org> 1.6.5-alt1
+- 1.6.4 -> 1.6.5
+
 * Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 1.6.4-alt1
 - 1.6.3 -> 1.6.4
 
