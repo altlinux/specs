@@ -1,6 +1,6 @@
 %global import_path github.com/prometheus-community/prometheus-postgres_exporter
 Name:    prometheus-postgres_exporter
-Version: 0.20.0
+Version: 0.20.1
 Release: alt1
 
 Summary: A PostgreSQL metric exporter for Prometheus
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: postgres_exporter-go1.26.patch
 
 Source2: postgres_exporter.yml
 Source3: %name.sysconfig
@@ -28,12 +29,14 @@ Requires(pre): prometheus-common
 %prep
 %setup
 tar xf %SOURCE1
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
+%define go_version 1.25
 %golang_prepare
 #promu build
 export BUILDTAGS="netgo"
@@ -72,6 +75,9 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/postgres-exporter
 %dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/postgres-exporter
 
 %changelog
+* Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 0.20.1-alt1
+- New version.
+
 * Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
 - New version.
 
