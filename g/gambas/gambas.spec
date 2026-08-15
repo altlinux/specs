@@ -16,7 +16,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name: gambas
-Version: 3.22.0
+Version: 3.22.1
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -324,6 +324,7 @@ Requires: %name-gb-pcre = %EVR
 Requires: %name-gb-util-web = %EVR
 Requires: %name-gb-geom = %EVR
 Requires: %name-gb-hash = %EVR
+Requires: %name-gb-media = %EVR
 
 %description ide
 This package includes the complete Gambas3 Development Environment
@@ -1971,6 +1972,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 3.22.1-alt1
+- New version.
+
 * Thu Jul 09 2026 Andrey Cherepanov <cas@altlinux.org> 3.22.0-alt1
 - New version.
 
