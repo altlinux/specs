@@ -1,6 +1,6 @@
 Name:           jaxb
 Version:        4.0.6
-Release:        alt2
+Release:        alt3
 
 Summary:        JAXB Reference Implementation
 License:        BSD-3-Clause
@@ -135,6 +135,8 @@ JAXB TXW parent module. Contains sources for TXW component.
 %package        xjc
 Group:          Development/Java
 Summary:        JAXB XJC
+Requires:       javapackages-tools
+Requires:       %name-runtime = %EVR
 
 %description    xjc
 JAXB Binding Compiler. Contains source code needed for binding customization
@@ -267,6 +269,8 @@ rm codemodel/codemodel/src/test/java/com/sun/codemodel/tests/JDefinedClassInstan
 %install
 %mvn_install
 
+%jpackage_script com.sun.tools.xjc.XJCFacade "" "" "jaxb/jaxb-xjc:jaxb/jaxb-core:jaxb/jaxb-runtime:jaxb/xsom:jaxb/codemodel:jaxb/rngom:jaxb/relaxng-datatype:jaxb/txw2:jaxb-istack-commons/istack-commons-runtime:jaxb-istack-commons/istack-commons-tools:jaxb-dtd-parser/dtd-parser:jaxb-api:jakarta-activation" xjc true
+
 %files core -f .mfiles-jaxb-core
 %doc ../LICENSE.md ../NOTICE.md
 
@@ -282,6 +286,8 @@ rm codemodel/codemodel/src/test/java/com/sun/codemodel/tests/JDefinedClassInstan
 %files parent -f .mfiles-jaxb-parent
 %files txw-parent -f .mfiles-jaxb-txw-parent
 %files xjc -f .mfiles-jaxb-xjc
+%_bindir/xjc
+
 %files relaxng-datatype -f .mfiles-relaxng-datatype
 %files rngom -f .mfiles-rngom
 %files txw2 -f .mfiles-txw2
@@ -294,6 +300,9 @@ rm codemodel/codemodel/src/test/java/com/sun/codemodel/tests/JDefinedClassInstan
 %files osgi -f .mfiles-osgi
 
 %changelog
+* Fri Aug 14 2026 Evgeniy Serov <scala@altlinux.org> 4.0.6-alt3
+- Added XJC command-line launcher.
+
 * Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 4.0.6-alt2
 - Added legacy JAXB artifacts.
 
