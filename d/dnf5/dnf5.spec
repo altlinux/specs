@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.2.1
-Release: alt1
+Release: alt2
 
 Summary: Command-line package manager
 
@@ -25,7 +25,7 @@ BuildRequires: cmake >= 3.21
 BuildRequires: gcc-c++ >= 10.1
 BuildRequires: gettext-tools
 BuildRequires: librpm-devel
-BuildRequires: libsolv-devel >= 0.7.35
+BuildRequires: libsolv-devel >= 0.7.39-alt1.1
 BuildRequires: librepo-devel >= 1.20.0
 BuildRequires: libfmt-devel
 BuildRequires: libjson-c-devel
@@ -373,6 +373,9 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Fri Aug 14 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt2
+Restore Fedora comps repository metadata support
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt1
 - new version 5.4.2.1
 - fixed FTBFS: include <cstring> for std::strcmp etc. (new libstdc++)
@@ -387,4 +390,3 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 - fix /usr/bin/rm and /usr/bin/sh paths for ALT Linux
 - move system state dir from /usr/lib/sysimage/libdnf5 to /var/lib/libdnf5
 - add Conflicts: dnf < 5, symlinks /usr/bin/dnf -> dnf5
-

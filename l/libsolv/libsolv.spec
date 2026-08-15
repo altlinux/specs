@@ -1,6 +1,6 @@
 Name: libsolv
 Version: 0.7.39
-Release: alt1
+Release: alt1.1
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -49,6 +49,7 @@ Group: System/Configuration/Packaging
        -DENABLE_RPMDB_LIBRPM=ON \
        -DENABLE_RPMPKG_LIBRPM=ON \
        -DENABLE_RPMMD=ON \
+       -DENABLE_COMPS=ON \
        -DENABLE_COMPLEX_DEPS=ON \
        -DWITH_LIBXML2=ON \
        -DENABLE_LZMA_COMPRESSION=ON \
@@ -76,6 +77,9 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Fri Aug 14 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.1
+- Enable Fedora comps support.
+
 * Fri May 29 2026 Andrey Cherepanov <cas@altlinux.org> 0.7.39-alt1
 - New version.
 
