@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 26.4.0
+Version: 26.8.0
 Release: alt1
 Summary: A personal finances manager, powered by KDE
 License: %gpl2plus
@@ -104,7 +104,7 @@ A personal finances manager, powered by KDE.
 %_qt6_plugindir/sqldrivers/libsk*.so
 %_qt6_plugindir/sk*
 %_K6xdgmime/*
-%_K6xdgapp/*%name.desktop
+%_K6xdgapp/*.desktop
 %_iconsdir/*/*/*/*
 %_K6xmlgui/*
 %_K6plug/kf6/ktexttemplate/grantlee_skgfilters.so
@@ -116,6 +116,9 @@ A personal finances manager, powered by KDE.
 %_datadir/skrooge_source/*.json
 
 %changelog
+* Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.0-alt1
+- New version 26.8.0.
+
 * Wed Jun 17 2026 Andrey Cherepanov <cas@altlinux.org> 26.4.0-alt1
 - New version.
 
