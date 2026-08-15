@@ -6,7 +6,7 @@
 
 Name:          gem-chef
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Clients for the chef systems integration framework
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -114,7 +114,7 @@ BuildConflicts: gem(vault) >= 0.21.0
 %ruby_use_gem_dependency addressable >= 2.8.0,addressable < 3
 %ruby_use_gem_dependency train-winrm >= 0.2.13,train-winrm < 1
 %ruby_use_gem_dependency train-core >= 3.11.1,train-core < 4
-%ruby_use_gem_dependency ohai >= 18.1.16,ohai < 19
+%ruby_use_gem_dependency ohai >= 18.1.16,ohai < 20
 %ruby_use_gem_dependency inspec-core >= 6.2.9,inspec-core < 7
 %ruby_use_gem_dependency corefoundation >= 0.3.14,corefoundation < 1
 %ruby_use_gem_dependency ffi-libarchive >= 1.1.13,ffi-libarchive < 2
@@ -211,7 +211,7 @@ the chef library.
 
 %package       -n gem-chef-bin
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef-branded binstubs for chef-client
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -227,7 +227,7 @@ management to your entire infrastructure.
 
 %package       -n chef
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef-branded binstubs for chef-client executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-bin
 Group:         Other
@@ -248,7 +248,7 @@ management to your entire infrastructure.
 %if_enabled    doc
 %package       -n gem-chef-bin-doc
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef-branded binstubs for chef-client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-bin
 Group:         Development/Documentation
@@ -270,7 +270,7 @@ management to your entire infrastructure.
 %if_enabled    devel
 %package       -n gem-chef-bin-devel
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef-branded binstubs for chef-client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-bin
 Group:         Development/Ruby
@@ -292,7 +292,7 @@ management to your entire infrastructure.
 
 %package       -n gem-chef-utils
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Basic utility functions for Core Chef Infra development
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -310,7 +310,7 @@ management to your entire infrastructure.
 %if_enabled    doc
 %package       -n gem-chef-utils-doc
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Basic utility functions for Core Chef Infra development documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-utils
 Group:         Development/Documentation
@@ -332,7 +332,7 @@ management to your entire infrastructure.
 %if_enabled    devel
 %package       -n gem-chef-utils-devel
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Basic utility functions for Core Chef Infra development development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-utils
 Group:         Development/Ruby
@@ -356,7 +356,7 @@ management to your entire infrastructure.
 
 %package       -n gem-chef-config
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef Infra's default configuration and config loading library
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -383,7 +383,7 @@ management to your entire infrastructure.
 %if_enabled    doc
 %package       -n gem-chef-config-doc
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef Infra's default configuration and config loading library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-config
 Group:         Development/Documentation
@@ -406,7 +406,7 @@ management to your entire infrastructure.
 %if_enabled    devel
 %package       -n gem-chef-config-devel
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       Chef Infra's default configuration and config loading library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-config
 Group:         Development/Ruby
@@ -431,7 +431,7 @@ management to your entire infrastructure.
 %if_enabled    doc
 %package       -n gem-chef-doc
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       A systems integration framework, built to bring the benefits of configuration management to your entire infrastructure documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef
 Group:         Development/Documentation
@@ -451,7 +451,7 @@ management to your entire infrastructure documentation files.
 %if_enabled    devel
 %package       -n gem-chef-devel
 Version:       19.4.12
-Release:       alt1
+Release:       alt1.1
 Summary:       A systems integration framework, built to bring the benefits of configuration management to your entire infrastructure development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef
 Group:         Development/Ruby
@@ -584,6 +584,9 @@ getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbi
 
 
 %changelog
+* Fri Aug 14 2026 Pavel Skrylev <majioa@altlinux.org> 19.4.12-alt1.1
+- ! fixed dep to ohai gem
+
 * Wed Aug 12 2026 Pavel Skrylev <majioa@altlinux.org> 19.4.12-alt1
 - ^ 19.1.176 -> 19.4.12
 
