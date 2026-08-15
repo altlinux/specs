@@ -5,8 +5,8 @@
 %define        gemname chef-provisioning
 
 Name:          gem-chef-provisioning
-Version:       2.7.7.0.1
-Release:       alt2
+Version:       2.7.8
+Release:       alt1
 Summary:       A library for creating machines and infrastructures idempotently in Chef
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -73,9 +73,9 @@ Conflicts:     gem(winrm-elevated) >= 2
 Conflicts:     gem(winrm-fs) >= 2
 Obsoletes:     ruby-chef-provisioning < %EVR
 Provides:      ruby-chef-provisioning = %EVR
-Provides:      gem(chef-provisioning) = 2.7.7.0.1
+Provides:      gem(chef-provisioning) = 2.7.8
 
-%ruby_use_gem_version chef-provisioning:2.7.7.0.1
+%ruby_use_gem_version chef-provisioning:2.7.8
 
 %description
 Chef Provisioning is a Cookbook and Recipe based approach for managing your
@@ -89,14 +89,14 @@ Chef Provisioning is maintained according to the Chef Maintenance Policy.
 
 %if_enabled    doc
 %package       -n gem-chef-provisioning-doc
-Version:       2.7.7.0.1
-Release:       alt2
+Version:       2.7.8
+Release:       alt1
 Summary:       A library for creating machines and infrastructures idempotently in Chef documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-provisioning
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(chef-provisioning) = 2.7.7.0.1
+Requires:      gem(chef-provisioning) = 2.7.8
 
 %description   -n gem-chef-provisioning-doc
 A library for creating machines and infrastructures idempotently in Chef
@@ -117,14 +117,14 @@ Chef Provisioning is maintained according to the Chef Maintenance Policy.
 
 %if_enabled    devel
 %package       -n gem-chef-provisioning-devel
-Version:       2.7.7.0.1
-Release:       alt2
+Version:       2.7.8
+Release:       alt1
 Summary:       A library for creating machines and infrastructures idempotently in Chef development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-provisioning
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(chef-provisioning) = 2.7.7.0.1
+Requires:      gem(chef-provisioning) = 2.7.8
 Requires:      gem(chef) >= 0
 Requires:      gem(cheffish) >= 4.0
 Requires:      gem(chefstyle) >= 0.10.0
@@ -200,6 +200,11 @@ Chef Provisioning is maintained according to the Chef Maintenance Policy.
 
 
 %changelog
+* Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 2.7.8-alt1
+- ^ 2.7.7p0.1 -> 2.7.8
+- * updated links in README
+- * replaced the ChefFS parallelizer with parallel_map helper
+
 * Fri Aug 14 2026 Pavel Skrylev <majioa@altlinux.org> 2.7.7.0.1-alt2
 - ^ 2.7.7 -> 2.7.7p0.1
 - * rebase to upstream
