@@ -4,7 +4,7 @@
 
 Name: pesign
 Version: 116
-Release: alt5
+Release: alt6
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -130,6 +130,9 @@ fi
 %ghost %attr(570,pesign,root) %_sysconfdir/pki/pesign/secmod.db
 
 %changelog
+* Sat Aug 15 2026 Egor Ignatov <egori@altlinux.org> 116-alt6
+- Fix FTBFS with gcc15
+
 * Mon Sep 29 2025 Egor Ignatov <egori@altlinux.org> 116-alt5
 - run pesignd as unprivileged user
 - drop deprecated pesign-authorize
