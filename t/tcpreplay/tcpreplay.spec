@@ -1,12 +1,12 @@
 Summary: A tool to replay captured network traffic
 Name: tcpreplay
-Version: 4.6.0
+Version: 4.6.1
 Release: alt1
 License: GPLv3
 Group: Networking/Other
 Url: https://github.com/appneta/tcpreplay
 Source: %name-%version.tar
-BuildRequires: autogen gcc-c++ groff-base libdnet-devel libpcap-devel tcpdump libopts-devel /proc
+BuildRequires: gcc-c++ groff-base libdnet-devel libpcap-devel tcpdump libopts-devel /proc
 BuildRequires: python3
 BuildRequires: asciidoctor
 
@@ -47,6 +47,9 @@ rm -rf %buildroot%_libdir/libtcpreplay.a \
 %_man1dir/*
 
 %changelog
+* Sat Aug 15 2026 Anton Farygin <rider@altlinux.org> 4.6.1-alt1
+- 4.6.0 -> 4.6.1
+
 * Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 4.6.0-alt1
 - 4.5.3 -> 4.6.0
 
