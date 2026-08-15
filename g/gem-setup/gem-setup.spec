@@ -2,7 +2,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.9
+Version:       5.999.10
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -78,8 +78,14 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Aug 13 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.10-alt1
+- ^ 5.999.9 -> 5.999.10
+- + added rule for ignore paths to match files for regular and actor's file
+    installation procedures
+- ! fixed procedure sequency for building so and searning for them
+
 * Tue Aug 11 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.9-alt1
-- ^ 5.999.7 -> 5.999.9
+- ^ 5.999.8 -> 5.999.9
 - * droppen exception when error in bash execution
 
 * Wed Aug 05 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.8-alt1
