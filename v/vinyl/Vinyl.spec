@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname page.codeberg.M23Snezhok.Vinyl
 %define nameU vinyl-player
 
 Name: vinyl
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Elegant music player
@@ -63,6 +64,9 @@ install -Dm 644 data/hicolor/scalable/apps/%oname.svg \
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Sat Aug 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt1
+- 1.5.0 -> 1.6.0
+
 * Wed Jul 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt1
 - 1.4.1 -> 1.5.0
 
