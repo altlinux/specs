@@ -1,28 +1,29 @@
 Name: libspandsp3
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: DSP library for VoIP, FAX and T.38 support
 License: LGPLv2.1
 Group: System/Libraries
 Url: http://soft-switch.org/
-# https://github.com/freeswitch/spandsp/
+VCS: https://github.com/freeswitch/spandsp/
 Source: %name-%version.tar
 BuildRequires: libtiff-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libxml2-devel
 BuildRequires: libsndfile-devel
 
-%package devel
+%package -n libspandsp-devel
 Summary: %summary
 Group: Development/C
 Requires: %name = %EVR
-Conflicts: libspandsp-devel
+Obsoletes: libspandsp3-devel <= 3.0.0-alt1
+Provides: libspandsp3-devel = %EVR
 
 %description
 %summary
 
-%description devel
+%description -n libspandsp-devel
 %summary
 
 %prep
@@ -46,13 +47,16 @@ Conflicts: libspandsp-devel
 %_libdir/libspandsp.so.3
 %_libdir/libspandsp.so.3.0.0
 
-%files devel
+%files -n libspandsp-devel
 %_libdir/libspandsp.so
 %_includedir/spandsp
 %_includedir/spandsp.h
 %_pkgconfigdir/spandsp.pc
 
 %changelog
+* Sat Aug 15 2026 Anton Farygin <rider@altlinux.org> 3.0.0-alt2
+- renamed devel package to libspandsp-devel
+
 * Mon Aug 31 2020 Anton Farygin <rider@altlinux.ru> 3.0.0-alt1
 - 3.0.0 from freeswitch project
 
