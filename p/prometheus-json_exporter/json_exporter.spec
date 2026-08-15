@@ -2,8 +2,8 @@
 %define mod json_exporter
 
 Name:    prometheus-json_exporter
-Version: 0.7.0
-Release: alt3
+Version: 0.8.0
+Release: alt1
 
 Summary: A prometheus exporter which scrapes remote JSON by JSONPath
 License: Apache-2.0
@@ -63,6 +63,9 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/json-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
+- New version.
+
 * Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt3
 - Removed socket file, fixed service file (ALT #54679).
 - Set program version.
