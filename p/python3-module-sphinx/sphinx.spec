@@ -30,7 +30,7 @@ python3(roman_numerals) \\\
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 8.2.3
+Version: 9.1.0
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -47,7 +47,6 @@ Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
 Patch2: python-sphinx-objects.patch
-Patch3: sphinx-8.2.3-alt-docutils-0.22-compat.patch
 
 Requires: python3-module-sphinx-sphinx-build-symlink
 Requires: %(echo "%dependencies")
@@ -196,6 +195,12 @@ do
 	touch $i/__init__.py
 done
 
+# Remove empty *.so/*.pyd test fixtures: they break
+# %%__python3_abi_check (ldd fails on a zero-sized .so).
+# The corresponding test (test_no_duplicates) still works via *.pyx files.
+find %buildroot%sphinx3_dir/tests -type f -size 0 \
+	\( -name '*.so' -o -name '*.pyd' \) -delete
+
 ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx3_dir/
 # There is some objects.inv there already; probably, we want to update it:
@@ -280,6 +285,10 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 1:9.1.0-alt1
+- 8.2.3 -> 9.1.0
+- dropped sphinx-8.2.3-alt-docutils-0.22-compat.patch (fixed upstream)
+
 * Fri Feb 06 2026 Anton Farygin <rider@altlinux.ru> 1:8.2.3-alt1
 - updated from 8.2.1 to 8.2.3
 
