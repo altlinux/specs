@@ -5,8 +5,8 @@
 %define        gemname onigmo
 
 Name:          gem-onigmo
-Version:       1.0.0
-Release:       alt1
+Version:       1.0.0.0.1
+Release:       alt0.1
 Summary:       The Onigmo regular expression engine compiled to WASM and wrapped in a Ruby embrace
 License:       Unlicense
 Group:         Development/Ruby
@@ -22,15 +22,15 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(debug) >= 0
 BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(wasmtime) >= 20.0
-BuildConflicts: gem(wasmtime) >= 28
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency wasmtime >= 27,wasmtime < 28
+%ruby_use_gem_dependency wasmtime >= 27
 Requires:      gem(wasmtime) >= 20.0
-Conflicts:     gem(wasmtime) >= 28
-Provides:      gem(onigmo) = 1.0.0
+Provides:      gem(onigmo) = 1.0.0.0.1
+
+%ruby_use_gem_version onigmo:1.0.0.0.1
 
 %description
 The Onigmo regular expression engine compiled to WASM and wrapped in a Ruby
@@ -39,14 +39,14 @@ embrace.
 
 %if_enabled    doc
 %package       -n gem-onigmo-doc
-Version:       1.0.0
-Release:       alt1
+Version:       1.0.0.0.1
+Release:       alt0.1
 Summary:       The Onigmo regular expression engine compiled to WASM and wrapped in a Ruby embrace documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета onigmo
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(onigmo) = 1.0.0
+Requires:      gem(onigmo) = 1.0.0.0.1
 
 %description   -n gem-onigmo-doc
 The Onigmo regular expression engine compiled to WASM and wrapped in a Ruby
@@ -59,14 +59,14 @@ embrace documentation files.
 
 %if_enabled    devel
 %package       -n gem-onigmo-devel
-Version:       1.0.0
-Release:       alt1
+Version:       1.0.0.0.1
+Release:       alt0.1
 Summary:       The Onigmo regular expression engine compiled to WASM and wrapped in a Ruby embrace development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета onigmo
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(onigmo) = 1.0.0
+Requires:      gem(onigmo) = 1.0.0.0.1
 Requires:      gem(debug) >= 0
 Requires:      gem(minitest) >= 0
 Requires:      gem(rake) >= 0
@@ -110,6 +110,10 @@ embrace development package.
 
 
 %changelog
+* Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0.0.1-alt0.1
+- ^ 1.0.0 -> 1.0.0p0.1
+- ! upper boundary for wasmtime gem
+
 * Wed Dec 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
