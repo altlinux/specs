@@ -13,7 +13,7 @@
 %endif
 
 Name:           lib%oname
-Version: 3.1.15.0
+Version: 3.1.16.0
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -28,6 +28,7 @@ Source0:        %name-%version.tar
 
 Source2: %oname.watch
 Patch1: openimageio-3.1.15.0-alt-jxl-icc.patch
+Patch2: openimageio-3.1.16.0-alt-fmt-target-dependency.patch
 
 Patch2000: %oname-e2k.patch
 
@@ -146,6 +147,7 @@ Development files for package %name
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -202,10 +204,11 @@ export OPENIMAGEIO_FONTS="$PWD/src/fonts/Droid_Serif:$PWD/src/fonts/Droid_Sans:$
 ulimit -n "$(ulimit -Hn)" 2>/dev/null || :
 # Excluded tests cannot run in this context:
 #  - igrep, texture-levels-stoch*: need the external oiio-images data set
-#  - cmake-consumer, docs-examples-cpp: need OpenImageIO already installed
+#  - cmake-consumer, docs-examples-cpp, imagebufalgo-opencv,
+#    openexr-partialtile: need OpenImageIO already installed
 #    (docs-examples-python compares against docs-examples-cpp reference output)
 #  - unit_imageinout: HEIF encode unsupported by the kvazaar bit depth
-%ctest -E 'cmake-consumer|docs-examples|igrep|texture-levels-stoch|unit_imageinout'
+%ctest -E 'cmake-consumer|docs-examples|imagebufalgo-opencv|igrep|openexr-partialtile|texture-levels-stoch|unit_imageinout'
 
 %install
 %cmake_install
@@ -246,6 +249,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 3.1.16.0-alt1
+- 3.1.15.0 -> 3.1.16.0
+
 * Fri Jul 03 2026 Anton Farygin <rider@altlinux.org> 3.1.15.0-alt1
 - 3.1.14.1 -> 3.1.15.0
 
