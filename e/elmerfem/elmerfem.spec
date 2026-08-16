@@ -7,7 +7,7 @@
 
 Name: elmerfem
 Version: 26.2.1
-Release: alt3
+Release: alt4
 
 Summary: Elmer FEM software
 License: LGPL-2.0-only
@@ -30,9 +30,7 @@ BuildRequires: pkgconfig(UMFPACK)
 
 BuildRequires: libgomp-devel
 
-%ifnarch riscv64
 BuildRequires: libhypre-devel
-%endif
 
 BuildRequires: pkgconfig(netcdf)
 BuildRequires: pkgconfig(netcdf-fortran)
@@ -107,10 +105,8 @@ sed -i 's|SET(ElmerIce_SRC ${ElmerIce_SRC} CalvingRemeshMMG.F90 )|MESSAGE(STATUS
        -Wno-dev \
        -DWITH_MPI=TRUE \
        -DWITH_OpenMP=TRUE \
-%ifnarch riscv64
        -DHYPRE_INCLUDE_DIR=%_includedir/hypre \
        -DWITH_Hypre=TRUE \
-%endif
        -DWITH_ElmerIce=TRUE \
        -DWITH_QT5=TRUE \
        -DWITH_ELMERGUI=TRUE \
@@ -201,6 +197,9 @@ echo "      Run -> Start ElmerVTK menu option to view results."
 %_datadir/elmersolver/lua-scripts/defaults.lua
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt4
+- Build with Hypre on riscv64.
+
 * Fri Jul 03 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt3
 - Build without libqwt6-qt5-devel (closes: #59717).
 
