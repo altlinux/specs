@@ -1,5 +1,5 @@
 Name: sympa
-Version: 6.2.78
+Version: 6.2.80
 Release: alt1
 
 %def_without authorcheck
@@ -98,7 +98,7 @@ Source202: apache2.ports-start
 
 
 # Add path to MHonArc::UTF8 so that sympa setup won't miss it
-Patch5: sympa-2.6.70-sympa-mhonarc.patch
+Patch5: sympa-2.6.80-sympa-mhonarc.patch
 # RPM specific customization of site defaults
 Patch13: sympa-6.2.57b.1-confdef.patch
 # ALT fhs specifics
@@ -158,6 +158,7 @@ BuildRequires: perl(URI.pm)
 BuildRequires: perl(URI/Escape.pm)
 BuildRequires: perl(XML/LibXML.pm)
 BuildRequires: perl(URI/Find/Schemeless.pm)
+BuildRequires: mhonarc
 
 %if %{with authorcheck}
 BuildRequires: perl(Test/Fixme.pm)
@@ -387,7 +388,7 @@ Sympa static web content.
 %patch20 -p1 -b .alt-fhs
 
 %build
-%autoreconf
+%autoreconf -I%_datadir/gettext/m4
 
 # Give install "-p" preserving mtime to prevent unexpected update of CSS.
 %configure \
@@ -760,6 +761,13 @@ fi
 %static_content
 
 %changelog
+* Sun Aug 16 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.80-alt1
+- 6.2.80.
+- BR: added mhonarc (new tests require it).
+
+* Wed Jul 29 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.78-alt1.1
+- Fix FTBFS with recent autotools.
+
 * Tue Apr 21 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.78-alt1
 - 6.2.78.
 
