@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: pantheon-agent-polkit
-Version: 8.0.2
+Version: 8.1.0
 Release: alt1
 
 Summary: Pantheon Polkit Agent
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-build-vala
 
 BuildRequires: meson
@@ -27,6 +28,10 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(polkit-agent-1)
 BuildRequires: pkgconfig(pantheon-wayland-1)
+BuildRequires: pkgconfig(libsystemd)
+
+BuildRequires: pkgconfig(gcr-4)
+BuildRequires: gcr4-libs-vala
 
 %description
 %summary
@@ -48,7 +53,7 @@ BuildRequires: pkgconfig(pantheon-wayland-1)
 
 %files -f %appname.lang
 %doc COPYING README.md
-%_sysconfdir/xdg/autostart/%{appname}.desktop
+%_userunitdir/io.elementary.desktop.agent-polkit.service
 %dir %_libexecdir/policykit-1-pantheon
 %_libexecdir/policykit-1-pantheon/%{appname}
 %_desktopdir/%{appname}.desktop
@@ -57,6 +62,9 @@ BuildRequires: pkgconfig(pantheon-wayland-1)
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - New version 8.0.2.
 

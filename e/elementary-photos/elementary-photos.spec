@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: elementary-photos
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Photo viewer and organizer designed for elementary OS
@@ -65,7 +65,7 @@ image formats, also including raw CR2 files.
 %meson_test
 
 %files -f %{appname}.lang
-%doc COPYING README.md THANKS
+%doc LICENSE README.md THANKS
 %_bindir/%appname
 %_desktopdir/%{appname}.desktop
 %_desktopdir/%{appname}.viewer.desktop
@@ -77,5 +77,8 @@ image formats, also including raw CR2 files.
 %_libexecdir/io.elementary.photos/video-thumbnailer
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
+- New version 8.0.2.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - Initial build for Sisyphus

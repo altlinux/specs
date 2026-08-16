@@ -6,7 +6,7 @@
 %def_without check
 
 Name: elementary-calendar
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Desktop calendar app designed for elementary OS
@@ -95,6 +95,8 @@ This package contains the development files used for %name.
 %_libdir/io.elementary.calendar/plugins/Google/libgoogle.so
 %_libdir/io.elementary.calendar/plugins/Web/libweb.so
 
+%exclude %_datadir/locale/zh_Hant/LC_MESSAGES/io.elementary.calendar.mo
+
 %files -n lib%{name}
 %_libdir/libelementary-calendar.so.0
 %_libdir/libelementary-calendar.so.0.1
@@ -108,6 +110,9 @@ This package contains the development files used for %name.
 %exclude %_vapidir/elementary-calendar.vapi
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
+- New version 8.0.2.
+
 * Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - New version 8.0.1.
 

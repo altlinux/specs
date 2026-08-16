@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.display
 
 Name: switchboard-plug-display
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: Switchboard Displays Plug
@@ -49,5 +49,8 @@ resolution.
 %_datadir/metainfo/io.elementary.settings.display.metainfo.xml
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
+- New version 8.0.3.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus
