@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define libquadmath_arches %ix86 x86_64 ppc64le
 
 Name: ncmpcpp
-Version: 0.9.2
+Version: 0.10.1
 Release: alt1
 
 Summary: ncurses-based client for the Music Player Daemon (MPD)
@@ -17,9 +18,17 @@ Source: %name-%version.tar
 # git://git.altlinux.org/gears/n/ncmpcpp.git
 Patch1: %name-%version-%release.patch
 
-# Automatically added by buildreq on Fri Jul 28 2017
-# optimized out: boost-devel boost-devel-headers glibc-kernheaders-x86 libncurses-devel libstdc++-devel libtinfo-devel perl pkg-config python-base python3 python3-base
-BuildRequires: boost-filesystem-devel boost-locale-devel boost-program_options-devel gcc-c++ glibc-devel-static glibc-kernheaders-generic libcurl-devel libfftw3-devel libmpdclient-devel libncursesw-devel libreadline-devel libtag-devel python3-dev
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-locale-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: gcc-c++
+BuildRequires: libcurl-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libmpdclient-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libreadline-devel
+BuildRequires: libtag-devel
+BuildRequires: python3-dev
 %ifarch %libquadmath_arches
 BuildRequires: libquadmath-devel
 %endif
@@ -55,6 +64,9 @@ mv %buildroot%_docdir/%name percentDoc
 %_man1dir/%name.1*
 
 %changelog
+* Sat Aug 15 2026 Arseny Maslennikov <arseny@altlinux.org> 0.10.1-alt1
+- 0.9.2 -> 0.10.1.
+
 * Thu Dec 16 2021 Arseny Maslennikov <arseny@altlinux.org> 0.9.2-alt1
 - 0.9.1 -> 0.9.2.
 
