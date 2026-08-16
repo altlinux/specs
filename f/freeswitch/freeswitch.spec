@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 Source1: %name.init
 Source2: %name.tmpfiles
+Source6: %name.service
 Source3: %name.sysconfig
 Source4: modules.conf
 Source5: fs_cli.conf
@@ -23,13 +24,13 @@ BuildRequires: gcc-c++ libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
-BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
+BuildRequires: libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre2-devel liblua5-devel
 BuildRequires: libilbc1-devel >= 0.0.2-alt3 flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
-BuildRequires: libpcap-devel perl-devel
+BuildRequires: libpcap-devel perl-devel rpm-macros-systemd
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libspandsp3-devel libsofia-sip-devel >= 1.13.17
+BuildRequires: libspandsp-devel >= 3.1.1 libsofia-sip-devel >= 1.13.17
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel 
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libswresample-devel libswscale-devel
@@ -122,6 +123,8 @@ Requires: %name-daemon = %version-%release
 %package vlc
 Summary: VLC support for the FreeSWITCH open source telephony platform
 Group: System/Servers
+# libvlc_new() fails without the VLC core plugins, which only vlc-mini ships
+Requires: vlc-mini
 
 %package imagick
 Summary: ImageMagick support for the FreeSWITCH open source telephony platform
@@ -227,7 +230,6 @@ cat %SOURCE4 >modules.conf
 export ASFLAGS='-Ox'
 %configure \
     --enable-fhs \
-    --enable-system-xmlrpc-c \
     --enable-system-lua \
     --localstatedir=%_var \
     --with-modinstdir=%_libdir/freeswitch \
@@ -255,6 +257,7 @@ PERL_ARCHLIB=%perl_vendorarch %make_install sysconfdir=%_sysconfdir/freeswitch D
 
 install -pm0755 -D %SOURCE1 %buildroot%_initdir/freeswitch
 install -pm0644 -D %SOURCE2 %buildroot%_tmpfilesdir/freeswitch.conf
+install -pm0644 -D %SOURCE6 %buildroot%_unitdir/freeswitch.service
 install -pm0644 -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/freeswitch
 install -pm0640 -D %SOURCE5 %buildroot%_sysconfdir/fs_cli.conf
 
@@ -268,6 +271,26 @@ mkdir -p \
 
 
 find %buildroot%_libdir/%name  -name \*.la -delete
+
+# a unit test that upstream installs into bindir under an unprefixed name
+rm -f %buildroot%_bindir/switch_eavesdrop
+# Makefile.am puts these into $(includedir)/test, outside any namespace;
+# they are only needed to build FreeSWITCH's own unit tests
+rm -rf %buildroot%_includedir/test
+# Flash-era leftovers
+rm -f %buildroot%_datadir/%name/htdocs/{slim.swf,slimtest.htm,license.txt}
+
+%check
+# tests/unit binaries are noinst_PROGRAMS, so "make" has already built them
+# all; running them costs almost nothing extra.  Only the FST_MINCORE ones
+# are run here: they init the core with SCF_MINIMAL and touch neither the
+# network nor the sound files.  The rest of the suite brings up sofia,
+# verto, RTP and the event socket and binds ports, which cannot work in
+# hasher.  Widen the list if the build host ever gets a usable loopback.
+# automake defaults to the parallel test driver, which only prints a summary
+make -C tests/unit check \
+    TESTS='switch_utils switch_hash switch_event switch_xml switch_console' \
+    || { cat tests/unit/test-suite.log; exit 1; }
 
 %triggerun daemon -- freeswitch-daemon < 1.6.6-alt2
 if [ $2 -gt 0 ]  && [ $1 -gt 0 ] && [ -f %_sysconfdir/%name/freeswitch.xml ];then 
@@ -308,6 +331,7 @@ fi
 %files daemon
 %doc conf
 %_initdir/freeswitch
+%_unitdir/freeswitch.service
 %_tmpfilesdir/freeswitch.conf
 
 %config(noreplace) %_sysconfdir/sysconfig/freeswitch
@@ -326,6 +350,7 @@ fi
 %_bindir/fs_encode
 %_bindir/fs_tts
 %_bindir/tone2wav
+%_bindir/gentls_cert
 
 %dir %_libdir/%name
 %_libdir/%name/mod_alsa.so
@@ -505,6 +530,7 @@ fi
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/dir/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/demo/*.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/vm/*.xml
+%_libdir/%name/mod_say_he.so*
 
 %files lang-pt
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt
@@ -533,6 +559,54 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 1:1.11.2-alt1
+- 1.11.1 -> 1.11.2
+- fs_encode: treat only the part after the last dot as the file
+  extension (Closes: 56577)
+- fs_encode: only use the output extension as a codec when it names a
+  real codec; formats encoded by the file module (wav, flac, ogg, ...)
+  now work as output, wav -> wav included (Closes: 47345, 47348)
+- fs_encode: do not encode twice when the output extension is claimed by
+  mod_sndfile (gsm, ...): the file was gsm-compressed by the codec and
+  then again by libsndfile, producing short noise-only files
+  (Closes: 47344)
+- fs_tts: fixed argument handling: the text argument was ignored unless
+  an extra argument followed it, and -i FILE was unreachable so the tool
+  hung on stdin instead of reading the file; extra arguments are
+  rejected now (Closes: 54889)
+- switch_xml: do not abort on assert in switch_xml_open_cfg() when the
+  main configuration could not be loaded; fixes fs_tts/fs_encode/
+  tone2wav crash under a regular user (Closes: 47334)
+- fs_tts: load mod_dptools (tts:// provider) instead of mod_ssml removed
+  upstream, and load the module of the selected TTS engine (mod_flite by
+  default), so text-to-speech actually works (Closes: 47335)
+- mod_imagick: bound the lazy loading thread by the real page count;
+  fixes endless re-reading of GIF frames with lazy=1 ending in an OOM
+  kill (Closes: 47382)
+- mod_xml_rpc: build against the bundled xmlrpc-c as upstream intends
+  instead of mixing bundled private headers with the system library;
+  fixes the HTTP server failing to start and every /api, /webapi,
+  /portal request answered with 404, which broke freeswitch-webui
+  (Closes: 47399, 54894)
+- added a native systemd unit ordered after network-online.target;
+  the unit generated from the SysV script started freeswitch before the
+  network was up, so after a reboot sofia bound to the wrong address and
+  clients could not connect (Closes: 47333)
+- freeswitch-vlc: require vlc-mini: without the VLC core plugins
+  libvlc_new() returns NULL and mod_vlc fails with "cannot initialise
+  VLC handle" on every call (Closes: 47403)
+- freeswitch-lang-he: package mod_say_he.so; the subpackage shipped the
+  Hebrew prompts without the module that speaks them
+- packaged gentls_cert, the TLS certificate helper for sofia and verto
+- dropped mod_say_hu, mod_say_it and mod_say_nl from the build: they
+  were built and thrown away, upstream ships no lang data for them
+- do not install the switch_eavesdrop unit test into the bin dir, the
+  unnamespaced /usr/include/test headers, and the Flash-era htdocs
+  leftovers
+- run the network-free part of tests/unit at build time (switch_utils,
+  switch_hash, switch_event, switch_xml, switch_console); the binaries
+  were already being built and thrown away
+
 * Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 1:1.11.1-alt1
 - 1.10.12 -> 1.11.1
 - re-applied ALT source patches lost in the v1.11.1 merge
