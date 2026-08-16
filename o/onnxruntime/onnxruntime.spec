@@ -8,7 +8,7 @@
 %define soname 1
 
 Name: onnxruntime
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 
 Summary: Cross-platform, high performance inference and training machine-learning accelerator
@@ -55,6 +55,10 @@ Source1: %name-%version-cmake-external-onnx.tar
 Source2: %name-%version-cmake-external-flatbuffers.tar
 Source3: %name-%version-cmake-external-eigen.tar
 Source4: %name-%version-cmake-external-dlpack.tar
+Source5: %name-%version-cmake-external-fxdiv.tar
+Source6: %name-%version-cmake-external-pthreadpool.tar
+Source7: %name-%version-cmake-external-googlexnnpack.tar
+Source8: %name-%version-cmake-external-kleidiai.tar
 Patch1: use-system-dnnl.patch
 
 # The bundled onnxruntime.transformers model-conversion tooling needs heavy
@@ -140,7 +144,7 @@ This package contains the "execution providers" for this onnxruntime, built
 as loadable plugin shared objects.
 
 %prep
-%setup -a1 -a2 -a3 -a4
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8
 %autopatch -p1
 
 # Remove win32 binaries shipped by upstream.
@@ -180,11 +184,17 @@ subst '/NAMES "SafeInt.hpp"/s!)! PATHS "%_includedir/safeint")!g' cmake/external
 # Use bundled dlpack.
 # The source tree is passed via FETCHCONTENT_SOURCE_DIR_DLPACK in %%build.
 
+# Use bundled fxdiv, pthreadpool, XNNPACK and KleidiAI (the XNNPACK execution
+# provider). The source trees are passed via FETCHCONTENT_SOURCE_DIR_* in
+# %%build; cpuinfo comes from the system package.
+
 # FetchContent applies PATCH_COMMAND only to downloaded sources; the trees
 # from Source2-Source4 are pre-unpacked, so apply ORT patches here.
 patch -p1 -d cmake/external/flatbuffers < cmake/patches/flatbuffers/flatbuffers.patch
 patch -p1 -d cmake/external/eigen < cmake/patches/eigen/s390x-build.patch
 patch -p1 -d cmake/external/eigen < cmake/patches/eigen/s390x-build-werror.patch
+patch --binary --ignore-whitespace -p1 -d cmake/external/googlexnnpack \
+  < cmake/patches/xnnpack/AddEmscriptenAndIosSupport.patch
 
 # Someone at ORT missed the noreturn attribute in their wrapper header.
 subst '/static void SafeIntOn[A-Za-z]\+/s!static ![[noreturn]] static !' onnxruntime/core/common/safeint.h
@@ -210,6 +220,11 @@ USE_DNNL=OFF
   -Donnxruntime_BUILD_UNIT_TESTS=OFF \
   -Donnxruntime_ENABLE_DLPACK=ON \
   -Donnxruntime_USE_DNNL=$USE_DNNL \
+  -Donnxruntime_USE_XNNPACK=ON \
+  -DFETCHCONTENT_SOURCE_DIR_FXDIV:PATH="$(pwd)/cmake/external/fxdiv" \
+  -DFETCHCONTENT_SOURCE_DIR_PTHREADPOOL:PATH="$(pwd)/cmake/external/pthreadpool" \
+  -DFETCHCONTENT_SOURCE_DIR_GOOGLEXNNPACK:PATH="$(pwd)/cmake/external/googlexnnpack" \
+  -DFETCHCONTENT_SOURCE_DIR_KLEIDIAI:PATH="$(pwd)/cmake/external/kleidiai" \
   -DONNX_CUSTOM_PROTOC_EXECUTABLE=%_bindir/protoc \
   -DFETCHCONTENT_SOURCE_DIR_ONNX:PATH="$(pwd)/cmake/external/onnx" \
   -DFETCHCONTENT_SOURCE_DIR_FLATBUFFERS:PATH="$(pwd)/cmake/external/flatbuffers" \
@@ -275,6 +290,13 @@ rm -rf %buildroot%python3_sitelibdir/onnxruntime/transformers/__pycache__
 
 
 %changelog
+* Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 1.29.0-alt1
+- 1.28.0 -> 1.29.0
+
+* Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 1.28.0-alt2
+- enabled the XNNPACK execution provider (bundled XNNPACK/pthreadpool/FXdiv,
+  KleidiAI on aarch64)
+
 * Thu Aug 06 2026 Anton Farygin <rider@altlinux.org> 1.28.0-alt1
 - 1.24.4 -> 1.28.0
 - fixed libonnxruntime updating (closes: #60109)
