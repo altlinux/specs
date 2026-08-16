@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: martchus-cpp-utilities
-Version: 5.34.2
+Version: 5.35.0
 Release: alt1
 
 Summary: useful C++ classes and routines used by Martchus' applications
@@ -169,6 +169,7 @@ sed -i "s|https://github.com/Martchus/cpp-utilities/blob/master/doc/buildvariabl
 %_datadir/martchus-c++utilities/cmake/templates/config.h.in
 %_datadir/martchus-c++utilities/cmake/templates/desktop.in
 %_datadir/martchus-c++utilities/cmake/templates/doxygen.in
+%_datadir/martchus-c++utilities/cmake/templates/env_init.cpp.in
 %_datadir/martchus-c++utilities/cmake/templates/global.h.in
 %_datadir/martchus-c++utilities/cmake/templates/sphinx-conf.py.in
 %_datadir/martchus-c++utilities/cmake/templates/template.pc.in
@@ -178,6 +179,9 @@ sed -i "s|https://github.com/Martchus/cpp-utilities/blob/master/doc/buildvariabl
 %_datadir/martchus-c++utilities/tests/calculateoverallcoverage.awk
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 5.35.0-alt1
+- New version 5.35.0.
+
 * Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 5.34.2-alt1
 - New version 5.34.2.
 

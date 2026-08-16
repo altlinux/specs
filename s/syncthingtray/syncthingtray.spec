@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: syncthingtray
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Desktop integration for Syncthing
@@ -232,6 +232,7 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/DevicesPage.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/DirectoriesPage.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/DownloadsPage.qml
+%_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/FilterTextField.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/FullRepresentation.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/IconLabel.qml
 %_datadir/plasma/plasmoids/martchus.syncthingplasmoid/contents/ui/RecentChangesPage.qml
@@ -252,6 +253,9 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %dir %_datadir/syncthingplasmoid/translations
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.4-alt1
+- New version 2.1.4.
+
 * Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.3-alt1
 - New version 2.1.3.
 
