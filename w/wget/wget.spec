@@ -4,19 +4,20 @@
 
 Name: wget
 Version: 1.25.0
-Release: alt4
+Release: alt5
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
 Group: Networking/WWW
 Url: http://www.gnu.org/software/wget/wget.html
-Vcs: https://git.savannah.gnu.org/cgit/wget.git
+Vcs: https://git.savannah.gnu.org/git/wget.git
 
 Source: %name-%version.tar
 
 BuildRequires: autoconf-archive
 BuildRequires: flex
 BuildRequires: gnulib
+BuildRequires: gettext-tools
 BuildRequires: gperf
 BuildRequires: libcap-devel
 BuildRequires: libcares-devel
@@ -66,6 +67,11 @@ if [ ! -e .tarball-version ]; then
 		--no-bootstrap-sync \
 		--no-git \
 		--skip-po
+	# gnulib-tool overwrites the autopoint-installed gnulib_po/Makefile.in.in
+	# with its own bundled copy from gettext-0.21, which does not include
+	# Makevars and thus loses top_builddir with gettext >= 0.23 po.m4
+	# (FTBFS: no rule to make target '/config.status').
+	cp -f %_datadir/gettext/po/Makefile.in.in gnulib_po/Makefile.in.in
 fi
 %ifarch %e2k
 # lcc-1.23.12: work around the lack of some builtins
@@ -113,6 +119,12 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Sat Aug 15 2026 Anton Farygin <rider@altlinux.ru> 1.25.0-alt5
+- Fixed FTBFS with gettext >= 0.23.
+- Added explicit BuildRequires: gettext-tools.
+- Updated seccomp filter for madvise (FTBFS on aarch64).
+- spec: Fixed the Vcs: URL to be clonable.
+
 * Mon Feb 10 2025 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt4
 - Update seccomp filter for gettimeofday (ALT#52946).
 
