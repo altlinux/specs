@@ -1,6 +1,6 @@
 %define  modulename crunch
 Name:    ocaml-%modulename
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 Summary: Convert a filesystem into a static OCaml module
 License: ISC
@@ -50,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 4.1.0-alt1
+- 4.0.0 -> 4.1.0
+
 * Sun Mar 15 2026 Anton Farygin <rider@altlinux.org> 4.0.0-alt1
 - 3.3.1 -> 4.0.0
 
