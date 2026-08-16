@@ -1,29 +1,30 @@
-Name:		cqrlog
-Version:	2.5.2
-Release:	alt2.gitba97c3b
-Summary:	An amateur radio contact logging program
+Name: cqrlog
+Version: 3.0.0
+Release: alt1
+Summary: An amateur radio contact logging program
 
-Group:		Communications
-License:	GPL-2.0
-URL:		http://www.cqrlog.com/
-Source0:	%name-%version.tar
-# VCS:		https://github.com/ok2cqr/cqrlog
+Group:   Communications
+License: GPL-2.0
+URL: http://www.cqrlog.com/
+VCS: https://github.com/ok2cqr/cqrlog
 
-Patch0:		cqrlog-install.patch
-Patch1:     cqrlog-fpc-3.2.3.patch
-Patch2:     cqrlog-mysqld-path.patch
+Source0: %name-%version.tar
 
-ExclusiveArch:  %ix86 x86_64
+Patch0: cqrlog-install.patch
+Patch1: cqrlog-mysqld-path.patch
 
-BuildRequires:	fpc >= 2.6.4
-BuildRequires:	lazarus
-BuildRequires:	hamlib-devel
-BuildRequires:	libssl-devel
-BuildRequires:	desktop-file-utils
+ExclusiveArch: %ix86 x86_64
 
-Requires:	mariadb-server
-Requires:	trustedqsl
-Requires:       hamlib
+BuildRequires: fpc >= 2.6.4
+BuildRequires: lazarus
+BuildRequires: hamlib-devel
+BuildRequires: libssl-devel
+BuildRequires: qt6pas-devel
+BuildRequires: desktop-file-utils
+
+Requires: mariadb-server
+Requires: trustedqsl
+Requires: hamlib
 
 %description
 CQRLOG is an advanced ham radio logger based on MySQL database. Provides
@@ -36,10 +37,7 @@ and strongly focused on easy operation and maintenance.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
+%autopatch -p1
 chmod -x src/*.pas \
          voice_keyer/voice_keyer.sh
 
@@ -67,6 +65,9 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt2.gitba97c3b
 - New snapshot.
 - FTBFS: fix build with fpc 3.2.3.
