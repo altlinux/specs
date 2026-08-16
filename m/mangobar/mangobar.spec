@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: mangobar
-Version: 0.0.0
-Release: alt1_20260528git.ab2c193
+Version: 0.1.1
+Release: alt1
 
 Summary: Simple bar for Mango
 License: GPL-3.0-or-later
@@ -20,9 +20,18 @@ BuildRequires: pkgconfig(fcft)
 BuildRequires: libcjson-devel
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(alsa)
 
 %description
-%summary
+A Wayland status bar for mangowm, built on wlr-layer-shell.
+The system tray (StatusNotifierItem / DBusMenu) is inspired
+by swaybar and waybar.
 
 %prep
 %setup
@@ -39,5 +48,8 @@ BuildRequires: pkgconfig(wayland-cursor)
 %_bindir/mangobar
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.1-alt1
+- new version 0.1.1 (with rpmrb script)
+
 * Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.0-alt1_20260528git.ab2c193
 - Initial build for Sisyphus
