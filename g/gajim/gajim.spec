@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 2.4.6
+Version: 2.5.0
 Release: alt1
 
 Summary: a Jabber/XMPP client written in PyGTK
@@ -27,7 +27,7 @@ Requires: python3 >= 3.10
 
 
 Requires: libgtk4-gir libgtksourceview4-gir
-Requires: python3-module-nbxmpp >= 7.2.0
+Requires: python3-module-nbxmpp >= 7.3.0
 Requires: python3-module-pygobject3-nox python3-module-pygobject3
 Requires: typelib(AyatanaAppIndicator3)
 # gajim >= 1.8 has imcoropated OMEMO support
@@ -42,7 +42,7 @@ Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-
 #py3_requires pygobject3
 %py3_requires dbus
 
-%add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement winrt.windows.ui winrt.windows.ui.viewmanagement gi.repository.Gdk
+%add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement winrt.windows.ui winrt.windows.ui.viewmanagement gi.repository.Gdk pysequoia
 
 %ifarch %e2k
 BuildRequires: librpmconstant-devel
@@ -54,7 +54,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk4-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
 BuildRequires: python3-module-pygobject3 libcairo-devel libcairo-gobject-devel pyinstaller python3-module-pygobject3-nox python3-module-pycairo
 BuildRequires: libgdk-pixbuf-devel libgdk-pixbuf-gir-devel gobject-introspection-devel libgtk4-gir-devel python3-module-pygobject3-devel 
-BuildRequires: python3-module-nbxmpp >= 7.2.0
+BuildRequires: python3-module-nbxmpp >= 7.3.0
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(pip)
@@ -67,7 +67,7 @@ users. Gajim does not require GNOME/MATE to run, eventhough it exists with
 it nicely.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-2.5.0.1
 #patch1 -p1
 
 %build
@@ -136,6 +136,9 @@ end
 %_datadir/%name/gui/*
 
 %changelog
+* Sun Aug 16 2026 Ilya Mashkin <oddity@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Sat Apr 25 2026 Ilya Mashkin <oddity@altlinux.ru> 2.4.6-alt1
 - 2.4.6
 
