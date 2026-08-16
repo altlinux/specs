@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Imager
-Version: 1.033
+Version: 1.034
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -72,6 +72,9 @@ IM_SUPPRESS_PROM=1 \
 %exclude /.perl.req
 
 %changelog
+* Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 1.034-alt1
+- 1.033 -> 1.034
+
 * Wed Jul 22 2026 Anton Farygin <rider@altlinux.org> 1.033-alt1
 - 1.031 -> 1.033
 
