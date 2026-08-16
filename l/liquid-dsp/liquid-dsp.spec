@@ -5,7 +5,7 @@
 %define sover 1
 %define libname libliquid%{sover}
 Name: liquid-dsp
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Digital Signal Processing Library for Software-Defined Radios
@@ -86,6 +86,9 @@ sed -i 's|DESTINATION lib$|DESTINATION "lib${LIB_SUFFIX}"|' CMakeLists.txt
 %_libdir/pkgconfig/liquid-dsp.pc
 
 %changelog
+* Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.2-alt1
+- New version 1.8.2.
+
 * Mon Jul 27 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.1-alt1
 - New version 1.8.1.
 
