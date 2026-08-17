@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -53,7 +53,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 92
+%define ver_min 91
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -66,10 +66,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -90,8 +90,19 @@ Patch83: boost-1.83.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/mpi/issues/179
-Patch89: boost-1.92.0-mpi-request-with-value-operator-eq.patch
+# https://github.com/boostorg/boost/issues/1141
+Patch89: boost-1.91.0-alt-fix-b2-abort-on-loongarch64.patch
+
+# https://github.com/boostorg/optional/issues/146
+# https://github.com/boostorg/boost/issues/1143
+# https://github.com/boostorg/optional/commit/1fb60cb53bb2b86b2a9739a26a8be2c5e4c9e8fc
+Patch90: boost-1.91.0-fix-bug-in-copy-construction-of-optional.patch
+
+# https://github.com/boostorg/boost/pull/1139
+Patch91: boost-1.91.0-fix-predef-install.patch
+
+# https://github.com/boostorg/container/issues/334
+Patch92: boost-1.91.0-container-flat-set-fix-overload-resolution.patch
 
 # Patch2000: boost-1.83-e2k-makecontext.patch
 
@@ -148,6 +159,7 @@ Requires: %name-intrusive-devel = %EVR
 Requires: %name-locale-devel = %EVR
 Requires: %name-lockfree-devel = %EVR
 Requires: %name-log-devel = %EVR
+Requires: %name-math-devel = %EVR
 %if_with mpi
 Requires: %name-mpi-devel = %EVR
 %endif
@@ -225,16 +237,6 @@ Requires: libboost_date_time%version = %EVR
 Requires: libboost_graph%version = %EVR
 Requires: libboost_iostreams%version = %EVR
 Requires: libboost_json%version = %EVR
-Requires: libboost_math_c99%version = %EVR
-Requires: libboost_math_c99f%version = %EVR
-%if_with long_double
-Requires: libboost_math_c99l%version = %EVR
-%endif
-Requires: libboost_math_tr1%version = %EVR
-Requires: libboost_math_tr1f%version = %EVR
-%if_with long_double
-Requires: libboost_math_tr1l%version = %EVR
-%endif
 Requires: libboost_process%version = %EVR
 Requires: libboost_random%version = %EVR
 Requires: libboost_regex%version = %EVR
@@ -254,8 +256,6 @@ Provides: boost-graph-devel = %EVR
 Obsoletes: boost-graph-devel < %EVR
 Provides: boost-iostreams-devel = %EVR
 Obsoletes: boost-iostreams-devel < %EVR
-Provides: boost-math-devel = %EVR
-Obsoletes: boost-math-devel < %EVR
 Provides: boost-regex-common-devel = %EVR
 Obsoletes: boost-regex-common-devel < %EVR
 Provides: boost-regex-devel = %EVR
@@ -526,6 +526,27 @@ mapped files, process-shared mutexes, condition variables, containers
 and allocators.
 
 It is header-only library. This package contains the headers.
+
+%package math-devel
+Summary: The Boost Math Library development files.
+Group: Development/C++
+
+Requires(pre,postun): %name-devel = %EVR
+Requires: libboost_math_c99%version = %EVR
+Requires: libboost_math_c99f%version = %EVR
+%if_with long_double
+Requires: libboost_math_c99l%version = %EVR
+%endif
+Requires: libboost_math_tr1%version = %EVR
+Requires: libboost_math_tr1f%version = %EVR
+%if_with long_double
+Requires: libboost_math_tr1l%version = %EVR
+%endif
+
+%description math-devel
+The Boost Math Library development files. You'll need to install this
+package if you want to link with Boost.Math shared libraries.
+
 
 %if_with mpi
 %package mpi-devel
@@ -1506,7 +1527,7 @@ find . \( -name \*.htm      \
           -or -name \*.txt  \
         \) \
         \( -not -name CMakeLists.txt \) \
-        -exec %__install -Dm644 {} %buildroot%boost_doc/{} \;
+        -exec install -Dm644 {} %buildroot%boost_doc/{} \;
 
 rm -rf %buildroot%boost_doc/libs/beast/test/extern
 
@@ -1599,6 +1620,7 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %exclude %_libdir/*_filesystem*.so
 %exclude %_libdir/*_locale*.so
 %exclude %_libdir/*_log*.so
+%exclude %_libdir/*_math*.so
 %if_with mpi
 %exclude %_libdir/*_mpi*.so
 %exclude %_libdir/*_graph_parallel*.so
@@ -1619,6 +1641,7 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %exclude %_libdir/cmake/boost_filesystem-%version
 %exclude %_libdir/cmake/boost_locale-%version
 %exclude %_libdir/cmake/boost_log-%version
+%exclude %_libdir/cmake/boost_math*-%version
 %if_with mpi
 %exclude %_libdir/cmake/boost_mpi*-%version
 %exclude %_libdir/cmake/boost_graph_parallel-%version
@@ -1689,6 +1712,10 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %_includedir/%name/log/
 %_libdir/*_log*.so
 %_libdir/cmake/boost_log-%version
+
+%files math-devel
+%_libdir/*_math*.so
+%_libdir/cmake/boost_math*-%version
 
 %if_with mpi
 %files mpi-devel
@@ -1932,11 +1959,8 @@ done
 
 
 %changelog
-* Mon Aug 17 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.92.0-alt2
-- Merge boost-math-devel into boost-devel.
-
-* Fri Aug 14 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.92.0-alt1
-- 1.92.0
+* Fri Aug 14 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.91.0-alt4
+- Rebuild as compat package without development files
 
 * Wed Jul 08 2026 Ivan A. Melnikov <iv@altlinux.org> 1:1.91.0-alt3
 - Return installation of Boost.Predef (with an upstream fix)

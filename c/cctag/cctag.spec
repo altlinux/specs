@@ -2,7 +2,7 @@
 
 Name:          cctag
 Version:       1.0.4.42
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Detection of CCTag markers made up of concentric circles
 License:       MPL-2.0
 Group:         System/Libraries
@@ -16,7 +16,6 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: eigen3
 BuildRequires: boost-devel
-BuildRequires: boost-math-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: libopencv-devel
@@ -62,7 +61,6 @@ Requires:      cmake
 Requires:      gcc-c++
 Requires:      eigen3
 Requires:      boost-devel
-Requires:      boost-math-devel
 Requires:      boost-program_options-devel
 Requires:      boost-filesystem-devel
 Requires:      libopencv-devel
@@ -107,6 +105,9 @@ The library is the implementation of the paper:
 
 
 %changelog
+* Mon Aug 17 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.4.42-alt0.2
+- NMU: drop BR: boost-math-devel (not needed since boost 1.92.0).
+
 * Tue Aug 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.4.42-alt0.1
 - ^ 1.0.3 -> 1.0.4p42
 
