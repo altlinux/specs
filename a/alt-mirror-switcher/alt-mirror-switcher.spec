@@ -2,7 +2,7 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -89,6 +89,14 @@ fi
 %_bindir/ams
 
 %changelog
+* Mon Aug 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
+- added update_potfiles bash file for automatic update locale
+- gui: fixed some inaccuracies
+- cli: fixed: showing date of Sisyphus archive with ams show command
+- cli: fixed: write actual list in conf file when Sisyphus archive date set
+- cli: fixed: drop Sisyphus archive date from conf with ams switch any mirror
+- added autofixed: enabled > 1 repo in one list
+
 * Thu Jul 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0
 
