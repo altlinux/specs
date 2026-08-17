@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.0.1
-Release: alt3
+Release: alt4
 
 Summary: A sphinx extension which renders display math in HTML via JavaScript
 
@@ -27,6 +27,9 @@ Source: %name-%version.tar
 Patch: sphinx5.patch
 # https://github.com/sphinx-doc/sphinxcontrib-jsmath/pull/32
 Patch1: sphinxcontrib-jsmath-1.0.1--Replace-domain.has_equations-with-context-has_maths.patch
+# backports for sphinx 9.0
+Patch2: sphinxcontrib-jsmath-1.0.1-Fix-test-failures.patch
+Patch3: sphinxcontrib-jsmath-1.0.1-Restore-support-in-tests-for-Sphinx-7.2.patch
 
 %description
 %summary
@@ -56,6 +59,9 @@ setup.cfg
 %python3_sitelibdir/*.pth
 
 %changelog
+* Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 1.0.1-alt4
+- Fixed FTBFS (sphinx 9.0).
+
 * Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 1.0.1-alt3
 - Fixed FTBFS (sphinx 8.2).
 - Shipped stable version.
