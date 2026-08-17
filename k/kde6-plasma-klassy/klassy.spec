@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define nameS klassy
 %define soname 6
 
 Name: kde6-plasma-klassy
-Version: 6.5.3
+Version: 6.7
 Release: alt1
 Epoch: 1
 
@@ -68,6 +69,7 @@ Klassy library.
 %_libdir/qt6/plugins/org.kde.kdecoration?.kcm/klassydecoration/*/*.klpw
 %_datadir/applications/*.desktop
 %_datadir/color-schemes/*.colors
+%_datadir/config.kcfg/*.kcfg
 %_iconsdir/hicolor/scalable/apps/*.svgz
 %_iconsdir/%{nameS}*
 %_iconsdir/%nameS/*/*.svg
@@ -88,6 +90,9 @@ Klassy library.
 %_K6lib/libklassycommon?.so.%{soname}.*
 
 %changelog
+* Tue Aug 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:6.7-alt1
+- 6.5.3 -> 6.7
+
 * Sun Feb 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:6.5.3-alt1
 - 6.5.2 -> 6.5.3
 
