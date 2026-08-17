@@ -1,6 +1,6 @@
 Name: sympa
 Version: 6.2.80
-Release: alt1
+Release: alt1.1
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -336,8 +336,8 @@ Provides: bundled(javascript-html5shiv) = 3.7.2
 %endif
 # jquery
 %if %unbundle_jquery
-BuildRequires: javascript-jquery >= 3.5.0
-Requires: javascript-jquery >= 3.5.0
+BuildRequires: javascript-jquery3.7 >= 3.5.0
+Requires: javascript-jquery3.7 >= 3.5.0
 %else
 Provides bundled(javascript-jquery) = 3.6.0
 %endif
@@ -761,6 +761,9 @@ fi
 %static_content
 
 %changelog
+* Mon Aug 17 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.80-alt1.1
+- Stick with jquery 3.7.x, application is not ready yet for jquery 4.x.
+
 * Sun Aug 16 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.80-alt1
 - 6.2.80.
 - BR: added mhonarc (new tests require it).
