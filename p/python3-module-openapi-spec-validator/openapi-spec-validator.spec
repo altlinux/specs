@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name openapi-spec-validator
+%define mod_name openapi_spec_validator
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.2
+Version: 0.9.0
 Release: alt1
 Summary: OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 spec validator
 License: Apache-2.0
@@ -15,24 +16,23 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# PyPI name
-%py3_provides %pypi_name
-Provides: python3-module-openapi_spec_validator = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 # not packaged
-%add_pyproject_deps_check_filter bump2version
-%add_pyproject_deps_check_filter deptry
+%add_pyproject_deps_check_filter tbump
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
 
 %description
-OpenAPI Spec Validator is a Python library that validates OpenAPI Specs against
-the OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 specification. The validator aims
-to check for full compliance with the Specification.
+OpenAPI Spec Validator is a CLI, pre-commit hook and python package that
+validates OpenAPI Specs against the OpenAPI 2.0 (aka Swagger), OpenAPI 3.0
+OpenAPI 3.1 and OpenAPI 3.2 specification. The validator aims to check for full
+compliance with the Specification.
 
 %prep
 %setup
@@ -53,12 +53,14 @@ to check for full compliance with the Specification.
 %pyproject_run_pytest -vra -m 'not network' -o=addopts=''
 
 %files
-%doc README.rst
 %_bindir/openapi-spec-validator
-%python3_sitelibdir/openapi_spec_validator/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.9.0-alt1
+- NMU: 0.7.2 -> 0.9.0.
+
 * Mon Jun 09 2025 Stanislav Levin <slev@altlinux.org> 0.7.2-alt1
 - 0.7.1 -> 0.7.2.
 

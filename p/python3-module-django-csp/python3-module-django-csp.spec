@@ -1,16 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name django-csp
+%define mod_name csp
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8
+Version: 4.0
 Release: alt1
 
-Summary: Content Security Policy for Django.
+Summary: Content Security Policy for Django
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/mozilla/django-csp
+URL: https://django-csp.readthedocs.io/en/latest/
+VCS: https://github.com/mozilla/django-csp.git
 
 BuildArch: noarch
 
@@ -39,16 +41,20 @@ Django-CSP adds Content-Security-Policy headers to Django.
 
 %install
 %pyproject_install
+rm -r %buildroot/%python3_sitelibdir/%mod_name/tests
 
 %check
 %pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
 %doc *.rst *.md LICENSE
-%python3_sitelibdir/csp/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.0-alt1
+- 3.8 -> 4.0
+
 * Mon Feb 17 2025 Dmitry Lyalyaev <fruktime@altlinux.org> 3.8-alt1
 - 3.7 -> 3.8
 
@@ -58,4 +64,3 @@ Django-CSP adds Content-Security-Policy headers to Django.
 
 * Tue Aug 22 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 3.7-alt1
 - Initial build for ALT Linux
-

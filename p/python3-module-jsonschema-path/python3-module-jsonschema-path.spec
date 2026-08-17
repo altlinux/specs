@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.4
+Version: 0.5.0
 Release: alt1
 
 Summary: Object-oriented JSONSchema
@@ -50,6 +50,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.5.0-alt1
+- NMU: New version 0.5.0.
+
 * Sun Jan 26 2025 Anton Vyatkin <toni@altlinux.org> 0.3.4-alt1
 - New version 0.3.4.
 

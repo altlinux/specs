@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.28.0
-Release: alt1
+Release: alt2
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -13,6 +13,7 @@ URL: https://pypi.org/project/jupyterlab-server/
 VCS: https://github.com/jupyterlab/jupyterlab_server
 BuildArch: noarch
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -43,6 +44,7 @@ applications from a more limited scope.
 
 %prep
 %setup
+%autopatch -p1
 sed -i 's/--color=yes//' pyproject.toml
 sed -i 's/--doctest-modules//' pyproject.toml
 
@@ -67,6 +69,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Aug 17 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 2.28.0-alt2
+- NMU: added support for openapi-core 0.23.x.
+
 * Wed Oct 22 2025 Anton Vyatkin <toni@altlinux.org> 2.28.0-alt1
 - New version 2.28.0.
 

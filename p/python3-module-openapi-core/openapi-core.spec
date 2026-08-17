@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name openapi-core
 %define mod_name openapi_core
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 0.23.1
 Release: alt1
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
@@ -13,37 +14,32 @@ Url: https://pypi.org/project/openapi-core/
 Vcs: https://github.com/python-openapi/openapi-core
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry-core
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-lazy-object-proxy
-BuildRequires: python3-module-jsonschema-path
-BuildRequires: python3-module-openapi-spec-validator
-BuildRequires: python3-module-werkzeug
-BuildRequires: python3-module-isodate
-BuildRequires: python3-module-more-itertools
-BuildRequires: python3-module-parse
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-aiohttp
-BuildRequires: python3-module-aiohttp-tests
-BuildRequires: python3-module-asgiref
-BuildRequires: python3-module-responses
-BuildRequires: python3-module-pytest-aiohttp
-BuildRequires: python3-module-webob
-BuildRequires: python3-module-openapi-schema-validator
-BuildRequires: python3-module-strict-rfc3339
-BuildRequires: python3-module-django
+# not yet packaged
+%add_pyproject_deps_check_filter tbump
+%pyproject_builddeps_metadata_extra flask
+%pyproject_builddeps_check
 %endif
 
 %description
-Openapi-core is a Python library that adds client-side and server-side support
-for the OpenAPI v3.0 and OpenAPI v3.1 specification.
+Openapi-core is a Python library that provides client-side and server-side
+support for the OpenAPI v3.0 and OpenAPI v3.1 and OpenAPI v3.2 specifications.
 
 %prep
 %setup
-sed -i '/--cov/d' pyproject.toml
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -52,14 +48,16 @@ sed -i '/--cov/d' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v tests/unit
+%pyproject_run_pytest -vra -o=addopts='' tests/unit/
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Aug 17 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.23.1-alt1
+- NMU: New version (0.23.1).
+
 * Tue Dec 23 2025 Anton Vyatkin <toni@altlinux.org> 0.22.0-alt1
 - New version 0.22.0.
 
