@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cov-analysis
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: afl-cov successor - simpler and using modern llvm tools
@@ -36,6 +36,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/cov-analysis
 
 %changelog
+* Mon Aug 17 2026 Egor Ignatov <egori@altlinux.org> 1.2-alt1
+- New version 1.2.
+
 * Thu Jul 16 2026 Egor Ignatov <egori@altlinux.org> 1.1-alt1
 - New version 1.1.
 
