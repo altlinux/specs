@@ -4,8 +4,8 @@ Name: gsasl
 %define soversion 18
 %define libnso lib%name%soversion
 %define libname lib%name
-Version: 2.2.1
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -31,7 +31,7 @@ Group: System/Libraries
 License: LGPLv2+
 # The previous versions of this subpackage had non-SLP-compliant names. Make
 # apt push them out on upgrades.
-Obsoletes: lib%name < 2.2.1-alt1
+Obsoletes: libgsasl < 2.2.1-alt1
 
 %description -n %libnso
 GNU SASL is an implementation of the Simple Authentication and
@@ -55,6 +55,8 @@ sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
 # Use gnulib largefile module in the library as well.
 sed -i '/AC_REQUIRE(\[gl_USE_SYSTEM_EXTENSIONS\])/a AC_REQUIRE([AC_SYS_LARGEFILE])' \
 	lib/m4/gnulib-comp.m4
+
+sed -i 's/^AM_GNU_GETTEXT_VERSION/AM_GNU_GETTEXT_REQUIRE_VERSION/' configure.ac
 
 %build
 %autoreconf
@@ -86,7 +88,8 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %doc AUTHORS NEWS README THANKS
 
 %files -n %libnso -f %libnso.lang
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%soversion
+%_libdir/lib%name.so.%soversion.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -96,6 +99,11 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Thu Aug 13 2026 Anton Osipov <radiolamp@altlinux.org> 2.2.4-alt1
+- 2.2.1 -> 2.2.4.
+- Replaced AM_GNU_GETTEXT_VERSION with AM_GNU_GETTEXT_REQUIRE_VERSION
+  in configure.ac to improve autopoint flexibility.
+
 * Mon Oct 14 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.1-alt2
 - Explicitly push out earlier versions of the libgsasl package. (Closes: 51714)
   Not sure why apt does not deal with this automatically.
@@ -149,4 +157,3 @@ sed -i '/libgsasl\.mo/d' %name.lang
 
 * Wed Jan 09 2008 Sergey V Turchin <zerg at altlinux dot org> 0.2.21-alt1
 - initial specfile
-
