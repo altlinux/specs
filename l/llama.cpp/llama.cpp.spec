@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10103
+Version: 10430
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -144,8 +144,6 @@ cat <<-EOF >> cmake/build-info.cmake
 	set(GGML_BUILD_NUMBER %version)
 	set(BUILD_COMMIT "${commit::8} [%release]")
 EOF
-sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' src/CMakeLists.txt
-sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' tools/mtmd/CMakeLists.txt
 # We do not have Internet access (issues/13371).
 perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
 
@@ -208,7 +206,7 @@ install -dm755 %buildroot%_sysconfdir/llama
 # Local path are more useful for debugging becasue they are not stripped by default.
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-server --version
-llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
+llama-server --version |& grep -Ex 'version: \S+ \(build %version, commit \S+ \[%release\]\)'
 # test-eval-callback and test-tokenizers-ggml-vocabs want network.
 # test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
 # test-thread-safety requires GPU; test-recurrent-state-rollback (MTP) is not runnable w/o CUDA.
@@ -216,19 +214,18 @@ llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 %ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-generate-models|test-thread-safety|test-recurrent-state-rollback'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
-	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
+	grep "Once upon a time, in a tidy cat, there was a little girl named Lily."
 
 %files
 
 %files -n libllama
-%_libdir/libllama.so.0.0.%version
-%_libdir/libllama-common.so.0
-%_libdir/libllama-common.so.0.0.%version
-%_libdir/libggml.so.0
-%_libdir/libggml.so.0.*
-%_libdir/libggml-base.so.0
-%_libdir/libggml-base.so.0.*
-%_libdir/libmtmd.so.0.0.%version
+# SONAME follows upstream's own versioning (LLAMA_VERSION_BASE/_MAJOR in
+# CMakeLists.txt) rather than our build number — no local SOVERSION hacks.
+%_libdir/libllama.so.*
+%_libdir/libllama-common.so.*
+%_libdir/libggml.so.*
+%_libdir/libggml-base.so.*
+%_libdir/libmtmd.so.*
 
 %files -n libllama-devel
 %_libdir/libllama.so
@@ -283,6 +280,13 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Fri Aug 14 2026 Alexey Shabalin <shaba@altlinux.org> 1:10430-alt1
+- Update to b10430.
+- Drop the local SOVERSION sed hacks for libllama/libmtmd/libllama-common.
+
+* Wed Aug 12 2026 Alexey Shabalin <shaba@altlinux.org> 1:10380-alt1
+- Update to b10380.
+
 * Thu Jul 23 2026 Alexey Shabalin <shaba@altlinux.org> 1:10103-alt1
 - Update to b10103.
 - Embed prebuilt WebUI again (ALT#59598).
