@@ -3,7 +3,7 @@
 
 Name: mcphost
 Version: 0.34.0
-Release: alt1
+Release: alt2
 Summary: A CLI host application for the Model Context Protocol (MCP).
 License: MIT and Apache-2.0 and BSD-2-Clause and BSD-3-Clause
 Group: Networking/Other
@@ -12,7 +12,7 @@ Url: https://github.com/mark3labs/mcphost
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-Patch: %name-%version-%release.patch
+Patch1: mcphost-fix-version-alt.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-build-golang
@@ -33,6 +33,7 @@ export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 
 %golang_prepare
+export LDFLAGS="-X main.version=%version -X github.com/mark3labs/mcphost/cmd.Version=%version"
 
 %golang_build .
 
@@ -48,6 +49,10 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Aug 17 2026 Pavel Shilov <zerospirit@altlinux.org> 0.34.0-alt2
+- Fix version reporting via ldflags (ALT #60159).
+- Fix progress bar artifacts in Ollama pull and --prompt streaming (ALT #60165).
+
 * Tue Jul 14 2026 Pavel Shilov <zerospirit@altlinux.org> 0.34.0-alt1
 - Update to 0.34.0.
 
