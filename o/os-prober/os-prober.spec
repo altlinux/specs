@@ -2,8 +2,8 @@
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.84
-Release: alt3
+Version: 1.85
+Release: alt1
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -62,6 +62,9 @@ mkdir -p %buildroot%_localstatedir/os-prober
 %_localstatedir/os-prober
 
 %changelog
+* Thu Aug 13 2026 Egor Ignatov <egori@altlinux.org> 1.85-alt1
+- New version 1.85.
+
 * Mon Jun 22 2026 Egor Ignatov <egori@altlinux.org> 1.84-alt3
 - os-prober: Ignore timeshift btrfs snapshots
 
