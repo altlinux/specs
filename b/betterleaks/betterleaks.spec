@@ -2,7 +2,7 @@
 %global import_path github.com/betterleaks/betterleaks
 
 Name: betterleaks
-Version: 1.6.1
+Version: 1.7.4
 Release: alt1
 Summary: A Better Secrets Scanner built for configurability and speed
 License: MIT
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
 
 %changelog
+* Mon Aug 17 2026 Egor Ignatov <egori@altlinux.org> 1.7.4-alt1
+- New version 1.7.4.
+
 * Fri Jul 17 2026 Egor Ignatov <egori@altlinux.org> 1.6.1-alt1
 - New version 1.6.1.
 
