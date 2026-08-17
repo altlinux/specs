@@ -6,8 +6,8 @@
 %define optflags_lto %nil
 
 # aarch64: error: cpio archive too big - 4518M
-%ifarch aarch64
-%global __find_debuginfo_files %nil
+%ifarch aarch64 loongarch64 riscv64
+%define optflags_debug -g1
 %endif
 
 %global descr IfcOpenShell is an open source (LGPL) software library for working with\
@@ -31,7 +31,7 @@ possible at compile-time when using C++ and at run-time when using Python.
 %def_with gltf
 
 # i586: E: Couldn't find package OpenUSD-devel
-%ifarch %ix86
+%ifarch %ix86 loongarch64 riscv64
 %def_without hdf5
 %else
 %def_with hdf5
@@ -60,7 +60,7 @@ possible at compile-time when using C++ and at run-time when using Python.
 
 Name: ifcopenshell
 Version: 0.8.4
-Release: alt1
+Release: alt3
 
 Summary: Open source IFC library and geometry engine
 License: LGPL-3.0-or-later AND GPL-3.0-or-later
@@ -70,6 +70,7 @@ Vcs: https://github.com/IfcOpenShell/IfcOpenShell.git
 
 Source0: %name-%version.tar
 Source1: submodules.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-cmake
 BuildRequires: boost-devel
@@ -80,6 +81,7 @@ BuildRequires: boost-program_options-devel
 BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
 BuildRequires: libhdf5-devel
+BuildRequires: liblzma-devel
 BuildRequires: libsvgpp-devel
 BuildRequires: libxml2-devel
 BuildRequires: ninja-build
@@ -106,7 +108,7 @@ BuildRequires: bzlib-devel
 BuildRequires: liblz4-devel
 %endif
 
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86
 
 %description
 %descr
@@ -141,17 +143,16 @@ Group: Development/Python3
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 pushd cmake
 %cmake -G Ninja \
 	-DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_EXTENSIONS=ON \
 	-DCMAKE_CXX_FLAGS="-Wno-error=return-type" \
-%ifnarch aarch64
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%else
-	-DCMAKE_BUILD_TYPE=Release \
-%endif
+	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO='%optflags' \
+	-DCMAKE_C_FLAGS_RELWITHDEBINFO='%optflags' \
 	-DWASM_BUILD=%{with wasm} \
 	-DBUILD_SHARED_LIBS=%{with shared} \
 	-DUSE_MMAP=%{with mmap} \
@@ -213,5 +214,14 @@ popd
 %python3_sitelibdir/%name
 
 %changelog
+* Fri Aug 14 2026 Ulysses Apokin <ulysses@altlinux.org> 0.8.4-alt3
+- Fix FTBFS with boost 1.9+ in Sisyphus.
+- Fix FTBFS with CGAL 6.0+ in Sisyphus.
+
+* Fri Aug 14 2026 Ulysses Apokin <ulysses@altlinux.org> 0.8.4-alt2
+- Make cmake respect %optflags (thnx @iv).
+- Enable debuginfo on aarch64 (thnx @iv).
+- Prepare for backporting to p11.
+
 * Mon Jun 08 2026 Ulysses Apokin <ulysses@altlinux.org> 0.8.4-alt1
 - Initial build for Sisyphus.
