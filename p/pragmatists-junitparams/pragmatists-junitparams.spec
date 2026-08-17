@@ -2,7 +2,7 @@
 
 Name: pragmatists-junitparams
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary:  Parameterised tests that don't suck
 License: Apache-2.0
@@ -28,6 +28,9 @@ BuildRequires: maven-source-plugin
 
 %prep
 %setup
+#fix with java17
+sed -i 's|<source>1.6<|<source>1.8<|' pom.xml
+sed -i 's|<target>1.6<|<target>1.8<|' pom.xml
 
 %pom_remove_plugin :nexus-staging-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
@@ -43,5 +46,8 @@ BuildRequires: maven-source-plugin
 %doc LICENSE.txt
 
 %changelog
+* Mon Aug 17 2026 Anton Meleshnikov <alton@altlinux.org> 1.1.1-alt2
+- FTBFS fix with java17.
+
 * Wed Dec 03 2025 Ivan Khanas <xeno@altlinux.org> 1.1.1-alt1
 - First build for ALT.
