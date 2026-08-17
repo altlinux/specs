@@ -1,6 +1,6 @@
 Name: passwdqc
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -173,6 +173,9 @@ install -pD -m755 passwdqc-match.control \
 %_man1dir/*
 
 %changelog
+* Mon Aug 17 2026 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt2
+- passwdqc-min.control: sync default policy with the library.
+
 * Wed Jul 22 2026 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
 - 2.0.3 -> 2.1.0.
 
