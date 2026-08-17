@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10430
+Version: 10456
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -280,6 +280,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Mon Aug 17 2026 Alexey Shabalin <shaba@altlinux.org> 1:10456-alt1
+- Update to b10456.
+
 * Fri Aug 14 2026 Alexey Shabalin <shaba@altlinux.org> 1:10430-alt1
 - Update to b10430.
 - Drop the local SOVERSION sed hacks for libllama/libmtmd/libllama-common.
