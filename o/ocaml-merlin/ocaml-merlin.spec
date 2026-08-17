@@ -1,6 +1,6 @@
 %define pkgname merlin
 Name: ocaml-%pkgname
-Version: 5.8.0.505
+Version: 5.8.1.505
 Release: alt1
 Summary: Editor helper, provides completion, typing and source browsing in Vim and Emacs
 License: MIT
@@ -56,6 +56,9 @@ sed -si 's;lib/ocaml;%_libdir/ocaml;' tests/test-dirs/locate/context-detection/c
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Aug 17 2026 Anton Farygin <rider@altlinux.org> 5.8.1.505-alt1
+- 5.8.0.505 -> 5.8.1.505
+
 * Thu Jun 25 2026 Anton Farygin <rider@altlinux.org> 5.8.0.505-alt1
 - 5.7.0.504 -> 5.8.0.505
 
