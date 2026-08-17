@@ -1,6 +1,6 @@
 Name: passwdqc
-Version: 2.0.3
-Release: alt4
+Version: 2.1.0
+Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -114,7 +114,7 @@ rebuilding.
 %setup -n %name-%version-%release
 
 %build
-%add_optflags -W -Werror -Wno-error=unterminated-string-initialization
+%add_optflags -W -Werror
 %make_build \
 	CPPFLAGS="-DENABLE_NLS=1 -DHAVE_LIBAUDIT=1 -DLINUX_PAM=1 $(getconf LFS_CFLAGS)" \
 	CFLAGS_bin='%optflags' \
@@ -137,6 +137,9 @@ install -pD -m755 passwdqc-match.control \
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+
+%check
+%make_build check
 
 %pre -n lib%name
 %pre_control passwdqc-enforce passwdqc-min passwdqc-match
@@ -170,8 +173,8 @@ install -pD -m755 passwdqc-match.control \
 %_man1dir/*
 
 %changelog
-* Thu Aug 13 2026 Artem Semenov <savoptik@altlinux.org> 2.0.3-alt4
-- Fixed FTBFS after gcc-15 update.
+* Wed Jul 22 2026 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
+- 2.0.3 -> 2.1.0.
 
 * Fri Mar 14 2025 Egor Shestakov <ved@altlinux.org> 2.0.3-alt3
 - Increase minimal pincodes length to 6 (Closes: #53446).
