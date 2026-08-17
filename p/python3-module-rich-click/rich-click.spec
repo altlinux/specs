@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.9.8
-Release: alt1
+Release: alt2
 Summary: Format click help output nicely with rich
 License: MIT
 Group: Development/Python3
@@ -55,6 +55,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 1.9.8-alt2
+- Fixed FTBFS (typer 0.26).
+
 * Fri May 29 2026 Stanislav Levin <slev@altlinux.org> 1.9.8-alt1
 - 1.9.7 -> 1.9.8.
 
