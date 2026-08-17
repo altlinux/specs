@@ -6,7 +6,7 @@
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.6.0
+Version: 0.6.3
 Release: alt1
 
 Summary: Atomic Package Manager 
@@ -80,6 +80,20 @@ done
 %doc README.ru.md
 
 %changelog
+* Sun Aug 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.3-alt1
+- New version: 0.6.3.
+- Fixed marking of requested packages: they are now marked before dependency
+  resolution so providers win during conflicts.
+- Broken-dependency behavior now matches apt-get, protecting requested
+  installs.
+- apm image apply gained a --force flag to skip change checks and dialogs.
+- Image config is now saved only after a successful switch.
+- `sync-groups`: added uid and uid_range user selectors.
+- `fix-nss` now resolves UID conflicts and reports conflict counters.
+- `kernel` module now copies dtb if present.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.6.3
+
 * Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.0-alt1
 - New version: 0.6.0.
 - Added switch command.
