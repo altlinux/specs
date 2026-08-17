@@ -1,6 +1,6 @@
 Name: unrtf
 Version: 0.21.10
-Release: alt1
+Release: alt2
 
 Summary: UnRTF is a moderately complicated converter from RTF to other formats
 License: GPLv3
@@ -11,6 +11,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildRequires:	automake
 
 Source0: %name-%version.tar.gz
+Patch0:  unrtf-0.21.10-alt-fix-compilation.patch
 
 %description
 The program unrtf is a converter from Rich Text Format (RTF) to a
@@ -26,6 +27,7 @@ to separate files in the current directory, or they can be ignored.
 
 %prep
 %setup -q
+%patch0 -p2
 # ALT bug#27309
 #sed -i 's,/usr/local/lib/unrtf/,%_libdir/unrtf/,g' src/path.h
 
@@ -60,6 +62,8 @@ autoreconf -fi
 %_datadir/%name/*
 
 %changelog
+* Mon Aug 17 2026 Anton Meleshnikov <alton@altlinux.org> 0.21.10-alt2
+- FTBFS fix.
 
 * Sat May 01 2021 Ilya Mashkin <oddity@altlinux.ru> 0.21.10-alt1
 - 0.21.10
