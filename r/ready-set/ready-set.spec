@@ -11,12 +11,12 @@
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
 %define soversion 0.13
-%define minor_version 0
+%define minor_version 2
 %define gis_name gnome-initial-setup
 
 Name: ready-set
 Version: %soversion.%minor_version
-Release: alt2
+Release: alt1
 
 Summary: Modular (System Installer | Initial Setup Wizard)
 License: GPL-3.0-or-later
@@ -469,6 +469,16 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Aug 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.2-alt1
+- New version: 0.13.2.
+- Fixed bug with build.
+
+* Sun Aug 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.1-alt1
+- New version: 0.13.1.
+- Fixed a few bugs with installer mode.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.13.1
+
 * Sat Aug 15 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.0-alt2
 - Cherry-pick 5180173df805da03dd55998ffa5e53b2cf9c5e2b from upstream:
   Used warning css style instead of error if enforce-password-quality
