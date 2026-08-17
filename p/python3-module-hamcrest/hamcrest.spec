@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.1.0
-Release: alt2
+Release: alt3
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python3
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -51,11 +52,13 @@ commonly used.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 2.1.0-alt3
+- Fixed FTBFS (Python 3.14).
+
 * Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt2
 - Fixed FTBFS (hatchling 1.23.0).
 
