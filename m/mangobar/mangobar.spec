@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: mangobar
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Simple bar for Mango
@@ -48,6 +48,9 @@ by swaybar and waybar.
 %_bindir/mangobar
 
 %changelog
+* Mon Aug 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.1-alt1
 - new version 0.1.1 (with rpmrb script)
 
