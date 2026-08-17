@@ -1,7 +1,7 @@
 %define repo laguna
 
 Name: gap-laguna
-Version: 3.10.0
+Version: 3.10.1
 Release: alt1
 Summary: GAP: Lie AlGebras and UNits of group Algebras
 License: GPL-2.0+
@@ -43,6 +43,9 @@ rm -Rf scripts
 %gap_sitelib/%repo/
 
 %changelog
+* Mon Aug 17 2026 Leontiy Volodin <lvol@altlinux.org> 3.10.1-alt1
+- New version 3.10.1.
+
 * Wed Aug 12 2026 Leontiy Volodin <lvol@altlinux.org> 3.10.0-alt1
 - New version 3.10.0.
 
