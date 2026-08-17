@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt6
+Release: alt7
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -121,6 +121,18 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Mon Aug 17 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt7
+- Applied multiple upstream security fixes (fixes CVE-2026-70464,
+  CVE-2026-70463, CVE-2026-70462, CVE-2026-70461, CVE-2026-70460,
+  CVE-2026-70459, CVE-2026-70458, CVE-2026-70457, CVE-2026-70456,
+  CVE-2026-70455, CVE-2026-70454, CVE-2026-70453, CVE-2026-70452,
+  CVE-2026-53803, CVE-2026-53802, CVE-2026-53801, CVE-2026-53800,
+  CVE-2026-53799, CVE-2026-53798, CVE-2026-53797, CVE-2026-53796,
+  CVE-2026-53795, CVE-2026-53794, CVE-2026-53793, CVE-2026-53792,
+  CVE-2026-53791, CVE-2026-53790, CVE-2026-53789, CVE-2026-53788,
+  CVE-2026-53786, CVE-2026-53785, CVE-2026-53784, CVE-2026-53783,
+  CVE-2026-45232).
+
 * Thu Jul 16 2026 Alexander Danilov <admsasha@altlinux.org> 3.2.7-alt6
 - Apply upstream commit 7e5e1ef90c9c. (Fixes: CVE-2026-41035).
 
