@@ -2,9 +2,9 @@
 
 %def_with check
 
-Name:    python3-module-py%oname
+Name:    python3-module-%oname
 Version: 0.12.1
-Release: alt2
+Release: alt3
 
 Summary: Python SPNEGO authentication library
 
@@ -12,6 +12,8 @@ License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/pyspnego
 VCS:     https://github.com/jborean93/pyspnego
+
+Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildArch: noarch
 
@@ -21,8 +23,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cryptography
-Obsoletes: python3-module-spnego <= 0.12.1-alt1
-Provides: python3-module-spnego = %EVR
+Obsoletes: python3-module-pyspnego <= 0.12.1-alt2
+Provides: python3-module-pyspnego = %EVR
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -62,6 +64,9 @@ sed -i 's/main()/main(sys.argv[1:])/' %buildroot%_bindir/pyspnego-parse
 %python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Mon Aug 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt3
+- Renamed back to spnego according original module name.
+
 * Mon Aug 17 2026 Anton Farygin <rider@altlinux.org> 0.12.1-alt2
 - Renamed to pyspnego accroridng upstream and pypi name.
 
