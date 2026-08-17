@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
 Group: Development/Python3
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -55,11 +56,13 @@ common best practices.
 %pyproject_run -- inv test -o=-Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 4.0.2-alt2
+- Fixed FTBFS (sphinx 9.0).
+
 * Tue Aug 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
 - 3.3.0 -> 4.0.2.
 
