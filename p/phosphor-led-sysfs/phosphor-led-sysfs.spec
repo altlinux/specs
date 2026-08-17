@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: phosphor-led-sysfs
 Version: 1.0.0
-Release: alt0.1.gf8548eeb
+Release: alt1.git4117851.1
 
 Summary: Application to manage BMC-owned LEDs using Linux sysfs interfaces
 License: Apache-2.0
@@ -49,5 +52,8 @@ export CXXFLAGS="%{optflags} -std=c++23"
 %_udevrulesdir/*.rules
 
 %changelog
+* Wed Jun 25 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt1.git4117851.1
+- New snapshot.
+
 * Wed Apr 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt0.1.gf8548eeb
 - Initial build for ALT.

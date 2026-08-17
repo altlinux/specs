@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: phosphor-certificate-manager
 Version: 0.0.1
-Release: alt1.gitaf701a6
+Release: alt2.gitefe7c29.1
 
 Summary: Certificate management allows the user to install a certificates
 License: Apache-2.0
@@ -50,5 +53,9 @@ client certificates.
 %_datadir/phosphor-certificate-manager
 
 %changelog
+* Thu Jul 23 2026 Anatoly Mukosey <mukav@altlinux.org> 0.0.1-alt2.gitefe7c29.1
+- Merge with upstream efe7c29.
+- Update build for Sisyphus.
+
 * Thu Dec 04 2025 Ulysses Apokin <ulysses@altlinux.org> 0.0.1-alt1.gitaf701a6
 - Initial build for Sisyphus.

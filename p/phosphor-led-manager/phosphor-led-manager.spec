@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_usr/libexec
 
 Name: phosphor-led-manager
 Version: 1.0.0
-Release: alt0.2.gccca8eb3
+Release: alt1.git67b186c.1
 
 Summary: This project manages LED groups on dbus
 License: Apache-2.0
@@ -34,7 +37,7 @@ the system, they should all light up together.
 
 %build
 export CXXFLAGS="%{optflags} -std=c++23"
-%meson -Dtests=disabled
+%meson
 %meson_build
 
 %install
@@ -56,6 +59,10 @@ export CXXFLAGS="%{optflags} -std=c++23"
 %_unitdir/*
 
 %changelog
+* Thu Jun 26 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt1.git67b186c.1
+- Merge with upstream 67b186c.
+- Enable tests.
+
 * Wed Aug 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt0.2.gccca8eb3
 - update from upstream/master
 

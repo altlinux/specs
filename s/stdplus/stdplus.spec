@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:    stdplus
 Version: 0.1
-Release: alt2.gitd8e0af5
+Release: alt3.git9b9648d.1
 
 Summary: The minimum set of features needed by the OpenBMC project
 License: Apache-2.0
@@ -15,6 +18,7 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(fmt)
 BuildRequires: pkgconfig(liburing)
 BuildRequires: function2-devel
+BuildRequires: pkgconfig(gtest)
 
 %description
 %name is a C++ project containing commonly used classes and functions for
@@ -52,6 +56,7 @@ OpenBMC project and other users.
 
 %files -n lib%name-devel
 %doc *.md
+%_bindir/run_with_tmp
 %_libdir/lib%name.so
 %_libdir/lib%name-*.so
 %_includedir/%name
@@ -59,6 +64,10 @@ OpenBMC project and other users.
 %_pkgconfigdir/%name-*.pc
 
 %changelog
+* Thu Jun 25 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt3.git9b9648d.1
+- New snapshot.
+- Enable tests.
+
 * Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt2.gitd8e0af5
 - NMU: Downgraded to commit from revision list.
 

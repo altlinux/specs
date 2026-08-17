@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # Replace the hash of the archive containing the source code or patches from
 # Meson WrapDB packages with the hash of our archives generated in hasher.
 # This is necessary for dependency vendoring.
@@ -16,7 +19,7 @@
 
 Name: x86-power-control
 Version: 0.1
-Release: alt1.git05e8ea8
+Release: alt2.git6ecef57.1
 
 Summary: Implementation of power control for x86 servers
 License: Apache-2.0
@@ -35,7 +38,7 @@ Source1: libgpiod-1.6.3.tar.gz
 # https://wrapdb.mesonbuild.com/v2/libgpiod_1.6.3-1/get_patch
 Source2: libgpiod_1.6.3-1_patch.zip
 
-Patch: fix-x86-power-control-ALT-libgpiod-1.6.3-linker.patch
+Patch:  fix-x86-power-control-ALT-libgpiod-1.6.3-linker.patch
 
 BuildRequires(Pre): rpm-macros-meson
 
@@ -44,6 +47,8 @@ BuildRequires: libphosphor-logging-devel
 BuildRequires: libsdbusplus-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: meson
+BuildRequires: boost-devel
+BuildRequires: boost-asio-devel
 
 ExclusiveArch: %ix86 x86_64
 
@@ -101,5 +106,10 @@ install -Dpm 0644 %SOURCE2 subprojects/packagecache
 %_datadir/%name
 
 %changelog
+* Wed Jun 28 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.git6ecef57.1
+- Merge with upstream 6ecef57.
+- Update build for Sisyphus.
+- Restore original Boost version.
+
 * Thu Dec 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt1.git05e8ea8
 - Initial build for Sisyphus.

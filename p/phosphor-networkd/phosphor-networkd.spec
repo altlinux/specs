@@ -2,7 +2,7 @@
 
 Name:    phosphor-networkd
 Version: 1.0.0
-Release: alt1.gitdce7fe7
+Release: alt2.git09916b5.1
 
 Summary: dBUS-based network manager
 License: Apache-2.0
@@ -10,6 +10,8 @@ Group:   Other
 Url:     https://github.com/openbmc/phosphor-networkd.git
 
 Source: %name-%version.tar
+
+Patch: fix_build_issues_memcpy_is_not_a_member_of_std.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -22,6 +24,7 @@ BuildRequires: pkgconfig(sdbusplus)
 BuildRequires: pkgconfig(sdeventplus)
 BuildRequires: libnl-devel
 BuildRequires: sdbusplus-tools
+BuildRequires: cli11-devel
 
 %description
 A Network Manager is a daemon which handles network management operations.
@@ -38,13 +41,16 @@ interface object.
 # Initial stage. Prepare sources
 %prep
 %setup
+%autopatch -p1
 
 %build
-%meson -Dtests=disabled
+%meson
 %meson_build
 
 %install
 %meson_install
+# Removing unused DBus API wrappers
+rm -rf %buildroot%_includedir/xyz/openbmc_project/Network
 
 %preun
 %preun_service xyz.openbmc_project.Network
@@ -59,5 +65,9 @@ interface object.
 %_datadir/dbus-1/system.d/*.conf
 
 %changelog
+* Thu Jun 26 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt2.git09916b5.1
+- New snapshot.
+- Enable tests.
+
 * Thu Jan 15 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt1.gitdce7fe7
 - Initial build for Sisyphus.

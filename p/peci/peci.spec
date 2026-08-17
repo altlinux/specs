@@ -2,7 +2,7 @@
 
 Name: peci
 Version: 1.0
-Release: alt0.1.g230b8570
+Release: alt1.git4bf9f90.1
 
 Summary: A command-line utility with functions that map to the libpeci APIs.
 License: Apache-2.0
@@ -17,6 +17,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: meson
 BuildRequires: pkgconfig(sdbusplus)
 BuildRequires: boost-devel
+BuildRequires: boost-asio-devel
 BuildRequires: systemd-devel
 
 %description
@@ -67,6 +68,10 @@ export CXXFLAGS="%{optflags} -std=c++23"
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Jun 24 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0-alt1.git4bf9f90.1
+- Merge with upstream 4bf9f90.
+- Update build for Sisyphus.
+
 * Wed Aug 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt0.1.g230b8570
 - Initial build for ALT.
 

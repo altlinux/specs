@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define soversion 1
 
 Name:           sdbusplus
 Version:        1.0.0
-Release:        alt3.gitfe1ebd4
+Release:        alt4.git542f199.1
 
 Summary:        C++ bindings for systemd dbus APIs
 
@@ -12,7 +14,7 @@ URL:            https://www.openbmc.org
 Vcs:            https://github.com/openbmc/sdbusplus.git
 
 Source:         %name-%version.tar
-Patch: 0001-boost-version-1.86-support.patch
+Patch:          0001-Fix-path-of-tests-headers.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ cmake
@@ -25,6 +27,7 @@ BuildRequires: python3(mako)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(yaml)
 BuildRequires: boost-asio-devel
+BuildRequires: stdexec-devel
 
 %description
 %name contains two parts:
@@ -59,11 +62,10 @@ built on top of the sd-bus library from systemd.
 
 %prep
 %setup
-sed -i 's/using __decay_t = __decay(_Ty);/using __decay_t = std::decay_t<_Ty>;/g' include/sdbusplus/async/stdexec/__detail/__type_traits.hpp
 %autopatch -p1
 
 %build
-%meson -Dtests=disabled -Dexamples=disabled
+%meson -Dexamples=disabled
 %meson_build
 pushd tools
 %pyproject_build
@@ -90,6 +92,10 @@ popd
 %python3_sitelibdir_noarch/%name-1.0.dist-info
 
 %changelog
+* Wed Jul 22 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt4.git542f199.1
+- New snapshot.
+- Enable tests.
+
 * Mon Jul 06 2026 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt3.gitfe1ebd4
 - Fixed FTBFS.
 

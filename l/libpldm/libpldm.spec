@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:    libpldm
-Version: 0.15.0
-Release: alt1
+Version: 0.16.0
+Release: alt1.giteccbba1.1
 
 Summary: Encoding and decoding of PLDM messages library
 License: Apache-2.0
@@ -50,14 +53,22 @@ subst "/	      \"PLDM_ALIGNOF_PLDM_FD wrong\");/d" src/firmware_device/fd.c
 
 %files
 %_libdir/%name.so.*
+%_libdir/%name++.so.*
 
 %files -n %name-devel
 %_includedir/%name
+%_includedir/%name++
 %_libdir/%name.so
+%_libdir/%name++.so
 %_pkgconfigdir/%name.pc
+%_pkgconfigdir/%name++.pc
 %_datadir/%name
 
 %changelog
+* Wed Jun 24 2026 Anatoly Mukosey <mukav@altlinux.org> 0.16.0-alt1.giteccbba1.1
+- Merge with upstream eccbba1.
+- Update build for Sisyphus.
+
 * Thu Feb 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.15.0-alt1
 - New version.
 

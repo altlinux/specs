@@ -1,6 +1,6 @@
 Name: phosphor-user-manager
 Version: 0.1
-Release: alt2.git34e6ccd.1
+Release: alt3.git19c0883.1
 
 Summary: Tools for working with LDAP and CA certificates
 License: Apache-2.0
@@ -16,13 +16,15 @@ BuildRequires(Pre): rpm-macros-meson
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: cereal-devel
-BuildRequires: gcc-c++
+BuildRequires: cmake gcc-c++
 BuildRequires: libphosphor-dbus-interfaces-devel
 BuildRequires: libphosphor-logging-devel
 BuildRequires: libldap-devel
 BuildRequires: libsdbusplus-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: meson
+BuildRequires: libpam0-devel
+BuildRequires: boost-asio-devel
 
 Requires: phosphor-certificate-manager
 
@@ -50,6 +52,9 @@ Requires: phosphor-certificate-manager
 %_datadir/phosphor-certificate-manager/nslcd
 
 %changelog
+* Wed Jun 26 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt3.git19c0883.1
+- New snapshot.
+
 * Thu Mar 10 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.git34e6ccd.1
 - Added dbus config and systemd unit file.
 

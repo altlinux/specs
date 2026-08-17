@@ -2,7 +2,7 @@
 
 Name: phosphor-settingsd
 Version: 1.0
-Release: alt1
+Release: alt2.git4af51a7.1
 
 Summary: Interfaces to let the user configure
 
@@ -42,6 +42,9 @@ and retrieving configuration settings via D-Bus.
 %_bindir/phosphor-settings-manager
 
 %changelog
+* Thu Jul 23 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0-alt2.git4af51a7.1
+- Merge with upstream 4af51a7.
+
 * Tue Aug 12 2025 Anton Meleshnikov <alton@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
 

@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # Replace the hash of the archive containing the source code or patches from
 # Meson WrapDB packages with the hash of our archives generated in hasher.
 # This is necessary for dependency vendoring.
@@ -16,7 +19,7 @@
 
 Name: phosphor-state-manager
 Version: 0.1
-Release: alt1.git39e0cbe
+Release: alt2.git52eae86.1
 
 Summary: Tracking and controlling the state of different objects
 License: Apache-2.0
@@ -49,6 +52,7 @@ BuildRequires: libsdbusplus-devel
 BuildRequires: libsdeventplus-devel
 BuildRequires: meson
 BuildRequires: nlohmann-json-devel
+BuildRequires: stdexec-devel
 
 ExcludeArch: %ix86
 
@@ -69,7 +73,7 @@ are in on/running states.
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 
 # Meson downloads source code from the internet and places it in a directory
 # subprojects/packagecache.
@@ -90,6 +94,10 @@ install -Dpm 0644 %SOURCE1 subprojects/packagecache
 
 install -Dpm 0644 %SOURCE2 subprojects/packagecache
 
+# Restore path to binary in unit files
+sed -i "s|ExecStart=/usr/libexec/phosphor-state-manager/|ExecStart=%_libexecdir/%name/|g" \
+    service_files/*.service
+
 %build
 %meson
 %meson_build
@@ -101,17 +109,7 @@ install -Dpm 0644 %SOURCE2 subprojects/packagecache
 %files
 %_sysconfdir/phosphor-systemd-target-monitor
 %_bindir/obmcutil
-%_bindir/phosphor-bmc-state-manager
-%_bindir/phosphor-chassis-check-power-status
-%_bindir/phosphor-chassis-state-manager
-%_bindir/phosphor-discover-system-state
 %_bindir/phosphor-host-condition-gpio
-%_bindir/phosphor-host-reset-recovery
-%_bindir/phosphor-host-state-manager
-%_bindir/phosphor-hypervisor-state-manager
-%_bindir/phosphor-scheduled-host-transition
-%_bindir/phosphor-secure-boot-check
-%_bindir/phosphor-systemd-target-monitor
 %_libexecdir/%name
 %_unitdir/obmc-bmc-service-quiesce@.target
 %_unitdir/obmc-chassis-blackout@.target
@@ -178,7 +176,14 @@ install -Dpm 0644 %SOURCE2 subprojects/packagecache
 %_unitdir/xyz.openbmc_project.State.Host@.service
 %_unitdir/xyz.openbmc_project.State.Hypervisor.service
 %_unitdir/xyz.openbmc_project.State.ScheduledHostTransition@.service
+%_unitdir/obmc-bmc-service-quiesce@0.target.wants/phosphor-bmc-quiesce-reboot.service
+%_unitdir/phosphor-bmc-quiesce-reboot.service
+%_unitdir/phosphor-chassis-wait-for-smp-poweron.service
 
 %changelog
+* Wed Jun 25 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.git52eae86.1
+- New snapshot.
+- Restore path to binary in unit files.
+
 * Wed Dec 10 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt1.git39e0cbe
 - Initial build for Sisyphus.

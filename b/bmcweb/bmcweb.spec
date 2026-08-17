@@ -5,7 +5,7 @@
 
 Name: bmcweb
 Version: 1.0
-Release: alt1.git5fe4ef3.1
+Release: alt2.gitf917a46.1
 
 Summary: A do everything Redfish, KVM, GUI, and DBus webserver for OpenBMC
 License: Apache-2.0
@@ -15,9 +15,9 @@ Vcs: https://github.com/openbmc/bmcweb.git
 
 Source: %name-%version.tar
 
-Patch: 0001-boost-version-1.86-support.patch
-Patch1: fix-bmcweb-git5fe4ef3-ALT-installation-path.patch
-Patch2: Fix_pam_rules_for_alt_OS.patch
+Patch:  0001-PATCH-fix-bmcweb-installation-path.patch
+Patch1: 0002-PATCH-Fix-pam-rules-for-alt-OS.patch
+Patch2: 0003-PATCH-Add-boost_url-and-boost_process-link-flags.patch
 
 BuildRequires(Pre): rpm-macros-meson
 BuildRequires(Pre): rpm-macros-webserver-common
@@ -27,6 +27,7 @@ BuildRequires: boost-asio-devel
 BuildRequires: boost-beast-devel
 BuildRequires: boost-devel-headers
 BuildRequires: boost-filesystem-devel
+BuildRequires: boost-url
 BuildRequires: cli11-devel
 BuildRequires: gcc-c++
 BuildRequires: libnghttp2-devel
@@ -38,6 +39,8 @@ BuildRequires: libtinyxml2-devel
 BuildRequires: meson
 BuildRequires: nlohmann-json-devel
 BuildRequires: zlib-devel
+BuildRequires: libzstd-devel
+BuildRequires: cmake
 
 %filter_from_requires /bmcwebd/d
 %filter_from_requires /common-account/d
@@ -90,11 +93,13 @@ useradd -M -r -g %pseudouser -G _webserver -c 'OpenBMC bmcweb' \
 %_sysconfdir/pam.d/%name
 %_bindir/%name
 %_datadir/%name
-%attr(2711,root,%pseudouser) %_libexecdir/%{name}d
 %attr(2775,root,%pseudouser) %_localstatedir/%{name}
 %_unitdir/%name.service
 %_unitdir/%name.socket
 
 %changelog
+* Mon Jun 29 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0-alt2.gitf917a46.1
+- New snapshot.
+
 * Tue Mar 31 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0-alt1.git5fe4ef3.1
 - Initial build for Sisyphus.

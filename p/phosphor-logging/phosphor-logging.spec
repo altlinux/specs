@@ -2,7 +2,7 @@
 
 Name:    phosphor-logging
 Version: 1.0.0
-Release: alt1.gitfc14867
+Release: alt2.git383e9c1.1
 
 Summary: Libraries for common event and logging creation.
 License: Apache-2.0
@@ -21,6 +21,7 @@ BuildRequires: libphosphor-dbus-interfaces-devel
 BuildRequires: phosphor-dbus-interfaces-data
 BuildRequires: cli11-devel
 BuildRequires: libdbus-devel
+BuildRequires: stdexec-devel
 
 %description
 The phosphor logging provides mechanisms for event and journal logging.
@@ -43,7 +44,7 @@ Group:   Development/C++
 %setup
 
 %build
-%meson -Dtests=disabled
+%meson
 %meson_build
 
 %install
@@ -69,9 +70,14 @@ Group:   Development/C++
 
 %files -n lib%name-devel
 %_includedir/%name
+%_includedir/xyz/openbmc_project/Logging
 %_libdir/libphosphor_logging.so
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jun 24 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt2.git383e9c1.1
+- New snapshot.
+- Enable tests.
+
 * Mon Aug 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1.gitfc14867
 - Initial build for Sisyphus.

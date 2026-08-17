@@ -3,7 +3,7 @@
 
 Name: phosphor-dbus-interfaces
 Version: 1.0.0
-Release: alt2.git5774060
+Release: alt3.gite5cafef.1
 
 Summary: YAML descriptors of standard dbus interfaces
 
@@ -76,8 +76,13 @@ YAML descriptors of standard dbus interfaces.
 
 %files data
 %_datadir/phosphor-dbus-yaml
+%_datadir/redfish-registry
 
 %changelog
+* Wed Jun 24 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt3.gite5cafef.1
+- Merge with upstream e5cafef.
+- Update build for Sisyphus.
+
 * Tue Jun 03 2025 Anton Meleshnikov <alton@altlinux.org> 1.0.0-alt2.git5774060
 - Rollback to git5774060.
 

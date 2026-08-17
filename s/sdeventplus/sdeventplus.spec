@@ -1,6 +1,6 @@
 Name:    sdeventplus
 Version: 0.1
-Release: alt2.git18db9a3
+Release: alt3.git857171a.1
 
 Summary: A c++ wrapper around the systemd sd_event apis meant to provide c++ ergonomics to their usage
 License: Apache-2.0
@@ -56,6 +56,10 @@ C++ ergonomics to their usage.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jun 25 2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt3.git857171a.1
+- Merge with upstream 857171a.
+- Update build for Sisyphus.
+
 * Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt2.git18db9a3
 - NMU: Downgraded to commit from revision list.
 

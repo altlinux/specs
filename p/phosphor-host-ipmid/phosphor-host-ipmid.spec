@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=relaxed
 
 Name: phosphor-host-ipmid
 Version: 1.0.0
-Release: alt2.gita809fa5
+Release: alt3.git4032853.1
 
 Summary: dbus-based ipmid for host-endpoint IPMI commands
 License: Apache-2.0
@@ -11,8 +14,7 @@ Url: https://github.com/openbmc/phosphor-host-ipmid
 Vcs: https://github.com/openbmc/phosphor-host-ipmid.git
 
 Source: %name-%version.tar
-Patch0: 0001-boost-version-1.86-support.patch
-Patch1: 0002-Fix-bug-in-the-name-of-array-of-whitelisted-commands.patch
+Patch: change_path_of_serialbridged_to_the_bindir.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -32,6 +34,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: meson
 BuildRequires: pkg-config
 BuildRequires: sdbusplus-tools
+BuildRequires: stdexec-devel
 
 %description
 %summary.
@@ -39,7 +42,6 @@ BuildRequires: sdbusplus-tools
 %package -n %name-devel
 Summary: Development files for %name
 Group: Development/C++
-BuildArch: noarch
 Requires: libipmid-devel = %EVR
 Requires: libsoftoff-dbus-devel = %EVR
 
@@ -106,6 +108,8 @@ Requires: libsoftoff-dbus = %EVR
 
 %files -n ipmid
 %_bindir/ipmid
+%_bindir/serialbridged
+%_unitdir/serialbridge@.service
 
 %files -n phosphor-softpoweroff
 %_bindir/phosphor-softpoweroff
@@ -123,6 +127,9 @@ Requires: libsoftoff-dbus = %EVR
 %_libdir/ipmid-providers/libsysintfcmds.so.*
 %_libdir/ipmid-providers/libusercmds.so.*
 %_libdir/ipmid-providers/libwhitelist.so.*
+%_libdir/ipmid-providers/libarm_ipmi_oem.so*
+%_libdir/ipmid-providers/libexample-oem.so*
+%_libdir/ipmid-providers/libnvidia_ipmi_oem.so*
 %_libdir/libuserlayer.so.*
 
 %files -n libsoftoff-dbus
@@ -155,6 +162,9 @@ Requires: libsoftoff-dbus = %EVR
 %_pkgconfigdir/softoff-dbus.pc
 
 %changelog
+* Wed Jun 27 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt3.git4032853.1
+- New snapshot.
+
 * Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gita809fa5
 - Downgraded to commit from revision list.
 

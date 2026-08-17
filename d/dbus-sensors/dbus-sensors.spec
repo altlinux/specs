@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # Replace the hash of the archive containing the source code or patches from
 # Meson WrapDB packages with the hash of our archives generated in hasher.
 # This is necessary for dependency vendoring.
@@ -16,7 +19,7 @@
 
 Name: dbus-sensors
 Version: 0.1
-Release: alt2.gitd7be555.1
+Release: alt3.gitd41f8cb.1
 
 Summary: D-Bus configurable sensor scanning applications
 License: Apache-2.0
@@ -36,10 +39,11 @@ Source1: libgpiod-1.6.3.tar.gz
 Source2: libgpiod_1.6.3-1_patch.zip
 
 Patch: fix-dbus-sensors-ALT-libgpiod-1.6.3-linker.patch
-Patch1: Add_support_for_W83795G_sensor.patch
-Patch2: Set_LED_if_fan_is_not_present.patch
-Patch3: Add_possibility_to_set_ScaleFactor_for_Tachs.patch
-Patch4: Set_Fan_LED_group_on_service_start.patch
+Patch1: 0001-PATCH-Add-support-for-W83795G-sensor.patch
+Patch2: 0002-PATCH-Set-LED-if-fan-is-not-present.patch
+Patch3: 0003-PATCH-Add-possibility-to-set-ScaleFactor-for-Tachs.patch
+Patch4: 0004-PATCH-Set-Fan-LED-group-on-service-start.patch
+Patch5: 0005-PATCH-Fix-path-of-binary-files.patch
 
 BuildRequires(Pre): rpm-macros-meson
 
@@ -51,6 +55,9 @@ BuildRequires: libphosphor-logging-devel
 BuildRequires: libsdbusplus-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: meson
+BuildRequires: boost-devel
+BuildRequires: boost-asio-devel
+BuildRequires: stdexec-devel
 
 %description
 dbus-sensors is a collection of sensor applications that provide the
@@ -90,30 +97,13 @@ install -Dpm 0644 %SOURCE2 subprojects/packagecache
 %__meson_install --skip-subprojects libgpiod
 
 %files
-%_bindir/adcsensor
-%_bindir/exitairtempsensor
-%_bindir/externalsensor
-%_bindir/fansensor
-%_bindir/hwmontempsensor
-%_bindir/intelcpusensor
-%_bindir/intrusionsensor
-%_bindir/ipmbsensor
-%_bindir/mcutempsensor
-%_bindir/nvmesensor
-%_bindir/psusensor
-%_unitdir/xyz.openbmc_project.adcsensor.service
-%_unitdir/xyz.openbmc_project.exitairsensor.service
-%_unitdir/xyz.openbmc_project.externalsensor.service
-%_unitdir/xyz.openbmc_project.fansensor.service
-%_unitdir/xyz.openbmc_project.hwmontempsensor.service
-%_unitdir/xyz.openbmc_project.intelcpusensor.service
-%_unitdir/xyz.openbmc_project.intrusionsensor.service
-%_unitdir/xyz.openbmc_project.ipmbsensor.service
-%_unitdir/xyz.openbmc_project.mcutempsensor.service
-%_unitdir/xyz.openbmc_project.nvmesensor.service
-%_unitdir/xyz.openbmc_project.psusensor.service
+%_libexecdir/dbus-sensors
+%_unitdir/xyz.openbmc_project.*.service
 
 %changelog
+* Fri Mar 6  2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt3.gitd41f8cb.1
+- New snapshot.
+
 * Fri Mar 6  2026 Anatoly Mukosey <mukav@altlinux.org> 0.1-alt2.gitd7be555.1
 - Set led if fan is not present.
 - Set fan led group on service start.

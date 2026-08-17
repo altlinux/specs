@@ -1,6 +1,6 @@
 Name: phosphor-objmgr
 Version: 1.0.0
-Release: alt2.gitea0e5d2
+Release: alt3.git3fb58d2.1
 
 Summary: Phosphor Object Manager
 License: Apache-2.0
@@ -56,8 +56,7 @@ Requires: lib%name = %EVR
 %setup
 
 %build
-%meson -Dtests=disabled \
-	-Dwerror=false
+%meson -Dwerror=false
 %meson_build
 
 %install
@@ -79,6 +78,10 @@ Requires: lib%name = %EVR
 %_datadir/dbus-1/*/*
 
 %changelog
+* Thu Jun 25 2026 Author: Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt3.git3fb58d2.1
+- New snapshot.
+- Enable tests.
+
 * Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gitea0e5d2
 - Downgraded to commit from revision list.
 

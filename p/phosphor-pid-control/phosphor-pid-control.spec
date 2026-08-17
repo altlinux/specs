@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=relaxed
 
 Name: phosphor-pid-control
 Version: 1.0.0
-Release: alt2.git3bfece8.1
+Release: alt3.git1125042.1
 
 Summary: OpenBMC PID-based Thermal Control Daemon
 License: Apache-2.0
@@ -12,9 +15,7 @@ Vcs: https://github.com/openbmc/phosphor-pid-control.git
 
 Source: %name-%version.tar
 
-Patch: Change_defualt_for_handle-missing-object-paths_option.patch
-Patch1: Fix_build_with_our_old_sdbusplus.patch
-Patch2: Print_fail_reason_why_zone_enters_failsafe_mode.patch
+Patch: Print_fail_reason_why_zone_enters_failsafe_mode.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -28,6 +29,7 @@ BuildRequires: libphosphor-logging-devel
 BuildRequires: libsystemd-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: pkg-config
+BuildRequires: stdexec-devel
 
 %description
 This is a daemon running within the OpenBMC environment. It uses a
@@ -63,7 +65,7 @@ Requires: libmanualcmds = %EVR
 %autopatch -p1
 
 %build
-%meson
+%meson -Dhandle-missing-object-paths=true
 %meson_build
 
 %install
@@ -81,6 +83,9 @@ Requires: libmanualcmds = %EVR
 %_libdir/ipmid-providers/libmanualcmds.so
 
 %changelog
+* Wed Jun 27 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt3.git1125042.1
+- New snapshot.
+
 * Tue Mar 10 2026 Anatoly Mukosey <mukav@altlinux.org> 1.0.0-alt2.git3bfece8.1
 - Update to the 3bfece8 upstream stage.
 - Change defualt for handle-missing-object-paths option.
