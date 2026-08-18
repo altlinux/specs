@@ -3,24 +3,29 @@
 %if_enabled static
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %endif
-%define abiversion 6
-%define oname cln
+# libtool current - age; SONAME libcln.so.6
+%define sover 6
+%define libname libcln%sover
 
-Name: %oname%abiversion
-Version: 1.3.6
-Release: alt2
+Name: cln
+Version: 1.3.7
+Release: alt1
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
 License: GPLv2+
-Url: http://www.ginac.de/CLN
+Url: https://www.ginac.de/CLN
+VCS: https://codeberg.org/ginac/cln
 
-Source: %oname-%version.tar
+Source: cln-%version.tar
 
-# Automatically added by buildreq on Fri Jun 17 2005
 BuildRequires: gcc-c++ libgmp-devel libstdc++-devel
-# explicitly added texinfo for info files
 BuildRequires: texinfo
+# gnulib havelib macros (AC_LIB_LINKFLAGS_FROM_LIBS) and config.rpath;
+# not shipped in the git checkout, and since gettext 0.22 not in aclocal/
+BuildRequires: gettext-tools
+# AX_CXX_COMPILE_STDCXX: dropped from git in 1.3.7, autogen.sh fetches it
+BuildRequires: autoconf-archive
 
 %description
 Class Library for Numbers.
@@ -31,11 +36,11 @@ Features:
 - Speed efficiency.
 - Interoperability.
 
-%package -n lib%name
+%package -n %libname
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
 
-%description -n lib%name
+%description -n %libname
 Class Library for Numbers.
 Features:
 - Rich set of number classes.
@@ -44,48 +49,56 @@ Features:
 - Speed efficiency.
 - Interoperability.
 
-%package -n lib%oname-devel
+%package -n libcln-devel
 Summary: CLN development package
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %libname = %EVR
 
-%description -n lib%oname-devel
+%description -n libcln-devel
 The CLN package contains the header files needed for developing
 applications that use CLN library. Install libcln-devel if
 you want to develop applications using CLN.
 
 %if_enabled static
-%package -n lib%oname-devel-static
+%package -n libcln-devel-static
 Summary: CLN static library
 Group: Development/C
-Requires: lib%oname-devel = %version-%release
+Requires: libcln-devel = %EVR
 
-%description -n lib%oname-devel-static
+%description -n libcln-devel-static
 This package contains static version of CLN library. Install
 libcln-devel-static if you want to develop applications statically linked
 with CLN.
 %endif
 
-%package -n lib%oname-doc
+%package -n libcln-doc
 Summary: CLN library documentation
 Group: Development/Documentation
 BuildArch: noarch
 
-%description -n lib%oname-doc
+%description -n libcln-doc
 This package contains documentation on CLN library.
 
-%package -n pi
+%package -n cln-pi
 Summary: Compute decimal Archimedes' constant Pi to arbitrary accuracy
 Group: Sciences/Mathematics
-Requires: lib%name = %version-%release
-Conflicts: puppet
+Requires: %libname = %EVR
 
-%description -n pi
+%description -n cln-pi
 Compute decimal Archimedes' constant Pi to arbitrary accuracy.
 
 %prep
-%setup 
+%setup
 rm -f aclocal.m4
+# Provide macros that upstream's autogen.sh downloads from gnulib/gettext.
+cp %_datadir/gettext/m4/lib-ld.m4 \
+   %_datadir/gettext/m4/lib-link.m4 \
+   %_datadir/gettext/m4/lib-prefix.m4 \
+   %_datadir/gettext/m4/host-cpu-c-abi.m4 \
+   %_datadir/aclocal/ax_cxx_compile_stdcxx.m4 \
+   m4/
+mkdir -p build-aux
+cp %_datadir/gettext/config.rpath build-aux/
 
 %build
 %ifarch %arm
@@ -98,6 +111,8 @@ rm -f aclocal.m4
 
 %install
 %make_install DESTDIR=%buildroot install
+mv %buildroot%_bindir/pi %buildroot%_bindir/cln-pi
+mv %buildroot%_man1dir/pi.1 %buildroot%_man1dir/cln-pi.1
 
 %check
 %make_build check
@@ -105,27 +120,32 @@ rm -f aclocal.m4
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
 
-%files -n lib%name
+%files -n %libname
 %_libdir/*.so.*
-%_man1dir/*
 
-%files -n lib%oname-devel
+%files -n libcln-devel
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
 
 %if_enabled static
-%files -n lib%oname-devel-static
+%files -n libcln-devel-static
 %_libdir/*.a
 %endif
 
-%files -n lib%oname-doc
+%files -n libcln-doc
 %_infodir/*
 
-%files -n pi
-%_bindir/pi
+%files -n cln-pi
+%_bindir/cln-pi
+%_man1dir/cln-pi.1*
 
 %changelog
+* Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 1.3.7-alt1
+- 1.3.6 -> 1.3.7
+- renamed source package cln6 -> cln (runtime stays libcln6)
+- renamed pi -> cln-pi
+
 * Sat Jul 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.6-alt2
 - Added upstream patch for LoongArch architecture (lp64d ABI) support
 - spec:
