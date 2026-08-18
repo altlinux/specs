@@ -1,7 +1,7 @@
 %set_gcc_version 14
 Name:    zxtune
 Version: r5075
-Release: alt2.git44be56a
+Release: alt3.git44be56a
 
 Summary: Crossplatform chiptune player
 License: GPL
@@ -50,6 +50,9 @@ install -Dpm0644 ./apps/zxtune123/dist/dingux/zxtune.png %buildroot%_iconsdir/%n
 %_iconsdir/%name.png
 
 %changelog
+* Tue Aug 18 2026 Artyom Bystrov <arbars@altlinux.org> r5075-alt3.git44be56a
+- Rebuild with new boost version
+
 * Tue May  5 2026 Artyom Bystrov <arbars@altlinux.org> r5075-alt2.git44be56a
 - Set GCC14 by default
 
