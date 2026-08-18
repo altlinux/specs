@@ -1,7 +1,7 @@
 %define repo cohomolo
 
 Name: gap-cohomolo
-Version: 1.6.12
+Version: 1.7.0
 Release: alt1
 Summary: GAP: Cohomology groups of finite groups on finite modules
 License: GPL-2.0
@@ -13,7 +13,6 @@ VCS: https://github.com/gap-packages/cohomolo
 Source: %repo-%version.tar
 Patch: %repo-%version-%release.patch
 
-BuildPreReq: fdupes
 BuildPreReq: rpm-macros-gap
 BuildRequires: gap-devel
 Requires: gap >= 4.7
@@ -25,29 +24,26 @@ first and second cohomology groups of finite groups acting on finite
 modules.
 
 %prep
-%setup -n cohomolo-%version
+%setup -n cohomolo
 %patch -p1
-sed -i 's/FILE  *ip,*op;/extern FILE  *ip,*op;/' \
-    standalone/progs.d/crp1.c \
-    standalone/progs.d/testchb.c
-sed -i 's/FILE *ip,*op;/extern FILE *ip,*op;/' \
-    standalone/progs.d/{egp.c,exa.c,gpp.c,gppb.c,grp.c,matperm.c,mcp.c,normp1.c,"nq+chfns.c",nqmfns.c,nqmp.c,optp.c,pcp.c,permmat.c,pkp.c,slg.c,subdir.c,sylp.c,sylp2.c,testmf.c,testmfz.c,testpf.c,wreath.c}
+find standalone/{README,info.d} -type f -exec chmod a-x "{}" "+"
 
 %build
-find standalone/{README,info.d} -type f -exec chmod a-x "{}" "+"
 ./configure "%gapdir"
 %make_build CFLAGS="-O2 -g"
 
 %install
 %gappkg_simple_install
 rm -Rf %buildroot/$moddir/standalone/progs.d
-fdupes %buildroot%_prefix
 
 %files -f %name.files
-%dir %gap_sitearch/%repo-%version/
-%gap_sitearch/%repo-%version/*
+%gap_sitearch/%repo/
 
 %changelog
+* Tue Aug 18 2026 Leontiy Volodin <lvol@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+- Moved files from cohomolo-version to cohomolo.
+
 * Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.6.12-alt1
 - New version 1.6.12.
 - Added VCS tag.
