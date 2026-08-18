@@ -1,6 +1,6 @@
 Name:     blockattack
 Version:  2.10.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Block Attack - Rise of the Blocks - the game
 License:  GPL-2.0
@@ -41,6 +41,9 @@ BuildRequires: gcc-c++ cmake libSDL2 libSDL2_image-devel libSDL2_mixer-devel lib
 %_datadir/metainfo/net.%name.game.metainfo.xml
 
 %changelog
+* Tue Aug 18 2026 Artyom Bystrov <arbars@altlinux.org> 2.10.0-alt2
+- Rebuild with new boost
+
 * Fri May 22 2026 Artyom Bystrov <arbars@altlinux.org> 2.10.0-alt1
 - New version 2.10.0.
 
