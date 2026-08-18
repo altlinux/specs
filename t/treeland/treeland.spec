@@ -5,7 +5,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.8.17
+Version: 0.8.18
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -109,28 +109,6 @@ Group: Development/C++
 %description -n libdwaylibserver-devel
 This package provides development files for waylibserver.
 
-%package -n libdqwlroots%sover
-Summary: qwlroots library for %name
-Group: System/Libraries
-Requires: libdqt6-core = %_dqt6_version
-
-%description -n libdqwlroots%sover
-This package provides qwlroots library for %name.
-
-%package -n libdqwlroots-devel
-Summary: Development files for qwlroots
-Group: Development/C++
-
-%description -n libdqwlroots-devel
-This package provides development files for qwlroots.
-
-%package -n libdwaylib-devel
-Summary: Development files for waylib
-Group: Development/C++
-
-%description -n libdwaylib-devel
-This package provides development files for waylib.
-
 %package -n libdwaylib-wlroots%soverwl
 Summary: waylib-wlroots library for %name
 Group: System/Libraries
@@ -141,6 +119,8 @@ This package provides waylib-wlroots library for %name.
 %package -n libdwaylib-wlroots-devel
 Summary: Development files for waylib-wlroots library
 Group: Development/C++
+Provides: libdwaylib-devel = %EVR
+Obsoletes: libdwaylib-devel < %EVR
 
 %description -n libdwaylib-wlroots-devel
 This package provides development files for
@@ -153,8 +133,6 @@ sed -i 's|${TREELAND_DATA_DIR}/qml/Treeland|%_dqt6_qmldir|' \
   src/CMakeLists.txt
 sed -i 's|${TREELAND_DATA_DIR}/qml|%_dqt6_qmldir|' \
   src/modules/capture/CMakeLists.txt
-sed -i '/add_library(\${TARGET}/a SHARED' \
-  qwlroots/src/CMakeLists.txt
 sed -e 's|CMAKE_INSTALL_LIBDIR|DCMAKE_INSTALL_LIBDIR|g;' \
     -e 's|CMAKE_INSTALL_INCLUDEDIR|DCMAKE_INSTALL_INCLUDEDIR|g;' \
     -i $(find ./waylib -name 'CMakeLists.txt' -o -name '*.cmake') \
@@ -242,25 +220,23 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/WaylibServer/
 %_dqt6_libdir/pkgconfig/waylibserver.pc
 
-%files -n libdqwlroots%sover
-%_dqt6_libdir/libqwlroots.so.%{sover}*
-
-%files -n libdqwlroots-devel
-%_dqt6_libdir/libqwlroots.so
-%_dqt6_headerdir/qwlroots/
-%_dqt6_libdir/cmake/QWlroots/
-%_dqt6_libdir/pkgconfig/qwlroots.pc
-
-%files -n libdwaylib-devel
-%_dqt6_libdir/cmake/Waylib/
-
 %files -n libdwaylib-wlroots%soverwl
 %_dqt6_libdir/libwaylib-wlroots.so.%{soverwl}*
 
 %files -n libdwaylib-wlroots-devel
+%_dqt6_headerdir/wlr/
+%_dqt6_headerdir/*.h
 %_dqt6_libdir/libwaylib-wlroots.so
+%_dqt6_libdir/cmake/Waylib/
+%_dqt6_libdir/pkgconfig/waylib-wlroots.pc
 
 %changelog
+* Tue Aug 18 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.18-alt1
+- New version 0.8.18.
+- Subpackages:
+  + Removed dqwlroots.
+  + Obsoleted libdwaylib-devel.
+
 * Mon Aug 03 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.17-alt1
 - New version 0.8.17.
 
