@@ -7,7 +7,7 @@ BuildRequires: boost-devel
 %global debug_package %{nil}
 
 Name:           cli11
-Version:        2.6.2
+Version:        2.7.2
 Release:        alt1
 Summary:        Command line parser for C++11
 
@@ -86,10 +86,12 @@ rm README.md.orig
 %{_datadir}/pkgconfig/CLI11.pc
 
 %files docs
-%doc %_cmake__builddir/docs/html
-%doc docs/CLI11.svg docs/CLI11_100.png
+%doc docs/CLI11.svg docs/CLI11_100.png html
 
 %changelog
+* Mon Aug 17 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.7.2-alt1
+- update to new release
+
 * Wed Mar 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.6.2-alt1
 - update to new release
 
