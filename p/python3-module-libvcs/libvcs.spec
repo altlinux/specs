@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.39.0
+Version: 0.45.1
 Release: alt1
 
 Summary: Lite, typed, pythonic utilities for git, svn, mercurial, etc
@@ -66,7 +66,7 @@ Key Features:
 %pyproject_run -- bash -s <<-'ENDTESTS'
 # Tests are hardcoded to load source files of this module from the src/. You
 # can see that in the pyproject.toml file in the pytest settings section.
-PYTHONPATH=src python3 -m pytest
+PYTHONPATH=src python3 -m pytest src/ tests/
 ENDTESTS
 
 %files
@@ -75,6 +75,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 14 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.45.1-alt1
+- Updated to 0.45.1.
+
 * Tue Mar 03 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.39.0-alt1
 - Updated to 0.39.0.
 
@@ -86,4 +89,3 @@ ENDTESTS
 
 * Wed Sep 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.0-alt1
 - Initial build for ALT Sisyphus.
-
