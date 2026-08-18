@@ -2,7 +2,7 @@
 
 Name: dart-lang
 Version: 3.10.1
-Release: alt2
+Release: alt3
 
 Summary: Dart language
 License: BSD-3-Clause
@@ -120,7 +120,7 @@ python3 ./tools/build.py \
 mkdir -p %buildroot%_bindir %buildroot%_libexecdir %buildroot%_includedir
 cp -r out/%dart_out/dart-sdk %buildroot%_libexecdir/dart
 
-install -Dm755 %SOURCE1 %buildroot%_bindir/dart
+install -Dm755 %SOURCE2 %buildroot%_bindir/dart
 ln -s ../lib/dart/include %buildroot%_includedir/dart
 ln -s ../lib/dart/bin/dartaotruntime %buildroot%_bindir/dartaotruntime
 
@@ -161,6 +161,9 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart/lib
 
 %changelog
+* Wed Aug 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.10.1-alt3
+- Fix dart wrapper.
+
 * Mon Aug 17 2026 David Sultaniiazov <x1z53@altlinux.org> 3.10.1-alt2
 - Rebuild with Git history.
 - Update plan.
