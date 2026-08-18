@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.25.0
-Release: alt5
+Release: alt6
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -119,6 +119,14 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Mon Aug 17 2026 Anton Farygin <rider@altlinux.ru> 1.25.0-alt6
+- Backported 4 upstream security fixes (cherry-picked commits).
+- Fixes:
+  + CVE-2026-58469: buffer underflow in clean_metalink_string() (metalink.c)
+  + CVE-2026-58470: integer overflow in parse_content_range() (http.c)
+  + CVE-2026-58471: buffer overflow in convert_fname() (url.c)
+  + CVE-2026-58472: integer+buffer overflow in html_quote_string() (convert.c)
+
 * Sat Aug 15 2026 Anton Farygin <rider@altlinux.ru> 1.25.0-alt5
 - Fixed FTBFS with gettext >= 0.23.
 - Added explicit BuildRequires: gettext-tools.
