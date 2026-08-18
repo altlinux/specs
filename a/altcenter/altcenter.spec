@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.42
+Release: alt0.43
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,19 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Tue Aug 18 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.43
+- Report: added localization.
+- Settings: moved report to separate plugin.
+- Settings: added FSTEC and journal settings to report.
+- Settings: added report policies export.
+- Settings: added report button.
+- Components: fixed UTF-8 error (ALT #60096).
+- Fixed translations (ALT #60087).
+- Settings: add AltHA support.
+- Auditd logs settings: blocked rules during apply.
+- System logs settings: added button state.
+- Auditd logs settings: fixed custom rule state bug.
+
 * Mon Jul 27 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.42
 - Auditd logs settings: added localization.
 - Auditd logs settings: added custom rule management.
