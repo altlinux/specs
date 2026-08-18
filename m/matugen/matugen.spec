@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: matugen
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: A cross-platform material you and base16 color generation tool
 License: GPL-2.0
 Group: Other
-Url: https://crates.io/crates/matugen
+URL: https://crates.io/crates/matugen
 VCS: https://github.com/InioX/matugen
 
 Source: %name-%version.tar
@@ -40,6 +40,9 @@ echo >> .cargo/config.toml
 %doc LICENSE
 
 %changelog
+* Tue Aug 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.0-alt1
+- Updated to version 4.2.0.
+
 * Sun May 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.1.0-alt1
 - Updated to version 4.1.0.
 
