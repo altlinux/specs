@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -19,6 +19,7 @@ Source6: kafka.sysconfig
 Patch0: kafka-pathes.patch
 Patch1: kafka-alt-use-gradle-8.x.patch
 Patch2: kafka-alt-use-java-21.patch
+Patch3: kafka-CVE-2026-10050.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
@@ -100,6 +101,9 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Aug 18 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt2
+- Use jetty-12.0.36 (fixes: CVE-2026-10050).
+
 * Wed Jun 24 2026 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
 - New version (fixes: CVE-2026-41115).
 
