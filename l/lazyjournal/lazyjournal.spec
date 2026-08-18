@@ -3,7 +3,7 @@
 
 Name: lazyjournal
 Version: 0.8.6
-Release: alt2
+Release: alt3
 Summary: Terminal user interface for journalctl
 License: MIT
 Group: System/Configuration/Boot and Init
@@ -11,9 +11,10 @@ Url: https://github.com/Lifailon/lazyjournal
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-Patch: %name-%version-%release.patch
+Patch: fix-missing-config-alt.patch
 
 BuildRequires(pre): rpm-build-golang
+BuildRequires: help2man
 
 %description
 TUI for journalctl, logs in the file system, Docker and Podman containers for
@@ -33,18 +34,29 @@ export GOFLAGS="-mod=vendor"
 
 %golang_build .
 
+help2man -N -n "Terminal user interface for journalctl, file, docker, podman logs" $BUILDDIR/bin/%name > %name.1
+
 %install
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export IGNORE_SOURCES=1
 %golang_install
+mkdir -p %buildroot%_man1dir
+mkdir -p %buildroot%_docdir/%name
+install -Dm0644 config.yml %buildroot%_docdir/%name/config.yml
+install -Dm 0644 %{name}.1 %buildroot%_man1dir/
 
 %files
 %doc README.md
 %_bindir/%name
+%_docdir/%name/config.yml
+%_man1dir/%name.1.*
 
 %changelog
+* Tue Aug 18 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.6-alt3
+- Do not print missing config warning when using defaults (ALT #60186).
+
 * Mon Jul 20 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.6-alt2
 - Remove optional build dependency.
 
