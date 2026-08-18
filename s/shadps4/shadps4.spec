@@ -17,7 +17,7 @@
 %define minimp3_commit 7b590fdcfa5a79c033e76eacc05d0c3e4c79f536
 
 Name: shadps4
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -165,6 +165,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Tue Aug 18 2026 Nazarov Denis <nenderus@altlinux.org> 0.18.0-alt1
+- Version 0.18.0
+
 * Fri Jul 31 2026 Nazarov Denis <nenderus@altlinux.org> 0.17.0-alt1
 - Version 0.17.0
 
