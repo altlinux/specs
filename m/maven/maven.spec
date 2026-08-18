@@ -23,7 +23,7 @@ BuildRequires: jpackage-default
 Name:           maven
 Epoch:          1
 Version:        3.8.8
-Release:        alt5
+Release:        alt6
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
 # bundled slf4j is MIT
@@ -42,6 +42,7 @@ Patch2:         0002-Invoke-logback-via-reflection.patch
 Patch3:         0003-Remove-dependency-on-powermock.patch
 Patch4:         0004-Restore-DefaultModelValidator-compatibility-with-Mav.patch
 Patch5:         maven-3.8.2-alt-fix-config-mavenrc.patch
+patch6:         0006-Load-maven-resolver-named-locks.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -134,6 +135,9 @@ find -name 'pom.xml' -exec sed -i 's/\r//' {} +
 %patch3 -p1
 %patch4 -p1
 %patch5 -p2
+
+sed -i 's/\r$//' apache-maven/src/bin/m2.conf
+%patch6 -p1
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -269,6 +273,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Mon Aug 17 2026 Evgeniy Serov <scala@altlinux.org> 1:3.8.8-alt6
+- Added maven-resolver-named-locks to the Maven ClassWorlds configuration.
+
 * Mon May 11 2026 Evgeniy Serov <scala@altlinux.org> 1:3.8.8-alt5
 - Removed maven-enforcer-plugin from build.
 

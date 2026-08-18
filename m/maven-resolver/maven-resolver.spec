@@ -1,23 +1,27 @@
 Name:           maven-resolver
 Epoch:          1
-Version:        1.6.3
-Release:        alt4
+Version:        1.9.10
+Release:        alt1
 
 License:        Apache-2.0
-Summary:        Apache Maven Artifact Resolver library
+Summary:        Apache Maven Artifact Resolver
 Group:          Development/Java
 URL:            https://maven.apache.org/resolver/
 VCS:            https://github.com/apache/maven-resolver
-Source0:        %name-%version-source-release.zip
 
-BuildRequires(pre):  maven-local
+Source0:        %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
-BuildRequires:  unzip
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-util:9.4)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-http:9.4)
 
 BuildArch:      noarch
 
@@ -32,44 +36,36 @@ artifact transports and artifact resolution.
 %prep
 %setup
 
-%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :japicmp-maven-plugin
 
-%pom_disable_module maven-resolver-synccontext-redisson
+%pom_disable_module maven-resolver-named-locks-hazelcast
+%pom_disable_module maven-resolver-named-locks-redisson
+%pom_disable_module maven-resolver-demos
 
-# generate OSGi manifests
-for pom in $(find -mindepth 2 -name pom.xml) ; do
-  %pom_add_plugin "org.apache.felix:maven-bundle-plugin" $pom \
-  "<configuration>
-    <instructions>
-      <Bundle-SymbolicName>\${project.groupId}$(sed 's:./maven-resolver::;s:/pom.xml::;s:-:.:g' <<< $pom)</Bundle-SymbolicName>
-      <Export-Package>!org.eclipse.aether.internal*,org.eclipse.aether*</Export-Package>
-      <_nouses>true</_nouses>
-    </instructions>
-  </configuration>
-  <executions>
-    <execution>
-      <id>create-manifest</id>
-      <phase>process-classes</phase>
-      <goals><goal>manifest</goal></goals>
-    </execution>
-  </executions>"
-done
+%pom_xpath_set "pom:properties/pom:jettyVersion" "9.4" \
+    maven-resolver-transport-http
 
+%pom_xpath_set \
+    "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration/pom:systemPropertyVariables/pom:java.io.tmpdir" \
+    "%_tmppath"
 
 %mvn_alias 'org.apache.maven.resolver:maven-resolver{*}' 'org.eclipse.aether:aether@1'
 %mvn_file ':maven-resolver{*}' %name/maven-resolver@1 aether/aether@1
 
 %build
-# tests are disabled cause jetty is built with 17 java
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE
+%doc README.md
 
 %changelog
+* Mon Aug 17 2026 Evgeniy Serov <scala@altlinux.org> 1:1.9.10-alt1
+- Updated to 1.9.10.
+
 * Tue May 12 2026 Evgeniy Serov <scala@altlinux.org> 1:1.6.3-alt4
 - Removed maven-enforcer-plugin from build.
 
