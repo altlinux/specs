@@ -1,8 +1,6 @@
-%define git d3d1062
-
 Name: powertop
-Version: 2.15
-Release: alt2.git%{git}
+Version: 2.16
+Release: alt1
 Epoch: 1
 
 Summary: Tool that helps you find what software is using the most power
@@ -15,10 +13,9 @@ Source0: %name-%version.tar
 Source1: %name.service
 Source2: %name.init
 Source100: %name.watch
-Patch0: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
-BuildRequires: autoconf-archive libtracefs-devel
+BuildRequires: meson gcc-c++ libncursesw-devel libnl-devel libpci-devel
+BuildRequires: libtracefs-devel gettext
 
 %define cachedir %_cachedir/%name
 
@@ -35,15 +32,13 @@ Please note that it also runs just fine with e.g. AMD CPUs. :)
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson --bindir=%_sbindir
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 install -d %buildroot%cachedir
 touch %buildroot%cachedir/saved_{parameters,results}.powertop
@@ -69,6 +64,10 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 1:2.16-alt1
+- 2.15 -> 2.16
+- built with meson
+
 * Sat May 31 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2.15-alt2.gitd3d1062
 - GIT d3d1062.
 - Update URL/Vcs links.
