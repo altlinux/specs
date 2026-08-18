@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.9.2
-Release: alt1.1
+Version: 2.10.0
+Release: alt1
 
 Summary: A powerful HTTP client that lives in your terminal
 License: Apache-2.0
@@ -16,34 +16,17 @@ Vcs: https://github.com/darrenburns/posting
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
 Patch: %name-%version-alt.patch
 
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
-BuildRequires: rpm-build-python3
-BuildRequires: python3-module-hatchling
-
+%pyproject_builddeps_build
+BuildRequires: rpm-build-pyproject
 %if_with check
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-textual-snapshot
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-syrupy
-
-BuildRequires: python3-module-click
-BuildRequires: python3-module-click-default-group
-BuildRequires: python3-module-httpx
-BuildRequires: python3-module-openapi-pydantic
-BuildRequires: python3-module-pydantic
-BuildRequires: python3-module-pydantic-settings
-BuildRequires: python3-module-pyperclip
-BuildRequires: python3-module-python-dotenv
-BuildRequires: python3-module-pyyaml
-BuildRequires: python3-module-textual
-BuildRequires: python3-module-textual-autocomplete
-BuildRequires: python3-module-watchfiles
-BuildRequires: python3-module-xdg-base-dirs
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -55,6 +38,11 @@ YAML files, so they're easy to read and version control.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -78,8 +66,9 @@ ln -sf %_licensedir/Apache-2.0 LICENSE
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.9.2-alt1.1
-- Demodernized packaging.
+* Thu Apr 02 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.10.0-alt1
+- Updated to 2.10.0.
+- Remodernized packaging.
 
 * Tue Mar 17 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.9.2-alt1
 - Initial build for Sisyphus.
