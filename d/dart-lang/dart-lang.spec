@@ -2,14 +2,15 @@
 
 Name: dart-lang
 Version: 3.10.1
-Release: alt1
+Release: alt2
 
 Summary: Dart language
 License: BSD-3-Clause
 Group: Development/Other
 
-Source0: %name-%version.tar
-Source1: dart-wrapper.sh
+Source0: %name-%version.tar.zst
+Source1: submodules-%version.tar.zst
+Source2: dart-wrapper.sh
 
 Patch0: build-config.patch
 Patch1: gcc13.patch
@@ -66,17 +67,8 @@ Requires: dart-lang dartaotruntime
 %summary.
 
 %prep
-%setup
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-
-%patch7 -p1
+%setup -a1
+%autopatch -p1
 
 mkdir -p .git/logs
 echo '' > .git/logs/HEAD
@@ -169,6 +161,15 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart/lib
 
 %changelog
+* Mon Aug 17 2026 David Sultaniiazov <x1z53@altlinux.org> 3.10.1-alt2
+- Rebuild with Git history.
+- Update plan.
+- Remove update script.
+- Update spec:
+  + move patches to `.gear/patches`;
+  + use autopatch;
+  + use `tar.zst` instead of `tar` in `rules`.
+
 * Fri Nov 28 2025 David Sultaniiazov <x1z53@altlinux.org> 3.10.1-alt1
 - Update to 3.10.1.
 - Separate update script:
