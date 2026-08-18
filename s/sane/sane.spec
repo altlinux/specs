@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.4.0
-Release: alt3
+Release: alt4
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -26,6 +26,7 @@ Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
 Patch5: sane-backends-1.4.0-xerox-blacklist-workcentre-322x.patch
 Patch9: sane-backends-1.4.0-fix-ISO-C23.patch
+Patch10: sane-backends-1.4.0-fix-saned-max-hostname.patch
 
 # Support for Avision FB2280E
 Patch6: sane-backends-1.0.32-avision-FB2280E.patch
@@ -183,6 +184,7 @@ This package contains SANE static libraries.
 #patch7 -p2
 #patch8 -p1
 %patch9 -p2
+%patch10 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -306,6 +308,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Mon Jul 20 2026 Nikita Shmatko <nash@altlinux.org> 1.4.0-alt4
+- Fixed saned access checks with maximum-length hostnames.
+
 * Thu Jun 25 2026 Nikita Shmatko <nash@altlinux.org> 1.4.0-alt3
 - fixed FTBFS
 - add udev-rules for Kyocera (ALT bug 58282)
