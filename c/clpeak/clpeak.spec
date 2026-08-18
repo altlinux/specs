@@ -16,7 +16,7 @@
 %endif
 
 Name: clpeak
-Version: 2.0.18
+Version: 2.0.19
 Release: alt1
 Summary: A synthetic micro-benchmark that measures the peak achievable performance of GPU compute devices
 License: Apache-2.0
@@ -154,6 +154,9 @@ rm -rf %buildroot%_datadir
 %endif
 
 %changelog
+* Tue Aug 18 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0.19-alt1
+- 2.0.19.
+
 * Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0.18-alt1
 - 2.0.18.
 - split out cuda/rocm/oneapi to separate subpkgs.
