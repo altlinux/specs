@@ -8,22 +8,23 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.21.04
-Release: alt2
+Version: 0.22.00
+Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
-License: GPL-2.0-only
+License: GPL-2.0-or-later
 Url: https://github.com/ColinIanKing/stress-ng
 
 Source: %name-%version.tar
 
 BuildRequires: banner
+BuildRequires: eigen3-devel
+BuildRequires: gcc-c++
 BuildRequires: libacl-devel
 BuildRequires: libaio-devel
-BuildRequires: libattr-devel
 BuildRequires: libbsd-devel
 BuildRequires: libcap-devel
-BuildRequires: libgcrypt-devel
+BuildRequires: libcrypt-devel
 BuildRequires: libgmp-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libjudy-devel
@@ -31,8 +32,9 @@ BuildRequires: libkeyutils-devel
 BuildRequires: libkmod-devel
 BuildRequires: liblksctp-devel
 BuildRequires: liblzma-devel
+BuildRequires: libmd-devel
 BuildRequires: libmpfr-devel
-BuildRequires: libseccomp-devel
+BuildRequires: libnl-devel
 BuildRequires: libxxhash-devel
 BuildRequires: zlib-devel
 %if_with gpu
@@ -120,6 +122,13 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed Aug 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.22.00-alt1
+- Updated to version 0.22.00.
+- Corrected the license to GPL-2.0-or-later.
+- Enabled Eigen and libnl support.
+- Added explicit build dependencies on libcrypt and libmd.
+- Removed obsolete build dependencies on libattr, libgcrypt, and libseccomp.
+
 * Thu Jul 30 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.21.04-alt2
 - e2k build fix
 
