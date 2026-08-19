@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -24,7 +24,7 @@ Requires: perl-LWP-Protocol-https
 Requires: pve-common >= 9.1.13 pve-guest-common >= 5.1.4
 Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
 Requires: pve-vncterm pve-novnc >= 1.6.0.4 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
-Requires: pve-container >= 6.1.6 pve-firewall pve-ha-manager >= 5.2.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
+Requires: pve-container >= 6.1.6 pve-firewall proxmox-firewall pve-ha-manager >= 5.2.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
 Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.1.0
 Requires: proxmox-widget-toolkit >= 5.2.6 proxmox-mini-journalreader >= 1.7.0
 Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
@@ -175,6 +175,11 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt4
+- ui: fix datacenter option dialog layout for long translations (Closes: 57244)
+- ui: guest import: handle deleted form values locally (Closes: 60157)
+- Require the nftables-based proxmox-firewall backend
+
 * Sun Aug 02 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt3
 - Adapt 'pveceph install' (Closes: 60054)
 
@@ -725,4 +730,3 @@ fi
 
 * Thu Dec 10 2015 Valery Inozemtsev <shrek@altlinux.ru> 4.0.64-alt1
 - initial release
-

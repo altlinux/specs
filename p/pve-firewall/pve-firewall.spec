@@ -3,7 +3,7 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 6.0.5
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -73,6 +73,10 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt2
+- Handle unquoted PVESIG comments (Closes: 60162)
+- Simulator: handle disabled firewall (Closes: 60163)
+
 * Wed Jul 22 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt1
 - pve-firewall.service: remove obsolete update-alternatives calls (Closes: 57025)
 

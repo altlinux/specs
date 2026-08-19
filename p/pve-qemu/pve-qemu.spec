@@ -13,8 +13,8 @@
 %endif
 
 Name: pve-%rname
-Version: 10.1.2
-Release: alt2
+Version: 10.2.2
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -32,7 +32,7 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 Source13: vitastor.c
 
-Patch: pve-qemu-10.1-vitastor.patch
+Patch: pve-qemu-10.2-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -45,7 +45,7 @@ Conflicts: %rname
 Provides: pve-qemu-kvm = %EVR
 
 BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel libalsa-devel libattr-devel libcap-devel
-BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel libgio-devel
+BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel libgio-devel libfuse3-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(virglrenderer) liburing-devel libuuid-devel
@@ -162,6 +162,7 @@ export CFLAGS="%optflags"
         --disable-strip \
         --disable-xen \
         --enable-curl \
+        --enable-fuse \
         --enable-gnutls \
         --enable-libiscsi \
         --enable-libusb \
@@ -220,6 +221,11 @@ install -m 0755 debian/kvm-ifup %buildroot%_sysconfdir/kvm/kvm-ifup
 mkdir -p %buildroot%_datadir/kvm
 %buildroot%_bindir/qemu-system-x86_64 -cpu help | ./debian/parse-cpu-flags.pl > %buildroot%_datadir/kvm/recognized-CPUID-flags-x86_64
 %buildroot%_bindir/qemu-system-x86_64 -machine help | ./debian/parse-machines.pl > %buildroot%_datadir/kvm/machine-versions-x86_64.json
+%buildroot%_bindir/qemu-system-aarch64 -machine help | ./debian/parse-machines.pl > %buildroot%_datadir/kvm/machine-versions-aarch64.json
+%buildroot%_bindir/qemu-system-x86_64 -cpu help | ./debian/parse-cpu-models.pl > %buildroot%_datadir/kvm/cpu-models-x86_64.json
+%buildroot%_bindir/qemu-system-aarch64 -cpu help | ./debian/parse-cpu-models.pl > %buildroot%_datadir/kvm/cpu-models-aarch64.json
+diff -u debian/cpu-models-x86_64.json %buildroot%_datadir/kvm/cpu-models-x86_64.json
+diff -u debian/cpu-models-aarch64.json %buildroot%_datadir/kvm/cpu-models-aarch64.json
 
 %find_lang %rname
 
@@ -332,6 +338,10 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 1:10.2.2-alt1
+- 10.2.2-1
+- Enabled FUSE block exports required for EFI key enrollment.
+
 * Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 1:10.1.2-alt2
 - BR: libgio to build 'dbus-vmstate' (Closes: 57805)
 
