@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.48.1
+Version: 0.48.2
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -209,12 +209,8 @@ rm kitty_tests/crypto.py
 rm kitty_tests/file_transmission.py
 %endif
 
-%ifarch %ix86
-# Vendored github.com/sgtdi/fswatcher uses 64-bit atomics on fields that are
-# not 8-byte aligned on 32-bit platforms, causing
-# "panic: unaligned 64-bit atomic operation" in TestWatchForConfigChanges.
-rm tools/watch/api_test.go
-%endif
+# ChildMemoryTest requires cgroupfs
+rm kitty_tests/child.py
 
 PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 
@@ -243,6 +239,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Thu Jul 30 2026 Egor Ignatov <egori@altlinux.org> 0.48.2-alt1
+- New version 0.48.2.
+
 * Fri Jul 24 2026 Egor Ignatov <egori@altlinux.org> 0.48.1-alt1
 - New version 0.48.1.
 
