@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.44
+%define kernel_sublevel	.45
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -281,7 +281,7 @@ rm -f localversion*
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) $(CROSS_COMPILE)gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -318,7 +318,6 @@ scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %build
 export ARCH=%base_arch
-export NPROCS=%__nprocs
 export KBUILD_BUILD_USER=$(echo %buildhost | sed 's/[-.].*//')
 export KBUILD_BUILD_HOST='%{?disttag}%{!?disttag:%buildhost}'
 export KBUILD_BUILD_TIMESTAMP="$(LC_ALL=C date -ud @$SOURCE_DATE_EPOCH)"
@@ -598,11 +597,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Aug 19 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.45-alt1
+- v6.18.45 (2026-08-19).
+
 * Mon Aug 10 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.44-alt1
 - v6.18.44 (2026-08-09).
 
 * Fri Aug 07 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.43-alt1
 - v6.18.43 (2026-08-06).
+- arm64: Add DTS for Repka Pi 5 board.
+- config-aarch64: Enable ARM PSCI CPU idle driver.
+- config: Increase 8250 runtime UARTs to 32.
 
 * Mon Aug 03 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.42-alt1
 - v6.18.42 (2026-08-03).
