@@ -1,5 +1,5 @@
 Name: xfce4-dict
-Version: 0.8.9
+Version: 0.8.10
 Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
@@ -10,6 +10,8 @@ Url: https://docs.xfce.org/apps/xfce4-dict/start
 Vcs: https://gitlab.xfce.org/apps/xfce4-dict.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+%def_enable llm
 
 Obsoletes: xfce4-dict-plugin < 0.5.2
 Provides: xfce4-dict-plugin
@@ -38,7 +40,8 @@ panel plugin for the Xfce panel.
 %patch -p1
 
 %build
-%meson
+%meson \
+	%{subst_enable_meson_bool llm llm}
 
 %meson_build -v
 
@@ -47,7 +50,7 @@ panel plugin for the Xfce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README NEWS AUTHORS
+%doc README.md NEWS AUTHORS
 %_bindir/xfce4-dict
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
@@ -56,6 +59,10 @@ panel plugin for the Xfce panel.
 %_iconsdir/*/*/*/*
 
 %changelog
+* Wed Aug 19 2026 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
+- Enabled LLM support.
+- Updated to 0.8.10.
+
 * Tue May 13 2025 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
 - Switched to meson build.
 - Used enchant2 instead of enchant.
