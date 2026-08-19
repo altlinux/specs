@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.51
-Release: alt1
+Release: alt2
 Summary: Check MANIFEST.in in a Python source package for completeness
 License: MIT
 Group: Development/Python3
@@ -51,13 +51,15 @@ If so, check-manifest is for you.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
 %_bindir/check-manifest
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 0.51-alt2
+- Fixed FTBFS (setuptools 83.0.0).
+
 * Fri Nov 28 2025 Stanislav Levin <slev@altlinux.org> 0.51-alt1
 - 0.50 -> 0.51.
 
