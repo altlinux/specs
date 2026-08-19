@@ -1,5 +1,5 @@
 Name: fail2ban
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
@@ -17,7 +17,6 @@ Source4: paths-altlinux.conf
 Source5: paths-altlinux-systemd.conf
 
 # python 3.12 fix
-Patch4: drop-distutils.patch
 Patch5: fail2ban-0.11.2-generateman-alt-fix.patch
 
 BuildArch: noarch
@@ -49,7 +48,6 @@ Recommends: python3-module-systemd
 
 %prep
 %setup
-%patch4 -p1
 %patch5 -p1
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
 %__subst "s|/usr/bin/env python|%__python3|" bin/*
@@ -117,6 +115,9 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Wed Aug 19 2026 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Mon Oct 20 2025 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
