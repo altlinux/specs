@@ -4,8 +4,8 @@
 %define arduino_cli_version 1.5.1
 
 Name: arduino-ide
-Version: 2.3.8
-Release: alt3
+Version: 2.3.10
+Release: alt1
 
 Summary: IDE for Arduino boards and compatible microcontroller platforms.
 Group: Education
@@ -99,6 +99,9 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Wed Aug 19 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt1
+- Update Arduino IDE to version 2.3.10.
+
 * Wed Jul 08 2026 Grant Makyan <karonus@altlinux.org> 2.3.8-alt3
 - Use system native Node.js modules.
 - Exclude ix86 from build.
