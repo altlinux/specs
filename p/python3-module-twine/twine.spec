@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2.0
+Version: 7.0.0
 Release: alt1
 Summary: Collection of utilities for publishing packages on PyPI
 License: Apache-2.0
@@ -54,12 +54,14 @@ export TERM=xterm
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
 %_bindir/*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 18 2026 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
+- 6.2.0 -> 7.0.0
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 6.2.0-alt1
 - 6.1.0 -> 6.2.0.
 
