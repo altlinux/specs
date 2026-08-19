@@ -7,7 +7,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.57
+Version: 1.1.60
 Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
@@ -15,6 +15,7 @@ License: Apache-2.0
 Url: https://github.com/processone/fast_xml
 VCS: https://github.com/processone/fast_xml.git
 Source: %name-%version.tar
+Patch1: erlang-fast_xml-alt-eunit-compile-spec.patch
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
@@ -40,6 +41,7 @@ after major optimisations to put emphasis on the fact it is damn fast.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -58,6 +60,10 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.1.60-alt1
+- 1.1.57 -> 1.1.60
+- skip compile_spec_test under rebar2 eunit (fxml_gen returns undef)
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.1.57-alt1
 - 1.1.55 -> 1.1.57
 
