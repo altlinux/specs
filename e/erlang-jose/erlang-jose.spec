@@ -34,10 +34,16 @@
 %add_erlang_req_modules_skiplist libsodium_crypto_sign_ed25519
 %add_erlang_req_modules_skiplist libsodium_crypto_stream_chacha20
 %add_erlang_req_modules_skiplist ojson
+%add_erlang_req_modules_skiplist json
+%add_erlang_req_modules_skiplist thoas
+%add_erlang_req_modules_skiplist libsodium_crypto_aead_xchacha20poly1305
+%add_erlang_req_modules_skiplist libsodium_crypto_box_curve25519xchacha20poly1305
+%add_erlang_req_modules_skiplist libsodium_crypto_sign_ed25519ph
+%add_erlang_req_modules_skiplist libsodium_crypto_stream_xchacha20
 
 Name: erlang-%realname
-Version: 1.11.2
-Release: alt2
+Version: 1.11.12
+Release: alt1
 Summary: JSON Object Signing and Encryption (JOSE) for Erlang and Elixir
 Group: Development/Erlang
 License: MIT
@@ -75,6 +81,10 @@ JSON Object Signing and Encryption (JOSE) for Erlang and Elixir.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.11.12-alt1
+- 1.11.2 -> 1.11.12
+- skip optional json/thoas/libsodium xchacha requires
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.2-alt2
 - Updated build dependencies.
 
