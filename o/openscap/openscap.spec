@@ -1,7 +1,7 @@
 %define with_sce 1
 
 Name: openscap
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Set of open source libraries enabling integration of the SCAP line of standards
@@ -297,6 +297,9 @@ cp AUTHORS NEWS README.md COPYING docs/oscap-scan.cron \
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Aug 19 2026 Alexey Appolonov <alexey@altlinux.org> 1.4.4-alt1
+- New version.
+
 * Thu Apr 09 2026 Alexey Appolonov <alexey@altlinux.org> 1.4.3-alt1
 - New version.
 
