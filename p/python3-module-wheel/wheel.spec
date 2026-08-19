@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.47.0
+Version: 0.48.0
 Release: alt1
 Summary: Command line tool for manipulating wheel files
 License: MIT
@@ -64,6 +64,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 0.48.0-alt1
+- 0.47.0 -> 0.48.0
+
 * Thu Apr 23 2026 Stanislav Levin <slev@altlinux.org> 0.47.0-alt1
 - 0.46.3 -> 0.47.0.
 
