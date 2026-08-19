@@ -1,7 +1,7 @@
 %define repo smallgrp
 
 Name: gap-smallgrp
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Summary: GAP: Small Groups Library
 License: Artistic-2.0
@@ -41,6 +41,9 @@ perl -i -pe 's{#!%_bindir/env }{#!/bin/}' doc/clean
 %gap_sitelib/%repo/
 
 %changelog
+* Wed Aug 19 2026 Leontiy Volodin <lvol@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+
 * Mon Aug 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.6.0-alt1
 - New version 1.6.0.
 
