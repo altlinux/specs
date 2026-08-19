@@ -5,7 +5,7 @@
 %global realname p1_acme
 
 Name: erlang-%realname
-Version: 1.0.16
+Version: 1.0.31
 Release: alt1
 Summary: ACME client library for Erlang
 Group: Development/Erlang
@@ -49,6 +49,9 @@ Erlang ACME client (RFC8555).
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.0.31-alt1
+- 1.0.16 -> 1.0.31
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.16-alt1
 - Updated to upstream version 1.0.16.
 
