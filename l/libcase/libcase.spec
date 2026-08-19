@@ -3,13 +3,12 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%define app_id_demo space.rirusha.CaseDemo
 %define girname Case
 %define soversion 0
 
 Name: libcase
 Version: %soversion.2
-Release: alt2
+Release: alt3
 
 Summary: Library with various useful widgets for your application
 License: GPL-3.0-or-later
@@ -32,13 +31,6 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: gettext-devel
 
 %description
-%summary.
-
-%package demo
-Summary: %name demo application
-Group: Other
-
-%description demo
 %summary.
 
 %package -n %name%soversion
@@ -80,26 +72,18 @@ Requires: %name%soversion-gir = %EVR
 %setup
 
 %build
-%meson -Dwith_demo=true
+%meson
 %meson_build
 
 %install
 %meson_install
 %find_lang %name
-%find_lang %name-demo
 
 %check
 %meson_test
 
 %files -n %name%soversion -f %name.lang
 %_libdir/%name-%soversion.so.*
-
-%files demo -f %name-demo.lang
-%_bindir/%name-demo
-%_datadir/metainfo/%app_id_demo.metainfo.xml
-%_desktopdir/%app_id_demo.desktop
-%_iconsdir/hicolor/*/apps/%app_id_demo.svg
-%_iconsdir/hicolor/*/apps/%app_id_demo-symbolic.svg
 
 %files devel
 %_libdir/%name-%soversion.so
@@ -115,6 +99,10 @@ Requires: %name%soversion-gir = %EVR
 %_girdir/%girname-%soversion.gir
 
 %changelog
+* Wed Aug 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt3
+- Dropped demo.
+- Don't use Gtk.Svg.
+
 * Thu Aug 06 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt2
 - Fixed summary.
 
