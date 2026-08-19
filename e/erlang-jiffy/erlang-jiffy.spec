@@ -5,7 +5,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.3
+Version: 1.1.5
 Release: alt1
 Summary: JSON NIFs for Erlang
 Group: Development/Erlang
@@ -49,6 +49,9 @@ rm -rf c_src/double-conversion
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.1.5-alt1
+- 1.1.3 -> 1.1.5
+
 * Wed Mar 04 2026 Anton Farygin <rider@altlinux.org> 1.1.3-alt1
 - 1.1.2 -> 1.1.3
 
