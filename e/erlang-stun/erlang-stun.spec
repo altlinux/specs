@@ -5,7 +5,7 @@
 %define realname stun
 
 Name: erlang-%realname
-Version: 1.2.22
+Version: 1.2.23
 Release: alt1
 Summary: STUN and TURN library for Erlang / Elixir
 Group: Development/Erlang
@@ -46,6 +46,9 @@ connection between peers for VoIP (for example using SIP or Jingle) and WebRTC.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.2.23-alt1
+- 1.2.22 -> 1.2.23
+
 * Mon Apr 20 2026 Anton Farygin <rider@altlinux.org> 1.2.22-alt1
 - 1.2.21 -> 1.2.22
 
