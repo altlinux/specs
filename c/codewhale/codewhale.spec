@@ -7,7 +7,7 @@
 
 Name: codewhale
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: Agentic coding terminal
 License: MIT
@@ -68,6 +68,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Wed Aug 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.9-alt2
+- Built from release v0.9.9.
+
 * Tue Aug 18 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.9-alt1
 - Updated to 0.9.9.
 
