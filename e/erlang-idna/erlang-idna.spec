@@ -3,7 +3,7 @@
 %define realname idna
 
 Name: erlang-%realname
-Version: 6.0.0
+Version: 7.1.0
 Release: alt1
 Summary: Erlang IDNA lib
 Group: Development/Erlang
@@ -20,7 +20,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-otp-devel erlang-devel
 BuildRequires: /usr/bin/rebar
-BuildRequires: erlang-unicode_util_compat
 
 %description
 A pure Erlang IDNA implementation that folllow the RFC5891.
@@ -59,5 +58,9 @@ A pure Erlang IDNA implementation that folllow the RFC5891.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 7.1.0-alt1
+- 6.0.0 -> 7.1.0
+- drop erlang-unicode_util_compat (idna 7 has no such dep)
+
 * Mon Mar 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 6.0.0-alt1
 - Initial build for ALT.
