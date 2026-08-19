@@ -2,7 +2,7 @@
 %def_disable check
 
 Name:    tuwunel
-Version: 1.7.1
+Version: 1.9.0
 Release: alt1
 Summary: High Performance Matrix Homeserver in Rust!
 License: Apache-2.0
@@ -76,6 +76,9 @@ useradd -r -g %name -c 'tuwunel Matrix homeserver' -d %_localstatedir/%name -s /
 %doc LICENSE README.md
 
 %changelog
+* Wed Aug 19 2026 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- updated from 1.7.1 to 1.9.0
+
 * Tue Jun 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
 - updated from 1.7.0 to 1.7.1
 
