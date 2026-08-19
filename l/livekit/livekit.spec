@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           livekit
-Version: 1.11.0
+Version: 1.13.5
 Release:        alt1
 Summary:        LiveKit Realtime Media Server
 License:        Apache-2.0
@@ -63,6 +63,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %dir %attr(0750,_%name,_%name) %_localstatedir/%name
 
 %changelog
+* Wed Aug 19 2026 Alexey Shabalin <shaba@altlinux.org> 1.13.5-alt1
+- updated from 1.11.0 to 1.13.5
+
 * Wed May 06 2026 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
 - updated from 1.9.12 to 1.11.0
 
