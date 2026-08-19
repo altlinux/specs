@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20260210
+%define orig_timestamp 20260812
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 34
+Version: 35
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -60,6 +60,63 @@ fi
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Wed Aug 19 2026 L.A. Kostis <lakostis@altlinux.ru> 2:35-alt1.20260812
+- New upstream datafile 20260812:
+  + Security updates for INTEL-SA-01379
+  + Security updates for INTEL-SA-01404
+  + Security updates for INTEL-SA-01423
+  + Security updates for INTEL-SA-01428
+  + Security updates for INTEL-SA-01435
+  + Security updates for INTEL-SA-01441
+  + Security updates for INTEL-SA-01442
+  + Security updates for INTEL-SA-01443
+  + Update for functional issues in 10th Gen Core Processor Families
+  + Update for functional issues in 13th/14th Gen Core Processor Families
+  + Update for functional issues in 3rd Generation Intel Xeon Processor Families
+  + Update for functional issues in 4th Gen Intel Xeon Processor Families
+  + Update for functional issues in 5th Gen Intel Xeon Processor Families
+  + Update for functional issues in Core Series 2 Processors with P-cores Families
+  + Update for functional issues in Core Series 3 Processor Families
+  + Update for functional issues in Ultra (200V/2/3) Series Processor Families
+  + Update for functional issues in Intel Xeon 6700/6700P-B Processor SoC with P-Cores Families
+  + Update for functional issues in Intel Xeon 6900/6700/6500 Processor with P-Cores Families
+  + Update for functional issues in Xeon D-2700/E-2300 Processor Families
+  + Updated microcodes:
+    sig 0x000606a6, pf_mask 0x87, rev 0xd000433
+    sig 0x000606c1, pf_mask 0x10, rev 0x1000301
+    sig 0x000706e5, pf_mask 0x80, rev 0x00ce
+    sig 0x000806f4, pf_mask 0x87, rev 0x2b000685
+    sig 0x000806f4, pf_mask 0x10, rev 0x2c000435
+    sig 0x000806f5, pf_mask 0x87, rev 0x2b000685
+    sig 0x000806f5, pf_mask 0x10, rev 0x2c000435
+    sig 0x000806f6, pf_mask 0x87, rev 0x2b000685
+    sig 0x000806f6, pf_mask 0x10, rev 0x2c000435
+    sig 0x000806f7, pf_mask 0x87, rev 0x2b000685
+    sig 0x000806f8, pf_mask 0x87, rev 0x2b000685
+    sig 0x000806f8, pf_mask 0x10, rev 0x2c000435
+    sig 0x000a0671, pf_mask 0x02, rev 0x0066
+    sig 0x000a06d1, pf_mask 0x95, rev 0x1000434
+    sig 0x000a06d1, pf_mask 0x20, rev 0xa000151
+    sig 0x000a06e1, pf_mask 0x97, rev 0x1000309
+    sig 0x000a06f3, pf_mask 0x01, rev 0x30003b2
+    sig 0x000b0650, pf_mask 0x80, rev 0x000e
+    sig 0x000b0671, pf_mask 0x36, rev 0x0137
+    sig 0x000b0674, pf_mask 0x36, rev 0x0137
+    sig 0x000b06d1, pf_mask 0x80, rev 0x0128
+    sig 0x000c0652, pf_mask 0x82, rev 0x0122
+    sig 0x000c0662, pf_mask 0x82, rev 0x0122
+    sig 0x000c0664, pf_mask 0x82, rev 0x0122
+    sig 0x000c06a2, pf_mask 0x82, rev 0x0122
+    sig 0x000c06f2, pf_mask 0x87, rev 0x210002f4
+  + New microcode:
+    sig 0x000c06c1, pf_mask 0x94, rev 0x011c
+    sig 0x000c06c2, pf_mask 0x94, rev 0x011c
+    sig 0x000c06c3, pf_mask 0x94, rev 0x011c
+    sig 0x000d0650, pf_mask 0xc0, rev 0x000c
+    sig 0x000d0651, pf_mask 0xc0, rev 0x000c
+    sig 0x000d0670, pf_mask 0x36, rev 0x0137
+    sig 0x000e0652, pf_mask 0x94, rev 0x011c
+
 * Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 2:34-alt1.20260210
 - New upstream microcode datafile 20260210:
   + Updated security updates for INTEL-SA-01083.
