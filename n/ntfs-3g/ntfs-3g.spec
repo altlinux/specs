@@ -1,5 +1,5 @@
 Name: ntfs-3g
-Version: 2026.2.25
+Version: 2026.7.7
 Release: alt1
 Epoch: 2
 Summary: third generation Linux NTFS driver
@@ -15,7 +15,7 @@ Obsoletes: ntfsprogs fuse-ntfs
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libattr-devel libfuse-devel libgcrypt-devel libgnutls-devel libuuid-devel
+BuildRequires: libattr-devel libfuse-devel libgcrypt-devel libgnutls-devel libuuid-devel libhwinfo-devel
 
 %description
 The ntfs-3g driver is an open source, freely available read/write NTFS
@@ -100,6 +100,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:2026.7.7-alt1
+- 2026.7.7
+
 * Wed Apr 22 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:2026.2.25-alt1
 - 2026.2.25
 
