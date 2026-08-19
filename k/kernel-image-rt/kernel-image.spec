@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.103
+%define kernel_sublevel	.104
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -281,7 +281,7 @@ rm -f localversion*
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) $(CROSS_COMPILE)gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -296,7 +296,6 @@ c=.gear/signing-%flavour.pem
 %build
 banner build
 export ARCH=%base_arch
-export NPROCS=%__nprocs
 export KBUILD_BUILD_USER=$(echo %buildhost | sed 's/[-.].*//')
 export KBUILD_BUILD_HOST='%{?disttag}%{!?disttag:%buildhost}'
 export KBUILD_BUILD_TIMESTAMP="$(LC_ALL=C date -ud @$SOURCE_DATE_EPOCH)"
@@ -594,6 +593,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Aug 19 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.104-alt1
+- v6.12.104 (2026-08-19).
+- arm64: Enable HDMI1 output on RK3588.
+
 * Mon Aug 10 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.103-alt1
 - v6.12.103 (2026-08-09).
 
