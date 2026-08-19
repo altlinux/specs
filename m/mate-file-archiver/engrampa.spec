@@ -2,7 +2,7 @@
 %define rname engrampa
 
 Name: mate-file-archiver
-Version: 1.28.3
+Version: 1.28.5
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop file archiver
@@ -70,6 +70,9 @@ tar -xf libegg.tar
 %_datadir/caja/extensions/libcaja-engrampa.caja-extension
 
 %changelog
+* Wed Aug 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.5-alt1
+- 1.28.5
+
 * Wed May 06 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.3-alt1
 - 1.28.3
 

@@ -1,6 +1,6 @@
 Name: mate-user-guide
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: User Guide for MATE desktop
 License: GPLv3+
@@ -39,6 +39,9 @@ Documentations for MATE desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Aug 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt2
+- rebuild
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
