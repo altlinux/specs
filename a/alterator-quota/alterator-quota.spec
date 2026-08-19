@@ -1,5 +1,5 @@
 Name: alterator-quota
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: alterator module for managing filesystem quotas
@@ -43,6 +43,9 @@ alterator module for managing filesystem quotas
 %_bindir/*
 
 %changelog
+* Mon Aug 17 2026 Ivan Khanas <xeno@altlinux.org> 1.6.6-alt1
+- Enable quota when fstab already.
+
 * Tue Apr 07 2026 Mikhail Efremov <sem@altlinux.org> 1.6.5-alt1
 - Disable 'use ext4 internal quota' warning (closes: #57279).
 
