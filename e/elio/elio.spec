@@ -3,7 +3,7 @@
 
 Name: elio
 Version: 1.11.2
-Release: alt1
+Release: alt2
 Summary: Snappy, batteries-included terminal file manager
 License: MIT
 Group: File tools
@@ -26,6 +26,7 @@ BuildRequires: xz
 Requires: 7-zip
 Requires: ffmpeg
 Requires: ffprobe
+Requires: fonts-ttf-fira-code-nerd
 
 %description
 Snappy, batteries-included terminal file manager with rich previews,
@@ -52,6 +53,9 @@ export RUST_TEST_THREADS=1
 %_bindir/elio
 
 %changelog
+* Thu Aug 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.11.2-alt2
+- Added Fira Code Nerd Font dependency (closes: #60225).
+
 * Tue Aug 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.11.2-alt1
 - Updated to version 1.11.2.
 
