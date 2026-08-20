@@ -1,6 +1,6 @@
 Name: unvanquished
 Version: 0.56.2
-Release: alt1
+Release: alt2
 
 Summary: An FPS/RTS hybrid game powered by the Daemon engine (a combination of ioq3 and XreaL)
 License: BSD-3-Clause and CC-BY-SA-4.0 and Zlib and MIT and GPL-2.0-or-later and GPL-3.0-or-later and FTL and CC-BY-SA-2.5
@@ -19,6 +19,8 @@ Source4: linux-arm64-default_11.tar
 Source5: linux-i686-default_11.tar
 
 ExclusiveArch: x86_64 i586 aarch64
+
+Patch: nettle4.patch
 
 BuildRequires(Pre): rpm-build-cmake
 BuildRequires: cmake clang libstdc++-devel qt6-base-devel llvm-devel
@@ -49,6 +51,8 @@ Unvanquished is an arena game with RTS elements (you can build) in which two ver
 %ifarch i586
  tar -xf %SOURCE5 -C daemon/external_deps/
 %endif
+
+%patch -p1
 
 %build
 export CC=clang
@@ -148,6 +152,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %doc *.md *.txt
 
 %changelog
+* Thu Aug 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.2-alt2
+- support Nettle 4 digest API
+
 * Tue May 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.56.2-alt1
 - 0.56.1 -> 0.56.2
 
