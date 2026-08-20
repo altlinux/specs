@@ -1,5 +1,5 @@
 Name: mystiq
-Version: 24.12.01
+Version: 25.04.17
 Release: alt1
 
 Summary: Audio/Video converter
@@ -52,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_man1dir/*
 
 %changelog
+* Thu Aug 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 25.04.17-alt1
+- 25.04.17
+
 * Fri Dec 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 24.12.01-alt1
 - 24.12.01
 - build with Qt6
