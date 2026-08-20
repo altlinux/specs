@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-databind
-Version: 2.20.1
-Release: alt3
+Version: 2.22.1
+Release: alt1
 
 Summary: General data-binding package for Jackson (2.x)
 License: Apache-2.0
@@ -14,10 +14,9 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc
-BuildRequires: rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11-compat
 BuildRequires: maven-local
+
 BuildRequires: jackson-annotations
 BuildRequires: jackson-core
 BuildRequires: jackson-bom
@@ -63,6 +62,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Automatically updated to 2.22.1.
+
 * Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
 - FTBFS fix.
 

@@ -1,6 +1,6 @@
 Name:           jackson-dataformats-text
-Version:        2.20.1
-Release:        alt2
+Version:        2.22.1
+Release:        alt1
 
 Summary:        Jackson standard text-format data format backends
 License:        Apache-2.0
@@ -10,8 +10,9 @@ VCS:            https://github.com/FasterXML/jackson-dataformats-text
 
 Source:         %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
 BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
@@ -26,7 +27,7 @@ BuildArch:      noarch
 %description
 Parent pom for Jackson text-format dataformats.
 
-%package -n jackson-dataformat-csv
+%package -n     jackson-dataformat-csv
 Group:          Development/Java
 Summary:        Support for reading and writing CSV-encoded data via Jackson abstractions
 
@@ -35,7 +36,7 @@ Jackson data format module for reading and writing CSV encoded data, either
 as "raw" data (sequence of String arrays), or via data binding to/from Java
 Objects (POJOs).
 
-%package -n jackson-dataformat-properties
+%package -n     jackson-dataformat-properties
 Group:          Development/Java
 Summary:        Support for reading and writing content of "Java Properties" files
 
@@ -45,7 +46,7 @@ files, using naming convention to determine implied structure (by default
 assuming dotted notation, but configurable from non-nested to other
 separators).
 
-%package -n jackson-dataformat-yaml
+%package -n     jackson-dataformat-yaml
 Group:          Development/Java
 Summary:        Support for reading and writing YAML-encoded data via Jackson abstractions
 
@@ -73,11 +74,7 @@ functionality.
 %mvn_file ":{*}" jackson-dataformats/@1
 
 %build
-%mvn_build -- \
-    -Dmaven.compiler.source=1.8 \
-    -Dmaven.compiler.target=1.8 \
-    -Dmaven.javadoc.source=1.8 \
-    -Dmaven.compiler.release=8 \
+%mvn_build
 
 %install
 %mvn_install
@@ -99,6 +96,9 @@ functionality.
 %doc LICENSE
 
 %changelog
+* Tue Aug 11 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Automatically updated to 2.22.1.
+
 * Fri Apr 03 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt2
 - fixed FTBFS.
 

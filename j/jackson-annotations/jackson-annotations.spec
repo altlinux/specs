@@ -1,24 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-annotations
-Version: 2.19.4
-Release: alt2
+Version: 2.22
+Release: alt1
 
 Summary: Core annotations for Jackson data processor
-License: ASL 2.0
+License: Apache-2.0
 Group: Development/Java
 Url: https://github.com/FasterXML/jackson-annotations
 Vcs: https://github.com/FasterXML/jackson-annotations.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch1: 0001-Change-compilation-source-target-to-Java-11.patch
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc
-BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
 BuildRequires: maven-local
+
 BuildRequires: jackson-parent
 BuildRequires: junit5
 BuildRequires: maven-plugin-bundle
@@ -28,37 +26,30 @@ BuildRequires: moditect-maven-plugin
 Core annotations used for value types,
 used by Jackson data-binding package.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %name.
+%javadoc_package
 
 %prep
 %setup
-%autopatch -p1
 
-%pom_remove_plugin "org.gradlex:gradle-module-metadata-maven-plugin"
-sed -i 's#${version.junit5}#5.10.2#g' pom.xml
+%pom_remove_plugin :cyclonedx-maven-plugin
+%pom_remove_plugin :gradle-module-metadata-maven-plugin
 
 %mvn_file : %name
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %changelog
+* Mon Aug 10 2026 Evgeniy Serov <scala@altlinux.org> 2.22-alt1
+- Updated to 2.22.
+
 * Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.19.4-alt2
 - Add JPMS support.
 

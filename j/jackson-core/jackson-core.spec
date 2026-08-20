@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-core
-Version: 2.20.1
-Release: alt4
+Version: 2.22.1
+Release: alt1
 
 Summary: Core part of Jackson
 License: Apache-2.0
@@ -28,6 +28,8 @@ BuildRequires: mvn(org.moditect:moditect-maven-plugin)
 Core part of Jackson that defines Streaming API as well
 as basic shared abstractions.
 
+%javadoc_package
+
 %prep
 %setup
 %autopatch -p1
@@ -46,16 +48,21 @@ as basic shared abstractions.
 %mvn_file : %name
 
 %build
-%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# tests disabled cause missing FastDoubleParser
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE
+%doc LICENSE
 
 %changelog
+* Fri Aug 07 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Updated to 2.22.1.
+- Enabled javadoc.
+
 * Thu May 28 2026 Ilfat Aminov <aminov@altlinux.org> 2.20.1-alt4
 - fix moditect dependency
 

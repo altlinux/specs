@@ -2,8 +2,8 @@
 %def_without extra_dataformats
 
 Name: jackson-dataformats-binary
-Version: 2.20.1
-Release: alt2
+Version: 2.22.1
+Release: alt1
 Summary: Jackson standard binary data format backends
 
 License: Apache-2.0
@@ -16,10 +16,9 @@ Source0: %name-%version.tar
 Patch0: 0001-Fix-HashMap-incompareble-types-cast-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc
-BuildRequires: rpm-build-java
-BuildRequires: jpackage-17-compat
+BuildRequires: jpackage-default
 BuildRequires: maven-local
+
 BuildRequires: jackson-annotations
 BuildRequires: jackson-core
 BuildRequires: jackson-databind
@@ -37,9 +36,10 @@ BuildRequires: assertj-core
 BuildRequires: avro
 %endif
 
-
 %description
 Parent pom for Jackson binary dataformats.
+
+%javadoc_package
 
 %if %{with extra_dataformats}
 %package -n jackson-dataformat-avro
@@ -102,11 +102,7 @@ pluggable extensions).
 %pom_add_dep -r org.apiguardian:apiguardian-api:test
 
 %build
-%mvn_build -s -j -- -Dmaven.compiler.source=1.8 \
-  -Dmaven.compiler.target=1.8 \
-  -Dmaven.javadoc.source=1.8 \
-  -Dmaven.compiler.release=9 \
-  #
+%mvn_build -s
 
 %install
 %mvn_install
@@ -134,6 +130,10 @@ pluggable extensions).
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Aug 11 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Automatically updated to 2.22.1.
+- Enabled javadoc.
+
 * Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt2
 - FTBFS fix.
 

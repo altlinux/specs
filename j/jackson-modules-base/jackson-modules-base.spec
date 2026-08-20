@@ -1,6 +1,6 @@
 Name:           jackson-modules-base
-Version:        2.20.1
-Release:        alt3
+Version:        2.22.1
+Release:        alt1
 
 Summary:        Uber-project for foundational modules of Jackson that build directly on core components but nothing else; not including data format or datatype modules
 License:        Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
+BuildRequires:  mvn(com.google.auto.service:auto-service)
 
 BuildArch:      noarch
 
@@ -37,63 +38,77 @@ stable) modules.
 
 %javadoc_package
 
-%package -n jackson-module-afterburner
+%package -n     jackson-module-afterburner
 Summary:        Jackson extension module used to enhance performance using bytecode generation to replace use of Reflection for field access and method calls
 Group:          Development/Java
+
 %description -n jackson-module-afterburner
 Module that will add dynamic bytecode generation for standard Jackson POJO
 serializers and deserializers, eliminating majority of remaining data binding
 overhead.
 
-%package -n jackson-module-blackbird
+%package -n     jackson-module-blackbird
 Summary:        Jackson extension module that uses LambdaMetafactory based code generation to replace reflection calls
 Group:          Development/Java
+
 %description -n jackson-module-blackbird
 The Afterburner has long been your engine of choice for maximum Jackson
 performance. But in the brave new Java 11 world, the trusty Afterburner
 is showing its age. It uses horrifying bytecode manipulation and cracks
 Unsafe.defineClass which will stop working soon.
 
-%package -n jackson-module-guice
+%package -n     jackson-module-guice
 Summary:        Stuff to make integration with Guice a bit easier
 Group:          Development/Java
+
 %description -n jackson-module-guice
 This extension allows Jackson to delegate ObjectMapper creation and value
 injection to Guice when handling data bindings.
 
-%package -n jackson-module-jakarta-xmlbind-annotations
+%package -n     jackson-module-jakarta-xmlbind-annotations
 Summary:        Jackson module: Jakarta XML Bind Annotations (jakarta.xml.bind)
 Group:          Development/Java
+
 %description -n jackson-module-jakarta-xmlbind-annotations
 Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative
 to "native" Jackson annotations, for configuring data-binding.
 
-%package -n jackson-module-jaxb-annotations
+%package -n     jackson-module-jaxb-annotations
 Summary:        Support for using JAXB annotations as an alternative to "native" Jackson annotations
 Group:          Development/Java
+
 %description -n jackson-module-jaxb-annotations
 This Jackson extension module provides support for using JAXB (javax.xml.bind)
 annotations as an alternative to native Jackson annotations. It is most often
 used to make it easier to reuse existing data beans that used with JAXB
 framework to read and write XML.
 
-%package -n jackson-module-mrbean
+%package -n     jackson-module-mrbean
 Summary:        Functionality for implementing interfaces and abstract types dynamically ("bean materialization"), integrated with Jackson (although usable externally as well)
 Group:          Development/Java
+
 %description -n jackson-module-mrbean
 Mr Bean is an extension that implements support for "POJO type materialization";
 ability for databinder to construct implementation classes for Java interfaces
 and abstract classes, as part of deserialization. Extension plugs in using
 standard Module interface, and requires Jackson 2.0 or above.
 
-%package -n jackson-module-osgi
+%package -n     jackson-module-osgi
 Summary:        Jackson module to inject OSGI services in deserialized beans
 Group:          Development/Java
+
 %description -n jackson-module-osgi
 This module provides a way to inject OSGI services into deserialized objects.
 Thanks to the JacksonInject annotations, the OsgiJacksonModule will search for
 the required service in the OSGI service registry and injects it in the object
 while deserializing.
+
+%package -n     jackson-module-spi-subtypes
+Summary:        Jackson module: SPI Subtypes Annotation Support
+Group:          Development/Java
+
+%description -n jackson-module-spi-subtypes
+Registering subtypes through SPI without annotating the parent class.
 
 %prep
 %setup
@@ -124,11 +139,7 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
-%mvn_build -s -- \
-    -Dmaven.compiler.source=1.8 \
-    -Dmaven.compiler.target=1.8 \
-    -Dmaven.javadoc.source=1.8 \
-    -Dmaven.compiler.release=8 \
+%mvn_build -s
 
 %install
 %mvn_install
@@ -165,7 +176,14 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc osgi/README.md osgi/release-notes
 %doc LICENSE
 
+%files -n jackson-module-spi-subtypes -f .mfiles-jackson-module-spi-subtypes
+%doc spi-subtypes/README.md
+%doc LICENSE
+
 %changelog
+* Wed Aug 05 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Updated to 2.22.1.
+
 * Fri Apr 03 2026 Anton Meleshnikov <alton@altlinux.org> 2.20.1-alt3
 - fixed FTBFS.
 

@@ -1,46 +1,47 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          jackson-parent
-Version:       2.20
+Version:       2.22
 Release:       alt1
+
 Summary:       Parent pom for all Jackson components
 License:       Apache-2.0
-
+Group:         Development/Java
 URL:           https://github.com/FasterXML/jackson-parent
-Source0:       %{url}/archive/%{name}-%{version}.tar.gz
-# jackson-parent package don't include the license file
-# reported @ https://github.com/FasterXML/jackson-parent/issues/1
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+VCS:           https://github.com/FasterXML/jackson-parent
 
+Source0:       %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
+
 BuildRequires:  mvn(com.fasterxml:oss-parent:pom:)
 
 BuildArch:     noarch
-Source44: import.info
 
 %description
-Project for parent pom for all Jackson components.
+This project is the ultimate parent pom for Jackson 2.x components: for most
+indirectly via jackson-base.
+
+It defines some defaults but much of this has been moved to above-mentioned
+jackson-base (and jackson-bom) over 2.x release schedule; this project will
+not be used at all with Jackson 3.x.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-cp -p %{SOURCE1} LICENSE
-sed -i 's/\r//' LICENSE
+%setup
 
 %build
-%mvn_build -j
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
-%doc --no-dereference LICENSE
+%doc README.md release-notes/VERSION
 
 %changelog
+* Fri Aug 07 2026 Evgeniy Serov <scala@altlinux.org> 2.22-alt1
+- Updated to 2.22.
+
 * Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.20-alt1
 - new version
 

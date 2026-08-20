@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-modules-java8
-Version: 2.20.1
+Version: 2.22.1
 Release: alt1
 
 Summary: Set of Jackson modules providing support for Java 8 features
@@ -14,10 +14,9 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc
-BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
 BuildRequires: maven-local
+
 BuildRequires: jackson-annotations
 BuildRequires: jackson-databind
 BuildRequires: jackson-core
@@ -26,6 +25,7 @@ BuildRequires: junit
 BuildRequires: maven-enforcer
 BuildRequires: replacer
 BuildRequires: moditect-maven-plugin
+BuildRequires: mockito-core
 
 %description
 Jackson Modules for Java 8 is a collection of extensions that enable the
@@ -35,6 +35,8 @@ Time API (JSR-310), and automatic discovery of constructor and method parameter
 names. Together, these modules make it easier to use Jackson in modern Java 8
 applications and ensure seamless integration with updated language constructs
 and APIs.
+
+%javadoc_package
 
 %package -n jackson-datatype-jdk8
 Summary: Jackson module for Java 8 core types (Optional and related types)
@@ -78,32 +80,27 @@ classes that rely on constructor parameters instead of standard setter methods.
 %prep
 %setup
 
-# Off tests beacause of broken mockito.
-rm -rf parameter-names/src/test
-%pom_remove_dep org.mockito:mockito-core parameter-names/pom.xml
-
 %pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :gradle-module-metadata-maven-plugin
 %pom_remove_plugin -r :cyclonedx-maven-plugin
 
 %build
-%mvn_build -s -f -j -- -Dmaven.compiler.source=1.8 \
-  -Dmaven.compiler.target=1.8 \
-  -Dmaven.javadoc.source=1.8 \
-  -Dmaven.compiler.release=8 \
-  #
+%mvn_build -s
 
 %install
 %mvn_install 
 
 %files -f .mfiles-jackson-modules-java8
+%doc *.md LICENSE
 
 %files -n jackson-datatype-jdk8 -f .mfiles-jackson-datatype-jdk8
-
 %files -n jackson-datatype-jsr310 -f .mfiles-jackson-datatype-jsr310
-
 %files -n jackson-module-parameter-names -f .mfiles-jackson-module-parameter-names
 
 %changelog
+* Mon Aug 10 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
+- Updated to 2.22.1.
+- Enabled tests and javadoc.
+
 * Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
 - First build for ALT.
