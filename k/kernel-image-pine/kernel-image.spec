@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	6.18
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.18
-%define kernel_sublevel .44
+%define kernel_sublevel .45
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -303,6 +303,7 @@ KbuildFiles="
 	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
+	scripts/module-common.c
 	scripts/subarch.include
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
@@ -425,6 +426,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Aug 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:6.18.45-alt1
+- 6.18.45
+
 * Mon Aug 10 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:6.18.44-alt1
 - 6.18.44
 
