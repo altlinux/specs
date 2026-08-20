@@ -1,14 +1,18 @@
 Name: winff
 Version: 1.6.4
-Release: alt1
+Release: alt2
 Summary: A cross platform batch GUI for FFmpeg
 Summary(ru_RU.UTF-8): Кроссплатформенный графический интерфейс для FFmpeg
 License: GPLv3
 Group: Video
-Url: http://winff.org
+Url: https://github.com/WinFF/winff
+Vcs: https://github.com/WinFF/winff.git
 Source: %name-%version.tar
 Source1: winff.desktop
 BuildRequires: lazarus desktop-file-utils dos2unix
+BuildRequires: qt6pas-devel
+
+Requires: icon-theme-hicolor
 Requires: ffmpeg
 Requires: ffplay
 Requires: xterm
@@ -37,7 +41,7 @@ chmod 644 *.txt docs/*.pdf docs/*.odg docs/*.odt docs/*.txt winff-icons/*.txt
 %build
 lazbuild \
 	--lazarusdir=%_libdir/lazarus \
-	--widgetset=gtk2 \
+	--widgetset=qt6 \
 	-B winff.lpr
 
 %install
@@ -65,6 +69,9 @@ install -m644 -t %buildroot/%_docdir/%name AUTHORS *.txt docs/*.pdf docs/*.odg d
 %_docdir/%name
 
 %changelog
+* Thu Aug 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.6.4-alt2
+- Change widgetset to qt6 (ALT #60215).
+
 * Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
