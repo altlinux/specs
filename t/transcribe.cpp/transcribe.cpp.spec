@@ -15,7 +15,7 @@
 
 Name: transcribe.cpp
 Version: 0.1.3
-Release: alt2
+Release: alt3
 
 Summary: Speech-to-text (ASR) inference in C/C++
 License: MIT
@@ -75,13 +75,9 @@ NOTE:
 %package -n libtranscribe%soversion
 Summary: Shared library for %name
 Group: System/Libraries
+# The CPU backend is the only one required: it always works and is small.
+# The CUDA and Vulkan backends are optional, install them explicitly.
 Requires: %name-cpu = %EVR
-%if_with cuda
-Requires: %name-cuda = %EVR
-%endif
-%if_with vulkan
-Requires: %name-vulkan = %EVR
-%endif
 
 %description -n libtranscribe%soversion
 %summary.
@@ -232,6 +228,11 @@ export PATH=$PWD/%_cmake__builddir/bin:$PATH
 %endif
 
 %changelog
+* Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 0.1.3-alt3
+- Make the CUDA and Vulkan backends optional: libtranscribe0 now requires
+  the CPU backend only, so installing the library no longer pulls in the
+  NVIDIA and Vulkan stacks.
+
 * Wed Jul 29 2026 Alexey Shabalin <shaba@altlinux.org> 0.1.3-alt2
 - Build without BLAS.
 
