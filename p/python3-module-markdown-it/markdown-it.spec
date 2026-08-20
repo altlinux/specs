@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Python port of markdown-it. Markdown parsing, done right!
@@ -87,6 +87,9 @@ For more details see: https://markdown-it-py.readthedocs.io.
 %_bindir/%oname
 
 %changelog
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 4.2.0-alt1
+- 4.0.0 -> 4.2.0
+
 * Mon Sep 08 2025 Anton Farygin <rider@altlinux.com> 4.0.0-alt1
 - 3.0.0 -> 4.0.0
 
