@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.101
+Version: 6.1.104
 Release: alt1
 Epoch: 2
 
@@ -156,6 +156,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %config(noreplace) %_sysconfdir/deepin/daemon/resource-control.json
 %config %_sysconfdir/pam.d/deepin-auth-keyboard
 %prefix/lib/%name/
+%dir %_libexecdir/deepin/
+%_libexecdir/deepin/dde-session-daemon
+%_libexecdir/deepin/langselector
 %dir %_libexecdir/%repo/
 %dir %_libexecdir/%repo/keybinding/
 %_libexecdir/%repo/keybinding/shortcut-dde-grand-search.sh
@@ -202,6 +205,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Thu Aug 20 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.104-alt1
+- New version 6.1.104.
+
 * Tue Jul 28 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.101-alt1
 - New version 6.1.101.
 
