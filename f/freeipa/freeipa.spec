@@ -60,8 +60,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.13.2
-Release: alt2
+Version: 4.13.3
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -669,6 +669,7 @@ rm %buildroot/%plugin_dir/libipa_modrdn.la
 rm %buildroot/%plugin_dir/libipa_lockout.la
 rm %buildroot/%plugin_dir/libipa_cldap.la
 rm %buildroot/%plugin_dir/libipa_dns.la
+rm %buildroot/%plugin_dir/libipa_krbprinc_mr.la
 rm %buildroot/%plugin_dir/libipa_sidgen.la
 rm %buildroot/%plugin_dir/libipa_sidgen_task.la
 rm %buildroot/%plugin_dir/libipa_extdom_extop.la
@@ -1002,6 +1003,7 @@ fi
 %attr(755,root,root) %plugin_dir/libipa_modrdn.so
 %attr(755,root,root) %plugin_dir/libipa_lockout.so
 %attr(755,root,root) %plugin_dir/libipa_dns.so
+%attr(755,root,root) %plugin_dir/libipa_krbprinc_mr.so
 %attr(755,root,root) %plugin_dir/libipa_range_check.so
 %attr(755,root,root) %plugin_dir/libipa_otp_counter.so
 %attr(755,root,root) %plugin_dir/libipa_otp_lasttoken.so
@@ -1224,6 +1226,10 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 4.13.3-alt1
+- 4.13.2 -> 4.13.3 (fixes: CVE-2026-19550, CVE-2026-73196, CVE-2026-73197,
+  CVE-2026-73198, CVE-2026-11861, CVE-2026-13097).
+
 * Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 4.13.2-alt2
 - Added check for all the required PKI ports (closes: #44555).
 
