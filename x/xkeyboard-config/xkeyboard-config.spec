@@ -1,14 +1,12 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
 Version: 2.46
-Release: alt1
+Release: alt2
 Epoch: 1
 License: X11/MIT
 Group: System/X11
 Url: https://www.freedesktop.org/wiki/Software/XKeyboardConfig/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-Requires: libX11 >= 1.4.3
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -66,6 +64,9 @@ cp -a %buildroot%_datadir/%name-2 %buildroot%_datadir/X11/xkb
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 1:2.46-alt2
+- NMU: Drop dependencies on libx11 (closes: #60169).
+
 * Tue Nov 25 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.46-alt1
 - 2.46
 
