@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 140.0
+Version: 140.1
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -102,6 +102,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 140.1-alt1
+- New version 140.1.
+
 * Sat May 23 2026 Anton Midyukov <antohami@altlinux.org> 140.0-alt1
 - New version 140.0.
 - Build with gtk4 too.
