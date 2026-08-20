@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.31.3
-Release: alt1
+Release: alt2
 Summary: Plain Python functions as CLI commands without boilerplate
 License: LGPLv3
 Group: Development/Python3
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -48,11 +49,13 @@ ordinary Python functions as CLI commands.
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 0.31.3-alt2
+- Fixed FTBFS (Python 3.14).
+
 * Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 0.31.3-alt1
 - 0.31.2 -> 0.31.3.
 
