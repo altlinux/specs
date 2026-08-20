@@ -3,7 +3,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: QML based login manager from KDE
@@ -18,6 +18,7 @@ Requires: kf6-filesystem
 Requires: kf6-kauth-common
 Requires(post): shadow-utils
 Requires: kwin
+Requires: plasma-workspace-qml
 
 Source: %rname-%version.tar
 Source10: alt.tar
@@ -177,6 +178,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- fix requires (closes: 60206)
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
