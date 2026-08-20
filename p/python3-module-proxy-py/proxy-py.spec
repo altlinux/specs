@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.10
-Release: alt1.2
+Release: alt2
 Summary: Proxy server
 License: BSD
 Group: Development/Python3
@@ -14,37 +14,19 @@ Url: https://pypi.org/project/proxy-py
 Vcs: https://github.com/abhinavsingh/proxy.py
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 # required by proxy/common/pki.py
 Requires: %_bindir/openssl
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-scm
-BuildRequires: python3-module-setuptools
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-autopep8
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-flake8
-BuildRequires: python3-module-h2
-BuildRequires: python3-module-hpack
-BuildRequires: python3-module-httpx
-BuildRequires: python3-module-hyperframe
-BuildRequires: python3-module-mccabe
-BuildRequires: python3-module-mypy
-BuildRequires: python3-module-pre-commit
-BuildRequires: python3-module-pylint
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-rope
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-wheel
-
 # py-spy: sampling profiler for Python programs (not packaged)
+%add_pyproject_deps_check_filter py-spy
+%pyproject_builddeps_metadata_extra testing
 # required by proxy/common/pki.py
 BuildRequires: %_bindir/openssl
 %endif
@@ -55,14 +37,9 @@ BuildRequires: %_bindir/openssl
 %prep
 %setup
 %autopatch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -73,7 +50,7 @@ fi
 %check
 # broken with modern pytest-asyncio
 # https://github.com/abhinavsingh/proxy.py/issues/1357
-%pyproject_run_pytest -ra -o=addopts='' \
+%pyproject_run_pytest -ra -o=addopts='' -Wignore \
     --ignore=tests/http/exceptions/ \
     --ignore=tests/http/proxy/ \
     --ignore=tests/http/test_protocol_handler.py \
@@ -85,15 +62,14 @@ fi
     --ignore=tests/test_grout.py \
 
 %files
-%doc README.*
 %_bindir/grout
 %_bindir/proxy
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.4.10-alt1.2
-- Demodernized packaging.
+* Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 2.4.10-alt2
+- Fixed FTBFS (Python 3.14).
 
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.4.10-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
