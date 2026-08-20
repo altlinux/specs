@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.65b0
-Release: alt2
+Release: alt3
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -114,6 +114,27 @@ Group: Development/Python3
 %description -n python3-module-%mod_name-instrumentation-botocore
 This library allows tracing AWS API calls made by the botocore library.
 
+%package -n python3-module-%mod_name-instrumentation-logging
+Summary: OpenTelemetry Logging Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-logging
+OpenTelemetry logging integration.
+
+%package -n python3-module-%mod_name-instrumentation-redis
+Summary: OpenTelemetry Redis Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-redis
+This library allows tracing requests made by the Redis library.
+
+%package -n python3-module-%mod_name-instrumentation-system-metrics
+Summary: OpenTelemetry System Metrics Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-system-metrics
+Instrumentation to collect system performance metrics.
+
 %package -n python3-module-%mod_name-propagator-aws-xray
 Summary: OpenTelemetry Propagator for AWS X-Ray Service
 Group: Development/Python3
@@ -138,6 +159,13 @@ This library provides ASGI, WSGI middleware and other HTTP-related
 functionality that is common to instrumented web frameworks (such as Django,
 Starlette, FastAPI, etc.) to track requests timing through OpenTelemetry.
 
+%package -n python3-module-%mod_name-distro
+Summary: OpenTelemetry Python Distro
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-distro
+This package provides entrypoints to configure OpenTelemetry.
+
 %prep
 %setup -n %pypi_name-%version
 
@@ -150,8 +178,12 @@ pushd ./util/%mod_name-util-http
     %pyproject_build
 popd
 
+pushd ./%mod_name-distro
+    %pyproject_build
+popd
+
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics}; do
     pushd $idir
         %pyproject_build
     popd
@@ -173,8 +205,12 @@ pushd ./util/%mod_name-util-http
     %pyproject_install
 popd
 
+pushd ./%mod_name-distro
+    %pyproject_install
+popd
+
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics}; do
     pushd $idir
         %pyproject_install
     popd
@@ -197,8 +233,12 @@ pushd ./util/%mod_name-util-http
     %pyproject_run_pytest
 popd
 
+pushd ./%mod_name-distro
+    %pyproject_run_pytest
+popd
+
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics}; do
     pushd $idir
         %pyproject_run_pytest
     popd
@@ -279,6 +319,21 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/botocore
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-botocore}
 
+%files -n python3-module-%mod_name-instrumentation-logging
+%doc instrumentation/%mod_name-instrumentation-logging/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/logging
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-logging}
+
+%files -n python3-module-%mod_name-instrumentation-redis
+%doc instrumentation/%mod_name-instrumentation-redis/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/redis
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-redis}
+
+%files -n python3-module-%mod_name-instrumentation-system-metrics
+%doc instrumentation/%mod_name-instrumentation-system-metrics/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/system_metrics
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-system-metrics}
+
 %files -n python3-module-%mod_name-propagator-aws-xray
 %doc propagator/%mod_name-propagator-aws-xray/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/propagators/aws
@@ -294,7 +349,15 @@ done
 %python3_sitelibdir/%mod_name/util/http
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
+%files -n python3-module-%mod_name-distro
+%doc %mod_name-distro/README.rst LICENSE
+%python3_sitelibdir/%mod_name/distro
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-distro}
+
 %changelog
+* Thu Aug 20 2026 Anton Zhukharev <ancieg@altlinux.org> 0.65b0-alt3
+- NMU: Package distro and instrumentation for logging, redis and system-metrics.
+
 * Wed Aug 12 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.65b0-alt2
 - NMU: Package instrumentation for dbapi (closes: #60142).
 
