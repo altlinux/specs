@@ -2,7 +2,7 @@
 
 Name: kmscon
 Version: 10.0.1
-Release: alt1
+Release: alt2
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -29,6 +29,11 @@ BuildRequires: pkgconfig(check)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: termutils-devel
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
+
+# https://bugzilla.altlinux.org/60164
+Requires: fontconfig
+Requires: xkeyboard-config >= 2.46-alt2
+Requires: fonts-ttf-Hack
 
 %description
 Kmscon is a simple terminal emulator based on Linux kernel mode setting (KMS).
@@ -66,6 +71,10 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example %buildroot/%_sysconfdir/%na
 %_man5dir/%name.conf.5*
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 10.0.1-alt2
+- Add depends on fontconfig, xkeyboard-config, fonts-ttf-Hack (Closes: 60164).
+- kmscon.conf: set term and font.
+
 * Mon Aug 03 2026 Anton Midyukov <antohami@altlinux.org> 10.0.1-alt1
 - New version 10.0.1.
 
