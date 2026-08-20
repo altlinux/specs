@@ -6,7 +6,7 @@
 
 Name: gpgmeqt
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Qt bindings for GPGME
 License: GPL-2.0-or-later
@@ -35,19 +35,19 @@ Summary: Qt6 QGpgME library
 %description -n %libqgpgme6
 Qt6 binding library for GPGME.
 
-%package -n libgpgme-devel
+%package -n gpgmeqt-devel
 Summary: Include files for development with QGpgME
 Group: Development/C++
 Requires: gpgme2-devel
 Requires: gpgmepp-devel
 #
 Provides: qgpgme-devel = %version
-Provides: gpgmeqt-devel = %EVR
-Obsoletes: gpgmeqt-devel < %EVR
+Provides: libgpgme-devel = %version-%release
+Obsoletes: libgpgme-devel < %version-%release
 Provides: libgpgme1-devel = %version-%release
 Obsoletes: libgpgme1-devel < %version-%release
 
-%description -n libgpgme-devel
+%description -n gpgmeqt-devel
 This package contains headers and CMake/pkg-config files for QGpgME.
 
 %description
@@ -81,12 +81,15 @@ popd
 %_libdir/libqgpgmeqt6.so.%sover
 %_libdir/libqgpgmeqt6.so.*
 
-%files -n libgpgme-devel
+%files -n gpgmeqt-devel
 %_includedir/qgpgme-qt*/
 %_libdir/lib*.so
 %_libdir/cmake/QGpgme*/
 #%_pkgconfigdir/qgpgme*.pc
 
 %changelog
+* Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- return gpgmeqt-devel subpackage after upgrade
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - initial build
