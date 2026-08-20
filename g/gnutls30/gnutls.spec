@@ -10,7 +10,7 @@
 
 Name: gnutls%libgnutls_soname
 Version: 3.8.13
-Release: alt1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -66,6 +66,8 @@ group.
 Summary: Transport Layer Security library
 License: LGPLv2.1+
 Group: System/Libraries
+# https://bugzilla.altlinux.org/51766
+Requires: ca-certificates
 Provides: libgnutls = %version
 Obsoletes: libgnutls < %version
 Obsoletes: libgnutls-new < %version
@@ -334,6 +336,9 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Thu Aug 20 2026 Mikhail Efremov <sem@altlinux.org> 3.8.13-alt2
+- Require ca-certificates (closes: #51766).
+
 * Mon May 04 2026 Mikhail Efremov <sem@altlinux.org> 3.8.13-alt1
 - Updated patches.
 - Updated to 3.8.13 (fixes: CVE-2026-33846, CVE-2026-42009,

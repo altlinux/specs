@@ -10,7 +10,7 @@
 %endif
 
 Name: leancrypto
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Cryptographic library with stack-only support and PQC-safe algorithms
@@ -113,12 +113,15 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 	-Ddefault_library=shared \
 	-Dascon=disabled -Dascon_keccak=disabled \
 	-Dbike_5=disabled -Dbike_3=disabled -Dbike_1=disabled \
-	-Dkyber_x25519=disabled -Ddilithium_ed25519=disabled \
+	-Dkyber_x25519=disabled -Dkyber_x448=disabled \
+	-Ddilithium_ed25519=disabled -Ddilithium_ed448=disabled \
 	-Dx509_parser=disabled -Dx509_generator=disabled \
+	-Dx509_csr_parser=disabled -Dx509_csr_generator=disabled \
 	-Dpkcs7_parser=disabled -Dpkcs7_generator=disabled \
+	-Dpkcs8_parser=disabled -Dpkcs8_generator=disabled \
 	-Dsha2-256=disabled \
 	-Dchacha20=disabled -Dchacha20_drng=disabled -Dchacha20poly1305=disabled \
-	-Ddrbg_hash=disabled -Ddrbg_hmac=disabled \
+	-Ddrbg_hash=disabled -Ddrbg_hmac=disabled -Ddrbg_ctr=disabled \
 	-Dhash_crypt=disabled \
 	-Dhmac=disabled -Dhkdf=disabled \
 	-Dkdf_ctr=disabled -Dkdf_fb=disabled -Dkdf_dpi=disabled \
@@ -129,7 +132,11 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 	-Daes_kw=disabled \
 	%{subst_enable_meson_feature tools apps} \
 	%{subst_enable_meson_feature tests tests} \
+	-Ddisable-asm=true \
 	-Dstrip=false
+# the reason for -Ddisable-asm=true being RH bz2416812
+# revert once the root cause is fixed
+# See https://bugzilla.redhat.com/show_bug.cgi?id=2416812
 
 %meson_build -v
 
@@ -170,6 +177,12 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 %endif
 
 %changelog
+* Thu Aug 20 2026 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Disabled asm for now.
+- Disabled pkcs8 and hybrid signature algorithms.
+- Fixed missing include.
+- Updated to 1.8.0.
+
 * Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
 - Updated to 1.6.0.
 
