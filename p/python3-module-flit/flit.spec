@@ -1,12 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name flit
 %define pypi_name_core flit-core
+# tomli is required for Python < 3.11, it's debundled and the metadata can't be
+# patched
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 3.12.0
-Release: alt2
+Release: alt3
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
@@ -40,6 +43,10 @@ Group: Development/Python3
 # previously flit_core was a part of flit
 Conflicts: python3-module-flit <= 3.6.0
 %py3_provides %pypi_name_core
+# required for older branches having Python < 3.11
+%if %tomli
+Requires: python3-module-tomli
+%endif
 
 %description -n python3-module-%pypi_name_core
 Distribution-building parts of Flit.
@@ -88,6 +95,9 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 3.12.0-alt3
+- Added missing runtime dep on tomli for Python < 3.11.
+
 * Mon Mar 30 2026 Stanislav Levin <slev@altlinux.org> 3.12.0-alt2
 - Undone Python vandalism.
 
