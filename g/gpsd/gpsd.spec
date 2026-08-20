@@ -6,7 +6,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.27.5
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -283,6 +283,13 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 3.27.5-alt2
+- Backported upstream fix for gpsprof:
+  * escaped quotes, backticks, and newlines in gnuplot titles;
+  * quoted and sanitized the gnuplot terminal name.
+- Fixes:
+  * CVE-2026-58459: command injection via a crafted GPS device subtype
+
 * Fri Jan 16 2026 Anton Farygin <rider@altlinux.org> 3.27.5-alt1
 - 3.27.3 -> 3.27.5
 
