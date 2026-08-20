@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -93,6 +93,26 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 1.4.1-alt1
+- 1.4.0 -> 1.4.1
+- webui: spec section jump strip now scrolls to the section on click and
+  lists only sections (dropped the %%define clutter)
+- fixed a flaky change-signal test that broke %%check on fast build hosts
+
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0
+- new "ui" config key: the server serves its own web UI from the binary,
+  no separate web server needed
+- new "gitweb_compat" config key: answers old gitweb.cgi URLs
+- webui: RPM spec syntax highlighting, section/macro jump strip, autolinks
+- webui accessibility: screen readers get row kinds and controls as
+  text, not decorative glyphs
+- webui: content centered on wide screens, aligned toolbar controls,
+  narrow-screen and mobile layout fixes
+- zip and tar.bz2 archives; commit/<rev>.patch and .diff URLs
+- faster first listing after a restart, faster large directories
+- hardening against unauthenticated resource exhaustion
+
 * Sat Aug 15 2026 Anton Farygin <rider@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0
 - new gitoskop-webui subpackage: static web interface, installed
