@@ -2,7 +2,7 @@
 %define oname io.github.tanaybhomia.Whisp
 
 Name: whisp
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: The Anti-Note for GNOME
@@ -47,6 +47,9 @@ A fluid, gesture-driven scratchpad designed for absolute speed.
 %_datadir/%name
 
 %changelog
+* Fri Aug 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.1-alt1
+- 1.4.0 -> 1.4.1
+
 * Sat Aug 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.0-alt1
 - 1.3.8 -> 1.4.0
 - added dependencies for OCR functions
