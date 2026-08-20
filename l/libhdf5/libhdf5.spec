@@ -5,7 +5,7 @@
 %define soverhl 320
 
 Name: lib%oname
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Hierarchical Data Format 5 library
@@ -128,10 +128,10 @@ rm -rf %buildroot%_libdir/cmake/Modules/Findlibaec.cmake
 
 %files -n lib%oname-devel
 %doc LICENSE
-%doc README.md release_docs/USING_HDF5_CMake.txt
+%doc README.md
 %doc release_docs/CHANGELOG.md
 %_libdir/lib*.so
-%_libdir/cmake/*.cmake
+%_libdir/cmake/hdf5
 %_includedir/*
 %_pkgconfigdir/*
 
@@ -141,6 +141,9 @@ rm -rf %buildroot%_libdir/cmake/Modules/Findlibaec.cmake
 %_libdir/libhdf5.settings
 
 %changelog
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.1.1 -> 2.2.0
+
 * Thu Jun 11 2026 Anton Farygin <rider@altlinux.org> 2.1.1-alt1
 - 2.0.0 -> 2.1.1
 
