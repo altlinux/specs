@@ -5,7 +5,7 @@
 
 Name: digler
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Digler - Go Deep. Get Back Your Data
 License: MIT
@@ -14,8 +14,9 @@ URL: https://github.com/ostafen/digler
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Patch1: alt-fix-appname.patch
-Patch2: alt-fix-completions.patch
+Patch: alt-fix-appname.patch
+Patch1: alt-fix-completions.patch
+Patch2: alt-fix-flag-output.patch
 
 ExcludeArch: i586
 BuildRequires(pre): rpm-macros-golang
@@ -28,6 +29,7 @@ images and raw devices.
 
 %prep
 %setup -a 1
+%patch -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -58,5 +60,8 @@ install -m 0644 cmd/%name.fish %buildroot%_datadir/fish/vendor_completions.d/%na
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Aug 19 2026 Vladislav Eliseev <general@altlinux.org> 0.1.0-alt2
+- Fixed flag -o/--output (Closes: 60152).
+
 * Fri Sep 19 2025 Vladislav Eliseev <general@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus.
