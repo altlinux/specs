@@ -1,10 +1,10 @@
 Name: sc-controller
-Version: 0.4.8.11
+Version: 0.6.6
 Release: alt1
 Summary: User-mode driver and GTK3-based GUI for the Steam Controller
 License: GPL-2.0-only
 Group: System/Libraries
-Url: https://github.com/Ryochan7/sc-controller
+Url: https://github.com/C0rn3j/sc-controller
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
@@ -56,5 +56,11 @@ fdupes %buildroot%prefix
 %_udevrulesdir/69-sc-controller.rules
 
 %changelog
+* Tue Aug 18 2026 Artyom Bystrov <arbars@altlinux.org> 0.6.6-alt1
+- Update to new version
+
+* Sat Feb  3 2024 Artyom Bystrov <arbars@altlinux.org> 0.4.8.13-alt1
+- Update to new version
+
 * Sun Jul 02 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.8.11-alt1
 - initial build for ALT Sisyphus
