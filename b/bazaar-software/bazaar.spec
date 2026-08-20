@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id io.github.kolunmi.Bazaar
 %define _name bazaar
-%define libname bge
+%define soname bge
+%define soversion 0
 
 Name: bazaar-software
-Version: 0.7.15
+Version: 0.9.3
 Release: alt1
 
 Summary: Discover and install applications
@@ -35,6 +36,8 @@ BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(blueprint-compiler)
 BuildRequires: pkgconfig(libproxy-1.0)
 BuildRequires: pkgconfig(malcontent-0)
+BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(systemd)
 BuildRequires: python3(babel)
 
 Requires: flatpak
@@ -49,18 +52,18 @@ It emphasizes supporting the developers who make the Linux desktop possible.
 Bazaar features a "curated" tab that can be configured by distributors to allow
 for a more localized experience.
 
-%package -n lib%libname
+%package -n lib%soname%soversion
 Summary: Bazaar GTK Extensions
 Group: Development/C++
 
-%description -n lib%libname
+%description -n lib%soname%soversion
 %summary.
 
-%package -n lib%libname-devel
+%package -n lib%soname-devel
 Summary: Headers for %name
 Group: Development/C++
 
-%description -n lib%libname-devel
+%description -n lib%soname-devel
 %summary.
 
 %prep
@@ -82,21 +85,26 @@ Group: Development/C++
 %_bindir/%{_name}*
 %_userunitdir/%app_id.service
 %_desktopdir/%app_id.desktop
-%_datadir/dbus-1/services/%app_id.service
+%_datadir/dbus-1/services/%app_id.SearchProvider.service
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %_datadir/gnome-shell/search-providers/%app_id.search-provider.ini
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
 
-%files -n lib%libname
-%_bindir/%libname-demo
-%_libdir/lib%libname-%version.so
+%files -n lib%soname%soversion
+%_bindir/%soname-demo
+%_libdir/lib%soname.so.%soversion
+%_libdir/lib%soname.so.%version
 
-%files -n lib%libname-devel
-%_includedir/%libname
-%_pkgconfigdir/%libname-%version.pc
+%files -n lib%soname-devel
+%_includedir/%soname
+%_pkgconfigdir/%soname.pc
+%_libdir/lib%soname.so
 
 %changelog
+* Sat Aug 15 2026 David Sultaniiazov <x1z53@altlinux.org> 0.9.3-alt1
+- 0.9.3.
+
 * Tue Apr 28 2026 David Sultaniiazov <x1z53@altlinux.org> 0.7.15-alt1
 - 0.7.15.
 - Add flatpak requirement.
