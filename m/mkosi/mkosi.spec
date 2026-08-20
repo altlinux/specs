@@ -4,7 +4,7 @@
 
 Name: mkosi
 Version: 26
-Release: alt1
+Release: alt2
 
 Summary: Build Bespoke OS Images
 License: LGPL-2.1-or-later AND GPL-2.0-only AND PSF-2.0
@@ -133,6 +133,9 @@ install -Dm 644 mkosi.zsh %buildroot/%_datadir/zsh/site-functions/_mkosi
 %ghost %dir %_sysconfdir/mkosi-addon
 
 %changelog
+* Thu Aug 20 2026 Egor Ignatov <egori@altlinux.org> 26-alt2
+- Add ALT Linux support.
+
 * Wed Apr 15 2026 Egor Ignatov <egori@altlinux.org> 26-alt1
 - New version 26.
 
