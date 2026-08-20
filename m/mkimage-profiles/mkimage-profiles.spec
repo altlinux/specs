@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,13 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 1.9.7-alt1
+- mixin.mk: add kmscon target.
+- pkg.in/groups: Split X-Alterator-PackageList on ";" in check-pkglists
+  (thx Ajrat Makhmutov).
+- x11: add use/x11/plasma-login-manager (thx Artyom Osipchuk).
+- regular-gnome: use ready-set on sisyphus branch.
+
 * Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 1.9.6-alt1
 - initrd-bootchain: do not rewrite STAGE1_BOOTARGS
 - profile.mk: export GLOBAL_BRANCH
