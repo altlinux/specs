@@ -1,5 +1,5 @@
 Name: libgc
-Version: 8.2.8
+Version: 8.2.12
 Release: alt1
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
@@ -97,6 +97,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 8.2.12-alt1
+- new version 8.2.12
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 8.2.8-alt1
 - new version 8.2.8 (with rpmrb script)
 
