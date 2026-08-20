@@ -83,6 +83,7 @@
 %vulkan_drivers_add virtio
 %endif
 %ifarch %armsoc_arches
+%vulkan_drivers_add asahi
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
@@ -97,8 +98,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 26.1
-%define ver_minor 8
+%define ver_major 26.2
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -419,14 +420,16 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 
 %files -n xorg-dri-swrast
 %ghost %_sysconfdir/drirc
-%dir %_datadir/drirc.d
-%_datadir/drirc.d/00-mesa-defaults.conf
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libdril_dri.so
 %_libdir/X11/modules/dri/zink_dri.so
 %_libdir/libvulkan_lvp.so
-%_datadir/vulkan/icd.d/lvp_icd*.json
 %_libdir/libVkLayer_MESA_device_select.so
+%dir %_datadir/drirc.d
+%_datadir/drirc.d/00-mesa-defaults.conf
+%_datadir/drirc.d/00-zink-defaults.conf
+%_datadir/drirc.d/00-lavapipe-defaults.conf
+%_datadir/vulkan/icd.d/lvp_icd*.json
 %_datadir/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
 
 %files -n vulkan-mesa-layers
@@ -439,8 +442,10 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n xorg-dri-virtio
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
 %_libdir/dri/virtio_gpu_drv_video.so
+%_datadir/drirc.d/00-virtio_gpu-defaults.conf
 %ifarch %vulkan_virtio_arches
 %_libdir/libvulkan_virtio.so
+%_datadir/drirc.d/00-venus-defaults.conf
 %_datadir/vulkan/icd.d/virtio_icd*.json
 %endif
 %endif
@@ -450,9 +455,13 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/X11/modules/dri/i9?5_dri.so
 %_libdir/X11/modules/dri/crocus_dri.so
 %_libdir/X11/modules/dri/iris_dri.so
+%_datadir/drirc.d/00-crocus-defaults.conf
+%_datadir/drirc.d/00-iris-defaults.conf
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
 %_libdir/libvulkan_intel_hasvk.so
+%_datadir/drirc.d/00-anv-defaults.conf
+%_datadir/drirc.d/00-hasvk-defaults.conf
 %_datadir/vulkan/icd.d/intel_icd*.json
 %_datadir/vulkan/icd.d/intel_hasvk_icd*.json
 %endif
@@ -464,6 +473,7 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/dri/nouveau_drv_video.so
 %ifarch %vulkan_nouveau_arches
 %_libdir/libvulkan_nouveau.so
+%_datadir/drirc.d/00-nvk-defaults.conf
 %_datadir/vulkan/icd.d/nouveau_icd*.json
 %endif
 %endif
@@ -473,6 +483,8 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
 %_libdir/dri/r*_drv_video.so
+%_datadir/drirc.d/00-r?00-defaults.conf
+%_datadir/drirc.d/00-radeonsi-defaults.conf
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
 %_datadir/vulkan/icd.d/radeon_icd*.json
@@ -483,32 +495,47 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %ifarch %svga_arches
 %files -n xorg-dri-vmwgfx
 %_libdir/X11/modules/dri/vmwgfx_dri.so
+%_datadir/drirc.d/00-vmwgfx-defaults.conf
 %endif
 
 %ifarch %armsoc_arches
 %files -n xorg-dri-armsoc -f xorg-dri-armsoc.list
-%_libdir/libvulkan_freedreno.so
+%_libdir/libvulkan_asahi.so
 %_libdir/libvulkan_broadcom.so
-%_libdir/libvulkan_panfrost.so
+%_libdir/libvulkan_freedreno.so
 %_libdir/libvulkan_kosmickrisp.so
+%_libdir/libvulkan_panfrost.so
 %ifarch aarch64
 %_libdir/libteflon.so
 %endif
-%_datadir/vulkan/icd.d/kosmickrisp_mesa_icd*.json
-%_datadir/vulkan/icd.d/freedreno_icd*.json
+%_datadir/drirc.d/00-asahi-defaults.conf
+%_datadir/drirc.d/00-hk-defaults.conf
+%_datadir/drirc.d/00-msm-defaults.conf
+%_datadir/drirc.d/00-panfrost-defaults.conf
+%_datadir/drirc.d/00-panvk-defaults.conf
+%_datadir/drirc.d/00-turnip-defaults.conf
+%_datadir/drirc.d/00-v3d-defaults.conf
+%_datadir/drirc.d/00-v3dv-defaults.conf
+%_datadir/vulkan/icd.d/asahi_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
+%_datadir/vulkan/icd.d/freedreno_icd*.json
+%_datadir/vulkan/icd.d/kosmickrisp_mesa_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
 %endif
 
 %ifarch %armsoc_arches riscv64
 %files -n xorg-dri-powervr
 %_libdir/libvulkan_powervr_mesa.so
+%_datadir/drirc.d/00-pvr-defaults.conf
 %_datadir/vulkan/icd.d/powervr_mesa_icd*.json
 %endif
 
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Aug 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.1-alt1
+- 26.2.1
+
 * Thu Aug 20 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.1.8-alt1
 - 26.1.8
 
