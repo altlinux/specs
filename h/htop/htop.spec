@@ -5,7 +5,7 @@
 %def_enable hwloc
 
 Name: htop
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -111,6 +111,9 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Fri Aug 21 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.3-alt1
+- 3.5.3
+
 * Sat Jul 25 2026 Ilya Mashkin <oddity@altlinux.ru> 3.5.2-alt1
 - 3.5.2
 
