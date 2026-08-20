@@ -7,7 +7,7 @@
 %define tls yes
 
 Name: valkey
-Version: 9.0.4
+Version: 9.0.5
 Release: alt1
 
 Summary: A persistent key-value database
@@ -265,6 +265,9 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Thu Aug 20 2026 Andrey Cherepanov <cas@altlinux.org> 9.0.5-alt1
+- Updated to 9.0.5 (fixes: CVE-2026-56684, CVE-2026-63639) (ALT #59775).
+
 * Mon Jun 08 2026 Evgeny Sinelnikov <sin@altlinux.org> 9.0.4-alt1
 - Update to latest stable release of Valkey 9.0
 - Security fixes (Fixes: CVE-2026-23479, CVE-2026-25243, CVE-2026-23631).
