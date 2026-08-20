@@ -1,6 +1,6 @@
 Name: rdesktop
 Version: 1.9.0
-Release: alt2
+Release: alt3
 
 Summary: A RDP client for accessing Windows Remote Desktop Services
 
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 Patch0: rdesktop-1.8.3-deb-alt-openssl1.1-support.patch
 Patch1: configure-1.9.0-build.patch
 Patch2: ssl-1.9.0-build.patch
+Patch3: support_Nettle_4_digest_API.patch
 
 BuildRequires: libgnutls-devel libkrb5-devel libnettle-devel libpcsclite-devel libtasn1-devel
 BuildRequires: libao-devel libsamplerate-devel 
@@ -30,6 +31,7 @@ Vista, 2008, 7, and 2008 R2.
 #patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -53,6 +55,9 @@ sed -i 's/slash 0x56 altgr/#slash 0x56 altgr/' %buildroot%_datadir/%name/keymaps
 %_man1dir/*
 
 %changelog
+* Thu Aug 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.9.0-alt3
+- support Nettle 4 digest API
+
 * Sat Oct 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.9.0-alt2
 - FTBFS: fix: error:
 	+ passing argument 1 of '__gmpz_sizeinbase' from incompatible pointer type
