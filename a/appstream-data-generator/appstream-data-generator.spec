@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20260811
+Version: 20260820
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -45,6 +45,9 @@ Collection of tools for generation of appstream-data
 %_datadir/locale/*/LC_MESSAGES/appstream-data.mo
 
 %changelog
+* Thu Aug 20 2026 Andrey Cherepanov <cas@altlinux.org> 20260820-alt1
+- Handle appdata.xml files that include <pkgname> tag.
+
 * Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 20260811-alt1
 - Generate appdata for font packages without metainfo when --usefontfiles is used (Closes: #55531).
 - Skip desktop files with NoDisplay=true or Hidden=true (Closes: #54365).
