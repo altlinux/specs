@@ -3,7 +3,7 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 5.0.2
+Version: 6.0.6
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -19,10 +19,14 @@ BuildRequires(pre): apache2-devel
 BuildRequires: python3-dev
 
 %if_with check
-BuildRequires: nss_wrapper
-BuildRequires: socket_wrapper
-BuildRequires: pytest3
-BuildRequires: python3-module-requests
+BuildRequires: apache2-mod_ssl
+BuildRequires: curl
+BuildRequires: openssl
+# required to build extra tools, not packaged in alt
+BuildRequires: rpm-macros-python3
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %endif
 
 %description
@@ -56,15 +60,23 @@ echo -e '<IfModule !wsgi_module>\n\tLoadModule wsgi_module %apache2_moduledir/mo
     %buildroot%apache2_mods_available/wsgi-py3.load
 
 %check
-%make check DESTDIR=%buildroot
+export MOD_WSGI_SO="%buildroot%apache2_moduledir/mod_wsgi-py3.so"
+# build extra tools without an extension, not packaged in alt
+%pyproject_build
+# tests suite relies on '.venv' venv
+%__python3 -m venv --system-site-packages --clear .venv
+.venv/bin/python -m pyproject_installer install "dist/$(cat dist/.wheeltracker)"
+./scripts/run-tests.sh
 
 %files
 %files py3
-%doc README*.*
 %apache2_moduledir/mod_wsgi-py3.so
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 6.0.6-alt1
+- 5.0.2 -> 6.0.6
+
 * Mon Nov 25 2024 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
 - 5.0.1 -> 5.0.2.
 
