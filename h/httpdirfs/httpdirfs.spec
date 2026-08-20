@@ -4,15 +4,17 @@
 %set_verify_elf_method strict
 
 Name: httpdirfs
-Version: 1.2.9
+Version: 1.3.3
 Release: alt1
 Summary: FUSE mount for HTTP
 License: GPL-3.0-or-later
 Group: Networking/File transfer
 Url: https://github.com/fangfufu/httpdirfs/
+Vcs: https://github.com/fangfufu/httpdirfs
 Requires: /usr/bin/fusermount3
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: help2man
 BuildRequires: libcurl-devel
@@ -31,8 +33,11 @@ interface. It supports HTTP basic authentication.
 
 %prep
 %setup
+%patch -p1
 # warning: "_FORTIFY_SOURCE" redefined
 sed -i /_FORTIFY_SOURCE/d meson.build
+# unit tests depend on the Unity test
+sed -i "/subdir('tests')/d" meson.build
 
 %build
 %meson
@@ -51,6 +56,11 @@ sed -i /_FORTIFY_SOURCE/d meson.build
 %_man1dir/httpdirfs.1*
 
 %changelog
+* Thu Aug 20 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.3-alt1
+- Update to 1.3.3 (2026-06-11).
+- Switched to use .gear/tags.
+- Added vcs tag.
+
 * Fri May 15 2026 Vitaly Chikunov <vt@altlinux.org> 1.2.9-alt1
 - Update to 1.2.9 (2026-05-13).
 
