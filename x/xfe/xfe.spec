@@ -1,6 +1,6 @@
-%global	main_version	2.1.6
+%global	main_version	2.1.11
 Name: xfe
-Version: 2.1.6
+Version: 2.1.11
 Release: alt1
 
 Summary: MS-Explorer or Commander like file manager for X
@@ -136,6 +136,9 @@ ln -sf ../../../%{_sysconfdir}/xferc %{buildroot}%{_datadir}/%{name}/xferc
 
 
 %changelog
+* Fri Aug 21 2026 Ilya Mashkin <oddity@altlinux.ru> 2.1.11-alt1
+- 2.1.11
+
 * Sun Mar 29 2026 Ilya Mashkin <oddity@altlinux.ru> 2.1.6-alt1
 - 2.1.6
 
