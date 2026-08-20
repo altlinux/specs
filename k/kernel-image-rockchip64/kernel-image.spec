@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.44
+%define kernel_sublevel	.45
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -350,7 +350,7 @@ tar -xf %kernel_src/kernel-source-%kernel_src_version.tar
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) $(CROSS_COMPILE)gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -358,7 +358,6 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 %build
 banner build
 export ARCH=%base_arch
-export NPROCS=%__nprocs
 export KBUILD_BUILD_USER=$(echo %buildhost | sed 's/[-.].*//')
 export KBUILD_BUILD_HOST='%{?disttag}%{!?disttag:%buildhost}'
 export KBUILD_BUILD_TIMESTAMP="$(LC_ALL=C date -ud @$SOURCE_DATE_EPOCH)"
@@ -570,6 +569,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Thu Aug 20 2026 Alexei Takaseev <taf@altlinux.org> 6.18.45-alt1
+- v6.18.45 (2026-08-19).
+
 * Mon Aug 10 2026 Alexei Takaseev <taf@altlinux.org> 6.18.44-alt1
 - v6.18.44 (2026-08-09).
 
