@@ -52,7 +52,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.26.5
+Version: 1.26.7
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -408,6 +408,23 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Aug 20 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.7-alt1
+- Updated from 1.26.6 to 1.26.7.
+
+* Thu Aug 20 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.6-alt1
+- Updated from 1.26.5 to 1.26.6.
+- Fixes:
+  + CVE-2026-56853
+  + CVE-2026-39821
+  + CVE-2026-56862
+  + CVE-2026-46600
+  + CVE-2026-56859
+  + CVE-2026-56860
+  + CVE-2026-56864
+  + CVE-2026-56865
+  + CVE-2026-33818
+  + CVE-2026-56858
+
 * Wed Jul 08 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.5-alt1
 - Updated from 1.26.4 to 1.26.5.
 - Fixes:
