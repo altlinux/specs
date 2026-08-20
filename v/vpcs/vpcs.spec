@@ -1,11 +1,12 @@
 Name: vpcs
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Virtual PC Simulator
 License: BSD-2-Clause
 Group: Networking/Other
-Url: https://github.com/GNS3/vpcs
+URL: https://github.com/GNS3/vpcs
+VCS: https://github.com/GNS3/vpcs
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -35,16 +36,19 @@ popd
 
 mkdir -p %buildroot/%_bindir
 mkdir -p %buildroot/%_man1dir
-install -m0755 src/vpcs %buildroot/%_bindir/%name
+install -m0755 src/vpcs %buildroot/%_bindir/vpcs
 xz man/vpcs.1
 cp man/vpcs.1.xz %buildroot/%_man1dir/
 
 %files
 %doc readme.txt README.md
-%_bindir/%name
-%_man1dir/*.1.*
+%_bindir/vpcs
+%_man1dir/vpcs.1.*
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 0.8.4-alt1
+- New version 0.8.4.
+
 * Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
 - new version 0.8.3
 - clean Packager
