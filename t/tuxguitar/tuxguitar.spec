@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL-2.0+
@@ -105,6 +105,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Thu Aug 20 2026 Evgeniy Serov <scala@altlinux.org> 2.0.1-alt2
+- NMU: re-vendor dependencies to fix the build with Maven 3.9.9
+
 * Tue Apr 28 2026 Andrey Kovalev <ded@altlinux.org> 2.0.1-alt1
 - update to 2.0.1
 
