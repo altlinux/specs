@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define exID hideaccessibilitymenu@boni.scot
 
 Name: gnome-shell-extension-hide-accessibility-menu
-Version: 50.0
+Version: 51.1
 Release: alt1
 
 Summary: Hide accessibility menu GNOME extension
@@ -34,6 +35,9 @@ cp -a *.js *.json %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Thu Aug 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 51.1-alt1
+- 50.0 -> 51.1
+
 * Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 50.0-alt1
 - Initial build.
 
