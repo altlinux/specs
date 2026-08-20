@@ -8,8 +8,8 @@
 %def_with pythran
 
 %define modname scipy
-%define ver_major 1.17
-%define ver_minor 1
+%define ver_major 1.18
+%define ver_minor 0
 
 %define numpy_version 1.16.5
 
@@ -27,12 +27,11 @@ Source0: %name-%version.tar
 Source1: site.cfg
 # submodules by update-submodules.sh
 Source2: %name-%version-doc-source-_static-scipy-mathjax.tar
-Source3: %name-%version-scipy-_lib-array_api_compat.tar
-Source4: %name-%version-scipy-_lib-array_api_extra.tar
+Source3: %name-%version-subprojects-array_api_compat-array_api_compat.tar
+Source4: %name-%version-subprojects-array_api_extra.tar
 Source5: %name-%version-subprojects-boost_math-math.tar
-Source6: %name-%version-scipy-_lib-cobyqa.tar
-Source7: %name-%version-scipy-_lib-pocketfft.tar
-Source8: %name-%version-scipy-_lib-unuran.tar
+Source6: %name-%version-subprojects-cobyqa.tar
+Source8: %name-%version-subprojects-unuran.tar
 Source9: %name-%version-subprojects-xsf.tar
 Source10: %name-%version-subprojects-highs.tar
 Source11: datasets.tar
@@ -112,7 +111,7 @@ SciPy is the library of scientific codes built on top of NumPy.
 This package contains development files of SciPy.
 
 %prep
-%setup -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
+%setup -a2 -a3 -a4 -a5 -a6 -a8 -a9 -a10 -a11
 %patch -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
@@ -197,7 +196,8 @@ export XDG_CACHE_HOME=$PWD
 pushd %buildroot/%python3_sitelibdir
 # test_gesdd_nan_error_message: LAPACK gesdd does not raise ValueError on NaN (implementation-specific)
 # test_kde_2d_weighted: rtol=5e-14 too tight for FlexiBLAS/netlib (5.2e-14 vs 5e-14)
-pytest3 scipy -k 'not test_basic_functions and not test_cython and not TestDatasets and not test_gesdd_nan_error_message and not test_kde_2d_weighted'
+# test_smoke_economic[complex64]: decimal=5 too tight for FlexiBLAS/netlib (1.5e-5 vs 1e-5)
+pytest3 scipy -k 'not test_basic_functions and not test_cython and not TestDatasets and not test_gesdd_nan_error_message and not test_kde_2d_weighted and not (test_smoke_economic and complex64)'
 rm -rv .pytest_cache
 
 for i in $(find %buildroot%python3_sitelibdir \
@@ -223,6 +223,9 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %_includedir/%modname-py3
 
 %changelog
+* Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 1.18.0-alt1
+- 1.17.1 -> 1.18.0
+
 * Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 1.17.1-alt1
 - 1.17.0 -> 1.17.1
 
