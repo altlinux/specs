@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 #Epoch: 2
 %K6init
 
@@ -39,6 +39,7 @@ Patch2: alt-pam-support.patch
 Patch3: alt-pam-service.patch
 Patch4: alt-dont-respond.patch
 Patch5: alt-disable-noninteractive.patch
+Patch6: when-autolock-is-false.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: glibc-devel
@@ -98,6 +99,7 @@ KF6 library
 #patch3 -p1
 %patch4 -p1
 #patch5 -p1
+%patch6 -p1
 
 %if_enabled kcheckpass
 tar xf %SOURCE2 kcheckpass/
@@ -166,6 +168,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- fix configuration UI when autolock is false (closes: 60153)
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
