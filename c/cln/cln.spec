@@ -9,7 +9,7 @@
 
 Name: cln
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -90,11 +90,14 @@ Compute decimal Archimedes' constant Pi to arbitrary accuracy.
 %prep
 %setup
 rm -f aclocal.m4
+# gnulib havelib: gettext 0.22+ ships them in gettext/m4/, older in aclocal/
+gettext_m4=%_datadir/gettext/m4
+[ -d "$gettext_m4" ] || gettext_m4=%_datadir/aclocal
 # Provide macros that upstream's autogen.sh downloads from gnulib/gettext.
-cp %_datadir/gettext/m4/lib-ld.m4 \
-   %_datadir/gettext/m4/lib-link.m4 \
-   %_datadir/gettext/m4/lib-prefix.m4 \
-   %_datadir/gettext/m4/host-cpu-c-abi.m4 \
+cp $gettext_m4/lib-ld.m4 \
+   $gettext_m4/lib-link.m4 \
+   $gettext_m4/lib-prefix.m4 \
+   $gettext_m4/host-cpu-c-abi.m4 \
    %_datadir/aclocal/ax_cxx_compile_stdcxx.m4 \
    m4/
 mkdir -p build-aux
@@ -141,6 +144,9 @@ rm -f %buildroot%_libdir/*.la
 %_man1dir/cln-pi.1*
 
 %changelog
+* Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1.3.7-alt2
+- pick gettext havelib macros from gettext/m4 or aclocal (p11/Sisyphus)
+
 * Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 1.3.7-alt1
 - 1.3.6 -> 1.3.7
 - renamed source package cln6 -> cln (runtime stays libcln6)
