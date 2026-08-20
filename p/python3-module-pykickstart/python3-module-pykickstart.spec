@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.77
+Version: 3.78
 Release: alt1
 
 Summary: python module for parsing and writing kickstart configs
@@ -55,6 +55,9 @@ Python utilities for manipulating kickstart files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 20 2026 Sergey Palcheh <minergenon@altlinux.org> 3.78-alt1
+- new version 3.78
+
 * Fri Aug 07 2026 Sergey Palcheh <minergenon@altlinux.org> 3.77-alt1
 - new version 3.77
 
