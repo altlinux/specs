@@ -1,7 +1,7 @@
 %define sover 0.24
 
 Name: libdatachannel
-Version: 0.24.1
+Version: 0.24.5
 Release: alt1
 Summary: WebRTC network library
 
@@ -81,6 +81,9 @@ sed -i -E 's/(std::.*<.*> .*)\{\};/\1={};/' examples/streamer/ArgParser.hpp
 %_libdir/%name.so
 
 %changelog
+* Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 0.24.5-alt1
+- New version 0.24.5.
+
 * Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 0.24.1-alt1
 - Buil old version 0.24.1.
 - Build with -DCMAKE_BUILD_TYPE=RelWithDebInfo.
