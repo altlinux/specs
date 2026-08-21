@@ -5,7 +5,7 @@
 
 Name: httpdirfs
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 Summary: FUSE mount for HTTP
 License: GPL-3.0-or-later
 Group: Networking/File transfer
@@ -15,7 +15,6 @@ Requires: /usr/bin/fusermount3
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-BuildRequires(pre): rpm-macros-meson
 BuildRequires: help2man
 BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
@@ -56,6 +55,9 @@ sed -i "/subdir('tests')/d" meson.build
 %_man1dir/httpdirfs.1*
 
 %changelog
+* Fri Aug 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.3-alt1.1
+- Fixed compatibility with older meson.
+
 * Thu Aug 20 2026 Leontiy Volodin <lvol@altlinux.org> 1.3.3-alt1
 - Update to 1.3.3 (2026-06-11).
 - Switched to use .gear/tags.
