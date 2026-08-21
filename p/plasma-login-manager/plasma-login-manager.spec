@@ -3,7 +3,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: QML based login manager from KDE
@@ -11,6 +11,7 @@ License: BSD-3-Clause and CC0-1.0 and (GPL-2.0-only or GPL-3.0-only) and GPL-2.0
 Url: https://invent.kde.org/plasma/plasma-login-manager
 
 Provides: service(graphical-login) = plasmalogin
+Requires: kde6-runtime
 Requires: xinitrc >= 2.4.43 xauth /usr/share/design/current
 # for jxl support
 Requires: kf6-kimageformats
@@ -178,6 +179,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Fri Aug 21 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt3
+- fix requires
+
 * Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
 - fix requires (closes: 60206)
 
