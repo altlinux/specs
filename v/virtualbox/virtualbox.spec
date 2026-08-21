@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.2.14
+Version: 7.2.16
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -695,7 +695,7 @@ cd additions >/dev/null
 %if_with additions
 # install additions
   install -d %buildroot/%_bindir
-  install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService vboxwl %buildroot/%_bindir/
+  install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService %buildroot/%_bindir/
 
 # install roles
   install -Dpm644 %SOURCE32 %buildroot%_sysconfdir/role.d/virtualbox-addition.role
@@ -846,7 +846,6 @@ mountpoint -q /dev || {
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
-%exclude %_bindir/vboxwl
 %endif
 %if_with webservice
 %exclude %_bindir/vboxwebsrv
@@ -923,7 +922,6 @@ mountpoint -q /dev || {
 %_bindir/VBoxClient-all
 %_bindir/VBoxClient
 %_bindir/VBoxDRMClient
-%_bindir/vboxwl
 %endif
 
 %ifarch x86_64
@@ -972,6 +970,11 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Aug 19 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.16-alt1
+- Update to newest version 7.2.16
+- Removed standalone vboxwl helper (Wayland support is now built
+  into VBoxClient upstream)
+
 * Mon Jul 27 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.14-alt1
 - Update to newest version 7.2.14
 
