@@ -8,7 +8,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
-Version:        3.1.1
+Version:        3.5.1
 Release:        alt1
 Summary:        Exec Maven Plugin
 
@@ -19,7 +19,6 @@ Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plug
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-artifact-transfer
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  mvn(org.apache.commons:commons-exec)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -30,8 +29,6 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
 
@@ -47,7 +44,6 @@ A plugin to allow execution of system and Java programs.
 %prep
 %setup -q -n exec-maven-plugin-%{version}
 
-sed -i 's/\r$//' LICENSE.txt
 find . -name *.jar -delete
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
@@ -57,12 +53,14 @@ find . -name *.jar -delete
 %pom_remove_dep :maven-plugin-testing-harness
 %pom_remove_dep :slf4j-simple
 
+%pom_remove_plugin :sisu-maven-plugin
 %pom_remove_plugin :maven-dependency-plugin
+%pom_remove_plugin :maven-toolchains-plugin
 
 rm -rf src/test/
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -72,6 +70,9 @@ rm -rf src/test/
 %dir %{_javadir}/%{name}
 
 %changelog
+* Fri Aug 21 2026 Anton Meleshnikov <alton@altlinux.org> 3.5.1-alt1
+- new version
+
 * Wed Aug 20 2025 Anton Meleshnikov <alton@altlinux.org> 3.1.1-alt1
 - new version
 
