@@ -5,19 +5,17 @@
 %define        gemname syslog
 
 Name:          gem-syslog
-Version:       0.3.0
+Version:       0.4.0
 Release:       alt1
 Summary:       Ruby interface for the POSIX system logging facility
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ruby/syslog
 Vcs:           https://github.com/ruby/syslog.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
 BuildRequires: gem(logger) >= 0
 BuildRequires: gem(rake) >= 0
@@ -29,10 +27,7 @@ BuildRequires: gem(test-unit) >= 0
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.5.0
 Requires:      gem(logger) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(test-unit) >= 0
-Provides:      gem(syslog) = 0.3.0
+Provides:      gem(syslog) = 0.4.0
 
 %description
 Ruby interface for the POSIX system logging facility.
@@ -40,16 +35,14 @@ Ruby interface for the POSIX system logging facility.
 
 %if_enabled    doc
 %package       -n gem-syslog-doc
-Version:       0.3.0
+Version:       0.4.0
 Release:       alt1
 Summary:       Ruby interface for the POSIX system logging facility documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета syslog
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(syslog) = 0.3.0
+Requires:      gem(syslog) = 0.4.0
 
 %description   -n gem-syslog-doc
 Ruby interface for the POSIX system logging facility documentation files.
@@ -61,16 +54,18 @@ Ruby interface for the POSIX system logging facility documentation files.
 
 %if_enabled    devel
 %package       -n gem-syslog-devel
-Version:       0.3.0
+Version:       0.4.0
 Release:       alt1
 Summary:       Ruby interface for the POSIX system logging facility development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета syslog
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(syslog) = 0.3.0
+Requires:      gem(syslog) = 0.4.0
+Requires:      gem(logger) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(test-unit) >= 0
 
 %description   -n gem-syslog-devel
 Ruby interface for the POSIX system logging facility development package.
@@ -111,6 +106,9 @@ Ruby interface for the POSIX system logging facility development package.
 
 
 %changelog
+* Mon Aug 17 2026 Pavel Skrylev <majioa@altlinux.org> 0.4.0-alt1
+- ^ 0.3.0 -> 0.4.0
+
 * Thu Nov 20 2025 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
