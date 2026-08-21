@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Aug 21 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt2
+- update to ALT Education 11.2
+- fix typo (closes #59757, #59758)
+- educational-resources: add OpenBoard, remove jitsi meet
+
 * Tue Jun 23 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt1
 - update to ALT Education 11.2BETA
 - fix typo (closes #58453)
