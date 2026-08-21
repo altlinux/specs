@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 9.1.18
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -73,6 +73,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Sat Aug 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.18-alt3
+- Fix HA rule comments with non-ASCII characters (Closes: 60231)
+
 * Tue Aug 04 2026 Sergey Konev <darisishe@altlinux.org> 9.1.18-alt2
 - cmd: restore taint-safe environment handling
 
@@ -362,4 +365,3 @@ make -C test check
 
 * Mon Dec 14 2015 Valery Inozemtsev <shrek@altlinux.ru> 4.0.41-alt1
 - initial release
-
