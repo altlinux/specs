@@ -2,7 +2,7 @@
 
 Name: onboard
 Version: 1.4.4.4
-Release: alt1
+Release: alt2
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
@@ -35,6 +35,8 @@ Requires: python3-module-dbus
 Requires: iso-codes
 # see ALT bug #53881
 Requires: python3-module-pygobject3
+# Wayland support
+Requires: at-spi2-core
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Onboard/pypredict
 %add_python3_req_skip AppIndicator3
@@ -56,17 +58,25 @@ GNOME Shell support for onboard.
 %prep
 %setup -q
 install -Dpm0644 %SOURCE1 po/ru.po
-# Remove empty file
-rm settings_ui.py
 
 %build
 export FAKEROOTKEY=1
+# Remove empty file before intltool runs
+rm -f settings_ui.py
 %pyproject_build
 
 %install
 %pyproject_install
 
 mv %buildroot%python3_sitelibdir/etc %buildroot
+
+# Install udev rules for Wayland support
+install -Dpm0644 data/72-onboard-uinput.rules \
+    %buildroot%_udevrulesdir/72-onboard-uinput.rules
+
+# Load uinput during boot so udev can grant the active user access to it.
+install -d %buildroot%_modulesloaddir
+printf '%%s\n' uinput > %buildroot%_modulesloaddir/onboard.conf
 
 desktop-file-install --dir %buildroot%_desktopdir       \
     --remove-category="Accessibility"        \
@@ -101,6 +111,8 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_iconsdir/hicolor/*x*/apps/onboard.png
 %_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
 %_datadir/dbus-1/services/*
+%_udevrulesdir/72-onboard-uinput.rules
+%_modulesloaddir/onboard.conf
 %python3_sitelibdir/Onboard/
 %python3_sitelibdir/%name-*.dist-info
 %_datadir/help/C/%name
@@ -109,6 +121,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Mon Aug 17 2026 Grant Makyan <karonus@altlinux.org> 1.4.4.4-alt2
+- Install udev rules for Wayland support.
+
 * Wed Jul 15 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.4-alt1
 - New version.
 
