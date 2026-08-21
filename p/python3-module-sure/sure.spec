@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define modname sure
+%define pypi_name sure
+%define modname %pypi_name
 
 %def_with check
 
 Name: python3-module-%modname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Summary: Utility belt for automated testing in python for python
 License: GPLv3+
 Group: Development/Python3
@@ -15,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,12 +51,14 @@ should.js.
 %pyproject_run_pytest -ra -o=addopts=''
 
 %files
-%_bindir/%modname
-%doc README.rst
-%python3_sitelibdir/%modname
-%python3_sitelibdir/%modname-%version.dist-info/
+%_bindir/sure
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 2.0.1-alt2
+- Fixed FTBFS (Python 3.14).
+
 * Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 2.0.0 -> 2.0.1.
 
