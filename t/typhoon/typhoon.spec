@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: typhoon
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: Stylish weather app based on Stormcloud
@@ -96,6 +96,9 @@ mkdir -p %buildroot%perl_vendor_autolib/%name
 %endif
 
 %changelog
+* Fri Aug 21 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.2-alt1
+- New version 1.9.2.
+
 * Thu Aug 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 
