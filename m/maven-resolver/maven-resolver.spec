@@ -1,6 +1,6 @@
 Name:           maven-resolver
 Epoch:          1
-Version:        1.9.10
+Version:        1.9.22
 Release:        alt1
 
 License:        Apache-2.0
@@ -50,6 +50,9 @@ artifact transports and artifact resolution.
     "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration/pom:systemPropertyVariables/pom:java.io.tmpdir" \
     "%_tmppath"
 
+# requires internet connection
+rm maven-resolver-supplier/src/test/java/org/eclipse/aether/supplier/RepositorySystemSupplierTest.java
+
 %mvn_alias 'org.apache.maven.resolver:maven-resolver{*}' 'org.eclipse.aether:aether@1'
 %mvn_file ':maven-resolver{*}' %name/maven-resolver@1 aether/aether@1
 
@@ -63,6 +66,9 @@ artifact transports and artifact resolution.
 %doc README.md
 
 %changelog
+* Fri Aug 21 2026 Evgeniy Serov <scala@altlinux.org> 1:1.9.22-alt1
+- Updated to 1.9.22.
+
 * Mon Aug 17 2026 Evgeniy Serov <scala@altlinux.org> 1:1.9.10-alt1
 - Updated to 1.9.10.
 
