@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.95
+Version: 2.0.99
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -128,8 +128,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.network/
 %_datadir/dsg/configs/org.deepin.dde.network/org.deepin.dde.network.json
-# package translations outside %%find_lang
 %dir %_datadir/dde-control-center/
+%dir %_datadir/dde-control-center/permission-interfaces/
+%_datadir/dde-control-center/permission-interfaces/org.deepin.dcc-network.json
+# package translations outside %%find_lang
 %dir %_datadir/dde-control-center/translations/
 %dir %_datadir/dde-control-center/translations/v1.1/
 %dir %_datadir/dde-network-core/
@@ -158,6 +160,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Fri Aug 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.99-alt1
+- New version 2.0.99.
+
 * Wed Jul 08 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.95-alt1
 - New version 2.0.95.
 

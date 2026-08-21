@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.38
+Version: 2.0.39
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -168,6 +168,9 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
 
 %changelog
+* Fri Aug 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.39-alt1
+- New version 2.0.39.
+
 * Fri Jul 24 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.38-alt1
 - New version 2.0.38.
 
