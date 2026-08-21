@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with check
+# disabled, needs access to /run for dbus-socket
+%def_without check
 
 Name: symbolical
-Version: 0.6.0.1
+Version: 0.6.5.1
 Release: alt1
 
 Summary: Math document application
@@ -18,13 +19,18 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: python3(PyQt6)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(dbus)
 %endif
 
 Requires: fonts-ttf-google-noto-serif
+Requires: python3(dateutil)
+Requires: python3(dbus)
 
 %filter_from_requires /python3(gui)/d
 %filter_from_requires /python3(gui.MainWindow)/d
 %filter_from_requires /python3(model.Document)/d
+%filter_from_requires /python3(controller)/d
 
 BuildArch: noarch
 
@@ -70,6 +76,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Fri Aug 21 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.5.1-alt1
+- New version 0.6.5.1.
+
 * Fri May 29 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0.1-alt1
 - New version 0.6.0.1.
 - Added %%check to enable Python unit-testing.
