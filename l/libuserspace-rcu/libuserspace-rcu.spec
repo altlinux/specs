@@ -1,6 +1,6 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
-Version: 0.15.2
+Version: 0.15.6
 Release: alt1
 
 Summary: RCU (read-copy-update) implementation in user space
@@ -97,6 +97,9 @@ make check
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 0.15.6-alt1
+- new version (0.15.6)
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.15.2-alt1
 - new version 0.15.2 (with rpmrb script)
 
