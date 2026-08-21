@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_with check
 
 Name: khal
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: CLI calendar application
@@ -61,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Fri Aug 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.1-alt1
+- 0.14.0 -> 0.14.1
+
 * Wed Mar 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt1
 - 0.13.0 -> 0.14.0
 
