@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 9.2.0
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -90,6 +90,9 @@ touch /run/qemu-server/force-legacy-cleanup \
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Fri Aug 21 2026 Sergey Konev <darisishe@altlinux.org> 9.2.0-alt3
+- Fix Microsoft KEK 2023 enrollment with ALT virt-firmware paths (Closes: 60240)
+
 * Sun Aug 02 2026 Sergey Konev <darisishe@altlinux.org> 9.2.0-alt2
 - Fix SPICE monitor count on aarch64 (Closes: 59877)
 
@@ -175,4 +178,3 @@ touch /run/qemu-server/force-legacy-cleanup \
 * Wed Mar 09 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.4-alt1
 - 7.1-4
 - build as separate package
-
