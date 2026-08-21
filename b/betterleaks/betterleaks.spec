@@ -2,7 +2,7 @@
 %global import_path github.com/betterleaks/betterleaks
 
 Name: betterleaks
-Version: 1.7.4
+Version: 1.8.1
 Release: alt1
 Summary: A Better Secrets Scanner built for configurability and speed
 License: MIT
@@ -43,22 +43,25 @@ mkdir -p %buildroot%_datadir/bash-completion/completions
 mkdir -p %buildroot%_datadir/zsh/site-functions
 mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
-"$BUILDDIR/bin/betterleaks" completion bash > \
+"%buildroot%_bindir/betterleaks" completion bash > \
             %buildroot%_datadir/bash-completion/completions/betterleaks
-"$BUILDDIR/bin/betterleaks" completion zsh > \
+"%buildroot%_bindir/betterleaks" completion zsh > \
             %buildroot%_datadir/zsh/site-functions/_betterleaks
-"$BUILDDIR/bin/betterleaks" completion fish > \
+"%buildroot%_bindir/betterleaks" completion fish > \
             %buildroot%_datadir/fish/vendor_completions.d/betterleaks.fish
 
 %files
 %doc LICENSE README.md
-%_bindir/%name
+%_bindir/betterleaks
 %_datadir/bash-completion/completions/betterleaks
 %_datadir/zsh/site-functions/_betterleaks
 %_datadir/fish/vendor_completions.d/betterleaks.fish
 
 
 %changelog
+* Wed Aug 19 2026 Egor Ignatov <egori@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Mon Aug 17 2026 Egor Ignatov <egori@altlinux.org> 1.7.4-alt1
 - New version 1.7.4.
 
