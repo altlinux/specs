@@ -4,7 +4,7 @@
 %define app_id io.github.mpc_qt.mpc-qt
 
 Name:     mpc-qt
-Version:  26.01
+Version:  26.07
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt
@@ -46,12 +46,18 @@ rm -r %buildroot%_defaultdocdir/%name
 
 %files
 %_bindir/%name
-%_desktopdir/%app_id.desktop
+%_desktopdir/%{app_id}*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/metainfo/%app_id.metainfo.xml
 %doc LICENSE README.md DOCS/ipc.md
 
 %changelog
+* Fri Aug 21 2026 Polina Poidenko <polipoki@altlinux.org> 26.07-alt1
+- New version 26.07.
+- playlistwindow.cpp: Append file extension when exporting playlist
+  (Closes: 51026).
+- translations: Update translation files.
+
 * Tue Mar 17 2026 Polina Poidenko <polipoki@altlinux.org> 26.01-alt1
 - New version 26.01.
 
