@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.6.1
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -41,6 +41,8 @@ Patch25: xrdp-0.9.14-arch.patch
 Patch28: xrdp-0.9.14-vnc-uninit.patch
 Patch30: xrdp-0.9.14-xrdp-ini.patch
 Patch31: xrdp-0.9.15-g_check_user_in_group.patch
+
+Patch32: xrdp-ssh-agent-fix.patch
 
 BuildPreReq: rpm-build-intro rpm-macros-intro-conflicts
 BuildRequires: libjpeg-devel
@@ -128,6 +130,7 @@ tar xf %SOURCE6
 %patch25 -p1
 %patch28 -p1
 %patch31 -p1
+%patch32 -p1
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' configure.ac
 %endif
@@ -193,6 +196,10 @@ pushd libpainter
 	    --enable-static
 popd
 %make_build
+# Build xrdp-ssh-agent
+pushd xrdpapi
+gcc xrdp-ssh-agent.c -o xrdp-ssh-agent -L./.libs -lxrdpapi -Wall -Wl,-rpath=%_libdir/xrdp
+popd
 
 %install
 %makeinstall_std
@@ -231,12 +238,15 @@ install -Dp -m 755 sesman/startwm-bash.sh %buildroot%_sysconfdir/xrdp/startwm-ba
 # install openssl config for key generation
 install -Dp -m 644 keygen/openssl.conf %buildroot%_sysconfdir/xrdp/openssl.conf
 
-#install xrdp.rules /usr/share/polkit-1/rules.d
+# install xrdp.rules /usr/share/polkit-1/rules.d
 install -Dp -m 644 %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/xrdp.rules
 
-# Clean unnecessary files
+# clean unnecessary files
 find %buildroot -name *.a -delete -o -name *.la -delete
 rm -rf %buildroot{/usr/local,%_includedir,%_pkgconfigdir}
+
+# install xrdp-ssh-agent
+install -Dpm0755 xrdpapi/xrdp-ssh-agent %buildroot%_bindir/xrdp-ssh-agent
 
 %pre
 groupadd -r -f tsusers 2>/dev/null ||:
@@ -302,6 +312,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Fri Aug 21 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.6.1-alt2
+- Built and packaged xrdp-ssh-agent (ALT #60232).
+
 * Tue Jul 07 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.6.1-alt1
 - New version (fixes: CVE-2026-41252, CVE-2026-41521, CVE-2026-44178,
   CVE-2026-42218, CVE-2026-44978, CVE-2026-54538, CVE-2026-55238,
