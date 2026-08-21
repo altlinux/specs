@@ -10,7 +10,7 @@
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 97
+%define v_minor 98
 %define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
@@ -47,7 +47,7 @@ Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
 # https://github.com/rust-lang/rust/issues/140473
 Patch002: rust-1.95.0-fedora_alt-use_system_lld.patch
 # https://github.com/rust-lang/rust/issues/114940
-Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
+Patch003: rust-1.98.0-alt-dont_copy_libunwind_to_src.patch
 # When channel isn't configured, bootstrap tries to use channel from ci file.
 # Since we delete all ci files to make repository and rust-src smaller,
 # it would be better to force user channel configuration instead.
@@ -321,7 +321,7 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 # Build configuration.
 cat > bootstrap.toml <<EOF
-change-id = 148671
+change-id = 158169
 include = [
         "bootstrap.toml.d/llvm-fork-build.toml"
     ]
@@ -483,7 +483,7 @@ for i in \
 
 	# "crashes/93237.rs" and "crashes/108499.rs" fail on i586
 	# For more info see https://github.com/rust-lang/rust/issues/148482.
-	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_host_triple "tests/$i" \
+	if ! python3 ./x.py test --all-targets --no-fail-fast --target %rust_host_triple "tests/$i" \
         %ifarch %ix86
             --skip tests/crashes/93237.rs --skip tests/crashes/108499.rs \
         %endif
@@ -601,12 +601,15 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Fri Aug 21 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.98.0-alt1
+- New version (1.98.0).
+
 * Thu Jul 09 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.97.0-alt1
 - New version (1.97.0).
 - Security fixes:
-    + CVE-2026-55200: libssh2 heap buffer over-read in SFTP handling allows memory disclosure or crash.
-    + CVE-2026-55199: libssh2 pre-authentication denial of service via CPU exhaustion in SSH_MSG_EXT_INFO handling
-    + CVE-2025-15661: libssh2 out-of-bounds write in SSH packet handling may enable remote code execution
+  + CVE-2026-55200: libssh2 heap buffer over-read in SFTP handling allows memory disclosure or crash
+  + CVE-2026-55199: libssh2 pre-authentication denial of service via CPU exhaustion in SSH_MSG_EXT_INFO handling
+  + CVE-2025-15661: libssh2 out-of-bounds write in SSH packet handling may enable remote code execution
 
 * Mon Jun 01 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.96.0-alt1
 - New version (1.96.0).
