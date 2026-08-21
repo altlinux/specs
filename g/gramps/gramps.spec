@@ -1,5 +1,5 @@
 Name: gramps
-Version: 6.0.6
+Version: 6.0.8
 Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
@@ -86,6 +86,9 @@ rm -rv %buildroot%python3_sitelibdir/gramps/test/
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.8-alt1
+- new version 6.0.8
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.6-alt1
 - new version 6.0.6
 
