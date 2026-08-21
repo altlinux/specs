@@ -1,5 +1,5 @@
 Name: seafile-fuse
-Version: 2.0.28
+Version: 3.0.23
 Release: alt1
 
 Summary: SeaDrive daemon with FUSE interface
@@ -33,6 +33,7 @@ BuildRequires: pkgconfig(libcurl) >= 7.17
 BuildRequires: pkgconfig(fuse) >= 2.7.3
 BuildRequires: pkgconfig(zlib) >= 1.2.0
 BuildRequires: pkgconfig(libwebsockets) >= 4.0.20
+BuildRequires: pkgconfig(libargon2)
 
 # FIXME: python3(seadrive.rpcclient)
 %add_python3_req_skip rpcclient
@@ -68,5 +69,9 @@ The python3 module with Seafile fuse.
 
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.23-alt1
+- new version 3.0.23
+- add BR: pkgconfig(libargon2)
+
 * Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.28-alt1
 - initial build for ALT Sisyphus
