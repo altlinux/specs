@@ -1,5 +1,5 @@
 Name: ad-integration-themes
-Version: 3.0
+Version: 4.0
 Release: alt1
 
 Summary: Icon themes for AD integration BaseAlt projects
@@ -19,13 +19,17 @@ like ADMC, GPUI and other.
 
 %install
 mkdir -p %buildroot%_iconsdir/%name
-cp -R scalable/ index.theme %buildroot%_iconsdir/%name
+cp -R ad-integration-1/ ad-integration-2/ %buildroot%_iconsdir/%name
 
 %files
 %doc LICENSE README.md
 %_iconsdir/%name
 
 %changelog
+* Thu Aug 20 2026 Semyon Knyazev <samael@altlinux.org> 4.0-alt1
+- Update ad-integration-1 (prev ad-integration) theme icons
+- Add designed (by Nina Petrova) ad-integration-2 theme icons
+
 * Wed Aug 20 2025 Semyon Knyazev <samael@altlinux.org> 3.0-alt1
 - Move icon theme files to parent directory
 - Change parent theme from Papirus to gnome
