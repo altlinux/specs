@@ -6,8 +6,8 @@
 %define libraw_r libraw_r%sover
 
 Name: libraw0
-Version: 0.22.1
-Release: alt2
+Version: 0.22.2
+Release: alt1
 
 Summary: Library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -103,6 +103,9 @@ __EOF__
 %_pkgconfigdir/libraw*.pc
 
 %changelog
+* Fri Aug 21 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.2-alt1
+- new version
+
 * Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 0.22.1-alt2
 - update provides
 
