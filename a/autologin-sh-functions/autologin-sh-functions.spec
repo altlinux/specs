@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -28,6 +28,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 # TODO: multiseat support (see autologin-sh-functions/TODO)?
 
 %changelog
+* Fri Aug 21 2026 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
+- Add plasmalogin support.
+
 * Fri Dec 05 2025 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
 - Do not check for availability /usr/bin/X.
 
