@@ -4,7 +4,7 @@
 
 Name: pcsc-lite-rutokens
 Version: 1.0.9
-Release: alt2
+Release: alt3
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: http://www.rutoken.ru/support/download/drivers-for-nix/
@@ -25,16 +25,17 @@ Source: %name-%version.tar
 
 %prep
 %setup
+subst 's|/etc/udev/rules.d/|%buildroot%_udevrulesdir|g' src/Makefile.*
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-usbdropdir=%libpcsclite_usbdropdir \
-	--disable-udevrules
+	--enable-usbdropdir=%libpcsclite_usbdropdir
 %make_build
 
 %install
+mkdir -p %buildroot%_udevrulesdir
 %makeinstall_std
 
 %post
@@ -43,9 +44,13 @@ Source: %name-%version.tar
 
 %files
 %doc AUTHORS COPYING NEWS README
+%config(noreplace) %_udevrulesdir/95-rutokens.rules
 %libpcsclite_usbdropdir/ifd-rutokens.bundle
 
 %changelog
+* Fri Aug 21 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt3
+- Installed udev rules for Rutoken S.
+
 * Thu Apr 10 2025 Alexey Shabalin <shaba@altlinux.org> 1.0.9-alt2
 - Add Provides: pcsc-ifd-handler.
 - Restart pcscd after install ifd-rutokens.
