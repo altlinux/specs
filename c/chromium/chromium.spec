@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        151.0.7922.169
+Version:        151.0.7922.173
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -728,6 +728,17 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Fri Aug 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 151.0.7922.173-alt1
+- New version (151.0.7922.173).
+- Fixes:
+  + CVE-2026-76017: Use after free in Chromoting
+  + CVE-2026-76018: Privilege elevation in Import
+  + CVE-2026-76019: Incorrect authorization in Workers
+  + CVE-2026-76020: Race condition in V8
+  + CVE-2026-76021: Use after free in DOM.
+  + CVE-2026-76022: Buffer overflow in Network
+  + CVE-2026-76023: Improper resource control in Linux Toolkit Theming
+
 * Wed Aug 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 151.0.7922.169-alt1
 - New version (151.0.7922.169).
 - Fixes:
