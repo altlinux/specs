@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config makeinfo pkgconfig(nettle)
 %define octpkg general
 Epoch: 1
 Name: octave-%octpkg
-Version: 2.1.3
-Release: alt2
+Version: 2.1.4
+Release: alt1
 Summary: General
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ cp -at src /usr/share/gnu-config/config.{guess,sub}
 %endif
 
 %changelog
+* Fri Aug 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.1.4-alt1
+- New version.
+
 * Wed Dec 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:2.1.3-alt2
 - NMU: fixed FTBFS on LoongArch (use fresh config.{config,guess})
 
