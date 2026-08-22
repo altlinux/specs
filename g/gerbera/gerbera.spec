@@ -7,13 +7,14 @@
 %endif
 
 Name: gerbera
-Version: 2.6.1
+Version: 3.2.1
 Release: alt1
 
 Summary: UPnP Media Server
 Group: System/Servers
-License: GPLv2 and MIT
-Url: https://gerbera.io
+License: GPL-2.0-only and MIT
+URL: https://gerbera.io
+VCS: https://github.com/gerbera/gerbera.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -28,7 +29,7 @@ BuildRequires: libuuid-devel
 BuildRequires: libsqlite3-devel >= 3.35.5
 BuildRequires: libduktape-devel >= 2.5.0
 BuildRequires: libcurl-devel
-BuildRequires: libtag-devel >= 1.12
+BuildRequires: taglib-devel
 BuildRequires: libmagic-devel
 BuildRequires: libwavpack-devel >= 5.1.0
 BuildRequires: libpugixml-devel >= 1.10
@@ -80,7 +81,9 @@ sed -i 's/upnpMap {}/upnpMap = {}/' src/content/import_service.h
     -DWITH_FFMPEGTHUMBNAILER=YES \
     -DWITH_INOTIFY=YES \
     -DWITH_SYSTEMD=YES \
-    -DUPNP_HAS_REUSEADDR=YES
+    -DUPNP_HAS_REUSEADDR=YES \
+    -DUPNP_HAS_IPV6=YES \
+    -DWITH_ZIP=NO
 
 %cmake_build
 
@@ -137,6 +140,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1
+- New version 3.2.1.
+
 * Fri Sep 19 2025 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt1
 - New version 2.6.1.
 
