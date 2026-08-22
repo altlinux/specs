@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 46
+%define majver 47
 %define sover 0
 
 Name: ngspice
@@ -189,6 +189,9 @@ cp -a \
 %_pkgconfigdir/ngspice.pc
 
 %changelog
+* Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 47-alt1
+- New version 47.
+
 * Sat Apr 18 2026 Anton Midyukov <antohami@altlinux.org> 46-alt1
 - New version 46.
 
