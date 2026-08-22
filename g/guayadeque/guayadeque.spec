@@ -1,17 +1,20 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # wx-config
 %global wxversion 3.2
 
 %define app_id org.guayadeque.Guayadeque
 
 Name: guayadeque
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 Summary: Music player
 License: GPL-3.0-or-later and BSD and LGPL-2.0-or-later and wxWidgets
 URL: https://guayadeque.org/
-VCS: https://github.com/thothix/guayadeque.git
+VCS: https://codeberg.org/thothix/guayadeque.git
 Group: Sound
-# Source-url: https://github.com/thothix/guayadeque/archive/refs/tags/v%version.tar.gz
+# Source-url: https://codeberg.org/thothix/guayadeque/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -58,32 +61,37 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %files -f %name.lang
 %doc LICENSE RADIOS.md README.md
 %_bindir/guayadeque
+%dir %_datadir/guayadeque
 %_datadir/guayadeque/*.conf
 %_datadir/guayadeque/*.xml
-%dir %_datadir/guayadeque
+%dir %_datadir/guayadeque/Radios
+%exclude %_datadir/guayadeque/Radios/*.xml
 %_iconsdir/hicolor/*/apps/guayadeque.png
 %_desktopdir/%app_id.desktop
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 0.7.6-alt1
+- New version 0.7.6.
+
 * Mon Jan 05 2026 Anton Midyukov <antohami@altlinux.org> 0.7.5-alt1
-- new version 0.7.5.
+- New version 0.7.5.
 
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
-- new version 0.7.4.
+- New version 0.7.4.
 
 * Thu Nov 27 2025 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
-- new version 0.7.3.
+- New version 0.7.3.
 
 * Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt1
-- new version (0.7.2) with rpmgs script
+- New version 0.7.2.
 
 * Mon Mar 03 2025 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
-- new version (0.7.0) with rpmgs script
-- add VCS tag
+- New version (0.7.0.
+- Add VCS tag.
 
 * Fri Oct 11 2024 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
-- New version 0.5.3
+- New version 0.5.3.
 
 * Fri Mar 17 2023 Anton Midyukov <antohami@altlinux.org> 0.4.7-alt1
-- Initial build
+- Initial build.
