@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 10.0.1
-Release: alt2
+Version: 10.0.2
+Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -30,6 +30,9 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: termutils-devel
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
+# check
+BuildRequires: alt-issue
+
 # https://bugzilla.altlinux.org/60164
 Requires: fontconfig
 Requires: xkeyboard-config >= 2.46-alt2
@@ -54,7 +57,9 @@ sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
 
 %install
 %meson_install
-mv %buildroot/%_sysconfdir/%name/kmscon.conf.example %buildroot/%_sysconfdir/%name/%name.conf
+mv %buildroot/%_sysconfdir/%name/kmscon.conf.example \
+	%buildroot/%_sysconfdir/%name/%name.conf
+
 %check
 %meson_test
 
@@ -71,6 +76,9 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example %buildroot/%_sysconfdir/%na
 %_man5dir/%name.conf.5*
 
 %changelog
+* Fri Aug 21 2026 Anton Midyukov <antohami@altlinux.org> 10.0.2-alt1
+- New version 10.0.2.
+
 * Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 10.0.1-alt2
 - Add depends on fontconfig, xkeyboard-config, fonts-ttf-Hack (Closes: 60164).
 - kmscon.conf: set term and font.
