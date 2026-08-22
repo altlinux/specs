@@ -1,13 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define nameD shazamio_core
  
 Name:    python3-module-shazamio-core
-Version: 1.1.2
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: shazamio-core
 License: MIT
 Group:   Development/Python3
-Url:     https://pypi.org/project/shazamio-core/
+
+Url:     https://pypi.org/project/shazamio-core
 VCS:     https://github.com/shazamio/shazamio-core
 
 Source0: %name-%version.tar
@@ -22,7 +24,7 @@ BuildRequires: /proc
 %summary
 
 %prep
-%setup
+%setup -a1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -31,8 +33,6 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
-
-tar -xf %SOURCE1 -C %_builddir/%name-%version/
 
 %build
 %pyproject_build
@@ -44,9 +44,11 @@ tar -xf %SOURCE1 -C %_builddir/%name-%version/
 %doc *.md LICENSE
 %python3_sitelibdir/%nameD/
 %python3_sitelibdir/%{pyproject_distinfo %nameD}
-# %python3_sitelibdir/shazamio_core-1.1.0.dist-info/
 
 %changelog
+* Sun Aug 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
+- 1.1.2 -> 1.2.0
+
 * Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.2-alt2
 - rebuild with removed %%add_python3_path
 
