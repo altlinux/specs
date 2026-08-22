@@ -6,7 +6,7 @@
 
 Name: lib%oname
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical Data Format 5 library
 License: BSD
@@ -59,6 +59,9 @@ Group: Development/C
 Requires: libstdc++-devel zlib-devel libaec-devel
 Requires: lib%oname-%sover = %EVR
 Requires: lib%oname-hl-%soverhl = %EVR
+# hdf5-targets.cmake exports CLI tools (mirror_server, h5dump, …);
+# find_package(HDF5) fails unless those binaries are present.
+Requires: %oname-tools = %EVR
 Conflicts: lib%oname-mpi-devel < 1.8.3-alt5
 
 %description -n lib%oname-devel
@@ -141,6 +144,9 @@ rm -rf %buildroot%_libdir/cmake/Modules/Findlibaec.cmake
 %_libdir/libhdf5.settings
 
 %changelog
+* Sat Aug 22 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt2
+- libhdf5-devel: require hdf5-tools (cmake imported targets)
+
 * Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
 - 2.1.1 -> 2.2.0
 
