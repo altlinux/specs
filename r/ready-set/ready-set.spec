@@ -11,7 +11,7 @@
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
 %define soversion 0.13
-%define minor_version 2
+%define minor_version 3
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -469,6 +469,10 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Aug 23 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.3-alt1
+- New version: 0.13.3.
+- Fixed broken context names for steps.*.enabled vars.
+
 * Mon Aug 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.2-alt1
 - New version: 0.13.2.
 - Fixed bug with build.
