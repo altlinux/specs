@@ -2,7 +2,7 @@
 %define oname io.m51.Gelly
 
 Name: gelly
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: A native music client for Jellyfin and Navidrome/Subsonic
@@ -15,7 +15,7 @@ VCS: https://github.com/Fingel/gelly
 Source: %name-%version.tar
 Source1: vendor.tar
 
-Patch: i18n-1.6.2-alt-fix.patch
+Patch: i18n-1.11.0-alt-fix.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust pkgconfig(glib-2.0) pkgconfig(gio-2.0)
@@ -67,6 +67,9 @@ done
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Sun Aug 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11.0-alt1
+- 1.10.0 -> 1.11.0
+
 * Mon Aug 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.10.0-alt1
 - 1.9.7 -> 1.10.0
 
