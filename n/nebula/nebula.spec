@@ -1,5 +1,5 @@
 Name: nebula
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Scalable overlay networking tool with a focus on performance, simplicity and security
@@ -83,6 +83,9 @@ sed -i \
 %_bindir/nebula-cert
 
 %changelog
+* Sat Aug 22 2026 Anton Farygin <rider@altlinux.org> 1.11.1-alt1
+- 1.11.0 -> 1.11.1
+
 * Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 1.11.0-alt1
 - 1.10.3 -> 1.11.0
 
