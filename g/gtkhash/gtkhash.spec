@@ -1,6 +1,6 @@
 Name:    gtkhash
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: A cross-platform desktop utility for computing message digests or checksums
 License: GPL-2.0
@@ -10,6 +10,7 @@ Url:     https://github.com/tristanheaven/gtkhash
 Source: %name-%version.tar
 Patch0: gtkhash-alt-disable-some-altorithms.patch
 Patch1: gtkhash-use-gost-2012.patch
+Patch2: gtkhash-gettext1.0.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gettext-tools
@@ -79,8 +80,7 @@ called "Checksums" to the file properties dialog.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -133,6 +133,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %_datadir/metainfo/org.gtkhash.caja.metainfo.xml
 
 %changelog
+* Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 1.5-alt3
+- Add upstream patch to fix FTBFS with gettext-1.0.
+
 * Tue Oct 08 2024 Andrey Cherepanov <cas@altlinux.org> 1.5-alt2
 - Disabled libnettle support.
 - Used GOST R 34.11-2012 (Stribog) hash function.
