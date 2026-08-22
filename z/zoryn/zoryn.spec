@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.49.0
+Version: 0.50.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,35 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Aug 22 2026 Anton Farygin <rider@altlinux.org> 0.50.0-alt1
+- added 'zoryn agent mcp' for registering HTTP MCP servers in local AI
+  coding agents (Claude Code, opencode, Kimi Code)
+- added multiple repositories in 'submit' kernel-image mode (-B sisyphus,p11),
+  creating a chained task per branch
+- added -u/--update to 'gen version-up' for regenerating the generated keys
+  while keeping manual settings
+- added --no-build-deps to 'devenv' for specs excluded on the host
+  architecture
+- added pkg.git=tag subtask labels to 'task add' and faster subtask TAB
+  completion via brief=2 task API lookups
+- added a merged-tags cache so the release-targets/upstream-branch filter
+  no longer walks the whole history on every run
+- fixed 'devenv' to drop apt sources naming a different ALT branch than the
+  environment instead of breaking it; --apt-conf '' resets configured sources
+- fixed 'devenv' image layout to give every feature its own podman layers,
+  so shared features reuse the cache across projects
+- fixed 'task batch' to accept the empty specsubst value 'task genbatch'
+  writes
+- fixed per-host build limits in [hosts."<hostname>"] never being applied
+- fixed 'check version' to resolve the upstream URL, anchor on tag style and
+  honour upstream-branch restrictions the same way 'up' does
+- fixed a stale local upstream branch hiding new versions in 'up' and
+  'check version'
+- fixed @ANY_VERSION@ watch-file macros to capture the version
+- fixed git operations on tag names starting with a dash
+- fixed 'up --switch-to-upstream-git' failing when rules live in .gear-rules
+- fixed 'task copy' to record the created task as the last one worked with
+
 * Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 0.49.0-alt1
 - added bundled devenv features for the pi.dev agent, package builds with
   hasher, nested podman, opt-in sudo access and headless Chromium
