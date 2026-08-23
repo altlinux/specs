@@ -1,5 +1,5 @@
 Name: python3-module-matplotlib-inline
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 Summary: Inline Matplotlib backend for IPython and Jupyter
 License: BSD-3-Clause
@@ -35,6 +35,9 @@ Inline Matplotlib backend for IPython and Jupyter
 %python3_sitelibdir/matplotlib_inline-%version.dist-info
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 0.2.2-alt1
+- 0.2.1 -> 0.2.2
+
 * Sat Oct 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1
 - Automatically updated to 0.2.1.
 
