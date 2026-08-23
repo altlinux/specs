@@ -41,7 +41,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.32.0.9
+%define version 11.0.32.1.1
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -278,7 +278,14 @@ BuildRequires: /proc rpm-build-java
 
 # New Version-String scheme-style defines
 # If you bump majorver, you must bump also vendor_version_string
-%global majorver 11
+# Standard JPackage naming and versioning defines
+%global origin          openjdk
+%global origin_nice     OpenJDK
+%global top_level_dir_name jdk11u
+%global majorver    11
+%global minorver    0
+%global securityver 32
+%global buildver    1
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
@@ -298,16 +305,6 @@ BuildRequires: /proc rpm-build-java
 # Define IcedTea version used for SystemTap tapsets and desktop file
 %global icedteaver      6.0.0pre00-c848b93a8598
 
-# Standard JPackage naming and versioning defines
-%global origin          openjdk
-%global origin_nice     OpenJDK
-%global top_level_dir_name   %{origin}
-%global securityver 32
-%global minorver    0
-%global buildver    9
-%global rpmrelease  1
-%global dist		jpp11
-#%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
 %define priority %( printf '%02d%02d%02d%02d' %{majorver} %{minorver} %{securityver} %{buildver} )
@@ -315,7 +312,7 @@ BuildRequires: /proc rpm-build-java
 # for techpreview, using 1, so slowdebugs can have 0
 %define priority %( printf '%08d' 3 )
 %endif
-%global newjavaver      %{majorver}.%{minorver}.%{securityver}.0
+%global newjavaver      %{majorver}.%{minorver}.%{securityver}.%{buildver}
 %global javaver         %{majorver}
 
 # Define milestone (EA for pre-releases, GA for releases)
@@ -443,10 +440,8 @@ Summary: %{origin_nice} Runtime Environment %{majorver}
 License:  Apache-1.1 and Apache-2.0 and BSD and BSD with advertising and GPL-2.0 and GPL-2.0 with exceptions and IJG and LGPL-2.0+ and MIT and MPL-2.0 and ALT-Public-Domain and W3C and Zlib and ISC and FTL and RSA-MD
 URL:      http://openjdk.java.net/
 
-
-# to regenerate source0 (jdk) run update_package.sh
-# update_package.sh contains hard-coded repos, revisions, tags, and projects to regenerate the source archives
-Source0: openjdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}.tar.xz
+# The source tarball, download from https://github.com/openjdk/jdk11u/tags
+Source0: jdk11u.tar
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -855,7 +850,7 @@ if [ %{include_debug_build} -eq 0 -a  %{include_normal_build} -eq 0 ] ; then
   echo "You have disabled both include_debug_build and include_normal_build. That is a no go."
   exit 13
 fi
-%setup -q -c -n %{uniquesuffix ""} -T -a 0
+%setup -c -n %{top_level_dir_name} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
 if [ $prioritylength -ne 8 ] ; then
@@ -864,9 +859,7 @@ if [ $prioritylength -ne 8 ] ; then
 fi
 
 # OpenJDK patches
-
-# Rename versioning subdirectory to openjdk
-mv jdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}} %{top_level_dir_name}
+ln -s %{top_level_dir_name} openjdk
 
 # Remove libraries that are linked
 sh %{SOURCE12}
@@ -874,10 +867,10 @@ pushd %{top_level_dir_name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch33 -p1
+%patch1000 -p1
 %patch3500 -p1
 popd # openjdk
-
-%patch1000
 
 # Extract systemtap tapsets
 %if_enabled systemtap
@@ -923,7 +916,6 @@ done
 
 # Setup nss.cfg
 sed -e "s:@NSS_LIBDIR@:%{NSS_LIBDIR}:g" %{SOURCE11} > nss.cfg
-%patch33 -p0
 
 %build
 # How many CPU's do we have?
@@ -1766,6 +1758,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.32.1.1-alt1
+- New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
+
 * Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.32.0.9-alt1
 - New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
   CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47057,
