@@ -3,7 +3,7 @@
 
 Name:     Cardinal
 Version:  26.02
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -24,6 +24,7 @@ Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
 Patch2:   Cardinal-22.11-rebeltech-fix-compilation.patch
 Patch3:   Cardinal-22.12-alt-more-system-libs.patch
 Patch4:   Cardinal-24.09-loongarch64.patch
+Patch5:   Cardinal-26.02-alt-fix-missing-fmt-header.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: simde-devel
@@ -165,6 +166,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Sun Aug 23 2026 Ivan A. Melnikov <iv@altlinux.org> 26.02-alt2
+- fix FTBFS caused by libfmt update
+
 * Sun Mar 01 2026 Ivan A. Melnikov <iv@altlinux.org> 26.02-alt1
 - 26.02
 
