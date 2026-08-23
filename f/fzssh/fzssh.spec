@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define sover 13.0.0
+%define sover 14.0.0
 
 Name: fzssh
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: FileZilla SSH client library
 Group: System/Libraries
@@ -74,6 +74,9 @@ files needed to build applications against fzssh.
 %_pkgconfigdir/libfzssh-client.pc
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0
+
 * Fri Jun 05 2026 Anton Farygin <rider@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0
 
