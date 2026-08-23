@@ -1,7 +1,7 @@
 %define soversion 5
 Name: libgeotiff
 Version: 1.7.4
-Release: alt1
+Release: alt2
 
 Summary: Library for reading and writing GeoTIFF information tags.
 License: ALT-Public-Domain and X11
@@ -97,9 +97,6 @@ popd
 pushd libgeotiff
 %makeinstall_std
 
-# install manualy some file
-install -p -m 755 bin/makegeo %{buildroot}%{_bindir}
-
 # install pkgconfig file
 cat > geotiff.pc <<EOF
 prefix=%{_prefix}
@@ -144,6 +141,9 @@ install -p -m 644 geotiff.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 1.7.4-alt2
+- do not ship libtool wrapper for noinst makegeo example (closes: #54631)
+
 * Mon Jul 06 2026 Anton Farygin <rider@altlinux.org> 1.7.4-alt1
 - 1.6.0 -> 1.7.4
 
