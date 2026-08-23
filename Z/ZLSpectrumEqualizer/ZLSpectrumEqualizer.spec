@@ -27,7 +27,7 @@ with the following key features: \
 %nil
 
 Name:    ZLSpectrumEqualizer
-Version: 0.0.1
+Version: 0.0.3
 Release: alt1
 
 Summary: %common_summary
@@ -169,5 +169,8 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Sat Aug 22 2026 Ivan A. Melnikov <iv@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Thu Jul 30 2026 Ivan A. Melnikov <iv@altlinux.org> 0.0.1-alt1
 - Build for Sisyphus (based on ZLEqualizer2 spec).
