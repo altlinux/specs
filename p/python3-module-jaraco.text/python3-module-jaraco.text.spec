@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 Summary: Module for text manipulation
 License: MIT
@@ -69,6 +69,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 4.3.0-alt1
+- 4.2.0 -> 4.3.0
+
 * Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
 - 4.1.0 -> 4.2.0.
 
