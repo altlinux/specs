@@ -4,7 +4,7 @@
 %def_without check
 
 Name: elektroid
-Version: 3.3.2
+Version: 3.4
 Release: alt1
 
 Summary: Sample and MIDI device manager
@@ -53,11 +53,12 @@ This package provides both the GUI and CLI application of Elektroid.
 %make_build check
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README README.md THANKS
+%doc ChangeLog COPYING INSTALL NEWS README README.md
 %_bindir/elektroid
 %_bindir/elektroid-cli
 %_desktopdir/io.github.dagargo.Elektroid.desktop
-%exclude %_datadir/elektroid/THANKS
+%_datadir/elektroid/THANKS
+%_datadir/elektroid/AUTHORS
 %dir %_datadir/elektroid
 %_datadir/elektroid/elektroid.css
 %_datadir/elektroid/elektroid.ui
@@ -75,6 +76,9 @@ This package provides both the GUI and CLI application of Elektroid.
 %_datadir/metainfo/io.github.dagargo.Elektroid.appdata.xml
 
 %changelog
+* Sun Aug 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.4-alt1
+- New version 3.4.
+
 * Sat Feb 28 2026 Nikolay Strelkov <snk@altlinux.org> 3.3.2-alt1
 - New version 3.3.2.
 
