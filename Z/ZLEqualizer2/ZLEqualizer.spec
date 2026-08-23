@@ -25,7 +25,7 @@
 
 
 Name:    ZLEqualizer2
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 
 Summary: %common_summary
@@ -73,6 +73,7 @@ BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
@@ -165,6 +166,9 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Sat Aug 22 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Sat Jul 11 2026 Ivan A. Melnikov <iv@altlinux.org> 1.2.2-alt1
 - 1.2.2
 - drop support for x86_64 CPUs w/o AVX2
