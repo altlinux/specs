@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xwaylandvideobridge
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Utility to allow streaming Wayland windows to X applications
@@ -31,6 +31,7 @@ BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-event)
 BuildRequires: plasma6-kpipewire-devel
 BuildRequires: kf6-kstatusnotifieritem-devel
+BuildRequires: kf6-kdbusaddons-devel
 
 %description
 By design, X11 applications can't access window or screen contents for
@@ -63,6 +64,9 @@ the control of the user at all times.
 %_K6data/qlogging-categories6/*.*categories
 
 %changelog
+* Sun Aug 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.2-alt1
+- New version 0.5.2.
+
 * Sat Aug 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.1-alt1
 - New version 0.5.1.
 
