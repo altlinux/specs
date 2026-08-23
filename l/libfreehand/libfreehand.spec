@@ -1,13 +1,12 @@
 Name: libfreehand
-Version: 0.1.2
-Release: alt1.1
+Version: 0.1.3
+Release: alt1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
 Group: System/Libraries
 License: MPLv2.0
-Url: http://www.freedesktop.org/wiki/Software/libfreehand/
-Source: %name-%version.tar.xz
-Patch1: 0001-Add-missing-semicolon-to-fix-build-with-icu-65.1.patch
+Url: https://wiki.documentfoundation.org/DLP/Libraries/libfreehand
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Jul 31 2017
 # optimized out: glibc-kernheaders-x86 libstdc++-devel perl pkg-config python-base xz
@@ -51,7 +50,6 @@ Currently supported: SVG, raw.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 mkdir -p m4
@@ -82,6 +80,10 @@ rm -rf %buildroot/%_docdir/%name
 %_bindir/*
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 0.1.3-alt1
+- 0.1.2 -> 0.1.3
+- fixed URL
+
 * Thu Jun 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1.1
 - FTBFS: use upstream fix for build with icu65.
 
