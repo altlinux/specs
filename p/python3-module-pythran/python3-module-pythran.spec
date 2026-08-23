@@ -13,8 +13,8 @@
 %endif
 
 Name: python3-module-%pyname
-Version: 0.18.1
-Release: alt2
+Version: 0.19.0
+Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -113,6 +113,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 0.19.0-alt1
+- 0.18.1 -> 0.19.0
+
 * Sat Jun 20 2026 Anton Farygin <rider@altlinux.com> 0.18.1-alt2
 - Fixed FTBFS with newer xsimd: constrain numpy.signbit helper to
   scalar types so SFINAE drops the array overload cleanly
