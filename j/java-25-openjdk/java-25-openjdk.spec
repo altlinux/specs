@@ -295,8 +295,8 @@
 %global featurever 25
 %global interimver 0
 %global updatever 4
-%global patchver 0
-%global buildver 7
+%global patchver 1
+%global buildver 1
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -1976,6 +1976,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:25.0.4.1.1-alt1
+- New version (fixes: CVE-2026-70906, CVE-2026-61308, CVE-2026-70907,
+  CVE-2026-60589).
+
 * Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:25.0.4.0.7-alt1
 - New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
   CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47059,
