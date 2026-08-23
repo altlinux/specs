@@ -1,17 +1,16 @@
 Name: libsearpc
-Version: 3.2.0.1
+Version: 3.3
 Release: alt1
 
 Summary: RPC library for Seafile
 
 Group: Networking/File transfer
-License: GPLv3
+License: Apache-2.0
 Url: https://github.com/haiwen/libsearpc
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
-# Source-url: https://github.com/haiwen/libsearpc/commit/cb1ffb2676ee0e96e4d416fe062f81b2e212271f
+# Source-url: https://github.com/haiwen/libsearpc/archive/refs/tags/v%version-latest.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: glib2-devel libjansson-devel
@@ -69,6 +68,9 @@ sed -i -e 's@#!/usr/bin/env python@#!%__python3@' lib/searpc-codegen.py
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.0.1-alt1
 - build cb1ffb2676ee0e96e4d416fe062f81b2e212271f commit
 
