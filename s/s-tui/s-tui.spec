@@ -1,72 +1,54 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
 Name: s-tui
-Version: 1.1.4
-Release: alt1.1
-
-Summary: CPU performance monitoring and testing
-Summary(ru_RU.UTF-8): Мониторинг и тестирование производительности процессора
-License: GPL-2.0-only
+Version: 1.5.0
+Release: alt1
+Summary: Terminal-based CPU stress and monitoring utility
+Summary(ru_RU.UTF-8): Терминальная утилита для стресс-тестирования и мониторинга ЦП
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
-Url: https://github.com/amanusk/s-tui
+URL: https://amanusk.github.io/s-tui
+VCS: https://github.com/amanusk/s-tui
 
-Requires: stress-ng
-Requires: python3-module-psutil
-Requires: python3-module-urwid
-
-# Source-url: https://github.com/amanusk/s-tui/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python3-dev
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
 
-BuildRequires(pre): rpm-build-python3
+%if_with check
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-urwid
+%endif
+
+Requires: stress-ng
 
 %description
-Terminal-based processor load monitoring utility. The Stress-Terminal user
-interface, s-tui, monitors temperature, clock speed, power consumption and
-CPU usage from the terminal. Shows performance degradation caused by thermal
-throttling. Does not require an X server. Built-in CPU Boot Options
-(stress/stress-ng/FIRESTARTER). Electrical power readings are supported on
-2nd generation and later Intel Core processors (Sandy Bridge) and AMD 17h
-family processors using the amd_energy driver. s-tui tested to work on
-Raspberry-Pi 4,3,2,1. All readings are taken from the sensors of your
-equipment, make sure that the necessary sensors are physically present on
-your devices. s-tui gives you the ability to run arbitrary shell scripts
-when a certain threshold is exceeded, such as your CPU temperature. See the
-documentation for more information. s-tui allows you to generate reports in
-csv format with the -c option. s-tui gives a warning signal about the
-decrease in the clock speed of the processor, caused by thermal throttling,
-changing the color of the monitor to a flashing red indication.
+s-tui is a terminal user interface for monitoring CPU temperature, frequency,
+power consumption and utilization. It can detect performance degradation
+caused by thermal throttling and does not require an X server. The application
+includes a built-in CPU stress test and can optionally use stress or stress-ng.
+It can also export readings in CSV format and run custom scripts when configured
+thresholds are exceeded.
 
 %description -l ru_RU.UTF-8
-Утилита мониторинга загрузки процессора на базе терминала. Пользовательский
-интерфейс Stress-Terminal, s-tui, отслеживает температуру, тактовую частоту,
-энергопотребление и использование ЦП с терминала. Показывает снижение
-производительности, вызванное тепловым дросселированием. Не требует X-сервера.
-Встроенные параметры загрузки ЦП (stress/stress-ng/FIRESTARTER). Показания
-электрической мощности поддерживаются процессорами Intel Core 2-го поколения
-и более поздних версий (Sandy Bridge) и процессорами семейства AMD 17h с
-использованием драйвера amd_energy. s-tui протестирован для работы на
-Raspberry-Pi 4,3,2,1. Все показания снимаются с датчиков вашего оборудования,
-убедитесь, что необходимые датчики физически присутствуют на ваших
-устройствах. s-tui дает вам возможность запускать произвольные сценарии
-оболочки при превышении определенного порога, например температуры вашего
-процессора. См. документацию для получения дополнительной информации. s-tui
-позволяет создавать отчеты в формате csv с опцией -c. s-tui подает
-предупреждающий сигнал о снижении тактовой частоты процессора, вызванном
-тепловым троттлингом, изменением цвета монитора на мигающую красную индикацию.
+s-tui — терминальный интерфейс для мониторинга температуры, частоты,
+энергопотребления и загрузки процессора. Программа обнаруживает снижение
+производительности из-за термического троттлинга и не требует X-сервера.
+В состав входит встроенный стресс-тест процессора; дополнительно можно
+использовать stress или stress-ng. Результаты измерений можно экспортировать
+в формате CSV, а при превышении заданных порогов — запускать пользовательские
+сценарии.
 
 %prep
 %setup
 
-# Replacing python with python3
-find s_tui/ -name "*.py" -exec sed -i 's|#!%_bindir/env python|#%_bindir/python3|' {} ";"
-find s_tui/ -name "*.py" -exec sed -i 's|#!%_bindir/python|#%_bindir/python3|' {} ";"
-
-# https://github.com/urwid/urwid/pull/655/commits
-sed -i 's/curses_display/display.curses/g' s_tui/s_tui.py
+%python3_fix_shebang s_tui
 
 %build
 %pyproject_build
@@ -74,13 +56,20 @@ sed -i 's/curses_display/display.curses/g' s_tui/s_tui.py
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
-%doc *.md
 %_bindir/%name
 %python3_sitelibdir_noarch/s_tui
-%python3_sitelibdir_noarch/s_tui-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Sun Aug 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.5.0-alt1
+- Updated to version 1.5.0.
+- Enabled the test suite during package build.
+- Removed obsolete compatibility workarounds.
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1.1
 - NMU: fix working with new urwid
 
