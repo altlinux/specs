@@ -290,8 +290,8 @@
 %global featurever 21
 %global interimver 0
 %global updatever 12
-%global patchver 0
-%global buildver 8
+%global patchver 1
+%global buildver 1
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -391,7 +391,8 @@ URL:      http://openjdk.java.net/
 %global oj_vendor_bug_url https://bugzilla.redhat.com
 %global oj_vendor_version (Red_Hat-%{version}-%{release})
 
-%global top_level_dir_name   %{vcstag}
+#global top_level_dir_name   %{vcstag}
+%global top_level_dir_name jdk21u
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
 
 # parametrized macros are order-sensitive
@@ -461,8 +462,8 @@ ExclusiveArch: %{java_arches}
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
 
-# The source tarball, generated using generate_source_tarball.sh
-Source0: https://openjdk-sources.osci.io/openjdk%{featurever}/open%{vcstag}.tar.xz
+# The source tarball, download from https://github.com/openjdk/jdk21u/tags
+Source0: jdk21u.tar
 
 %if_with fresh_libjvm
 Source1: bootstrap.tar
@@ -845,7 +846,7 @@ echo "WARNING: The build of a fresh libjvm has been disabled due to a JDK versio
 echo "Build JDK version is %{buildjdkver}, feature JDK version is %{featurever}"
 %endif
 
-%setup -q -c -n %{uniquesuffix ""} -T -a 0
+%setup -c -n %{top_level_dir_name} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
 if [ $prioritylength -ne 8 ] ; then
@@ -1984,6 +1985,9 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.12.1.1-alt1
+- New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
+
 * Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.12.0.8-alt1
 - New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
   CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47059,
