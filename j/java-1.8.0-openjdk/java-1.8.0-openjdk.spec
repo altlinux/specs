@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.502.b07
+%define version 1.8.0.504.b01
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -155,7 +155,7 @@ BuildRequires: /proc rpm-build-java
 # We filter out -O flags so that the optimization of HotSpot is not lowered from O3 to O2
 # We replace it with -Wformat (required by -Werror=format-security) and -Wno-cpp to avoid FORTIFY_SOURCE warnings
 # We filter out -fexceptions as the HotSpot build explicitly does -fno-exceptions and it's otherwise the default for C++
-%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat -Wno-cpp -Wno-error=incompatible-pointer-types -std=gnu++17|' | sed -r -e 's|-O[0-9]*||')
+%global ourflags %(echo %optflags | sed -e 's|-Wall|-Wformat -Wno-cpp -Wno-error=incompatible-pointer-types -std=gnu11|' | sed -r -e 's|-O[0-9]*||')
 %global ourcppflags %(echo %ourflags | sed -e 's|-fexceptions||')
 %global ourldflags %{__global_ldflags}
 
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u502-b07
+%global shenandoah_revision jdk8u504-b01
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -384,7 +384,7 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b07
+Version: %{javaver}.%{updatever}.b01
 Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
@@ -1090,7 +1090,7 @@ sh %{SOURCE12}
 %patch2000 -p2 -d jdk8
 %endif
 
-%if "%__gcc_version_major" > "14"
+%if "0%__gcc_version_major" > "14"
 %patch2001 -p1 -d jdk8
 %endif
 
@@ -2145,6 +2145,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.504.b01-alt1
+- New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
+
 * Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.502.b07-alt1
 - New version (fixes: CVE-2026-41254, CVE-2026-46968, CVE-2026-47010,
   CVE-2026-47021, CVE-2026-47027, CVE-2026-47057, CVE-2026-47058,
