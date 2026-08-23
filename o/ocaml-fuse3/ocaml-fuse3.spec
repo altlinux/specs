@@ -1,12 +1,12 @@
 %def_with check
 Name: ocaml-fuse3
 Version: 3.10.0
-Release: alt1
+Release: alt2
 Summary: OCaml bindings for FUSE 3
 Group: Development/ML
 License: LGPL-2.1-only
-Url: https://github.com/libfuse/libfuse
-VCS: https://github.com/astrada/ocamlfuse
+URL: https://github.com/astrada/ocamlfuse
+VCS: https://github.com/astrada/ocamlfuse.git
 Source0: %name-%version.tar
 
 BuildRequires: ocaml >= 4.08.0
@@ -19,6 +19,7 @@ BuildRequires: pkgconfig
 BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-odoc-devel
 BuildRequires: pkgconfig(fuse3)
+Conflicts: ocaml-ocamlfuse
 
 %if_with check
 BuildRequires: ocaml-ounit-devel
@@ -57,6 +58,10 @@ Development files for ocaml-fuse3.
 %files devel -f ocaml-files.devel.fuse3
 
 %changelog
+* Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 3.10.0-alt2
+- Added conflict with ocaml-ocamlfuse (closes: #60253)
+- Fixed homepage URL
+
 * Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 3.10.0-alt1
 - Initial build for ALT Linux.
 
