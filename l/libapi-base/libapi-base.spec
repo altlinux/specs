@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 9
+%define minor_version 10
 %define gir_name ApiBase
 
 %define yaml_api_version 0.1
@@ -168,6 +168,13 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %changelog
+* Tue Aug 25 2026 Vladimir Romanov <rirusha@altlinux.org> 7.10-alt1
+- New version: 7.10.
+- Added `simple_` methods to session for simplification of working with API.
+- Allowed to set raw data to `Content`.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.10
+
 * Sun Jul 19 2026 Vladimir Romanov <rirusha@altlinux.org> 7.9-alt1
 - New version: 7.9.
 - Added Yaml typelib.
