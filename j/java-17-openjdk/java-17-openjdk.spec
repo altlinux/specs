@@ -278,8 +278,8 @@
 %global featurever 17
 %global interimver 0
 %global updatever 20
-%global patchver 0
-%global buildver 8
+%global patchver 1
+%global buildver 1
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -298,7 +298,7 @@
 # Standard JPackage naming and versioning defines
 %global origin          openjdk
 %global origin_nice     OpenJDK
-%global top_level_dir_name   %{origin}
+%global top_level_dir_name jdk17u
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
 %if %is_system_jdk
@@ -312,8 +312,8 @@
 
 # Strip up to 6 trailing zeros in newjavaver, as the JDK does, to get the correct version used in filenames
 # TODO hardcoded
-#global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
-%global filever %{featurever}.%{interimver}.%{updatever}
+%global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
+#global filever %{featurever}.%{interimver}.%{updatever}
 
 # The tag used to create the OpenJDK tarball
 %global vcstag jdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}
@@ -446,8 +446,8 @@ ExcludeArch: armh
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
 
-# The source tarball, generated using generate_source_tarball.sh
-Source0: openjdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}.tar.xz
+# The source tarball, download from https://github.com/openjdk/jdk17u/tags
+Source0: jdk17u.tar
 
 %if_with fresh_libjvm
 Source1: bootstrap.tar
@@ -933,7 +933,7 @@ if [ %{include_debug_build} -eq 0 -a  %{include_normal_build} -eq 0 -a  %{includ
   echo "You have disabled all builds (normal,fastdebug,slowdebug). That is a no go."
   exit 14
 fi
-%setup -q -c -n %{uniquesuffix ""} -T -a 0
+%setup -c -n %{top_level_dir_name} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
 if [ $prioritylength -ne 8 ] ; then
@@ -948,9 +948,6 @@ mkdir -p %{bootjdk}
 %__cp -af bootstrap/noarch/* %{bootjdk}
 %__cp -af bootstrap/%archinstall/* %{bootjdk}
 %endif
-
-# Rename versioning subdirectory to openjdk
-mv %{vcstag} %{top_level_dir_name}
 
 # OpenJDK patches
 # Remove libraries that are linked by both static and dynamic builds
@@ -2017,6 +2014,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.20.1.1-alt1
+- New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
+
 * Sat Jul 25 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.20.0.8-alt1
 - New version (fixes: CVE-2026-41254, CVE-2026-46917, CVE-2026-46968,
   CVE-2026-47010, CVE-2026-47021, CVE-2026-47027, CVE-2026-47059,
