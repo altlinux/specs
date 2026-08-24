@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.51.0
+Version: 3.3.1
 Release: alt1
 
 Summary: The official Python library for the OpenAI API
@@ -34,7 +34,6 @@ Patch0: %name-%version-alt.patch
 
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
-%add_pyproject_deps_runtime_filter pandas-stubs
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,7 +52,6 @@ offers both synchronous and asynchronous clients powered by httpx.
 %add_python_extra aiohttp
 %add_python_extra bedrock
 %add_python_extra datalib
-%add_python_extra httpx2
 %add_python_extra realtime
 %add_python_extra voice-helpers
 
@@ -80,6 +78,9 @@ offers both synchronous and asynchronous clients powered by httpx.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.3.1-alt1
+- Updated to 3.3.1.
+
 * Fri Jul 31 2026 Anton Zhukharev <ancieg@altlinux.org> 2.51.0-alt1
 - Updated to 2.51.0.
 

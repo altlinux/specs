@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Access large language models from the command-line
@@ -52,7 +52,20 @@ on your own machine.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+# disable tests require remote model
+%pyproject_run_pytest -vra \
+    --deselect tests/test_openai_responses.py::test_responses_basic_non_streaming \
+    --deselect tests/test_openai_responses.py::test_responses_basic_streaming \
+    --deselect tests/test_openai_responses.py::test_responses_tool_use \
+    --deselect tests/test_openai_responses.py::test_responses_tool_use_streaming \
+    --deselect tests/test_openai_responses.py::test_responses_round_trips_encrypted_reasoning \
+    --deselect tests/test_openai_responses.py::test_responses_interleaved_reasoning_between_tool_calls \
+    --deselect tests/test_tools.py::test_tool_use_basic \
+    --deselect tests/test_tools.py::test_tool_use_chain_of_two_calls \
+    --deselect tests/test_tools_streaming.py::test_tools_streaming_variant_a \
+    --deselect tests/test_tools_streaming.py::test_tools_streaming_variant_b \
+    --deselect tests/test_tools_streaming.py::test_tools_streaming_variant_c \
+    --deselect tests/test_tools_streaming.py::test_tools_streaming_variant_d
 
 %files
 %_bindir/llm
@@ -60,6 +73,9 @@ on your own machine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.33-alt1
+- Updated to 0.33.
+
 * Wed Aug 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.32-alt1
 - Updated to 0.32.
 
