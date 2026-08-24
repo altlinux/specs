@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.19.4
+Version: 4.20.2
 Release: alt1
 Epoch: 1
 
@@ -18,8 +18,6 @@ Source7: chfn.control
 Source8: chsh.control
 Source9: gpasswd.control
 Source10: newgrp.control
-Source11: groupmems.control
-Source12: groupmems.pamd
 Source13: newuidmap.control
 Source14: newgidmap.control
 
@@ -40,7 +38,7 @@ Patch: %name-%version-%release.patch
 %def_enable man
 %endif
 
-%define lsubid_sovers 5
+%define lsubid_sovers 6
 
 # libbsd support for readpassphrase().
 # Using in-source implementation instead.
@@ -228,10 +226,9 @@ This virtual package unifies all shadow suite subpackages.
 	%{subst_with btrfs} \
 	%{subst_with libbsd} \
 	--with-group-name-max-length=32 \
-	--without-sha-crypt \
 	--without-su \
 	--disable-logind \
-	--disable-account-tools-setuid \
+	--enable-syslog \
 	%{subst_enable man}
 %make_build
 
@@ -261,7 +258,6 @@ ln -s chfn-chsh chsh
 install -pm600 %_sourcedir/chpasswd-newusers.pamd chpasswd-newusers
 ln -s chpasswd-newusers chpasswd
 ln -s chpasswd-newusers newusers
-install -pm600 %_sourcedir/groupmems.pamd groupmems
 popd
 %endif
 
@@ -272,7 +268,6 @@ install -pD -m755 %_sourcedir/chfn.control %buildroot%_controldir/chfn
 install -pD -m755 %_sourcedir/chsh.control %buildroot%_controldir/chsh
 install -pD -m755 %_sourcedir/gpasswd.control %buildroot%_controldir/gpasswd
 install -pD -m755 %_sourcedir/newgrp.control %buildroot%_controldir/newgrp
-install -pD -m755 %_sourcedir/groupmems.control %buildroot%_controldir/groupmems
 install -pD -m755 %_sourcedir/newuidmap.control %buildroot%_controldir/newuidmap
 install -pD -m755 %_sourcedir/newgidmap.control %buildroot%_controldir/newgidmap
 
@@ -322,10 +317,10 @@ rm -f %save_login_defs_file
 %post_control -s restricted chage chfn chsh
 
 %pre groups
-%pre_control gpasswd newgrp groupmems
+%pre_control gpasswd newgrp
 
 %post groups
-%post_control -s restricted gpasswd newgrp groupmems
+%post_control -s restricted gpasswd newgrp
 
 %pre submap
 %pre_control newuidmap newgidmap
@@ -364,10 +359,6 @@ rm -f %save_login_defs_file
 %_man8dir/user*.*
 %endif
 %doc README
-%exclude %_bindir/groupmems
-%if_enabled man
-%exclude %_man8dir/groupmems.*
-%endif
 
 %files check
 %_sbindir/*ck
@@ -400,21 +391,15 @@ rm -f %save_login_defs_file
 %endif
 
 %files groups
-%if_with pam
-%_sysconfdir/pam.d/groupmems
-%endif
 %config %_controldir/gpasswd
 %config %_controldir/newgrp
-%config %_controldir/groupmems
 %attr(700,root,root) %verify(not mode,group) %_bindir/gpasswd
 %attr(700,root,root) %verify(not mode,group) %_bindir/newgrp
 %_bindir/sg
-%attr(700,root,root) %verify(not mode,group) %_bindir/groupmems
 %if_enabled man
 %_mandir/man?/gpasswd.*
 %_mandir/man?/newgrp.*
 %_mandir/man?/sg.*
-%_man8dir/groupmems.*
 %endif
 
 %files submap
@@ -449,18 +434,14 @@ rm -f %save_login_defs_file
 
 %files suite
 
-%exclude %_bindir/expiry
 %exclude %_sbindir/chgpasswd
-%exclude %_sbindir/logoutd
 %exclude %_sbindir/nologin
 %if_enabled man
-%exclude %_man1dir/expiry.1.*
 %exclude %_man3dir/getspnam.3.*
 %exclude %_man3dir/shadow.3.*
 %exclude %_man5dir/gshadow.5.*
 %exclude %_man5dir/passwd.5.*
 %exclude %_man8dir/chgpasswd.8.*
-%exclude %_man8dir/logoutd.8.*
 %exclude %_man8dir/nologin.8.*
 %endif
 %if_without pam
@@ -468,7 +449,25 @@ rm -f %save_login_defs_file
 %exclude %_sysconfdir/login.access
 %endif
 
+
 %changelog
+* Mon Aug 24 2026 Mikhail Efremov <sem@altlinux.org> 1:4.20.2-alt1
+- Bumped libsubid soname version.
+- Patches from upstream git (by Artem Semenov):
+  + fix: lib/list.c: del_list(): free the old list container.
+  + fix: lib/list.c: del_list(): free the removed entry's string.
+  + fix: lib/list.c: add_list(): free the replaced list.
+  + fix: src/groupmod.c: dup_list() unconditionally in append path.
+  + fix: src/groupmod.c: borrow gr_mem in new gshadow-entry branch.
+  + fix: memory leak of nsgrp in src/useradd.c grp_update().
+  + fix: memory leak of ngrp in src/useradd.c grp_update().
+  + fix: memory leak of ngrp in src/userdel.c update_groups().
+  + fix: memory leak of nsgrp in src/userdel.c update_groups().
+- lib/semanage.c: fix library handle leak (thx Artem Semenov).
+- lib/getdef.c: Fix descriptor leak (by Artem Semenov).
+- Fixed error messages output.
+- Updated to 4.20.2.
+
 * Thu Mar 05 2026 Mikhail Efremov <sem@altlinux.org> 1:4.19.4-alt1
 - Disabled account-tools-setuid build option.
 - Updated to 4.19.4.
