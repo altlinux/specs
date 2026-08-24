@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 83.0.0
+Version: 84.0.0
 Release: alt1
 Summary: Most extensible Python build backend with support for C/C++ extension modules
 License: MIT
@@ -99,17 +99,6 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-# 71.0.1 includes tests again
-pushd %buildroot%python3_sitelibdir/
-rm -r \
-  ./%mod_name/tests \
-  ./%mod_name/_distutils/tests \
-%if_with bootstrap
-  ./%mod_name/_vendor/importlib_resources/tests \
-%endif
-
-popd
-
 # package a built wheel (will be used within venv created by virtualenv)
 built_wheel="$(cat ./dist_venv/.wheeltracker)" ||
         { echo Make sure you built a pyproject ; exit 1 ; }
@@ -144,6 +133,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Aug 18 2026 Stanislav Levin <slev@altlinux.org> 1:84.0.0-alt1
+- 83.0.0 -> 84.0.0
+
 * Mon Jul 06 2026 Stanislav Levin <slev@altlinux.org> 1:83.0.0-alt1
 - 82.0.1 -> 83.0.0
 
