@@ -13,7 +13,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.4.10
+Version: 8.4.11
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -62,7 +62,7 @@ Patch7: mysql-8.4.8-alt-mysql_config-libs.patch
 Patch9: mysql-8.4.8-alt-disable-run-libmysql_api_test.patch
 Patch10: mysql-8.4.8-alt-disable-faster-TLS-model.patch
 Patch11: mysql-8.4.8-alt-client.patch
-Patch12: mysql-8.4.9-alt-allow-32bit.patch
+Patch12: mysql-8.4.11-alt-allow-32bit.patch
 
 # Patches for mysql-shell
 Patch201: mysql-shell-8.4.8-alt-link-secret-store-login-path-with-ssl.patch
@@ -979,6 +979,19 @@ cd %_cmake__builddir && ctest --output-on-failure -R '.*-t' -LE NDB -j4
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Aug 13 2026 Nikolai Kostrigin <nickel@altlinux.org> 8.4.11-alt1
+- 8.4.10 -> 8.4.11
+  + (fixes: CVE-2026-46936, CVE-2026-47012, CVE-2026-47023, CVE-2026-47052)
+  + (fixes: CVE-2026-47064, CVE-2026-60145, CVE-2026-60163, CVE-2026-60177)
+  + (fixes: CVE-2026-60178, CVE-2026-60182, CVE-2026-60183, CVE-2026-60184)
+  + (fixes: CVE-2026-60185, CVE-2026-60186, CVE-2026-60187, CVE-2026-60188)
+  + (fixes: CVE-2026-60189, CVE-2026-60190, CVE-2026-60191, CVE-2026-60314)
+  + (fixes: CVE-2026-60315, CVE-2026-60316, CVE-2026-60331, CVE-2026-60332)
+  + (fixes: CVE-2026-60585, CVE-2026-60725, CVE-2026-60747, CVE-2026-61081)
+  + (fixes: CVE-2026-61094, CVE-2026-61096, CVE-2026-61109)
+- update alt-allow-32bit patch 8.4.9 -> 8.4.11
+  + drop dict0dict.cc hunk (rec_max_size is now size_t upstream)
+
 * Mon Jun 29 2026 Nikolai Kostrigin <nickel@altlinux.org> 8.4.10-alt1
 - new version 8.4.9 -> 8.4.10
 - update mysql-shell 8.4.9 -> 8.4.10
