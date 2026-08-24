@@ -1,17 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name woodstox
 
 Name:           woodstox-core
 Summary:        High-performance XML processor
-Version:        6.2.3
-Release:        alt1_2jpp11
-License:        ASL 2.0 or LGPLv2+ or BSD
+Version:        7.1.1
+Release:        alt1
+License:        Apache-2.0
 
-URL:            https://github.com/FasterXML/woodstox
+Url:            https://github.com/FasterXML/woodstox
+Vcs:            https://github.com/FasterXML/woodstox
+
 Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 # Port to latest OSGi APIs
@@ -28,6 +30,8 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
 BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
@@ -37,63 +41,39 @@ XML processor means that it handles both input (== parsing)
 and output (== writing, serialization)), as well as supporting tasks
 such as validation.
 
-
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package contains the API documentation for %{name}.
-
-
 %prep
 %setup -q -n %{base_name}-%{name}-%{version}
 %patch0 -p1
 %patch1 -p1
 
-
-%pom_remove_dep relaxngDatatype:relaxngDatatype
+# Patch out optional support for msv and relax schema validation
+%pom_remove_dep :relaxngDatatype
 %pom_remove_dep net.java.dev.msv:
+%pom_remove_dep :isorelax
 rm -rf src/main/java/com/ctc/wstx/msv
 
 # Remove tests for msv and relaxng functionality
-rm -rf src/test/java/wstxtest/msv src/test/java/wstxtest/vstream/TestRelaxNG.java src/test/java/stax2/vwstream/W3CSchemaWrite*Test.java \
-  src/test/java/failing/{TestRelaxNG,TestW3CSchemaTypes,TestW3CSchemaComplexTypes,TestW3CDefaultValues}.java
-
-# Unnecessary for RPM builds
-%pom_remove_plugin :nexus-staging-maven-plugin
-
-# we don't care about Java 9 modules (yet)
-%pom_remove_plugin :moditect-maven-plugin
-
-# replace felix-osgi-core with osgi-core
-%pom_change_dep -r :org.osgi.core org.osgi:osgi.core
-
-%mvn_alias ":{woodstox-core}" :@1-lgpl :@1-asl :wstx-asl :wstx-lgpl \
-    org.codehaus.woodstox:@1 org.codehaus.woodstox:@1-asl \
-    org.codehaus.woodstox:@1-lgpl org.codehaus.woodstox:wstx-lgpl \
-    org.codehaus.woodstox:wstx-asl
-
-%mvn_file : %{name}{,-asl,-lgpl}
-
+rm -rf src/main/java/com/ctc/wstx/msv
+rm src/test/java/failing/{RelaxNGTest,TestRelaxNG189,TestRelaxNG190,TestW3CSchema189,W3CDefaultValuesTest,W3CSchemaTypesTest}.java
+rm src/test/java/stax2/vwstream/{W3CSchemaWrite16Test,W3CSchemaWrite23Test}.java
+rm src/test/java/wstxtest/msv/{TestW3CSchema,TestW3CSchemaTypes,TestWsdlValidation}.java
+rm src/test/java/wstxtest/vstream/{TestRelaxNG,TestW3CSchemaComplexTypes}.java
 
 %build
-%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build -j
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc README.md
 %doc --no-dereference LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Mon Aug 24 2026 Anton Meleshnikov <alton@altlinux.org> 7.1.1-alt1
+- new version (thanks fedora for the spec)
+- remove javadoc
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 6.2.3-alt1_2jpp11
 - new version
 

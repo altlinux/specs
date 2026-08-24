@@ -1,22 +1,23 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             stax2-api
-Version:          4.2.1
-Release:          alt1_4jpp11
+Version:          4.3.0
+Release:          alt1
 Summary:          Experimental API extending basic StAX implementation
-License:          BSD
+License:          BSD-2-Clause
+Url:              https://github.com/FasterXML/stax2-api
+Vcs:              https://github.com/FasterXML/stax2-api
 
-URL:              https://github.com/FasterXML/stax2-api
 Source0:          %{url}/archive/%{name}-%{version}.tar.gz
-
 BuildArch:        noarch
 
 BuildRequires:    maven-local
 BuildRequires:    mvn(com.fasterxml:oss-parent:pom:)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.moditect:moditect-maven-plugin)
 Source44: import.info
 
 %description
@@ -38,16 +39,12 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-
-%pom_xpath_remove pom:Import-Package
-
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :moditect-maven-plugin
 
 %build
 %mvn_file :%{name} %{name}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -58,6 +55,10 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 24 2026 Anton Meleshnikov <alton@altlinux.org> 4.3.0-alt1
+- new version
+- added vcs tag
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.2.1-alt1_4jpp11
 - new version
 
