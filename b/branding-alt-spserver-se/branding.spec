@@ -12,7 +12,7 @@
 #endif
 %define altbranch %_priority_distbranch
 %define status %nil
-%define status_en ALPHA
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define design_graphics_abi_epoch 0
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.52
+Release: alt1
 URL: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -43,9 +43,9 @@ Group: Graphics
 Summary: System/Base
 License: GPL-2.0-or-later
 
-%define distro_name SP Server
+%define distro_name SP %LKNV Server
 %define Brand_ru Альт 
-%define distro_name_ru СП Сервер
+%define distro_name_ru СП %LKNV Сервер
 
 %description
 Distro-specific packages with design and texts for %Brand %distro_name.
@@ -216,7 +216,7 @@ cp /usr/share/distro-licenses/ALT_SP_A2_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND='%Brand' BRAND_RU='%Brand_ru' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' LKNV='%LKNV' BRANCH='%altbranch' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND='%Brand' BRAND_RU='%Brand_ru' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -298,6 +298,14 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Aug 24 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt1
+- Add LKNV to Product Name.
+- Disable ALPHA status.
+- release-notes: replace release with version.
+- indexhtml: remove link to forum.altlinux.org.
+- Add version to /etc/altlinux-release.
+- os-release: add @BRAND@ to BUILD_ID.
+
 * Thu Aug 06 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.52
 - indexhtml: replacement Telegram Channel with MAX Channel.
 - branding.spec: use ALT_SP_A2_License.
