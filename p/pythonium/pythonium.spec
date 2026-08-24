@@ -1,6 +1,6 @@
 Name: pythonium
 Version: 0.6.2
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: Python 3 to Javascript translator written in Python that produce fast portable javascript code
 
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-git: https://github.com/pythonium/pythonium
 Source: %name-%version.tar
+Patch0: python3.14-ast-constant.patch
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ Python 3 to Javascript translator written in Python that produce fast portable j
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python3_build
@@ -41,6 +43,9 @@ Python 3 to Javascript translator written in Python that produce fast portable j
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1.2.1
+- Fix build with Python 3.14.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.6.2-alt1.2
 - (NMU) rebuild with python3.6
 
