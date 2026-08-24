@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.13
+Version: 0.4.14
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,13 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.14-alt1
+- Add (thx Dmitriy Terekhin):
+  + edition and component markers to generated package lists;
+  + grouped package extraction API.
+- Add external repository support (thx Oleg Chagaev).
+- Fix package filtering by desktop environment (thx Dmitriy Terekhin).
+
 * Wed Jun 10 2026 Andrey Alekseev <parovoz@altlinux.org> 0.4.13-alt1
 - Added 'required' component marker to source entry
 - Added missing descriptions of the source entity (thx Sergey Savelev)
