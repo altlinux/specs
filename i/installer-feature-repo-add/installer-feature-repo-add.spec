@@ -1,5 +1,5 @@
 Name: installer-feature-repo-add
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Add the installation media to APT configuration
@@ -29,6 +29,9 @@ Conflicts: alterator-pkg < 2.6.18-alt1
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Mon Aug 24 2026 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
+- Do not filter USB CD-ROM.
+
 * Tue Mar 05 2024 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Fix adding repo with USB flash.
 
