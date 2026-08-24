@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 15.0.0
-Release: alt1
+Release: alt2
 Summary: Render rich text and beautiful formatting in the terminal
 License: MIT
 Group: Development/Python3
@@ -55,6 +55,9 @@ code, tracebacks, and more - out of the box.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 15.0.0-alt2
+- Fixed FTBFS (Pygments 2.21.0).
+
 * Mon Apr 13 2026 Stanislav Levin <slev@altlinux.org> 15.0.0-alt1
 - 14.3.3 -> 15.0.0.
 
