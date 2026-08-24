@@ -5,7 +5,7 @@
 Name: python3-module-html5lib
 Epoch: 1
 Version: 1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Library for working with HTML5 documents
 
@@ -15,6 +15,7 @@ Url: https://github.com/html5lib/html5lib-python
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch0: python3.14-ast-constant.patch
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
@@ -46,6 +47,7 @@ This package contains documentation for html5lib.
 
 %prep
 %setup
+%patch0 -p1
 rm -f html5lib/tests/conftest.py
 # https://github.com/html5lib/html5lib-python/issues/433
 rm -f html5lib/tests/test_encoding.py
@@ -81,6 +83,9 @@ py.test3
 %endif
 
 %changelog
+* Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.1-alt1.1
+- Fix build with Python 3.14.
+
 * Sun Jul 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.1-alt1
 - build python3 module separately
 - new version 1.1 (with rpmrb script)
@@ -159,4 +164,3 @@ py.test3
 
 * Fri Jan 30 2009 Denis Klimov <zver@altlinux.org> 0.11.1-alt1
 - Initial build for ALT Linux
-
