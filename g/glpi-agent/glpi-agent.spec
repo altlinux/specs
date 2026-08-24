@@ -1,6 +1,6 @@
 Name:    glpi-agent
 Version: 1.19
-Release: alt1
+Release: alt2
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -49,6 +49,9 @@ BuildRequires: perl-XML-XPath
 BuildRequires: perl-HTTP-Cookies
 BuildRequires: perl-XML-LibXML
 
+Requires: perl-DateTime
+Requires: perl-Net-CUPS
+Requires: perl-Parse-EDID
 Requires: perl-XML-LibXML
 
 %description
@@ -141,6 +144,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Mon Aug 24 2026 Andrey Cherepanov <cas@altlinux.org> 1.19-alt2
+- Added requirements for printer and resolution detection (ALT #60257).
+
 * Wed Aug 05 2026 Andrey Cherepanov <cas@altlinux.org> 1.19-alt1
 - New version.
 
