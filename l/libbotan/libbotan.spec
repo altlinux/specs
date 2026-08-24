@@ -6,7 +6,7 @@
 
 Name: libbotan
 Version: 2.19.1
-Release: alt3
+Release: alt3.1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -23,7 +23,6 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel bzlib-devel libssl-devel zlib-devel
-BuildRequires: boost-asio-devel boost-beast-devel
 BuildRequires: %_bindir/sphinx-build %_bindir/rst2man
 
 %description
@@ -63,7 +62,6 @@ python3 ./configure.py \
 	--with-bzip2 \
 	--with-lzma \
 	--with-zlib \
-	--with-boost \
 	--with-openssl \
 	--with-python-versions=%__python3_version \
 	--with-documentation \
@@ -93,6 +91,9 @@ LD_LIBRARY_PATH=. ./botan-test
 
 
 %changelog
+* Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.19.1-alt3.1
+- NMU: disable unused Boost.Asio CLI support to fix FTBFS.
+
 * Tue Apr 21 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.19.1-alt3
 - stop package devel/doc and python-module
 
@@ -179,4 +180,3 @@ LD_LIBRARY_PATH=. ./botan-test
 
 * Mon Oct 11 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.8.10-alt1
 - Initial build for Sisyphus.
-
