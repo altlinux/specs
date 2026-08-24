@@ -1,5 +1,5 @@
 Name: gap
-Version: 4.16.0
+Version: 4.16.1
 Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Artistic-2.0 or GPL-2.0-only and GPL-2.0-or-later
@@ -186,6 +186,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Mon Aug 24 2026 Leontiy Volodin <lvol@altlinux.org> 4.16.1-alt1
+- New version 4.16.1.
+
 * Tue Jun 02 2026 Leontiy Volodin <lvol@altlinux.org> 4.16.0-alt1
 - New version 4.16.0.
 
