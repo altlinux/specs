@@ -1,6 +1,6 @@
 Name: waked
 Version: 0.1.1
-Release: alt3
+Release: alt4
 
 Summary: Waked Daemon
 Group: System/Servers
@@ -10,6 +10,7 @@ Url: https://gitlab.com/seath1/waked.git
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: waked-0.1.1-alt-sdbus-cpp-2.0.patch
+Patch2: waked-0.1.1-alt-cxx20.patch
 
 # https://aur.archlinux.org/cgit/aur.git/tree/0002-Include-typedef-for-uint64_t-fixes-compilation.patch?h=waked-git
 Patch10: 0002-Include-typedef-for-uint64_t-fixes-compilation.patch
@@ -28,6 +29,7 @@ Waked is a daemon which lets Apps wake the system from suspend at requested time
 %patch10 -p1
 %patch11 -p1
 %patch1 -p1 -b .sdbus-cpp-2.0
+%patch2 -p1
 
 %build
 cd src
@@ -45,6 +47,9 @@ install -pD -m0644 %name.service %buildroot%systemd_unitdir/%name.service
 %_datadir/dbus-1/system.d/de.seath.Waked.conf
 
 %changelog
+* Mon Aug 24 2026 Vasiliy Doylov <neko@altlinux.org> 0.1.1-alt4
+- build with C++20 as required by sdbus-c++-2.0 headers (fixes FTBFS)
+
 * Thu Mar 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt3
 - fixed for sdbus-cpp-2.0 (ALT #53137)
 
