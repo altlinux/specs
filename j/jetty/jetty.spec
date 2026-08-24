@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jetty
-Version: 12.1.8
+Version: 12.1.12
 Release: alt1
 
 Summary: Java Webserver and Servlet Container
@@ -375,6 +375,9 @@ sed -i 's/requires transitive jetty.servlet.api;/requires transitive jakarta.ser
 %files servlet -f .mfiles-servlet
 
 %changelog
+* Mon Aug 24 2026 Ivan Khanas <xeno@altlinux.org> 12.1.12-alt1
+- New version (fixes CVE-2026-10050).
+
 * Wed Apr 01 2026 Ivan Khanas <xeno@altlinux.org> 12.1.8-alt1
 - New version.
 
