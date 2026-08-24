@@ -1,10 +1,10 @@
 Name: libmd
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Message Digest functions from BSD systems
 
-License: BSD and ISC and Copyright only and Public Domain
+License: BSD-3-Clause and BSD-2-Clause and ISC and Beerware and ALT-Public-Domain
 Group: System/Libraries
 Url: http://libbsd.freedesktop.org/
 
@@ -48,6 +48,10 @@ Development files for the libbsd library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0
+- fix License tag to valid SPDX
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0
 - add man7 page
