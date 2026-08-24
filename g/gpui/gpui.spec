@@ -10,7 +10,7 @@
 %endif
 
 Name: gpui
-Version: 0.2.56
+Version: 0.2.57
 Release: alt1
 
 Summary: Group policy editor
@@ -138,6 +138,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Aug 24 2026 Vladimir Rubanov <august@altlinux.org> 0.2.57-alt1
+- 0.2.57-alt1
+- Fixes:
+  + Fix change date of preferences (thx to Tugushev Niall).
+
 * Tue Jun 23 2026 Vladimir Rubanov <august@altlinux.org> 0.2.56-alt1
 - 0.2.56-alt1
 - Fixes:
