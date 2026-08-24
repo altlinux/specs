@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%ifnarch %ix86
-%def_without bootstrap
-%def_with java21
-%else
 %def_with bootstrap
-%def_without java21
+
+%ifarch %ix86
+%def_without java21plus
+%else
+%def_with java21plus
 %endif
 
 Name: gradle
-Version: 8.14.3
-Release: alt2
+Version: 9.7.1
+Release: alt1
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
@@ -27,15 +27,26 @@ Source4: commit.sh
 Patch0: 0001-Gradle-adoptium-alt-patch.patch
 Patch1: 0002-Gradle-set-buildtime-alt-patch.patch
 Patch2: 0003-Gradle-set-git-specifications-alt-patch.patch
+# https://github.com/gradle/gradle/issues/38911
+# https://github.com/gradle/gradle/pull/38913
+Patch3: 0004-Stop-capturing-the-release-notes-date-formatters-alt-patch.patch
+# Error Prone 2.43 and later are compiled for Java 21, which %ix86 has no JDK for.
+# 2.42.0 is the last release still running on Java 17.
+# The annotations artifact ships inside the distribution, so it stays at 2.50.0.
+Patch4: 0005-Gradle-downgrade-error-prone-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 %{!?_with_bootstrap:BuildRequires: gradle}
 BuildRequires: rpm-build-java-osgi
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: java-11-openjdk-devel
 BuildRequires: java-17-openjdk-devel
-%{?_with_java21:BuildRequires: java-21-openjdk-devel}
+%{?_with_java21plus:BuildRequires: java-21-openjdk-devel}
+%{?_with_java21plus:BuildRequires: java-25-openjdk-devel}
 BuildRequires: git
+%add_findreq_skiplist %_datadir/gradle/lib/plugins/org.eclipse.jgit.ssh.apache.agent-*.jar
+Requires: jna-contrib
 
 %description
 Gradle is a highly scalable build automation tool designed to handle everything
@@ -49,9 +60,14 @@ Android, Groovy, C++, and Swift.
 %setup -a1 -a2
 %autopatch -p1
 
-%if_without java21
+%if_without java21plus
 find -type f -name gradle.properties -print0 |
-        xargs -r0 sed -i 's,-Xmx3100m,-Xmx1500m,'
+        xargs -r0 sed -i 's,-Xmx[0-9][0-9]*m,-Xmx1500m,'
+
+# No JDK 21+ here, so run the daemon on the newest JDK this arch has.
+# Upstream rewrites this file the same way for its Gradleception builds.
+sed -i 's,^toolchainVersion=.*,toolchainVersion=17,' \
+    gradle/gradle-daemon-jvm.properties
 %endif
 
 %if_with bootstrap
@@ -71,15 +87,15 @@ export GRADLE_USER_HOME="$PWD/.gradle"
 COMMITHASH=$(./commit.sh)
 
 # Skip task :docs:javadocAll that requires .git directory.
-%{?_with_java21:gradle installAll} \
-%{!?_with_java21:./gradlew installAll} \
+%{?_with_bootstrap:./gradlew installAll} \
+%{!?_with_bootstrap:gradle installAll} \
   -x :docs:javadocAll \
-  %{!?_with_java21:-x :docs:compileJava} \
-  %{?_with_java21:\
-  -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk,%_jvmdir/java-21-openjdk"\
+  %{!?_with_java21plus:-x :docs:compileJava} \
+  %{?_with_java21plus:\
+  -Porg.gradle.java.installations.paths="%_jvmdir/java-1.8.0-openjdk,%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk,%_jvmdir/java-21-openjdk,%_jvmdir/java-25-openjdk"\
   } \
-  %{!?_with_java21:\
-  -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk" \
+  %{!?_with_java21plus:\
+  -Porg.gradle.java.installations.paths="%_jvmdir/java-1.8.0-openjdk,%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk" \
   } \
   -Porg.gradle.java.installations.auto-detect=false \
   -Pgradle_installPath="$PWD/dist" \
@@ -88,6 +104,7 @@ COMMITHASH=$(./commit.sh)
   -DgitCommitId="$COMMITHASH" \
   -DgitBranch="sisyphus" \
   -Dorg.gradle.java.installations.auto-download=false \
+  -Dorg.gradle.unsafe.isolated-projects=false \
   --no-configuration-cache \
   --no-build-cache \
   --offline \
@@ -116,6 +133,9 @@ ln -s %_datadir/gradle/bin/gradle \
 %_datadir/gradle/
 
 %changelog
+* Fri Aug 21 2026 Ivan Khanas <xeno@altlinux.org> 9.7.1-alt1
+- New version.
+
 * Fri Oct 17 2025 Ivan Khanas <xeno@altlinux.org> 8.14.3-alt2
 - Noarch packaging.
 
