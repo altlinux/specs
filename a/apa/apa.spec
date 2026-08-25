@@ -1,16 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_enable check
-
 Name: apa
-Version: 0.1.8.alpha
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: An assistant for working with packages in your ALT distros
 License: GPL-3.0-or-later
 Group: System/Configuration/Packaging
-Url: https://github.com/alt-gnome/apa
-VCS: https://github.com/alt-gnome/apa
+Url: https://altlinux.space/alt-gnome/apa
+VCS: https://altlinux.space/alt-gnome/apa.git
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -18,16 +16,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
-BuildRequires: apt
-BuildRequires: apt-repo
-BuildRequires: update-kernel
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gobject-2.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: pkgconfig(packagekit-glib2)
-BuildRequires: pkgconfig(libalt-repo-1) >= 1.21.1
-BuildRequires: pkgconfig(libvazzy-1)
+BuildRequires: pkgconfig(libapi-base-7)
 
 %description
 An assistant for working with packages in your ALT distros.
@@ -42,9 +31,6 @@ Use `apa help` for more information.
 %meson
 %meson_build
 
-%check
-%meson_test
-
 %install
 %meson_install
 %find_lang %name
@@ -53,6 +39,10 @@ Use `apa help` for more information.
 %_bindir/%name
 
 %changelog
+* Tue Aug 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
+- New version 0.2.
+- Dropped everything except search-file command.
+
 * Fri Sep 05 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1.8.alpha-alt2
 - Fixed build with newer libapi-base version
 
