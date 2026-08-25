@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.6.0
-Release: alt1.1
+Release: alt2
 Summary: Thread-pool Controls
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,17 +14,15 @@ Url: https://pypi.org/project/threadpoolctl
 Vcs: https://github.com/joblib/threadpoolctl
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
-
+Source1: %pyproject_deps_config_name
+Patch0: threadpoolctl-3.6.0-Use-PEP-621-metadata-to-fix-building-with-flit-core.patch
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-cython
-BuildRequires: python3-module-flit
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-setuptools
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -37,6 +35,12 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -48,14 +52,13 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.md CHANGES.md
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1.1
-- Demodernized packaging.
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 3.6.0-alt2
+- Fixed FTBFS (flit-core 4).
 
 * Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
 - 3.5.0 -> 3.6.0.

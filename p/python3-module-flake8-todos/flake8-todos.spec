@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Lint TODO comments in a Python code
 
@@ -18,7 +18,7 @@ Vcs: https://github.com/orsinium-labs/flake8-todos
 BuildArch: noarch
 
 Source: %name-%version.tar
-
+Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flit-core
 %if_with check
@@ -31,6 +31,7 @@ BuildRequires: python3-module-pytest
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -47,5 +48,8 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 0.3.1-alt2
+- NMU: fixed FTBFS (flit-core 4).
+
 * Thu Apr 19 2025 Timofei Fedotov <sovtouch@altlinux.org> 0.3.1-alt1
 - Initial build for ALT Sisyphus.

@@ -1,6 +1,6 @@
 Name: python3-module-socksio
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: Client-side sans-I/O SOCKS proxy implementation
 License: MIT
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/socksio-%version.dist-info
 
 %changelog
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 1.0.0-alt3
+- NMU: fixed FTBFS (flit-core 4).
+
 * Tue Dec 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt2
 - moved to pyproject
 

@@ -8,8 +8,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.12.0
-Release: alt3
+Version: 4.0.2
+Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
@@ -21,6 +21,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 # flit and flit-core are built from the same repo
@@ -85,7 +86,6 @@ export PYTHONPATH=$(pwd)/flit_core
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst
 %_bindir/flit
 %python3_sitelibdir/flit/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -95,6 +95,9 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
+- 3.12.0 -> 4.0.2
+
 * Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 3.12.0-alt3
 - Added missing runtime dep on tomli for Python < 3.11.
 

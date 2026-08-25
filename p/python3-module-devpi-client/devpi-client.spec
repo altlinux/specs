@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.3.0
-Release: alt1
+Release: alt2
 Summary: Manage devpi-server, Python packaging and testing
 License: MIT
 Group: Development/Python3
@@ -67,6 +67,9 @@ export PYTHONWARNINGS='ignore:pkg_resources is deprecated as an API.:UserWarning
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 7.3.0-alt2
+- Fixed FTBFS (flit-core 4).
+
 * Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
 - 7.2.1 -> 7.3.0.
 

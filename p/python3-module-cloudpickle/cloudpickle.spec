@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.2
-Release: alt1
+Release: alt2
 Summary: Extended pickling support for Python objects
 License: BSD
 Group: Development/Python
@@ -15,6 +15,7 @@ VCS: https://github.com/cloudpipe/cloudpickle
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -38,6 +39,7 @@ interactively in the __main__ module.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -64,6 +66,9 @@ export PYTHONPATH=tests/cloudpickle_testpkg
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 3.1.2-alt2
+- Fixed FTBFS (flit-core 4).
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 3.1.2-alt1
 - 3.1.1 -> 3.1.2.
 
