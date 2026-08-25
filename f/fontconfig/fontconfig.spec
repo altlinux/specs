@@ -1,3 +1,6 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %ifndef xmlcatalog
 %define xmlcatalog %_sysconfdir/xml/catalog
 %endif
@@ -6,14 +9,21 @@
 %define sover 1
 %define libfontconfig libfontconfig%sover
 
+%ifver_lteq %ubt_id M120
+%def_enable new_options
+%else
+%def_disable new_options
+%endif
+
 Name: fontconfig
-Version: 2.18.1
+Version: 2.18.3
 Release: alt1
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
 License: MIT
-Url: http://fontconfig.org/
+URL: http://fontconfig.org/
+VCS: https://gitlab.freedesktop.org/fontconfig/fontconfig/
 
 Source: %name-%version.tar
 Source1: fontconfig-firsttime
@@ -31,7 +41,7 @@ Patch14: alt-disable-postscript-aliases.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt rpm-macros-ifver
 BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel libuuid-devel
 
 %description
@@ -71,8 +81,13 @@ documentation required for development of fontconfig-based software.
 	--with-default-fonts=%_datadir/fonts \
 	--with-cache-dir=%_var/cache/%name \
 	--docdir=%docdir \
-	--with-default-hinting=full \
+%if_enabled new_options
+	--with-default-hinting=slight \
 	--with-default-sub-pixel-rendering=none \
+%else
+	--with-default-hinting=full \
+	--with-default-sub-pixel-rendering=rgb \
+%endif
 	--with-bitmap-conf=yes \
 	#
 
@@ -145,19 +160,26 @@ fi
 %config %_sysconfdir/fonts/fonts.conf
 %config(noreplace) %_sysconfdir/fonts/conf.avail/*.conf
 %_sysconfdir/fonts/conf.d/README
-%_sysconfdir/fonts/conf.d/[2-9]*.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/[2-9]*.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-yes-antialias.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
+%if_enabled new_options
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-full.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-none.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
+%else
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-none.conf
+%endif
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
 %ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
-%ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-medium.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-none.conf
-%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-bgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vbgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vrgb.conf
@@ -194,6 +216,10 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Tue Aug 25 2026 Sergey V Turchin <zerg@altlinux.org> 2.18.3-alt1
+- new version
+- enable new hinting and sub-pixel-rendering only for modern branches
+
 * Wed Jun 17 2026 Sergey V Turchin <zerg@altlinux.org> 2.18.1-alt1
 - new version
 
@@ -611,4 +637,3 @@ fi
 
 * Fri May 24 2002 Owen Taylor <otaylor@redhat.com>
 - Initial specfile
-
