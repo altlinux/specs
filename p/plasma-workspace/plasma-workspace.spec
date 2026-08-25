@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -474,6 +474,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 %dir %_K6plug/plasma/
 %dir %_K6plug/plasma/*/
 %_bindir/*
+%exclude %_bindir/plasma-shutdown
 %_K6libexecdir/ba*
 %_K6libexecdir/kfo*
 %_K6libexecdir/ks*
@@ -517,6 +518,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 %_K6notif/*.notifyrc
 %_K6cfg/*.kcfg
 %_K6dbus_srv/*.service
+%exclude %_K6dbus_srv/org.kde.Shutdown.service
 %_K6dbus/system.d/*.conf
 %_K6dbus_sys_srv/*.service
 %_K6conf_up/*
@@ -536,6 +538,8 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 %_datadir/polkit-1/actions/*fontinst*.policy
 
 %files -n %name-qml
+%_bindir/plasma-shutdown
+%_K6dbus_srv/org.kde.Shutdown.service
 %_K6plug/kf6/packagestructure/wallpaper_images.so
 %_K6qml/org/kde/breeze/components/
 %_K6qml/org/kde/plasma/
@@ -588,6 +592,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Tue Aug 25 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.4-alt2
+- move plasma-shutdown dbus service to qml subpackage
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.4-alt1
 - new version
 
