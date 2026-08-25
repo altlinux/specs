@@ -3,10 +3,13 @@
 %define ns_name zope
 %define mod_name interface
 
+# abi3 is not supported
+# %%python3_set_limited_api
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.5
+Version: 8.6
 Release: alt1
 
 Summary: Zope interfaces package
@@ -66,6 +69,9 @@ ENDTESTS
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 8.6-alt1
+- 8.5 -> 8.6
+
 * Mon Jun 15 2026 Stanislav Levin <slev@altlinux.org> 8.5-alt1
 - 8.4 -> 8.5
 
