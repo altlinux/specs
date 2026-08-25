@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.30
+Version: 2.0.31
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -73,6 +73,8 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_bindir/dde-oom-score-adj
 %_xdgconfigdir/autostart/dde-oom-score-adj.desktop
 %_libexecdir/dde-session-ctl
+%dir %_libexecdir/deepin/
+%_libexecdir/deepin/dde-session*
 %_datadir/dbus-1/services/org.deepin.dde.Session1.service
 %_datadir/xsessions/deepin.desktop
 %_userunitdir/dde-session*
@@ -92,6 +94,9 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_datadir/dsg/configs/org.deepin.dde.session/org.deepin.dde.session.oom-score-adj.json
 
 %changelog
+* Tue Aug 25 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.31-alt1
+- New version 2.0.31.
+
 * Tue Aug 11 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.30-alt1
 - New version 2.0.30.
 
