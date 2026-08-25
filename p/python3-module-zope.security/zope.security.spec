@@ -3,10 +3,15 @@
 %define ns_name zope
 %define mod_name security
 
+# not compatible with abi3
+# %%python3_set_limited_api
+
+# some modules are occasionally abi3 compatible
+%none_python3_modules_rename
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.3
+Version: 8.4
 Release: alt1
 Summary: Zope Security Framework
 License: ZPL-2.1
@@ -54,7 +59,6 @@ security policies on Python objects.
 %pyproject_run -- zope-testrunner --test-path=src
 
 %files
-%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/examples/
@@ -62,6 +66,9 @@ security policies on Python objects.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 8.4-alt1
+- 8.3 -> 8.4
+
 * Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 8.3-alt1
 - 7.3 -> 8.3.
 
