@@ -16,8 +16,8 @@
 %global optflags_lto %nil
 
 Name: squid
-Version: 7.6
-Release: alt2
+Version: 7.7
+Release: alt1
 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -331,6 +331,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Mon Aug 24 2026 Egor Ignatov <egori@altlinux.org> 7.7-alt1
+- 7.7
+
 * Tue Jun 23 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt2
 - Fix build with openldap < 2.5
 
