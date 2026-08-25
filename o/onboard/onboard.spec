@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.4.4
-Release: alt2
+Version: 1.4.4.5
+Release: alt1
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
@@ -61,8 +61,6 @@ install -Dpm0644 %SOURCE1 po/ru.po
 
 %build
 export FAKEROOTKEY=1
-# Remove empty file before intltool runs
-rm -f settings_ui.py
 %pyproject_build
 
 %install
@@ -95,6 +93,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 
 %find_lang %name
 
+# Remove empty file
+rm %buildroot%python3_sitelibdir/settings_ui.py 
+
 %files -f %name.lang
 %doc AUTHORS README.md HACKING *.example
 %_bindir/%name
@@ -121,6 +122,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Tue Aug 25 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.5-alt1
+- New version.
+
 * Mon Aug 17 2026 Grant Makyan <karonus@altlinux.org> 1.4.4.4-alt2
 - Install udev rules for Wayland support.
 
