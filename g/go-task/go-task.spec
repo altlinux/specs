@@ -1,6 +1,6 @@
 %global import_path github.com/go-task/task
 Name:     go-task
-Version:  3.52.0
+Version:  3.53.1
 Release:  alt1
 
 Summary:  A task runner / simpler Make alternative written in Go
@@ -13,6 +13,8 @@ Source1:   vendor.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+
+Conflicts: task-core
 
 %description
 Task is a task runner / build tool that aims to be simpler and easier to use
@@ -45,6 +47,10 @@ install -Dm 644 completion/zsh/_task %buildroot/%_datadir/zsh/site-functions/_ta
 %_datadir/zsh/site-functions/_task
 
 %changelog
+* Tue Aug 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.53.1-alt1
+- New version 3.53.1.
+- Add Conflicts: task-core (closes: #60262).
+
 * Thu Jul 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.52.0-alt1
 - New version 3.52.0.
 
