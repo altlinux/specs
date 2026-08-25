@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mate-wayland-session
-Version: 1.29.0
+Version: 1.29.1
 Release: alt1
 
 Summary: MATE wayland session manager
@@ -70,6 +70,9 @@ NOCONFIGURE=1 mate-autogen
 %_datadir/wayland-sessions/MATE.desktop
 
 %changelog
+* Tue Aug 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.29.1-alt1
+- New version 1.29.1.
+
 * Thu Aug 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.29.0-alt1
 - New version 1.29.0.
 
