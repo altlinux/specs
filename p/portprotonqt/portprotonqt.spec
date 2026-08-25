@@ -2,10 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
-Summary: A modern GUI for PortProton project
+Summary: Modern GUI for managing and launching games from PortProton and Steam
 
 License: GPL-3.0
 Group: Games/Other
@@ -13,20 +13,10 @@ Url: https://git.linux-gaming.ru/Linux-Gaming/PortProtonQt
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libvulkan-devel
+BuildRequires(pre): meson rpm-build-python3
+BuildRequires: libvulkan-devel libSDL3-devel
 
-Requires: qt6-svg udev pciutils mesa-info qt6-imageformats python3(dbus_fast)
-Requires: libSDL3
-
-# TODO: meta package for portprotonqt-os (System Tab)
-# Requires: udisks2
-# Requires: bluez
-# Requires: upower
-# Requires: NetworkManager-daemon
-# Requires: pulseaudio-utils
-# Requires: python3(qrcode)
+Requires: qt6-svg udev pciutils mesa-info qt6-imageformats python3(dbus_fast) libqt6-multimedia
 
 ExclusiveArch: x86_64
 
@@ -42,6 +32,15 @@ ExclusiveArch: x86_64
 %description
 %summary
 
+%package os
+Group: Games/Other
+Summary: Meta package for portprotonqt-os for use system tabs
+Requires: %name = %EVR
+Requires: udisks2 bluez upower NetworkManager-daemon pulseaudio-utils
+Requires: python3(qrcode)
+%description os
+%summary
+
 %prep
 %setup
 
@@ -53,12 +52,11 @@ ExclusiveArch: x86_64
 %meson_install
 
 bash ./dev-scripts/generate-completions.sh
-
-install -Dm 0644 ./completions/portprotonqt %buildroot%_datadir/bash-completion/completions/portprotonqt
-
-install -Dm 0644 ./completions/portprotonqt.fish %buildroot%_datadir/fish/vendor_completions.d/portprotonqt.fish
-
-install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functions/_portprotonqt
+cd completions
+install -Dm 0644 portprotonqt %buildroot%_datadir/bash-completion/completions/portprotonqt
+install -Dm 0644 portprotonqt.fish %buildroot%_datadir/fish/vendor_completions.d/portprotonqt.fish
+install -Dm 0644 _portprotonqt %buildroot%_datadir/zsh/site-functions/_portprotonqt
+cd -
 
 %find_lang %name
 
@@ -67,12 +65,12 @@ install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functi
 %_bindir/portprotonqt
 %_bindir/vk_gpu_info
 %_desktopdir/%xdg_name.desktop
+%_desktopdir/%xdg_name.log.desktop
+%_desktopdir/%xdg_name.silent.desktop
 %_datadir/mime/packages/%xdg_name.xml
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%_datadir/polkit-1/rules.d/%xdg_name.rules
 %_datadir/portproton/scripts/
 %_datadir/portproton/conf/
-%_datadir/portproton/img/
 %_datadir/bash-completion/completions/portprotonqt
 %_datadir/fish/vendor_completions.d/portprotonqt.fish
 %_datadir/zsh/site-functions/_portprotonqt
@@ -80,7 +78,17 @@ install -Dm 0644 ./completions/_portprotonqt %buildroot%_datadir/zsh/site-functi
 %_udevrulesdir/60-portprotonqt.rules
 %python3_sitelibdir/%name/
 
+%files os
+%_datadir/polkit-1/rules.d/%xdg_name.rules
+%_sysusersdir/portprotonqt.conf
+
 %changelog
+* Tue Aug 25 2026 Mikhail Tergoev <fidel@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+- portprotonqt-os package separated
+- Fixes:
+  + CVE-2026-59678: An Incorrect Authorization vulnerability in portprotonqt-os
+
 * Mon Jul 13 2026 Mikhail Tergoev <fidel@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
