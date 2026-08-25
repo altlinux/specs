@@ -1,7 +1,7 @@
 %define oname sqlparse
 
 Name: python3-module-%oname
-Version: 0.5.5
+Version: 0.6.0
 Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
@@ -15,6 +15,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-furo
+BuildRequires: python3-module-accessible-pygments
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -66,8 +68,8 @@ install -d %buildroot%_man1dir
 install -p -m644 docs/*.1 %buildroot%_man1dir/
 
 %files
-%doc AUTHORS *.rst TODO CHANGELOG docs
-%_bindir/*
+%doc AUTHORS *.md TODO CHANGELOG docs
+%_bindir/sqlformat
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
 
@@ -79,6 +81,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Automatically updated to 0.6.0.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.5-alt1
 - Automatically updated to 0.5.5.
 
