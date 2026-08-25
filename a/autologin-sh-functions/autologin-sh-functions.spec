@@ -1,19 +1,18 @@
 Name: autologin-sh-functions
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: helper functions for autologin setup
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
 
-Url: http://altlinux.org/autologin
+URL: https://altlinux.org/autologin
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -28,6 +27,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 # TODO: multiseat support (see autologin-sh-functions/TODO)?
 
 %changelog
+* Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
+- Add /etc/sysconfig/disable_autologin.flag support.
+
 * Fri Aug 21 2026 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
 - Add plasmalogin support.
 
