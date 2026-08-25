@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 19.2.3
-Release: alt4
+Release: alt5
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1130,6 +1130,12 @@ rm -rf %buildroot%python3_sitelibdir_noarch/cephfs_shell-*.egg-info
 rm -rf %buildroot%_datadir/ceph/mgr/dashboard/ci
 
 %check
+%ifarch aarch64
+# Regression test for GCC PR target/119610: this used to crash while tcmalloc
+# was collecting a libunwind stack trace.
+%_cmake__builddir/bin/ceph-mon --version
+%endif
+
 # run in-tree unittests
 cd build
 ctest %{?_smp_mflags}
@@ -1805,7 +1811,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/ceph-coverage
 %_bindir/ceph-debugpack
 %_bindir/ceph-dedup-tool
-%if_with seastar
+%if %{with seastar}
 %_bindir/crimson-store-nbd
 %endif
 #_bindir/dmclock-tests
@@ -1891,6 +1897,10 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 19.2.3-alt5
+- Work around GCC PR target/119610 on aarch64 (Closes: 59871)
+- Fix build with Boost 1.85 and newer.
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 19.2.3-alt4
 - Backported upstream commit to fix build with Python 3.14.
 
