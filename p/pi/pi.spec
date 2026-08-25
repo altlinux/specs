@@ -2,8 +2,8 @@
 
 Name: pi
 Epoch:1 
-Version: 0.84.2
-Release: alt2
+Version: 0.84.3
+Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
 License: MIT
@@ -15,7 +15,16 @@ Source0: %name-%version.tar
 Source1: %name-%version-node_modules.tar
 Source2: %name-%version-model-data.tar
 Source3: copy-production-tree.mjs
-Patch0: tsconfig-es2024.patch
+Patch0: pi-0.84.3-alt-tsconfig-es2024.patch
+# Vendored model data (Source2) is newer than the tag: cloudflare-ai-gateway
+# lost its openai-completions models, drop the dead api registration.
+Patch1: pi-0.84.3-alt-cloudflare-drop-openai-completions.patch
+# pi is managed by RPM: no online version check, no self-update.
+Patch2: pi-0.84.3-alt-disable-update-check.patch
+# The esbuild bundle is only for npm distribution; we ship the unbundled
+# dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
+# noarch rebuild on other arches.
+Patch3: pi-0.84.3-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -27,7 +36,7 @@ BuildRequires: typescript-go
 BuildRequires: /proc
 
 Requires: node >= 22.19
-Requires: /usr/bin/node
+Requires: ripgrep
 
 # Vendored node_modules: do not generate Requires on bundled modules.
 # nodejs.req would emit npm(@types/node) from hoisted protobufjs.
@@ -50,6 +59,9 @@ It needs only a Node.js runtime at install time.
 %prep
 %setup -a1 -a2
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 export HUSKY=0
@@ -87,6 +99,11 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Tue Aug 25 2026 Anton Farygin <rider@altlinux.org> 1:0.84.3-alt1
+- 0.84.2 -> 0.84.3
+- Disabled online version check and self-update: pi is managed by RPM
+  (override with PI_FORCE_VERSION_CHECK / PI_FORCE_SELF_UPDATE).
+
 * Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 1:0.84.2-alt2
 - Build with system typescript-go (tsgo 7.0.2) instead of vendored native-preview.
 - Target ES2024 so tsgo 7.0.2 accepts /v regexes in packages/tui.
