@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.5
-Release: alt1
+Release: alt2
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -298,6 +298,7 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 	--with-group=%runas \
 	--enable-strip=no \
 	--without-python2 \
+	SYSTEMD_TMPFILES_PROGRAM=%_sbindir/systemd-tmpfiles \
 	%nil
 
 sh %SOURCE104 >>include/config.h
@@ -602,6 +603,11 @@ fi
 %python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Mon Aug 25 2026 Andrey Kovalev <ded@altlinux.org> 2.8.5-alt2
+- Fixed ExecStartPre path to systemd-tmpfiles in systemd units
+  (was the non-existent /usr/bin/systemd-tmpfiles autoconf fallback)
+  (closes: #59300)
+
 * Tue May 26 2026 Andrey Kovalev <ded@altlinux.org> 2.8.5-alt1
 - Updated to upstream version 2.8.5.
 
