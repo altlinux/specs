@@ -1,10 +1,10 @@
 %define oname sqlparse
 
-%def_without docs
+%def_with docs
 
 Name: python3-module-%oname
 Version: 0.6.0
-Release: alt2
+Release: alt3
 Summary: Non-validating SQL parser
 License: BSD
 Group: Development/Python3
@@ -93,6 +93,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %endif
 
 %changelog
+* Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt3
+- Built with docs again.
+
 * Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
 - Add docs knob, built without docs.
 
