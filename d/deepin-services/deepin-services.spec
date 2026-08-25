@@ -2,9 +2,10 @@
 %def_without ipwatchd
 
 %define repo dde-services
+%define _libexecdir %_prefix/libexec
 
 Name: deepin-services
-Version: 1.0.39
+Version: 1.0.41
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -61,6 +62,10 @@ export AR="llvm-ar"
 %doc LICENSE README.md debian/changelog
 %_bindir/dde-shortcut-tool
 %_bindir/extract_shortcuts_i18n
+%dir %_libexecdir/dde-services/
+%dir %_libexecdir/dde-services/keybinding/
+%_libexecdir/dde-services/keybinding/camera-switch
+%_libexecdir/dde-services/keybinding/toggle-grand-search
 %dir %_libdir/deepin-service-manager/
 %_libdir/deepin-service-manager/libplugin-qt-thememanager.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpaperslideshow.so
@@ -68,6 +73,7 @@ export AR="llvm-ar"
 %_libdir/deepin-service-manager/libplugin-dde-shortcut.so
 %_libdir/deepin-service-manager/libplugin-power-session.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpapercache.so
+%_libdir/deepin-service-manager/libplugin-ambient-brightness.so
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/system/
 %_datadir/deepin-service-manager/system/plugin-qt-wallpapercache.json
@@ -89,6 +95,7 @@ export AR="llvm-ar"
 %_datadir/deepin-service-manager/user/plugin-dde-xsettings.json
 %_datadir/deepin-service-manager/user/plugin-dde-shortcut.json
 %_datadir/deepin-service-manager/user/plugin-power-session.json
+%_datadir/deepin-service-manager/user/plugin-ambient-brightness.json
 %_datadir/dbus-1/services/org.deepin.dde.XSettings1.service
 %_datadir/dbus-1/services/org.deepin.dde.Power1.service
 %_datadir/dbus-1/system-services/org.deepin.dde.ImageBlur1.service
@@ -114,6 +121,7 @@ export AR="llvm-ar"
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
+%_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.dde.daemon.ambient-brightness.json
 %dir %_datadir/dsg/configs/org.deepin.dde.keybinding/
 %_datadir/dsg/configs/org.deepin.dde.keybinding/org.deepin.shortcut.json
 %_datadir/dsg/configs/org.deepin.dde.keybinding/org.deepin.dde.keybinding*/
@@ -121,6 +129,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeShortcutI18n/DdeShortcutI18nConfig.cmake
 
 %changelog
+* Tue Aug 25 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt1
+- New version 1.0.41.
+
 * Fri Aug 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.39-alt1
 - New version 1.0.39.
 
