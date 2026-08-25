@@ -1,7 +1,7 @@
 %define distro sp-server-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt15
+Release: alt16
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -104,6 +104,10 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files net-eth-stage3
 
 %changelog
+* Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt16
+- preinstall.d: add 20-setup-sysconfig-flag.
+- Remove postinstall.d/30-gen-host-keys.sh.
+
 * Fri Jun 26 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt15
 - stage3: Add missing dependency on alterator-notes.
 

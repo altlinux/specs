@@ -1,7 +1,7 @@
 %define distro sp-workstation-se
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt11
+Release: alt12
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -94,6 +94,10 @@ cp %_datadir/alterator/applications/officer.desktop \
 %files stage3
 
 %changelog
+* Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt12
+- preinstall.d: add 20-setup-sysconfig-flag.
+- Remove postinstall.d/30-gen-host-keys.sh.
+
 * Fri Jun 26 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt11
 - stage3: Add missing dependency on alterator-notes.
 
