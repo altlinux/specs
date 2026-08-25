@@ -4,7 +4,7 @@
 
 Name: contour-terminal
 Version: 0.7.0.8982
-Release: alt1
+Release: alt2
 
 Summary: Modern C++ Terminal Emulator
 License: Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires: libunicode-devel
 BuildRequires: libboxed-cpp-devel
 BuildRequires: libreflection-cpp-devel
 BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Qml)
 BuildRequires: pkgconfig(Qt6Multimedia)
@@ -93,6 +94,9 @@ sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-nc
 %_datadir/metainfo/org.contourterminal.Contour.metainfo.xml
 
 %changelog
+* Tue Aug 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0.8982-alt2
+- Build with libssh2.
+
 * Mon Aug 24 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0.8982-alt1
 - Initial build for Sisyphus
 
