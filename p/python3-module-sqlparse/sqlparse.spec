@@ -1,8 +1,10 @@
 %define oname sqlparse
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: Non-validating SQL parser
 License: BSD
 Group: Development/Python3
@@ -14,9 +16,11 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-hatchling
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-furo
 BuildRequires: python3-module-accessible-pygments
+%endif
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -25,6 +29,7 @@ Obsoletes: python-module-%oname
 sqlparse is a non-validating SQL parser module. It provides support for
 parsing, splitting and formatting SQL statements.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
@@ -45,12 +50,15 @@ sqlparse is a non-validating SQL parser module. It provides support for
 parsing, splitting and formatting SQL statements.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
+%endif
 
 %build
 %pyproject_build
@@ -58,6 +66,7 @@ ln -s ../objects.inv docs/source/
 %install
 %pyproject_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
@@ -66,11 +75,13 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 install -d %buildroot%_man1dir
 install -p -m644 docs/*.1 %buildroot%_man1dir/
+%endif
 
 %files
 %doc AUTHORS *.md TODO CHANGELOG docs
 %_bindir/sqlformat
 %python3_sitelibdir/*
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -79,8 +90,12 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %files docs
 %doc docs/build/html
 %_man1dir/*
+%endif
 
 %changelog
+* Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2
+- Add docs knob, built without docs.
+
 * Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Automatically updated to 0.6.0.
 
