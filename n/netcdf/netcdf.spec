@@ -9,7 +9,7 @@
 %endif
 
 Name: netcdf
-Version: 4.10.0
+Version: 4.10.1
 Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: NetCDF
@@ -222,6 +222,9 @@ rm -f %buildroot%_libdir/hdf5/plugin/*.la
 %_libdir/hdf5/plugin/lib__ncz*.so
 
 %changelog
+* Tue Aug 25 2026 Anton Farygin <rider@altlinux.org> 4.10.1-alt1
+- 4.10.0 -> 4.10.1
+
 * Sun Jun 14 2026 Anton Farygin <rider@altlinux.org> 4.10.0-alt1
 - 4.9.3 -> 4.10.0
 
