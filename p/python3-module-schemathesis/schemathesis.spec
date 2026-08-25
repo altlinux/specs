@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 4.25.1
+Version: 4.25.2
 Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
@@ -73,6 +73,9 @@ test/
 %_bindir/st
 
 %changelog
+* Tue Aug 25 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.25.2-alt1
+- New version (4.25.2).
+
 * Mon Aug 24 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.25.1-alt1
 - New version (4.25.1).
 
