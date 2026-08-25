@@ -2,12 +2,12 @@
 
 %define _unpackaged_files_terminate_build 1
 
-# git rev-parse v0.15.2^{commit}
-%define git_commit 942c2fe54a75ac6353d3099eeebff33b6b8fe3f0
+# git rev-parse v0.16.1^{commit}
+%define git_commit 791dfcc63ced7a6b3e869131eae75e645150fff0
 
 Name: metallb
-Version: 0.15.2
-Release: alt2
+Version: 0.16.1
+Release: alt1
 
 Summary: A network load-balancer implementation for Kubernetes using standard routing protocols
 License: Apache-2.0
@@ -49,6 +49,7 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
+# strip version
 # 0.15.2 -> v0.15
 GIT_BRANCH='v%(ver=%version; echo "${ver%.*}")'
 
@@ -80,7 +81,7 @@ export IGNORE_SOURCES=1
 install -pD -m0755 frr-tools/reloader/frr-reloader.sh %buildroot%_bindir/metallb-frr-reloader.sh
 
 %files
-%doc *.md
+%doc *.md LICENSE
 %_bindir/metallb-controller
 %_bindir/metallb-speaker
 %_bindir/metallb-configmaptocrs
@@ -89,6 +90,9 @@ install -pD -m0755 frr-tools/reloader/frr-reloader.sh %buildroot%_bindir/metallb
 %_bindir/metallb-frr-reloader.sh
 
 %changelog
+* Tue Aug 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.16.1-alt1
+- New version (0.16.1).
+
 * Sat Nov 01 2025 Alexander Stepchenko <geochip@altlinux.org> 0.15.2-alt2
 - Prefix all the executables with "metallb-".
 
