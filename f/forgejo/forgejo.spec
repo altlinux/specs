@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 15.0.6
+Version: 15.0.7
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -109,6 +109,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Aug 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 15.0.7-alt1
+- 15.0.7.
+
 * Fri Jul 31 2026 Maxim Slipenko <maks1ms@altlinux.org> 15.0.6-alt1
 - 15.0.6.
 
