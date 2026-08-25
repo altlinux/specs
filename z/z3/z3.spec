@@ -1,9 +1,12 @@
 %define pypi_name z3-solver
+# CMake SOVERSION is ${Z3_VERSION_MAJOR}.${Z3_VERSION_MINOR}
+%define sover 5.1
+%define libz3 libz3_%sover
 %set_verify_elf_method strict
 
 Name:     z3
-Version:  4.16.0
-Release:  alt2
+Version:  5.1.0
+Release:  alt1
 
 Summary:  High-performance theorem prover (SMT solver)
 
@@ -13,8 +16,6 @@ URL:      https://z3prover.github.io
 VCS:      https://github.com/Z3Prover/z3
 
 Source:   %name-%version.tar
-
-Patch:    python-use-non-devel-so.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-cmake
@@ -28,11 +29,12 @@ BuildRequires: python3-module-setuptools
 Z3 is a high-performance theorem prover being developed at Microsoft
 Research.
 
-%package -n lib%name
+%package -n %libz3
 Summary: Shared library of %name
 Group: System/Libraries
+Obsoletes: libz3 < %EVR
 
-%description -n lib%name
+%description -n %libz3
 Z3 is a high-performance theorem prover being developed at Microsoft
 Research.
 
@@ -41,7 +43,7 @@ This package contains shared library of %name.
 %package -n lib%name-devel
 Summary: Development files of %name
 Group: Development/C++
-Requires: lib%name = %EVR
+Requires: %libz3 = %EVR
 
 %description -n lib%name-devel
 Z3 is a high-performance theorem prover being developed at Microsoft
@@ -53,7 +55,7 @@ This package contains development files of %name.
 Summary: Python bindings of %name
 Group: Development/Python3
 BuildArch: noarch
-Requires: lib%name = %EVR
+Requires: %libz3 = %EVR
 %py3_provides %name
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -66,7 +68,6 @@ This package contains Python bindings of %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -86,6 +87,8 @@ This package contains Python bindings of %name.
 
 %install
 %cmakeinstall_std
+# Do not ship libz3 inside the noarch Python module; load the system library.
+rm -f %buildroot%python3_sitelibdir_noarch/%name/libz3.so*
 
 %check
 set -o pipefail
@@ -100,8 +103,9 @@ python3 examples/python/example.py
 %doc LICENSE.txt README.md RELEASE_NOTES.md
 %_bindir/%name
 
-%files -n lib%name
-%_libdir/lib%name.so.*
+%files -n %libz3
+%_libdir/libz3.so.%sover
+%_libdir/libz3.so.%sover.*
 
 %files -n lib%name-devel
 %_includedir/%{name}*.h
@@ -113,6 +117,10 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 5.1.0-alt1
+- 4.16.0 -> 5.1.0
+- packaged shared library as libz3_5.1 (SharedLibsPolicy)
+
 * Wed Mar 11 2026 Grigory Ustinov <grenka@altlinux.org> 4.16.0-alt2
 - Fixed package URL.
 - Built without docs.
