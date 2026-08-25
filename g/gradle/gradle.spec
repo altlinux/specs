@@ -9,7 +9,7 @@
 
 Name: gradle
 Version: 9.7.1
-Release: alt1
+Release: alt2
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
@@ -111,14 +111,10 @@ COMMITHASH=$(./commit.sh)
   #
 
 %install
-install -Dm 644 dist/lib/*.jar \
-  -t %buildroot%_datadir/gradle/lib/
-
-install -Dm 644 dist/lib/plugins/*.jar \
-  -t %buildroot%_datadir/gradle/lib/plugins/
-
-install -Dm 644 dist/lib/agents/gradle-instrumentation-agent-%version.jar \
-  -t %buildroot%_datadir/gradle/lib/agents/
+install -d %buildroot%_datadir/gradle/lib
+cp -a dist/lib/. %buildroot%_datadir/gradle/lib/
+find %buildroot%_datadir/gradle/lib -type d -exec chmod 755 {} +
+find %buildroot%_datadir/gradle/lib -type f -exec chmod 644 {} +
 
 install -Dm 755 dist/bin/gradle \
   -t %buildroot%_datadir/gradle/bin/
@@ -133,6 +129,9 @@ ln -s %_datadir/gradle/bin/gradle \
 %_datadir/gradle/
 
 %changelog
+* Tue Aug 25 2026 Ivan Khanas <xeno@altlinux.org> 9.7.1-alt2
+- Start to package descriptors.
+
 * Fri Aug 21 2026 Ivan Khanas <xeno@altlinux.org> 9.7.1-alt1
 - New version.
 
