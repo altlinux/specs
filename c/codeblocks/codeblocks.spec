@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 25.03
-Release: alt3
+Release: alt4
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -22,6 +22,7 @@ Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-add-shebang-to-gdb-fortran-extension.patch
 Patch5: %name-%version-fix-empty-arduino-page.patch
 Patch6: %name-%version-alt-loongarch64.patch
+Patch7: %name-%version-boost1.89.patch
 
 Requires: automake >= 1.7 libwxGTK3.2 gcc gcc-c++ gdb xterm gamin mythes-en
 
@@ -79,6 +80,7 @@ cp %SOURCE4 .
 %patch3 -p2
 %patch5 -p2
 %patch6 -p1
+%patch7 -p1
 
 %ifarch %e2k
 sed -i 's/#elif defined(__x86_64__)/& || defined(__e2k__)/' \
@@ -307,6 +309,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Tue Aug 25 2026 Grigory Ustinov <grenka@altlinux.org> 25.03-alt4
+- Fixed FTBFS with new boost.
+
 * Tue Jun 10 2025 Ivan A. Melnikov <iv@altlinux.org> 25.03-alt3
 - NMU: Re-apply patch for loongarch64 support.
 
