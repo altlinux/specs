@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 11.1
-Release: alt5
+Version: 11.2
+Release: alt1
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -72,6 +72,9 @@ echo "use_edition=yes" >>%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Tue Aug 25 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.2-alt1
+- 95-virt-env.sh: Add VM support for the edition_ipa group
+
 * Wed Mar 18 2026 Michael Shigorin <mike@altlinux.org> 11.1-alt5
 - scripts: don't fail for no good reason
 
