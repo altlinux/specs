@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 Epoch:3
 
@@ -181,6 +181,9 @@ fi
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sun Aug 23 2026 Dmitriy Khanzhin <jinn@altlinux.org> 3:4.1.0-alt1
+- 4.1.0
+
 * Wed Jan 07 2026 Dmitriy Khanzhin <jinn@altlinux.org> 3:4.0.0-alt1
 - 4.0.0
 
