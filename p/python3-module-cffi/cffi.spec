@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 Summary: Foreign Function Interface for Python calling C code
 License: MIT
@@ -53,6 +53,9 @@ Foreign Function Interface for Python calling C code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 2.1.0 -> 2.1.1
+
 * Tue Jul 07 2026 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.0 -> 2.1.0
 
