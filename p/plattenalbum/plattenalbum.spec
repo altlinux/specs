@@ -2,7 +2,7 @@
 %define rdn_name de.wagnermartin.Plattenalbum
 
 Name: plattenalbum
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 Summary: Connect to your music
 License: GPL-3.0
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rpm-build-python3
-BuildRequires: python3-module-mpd python3-module-pygobject3
+BuildRequires: python3-module-pygobject3
 BuildRequires: libgio gtk4-update-icon-cache
 
 Requires: libgtk4-gir >= 4.18
@@ -44,10 +44,13 @@ managing playlists.
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/locale/*/LC_MESSAGES/%rdn_name.mo
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README* NEWS
+%doc README*
 
 
 %changelog
+* Tue Aug 25 2026 Andrey Kovalev <ded@altlinux.org> 2.6.0-alt1
+- Updated to upstream version 2.6.0.
+
 * Fri Apr 03 2026 Andrey Kovalev <ded@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
