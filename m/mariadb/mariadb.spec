@@ -49,8 +49,12 @@
 %def_with cracklib
 %def_with jemalloc
 
+%ifnarch %ix86
+%def_with duckdb
+%endif
+
 Name: mariadb
-Version: 12.3.2
+Version: 12.3.3
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -96,18 +100,20 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 # git submodules
-Source101: libmariadb_v3.4.9.tar
+Source101: libmariadb_v3.4.10.tar
 Source102: rocksdb_v6.29.5.tar
-Source103: wsrep-lib_20260209.tar
-Source104: columnstore_25.10.4-1.tar
+Source103: wsrep-lib_20260820.tar
+Source104: columnstore_25.10.6-1.tar
 Source105: libmarias3_3.2.0.tar
-Source106: fmt_12.1.0.tar
+Source106: fmt_12.2.0.tar
+Source107: duckdb.tar
 
 Patch0: %name-%version.patch
 
 # ALTLinux
 Patch1: mariadb-10.6.8-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
+Patch3: mariadb-12.3.3-fix-build-32bit.patch
 Patch4: mariadb-12.3.2-alt-client.patch
 Patch7: mariadb-10.3.8-alt-config-libs.patch
 
@@ -117,7 +123,8 @@ Patch32: mariadb-basedir.patch
 
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
-Patch104: mariadb-11.8.6-disable-download-fmt.patch
+Patch104: mariadb-12.3.3-disable-download-fmt.patch
+Patch105: mariadb-12.3.3-use-local-duckdb.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -264,6 +271,14 @@ Conflicts: rocksdb-tools
 
 %description rocksdb-engine
 The RocksDB storage engine is used for high performance servers on SSD drives.
+
+%package duckdb-engine
+Summary: DuckDB Storage Engine for MariaDB
+Group: Databases
+Requires: %name-server = %EVR
+
+%description duckdb-engine
+A pluggable storage engine that brings DuckDB's columnar analytical engine inside MariaDB Server
 
 %package cracklib-password-check
 Summary: The password strength checking plugin
@@ -416,10 +431,15 @@ tar -xf %SOURCE104 -C storage/columnstore/columnstore
 tar -xf %SOURCE105 -C storage/maria/libmarias3
 mkdir -p extra/libfmt/src/libfmt
 tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
+mkdir -p storage/duckdb/third_parties/duckdb
+tar -xf %SOURCE107 -C storage/duckdb/third_parties/duckdb
+
+patch -p1 -d ./storage/duckdb/third_parties/duckdb < ./storage/duckdb/patches/duckdb-pr24061-setval.diff
 
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1 -d ./extra/libfmt/src/libfmt
 %patch4 -p1
 %patch7 -p1
 
@@ -429,6 +449,7 @@ tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
+%patch105 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -818,6 +839,7 @@ fi
 %{?_with_cassandra:%exclude %prefix/%plugindir/ha_cassandra.so}
 %{?_with_s3:%exclude %prefix/%plugindir/ha_s3.so}
 %{?_with_gssapi:%exclude %prefix/%plugindir/auth_gssapi_client.so}
+%{?_with_duckdb:%exclude %prefix/%plugindir/ha_duckdb.so}
 %exclude %prefix/%plugindir/client_ed25519.so
 %exclude %prefix/%plugindir/dialog.so
 %exclude %prefix/%plugindir/mysql_clear_password.so
@@ -935,6 +957,12 @@ fi
 %_man1dir/aria_s3_copy.1*
 %config(noreplace) %_sysconfdir/my.cnf.d/s3.cnf
 %prefix/%plugindir/ha_s3.so
+%endif
+
+%if_with duckdb
+%files duckdb-engine
+%config(noreplace) %_sysconfdir/my.cnf.d/duckdb.cnf
+%prefix/%plugindir/ha_duckdb.so
 %endif
 
 %files common
@@ -1113,6 +1141,16 @@ fi
 %endif
 
 %changelog
+* Tue Aug 25 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt1
+- 12.3.3 (Fixes CVE-2026-61081, CVE-2026-60585, CVE-2026-60331,
+                CVE-2026-60747, CVE-2026-47023, CVE-2026-60184)
+- Update libmariadb to v3.4.10
+- Update columnstore to 25.10.6-1
+- Update fmt to 12.2.0
+- Update wsrep-lib to 20260820
+- Add duckdb plugin
+- Add mariadb-12.3.3-fix-build-32bit.patch
+
 * Thu Jun 04 2026 Alexei Takaseev <taf@altlinux.org> 12.3.2-alt1
 - 12.3.2
 - Update mariadb-*-alt-client.patch
