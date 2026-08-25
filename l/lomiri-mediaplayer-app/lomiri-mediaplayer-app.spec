@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-mediaplayer-app
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Media Player application for Ubuntu Touch devices
@@ -108,5 +108,8 @@ Media Player App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-mediaplayer-app.mo
 
 %changelog
+* Tue Aug 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus
