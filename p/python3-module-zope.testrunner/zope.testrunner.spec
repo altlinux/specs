@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.2
-Release: alt1.1
+Version: 8.3
+Release: alt1
 Summary: Zope testrunner script
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,22 +15,21 @@ Url: https://pypi.org/project/zope.testrunner/
 Vcs: https://github.com/zopefoundation/zope.testrunner.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 Conflicts: python-module-%pypi_name
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope-exceptions
-BuildRequires: python3-module-zope-interface
-BuildRequires: python3-module-zope-testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -39,6 +38,8 @@ This package provides a flexible test runner with layer support.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -58,8 +59,8 @@ cp -al %buildroot%_bindir/zope-testrunner{,3}
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 8.2-alt1.1
-- Demodernized packaging.
+* Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 8.3-alt1
+- 8.2 -> 8.3
 
 * Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 8.2-alt1
 - 8.1 -> 8.2.
