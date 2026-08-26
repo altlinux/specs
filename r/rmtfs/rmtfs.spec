@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rmtfs
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: Qualcomm Remote Filesystem Service Implementation
 License: BSD-3-Clause
@@ -31,7 +31,14 @@ BuildRequires: pkgconfig(qrtr)
 %files
 %_bindir/%name
 %_unitdir/*.service
+%_udevrulesdir/%name.rules
 
 %changelog
+* Sat Aug 15 2026 Vasiliy Doylov <neko@altlinux.org> 1.3-alt1
+- New version 1.3
+- Service: Only start if dev node present
+- Start service after qcom_rmtfs_mem* device is available
+- Add OnePlus/Oppo OEM NV partition mappings
+
 * Tue Apr 14 2026 Vasiliy Doylov <neko@altlinux.org> 1.2-alt1
 - Initial package

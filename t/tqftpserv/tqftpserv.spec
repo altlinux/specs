@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tqftpserv
-Version: 1.1.1
+Version: 1.2
 Release: alt1
 Summary: Trivial File Transfer Protocol server over AF_QIPCRTR
 License: BSD-3-Clause
@@ -44,5 +44,13 @@ Request) and WRQ (Write Request) messages which read and write files.
 %_unitdir/*.service
 
 %changelog
+* Sat Aug 15 2026 Vasiliy Doylov <neko@altlinux.org> 1.2-alt1
+- Sanity checks and cleanups
+- TFTP: ACK short DATA packets in WRQ window mode
+- Translate: add persistent path for read-write and fix read-only search path
+- Translate: verify asprintf return value
+- Translate: support /readonly/vendor/firmware/ paths
+- Fix: add path validation in tqftpserv.c
+
 * Tue Apr 14 2026 Vasiliy Doylov <neko@altlinux.org> 1.1.1-alt1
 - Initial package

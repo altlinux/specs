@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: startup-config-qualcomm
-Version: 3
+Version: 4
 Release: alt1
 Summary: Startup script for qualcomm
 License: MIT
@@ -41,6 +41,9 @@ install -m 0644 90-setup-userdata-subparts.rules %buildroot%_udevdir/initramfs-r
 %_udevdir/initramfs-rules.d/90-setup-userdata-subparts.rules
 
 %changelog
+* Sat Aug 15 2026 Vasiliy Doylov <neko@altlinux.org> 4-alt1
+- Change q6voiced config path.
+
 * Thu Jul 23 2026 Vasiliy Doylov <neko@altlinux.org> 3-alt1
 - Add configure-subpartitions service.
 - Add nothing-spacewar q6voiced configuration.

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: q6voiced
-Version: 0.2.1
+Version: 0.3.1
 Release: alt1
 Summary: Userspace QDSP6 voice driver daemon listing on oFono/ModemManager
 License: MIT
@@ -11,7 +11,7 @@ VCS: https://gitlab.postmarketos.org/postmarketOS/q6voiced.git
 ExclusiveArch: aarch64
 
 Source: %name-%version.tar
-Patch0: fix-unit.patch
+Patch0: 0.3.1-neko-fix-unit.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -30,10 +30,10 @@ set up appropriately).
 
 %prep
 %setup
-%patch -p1
+%autopatch -p 1
 
 %build
-%meson
+%meson -D openrc=disabled
 %meson_build -v
 
 %install
@@ -45,5 +45,9 @@ set up appropriately).
 %_unitdir/%name.service
 
 %changelog
+* Sat Aug 15 2026 Vasiliy Doylov <neko@altlinux.org> 0.3.1-alt1
+- New version 0.3.1
+- Configuration file path changed
+
 * Mon Apr 20 2026 Vasiliy Doylov <neko@altlinux.org> 0.2.1-alt1
 - Initial package
