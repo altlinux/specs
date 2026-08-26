@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 
 Summary: Workflow orchestration and management
@@ -96,5 +96,8 @@ export TZ=UTC
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 3.8.4-alt1
+- Updated to 3.8.4.
+
 * Thu Aug 20 2026 Anton Zhukharev <ancieg@altlinux.org> 3.8.3-alt1
 - Packaged for ALT Sisyphus.
