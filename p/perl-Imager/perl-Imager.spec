@@ -2,7 +2,7 @@
 
 Name: perl-Imager
 Version: 1.034
-Release: alt1
+Release: alt2
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -72,6 +72,14 @@ IM_SUPPRESS_PROM=1 \
 %exclude /.perl.req
 
 %changelog
+* Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 1.034-alt2
+- Fixes:
+  * CVE-2026-73639: d973bd7e PNG: fix mishandling of a volatile
+    alias for a parameter
+  * CVE-2026-73638: 48ba8ac0 EXIF: add missing checks for the start
+    of an ifd entry offset; 6f1fd003 EXIF: add more EXIF limit
+    checks and tests
+
 * Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 1.034-alt1
 - 1.033 -> 1.034
 
