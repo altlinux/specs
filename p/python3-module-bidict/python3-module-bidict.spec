@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Summary: The bidirectional mapping library for Python
@@ -55,6 +55,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.24.1-alt1
+- 0.24.0 -> 0.24.1
+
 * Tue Aug 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.24.0-alt1
 - 0.23.1 -> 0.24.0
 
