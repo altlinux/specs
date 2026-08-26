@@ -1,7 +1,7 @@
 %define gitrev          b9627fff
 
 Name:    wal-g
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: WAL-G is an archival restoration tool for PostgreSQL.
@@ -48,5 +48,8 @@ install -p -m 755 -D main/pg/wal-g %buildroot%_bindir/wal-g
 %_bindir/*
 
 %changelog
+* Wed Aug 26 2026 Alexei Takaseev <taf@altlinux.org> 3.0.9-alt1
+- 3.0.9
+
 * Wed Jun 24 2026 Alexei Takaseev <taf@altlinux.org> 3.0.8-alt1
 - Initial build for c10f1
