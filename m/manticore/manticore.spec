@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: manticore
-Version: 17.5.1
+Version: 29.0.2
 Release: alt1
 
 Summary: Manticore full-text search server
@@ -20,6 +20,9 @@ Source2: %name-files-%version.tar
 
 Patch1: manticore-system-xxhash-pkgconfig.patch
 Patch2: manticore-uni-algo-no-freebsd-ifdef.patch
+Patch3: manticore-system-columnar.patch
+Patch4: manticore-gcc15-sortergroup-access.patch
+Patch5: manticore-boost191-process-environment.patch
 
 Conflicts: mnogosearch
 Conflicts: sphinx
@@ -31,7 +34,7 @@ BuildRequires: boost-context-devel boost-filesystem-devel boost-asio-devel boost
 BuildRequires: libexpat-devel libmysqlclient-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
 BuildRequires: nlohmann-json-devel libuni-algo-devel cctz-devel libxxhash-devel libzstd-devel libcurl-devel
 BuildRequires: libicu-devel
-BuildRequires: libmanticore-columnar-devel >= 10.2.0
+BuildRequires: libmanticore-columnar-devel >= 13.9.0
 BuildRequires: libroaring-devel
 
 BuildRequires(pre): rpm-macros-cmake
@@ -82,6 +85,9 @@ Manticore Search 3.x format.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 subst 's|#define VERNUMBERS "0.0.0"|#define VERNUMBERS "%version"|' src/sphinxversion.h.in
 subst "s|.*Boost_USE_STATIC_LIBS ON.*||" src/CMakeLists.txt
 subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" src/CMakeLists.txt
@@ -165,6 +171,9 @@ tar xfv %SOURCE2
 %_bindir/index_converter
 
 %changelog
+* Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 29.0.2-alt1
+- new version 29.0.2
+
 * Tue Mar 31 2026 Vitaly Lipatov <lav@altlinux.ru> 17.5.1-alt1
 - new version (17.5.1)
 - set correct version via VERNUMBERS
