@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.13.0
+Version: 140.14.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -37,6 +37,7 @@ Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
 Patch005: 0005-firefox-140-glslopt-once-flag-libc.patch
 Patch006: 0006-firefox-140-fix-sys-seccomp-glibc.patch
+Patch007: 0007-MOZ-bug-2053518-Rust-target-detection-fails-to-translate-1.98.patch
 Patch100: 0100-firefox-140.13.0-python3.14-mach-ast.patch
 Patch101: 0101-firefox-140-python3.14-mozbuild-reader.patch
 Patch102: 0102-firefox-140-python3.14-jsonschema.patch
@@ -472,6 +473,41 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Aug 26 2026 Pavel Vasenkov <pav@altlinux.org> 140.14.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-74934 Site isolation issue in the Graphics: CanvasWebGL component
+  + CVE-2026-74935 Privilege escalation in the DOM: Networking component
+  + CVE-2026-74936 Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-74939 Privilege escalation in the DOM: Navigation component
+  + CVE-2026-74940 Use-after-free in the Graphics: Text component
+  + CVE-2026-74941 Privilege escalation in the Graphics: CanvasWebGL component
+  + CVE-2026-74942 Privilege escalation in the Remote Settings Client component
+  + CVE-2026-74943 Use-after-free in the Graphics: ImageLib component
+  + CVE-2026-74944 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-74945 Information disclosure in the Graphics: Text component
+  + CVE-2026-74946 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-74948 Information disclosure in the Graphics component
+  + CVE-2026-74953 Privilege escalation in the Networking: Cookies component
+  + CVE-2026-74957 Mitigation bypass in the Safe Browsing component
+  + CVE-2026-74959 Mitigation bypass in the Storage: Cache API component
+  + CVE-2026-74960 Site isolation issue in the WebExtensions component
+  + CVE-2026-74962 Site isolation issue in the Networking: Cookies component
+  + CVE-2026-74963 Same-origin policy bypass in the Networking: Cookies component
+  + CVE-2026-74964 Integer overflow in the Graphics component
+  + CVE-2026-74965 Privilege escalation in the Shell Integration component
+  + CVE-2026-74967 Same-origin policy bypass in the Audio/Video: Playback component
+  + CVE-2026-74969 Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-74971 Information disclosure in the DOM: UI Events & Focus Handling component
+  + CVE-2026-74972 Information disclosure in the DOM: Push Subscriptions component
+  + CVE-2026-74949 Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-74973 Race condition, use-after-free in the Graphics component
+  + CVE-2026-74974 Same-origin policy bypass in the Graphics: ImageLib component
+  + CVE-2026-74976 JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-74983 Mitigation bypass in the Data Loss Prevention component
+  + CVE-2026-74987 Internally found bugs fixed in Firefox ESR 140.14, Firefox ESR 153.1 and Firefox 154
+  + CVE-2026-74990 Internally found bugs fixed in Firefox ESR 115.39, Firefox ESR 140.14, Firefox ESR 153.1 and Firefox 154
+
 * Wed Jul 29 2026 Pavel Vasenkov <pav@altlinux.org> 140.13.0-alt1
 - New ESR version.
 - Security fixes:
