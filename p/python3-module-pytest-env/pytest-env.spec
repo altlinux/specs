@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
-Release: alt1.1
+Version: 1.7.0
+Release: alt1
 Summary: py.test plugin that allows you to add environment variables
 License: MIT
 Group: Development/Python3
@@ -14,19 +14,16 @@ Url: https://pypi.org/project/pytest-env
 Vcs: https://github.com/pytest-dev/pytest-env
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-BuildRequires: python3-module-hatch-vcs
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-python-dotenv
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -36,14 +33,12 @@ pytest.ini or pyproject.toml file.
 %prep
 %setup
 %autopatch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -59,8 +54,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1.1
-- Demodernized packaging.
+* Wed Aug 26 2026 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.0 -> 1.7.0
 
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.0 -> 1.6.0.
