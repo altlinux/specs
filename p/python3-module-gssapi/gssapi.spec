@@ -8,7 +8,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 Summary: Python GSSAPI Wrapper
 License: ISC
@@ -65,6 +65,9 @@ ENDUNITTEST
 %exclude %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Wed Aug 26 2026 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
+- 1.11.1 -> 1.12.0
+
 * Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 1.11.1-alt1
 - 1.10.1 -> 1.11.1.
 
