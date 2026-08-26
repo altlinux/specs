@@ -1,19 +1,19 @@
 %define        _unpackaged_files_terminate_build 1
 
-Name:          geogram
-Version:       1.9.9.21.2
-Release:       alt0.1
-Summary:       Geogram library by INRIA
-License:       BSD-3-Clause
-Group:         Sciences/Mathematics
-Url:           https://brunolevy.github.io/geogram/
-Vcs:           https://github.com/BrunoLevy/geogram.git
-
 %ifarch loongarch64
 %def_disable legacy_numeric
 %else
 %def_enable legacy_numeric
 %endif
+
+Name:          geogram
+Version:       1.10.0
+Release:       alt1
+Summary:       Geogram library by INRIA
+License:       BSD-3-Clause
+Group:         Sciences/Mathematics
+Url:           https://brunolevy.github.io/geogram/
+Vcs:           https://github.com/BrunoLevy/geogram.git
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
@@ -26,7 +26,7 @@ BuildRequires: liblua5.3-devel
 #BuildRequires: libhlbfgs-devel
 BuildRequires: libglfw3-devel
 BuildRequires: libdnet-devel
-BuildRequires: libgomp14-devel
+BuildRequires: libgomp-devel
 BuildRequires: libGLU-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libXcursor-devel
@@ -39,6 +39,7 @@ BuildRequires: libImGuiColorTextEdit-devel
 BuildRequires: librply-devel
 BuildRequires: libmeshb-devel
 BuildRequires: amgcl-devel
+BuildRequires: tbb-devel
 BuildRequires: libxatlas-devel
 BuildRequires: libtetgen-devel
 BuildRequires: libtriangle-devel
@@ -89,7 +90,7 @@ Requires:      libtriangle-devel
 Requires:      liblua5.3-devel
 Requires:      libglfw3-devel
 Requires:      libdnet-devel
-Requires:      libgomp13-devel
+Requires:      libgomp-devel
 Requires:      libGLU-devel
 Requires:      libXxf86vm-devel
 Requires:      libXcursor-devel
@@ -179,6 +180,7 @@ Transport in 3d that scales up to 1 million Dirac masses.
        -DVORPALINE_VERSION_RC:BOOL=OFF \
        -DGEOGRAM_WITH_LUA:BOOL=OFF \
        -DGEOGRAM_WITH_THIRD_PARTIES:BOOL=OFF \
+       -DGEOGRAM_WITH_TBB=ON \
        -DCMAKE_INSTALL_DOCDIR=%_docdir/%name \
 %if_enabled legacy_numeric
        -DGEOGRAM_WITH_LEGACY_NUMERICS:BOOL=ON \
@@ -226,6 +228,9 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %_libdir/lib%{name}_gfx*.so
 
 %changelog
+* Sat Aug 08 2026 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
+- ^ 1.9.9p21.2 -> 1.10.0
+
 * Mon May 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.9.9.21.2-alt0.1
 - ^ 1.9.1p2 -> 1.9.9p21.2
 
