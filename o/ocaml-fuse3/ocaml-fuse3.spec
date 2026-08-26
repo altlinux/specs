@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-fuse3
-Version: 3.10.0
-Release: alt2
+Version: 3.10.0.1
+Release: alt1
 Summary: OCaml bindings for FUSE 3
 Group: Development/ML
 License: LGPL-2.1-only
@@ -58,6 +58,9 @@ Development files for ocaml-fuse3.
 %files devel -f ocaml-files.devel.fuse3
 
 %changelog
+* Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 3.10.0.1-alt1
+- 3.10.0 -> 3.10.0.1
+
 * Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 3.10.0-alt2
 - Added conflict with ocaml-ocamlfuse (closes: #60253)
 - Fixed homepage URL
