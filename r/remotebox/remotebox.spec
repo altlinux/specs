@@ -1,17 +1,18 @@
 %define oname RemoteBox
 Name: remotebox
-Version: 3.4
+Version: 3.7
 Release: alt1
 
 Summary: Open Source VirtualBox Client with Remote Management
 
 Group: System/Servers
-License: GPL
+License: GPLv2
 Url: http://remotebox.knobgoblin.org.uk/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://remotebox.knobgoblin.org.uk/downloads/%oname-%version.tar
+# Source-url: https://sourceforge.net/projects/remotebox/files/%oname-%version.tar.bz2/download
+Source: %oname-%version.tar
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ Autoreq: yes,noperl
 
 BuildRequires: perl-Gtk3 perl-SOAP-Lite
 
-Requires: perl-Gtk3 perl-SOAP-Lite
+Requires: perl-File-Which perl-Gtk3 perl-Regexp-Common perl-SOAP-Lite
 
 %description
 RemoteBox is a GUI tool which lets you administer guests or virtual
@@ -49,6 +50,12 @@ cp -a share/remotebox/* %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7-alt1
+- new version 3.7
+- switch download source to SourceForge
+- update License to GPLv2
+- add runtime dependencies on perl-File-Which and perl-Regexp-Common
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
 - new version 3.4 (with rpmrb script)
 - use perl-Gtk3 instead of perl-Gtk2
