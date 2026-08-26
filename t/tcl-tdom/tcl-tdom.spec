@@ -1,8 +1,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: tcl-tdom
-Version: 0.9.2
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Summary: A XML/DOM/XPath/XSLT implementation for Tcl
 License: MPL-2.0
@@ -49,6 +49,9 @@ make test
 %_mandir/mann/*
 
 %changelog
+* Wed Aug 26 2026 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt1
+- NMU: Updated to 0.9.6.
+
 * Wed Sep 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2-alt2
 - Fixed extension loading (closes #40877).
 
