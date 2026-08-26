@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -70,6 +70,15 @@ fi
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Aug 26 2026 Egor Ignatov <egori@altlinux.org> 1.7.7-alt1
+- create_chroot: fixed hsh-update-resolver-conf invocation to pass
+  the workdir being initialized (fixes regression from 1.7.5 release).
+- hsh-update-resolver-conf: fixed handling of the --workdir option.
+- hsh-update-resolver-conf: fixed the bug reporting address in the
+  help text.
+- hsh-update-resolver-conf.1: fixed the program name in the NAME
+  section (by Gleb Fotengauer-Malinovskiy).
+
 * Mon Jul 27 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.6-alt1
 - Packaged hsh-update-resolver-conf utility (fixes regression from
   1.7.5 release).
