@@ -3,7 +3,7 @@
 Name: pi
 Epoch:1 
 Version: 0.84.3
-Release: alt1
+Release: alt2
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
 License: MIT
@@ -37,6 +37,7 @@ BuildRequires: /proc
 
 Requires: node >= 22.19
 Requires: ripgrep
+Requires: fd
 
 # Vendored node_modules: do not generate Requires on bundled modules.
 # nodejs.req would emit npm(@types/node) from hoisted protobufjs.
@@ -99,6 +100,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 1:0.84.3-alt2
+- Added Requires: fd to avoid runtime download from GitHub (closes: 60282).
+
 * Tue Aug 25 2026 Anton Farygin <rider@altlinux.org> 1:0.84.3-alt1
 - 0.84.2 -> 0.84.3
 - Disabled online version check and self-update: pi is managed by RPM
