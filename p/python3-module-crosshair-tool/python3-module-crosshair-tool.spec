@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.0.107
+Version: 0.0.110
 Release: alt1
 
 Summary: An analysis tool for Python that blurs the line between testing and type systems
@@ -23,6 +23,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -58,7 +60,6 @@ export PYTHONHASHSEED=0
     --deselect 'crosshair/libimpl/datetimelib_test.py::test_leap_year'
 
 %files
-%doc README.md
 %_bindir/crosshair
 %_bindir/mypycrosshair
 %python3_sitelibdir/%mod_name/
@@ -66,6 +67,9 @@ export PYTHONHASHSEED=0
 %python3_sitelibdir/_crosshair_tracers.*.so
 
 %changelog
+* Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.110-alt1
+- Updated to 0.0.110.
+
 * Tue Jun 16 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.107-alt1
 - Updated to 0.0.107.
 

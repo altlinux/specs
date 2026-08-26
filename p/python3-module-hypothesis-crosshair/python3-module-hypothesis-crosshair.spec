@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.28
+Version: 0.0.30
 Release: alt1
 
 Summary: Level-up your Hypothesis tests with CrossHair
@@ -57,6 +57,9 @@ tests with CrossHair.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.30-alt1
+- Updated to 0.0.30.
+
 * Tue Jul 07 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.28-alt1
 - Updated to 0.0.28.
 
