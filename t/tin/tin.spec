@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.6.5
+Version: 2.6.6
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -11,7 +11,7 @@ Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%name-%version.tar.xz
 Source1: tin.watch
 Source2: tin.attributes
 
-Patch: tin-2.6.4-enable_coloring.patch
+Patch: tin-2.6.6-enable_coloring.patch
 
 # Automatically added by buildreq on Wed Dec 28 2011
 # Manually removed from buildreq'ed string:
@@ -94,6 +94,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %_bindir/*.pl
 
 %changelog
+* Sun Aug 23 2026 Michael Shigorin <mike@altlinux.org> 2.6.6-alt1
+- new version (watch file uupdate)
+
 * Wed Dec 24 2025 Michael Shigorin <mike@altlinux.org> 2.6.5-alt1
 - new version (watch file uupdate)
 
