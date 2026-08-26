@@ -3,7 +3,7 @@
 %def_with check
 
 Name: pybind11
-Version: 3.0.4
+Version: 3.1.0
 Release: alt1
 
 Summary: Seamless operability between C++11 and Python
@@ -117,6 +117,9 @@ popd
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Wed Aug 26 2026 Anton Vyatkin <toni@altlinux.org> 3.1.0-alt1
+- New version 3.1.0.
+
 * Tue Jun 02 2026 Anton Vyatkin <toni@altlinux.org> 3.0.4-alt1
 - New version 3.0.4 (Closes: #46642).
 
