@@ -4,7 +4,7 @@
 
 Name: links2
 Version: 2.30
-Release: alt1
+Release: alt2
 
 Summary: Lynx-like text and graphics WWW browser
 # actually GPLv2+ with OpenSSL exception, stupid SPDX doesn't grok that
@@ -14,6 +14,8 @@ Group: Networking/WWW
 Url: http://links.twibright.com
 Source0: %url/download/links-%version.tar.gz
 Source100: %name.watch
+Patch1: links-2.30-configure.patch
+Patch2: links-2.30-fix-strchr-const-write.patch
 
 %if_with directfb
 BuildPreReq: libdirectfb-devel
@@ -69,6 +71,7 @@ Links умеет цвета в терминале.
 
 %prep
 %setup -n links-%version
+%autopatch -p1
 
 %build
 %add_optflags -Wno-pointer-sign -fno-strict-aliasing
@@ -134,6 +137,9 @@ chmod +x %buildroot%_bindir/x%name
 # - consider system publicsuffix like debian
 
 %changelog
+* Wed Aug 26 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.30-alt2
+- NMU: fix FTBFS with gcc15
+
 * Mon Jul 29 2024 Michael Shigorin <mike@altlinux.org> 2.30-alt1
 - new version (watch file uupdate)
 
