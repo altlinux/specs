@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %define sover 0
-%define soverwl 0.19
+%define soverwl 0.20
 
 %def_disable clang
 
 Name: treeland
-Version: 0.8.18
+Version: 0.9.0
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -150,6 +150,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
   -DWITH_SUBMODULE_WAYLIB=ON \
   -DBUILD_TESTS=OFF \
   -DBUILD_EXAMPLES=OFF \
+  -DTREELAND_INSTALL_DEV=ON \
   -DDCMAKE_INSTALL_LIBDIR=%_dqt6_libdir \
   -DDCMAKE_INSTALL_INCLUDEDIR=%_dqt6_headerdir
 
@@ -231,6 +232,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/pkgconfig/waylib-wlroots.pc
 
 %changelog
+* Wed Aug 26 2026 Leontiy Volodin <lvol@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Tue Aug 18 2026 Leontiy Volodin <lvol@altlinux.org> 0.8.18-alt1
 - New version 0.8.18.
 - Subpackages:
