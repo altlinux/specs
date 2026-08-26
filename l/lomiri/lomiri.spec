@@ -4,11 +4,12 @@
 %def_with check
 
 %define _libexecdir %_prefix/libexec
+%define _udevrulesdir /lib/udev/rules.d
 
 %set_verify_elf_skiplist %_libexecdir/lomiri/tests/*
 
 Name: lomiri
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Shell of the Lomiri Operating Environment
@@ -18,7 +19,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri
 
 Source: %name-%version.tar
 
-# sync with package version 0.6.0-3 from Debian unstable
+# sync with package version 0.6.1-1 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -34,13 +35,13 @@ BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(lomiri-shell-application)
 BuildRequires: pkgconfig(geonames)
 BuildRequires: pkgconfig(qmenumodel)
-BuildRequires: pkgconfig(gnome-desktop-3.0)
+BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(lomiri-app-launch-0)
 BuildRequires: pkgconfig(LomiriGestures)
 BuildRequires: pkgconfig(deviceinfo)
 BuildRequires: pkgconfig(lomiri-schemas)
 BuildRequires: pkgconfig(liblightdm-qt5-3)
-BuildRequires: pkgconfig(mirserver)
+BuildRequires: pkgconfig(qtmirserver)
 BuildRequires: pkgconfig(LomiriSystemSettings)
 BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(lomiri-connectivity-qt1)
@@ -52,7 +53,6 @@ BuildRequires: pkgconfig(ldm-common)
 BuildRequires: pkgconfig(libevdev)
 BuildRequires: /usr/bin/Xwayland
 BuildRequires: libpam0-devel
-BuildRequires: pkgconfig(qtmirserver)
 BuildRequires: doxygen
 BuildRequires: /usr/bin/dot
 
@@ -63,6 +63,7 @@ BuildRequires: pkgconfig(libqtdbusmock-1)
 BuildRequires: dbus-test-runner
 BuildRequires: qtdbustest-runner
 BuildRequires: python3(dbusmock)
+BuildRequires: /usr/bin/xvfb-run
 %endif
 
 Requires: ayatana-indicator-bluetooth
@@ -72,6 +73,7 @@ Requires: ayatana-indicator-messages
 Requires: ayatana-indicator-power
 Requires: ayatana-indicator-session
 Requires: ayatana-indicator-sound
+Requires: deviceinfo-tools
 Requires: lomiri-app-launch
 Requires: x-cursor-themes-dmz
 Requires: gsettings-desktop-schemas-data
@@ -99,6 +101,8 @@ Requires: lomiri-indicator-datetime
 Requires: lomiri-indicator-network
 Requires: lomiri-system-settings
 Requires: lomiri-url-dispatcher
+Requires: lomiri-content-hub
+Requires: lomiri-ui-extras
 
 # qt5/qml/Lomiri/Settings/Components/qmldir qt5/qml/Lomiri/Settings/Menus/Style/qmldir qt5/qml/Lomiri/Settings/Menus/qmldir
 Requires: lomiri-settings-components
@@ -123,6 +127,9 @@ This package provides the Lomiri shell.
 %package -n lib%{name}
 Summary: %{name} shared library
 Group: System/Libraries
+Requires: lomiri-schemas
+Requires: libgsettings-qt1
+Requires: libqt5-multimedia
 
 %description -n lib%{name}
 %{name} shared library.
@@ -147,6 +154,7 @@ LightDM Greeter for the Lomiri Operating Environment
 %prep
 %setup
 %patch -p1
+sed -i "s|QDBUSXML2CPP_EXECUTABLE qdbusxml2cpp|QDBUSXML2CPP_EXECUTABLE qdbusxml2cpp-qt5|" tests/CMakeLists.txt
 
 %build
 %cmake \
@@ -168,7 +176,17 @@ LightDM Greeter for the Lomiri Operating Environment
 
 install -m 0755 data/lomiri-greeter-wrapper %buildroot%_bindir
 install -pDm 0644 data/lomiri-greeter.rules %buildroot%_datadir/polkit-1/rules.d/lomiri-greeter.rules
+install -pDm 0644 debian/lomiri-common.udev %buildroot%_udevrulesdir/60-lomiri-common.rules
+install -pDm 0644 data/devices.conf %buildroot%_sysconfdir/lomiri/devices.conf
 
+# follow debian/rules
+rm -vf %buildroot%_bindir/indicators-client
+rm -vf %buildroot%_desktopdir/indicators-client.desktop
+rm -vf %buildroot%_datadir/lomiri/unlock-device
+rm -vf %buildroot%_datadir/lomiri/Wizard/Pages/*-update.qml*
+rm -vf %buildroot%_userunitdir/*.service
+
+# create configuration files
 mkdir -p %buildroot/etc/lightdm/lightdm.conf.d/
 
 cat <<EOF > %buildroot/etc/lightdm/lightdm.conf.d/90-default-session-lomiri.conf
@@ -189,11 +207,7 @@ EOF
 %find_lang %name
 
 %post
-%systemd_user_post lomiri-full-greeter.service
-%systemd_user_post lomiri-full-shell.service
-%systemd_user_post lomiri-greeter.service
 %systemd_user_post lomiri-indicators.target
-%systemd_user_post lomiri-shell.service
 
 echo "NOTE: upstream project does not provide systemd preset for user units,"
 echo "      so you need to run the below commands to enable all essential"
@@ -214,21 +228,13 @@ echo " "
 echo "And then you can login to the Lomiri session using preffered login manager."
 
 %preun
-%systemd_user_preun lomiri-full-greeter.service
-%systemd_user_preun lomiri-full-shell.service
-%systemd_user_preun lomiri-greeter.service
 %systemd_user_preun lomiri-indicators.target
-%systemd_user_preun lomiri-shell.service
 
 %postun
-%systemd_user_postun lomiri-full-greeter.service
-%systemd_user_postun lomiri-full-shell.service
-%systemd_user_postun lomiri-greeter.service
 %systemd_user_postun lomiri-indicators.target
-%systemd_user_postun lomiri-shell.service
 
 %check
-%ctest -j1 -VV
+%ctest -j1 -VV -R xvfballtests
 
 # do not package lomiri-tests
 rm -vrf %buildroot%_libdir/lomiri/qml/mocks
@@ -238,8 +244,8 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING COPYING.LGPL LGPL_EXCEPTION.txt README.md
-%_bindir/indicators-client
 %_bindir/lomiri
+%_sysconfdir/lomiri/devices.conf
 %exclude %_datadir/locale/it_CARES/LC_MESSAGES/lomiri.mo
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri.mo
 %dir %_libdir/lomiri
@@ -250,13 +256,9 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 %_datadir/lomiri/*
 %_datadir/polkit-1/rules.d/50-com.lomiri.wizard.rules
 %_datadir/accountsservice/interfaces/com.lomiri.shell.AccountsService.xml
-%_desktopdir/indicators-client.desktop
 %_desktopdir/lomiri.desktop
-%_userunitdir/lomiri-full-greeter.service
-%_userunitdir/lomiri-full-shell.service
-%_userunitdir/lomiri-greeter.service
 %_userunitdir/lomiri-indicators.target
-%_userunitdir/lomiri-shell.service
+%_udevrulesdir/60-lomiri-common.rules
 
 %dir %_localstatedir/lomiri
 %_localstatedir/lomiri/version
@@ -278,6 +280,9 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 %_datadir/dbus-1/interfaces/com.lomiri.shell.AccountsService.xml
 
 %changelog
+* Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt1
+- New version 0.6.1.
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 

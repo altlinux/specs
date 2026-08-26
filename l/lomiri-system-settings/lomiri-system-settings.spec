@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-system-settings
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: System Settings application for Lomiri
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-system-settings
 
 Source: %name-%version.tar
 
-# sync with version 1.3.2-1 from Debian unstable + local fixes
+# sync with version 1.4.0-5 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -34,8 +34,8 @@ BuildRequires: pkgconfig(accountsservice)
 BuildRequires: pkgconfig(geonames)
 BuildRequires: pkgconfig(click-0.4)
 BuildRequires: pkgconfig(gsettings-qt)
-BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(deviceinfo)
+BuildRequires: pkgconfig(gnome-desktop-4)
 
 %if_with check
 BuildRequires: ctest
@@ -53,6 +53,7 @@ BuildRequires: qt5-graphicaleffects
 
 Requires: accountsservice
 Requires: bluez
+Requires: cups
 Requires: glib2
 Requires: gsettings-desktop-schemas
 Requires: fonts-ttf-google-noto-sans
@@ -77,6 +78,9 @@ Requires: libqt5-qml
 # qt5/qml/QtSystemInfo/qmldir
 Requires: libqt5-qtsystems
 
+Requires: libqt5-multimedia
+Requires: qml-module-qmenumodel1
+
 %ifnarch i586 riscv64
 Requires: signon-ui
 %endif
@@ -84,9 +88,12 @@ Requires: signon-ui
 Requires: upower
 
 Requires: qt5-quickcontrols2
-Requires: maliit-keyboard
+Requires: lomiri-keyboard
 Requires: lomiri-keyboard-data
 Requires: tecla
+
+Requires: lomiri-printing-app
+Requires: suru-icon-theme
 
 %description
 The system settings application (and library) for the Lomiri desktop
@@ -119,10 +126,14 @@ developing applications that use %{name}.
 %prep
 %setup
 %patch -p1
+sed -i "s|Categories=.*|Categories=Settings;DesktopSettings;HardwareSettings;Printing;Security;Accessibility;|" lomiri-system-settings.desktop.in.in
 
 %build
 %cmake \
        -DENABLE_LIBDEVICEINFO=ON \
+       -DENABLE_UBUNTU_ACCOUNTSSERVICE=OFF \
+       -DLOMIRI_KEYBOARD_PLUGIN_PATH="/usr/lib/lomiri-keyboard/plugins" \
+       -DMODERN_PYTHON_DBUSMOCK=ON \
 %if_with check
        -DENABLE_TESTS=ON \
        -Dqmlplugindump_exe=%_qt5_bindir/qmlplugindump \
@@ -141,7 +152,7 @@ developing applications that use %{name}.
 %ctest -j1 -VV
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog COPYING README.md
+%doc AUTHORS COPYING README.md
 %_bindir/%name
 %_desktopdir/%{name}.desktop
 %_datadir/glib-2.0/schemas/com.lomiri.%{name}.gschema.xml
@@ -153,6 +164,8 @@ developing applications that use %{name}.
 %_libdir/%name/*
 %exclude %_datadir/locale/it_CARES/LC_MESSAGES/lomiri-system-settings.mo
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-system-settings.mo
+%_datadir/polkit-1/actions/com.lomiri.system-settings.time-date.policy
+%_datadir/polkit-1/rules.d/com.lomiri.system-settings.rules
 
 %files -n lib%{name}
 %_libdir/libLomiriSystemSettings.so.1*
@@ -168,6 +181,9 @@ developing applications that use %{name}.
 %_pkgconfigdir/LomiriSystemSettings.pc
 
 %changelog
+* Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sun Sep 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
 - New version 1.3.2.
 

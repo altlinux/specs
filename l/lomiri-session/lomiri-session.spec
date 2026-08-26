@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-session
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Integrate Lomiri Desktop Session into Display Managers
 License: LGPL-3.0
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-session
 
 Source: %name-%version.tar
 
-# sync with version 0.3-10 from Debian unstable
+# sync with version 0.4-5 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -54,6 +54,8 @@ display manager.
 
 %prep
 %setup
+%patch -p1
+sed -i "s|^source /etc/default/lomiri-desktop-session|#source /etc/default/lomiri-desktop-session|" lomiri-session.in
 
 %build
 %cmake \
@@ -82,6 +84,9 @@ display manager.
 %_libexecdir/lomiri-session/run-systemd-session
 
 %changelog
+* Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.4-alt1
+- New version 0.4.
+
 * Thu Sep 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.3-alt2
 - Enabled install on systems without qt5-webengine
 

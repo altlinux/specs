@@ -2,8 +2,10 @@
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
+%def_with check
+
 Name: lomiri-keyboard
-Version: 1.0.3
+Version: 1.2.0
 Release: alt1
 
 Summary: Lomiri on-screen keyboard
@@ -13,7 +15,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-keyboard
 
 Source: %name-%version.tar
 
-# sync with version 1.0.3-1 from Debian unstable
+# sync with version 1.2.0-4 from Debian unstable, but using Qt5
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-qt5
@@ -28,8 +30,14 @@ BuildRequires: libpresage-devel
 BuildRequires: pkgconfig(anthy)
 BuildRequires: pkgconfig(chewing)
 BuildRequires: /usr/bin/text2ngram
+BuildRequires: pkgconfig(guile-3.0)
+BuildRequires: unicode-emoji
+BuildRequires: /usr/bin/xml2ag
 
 Requires: lomiri-keyboard-data
+Requires: lomiri-ui-toolkit
+Requires: libqt5-multimedia
+Requires: maliit-framework
 
 %description
 Lomiri Keyboard based on Maliit-Keyboard
@@ -46,6 +54,10 @@ Lomiri-Keyboard on-screen keyboard is a Maliit plugin.
 Group: Graphical desktop/Other
 BuildArch: noarch
 Summary: Lomiri on-screen keyboard
+Requires: fonts-otf-google-noto-serif-cjk-ttc
+Requires: fonts-otf-google-noto-sans-cjk-ttc
+Requires: lomiri-ui-toolkit
+Requires: libqt5-multimedia
 
 %description data
 Lomiri Keyboard based on Maliit-Keyboard
@@ -241,10 +253,20 @@ Lomiri Keyboard based on Maliit-Keyboard
 
 Data files for the Lomiri virtual keyboard - English
 
+%package -n lomiri-keyboard-english-colemak
+Group: Graphical desktop/Other
+Requires: lomiri-keyboard
+Requires: ispell-en
+Summary: Lomiri on-screen keyboard data files - English Colemak
+%description -n lomiri-keyboard-english-colemak
+Lomiri Keyboard based on Maliit-Keyboard
+
+Data files for the Lomiri virtual keyboard - English Colemak
+
 %package -n lomiri-keyboard-english-dvorak
 Group: Graphical desktop/Other
 Requires: lomiri-keyboard
-Requires: lomiri-keyboard-english,
+Requires: lomiri-keyboard-english
 Requires: ispell-en
 Summary: Lomiri on-screen keyboard data files - English Dvorak
 %description -n lomiri-keyboard-english-dvorak
@@ -292,6 +314,15 @@ Lomiri Keyboard based on Maliit-Keyboard
 
 Data files for the Lomiri virtual keyboard - French
 
+%package -n lomiri-keyboard-georgian
+Group: Graphical desktop/Other
+Requires: lomiri-keyboard
+Summary: Lomiri on-screen keyboard data files - Georgian
+%description -n lomiri-keyboard-georgian
+Lomiri Keyboard based on Maliit-Keyboard
+
+Data files for the Lomiri virtual keyboard - Georgian
+
 %package -n lomiri-keyboard-german
 Group: Graphical desktop/Other
 Requires: lomiri-keyboard
@@ -305,7 +336,7 @@ Data files for the Lomiri virtual keyboard - German
 %package -n lomiri-keyboard-greek
 Group: Graphical desktop/Other
 Requires: lomiri-keyboard
-Requires: hunspell-el,
+Requires: hunspell-el
 Summary: Lomiri on-screen keyboard data files - Greek
 %description -n lomiri-keyboard-greek
 Lomiri Keyboard based on Maliit-Keyboard
@@ -544,6 +575,7 @@ Data files for the Lomiri virtual keyboard - Ukrainian
 %prep
 %setup
 %patch -p1
+sed -i "s|commands = guile|commands = guile30|" src/plugin/plugin.pro
 
 %build
 %qmake_qt5 \
@@ -562,13 +594,16 @@ Data files for the Lomiri virtual keyboard - Ukrainian
 mkdir -p %buildroot%_sysconfdir/xdg/maliit.org/
 install -pD -m644 %_builddir/%name-%version/debian/server.conf %buildroot%_sysconfdir/xdg/maliit.org/server.conf
 
-mkdir -p %buildroot%_sysconfdir/xdg/maliit.org/ %buildroot%_userunitdir/lomiri-keyboard.service
+mkdir -p %buildroot%_sysconfdir/xdg/maliit.org/ %buildroot%_userunitdir/
 install -pD -m644 debian/systemd/maliit-server.service %buildroot%_userunitdir/lomiri-keyboard.service
 
 %find_lang %name
 
+%check
+%make_build check
+
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog COPYING COPYING.BSD COPYING.CC-BY README.md STYLING VERSION
+%doc AUTHORS COPYING COPYING.BSD COPYING.CC-BY README.md STYLING VERSION
 %_sysconfdir/xdg/maliit.org/server.conf
 %dir /usr/lib/lomiri-keyboard
 /usr/lib/lomiri-keyboard/libwesternsupport.a
@@ -656,6 +691,10 @@ install -pD -m644 debian/systemd/maliit-server.service %buildroot%_userunitdir/l
 %dir /usr/lib/lomiri-keyboard/plugins/en@dv/
 /usr/lib/lomiri-keyboard/plugins/en@dv/*
 
+%files -n lomiri-keyboard-english-colemak
+%dir /usr/lib/lomiri-keyboard/plugins/en-colemak/
+/usr/lib/lomiri-keyboard/plugins/en-colemak/*
+
 %files -n lomiri-keyboard-english-dvorak
 %dir /usr/lib/lomiri-keyboard/plugins/en/
 /usr/lib/lomiri-keyboard/plugins/en/*
@@ -675,6 +714,10 @@ install -pD -m644 debian/systemd/maliit-server.service %buildroot%_userunitdir/l
 %files -n lomiri-keyboard-french
 %dir /usr/lib/lomiri-keyboard/plugins/de/
 /usr/lib/lomiri-keyboard/plugins/de/*
+
+%files -n lomiri-keyboard-georgian
+%dir /usr/lib/lomiri-keyboard/plugins/ka/
+/usr/lib/lomiri-keyboard/plugins/ka/*
 
 %files -n lomiri-keyboard-german
 %dir /usr/lib/lomiri-keyboard/plugins/el/
@@ -777,5 +820,8 @@ install -pD -m644 debian/systemd/maliit-server.service %buildroot%_userunitdir/l
 /usr/lib/lomiri-keyboard/plugins/uk/*
 
 %changelog
+* Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
