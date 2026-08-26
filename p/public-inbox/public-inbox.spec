@@ -1,7 +1,7 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.9.0.1113.g84874a85
+Version: 2.0.0
 Release: alt1
 
 Group: Networking/Mail
@@ -13,13 +13,13 @@ Source1: %name.watch
 
 Patch1: 0001-Do-not-show-loose-matches.patch
 Patch2: 0002-Hide-from-thread-missing-messages.patch
-Patch3: 0003-tests-fix-failed-testcases.patch
 Patch4: 0004-Make-PublicInbox-MIME-unloadable-and-make-perl.req-h.patch
 
 BuildArch: noarch
 
 BuildRequires: curl
 BuildRequires: rpm-build-perl
+BuildRequires: gcc-c++
 BuildRequires: git-core
 BuildRequires: pkg-config
 BuildRequires: libgit2-devel
@@ -131,6 +131,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Wed Aug 26 2026 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt1
+- New version (2.0.0).
+
 * Sat Dec 23 2023 Alexey Gladkov <legion@altlinux.ru> 1.9.0.1113.g84874a85-alt1
 - New git snapshot (v1.9.0-1113-g84874a85).
 
