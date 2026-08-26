@@ -1,7 +1,7 @@
 %define soversion 2
 Name: libcupsfilters
 Version: 2.2.1
-Release: alt2
+Release: alt3
 Summary: Library for developing printing filters
 License: Apache-2.0 WITH LLVM-exception
 Group: System/Libraries
@@ -121,6 +121,9 @@ rm -rf %buildroot/usr/share/doc/libcupsfilters
 %_libdir/pkgconfig/libcupsfilters.pc
 
 %changelog
+* Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt3
+- bannertopdf: fclose output stream to fix truncated test page (closes: 60277)
+
 * Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt2
 - applied upstream fix for "Missing Root object." pdfio output (closes: #60209)
 
