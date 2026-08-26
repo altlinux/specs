@@ -3,8 +3,8 @@
 %define libdnf5_dir %_sharedstatedir/libdnf5
 
 Name: dnf5
-Version: 5.4.2.1
-Release: alt2
+Version: 5.4.3.0
+Release: alt3
 
 Summary: Command-line package manager
 
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 Patch1: %name-5.4.0.0-rpm-4.13-compat.patch
 Patch2: %name-cstring.patch
+Patch3: %name-rpm-4.13-elem-progress.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
@@ -162,6 +163,7 @@ Libdnf5 plugin that allows loading Python plugins.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %cmake \
@@ -267,8 +269,6 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %dir %_datadir/dnf5
 %dir %_datadir/dnf5/aliases.d
 %_datadir/dnf5/aliases.d/compatibility.conf
-%_datadir/dnf5/aliases.d/compatibility-plugins.conf
-%_datadir/dnf5/aliases.d/compatibility-reposync.conf
 %dir %_libdir/dnf5
 %dir %_libdir/dnf5/plugins
 %dir %_datadir/dnf5/dnf5-plugins
@@ -283,6 +283,7 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 
 %files -n libdnf5 -f libdnf5.lang
 %_sysconfdir/dnf/dnf.conf
+%_tmpfilesdir/libdnf5.conf
 %ghost %attr(0644,root,root) %_sysconfdir/dnf/versionlock.toml
 %dir %_datadir/dnf5/libdnf.conf.d
 %dir %_sysconfdir/dnf/libdnf5.conf.d
@@ -345,11 +346,15 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %_libdir/dnf5/plugins/repoclosure_cmd_plugin.so
 %_libdir/dnf5/plugins/reposync_cmd_plugin.so
 %_libdir/dnf5/plugins/repomanage_cmd_plugin.so
+%_datadir/dnf5/aliases.d/compatibility-plugins.conf
+%_datadir/dnf5/aliases.d/compatibility-reposync.conf
 
 %files plugin-automatic -f dnf5-plugin-automatic.lang
 %_bindir/dnf-automatic
 %_libdir/dnf5/plugins/automatic_cmd_plugin.so
 %_datadir/dnf5/dnf5-plugins/automatic.conf
+%_datadir/dbus-1/interfaces/org.rpm.dnf.v0.Automatic.xml
+%_datadir/dbus-1/system.d/org.rpm.dnf.v0.Automatic.conf
 %_unitdir/dnf5-automatic.service
 %_unitdir/dnf5-automatic.timer
 %_unitdir/dnf-automatic.service
@@ -373,8 +378,21 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt3
+- Fix RPM 4.13 transaction callback crash (eterbug #19326).
+
+* Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt2
+- Fix RPM 4.13 transaction progress callbacks (eterbug #19326).
+
+* Sat Aug 15 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt1
+- new version 5.4.3.0
+- Package new upstream files.
+
+* Sat Aug 15 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt3
+- Move plugin aliases to dnf5-plugins.
+
 * Fri Aug 14 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt2
-Restore Fedora comps repository metadata support
+- Restore Fedora comps repository metadata support.
 
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.2.1-alt1
 - new version 5.4.2.1
