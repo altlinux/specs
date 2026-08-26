@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.5.7
+Version: 3.5.8
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -17,12 +17,12 @@ Source: openssl-%version-%release.tar
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
 
-BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd
+BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd perl-Time-Piece
 %if_enabled tsget
 BuildRequires: perl-WWW-Curl
 %endif
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: perl-devel perl-Math-BigInt perl-Time-Piece perl-IO-Socket-IP}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: perl-devel perl-Math-BigInt perl-IO-Socket-IP}}
 
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
@@ -35,13 +35,13 @@ Requires: openssl-config >= 3.2.0-alt1
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
 Conflicts: openssh-common < 5.9p1-alt5
-Requires: ca-certificates
 
 %package -n libssl%shlib_soversion
 Summary: OpenSSL libssl shared library
 Group: System/Libraries
 Provides: libssl = %version
 Requires: libcrypto%shlib_soversion = %version-%release
+Requires: ca-certificates
 
 %package -n libssl-devel
 Summary: OpenSSL include files and development libraries
@@ -336,7 +336,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %dir %openssldir/certs
 %dir %attr(700,root,root) %openssldir/private
 %openssldir/*.cnf
-%openssldir/*.pem
 %dir %_libdir/openssl
 %dir %docdir
 %docdir/[A-Z]*
@@ -344,6 +343,7 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %files -n libssl%shlib_soversion
 %config(noreplace) %_sysconfdir/openssl/cipher-list.conf
 %dir %_sysconfdir/openssl/
+%openssldir/*.pem
 /%_lib/libssl*
 
 %files -n libssl-devel
@@ -381,6 +381,11 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Wed Aug 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.8-alt1
+- Updated to openssl-3.5.8.
+- Fixed build --without check (thx mike@).
+- Moved ca-certificates dependency from libcrypto3 to libssl3.
+
 * Tue Jul 14 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.7-alt1
 - Updated to openssl-3.5.7.
 
