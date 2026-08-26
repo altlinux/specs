@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Modern GUI for managing and launching games from PortProton and Steam
@@ -83,6 +83,9 @@ cd -
 %_sysusersdir/portprotonqt.conf
 
 %changelog
+* Wed Aug 26 2026 Mikhail Tergoev <fidel@altlinux.org> 1.4.1-alt1
+- new version 1.4.1
+
 * Tue Aug 25 2026 Mikhail Tergoev <fidel@altlinux.org> 1.4.0-alt1
 - new version 1.4.0
 - portprotonqt-os package separated
