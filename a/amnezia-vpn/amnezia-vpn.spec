@@ -1,12 +1,12 @@
-%define git_commit_hash 4d28f819
+%define git_commit_hash 7d4f3e0f
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
-%define amnezia_xray_bindings_version 1.3.0
+%define amnezia_xray_bindings_version 1.4.0
 
 Name: amnezia-vpn
-Version: 5.0.0.5
-Release: alt2
+Version: 5.0.1.5
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -46,7 +46,7 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
-Requires: amneziawg-go >= 3.0.1
+Requires: amneziawg-go >= 3.1
 Requires: cloak-client
 Requires: libnss-resolve
 Requires: openvpn
@@ -172,6 +172,10 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Aug 25 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt1
+- Version 5.0.1.5
+- Update amnezia-xray-bindings to 1.4.0
+
 * Wed Jul 29 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.0.5-alt2
 - Switch to use original tun2socks for XRay protocol
 
