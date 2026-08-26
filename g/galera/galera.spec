@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.27
+Version: 26.4.28
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -20,7 +20,6 @@ Source100: wsrep.tar
 
 Patch: %name-%version.patch
 Patch1: Fix_wsrep_api_version.patch
-Patch2: Fix-gcache_tests.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest
@@ -64,8 +63,6 @@ pushd wsrep/src
 %patch1 -p1
 popd
 echo %release > GALERA_GIT_REVISION
-
-%patch2 -p1
 
 %build
 %cmake -DINSTALL_LIBDIR=%_libdir/galera -DINSTALL_MANPAGE=%_man8dir
@@ -118,6 +115,10 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Wed Aug 26 2026 Alexei Takaseev <taf@altlinux.org> 26.4.28-alt1
+- 26.4.28
+- Delete Fix-gcache_tests.patch fix in upstream
+
 * Fri May 29 2026 Alexei Takaseev <taf@altlinux.org> 26.4.27-alt1
 - 26.4.27
 
