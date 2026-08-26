@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-cyclonedx
-Version: 11.6.0
+Version: 11.11.0
 Release: alt1
 Summary: Python implementation of OWASP CycloneDX
 License: Apache-2.0
@@ -65,6 +65,9 @@ ln -sf %_licensedir/Apache-2.0 LICENSE
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 14 2026 Andrey Kuzma <kuzmaav@altlinux.org> 11.11.0-alt1
+- Updated to upstream version 11.11.0.
+
 * Tue Dec 16 2025 Andrey Kuzma <kuzmaav@altlinux.org> 11.6.0-alt1
 - Updated to upstream version 11.6.0.
 
