@@ -1,5 +1,5 @@
 Name:     librecad
-Version:  2.2.0.2
+Version:  2.2.1.5
 Release:  alt1
 
 Summary:  Computer-aided design (CAD) system
@@ -10,7 +10,6 @@ Url: 	  http://www.librecad.org
 Source:   librecad-%version.tar
 Patch0:   0001-Adding-DXF-.desktop-file.patch
 Patch1:   librecad-fix-desktop.patch
-Patch2:   librecad-alt-paths.patch
 Patch3:   librecad-alt-init-localized.patch
 Patch4:   alt-boost-1.76-compat.patch
 
@@ -52,8 +51,6 @@ Contains the plugins files for LibreCAD.
 %setup
 %patch0 -p1
 %patch1 -p1
-subst 's|/usr/lib|%_libdir|' %PATCH2
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 find . -type f -executable -a \( -name '*.cpp' -o -name '*.h' \) | xargs -i{} chmod 644 {}
@@ -115,6 +112,12 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.1.5-alt1
+- New version 2.2.1.5.
+
+* Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.0.2-alt1.1
+- Build with C++14 for Boost compatibility.
+
 * Sun Apr 14 2024 Andrey Cherepanov <cas@altlinux.org> 2.2.0.2-alt1
 - New version.
 
@@ -228,4 +231,3 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 - Fix missing BuildRequires against qt4-assistant (providing qcollectiongenerator)
 - Importing LibreCAD.
 - Created package structure for librecad.
-
