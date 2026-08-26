@@ -12,8 +12,19 @@
 
 %python3_set_limited_api
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 0.3.9
+Version: 0.4.0
 Release: alt1
 
 Summary: Observable Rust-powered HTTP client for Python services
@@ -48,6 +59,8 @@ service-to-service HTTP workloads where explicit lifecycle, predictable
 resource usage, cancellation, redirect history, and request
 backpressure visibility matter more than browser-like feature parity.
 
+%add_python_extra prometheus
+
 %prep
 %setup -a1
 %autopatch -p1
@@ -70,6 +83,9 @@ install -vD %SOURCE3 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Mon Jul 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.9-alt1
 - Updated to 0.3.9.
 
