@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
-Release: alt3
+Version: 1.7.5
+Release: alt1
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
 Group: Development/Python3
@@ -49,6 +49,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 26 2026 Stanislav Levin <slev@altlinux.org> 1.7.5-alt1
+- 1.6.0 -> 1.7.5
+
 * Tue Feb 24 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt3
 - Fixed FTBFS (Pytest 9).
 
