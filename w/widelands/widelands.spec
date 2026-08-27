@@ -5,7 +5,7 @@
 
 Name: widelands
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Open source realtime-strategy game
@@ -97,6 +97,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %_datadir/%name
 
 %changelog
+* Thu Aug 27 2026 Anton Midyukov <antohami@altlinux.org> 1:1.3.1-alt2
+- Add missing fix CVE to Changelog.
+
 * Sun Feb 22 2026 Anton Midyukov <antohami@altlinux.org> 1:1.3.1-alt1
 - New version 1.3.1.
 
@@ -208,7 +211,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 - initial release by fedoraimport
 
 * Fri Aug 26 2011 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.26.build16
-- new version by fcimport
+- new version by fcimport (Fixes: CVE-2011-4675)
 
 * Mon Mar 16 2009 Eugene Ostapets <eostapets@altlinux.ru> b13-alt1
 - new version
