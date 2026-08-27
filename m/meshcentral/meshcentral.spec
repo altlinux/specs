@@ -4,7 +4,7 @@
 %define mc_group meshcentral
 
 Name:    meshcentral
-Version: 1.1.56
+Version: 1.2.5 
 Release: alt1
 
 Summary: A complete web-based remote monitoring and management web site
@@ -94,5 +94,9 @@ exit 0
 %attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/backups
 
 %changelog
+* Thu Aug 27 2026 Nikita Shmatko <nash@altlinux.org> 1.2.5-alt1
+- Updated to 1.2.5.
+- Hardened systemd service.
+
 * Fri Feb 13 2026 Nikita Shmatko <nash@altlinux.org> 1.1.56-alt1
 - Initial build for Sisyphus.
