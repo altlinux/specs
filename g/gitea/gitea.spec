@@ -1,10 +1,10 @@
-%global import_path code.gitea.io/gitea
+%global import_path gitea.dev
 
 %global _unpackaged_files_terminate_build 1
 %def_enable tarball
 
 Name:    gitea
-Version: 1.26.2
+Version: 1.27.2
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -27,7 +27,7 @@ Patch2: ALT_config.patch
 Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.26.3
+BuildRequires: rpm-build-golang golang >= 1.26.4
 %if_disabled tarball
 BuildRequires: npm >= 6.13.6-alt2 node >= 18.0.0 esbuild node-gyp go-bindata
 %endif
@@ -66,9 +66,9 @@ ln -s %_bindir/esbuild node_modules/esbuild/bin/esbuild
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="-X code.gitea.io/gitea/modules/setting.CustomConf=%_sysconfdir/%name/app.ini \
-                -X code.gitea.io/gitea/modules/setting.CustomPath=%_localstatedir/%name/custom \
-                -X code.gitea.io/gitea/modules/setting.AppWorkPath=%_localstatedir/%name"
+export LDFLAGS="-X %import_path/modules/setting.CustomConf=%_sysconfdir/%name/app.ini \
+                -X %import_path/modules/setting.CustomPath=%_localstatedir/%name/custom \
+                -X %import_path/modules/setting.AppWorkPath=%_localstatedir/%name"
 
 TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make all
 
@@ -123,8 +123,31 @@ useradd -r -g %name -c 'Gitea daemon' \
 %_datadir/zsh/site-functions/_gitea
 
 %changelog
+* Thu Aug 27 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.2-alt1
+- sqlite driver switched to modernc (new upstream default).
+- 1.27.2 (Fixes: CVE-2026-60008, CVE-2026-73278, CVE-2026-73535,
+  CVE-2026-73539, CVE-2026-73800, CVE-2026-73804, CVE-2026-73814,
+  CVE-2026-59774, CVE-2026-60004, CVE-2026-23603, CVE-2026-25946,
+  CVE-2026-42931, CVE-2026-50105, CVE-2026-54481, CVE-2026-55982,
+  CVE-2026-55984, CVE-2026-55986, CVE-2026-55987, CVE-2026-56443,
+  CVE-2026-56654, CVE-2026-56657, CVE-2026-56750, CVE-2026-56755,
+  CVE-2026-57886, CVE-2026-57894, CVE-2026-57897, CVE-2026-58314,
+  CVE-2026-58416, CVE-2026-58417, CVE-2026-58420, CVE-2026-58425,
+  CVE-2026-58427, CVE-2026-58428, CVE-2026-58429, CVE-2026-58431,
+  CVE-2026-58432, CVE-2026-58433, CVE-2026-58434, CVE-2026-58435,
+  CVE-2026-58436, CVE-2026-58437, CVE-2026-58438, CVE-2026-58439,
+  CVE-2026-58440, CVE-2026-58441, CVE-2026-58442, CVE-2026-58443,
+  CVE-2026-58444, CVE-2026-58445, CVE-2026-58507, CVE-2026-58508,
+  CVE-2026-58510, CVE-2026-58511, CVE-2026-59763, CVE-2026-59765,
+  CVE-2026-59766, CVE-2026-58422, CVE-2026-20779, CVE-2026-20896,
+  CVE-2026-22874, CVE-2026-24451, CVE-2026-25038, CVE-2026-27761,
+  CVE-2026-27775, CVE-2026-28740, CVE-2026-58418, CVE-2026-58419,
+  CVE-2026-58421, CVE-2026-58423, CVE-2026-58424).
+
 * Thu May 21 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.2-alt1
-- 1.26.2.
+- 1.26.2 (Fixes: CVE-2026-20706, CVE-2026-24791, CVE-2026-25714,
+  CVE-2026-26231, CVE-2026-27771, CVE-2026-27783, CVE-2026-28699,
+  CVE-2026-28744, CVE-2026-58426).
 
 * Wed Feb 11 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.4-alt1
 - 1.25.4 (Fixes: CVE-2026-20736, CVE-2026-20750, CVE-2026-20883,
