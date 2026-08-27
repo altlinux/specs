@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-dde
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
@@ -38,6 +38,8 @@ BuildRequires: gcc-c++
 Summary: Library for %name
 Group: System/Libraries
 Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-qml = %_dqt6_version
+Requires: libdqt6-quick = %_dqt6_version
 Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description -n lib%{name}-wayland
@@ -81,6 +83,9 @@ export READELF="llvm-readelf"
 %_libdir/libxdg-desktop-portal-dde-wayland.so
 
 %changelog
+* Thu Aug 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.10-alt1
+- New version 1.1.10.
+
 * Fri Jul 24 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.9-alt1
 - New version 1.1.9.
 
