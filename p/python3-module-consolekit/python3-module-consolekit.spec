@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13.0
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Additional utilities for click
 License: MIT
@@ -57,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.13.0 -> 2.0.0
+
 * Wed May 27 2026 Stanislav Levin <slev@altlinux.org> 1.13.0-alt2
 - Fixed FTBFS (click 8.4.0).
 
