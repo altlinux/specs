@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt7
+Release: alt8
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -587,6 +587,10 @@ fi
 %endif
 
 %changelog
+* Mon Aug 24 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt8
+- fix ESP partition number detection (closes: #59896)
+- backport upstream fix for "cannot load image" error (closes: #59100)
+
 * Thu Jun 04 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt7
 - fix boot hang with encrypted root on some CPUs (e.g. AMD Ryzen 5 7530U)
 
