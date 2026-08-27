@@ -5,13 +5,13 @@
 #def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.1
+Version: 0.11.1
 Release: alt1
 Summary: A simple CLI tool to help you remember terminal commands.
 License: MIT
 Group: Terminals
-Url: https://github.com/dtnewman/zev
-Vcs: https://pypi.org/project/zev/
+Vcs: https://github.com/dtnewman/zev
+Url: https://pypi.org/project/zev/
 
 BuildArch: noarch
 
@@ -61,5 +61,8 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.11.1-alt1
+- updated from 0.8.1 to 0.11.1
+
 * Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.8.1-alt1
 - Initial build for Sisyphus.

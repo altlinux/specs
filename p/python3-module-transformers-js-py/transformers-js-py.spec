@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.19.1
+Version: 0.19.10
 Release: alt1
 Summary: Use Transformers.js on Pyodide and Pyodide-based frameworks.
 License: Apache-2.0
@@ -69,5 +69,8 @@ sed -ri 's/^[[:space:]]*dynamic[[:space:]]*=[[:space:]]*\[.*"version".*\]/versio
 
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.19.10-alt1
+- updated from 0.19.1 to 0.19.10
+
 * Sat Aug 09 2025 Pavel Shilov <zerospirit@altlinux.org> 0.19.1-alt1
 - Initial build for Sisyphus.
