@@ -7,7 +7,7 @@
 
 Name: kontainer
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: A Kirigami Distrobox GUI
 License: GPL-3.0-or-later AND CC0-1.0 AND MIT
@@ -67,6 +67,10 @@ sed -i "s|Categories=.*|Categories=Emulator;System;|" io.github.DenysMb.Kontaine
 %check
 %ctest -j1 -VV
 
+%post
+echo "NOTE: Kontainer package uses Distrobox via Podman, see"
+echo "      https://www.altlinux.org/Podman for details."
+
 %files -f %name.lang
 %doc README.md LICENSES/*.txt
 %_bindir/kontainer
@@ -75,6 +79,9 @@ sed -i "s|Categories=.*|Categories=Emulator;System;|" io.github.DenysMb.Kontaine
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Thu Aug 27 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.2-alt2
+- Added postinst message about Podman configuration (closes: #60292).
+
 * Sun Aug 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.2-alt1
 - New version 1.6.2.
 
