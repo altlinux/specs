@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.3
-Release: alt1.1
+Version: 5.3.0
+Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
 Group: Development/Python3
@@ -15,22 +15,20 @@ Vcs: https://github.com/ionelmc/pytest-benchmark
 BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-aspectlib
-BuildRequires: python3-module-elasticsearch
-BuildRequires: python3-module-freezegun
-BuildRequires: python3-module-nbmake
-BuildRequires: python3-module-pygal
-BuildRequires: python3-module-pytest-instafail
-
-BuildRequires: python3-module-py-cpuinfo
-BuildRequires: python3-module-pytest
 # required for some tests
 BuildRequires: /usr/bin/git
+%add_pyproject_deps_check_filter pygaljs
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra aspect
+%pyproject_builddeps_metadata_extra histogram
 %endif
 
 %description
@@ -39,6 +37,11 @@ A pytest fixture for benchmarking code.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -54,15 +57,14 @@ done
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst CHANGELOG.rst
 %_bindir/py.test-benchmark.py3
 %_bindir/pytest-benchmark.py3
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 5.2.3-alt1.1
-- Demodernized packaging.
+* Wed Aug 26 2026 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
+- 5.2.3 -> 5.3.0
 
 * Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 5.2.3-alt1
 - 5.1.0 -> 5.2.3.

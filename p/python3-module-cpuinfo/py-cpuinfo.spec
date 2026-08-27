@@ -4,7 +4,7 @@
 
 Name: python3-module-%mod_name
 Version: 9.0.0
-Release: alt2.1
+Release: alt3
 Summary: Get CPU info with pure Python
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,10 @@ Vcs: https://github.com/workhorsy/py-cpuinfo
 BuildArch: noarch
 Source: %name-%version.tar
 Patch3500: 0001-Add-support-for-LoongArch.patch
+# py-cpuinfo is unmaitained:
+# https://github.com/workhorsy/py-cpuinfo/issues/213
+# disable python3(cpuinfo) provides in favor of its fork (py-cpuinfo2)
+Autoprov: yes,nopython3
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 Conflicts: python-module-%mod_name <= 3.3.0-alt2
@@ -46,6 +50,9 @@ any compilation(C/C++, assembly, et cetera) to use. It works with Python 3.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 9.0.0-alt3
+- Hid Python provides in favor of py-cpuinfo2.
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt2.1
 - Demodernized packaging.
 
