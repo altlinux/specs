@@ -1,7 +1,7 @@
 %set_autoconf_version 2.71
 
 Name: nsd
-Version: 4.15.0
+Version: 4.15.1
 Release: alt1
 
 Summary: Name Server Daemon
@@ -94,6 +94,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Thu Aug 27 2026 Alexei Takaseev <taf@altlinux.org> 4.15.1-alt1
+- 4.15.1 (Fixes: CVE-2026-18664, CVE-2026-18916, CVE-2026-19401, CVE-2026-19538)
+
 * Tue Jul 07 2026 Alexei Takaseev <taf@altlinux.org> 4.15.0-alt1
 - 4.15.0
 
