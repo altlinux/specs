@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: byte-buddy
-Version: 1.18.0
-Release: alt2
+Version: 1.18.8
+Release: alt1
 
 Summary: Runtime code generation for the Java virtual machine
 License: Apache-2.0
@@ -104,6 +104,17 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 
 %pom_remove_dep org.ow2.asm:asm-deprecated
 
+%pom_xpath_inject \
+  "pom:profile[pom:id='shade-current']//pom:execution[pom:goals/pom:goal='shade']/pom:configuration" \
+  "<artifactSet>
+     <includes>
+       <include>net.bytebuddy:byte-buddy-dep</include>
+       <include>codes.rafael.asmjdkbridge:asm-jdk-bridge</include>
+       <include>org.ow2.asm:*</include>
+     </includes>
+   </artifactSet>" \
+  byte-buddy
+
 %build
 # Ignore test failures, there seems to be something different about the
 # bytecode of our recompiled test resources, expect 6 test failures in
@@ -136,6 +147,10 @@ cat .mfiles-%name-dep >> .mfiles-%name
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Aug 27 2026 Evgeniy Serov <scala@altlinux.org> 1.18.8-alt1
+- Automatically updated to 1.18.8.
+- Excluded test dependencies from the shaded JAR.
+
 * Thu Jun 25 2026 Anton Meleshnikov <alton@altlinux.org> 1.18.0-alt2
 - FTBFS fix (added necessary requires for build).
 
