@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 %define binary_name cosmic-app-library
-%define ver_major 1.5
+%define ver_major 1.7
 %define beta %nil
 %define rdn_name com.system76.CosmicAppLibrary
 
@@ -48,22 +48,28 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+export APP_NAME=%binary_name APP_ID=%rdn_name
+just
 
 %install
+export APP_NAME=%binary_name APP_ID=%rdn_name
 just rootdir=%buildroot install
 
 %check
+export APP_NAME=%binary_name APP_ID=%rdn_name
 %rust_test
 
 %files
 %_bindir/%binary_name
-%_desktopdir/*.desktop
+%_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/appdata/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- epoch-1.7.0-3-g5fe2aa8
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 

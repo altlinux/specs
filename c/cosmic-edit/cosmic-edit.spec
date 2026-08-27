@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.5
+%define ver_major 1.7
 %define beta %nil
 %define rdn_name com.system76.CosmicEdit
 
@@ -70,6 +70,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 

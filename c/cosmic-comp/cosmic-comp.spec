@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.5
+%define ver_major 1.7
 %define beta %nil
 %define rdn_name com.system76.Cosmic
 
@@ -48,6 +48,7 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
+export CARGO_PKG_VERSION=%version
 %rust_build
 
 %install
@@ -62,6 +63,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/cosmic/com.system76.CosmicSettings.WindowRules/v1/tiling_exception_defaults
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 

@@ -1,10 +1,10 @@
-%def_disable snapshot
-%define ver_major 1.5
+%def_enable snapshot
+%define ver_major 1.7
 %define beta %nil
 %define rdn_name com.system76.CosmicLauncher
 
 %def_disable bootstrap
-%def_enable check
+%def_disable check
 
 Name: cosmic-launcher
 Version: %ver_major.0
@@ -45,22 +45,28 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+export APP_NAME=%name APP_ID=%rdn_name
+just
 
 %install
+export APP_NAME=%name APP_ID=%rdn_name
 just rootdir=%buildroot install
 
 %check
+export APP_NAME=%name APP_ID=%rdn_name
 %rust_test
 
 %files
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/appdata/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- epoch-1.7.0-2-g402103d
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
