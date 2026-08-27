@@ -5,7 +5,7 @@
 
 Name: gnome-shell-extension-v-shell
 Version: 50.8
-Release: alt1
+Release: alt2
 Summary: Customize the GNOME Shell overview and workspaces
 License: GPL-3.0
 Group: Graphical desktop/GNOME
@@ -13,6 +13,7 @@ URL: https://extensions.gnome.org/extension/5177/vertical-workspaces
 VCS: https://github.com/G-dH/vertical-workspaces
 
 Source: %name-%version.tar
+Source1: ru.po
 
 BuildArch: noarch
 
@@ -26,6 +27,8 @@ layout, supporting both horizontal and vertical workspaces.
 
 %prep
 %setup
+cp -p %SOURCE1 po/ru.po
+echo ru >> po/LINGUAS
 
 %build
 %meson
@@ -41,6 +44,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/%schema.gschema.xml
 
 %changelog
+* Thu Aug 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.8-alt2
+- Added Russian translation.
+
 * Tue Aug 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.8-alt1
 - Updated to version 50.8.
 
