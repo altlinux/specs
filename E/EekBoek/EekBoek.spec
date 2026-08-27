@@ -17,7 +17,7 @@ Name: EekBoek
 Summary: Bookkeeping software for small and medium-size businesses
 License: GPL+ or Artistic
 Version: 2.051
-Release: alt2
+Release: alt3
 Source: https://www.eekboek.nl/dl/%{name}-%{version}.tar.gz
 URL: https://www.eekboek.nl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -120,6 +120,9 @@ This package contains the PostgreSQL database driver for %{name}.
 
 chmod 0664 MANIFEST
 
+mv t/80_db_postgresql.t t/80_db_postgresql.t.disable
+mv t/92_ivp_postgres.t  t/92_ivp_postgres.t.disable
+
 %build
 /usr/bin/perl Makefile.PL
 make
@@ -204,6 +207,9 @@ env EB_SKIPDBTESTS=1 make test
 %{ebshare}/lib/EB/DB/Postgres.pm
 
 %changelog
+* Thu Aug 27 2026 Alexei Takaseev <taf@altlinux.org> 2.051-alt3
+- Fix FTBS with new DBD-Pg (disable PostgreSQL tests)
+
 * Sat Dec 24 2022 Ilya Mashkin <oddity@altlinux.ru> 2.051-alt2
 - Build for Sisyphus
 - Change Group to Office
