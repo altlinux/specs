@@ -3,8 +3,8 @@
 %def_with check
 
 Name: mkosi
-Version: 26
-Release: alt2
+Version: 27
+Release: alt1
 
 Summary: Build Bespoke OS Images
 License: LGPL-2.1-or-later AND GPL-2.0-only AND PSF-2.0
@@ -21,6 +21,7 @@ AutoProv: nopython3
 BuildRequires: python3-module-setuptools
 BuildRequires: rpm-macros-systemd
 BuildRequires: pandoc
+BuildRequires: /proc
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -100,7 +101,8 @@ install -Dm 644 mkosi.zsh %buildroot/%_datadir/zsh/site-functions/_mkosi
 
 %check
 %tox_create_default_config
-%tox_check_pyproject
+# CLONE_NEWUSER is refused for chrooted processes, so this test can't pass in hasher.
+%tox_check_pyproject -- -vra --deselect tests/test_run.py::test_fork_and_wait_sandbox
 
 %files
 %doc README.md
@@ -133,6 +135,9 @@ install -Dm 644 mkosi.zsh %buildroot/%_datadir/zsh/site-functions/_mkosi
 %ghost %dir %_sysconfdir/mkosi-addon
 
 %changelog
+* Thu Aug 27 2026 Egor Ignatov <egori@altlinux.org> 27-alt1
+- New version 27.
+
 * Thu Aug 20 2026 Egor Ignatov <egori@altlinux.org> 26-alt2
 - Add ALT Linux support.
 
