@@ -1,5 +1,5 @@
 Name:    volt-gui
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: A graphical control panel for Vulkan games on Linux
@@ -78,5 +78,8 @@ EOF
 %_datadir/applications/volt-gui.desktop
 
 %changelog
+* Thu Aug 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.0.3-alt1
+- new version 2.0.3
+
 * Tue Aug 25 2026 Sergey Palcheh <minergenon@altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus
