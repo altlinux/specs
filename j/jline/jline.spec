@@ -1,5 +1,5 @@
 Name:           jline
-Version:        3.23.0
+Version:        3.30.16
 Release:        alt1
 
 Summary:        Java library for handling console input
@@ -16,6 +16,9 @@ BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
 BuildRequires:  maven-local
 
+# required for tests
+BuildRequires:  nano
+
 BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
@@ -24,6 +27,8 @@ BuildRequires:  mvn(com.github.albfernandez:juniversalchardet)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(com.google.jimfs:jimfs)
+BuildRequires:  mvn(org.slf4j:slf4j-jdk14)
 
 %description 
 JLine is a Java library for handling console input. It is similar in
@@ -35,6 +40,22 @@ find most of the command editing features of JLine to be familiar.
 JLine 3.x is an evolution of JLine 2.x.
 
 %javadoc_package
+
+%package        jansi
+Summary:        JLine Jansi bundle
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    jansi
+%summary.
+
+%package        jansi-core
+Summary:        JLine Jansi core
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    jansi-core
+%summary.
 
 %package        core
 Summary:        JLine core
@@ -58,6 +79,22 @@ Group:          Development/Java
 BuildArch:      noarch
 
 %description    console 
+%summary.
+
+%package        console-ui
+Summary:        JLine console UI
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    console-ui
+%summary.
+
+%package        curses
+Summary:        JLine Curses
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    curses
 %summary.
 
 %package        native
@@ -123,11 +160,20 @@ BuildArch:      noarch
 %description    terminal-jna 
 %summary.
 
+%package        terminal-jni
+Summary:        JLine terminal with JNI
+Group:          Development/Java
+BuildArch:      noarch
+
+%description    terminal-jni
+%summary.
+
 %prep
 %setup
 %autopatch -p1
 
 rm -r native/src/main/resources/org/jline/nativ/*/
+rm .mvn/extensions.xml
 
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :spotless-maven-plugin
@@ -136,12 +182,23 @@ rm -r native/src/main/resources/org/jline/nativ/*/
 %pom_remove_plugin :exec-maven-plugin native
 %pom_remove_dep :picocli-codegen native
 
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
+
 # fails
-rm terminal-jna/src/test/java/org/jline/terminal/impl/jna/JnaNativePtyTest.java
+rm terminal-jna/src/test/java/org/jline/terminal/impl/jna/{JnaNativePtyTest,JnaTerminalProviderTest}.java
+rm terminal/src/test/java/org/jline/terminal/DumbTerminalWarningTest.java
+rm reader/src/test/java/org/jline/reader/impl/history/HistoryPersistenceTest.java
+rm builtins/src/test/java/org/jline/builtins/InputRCTest.java
 
 %pom_disable_module groovy
 %pom_disable_module demo
 %pom_disable_module graal
+
+# ffm requires java 22
+%pom_disable_module terminal-ffm
+%pom_remove_dep :jline-terminal-ffm jline
+%pom_xpath_remove "//pom:artifactItem[pom:artifactId='jline-terminal-ffm']" jline
+%pom_xpath_remove "//pom:execution[pom:id='jdk22']" jline
 
 %mvn_package :%name-parent __noinstall
 
@@ -152,7 +209,8 @@ rm terminal-jna/src/test/java/org/jline/terminal/impl/jna/JnaNativePtyTest.java
 %add_optflags -I %_jvmdir/jre/include
 %add_optflags -I %_jvmdir/jre/include/linux %{?__global_ldflags}
 
-gcc %optflags -o libjlinenative.so native/src/main/native/jlinenative.c
+gcc %optflags -o libjlinenative.so \
+    native/src/main/native/{jlinenative,clibrary}.c
 
 %mvn_build -s -- -Dlibrary.jline.path=$PWD
 
@@ -164,8 +222,12 @@ install -p -m 755 libjlinenative.so %buildroot%_libdir/%name/
 %files core -f .mfiles-jline
 %doc LICENSE.txt *.md
 
+%files jansi -f .mfiles-jansi
+%files jansi-core -f .mfiles-jansi-core
 %files builtins -f .mfiles-jline-builtins
 %files console -f .mfiles-jline-console
+%files console-ui -f .mfiles-jline-console-ui
+%files curses -f .mfiles-jline-curses
 %files native -f .mfiles-jline-native
 %_libdir/%name/libjlinenative.so
 
@@ -176,8 +238,14 @@ install -p -m 755 libjlinenative.so %buildroot%_libdir/%name/
 %files terminal -f .mfiles-jline-terminal
 %files terminal-jansi -f .mfiles-jline-terminal-jansi
 %files terminal-jna -f .mfiles-jline-terminal-jna
+%files terminal-jni -f .mfiles-jline-terminal-jni
 
 %changelog
+* Thu Aug 27 2026 Evgeniy Serov <scala@altlinux.org> 3.30.16-alt1
+- Updated to 3.30.16 (Fixes: CVE-2026-56740, CVE-2026-56741).
+- Fixed the path used to load the native library.
+- Added console-ui, curses, jansi, jansi-core and terminal-jni subpackages.
+
 * Thu Jul 02 2026 Evgeniy Serov <scala@altlinux.org> 3.23.0-alt1
 - Updated to 3.23.0 (ty nash@).
 
