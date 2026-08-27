@@ -3,7 +3,7 @@
 %global import_path github.com/Vanilla-OS/apx
 Name: apx
 Version: 2.5.0
-Release: alt2
+Release: alt3
 
 Summary: Package manager with support for multiple sources
 License: GPL-3.0-only
@@ -67,7 +67,7 @@ cp -rpv config/package-managers %buildroot%_datadir/apx/
 [[ "$(./%name --version)" == "%name version v%version" ]]
 
 %post
-echo "NOTE: This package requires Podman, see"
+echo "NOTE: Apx package requires Podman, see"
 echo "      https://www.altlinux.org/Podman for details."
 
 %files
@@ -85,6 +85,9 @@ echo "      https://www.altlinux.org/Podman for details."
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Thu Aug 27 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt3
+- Updated postinst message.
+
 * Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt2
 - Added 'apx list' command for apt-rpm package manager.
 

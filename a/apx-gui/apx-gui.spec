@@ -4,7 +4,7 @@
 
 Name: apx-gui
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: GUI frontend for Apx in GTK 4 and Libadwaita
 License: GPL-3.0-only
@@ -25,6 +25,7 @@ Requires: apx
 Requires: python3(requests)
 Requires: python3(urllib3)
 Requires: python3(yaml)
+Requires: python3(gi)
 
 BuildArch: noarch
 
@@ -70,5 +71,8 @@ sed -i "s|Categories=Utility;Development;GTK;|Categories=System;FileTools;Termin
 %exclude %_datadir/locale/zh_Hant/LC_MESSAGES/apx_gui.mo
 
 %changelog
+* Thu Aug 27 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt2
+- Added python3(gi) to requires.
+
 * Tue Jan 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt1
 - Initial build for Sisyphus
