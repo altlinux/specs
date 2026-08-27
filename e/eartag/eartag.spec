@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Small and simple audio file tag editor
 License: MIT
@@ -77,6 +77,9 @@ sed -i 's|"function"|function|' pytest.ini
 %doc README*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Sat Nov 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1.1
 - fixed %%check
 

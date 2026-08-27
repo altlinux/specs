@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: iotas
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -46,7 +46,7 @@ BuildArch: noarch
 %add_python3_path %_datadir/%name
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson
+BuildRequires: meson blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gtksourceview-5) >= %gtksource_ver
@@ -93,6 +93,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.7-alt1
+- 2026.7
+
 * Tue Apr 14 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.6-alt1
 - 2026.6
 

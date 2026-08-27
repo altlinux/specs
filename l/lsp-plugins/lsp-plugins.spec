@@ -12,7 +12,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.33
+Version: 1.2.35
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -35,8 +35,6 @@ BuildRequires: libsndfile-devel libcairo-devel
 %{?_enable_gst:BuildRequires: pkgconfig(gstreamer-audio-1.0)}
 %{?_enable_pw:BuildRequires: pkgconfig(libpipewire-0.3)}
 BuildRequires: %_bindir/php
-
-#ExclusiveArch: %ix86 x86_64 aarch64 %e2k riscv64 loongarch64
 
 %description
 LSP (Linux Studio Plugins) is a collection of open-source plugins
@@ -159,6 +157,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.35-alt1
+- 1.2.35
+
 * Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.33-alt1
 - 1.2.33
 

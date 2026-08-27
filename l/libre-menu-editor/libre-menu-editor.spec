@@ -5,7 +5,7 @@
 %define rdn_name page.codeberg.libre_menu_editor.LibreMenuEditor
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.5
 Release: alt1
 
 Summary: Menu editor
@@ -31,7 +31,7 @@ Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: xdg-utils
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-python3 rpm-build-gir /usr/bin/magick
 
 %description
 Menu editor for GNOME.
@@ -52,6 +52,9 @@ Menu editor for GNOME.
 %doc readme.*
 
 %changelog
+* Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.10.5-alt1
+- 1.10.5
+
 * Tue Jan 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.10.2-alt1
 - 1.10.2
 

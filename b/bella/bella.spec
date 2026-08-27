@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.10
+Version: %ver_major.12
 Release: alt1
 
 Summary: Yet Another Eye Dropper
@@ -72,6 +72,9 @@ Pipettes do not happen much!
 %doc README*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.12-alt1
+- 0.1.12
+
 * Sat May 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.10-alt1
 - 0.1.10
 
