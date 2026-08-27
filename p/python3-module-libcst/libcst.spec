@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.6
-Release: alt3
+Version: 1.9.0
+Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -16,7 +16,6 @@ Group: Development/Python3
 Url: https://pypi.org/project/libcst/
 Vcs: https://github.com/Instagram/LibCST
 Source0: %name-%version.tar
-# prepared with https://git.altlinux.org/people/slev/public/updater_vendored_rust.git
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
@@ -36,10 +35,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
-# rust stuff
-BuildRequires: /proc
-BuildRequires: rust
-BuildRequires: rust-cargo
 
 %description
 LibCST parses Python source code as a CST tree that keeps all formatting
@@ -81,19 +76,17 @@ export NO_PYRE=yes
 %pyproject_run -- bash -s <<-'ENDTESTS'
 set -eux
 cd %mod_name
-export LIBCST_PARSER_TYPE=native
-python -m %mod_name.tests
-
-export LIBCST_PARSER_TYPE=pure
 python -m %mod_name.tests
 ENDTESTS
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
+- 1.8.6 -> 1.9.0
+
 * Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 1.8.6-alt3
 - Fixed FTBFS (black 26.1.0).
 
