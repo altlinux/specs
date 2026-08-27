@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 153.0.3
+Version: 154.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -43,8 +43,9 @@ Patch007: 0007-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch009: 0009-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
 Patch010: 0010-Apply-chat-message-style-changes-to-already-open-con.patch
-Patch011: 0011-Disable-the-native-textarea-resize-handle-on-the-cha.patch
-Patch012: 0012-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
+Patch011: 0011-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
+Patch012: 0012-Bug-2065007-Redefine-X11-s-Success-macro-to-X11Succe.patch
+Patch013: 0013-Bug-2053518-Handle-the-oe-linux-rust-targets-added-i.patch
 ### End Patches
 
 Provides: mailclient
@@ -186,6 +187,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -374,6 +376,68 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Aug 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 154.0-alt1
+- New version.
+- Fix FTBFS:
+  + Add patch fixing the X11 Success macro clash with mozpkix;
+  + Add patch fixing rust target detection with rustc 1.98.
+- Fixes:
+  + CVE-2026-75874: Sandbox escape in the Remote Settings Client component
+  + CVE-2026-74934: Site isolation issue in the Graphics: CanvasWebGL component
+  + CVE-2026-74935: Privilege escalation in the DOM: Networking component
+  + CVE-2026-74936: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-74937: Use-after-free in the JavaScript: GC component
+  + CVE-2026-74938: Mitigation bypass in the JavaScript: GC component
+  + CVE-2026-74939: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-74940: Use-after-free in the Graphics: Text component
+  + CVE-2026-74941: Privilege escalation in the Graphics: CanvasWebGL component
+  + CVE-2026-74942: Privilege escalation in the Remote Settings Client component
+  + CVE-2026-74943: Use-after-free in the Graphics: ImageLib component
+  + CVE-2026-74944: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-74945: Information disclosure in the Graphics: Text component
+  + CVE-2026-74946: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-74947: Privilege escalation due to invalid pointer in the Graphics component
+  + CVE-2026-74948: Information disclosure in the Graphics component
+  + CVE-2026-74949: Privilege escalation due to use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-74950: Privilege escalation in the Downloads API component
+  + CVE-2026-74952: Privilege escalation in the Application Update component
+  + CVE-2026-74953: Privilege escalation in the Networking: Cookies component
+  + CVE-2026-74954: Information disclosure due to side-channel in the Storage: Cache API component
+  + CVE-2026-74955: Privilege escalation in the Request Handling component
+  + CVE-2026-74956: Same-origin policy bypass in the DOM: Service Workers component
+  + CVE-2026-74957: Mitigation bypass in the Safe Browsing component
+  + CVE-2026-74958: Information disclosure in the WebRTC component
+  + CVE-2026-74959: Mitigation bypass in the Storage: Cache API component
+  + CVE-2026-74960: Site isolation issue in the WebExtensions component
+  + CVE-2026-74961: Side-channel in the Web Audio component
+  + CVE-2026-74962: Site isolation issue in the Networking: Cookies component
+  + CVE-2026-74963: Same-origin policy bypass in the Networking: Cookies component
+  + CVE-2026-74964: Integer overflow in the Graphics component
+  + CVE-2026-74965: Privilege escalation in the Shell Integration component
+  + CVE-2026-74966: Information disclosure in the Form Autofill component
+  + CVE-2026-74967: Same-origin policy bypass in the Audio/Video: Playback component
+  + CVE-2026-74968: Site isolation issue in the Graphics: WebRender component
+  + CVE-2026-74969: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-74970: Site isolation issue in the Graphics component
+  + CVE-2026-74971: Information disclosure in the DOM: UI Events & Focus Handling component
+  + CVE-2026-74972: Information disclosure in the DOM: Push Subscriptions component
+  + CVE-2026-74973: Race condition, use-after-free in the Graphics component
+  + CVE-2026-74974: Same-origin policy bypass in the Graphics: ImageLib component
+  + CVE-2026-74976: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-74977: Integer overflow in the Graphics component
+  + CVE-2026-74978: Clickjacking issue in the Widget component
+  + CVE-2026-74979: Mitigation bypass in the Add-ons Manager component
+  + CVE-2026-74981: Site isolation issue in the Audio/Video: Web Codecs component
+  + CVE-2026-74982: Denial-of-service in the Widget component
+  + CVE-2026-74983: Mitigation bypass in the Data Loss Prevention component
+  + CVE-2026-74984: Race condition in the JavaScript Engine component
+  + CVE-2026-74985: Privilege escalation in the Enterprise Policies component
+  + CVE-2026-74986: Site isolation issue in the CSS Parsing and Computation component
+  + CVE-2026-74987: Internally found bugs fixed in Thunderbird ESR 140.14, Thunderbird ESR 153.1 and Thunderbird 154
+  + CVE-2026-74988: Internally found bugs fixed in Thunderbird ESR 153.1 and Thunderbird 154
+  + CVE-2026-74989: Internally found bugs fixed in Thunderbird 154
+  + CVE-2026-74990: Internally found bugs fixed in Thunderbird ESR 140.14, Thunderbird ESR 153.1 and Thunderbird 154
+
 * Wed Aug 12 2026 Ajrat Makhmutov <rauty@altlinux.org> 153.0.3-alt1
 - New version.
 
