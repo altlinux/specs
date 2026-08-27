@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt5
+Release: alt6
 
 Summary: The default startup scripts for the X Window System
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Wed Aug 26 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt6
+- Xsession: fix run with predefined context of selinux.
+
 * Tue Apr 28 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt5
 - Xsession: add workaround for restore xkb settings with selinux.
 
