@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: crow-translate
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -34,6 +36,7 @@ BuildRequires: qt6-scxml-devel
 BuildRequires: qt6-speech-devel
 BuildRequires: plasma6-kwayland-devel
 BuildRequires: libonnxruntime-devel
+BuildRequires: kf6-kiconthemes-devel
 
 %description
 A simple and lightweight translator that allows you to translate and voice text
@@ -63,9 +66,12 @@ tar -xf %SOURCE2 -C src/3rdparty/
 tar -xf %SOURCE3 -C src/3rdparty/
 tar -xf %SOURCE4 -C src/3rdparty/
 
+subst 's|lib/libespeak-ng.a|%_lib/libespeak-ng.a|' CMakeLists.txt
+
 %build
 %cmake \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    -G Ninja
 %cmake_build
 
 %install
@@ -81,6 +87,9 @@ tar -xf %SOURCE4 -C src/3rdparty/
 %_iconsdir/hicolor/*/*/org.kde.CrowTranslate*
 
 %changelog
+* Thu Aug 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.1.0-alt1
+- 4.0.2 -> 4.1.0
+
 * Mon Apr 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.2-alt1
 - 3.1.0 -> 4.0.2 (ALT #55988)
 - build with Qt6
