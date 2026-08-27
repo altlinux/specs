@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.13.6
+Version: 1.13.7
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -73,6 +73,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.13.7-alt1
+- 1.13.7
+
 * Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.6-alt1
 - 1.13.6
 
