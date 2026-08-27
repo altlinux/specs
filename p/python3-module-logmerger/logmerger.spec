@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
+Version: 0.13.0
 Release: alt1
 Summary: TUI utility to view multiple log files with merged timeline.
 License: MIT
@@ -16,7 +16,6 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: alt-pyproject.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -41,7 +40,6 @@ merged by timestamp.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -59,5 +57,8 @@ merged by timestamp.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.13.0-alt1
+- updated from 0.11.0 to 0.13.0
+
 * Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 0.11.0-alt1
 - Initial build for Sisyphus.

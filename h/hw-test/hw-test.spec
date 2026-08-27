@@ -6,7 +6,7 @@
 %endif
 
 Name: hw-test
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Hardware compatibility testing tool for ALT Linux
@@ -153,7 +153,8 @@ mkdir -p -m 0755 -- "%buildroot%_sysconfdir"
 install -m 0644 etc/%name.conf "%buildroot%_sysconfdir/%name.conf"
 install -m 0644 etc/%name-RVSETS.txt "%buildroot%_sysconfdir/%name-RVSETS.txt"
 mkdir -p -m 0755 -- "%buildroot/etc/profile.d"
-install -m 0644 etc/profile.d/hw-test-resume.sh "%buildroot/etc/profile.d/hw-test-resume.sh"
+# ALT /etc/profile sources only executable (+x) scripts from profile.d.
+install -m 0755 etc/profile.d/hw-test-resume.sh "%buildroot/etc/profile.d/hw-test-resume.sh"
 mkdir -p -m 0755 -- "%buildroot%_localstatedir/%name"
 cp -a var/lib/%name/. "%buildroot%_localstatedir/%name/"
 mkdir -p -m 0755 -- "%buildroot/usr/lib/systemd/system"
@@ -214,5 +215,10 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Wed Aug 26 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.1-alt1
+- Fixed (ALT #60241): dialog ESCDELAY so arrow keys do not cancel TUI test plan.
+- Fixed (ALT #60237): skip graphics-only express on headless Server; do not pause on SKIPPED.
+- updated from 2.2.1 to 2.2.1
+
 * Fri Jun 06 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus

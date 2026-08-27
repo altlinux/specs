@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 Summary: Easy rate-limiting for python requests
 License: MIT
@@ -68,6 +68,9 @@ sed -i 's/, *blocking=True//g' requests_ratelimiter/requests_ratelimiter.py
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.10.0-alt1
+- updated from 0.9.2 to 0.10.0
+
 * Wed Mar 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus.
 

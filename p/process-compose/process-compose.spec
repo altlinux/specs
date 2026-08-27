@@ -2,7 +2,7 @@
 %global import_path github.com/F1bonacc1/process-compose
 
 Name: process-compose
-Version: 1.120.0
+Version: 1.122.0
 Release: alt1
 Summary: Process Compose is a simple and flexible scheduler and orchestrator to manage non-containerized applications.
 License: Apache-2.0
@@ -57,6 +57,9 @@ ln -s %_sysconfdir/%name/process-compose.yaml %buildroot%_sysconfdir/xdg/%name/p
 %_sysconfdir/xdg/%name/process-compose.*
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.122.0-alt1
+- updated from 1.120.0 to 1.122.0
+
 * Thu Jul 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.120.0-alt1
 - Update to new version 1.120.0.
 

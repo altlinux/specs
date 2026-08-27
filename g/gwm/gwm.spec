@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gwm
-Version: 1.5.0
+Version: 1.9.0
 Release: alt1
 Summary: Worktree manager for the terminal.
 License: MIT
@@ -50,5 +50,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.9.0-alt1
+- updated from 1.5.0 to 1.9.0
+
 * Fri Jul 31 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.

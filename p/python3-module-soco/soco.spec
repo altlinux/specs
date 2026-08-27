@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.30.11
+Version: 0.31.2
 Release: alt1
 Summary: SoCo (Sonos Controller) is a Python project that allows you to programmatically control Sonos speakers.
 License: MIT
@@ -66,5 +66,8 @@ BuildRequires: python3(build)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 0.31.2-alt1
+- updated from 0.30.11 to 0.31.2
+
 * Wed Aug 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.30.11-alt1
 - Initial build for Sisyphus.
