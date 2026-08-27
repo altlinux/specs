@@ -11,16 +11,18 @@
 
 Name:    Uranium
 Version: 5.13.0
-Release: alt2
+Release: alt3
 
 Summary: A Python framework for building Desktop applications.
 License: LGPL-3.0-or-later
 Group:   Development/Python3
 URL:     https://github.com/Ultimaker/Uranium
+VCS:     https://github.com/Ultimaker/Uranium
 
 BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
 BuildRequires: rpm-build-python3
 BuildRequires: python3-devel cmake
+BuildRequires: jq
 BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
 
@@ -71,6 +73,12 @@ Patch7: numpy-2.0-lib-pad.patch
 # https://github.com/Ultimaker/Uranium/pull/1028
 Patch8: numpy-2.3.0-tostring.patch
 
+# Fixes for Qt 6.9+
+# https://github.com/Ultimaker/Uranium/pull/1018
+Patch10: 1018.patch
+# https://github.com/Ultimaker/Uranium/commit/483f60ecb359c18870a4ae5428476fcdfca47111
+Patch11: Uranium-5.13.0-Force-dialogs-to-appear-centered.patch
+
 %description
 %summary
 
@@ -105,6 +113,11 @@ sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 %cmake_install
 mv %buildroot/%_datadir/cmake* %buildroot/%_datadir/cmake
 
+# Remove UpdateChecker plugin
+export PLUGINDATA=%buildroot%_datadir/uranium/resources/bundled_packages/uranium.json
+rm -rf %buildroot%_libexecdir/uranium/plugins/UpdateChecker
+cat <<<$(jq --indent 4 'del(.UpdateChecker)' $PLUGINDATA) > $PLUGINDATA
+
 # Sanitize the location of locale files
 pushd %buildroot%_datadir
 mv uranium/resources/i18n locale
@@ -136,6 +149,11 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Wed Aug 26 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt3
+- Remove UpdateChecker plugin.
+- Fix issues with Qt 6.9+.
+- Spec: add VCS tag.
+
 * Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt2
 - Fix FTBFS with python3.14.
 - Fix numpy 2.3.0+ compatibility.

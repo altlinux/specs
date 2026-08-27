@@ -7,12 +7,13 @@
 Name: cura
 Epoch: 1
 Version: 5.13.0
-Release: alt3
+Release: alt4
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
 
 Group: Engineering
-Url: https://github.com/Ultimaker/Cura
+URL: https://github.com/Ultimaker/Cura
+VCS: https://github.com/Ultimaker/Cura
 
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
@@ -40,8 +41,11 @@ Patch8: numpy-2.3.0-frombuffer.patch
 # Skip forced loading SentryLogger to avoid an error on startup
 Patch10: 028e7f7.patch
 
-Patch11: cura-buildtype-fix.patch
-Patch12: cura-5.12.1-marketplace-crash-fix.patch
+# Fixes for Qt 6.9+
+# https://github.com/Ultimaker/Cura/pull/21158
+Patch20: 21158.patch
+Patch21: qt-6.9-qpa-env.patch
+Patch22: cura-5.13.0-welcome-wizard.patch
 
 BuildArch: noarch
 
@@ -79,6 +83,7 @@ Requires: qt6-svg
 # need for plugins
 Requires: python3-module-Charon
 Requires: python3-module-trimesh
+Requires: python3-module-certifi
 
 %description
 Cura is a project which aims to be an single software solution for 3D printing.
@@ -125,7 +130,6 @@ EOF
 
 %build
 %cmake -DCURA_VERSION:STRING=%version \
-       -DCURA_BUILDTYPE=RPM \
        -DCURA_CLOUD_API_ROOT:STRING=%cura_cloud_api_root \
        -DCURA_CLOUD_API_VERSION:STRING=%cura_cloud_api_version \
        -DCURA_CLOUD_ACCOUNT_API_ROOT:STRING=%cura_cloud_account_api_root \
@@ -166,6 +170,13 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Wed Aug 26 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt4
+- Drop build type specification to make Cura use the default style.
+- Fix issues with Qt 6.9+ (Closes: 40977, 43368, 51690, 59262).
+- Spec:
+  + Add python3-module-certifi dep for FirmwareUpdateChecker plugin.
+  + Add VCS tag.
+
 * Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt3
 - Fix numpy 2.3.0+ compatibility.
 
