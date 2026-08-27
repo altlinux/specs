@@ -5,37 +5,32 @@
 %define        gemname minitest-focus
 
 Name:          gem-minitest-focus
-Version:       1.4.0
+Version:       1.4.1
 Release:       alt1
 Summary:       Allows you to focus on a few tests with ease without having to use command-line arguments
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/seattlerb/minitest-focus
 Vcs:           https://github.com/seattlerb/minitest-focus.git
-Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(hoe) >= 4.2
-BuildRequires: gem(minitest) >= 4
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(minitest) > 5.0
 BuildRequires: gem(rdoc) >= 4.0
-BuildConflicts: gem(hoe) >= 5
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(minitest) >= 4
-Conflicts:     gem(minitest) >= 6
-Provides:      gem(minitest-focus) = 1.4.0
+Requires:      gem(minitest) > 5.0
+Provides:      gem(minitest-focus) = 1.4.1
 
 %description
 Allows you to focus on a few tests with ease without having to use command-line
 arguments. Good for tools like guard that don't have enough brains to understand
-test output. Cf. ZenTest's autotest (an example of a test runner with strong
+test output. Cf. minitest-autotest (an example of a test runner with strong
 testing logic).
 
 Inspired by https://github.com/seattlerb/minitest/issues/213
@@ -43,14 +38,14 @@ Inspired by https://github.com/seattlerb/minitest/issues/213
 
 %if_enabled    doc
 %package       -n gem-minitest-focus-doc
-Version:       1.4.0
+Version:       1.4.1
 Release:       alt1
 Summary:       Allows you to focus on a few tests with ease without having to use command-line arguments documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-focus
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-focus) = 1.4.0
+Requires:      gem(minitest-focus) = 1.4.1
 
 %description   -n gem-minitest-focus-doc
 Allows you to focus on a few tests with ease without having to use command-line
@@ -58,7 +53,7 @@ arguments documentation files.
 
 Allows you to focus on a few tests with ease without having to use command-line
 arguments. Good for tools like guard that don't have enough brains to understand
-test output. Cf. ZenTest's autotest (an example of a test runner with strong
+test output. Cf. minitest-autotest (an example of a test runner with strong
 testing logic).
 
 Inspired by https://github.com/seattlerb/minitest/issues/213
@@ -70,18 +65,16 @@ Inspired by https://github.com/seattlerb/minitest/issues/213
 
 %if_enabled    devel
 %package       -n gem-minitest-focus-devel
-Version:       1.4.0
+Version:       1.4.1
 Release:       alt1
 Summary:       Allows you to focus on a few tests with ease without having to use command-line arguments development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-focus
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-focus) = 1.4.0
-Requires:      gem(hoe) >= 4.2
+Requires:      gem(minitest-focus) = 1.4.1
+Requires:      gem(hoe) >= 0
 Requires:      gem(rdoc) >= 4.0
-Conflicts:     gem(hoe) >= 5
-Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-minitest-focus-devel
 Allows you to focus on a few tests with ease without having to use command-line
@@ -89,7 +82,7 @@ arguments development package.
 
 Allows you to focus on a few tests with ease without having to use command-line
 arguments. Good for tools like guard that don't have enough brains to understand
-test output. Cf. ZenTest's autotest (an example of a test runner with strong
+test output. Cf. minitest-autotest (an example of a test runner with strong
 testing logic).
 
 Inspired by https://github.com/seattlerb/minitest/issues/213
@@ -129,6 +122,9 @@ Inspired by https://github.com/seattlerb/minitest/issues/213
 
 
 %changelog
+* Mon Aug 17 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
+- ^ 1.4.0 -> 1.4.1
+
 * Mon Nov 03 2025 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
 - ^ 1.3.1p4 -> 1.4.0
 
@@ -137,3 +133,5 @@ Inspired by https://github.com/seattlerb/minitest/issues/213
 
 * Wed Jun 23 2021 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
 - + packaged gem with Ruby Policy 2.0
+- * define explicit dependencies
+

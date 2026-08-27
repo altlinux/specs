@@ -5,40 +5,32 @@
 %define        gemname minitest-autotest
 
 Name:          gem-minitest-autotest
-Version:       1.1.1
-Release:       alt1.1
+Version:       1.2.2
+Release:       alt1
 Summary:       autotest is a continous testing facility meant to be used during development
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/seattlerb/minitest-autotest
 Vcs:           https://github.com/seattlerb/minitest-autotest.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(minitest-server) >= 1.0
-BuildRequires: gem(path_expander) >= 1.0
-BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(minitest) >= 6.0
 BuildRequires: gem(rdoc) >= 4.0
-BuildRequires: gem(hoe) >= 4.2
-BuildConflicts: gem(minitest-server) >= 2
-BuildConflicts: gem(path_expander) >= 2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
+BuildConflicts: gem(minitest) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-Requires:      gem(minitest-server) >= 1.0
-Requires:      gem(path_expander) >= 1.0
-Conflicts:     gem(minitest-server) >= 2
-Conflicts:     gem(path_expander) >= 2
-Provides:      gem(minitest-autotest) = 1.1.1
+Requires:      gem(minitest) >= 6.0
+Conflicts:     gem(minitest) >= 7
+Provides:      gem(minitest-autotest) = 1.2.2
 
+%ruby_regard_path_tokens autotest
 
 %description
 autotest is a continous testing facility meant to be used during development. As
@@ -51,14 +43,14 @@ output parsing. There are no regexps to tweak. There's no cruft or overhead.
 
 
 %package       -n autotest
-Version:       1.1.1
-Release:       alt1.1
+Version:       1.2.2
+Release:       alt1
 Summary:       autotest is a continous testing facility meant to be used during development executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета minitest-autotest
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(minitest-autotest) = 1.1.1
+Requires:      gem(minitest-autotest) = 1.2.2
 
 %description   -n autotest
 autotest is a continous testing facility meant to be used during development
@@ -78,14 +70,14 @@ output parsing. There are no regexps to tweak. There's no cruft or overhead.
 
 %if_enabled    doc
 %package       -n gem-minitest-autotest-doc
-Version:       1.1.1
-Release:       alt1.1
+Version:       1.2.2
+Release:       alt1
 Summary:       autotest is a continous testing facility meant to be used during development documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-autotest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-autotest) = 1.1.1
+Requires:      gem(minitest-autotest) = 1.2.2
 
 %description   -n gem-minitest-autotest-doc
 autotest is a continous testing facility meant to be used during development
@@ -106,20 +98,16 @@ output parsing. There are no regexps to tweak. There's no cruft or overhead.
 
 %if_enabled    devel
 %package       -n gem-minitest-autotest-devel
-Version:       1.1.1
-Release:       alt1.1
+Version:       1.2.2
+Release:       alt1
 Summary:       autotest is a continous testing facility meant to be used during development development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-autotest
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-autotest) = 1.1.1
-Requires:      gem(minitest) >= 5.17.0
+Requires:      gem(minitest-autotest) = 1.2.2
+Requires:      gem(hoe) >= 0
 Requires:      gem(rdoc) >= 4.0
-Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-minitest-autotest-devel
 autotest is a continous testing facility meant to be used during development
@@ -151,27 +139,30 @@ output parsing. There are no regexps to tweak. There's no cruft or overhead.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n autotest
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %_bindir/autotest
 
 %if_enabled    doc
 %files         -n gem-minitest-autotest-doc
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-minitest-autotest-devel
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %endif
 
 
 %changelog
+* Mon Aug 17 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.2-alt1
+- ^ 1.1.1 -> 1.2.2
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt1.1
 - ! spec
 

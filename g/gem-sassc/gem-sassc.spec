@@ -1,58 +1,65 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname sassc
 
 Name:          gem-sassc
-Version:       2.4.0.1
-Release:       alt1.1
+Version:       2.4.0.4.1
+Release:       alt0.1
 Summary:       Use libsass with Ruby!
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/sass/sassc-ruby
 Vcs:           https://github.com/sass/sassc-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
-BuildArch:     noarch
 
+BuildArch:     noarch
 Source:        %name-%version.tar
-Patch:         use-system-libsass.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires: libstdc++-devel
 BuildRequires: libsass-devel
-%if_with check
-BuildRequires: gem(minitest) >= 5.5.1 gem(minitest) < 6
-BuildRequires: gem(minitest-around) >= 0
-BuildRequires: gem(test_construct) >= 0
-BuildRequires: gem(pry) >= 0
+%if_enabled check
 BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(ffi) >= 1.9
+BuildRequires: gem(minitest) >= 5.5.1
+BuildRequires: gem(minitest-around) >= 0
+BuildRequires: gem(pry) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(rake-compiler-dock) >= 0
-BuildRequires: gem(ffi) >= 1.9 gem(ffi) < 2
+BuildRequires: gem(test_construct) >= 0
+BuildConflicts: gem(ffi) >= 2
+BuildConflicts: gem(minitest) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-Requires:      gem(ffi) >= 1.9 gem(ffi) < 2
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
 Requires:      libsass
+Requires:      ruby >= 2.0.0
+Requires:      gem(ffi) >= 1.9
+Conflicts:     gem(ffi) >= 2
 Obsoletes:     ruby-sassc < %EVR
 Provides:      ruby-sassc = %EVR
-Provides:      gem(sassc) = 2.4.0.1
+Provides:      gem(sassc) = 2.4.0.4.1
 
-%ruby_use_gem_version sassc:2.4.0.1
+%ruby_use_gem_version sassc:2.4.0.4.1
 
 %description
 This gem combines the speed of libsass, the Sass C implementation, with the ease
 of use of the original Ruby Sass library.
 
-
+%if_enabled    doc
 %package       -n gem-sassc-doc
-Version:       2.4.0.1
-Release:       alt1.1
+Version:       2.4.0.4.1
+Release:       alt0.1
 Summary:       Use libsass with Ruby! documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sassc
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sassc) = 2.4.0.1
+Requires:      gem(sassc) = 2.4.0.4.1
 
 %description   -n gem-sassc-doc
 Use libsass with Ruby! documentation files.
@@ -62,26 +69,29 @@ of use of the original Ruby Sass library.
 
 %description   -n gem-sassc-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета sassc.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-sassc-devel
-Version:       2.4.0.1
-Release:       alt1.1
+Version:       2.4.0.4.1
+Release:       alt0.1
 Summary:       Use libsass with Ruby! development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sassc
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sassc) = 2.4.0.1
 Requires:      libstdc++-devel
-Requires:      gem(minitest) >= 5.5.1 gem(minitest) < 6
-Requires:      gem(minitest-around) >= 0
-Requires:      gem(test_construct) >= 0
-Requires:      gem(pry) >= 0
+Requires:      gem(sassc) = 2.4.0.4.1
 Requires:      gem(bundler) >= 0
+Requires:      gem(minitest) >= 5.5.1
+Requires:      gem(minitest-around) >= 0
+Requires:      gem(pry) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(rake-compiler-dock) >= 0
+Requires:      gem(test_construct) >= 0
+Conflicts:     gem(minitest) >= 7
 
 %description   -n gem-sassc-devel
 Use libsass with Ruby! development package.
@@ -91,11 +101,11 @@ of use of the original Ruby Sass library.
 
 %description   -n gem-sassc-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета sassc.
+%endif
 
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -107,24 +117,31 @@ of use of the original Ruby Sass library.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-sassc-doc
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-sassc-devel
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Sun Aug 23 2026 Pavel Skrylev <majioa@altlinux.org> 2.4.0.4.1-alt0.1
+- ^ 2.4.0[1] -> 2.4.0p4.1
+
 * Wed Dec 21 2022 Pavel Skrylev <majioa@altlinux.org> 2.4.0.1-alt1.1
 - - extension for gemspec
 
 * Tue Oct 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.4.0.1-alt1
-- ^ 2.4.0 -> 2.4.0.1
+- ^ 2.4.0 -> 2.4.0[1]
 
 * Fri Oct 29 2021 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt3
 - ! patch loading the sassc in runtime

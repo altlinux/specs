@@ -5,7 +5,7 @@
 %define        gemname rack-session
 
 Name:          gem-rack-session
-Version:       2.0.0
+Version:       2.1.2
 Release:       alt1
 Summary:       A session implementation for Rack
 License:       MIT
@@ -16,22 +16,25 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(rack) >= 2.2.2
+BuildRequires: gem(base64) >= 0.1.0
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(minitest-global_expectations) >= 0
 BuildRequires: gem(minitest-sprint) >= 0
+BuildRequires: gem(rack) >= 3.0.0
 BuildRequires: gem(rake) >= 0
-BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(rack) >= 2.2.2
-Provides:      gem(rack-session) = 2.0.0
-
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+Requires:      ruby >= 2.5
+Requires:      gem(base64) >= 0.1.0
+Requires:      gem(rack) >= 3.0.0
+Provides:      gem(rack-session) = 2.1.2
 
 %description
 Session management implementation for Rack.
@@ -39,14 +42,14 @@ Session management implementation for Rack.
 
 %if_enabled    doc
 %package       -n gem-rack-session-doc
-Version:       2.0.0
+Version:       2.1.2
 Release:       alt1
 Summary:       A session implementation for Rack documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rack-session
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rack-session) = 2.0.0
+Requires:      gem(rack-session) = 2.1.2
 
 %description   -n gem-rack-session-doc
 A session implementation for Rack documentation files.
@@ -60,20 +63,20 @@ Session management implementation for Rack.
 
 %if_enabled    devel
 %package       -n gem-rack-session-devel
-Version:       2.0.0
+Version:       2.1.2
 Release:       alt1
 Summary:       A session implementation for Rack development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rack-session
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rack-session) = 2.0.0
+Requires:      gem(rack-session) = 2.1.2
 Requires:      gem(bundler) >= 0
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(minitest-global_expectations) >= 0
 Requires:      gem(minitest-sprint) >= 0
 Requires:      gem(rake) >= 0
-Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest) >= 7
 
 %description   -n gem-rack-session-devel
 A session implementation for Rack development package.
@@ -98,22 +101,25 @@ Session management implementation for Rack.
 %ruby_test
 
 %files
-%doc readme.md
+%doc license.md readme.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-rack-session-doc
-%doc readme.md
+%doc license.md readme.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rack-session-devel
-%doc readme.md
+%doc license.md readme.md
 %endif
 
 
 %changelog
+* Sat Aug 22 2026 Pavel Skrylev <majioa@altlinux.org> 2.1.2-alt1
+- ^ 2.0.0 -> 2.1.2
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - + packaged gem with Ruby Policy 2.0

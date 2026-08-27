@@ -13,7 +13,7 @@
 
 Name: grpc
 Version: 1.80.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -31,7 +31,7 @@ Source103: grpc-%version-third_party-xds.tar
 
 BuildRequires(pre): rpm-macros-cmake
 %if_with ruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb libruby-devel
 %endif
 BuildRequires: cmake ninja-build
 BuildRequires: gcc-c++ libstdc++-devel
@@ -72,7 +72,7 @@ BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(signet) >= 1
 BuildConflicts: gem(simplecov) >= 1
-BuildConflicts: gem(syslog) >= 0.4
+BuildConflicts: gem(syslog) >= 1
 %endif
 %endif
 
@@ -80,14 +80,16 @@ Patch0: grpc-%version-alt.patch
 Patch1: grpc-0001-enforce-system-crypto-policies.patch
 
 %if_with ruby
+%ruby_ignore_path_tokens /linux
+%ruby_ignore_names distribtest,grpc-demo,pubsub,grpc-native-debug
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names distribtest,grpc-demo,pubsub,grpc-native-debug
 %ruby_use_gem_dependency facter >= 4.10,facter < 5
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
+%ruby_use_gem_dependency syslog >= 0.4,syslog < 1
 %endif
 
 %description
@@ -238,7 +240,7 @@ Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(signet) >= 1
 Conflicts:     gem(simplecov) >= 1
-Conflicts:     gem(syslog) >= 0.4
+Conflicts:     gem(syslog) >= 1
 
 %description -n gem-grpc-devel
 Modern, open source, high-performance remote procedure call (RPC) framework
@@ -404,20 +406,6 @@ strip --strip-debug %_cmake__builddir/libgrpc{,_*}.so.*
 %cmake_install
 %if_with ruby
 %ruby_install
-rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemslibdir/grpc-%version/src/ruby/lib/*-linux*
-# %ruby_install creates /usr/bin/grpc_tools_ruby_protoc_plugin as an absolute
-# symlink into the gem. The file is never called directly (only via the
-# grpc_tools_ruby_protoc wrapper which uses a relative path inside the gem),
-# so drop the orphan.
-rm -f %buildroot%_bindir/grpc_tools_ruby_protoc_plugin
-# %ruby_install creates absolute symlinks (grpc_c.so, grpc_tools_ruby_protoc).
-# ALT requires relative symlinks inside %buildroot.
-find %buildroot -type l | while read link; do
-    target=$(readlink "$link")
-    case "$target" in
-    /*) ln -sf "$(realpath -m --relative-to="$(dirname "$link")" "%buildroot$target")" "$link" ;;
-    esac
-done
 %endif
 
 %if_with python3_bindings
@@ -512,6 +500,10 @@ done
 %endif
 
 %changelog
+* Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 1.80.0-alt1.2
+- ! fixed ignore token to purely build the package so-libs
+- ! cleanup the spec
+
 * Thu May 14 2026 Pavel Skrylev <majioa@altlinux.org> 1.80.0-alt1.1
 - ! fixed dep to gem google-protobuf
 - ! fixed some enclosing macros for ruby subsystem

@@ -2,21 +2,19 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.10
+Version:       5.999.11
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
-Url:           https://github.com/rubyworks/setup
+Url:           https://github.com/majioa/setup
 Vcs:           https://github.com/majioa/setup.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
-Autoreq:       no
-Autoprov:      no
 
 Source:        %name-%version.tar
 
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby ruby rake
 %add_findreq_skiplist %_libexecdir/**/*
 %add_findprov_skiplist %_libexecdir/**/*
 Requires:      chrpath
@@ -78,6 +76,14 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.11-alt1
+- * 5.999.10 -> 5.999.11
+- * match_ignore now matches for a flexive form of path tokens var along
+    with nore string names to ignore or regard them
+- ! fixed ignore/ragard names/token parts to ggenerate proper regexp in config
+- ! fixed lost source acquirement for the compiler module
+- + log to show ignored path to installation
+
 * Thu Aug 13 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.10-alt1
 - ^ 5.999.9 -> 5.999.10
 - + added rule for ignore paths to match files for regular and actor's file

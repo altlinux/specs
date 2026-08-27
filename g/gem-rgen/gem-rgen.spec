@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rgen
 
 Name:          gem-rgen
-Version:       0.9.0
+Version:       0.10.2
 Release:       alt1
 Summary:       Ruby Modelling and Generator Framework
 License:       MIT
@@ -12,23 +16,38 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(nokogiri) >= 1.11.2 gem(nokogiri) < 2
-BuildRequires: gem(rake) >= 12.0 gem(rake) < 14
-BuildRequires: gem(minitest) >= 5.0 gem(minitest) < 6
-BuildRequires: gem(minitest-fail-fast) >= 0.1.0 gem(minitest-fail-fast) < 0.2
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
 BuildRequires: gem(andand) >= 1.3.3
+BuildRequires: gem(minitest) >= 5.20.0
+BuildRequires: gem(minitest-fail-fast) >= 0.1.0
+BuildRequires: gem(nokogiri) >= 1.15.4
+BuildRequires: gem(rake) >= 13.0.0
+BuildConflicts: gem(andand) >= 1.4
+BuildConflicts: gem(minitest) >= 7
+BuildConflicts: gem(minitest-fail-fast) >= 1
+BuildConflicts: gem(nokogiri) >= 2
+BuildConflicts: gem(rake) >= 14
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency nokogiri >= 1.12.4,nokogiri < 2
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency andand >= 1.3.3,andand < 2
-%ruby_ignore_names dummy_sass_only,dummy_sass
+%ruby_use_gem_dependency nokogiri >= 1.16,nokogiri < 2
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+%ruby_use_gem_dependency minitest-fail-fast >= 0.2, minitest-fail-fast < 1
+Requires:      gem(andand) >= 1.3.3
+Requires:      gem(minitest) >= 5.20.0
+Requires:      gem(minitest-fail-fast) >= 0.1.0
+Requires:      gem(nokogiri) >= 1.15.4
+Requires:      gem(rake) >= 13.0.0
+Conflicts:     gem(andand) >= 1.4
+Conflicts:     gem(minitest) >= 7
+Conflicts:     gem(minitest-fail-fast) >= 1
+Conflicts:     gem(nokogiri) >= 2
+Conflicts:     gem(rake) >= 14
 Obsoletes:     ruby-rgen < %EVR
 Provides:      ruby-rgen = %EVR
-Provides:      gem(rgen) = 0.9.0
-
+Provides:      gem(rgen) = 0.10.2
 
 %description
 RGen is a framework for Model Driven Software Development (MDSD)in Ruby. This
@@ -52,15 +71,16 @@ RGen features include:
 * Enterprise Architect support (UML1.3/XMI1.1)
 
 
+%if_enabled    doc
 %package       -n gem-rgen-doc
-Version:       0.9.0
+Version:       0.10.2
 Release:       alt1
 Summary:       Ruby Modelling and Generator Framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rgen
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rgen) = 0.9.0
+Requires:      gem(rgen) = 0.10.2
 
 %description   -n gem-rgen-doc
 Ruby Modelling and Generator Framework documentation files.
@@ -87,22 +107,19 @@ RGen features include:
 
 %description   -n gem-rgen-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rgen.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rgen-devel
-Version:       0.9.0
+Version:       0.10.2
 Release:       alt1
 Summary:       Ruby Modelling and Generator Framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rgen
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rgen) = 0.9.0
-Requires:      gem(nokogiri) >= 1.11.2 gem(nokogiri) < 2
-Requires:      gem(rake) >= 12.0 gem(rake) < 14
-Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
-Requires:      gem(minitest-fail-fast) >= 0.1.0 gem(minitest-fail-fast) < 0.2
-Requires:      gem(andand) >= 1.3.3
+Requires:      gem(rgen) = 0.10.2
 
 %description   -n gem-rgen-devel
 Ruby Modelling and Generator Framework development package.
@@ -129,6 +146,7 @@ RGen features include:
 
 %description   -n gem-rgen-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rgen.
+%endif
 
 
 %prep
@@ -144,19 +162,26 @@ RGen features include:
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc CHANGELOG MIT-LICENSE README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-rgen-doc
-%doc README.rdoc
+%doc CHANGELOG MIT-LICENSE README.rdoc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rgen-devel
-%doc README.rdoc
+%doc CHANGELOG MIT-LICENSE README.rdoc
+%endif
 
 
 %changelog
+* Sat Aug 22 2026 Pavel Skrylev <majioa@altlinux.org> 0.10.2-alt1
+- ^ 0.9.0 -> 0.10.2
+
 * Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1
 - ^ 0.8.4 -> 0.9.0
 

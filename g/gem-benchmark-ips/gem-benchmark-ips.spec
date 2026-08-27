@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname benchmark-ips
 
 Name:          gem-benchmark-ips
-Version:       2.10.0
+Version:       2.15.1
 Release:       alt1
 Summary:       A iterations per second enhancement to Benchmark
 License:       MIT
@@ -13,16 +17,22 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(minitest) >= 5.4 gem(minitest) < 6
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
+%if_enabled check
+BuildRequires: gem(minitest) >= 5.4
+BuildRequires: gem(rake) >= 10.5
+BuildRequires: gem(rdoc) >= 4.0
+BuildConflicts: gem(minitest) >= 7
+BuildConflicts: gem(rdoc) >= 7
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency minitest >= 6.0
+Requires:      gem(rake) >= 10.5
 Obsoletes:     ruby-benchmark-ips < %EVR
 Provides:      ruby-benchmark-ips = %EVR
-Provides:      gem(benchmark-ips) = 2.10.0
-
+Provides:      gem(benchmark-ips) = 2.15.1
 
 %description
 Benchmark/ips benchmarks a blocks iterations/second. For short snippets of code,
@@ -30,15 +40,16 @@ ips automatically figures out how many times to run the code to get interesting
 data. No more guessing at random iteration counts.
 
 
+%if_enabled    doc
 %package       -n gem-benchmark-ips-doc
-Version:       2.10.0
+Version:       2.15.1
 Release:       alt1
 Summary:       A iterations per second enhancement to Benchmark documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета benchmark-ips
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(benchmark-ips) = 2.10.0
+Requires:      gem(benchmark-ips) = 2.15.1
 
 %description   -n gem-benchmark-ips-doc
 A iterations per second enhancement to Benchmark documentation
@@ -50,19 +61,23 @@ data. No more guessing at random iteration counts.
 
 %description   -n gem-benchmark-ips-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета benchmark-ips.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-benchmark-ips-devel
-Version:       2.10.0
+Version:       2.15.1
 Release:       alt1
 Summary:       A iterations per second enhancement to Benchmark development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета benchmark-ips
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(benchmark-ips) = 2.10.0
-Requires:      gem(minitest) >= 5.4 gem(minitest) < 6
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
+Requires:      gem(benchmark-ips) = 2.15.1
+Requires:      gem(minitest) >= 5.4
+Requires:      gem(rdoc) >= 4.0
+Conflicts:     gem(minitest) >= 7
+Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-benchmark-ips-devel
 A iterations per second enhancement to Benchmark development
@@ -74,6 +89,7 @@ data. No more guessing at random iteration counts.
 
 %description   -n gem-benchmark-ips-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета benchmark-ips.
+%endif
 
 
 %prep
@@ -89,19 +105,26 @@ data. No more guessing at random iteration counts.
 %ruby_test
 
 %files
-%doc README.md
+%doc History.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-benchmark-ips-doc
-%doc README.md
+%doc History.md LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-benchmark-ips-devel
-%doc README.md
+%doc History.md LICENSE README.md
+%endif
 
 
 %changelog
+* Tue Aug 18 2026 Pavel Skrylev <majioa@altlinux.org> 2.15.1-alt1
+- ^ 2.10.0 -> 2.15.1
+
 * Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 2.10.0-alt1
 - ^ 2.9.1 -> 2.10.0
 
