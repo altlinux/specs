@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.11
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2377,6 +2377,26 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sat Aug 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt3
+- Fix resolve srv records as in windows option default value.
+- Backport fixes from upstream (Samba#14638, Samba#15973, Samba#16067,
+                                Samba#16151, Samba#16093, Samba#16149,
+                                Samba#16153, Samba#16191):
+  + Restrict connection checks to NCACN_NP only, avoid spurious
+    NT_STATUS_TRUSTED_DOMAIN_FAILURE.
+  + Use cached dcname/dcaddr instead of unsafe smbXcli_conn_remote_*()
+    to prevent NULL derefs.
+  + Fail early in init_dc_connection_rpc() if dcname is missing.
+  + Reject local domain as RWDC in wb_irpc_SamLogon to avoid loops.
+  + Do not fallback to NCACN_NP for AD domains (use ncacn_ip_tcp/ncalrpc).
+  + Ignore unsupported anonymous SMB sessions on AD trusts (NTLMv2 or restrict
+    anonymous=2).
+  + Fix vulnerability causing reads of unrelated/non-existing memory.
+  + Prefer DNS (CLDAP) over NetBIOS for DC discovery to correctly detect AD domains.
+  + Parse username strings correctly (UPN and domain-prefixed formats).
+  + Fix undefined behaviour at fork - avoid racing with destroyed condition
+    variable on timeout.
+
 * Fri Jul 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt2
 - Fix samba-devel pkgconfig: drop RPATH from Libs flags to avoid standard
   library path violations (Closes: #60003)
