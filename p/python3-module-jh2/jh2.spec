@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name jh2
 
 Name: python3-module-%pypi_name
-Version: 5.0.13
+Version: 5.0.14
 Release: alt1
 
 Summary: HTTP/2 state-machine based protocol implementation
@@ -12,7 +13,6 @@ Url: https://pypi.org/project/jh2
 Vcs: https://github.com/jawah/h2
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling python3-module-wheel
 BuildRequires: python3-module-maturin rust-cargo
 
 Source: %name-%version.tar
@@ -45,6 +45,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.0.14-alt1
+- 5.0.13 -> 5.0.14
+
 * Wed Jun 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.0.13-alt1
 - Initial build for ALT Linux.
 
