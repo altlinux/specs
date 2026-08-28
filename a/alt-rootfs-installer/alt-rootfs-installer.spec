@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.7.4
+Version: 0.8.0
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,17 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Sun Aug 23 2026 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
+- log: major refactoring (thanks Egor Shestakov).
+- Add --batch-mode option (thanks Egor Shestakov).
+- Add --boot-fstype and --boot-fs-opt support (thanks Vasiliy Doylov).
+- Remove manual invalid arguments handling (thanks Egor Shestakov).
+- Fix bug: always initialize BOOT_FSTYPE to default (thanks Egor Shestakov).
+- luks: add true --batch-mode (thanks Egor Shestakov).
+- luks: add an example of API usage (thanks Egor Shestakov).
+- Add API specification (thanks Egor Shestakov).
+- Refactoring grub-efi-install for compatibility with grub 2.14.
+
 * Mon Jun 29 2026 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
 - Refactoring find of partitions (thanks Egor Shestakov).
 - Fix log to file (thanks Egor Shestakov).
