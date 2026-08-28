@@ -1,6 +1,6 @@
 Name:     createrepo_c
 Version:  1.2.4
-Release:  alt1
+Release:  alt2
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
 Group:    System/Configuration/Packaging
@@ -9,7 +9,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0:  %name-%version.tar
 Patch0:   %name-set-versions.patch
-Patch1:   %name-alt-gcc14.patch
+Patch1:   %name-disttag.patch
+Patch2:   %name-alt-gcc14.patch
 
 ExcludeArch: ppc64le
 
@@ -71,6 +72,7 @@ Python 3 bindings for the createrepo_c library.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 export CMAKE_CXX_FLAGS="%optflags"
@@ -100,6 +102,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt2
+- Preserve disttags in dependency versions in RPM-MD metadata.
+
 * Wed Jun 10 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1
 - New version.
 
