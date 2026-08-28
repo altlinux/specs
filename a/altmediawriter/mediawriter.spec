@@ -3,7 +3,7 @@
 %define appId ru.basealt.altmediawriter
 
 Name:           altmediawriter
-Version:        1.0.11
+Version:        1.1.0
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -15,12 +15,14 @@ Source:         %oname-%version.tar
 
 BuildRequires:  liblzma-devel
 BuildRequires:  libyaml-cpp-devel
-BuildRequires:  qt5-declarative-devel
-BuildRequires:  qt5-x11extras-devel
+BuildRequires:  qt6-declarative-devel >= 6.8
 BuildRequires:  libappstream-glib
 
-Requires:       qt5-quickcontrols
-Requires:       qt5-quickcontrols2
+Requires:       libqt6-quickcontrols2 >= 6.8
+Requires:       libqt6-qmlcore >= 6.8
+Requires:       libqt6-quicklayouts >= 6.8
+Requires:       libqt6-quickdialogs2 >= 6.8
+Requires:       libqt6-quickcontrols2basic >= 6.8
 Requires:       polkit
 Requires:       udisks2
 
@@ -32,7 +34,7 @@ like flash drives or memory cards.
 %setup -n %oname-%version
 
 %build
-%qmake_qt5 PREFIX=%_prefix LIBEXECDIR=%_libexecdir/%name MEDIAWRITER_NAME=%name MEDIAWRITER_VERSION=%version-%release
+%qmake_qt6 PREFIX=%_prefix LIBEXECDIR=%_libexecdir/%name MEDIAWRITER_NAME=%name MEDIAWRITER_VERSION=%version-%release
 %make_build
 
 %install
@@ -60,6 +62,14 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Thu Aug 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.1.0-alt1
+- Port to Qt 6.
+- Automatically select the image variant matching the architecture
+  filter (closes: 58983).
+- Disable online image selection while metadata is loading,
+  keeping local image selection available.
+- Update translations and application icons.
+
 * Fri Sep 19 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.11-alt1
 - New app icon
 
