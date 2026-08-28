@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -60,6 +60,7 @@ The package provides development files for libddm-common.
 %setup
 %patch0 -p1
 %patch1 -p1
+sed -i 's|/etc/default/locale|%_sysconfdir/locale.conf|' services/*.pam
 
 %build
 %DQ6build \
@@ -85,6 +86,7 @@ exit 0
 %files
 %doc LICENSES/ README*.md debian/changelog
 %config(noreplace) %_sysconfdir/pam.d/ddm
+%config(noreplace) %_sysconfdir/pam.d/ddm-autologin
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.deepin.DisplayManager.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/ddm_org.freedesktop.DisplayManager.conf
 %_bindir/ddm
@@ -116,6 +118,9 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %changelog
+* Fri Aug 28 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.8-alt1
+- New version 0.3.8.
+
 * Mon Jul 20 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.7-alt1
 - New version 0.3.7.
 
