@@ -1,8 +1,8 @@
 %define _qt6_qml %_lib/qt6/qml
 
 Name: quickshell
-Version: 0.2.1
-Release: alt3
+Version: 0.3.1
+Release: alt1
 License: GPL-3.0 and LGPL-3.0
 
 Summary: Flexible toolkit for making desktop shells with QtQuick
@@ -34,6 +34,8 @@ BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(pam)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(polkit-agent-1)
 
 Requires: qt6-declarative
 
@@ -51,11 +53,12 @@ to build a complete desktop environment.
 %add_optflags -Wno-error=return-type
 %cmake -GNinja \
     -DDISTRIBUTOR="ALT Linux package" \
-	-DDISTRIBUTOR_DEBUGINFO_AVAILABLE=YES \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DDISTRIBUTOR_DEBUGINFO_AVAILABLE=YES \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DINSTALL_QML_PREFIX=%_qt6_qml \
-	-DINSTALL_QMLDIR=%_qt6_qmldir \
-	-DCRASH_REPORTER=OFF
+    -DINSTALL_QMLDIR=%_qt6_qmldir \
+    -DCRASH_HANDLER=OFF
+
 %cmake_build
 
 %install
@@ -69,6 +72,9 @@ to build a complete desktop environment.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Aug 27 2026 Egor Ignatov <egori@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt3
 - fix FTBFS: add BuildRequires pkgconfig(wayland-cursor)
 
