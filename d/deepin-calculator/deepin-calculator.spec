@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.5.39
+Version: 6.5.40
 Release: alt1
 
 Summary: An easy to use calculator for ordinary users
@@ -73,6 +73,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Fri Aug 28 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.40-alt1
+- New version 6.5.40.
+
 * Mon Aug 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.39-alt1
 - New version 6.5.39.
 
