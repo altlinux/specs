@@ -77,7 +77,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 11.1.900
+Version: 11.2
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -510,6 +510,9 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Fri Aug 28 2026 Mikhail Efremov <sem@altlinux.org> 11.2-alt1
+- Bump version for release.
+
 * Mon Jun 29 2026 Mikhail Efremov <sem@altlinux.org> 11.1.900-alt1
 - alterator: Add a border to the QScrollBar.
 - indexhtml: Add MAX channel link.
