@@ -1,15 +1,15 @@
 Name: stardict
-Version: 3.0.6
-Release: alt2
+Version: 3.0.7
+Release: alt1
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
 # dict/src/lib/ctype-{uca,utf8}.cpp which is GPLv2+
 # dict/src/lib/ctype-uca.cpp which is GPLv2+
 # dict/src/eggaccelerators.{h,cpp which is GPLv2+
-# dict/stardict-plugins/stardict-wordnet-plugin/tenis.h is CPL
+# dict/stardict-plugins/stardict-wordnet-plugin/tenis.h is CPL-1.0
 # refer to README
-License: GPLv3+ and GPLv2+ and CPL
+License: GPLv3+ and GPLv2+ and CPL-1.0
 Group: System/Internationalization
 URL: http://stardict-4.sourceforge.net
 
@@ -22,11 +22,20 @@ Source6: slovnyktodict.awk
 Source7: mueller2stardict.sh
 
 Patch1: stardict-3.0.3-alt-dsl2dict.patch
-Patch2: stardict-3.0.3-alt-linkage.patch
-Patch3: stardict-3.0.4-alt-desktop.patch
+Patch2: stardict-3.0.7-alt-linkage.patch
+Patch3: stardict-3.0.7-alt-desktop.patch
 Patch4: stardict-3.0.5-alt-tabfile.patch
 Patch5: stardict-3.0.6-debian-fix-gcc14-ftbfs.patch
-Patch6: stardict-3.0.6-fix-russian-translation.patch
+Patch6: stardict-3.0.7-fix-russian-translation.patch
+Patch7: stardict-3.0.7-alt-dont-call-gtk_main_quit.patch
+Patch8: stardict-3.0.7-alt-wordnet-ru-desc.patch
+Patch9: Fix-crash-on-prefs-dialog-close.patch
+Patch10: stardict-3.0.7-alt-gettext.patch
+Patch11: stardict-3.0.7-alt-gtkstock.patch
+Patch12: stardict-3.0.7-fix-youdao-crash.patch
+Patch13: stardict-3.0.7-alt-fix-historywin-model-unref.patch
+Patch14: stardict-3.0.7-alt-gdk-backend-x11.patch
+Patch15: stardict-3.0.7-alt-remove_fortify_source.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -35,11 +44,12 @@ Obsoletes: %name-gtk < %version
 Provides: %name-gnome = %version
 Obsoletes: %name-gnome < %version
 
+%define _unpackaged_files_terminate_build 1
+
+%def_disable youdaodict
 %def_disable dictdotcn
 
-# Automatically added by buildreq on Mon May 28 2012
-# optimized out: docbook-dtds fontconfig fontconfig-devel glib2-devel gnome-doc-utils-xslt libICE-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-libxml2 python-modules python-modules-encodings xml-common xml-utils xorg-xproto-devel xsltproc zlib-devel
-BuildRequires: gcc-c++ gnome-doc-utils hardlink imake intltool libSM-devel libenchant-devel libespeak-devel libgucharmap7-devel libmysqlclient-devel libsigc++2-devel libxml2-devel xorg-cf-files
+BuildRequires: gcc-c++ yelp-tools hardlink imake intltool libgtk+3-devel libcanberra-gtk3-devel libSM-devel libenchant-devel libespeak-ng-devel libexpat-devel libgucharmap-devel libjson-glib-devel libmariadb-devel libsigc++2-devel libxml2-devel xorg-cf-files
 
 %description
 StarDict is a Cross-Platform and international dictionary written in
@@ -54,13 +64,32 @@ Group: Development/Other
 This package contains various tools for converting dictionaries in
 stardict format.
 
+%package plugin-cal
+Summary: Calendar plugin
+Group: System/Internationalization
+Requires: %name = %version-%release
+# For cal
+Requires: util-linux
+
+%description plugin-cal
+This package contains cal plugin for stardict.
+
 %package plugin-espeak
-Summary: Espeak plugin
+Summary: Espeak-ng plugin
 Group: System/Internationalization
 Requires: %name = %version-%release
 
 %description plugin-espeak
-This package contains espeak plugin for stardict.
+This package contains espeak-ng plugin for stardict.
+
+%package plugin-fortune
+Summary: Fortune plugin
+Group: System/Internationalization
+Requires: %name = %version-%release
+Requires: fortune
+
+%description plugin-fortune
+This package contains fortune plugin for stardict.
 
 %package plugin-gucharmap
 Summary: Gucharmap plugin
@@ -70,6 +99,15 @@ Requires: %name = %version-%release
 %description plugin-gucharmap
 This package contains gucharmap plugin for stardict.
 
+%package plugin-info
+Summary: Info plugin
+Group: System/Internationalization
+Requires: %name = %version-%release
+Requires: info
+
+%description plugin-info
+This package contains info plugin for stardict.
+
 %package plugin-spell
 Summary: Spell plugin
 Group: System/Internationalization
@@ -77,6 +115,18 @@ Requires: %name = %version-%release
 
 %description plugin-spell
 This package contains spell plugin for stardict.
+
+%if_enabled youdaodict
+%package plugin-youdaodict
+Summary: YouDao.com network dictionary plugin
+Group: System/Internationalization
+Requires: %name = %version-%release
+
+%description plugin-youdaodict
+This package contains youdaodict plugin for stardict:
+query result from YouDao.com website.
+Warning: this package is insecure. Use at your own risk.
+%endif
 
 %package plugin-dictdotcn
 Summary: dictdotcn plugin
@@ -96,8 +146,6 @@ Warning: this package is insecure. Use at your own risk.
 rm -r dict/src/sigc++*
 sed -i '/src\/sigc++/d' dict/configure.ac
 sed -i 's/ sigc++ sigc++config//' dict/src/Makefile.am
-# remove bundled libtool files
-rm */m4/{lt*,libtool}.m4 dict/m4/{gnome-doc-utils,intltool}.m4
 # remove use of gconf macros
 sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 
@@ -107,6 +155,15 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -115,14 +172,18 @@ export CPPFLAGS="$(getconf LFS_CFLAGS)"
 %configure \
  --enable-spell \
  --enable-gucharmap \
- --enable-espeak \
+ --disable-espeak \
+ --enable-espeak-ng \
  --disable-gnome-support \
  --disable-festival \
+ --disable-flite \
  --disable-man \
  --disable-updateinfo \
- --disable-advertisement \
+ --disable-customdict \
  --disable-gpe-support \
  --disable-maemo-support \
+ --disable-multi-cmd \
+ %{subst_enable youdaodict} \
  %{subst_enable dictdotcn} \
  #
 %make_build
@@ -162,6 +223,7 @@ hardlink -cv %buildroot%_datadir
 %_libdir/%name/plugins/stardict_wordnet.*
 %_libdir/%name/plugins/stardict_wordnet_parsedata.*
 %_man1dir/*
+%_datadir/appdata/stardict.appdata.xml
 %doc dict/AUTHORS dict/ChangeLog
 %doc dict/doc/{StarDictFileFormat,FAQ,HACKING,HowToCreateDictionary}
 
@@ -170,14 +232,28 @@ hardlink -cv %buildroot%_datadir
 %exclude %_bindir/%name
 %doc tools/AUTHORS tools/ChangeLog tools/README tools/src/example.ifo
 
+%files plugin-cal
+%_libdir/%name/plugins/stardict_cal.*
+
 %files plugin-espeak
-%_libdir/%name/plugins/stardict_espeak.*
+%_libdir/%name/plugins/stardict_espeak_ng.*
+
+%files plugin-fortune
+%_libdir/%name/plugins/stardict_fortune.*
 
 %files plugin-gucharmap
 %_libdir/%name/plugins/stardict_gucharmap.*
 
+%files plugin-info
+%_libdir/%name/plugins/stardict_info.*
+
 %files plugin-spell
 %_libdir/%name/plugins/stardict_spell.*
+
+%if_enabled youdaodict
+%files plugin-youdaodict
+%_libdir/%name/plugins/stardict_youdaodict.*
+%endif
 
 %if_enabled dictdotcn
 %files plugin-dictdotcn
@@ -185,6 +261,24 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Fri Aug 28 2026 Mikhail Efremov <sem@altlinux.org> 3.0.7-alt1
+- Fixed _FORTIFY_SOURCE redefinition.
+- Wayland fix: preferring X11 GDK backend with user override.
+- Fixed GLib-GObject criticals on shutdown.
+- Fixed youdaodict plugin crash (by radiolamp@).
+- Fixed deprecated GTK_STOCK usage in stardict-editor (by radiolamp@).
+- Fixed build without AM_ICONV (gettext) (by radiolamp@).
+- Fixed crash on prefs dialog close.
+- Fixed License tag.
+- Added 'insecure' note for youdaodict plugin.
+- Don't call gtk_main_quit() with GTK3.
+- Packaged info plugin as subpackage.
+- Packaged fortune plugin as subpackage.
+- Packaged cal plugin as subpackage.
+- Updated patches.
+- Built with GTK3.
+- 3.0.6 -> 3.0.7.
+
 * Wed Dec 17 2025 Anton Midyukov <antohami@altlinux.org> 3.0.6-alt2
 - NMU: Fix russian translations of desktop file.
 
