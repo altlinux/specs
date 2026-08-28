@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.5.2
+Version:  1.5.3
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -42,6 +42,9 @@ bash -n bash-completion.sh
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Aug 28 2026 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- Ignored biarch for c11f1 branch.
+
 * Tue Aug 25 2026 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - Added c10f2 and c11f1 branches.
 
