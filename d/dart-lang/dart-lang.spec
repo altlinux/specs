@@ -1,12 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dart-lang
-Version: 3.10.1
-Release: alt3
+Version: 3.11.6
+Release: alt1
 
 Summary: Dart language
 License: BSD-3-Clause
 Group: Development/Other
+
+URL: https://dart.dev/
+VCS: https://github.com/dart-lang/sdk.git
 
 Source0: %name-%version.tar.zst
 Source1: submodules-%version.tar.zst
@@ -19,8 +22,14 @@ Patch3: unbundle.patch
 Patch4: unbundle-icu.patch
 Patch5: where-we-are-heading-prefixes-are-not-needed.patch
 Patch6: zlib-not-found.patch
-
 Patch7: ninja-multithreading.patch
+Patch8: unbundle-double-conversion.patch
+Patch9: use-system-binaryen.patch
+Patch10: binaryen-stripped-path.patch
+Patch11: drop-fortify-source.patch
+Patch12: drop-clang-flags.patch
+Patch13: skip-sanitizer-copies-on-gcc.patch
+Patch14: guard-libprotozero.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gn
@@ -32,6 +41,8 @@ BuildRequires: samurai
 BuildRequires: python3
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(double-conversion)
+BuildRequires: binaryen
 BuildRequires: dart-lang-sdk
 
 ExclusiveArch: x86_64 aarch64
@@ -76,9 +87,14 @@ echo '' > .git/logs/HEAD
 rm -rf tools/sdks/dart-sdk
 ln -s %_libexecdir/dart tools/sdks/dart-sdk
 
-ln -s %_bindir/gn buildtools/gn
 mkdir -p buildtools/ninja
+ln -s %_bindir/gn buildtools/gn
 ln -s %_bindir/samu buildtools/ninja/ninja
+
+# gclient generates this; recreate it manually since we don't ship it.
+cat > build/config/gclient_args.gni <<'EOF'
+build_devtools_from_sources = false
+EOF
 
 # gclient hooks
 python3 tools/generate_package_config.py
@@ -95,16 +111,21 @@ rg --no-ignore -l 'google-analytics\.com' . \
 rg --no-ignore -l 'UA-[0-9]+-[0-9]+' . \
   | xargs -t -n 1 -P ${JOBS:-2} sed -i -E 's|UA-[0-9]+-[0-9]+|UA-2137-0|g'
 
-# reusable system library settings
-for _lib in icu zlib; do
-  find . -type f -path "*third_party/$_lib/*" \
-    \! -path "*third_party/$_lib/chromium/*" \
-    \! -path "*third_party/$_lib/google/*" \
-    \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
-    -delete
+# Strip bundled sources for libraries we replace with system packages,
+# leaving only build files (replace_gn_files.py needs BUILD.gn to exist).
+for _path in third_party/icu third_party/zlib third_party/double-conversion/src; do
+  if [ -d "$_path" ]; then
+    find "$_path" -type f \
+      \! -path "*chromium/*" \
+      \! -path "*google/*" \
+      \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+      -delete
+  fi
+  mkdir -p "$_path"
+  [ -f "$_path/BUILD.gn" ] || : > "$_path/BUILD.gn"
 done
 
-python3 build/linux/unbundle/replace_gn_files.py --system-libraries icu zlib
+python3 build/linux/unbundle/replace_gn_files.py --system-libraries icu zlib double-conversion binaryen
 
 %build
 python3 ./tools/build.py \
@@ -112,7 +133,7 @@ python3 ./tools/build.py \
   --arch="%dart_arch" \
   --mode=release \
   --no-verify-sdk-hash \
-  --gn-args='dart_embed_icu_data=false dart_snapshot_kind="app-jit" dart_sysroot=""' \
+  --gn-args='dart_embed_icu_data=false dart_snapshot_kind="app-jit" dart_sysroot="" dart_support_perfetto=false' \
   -j%__nprocs \
   create_sdk runtime
 
@@ -161,6 +182,14 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart/lib
 
 %changelog
+* Wed Aug 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.11.6-alt1
+- 3.11.6.
+- Update spec:
+  + add URL and VCS;
+- Changes by shaba@:
+  + build with system double-conversion and binaryen;
+  + build without perfetto support (and without protobuf).
+
 * Wed Aug 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.10.1-alt3
 - Fix dart wrapper.
 

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define flutter_channel stable
-%define dart_version 3.10.1
-%define llvm_version 21.1
+%define dart_version 3.11.6
+%define llvm_version 22.1
 
 Name: flutter
-Version: 3.38.2
+Version: 3.41.9
 Release: alt1
 
 Summary: Flutter framework
@@ -13,7 +13,7 @@ License: BSD-3-Clause
 Group: Development/Other
 
 URL: https://github.com/flutter/flutter.git
-VCS: https://github.com/flutter/flutter.git
+VCS: https://flutter.dev
 
 # Original spec and patches — https://gitlab.alpinelinux.org/alpine/aports/-/tree/master/testing/flutter
 
@@ -23,18 +23,19 @@ VCS: https://github.com/flutter/flutter.git
 %define gradle_wrapper_version fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
 
 Source0: %name-%version.tar.zst
-Source1: %name-%version-vendor.tar
-Source2: flutter
+Source1: submodules-%version.tar.zst
+Source2: dart-vendor-%version.tar.zst
+Source3: flutter-wrapper.sh
 # https://storage.googleapis.com/flutter_infra_release/flutter/fonts/%material_fonts_version/fonts.zip
-Source3: fonts.zip
+Source4: fonts.zip
 # https://storage.googleapis.com/flutter_infra_release/gradle-wrapper/%gradle_wrapper_version/gradle-wrapper.tgz
-Source4: gradle-wrapper.tgz
+Source5: gradle-wrapper.tgz
 
 Patch0: alpine-target.patch
 Patch1: content-unaware-hash.patch
 Patch2: doctor.patch
 Patch3: git-revision.patch
-Patch4: libstdc++13.patch
+# Patch4: libstdc++13.patch
 Patch5: musl-no-execinfo.patch
 Patch6: musl-no-mallinfo.patch
 Patch7: no-cache.patch
@@ -194,7 +195,7 @@ Requires: flutter-tool = %EVR
 %summary.
 
 %prep
-%setup -a1
+%setup -a1 -a2
 %autopatch -p1
 
 echo -n "%version" > version
@@ -270,6 +271,9 @@ ln -sf flutter/third_party/vulkan-deps/glslang/src/SPIRV/spirv.hpp11 flutter/thi
 # Fix build fail: undeclared memset
 sed -i '1s|^|#include <cstring>\n|' flutter/fml/logging.h
 
+# Fix build fail: redefinitions
+sed -i 's|G_DEFINE_AUTOPTR_CLEANUP_FUNC(PangoContext, g_object_unref)||' flutter/shell/platform/linux/fl_accessible_text_field.cc
+
 for mode in %modes; do
   python3 ./flutter/tools/gn \
     --no-goma \
@@ -311,7 +315,7 @@ dart --verbosity=error \
 sed -i 's|\(%_builddir/%name-%version/%_libexecdir/%name/pub_cache\)/packages/flutter_tools/.pub_cache|\1|' packages/flutter_tools/.dart_tool/package_config.json
 
 %install
-install -Dm755 %SOURCE2 %buildroot%_libexecdir/%name/bin/flutter
+install -Dm755 %SOURCE3 %buildroot%_libexecdir/%name/bin/flutter
 mkdir -p %buildroot%_bindir
 ln -s ../lib/%name/bin/flutter %buildroot%_bindir/%name
 
@@ -338,10 +342,10 @@ mkdir -p %buildroot%_libexecdir/%name/bin/internal/
 echo -n %engine_version > %buildroot%_libexecdir/%name/bin/internal/engine.version
 
 mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/material_fonts
-unzip %SOURCE3 -d %buildroot%_libexecdir/%name/bin/cache/artifacts/material_fonts
+unzip %SOURCE4 -d %buildroot%_libexecdir/%name/bin/cache/artifacts/material_fonts
 
 mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
-tar xf %SOURCE4 -C %buildroot%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
+tar xf %SOURCE5 -C %buildroot%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
 
 for mode in %modes; do
   case $mode in
@@ -400,5 +404,14 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 %_libexecdir/%name/examples
 
 %changelog
+* Fri Aug 28 2026 David Sultaniiazov <x1z53@altlinux.org> 3.41.9-alt1
+- 3.41.9.
+- Rebuild with Git history.
+- Update plan.
+- Remove update script.
+- Update spec:
+  + move patches to `.gear/patches`;
+  + use `tar.zst` instead of `tar` in `rules`.
+
 * Thu Nov 27 2025 David Sultaniiazov <x1z53@altlinux.org> 3.38.2-alt1
 - Initial build.
