@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri Aug 28 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
+- Add static license ALT Domain IPA 11.2 License.
+
 * Mon Aug 10 2026 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt1
 - Add licenses for ALT SP FSB (thx Vladimir Cherny).
 
