@@ -1,6 +1,6 @@
 Name: libsolv
 Version: 0.7.39
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -10,6 +10,7 @@ Url:     https://github.com/openSUSE/libsolv
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: libsolv-rpmset.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -20,6 +21,7 @@ BuildRequires: libxml2-devel
 BuildRequires: bzlib-devel
 BuildRequires: liblzma-devel
 BuildRequires: libzstd-devel
+BuildRequires: librpmset-devel
 
 %description
 This is libsolv, a free package dependency solver using a satisfiability
@@ -41,6 +43,7 @@ Group: System/Configuration/Packaging
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake -GNinja \
@@ -49,6 +52,7 @@ Group: System/Configuration/Packaging
        -DENABLE_RPMDB_LIBRPM=ON \
        -DENABLE_RPMPKG_LIBRPM=ON \
        -DENABLE_RPMMD=ON \
+       -DENABLE_RPMSET=ON \
        -DENABLE_COMPS=ON \
        -DENABLE_COMPLEX_DEPS=ON \
        -DWITH_LIBXML2=ON \
@@ -77,6 +81,9 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Mon Aug 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.2
+- Add RPM set-version support.
+
 * Fri Aug 14 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.1
 - Enable Fedora comps support.
 
