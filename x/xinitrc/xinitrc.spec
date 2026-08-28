@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt6
+Release: alt7
 
 Summary: The default startup scripts for the X Window System
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Thu Aug 27 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt7
+- Xsession: replace condition for SERANGE with case by mask.
+
 * Wed Aug 26 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt6
 - Xsession: fix run with predefined context of selinux.
 
