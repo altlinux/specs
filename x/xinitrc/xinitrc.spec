@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt7
+Release: alt8
 
 Summary: The default startup scripts for the X Window System
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Fri Aug 28 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt8
+- Xsession: hide sechooser behind variable from shell.req (Closes: 60306).
+
 * Thu Aug 27 2026 Anton Midyukov <antohami@altlinux.org> 2.4.47-alt7
 - Xsession: replace condition for SERANGE with case by mask.
 
