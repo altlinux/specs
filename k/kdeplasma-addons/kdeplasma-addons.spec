@@ -16,7 +16,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -46,6 +46,7 @@ Patch2: alt-def-dict.patch
 Patch3: alt-displayname-filter.patch
 Patch4: alt-del-ions.patch
 Patch5: alt-qmk-via-api-hidraw.patch
+Patch6: alt-word-filter.patch
 # FC
 Patch100: kdeplasma-addons-6.7.0-qmk-via-api-0.8.patch
 
@@ -136,6 +137,7 @@ Requires: %name-common >= %EVR
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 #
 %patch100 -p1
 
@@ -230,6 +232,9 @@ touch touch-%_arch
 
 
 %changelog
+* Fri Aug 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- add unwanted words filter for online dictionaries
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
