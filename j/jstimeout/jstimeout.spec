@@ -1,7 +1,7 @@
 %global import_path github.com/0x90shell/jstimeout
 
 Name:    jstimeout
-Version: 1.0.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Auto-disconnect idle Bluetooth gamepads after a configurable timeout
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
+Requires: systemd-filesystem
 
 %description
 jstimeout automatically disconnects idle Bluetooth gamepads after a
@@ -53,5 +54,8 @@ install -pm 644 jstimeout.service %buildroot%_userunitdir/%name.service
 %_userunitdir/%name.service
 
 %changelog
+* Fri Aug 28 2026 Sergey Palcheh <minergenon@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Fri Aug 21 2026 Sergey Palcheh <minergenon@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
