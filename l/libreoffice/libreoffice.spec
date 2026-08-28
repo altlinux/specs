@@ -53,7 +53,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 4.2
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -98,6 +98,27 @@ Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 
+Patch101: 0001-tdf-170236-sw-import-comment-anchored-inside-a-math-.patch
+Patch102: 0001-tdf-170642-FILEOPEN-DOC-Incorrect-first-line-indent-.patch
+Patch103: 0002-tdf-170902-sc-don-t-show-autofilter-buttons-in-ODS-w.patch
+Patch104: 0003-tdf-172746-sc-show-align-bottom-as-active-for-Standa.patch
+Patch105: tablestyles-backport-26.2.patch
+Patch106: alt-tdf159264-stage1-grandtotal-dep-full-with-tests.patch
+Patch107: alt-tdf159264-stage2-pivot-styles-full-with-tests.patch
+Patch108: alt-tdf171002-endnote-docx-save-full-with-tests.patch
+Patch110: alt-tdf171176-docx-tight-wrap-distance-full-with-tests.patch
+Patch112: alt-tdf172156-file-hang-issue-full-with-tests.patch
+Patch113: footnote-web-crash-fix-26.2.4.2-backport.patch
+Patch114: 0004-tdf-172748-oox-export-Basic-macros-from-documents-cr.patch
+Patch115: tdf-146973-sw-keep-date-field-locale-over-DOCX-round.patch
+Patch116: tdf-163391-DOCX-import-linked-VML-images.patch
+Patch117: tdf170898-tablestyle-precedence.patch
+Patch118: tdf172540-uitest.patch
+Patch119: tdf172776-xlsx-cell-font-language-26.2.4.2-backport.patch
+Patch120: tdf172898-docx-image-hairline-border.patch
+Patch121: all-fixes.patch
+Patch122: extra-patch.patch
+
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
@@ -127,6 +148,7 @@ Patch700: alt-700-external-project-concurrency.patch
 %filter_from_requires /com[.]sun[.]/d
 %filter_from_requires /open/d
 %filter_from_requires /valgrind/d
+%filter_from_requires /x-terminal-emulator/d
 %add_python3_req_skip pyuno strings officehelper uno unohelper
 %add_python3_req_skip usr.src.tmp.libreoffice-buildroot.usr.%_lib.libreoffice.program.wizards.ui.event.ListDataListener
 
@@ -237,6 +259,9 @@ BuildRequires: libmd4c-devel
 BuildRequires: libfast_float-devel
 BuildRequires: perl-Time-Piece
 
+# For git apply for binary patches
+BuildRequires: git-core
+
 %if_without python
 BuildRequires: python3-dev
 %endif
@@ -274,6 +299,7 @@ Obsoletes: LibreOffice-mimetypes < %EVR
 Obsoletes: LibreOffice-still-mimetypes < %EVR
 Obsoletes: LibreOffice4-mimetypes
 # Other runtime requirements
+Requires: libreoffice-core = %EVR
 Requires: gst-libav
 %if_with java
 Requires: java-headless >= 9.0.0
@@ -458,6 +484,27 @@ echo Direct build
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+git apply %PATCH101
+git apply %PATCH102
+git apply %PATCH103
+git apply %PATCH104
+git apply %PATCH105
+git apply %PATCH106
+git apply %PATCH107
+git apply %PATCH108
+git apply %PATCH110
+git apply %PATCH112
+git apply %PATCH113
+git apply %PATCH114
+git apply %PATCH115
+git apply %PATCH116
+git apply %PATCH117
+git apply %PATCH118
+git apply %PATCH119
+git apply %PATCH120
+git apply %PATCH121
+git apply %PATCH122
 
 ## ALT apply patches
 %patch401 -p0
@@ -890,6 +937,11 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Jul 31 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.4.2-alt2
+- Added fixes submitted to upstream.
+- libreoffice needed libreoffice-core.
+- Ignored auto requested x-terminal-emulator.
+
 * Sun Jun 07 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.4.2-alt1
 - New version.
 
