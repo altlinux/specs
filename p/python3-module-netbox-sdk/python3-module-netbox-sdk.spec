@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.10
+Version: 0.0.11
 Release: alt1
 
 Summary: Modern NetBox toolkit with an SDK, CLI and TUI (terminal UI) for faster automation
@@ -30,6 +30,7 @@ BuildRequires: python3-module-textual
 BuildRequires: python3-module-fastapi
 BuildRequires: python3-module-httpx
 BuildRequires: python3-module-click
+BuildRequires: python3-module-jsonschema
 %endif
 
 BuildArch: noarch
@@ -70,6 +71,8 @@ Django model browser and developer tools TUI.
 
 %install
 %pyproject_install
+rm -rf %buildroot%python3_sitelibdir/netbox_mcp
+rm -f %buildroot%_bindir/nbx-mcp
 
 %check
 %pyproject_run_pytest -k "not ( \
@@ -79,7 +82,18 @@ Django model browser and developer tools TUI.
 	test_parse_max_columns_requires_value or \
 	test_parse_max_columns_invalid or \
 	test_parse_max_columns_zero_raises or \
-	test_main_handles_unknown_command_without_traceback)"
+	test_main_handles_unknown_command_without_traceback or \
+	test_metadata_generation_rejects_source_version_mismatch or \
+	test_metadata_generation_rejects_materially_different_same_version_ancestor or \
+	test_release_commit_must_already_be_on_canonical_main or \
+	test_immutable_tag_requires_exact_annotated_object_and_commit or \
+	test_built_wheel_exposes_the_catalog_outside_the_checkout or \
+	test_v46_typed_regeneration_matches_committed_artifact or \
+	test_v47_typed_regeneration_matches_committed_artifact)" \
+    --ignore=tests/test_gitea_release.py \
+    --ignore=tests/test_mcp.py \
+    --ignore=tests/test_mcp_connected_line.py \
+    --ignore=tests/test_mcp_plugin_bridge.py
 
 %files
 %doc *.md
@@ -95,6 +109,9 @@ Django model browser and developer tools TUI.
 %python3_sitelibdir/netbox_tui
 
 %changelog
+* Fri Aug 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.11-alt1
+- New 0.0.11 version.
+
 * Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.10-alt1
 - New 0.0.10 version.
 

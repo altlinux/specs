@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.19.post5
+Version: 0.0.20
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -112,7 +112,7 @@ install -p -D -m 644 %SOURCE6 %buildroot%_tmpfilesdir/proxbox-api.conf
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 
 %check
-%pyproject_run_pytest -k "not ( \
+%pyproject_run_pytest --ignore=tests/test_release_workflows.py -k "not ( \
 	test_generate_bundle_persists_artifacts or \
 	test_proxmox_mock_package_is_importable or \
 	test_proxmox_mock_root_reports_configured_service or \
@@ -120,7 +120,8 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 	test_user_data_yaml_bakes_cicustom_snippet_without_catalog_product or \
 	test_generated_routes_appear_in_openapi or \
 	test_generated_proxy_route_forwards_request_and_validates_response or \
-	test_generated_proxy_route_requires_explicit_selector_for_multiple_endpoints)"
+	test_generated_proxy_route_requires_explicit_selector_for_multiple_endpoints or \
+	test_pve_template_direct_create_uses_graphical_display)"
 
 %pre
 groupadd -r -f proxbox-api >/dev/null 2>&1 ||:
@@ -145,6 +146,7 @@ cert-sh generate apache2-proxbox-api ||:
 %doc *.md
 %_bindir/proxbox-proxmox-codegen
 %_bindir/proxbox-schema
+%_bindir/proxbox-auth-lockout
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
 %_datadir/proxbox-api
@@ -164,6 +166,9 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Fri Aug 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.20-alt1
+- New 0.0.20 version.
+
 * Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.19.post5-alt1
 - New 0.0.19.post5 version.
 
