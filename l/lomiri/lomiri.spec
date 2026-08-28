@@ -10,7 +10,7 @@
 
 Name: lomiri
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Shell of the Lomiri Operating Environment
 License: GPL-3.0
@@ -116,13 +116,15 @@ Requires: qt5-graphicaleffects
 # qt5/qml/QtMultimedia/qmldir
 Requires: libqt5-multimedia
 
+Requires: qt5-wayland
+
 %description
 Shell of the Lomiri Operating environment optimized for touch based
 human-machine interaction, but also supporting convergence (i.e.
 switching between tablet/phone and desktop mode). Lomiri is the user
 shell driving Ubuntu Touch based mobile devices.
 
-This package provides the Lomiri shell. 
+This package provides the Lomiri shell.
 
 %package -n lib%{name}
 Summary: %{name} shared library
@@ -209,24 +211,6 @@ EOF
 %post
 %systemd_user_post lomiri-indicators.target
 
-echo "NOTE: upstream project does not provide systemd preset for user units,"
-echo "      so you need to run the below commands to enable all essential"
-echo "      systemd user units of the Lomiri environment as normal user:"
-echo " "
-echo "systemctl --user enable --now ayatana-indicator-bluetooth.service"
-echo "systemctl --user enable --now ayatana-indicator-display.service"
-echo "systemctl --user enable --now ayatana-indicator-keyboard.service"
-echo "systemctl --user enable --now ayatana-indicator-messages.service"
-echo "systemctl --user enable --now ayatana-indicator-power.service"
-echo "systemctl --user enable --now ayatana-indicator-session.service"
-echo "systemctl --user enable --now ayatana-indicator-sound.service"
-echo "systemctl --user enable --now lomiri-indicator-datetime.service"
-echo "systemctl --user enable --now lomiri-indicator-network.service"
-echo "systemctl --user enable --now lomiri-url-dispatcher-update-system-dir.{service,path}"
-echo "systemctl --user enable --now lomiri-url-dispatcher-update-user-dir.{service,path}"
-echo " "
-echo "And then you can login to the Lomiri session using preffered login manager."
-
 %preun
 %systemd_user_preun lomiri-indicators.target
 
@@ -280,6 +264,9 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 %_datadir/dbus-1/interfaces/com.lomiri.shell.AccountsService.xml
 
 %changelog
+* Fri Aug 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt2
+* Updated systemd user target.
+
 * Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt1
 - New version 0.6.1.
 

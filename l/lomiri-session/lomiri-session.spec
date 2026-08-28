@@ -5,7 +5,7 @@
 
 Name: lomiri-session
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Integrate Lomiri Desktop Session into Display Managers
 License: LGPL-3.0
@@ -84,6 +84,9 @@ sed -i "s|^source /etc/default/lomiri-desktop-session|#source /etc/default/lomir
 %_libexecdir/lomiri-session/run-systemd-session
 
 %changelog
+* Fri Aug 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.4-alt2
+* Updated systemd user unit.
+
 * Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.4-alt1
 - New version 0.4.
 
