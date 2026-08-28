@@ -8,7 +8,7 @@
 
 Name: kdeconnect
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Communications
@@ -19,6 +19,7 @@ License: LGPL-2.1-or-later
 Provides: kde5-connect = %EVR
 Obsoletes: kde5-connect < %EVR
 Provides: kde-connect = %version
+Provides: %rname = %version
 
 Requires: libqt6-quickparticles
 Requires: /usr/bin/sshfs qca-qt6-ossl
@@ -29,7 +30,7 @@ Requires: libkf6peoplewidgets
 #Requires: kpeoplevcard
 
 Source: %rname-%version.tar
-Patch: alt-plasmoid-placement.patch
+Patch1: alt-def-bluetooth.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libssl-devel
@@ -93,7 +94,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
-#%patch -p1
+%patch1 -p1
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -147,6 +148,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Fri Aug 28 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- disable bluetooth by default
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
