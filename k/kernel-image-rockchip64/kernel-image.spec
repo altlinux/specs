@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.46
+%define kernel_sublevel	.47
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -214,21 +214,20 @@ Patch0171: rk3588-1040-board-khadas-edge2-add-nodes.patch
 Patch0172: rk3588-1041-board-khadas-edge2-mcu.patch
 Patch0173: rk3588-1051-board-nanopc-t6-fan-support.patch
 Patch0174: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
-Patch0175: rk3588-1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
-Patch0176: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
-Patch0177: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
-Patch0178: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
-Patch0179: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
-Patch0180: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
-Patch0181: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
-Patch0182: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
-Patch0183: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
-Patch0184: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
-Patch0185: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
-Patch0186: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
-Patch0187: rk35xx-montjoie-crypto-v2-rk35xx.patch
-Patch0188: temporary-workaround-dma-reset.patch
-Patch0189: wifi-4003-add-bcm43342-chip.patch
+Patch0175: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
+Patch0176: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
+Patch0177: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
+Patch0178: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
+Patch0179: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
+Patch0180: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
+Patch0181: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
+Patch0182: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
+Patch0183: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
+Patch0184: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
+Patch0185: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
+Patch0186: rk35xx-montjoie-crypto-v2-rk35xx.patch
+Patch0187: temporary-workaround-dma-reset.patch
+Patch0188: wifi-4003-add-bcm43342-chip.patch
 
 # ALT Patches
 Patch1000: 1000-drm_rockchip_dwhdmiqp-rockchip_attach_next_bridge_to_the_HDMI_bridge.patch
@@ -574,6 +573,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Aug 28 2026 Alexei Takaseev <taf@altlinux.org> 6.18.47-alt1
+- v6.18.47 (2026-08-27).
+
 * Mon Aug 24 2026 Alexei Takaseev <taf@altlinux.org> 6.18.46-alt1
 - v6.18.46 (2026-08-23).
 
