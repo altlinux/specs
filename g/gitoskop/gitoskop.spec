@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -12,7 +12,7 @@ Vcs: https://altlinux.space/rider/gitoskop.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: rust rust-cargo gcc
+BuildRequires: rust rust-cargo gcc make
 # test fixtures shell out to git
 BuildRequires: git-core
 
@@ -93,6 +93,9 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Sat Aug 29 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
+- 1.4.1 -> 1.5.0
+
 * Thu Aug 20 2026 Anton Farygin <rider@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.1
 - webui: spec section jump strip now scrolls to the section on click and
