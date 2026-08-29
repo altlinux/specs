@@ -5,7 +5,7 @@
 
 Name: gnome-shell-extension-v-shell
 Version: 50.8
-Release: alt2
+Release: alt3
 Summary: Customize the GNOME Shell overview and workspaces
 License: GPL-3.0
 Group: Graphical desktop/GNOME
@@ -14,6 +14,8 @@ VCS: https://github.com/G-dH/vertical-workspaces
 
 Source: %name-%version.tar
 Source1: ru.po
+
+Patch: alt-fix-prefs-layout.patch
 
 BuildArch: noarch
 
@@ -27,6 +29,7 @@ layout, supporting both horizontal and vertical workspaces.
 
 %prep
 %setup
+%patch -p1
 cp -p %SOURCE1 po/ru.po
 echo ru >> po/LINGUAS
 
@@ -44,6 +47,10 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/%schema.gschema.xml
 
 %changelog
+* Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.8-alt3
+- Fixed preferences layout with long Russian labels (closes: #60307).
+- Completed Russian translation (closes: #60308).
+
 * Thu Aug 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.8-alt2
 - Added Russian translation.
 
