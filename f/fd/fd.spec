@@ -1,10 +1,10 @@
 Name: fd
-Version: 10.4.2
+Version: 10.5.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
 Group: File tools
-Url: https://crates.io/crates/fd-find
+URL: https://crates.io/crates/fd-find
 VCS: https://github.com/sharkdp/fd
 
 Source: %name-%version.tar
@@ -55,6 +55,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 10.5.0-alt1
+- Updated to version 10.5.0.
+
 * Wed Mar 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 10.4.2-alt1
 - Updated to version 10.4.2.
 
