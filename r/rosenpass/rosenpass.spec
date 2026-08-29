@@ -4,16 +4,19 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: rosenpass
-Version: 0.2.2
-Release: alt2
+Version: 0.2.3
+Release: alt1
 Summary: Post-quantum secure VPN with WireGuard
 License: MIT or Apache-2.0
 Group: Security/Networking
-Url: https://rosenpass.eu/
-Vcs: https://github.com/rosenpass/rosenpass
+URL: https://rosenpass.eu
+VCS: https://github.com/rosenpass/rosenpass
 
 Source: %name-%version.tar
-BuildRequires: rust-cargo
+Source1: vendor.tar
+
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: libsodium-devel
 BuildRequires: clang-devel
 BuildRequires: cmake
@@ -30,29 +33,8 @@ upstream tracker:
   https://github.com/rosenpass/rosenpass/issues
 
 %prep
-%setup
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
-
+%setup -a1
+%rust_prep
 %ifarch armh
 # Add armh to the list of supported arm32 arches.
 sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/'	vendor/oqs-sys/liboqs/CMakeLists.txt
@@ -60,19 +42,16 @@ sed -i 's!,"liboqs/CMakeLists.txt":"[^"]\+",!,!'	vendor/oqs-sys/.cargo-checksum.
 %endif
 
 %build
-cargo build %_smp_mflags --offline --release
+%rust_build
 
 %install
-install -Dp target/release/rosenpass -t %buildroot%_bindir
+%rust_install
 install -Dp rp -t %buildroot%_bindir
 install -Dpm644 doc/rosenpass.1 -t %buildroot%_man1dir
 install -Dpm644 doc/rp.1 -t %buildroot%_man1dir
 
-%define _customdocdir %_docdir/%name
-
 %check
-cargo test %_smp_mflags --release --no-fail-fast --locked
-
+%rust_test
 # Also manual test for rosenpass.
 PATH=%buildroot%_bindir:$PATH
 rosenpass gen-keys --secret-key r1 --public-key p1
@@ -91,6 +70,9 @@ kill %%1 %%2
 %_man1dir/rp.1*
 
 %changelog
+* Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.3-alt1
+- Updated to version 0.2.3.
+
 * Tue Jul 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.2-alt2
 - Added conflict with RTags package (closes: #59818).
 
