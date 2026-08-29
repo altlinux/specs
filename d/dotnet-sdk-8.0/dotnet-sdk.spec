@@ -4,19 +4,20 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define preview %nil
-%define _dotnet_coreversion 8.0.21
-%define _dotnet_sdkversion 8.0.121%preview
 
-%define _dotnet_corerelease 8.0.21
+%define _dotnet_coreversion 8.0.25
+%define _dotnet_sdkversion 8.0.125
+
+%define _dotnet_corerelease 8.0.25
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.121
-%define _dotnet_templatesrelease %_dotnet_corerelease
+%define _dotnet_sdkrelease 8.0.125
+%define _dotnet_corerelease1 8.0.25
+%define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
-%define _dotnet_coreshortrelease 8.0.21%preview
-%define _dotnet_sdkshortrelease 8.0.121%preview
+
+
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
@@ -39,19 +40,19 @@ BuildRequires: rpm-build-intro
 # TODO
 BuildRequires(pre): rpm-macros-dotnet
 
-BuildRequires: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
+BuildRequires: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkversion
 #BuildRequires: dotnet-bootstrap-%_dotnet_major = %_dotnet_corerelease
-#BuildRequires: dotnet-host >= %_dotnet_coreshortrelease
+#BuildRequires: dotnet-host >= %_dotnet_coreversion
 
-BuildRequires: dotnet-apphost-pack-%_dotnet_major = %_dotnet_coreshortrelease
+BuildRequires: dotnet-apphost-pack-%_dotnet_major = %_dotnet_coreversion
 
 # SDK unusable without dotnet CLI
-Requires: dotnet-%_dotnet_major = %_dotnet_coreshortrelease
+Requires: dotnet-%_dotnet_major = %_dotnet_coreversion
 
-Requires: dotnet-runtime-%_dotnet_major = %_dotnet_coreshortrelease
-Requires: dotnet-apphost-pack-%_dotnet_major = %_dotnet_coreshortrelease
-Requires: dotnet-aspnetcore-runtime-%_dotnet_major = %_dotnet_coreshortrelease
-Requires: dotnet-aspnetcore-targeting-pack-%_dotnet_major = %_dotnet_coreshortrelease
+Requires: dotnet-runtime-%_dotnet_major = %_dotnet_coreversion
+Requires: dotnet-apphost-pack-%_dotnet_major = %_dotnet_coreversion
+Requires: dotnet-aspnetcore-runtime-%_dotnet_major = %_dotnet_coreversion
+Requires: dotnet-aspnetcore-targeting-pack-%_dotnet_major = %_dotnet_coreversion
 Requires: dotnet-targeting-pack-%_dotnet_major = %version-%release
 
 Requires: netstandard-targeting-pack-2.1 = %_dotnet_netstandartrelease
@@ -77,7 +78,7 @@ Just copying managed code now.
 # Note: one for all versions
 %package -n netstandard-targeting-pack-2.1
 Version: %_dotnet_netstandartrelease
-Release: alt2
+Release: alt3
 Group: Development/Other
 Summary: NETStandard.Library.Ref 2.1
 
@@ -165,6 +166,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.125-alt1
+- .NET SDK 8.0.125
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.121-alt1
 - .NET SDK 8.0.121 release
 - fixed CVEs:

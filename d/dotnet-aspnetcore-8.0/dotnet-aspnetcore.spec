@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define preview %nil
-%define _dotnet_coreversion 8.0.21%preview
-%define _dotnet_corerelease 8.0.21
-%define _dotnet_aspnetcorerelease 8.0.21
-%define _dotnet_aspnetcoreapprefrelease 8.0.21
-%define _dotnet_coreshortrelease %_dotnet_corerelease%preview
+
+%define _dotnet_coreversion 8.0.25
+%define _dotnet_corerelease 8.0.25
+%define _dotnet_corerelease1 8.0.25
+%define _dotnet_aspnetcorerelease %_dotnet_corerelease1
+%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
+
 
 # FIXME: build from sources
 %def_with bootstrap
@@ -29,7 +30,7 @@ BuildRequires(pre): rpm-macros-dotnet
 # TODO = %version
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreshortrelease
+BuildRequires: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreversion
 #= %version
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 %else
@@ -131,6 +132,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.25-alt1
+- ASP.NET Core 8.0.25
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
 - ASP.NET 8.0.21 release
 - fixed CVEs:

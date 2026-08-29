@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable dotnet_host
+%def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.21
+%define _dotnet_corerelease 8.0.25
 # used for build
-%define _dotnet_sdkrelease 8.0.121
-%define preview %nil
-%define _dotnet_coreversion 8.0.21%preview
-%define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
+%define _dotnet_sdkrelease 8.0.125
+
+%define _dotnet_coreversion 8.0.25
+%define _dotnet_sdkversion 8.0.125
+
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -67,7 +68,7 @@ BuildRequires: libstdc++-devel
 %if_with libunwind
 BuildRequires: libunwind-devel >= 1.5
 %endif
-BuildRequires: liblttng-ust-devel liblwp-devel
+BuildRequires: liblttng-ust-devel
 
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
@@ -78,7 +79,7 @@ Requires: libicu
 Requires: libssl >= 1.1
 
 %if_with bootstrap
-BuildRequires: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
+BuildRequires: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkversion
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 %else
 BuildRequires: dotnet-%_dotnet_major
@@ -400,6 +401,16 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Aug 29 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.25-alt2
+- Drop unused liblwp-devel build dependency on Linux.
+
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.25-alt1
+- .NET 8.0.25 release
+- enable build dotnet-host here
+- fixed CVEs:
+ + CVE-2026-21218: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-26130: .NET Denial of Service Vulnerability
+
 * Mon Dec 30 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt2
 - add debuginfo (ALT bug 57032)
 

@@ -1,24 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.21
-#define _dotnet_sdkmanifestsrelease1 %nil
+%define _dotnet_coreversion 8.0.25
+%define _dotnet_sdkversion 8.0.125
+%define _dotnet_corerelease 8.0.25
+%define _dotnet_corerelease1 %_dotnet_corerelease
+
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.121
-%define _dotnet_aspnetcorerelease %_dotnet_corerelease
-%define _dotnet_templatesrelease %_dotnet_corerelease
+%define _dotnet_sdkrelease 8.0.125
+%define _dotnet_aspnetcorerelease %_dotnet_corerelease1
+%define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
-%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease
+%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
 %define _dotnet_netstandartrelease 2.1.0
-%define preview %nil
-%define _dotnet_coreshortrelease %_dotnet_corerelease%preview
-%define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
+
+
+
 
 %define _dotnetdir %_libdir/%name
-%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
+
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.21
+Version: %_dotnet_sdkversion
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -62,8 +65,8 @@ BuildRequires: libkrb5
 # there are icu detection in a version range
 Requires: libicu
 
-Provides: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreshortrelease
-Provides: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
+Provides: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreversion
+Provides: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkversion
 
 %filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
@@ -131,6 +134,12 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.125-alt1
+- The .NET 8.0.25 and .NET SDK 8.0.125 release
+- fixed CVEs:
+ + CVE-2026-21218: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-26130: .NET Denial of Service Vulnerability
+
 * Fri Oct 24 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
 - The .NET 8.0.21 and .NET SDK 8.0.121 release
 - update sources' URLs

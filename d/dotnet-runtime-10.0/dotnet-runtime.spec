@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable dotnet_host
+%def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.4
-%define _dotnet_sdkversion 10.0.200
+%define _dotnet_coreversion 10.0.5
+%define _dotnet_sdkversion 10.0.201
 
-%define _dotnet_corerelease 10.0.4
+%define _dotnet_corerelease 10.0.5
 # used for build
-%define _dotnet_sdkrelease 10.0.200
+%define _dotnet_sdkrelease 10.0.201
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
 
@@ -27,7 +27,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: %_dotnet_coreversion
-Release: alt1
+Release: alt2
 
 Summary: Microsoft .NET 10 Runtime and Microsoft.NETCore.App
 
@@ -62,7 +62,7 @@ BuildRequires: libstdc++-devel
 %if_with libunwind
 BuildRequires: libunwind-devel >= 1.5
 %endif
-BuildRequires: liblttng-ust-devel liblwp-devel
+BuildRequires: liblttng-ust-devel
 
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
@@ -387,6 +387,13 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Aug 29 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.5-alt2
+- Drop unused liblwp-devel build dependency on Linux.
+
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.5-alt1
+- new version (no code changes really)
+- enable build dotnet-host here
+
 * Wed Apr 01 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.4-alt1
 - new version (10.0.4)
 

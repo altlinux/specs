@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.4
-%define _dotnet_sdkversion 10.0.200
+%define _dotnet_coreversion 10.0.5
+%define _dotnet_sdkversion 10.0.201
 
-%define _dotnet_corerelease 10.0.4
-%define _dotnet_corerelease1 10.0.4
+%define _dotnet_corerelease 10.0.5
+%define _dotnet_corerelease1 10.0.5
 
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.200
+%define _dotnet_sdkrelease 10.0.201
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -139,6 +139,9 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.201-alt1
+- new version (10.0.201)
+
 * Wed Apr 01 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.200-alt1
 - new version (10.0.200)
 

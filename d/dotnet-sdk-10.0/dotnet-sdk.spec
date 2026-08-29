@@ -4,15 +4,15 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.4
-%define _dotnet_sdkversion 10.0.200
+%define _dotnet_coreversion 10.0.5
+%define _dotnet_sdkversion 10.0.201
 
-%define _dotnet_corerelease 10.0.4
-%define _dotnet_corerelease1 10.0.4
+%define _dotnet_corerelease 10.0.5
+%define _dotnet_corerelease1 10.0.5
 
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.200
+%define _dotnet_sdkrelease 10.0.201
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -185,8 +185,11 @@ done
 %endif
 
 %changelog
+* Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.201-alt1
+- .NET SDK 10.0.201
+
 * Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.200-alt1
-.NET SDK 10.0.200
+- .NET SDK 10.0.200
 
 * Tue Nov 18 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.100.rel-alt1
 - .NET SDK 10.0.100 release
