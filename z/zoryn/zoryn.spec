@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.50.0
+Version: 0.51.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,31 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Aug 29 2026 Anton Farygin <rider@altlinux.org> 0.51.0-alt1
+- added experimental 'zoryn flow' for unattended package-update workflows:
+  configured step lists (up, build, submit, batch, bash, ssh, devenv, zoryn,
+  agent) with if conditions, on-failure recovery flows, opt-in AI-agent
+  repair and --continue resume
+- added first-class task-add, task-approve and task-run flow steps driving
+  the created task, and -B as the short form of the implicit --branch flag
+- added a built-in bugzilla MCP server and 'agent mcp install --api-key'
+  storing the key as an HTTP header in the agent config
+- added 'devenv packages' printing the packages a devenv run would install
+- added a warning on devenv enter when a bind-mounted file was replaced on
+  the host since the container was created
+- added --no-build to 'up' and --force to 'up --switch-to-upstream-git' for
+  re-running the migration
+- added comma-separated task id lists to 'task run', 'task add',
+  'task approve' and 'task disapprove'
+- added [sandbox] outbound_interface routing hook traffic through one host
+  interface via pasta
+- fixed an upstream tag whose commits were already fetched hiding a new
+  release behind "up to date" in 'up' and 'check version'
+- fixed .gear/up.d hooks running on every 'up' invocation instead of only
+  when a new version was picked up
+- fixed devenv [devenv.lan] clients from an allowed prefix being blackholed
+  by the sidecar's routes capturing replies of primary-interface connections
+
 * Sat Aug 22 2026 Anton Farygin <rider@altlinux.org> 0.50.0-alt1
 - added 'zoryn agent mcp' for registering HTTP MCP servers in local AI
   coding agents (Claude Code, opencode, Kimi Code)
