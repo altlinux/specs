@@ -6,7 +6,7 @@
 
 Name: amnezia-vpn
 Version: 5.0.1.5
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -112,7 +112,7 @@ sed -i 's|ssh::ssh|ssh|g' client/cmake/3rdparty.cmake
 sed -e 's|m_tunnel.start(appPath.filePath("amneziawg-go"), wgArgs);|m_tunnel.start("%_bindir/amneziawg-go", wgArgs);|' -i client/platforms/linux/daemon/wireguardutilslinux.cpp
 
 # Fix update resolv conf path
-sed -e 's|.arg(qApp->applicationDirPath());|.arg("%_libexecdir/%name");|' -i client/core/configurators/openVpnConfigurator.cpp
+sed -e 's|qApp->applicationDirPath()|"%_libexecdir/%name"|' -i client/core/configurators/openVpnConfigurator.cpp
 
 # Set git commit
 sed -e 's|add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")|add_definitions(-DGIT_COMMIT_HASH="%git_commit_hash")|' -i client/CMakeLists.txt
@@ -172,6 +172,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Aug 29 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt2
+- Fix OpenVPN connection: correct update-resolv-conf.sh path in generated config (ALT #60160)
+
 * Tue Aug 25 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt1
 - Version 5.0.1.5
 - Update amnezia-xray-bindings to 1.4.0
