@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.47
+%define kernel_sublevel	.48
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -573,6 +573,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Aug 29 2026 Alexei Takaseev <taf@altlinux.org> 6.18.48-alt1
+- v6.18.48 (2026-08-28).
+
 * Fri Aug 28 2026 Alexei Takaseev <taf@altlinux.org> 6.18.47-alt1
 - v6.18.47 (2026-08-27).
 
