@@ -6,7 +6,7 @@
 
 Name:          gem-google-cloud-env
 Version:       2.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Google Cloud Platform hosting environment information
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -31,8 +31,8 @@ BuildRequires: gem(yard) >= 0.9
 BuildConflicts: gem(autotest-suffix) >= 2
 BuildConflicts: gem(base64) >= 1
 BuildConflicts: gem(faraday) >= 3
-BuildConflicts: gem(google-style) >= 1.32
-BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(google-style) >= 2
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(minitest-autotest) >= 2
 BuildConflicts: gem(minitest-focus) >= 2
 BuildConflicts: gem(minitest-rg) >= 6
@@ -43,6 +43,8 @@ BuildConflicts: gem(yard) >= 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
+%ruby_use_gem_dependency minitest >= 5.16
+%ruby_use_gem_dependency google-style >= 1.31
 Requires:      ruby >= 3.1
 Requires:      gem(base64) >= 0.2
 Requires:      gem(faraday) >= 1.0
@@ -60,7 +62,7 @@ set on the VM instance, and much more.
 %if_enabled    doc
 %package       -n gem-google-cloud-env-doc
 Version:       2.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Google Cloud Platform hosting environment information documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-env
 Group:         Development/Documentation
@@ -85,7 +87,7 @@ set on the VM instance, and much more.
 %if_enabled    devel
 %package       -n gem-google-cloud-env-devel
 Version:       2.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Google Cloud Platform hosting environment information development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-cloud-env
 Group:         Development/Ruby
@@ -105,8 +107,8 @@ Requires:      gem(yard) >= 0.9
 Conflicts:     gem(autotest-suffix) >= 2
 Conflicts:     gem(base64) >= 1
 Conflicts:     gem(faraday) >= 3
-Conflicts:     gem(google-style) >= 1.32
-Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(google-style) >= 2
+Conflicts:     gem(minitest) >= 7
 Conflicts:     gem(minitest-autotest) >= 2
 Conflicts:     gem(minitest-focus) >= 2
 Conflicts:     gem(minitest-rg) >= 6
@@ -157,6 +159,9 @@ set on the VM instance, and much more.
 
 
 %changelog
+* Sat Aug 29 2026 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt1.1
+- ! relaxed deps to google-style, and minitest gems
+
 * Fri Oct 31 2025 Pavel Skrylev <majioa@altlinux.org> 2.3.1-alt1
 - ^ 1.6.0 -> 2.3.1
 
