@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.5
-Release:        alt2
+Release:        alt3
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -180,7 +180,7 @@ EOF
 cat <<EOF >nginx-%name.conf
 server {
     listen  127.0.0.1:81;
-    listen  [::1]:81;
+#   listen  [::1]:81;
     server_name localhost localhost.localdomain;
 EOF
 bin/icingacli setup config webserver nginx \
@@ -303,6 +303,9 @@ grep -F '%_var/run/php%php_defver-fpm/%name.socket' ./nginx-icingaweb2.conf
 %_datadir/%name/public/css
 
 %changelog
+* Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 2.12.5-alt3
+- icingaweb2-nginx: disable ipv6 by default.
+
 * Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.5-alt2
 - Select PHP version using %%php_defver macro.
 - Fix: Don't mask the exit status of icingacli setup.
