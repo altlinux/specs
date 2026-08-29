@@ -1,12 +1,22 @@
 Name: utop
 Version: 2.17.0
-Release: alt2
+Release: alt3
 Summary: Universal toplevel for OCaml
 Group: Development/ML
 License: MIT
 Url: https://github.com/ocaml-community/utop
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Provides: ocaml-%name = %EVR
+# utop is a bytecode program: it dlopens C stubs (dll*_stubs.so) and reads
+# findlib META of the linked libraries at runtime, but the automatic
+# dependency generator does not extract these from bytecode executables.
+Requires: ocaml-findlib
+Requires: ocaml-lambda-term
+Requires: ocaml-lwt
+Requires: ocaml-logs
+Requires: ocaml-xdg
+Requires: ocaml-zed
 BuildRequires: dune ocaml-cppo 
 BuildRequires: ocaml-xdg-devel
 BuildRequires: ocaml-findlib-devel
@@ -24,6 +34,7 @@ utop is an improved toplevel (i.e., Read-Eval-Print Loop) for OCaml.
 
 %prep
 %setup
+%patch -p1
 sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 
 %build
@@ -31,11 +42,13 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 
 %install
 %dune_install %name
+# rpm honors only the last -f list in %%files, so merge both into one
+cat ocaml-files.devel >>ocaml-files.runtime
 
 %check
 %dune_check
 
-%files -f ocaml-files.runtime -f ocaml-files.devel
+%files -f ocaml-files.runtime
 %doc CHANGES.md README.md
 %doc %_datadir/utop
 %_man1dir/utop*
@@ -45,6 +58,17 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %_emacslispdir/utop.el
 
 %changelog
+* Sun Aug 30 2026 Anton Farygin <rider@altlinux.org> 2.17.0-alt3
+- added explicit runtime Requires on ocaml-findlib, ocaml-lambda-term,
+  ocaml-lwt, ocaml-logs, ocaml-xdg and ocaml-zed: utop is a bytecode
+  program that dlopens their C stubs and reads their META at runtime,
+  which the automatic dependency generator does not detect
+- packaged the runtime file list (META, uTop.cma, *.cmi) that was silently
+  dropped because rpm honors only the last -f list in %%files
+- fixed unbound identifiers in non-tty (piped stdin) mode on OCaml 5.5:
+  initialize the toplevel environment before Toploop.loop
+  (closes: #58599)
+
 * Thu Apr 09 2026 Anton Farygin <rider@altlinux.org> 2.17.0-alt2
 - merged devel subpackage into main package since utop is a bytecode-only
   end-user tool that requires META at runtime (closes: #58599)
