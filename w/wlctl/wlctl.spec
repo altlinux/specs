@@ -2,7 +2,7 @@
 %def_with check
 
 Name: wlctl
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 Summary: TUI for managing wifi/ethernet/vpn on Linux with NetworkManager
 License: GPL-3.0
@@ -45,5 +45,8 @@ Features:
 %_bindir/%name
 
 %changelog
+* Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.10-alt1
+- Updated to version 0.1.10.
+
 * Fri Jul 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.9-alt1
 - Initial build for ALT.
