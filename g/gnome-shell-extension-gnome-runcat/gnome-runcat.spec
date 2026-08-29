@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define exID runcat@kolesnikov.se
 
 Name: gnome-shell-extension-gnome-runcat
-Version: 34
+Version: 36
 Release: alt1
 
 Summary: RunCat for GNOME Shell
@@ -50,6 +51,9 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas/
 %doc *.md LICENSE 
 
 %changelog
+* Sat Aug 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 36-alt1
+- 34 -> 36
+
 * Tue Aug 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 34-alt1
 - 32 -> 34
 
