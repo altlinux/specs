@@ -3,7 +3,7 @@
 
 Name: kicad-footprints
 Summary: Footprint Libraries for kicad (creation of electronic schematic diagrams)
-Version: 10.0.5
+Version: 10.0.6
 Release: alt1
 License: GPL-2.0-or-later
 Group: Engineering
@@ -46,6 +46,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/template/fp-lib-table
 
 %changelog
+* Sat Aug 29 2026 Anton Midyukov <antohami@altlinux.org> 10.0.6-alt1
+- New version 10.0.6.
+
 * Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 10.0.5-alt1
 - New version 10.0.5.
 
