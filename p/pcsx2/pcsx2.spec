@@ -1,16 +1,16 @@
 %define optflags_lto -flto=thin
 
 %define version_hi 2
-%define version_mid 6
-%define version_lo 3
+%define version_mid 8
+%define version_lo 0
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define Wed Jan 28 19:36:27 2026
+%define Fri Aug 28 23:18:05 2026
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash bc8151d2a46d4aba039ea5580afbfc7bfcf6d730
+%define git_hash c10a5c9ad951c517dc48b722b5b84eb9bf7fdb42
 
 Name: pcsx2
-Version: 2.6.3
+Version: 2.8.0
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -26,6 +26,7 @@ ExclusiveArch: x86_64
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires: alt-os-release
 BuildRequires: bzlib-devel
 BuildRequires: clang
 BuildRequires: ctest
@@ -57,8 +58,8 @@ BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libplutosvg-devel
-BuildRequires: libplutovg-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libryml-devel
 BuildRequires: libshaderc-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
@@ -126,6 +127,9 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Sat Aug 29 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Wed Jan 28 2026 Nazarov Denis <nenderus@altlinux.org> 2.6.3-alt1
 - New version 2.6.3.
 
