@@ -1,12 +1,20 @@
 %define _libexecdir /usr/libexec
 %define _ssldir %(openssl-config --openssldir)
 %define _unpackaged_files_terminate_build 1
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
 
 %def_disable debug
 
 Name: dovecot
-Version: 2.4.4
-Release: alt2
+Version: 2.4.5
+Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -89,7 +97,12 @@ xz -9 NEWS
 %undefine _configure_gettext
 %add_optflags -D_DEFAULT_SOURCE=1
 export ACLOCAL='aclocal -I .'
-%autoreconf -I /usr/share/gettext/m4
+%if "%altbranch" == "sisyphus"
+%define AUTORECONF_FLAGS -I /usr/share/gettext/m4
+%else
+%define AUTORECONF_FLAGS %nil
+%endif
+%autoreconf %AUTORECONF_FLAGS
 %configure \
     --localstatedir=%_var \
     --with-moduledir=%_libdir/%name/modules \
@@ -218,6 +231,13 @@ fi
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Sat Aug 29 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.5-alt1
+- New version (fixes: CVE-2026-4200, CVE-2026-27852, CVE-2026-33263,
+  CVE-2026-33604, CVE-2026-33606, CVE-2026-33607, CVE-2026-40014,
+  CVE-2026-40015, CVE-2026-40017, CVE-2026-40203, CVE-2026-40205,
+  CVE-2026-42391, CVE-2026-42392, CVE-2026-42393, CVE-2026-42395,
+  CVE-2026-52681, CVE-2026-52687, CVE-2026-73208, CVE-2026-73209).
+
 * Sun Jul 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.4-alt2
 - FTBFS: fixed build with new glibc.
 
