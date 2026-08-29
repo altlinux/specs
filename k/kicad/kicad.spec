@@ -4,7 +4,7 @@
 %define majver 9.0
 
 Name: kicad
-Version: 10.0.5
+Version: 10.0.6
 Release: alt1
 Epoch: 1
 
@@ -201,6 +201,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Sat Aug 29 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.6-alt1
+- New version 10.0.6.
+
 * Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.5-alt1
 - New version 10.0.5.
 
