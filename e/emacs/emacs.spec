@@ -1,11 +1,12 @@
 Name: emacs
-Version: 30.2
-Release: alt5
+Version: 31.1
+Release: alt1
 
 Summary: GNU Emacs text editor
 License: GPLv3+
 Group: Editors
-Url: http://www.gnu.org/software/emacs/
+URL: http://www.gnu.org/software/emacs/
+VCS: https://github.com/emacs-mirror/emacs.git
 
 Source: %name-%version-%release.tar
 
@@ -262,14 +263,15 @@ rm -vf %buildroot%_bindir/emacs
 rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
+# no native-lisp here please
+find %buildroot%_datadir/emacs/%version -type d -name native-lisp |xargs rm -rv
+
 # arch-dependent part of locallisppath, mostly for modules
 mkdir -p %buildroot%_libdir/emacs/%version/site-lisp
 
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
     %buildroot%_libexecdir/systemd/user/emacs.service
-mv %buildroot%_bindir/{,g}ctags
-mv %buildroot%_man1dir/{,g}ctags.1.gz
 rm -vf %buildroot%_infodir/{dir,elisp_type_hierarchy.*}
 
 # alternatives
@@ -312,6 +314,7 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %set_compress_method skip
 %add_debuginfo_skiplist %_libdir/emacs/%version/native-lisp
 %brp_strip_none %_libdir/emacs/%version/native-lisp
+%set_verify_info_method relaxed
 
 #---------------------------------------------------------------
 %files athena -f athena.ls
@@ -332,6 +335,7 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %files common -f common.ls
 %doc BUGS README
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
+%_datadir/glib-2.0/schemas/org.gnu.emacs.defaults.gschema.xml
 
 %_bindir/*
 %exclude %_bindir/%name-athena
@@ -376,6 +380,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Aug 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 31.1-alt1
+- 31.1 released
+
 * Thu Jun 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 30.2-alt5
 - e2k build fix
 
