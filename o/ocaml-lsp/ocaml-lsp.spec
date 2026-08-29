@@ -1,7 +1,7 @@
 %define pkgname lsp
 Name: ocaml-%pkgname
 Version: 1.27.0
-Release: alt1
+Release: alt2
 Summary: LSP Server for OCaml
 License: MIT
 Group: Development/ML
@@ -9,6 +9,8 @@ Url: https://github.com/ocaml/ocaml-lsp
 VCS: https://github.com/ocaml/ocaml-lsp
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# ocamllsp looks it up at runtime for well-formatted types on hover
+Requires: /usr/bin/ocamlformat-rpc
 BuildRequires: dune ocaml >= 5.2.0
 BuildRequires: ocaml-yojson-devel
 BuildRequires: ocaml-ppx_yojson_conv_lib-devel
@@ -69,6 +71,10 @@ make test-ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Aug 30 2026 Anton Farygin <rider@altlinux.org> 1.27.0-alt2
+- added requirement on ocamlformat-rpc: without it ocamllsp deadlocks on
+  session shutdown before initialize (closes: 60310)
+
 * Wed Jun 24 2026 Anton Farygin <rider@altlinux.org> 1.27.0-alt1
 - 1.26.0 -> 1.27.0
 
