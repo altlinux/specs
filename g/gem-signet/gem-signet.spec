@@ -5,7 +5,7 @@
 %define        gemname signet
 
 Name:          gem-signet
-Version:       0.21.0
+Version:       0.22.0
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation
 License:       Apache-2.0
@@ -16,19 +16,17 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(addressable) >= 2.8
 BuildRequires: gem(faraday) >= 0.17.5
 BuildRequires: gem(gems) >= 1.2
 BuildRequires: gem(google-style) >= 1.31.0
 BuildRequires: gem(hurley) >= 0
+BuildRequires: gem(irb) >= 1.17
 BuildRequires: gem(jwt) >= 1.5
-BuildRequires: gem(kramdown) >= 1.5
+BuildRequires: gem(kramdown) >= 2.3
 BuildRequires: gem(launchy) >= 2.4
-BuildRequires: gem(multi_json) >= 1.10
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(redcarpet) >= 3.0
 BuildRequires: gem(rspec) >= 3.1
@@ -36,11 +34,11 @@ BuildRequires: gem(yard) >= 0.9
 BuildConflicts: gem(addressable) >= 3
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(gems) >= 2
-BuildConflicts: gem(google-style) >= 1.32
+BuildConflicts: gem(google-style) >= 1.33
+BuildConflicts: gem(irb) >= 2
 BuildConflicts: gem(jwt) >= 4.0
 BuildConflicts: gem(kramdown) >= 3
 BuildConflicts: gem(launchy) >= 3
-BuildConflicts: gem(multi_json) >= 2
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(redcarpet) >= 4
 BuildConflicts: gem(rspec) >= 4
@@ -48,22 +46,21 @@ BuildConflicts: gem(rspec) >= 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency kramdown >= 2.3.1,kramdown < 3
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
-Requires:      ruby >= 3.1
 Requires:      rubygems >= 1.3.5
+Requires:      ruby >= 3.2
 Requires:      gem(addressable) >= 2.8
 Requires:      gem(faraday) >= 0.17.5
+Requires:      gem(irb) >= 1.17
 Requires:      gem(jwt) >= 1.5
-Requires:      gem(multi_json) >= 1.10
 Conflicts:     gem(addressable) >= 3
 Conflicts:     gem(faraday) >= 3
+Conflicts:     gem(irb) >= 2
 Conflicts:     gem(jwt) >= 4.0
-Conflicts:     gem(multi_json) >= 2
 Obsoletes:     ruby-signet < %EVR
 Provides:      ruby-signet = %EVR
-Provides:      gem(signet) = 0.21.0
+Provides:      gem(signet) = 0.22.0
 
 %description
 Signet is an OAuth 1.0 / OAuth 2.0 implementation.
@@ -71,16 +68,14 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation.
 
 %if_enabled    doc
 %package       -n gem-signet-doc
-Version:       0.21.0
+Version:       0.22.0
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета signet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(signet) = 0.21.0
+Requires:      gem(signet) = 0.22.0
 
 %description   -n gem-signet-doc
 Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files.
@@ -92,25 +87,23 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files.
 
 %if_enabled    devel
 %package       -n gem-signet-devel
-Version:       0.21.0
+Version:       0.22.0
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета signet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(signet) = 0.21.0
+Requires:      gem(signet) = 0.22.0
 Requires:      gem(addressable) >= 2.8
 Requires:      gem(faraday) >= 0.17.5
 Requires:      gem(gems) >= 1.2
 Requires:      gem(google-style) >= 1.31.0
 Requires:      gem(hurley) >= 0
+Requires:      gem(irb) >= 1.17
 Requires:      gem(jwt) >= 1.5
-Requires:      gem(kramdown) >= 1.5
+Requires:      gem(kramdown) >= 2.3
 Requires:      gem(launchy) >= 2.4
-Requires:      gem(multi_json) >= 1.10
 Requires:      gem(rake) >= 13.0
 Requires:      gem(redcarpet) >= 3.0
 Requires:      gem(rspec) >= 3.1
@@ -118,11 +111,11 @@ Requires:      gem(yard) >= 0.9
 Conflicts:     gem(addressable) >= 3
 Conflicts:     gem(faraday) >= 3
 Conflicts:     gem(gems) >= 2
-Conflicts:     gem(google-style) >= 1.32
+Conflicts:     gem(google-style) >= 1.33
+Conflicts:     gem(irb) >= 2
 Conflicts:     gem(jwt) >= 4.0
 Conflicts:     gem(kramdown) >= 3
 Conflicts:     gem(launchy) >= 3
-Conflicts:     gem(multi_json) >= 2
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(redcarpet) >= 4
 Conflicts:     gem(rspec) >= 4
@@ -165,6 +158,9 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation development package.
 
 
 %changelog
+* Sat Aug 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.22.0-alt1
+- ^ 0.21.0 -> 0.22.0
+
 * Sat Nov 15 2025 Pavel Skrylev <majioa@altlinux.org> 0.21.0-alt1
 - ^ 0.17.0 -> 0.21.0
 
