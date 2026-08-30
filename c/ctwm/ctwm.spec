@@ -5,7 +5,7 @@ Summary(ru): Основанный на twm оконный менеджер дл�
 Name: ctwm
 Version: 4.1.0
 Epoch: 1
-Release: alt3
+Release: alt4
 
 Source: %name-%version.tar.xz
 Url: http://www.ctwm.org/index.html
@@ -18,7 +18,6 @@ Source5: %name-systemd.desktop
 Source6: %name-session-target
 Source7: %name.service
 Source8: %name-session.target
-Source9: %name.target
 
 Patch: ctwm-3.8.2-GetFont.patch
 License: BSD
@@ -95,7 +94,6 @@ install -D %SOURCE6 %buildroot%prefix/libexec/%name-session-target
 install -d %buildroot%_user_unitdir
 install -m644 -D %SOURCE7 %buildroot%_user_unitdir/
 install -m644 -D %SOURCE8 %buildroot%_user_unitdir/
-install -m644 -D %SOURCE9 %buildroot%_user_unitdir/
 install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 
 %files
@@ -123,6 +121,9 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 %endif
 
 %changelog
+* Mon Jun 22 2026 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt4
+- Fix systemd support, part two
+
 * Wed Jan 07 2026 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt3
 - Fix "Please remove executable permission" warning
 
