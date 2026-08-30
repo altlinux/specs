@@ -6,7 +6,7 @@
 
 Name:          gem-shoulda
 Version:       4.0.0.23
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Making tests easy on the fingers and eyes
 License:       MIT
 Group:         Development/Ruby
@@ -34,7 +34,6 @@ BuildRequires: gem(shoulda-context) >= 2.0.0
 BuildRequires: gem(shoulda-matchers) >= 4.5.1
 BuildRequires: gem(snowglobe) >= 0
 BuildRequires: gem(warnings_logger) >= 0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(shoulda-context) >= 3
@@ -45,6 +44,7 @@ BuildConflicts: gem(shoulda-matchers) >= 7
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency shoulda-matchers >= 4.5.1,shoulda-matchers < 7
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      ruby >= 3.0.5
 Requires:      gem(shoulda-context) >= 2.0
 Requires:      gem(shoulda-matchers) >= 4.5.1
@@ -64,7 +64,7 @@ requires no retooling to use.
 %if_enabled    doc
 %package       -n gem-shoulda-doc
 Version:       4.0.0.23
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Making tests easy on the fingers and eyes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета shoulda
 Group:         Development/Documentation
@@ -88,7 +88,7 @@ requires no retooling to use.
 %if_enabled    devel
 %package       -n gem-shoulda-devel
 Version:       4.0.0.23
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Making tests easy on the fingers and eyes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета shoulda
 Group:         Development/Ruby
@@ -108,7 +108,6 @@ Requires:      gem(rubocop-packaging) >= 0
 Requires:      gem(rubocop-rails) >= 0
 Requires:      gem(snowglobe) >= 0
 Requires:      gem(warnings_logger) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
@@ -156,6 +155,9 @@ requires no retooling to use.
 
 
 %changelog
+* Sun Aug 30 2026 Pavel Skrylev <majioa@altlinux.org> 4.0.0.23-alt0.2
+- ! fixed dep to minitest gem
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 4.0.0.23-alt0.1
 - ^ 4.0.0 -> 4.0.0p23
 
