@@ -6,7 +6,7 @@
 
 Name:          gem-fog-libvirt
 Version:       0.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       libvirt provider for fog
 License:       MIT
 Group:         Development/Ruby
@@ -35,13 +35,13 @@ BuildRequires: gem(shindo) >= 0.3.4
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(yard) >= 0
 BuildConflicts: gem(fog-xml) >= 0.2
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(mocha) >= 4
 BuildConflicts: gem(shindo) >= 0.4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency simplecov >= 5.0
 Requires:      ruby >= 2.7
 Requires:      gem(fog-core) >= 1.27.4
 Requires:      gem(fog-json) >= 0
@@ -60,7 +60,7 @@ fog-libvirt is a libvirt provider for fog.
 %if_enabled    doc
 %package       -n gem-fog-libvirt-doc
 Version:       0.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       libvirt provider for fog documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-libvirt
 Group:         Development/Documentation
@@ -81,7 +81,7 @@ fog-libvirt is a libvirt provider for fog.
 %if_enabled    devel
 %package       -n gem-fog-libvirt-devel
 Version:       0.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       libvirt provider for fog development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-libvirt
 Group:         Development/Ruby
@@ -97,7 +97,6 @@ Requires:      gem(rubocop) >= 0
 Requires:      gem(shindo) >= 0.3.4
 Requires:      gem(simplecov) >= 0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(mocha) >= 4
 Conflicts:     gem(shindo) >= 0.4
 
@@ -141,6 +140,9 @@ fog-libvirt is a libvirt provider for fog.
 
 
 %changelog
+* Sun Aug 30 2026 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Wed Apr 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
 - ^ 0.13.2 -> 0.15.0
 
