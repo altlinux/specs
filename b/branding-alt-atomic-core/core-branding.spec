@@ -1,5 +1,5 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/alt-atomic/core-branding to altlinux branch 
+# https://altlinux.space/alt-atomic/core-branding to altlinux branch
 
 %define _unpackaged_files_terminate_build 1
 
@@ -12,10 +12,10 @@
 %define flavour_core %flavour-core
 %define pname ALT Atomic
 %define bugtracker https://altlinux.space/alt-atomic/core/issues
-%define docpage https://atomic.alt-gnome.ru/
+%define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-core
-Version: 20260518
+Version: 20260830
 Release: alt1
 
 Group: Graphics
@@ -78,6 +78,11 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Sun Aug 30 2026 Vladimir Romanov <rirusha@altlinux.org> 20260830-alt1
+- Updated URLs.
+- Added additional `ID_LIKE`.
+- Change OS vendor data.
+
 * Mon May 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20260518-alt1
 - Fixed bugtracker link.
 
