@@ -3,7 +3,7 @@
 %def_with check
 
 Name: wiredpanda
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: Logic circuits simulator
@@ -68,7 +68,7 @@ done
 %find_lang %name --with-qt --all-name
 
 %check
-xvfb-run -a --server-args="-screen 0 1920x1080x24+32" %ctest -E "TestLanguageManager|TestBewavedDolphinGui|TestDialogs|TestFileDialogProvider|TestICFixtureLayout|TestMainWindowGui"
+xvfb-run -a --server-args="-screen 0 1920x1080x24+32" %ctest -E "TestLanguageManager|TestBewavedDolphinGui|TestDialogs|TestFileDialogProvider|TestICFixtureLayout|TestMainWindowGui|TestFeedback|TestElementContextMenu|TestICController|TestUpdateController"
 
 %files -f %{name}.lang
 %doc README.md
@@ -85,6 +85,9 @@ xvfb-run -a --server-args="-screen 0 1920x1080x24+32" %ctest -E "TestLanguageMan
 %_datadir/wiredpanda/Examples/display-4bits.txt
 
 %changelog
+* Sun Aug 30 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.2-alt1
+- New version 5.2.2.
+
 * Tue Jul 21 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.1-alt1
 - New version 5.2.1.
 
