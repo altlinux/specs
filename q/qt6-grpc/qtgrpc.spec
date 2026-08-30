@@ -3,8 +3,8 @@
 %global qt_module qtgrpc
 
 Name: qt6-grpc
-Version: 6.10.3
-Release: alt4
+Version: 6.11.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Grpc component
@@ -174,6 +174,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Aug 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.10.3-alt4
 - e2k build fix
 

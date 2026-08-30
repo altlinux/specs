@@ -1,8 +1,8 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.10.3
-Release: alt2
+Version: 6.11.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -139,6 +139,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - build docs after qttools
 

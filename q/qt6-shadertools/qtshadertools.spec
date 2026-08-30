@@ -2,8 +2,8 @@
 %def_enable glslang_bundle
 
 Name: qt6-shadertools
-Version: 6.10.3
-Release: alt2
+Version: 6.11.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -127,6 +127,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - fix to build docs
 

@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.10.3
+Version: 6.11.2
 Release: alt1
 
 Group: System/Libraries
@@ -44,8 +44,7 @@ Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
 Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
-Patch15: qtwebengine-add-missing-pipewire-headers.patch
-Patch16: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
+Patch15: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -206,7 +205,6 @@ Obsoletes: %name < %EVR
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
@@ -425,6 +423,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 

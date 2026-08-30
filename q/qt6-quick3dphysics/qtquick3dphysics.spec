@@ -3,8 +3,8 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3dphysics
-Version: 6.10.3
-Release: alt2
+Version: 6.11.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - High-level API for physics simulation
@@ -142,6 +142,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - fix package description
 

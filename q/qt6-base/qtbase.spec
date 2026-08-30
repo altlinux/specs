@@ -35,8 +35,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.10.3
-Release: alt5
+Version: 6.11.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -58,18 +58,11 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-
+# UPSTREAM
+Patch50: qtbase-qiconloader-dont-consider-fallbackthemename-in-themename.patch
 # Debian
 Patch100: remove_rpath_from_examples.patch
 Patch101: enable_skip_plugins.patch
-# upstream
-Patch200: qtbase-wayland-convey-preference-for-server-side-decorations.patch
-Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
-Patch202: qtbase-wayland-optimize-scroll-operations.patch
-Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
-Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
-Patch205: QTBUG-145310.patch
-Patch206: QT-78a7fc3.diff
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -81,7 +74,7 @@ Patch1006: alt-singleclick.patch
 Patch1007: alt-xdg-current-desktop.patch
 Patch1008: python-shebang.patch
 #
-Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
+Patch2000: 9003-qt6-base-6.10.3-qmenu_fix_shortcuts.patch
 
 # macros
 %define _qt6 %gname
@@ -408,16 +401,10 @@ Requires: %name-common
 %patch2 -p1
 %patch3 -p1
 #
+%patch50 -p1
+#
 %patch100 -p1
 %patch101 -p1
-#
-%patch200 -p1
-%patch201 -p1
-%patch202 -p1
-%patch203 -p1
-%patch204 -p1
-%patch205 -p1
-%patch206 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -431,7 +418,7 @@ Requires: %name-common
 %patch1007 -p1
 %patch1008 -p1
 #
-#%patch2000 -p1
+%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -710,6 +697,7 @@ done
 %dir %_qt6_plugindir/xcbglintegrations/
 %config(noreplace) %_sysconfdir/qt6/qtlogging.ini
 %_qt6_datadir/qtlogging.ini
+%dir %_qt6_datadir/json_schema/
 
 %files doc
 %if %qdoc_found
@@ -743,6 +731,8 @@ done
 %_qt6_bindir/qdbusxml2cpp*
 %_bindir/qmake*
 %_qt6_bindir/qmake*
+%_bindir/wasmdeployqt*
+%_qt6_bindir/wasmdeployqt*
 #
 %_qt6_libexecdir/moc
 %_qt6_libexecdir/rcc
@@ -753,12 +743,9 @@ done
 %_qt6_libexecdir/qvkgen
 %_qt6_libexecdir/tracegen
 %_qt6_libexecdir/cmake_automoc_parser
-%_qt6_libexecdir/ensure_pro_file.cmake
 %_qt6_libexecdir/qt-internal-configure-*
 %_qt6_libexecdir/qt-cmake-private*
 %_qt6_libexecdir/qt-cmake-standalone-test
-%_qt6_libexecdir/qt-testrunner.py
-%_qt6_libexecdir/sanitizer-testrunner.py
 %_qt6_libexecdir/tracepointgen
 %_qt6_libexecdir/qtwaylandscanner
 %_qt6_libexecdir/qt_cyclonedx_generator.py
@@ -779,6 +766,7 @@ done
 %_qt6_libdir/cmake/Qt%{major}*/
 %_qt6_archdatadir/metatypes/
 %_qt6_archdatadir/modules/
+%_qt6_datadir/json_schema/modules.json
 %_pkgconfigdir/Qt%{major}*.pc
 
 %files devel-static
@@ -871,6 +859,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Mon Aug 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt5
 - add upstream fix to avoid resetting clipboard (closes: 60071)
 

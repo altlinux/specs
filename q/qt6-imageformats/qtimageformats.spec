@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: qt6-imageformats
-Version: 6.10.3
+Version: 6.11.2
 Release: alt1
 
 Group: System/Libraries
@@ -101,6 +101,9 @@ done
 %endif
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 

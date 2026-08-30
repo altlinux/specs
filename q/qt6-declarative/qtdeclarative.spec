@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.10.3
-Release: alt2
+Version: 6.11.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -49,8 +49,6 @@ Source1: qml6
 Source2: qml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-# FC
-Patch1: qtdeclarative-quickshapes-make-module-public.patch
 
 %include %SOURCE1
 %qml6_req_skipall 1
@@ -480,10 +478,25 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickvectorimage
 %summary
 
+%package -n libqt6-labsstylekit
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-labsstylekit
+%summary
+
+%package -n libqt6-labsstylekitimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-labsstylekitimpl
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
-%patch1 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -494,8 +507,6 @@ done
 mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
-# don't make  module static
-sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
 %ifarch %e2k
 # as of lcc 1.29.06 (mcst#9355)
@@ -584,9 +595,6 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_qmldir/QtQml/libqmlplugin.so
 %_qt6_qmldir/builtins.qmltypes
 %_qt6_qmldir/jsroot.qmltypes
-%files -n libqt6-assetsdownloader
-%_qt6_libdir/libQt6QmlAssetDownloader.so.*
-%_qt6_qmldir/Qt/labs/assetdownloader/
 %files -n libqt6-labsplatform
 %_qt6_libdir/libQt6LabsPlatform.so.*
 %files -n libqt6-qmlmeta
@@ -712,6 +720,11 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %files -n libqt6-quickvectorimagehelpers
 %_qt6_libdir/libQt6QuickVectorImageHelpers.so.*
 %_qt6_qmldir/QtQuick/VectorImage/Helpers/
+%files -n libqt6-labsstylekit
+%_qt6_libdir/libQt6LabsStyleKit.so.*
+%files -n libqt6-labsstylekitimpl
+%_qt6_libdir/libQt6LabsStyleKitImpl.so.*
+%_qt6_qmldir/Qt/labs/StyleKit/
 
 %files devel
 %_bindir/qml*
@@ -751,6 +764,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
 - build vectorimage QML plugin (closes: 59476)
 - fix compile docs

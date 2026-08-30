@@ -4,7 +4,7 @@
 %define optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3d
-Version: 6.10.3
+Version: 6.11.2
 Release: alt1
 
 Group: System/Libraries
@@ -15,7 +15,6 @@ License: GPL-3.0-or-later
 Requires: qt6-declarative
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: alt-find-assimp.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-quicktimeline-devel
@@ -161,7 +160,6 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
 
 %ifarch %e2k
 # error: constant is inaccessible
@@ -257,6 +255,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Apr 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.10.3
-Release: alt3
+Version: 6.11.2
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -24,6 +24,8 @@ Requires: %name-common = %EVR
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: alt-hide-search-and-translate.patch
+Patch2: qdoc-support-newer-clang.patch
+Patch3: qttools-llvm22-qdoc-fixes.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -37,7 +39,7 @@ BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
 BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libicu-devel
-BuildRequires: libzstd-devel libzstd-devel-static
+BuildRequires: libzstd-devel
 BuildRequires: qt6-base-devel qt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -151,6 +153,8 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %if_disabled bootstrap
@@ -247,6 +251,8 @@ done
 %_bindir/qtdiag*
 %_bindir/qtplugininfo*
 %_bindir/qdistancefieldgenerator*
+%_bindir/lcheck*
+%_bindir/ltext2id*
 %_qt6_bindir/lconvert*
 %_qt6_bindir/lrelease*
 %_qt6_bindir/lupdate*
@@ -254,10 +260,9 @@ done
 %_qt6_bindir/qtdiag*
 %_qt6_bindir/qtplugininfo*
 %_qt6_bindir/qdistancefieldgenerator*
+%_qt6_bindir/lcheck*
+%_qt6_bindir/ltext2id*
 %_qt6_libexecdir/qtattributionsscanner
-%_qt6_libexecdir/lprodump
-%_qt6_libexecdir/lrelease-pro
-%_qt6_libexecdir/lupdate-pro
 %_qt6_libexecdir/qhelpgenerator
 
 %files -n qt6-assistant
@@ -327,6 +332,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
 - fix build requires for new libzstd
 
