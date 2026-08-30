@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname tv.aniliberty.AniLiberty
 
 Name: anilibria-winmaclinux
-Version: 2.2.36
+Version: 2.2.37
 Release: alt1
 
 Summary: AniLiberty.Qt cross platform desktop client
@@ -60,6 +61,9 @@ popd
 %_iconsdir/hicolor/*/apps/aniliberty.png
 
 %changelog
+* Mon Aug 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.2.37-alt1
+- 2.2.36 -> 2.2.37
+
 * Fri May 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.2.36-alt1
 - 2.2.35 -> 2.2.36
 - changed summary && description
