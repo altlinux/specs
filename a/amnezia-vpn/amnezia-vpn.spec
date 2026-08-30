@@ -1,4 +1,5 @@
 %define git_commit_hash 7d4f3e0f
+%define git_commit_date 1787323381
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
@@ -6,7 +7,7 @@
 
 Name: amnezia-vpn
 Version: 5.0.1.5
-Release: alt2
+Release: alt3
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -78,9 +79,18 @@ This package contains systemd service files.
 %__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_version/vendor
 
 %build
-# Export AGW public key and S3 endpoint for work VPN from Amnezia
+# Use the commit timestamp for reproducible __DATE__ and CMake timestamps
+export SOURCE_DATE_EPOCH="%git_commit_date"
+
+# Export AGW public keys and endpoints for work VPN from Amnezia
+export DEV_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwMJbYlGxn3l+0XiGA9I/\nBHK8HX/aet7A9GVL817apDUeL6sdISRBdopv5Y0FdrBHSJWSUdWtVxVazJB46J8x\n327/5H5pi0nkfRbcgxBGSGxhKOvwRe+WPVb2f81jlkenZK46c9C7dNmX/310rlHY\nBwOnZcdw2oKu6hTNDwk3nyUo2v2/leNIMLsv84RlHAX6Tyx5slq8ysewhcmdfv17\nWQjF7albq12ZafTSjtXqDcsrk2oF8mfyzxLjSXbxQHKIDHkfz3SUXCs/H9tt1ydK\n2Yj6nIxv98HESZ8Ng40OZPhHDex8Ru1NjcWlo2EWNM1xT8IqmBT21PLuyzGjNSwG\nOjnm1V2EcjerVmRNhFTJG70RkURD/i2MDbG+ZKpqPtW1uL8wEt2IkSqNfKcf+TF+\nUJZZfm1lDUMpWJ2eWJGrgOUX8/f8v/GB+x4PxUo1m7V/pDLqCUPm3l2dkaM9P0sM\n6lO0+jKqfIFnG1zjc3if7r1YbDsZlyl389q9Hrh7t+Lwj/JXkDxFaTnudM8egaXk\nGX5YxZiEDmCCLRskRwBBUaYffXIpFbI8sO2Xj0J5/im5xtu7TtfJktcPzDL9uyG1\nEbt8oSA4FTzTid6Zwj55YgDfz0FMnNmXh80T1xMzlbi6y+BCuna+I+7McMRo8yz3\nVzzYJ0/J7PpHpXoZv7K1qDsCAwEAAQ==\n-----END PUBLIC KEY-----"
+export DEV_AGW_ENDPOINT="http://gw.dev.amzsvc.com:80/"
+export DEV_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia-dev/"
 export PROD_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAj5mxl/4DL3Sk89ntxs5G\nX3JawGQWIoq6rvNkOzNGuNgedNS2+pi6hZl3Izl1Io9om4KiUlMT6mgLO1hTr9q+\ns7CYhlvroFA7ErucF+9L+7FCt0Igi0kIK/R2/vxd/2HaUrorn/aSvvutkYwbfxqW\nSwtzE+RuBeDWGvEt937OW0oqYONPYv9E4T56Dz/EZ6v2t8ejAnKLbGD/GocMmipK\n7etFSiSMAB2RmaztqTq4NleBepfO80XpYlW9pCSXuHcE8wxHczkzxsbyMAMsG/K3\nvUQY6qPtohqqzSSBwa/8u2ptNHBeor7l7DdYXeR/Nqcc4z92VUkZ5lOVR4evkS5V\n/wQqp5tnOJEj3NjUhEhXFoNEapbZd1bh6iQoUk7jC1TdvKJ/nPKGZAsHRpr0rNKz\nfx/N/Oo6lr2yh/+ps6VxTkbPmB6E85WOO3UvjImZUY0XQdBjWle/4iJLdEC77Nr0\njXhdgeypucy6jkB6iBHMeVMlrNMEV7UxoBR/cCNx55zu/8sml5ByiDvCDT7sRomN\nNgVt5S/FaVjYuzFUifJ12ToChXFgESKFmuso7WluEaWvMIGREdrMrKQKHfYLOzWF\n2B5ZJDqw4o03fU4J/6rw61M1b+rjVpXMjPnzc2A+RgcjTvXv955gfZkwe4lt5wk/\n3j8zMVo3+zLrMTAaEeIUM0UCAwEAAQ==\n-----END PUBLIC KEY-----"
-export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/, https://storage.googleapis.com/lambda-list/"
+export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/, https://storage.googleapis.com/lambda-list/, https://amnzstrg01.blob.core.windows.net/lambda-list/, https://objectstorage.eu-zurich-1.oraclecloud.com/n/zrhfyaq6qxvh/b/lambda-list/o/"
+export FALLBACK_S3_ENDPOINT="https://storage.mwsapis.ru/lambda-list/, https://46.8.209.252/lambda-list/"
+export FREE_V2_ENDPOINT="13.248.139.44"
+export PREM_V1_ENDPOINT="52.223.54.40"
 
 # Build amnezia xray bindings
 pushd ../amnezia-xray-bindings-%amnezia_xray_bindings_version
@@ -172,6 +182,10 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt3
+- Update AGW public keys and endpoints for work VPN from Amnezia
+- Use the commit timestamp for reproducible __DATE__ and CMake timestamps
+
 * Sat Aug 29 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt2
 - Fix OpenVPN connection: correct update-resolv-conf.sh path in generated config (ALT #60160)
 
