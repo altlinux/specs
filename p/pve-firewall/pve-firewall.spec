@@ -3,7 +3,7 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 6.0.5
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -73,6 +73,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Sun Aug 30 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt3
+- Include ipset bucketsize in generated rules (Closes: 60162)
+
 * Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt2
 - Handle unquoted PVESIG comments (Closes: 60162)
 - Simulator: handle disabled firewall (Closes: 60163)

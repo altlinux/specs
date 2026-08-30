@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt5
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -175,6 +175,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Sun Aug 30 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt5
+- Preserve locale for web shell sessions (Closes: 60261)
+
 * Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt4
 - ui: fix datacenter option dialog layout for long translations (Closes: 57244)
 - ui: guest import: handle deleted form values locally (Closes: 60157)
