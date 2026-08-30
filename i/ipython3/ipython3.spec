@@ -9,7 +9,7 @@
 
 Name: ipython3
 Version: 9.17.0
-Release: alt1
+Release: alt2
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -125,6 +125,7 @@ This package contains examples for IPython.
 Summary: An enhanced interactive Python 3 shell
 Group: Development/Python3
 Requires: python3(matplotlib_inline) python3(pickleshare)
+Requires: python3(stack_data)
 
 %description -n python3-module-%oname
 IPython provides a replacement for the interactive Python interpreter with
@@ -186,6 +187,9 @@ export IPYTHON_TESTING_TIMEOUT_SCALE=4
 %endif
 
 %changelog
+* Sun Aug 30 2026 Anton Vyatkin <toni@altlinux.org> 9.17.0-alt2
+- Fix requires.
+
 * Sat Aug 29 2026 Anton Vyatkin <toni@altlinux.org> 9.17.0-alt1
 - New version 9.17.0.
 
