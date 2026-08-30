@@ -1,23 +1,21 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/authelia/authelia
-# git rev-parse --short v%version
-%global commit_hash 9e4ac427e
+%global commit_hash 1b524f7
 
 Name: authelia
-Version: 4.39.15
+Version: 4.39.20
 Release: alt1
 Summary: The Single Sign-On Multi-Factor portal for web apps
 License: Apache-2.0
 Group: System/Servers
-Url: https://www.authelia.com
+URL: https://www.authelia.com
 VCS: https://github.com/authelia/authelia
 
 Source: %name-%version.tar
 Source1: vendor.tar
 Source2: node_modules.tar
 
-# native rollup js bundler is needed to build
-ExclusiveArch: x86_64
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -31,11 +29,8 @@ reverse proxies by allowing, denying, or redirecting requests.
 Documentation is available at https://www.authelia.com.
 
 %prep
-# go mod vendor
-# git add vendor -f && git commit -m "Updated go vendor modules." --no-verify
-# npm --prefix web install
-# git add web/node_modules -f && git commit -m "Updated node modules." --no-verify
-%setup -a 1 -a 2
+%setup -a1 -a2
+# allow user namespace creation in containers
 sed -i '/PrivateUsers=yes/d' authelia.service
 
 %build
@@ -59,8 +54,8 @@ go build -ldflags "-linkmode=external \
     -X %import_path/v4/internal/utils.BuildDate=$(date +'%%d-%%m-%%Y')" \
     -buildmode=pie -o authelia ./cmd/authelia
 ./authelia completion bash > authelia.bash
-./authelia completion zsh > authelia.fish
-./authelia completion fish > _authelia
+./authelia completion zsh > _authelia
+./authelia completion fish > authelia.fish
 
 %install
 mkdir -p %buildroot%_bindir \
@@ -103,6 +98,9 @@ touch %buildroot%_sysconfdir/authelia/{configuration,users_database}.yml
 %doc LICENSE
 
 %changelog
+* Sun Aug 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.39.20-alt1
+- Updated to version 4.39.20.
+
 * Mon Dec 15 2025 Vladislav Eliseev <general@altlinux.org> 4.39.15-alt1
 - Updated to version 4.39.15.
 
