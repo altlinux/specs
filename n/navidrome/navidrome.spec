@@ -1,15 +1,14 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/navidrome/navidrome
-# git rev-parse --short v%version
-%global commit_hash e7c7cba
+%global commit_hash be10f89
 
 Name: navidrome
-Version: 0.61.1
-Release: alt1
+Version: 0.63.2
+Release: alt2
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
 Group: System/Servers
-Url: https://www.navidrome.org
+URL: https://www.navidrome.org
 VCS: https://github.com/navidrome/navidrome
 
 Source: %name-%version.tar
@@ -24,10 +23,8 @@ ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: esbuild
 BuildRequires: gcc-c++
 BuildRequires: npm
-BuildRequires: taglib-devel
 
 Requires: ffmpeg
 Requires: ffprobe
@@ -38,10 +35,7 @@ It gives you freedom to listen to your music collection from any browser
 or mobile device. It's like your personal Spotify!
 
 %prep
-%setup -a 1 -a 2
-# use system esbuild
-ln -sv %_bindir/esbuild ui
-sed -i "s/0.27.2/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
+%setup -a1 -a2
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -49,7 +43,6 @@ export IMPORT_PATH=%import_path
 export GOPATH=$BUILDDIR:%go_path
 export GOFLAGS=-mod=vendor
 export CGO_CFLAGS_ALLOW="--define-prefix"
-export ESBUILD_BINARY_PATH=./esbuild
 npm --prefix ui run build
 %golang_prepare
 cd .gopath/src/%import_path
@@ -86,6 +79,25 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Sun Aug 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.63.2-alt2
+- Use bundled esbuild binaries for build.
+
+* Sun Jul 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.63.2-alt1
+- Updated to version 0.63.2.
+
+* Thu Jul 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.63.1-alt1
+- Updated to version 0.63.1.
+
+* Thu Jul 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.63.0-alt1
+- Updated to version 0.63.0.
+
+* Mon Jun 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.62.0-alt1
+- Updated to version 0.62.0.
+
+* Mon Apr 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.61.2-alt1
+- Updated to version 0.61.2.
+- Updated russian translation.
+
 * Sun Apr 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.61.1-alt1
 - Updated to version 0.61.1.
 
