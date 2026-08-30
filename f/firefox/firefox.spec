@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 154.0
+Version: 154.0.1
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Aug 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 154.0.1-alt1
+- New version.
+- Fix FTBFS with rustc 1.98: new *-oe-linux-* targets made
+  rust target detection ambiguous (mozilla bug 2053518).
+
 * Tue Aug 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 154.0-alt1
 - New version.
 - Fixes:
