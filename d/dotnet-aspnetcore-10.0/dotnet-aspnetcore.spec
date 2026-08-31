@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.5
+%define _dotnet_coreversion 10.0.11
 
-%define _dotnet_corerelease 10.0.5
-%define _dotnet_corerelease1 10.0.5
+%define _dotnet_corerelease 10.0.11
+%define _dotnet_corerelease1 10.0.11
 
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
@@ -132,6 +132,49 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Sun Aug 30 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.11-alt1
+- ASP.NET Core 10.0.11
+- fixed CVEs:
+ + CVE-2026-62898: .NET Information Disclosure Vulnerability
+ + CVE-2026-62899: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-62900: .NET Information Disclosure Vulnerability
+ + CVE-2026-62901: .NET Denial of Service Vulnerability
+ + CVE-2026-62886: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-62871: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-70354: .NET Core Remote Code Execution Vulnerability
+ + CVE-2026-62902: .NET Information Disclosure Vulnerability
+ + CVE-2026-62897: .NET Remote Code Execution Vulnerability
+ + CVE-2026-62909: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-50651: .NET Denial of Service Vulnerability
+ + CVE-2026-50526: .NET Tampering Vulnerability
+ + CVE-2026-50524: .NET Denial of Service Vulnerability
+ + CVE-2026-50646: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50649: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50650: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-56158: .NET Remote Code Execution Vulnerability
+ + CVE-2026-47302: .NET Denial of Service Vulnerability
+ + CVE-2026-50648: .NET Denial of Service Vulnerability
+ + CVE-2026-50527: .NET Denial of Service Vulnerability
+ + CVE-2026-47304: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50525: .NET Denial of Service Vulnerability
+ + CVE-2026-57108: .NET Denial of Service Vulnerability
+ + CVE-2026-50528: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50659: .NET Spoofing Vulnerability
+ + CVE-2026-47300: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-47303: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45591: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-45491: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45490: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32177: .NET Denial of Service Vulnerability
+ + CVE-2026-35433: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32175: .NET Core Tampering Vulnerability
+ + CVE-2026-42899: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-40372: ASP.NET Core Security Feature Bypass Vulnerability
+ + CVE-2026-26171: .NET Denial of Service Vulnerability
+ + CVE-2026-32203: .NET Denial of Service Vulnerability
+ + CVE-2026-33116: .NET Denial of Service Vulnerability
+ + CVE-2026-32178: .NET Spoofing Vulnerability
+
 * Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.5-alt1
 - new version 10.0.5
 
