@@ -4,7 +4,7 @@
 
 Name: wayle
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: A compositor agnostic shell with extensive customization
 License: MIT
 Group: Graphical desktop/Other
@@ -13,6 +13,7 @@ VCS: https://github.com/wayle-rs/wayle
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: alt-calendar-start-week-on-monday.patch
 
 ExcludeArch: %ix86
 
@@ -44,6 +45,7 @@ and device controls built in. Written in Rust with GTK4 and Relm4.
 
 %prep
 %setup -a 1
+%patch -p1
 %rust_prep
 
 %build
@@ -79,6 +81,9 @@ desktop-file-validate %buildroot%_desktopdir/%desktop_file
 %_datadir/fish/vendor_completions.d/wayle.fish
 
 %changelog
+* Mon Aug 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt2
+- Changed the calendar to start weeks on Monday.
+
 * Sun Aug 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
 - Updated to version 0.7.0.
 
