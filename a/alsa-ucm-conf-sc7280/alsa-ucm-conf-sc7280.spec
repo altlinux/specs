@@ -2,7 +2,7 @@
 
 Name: alsa-ucm-conf-sc7280
 Version: 1.2.14
-Release: alt1
+Release: alt2
 Summary: ALSA UCM configuration for Qualcomm sc7280 based devices
 License: BSD-3-Clause
 Group: System/Configuration/Hardware
@@ -27,15 +27,23 @@ sound on any sc7280 based phone.
 
 %install
 mkdir -p %buildroot%_datadir/alsa/ucm2/conf.d/sm8250/
+mkdir -p %buildroot%_datadir/alsa/ucm2/conf.d/sm7325/
 mkdir -p %buildroot%_datadir/alsa/ucm2/codecs/wcd938x/
+mkdir -p %buildroot%_datadir/alsa/ucm2/codecs/qcom-lpass/tx-macro
 cp -rv ucm2/Nothing %buildroot%_datadir/alsa/ucm2
 cp -v ucm2/conf.d/sm8250/NP1.conf %buildroot%_datadir/alsa/ucm2/conf.d/sm8250/
+cp -v ucm2/conf.d/sm7325/NP1.conf %buildroot%_datadir/alsa/ucm2/conf.d/sm7325/
 cp -v ucm2/codecs/wcd938x/AnalogMic2EnableSeq.conf %buildroot%_datadir/alsa/ucm2/codecs/wcd938x/AnalogMic2EnableSeq.conf
 cp -v ucm2/codecs/wcd938x/AnalogMic2DisableSeq.conf %buildroot%_datadir/alsa/ucm2/codecs/wcd938x/AnalogMic2DisableSeq.conf
+cp -v ucm2/codecs/qcom-lpass/tx-macro/SoundwireMic5EnableSeq.conf %buildroot%_datadir/alsa/ucm2/codecs/qcom-lpass/tx-macro/SoundwireMic5EnableSeq.conf
 
 %files
 %_datadir/alsa/ucm2
 
 %changelog
+* Sat Aug 29 2026 Vasiliy Doylov <neko@altlinux.org> 1.2.14-alt2
+- Add top microphone for Nothing Phone (1).
+- Fix configuration for new kernels.
+
 * Thu Jul 09 2026 Vasiliy Doylov <neko@altlinux.org> 1.2.14-alt1
 - Initial build for ALT.

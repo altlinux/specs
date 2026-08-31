@@ -2,7 +2,7 @@
 
 Name: droid-juicer
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Summary: Extract firmware from Android vendor partitions
 License: MIT
 Group: System/Kernel and hardware
@@ -12,8 +12,10 @@ VCS: https://gitlab.com/mobian1/droid-juicer.git
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch0: v0.4.2-dhxx-firmware-add-compat-symlinks-for-backwards-compatibi.patch
-Patch1: v0.4.2-dhxx-configs-add-new-fw-paths-and-keep-the-original-paths.patch
-Patch2: v0.4.2-neko-configs-nothing-spacewar-add-missing-firmware.patch
+Patch1: v0.4.2-neko-firmware-add-textfiles-to-generate-files-with-inline.patch
+Patch2: v0.4.2-neko-folders-resolve-destination-relative-to-extract_path.patch
+Patch3: v0.4.2-dhxx-configs-add-new-fw-paths-and-keep-the-original-paths.patch
+Patch4: v0.4.2-neko-configs-nothing-spacewar-add-missing-firmware.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires(pre): rpm-macros-systemd
@@ -47,6 +49,11 @@ cp -rv configs %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Sat Aug 29 2026 Vasiliy Doylov <neko@altlinux.org> 0.4.2-alt3
+- Fix firmware extraction for Nothing Phone (1).
+- Add textfils generation.
+- Fix folders with relative path extraction.
+
 * Sun Jul 26 2026 Vasiliy Doylov <neko@altlinux.org> 0.4.2-alt2
 - Improve Nothing Phone (1) config.
 
