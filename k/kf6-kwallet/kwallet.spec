@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.28.0
+Version: 6.29.0
 Release: alt1
 %K6init
 
@@ -26,7 +26,7 @@ Patch5: alt-l10n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules glibc-devel qt6-tools-devel qt6-declarative-devel
-BuildRequires: libgcrypt-devel libgpgme-devel libassuan-devel libsecret-devel
+BuildRequires: libgcrypt-devel gpgmeqt-devel libassuan-devel libsecret-devel
 BuildRequires: boost-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -143,6 +143,9 @@ __EOF__
 
 
 %changelog
+* Sun Aug 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.29.0-alt1
+- new version
+
 * Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.28.0-alt1
 - new version
 

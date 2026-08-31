@@ -5,7 +5,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.28.0
+Version: 6.29.0
 Release: alt1
 %K6init altplace
 
@@ -141,6 +141,9 @@ sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmi
 
 
 %changelog
+* Sun Aug 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.29.0-alt1
+- new version
+
 * Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.28.0-alt1
 - new version
 
