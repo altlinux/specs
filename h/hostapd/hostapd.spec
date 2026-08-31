@@ -1,5 +1,5 @@
 Name: hostapd
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
@@ -69,6 +69,9 @@ install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
 %_man8dir/*
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12-alt1
+- 2.12 released
+
 * Tue Jul 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11-alt1
 - 2.11 released
 
