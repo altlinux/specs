@@ -1,5 +1,5 @@
 Name: haveged
-Version: 1.9.20
+Version: 1.9.26
 Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
@@ -69,6 +69,9 @@ install -Dpm 0644 contrib/Fedora/90-haveged.rules %buildroot%_udevrulesdir/90-%n
 %_libdir/*.so
 
 %changelog
+* Mon Aug 31 2026 Alexander Danilov <admsasha@altlinux.org> 1.9.26-alt1
+- 1.9.26 (fixed: CVE-2026-41054).
+
 * Sun May 17 2026 L.A. Kostis <lakostis@altlinux.ru> 1.9.20-alt1
 - 1.9.20.
 
