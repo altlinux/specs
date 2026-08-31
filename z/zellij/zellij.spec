@@ -2,7 +2,7 @@
 %define features plugins_from_target web_server_capability
 
 Name:    zellij
-Version: 0.44.3
+Version: 0.45.1
 Release: alt1
 
 Summary: A terminal workspace with batteries included
@@ -20,7 +20,6 @@ Source2: config.toml
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 BuildRequires: libssl-devel
-BuildRequires: mandown
 
 %description
 Zellij is a workspace aimed at developers, ops-oriented people and
@@ -40,14 +39,12 @@ for shell in "zsh" "bash" "fish"
 do
   ./target/release/zellij setup --generate-completion "$shell" > ./target/zellij."$shell"
 done
-mandown docs/MANPAGE.md > ./target/zellij.1
 
 %install
 %rust_install
 install -Dm644 -T ./target/zellij.bash %buildroot%_datadir/bash-completion/completions/zellij
 install -Dm644 -T ./target/zellij.fish %buildroot%_datadir/fish/vendor_completions.d/zellij.fish
 install -Dm644 -T ./target/zellij.zsh %buildroot%_datadir/zsh/site-functions/_zellij
-install -Dm644 -T ./target/zellij.1 %buildroot%_man1dir/zellij.1
 install -Dm644 -T %_builddir/%name-%version/assets/logo.png %buildroot%_datadir/pixmaps/%name.png
 install -Dm644 -T %_builddir/%name-%version/assets/%name.desktop %buildroot%_datadir/applications/%name.desktop
 cp -r ./example %buildroot%_datadir/example
@@ -57,7 +54,6 @@ cp -r ./example %buildroot%_datadir/example
 %files
 %doc *.md docs/*.md
 %_bindir/zellij
-%_man1dir/zellij.1*
 %_datadir/pixmaps/*
 %_datadir/applications/*
 %_datadir/bash-completion/*
@@ -66,6 +62,10 @@ cp -r ./example %buildroot%_datadir/example
 %_datadir/example
 
 %changelog
+* Mon Aug 31 2026 Ilya Sorochan <k0tran@altlinux.org> 0.45.1-alt1
+- Update version (closes: #59077).
+- Remove manpage because upstream dropped it's support.
+
 * Wed May 27 2026 Ilya Sorochan <k0tran@altlinux.org> 0.44.3-alt1
 - Update version.
 
