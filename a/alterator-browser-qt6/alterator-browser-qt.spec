@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.8
+Version: 3.7.9
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Aug 31 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.9-alt1
+- update all translations (closes: 41002)
+
 * Tue Aug 25 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.8-alt1
 - disable unselect selected item for single-selection listboxes
 - add popup animation
