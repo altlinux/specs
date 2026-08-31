@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.2
-Release: alt1.1
+Release: alt2
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -18,18 +18,15 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: node_modules.tar.gz
+Source2: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_enabled check
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-aniso8601
-BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-importlib-resources
-BuildRequires: python3-module-pytest-flask
-BuildRequires: python3-module-pytest-mock
+%add_pyproject_deps_check_filter pytest-profiling
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -42,6 +39,8 @@ its documentation properly using Swagger.
 %prep
 %setup -a 1
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 # copy swaggerui code from npm modules
@@ -70,6 +69,9 @@ EXCLUDE_TESTS_CONDITION="not (\
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 31 2026 Anton Zhukharev <ancieg@altlinux.org> 1.3.2-alt2
+- Fixed FTBFS (python 3.14).
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1.1
 - Demodernized packaging.
 
