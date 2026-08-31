@@ -1,7 +1,7 @@
 %define pypi_name pysyncobj
 
 Name:    python3-module-%pypi_name
-Version: 0.3.16
+Version: 0.3.17
 Release: alt1
 
 Summary: A library for replicating your python class between multiple servers, based on raft protocol
@@ -54,6 +54,9 @@ servers. It has following features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 31 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.17-alt1
+- New version.
+
 * Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.16-alt1
 - New version.
 
