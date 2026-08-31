@@ -1,11 +1,11 @@
 Name: libjaylink
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Access library for SEGGER J-Link and complatible devices
-License: GPLv2
+License: LGPL-2.1-or-later
 Group: System/Libraries
-Url: https://gitlab.zapb.de/libjaylink/libjaylink
+URL: https://gitlab.zapb.de/libjaylink/libjaylink
 
 Source: %name-%version-%release.tar
 BuildRequires: libusb-devel
@@ -41,12 +41,15 @@ install -pm0644 -D contrib/60-libjaylink.rules %buildroot%_udevrulesdir/60-libja
 %_libdir/*.so.*
 
 %files devel
-%doc AUTHORS COPYING HACKING NEWS README* 
+%doc AUTHORS COPYING HACKING* NEWS README*
 %_includedir/libjaylink
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.0-alt1
+- 0.5.0 released
+
 * Fri Dec 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt2
 - create plugdev group used in udev rules (closes: 52357)
 
