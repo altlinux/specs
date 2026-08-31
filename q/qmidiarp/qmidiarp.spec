@@ -1,5 +1,5 @@
 Name: qmidiarp
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: An arpeggiator, sequencer and MIDI LFO
@@ -50,6 +50,9 @@ This package contains above as LV2 plugins.
 %_libdir/lv2/*.lv2
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.5-alt1
+- 0.7.5 released
+
 * Mon Feb 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.4-alt1
 - 0.7.4 released
 
