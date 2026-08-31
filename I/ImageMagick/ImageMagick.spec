@@ -16,7 +16,7 @@
 %endif
 
 Name: ImageMagick
-Version: 7.1.2.29
+Version: 7.1.2.30
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -263,6 +263,20 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Sun Aug 30 2026 Anton Farygin <rider@altlinux.org> 7.1.2.30-alt1
+- 7.1.2.29 -> 7.1.2.30
+- display: do not exit on File->Next/Former when there is no other file
+  to show (closes: 44016)
+- display: do not show a false "Unable to delete image file" error after
+  a successful File->Delete (closes: 44017)
+- display: do not self-close after showing a GIF (loop count no longer
+  terminates the viewer) and render delta-frame animations correctly
+  by coalescing them (closes: 47343, 50426)
+- display: show the pan (navigation) window when an image larger than
+  the window is opened via File->Open (closes: 47430)
+- delegates.xml: substitute @LPRDelegateDefault@ so File->Print invokes
+  lpr instead of failing on the raw placeholder (closes: 47433)
+
 * Tue Aug 04 2026 Anton Farygin <rider@altlinux.org> 7.1.2.29-alt1
 - 7.1.2.27 -> 7.1.2.29
 
