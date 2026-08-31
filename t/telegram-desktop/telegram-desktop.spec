@@ -6,7 +6,7 @@
 
 %define ffmpeg_version 4.0
 # minimum required
-%define tg_qt6_version 6.6.2
+%define tg_qt6_version 6.11
 
 # AppID for Basealt build
 # got from https://core.telegram.org/api/obtaining_api_id
@@ -23,8 +23,8 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 6.9.3
-Release: alt2
+Version: 7.1.3
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -37,9 +37,9 @@ Vcs: https://github.com/telegramdesktop/tdesktop
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
+Patch: use-system-rlottie.patch
 #Source1: %name-gsl-%version.tar
 
-Patch: toomanycooks-upstream-loongarch64-and-riscv64-support.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -101,6 +101,7 @@ BuildRequires: liblz4-devel
 BuildRequires: libcrc32c-devel
 BuildRequires: libfmt-devel
 BuildRequires: libada-devel
+BuildRequires: libfido2-devel
 
 BuildRequires: libminizip-devel libpcre2-devel libexpat-devel libssl-devel libselinux-devel bison
 
@@ -250,8 +251,7 @@ or business messaging needs.
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
 %endif
 
-#patch9 -p1
-%patch -p1 -d Telegram/ThirdParty/TooManyCooks
+%patch -p1
 
 # See https://github.com/desktop-app/tg_owt/pull/82
 # TODO: there are incorrect using and linking libyuv
@@ -280,12 +280,6 @@ for i in \
     rm -r $i
 done
 
-%if_with rlottie
-# really ALT's rlottie is forked rlottie from desktop-app
-subst 's|#ifndef LOTTIE_USE_PACKAGED_RLOTTIE|#ifdef LOTTIE_USE_PACKAGED_RLOTTIE|' \
-	Telegram/lib_lottie/lottie/lottie_icon.cpp \
-	Telegram/lib_lottie/lottie/details/lottie_frame_provider_direct.cpp
-%endif
 
 %build
 %if_with ffmpeg_static
@@ -383,6 +377,11 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 7.1.3-alt1
+- require Qt 6.11 or newer
+- use system libfido2 and rlottie
+- new version 7.1.3
+
 * Fri Jul 10 2026 Ilya Sorochan <k0tran@altlinux.org> 6.9.3-alt2
 - NMU: fix bundled TooManyCooks FTBFS on loongarch64 and riscv64
 
