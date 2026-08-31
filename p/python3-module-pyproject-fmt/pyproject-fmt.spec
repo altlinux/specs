@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.28.0
+Version: 2.29.0
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -19,7 +19,6 @@ VCS: https://github.com/tox-dev/pyproject-fmt.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: vendor_rust.tar
-Source3: tombi_vendorer.py
 Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
@@ -37,8 +36,6 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup -a2
 %autopatch -p1
-python3 %SOURCE3 --check
-mv vendor/_tombi_schemas/* ./
 mkdir .cargo
 cat < vendor_cargoconf.toml >> .cargo/config.toml
 # make this project build without vendor,
@@ -74,6 +71,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 2.29.0-alt1
+- 2.28.0 -> 2.29.0
+
 * Tue Aug 18 2026 Stanislav Levin <slev@altlinux.org> 2.28.0-alt1
 - 2.25.2 -> 2.28.0
 
