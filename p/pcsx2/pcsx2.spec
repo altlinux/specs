@@ -2,15 +2,15 @@
 
 %define version_hi 2
 %define version_mid 8
-%define version_lo 0
+%define version_lo 1
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define Fri Aug 28 23:18:05 2026
+%define Sun Aug 30 22:24:57 2026
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash c10a5c9ad951c517dc48b722b5b84eb9bf7fdb42
+%define git_hash d073d75010090186b58eb38bfc78dfc2f3acd8c7
 
 Name: pcsx2
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -127,6 +127,9 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.1-alt1
+- New version 2.8.1.
+
 * Sat Aug 29 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.0-alt1
 - New version 2.8.0.
 
