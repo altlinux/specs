@@ -1,5 +1,5 @@
 Name:    mandown
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Create man pages from markdown markup
@@ -29,15 +29,18 @@ install -vpD %SOURCE2 .cargo/config.toml
 %install
 %rust_install
 
-# No tests for now
-# %check
-# %rust_test
+%check
+%rust_test
 
 %files
 %doc README.md LICENSE
 %_bindir/mandown
 
 %changelog
+* Mon Aug 31 2026 Ilya Sorochan <k0tran@altlinux.org> 1.1.1-alt1
+- 1.1.0 -> 1.1.1
+- Enable tests.
+
 * Mon Jul 07 2025 Ilya Sorochan <k0tran@altlinux.org> 1.1.0-alt1
 - 0.1.5 -> 1.1.0
 
