@@ -1,11 +1,11 @@
 Name: qsampler
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: A LinuxSampler Qt GUI
 License: GPLv2
 Group: Sound
-Url: https://qsampler.sourceforge.io/
+URL: https://qsampler.sourceforge.io/
 VCS: https://github.com/rncbc/qsampler
 
 Source: %name-%version-%release.tar
@@ -47,6 +47,9 @@ reference interface for the LinuxSampler Control Protocol (LSCP).
 %_man1dir/qsampler.1*
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.3-alt1
+- 1.0.3 released
+
 * Wed Jun 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2-alt1
 - 1.0.2 released
 
