@@ -1,13 +1,13 @@
 Name: greetd-tuigreet
-Version: 0.9.1
+Version: 0.11.1
 Release: alt1
 
 Summary: Graphical console greeter for greetd
 License: GPLv3
 Group:   Graphical desktop/Other
 
-URL: https://github.com/apognu/tuigreet
-VCS: https://github.com/apognu/tuigreet.git
+URL: https://github.com/tuigreet/tuigreet
+VCS: https://github.com/tuigreet/tuigreet.git
 
 Source0: %name-%version.tar
 Source1: vendor.tar
@@ -65,5 +65,9 @@ mkdir -p %buildroot%_cachedir/tuigreet
 %config(noreplace) %_sysconfdir/greetd/greeters/tuigreet.toml
 
 %changelog
+* Mon Aug 31 2026 Ilya Sorochan <k0tran@altlinux.org> 0.11.1-alt1
+- Update version.
+- Update URL and VCS tags.
+
 * Fri Nov 07 2025 Ilya Sorochan <k0tran@altlinux.org> 0.9.1-alt1
 - Initial build.
