@@ -2,34 +2,40 @@
 #def_with bootstrap
 
 Name: python3-module-mysql
-Version: 8.0.33
+Version: 9.7.0
 Release: alt1
 
 Summary: MySQL Connector for Python 3
 
-License: GPLv2 with exceptions
+License: GPL-2.0-or-later WITH Universal-FOSS-exception-1.0
 Group: Development/Python3
 Url: http://dev.mysql.com/doc/connector-python/en/index.html
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://pypi.org/packages/source/m/mysql-connector-python/mysql_connector_python-%version.tar.gz
 Source: %oname-%version.tar
-
-#BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libmysqlclient-devel
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 Provides: %{oname}3 = %version
 
-# TODO: we miss The _mysql_connector C Extension Module
-%add_python3_req_skip _mysql_connector
-
 %description
-MySQL driver written in Python which does not depend on MySQL C client
-libraries and implements the DB API v2.0 specification (PEP-249).
+MySQL driver for Python with the _mysql_connector C extension which
+implements the DB API v2.0 specification (PEP-249).
+
+%package -n python3-module-mysql.ai
+Summary: MySQL HeatWave AI and ML SDK
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description -n python3-module-mysql.ai
+Optional MySQL HeatWave AI and machine learning integration for %name.
+It provides LangChain-compatible GenAI components and scikit-learn-compatible
+estimators.
 
 %package django
 Summary: Django MySQL Connector for Python 3
@@ -48,25 +54,40 @@ DJango connector for %name.
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
-cd build ; ln -s lib.linux* lib ; cd ..
+export MYSQL_CAPI=%_bindir/mysql_config
+export SKIP_VENDOR=1
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
+
+%check
+PYTHONPATH=%buildroot%python3_sitelibdir %__python3 -c \
+    'import mysql.connector; assert mysql.connector.HAVE_CEXT'
 
 %files
 %doc CHANGES.txt LICENSE.txt README.rst
 %doc examples
+%python3_sitelibdir/_mysql_connector*.so
 %python3_sitelibdir/mysql/
-%python3_sitelibdir/mysqlx/
+%exclude %python3_sitelibdir/mysql/ai
 %exclude %python3_sitelibdir/mysql/connector/django
-%python3_sitelibdir/mysql_connector_python-%version-py3*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+
+%files -n python3-module-mysql.ai
+%python3_sitelibdir/mysql/ai/
 
 %files django
 %python3_sitelibdir/mysql/connector/django/
 
 %changelog
+* Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 9.7.0-alt1
+- new version 9.7.0 (with rpmrb script)
+- build the _mysql_connector C extension against the system MySQL C API
+- split the optional mysql.ai functionality into a separate subpackage
+- migrate to %%pyproject_build/%%pyproject_install
+
 * Fri Sep 19 2025 Alexander Danilov <admsasha@altlinux.org> 8.0.33-alt1
 - new version 8.0.33
 
@@ -172,4 +193,3 @@ cd build ; ln -s lib.linux* lib ; cd ..
 
 * Wed Mar 09 2011 Remi Collet <Fedora@famillecollet.com> 0.3.2-1
 - first RPM
-
