@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 7.2.2
-Release: alt1
+Release: alt2
 
 Summary: A process utilities module for Python
 
@@ -21,6 +21,8 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+Requires: /proc
 
 %if_enabled check
 BuildRequires: python3-module-pytest
@@ -55,6 +57,9 @@ py.test-3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.2-alt2
+- Added /proc requirement (ALT bug 60212).
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.2-alt1
 - new version 7.2.2
 
