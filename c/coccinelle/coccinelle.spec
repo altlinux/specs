@@ -6,7 +6,7 @@
 %endif
 
 Name:		coccinelle
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary:	Match and transform C code using semantic patches
 Group:		Development/C
@@ -29,6 +29,7 @@ BuildRequires:	ocaml-parmap-devel
 BuildRequires:	ocaml-pcre-devel
 BuildRequires:	ocaml-stdcompat-devel
 BuildRequires:	python3-dev
+BuildRequires:	pkgconfig(libpcre2-8)
 
 # Bogus internal name
 %filter_from_requires /^python.*(coccinelle)/d
@@ -168,6 +169,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Mon Aug 31 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.2-alt1
+- Update to 1.3.2 (2026-08-18).
+
 * Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
 - Update to 1.3.1 (2025-11-18).
 
