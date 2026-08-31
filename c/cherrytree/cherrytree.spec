@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 1.7.0
+Version: 1.7.2
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -80,6 +80,9 @@ rm -r src/spdlog
 
 
 %changelog
+* Mon Aug 31 2026 Danila Skachedubov <skachedubov@altlinux.org> 1.7.2-alt1
+- new version 1.7.2 (with rpmrb script)
+
 * Thu Jun 04 2026 Danila Skachedubov <skachedubov@altlinux.org> 1.7.0-alt1
 - new version 1.7.0 (with rpmrb script)
 
