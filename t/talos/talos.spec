@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      acf8380b37772b0664c8a60891c847d07d96ae8e
+%global commit      3ebd10a7c1bd0f81742bdcd0c3fe56d727db7401
 %global shortcommit %(c=%commit; echo ${c:0:7})
 %global altkernel 6.18.26-talos
 %global latest_distro_tag v11.0
+%global kubernetes_ver 1.36
 %define _libexecdir %prefix/libexec
 %define alt_registry registry.altlinux.org
 %define alt_orchestra_registry altlinux.space/alt-orchestra
@@ -14,7 +15,7 @@
 %endif
 
 Name: talos
-Version: 1.12.10
+Version: 1.13.9
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -32,7 +33,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.24.0
 # For define versions
-BuildRequires: etcd-for-kubernetes kubernetes-common coredns-for-kubernetes containerd flannel
+BuildRequires: etcd-for-kubernetes kubernetes%kubernetes_ver-common coredns-for-kubernetes containerd flannel
 #BuildRequires: /usr/bin/protoc libprotobuf-devel
 #BuildRequires: /usr/bin/protoc-gen-go /usr/bin/protoc-gen-go-vtproto /usr/bin/protoc-gen-go-grpc
 
@@ -209,6 +210,10 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed Aug 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.9-alt1
+- New version 1.13.9.
+- Fix default image in upgrade command.
+
 * Mon Jul 20 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.10-alt1
 - New version 1.12.10.
 - Correct version logging in init process.
