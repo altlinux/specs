@@ -2,7 +2,7 @@
 %define pypi_name posthog
 
 Name: python3-module-%pypi_name
-Version: 3.24.1
+Version: 7.45.1
 Release: alt1
 
 Summary: Send usage data from your Python code to PostHog
@@ -30,11 +30,17 @@ BuildArch: noarch
 %install
 %pyproject_install
 
+# do not package tests (no clients)
+rm -r %buildroot%python3_sitelibdir/posthog/test
+
 %files
 %python3_sitelibdir_noarch/%pypi_name
 %python3_sitelibdir_noarch/%pypi_name-%version.dist-info
 %doc README.md
 
 %changelog
+* Mon Aug 31 2026 Anton Zhukharev <ancieg@altlinux.org> 7.45.1-alt1
+- NMU: Updated to 7.45.1.
+
 * Sun Apr 13 2025 David Sultaniiazov <x1z53@altlinux.org> 3.24.1-alt1
 - Initial build

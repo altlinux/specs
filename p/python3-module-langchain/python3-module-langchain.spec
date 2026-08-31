@@ -1,399 +1,190 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name langchain
-%define libs cli community core langchain text-splitters standard-tests
-%define partners anthropic deepseek exa groq huggingface ollama openai perplexity prompty qdrant voyageai xai
-# Couldn't build `python3(torch)` for `nomic`
-# Couldn't build `python3(chromadb)` for `chroma`
-# Couldn't build `python3(fireworks.client)` for `fireworks`
-# Couldn't build `python3(tokenizers)` for `mistralai`
 
-Name: python3-module-%pypi_name
-Version: 0.3.23
+BuildRequires(pre): rpm-build-pyproject
+Source99: %pyproject_deps_config_name
+
+Name: python3-module-langchain
+Version: 1.3.17
 Release: alt1
-
 Summary: Building applications with LLMs through composability
 License: MIT
 Group: Development/Python3
-
-Url: https://github.com/langchain-ai/langchain
+Url: https://pypi.org/project/langchain/
 Vcs: https://github.com/langchain-ai/langchain
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(pdm.backend)
-
-%add_python3_req_skip __module_name__.vectorstores
-%add_python3_req_skip __module_name__.chain
-%add_python3_req_skip __module_name__.chat_models
-%add_python3_req_skip __module_name__.document_loaders
-%add_python3_req_skip __module_name__.embeddings
-%add_python3_req_skip __module_name__.retrievers
-%add_python3_req_skip __module_name__.toolkits
-%add_python3_req_skip __module_name__.tools
-
 BuildArch: noarch
+Source0: langchain.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_metadata
+%pyproject_builddeps -- langchain_pep518
+%pyproject_builddeps -- langchain_pep517
+
+%files -n python3-module-langchain
+%python3_sitelibdir/langchain/
+%python3_sitelibdir/langchain-%version.dist-info/
 
 %description
-Large language models (LLMs) are emerging as a transformative technology,
-enabling developers to build applications that they previously could not.
-However, using these LLMs in isolation is often insufficient for creating a
-truly powerful app - the real power comes when you can combine them with other
-sources of computation or knowledge.
+LangChain is the easiest way to start building agents and applications powered
+by LLMs. With under 10 lines of code, you can connect to OpenAI, Anthropic,
+Google, and more. LangChain provides a pre-built agent architecture and model
+integrations to help you get started quickly and seamlessly incorporate LLMs
+into your agents and applications.
 
-%package -n %name-cli
-Summary: CLI for interacting with LangChain
-Group: Development/Python3
 
-%description -n %name-cli
-This package implements the official CLI for LangChain. Right now, it is most
-useful for getting started with LangChain Templates!
-
-%package -n %name-community
-Summary: Community contributed LangChain integrations
-Group: Development/Python3
-
-%description -n %name-community
-LangChain Community contains third-party integrations that implement the base
-interfaces defined in LangChain Core, making them ready-to-use in any LangChain
-application.
-
-%package -n %name-core
+%package -n python3-module-langchain-core
+Version: 1.6.0
+Release: alt1
 Summary: Building applications with LLMs through composability
+License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/langchain-core/
+Vcs: https://github.com/langchain-ai/langchain
+BuildArch: noarch
+Source1: langchain-core.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_core_metadata
+%pyproject_builddeps -- langchain_core_pep518
+%pyproject_builddeps -- langchain_core_pep517
 
-%description -n %name-core
-LangChain Core contains the base abstractions that power the rest of the
-LangChain ecosystem.
+%files -n python3-module-langchain-core
+%python3_sitelibdir/langchain_core/
+%python3_sitelibdir/langchain_core-%version.dist-info/
 
-These abstractions are designed to be as modular and simple as possible.
-Examples of these abstractions include those for language models, document
-loaders, embedding models, vectorstores, retrievers, and more.
+%description -n python3-module-langchain-core
+%summary.
 
-The benefit of having these abstractions is that any provider can implement the
-required interface and then easily be used in the rest of the LangChain
-ecosystem.
 
-%package -n %name-tests
-Summary: Standard tests for LangChain implementations
-Group: Development/Python3
-
-%description -n %name-tests
-This is a testing library for LangChain integrations. It contains the base
-classes for a standard set of tests.
-
-%package -n %name-text-splitters
-Summary: LangChain text splitting utilities
-Group: Development/Python3
-
-%description -n %name-text-splitters
-LangChain Text Splitters contains utilities for splitting into chunks a wide
-variety of text documents.
-
-%package -n %name-anthropic
-Summary: An integration package connecting AnthropicMessages and LangChain
-Group: Development/Python3
-
-%description -n %name-anthropic
-This package contains the LangChain integration for Anthropic's generative
-models.
-
-# Couldn't build `python3(chromadb)` for `chroma`
-# %package -n %name-chroma
-# Summary: An integration package connecting Chroma and LangChain
-# Group: Development/Python3
-#
-# %description -n %name-chroma
-# This package contains the LangChain integration with Chroma.
-
-%package -n %name-deepseek
-Summary: An integration package connecting DeepSeek and LangChain
-Group: Development/Python3
-
-%description -n %name-deepseek
-This package contains the LangChain integration with the DeepSeek API
-
-%package -n %name-exa
-Summary: An integration package connecting Exa and LangChain
-Group: Development/Python3
-
-%description -n %name-exa
-This package contains the LangChain integrations for Exa Cloud generative
-models.
-
-# Couldn't build `python3(fireworks.client)` for `fireworks`
-# %package -n %name-fireworks
-# Summary: An integration package connecting Fireworks and LangChain
-# Group: Development/Python3
-#
-# %description -n %name-fireworks
-# This is the partner package for tying Fireworks.ai and LangChain. Fireworks
-# really strive to provide good support for LangChain use cases, so if you run
-# into any issues please let us know.
-
-%package -n %name-groq
-Summary: An integration package connecting Groq and LangChain
-Group: Development/Python3
-
-%description -n %name-groq
-At Groq, we've developed the world's first Language Processing Unit, or LPU.
-The Groq LPU has a deterministic, single core streaming architecture that sets
-the standard for GenAI inference speed with predictable and repeatable
-performance for any given workload.
-
-Beyond the architecture, our software is designed to empower developers like
-you with the tools you need to create innovative, powerful AI applications.
-With Groq as your engine, you can:
-
-- Achieve uncompromised low latency and performance for real-time AI and HPC
-inferences
-- Know the exact performance and compute time for any given workload
-- Take advantage of our cutting-edge technology to stay ahead of the
-competition
-
-%package -n %name-huggingface
-Summary: An integration package connecting Hugging Face and LangChain
-Group: Development/Python3
-
-%description -n %name-huggingface
-This package contains the LangChain integrations for huggingface related
-classes.
-
-# Couldn't build `python3(tokenizers)` for `mistralai`
-# %package -n %name-mistralai
-# Summary: An integration package connecting Mistral and LangChain
-# Group: Development/Python3
-#
-# %description -n %name-mistralai
-# This package contains the LangChain integrations for MistralAI through their
-# mistralai SDK.
-
-# Couldn't build `python3(torch)` for `nomic`
-# %package -n %name-nomic
-# Summary: An integration package connecting Nomic and LangChain
-# Group: Development/Python3
-#
-# %description -n %name-nomic
-# This package contains the LangChain integration with Nomic
-
-%package -n %name-ollama
-Summary: An integration package connecting Ollama and LangChain
-Group: Development/Python3
-
-%description -n %name-ollama
-This package contains the LangChain integration with Ollama
-
-%package -n %name-openai
+%package -n python3-module-langchain-openai
+Version: 1.6.0
+Release: alt1
 Summary: An integration package connecting OpenAI and LangChain
+License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/langchain-openai/
+Vcs: https://github.com/langchain-ai/langchain
+BuildArch: noarch
+Source2: langchain-openai.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_openai_metadata
+%pyproject_builddeps -- langchain_openai_pep518
+%pyproject_builddeps -- langchain_openai_pep517
 
-%description -n %name-openai
-This package contains the LangChain integrations for OpenAI through their
-`openai` SDK.
+%files -n python3-module-langchain-openai
+%python3_sitelibdir/langchain_openai/
+%python3_sitelibdir/langchain_openai-%version.dist-info/
 
-%package -n %name-perplexity
-Summary: An integration package connecting Perplexity and LangChain
+%description -n python3-module-langchain-openai
+%summary.
+
+
+%package -n python3-module-langchain-deepseek
+Version: 1.1.0
+Release: alt1
+Summary: An integration package connecting DeepSeek and LangChain
+License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/langchain-deepseek/
+Vcs: https://github.com/langchain-ai/langchain
+BuildArch: noarch
+Source3: langchain-deepseek.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_deepseek_metadata
+%pyproject_builddeps -- langchain_deepseek_pep518
+%pyproject_builddeps -- langchain_deepseek_pep517
 
-%description -n %name-perplexity
-This package contains the LangChain integration with Perplexity.
+%files -n python3-module-langchain-deepseek
+%python3_sitelibdir/langchain_deepseek/
+%python3_sitelibdir/langchain_deepseek-%version.dist-info/
 
-%package -n %name-prompty
-Summary: An integration package connecting Prompty and LangChain
+%description -n python3-module-langchain-deepseek
+%summary.
+
+
+%package -n python3-module-langchain-anthropic
+Version: 1.6.1
+Release: alt1
+Summary: Integration package connecting Claude (Anthropic) APIs and LangChain
+License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/langchain-anthropic/
+Vcs: https://github.com/langchain-ai/langchain
+BuildArch: noarch
+Source4: langchain-anthropic.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_anthropic_metadata
+%pyproject_builddeps -- langchain_anthropic_pep518
+%pyproject_builddeps -- langchain_anthropic_pep517
 
-%description -n %name-prompty
-This package contains the LangChain integration with Microsoft Prompty.
+%files -n python3-module-langchain-anthropic
+%python3_sitelibdir/langchain_anthropic/
+%python3_sitelibdir/langchain_anthropic-%version.dist-info/
 
-%package -n %name-qdrant
-Summary: An integration package connecting Qdrant and LangChain
+%description -n python3-module-langchain-anthropic
+%summary.
+
+
+%package -n python3-module-langchain-text-splitters
+Version: 1.1.2
+Release: alt1
+Summary: LangChain text splitting utilities
+License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/langchain-text-splitters/
+Vcs: https://github.com/langchain-ai/langchain
+BuildArch: noarch
+Source5: langchain-text-splitters.tar
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- langchain_text_splitters_metadata
+%pyproject_builddeps -- langchain_text_splitters_pep518
+%pyproject_builddeps -- langchain_text_splitters_pep517
 
-%description -n %name-qdrant
-This package contains the LangChain integration with Qdrant.
+%files -n python3-module-langchain-text-splitters
+%python3_sitelibdir/langchain_text_splitters/
+%python3_sitelibdir/langchain_text_splitters-%version.dist-info/
 
-%package -n %name-voyageai
-Summary: An integration package connecting VoyageAI and LangChain
-Group: Development/Python3
+%description -n python3-module-langchain-text-splitters
+%summary.
 
-%description -n %name-voyageai
-This package contains the LangChain integrations for VoyageAI through their
-`voyageai` client package.
-
-%package -n %name-xai
-Summary: An integration package connecting xAI and LangChain
-Group: Development/Python3
-
-%description -n %name-xai
-This package contains the LangChain integrations for xAI through their APIs.
 
 %prep
-%setup
+%setup -c -T -n packages
+%setup -D -T -n packages -a0 -a1 -a2 -a3 -a4 -a5
 
-%build
-cd libs
-for dir in %libs; do
-  %pyproject_build $dir
+for target in $(ls -d *) ; do
+    pushd $target
+        %pyproject_deps_resync ${target}_pep518 pep518
+        %pyproject_deps_resync ${target}_pep517 pep517
+        %pyproject_deps_resync ${target}_metadata metadata
+    popd
 done
 
-cd partners
-for dir in %partners; do
-  %pyproject_build $dir
+%build
+for target in $(ls -d *) ; do
+    pushd $target
+        %pyproject_build
+    popd
 done
 
 %install
-cd libs
-for dir in %libs; do
-  cd $dir
-  %pyproject_install
-  cd ..
+for target in $(ls -d *) ; do
+    pushd $target
+        %pyproject_install
+    popd
 done
-
-cd partners
-for dir in %partners; do
-  cd $dir
-  %pyproject_install
-  cd ..
-done
-
-%files
-%_bindir/%pypi_name
-%python3_sitelibdir_noarch/%{pypi_name}
-%python3_sitelibdir_noarch/%{pypi_name}-*
-%exclude %python3_sitelibdir_noarch/scripts
-%exclude %python3_sitelibdir_noarch/%pypi_name/__pycache__
-%doc libs/%{pypi_name}/README.md
-
-%files -n %name-cli
-%_bindir/%pypi_name-cli
-%python3_sitelibdir_noarch/%{pypi_name}_cli
-%python3_sitelibdir_noarch/%{pypi_name}_cli-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_cli/__pycache__
-%doc libs/cli/README.md
-
-%files -n %name-community
-%python3_sitelibdir_noarch/%{pypi_name}_community
-%python3_sitelibdir_noarch/%{pypi_name}_community-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_community/__pycache__
-%doc libs/community/README.md
-
-%files -n %name-core
-%python3_sitelibdir_noarch/%{pypi_name}_core
-%python3_sitelibdir_noarch/%{pypi_name}_core-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_core/__pycache__
-%doc libs/core/README.md
-
-%files -n %name-tests
-%python3_sitelibdir_noarch/%{pypi_name}_tests
-%python3_sitelibdir_noarch/%{pypi_name}_tests-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_tests/__pycache__
-%doc libs/standard-tests/README.md
-
-%files -n %name-text-splitters
-%python3_sitelibdir_noarch/%{pypi_name}_text_splitters
-%python3_sitelibdir_noarch/%{pypi_name}_text_splitters-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_text_splitters/__pycache__
-%doc libs/text-splitters/README.md
-
-%files -n %name-anthropic
-%python3_sitelibdir_noarch/%{pypi_name}_anthropic
-%python3_sitelibdir_noarch/%{pypi_name}_anthropic-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_anthropic/__pycache__
-%doc libs/partners/anthropic/README.md
-
-# Couldn't build `python3(chromadb)` for `chroma`
-# %files -n %name-chroma
-# %python3_sitelibdir_noarch/%{pypi_name}_chroma
-# %python3_sitelibdir_noarch/%{pypi_name}_chroma-*
-# %exclude %python3_sitelibdir_noarch/%{pypi_name}_chroma/__pycache__
-# %doc libs/partners/chroma/README.md
-
-%files -n %name-deepseek
-%python3_sitelibdir_noarch/%{pypi_name}_deepseek
-%python3_sitelibdir_noarch/%{pypi_name}_deepseek-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_deepseek/__pycache__
-%doc libs/partners/deepseek/README.md
-
-%files -n %name-exa
-%python3_sitelibdir_noarch/%{pypi_name}_exa
-%python3_sitelibdir_noarch/%{pypi_name}_exa-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_exa/__pycache__
-%doc libs/partners/exa/README.md
-
-# Couldn't build `python3(fireworks.client)` for `fireworks`
-# %files -n %name-fireworks
-# %python3_sitelibdir_noarch/%{pypi_name}_fireworks
-# %python3_sitelibdir_noarch/%{pypi_name}_fireworks-*
-# %exclude %python3_sitelibdir_noarch/%{pypi_name}_fireworks/__pycache__
-# %doc libs/partners/fireworks/README.md
-
-%files -n %name-groq
-%python3_sitelibdir_noarch/%{pypi_name}_groq
-%python3_sitelibdir_noarch/%{pypi_name}_groq-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_groq/__pycache__
-%doc libs/partners/groq/README.md
-
-%files -n %name-huggingface
-%python3_sitelibdir_noarch/%{pypi_name}_huggingface
-%python3_sitelibdir_noarch/%{pypi_name}_huggingface-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_huggingface/__pycache__
-%doc libs/partners/huggingface/README.md
-
-# Couldn't build `python3(tokenizers)` for `mistralai`
-# %files -n %name-mistralai
-# %python3_sitelibdir_noarch/%{pypi_name}_mistralai
-# %python3_sitelibdir_noarch/%{pypi_name}_mistralai-*
-# %exclude %python3_sitelibdir_noarch/%{pypi_name}_mistralai/__pycache__
-# %doc libs/partners/mistralai/README.md
-
-# Couldn't build `python3(torch)` for `nomic`
-# %files -n %name-nomic
-# %python3_sitelibdir_noarch/%{pypi_name}_nomic
-# %python3_sitelibdir_noarch/%{pypi_name}_nomic-*
-# %exclude %python3_sitelibdir_noarch/%{pypi_name}_nomic/__pycache__
-# %doc libs/partners/nomic/README.md
-
-%files -n %name-ollama
-%python3_sitelibdir_noarch/%{pypi_name}_ollama
-%python3_sitelibdir_noarch/%{pypi_name}_ollama-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_ollama/__pycache__
-%doc libs/partners/ollama/README.md
-
-%files -n %name-openai
-%python3_sitelibdir_noarch/%{pypi_name}_openai
-%python3_sitelibdir_noarch/%{pypi_name}_openai-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_openai/__pycache__
-%doc libs/partners/openai/README.md
-
-%files -n %name-perplexity
-%python3_sitelibdir_noarch/%{pypi_name}_perplexity
-%python3_sitelibdir_noarch/%{pypi_name}_perplexity-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_perplexity/__pycache__
-%doc libs/partners/perplexity/README.md
-
-%files -n %name-prompty
-%python3_sitelibdir_noarch/%{pypi_name}_prompty
-%python3_sitelibdir_noarch/%{pypi_name}_prompty-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_prompty/__pycache__
-%doc libs/partners/prompty/README.md
-
-%files -n %name-qdrant
-%python3_sitelibdir_noarch/%{pypi_name}_qdrant
-%python3_sitelibdir_noarch/%{pypi_name}_qdrant-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_qdrant/__pycache__
-%doc libs/partners/qdrant/README.md
-
-%files -n %name-voyageai
-%python3_sitelibdir_noarch/%{pypi_name}_voyageai
-%python3_sitelibdir_noarch/%{pypi_name}_voyageai-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_voyageai/__pycache__
-%doc libs/partners/voyageai/README.md
-
-%files -n %name-xai
-%python3_sitelibdir_noarch/%{pypi_name}_xai
-%python3_sitelibdir_noarch/%{pypi_name}_xai-*
-%exclude %python3_sitelibdir_noarch/%{pypi_name}_xai/__pycache__
-%doc libs/partners/xai/README.md
 
 %changelog
+* Mon Aug 31 2026 Anton Zhukharev <ancieg@altlinux.org> 1.3.17-alt1
+- Updated langchain to 1.3.17.
+- Updated langchain-anthropic to 1.6.1.
+- Updated langchain-openai to 1.6.0.
+- Updated langchain-core to 1.6.0.
+- Updated langchain-deepseek to 1.1.0.
+- Updated langchain-text-splitters to 1.1.2.
+
 * Sun Apr 13 2025 David Sultaniiazov <x1z53@altlinux.org> 0.3.23-alt1
 - Initial build
