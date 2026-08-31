@@ -3,7 +3,7 @@
 
 Name: libqtxdg
 Version: 3.12.0
-Release: alt1
+Release: alt2
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL-2.1
@@ -44,12 +44,12 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 
 %install
 %cmake_install
+rm %buildroot%_sysconfdir/xdg/lxqt-qtxdg.conf
+rm %buildroot%_sysconfdir/xdg/qtxdg.conf
 
 %files
 %_libdir/*.so.*
 %_qt5_plugindir/*/*.so
-%config %_sysconfdir/xdg/lxqt-qtxdg.conf
-%config %_sysconfdir/xdg/qtxdg.conf
 
 %files devel
 %_libdir/*.so
@@ -58,6 +58,9 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_datadir/cmake/*/
 
 %changelog
+* Mon Aug 31 2026 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt2
+- Remove xdg configs (Closes: 60326).
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt1
 - New version 3.12.0.
 
