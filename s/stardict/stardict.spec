@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -36,6 +36,11 @@ Patch12: stardict-3.0.7-fix-youdao-crash.patch
 Patch13: stardict-3.0.7-alt-fix-historywin-model-unref.patch
 Patch14: stardict-3.0.7-alt-gdk-backend-x11.patch
 Patch15: stardict-3.0.7-alt-remove_fortify_source.patch
+Patch16: stardict-3.0.7-alt-fix-help-uri.patch
+Patch17: stardict-3.0.7-alt-fix-google-translate-api.patch
+Patch18: stardict-3.0.7-alt-fix-locale-initialization.patch
+Patch19: stardict-3.0.7-alt-fix-stale-gio-source-ids.patch
+Patch20: stardict-3.0.7-alt-remove-http-debug-printf.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -164,6 +169,11 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -261,6 +271,14 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Mon Aug 31 2026 Mikhail Efremov <sem@altlinux.org> 3.0.7-alt2
+- Removed leftover debug output of raw HTTP response in parse_response.
+- Fixed GLib criticals about GIO source removal in HttpClient.
+- Initialized the C locale at program startup.
+- Ported the Google full-text translation engine to the modern API
+  (closes: #56953).
+- Fixed unresponsive Help menu (closes: #55081).
+
 * Fri Aug 28 2026 Mikhail Efremov <sem@altlinux.org> 3.0.7-alt1
 - Fixed _FORTIFY_SOURCE redefinition.
 - Wayland fix: preferring X11 GDK backend with user override.
