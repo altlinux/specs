@@ -1,11 +1,12 @@
 Name: wpa_supplicant
-Version: 2.11
-Release: alt4
+Version: 2.12
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
 Group: Security/Networking
-Url: http://hostap.epitest.fi/
+URL: https://w1.fi/wpa_supplicant/
+VCS: https://git.w1.fi/hostap.git
 
 Source0: %name-%version-%release.tar
 Source1: src-%version-%release.tar
@@ -31,6 +32,8 @@ example text-based frontend, wpa_cli, is included with wpa_supplicant.
 %prep
 %setup -c -a1
 cp %name/defconfig %name/.config
+sed -ri '/^#define\s+TRUSTED_PATH\s+/ s,"/usr/lib/","%_libdir/pkcs11/",' \
+	src/crypto/tls_openssl.c
 
 %build
 make -C %name
@@ -82,6 +85,9 @@ install -pm0644 %name/doc/docbook/wpa_{cli,passphrase,background,priv}.8 %buildr
 %_man8dir/wpa_passphrase.*
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12-alt1
+- 2.12 released
+
 * Mon Jun 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11-alt4
 - limit CTRL-EVENT-SIGNAL-CHANGE log messages (closes: 54973)
 
