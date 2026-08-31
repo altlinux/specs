@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10549
+Version: 10717
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -45,6 +45,7 @@ BuildRequires: libstdc++-devel-static
 %if_with cuda
 BuildRequires: gcc12-c++
 BuildRequires: nvidia-cuda-devel-static
+BuildRequires: libnccl-devel
 %endif
 %if_with vulkan
 BuildRequires: glslc
@@ -280,6 +281,10 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Mon Aug 31 2026 Alexey Shabalin <shaba@altlinux.org> 1:10717-alt1
+- Update to b10717.
+- Build with libnccl-devel (GGML_CUDA_NCCL=ON).
+
 * Fri Aug 21 2026 Alexey Shabalin <shaba@altlinux.org> 1:10549-alt1
 - Update to b10549.
 
