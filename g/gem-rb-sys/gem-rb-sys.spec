@@ -6,7 +6,7 @@
 
 Name:          gem-rb-sys
 Version:       0.9.128
-Release:       alt1
+Release:       alt1.1
 Summary:       Helpers for compiling Rust extensions for ruby
 License:       MIT or Apache-2.0
 Group:         Other
@@ -30,7 +30,6 @@ BuildRequires: gem(rake-compiler-dock) >= 1.2.1
 BuildRequires: gem(standard) >= 1.54.0
 BuildRequires: gem(tsort) >= 0
 BuildRequires: gem(yard) >= 0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(ostruct) >= 0.7
 BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(standard) >= 2
@@ -40,6 +39,7 @@ BuildConflicts: gem(standard) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 %ruby_use_gem_dependency standard >= 1.56.0,standard < 2
+%ruby_use_gem_dependency minitest >= 5.0
 %ruby_alias_names rb_sys,rb-sys
 Requires:      ruby >= 2.7.0
 Requires:      gem(rake-compiler-dock) >= 1.2.1
@@ -54,7 +54,7 @@ Helpers for compiling Rust extensions for ruby
 
 %package       -n rb-sys-dock
 Version:       0.9.128
-Release:       alt1
+Release:       alt1.1
 Summary:       Helpers for compiling Rust extensions for ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rb_sys
 Group:         Other
@@ -72,7 +72,7 @@ Helpers for compiling Rust extensions for ruby executable(s).
 %if_enabled    doc
 %package       -n gem-rb-sys-doc
 Version:       0.9.128
-Release:       alt1
+Release:       alt1.1
 Summary:       Helpers for compiling Rust extensions for ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rb_sys
 Group:         Development/Documentation
@@ -91,7 +91,7 @@ Helpers for compiling Rust extensions for ruby documentation files.
 %if_enabled    devel
 %package       -n gem-rb-sys-devel
 Version:       0.9.128
-Release:       alt1
+Release:       alt1.1
 Summary:       Helpers for compiling Rust extensions for ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rb_sys
 Group:         Development/Ruby
@@ -109,7 +109,6 @@ Requires:      gem(rake-compiler-dock) >= 1.2.1
 Requires:      gem(standard) >= 1.54.0
 Requires:      gem(tsort) >= 0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(ostruct) >= 0.7
 Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(standard) >= 2
@@ -157,6 +156,9 @@ Helpers for compiling Rust extensions for ruby development package.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.128-alt1.1
+- ! fixed dep to minitest gem
+
 * Mon Aug 10 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.128-alt1
 - ^ 0.9.98 -> 0.9.128
 
