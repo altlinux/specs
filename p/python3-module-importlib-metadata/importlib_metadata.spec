@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.0.0
+Version: 9.0.1
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -67,6 +67,9 @@ CPython.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 9.0.1-alt1
+- 9.0.0 -> 9.0.1
+
 * Fri Mar 20 2026 Stanislav Levin <slev@altlinux.org> 9.0.0-alt1
 - 8.7.1 -> 9.0.0.
 
