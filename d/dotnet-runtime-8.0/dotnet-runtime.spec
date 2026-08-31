@@ -2,12 +2,12 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.25
+%define _dotnet_corerelease 8.0.30
 # used for build
-%define _dotnet_sdkrelease 8.0.125
+%define _dotnet_sdkrelease 8.0.130
 
-%define _dotnet_coreversion 8.0.25
-%define _dotnet_sdkversion 8.0.125
+%define _dotnet_coreversion 8.0.30
+%define _dotnet_sdkversion 8.0.130
 
 
 %define upstream_tag v%_dotnet_corerelease
@@ -31,7 +31,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: %_dotnet_coreversion
-Release: alt2
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -401,6 +401,47 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sun Aug 30 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.30-alt1
+- fixed CVEs:
+ + CVE-2026-62898: .NET Information Disclosure Vulnerability
+ + CVE-2026-62899: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-62900: .NET Information Disclosure Vulnerability
+ + CVE-2026-62901: .NET Denial of Service Vulnerability
+ + CVE-2026-62886: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-62871: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-70354: .NET Core Remote Code Execution Vulnerability
+ + CVE-2026-62902: .NET Information Disclosure Vulnerability
+ + CVE-2026-62897: .NET Remote Code Execution Vulnerability
+ + CVE-2026-62909: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-50651: .NET Denial of Service Vulnerability
+ + CVE-2026-50526: .NET Tampering Vulnerability
+ + CVE-2026-50524: .NET Denial of Service Vulnerability
+ + CVE-2026-50646: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50649: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50650: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-56158: .NET Remote Code Execution Vulnerability
+ + CVE-2026-47302: .NET Denial of Service Vulnerability
+ + CVE-2026-50648: .NET Denial of Service Vulnerability
+ + CVE-2026-50527: .NET Denial of Service Vulnerability
+ + CVE-2026-47304: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50525: .NET Denial of Service Vulnerability
+ + CVE-2026-57108: .NET Denial of Service Vulnerability
+ + CVE-2026-50528: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50659: .NET Spoofing Vulnerability
+ + CVE-2026-47300: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-47303: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45591: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-45491: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45490: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32177: .NET Denial of Service Vulnerability
+ + CVE-2026-35433: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32175: .NET Core Tampering Vulnerability
+ + CVE-2026-42899: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-26171: .NET Denial of Service Vulnerability
+ + CVE-2026-32203: .NET Denial of Service Vulnerability
+ + CVE-2026-33116: .NET Denial of Service Vulnerability
+ + CVE-2026-32178: .NET Spoofing Vulnerability
+
 * Sat Aug 29 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.25-alt2
 - Drop unused liblwp-devel build dependency on Linux.
 

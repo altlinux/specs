@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_coreversion 8.0.25
-%define _dotnet_sdkversion 8.0.125
-%define _dotnet_corerelease 8.0.25
-%define _dotnet_corerelease1 %_dotnet_corerelease
+%define _dotnet_coreversion 8.0.30
+%define _dotnet_sdkversion 8.0.130
+%define _dotnet_corerelease 8.0.30
+%define _dotnet_corerelease1 8.0.30
 
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.125
+%define _dotnet_sdkrelease 8.0.130
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -134,6 +134,47 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sun Aug 30 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.130-alt1
+- fixed CVEs:
+ + CVE-2026-62898: .NET Information Disclosure Vulnerability
+ + CVE-2026-62899: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-62900: .NET Information Disclosure Vulnerability
+ + CVE-2026-62901: .NET Denial of Service Vulnerability
+ + CVE-2026-62886: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-62871: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-70354: .NET Core Remote Code Execution Vulnerability
+ + CVE-2026-62902: .NET Information Disclosure Vulnerability
+ + CVE-2026-62897: .NET Remote Code Execution Vulnerability
+ + CVE-2026-62909: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-50651: .NET Denial of Service Vulnerability
+ + CVE-2026-50526: .NET Tampering Vulnerability
+ + CVE-2026-50524: .NET Denial of Service Vulnerability
+ + CVE-2026-50646: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50649: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50650: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-56158: .NET Remote Code Execution Vulnerability
+ + CVE-2026-47302: .NET Denial of Service Vulnerability
+ + CVE-2026-50648: .NET Denial of Service Vulnerability
+ + CVE-2026-50527: .NET Denial of Service Vulnerability
+ + CVE-2026-47304: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50525: .NET Denial of Service Vulnerability
+ + CVE-2026-57108: .NET Denial of Service Vulnerability
+ + CVE-2026-50528: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50659: .NET Spoofing Vulnerability
+ + CVE-2026-47300: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-47303: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45591: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-45491: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45490: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32177: .NET Denial of Service Vulnerability
+ + CVE-2026-35433: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32175: .NET Core Tampering Vulnerability
+ + CVE-2026-42899: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-26171: .NET Denial of Service Vulnerability
+ + CVE-2026-32203: .NET Denial of Service Vulnerability
+ + CVE-2026-33116: .NET Denial of Service Vulnerability
+ + CVE-2026-32178: .NET Spoofing Vulnerability
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.125-alt1
 - The .NET 8.0.25 and .NET SDK 8.0.125 release
 - fixed CVEs:
