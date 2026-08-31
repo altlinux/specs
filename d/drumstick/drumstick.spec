@@ -1,13 +1,14 @@
 Name: drumstick
-Version: 2.11.0
+Version: 2.11.1
 Release: alt1
 
 Summary: MIDI C++ Libraries for Qt
 License: GPLv3
 Group: System/Libraries
-Url: https://drumstick.sourceforge.net/
+URL: https://drumstick.sourceforge.net/
+VCS: https://git.code.sf.net/p/drumstick/git
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(Qt6)
@@ -90,6 +91,9 @@ This package contains set of example programs using drumstick
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11.1-alt1
+- 2.11.1 relelased
+
 * Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11.0-alt1
 - 2.11.0 released
 
