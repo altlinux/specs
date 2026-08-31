@@ -1,8 +1,8 @@
-%define git_commit_short 2aa6d0d
+%define git_commit_short 30dc182
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -82,6 +82,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Wed Aug 12 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 
