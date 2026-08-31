@@ -1,19 +1,23 @@
 %define libname libwim
 
+# syslinux is only needed for an optional mkwinpeimg workflow.
+%filter_from_requires /^syslinux$/d
+%filter_from_requires /^\/usr\/bin\/syslinux$/d
+
 Name: wimlib
-Version: 1.14.4
+Version: 1.14.5
 Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
-License: GPLv3+
+
+License: GPL-3.0-or-later
 Group: System/Libraries
 
 Url: https://wimlib.net/
 Source: https://wimlib.net/downloads/wimlib-%version.tar
 
-
 BuildRequires: patchelf
-BuildRequires: libattr-devel libntfs-3g-devel libssl-devel libxml2-devel
+BuildRequires: libattr-devel libntfs-3g-devel
 BuildRequires: libfuse3-devel
 
 %description
@@ -42,9 +46,6 @@ Development files for wimlib.
 Summary: Tools to create, extract, modify, and mount WIM files
 Group: File tools
 Requires: %libname = %version-%release
-%ifarch x86_64 %ix86
-Requires: syslinux
-%endif
 
 %description -n wimtools
 Tools to create, extract, modify, and mount files in the
@@ -62,11 +63,8 @@ but this package contains a free implementation of ImageX called
 
 %configure \
        --disable-static \
-       --disable-rpath  \
-       --with-libcrypto \
        --with-ntfs-3g   \
-       --with-fuse      \
-       --enable-xattr
+       --with-fuse
 %make_build
 
 %install
@@ -92,6 +90,11 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.14.5-alt1
+- New version 1.14.5 (ALT bug 59864).
+- Drop the optional syslinux dependency from wimtools (ALT bug 59883).
+- Update the License tag and remove obsolete build dependencies and options.
+
 * Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 1.14.4-alt1
 - new version 1.14.4 (with rpmrb script)
 
@@ -158,4 +161,3 @@ make check
 
 * Thu Aug 29 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - initial build for ALT Linux Sisyphus
-
