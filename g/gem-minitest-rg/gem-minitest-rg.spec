@@ -5,7 +5,7 @@
 %define        gemname minitest-rg
 
 Name:          gem-minitest-rg
-Version:       5.4.0
+Version:       5.4.0.6
 Release:       alt1
 Summary:       Red/Green for MiniTest
 License:       MIT
@@ -23,7 +23,6 @@ BuildRequires: gem(minitest) >= 5.17.0
 BuildRequires: gem(rdoc) >= 6.1.1
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildConflicts: gem(hoe) >= 5
-BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rdoc) >= 8
 BuildConflicts: gem(rubocop) >= 2
 %endif
@@ -33,11 +32,12 @@ BuildConflicts: gem(rubocop) >= 2
 %ruby_use_gem_dependency hoe >= 4.2.2,hoe < 5
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.17.0
 Requires:      ruby >= 3.2
 Requires:      gem(minitest) >= 5.17.0
-Conflicts:     gem(minitest) >= 7
-Provides:      gem(minitest-rg) = 5.4.0
+Provides:      gem(minitest-rg) = 5.4.0.6
+
+%ruby_use_gem_version minitest-rg:5.4.0.6
 
 %description
 Colored red/green output for Minitest
@@ -45,14 +45,14 @@ Colored red/green output for Minitest
 
 %if_enabled    doc
 %package       -n gem-minitest-rg-doc
-Version:       5.4.0
+Version:       5.4.0.6
 Release:       alt1
 Summary:       Red/Green for MiniTest documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-rg
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-rg) = 5.4.0
+Requires:      gem(minitest-rg) = 5.4.0.6
 
 %description   -n gem-minitest-rg-doc
 Red/Green for MiniTest documentation files.
@@ -66,14 +66,14 @@ Colored red/green output for Minitest
 
 %if_enabled    devel
 %package       -n gem-minitest-rg-devel
-Version:       5.4.0
+Version:       5.4.0.6
 Release:       alt1
 Summary:       Red/Green for MiniTest development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-rg
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-rg) = 5.4.0
+Requires:      gem(minitest-rg) = 5.4.0.6
 Requires:      gem(hoe) >= 4.2.2
 Requires:      gem(rdoc) >= 6.1.1
 Requires:      gem(rubocop) >= 1.15.0
@@ -121,6 +121,10 @@ Colored red/green output for Minitest
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 5.4.0.6-alt1
+- ^ 5.4.0 -> 5.4.0.6
+- ! relaxed dep to minitest gem (closes ALT #60323)
+
 * Mon Aug 17 2026 Pavel Skrylev <majioa@altlinux.org> 5.4.0-alt1
 - ^ 5.3.0 -> 5.4.0
 
