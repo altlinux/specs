@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librealsense
-Version: 2.58.3
+Version: 2.58.4
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
@@ -16,14 +16,12 @@ Source1: realsense-viewer.desktop
 Patch0:  presets_path.patch
 Patch1:  disable-pedantic.patch
 Patch2:  librealsense.use-system-yaml-cpp.patch
-Patch3:  librealsense.use-system-json.patch
 Patch4:  librealsense.use-system-pybind11.patch
 Patch5:  librealsense.realsense-file-fixes.patch
 Patch6:  librealsense.rsutils-shared-library.patch
 Patch7:  librealsense.use-system-fastcdr.patch
 Patch8:  librealsense.use-system-sqlite3.patch
 Patch9:  librealsense.fix-zstd-qsort.patch
-Patch10: librealsense.fix-pybind11-keepalive.patch
 Patch11: librealsense.fix-easylogging-visibility.patch
 Patch12: librealsense.fix-cxx14-all.patch
 Patch13: librealsense.fix-fastcdr-v2-api.patch
@@ -34,6 +32,7 @@ BuildRequires: libglfw3-devel libusb-devel libudev-devel libGL-devel libGLU-deve
 BuildRequires: python3-dev python3-module-setuptools pybind11-devel libcap-devel
 BuildRequires: nlohmann-json-devel doxygen libyaml-cpp-devel libsqlite3-devel
 BuildRequires: fast-cdr-devel
+Requires: udev
 Provides: librealsense2 = %EVR
 
 %description
@@ -94,6 +93,7 @@ with %name.
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
   -DBUILD_PYTHON_BINDINGS:bool=true \
+  -DUSE_EXTERNAL_NLOHMANN_JSON=ON \
   -DCMAKE_C_FLAGS="%optflags -ffat-lto-objects" \
   -DCMAKE_CXX_FLAGS="%optflags -ffat-lto-objects" \
   -Wno-dev
@@ -114,7 +114,8 @@ popd
 %install
 %cmake_install
 mkdir -p %buildroot/%_udevrulesdir
-install -p -m644 config/99-realsense-libusb.rules %buildroot%_udevrulesdir
+install -p -m644 config/99-realsense-libusb.rules \
+  %buildroot%_udevrulesdir/60-librealsense2-udev-rules.rules
 
 mkdir -p %buildroot/%_datadir/realsense
 install -p -m755 config/usb-R200-in{,_udev} %buildroot%_datadir/realsense
@@ -149,6 +150,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-fw-logger
 %_bindir/rs-fw-update
 %_bindir/rs-gl
+%_bindir/rs-gpu-frame
 %_bindir/rs-hdr
 %_bindir/rs-hello-realsense
 %_bindir/rs-measure
@@ -172,9 +174,10 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_libdir/librsutils.so.*
 %_datadir/realsense
 %_desktopdir/realsense-viewer.desktop
-%_udevrulesdir/99-realsense-libusb.rules
+%_udevrulesdir/60-librealsense2-udev-rules.rules
 
 %files devel
+%dir %_libdir/cmake
 %_includedir/librealsense2
 %_includedir/librealsense2-gl
 %_libdir/librsutils.so
@@ -197,12 +200,19 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %python3_sitelibdir/pyrealsense2/pyrsutils*.so.*
 
 %files -n python3-module-%name-devel
+%dir %_libdir/cmake
 %_libdir/cmake/pyrealsense2
 
 %files doc
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Mon Aug 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.4-alt1
+- new version 2.58.4
+- drop use-system-json patch, use upstream USE_EXTERNAL_NLOHMANN_JSON option
+- refresh rsutils-shared-library patch
+- drop fix-pybind11-keepalive patch, fixed upstream (e1bfed5d3)
+
 * Mon Jul 20 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.3-alt1
 - new version 2.58.3
 - fix fastcdr v2 api patch for upstream 2.58.3
