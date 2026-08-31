@@ -2,7 +2,7 @@
 %global alt_name fedi
 
 Name: tuba
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 License: GPL-3.0-only
 Group: Networking/Other
@@ -79,6 +79,9 @@ populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Aug 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.11.1-alt1
+- 0.11.0 -> 0.11.1
+
 * Wed Aug 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.11.0-alt1
 - 0.10.3 -> 0.11.0
 
