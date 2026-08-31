@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.33
+Version: 10.35
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -63,6 +63,12 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_datadir/alterator-framework/modules/users/ts/users_ru.qm
 
 %changelog
+* Fri Aug 28 2026 Andrey Cherepanov <cas@altlinux.org> 10.35-alt1
+- web-interface: hide allow_su option if visible_wheel condition is false.
+
+* Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 10.34-alt1
+- Hide checkbox 'allow_su', when exist /etc/sysconfig/disable_system_user.flag
+
 * Tue Jul 28 2026 Ivan Khanas <xeno@altlinux.org> 10.33-alt1
 - Fix: validate home directory path (closes: #47387).
 
