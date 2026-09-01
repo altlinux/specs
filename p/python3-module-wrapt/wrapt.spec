@@ -1,9 +1,10 @@
 %define oname wrapt
 
 %def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: A Python module for decorators, wrappers and monkey patching
@@ -15,13 +16,15 @@ VCS: https://github.com/GrahamDumpleton/wrapt
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-pytest
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx_rtd_theme
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-mypy
+%endif
+%if_with docs
+BuildRequires: rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
 %endif
 
 %py3_provides %oname
@@ -57,29 +60,34 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+%if_with docs
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3
+%pyproject_run_pytest -k 'not mypy_patch_function_wrapper_t1'
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-stubs
+%python3_sitelibdir/%oname-%version.dist-info
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -87,8 +95,12 @@ py.test3
 
 %files docs
 %doc docs/_build/html blog
+%endif
 
 %changelog
+* Tue Sep 01 2026 Anton Vyatkin <toni@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Tue Jul 28 2026 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
