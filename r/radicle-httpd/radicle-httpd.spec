@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.26.0
+Version: 0.28.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -32,9 +32,9 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=cb4ac69c
-cargo install %_smp_mflags --offline --no-track --path crates/radicle-httpd --root=%buildroot%_prefix
-cargo install %_smp_mflags --offline --no-track --path crates/radicle-search --root=%buildroot%_prefix
+export GIT_HEAD=60fd9a12
+cargo install %_smp_mflags --frozen --no-track --path crates/radicle-httpd --root=%buildroot%_prefix
+cargo install %_smp_mflags --frozen --no-track --path crates/radicle-search --root=%buildroot%_prefix
 
 mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
 install -pm0644 -D crates/radicle-httpd/systemd/radicle-httpd.service %buildroot%_unitdir/radicle-httpd.service
@@ -49,6 +49,9 @@ cp crates/radicle-search/README.md README.radicle-search.md
 %_unitdir/radicle-httpd.service
 
 %changelog
+* Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.28.0-alt1
+- 0.28.0 released
+
 * Fri Jul 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.0-alt1
 - 0.26.0 released
 
