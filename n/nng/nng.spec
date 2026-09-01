@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: nng
-Version: 1.12.2
+Version: 1.12.4
 Release: alt1
 
 Summary: Lightweight brokerless messaging
@@ -89,6 +89,9 @@ mv %buildroot%_mandir/man3{compat,http,str,supp}/* %buildroot%_man3dir
 %_man1dir/*
 
 %changelog
+* Tue Sep 01 2026 Valery Zabrovsky <brow@altlinux.org> 1.12.4-alt1
+- New version 1.12.4.
+
 * Mon Aug 24 2026 Valery Zabrovsky <brow@altlinux.org> 1.12.2-alt1
 - New version 1.12.2.
 
