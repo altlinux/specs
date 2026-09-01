@@ -59,7 +59,7 @@
 
 Name:     subversion
 Version:  1.14.5
-Release:  alt2
+Release:  alt3.gitd528cd7d
 
 Summary:  A version control system
 Group:    Development/Other
@@ -763,6 +763,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.14.5-alt3.gitd528cd7d
+- NMU: import upstream/1.14.x branch to fix FTBFS with new SWIG
+
 * Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 1.14.5-alt2
 - NMU: drop db4 support
 
