@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.6.0
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
@@ -25,12 +25,12 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not packaged
+%add_pyproject_deps_check_filter distributed
+%add_pyproject_deps_check_filter memory-profiler
 %pyproject_builddeps_metadata
 %pyproject_builddeps -- vendored
-# synced to continuous_integration/install.sh
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-threadpoolctl
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -80,13 +80,15 @@ sed -i \
 %pyproject_run_pytest -ra
 
 %files
-%doc CHANGES.rst README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%mod_name/test*
 %exclude %python3_sitelibdir/%mod_name/__pycache__/test*
 
 %changelog
+* Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.3 -> 1.6.0
+
 * Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
 - 1.5.2 -> 1.5.3.
 
