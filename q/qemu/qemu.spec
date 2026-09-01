@@ -161,7 +161,7 @@
 # }}}
 
 Name: qemu
-Version: 10.2.2
+Version: 10.2.4
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1500,6 +1500,13 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 10.2.4-alt1
+- 10.2.4 (Fixes: CVE-2026-3886, CVE-2026-3890, CVE-2024-6519, CVE-2026-5763,
+  CVE-2026-5744, CVE-2026-5761, CVE-2026-6502, CVE-2026-41435, CVE-2026-41436,
+  CVE-2026-41437, CVE-2026-41438, CVE-2026-41439, CVE-2026-41440, CVE-2026-8341,
+  CVE-2026-48002, CVE-2026-48002, CVE-2026-48003, CVE-2026-8343, CVE-2026-48004,
+  CVE-2026-48914, CVE-2026-6425, CVE-2026-48915).
+
 * Thu Apr 02 2026 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
 - 10.2.2 (Fixes: CVE-2026-2243, CVE-2026-3842).
 
