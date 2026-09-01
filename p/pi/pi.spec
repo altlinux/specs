@@ -2,8 +2,8 @@
 
 Name: pi
 Epoch:1 
-Version: 0.84.3
-Release: alt2
+Version: 0.84.4
+Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
 License: MIT
@@ -16,15 +16,12 @@ Source1: %name-%version-node_modules.tar
 Source2: %name-%version-model-data.tar
 Source3: copy-production-tree.mjs
 Patch0: pi-0.84.3-alt-tsconfig-es2024.patch
-# Vendored model data (Source2) is newer than the tag: cloudflare-ai-gateway
-# lost its openai-completions models, drop the dead api registration.
-Patch1: pi-0.84.3-alt-cloudflare-drop-openai-completions.patch
 # pi is managed by RPM: no online version check, no self-update.
-Patch2: pi-0.84.3-alt-disable-update-check.patch
+Patch1: pi-0.84.3-alt-disable-update-check.patch
 # The esbuild bundle is only for npm distribution; we ship the unbundled
 # dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
 # noarch rebuild on other arches.
-Patch3: pi-0.84.3-alt-no-esbuild-bundle.patch
+Patch2: pi-0.84.3-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -62,7 +59,6 @@ It needs only a Node.js runtime at install time.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 export HUSKY=0
@@ -100,6 +96,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 1:0.84.4-alt1
+- 0.84.3 -> 0.84.4
+
 * Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 1:0.84.3-alt2
 - Added Requires: fd to avoid runtime download from GitHub (closes: 60282).
 
