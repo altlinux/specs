@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 Summary: An alternative plugin for pytest to make it support async tests and fixtures
 License: MIT
@@ -66,6 +66,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 0.9.6-alt1
+- 0.9.5 -> 0.9.6
+
 * Thu Feb 19 2026 Stanislav Levin <slev@altlinux.org> 0.9.5-alt1
 - 0.8.2 -> 0.9.5.
 
