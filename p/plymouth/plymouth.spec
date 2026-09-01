@@ -11,7 +11,7 @@
 
 Name: plymouth
 Version: 26.134.222
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -482,6 +482,11 @@ fi \
 %files system-theme
 
 %changelog
+* Fri Aug 21 2026 Anton Midyukov <antohami@altlinux.org> 1:26.134.222-alt2
+- Add upstream fix:
+  + plymouth-set-default-theme: Add lines to the config file when a new line
+    needs to be added (Closes: 60173).
+
 * Sun Aug 02 2026 Anton Midyukov <antohami@altlinux.org> 1:26.134.222-alt1
 - New version 26.134.222.
 - systemd-units: Run after kmsconvt@tty1
