@@ -1,7 +1,7 @@
 %define kiota_version v1.32.4
 
 Name:    keycloak
-Version: 26.7.2
+Version: 26.7.3
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -120,6 +120,14 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Sep 01 2026 Andrey Cherepanov <cas@altlinux.org> 26.7.3-alt1
+- New version (fixes: CVE-2026-35563, CVE-2026-16093, CVE-2026-16072,
+  CVE-2026-16108, CVE-2026-16105, CVE-2026-16089, CVE-2026-16104,
+  CVE-2026-16106, CVE-2026-17059, CVE-2026-18218, CVE-2026-18215,
+  CVE-2026-18201, CVE-2026-18209, CVE-2026-18214, CVE-2026-18571,
+  CVE-2026-18572, CVE-2026-18573, CVE-2026-18570, CVE-2026-19729,
+  CVE-2026-79652).
+
 * Thu Aug 20 2026 Andrey Cherepanov <cas@altlinux.org> 26.7.2-alt1
 - New version (fixes: CVE-2026-45292, CVE-2026-14613, CVE-2026-59888,
   CVE-2026-59889, CVE-2026-15945, CVE-2026-17048, CVE-2026-15571,
