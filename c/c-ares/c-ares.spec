@@ -4,7 +4,7 @@
 
 Name: c-ares
 Version: 1.34.8
-Release: alt1
+Release: alt2
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -14,6 +14,7 @@ Url: https://c-ares.org/
 VCS: https://github.com/c-ares/c-ares.git
 Source: c-ares-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: c-ares-1.34.8-revert-5d2d2d2.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -47,6 +48,7 @@ compile applications or shared objects that use c-ares.
 %prep
 %setup -n c-ares-%version
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake -DCARES_BUILD_TESTS:BOOL=ON
@@ -74,6 +76,10 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 1.34.8-alt2
+- reverted upstream commit 5d2d2d28 breaking SSSD/Samba AD via
+  SRV compression check (closes: #60151)
+
 * Sat Jul 11 2026 Anton Farygin <rider@altlinux.org> 1.34.8-alt1
 - 1.34.6 -> 1.34.8 (Fixes: CVE-2026-33630)
 
