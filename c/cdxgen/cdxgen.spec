@@ -2,7 +2,7 @@
 %define appdir %_datadir/%name
 
 Name: cdxgen
-Version: 12.8.2
+Version: 12.8.4
 Release: alt1
 
 Summary: CycloneDX Software Bill of Materials generator
@@ -112,5 +112,8 @@ ln -sr %buildroot%appdir/bin/hbom.js \
 %appdir/
 
 %changelog
+* Tue Sep 01 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 12.8.4-alt1
+- Update to version 12.8.4.
+
 * Mon Aug 10 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 12.8.2-alt1
 - Initial build.
