@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 9.0
-%define preview %nil
-%define _dotnet_coreversion 9.0.10%preview
-%define _dotnet_sdkversion 9.0.111%preview
+#%define preview %nil
+%define _dotnet_coreversion 9.0.19
+%define _dotnet_sdkversion 9.0.317
 
-%define _dotnet_corerelease 9.0.10
-%define _dotnet_corerelease1 %nil
+%define _dotnet_corerelease 9.0.19
+%define _dotnet_corerelease1 9.0.19
 
-%define _dotnet_sdkmanifestsrelease0 8.0.100
+#%define _dotnet_sdkmanifestsrelease0 8.0.100
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.111
+%define _dotnet_sdkrelease 9.0.317
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -141,6 +141,51 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.317-alt1
+- .NET SDK 9.0.317 and runtime 9.0.19
+- fixed CVEs:
+ + CVE-2026-62898: .NET Information Disclosure Vulnerability
+ + CVE-2026-62899: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-62900: .NET Information Disclosure Vulnerability
+ + CVE-2026-62901: .NET Denial of Service Vulnerability
+ + CVE-2026-62886: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-62871: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-70354: .NET Core Remote Code Execution Vulnerability
+ + CVE-2026-62902: .NET Information Disclosure Vulnerability
+ + CVE-2026-62897: .NET Remote Code Execution Vulnerability
+ + CVE-2026-62909: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-50651: .NET Denial of Service Vulnerability
+ + CVE-2026-50526: .NET Tampering Vulnerability
+ + CVE-2026-50524: .NET Denial of Service Vulnerability
+ + CVE-2026-50646: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50649: .NET Remote Code Execution Vulnerability
+ + CVE-2026-50650: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-56158: .NET Remote Code Execution Vulnerability
+ + CVE-2026-47302: .NET Denial of Service Vulnerability
+ + CVE-2026-50648: .NET Denial of Service Vulnerability
+ + CVE-2026-50527: .NET Denial of Service Vulnerability
+ + CVE-2026-47304: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50525: .NET Denial of Service Vulnerability
+ + CVE-2026-57108: .NET Denial of Service Vulnerability
+ + CVE-2026-50528: .NET Security Feature Bypass Vulnerability
+ + CVE-2026-50659: .NET Spoofing Vulnerability
+ + CVE-2026-47300: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-47303: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45591: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-45491: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-45490: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32177: .NET Denial of Service Vulnerability
+ + CVE-2026-35433: .NET Elevation of Privilege Vulnerability
+ + CVE-2026-32175: .NET Core Tampering Vulnerability
+ + CVE-2026-42899: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-26171: .NET Denial of Service Vulnerability
+ + CVE-2026-32203: .NET Denial of Service Vulnerability
+ + CVE-2026-33116: .NET Denial of Service Vulnerability
+ + CVE-2026-32178: .NET Spoofing Vulnerability
+ + CVE-2026-26130: .NET Denial of Service Vulnerability
+ + CVE-2026-26127: .NET Denial of Service Vulnerability
+ + CVE-2026-21218: .NET Security Feature Bypass Vulnerability
+
 * Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.111-alt1
 - The .NET 9.0.10 and .NET SDK 9.0.111 release
 - fixed CVEs:
