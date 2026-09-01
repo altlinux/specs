@@ -1,5 +1,5 @@
 Name: hass
-Version: 2026.6.4
+Version: 2026.8.3
 Release: alt1
 
 Summary: Home automation platform
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-pyproject
 %package core
 Summary: Home automation platform
 Group: System/Servers
+Requires: ffmpeg
 
 Autoreqprov: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -87,6 +88,9 @@ sed -re 's,^,%%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.8.3-alt1
+- 2026.8.3 released
+
 * Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.6.4-alt1
 - 2026.6.4 released
 

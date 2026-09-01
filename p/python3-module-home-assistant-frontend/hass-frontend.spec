@@ -1,11 +1,11 @@
 Name: python3-module-home-assistant-frontend
-Version: 20260527.7
+Version: 20260729.7
 Release: alt1
 
 Summary: Home automation platform -- frontend
 License: Apache-2.0
 Group: System/Servers
-Url: https://www.home-assistant.io/
+URL: https://www.home-assistant.io/
 
 Source0: hass-frontend-%version.tar
 
@@ -28,6 +28,9 @@ tar xf %SOURCE0 -C %buildroot%python3_sitelibdir/
 %python3_sitelibdir/home_assistant_frontend-*-info
 
 %changelog
+* Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20260729.7-alt1
+- 20260729.7
+
 * Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20260527.7-alt1
 - 20260527.7
 
