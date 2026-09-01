@@ -5,12 +5,12 @@
 %endif
 
 Name: ouch
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
 Group: Archiving/Compression
-Url: https://crates.io/crates/ouch
+URL: https://crates.io/crates/ouch
 VCS: https://github.com/ouch-org/ouch
 
 Source: %name-%version.tar
@@ -51,6 +51,9 @@ export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_
 %doc README.md LICENSE
 
 %changelog
+* Tue Sep 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.2-alt1
+- Updated to version 0.8.2.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt1
 - Updated to version 0.8.1.
 
