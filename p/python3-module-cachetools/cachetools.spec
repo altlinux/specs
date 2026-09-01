@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.7
+Version: 7.1.8
 Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
@@ -52,6 +52,9 @@ decorator.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 7.1.8-alt1
+- 7.1.7 -> 7.1.8
+
 * Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 7.1.7-alt1
 - 7.1.4 -> 7.1.7
 
