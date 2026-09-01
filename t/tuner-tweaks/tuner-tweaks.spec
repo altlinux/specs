@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -14,7 +14,7 @@ Url: https://altlinux.space/alt-gnome/TunerTweaks
 Vcs: https://altlinux.space/alt-gnome/TunerTweaks
 Source: %name-%version.tar
 
-Requires: tuner >= 0.7.2
+Requires: tuner >= 0.7.3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -43,9 +43,11 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %_pluginsdir/libtweaks.so
 %_pluginsdir/tweaks.plugin
 %_datadir/metainfo/%app_id.metainfo.xml
-%doc README.md
 
 %changelog
+* Tue Sep 01 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.7-alt1
+- added scale marks
+
 * Fri Aug 07 2026 Alexander Davydzik <paladindev@altlinux.org> 0.5.6-alt1
 - fixed missing translations
 

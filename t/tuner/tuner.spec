@@ -6,7 +6,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Extensible control center
@@ -133,6 +133,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Tue Sep 01 2026 Alexander Davydzik <paladindev@altlinux.org> 0.7.3-alt1
+- fixed plugin list adaptivity
+- upgraded scale widget adaptivity
+
 * Tue Aug 04 2026 Alexander Davydzik <paladindev@altlinux.org> 0.7.2-alt1
 - added page validator
 - fixed crash in widgets with adjustment
