@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-
 %define soname 1
 
 Name: recastnavigation
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Navigation-mesh toolset for games
 License: Zlib
@@ -79,7 +78,7 @@ This package contains the recast library part of recastnavigation.
     -DBUILD_SHARED_LIBS=ON \
     -DRECASTNAVIGATION_DEMO=OFF \
     -DRECASTNAVIGATION_EXAMPLES=OFF \
-    %nil
+    #
 
 %cmake_build
 
@@ -98,8 +97,8 @@ This package contains the recast library part of recastnavigation.
 %_libdir/libDetourTileCache.so
 %_libdir/libRecast.so
 %_includedir/recastnavigation
-%_libdir/pkgconfig/recastnavigation.pc
-%_libdir/cmake/recastnavigation
+%_pkgconfigdir/recastnavigation.pc
+%_cmakedir/recastnavigation
 
 %files -n libDebugUtils%soname
 %_libdir/libDebugUtils.so.%soname
@@ -122,5 +121,8 @@ This package contains the recast library part of recastnavigation.
 %_libdir/libRecast.so.%version
 
 %changelog
+* Mon Aug 31 2026 Pavel Petrykin <silverducks@altlinux.org> 1.6.0-alt2
+- Spec cleanup.
+
 * Thu Nov 6 2025 Pavel Petrykin <silverducks@altlinux.org> 1.6.0-alt1
 - Initial build for Alt Linux.
