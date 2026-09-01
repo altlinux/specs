@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: conftest
-Version: 0.68.2
+Version: 0.69.0
 Release: alt1
 
 Summary: Conftest validates config files against Rego policies
@@ -39,11 +39,13 @@ export LDFLAGS='-X=github.com/open-policy-agent/conftest/internal/'\
 install -Dm0755 %name %buildroot%_bindir/%name
 
 %files
-%doc README.md LICENSE *.md docs contrib
+%doc LICENSE *.md docs contrib
 %_bindir/%name
 
-
 %changelog
+* Tue Aug 11 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.69.0-alt1
+- v0.69.0.
+
 * Thu Jul 23 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.68.2-alt1
 - Initial build for Sisyphus.
 
