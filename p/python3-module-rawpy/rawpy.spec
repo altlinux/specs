@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.27.0
+Version: 0.27.1
 Release: alt1
 
 Summary: RAW image processing for Python, a wrapper for libraw
@@ -25,7 +25,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-Cython
-BuildRequires: libraw-devel gcc-c++
+BuildRequires: libraw0-devel gcc-c++
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libgomp-devel
 
@@ -106,6 +106,10 @@ install -m0644 build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Sep 01 2026 Alexander Kovalev <alexvk@altlinux.org> 0.27.1-alt1
+- New version 0.27.1.
+- BR: libraw-devel -> libraw0-devel.
+
 * Mon May 11 2026 Alexander Kovalev <alexvk@altlinux.org> 0.27.0-alt1
 - New version 0.27.0.
 
