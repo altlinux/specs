@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: theclicker
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: A simple linux (xorg/wayland) autoclicker!
@@ -46,6 +46,9 @@ EOF
 %_bindir/theclicker
 
 %changelog
+* Tue Sep 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.4.0-alt1
+- updated from 0.3.1 to 0.4.0
+
 * Mon Jan 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.3.1-alt1
 - New version.
 
