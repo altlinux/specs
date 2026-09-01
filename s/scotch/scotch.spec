@@ -12,7 +12,7 @@
 %define sover 7.0
 
 Name: scotch
-Version: 7.0.13
+Version: 7.0.14
 Release: alt1
 
 Summary: Package and libraries for sequential and parallel graph partitioning
@@ -250,6 +250,9 @@ export OMPI_MCA_plm_rsh_agent=false OMPI_MCA_btl=^tcp
 %_datadir/%name/tgt
 
 %changelog
+* Tue Sep 01 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.14-alt1
+- New version 7.0.14.
+
 * Thu Aug 06 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.13-alt1
 - New version 7.0.13.
 
