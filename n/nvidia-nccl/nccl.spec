@@ -2,13 +2,13 @@
 
 %define soversion 2
 
-# NVCC is incompatible with GCC 15, use GCC 14 as host compiler.
-%define nvcc_host_gcc_version 14
+# NVCC is incompatible with GCC 15, use GCC 12 as host compiler.
+%define nvcc_host_gcc_version 12
 %define nvcc_host_cc  %_bindir/gcc-%nvcc_host_gcc_version
 %define nvcc_host_cxx %_bindir/g++-%nvcc_host_gcc_version
 
 Name:    nvidia-nccl
-Version: 2.30.3
+Version: 2.31.2
 Release: alt1
 
 Summary: Optimized primitives for collective multi-GPU communication
@@ -102,6 +102,10 @@ rm -rv %buildroot/%_libdir/libnccl_static.a
 %_libdir/libnccl.so
 
 %changelog
+* Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 2.31.2-alt1
+- New version 2.31.2.
+- Build with gcc11 for compat with p11.
+
 * Mon Jun 29 2026 Nikita Shmatko <nash@altlinux.org> 2.30.3-alt1
 - New version 2.30.3.
 - Used gcc 14 as NVCC host compiler to avoid gcc 15 incompatibility.
