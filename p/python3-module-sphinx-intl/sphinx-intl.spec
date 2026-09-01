@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: python3-module-%pypi_name
-Version: 2.3.2
+Version: 2.4.0
 Release: alt1
 
 Summary: A Sphinx utility that make it easy to translate and to apply translations
@@ -92,5 +92,8 @@ install -m0644 doc/_build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Sep 01 2026 Alexander Kovalev <alexvk@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Sat Sep 13 2025 Alexander Kovalev <alexvk@altlinux.org> 2.3.2-alt1
 - Initial build for ALT.
