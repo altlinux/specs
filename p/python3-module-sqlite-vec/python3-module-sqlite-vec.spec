@@ -6,7 +6,7 @@
 
 Name: python3-module-sqlite-vec
 Version: 0.1.9
-Release: alt1
+Release: alt2
 
 Summary: A vector search SQLite extension that runs anywhere
 License: Apache-2.0 OR MIT
@@ -25,6 +25,9 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: pkgconfig(sqlite3)
+%if_with check
+BuildRequires: python3-modules-sqlite3
+%endif
 
 %description
 %summary.
@@ -56,5 +59,8 @@ rm -r %mod_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 01 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.9-alt2
+- Set check requirements explicitly.
+
 * Mon Aug 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.9-alt1
 - Packaged for ALT Sisyphus.
