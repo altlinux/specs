@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.11.0
-Release: alt3
+Version: 4.11.2
+Release: alt1
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -20,7 +20,6 @@ Source4: %name-%version-3rdparty-x11vnc.tar
 Source100: veyon-config-dm-login.sh
 Patch1: alt-veyon-libdir.patch
 Patch2: alt-fix-dm-login.patch
-Patch3: alt-fix-reset-location-table.patch
 
 Requires: polkit qca-qt6-ossl qt6-translations
 Obsoletes: italc3
@@ -142,6 +141,9 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Jul 21 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.2-alt1
+- New version.
+
 * Tue Jul 21 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.0-alt3
 - Fix add computer button disabling (Closes: 37952).
 
