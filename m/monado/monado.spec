@@ -2,12 +2,12 @@
 
 Name:    monado
 Version: 25.1.0
-Release: alt4
+Release: alt5
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
 Group:   Games/Other
-Url:     https://gitlab.freedesktop.org/monado/monado
+URL:     https://monado.dev/
 VCS:     https://gitlab.freedesktop.org/monado/monado
 
 Source:  %name-%version.tar
@@ -23,7 +23,8 @@ BuildRequires: libcjson-devel libsystemd-devel libuvc-devel libudev-devel
 BuildRequires: libXrandr-devel libXau-devel libXdmcp-devel libXext-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libffi-devel
 BuildRequires: libpcre2-devel liborc-devel libsurvive-devel libopenvr-devel
-BuildRequires: wayland-devel wayland-protocols libcap-devel
+BuildRequires: wayland-devel wayland-protocols libcap-devel nlohmann-json-devel
+BuildRequires: libonnxruntime-devel libdbus-devel libbsd-devel
 BuildRequires: doxygen graphviz
 
 ExclusiveArch: x86_64
@@ -59,7 +60,7 @@ Summary: %name library
     -DXRT_HAVE_WAYLAND:BOOL=ON \
     -DXRT_HAVE_WAYLAND_DIRECT:BOOL=ON \
     -DXRT_HAVE_VULKAN:BOOL=ON \
-    -DDRIVER_HANDTRACKING:BOOL=ON \
+    -DXRT_BUILD_DRIVER_HANDTRACKING=ON \
     -DBUILD_DOC:BOOL=OFF \
     -Wno-dev
 
@@ -71,6 +72,7 @@ Summary: %name library
 %files
 %doc CONTRIBUTING.md LICENSES README.md
 %_bindir/%{name}*
+%dir %_libdir/monado
 %_libdir/monado/libopenxr_monado.so
 %_datadir/openxr
 %_libdir/steamvr-monado
@@ -85,6 +87,9 @@ Summary: %name library
 %_libdir/libmonado.so.%{soname}.*
 
 %changelog
+* Tue Sep 01 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt5
+- enabled hand tracking driver (XRT_BUILD_DRIVER_HANDTRACKING)
+
 * Sat Jun 06 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt4
 - rebuild with librealsense 2.58.1
 
