@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.51
+Version: 3.1.61
 Release: alt1
 Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
@@ -14,7 +14,7 @@ Url: https://pypi.org/project/GitPython/
 VCS: https://github.com/gitpython-developers/GitPython
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: git-history-tests.tar
+Source1: tests-repo.bundle
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
@@ -31,6 +31,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /proc
 BuildRequires: /usr/bin/git
 BuildRequires: /usr/sbin/git-daemon
+%add_pyproject_deps_check_filter basedpyright
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: python3-module-gitdb-tests
@@ -50,16 +51,13 @@ objects and large datasets, which is achieved by using low-level structures and
 data streaming.
 
 %prep
-%setup -a 1
+%setup
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
 %pyproject_deps_resync_check_pipreqfile test-requirements.txt
 %endif
-
-# unbundle
-rm -vr %mod_name/ext/*
 
 %build
 %pyproject_build
@@ -68,26 +66,22 @@ rm -vr %mod_name/ext/*
 %pyproject_install
 
 %check
-# Tests expect project's own git repo + submodules
+# see .github/workflows/pythonpackage.yml
+# Tests expect project's own git repo
 export GIT_CONFIG_GLOBAL=~/.gitconfig
 cat test/fixtures/.gitconfig > "$GIT_CONFIG_GLOBAL"
 git config --global user.email "someone@somewhere.com"
 git config --global user.name "someone"
 
 # prepare test git repo
-TEST_REPO="$(pwd)/test_repo"
-rm -rf "$TEST_REPO"
-mkdir "$TEST_REPO"
-cp -a .git "$TEST_REPO"/
-pushd "$TEST_REPO"
-# see .github/workflows/pythonpackage.yml
+export GIT_PYTHON_TEST_GIT_REPO_BASE="$(pwd)/test_repo"
+git clone -b alt_tests "%SOURCE1" "$GIT_PYTHON_TEST_GIT_REPO_BASE"
+pushd "$GIT_PYTHON_TEST_GIT_REPO_BASE"
 TRAVIS=yes ../init-tests-after-clone.sh
 popd
-export GIT_PYTHON_TEST_GIT_REPO_BASE="$TEST_REPO"
 
 # /usr/sbin/git-daemon
 export PATH=$PATH:%_sbindir
-export NO_SUBMODULES=YES
 %pyproject_run_pytest \
     -vra \
     -o=addopts='' \
@@ -99,6 +93,9 @@ export NO_SUBMODULES=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 3.1.61-alt1
+- 3.1.51 -> 3.1.61
+
 * Mon Jul 13 2026 Stanislav Levin <slev@altlinux.org> 3.1.51-alt1
 - 3.1.50 -> 3.1.51
 
