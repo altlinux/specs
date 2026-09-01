@@ -3,26 +3,41 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method rpath=relaxed
 
-Name: zig
-Version: 0.15.2
+%define llvm_ver 21
+%define llvm_pkgver %llvm_ver.1
+
+Name:    zig
+Version: 0.16.0
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
-# TODO: Zig lib is bundled with a lot of third party with other licenses.
-License: MIT
-Group: Development/C
-Url: https://ziglang.org/
-Vcs: https://github.com/ziglang/zig/
+
+# ./LICENSE - MIT
+# ./lib/
+#   libcxx/LICENSE.TXT - Apache-2.0 with LLVM-exception
+#   libcxxabi/LICENSE.TXT - Apache-2.0 with LLVM-exception
+#   libunwind/LICENSE.TXT - Apache-2.0 with LLVM-execption
+#   libc/
+#     musl/COPYRIGHT - MIT
+#     include/generic-freebsd/sys/copyright.hi - BSD-2-Clause
+#     freebsd/COPYRIGHT - BSD-1-Clause and BSD-2-Clause and BSD-4-Clause (guessing from SPDX-Identifiers)
+#     mingw/COPYING - ZPL-2.1
+#     glibc/LICENSES - LGPL-2.1+ and ISC and BSD-3-Clause and GPL-2.0-or-later (from our spec)
+#     wasi/LICENSE - Apache-2.0 with LLVM-exception and Apache-2.0 and MIT and CC0 and BSD-2-Clause
+License: MIT and Apache-2.0 with LLVM-exception and BSD-2-Clause and BSD-1-Clause and BSD-4-Clause and ZPL-2.1 and LGPL-2.1+ and ISC and BSD-3-Clause and GPL-2.0-or-later and Apache-2.0 and CC0
+Group:   Development/C
+Url:     https://ziglang.org/
+Vcs:     https://codeberg.org/ziglang/zig.git
+
+# /proc is required or zig will output FileNotFound
 Requires: /proc
 
 ExclusiveArch: %zig_arches
 
 Source: %name-%version.tar
 
-%define llvm_ver 20
-%define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-zig
-# /proc is required or zig will output FileNotFound
+BuildRequires: /proc
 BuildRequires: chrpath
 BuildRequires: clang%llvm_pkgver-devel
 BuildRequires: cmake
@@ -32,18 +47,10 @@ BuildRequires: libtinfo-devel
 BuildRequires: libxml2-devel
 BuildRequires: lld%llvm_pkgver-devel
 BuildRequires: llvm%llvm_pkgver-devel
-BuildRequires: /proc
 BuildRequires: zlib-devel
 
 %description
 %summary.
-
-%prep
-%setup
-
-# Remove after this issue is resolved:
-# https://github.com/ziglang/zig/issues/23347
-sed -i '/max_rss = 7_800_000_000/d' build.zig
 
 %package checkinstall
 Summary: CI test for zig
@@ -52,6 +59,9 @@ Requires(pre): zig
 
 %description checkinstall
 %summary.
+
+%prep
+%setup
 
 %build
 %define optflags_lto %nil
@@ -107,6 +117,12 @@ rm -rf -- "$t" "$HOME/.cache/zig"
 %files checkinstall
 
 %changelog
+* Tue Sep 01 2026 Ilya Sorochan <k0tran@altlinux.org> 0.16.0-alt1
+- Update to 0.16.0 (2026-04-13), (ALT#60236).
+- Switch to LLVM 21.
+- Switch to building from version tag.
+- Small spec cleanup and reordering.
+
 * Sat Oct 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.2-alt1
 - Update to 0.15.2 (2025-10-10).
 

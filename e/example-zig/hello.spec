@@ -4,7 +4,7 @@
 
 Name: example-zig
 Summary: Example of packaging Zig program
-Version: 5
+Version: 6
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Other
@@ -43,6 +43,9 @@ example_zig
 %_bindir/example_zig
 
 %changelog
+* Tue Sep 01 2026 Ilya Sorochan <k0tran@altlinux.org> 6-alt1
+- Update for zig-0.16.0.
+
 * Sat Aug 23 2025 Vitaly Chikunov <vt@altlinux.org> 5-alt1
 - Update for zig-0.15.1.
 
