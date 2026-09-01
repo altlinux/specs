@@ -3,7 +3,7 @@
 %define mod_name graph_tool
 
 Name: python3-module-%pypi_name
-Version: 2.98
+Version: 3.7
 Release: alt1
 
 Summary: Efficient tool for manipulation and statistical analysis of graphs
@@ -132,5 +132,8 @@ install -D -m644 %graph_tool_distinfo/INSTALLER %buildroot%python3_sitelibdir/%g
 %_datadir/doc/python3-module-%pypi_name-%version
 
 %changelog
+* Tue Sep 01 2026 Aleksandr Dovydenkov <asd@altlinux.org> 3.7-alt1
+- New version 3.7.
+
 * Tue Mar 24 2026 Aleksandr Dovydenkov <asd@altlinux.org> 2.98-alt1
 - Initial build for ALT Linux.
