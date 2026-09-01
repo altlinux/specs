@@ -1,6 +1,6 @@
 Name:           maven-resolver
 Epoch:          1
-Version:        1.9.22
+Version:        1.9.27
 Release:        alt1
 
 License:        Apache-2.0
@@ -38,6 +38,7 @@ artifact transports and artifact resolution.
 
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :japicmp-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
 
 %pom_disable_module maven-resolver-named-locks-hazelcast
 %pom_disable_module maven-resolver-named-locks-redisson
@@ -49,6 +50,8 @@ artifact transports and artifact resolution.
 %pom_xpath_set \
     "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration/pom:systemPropertyVariables/pom:java.io.tmpdir" \
     "%_tmppath"
+
+find . -name pom.xml -type f -exec sed -i '/classes<\/classifier>/d' {} +
 
 # requires internet connection
 rm maven-resolver-supplier/src/test/java/org/eclipse/aether/supplier/RepositorySystemSupplierTest.java
@@ -66,6 +69,9 @@ rm maven-resolver-supplier/src/test/java/org/eclipse/aether/supplier/RepositoryS
 %doc README.md
 
 %changelog
+* Sun Aug 23 2026 Evgeniy Serov <scala@altlinux.org> 1:1.9.27-alt1
+- Automatically updated to 1.9.27.
+
 * Fri Aug 21 2026 Evgeniy Serov <scala@altlinux.org> 1:1.9.22-alt1
 - Updated to 1.9.22.
 

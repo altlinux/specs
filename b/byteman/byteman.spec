@@ -3,7 +3,6 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -25,7 +24,7 @@ BuildRequires: jpackage-11
 
 Name:             byteman
 Version:          4.0.16
-Release:          alt2
+Release:          alt3
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
@@ -34,8 +33,8 @@ Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.t
 
 BuildArch:        noarch
 
-# Byteman 4.x requires JDK 9+ to build. Require JDK 10 explicitly.
-BuildRequires:    java-11-openjdk-devel
+# Byteman 4.x requires JDK 9+ to build. Require jpackage-default (JDK 17).
+BuildRequires:    jpackage-default
 BuildRequires:    maven-local
 BuildRequires:    maven-shade-plugin
 BuildRequires:    maven-source-plugin
@@ -239,6 +238,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Fri Aug 28 2026 Evgeniy Serov <scala@altlinux.org> 4.0.16-alt3
+- Build with jpackage-default.
+
 * Mon Jun 08 2026 Arseniy Kostevich <faux@altlinux.org> 4.0.16-alt2
 - Build with Java 8 source/target to fix compilation of generated HelpMojo.
 

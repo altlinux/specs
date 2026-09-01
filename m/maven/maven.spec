@@ -4,7 +4,7 @@
 
 Name:           maven
 Epoch:          1
-Version:        3.9.9
+Version:        3.9.16
 Release:        alt1
 
 Summary:        Apache Maven core
@@ -20,6 +20,7 @@ Source2:        mvn.1
 Patch1:         0001-Adapt-mvn-script.patch
 Patch3:         0003-Remove-dependency-on-powermock.patch
 Patch6:         0006-Load-maven-resolver-named-locks.patch
+Patch7:         0007-Use-Java-JUnit-assertions.patch
 
 BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
@@ -73,6 +74,9 @@ sed -i 's/\r$//' apache-maven/src/bin/m2.conf
 %pom_remove_plugin :buildnumber-maven-plugin maven-core
 
 %pom_remove_dep :powermock-reflect maven-model-builder
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
+
+find . -name pom.xml -type f -exec sed -i '/classes<\/classifier>/d' {} +
 
 %mvn_package :apache-maven __noinstall
 %mvn_alias :maven-resolver-provider :maven-aether-provider
@@ -153,6 +157,10 @@ touch %buildroot%_sysconfdir/mavenrc
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Mon Aug 24 2026 Evgeniy Serov <scala@altlinux.org> 1:3.9.16-alt1
+- Automatically updated to 3.9.16.
+- Added patch to use Java JUnit assertions instead of Kotlin helpers.
+
 * Tue Aug 18 2026 Evgeniy Serov <scala@altlinux.org> 1:3.9.9-alt1
 - Updated to 3.9.9 (Closes: #48910, #51532).
 - Updated build dependencies and removed obsolete patches.

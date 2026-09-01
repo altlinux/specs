@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 2.0.1
-Release: alt2
+Release: alt3
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL-2.0+
@@ -15,7 +15,8 @@ Source2: tuxguitar.sh
 
 Requires: java-17-openjdk
 Requires: javapackages-filesystem
-BuildRequires: java-17-openjdk-devel java-headless
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local jpackage-default
 BuildRequires: javapackages-filesystem maven glibc libfluidsynth-devel
 BuildRequires: libjack-devel libalsa-devel soundfont2-default gcc-c++
 BuildRequires: lilv-devel musl-devel libconfig-devel libsuil-devel
@@ -51,7 +52,12 @@ find . \( -name "*.xml" -or -name "*.gradle"  -or -name "*.properties" -or -name
 
 %build
 pushd desktop/build-scripts/tuxguitar-linux-swt
-mvn -o -P native-modules package -Dmaven.repo.local=../../../vendors/m2-repository
+
+# xmvn searches additional local artifacts in $PWD/.m2
+ln -s ../../../vendors/m2-repository .m2
+
+%mvn_build -i -j -- -Pnative-modules \
+    -Dmaven.repo.local=../../../vendors/m2-repository
 popd
 
 %install
@@ -105,6 +111,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Tue Aug 25 2026 Evgeniy Serov <scala@altlinux.org> 2.0.1-alt3
+- NMU: switched the build to XMvn
+
 * Thu Aug 20 2026 Evgeniy Serov <scala@altlinux.org> 2.0.1-alt2
 - NMU: re-vendor dependencies to fix the build with Maven 3.9.9
 

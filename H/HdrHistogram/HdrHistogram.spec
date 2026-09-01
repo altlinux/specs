@@ -1,76 +1,69 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          HdrHistogram
-Version:       2.1.12
-Release:       alt1_1jpp11
-Summary:       A High Dynamic Range (HDR) Histogram
-License:       BSD and CC0
-URL:           http://hdrhistogram.github.io/%{name}/
-Source0:       https://github.com/%{name}/%{name}/archive/%{name}-%{version}.tar.gz
+Version:       2.2.2
+Release:       alt1
 
-BuildRequires: maven-local
-BuildRequires: junit5
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-# Explicit requires for javapackages-tools since HistogramLogProcessor script
-# uses /usr/share/java-utils/java-functions
+Summary:       A High Dynamic Range (HDR) Histogram
+License:       BSD-2-Clause OR CC0-1.0
+Group:         Development/Java
+URL:           https://hdrhistogram.github.io/HdrHistogram/
+VCS:           https://github.com/HdrHistogram/HdrHistogram
+
+Source0:       %name-%version.tar
+
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:maven-replacer-plugin)
+
 Requires:      javapackages-tools
 
 BuildArch:     noarch
-Source44: import.info
 
 %description
-HdrHistogram supports the recording and analyzing sampled data value
-counts across a configurable integer value range with configurable value
-precision within the range. Value precision is expressed as the number of
-significant digits in the value recording, and provides control over value
-quantization behavior across the value range and the subsequent value
-resolution at any given level.
+HdrHistogram is a High Dynamic Range (HDR) Histogram implementation for Java.
+It supports recording and analyzing sampled value distributions across a
+configurable range with configurable precision.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
+HdrHistogram is designed for latency and performance-sensitive applications.
+It provides a fixed memory footprint for a configured range and precision,
+constant-time value recording, and supports analysis using percentiles,
+linear and logarithmic buckets, mean, and standard deviation.
 
-%description javadoc
-This package contains javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-find  -name "*.class"  -print -delete
-find  -name "*.jar"  -print -delete
+%setup
 
-%pom_remove_plugin :maven-dependency-plugin
-%pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :maven-release-plugin
-%pom_remove_plugin :maven-source-plugin
+# Remove bundled JUnit
+rm lib/test/junit-4.10.jar
+
 %pom_remove_plugin :nexus-staging-maven-plugin
-%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-dependency-plugin
 
-%pom_xpath_set "pom:plugin[pom:groupId = 'com.google.code.maven-replacer-plugin' ]/pom:artifactId" replacer
-
-%mvn_file :%{name} %{name}
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 %build
-%mvn_build --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
 
-%jpackage_script org.%{name}.HistogramLogProcessor "" "" %{name} HistogramLogProcessor true
+%jpackage_script org.%name.HistogramLogProcessor "" "" %name HistogramLogProcessor true
 
 %files -f .mfiles
-%{_bindir}/HistogramLogProcessor
+%_bindir/HistogramLogProcessor
 %doc README.md
-%doc --no-dereference COPYING.txt LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference COPYING.txt LICENSE.txt
+%doc COPYING.txt LICENSE.txt
 
 %changelog
+* Mon Aug 31 2026 Evgeniy Serov <scala@altlinux.org> 2.2.2-alt1
+- Updated to 2.2.2.
+- Build with jpackage-default.
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.12-alt1_1jpp11
 - new version
 

@@ -2,10 +2,10 @@ BuildArch: noarch
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-golang rpm-macros-java rpm-macros-nodejs
-BuildRequires: java-devel-default python3-module-setuptools
+BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -32,7 +32,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           antlr4-project
 Version:        4.9.2
-Release:        alt2
+Release:        alt3
 
 Summary:        Parser generator (ANother Tool for Language Recognition)
 License:        BSD-3-Clause
@@ -478,6 +478,9 @@ rm -fr %{buildroot}%{_docdir}/libantlr4
 %endif
 
 %changelog
+* Fri Aug 28 2026 Evgeniy Serov <scala@altlinux.org> 4.9.2-alt3
+- Build with jpackage-default.
+
 * Thu Feb 12 2026 Evgeniy Serov <scala@altlinux.org> 4.9.2-alt2
 - Fixed FTBFS.
 - Removed import.info.

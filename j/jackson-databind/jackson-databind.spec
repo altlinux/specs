@@ -2,7 +2,7 @@
 
 Name: jackson-databind
 Version: 2.22.1
-Release: alt1
+Release: alt2
 
 Summary: General data-binding package for Jackson (2.x)
 License: Apache-2.0
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 BuildRequires: maven-local
 
 BuildRequires: jackson-annotations
@@ -28,6 +28,8 @@ BuildRequires: moditect-maven-plugin
 The general-purpose data-binding functionality and tree-model for Jackson Data
 Processor. It builds on core streaming parser/generator package, and uses
 Jackson Annotations for configuration.
+
+%javadoc_package
 
 %prep
 %setup
@@ -52,7 +54,7 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %mvn_file : %name
 
 %build
-%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
+%mvn_build -f
 
 %install
 %mvn_install
@@ -62,6 +64,10 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Aug 29 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt2
+- Build with jpackage-default.
+- Enabled javadoc.
+
 * Wed Aug 12 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
 - Automatically updated to 2.22.1.
 

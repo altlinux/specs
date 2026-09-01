@@ -1,4 +1,4 @@
-%global antflags -Dno_arduino_builder=true -Dsystem_avr=true -Dlight_bundle=true
+%global antflags -Dno_arduino_builder=true -Dsystem_avr=true -Dlight_bundle=true -Dlocal_sources=true
 %global appstream_id cc.arduino.arduinoide
 %global avr_version 1.8.3
 %global ethernet_version 2.0.0
@@ -27,7 +27,7 @@
 Name:    arduino
 Epoch:   1
 Version: 1.8.19
-Release: alt2_1jpp11
+Release: alt3
 Summary: An IDE for Arduino-compatible electronics prototyping platforms
 
 License: GPL-2.0+ and LGPL-2.1+ and CC-BY-SA-3.0
@@ -69,6 +69,7 @@ Patch6: arduino-fix-path-to-builder.patch
 Patch7: arduino-fix-fresh-rsyntaxtextarea.patch
 Patch8: arduino-add-libraries.patch
 Patch9: arduino-loongarch64-support.patch
+Patch10: arduino-skip-checksums-for-local-sources.patch
 
 BuildRequires: ant
 BuildRequires: desktop-file-utils
@@ -76,7 +77,7 @@ BuildRequires: libappstream-glib
 BuildRequires: javapackages-tools
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ unzip
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 BuildRequires: arduino-builder
 
 BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
@@ -204,6 +205,7 @@ tar -xvf %{SOURCE10} -C hardware
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 cp %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE17} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} build/
 cp %{SOURCE50} %{SOURCE51} build/shared/
@@ -367,6 +369,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 
 
 %changelog
+* Mon Aug 31 2026 Evgeniy Serov <scala@altlinux.org> 1:1.8.19-alt3
+- Build with Java 17.
+- Skip checksum verification for Gear-generated source archives.
+
 * Tue Apr 21 2026 Ilya Sorochan <k0tran@altlinux.org> 1:1.8.19-alt2_1jpp11
 - NMU: introduce loongarch64 support
 

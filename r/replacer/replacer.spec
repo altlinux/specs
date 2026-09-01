@@ -2,7 +2,7 @@
 
 Name: replacer
 Version: 1.6
-Release: alt2
+Release: alt3
 
 Summary: Replacer Maven Mojo
 License: MIT
@@ -11,19 +11,18 @@ Url: https://code.google.com/archive/p/maven-replacer-plugin
 Vcs: https://github.com/beiliubei/maven-replacer-plugin
 Source0: %name-%version.tar
 
+Patch0: 0001-Port-to-commons-lang3.patch
+Patch1: 0002-Port-to-maven-plugin-annotations.patch
+
 BuildRequires(pre): rpm-macros-java
 BuildRequires: maven-local
 BuildRequires: jpackage-default
-BuildRequires: apache-commons-io
-BuildRequires: ant-lib
-BuildRequires: apache-commons-lang3
-BuildRequires: maven-lib
+
+BuildRequires: sonatype-oss-parent
 BuildRequires: maven-plugin-plugin
-BuildRequires: xerces-j2
-BuildRequires: maven-plugin-annotations
+BuildREquires: xerces-j2
 
 BuildArch: noarch
-Source44: import.info
 
 %description
 Maven plugin to replace tokens in a given file with a value.
@@ -31,53 +30,35 @@ Maven plugin to replace tokens in a given file with a value.
 This plugin is also used to automatically generating PackageVersion.java
 in the FasterXML.com project.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %name.
+%javadoc_package
 
 %prep
 %setup
+%autopatch -p1
 
-%pom_change_dep org.apache.maven:maven-plugin-api:3.0.3 org.apache.maven:maven-plugin-api:3.0.3:provided
-%pom_add_dep org.apache.maven.plugin-tools:maven-plugin-annotations:3.9.0:compile
-
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
-
-%pom_remove_plugin :dashboard-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
-
-# remove hard-coded compiler settings
 %pom_remove_plugin :maven-compiler-plugin
 
-# trivial port to commons-lang3
-%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1
-
-for i in $(find -name "*.java"); do
-    sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" $i;
-done
+%pom_change_dep :commons-lang org.apache.commons:commons-lang3
+%pom_add_dep org.apache.maven.plugin-tools:maven-plugin-annotations::provided
 
 %mvn_file :%name %name
 %mvn_alias :%name com.google.code.maven-replacer-plugin:maven-replacer-plugin
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
-%doc --no-dereference LICENSE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
+%doc README.md LICENSE
 
 %changelog
+* Fri Aug 28 2026 Evgeniy Serov <scala@altlinux.org> 1.6-alt3
+- Moved commons-lang3 source changes to a patch.
+- Ported to modern Maven plugin annotations.
+
 * Mon Dec 08 2025 Ivan Khanas <xeno@altlinux.org> 1.6-alt2
 - Return to the Sisyphus repository.
 
