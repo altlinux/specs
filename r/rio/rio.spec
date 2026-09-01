@@ -3,8 +3,8 @@
 %def_with check
 
 Name: rio
-Version: 0.5.26
-Release: alt2
+Version: 0.5.27
+Release: alt1
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -94,6 +94,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Tue Sep 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt1
+- Updated to version 0.5.27.
+
 * Wed Aug 26 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.26-alt2
 - Renamed the executable to rioterm to avoid a conflict with Rasterio.
 - Dropped the rio terminfo entry already provided by terminfo-extra.
