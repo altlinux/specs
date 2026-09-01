@@ -1,5 +1,5 @@
 Name:    volt-gui
-Version: 2.0.3
+Version: 2.1.0
 Release: alt1
 
 Summary: A graphical control panel for Vulkan games on Linux
@@ -25,16 +25,12 @@ every Vulkan driver: RADV, ANV, NVK, AMDVLK, the NVIDIA proprietary driver.
 %rust_prep
 
 %build
-pushd volt
 %rust_build
-popd
 
 %install
 # Rust: launcher, probe binary and the Vulkan implicit layer shared object
-pushd volt
 %rust_install -t %_bindir volt volt-probe
 install -Dm755 target/release/libvolt.so %buildroot%_libdir/libvolt.so
-popd
 
 # Vulkan implicit layer manifest. The loader resolves a relative library_path
 # against the manifest's own directory, so point it at the absolute install path.
@@ -78,6 +74,9 @@ EOF
 %_datadir/applications/volt-gui.desktop
 
 %changelog
+* Mon Aug 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Thu Aug 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.0.3-alt1
 - new version 2.0.3
 
