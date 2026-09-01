@@ -1,26 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: iwdgui
+Name: python3-module-iwdgui
 Version: 0.3.0
-Release: alt1
+Release: alt2
+
 Summary: Graphical frontend for iwd
 License: MPL-2.0
 Group: Networking/WWW
 Url: https://pypi.org/project/iwdgui/
 Vcs: https://gitlab.com/hfernh/iwdgui
-
 BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
 BuildRequires(pre): rpm-build-pyproject
-
 BuildRequires: python3-dev
 
 %pyproject_runtimedeps_metadata
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+Provides: iwdgui = %EVR
+Obsoletes: iwdgui < %EVR
 
 %description
 A graphical frontend for iwd, Intel's iNet Wireless Daemon, written in python.
@@ -49,11 +50,15 @@ Able to manage previously connected networks.
 %files
 %_bindir/iwdgui
 %python3_sitelibdir/iwdgui
-%python3_sitelibdir/iwdgui-0.3.0.dist-info
-%_datadir/applications/iwdgui.desktop
-%_datadir/icons/hicolor/48x48/apps/iwdgui.png
-%_datadir/icons/hicolor/96x96/apps/iwdgui.png
+%python3_sitelibdir/%pyproject_distinfo iwdgui
+%_desktopdir/iwdgui.desktop
+%_liconsdir/iwdgui.png
+%_iconsdir/hicolor/96x96/apps/iwdgui.png
 
 %changelog
+* Fri Aug 28 2026 Pavel Petrykin <silverducks@altlinux.org> 0.3.0-alt2
+- Rename package according to Alt Linux conventions.
+- Minor spec cleanup.
+
 * Fri Apr 10 2026 Pavel Petrykin <silverducks@altlinux.org> 0.3.0-alt1
 - Initial build for Alt Linux.
