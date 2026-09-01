@@ -5,7 +5,7 @@
 
 Name: generics-resolver
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: Java generics runtime resolver
 License: MIT
@@ -59,5 +59,8 @@ This package provides %summary.
 %doc README.md LICENSE
 
 %changelog
+* Tue Sep 1 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0.3-alt2
+- Fix FTBFS.
+
 * Thu Jun 11 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.0.3-alt1
 - Initial build for ALT Sisyphus.
