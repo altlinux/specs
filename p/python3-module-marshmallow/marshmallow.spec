@@ -1,5 +1,5 @@
 Name: python3-module-marshmallow
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 
 Summary: Simplified object serialization
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/marshmallow-%version.dist-info
 
 %changelog
+* Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.1-alt1
+- 4.3.1 released
+
 * Thu Apr 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.0-alt1
 - 4.3.0 released
 
