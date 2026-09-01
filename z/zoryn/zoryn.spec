@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.51.0
+Version: 0.52.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,17 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 0.52.0-alt1
+- added baking the last resolved BuildRequires set into the devenv podman
+  image, so a recreated container installs only the delta
+- added flat ~/.config/zoryn/devenv/features/<id>.toml local feature files
+- added {devenv}, {project}, {branch} and {profile} placeholders in devenv
+  mounts and env values
+- added the [devenv] env config key and env in feature.toml
+- added cli and prompt option keys to the 'flow' agent step
+- fixed SHELL not being exported into the devenv environment
+- fixed local features missing from shell completion
+
 * Sat Aug 29 2026 Anton Farygin <rider@altlinux.org> 0.51.0-alt1
 - added experimental 'zoryn flow' for unattended package-update workflows:
   configured step lists (up, build, submit, batch, bash, ssh, devenv, zoryn,
