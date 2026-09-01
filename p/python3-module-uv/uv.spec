@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.12.7
+%define uv_version 0.12.8
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+Patch1: linux-raw-sys-upstream-loongarch64-fiemap.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 Requires: %pypi_name
@@ -69,6 +70,9 @@ Requires: %pypi_name_uv_build
 %prep
 %setup -a1
 %autopatch -p1
+# Following sed is for patch1: allow patching linux-raw-sys crate
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/linux-raw-sys/.cargo-checksum.json
 cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -141,6 +145,11 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 0.12.8-alt1
+- 0.12.7 -> 0.12.8
+- Fixed FTBFS on loongarch64 by adapting upstream patch for linux-raw-sys crate
+  by k0tran@
+
 * Fri Aug 28 2026 Stanislav Levin <slev@altlinux.org> 0.12.7-alt1
 - 0.12.6 -> 0.12.7
 
