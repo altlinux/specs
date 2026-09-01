@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vector
-Version: 0.56.0
+Version: 0.58.0
 Release: alt1
 
 Summary: A lightweight and ultra-fast tool for building observability pipelines
@@ -95,6 +95,9 @@ usermod -a -G adm vector >/dev/null 2>&1 || :
 %dir %attr(0770, root, vector) %_sharedstatedir/vector
 
 %changelog
+* Tue Sep 01 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.58.0-alt1
+- New version.
+
 * Tue Jul 14 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.56.0-alt1
 - New version.
 
