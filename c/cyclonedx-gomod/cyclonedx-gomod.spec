@@ -2,7 +2,7 @@
 %def_with check
 
 Name: cyclonedx-gomod
-Version: 1.10.0
+Version: 1.12.0
 Release: alt1
 
 Summary: Tool to create CycloneDX Software Bill of Materials (SBOM) from Go modules.
@@ -13,7 +13,7 @@ URL: https://github.com/CycloneDX/cyclonedx-gomod
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 
-Requires:  golang
+Requires: golang
 
 BuildRequires(pre): rpm-build-golang rpm-macros-golang
 
@@ -41,6 +41,9 @@ install -D -m755 bin/cyclonedx-gomod -t %buildroot%_bindir/
 %_bindir/cyclonedx-gomod
 
 %changelog
+* Tue Sep 01 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 1.12.0-alt1
+- Update to version 1.12.0.
+
 * Fri Feb 06 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 1.10.0-alt1
 - Update to version 1.10.0.
 - Add golang BR.
