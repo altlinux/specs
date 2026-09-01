@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.29.0
+Version: 2.29.2
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -23,9 +23,13 @@ Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+# devendored
+Requires: python3-module-toml-fmt-common
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# devendored
+BuildRequires: python3-module-toml-fmt-common
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -71,6 +75,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 2.29.2-alt1
+- 2.29.0 -> 2.29.2
+
 * Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 2.29.0-alt1
 - 2.28.0 -> 2.29.0
 
