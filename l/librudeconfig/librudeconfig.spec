@@ -1,23 +1,21 @@
 %define oname rudeconfig
 Name: librudeconfig
-Version: 5.0.5
-Release: alt1.qa1
+Version: 6.1.0
+Release: alt1
 
 Summary: Library (C++ API) for reading and writing configuration/.ini files
 
 Group: System/Libraries
-License: GPLv2+
-Url: http://www.rudeserver.com/config
+License: GPL-2.0-or-later
+Url: https://github.com/mflood/rudeconfig
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.rudeserver.com/config/download/%oname-%version.tar
+# Source-url: https://github.com/mflood/%oname/archive/v%version/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
-Patch: rudeconfig-5.0.5-gcc43.patch
-Patch1: rudeconfig-5.0.5-includes.patch
-
-# Automatically added by buildreq on Fri Sep 03 2010
-BuildRequires: gcc-c++ glibc-devel-static
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ /usr/bin/ctest
 
 %description
 %name is a library that allows applications to read, modify
@@ -36,16 +34,19 @@ to develop C++ applications using %name.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p1 -b .gcc43
-%patch1 -p1 -b .includes
 
 %build
-%configure --disable-static
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON \
+    -DRUDECONFIG_BUILD_EXAMPLES=OFF
+%cmake_build
 
 %install
-%makeinstall_std
-#find %buildroot -name '*.la' -exec rm -f {} ';'
+%cmake_install
+
+%check
+%ctest
 
 %files
 %doc AUTHORS COPYING README NEWS ChangeLog
@@ -55,9 +56,16 @@ to develop C++ applications using %name.
 %dir %_includedir/rude/
 %_includedir/rude/config.h
 %_libdir/*.so
+%_pkgconfigdir/rudeconfig.pc
+%dir %_libdir/cmake
+%_libdir/cmake/rudeconfig/
 %_man3dir/*
 
 %changelog
+* Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
+- new version 6.1.0
+- Switch to the CMake build system and enable tests.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.0.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -116,4 +124,3 @@ to develop C++ applications using %name.
 - 5.0.2-0
 - Modified source code for DataLine.cpp - removed 'using namespace std' which Visual Studio is too dumb to ignore.
 - Fixed ParserJuly2004::chompEOL() - was not returning a value - (TODO: consider making the function void)
-
