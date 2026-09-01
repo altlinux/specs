@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.9.1
+Version: 2.12.0
 Release: alt1
 
 Summary: A minimal low-level HTTP client
@@ -106,6 +106,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 01 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.12.0-alt1
+- Updated to 2.12.0.
+
 * Tue Jul 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.9.1-alt1
 - Updated to 2.9.1.
 
