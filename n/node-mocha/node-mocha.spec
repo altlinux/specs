@@ -5,7 +5,7 @@
 
 Name: node-mocha
 Version: 11.7.7
-Release: alt1
+Release: alt2
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
 
@@ -53,19 +53,18 @@ while mapping uncaught exceptions to the correct test cases.
 %build
 #pm prune --production
 
-#%check
-#npm test
-
 %install
 # replace node_modules with got after npm install --production
 #rm -rf node_modules
 #tar xf %SOURCE2
-
 mkdir -p %buildroot%_bindir
-ln -sr %buildroot%nodejs_sitelib/%node_module/bin/mocha %buildroot%_bindir/mocha
+ln -sr %buildroot%nodejs_sitelib/%node_module/bin/mocha.js %buildroot%_bindir/mocha
 mkdir -p %buildroot%nodejs_sitelib/%node_module/
 cp -a * %buildroot/%nodejs_sitelib/%node_module/
 rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
+
+%check
+%buildroot%_bindir/mocha --version
 
 %files
 %doc LICENSE README.md
@@ -76,6 +75,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 11.7.7-alt2
+- Fixed /usr/bin/mocha symlink (ALT bug 60309).
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 11.7.7-alt1
 - new version 11.7.7
 
