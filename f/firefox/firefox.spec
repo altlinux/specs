@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 154.0.1
+Version: 155.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,39 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Sep 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 155.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-84117: Privilege escalation in Firefox for Android
+  + CVE-2026-84118: Use-after-free in the JavaScript: GC component
+  + CVE-2026-84119: Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-84120: Use-after-free in the Audio/Video component
+  + CVE-2026-84121: Sandbox escape due to use-after-free in the DOM: Security component
+  + CVE-2026-84122: Use-after-free in the Audio/Video component
+  + CVE-2026-84123: Privilege escalation due to use-after-free in the Graphics: WebGPU component
+  + CVE-2026-84124: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-84125: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-84126: Incorrect boundary conditions in the Layout: Grid component
+  + CVE-2026-84127: Information disclosure in the WebExtensions component in Firefox for Android
+  + CVE-2026-84128: Privilege escalation in the WebDriver BiDi component
+  + CVE-2026-84129: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-84130: Information disclosure in the Graphics: WebGPU component
+  + CVE-2026-84131: Privilege escalation due to invalid pointer in the Graphics component
+  + CVE-2026-84132: Information disclosure in the Networking: HTTP component
+  + CVE-2026-84133: Site isolation issue in the DOM: Push Subscriptions component
+  + CVE-2026-84134: Other issue in the Profile Backup component
+  + CVE-2026-84135: Other issue in Firefox Focus for Android
+  + CVE-2026-84136: Other issue in the DOM: Navigation component
+  + CVE-2026-84137: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-84138: Denial-of-service in the PDF Viewer component
+  + CVE-2026-84139: Clickjacking issue in the DOM: Events component
+  + CVE-2026-84140: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-84141: Integer overflow in the Graphics: ImageLib component
+  + CVE-2026-84142: Internally found bugs fixed in Firefox 155
+  + CVE-2026-84143: Internally found bugs fixed in Firefox 155, Firefox ESR 153.2 and Firefox ESR 140.15
+  + CVE-2026-84144: Internally found bugs fixed in Firefox 155 and Firefox ESR 153.2
+  + CVE-2026-84145: Internally found bugs fixed in Firefox 155, Firefox ESR 153.2, Firefox ESR 140.15 and Firefox ESR 115.40
+
 * Thu Aug 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 154.0.1-alt1
 - New version.
 - Fix FTBFS with rustc 1.98: new *-oe-linux-* targets made
