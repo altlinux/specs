@@ -4,7 +4,7 @@
 
 Name: ctre
 Version: 3.11.0
-Release: alt2
+Release: alt3
 Summary: Compile Time Regular Expression in C++
 License: Apache-2.0
 Group: Development/C++
@@ -53,7 +53,7 @@ Documentation files for %name.
 %cmake \
     -DCTRE_BUILD_TESTS=%{?_with_check:ON}%{!?_with_check:OFF} \
     -DCTRE_BUILD_PACKAGE=OFF
-sphinx-build docs doc
+sphinx-build-3 docs doc
 
 %install
 %cmake_install
@@ -79,6 +79,9 @@ sphinx-build docs doc
 %doc doc/*
 
 %changelog
+* Thu Aug 27 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt3
+- Fix docs build for older Sphinx.
+
 * Tue May 26 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt2
 - Fix build without tests.
 - Use CMake for building tests.

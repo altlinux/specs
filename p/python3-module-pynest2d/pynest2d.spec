@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     python3-module-pynest2d
-Version:  5.10.0
-Release:  alt1
+Version:  5.11.0
+Release:  alt1.g73235af5.1
 
 Summary:  Python bindings for libnest2d
 License:  LGPL-3.0-or-later AND BSD-3-Clause
@@ -80,6 +80,10 @@ EOF
 %python3_sitelibdir/pynest2d.pyi
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.0-alt1.g73235af5.1
+- Switch to more appropriate rolling tagging.
+- Update to latest snapshot.
+
 * Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.0-alt1
 - New version 5.10.0.
 - Port to sip6 and PyQt6.sip.

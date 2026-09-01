@@ -11,7 +11,7 @@
 
 Name:    Uranium
 Version: 5.13.0
-Release: alt3
+Release: alt4
 
 Summary: A Python framework for building Desktop applications.
 License: LGPL-3.0-or-later
@@ -19,16 +19,16 @@ Group:   Development/Python3
 URL:     https://github.com/Ultimaker/Uranium
 VCS:     https://github.com/Ultimaker/Uranium
 
-BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-python3
 BuildRequires: python3-devel cmake
-BuildRequires: jq
 BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
 
 # Tests
 %if_with check
-BuildRequires:  python3-module-Arcus
+BuildRequires:  python3-module-pyArcus
 BuildRequires:  python3-module-numpy
 BuildRequires:  python3-module-numpy-testing
 BuildRequires:  python3-module-scipy
@@ -92,6 +92,8 @@ related applications.
 
 %prep
 %setup
+%autopatch -p1
+
 mkdir cmake
 cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 cmake/
 rm CMakeLists.txt
@@ -100,7 +102,10 @@ cp -a %SOURCE6 %SOURCE7 %SOURCE8 .
 # fix compile-shaders
 sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 
-%autopatch -p1
+# Remove unnecessary plugins
+BAD_PLUGINS=(UpdateChecker)
+printf 'plugins/%%s\0' ${BAD_PLUGINS[@]} | xargs -r0 rm -r --
+%__python3 %SOURCE2 -d resources/bundled_packages ${BAD_PLUGINS[@]}
 
 %build
 # there is no arch specific content, so we set LIB_SUFFIX to nothing
@@ -112,11 +117,6 @@ sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 %install
 %cmake_install
 mv %buildroot/%_datadir/cmake* %buildroot/%_datadir/cmake
-
-# Remove UpdateChecker plugin
-export PLUGINDATA=%buildroot%_datadir/uranium/resources/bundled_packages/uranium.json
-rm -rf %buildroot%_libexecdir/uranium/plugins/UpdateChecker
-cat <<<$(jq --indent 4 'del(.UpdateChecker)' $PLUGINDATA) > $PLUGINDATA
 
 # Sanitize the location of locale files
 pushd %buildroot%_datadir
@@ -149,6 +149,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt4
+- Fix python3-module-pyArcus build dep.
+
 * Wed Aug 26 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt3
 - Remove UpdateChecker plugin.
 - Fix issues with Qt 6.9+.

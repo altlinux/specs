@@ -1,24 +1,22 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-
-#%%def_disable check
+%def_with check
 
 %define modulename Charon
 %define srcname lib%modulename
 
-Name:    python3-module-%modulename
-Version: 8.4.0
-Release: alt0.rc.1
+Name: python3-module-%modulename
+Version: 17.0.0
+Release: alt1
 
 Summary: File metadata and streaming library
 License: LGPL-3.0-or-later
-Group:   Development/Python3
-URL:     https://github.com/Ultimaker/%srcname
-VCS:     https://github.com/Ultimaker/%srcname
+Group: Development/Python3
+URL: https://github.com/Ultimaker/%srcname
+VCS: https://github.com/Ultimaker/%srcname
 
 BuildArch: noarch
 
-# Source-url: %url/archive/%version/%srcname-%version.tar.gz
+# Source-url: %vcs/archive/refs/tags/v%version-0.tar.gz
 Source: %srcname-%version.tar
 
 Patch: PyQt6.patch
@@ -28,8 +26,7 @@ BuildRequires: python3-dev
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
 
-%if_disabled check
-%else
+%if_with check
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest-timeout
 %endif
@@ -59,6 +56,10 @@ pytest3 -v
 %doc *.md
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 17.0.0-alt1
+- New version 17.0.0.
+- Minor spec cleanup.
+
 * Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 8.4.0-alt0.rc.1
 - New version 8.4.0-rc.
 - Port to PyQt6.

@@ -1,23 +1,27 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define modulename pyDulcificum
 
-Name: libdulcificum
-Version: 5.10.2
-Release: alt3.gitdfaa4763
+Name: python3-module-%modulename
+Version: 5.11.0
+Release: alt1.gf81c0ea9.1
 
 Summary: Translation between the dialects of 3D printer commands
 License: LGPL-3.0-only
-Group: Development/C++
-
+Group: Development/Python3
 URL: https://github.com/Ultimaker/synsepalum-dulcificum
 VCS: https://github.com/Ultimaker/synsepalum-dulcificum
-Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
-BuildRequires: gcc-c++ cmake
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
 %ifarch %e2k
 BuildRequires: clang
+%else
+BuildRequires: gcc-c++
 %endif
+BuildRequires: cmake
 BuildRequires: %_bindir/python3
 BuildRequires: pybind11-devel
 BuildRequires: libspdlog-devel
@@ -25,30 +29,15 @@ BuildRequires: librange-v3-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: ctre-devel
 
+%py3_provides %modulename
+
 %description
-Dulcificum changes the or dialect of 3D printer commands.
-Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
-
-%package devel
-Summary: Development files for %name
-Group:   Development/C++
-Requires: %name = %EVR
-
-%description devel
-Development files for %name.
-
-%package -n python3-module-pyDulcificum
-Summary: %summary
-Group:   Development/Python3
-Requires: %name = %EVR
-%py3_provides pyDulcificum
-
-%description -n python3-module-pyDulcificum
-Dulcificum changes the or dialect of 3D printer commands.
+Dulcificum changes the "flavor", or dialect of 3D printer commands.
 Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -67,17 +56,15 @@ Supported dialects include MiracleGrue jsontoolpath and UltiMaker GCode.
 
 %files
 %doc README.md
-%_libdir/libdulcificum.so.%version
-
-%files devel
-%_libdir/libdulcificum.so
-%_includedir/dulcificum.h
-%_includedir/dulcificum
-
-%files -n python3-module-pyDulcificum
-%python3_sitelibdir/pyDulcificum.*.so
+%python3_sitelibdir/%modulename.*.so
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.0-alt1.gf81c0ea9.1
+- Build the Python package only.
+- Update to latest snapshot.
+- Force set C++20 standard.
+- Minor spec cleanup.
+
 * Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 5.10.2-alt3.gitdfaa4763
 - Fix build for e2k (thx ilyakurdyukov@).
 - Switch to more appropriate rolling tagging.

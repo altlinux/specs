@@ -1,119 +1,68 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
 Name: libsavitar
-Version: 5.11.0
-Release: alt0.alpha0.1
-Summary: C++ implementation of 3mf loading with SIP Python bindings
+Version: 5.12.0
+Release: alt1.gc513049b.1
+
+Summary: C++ implementation of 3mf loading
 License: LGPL-3.0-or-later
-Group: Development/Other
-Url: https://github.com/Ultimaker/libSavitar
+Group: System/Libraries
+URL: https://github.com/Ultimaker/libSavitar
+VCS: https://github.com/Ultimaker/libSavitar
 
-# Upstream stopped tagging their versions; we have to get it by SHA. Ew!
-%define libSavitar_sha 031a70a89e0945e823619be83771cba46e5f5141
-# Source-url: https://github.com/Ultimaker/libSavitar/archive/%libSavitar_sha.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-# Python bits
-%define pySavitar_sha 53fe14b35d561f4ff8dc2b0e80cb2d2dee2b20a8
-# Source1-url: https://github.com/Ultimaker/pySavitar/archive/%pySavitar_sha.tar.gz
-Source1: pySavitar-%version.tar
-
-# CMake bits taken from 5.0.0, before upstream went nuts with conan
-Source2: COPYING-CMAKE-SCRIPTS
-Source3: FindSIP.cmake
-Source4: FindSIP.py
-Source5: SIPMacros.cmake
-Source6: CMakeBuilder.py
-Source7: StandardProjectSettings.cmake
-Source8: CMakeLists.txt
-Source9: SavitarConfig.cmake.in
-Source10: pyproject.toml.in
-
-# Actually export symbols into the shared lib
-Patch0: libsavitar-5.2.2-export-fix.patch
-
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: cmake dos2unix gcc-c++ libpugixml-devel
-BuildRequires: python3-devel python3-module-sip6 python3-module-PyQt6-sip
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: libpugixml-devel
+BuildRequires: dos2unix
 
 %description
-Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
-3mf is a 3D printing file format.
+Savitar is a C++ implementation of 3mf (3D printing file format) loading.
 
 %package devel
-Summary: Development files for libsavitar
-# The cmake scripts are BSD
-License: LGPL-3.0-or-later AND BSD-3-Clause
-Group: Development/Other
+Summary: Development files for %name
+Group: Development/C++
 Requires: %name = %EVR
 
 %description devel
-Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
-3mf is a 3D printing file format.
-
-Development files.
-
-%package -n python3-module-savitar
-Summary: Python 3 libSavitar bindings
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_provides Savitar
-Requires: python3-module-PyQt6-sip
-
-%description -n python3-module-savitar
-Savitar is a C++ implementation of 3mf loading with SIP Python bindings.
-3mf is a 3D printing file format.
-
-The Python bindings.
+%summary.
 
 %prep
-%setup -a 1
-
-cp -a pySavitar-%version/python .
-mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 cmake/
-rm -rf CMakeLists.txt
-cp -a %SOURCE8 %SOURCE9 %SOURCE10 .
+%setup
 %autopatch -p1
 
 # Wrong end of line encoding
 dos2unix README.md
 
 %build
-# Decode PyQt6.sip ABI version from bytewise value
-export PyQt6_SIP_ABI_VERSION=$(python3 <<EOF
-from PyQt6.sip import SIP_ABI_VERSION as abi
-print(f'{abi >> 16}.{abi >> 8 & 0xff}')
-EOF
-)
-
 %add_optflags '-Wl,--as-needed'
 %cmake \
-    -DCMAKE_SKIP_RPATH:BOOL=ON \
-    -DPyQt6_SIP_ABI_VERSION=$PyQt6_SIP_ABI_VERSION
+    -DSAVITAR_VERSION=%version \
+    -DCMAKE_SKIP_RPATH:BOOL=ON
 %cmake_build
 
 %install
 %cmake_install
 
 %files
-%doc README.md
 %_libdir/libSavitar.so.*
 
 %files devel
 %doc README.md LICENSE
 %_libdir/libSavitar.so
 %_includedir/Savitar
-# Own the dir not to depend on cmake:
-%_libdir/cmake
-
-%files -n python3-module-savitar
-%doc README.md
-%python3_sitelibdir/pySavitar.so
-%python3_sitelibdir/pySavitar.pyi
+%_cmakedir/Savitar
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.12.0-alt1.gc513049b.1
+- Move pySavitar to a separate package.
+- Switch to more appropriate rolling tagging.
+- Update to latest snapshot.
+- Minor spec cleanup.
+
 * Tue Apr 21 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.0-alt0.alpha0.1
 - New version 5.11.0-alpha.0.
 - Port to sip6 and PyQt6.sip.

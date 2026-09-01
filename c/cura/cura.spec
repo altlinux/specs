@@ -1,13 +1,13 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
-%global with_check 1
 %add_python3_compile_include %_libexecdir/cura
 
 Name: cura
 Epoch: 1
 Version: 5.13.0
-Release: alt4
+Release: alt5
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
 
@@ -49,7 +49,8 @@ Patch22: cura-5.13.0-welcome-wizard.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -57,21 +58,23 @@ BuildRequires: desktop-file-utils
 BuildRequires: python3-devel
 BuildRequires: Uranium >= %version
 BuildRequires: python3-module-pynest2d
-# Tests
-%if 0%{?with_check}
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
-BuildRequires: python3-module-savitar >= 5.11.0
+BuildRequires: python3-module-pySavitar >= 5.11.0
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-keyring >= 21
 BuildRequires: python3-module-dbus
 BuildRequires: python3(importlib_metadata)
-BuildRequires: python3-module-numpy libnumpy-py3-devel python3-module-numpy-tests
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-numpy-tests
+BuildRequires: libnumpy-py3-devel
 %endif
 
-%py3_requires serial zeroconf
+%py3_requires serial
+%py3_requires zeroconf
 %py3_requires stl
-Requires: python3-module-savitar
+Requires: python3-module-pySavitar
 Requires: python3-module-pyDulcificum
 Requires: Uranium = %version
 Requires: CuraEngine = %epoch:%version
@@ -112,8 +115,12 @@ rm -rf CMakeLists.txt
 cp -a %SOURCE5 %SOURCE6 %SOURCE8 .
 cp -a %SOURCE7 cura
 
-# Wrong shebang
-%__subst '1s=^#!%_bindir/\(python\|env python\)3*=#!%__python3=' cura_app.py
+%python3_fix_shebang cura_app.py
+
+# Remove failing plugins
+BAD_PLUGINS=(3DConnexion SentryLogger UFPReader UFPWriter)
+printf 'plugins/%%s\0' ${BAD_PLUGINS[@]} | xargs -r0 rm -r --
+%__python3 %SOURCE2 -d resources/bundled_packages ${BAD_PLUGINS[@]}
 
 # create empty keyrings
 mkdir -p $HOME/.local/share/keyrings
@@ -143,18 +150,13 @@ mkdir -p %buildroot%_datadir/%name/resources/images/whats_new
 mkdir -p %buildroot%_datadir/%name/resources/texts/whats_new
 mkdir -p %buildroot%_datadir/%name/resources/scripts
 
-# Remove failing plugins
-rm -r %buildroot%_prefix/lib/cura/plugins/{SentryLogger,UFPReader,UFPWriter}
-
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
 %check
-%if 0%{?with_check}
 # Temporary copy of the generated version file
 cp %_cmake__builddir/CuraVersion.py cura
 %__python3 -m pip freeze
 %__python3 -m pytest -v
-%endif
 
 desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.desktop
 
@@ -170,6 +172,11 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt5
+- Drop 3DConnexion plugin (not designed for Linux).
+- Drop references to deleted plugins in metadata files.
+- Minor spec cleanup.
+
 * Wed Aug 26 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt4
 - Drop build type specification to make Cura use the default style.
 - Fix issues with Qt 6.9+ (Closes: 40977, 43368, 51690, 59262).

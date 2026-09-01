@@ -1,118 +1,64 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
 Name: libArcus
 Version: 5.11.1
-Release: alt2
+Release: alt3.g339c85a1.1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPL-3.0-or-later
-Group: Development/Other
-Url: https://github.com/Ultimaker/libArcus
+Group: System/Libraries
+URL: https://github.com/Ultimaker/libArcus
+VCS: https://github.com/Ultimaker/libArcus
 
-# Upstream stopped tagging their versions; we have to get it by SHA. Ew!
-%define libArcus_sha 50173cc681e9c331374c2648c64bc2544cb881c4
-# Source-url: https://github.com/Ultimaker/%name/archive/%libArcus_sha.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-# Python bits
-%define pyArcus_sha 367c69730567141168a8de6eb94f4eb4d6bb45c4
-# Source1-url: https://github.com/Ultimaker/pyArcus/archive/%pyArcus_sha.tar.gz
-Source1: pyArcus-%version.tar
-
-# CMake bits taken from 5.0.0, before upstream went nuts with conan
-Source2: COPYING-CMAKE-SCRIPTS
-Source3: FindSIP.cmake
-Source4: FindSIP.py
-Source5: SIPMacros.cmake
-Source6: CMakeBuilder.py
-Source7: StandardProjectSettings.cmake
-Source8: CMakeLists.txt
-Source9: ArcusConfig.cmake.in
-Source10: pyproject.toml.in
-
-# Actually export symbols
-Patch2: libArcus-5.2.2-actually-export-symbols.patch
-
-# Fix for gcc-15
-Patch3: Add-cstdint-includes-where-needed.patch
-
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: python3-dev
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(protobuf)
 BuildRequires: protobuf-compiler
-BuildRequires: python3-module-sip6
-BuildRequires: python3-module-PyQt6-sip
 
 %description
-%summary
+%summary.
 
 %package devel
 Summary: Development files for %name
-# The cmake scripts are BSD
-License: LGPL-3.0-or-later AND BSD-3-Clause
-Group:   Development/Other
+Group: Development/C++
 Requires: %name = %EVR
 
 %description devel
-Development files for %name.
-
-%package -n python3-module-Arcus
-Summary: Communication library between internal components for Ultimaker software
-Group:   Development/Python3
-%py3_provides Arcus
-Requires: %name = %EVR
-Requires: python3-module-PyQt6-sip
-
-%description -n python3-module-Arcus
-Communication library between internal components for Ultimaker software
+%summary.
 
 %prep
-%setup -n libArcus-%{version} -a 1
-
-cp -a pyArcus-%version/python .
-cp -a pyArcus-%version/src/PythonMessage.cpp python/
-cp -a pyArcus-%version/include/pyArcus include
-mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 cmake/
-rm -rf CMakeLists.txt
-cp -a %SOURCE8 %SOURCE9 %SOURCE10 .
-
+%setup
 %autopatch -p1
 
 %build
-# Decode PyQt6.sip ABI version from bytewise value
-export PyQt6_SIP_ABI_VERSION=$(python3 <<EOF
-from PyQt6.sip import SIP_ABI_VERSION as abi
-print(f'{abi >> 16}.{abi >> 8 & 0xff}')
-EOF
-)
-
 %cmake \
-    -DBUILD_EXAMPLES:BOOL=OFF \
-    -DCMAKE_SKIP_RPATH:BOOL=ON \
-    -DPyQt6_SIP_ABI_VERSION=$PyQt6_SIP_ABI_VERSION
+    -DARCUS_VERSION=%version \
+    -DCMAKE_SKIP_RPATH:BOOL=ON
 %cmake_build
 
 %install
 %cmake_install
 
 %files
-%_libdir/libArcus.so.*
-%doc README.md
+%_libdir/%name.so.*
 
 %files devel
-%_libdir/libArcus.so
+%doc README.md LICENSE
+%_libdir/%name.so
 %_includedir/Arcus
-%_libdir/cmake/Arcus
-
-%files -n python3-module-Arcus
-%python3_sitelibdir/pyArcus.so
-%python3_sitelibdir/pyArcus.pyi
+%_cmakedir/Arcus
 
 %changelog
+* Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.1-alt3.g339c85a1.1
+- Move pyArcus to a separate package.
+- Switch to more appropriate rolling tagging.
+- Update to latest snapshot.
+- Minor spec cleanup.
+
 * Wed Apr 22 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.1-alt2
 - Fix build with GCC 15.
 
