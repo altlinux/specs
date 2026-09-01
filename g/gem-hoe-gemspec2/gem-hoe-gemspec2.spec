@@ -6,7 +6,7 @@
 
 Name:          gem-hoe-gemspec2
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Adds support for generation of gemspec files to Hoe
 License:       MIT
 Group:         Development/Ruby
@@ -16,8 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         %name-%EVR.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(hoe) >= 0
 BuildRequires: gem(minitest) >= 5.15
@@ -25,12 +24,12 @@ BuildRequires: gem(hoe-doofus) >= 1.0
 BuildRequires: gem(hoe-seattlerb) >= 1.2
 BuildRequires: gem(hoe-git2) >= 1.3
 BuildRequires: gem(rdoc) >= 4.0
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.15
+%ruby_use_gem_dependency rdoc >= 4.0
 Requires:      gem(hoe) >= 0
 Provides:      gem(hoe-gemspec2) = 1.3.0
 
@@ -44,7 +43,7 @@ signing key and certificate chain.
 %if_enabled    doc
 %package       -n gem-hoe-gemspec2-doc
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Adds support for generation of gemspec files to Hoe documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hoe-gemspec2
 Group:         Development/Documentation
@@ -67,7 +66,7 @@ signing key and certificate chain.
 %if_enabled    devel
 %package       -n gem-hoe-gemspec2-devel
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Adds support for generation of gemspec files to Hoe development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hoe-gemspec2
 Group:         Development/Ruby
@@ -79,8 +78,6 @@ Requires:      gem(hoe-doofus) >= 1.0
 Requires:      gem(hoe-seattlerb) >= 1.2
 Requires:      gem(hoe-git2) >= 1.3
 Requires:      gem(rdoc) >= 4.0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-hoe-gemspec2-devel
 Adds support for generation of gemspec files to Hoe development package.
@@ -125,6 +122,9 @@ signing key and certificate chain.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1.1
+- ! fixed dep to minitest, and rdoc gems
+
 * Sat Aug 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
 - ^ 1.2.0 -> 1.3.0
 

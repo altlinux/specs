@@ -5,7 +5,7 @@
 %define        gemname fakefs
 
 Name:          gem-fakefs
-Version:       2.5.0
+Version:       3.2.1
 Release:       alt1
 Summary:       A fake filesystem. Use it in your tests
 License:       MIT
@@ -16,26 +16,24 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(bump) >= 0.5.3
-BuildRequires: gem(maxitest) >= 3.6
+BuildRequires: gem(bump) >= 0
+BuildRequires: gem(csv) >= 0
+BuildRequires: gem(irb) >= 0
+BuildRequires: gem(maxitest) >= 0
+BuildRequires: gem(mutex_m) >= 0
 BuildRequires: gem(pry) >= 0
-BuildRequires: gem(rake) >= 10.3
-BuildRequires: gem(rspec) >= 3.1
-BuildRequires: gem(rubocop) >= 0.82.0
-BuildConflicts: gem(bump) >= 1
-BuildConflicts: gem(maxitest) >= 4
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rubocop) >= 2
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 0
+BuildRequires: gem(rubocop) >= 1.15.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency bump >= 0.8,bump < 1
-Provides:      gem(fakefs) = 2.5.0
-
+%ruby_use_gem_dependency rubocop >= 1.15.0
+Requires:      ruby >= 3.2.0
+Provides:      gem(fakefs) = 3.2.1
 
 %description
 A fake filesystem. Use it in your tests.
@@ -43,14 +41,14 @@ A fake filesystem. Use it in your tests.
 
 %if_enabled    doc
 %package       -n gem-fakefs-doc
-Version:       2.5.0
+Version:       3.2.1
 Release:       alt1
 Summary:       A fake filesystem. Use it in your tests documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fakefs
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(fakefs) = 2.5.0
+Requires:      gem(fakefs) = 3.2.1
 
 %description   -n gem-fakefs-doc
 A fake filesystem. Use it in your tests documentation files.
@@ -62,24 +60,23 @@ A fake filesystem. Use it in your tests documentation files.
 
 %if_enabled    devel
 %package       -n gem-fakefs-devel
-Version:       2.5.0
+Version:       3.2.1
 Release:       alt1
 Summary:       A fake filesystem. Use it in your tests development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fakefs
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(fakefs) = 2.5.0
-Requires:      gem(bump) >= 0.5.3
-Requires:      gem(maxitest) >= 3.6
+Requires:      gem(fakefs) = 3.2.1
+Requires:      gem(bump) >= 0
+Requires:      gem(csv) >= 0
+Requires:      gem(irb) >= 0
+Requires:      gem(maxitest) >= 0
+Requires:      gem(mutex_m) >= 0
 Requires:      gem(pry) >= 0
-Requires:      gem(rake) >= 10.3
-Requires:      gem(rspec) >= 3.1
-Requires:      gem(rubocop) >= 0.82.0
-Conflicts:     gem(bump) >= 1
-Conflicts:     gem(maxitest) >= 4
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(rake) >= 0
+Requires:      gem(rspec) >= 0
+Requires:      gem(rubocop) >= 1.15.0
 
 %description   -n gem-fakefs-devel
 A fake filesystem. Use it in your tests development package.
@@ -102,25 +99,25 @@ A fake filesystem. Use it in your tests development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md CONTRIBUTORS
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-fakefs-doc
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md CONTRIBUTORS
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-fakefs-devel
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md CONTRIBUTORS
 %endif
 
 
 %changelog
-* Sat Aug 03 2024 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt1
-- ^ 1.9.0 -> 2.5.0
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 3.2.1-alt1
+- ^ 1.9.0 -> 3.2.1
 
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 1.9.0-alt1
 - ^ 1.3.2 -> 1.9.0
