@@ -5,7 +5,7 @@
 
 Name: rvnllm
 Version: 0.1.7
-Release: alt1
+Release: alt2
 Summary: LLM model introspection and diffing for GGUF and safetensors
 License: MIT
 Group: Other
@@ -47,6 +47,7 @@ EOF
 cp -a /usr/share/license/MIT LICENSE.MIT
 
 %build
+export PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
 cargo build %_smp_mflags --offline --release --all-features
 
 %install
@@ -58,5 +59,8 @@ install -Dp target/release/rvn-{diff,info} -t %buildroot%_bindir
 %_bindir/rvn-info
 
 %changelog
+* Wed Sep 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.1.7-alt2
+- NMU: fix FTBFS with Python 3.14.
+
 * Wed Jun 18 2025 Vitaly Chikunov <vt@altlinux.org> 0.1.7-alt1
 - Experimental import v0.1.7-8-g302eae7 (2025-06-17).
