@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 154.0
+Version: 155.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -44,8 +44,6 @@ Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch009: 0009-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
 Patch010: 0010-Apply-chat-message-style-changes-to-already-open-con.patch
 Patch011: 0011-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
-Patch012: 0012-Bug-2065007-Redefine-X11-s-Success-macro-to-X11Succe.patch
-Patch013: 0013-Bug-2053518-Handle-the-oe-linux-rust-targets-added-i.patch
 ### End Patches
 
 Provides: mailclient
@@ -186,8 +184,6 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch9 -p2
 %patch10 -p2
 %patch11 -p2
-%patch12 -p2
-%patch13 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -376,6 +372,40 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Sep 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 155.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-84639: Uninitialized memory in MIME parsing
+  + CVE-2026-84640: One byte overflow read in mail parser
+  + CVE-2026-84641: Information disclosure due to malicious IMAP server response
+  + CVE-2026-84642: Allowed UNC hostnames for attachments interpreted as a regular expression
+  + CVE-2026-84118: Use-after-free in the JavaScript: GC component
+  + CVE-2026-84119: Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-84120: Use-after-free in the Audio/Video component
+  + CVE-2026-84121: Sandbox escape due to use-after-free in the DOM: Security component
+  + CVE-2026-84122: Use-after-free in the Audio/Video component
+  + CVE-2026-84123: Privilege escalation due to use-after-free in the Graphics: WebGPU component
+  + CVE-2026-84124: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-84125: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-84126: Incorrect boundary conditions in the Layout: Grid component
+  + CVE-2026-84128: Privilege escalation in the WebDriver BiDi component
+  + CVE-2026-84129: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-84130: Information disclosure in the Graphics: WebGPU component
+  + CVE-2026-84131: Privilege escalation due to invalid pointer in the Graphics component
+  + CVE-2026-84132: Information disclosure in the Networking: HTTP component
+  + CVE-2026-84133: Site isolation issue in the DOM: Push Subscriptions component
+  + CVE-2026-84134: Other issue in the Profile Backup component
+  + CVE-2026-84136: Other issue in the DOM: Navigation component
+  + CVE-2026-84137: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-84138: Denial-of-service in the PDF Viewer component
+  + CVE-2026-84139: Clickjacking issue in the DOM: Events component
+  + CVE-2026-84140: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-84141: Integer overflow in the Graphics: ImageLib component
+  + CVE-2026-84142: Internally found bugs fixed in Thunderbird 155
+  + CVE-2026-84143: Internally found bugs fixed in Thunderbird 155, Thunderbird ESR 153.2 and Thunderbird ESR 140.15
+  + CVE-2026-84144: Internally found bugs fixed in Thunderbird 155 and Thunderbird ESR 153.2
+  + CVE-2026-84145: Internally found bugs fixed in Thunderbird 155, Thunderbird ESR 153.2 and Thunderbird ESR 140.15
+
 * Thu Aug 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 154.0-alt1
 - New version.
 - Fix FTBFS:
