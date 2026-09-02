@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 3.0.8
+Version: 3.0.16
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -17,14 +17,15 @@ Source3: json11.tar
 Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
-BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: pkgconfig(liburing) >= 2.11
 BuildRequires: pkgconfig(libnl-3.0) pkgconfig(libnl-genl-3.0)
+BuildRequires: pkgconfig(libcares) pkgconfig(openssl)
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
-BuildRequires: libjerasure-devel pkgconfig(libisal)
+BuildRequires: libjerasure-devel libisal-devel
 BuildRequires: libgf-complete-devel
 BuildRequires: rdma-core-devel
 
@@ -171,15 +172,15 @@ sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%meson \
-    -Dwith_qemu=false \
-    -Dwith_fio=false \
-    -Dwith_system_liburing=true
-
-%meson_build
+%cmake \
+    -DWITH_QEMU=OFF \
+    -DWITH_FIO=OFF \
+    -DWITH_SYSTEM_LIBURING=ON \
+    -GNinja
+%cmake_build
 
 %install
-%meson_install
+%cmake_install
 
 mkdir -p %buildroot{%_sysconfdir,%_libexecdir,%_localstatedir}/%name
 cp -r mon %buildroot%_libexecdir/%name
@@ -285,6 +286,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 3.0.16-alt1
+- 3.0.16
+
 * Thu Apr 02 2026 Alexey Shabalin <shaba@altlinux.org> 3.0.8-alt1
 - 3.0.8
 
