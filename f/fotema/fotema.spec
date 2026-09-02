@@ -12,7 +12,7 @@
 
 Name: fotema
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A photo gallery for GNOME
 License: GPL-3.0-or-later
@@ -30,11 +30,8 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define onnx_ver 1.24.4
-Source4: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-x64-%onnx_ver.tgz
-Source5: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-aarch64-%onnx_ver.tgz
-
 Patch: fotema-1.19.0-alt-loongarch64-size_t-ort-crate.patch
+Patch1: cargo-lock-bump-ffmpeg-next.patch
 
 %define gtk_ver 4.0
 %define adwaita_ver 1.5
@@ -48,6 +45,7 @@ BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(shumate-1.0)
+BuildRequires: libonnxruntime-devel
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 BuildRequires: pkgconfig(openssl)
@@ -84,24 +82,16 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%patch1 -p1
 #%%patch -p2
 #sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 #	./vendor/ort/.cargo-checksum.json
 
-mkdir onnxruntime
-%ifarch x86_64
-tar zxf %SOURCE4 --strip-components=1 -C onnxruntime
-%elifarch aarch64
-tar zxf %SOURCE5 --strip-components=1 -C onnxruntime
-%endif
-
 %build
-export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %meson
 %__meson_build
 
 %install
-export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %meson_install
 %find_lang %name
 
@@ -118,6 +108,10 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Wed Sep 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.2-alt2
+- builded with onnxruntime from repo
+- fixed FTBFS
+
 * Sun Mar 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
