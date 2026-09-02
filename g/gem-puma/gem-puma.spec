@@ -6,7 +6,7 @@
 
 Name:          gem-puma
 Version:       6.6.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A Ruby/Rack web server built for parallelism
 License:       BSD-3-Clause
 Group:         Networking/WWW
@@ -15,7 +15,7 @@ Vcs:           https://github.com/puma/puma.git
 Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
 BuildRequires: gem(concurrent-ruby) >= 1.3
 BuildRequires: gem(json) >= 2.3
@@ -33,12 +33,12 @@ BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-performance) >= 0
 BuildConflicts: gem(concurrent-ruby) >= 2
 BuildConflicts: gem(json) >= 3
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(nio4r) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.11
 Requires:      ruby >= 2.4
 Requires:      gem(json) >= 2.3
 Requires:      gem(nio4r) >= 2.0
@@ -56,7 +56,7 @@ support CRuby well.
 
 %package       -n puma
 Version:       6.6.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A Ruby/Rack web server built for parallelism executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Other
@@ -84,7 +84,7 @@ support CRuby well.
 %if_enabled    doc
 %package       -n gem-puma-doc
 Version:       6.6.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A Ruby/Rack web server built for parallelism documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
@@ -109,7 +109,7 @@ support CRuby well.
 %if_enabled    devel
 %package       -n gem-puma-devel
 Version:       6.6.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A Ruby/Rack web server built for parallelism development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
@@ -168,6 +168,9 @@ support CRuby well.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 6.6.1-alt1.2
+- ! fixed dep to minitest gem
+
 * Thu Aug 14 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.1-alt1.1
 - ! fixed provides/requires
 

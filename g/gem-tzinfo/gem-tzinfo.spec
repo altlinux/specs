@@ -6,7 +6,7 @@
 
 Name:          gem-tzinfo
 Version:       2.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Daylight-savings aware timezone support for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -24,13 +24,13 @@ BuildRequires: gem(concurrent-ruby) >= 1.0
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(simplecov) >= 0.15.1
 BuildConflicts: gem(concurrent-ruby) >= 2
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(simplecov) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      ruby >= 1.9.3
 Requires:      gem(concurrent-ruby) >= 1.0
 Conflicts:     gem(concurrent-ruby) >= 2
@@ -50,7 +50,7 @@ This is the same database as used for zoneinfo on Unix machines.
 %if_enabled    doc
 %package       -n gem-tzinfo-doc
 Version:       2.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Daylight-savings aware timezone support for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета tzinfo
 Group:         Development/Documentation
@@ -75,7 +75,7 @@ This is the same database as used for zoneinfo on Unix machines.
 %if_enabled    devel
 %package       -n gem-tzinfo-devel
 Version:       2.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Daylight-savings aware timezone support for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета tzinfo
 Group:         Development/Ruby
@@ -85,7 +85,6 @@ Requires:      gem(tzinfo) = 2.0.6
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake) >= 12.2.1
 Requires:      gem(simplecov) >= 0.15.1
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(simplecov) >= 1
 
@@ -133,6 +132,9 @@ This is the same database as used for zoneinfo on Unix machines.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.6-alt1.1
+- ! fixed dep to minitest
+
 * Fri Jan 10 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.6-alt1
 - ^ 1.2.9 -> 2.0.6
 

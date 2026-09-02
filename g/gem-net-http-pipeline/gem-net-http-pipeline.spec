@@ -6,7 +6,7 @@
 
 Name:          gem-net-http-pipeline
 Version:       1.0.1.4
-Release:       alt1
+Release:       alt1.1
 Summary:       An HTTP/1.1 pipelining implementation atop Net::HTTP
 License:       MIT
 Group:         Development/Ruby
@@ -16,19 +16,18 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.17.0
 BuildRequires: gem(rdoc) >= 4.0
 BuildRequires: gem(hoe) >= 4.2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.17.0
+%ruby_use_gem_dependency rdoc >= 4.0
+%ruby_use_gem_dependency hoe >= 4.2
 Obsoletes:     ruby-net-http-pipeline < %EVR
 Provides:      ruby-net-http-pipeline = %EVR
 Provides:      gem(net-http-pipeline) = 1.0.1.4
@@ -43,7 +42,7 @@ The server will respond in-order.
 %if_enabled    doc
 %package       -n gem-net-http-pipeline-doc
 Version:       1.0.1.4
-Release:       alt1
+Release:       alt1.1
 Summary:       An HTTP/1.1 pipelining implementation atop Net::HTTP documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета net-http-pipeline
 Group:         Development/Documentation
@@ -66,7 +65,7 @@ The server will respond in-order.
 %if_enabled    devel
 %package       -n gem-net-http-pipeline-devel
 Version:       1.0.1.4
-Release:       alt1
+Release:       alt1.1
 Summary:       An HTTP/1.1 pipelining implementation atop Net::HTTP development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета net-http-pipeline
 Group:         Development/Ruby
@@ -76,9 +75,6 @@ Requires:      gem(net-http-pipeline) = 1.0.1.4
 Requires:      gem(minitest) >= 5.17.0
 Requires:      gem(rdoc) >= 4.0
 Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-net-http-pipeline-devel
 An HTTP/1.1 pipelining implementation atop Net::HTTP development package.
@@ -122,8 +118,11 @@ The server will respond in-order.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.1.4-alt1.1
+- ! fixed eps to minitest, rdoc, hoe gems
+
 * Thu Oct 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.1.4-alt1
-- ^ 1.0.1 -> 1.0.1.4
+- ^ 1.0.1 -> 1.0.1p4
 
 * Tue May 26 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt2.1
 - ! spec tags and syntax

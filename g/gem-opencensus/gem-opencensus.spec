@@ -6,7 +6,7 @@
 
 Name:          gem-opencensus
 Version:       0.5.0.4
-Release:       alt1
+Release:       alt1.1
 Summary:       A stats collection and distributed tracing framework
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -16,7 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb
 BuildRequires: gem(bundler) >= 1.17
 BuildRequires: gem(rake) >= 12.0
 BuildConflicts: gem(rake) >= 14
@@ -34,7 +34,6 @@ BuildRequires: gem(yard-doctest) >= 0.1.6
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(jekyll) >= 5
 BuildConflicts: gem(jekyll-theme-minimal) >= 1
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-focus) >= 2
 BuildConflicts: gem(rails) >= 8
 BuildConflicts: gem(rubocop) >= 2
@@ -51,6 +50,7 @@ BuildConflicts: gem(yard-doctest) >= 0.2
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency jekyll >= 4.3.2,jekyll < 5
 %ruby_use_gem_dependency sinatra >= 4.0.0,sinatra < 5
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      ruby >= 2.2.0
 Provides:      gem(opencensus) = 0.5.0.4
 
@@ -61,7 +61,7 @@ A stats collection and distributed tracing framework
 %if_enabled    doc
 %package       -n gem-opencensus-doc
 Version:       0.5.0.4
-Release:       alt1
+Release:       alt1.1
 Summary:       A stats collection and distributed tracing framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета opencensus
 Group:         Development/Documentation
@@ -80,7 +80,7 @@ A stats collection and distributed tracing framework documentation files.
 %if_enabled    devel
 %package       -n gem-opencensus-devel
 Version:       0.5.0.4
-Release:       alt1
+Release:       alt1.1
 Summary:       A stats collection and distributed tracing framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета opencensus
 Group:         Development/Ruby
@@ -102,7 +102,6 @@ Requires:      gem(yard-doctest) >= 0.1.6
 Conflicts:     gem(faraday) >= 3
 Conflicts:     gem(jekyll) >= 5
 Conflicts:     gem(jekyll-theme-minimal) >= 1
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-focus) >= 2
 Conflicts:     gem(rails) >= 8
 Conflicts:     gem(rake) >= 14
@@ -149,6 +148,9 @@ A stats collection and distributed tracing framework development package.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.5.0.4-alt1.1
+- ! fixed dep to minitest gem
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.5.0.4-alt1
 - ^ 0.5.0 -> 0.5.0p4
 

@@ -6,7 +6,7 @@
 
 Name:          gem-azure-core
 Version:       0.1.15.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Azure Ruby SDK Service Management Core HTTP
 License:       Apache License, Version 2.0
 Group:         Development/Ruby
@@ -31,11 +31,9 @@ BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(dotenv) >= 3
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(faraday_middleware) >= 2
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(nokogiri) >= 2
-BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(timecop) >= 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -43,8 +41,9 @@ BuildConflicts: gem(timecop) >= 1
 %ruby_use_gem_dependency faraday_middleware >= 1.2.0,faraday_middleware < 2
 %ruby_use_gem_dependency mocha >= 2.0,mocha < 3
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
+%ruby_use_gem_dependency rake >= 10
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      ruby >= 1.9.3
 Requires:      gem(faraday) >= 0.9
 Requires:      gem(faraday_middleware) >= 0.10
@@ -54,7 +53,6 @@ Conflicts:     gem(faraday_middleware) >= 2
 Conflicts:     gem(nokogiri) >= 2
 Obsoletes:     ruby-azure-core < %EVR
 Provides:      ruby-azure-core = %EVR
-Provides:      azure-core = %EVR
 Provides:      gem(azure-core) = 0.1.15.3
 
 %ruby_use_gem_version azure-core:0.1.15.3
@@ -67,7 +65,7 @@ SDK gems.
 %if_enabled    doc
 %package       -n gem-azure-core-doc
 Version:       0.1.15.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Azure Ruby SDK Service Management Core HTTP documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-core
 Group:         Development/Documentation
@@ -89,7 +87,7 @@ SDK gems.
 %if_enabled    devel
 %package       -n gem-azure-core-devel
 Version:       0.1.15.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Azure Ruby SDK Service Management Core HTTP development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-core
 Group:         Development/Ruby
@@ -105,10 +103,8 @@ Requires:      gem(rake) >= 10.0
 Requires:      gem(timecop) >= 0.7
 Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(dotenv) >= 3
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
 Conflicts:     gem(mocha) >= 3
-Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 
 %description   -n gem-azure-core-devel
@@ -152,6 +148,9 @@ SDK gems.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.1.15.3-alt0.2
+- ! fixed deps to minitest and rake gems
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.1.15.3-alt0.1
 - ^ 0.1.15 -> 0.1.15p3
 

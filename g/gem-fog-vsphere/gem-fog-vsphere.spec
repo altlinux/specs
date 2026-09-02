@@ -6,7 +6,7 @@
 
 Name:          gem-fog-vsphere
 Version:       3.7.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere
 License:       MIT
 Group:         Development/Ruby
@@ -37,7 +37,6 @@ BuildRequires: gem(rubocop-rake) >= 0
 BuildRequires: gem(shindo) >= 0.3
 BuildRequires: gem(vcr) >= 6.0
 BuildRequires: gem(webmock) >= 3.5
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rbvmomi2) >= 4
@@ -50,7 +49,7 @@ BuildConflicts: gem(webmock) >= 4
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.17.0
 Requires:      ruby >= 2.7
 Requires:      gem(base64) >= 0
 Requires:      gem(fog-core) >= 0
@@ -69,7 +68,7 @@ services library to communicate with vSphere.
 %if_enabled    doc
 %package       -n gem-fog-vsphere-doc
 Version:       3.7.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-vsphere
 Group:         Development/Documentation
@@ -91,7 +90,7 @@ services library to communicate with vSphere.
 %if_enabled    devel
 %package       -n gem-fog-vsphere-devel
 Version:       3.7.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-vsphere
 Group:         Development/Ruby
@@ -110,7 +109,6 @@ Requires:      gem(rubocop-rake) >= 0
 Requires:      gem(shindo) >= 0.3
 Requires:      gem(vcr) >= 6.0
 Requires:      gem(webmock) >= 3.5
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rubocop) >= 2
@@ -159,6 +157,9 @@ services library to communicate with vSphere.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 3.7.3-alt1.1
+- ! fixed dep to minitest gem
+
 * Wed Apr 29 2026 Pavel Skrylev <majioa@altlinux.org> 3.7.3-alt1
 - ^ 3.7.0 -> 3.7.3
 

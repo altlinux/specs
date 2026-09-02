@@ -6,7 +6,7 @@
 
 Name:          gem-numerizer
 Version:       0.2.0.50
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Numerizer is a gem to help with parsing numbers in natural language from strings (ex forty two)
 License:       MIT
 Group:         Development/Ruby
@@ -16,16 +16,16 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires: gem(rake) >= 13
-BuildConflicts: gem(rake) >= 14
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.0
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.0
+%ruby_use_gem_dependency rake >= 13.0
 Provides:      gem(numerizer) = 0.2.0.50
 
 %ruby_use_gem_version numerizer:0.2.0.50
@@ -39,7 +39,7 @@ http://github.com/evaryont/chronic.
 %if_enabled    doc
 %package       -n gem-numerizer-doc
 Version:       0.2.0.50
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Numerizer is a gem to help with parsing numbers in natural language from strings (ex forty two) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета numerizer
 Group:         Development/Documentation
@@ -63,7 +63,7 @@ http://github.com/evaryont/chronic.
 %if_enabled    devel
 %package       -n gem-numerizer-devel
 Version:       0.2.0.50
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Numerizer is a gem to help with parsing numbers in natural language from strings (ex forty two) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета numerizer
 Group:         Development/Ruby
@@ -72,8 +72,6 @@ BuildArch:     noarch
 Requires:      gem(numerizer) = 0.2.0.50
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake) >= 13
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rake) >= 14
 
 %description   -n gem-numerizer-devel
 Numerizer is a gem to help with parsing numbers in natural language from strings
@@ -118,6 +116,9 @@ http://github.com/evaryont/chronic.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.2.0.50-alt0.2
+- ! relaxed deps to minitest and rake gems
+
 * Fri Jan 10 2025 Pavel Skrylev <majioa@altlinux.org> 0.2.0.50-alt0.1
 - ^ 0.2.0 -> 0.2.0p50
 - * define explicit dependencies

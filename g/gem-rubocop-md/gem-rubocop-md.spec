@@ -5,8 +5,8 @@
 %define        gemname rubocop-md
 
 Name:          gem-rubocop-md
-Version:       2.0.2
-Release:       alt1
+Version:       2.0.4
+Release:       alt1.1
 Summary:       Run Rubocop against your Markdown files to make sure that code examples follow style guidelines
 License:       MIT
 Group:         Development/Ruby
@@ -16,9 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.15
 BuildRequires: gem(lint_roller) >= 1.1
@@ -26,17 +24,17 @@ BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildConflicts: gem(lint_roller) >= 2
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      ruby >= 2.7.0
 Requires:      gem(lint_roller) >= 1.1
 Requires:      gem(rubocop) >= 1.15.0
 Conflicts:     gem(lint_roller) >= 2
-Provides:      gem(rubocop-md) = 2.0.2
+Provides:      gem(rubocop-md) = 2.0.4
 
 %description
 Run Rubocop against your Markdown files to make sure that code examples follow
@@ -45,16 +43,14 @@ style guidelines.
 
 %if_enabled    doc
 %package       -n gem-rubocop-md-doc
-Version:       2.0.2
-Release:       alt1
+Version:       2.0.4
+Release:       alt1.1
 Summary:       Run Rubocop against your Markdown files to make sure that code examples follow style guidelines documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-md
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(rubocop-md) = 2.0.2
+Requires:      gem(rubocop-md) = 2.0.4
 
 %description   -n gem-rubocop-md-doc
 Run Rubocop against your Markdown files to make sure that code examples follow
@@ -67,20 +63,17 @@ style guidelines documentation files.
 
 %if_enabled    devel
 %package       -n gem-rubocop-md-devel
-Version:       2.0.2
-Release:       alt1
+Version:       2.0.4
+Release:       alt1.1
 Summary:       Run Rubocop against your Markdown files to make sure that code examples follow style guidelines development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-md
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(rubocop-md) = 2.0.2
+Requires:      gem(rubocop-md) = 2.0.4
 Requires:      gem(bundler) >= 1.15
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake) >= 13.0
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-rubocop-md-devel
 Run Rubocop against your Markdown files to make sure that code examples follow
@@ -121,6 +114,12 @@ style guidelines development package.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.4-alt1.1
+- ! fixed dep to minitest gem
+
+* Mon Jun 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.4-alt1
+- ^ 2.0.2 -> 2.0.4
+
 * Fri Nov 28 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.2-alt1
 - ^ 1.2.2 -> 2.0.2
 

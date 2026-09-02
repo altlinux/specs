@@ -5,8 +5,8 @@
 %define        gemname rails
 
 Name:          gem-rails
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -16,7 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires: gem(bundler) >= 1.15.0
 BuildRequires: gem(racc) >= 1.4.6
 BuildRequires: gem(rake) >= 13.0
@@ -101,8 +101,6 @@ BuildConflicts: gem(importmap-rails) >= 2.0.2
 BuildConflicts: gem(json) >= 3
 BuildConflicts: gem(listen) >= 4
 BuildConflicts: gem(mail) >= 3
-BuildConflicts: gem(marcel) >= 2
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(nio4r) >= 3
 BuildConflicts: gem(nokogiri) >= 1.11.0
 BuildConflicts: gem(rack) >= 4
@@ -118,15 +116,27 @@ BuildConflicts: gem(zeitwerk) >= 3
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency redis >= 6.0.0,redis < 7
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 6.0
 %ruby_use_gem_dependency rack >= 3.1.7,rack < 4
 %ruby_use_gem_dependency syntax_tree >= 6.2.0,syntax_tree < 7
+%ruby_use_gem_dependency marcel >= 1.0
 Requires:      ruby >= 2.7.0
 Requires:      rubygems >= 1.8.11
 Requires:      gem(bundler) >= 1.15.0
+Provides:      gem(railties) = 7.1.6
+Provides:      gem(activejob) = 7.1.6
+Provides:      gem(actionview) = 7.1.6
+Provides:      gem(actiontext) = 7.1.6
+Provides:      gem(actionpack) = 7.1.6
+Provides:      gem(activemodel) = 7.1.6
+Provides:      gem(actioncable) = 7.1.6
+Provides:      gem(actionmailer) = 7.1.6
+Provides:      gem(activerecord) = 7.1.6
+Provides:      gem(activestorage) = 7.1.6
+Provides:      gem(activesupport) = 7.1.6
 Obsoletes:     ruby-rails < %EVR
 Provides:      ruby-rails = %EVR
-Provides:      gem(rails) = 7.1.5.1
+Provides:      gem(rails) = 7.1.6
 
 %description
 Ruby on Rails is a full-stack web framework optimized for programmer happiness
@@ -135,15 +145,15 @@ convention over configuration.
 
 
 %package       -n gem-railties
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(irb) >= 0
 Requires:      gem(rackup) >= 1.0.0
 Requires:      gem(rake) >= 12.2
@@ -151,22 +161,21 @@ Requires:      gem(thor) >= 1.2.2
 Requires:      gem(zeitwerk) >= 2.6
 Conflicts:     gem(thor) >= 2
 Conflicts:     gem(zeitwerk) >= 3
-Provides:      railties = %EVR
-Provides:      gem(railties) = 7.1.5.1
+Provides:      gem(railties) = 7.1.6
 
 %description   -n gem-railties
 Rails internals: application bootup, plugins, generators, and rake tasks.
 
 
 %package       -n rails
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета railties
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(railties) = 7.1.5.1
+Requires:      gem(railties) = 7.1.6
 
 %description   -n rails
 Ruby on Rails executable(s).
@@ -179,14 +188,14 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %if_enabled    doc
 %package       -n gem-railties-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета railties
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(railties) = 7.1.5.1
+Requires:      gem(railties) = 7.1.6
 
 %description   -n gem-railties-doc
 Ruby on Rails documentation files.
@@ -200,14 +209,14 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %if_enabled    devel
 %package       -n gem-railties-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета railties
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(railties) = 7.1.5.1
+Requires:      gem(railties) = 7.1.6
 
 %description   -n gem-railties-devel
 Ruby on Rails development package.
@@ -220,17 +229,16 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 
 %package       -n gem-activejob
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(globalid) >= 0.3.6
-Provides:      activejob = %EVR
-Provides:      gem(activejob) = 7.1.5.1
+Provides:      gem(activejob) = 7.1.6
 
 %description   -n gem-activejob
 Declare job classes that can be run by a variety of queuing backends.
@@ -238,14 +246,14 @@ Declare job classes that can be run by a variety of queuing backends.
 
 %if_enabled    doc
 %package       -n gem-activejob-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activejob
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(activejob) = 7.1.5.1
+Requires:      gem(activejob) = 7.1.6
 
 %description   -n gem-activejob-doc
 Ruby on Rails documentation files.
@@ -259,14 +267,14 @@ Declare job classes that can be run by a variety of queuing backends.
 
 %if_enabled    devel
 %package       -n gem-activejob-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activejob
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(activejob) = 7.1.5.1
+Requires:      gem(activejob) = 7.1.6
 
 %description   -n gem-activejob-devel
 Ruby on Rails development package.
@@ -279,14 +287,14 @@ Declare job classes that can be run by a variety of queuing backends.
 
 
 %package       -n gem-actionview
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(builder) >= 3.1
 Requires:      gem(erubi) >= 1.11
 Requires:      gem(rails-dom-testing) >= 2.2
@@ -295,8 +303,7 @@ Conflicts:     gem(builder) >= 4
 Conflicts:     gem(erubi) >= 2
 Conflicts:     gem(rails-dom-testing) >= 3
 Conflicts:     gem(rails-html-sanitizer) >= 2
-Provides:      actionview = %EVR
-Provides:      gem(actionview) = 7.1.5.1
+Provides:      gem(actionview) = 7.1.6
 
 %description   -n gem-actionview
 Simple, battle-tested conventions and helpers for building web pages.
@@ -304,14 +311,14 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %if_enabled    doc
 %package       -n gem-actionview-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionview
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actionview) = 7.1.5.1
+Requires:      gem(actionview) = 7.1.6
 
 %description   -n gem-actionview-doc
 Ruby on Rails documentation files.
@@ -325,14 +332,14 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %if_enabled    devel
 %package       -n gem-actionview-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionview
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actionview) = 7.1.5.1
+Requires:      gem(actionview) = 7.1.6
 
 %description   -n gem-actionview-devel
 Ruby on Rails development package.
@@ -345,21 +352,20 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 
 %package       -n gem-actiontext
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(activerecord) = 7.1.5.1
-Requires:      gem(activestorage) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(activerecord) = 7.1.6
+Requires:      gem(activestorage) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(globalid) >= 0.6.0
 Requires:      gem(nokogiri) >= 1.8.5
-Provides:      actiontext = %EVR
-Provides:      gem(actiontext) = 7.1.5.1
+Provides:      gem(actiontext) = 7.1.6
 
 %description   -n gem-actiontext
 Edit and display rich text in Rails applications.
@@ -367,14 +373,14 @@ Edit and display rich text in Rails applications.
 
 %if_enabled    doc
 %package       -n gem-actiontext-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actiontext
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actiontext) = 7.1.5.1
+Requires:      gem(actiontext) = 7.1.6
 
 %description   -n gem-actiontext-doc
 Ruby on Rails documentation files.
@@ -388,14 +394,14 @@ Edit and display rich text in Rails applications.
 
 %if_enabled    devel
 %package       -n gem-actiontext-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actiontext
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actiontext) = 7.1.5.1
+Requires:      gem(actiontext) = 7.1.6
 
 %description   -n gem-actiontext-devel
 Ruby on Rails development package.
@@ -408,15 +414,15 @@ Edit and display rich text in Rails applications.
 
 
 %package       -n gem-actionpack
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionview) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionview) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(nokogiri) >= 1.8.5
 Requires:      gem(racc) >= 0
 Requires:      gem(rack) >= 2.2.4
@@ -426,8 +432,7 @@ Requires:      gem(rails-dom-testing) >= 2.2
 Requires:      gem(rails-html-sanitizer) >= 1.6
 Conflicts:     gem(rails-dom-testing) >= 3
 Conflicts:     gem(rails-html-sanitizer) >= 2
-Provides:      actionpack = %EVR
-Provides:      gem(actionpack) = 7.1.5.1
+Provides:      gem(actionpack) = 7.1.6
 
 %description   -n gem-actionpack
 Web apps on Rails. Simple, battle-tested conventions for building and testing
@@ -436,14 +441,14 @@ MVC web applications. Works with any Rack-compatible server.
 
 %if_enabled    doc
 %package       -n gem-actionpack-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionpack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actionpack) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
 
 %description   -n gem-actionpack-doc
 Ruby on Rails documentation files.
@@ -458,14 +463,14 @@ MVC web applications. Works with any Rack-compatible server.
 
 %if_enabled    devel
 %package       -n gem-actionpack-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionpack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actionpack) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
 
 %description   -n gem-actionpack-devel
 Ruby on Rails development package.
@@ -479,16 +484,15 @@ MVC web applications. Works with any Rack-compatible server.
 
 
 %package       -n gem-activemodel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(activesupport) = 7.1.5.1
-Provides:      activemodel = %EVR
-Provides:      gem(activemodel) = 7.1.5.1
+Requires:      gem(activesupport) = 7.1.6
+Provides:      gem(activemodel) = 7.1.6
 
 %description   -n gem-activemodel
 A toolkit for building modeling frameworks like Active Record. Rich support for
@@ -498,14 +502,14 @@ testing.
 
 %if_enabled    doc
 %package       -n gem-activemodel-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activemodel
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(activemodel) = 7.1.5.1
+Requires:      gem(activemodel) = 7.1.6
 
 %description   -n gem-activemodel-doc
 Ruby on Rails documentation files.
@@ -521,14 +525,14 @@ testing.
 
 %if_enabled    devel
 %package       -n gem-activemodel-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activemodel
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(activemodel) = 7.1.5.1
+Requires:      gem(activemodel) = 7.1.6
 
 %description   -n gem-activemodel-devel
 Ruby on Rails development package.
@@ -543,22 +547,21 @@ testing.
 
 
 %package       -n gem-actioncable
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(nio4r) >= 2.0
 Requires:      gem(websocket-driver) >= 0.6.1
 Requires:      gem(zeitwerk) >= 2.6
 Conflicts:     gem(nio4r) >= 3
 Conflicts:     gem(zeitwerk) >= 3
-Provides:      actioncable = %EVR
-Provides:      gem(actioncable) = 7.1.5.1
+Provides:      gem(actioncable) = 7.1.6
 
 %description   -n gem-actioncable
 Structure many real-time application concerns into channels over a single
@@ -567,14 +570,14 @@ WebSocket connection.
 
 %if_enabled    doc
 %package       -n gem-actioncable-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actioncable
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actioncable) = 7.1.5.1
+Requires:      gem(actioncable) = 7.1.6
 
 %description   -n gem-actioncable-doc
 Ruby on Rails documentation files.
@@ -589,14 +592,14 @@ WebSocket connection.
 
 %if_enabled    devel
 %package       -n gem-actioncable-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actioncable
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actioncable) = 7.1.5.1
+Requires:      gem(actioncable) = 7.1.6
 
 %description   -n gem-actioncable-devel
 Ruby on Rails development package.
@@ -610,17 +613,17 @@ WebSocket connection.
 
 
 %package       -n gem-actionmailer
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(actionview) = 7.1.5.1
-Requires:      gem(activejob) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(actionview) = 7.1.6
+Requires:      gem(activejob) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(mail) >= 2.5.4
 Requires:      gem(net-imap) >= 0
 Requires:      gem(net-pop) >= 0
@@ -628,8 +631,7 @@ Requires:      gem(net-smtp) >= 0
 Requires:      gem(rails-dom-testing) >= 2.2
 Conflicts:     gem(mail) >= 3
 Conflicts:     gem(rails-dom-testing) >= 3
-Provides:      actionmailer = %EVR
-Provides:      gem(actionmailer) = 7.1.5.1
+Provides:      gem(actionmailer) = 7.1.6
 
 %description   -n gem-actionmailer
 Email on Rails. Compose, deliver, and test emails using the familiar
@@ -639,14 +641,14 @@ attachments.
 
 %if_enabled    doc
 %package       -n gem-actionmailer-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailer
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actionmailer) = 7.1.5.1
+Requires:      gem(actionmailer) = 7.1.6
 
 %description   -n gem-actionmailer-doc
 Ruby on Rails documentation files.
@@ -662,14 +664,14 @@ attachments.
 
 %if_enabled    devel
 %package       -n gem-actionmailer-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailer
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actionmailer) = 7.1.5.1
+Requires:      gem(actionmailer) = 7.1.6
 
 %description   -n gem-actionmailer-devel
 Ruby on Rails development package.
@@ -684,18 +686,17 @@ attachments.
 
 
 %package       -n gem-activerecord
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(activemodel) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(activemodel) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(timeout) >= 0.4.0
-Provides:      activerecord = %EVR
-Provides:      gem(activerecord) = 7.1.5.1
+Provides:      gem(activerecord) = 7.1.6
 
 %description   -n gem-activerecord
 Databases on Rails. Build a persistent domain model by mapping database tables
@@ -705,14 +706,14 @@ migrations, and testing come baked-in.
 
 %if_enabled    doc
 %package       -n gem-activerecord-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activerecord
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(activerecord) = 7.1.5.1
+Requires:      gem(activerecord) = 7.1.6
 
 %description   -n gem-activerecord-doc
 Ruby on Rails documentation files.
@@ -728,14 +729,14 @@ migrations, and testing come baked-in.
 
 %if_enabled    devel
 %package       -n gem-activerecord-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activerecord
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(activerecord) = 7.1.5.1
+Requires:      gem(activerecord) = 7.1.6
 
 %description   -n gem-activerecord-devel
 Ruby on Rails development package.
@@ -750,21 +751,19 @@ migrations, and testing come baked-in.
 
 
 %package       -n gem-activestorage
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(activejob) = 7.1.5.1
-Requires:      gem(activerecord) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(activejob) = 7.1.6
+Requires:      gem(activerecord) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(marcel) >= 1.0
-Conflicts:     gem(marcel) >= 2
-Provides:      activestorage = %EVR
-Provides:      gem(activestorage) = 7.1.5.1
+Provides:      gem(activestorage) = 7.1.6
 
 %description   -n gem-activestorage
 Attach cloud and local files in Rails applications.
@@ -772,14 +771,14 @@ Attach cloud and local files in Rails applications.
 
 %if_enabled    doc
 %package       -n gem-activestorage-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activestorage
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(activestorage) = 7.1.5.1
+Requires:      gem(activestorage) = 7.1.6
 
 %description   -n gem-activestorage-doc
 Ruby on Rails documentation files.
@@ -793,14 +792,14 @@ Attach cloud and local files in Rails applications.
 
 %if_enabled    devel
 %package       -n gem-activestorage-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activestorage
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(activestorage) = 7.1.5.1
+Requires:      gem(activestorage) = 7.1.6
 
 %description   -n gem-activestorage-devel
 Ruby on Rails development package.
@@ -813,8 +812,8 @@ Attach cloud and local files in Rails applications.
 
 
 %package       -n gem-activesupport
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -827,8 +826,7 @@ Requires:      gem(tzinfo) >= 2.0
 Conflicts:     gem(concurrent-ruby) >= 2
 Conflicts:     gem(i18n) >= 2
 Conflicts:     gem(tzinfo) >= 3
-Provides:      activesupport = %EVR
-Provides:      gem(activesupport) = 7.1.5.1
+Provides:      gem(activesupport) = 7.1.6
 
 %description   -n gem-activesupport
 A toolkit of support libraries and Ruby core extensions extracted from the Rails
@@ -838,14 +836,14 @@ and testing.
 
 %if_enabled    doc
 %package       -n gem-activesupport-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activesupport
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(activesupport) = 7.1.6
 
 %description   -n gem-activesupport-doc
 Ruby on Rails documentation files.
@@ -861,14 +859,14 @@ and testing.
 
 %if_enabled    devel
 %package       -n gem-activesupport-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activesupport
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(activesupport) = 7.1.6
 
 %description   -n gem-activesupport-devel
 Ruby on Rails development package.
@@ -883,24 +881,24 @@ and testing.
 
 
 %package       -n gem-actionmailbox
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      ruby >= 2.7.0
-Requires:      gem(actionpack) = 7.1.5.1
-Requires:      gem(activejob) = 7.1.5.1
-Requires:      gem(activerecord) = 7.1.5.1
-Requires:      gem(activestorage) = 7.1.5.1
-Requires:      gem(activesupport) = 7.1.5.1
+Requires:      gem(actionpack) = 7.1.6
+Requires:      gem(activejob) = 7.1.6
+Requires:      gem(activerecord) = 7.1.6
+Requires:      gem(activestorage) = 7.1.6
+Requires:      gem(activesupport) = 7.1.6
 Requires:      gem(mail) >= 2.7.1
 Requires:      gem(net-imap) >= 0
 Requires:      gem(net-pop) >= 0
 Requires:      gem(net-smtp) >= 0
 Provides:      actionmailbox = %EVR
-Provides:      gem(actionmailbox) = 7.1.5.1
+Provides:      gem(actionmailbox) = 7.1.6
 
 %description   -n gem-actionmailbox
 Action Mailbox routes incoming emails to controller-like mailboxes for
@@ -920,14 +918,14 @@ rest of your domain model.
 
 %if_enabled    doc
 %package       -n gem-actionmailbox-doc
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailbox
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(actionmailbox) = 7.1.5.1
+Requires:      gem(actionmailbox) = 7.1.6
 
 %description   -n gem-actionmailbox-doc
 Ruby on Rails documentation files.
@@ -953,14 +951,14 @@ rest of your domain model.
 
 %if_enabled    devel
 %package       -n gem-actionmailbox-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailbox
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(actionmailbox) = 7.1.5.1
+Requires:      gem(actionmailbox) = 7.1.6
 
 %description   -n gem-actionmailbox-devel
 Ruby on Rails development package.
@@ -986,7 +984,7 @@ rest of your domain model.
 
 %package       -n gem-releaser
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Library to release Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1003,7 +1001,7 @@ A set of tasks to release Rails
 %if_enabled    doc
 %package       -n gem-releaser-doc
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Library to release Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета releaser
 Group:         Development/Documentation
@@ -1024,7 +1022,7 @@ A set of tasks to release Rails
 %if_enabled    devel
 %package       -n gem-releaser-devel
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Library to release Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета releaser
 Group:         Development/Ruby
@@ -1044,7 +1042,7 @@ A set of tasks to release Rails
 
 %package       -n gem-rail-inspector
 Version:       0.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       A collection of linters for rails/rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1064,7 +1062,7 @@ convention over configuration.
 %if_enabled    doc
 %package       -n gem-rail-inspector-doc
 Version:       0.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       A collection of linters for rails/rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rail_inspector
 Group:         Development/Documentation
@@ -1087,7 +1085,7 @@ convention over configuration.
 %if_enabled    devel
 %package       -n gem-rail-inspector-devel
 Version:       0.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       A collection of linters for rails/rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rail_inspector
 Group:         Development/Ruby
@@ -1109,14 +1107,14 @@ convention over configuration.
 
 %if_enabled    devel
 %package       -n gem-rails-devel
-Version:       7.1.5.1
-Release:       alt1
+Version:       7.1.6
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rails) = 7.1.5.1
+Requires:      gem(rails) = 7.1.6
 Requires:      gem(minitest-bisect) >= 0
 Requires:      gem(minitest-ci) >= 0
 Requires:      gem(minitest-retry) >= 0
@@ -1171,7 +1169,7 @@ convention over configuration.
 Файлы для разработки самоцвета rails.
 %endif
 
-%global        version 7.1.5.1
+%global        version 7.1.6
 
 %prep
 %setup
@@ -1193,8 +1191,8 @@ convention over configuration.
 
 %files         -n gem-railties
 %doc MIT-LICENSE
-%ruby_gemspecdir/railties-7.1.5.1.gemspec
-%ruby_gemslibdir/railties-7.1.5.1
+%ruby_gemspecdir/railties-7.1.6.gemspec
+%ruby_gemslibdir/railties-7.1.6
 
 %files         -n rails
 %doc MIT-LICENSE
@@ -1203,7 +1201,7 @@ convention over configuration.
 %if_enabled    doc
 %files         -n gem-railties-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/railties-7.1.5.1
+%ruby_gemsdocdir/railties-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1213,13 +1211,13 @@ convention over configuration.
 
 %files         -n gem-activejob
 %doc MIT-LICENSE README.md
-%ruby_gemspecdir/activejob-7.1.5.1.gemspec
-%ruby_gemslibdir/activejob-7.1.5.1
+%ruby_gemspecdir/activejob-7.1.6.gemspec
+%ruby_gemslibdir/activejob-7.1.6
 
 %if_enabled    doc
 %files         -n gem-activejob-doc
 %doc MIT-LICENSE README.md
-%ruby_gemsdocdir/activejob-7.1.5.1
+%ruby_gemsdocdir/activejob-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1229,13 +1227,13 @@ convention over configuration.
 
 %files         -n gem-actionview
 %doc MIT-LICENSE
-%ruby_gemspecdir/actionview-7.1.5.1.gemspec
-%ruby_gemslibdir/actionview-7.1.5.1
+%ruby_gemspecdir/actionview-7.1.6.gemspec
+%ruby_gemslibdir/actionview-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actionview-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/actionview-7.1.5.1
+%ruby_gemsdocdir/actionview-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1245,13 +1243,13 @@ convention over configuration.
 
 %files         -n gem-actiontext
 %doc MIT-LICENSE README.md
-%ruby_gemspecdir/actiontext-7.1.5.1.gemspec
-%ruby_gemslibdir/actiontext-7.1.5.1
+%ruby_gemspecdir/actiontext-7.1.6.gemspec
+%ruby_gemslibdir/actiontext-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actiontext-doc
 %doc MIT-LICENSE README.md
-%ruby_gemsdocdir/actiontext-7.1.5.1
+%ruby_gemsdocdir/actiontext-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1261,13 +1259,13 @@ convention over configuration.
 
 %files         -n gem-actionpack
 %doc MIT-LICENSE
-%ruby_gemspecdir/actionpack-7.1.5.1.gemspec
-%ruby_gemslibdir/actionpack-7.1.5.1
+%ruby_gemspecdir/actionpack-7.1.6.gemspec
+%ruby_gemslibdir/actionpack-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actionpack-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/actionpack-7.1.5.1
+%ruby_gemsdocdir/actionpack-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1277,13 +1275,13 @@ convention over configuration.
 
 %files         -n gem-activemodel
 %doc MIT-LICENSE
-%ruby_gemspecdir/activemodel-7.1.5.1.gemspec
-%ruby_gemslibdir/activemodel-7.1.5.1
+%ruby_gemspecdir/activemodel-7.1.6.gemspec
+%ruby_gemslibdir/activemodel-7.1.6
 
 %if_enabled    doc
 %files         -n gem-activemodel-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/activemodel-7.1.5.1
+%ruby_gemsdocdir/activemodel-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1293,13 +1291,13 @@ convention over configuration.
 
 %files         -n gem-actioncable
 %doc MIT-LICENSE README.md
-%ruby_gemspecdir/actioncable-7.1.5.1.gemspec
-%ruby_gemslibdir/actioncable-7.1.5.1
+%ruby_gemspecdir/actioncable-7.1.6.gemspec
+%ruby_gemslibdir/actioncable-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actioncable-doc
 %doc MIT-LICENSE README.md
-%ruby_gemsdocdir/actioncable-7.1.5.1
+%ruby_gemsdocdir/actioncable-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1309,13 +1307,13 @@ convention over configuration.
 
 %files         -n gem-actionmailer
 %doc MIT-LICENSE
-%ruby_gemspecdir/actionmailer-7.1.5.1.gemspec
-%ruby_gemslibdir/actionmailer-7.1.5.1
+%ruby_gemspecdir/actionmailer-7.1.6.gemspec
+%ruby_gemslibdir/actionmailer-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actionmailer-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/actionmailer-7.1.5.1
+%ruby_gemsdocdir/actionmailer-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1325,13 +1323,13 @@ convention over configuration.
 
 %files         -n gem-activerecord
 %doc MIT-LICENSE
-%ruby_gemspecdir/activerecord-7.1.5.1.gemspec
-%ruby_gemslibdir/activerecord-7.1.5.1
+%ruby_gemspecdir/activerecord-7.1.6.gemspec
+%ruby_gemslibdir/activerecord-7.1.6
 
 %if_enabled    doc
 %files         -n gem-activerecord-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/activerecord-7.1.5.1
+%ruby_gemsdocdir/activerecord-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1341,13 +1339,13 @@ convention over configuration.
 
 %files         -n gem-activestorage
 %doc MIT-LICENSE README.md
-%ruby_gemspecdir/activestorage-7.1.5.1.gemspec
-%ruby_gemslibdir/activestorage-7.1.5.1
+%ruby_gemspecdir/activestorage-7.1.6.gemspec
+%ruby_gemslibdir/activestorage-7.1.6
 
 %if_enabled    doc
 %files         -n gem-activestorage-doc
 %doc MIT-LICENSE README.md
-%ruby_gemsdocdir/activestorage-7.1.5.1
+%ruby_gemsdocdir/activestorage-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1357,13 +1355,13 @@ convention over configuration.
 
 %files         -n gem-activesupport
 %doc MIT-LICENSE
-%ruby_gemspecdir/activesupport-7.1.5.1.gemspec
-%ruby_gemslibdir/activesupport-7.1.5.1
+%ruby_gemspecdir/activesupport-7.1.6.gemspec
+%ruby_gemslibdir/activesupport-7.1.6
 
 %if_enabled    doc
 %files         -n gem-activesupport-doc
 %doc MIT-LICENSE
-%ruby_gemsdocdir/activesupport-7.1.5.1
+%ruby_gemsdocdir/activesupport-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1373,13 +1371,13 @@ convention over configuration.
 
 %files         -n gem-actionmailbox
 %doc MIT-LICENSE README.md
-%ruby_gemspecdir/actionmailbox-7.1.5.1.gemspec
-%ruby_gemslibdir/actionmailbox-7.1.5.1
+%ruby_gemspecdir/actionmailbox-7.1.6.gemspec
+%ruby_gemslibdir/actionmailbox-7.1.6
 
 %if_enabled    doc
 %files         -n gem-actionmailbox-doc
 %doc MIT-LICENSE README.md
-%ruby_gemsdocdir/actionmailbox-7.1.5.1
+%ruby_gemsdocdir/actionmailbox-7.1.6
 %endif
 
 %if_enabled    devel
@@ -1423,6 +1421,15 @@ convention over configuration.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 7.1.6-alt1.1
+- ^ 7.1.5.1 -> 7.1.6
+- ! CVEs
+ + CVE-2025-55193
+ + CVE-2025-24293
+
+* Wed Aug 26 2026 Pavel Skrylev <majioa@altlinux.org> 7.1.5.1-alt1.1
+- ! dep to minitest gem
+
 * Fri Jan 10 2025 Pavel Skrylev <majioa@altlinux.org> 7.1.5.1-alt1
 - ^ 6.1.7.8 -> 7.1.5.1
 - ! CVEs

@@ -6,7 +6,7 @@
 
 Name:          gem-smart-proxy-dynflow
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Dynflow runtime for Foreman smart proxy
 License:       GPL-3.0-only
 Group:         Development/Ruby
@@ -17,9 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         fixes.patch
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(dynflow) >= 1.6
 BuildRequires: gem(minitest) >= 0
@@ -36,12 +34,12 @@ BuildRequires: gem(sqlite3) >= 1.0
 BuildRequires: gem(webmock) >= 0
 BuildConflicts: gem(dynflow) >= 3.0
 BuildConflicts: gem(rest-client) >= 3
-BuildConflicts: gem(sqlite3) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rubocop >= 1.15.0
+%ruby_use_gem_dependency sqlite3 >= 1.0
 %ruby_alias_names smart_proxy_dynflow,smart-proxy-dynflow
 Requires:      ruby >= 3.0
 Requires:      gem(dynflow) >= 1.6
@@ -49,7 +47,6 @@ Requires:      gem(rest-client) >= 2.0
 Requires:      gem(sqlite3) >= 1.0
 Conflicts:     gem(dynflow) >= 3.0
 Conflicts:     gem(rest-client) >= 3
-Conflicts:     gem(sqlite3) >= 2
 Provides:      gem(smart_proxy_dynflow) = 1.0.0
 
 %description
@@ -65,14 +62,12 @@ standalone service.
 %if_enabled    doc
 %package       -n gem-smart-proxy-dynflow-doc
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Dynflow runtime for Foreman smart proxy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy_dynflow
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(smart_proxy_dynflow) = 1.0.0
 
 %description   -n gem-smart-proxy-dynflow-doc
@@ -94,14 +89,12 @@ standalone service.
 %if_enabled    devel
 %package       -n gem-smart-proxy-dynflow-devel
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Dynflow runtime for Foreman smart proxy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy_dynflow
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(smart_proxy_dynflow) = 1.0.0
 Requires:      gem(dynflow) >= 1.6
 Requires:      gem(minitest) >= 0
@@ -118,7 +111,6 @@ Requires:      gem(sqlite3) >= 1.0
 Requires:      gem(webmock) >= 0
 Conflicts:     gem(dynflow) >= 3.0
 Conflicts:     gem(rest-client) >= 3
-Conflicts:     gem(sqlite3) >= 2
 
 %description   -n gem-smart-proxy-dynflow-devel
 Dynflow runtime for Foreman smart proxy development package.
@@ -167,6 +159,9 @@ standalone service.
 
 
 %changelog
+* Wed Sep 02 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1.1
+- ! fixed deps to sqlite3 gem
+
 * Mon Mar 30 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - ^ 0.8.2 -> 1.0.0
 

@@ -6,7 +6,7 @@
 %define        gemname bcrypt_pbkdf
 
 Name:          gem-bcrypt-pbkdf
-Version:       1.1.1
+Version:       1.1.2
 Release:       alt1
 Summary:       Ruby gem implementing bcrypt_pbkdf
 License:       MIT
@@ -16,27 +16,25 @@ Vcs:           https://github.com/net-ssh/bcrypt_pbkdf-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel 
 %if_enabled check
-BuildRequires: gem(rake-compiler) >= 1.1.2
+BuildRequires: gem(benchmark) >= 0.4.0
 BuildRequires: gem(minitest) >= 5
 BuildRequires: gem(openssl) >= 3
-BuildRequires: gem(rdoc) >= 6
+BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rake-compiler-dock) >= 1.2.1
-BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(rdoc) >= 6
 BuildConflicts: gem(openssl) >= 4
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(rake-compiler-dock) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
-%ruby_alias_names bcrypt_pbkdf,bcrypt-pbkdf
-Provides:      gem(bcrypt_pbkdf) = 1.1.1
-
+%ruby_use_gem_dependency minitest >= 5
+%ruby_use_gem_dependency rdoc >= 6
+%ruby_use_gem_dependency benchmark >= 0.4
+%ruby_use_gem_dependency rake-compiler >= 1.1.2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1
+Provides:      gem(bcrypt_pbkdf) = 1.1.2
 
 %description
 bcrypt_pdkfd is a ruby gem implementing bcrypt_pdkfd from OpenBSD. This is
@@ -45,14 +43,14 @@ currently used by net-ssh to read password encrypted Ed25519 keys.
 
 %if_enabled    doc
 %package       -n gem-bcrypt-pbkdf-doc
-Version:       1.1.1
+Version:       1.1.2
 Release:       alt1
-Summary:       Ruby gem implementing bcrypt_pbkdf documentation files
+Summary:       Ruby gem implementing bcrypt_pbkdf
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bcrypt_pbkdf
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bcrypt_pbkdf) = 1.1.1
+Requires:      gem-bcrypt-pbkdf = 1.1.2-alt1
 
 %description   -n gem-bcrypt-pbkdf-doc
 Ruby gem implementing bcrypt_pbkdf documentation files.
@@ -61,30 +59,27 @@ bcrypt_pdkfd is a ruby gem implementing bcrypt_pdkfd from OpenBSD. This is
 currently used by net-ssh to read password encrypted Ed25519 keys.
 
 %description   -n gem-bcrypt-pbkdf-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета bcrypt_pbkdf.
+Файлы сведений для самоцвета bcrypt_pbkdf. %endif
 %endif
 
 
 %if_enabled    devel
 %package       -n gem-bcrypt-pbkdf-devel
-Version:       1.1.1
+Version:       1.1.2
 Release:       alt1
-Summary:       Ruby gem implementing bcrypt_pbkdf development package
+Summary:       Ruby gem implementing bcrypt_pbkdf
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bcrypt_pbkdf
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bcrypt_pbkdf) = 1.1.1
-Requires:      gem(rake-compiler) >= 1.1.2
+Requires:      gem(bcrypt_pbkdf) = 1.1.2
+Requires:      gem(benchmark) >= 0.4.0
 Requires:      gem(minitest) >= 5
 Requires:      gem(openssl) >= 3
-Requires:      gem(rdoc) >= 6
+Requires:      gem(rake-compiler) >= 1.1.2
 Requires:      gem(rake-compiler-dock) >= 1.2.1
-Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(rdoc) >= 6
 Conflicts:     gem(openssl) >= 4
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(rake-compiler-dock) >= 2
 
 %description   -n gem-bcrypt-pbkdf-devel
 Ruby gem implementing bcrypt_pbkdf development package.
@@ -93,7 +88,7 @@ bcrypt_pdkfd is a ruby gem implementing bcrypt_pdkfd from OpenBSD. This is
 currently used by net-ssh to read password encrypted Ed25519 keys.
 
 %description   -n gem-bcrypt-pbkdf-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета bcrypt_pbkdf.
+Файлы для разработки самоцвета bcrypt_pbkdf. %endif
 %endif
 
 
@@ -110,25 +105,25 @@ currently used by net-ssh to read password encrypted Ed25519 keys.
 %ruby_test
 
 %files
-%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-bcrypt-pbkdf-doc
-%doc README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-bcrypt-pbkdf-devel
-%doc README.md
-%ruby_includedir/*
+%_includedir/*
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.1.2-alt1
+- ^ 1.1.1 -> 1.1.2
+
 * Tue Jul 23 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt1
 - ^ 1.1.0 -> 1.1.1
 

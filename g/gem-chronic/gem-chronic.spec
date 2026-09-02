@@ -6,7 +6,7 @@
 
 Name:          gem-chronic
 Version:       0.10.2.71
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Chronic is a pure Ruby natural language date parser
 License:       MIT
 Group:         Development/Ruby
@@ -23,13 +23,13 @@ BuildRequires: gem(activesupport) >= 4.0
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(numerizer) >= 0.2
 BuildRequires: gem(simplecov) >= 0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(numerizer) >= 1
 BuildConflicts: gem(simplecov) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      gem(numerizer) >= 0.2
 Conflicts:     gem(numerizer) >= 1
 Obsoletes:     ruby-chronic < %EVR
@@ -46,7 +46,7 @@ for the wide variety of formats Chronic will parse.
 %if_enabled    doc
 %package       -n gem-chronic-doc
 Version:       0.10.2.71
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Chronic is a pure Ruby natural language date parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chronic
 Group:         Development/Documentation
@@ -69,7 +69,7 @@ for the wide variety of formats Chronic will parse.
 %if_enabled    devel
 %package       -n gem-chronic-devel
 Version:       0.10.2.71
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Chronic is a pure Ruby natural language date parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chronic
 Group:         Development/Ruby
@@ -80,7 +80,6 @@ Requires:      gem(activesupport) >= 4.0
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake) >= 10
 Requires:      gem(simplecov) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(simplecov) >= 1
 
 %description   -n gem-chronic-devel
@@ -125,6 +124,9 @@ for the wide variety of formats Chronic will parse.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.10.2.71-alt0.2
+- ! fixed dep to minitest gem
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.10.2.71-alt0.1
 - ^ 0.10.2[1] -> 0.10.2p71
 

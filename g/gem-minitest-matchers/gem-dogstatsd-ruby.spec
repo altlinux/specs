@@ -5,11 +5,13 @@
 %define        gemname minitest-matchers
 
 Name:          gem-minitest-matchers
-Version:       1.4.1
-Release:       alt1
+Version:       1.4.1.5
+Release:       alt0.1
 Summary:       Adds support for RSpec-style matchers
 License:       Unlicense
 Group:         Development/Ruby
+Url:           https://github.com/wojtekmach/minitest-matchers
+Vcs:           https://github.com/wojtekmach/minitest-matchers.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -19,14 +21,14 @@ BuildRequires(pre): rake
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(rake) >= 0
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.0
+%ruby_use_gem_version minitest-matchers:1.4.1.5
 Requires:      gem(minitest) >= 5.0
-Conflicts:     gem(minitest) >= 6
-Provides:      gem(minitest-matchers) = 1.4.1
+Provides:      gem(minitest-matchers) = 1.4.1.5
 
 %description
 Adds support for RSpec-style matchers
@@ -34,14 +36,14 @@ Adds support for RSpec-style matchers
 
 %if_enabled    doc
 %package       -n gem-minitest-matchers-doc
-Version:       1.4.1
-Release:       alt1
+Version:       1.4.1.5
+Release:       alt0.1
 Summary:       Adds support for RSpec-style matchers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-matchers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-matchers) = 1.4.1
+Requires:      gem(minitest-matchers) = 1.4.1.5
 
 %description   -n gem-minitest-matchers-doc
 Adds support for RSpec-style matchers documentation files.
@@ -53,14 +55,14 @@ Adds support for RSpec-style matchers documentation files.
 
 %if_enabled    devel
 %package       -n gem-minitest-matchers-devel
-Version:       1.4.1
-Release:       alt1
+Version:       1.4.1.5
+Release:       alt0.1
 Summary:       Adds support for RSpec-style matchers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-matchers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-matchers) = 1.4.1
+Requires:      gem(minitest-matchers) = 1.4.1.5
 Requires:      gem(rake) >= 0
 
 %description   -n gem-minitest-matchers-devel
@@ -101,6 +103,9 @@ Adds support for RSpec-style matchers development package.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.1.5-alt0.1
+- ^ 1.4.1 -> 1.4.1p5
+
 * Wed Apr 29 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

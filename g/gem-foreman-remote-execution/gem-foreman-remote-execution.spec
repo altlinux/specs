@@ -6,7 +6,7 @@
 
 Name:          gem-foreman-remote-execution
 Version:       16.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -24,7 +24,6 @@ BuildRequires: gem(factory_bot_rails) >= 4.8.0
 BuildRequires: gem(foreman-tasks) >= 8.3.0
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(theforeman-rubocop) >= 0.1.2
-BuildConflicts: gem(dynflow) >= 2.0.0
 BuildConflicts: gem(factory_bot_rails) >= 7
 BuildConflicts: gem(theforeman-rubocop) >= 1
 %endif
@@ -33,13 +32,13 @@ BuildConflicts: gem(theforeman-rubocop) >= 1
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
 %ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
+%ruby_use_gem_dependency dynflow >= 1.0.2
 %ruby_alias_names foreman_remote_execution,foreman-remote-execution
 Requires:      ruby >= 2.7
 Requires:      gem(deface) >= 0
 Requires:      gem(dynflow) >= 1.0.2
 Requires:      gem(foreman-tasks) >= 8.3.0
 Conflicts:     ruby >= 4
-Conflicts:     gem(dynflow) >= 2.0.0
 Provides:      gem(foreman_remote_execution) = 16.2.3
 
 %description
@@ -50,7 +49,7 @@ management functionality with remote management functionality.
 %if_enabled    doc
 %package       -n gem-foreman-remote-execution-doc
 Version:       16.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_remote_execution
 Group:         Development/Documentation
@@ -72,7 +71,7 @@ management functionality with remote management functionality.
 %if_enabled    devel
 %package       -n gem-foreman-remote-execution-devel
 Version:       16.2.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A plugin bringing remote execution to the Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_remote_execution
 Group:         Development/Ruby
@@ -124,6 +123,9 @@ management functionality with remote management functionality.
 
 
 %changelog
+* Wed Sep 02 2026 Pavel Skrylev <majioa@altlinux.org> 16.2.3-alt1.1
+- ! fixed dep to dynflow gem
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 16.2.3-alt1
 - ^ 14.0.0 -> 16.2.3
 

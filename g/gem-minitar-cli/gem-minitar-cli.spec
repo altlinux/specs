@@ -5,7 +5,7 @@
 %define        gemname minitar-cli
 
 Name:          gem-minitar-cli
-Version:       1.0.0
+Version:       1.0.0.78
 Release:       alt1
 Summary:       minitar-cli is a pure-Ruby command-line tool that uses {minitar}
 License:       Ruby or BSD-2-Clause
@@ -31,7 +31,6 @@ BuildRequires: gem(standard) >= 1.0
 BuildRequires: gem(rdoc) >= 4.0
 BuildRequires: gem(minitar) >= 1.0.0
 BuildRequires: gem(powerbar) >= 1.0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(hoe) >= 5
 BuildConflicts: gem(hoe-doofus) >= 2
 BuildConflicts: gem(hoe-gemspec2) >= 2
@@ -42,20 +41,20 @@ BuildConflicts: gem(minitest-focus) >= 2
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(standard) >= 2
 BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(minitar) >= 1.1
 BuildConflicts: gem(powerbar) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.17.0
+%ruby_use_gem_dependency minitar >= 1.0
 %ruby_use_gem_dependency powerbar >= 2.0.1,powerbar < 3
 Requires:      gem(minitar) >= 1.0.0
 Requires:      gem(powerbar) >= 1.0
-Conflicts:     gem(minitar) >= 1.1
 Conflicts:     gem(powerbar) >= 3
-Provides:      gem(minitar-cli) = 1.0.0
+Provides:      gem(minitar-cli) = 1.0.0.78
 
+%ruby_use_gem_version minitar-cli:1.0.0.78
 
 %description
 <tt>minitar-cli</tt> is a pure-Ruby command-line tool that uses
@@ -67,14 +66,14 @@ with modernizations.
 
 
 %package       -n minitar
-Version:       1.0.0
+Version:       1.0.0.78
 Release:       alt1
 Summary:       minitar-cli is a pure-Ruby command-line tool that uses {minitar} executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета minitar-cli
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(minitar-cli) = 1.0.0
+Requires:      gem(minitar-cli) = 1.0.0.78
 
 %description   -n minitar
 minitar-cli is a pure-Ruby command-line tool that uses {minitar}
@@ -93,14 +92,14 @@ with modernizations.
 
 %if_enabled    doc
 %package       -n gem-minitar-cli-doc
-Version:       1.0.0
+Version:       1.0.0.78
 Release:       alt1
 Summary:       minitar-cli is a pure-Ruby command-line tool that uses {minitar} documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitar-cli
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitar-cli) = 1.0.0
+Requires:      gem(minitar-cli) = 1.0.0.78
 
 %description   -n gem-minitar-cli-doc
 minitar-cli is a pure-Ruby command-line tool that uses {minitar} documentation
@@ -120,14 +119,14 @@ with modernizations.
 
 %if_enabled    devel
 %package       -n gem-minitar-cli-devel
-Version:       1.0.0
+Version:       1.0.0.78
 Release:       alt1
 Summary:       minitar-cli is a pure-Ruby command-line tool that uses {minitar} development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitar-cli
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitar-cli) = 1.0.0
+Requires:      gem(minitar-cli) = 1.0.0.78
 Requires:      gem(minitest) >= 5.17.0
 Requires:      gem(hoe) >= 4.0
 Requires:      gem(hoe-doofus) >= 1.0
@@ -139,7 +138,6 @@ Requires:      gem(minitest-focus) >= 1.0
 Requires:      gem(rake) >= 10.0
 Requires:      gem(standard) >= 1.0
 Requires:      gem(rdoc) >= 4.0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(hoe) >= 5
 Conflicts:     gem(hoe-doofus) >= 2
 Conflicts:     gem(hoe-gemspec2) >= 2
@@ -202,6 +200,9 @@ with modernizations.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0.78-alt1
+- ^ 1.0.0 -> 1.0.0p78
+
 * Thu Sep 26 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - ^ 0.8 -> 1.0.0
 

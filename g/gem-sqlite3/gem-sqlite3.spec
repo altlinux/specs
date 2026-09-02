@@ -5,7 +5,7 @@
 %define        gemname sqlite3
 
 Name:          gem-sqlite3
-Version:       1.7.3
+Version:       2.9.6
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine
 License:       BSD-3-Clause
@@ -15,36 +15,40 @@ Vcs:           https://github.com/sparklemotion/sqlite3-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: libsqlite3-devel
-BuildRequires: gem(mini_portile2) >= 2.8.0
-BuildConflicts: gem(mini_portile2) >= 2.9
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
+BuildRequires: pkgconfig(sqlite3)
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(mini_portile2) >= 2.8.0
+BuildRequires: gem(minitest) >= 6.0
 BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rake-compiler-dock) >= 1.2.1
 BuildRequires: gem(rdoc) >= 6.1.1
+BuildRequires: gem(rubocop-minitest) >= 0.13.0
 BuildRequires: gem(ruby_memcheck) >= 2.2.1
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(standard) = 1.56.0
+BuildConflicts: gem(mini_portile2) >= 2.9
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(rubocop-minitest) >= 1
 BuildConflicts: gem(ruby_memcheck) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+%ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
-%ruby_use_gem_dependency ruby_memcheck >= 3.0.0,ruby_memcheck < 4
+%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 4
+Requires:      ruby >= 3.2
 Requires:      gem(mini_portile2) >= 2.8.0
 Conflicts:     gem(mini_portile2) >= 2.9
 Obsoletes:     sqlite3-ruby < %EVR
 Provides:      sqlite3-ruby = %EVR
-Provides:      gem(sqlite3) = 1.7.3
-
+Provides:      gem(sqlite3) = 2.9.6
 
 %description
 A Ruby interface for the SQLite database engine.
@@ -52,14 +56,14 @@ A Ruby interface for the SQLite database engine.
 
 %if_enabled    doc
 %package       -n gem-sqlite3-doc
-Version:       1.7.3
+Version:       2.9.6
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sqlite3
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sqlite3) = 1.7.3
+Requires:      gem(sqlite3) = 2.9.6
 
 %description   -n gem-sqlite3-doc
 A Ruby interface for the SQLite database engine documentation files.
@@ -71,24 +75,29 @@ A Ruby interface for the SQLite database engine documentation files.
 
 %if_enabled    devel
 %package       -n gem-sqlite3-devel
-Version:       1.7.3
+Version:       2.9.6
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sqlite3
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sqlite3) = 1.7.3
-Requires:      gem(minitest) >= 5.17.0
+Requires:      libsqlite3-devel
+Requires:      gem(sqlite3) = 2.9.6
+Requires:      gem(mini_portile2) >= 2.8.0
+Requires:      gem(minitest) >= 6.0
 Requires:      gem(rake-compiler) >= 1.1.2
 Requires:      gem(rake-compiler-dock) >= 1.2.1
 Requires:      gem(rdoc) >= 6.1.1
+Requires:      gem(rubocop-minitest) >= 0.13.0
 Requires:      gem(ruby_memcheck) >= 2.2.1
-Requires:      libsqlite3-devel
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(standard) = 1.56.0
+Conflicts:     gem(mini_portile2) >= 2.9
+Conflicts:     gem(minitest) >= 7
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(rubocop-minitest) >= 1
 Conflicts:     gem(ruby_memcheck) >= 4
 
 %description   -n gem-sqlite3-devel
@@ -112,25 +121,28 @@ A Ruby interface for the SQLite database engine development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-sqlite3-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-sqlite3-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.9.6-alt1
+- ^ 1.7.3 -> 2.9.6
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.3-alt1
 - ^ 1.5.4 -> 1.7.3
 

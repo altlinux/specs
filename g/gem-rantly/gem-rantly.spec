@@ -5,7 +5,7 @@
 %define        gemname rantly
 
 Name:          gem-rantly
-Version:       2.0.0
+Version:       3.0.0
 Release:       alt1
 Summary:       Ruby Imperative Random Data Generator and Quickcheck
 License:       MIT
@@ -16,23 +16,26 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(coveralls) >= 0
 BuildRequires: gem(minitest) >= 5.10.0
-BuildRequires: gem(rake) >= 12.0.0
-BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(rake) >= 12.3.3
 BuildRequires: gem(rubocop) >= 0
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(rubocop-performance) >= 0
+BuildRequires: gem(simplecov) >= 0
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake) >= 14
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-Provides:      gem(rantly) = 2.0.0
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+Requires:      ruby >= 3.3.0
+Provides:      gem(rantly) = 3.0.0
 
+%ruby_use_gem_version rantly:3.0.0
 
 %description
 Ruby Imperative Random Data Generator and Quickcheck
@@ -40,14 +43,14 @@ Ruby Imperative Random Data Generator and Quickcheck
 
 %if_enabled    doc
 %package       -n gem-rantly-doc
-Version:       2.0.0
+Version:       3.0.0
 Release:       alt1
 Summary:       Ruby Imperative Random Data Generator and Quickcheck documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rantly
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rantly) = 2.0.0
+Requires:      gem(rantly) = 3.0.0
 
 %description   -n gem-rantly-doc
 Ruby Imperative Random Data Generator and Quickcheck documentation files.
@@ -59,21 +62,15 @@ Ruby Imperative Random Data Generator and Quickcheck documentation files.
 
 %if_enabled    devel
 %package       -n gem-rantly-devel
-Version:       2.0.0
+Version:       3.0.0
 Release:       alt1
 Summary:       Ruby Imperative Random Data Generator and Quickcheck development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rantly
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rantly) = 2.0.0
-Requires:      gem(coveralls) >= 0
-Requires:      gem(minitest) >= 5.10.0
-Requires:      gem(rake) >= 12.0.0
-Requires:      gem(simplecov) >= 0
-Requires:      gem(rubocop) >= 0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rake) >= 14
+Requires:      gem(rantly) = 3.0.0
+Requires:      gem(rubocop-performance) >= 0
 
 %description   -n gem-rantly-devel
 Ruby Imperative Random Data Generator and Quickcheck development package.
@@ -96,22 +93,25 @@ Ruby Imperative Random Data Generator and Quickcheck development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-rantly-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rantly-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+- ^ 2.0.0 -> 3.0.0
+
 * Thu Apr 25 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - + packaged gem with Ruby Policy 2.0

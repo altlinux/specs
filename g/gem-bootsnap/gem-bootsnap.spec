@@ -5,7 +5,7 @@
 %define        gemname bootsnap
 
 Name:          gem-bootsnap
-Version:       1.18.3
+Version:       1.25.0
 Release:       alt1
 Summary:       Boot large ruby/rails apps faster
 License:       MIT
@@ -15,41 +15,42 @@ Vcs:           https://github.com/shopify/bootsnap.git
 Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(minitest) >= 5.0
+BuildRequires: gem(msgpack) >= 1.5
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
-BuildRequires: gem(minitest) >= 5.0
-BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(msgpack) >= 1.2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rubocop) >= 2
+BuildRequires: gem(rubocop) >= 0
+BuildRequires: gem(rubocop-performance) >= 0
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(msgpack) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-Requires:      gem(msgpack) >= 1.2
+%ruby_use_gem_dependency mocha >= 2.7.1,mocha < 3
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+Requires:      ruby >= 2.7.0
+Requires:      gem(msgpack) >= 1.5
 Conflicts:     gem(msgpack) >= 2
-Provides:      gem(bootsnap) = 1.18.3
-
+Provides:      gem(bootsnap) = 1.25.0
 
 %description
 Boot large ruby/rails apps faster.
 
 
 %package       -n bootsnap
-Version:       1.18.3
+Version:       1.25.0
 Release:       alt1
 Summary:       Boot large ruby/rails apps faster executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета bootsnap
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(bootsnap) = 1.18.3
+Requires:      gem(bootsnap) = 1.25.0
 
 %description   -n bootsnap
 Boot large ruby/rails apps faster executable(s).
@@ -60,14 +61,14 @@ Boot large ruby/rails apps faster executable(s).
 
 %if_enabled    doc
 %package       -n gem-bootsnap-doc
-Version:       1.18.3
+Version:       1.25.0
 Release:       alt1
 Summary:       Boot large ruby/rails apps faster documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bootsnap
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bootsnap) = 1.18.3
+Requires:      gem(bootsnap) = 1.25.0
 
 %description   -n gem-bootsnap-doc
 Boot large ruby/rails apps faster documentation files.
@@ -79,22 +80,15 @@ Boot large ruby/rails apps faster documentation files.
 
 %if_enabled    devel
 %package       -n gem-bootsnap-devel
-Version:       1.18.3
+Version:       1.25.0
 Release:       alt1
 Summary:       Boot large ruby/rails apps faster development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bootsnap
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bootsnap) = 1.18.3
-Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(minitest) >= 5.0
-Requires:      gem(mocha) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(bootsnap) = 1.25.0
+Requires:      gem(rubocop-performance) >= 0
 
 %description   -n gem-bootsnap-devel
 Boot large ruby/rails apps faster development package.
@@ -117,29 +111,31 @@ Boot large ruby/rails apps faster development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %files         -n bootsnap
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %_bindir/bootsnap
 
 %if_enabled    doc
 %files         -n gem-bootsnap-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-bootsnap-devel
-%doc README.md
-%ruby_includedir/*
+%doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.25.0-alt1
+- ^ 1.18.3 -> 1.25.0
+
 * Tue Jul 23 2024 Pavel Skrylev <majioa@altlinux.org> 1.18.3-alt1
 - ^ 1.13.0 -> 1.18.3
 

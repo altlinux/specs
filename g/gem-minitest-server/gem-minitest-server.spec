@@ -5,7 +5,7 @@
 %define        gemname minitest-server
 
 Name:          gem-minitest-server
-Version:       1.0.8
+Version:       1.0.10
 Release:       alt1
 Summary:       minitest-server provides a client/server setup with your minitest process, allowing your test run to send its results directly to a handler
 License:       MIT
@@ -16,26 +16,26 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.16
 BuildRequires: gem(drb) >= 2.0
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(minitest) >= 5.16
 BuildRequires: gem(rdoc) >= 4.0
-BuildRequires: gem(hoe) >= 4.2
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(drb) >= 3
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
+BuildConflicts: gem(minitest) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(minitest) >= 5.16
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
 Requires:      gem(drb) >= 2.0
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(minitest) >= 5.16
 Conflicts:     gem(drb) >= 3
-Provides:      gem(minitest-server) = 1.0.8
-
+Conflicts:     gem(minitest) >= 7
+Provides:      minitest-server = %EVR
+Provides:      gem(minitest-server) = 1.0.10
 
 %description
 minitest-server provides a client/server setup with your minitest process,
@@ -44,14 +44,14 @@ allowing your test run to send its results directly to a handler.
 
 %if_enabled    doc
 %package       -n gem-minitest-server-doc
-Version:       1.0.8
+Version:       1.0.10
 Release:       alt1
 Summary:       minitest-server provides a client/server setup with your minitest process, allowing your test run to send its results directly to a handler documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-server
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-server) = 1.0.8
+Requires:      gem(minitest-server) = 1.0.10
 
 %description   -n gem-minitest-server-doc
 minitest-server provides a client/server setup with your minitest process,
@@ -65,18 +65,16 @@ files.
 
 %if_enabled    devel
 %package       -n gem-minitest-server-devel
-Version:       1.0.8
+Version:       1.0.10
 Release:       alt1
 Summary:       minitest-server provides a client/server setup with your minitest process, allowing your test run to send its results directly to a handler development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-server
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-server) = 1.0.8
+Requires:      gem(minitest-server) = 1.0.10
+Requires:      gem(hoe) >= 0
 Requires:      gem(rdoc) >= 4.0
-Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-minitest-server-devel
 minitest-server provides a client/server setup with your minitest process,
@@ -101,23 +99,26 @@ package.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-minitest-server-doc
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-minitest-server-devel
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.10-alt1
+- ^ 1.0.8 -> 1.0.10
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.8-alt1
 - ^ 1.0.6 -> 1.0.8
 

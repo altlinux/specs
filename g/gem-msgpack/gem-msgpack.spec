@@ -5,7 +5,7 @@
 %define        gemname msgpack
 
 Name:          gem-msgpack
-Version:       1.7.2
+Version:       1.8.4
 Release:       alt1
 Summary:       MessagePack implementation for Ruby
 License:       Apache-2.0
@@ -15,21 +15,18 @@ Vcs:           https://github.com/msgpack/msgpack-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         license.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
-BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(benchmark-ips) >= 0
+BuildRequires: gem(json) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rspec) >= 3.3
-BuildRequires: gem(ruby_memcheck) >= 0
-BuildRequires: gem(yard) >= 0
-BuildRequires: gem(json) >= 0
-BuildRequires: gem(benchmark-ips) >= 2.10.0
 BuildRequires: gem(rubocop) >= 0.82.0
+BuildRequires: gem(ruby_memcheck) >= 0
 BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(yard) >= 0
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(benchmark-ips) >= 2.11
 BuildConflicts: gem(rubocop) >= 2
 %endif
 
@@ -37,10 +34,10 @@ BuildConflicts: gem(rubocop) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+Requires:      ruby >= 2.5
 Obsoletes:     ruby-msgpack < %EVR
 Provides:      ruby-msgpack = %EVR
-Provides:      gem(msgpack) = 1.7.2
-
+Provides:      gem(msgpack) = 1.8.4
 
 %description
 MessagePack is an efficient binary serialization format. It lets you exchange
@@ -56,16 +53,16 @@ is a perfect replacement.
 
 %if_enabled    doc
 %package       -n gem-msgpack-doc
-Version:       1.7.2
+Version:       1.8.4
 Release:       alt1
 Summary:       MessagePack implementation for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета msgpack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.7.2
-Obsoletes:     msgpack-doc
-Provides:      msgpack-doc
+Requires:      gem(msgpack) = 1.8.4
+Obsoletes:     msgpack-doc < %EVR
+Provides:      msgpack-doc = %EVR
 
 %description   -n gem-msgpack-doc
 MessagePack implementation for Ruby documentation files.
@@ -87,28 +84,14 @@ is a perfect replacement.
 
 %if_enabled    devel
 %package       -n gem-msgpack-devel
-Version:       1.7.2
+Version:       1.8.4
 Release:       alt1
 Summary:       MessagePack implementation for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета msgpack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.7.2
-Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rake-compiler) >= 1.1.2
-Requires:      gem(rspec) >= 3.3
-Requires:      gem(ruby_memcheck) >= 0
-Requires:      gem(yard) >= 0
-Requires:      gem(json) >= 0
-Requires:      gem(benchmark-ips) >= 2.10.0
-Requires:      gem(rubocop) >= 0.82.0
-Requires:      gem(simplecov) >= 0
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(benchmark-ips) >= 2.11
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     libmsgpack-devel
+Requires:      gem(msgpack) = 1.8.4
 
 %description   -n gem-msgpack-devel
 MessagePack implementation for Ruby development package.
@@ -130,7 +113,6 @@ is a perfect replacement.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -142,25 +124,28 @@ is a perfect replacement.
 %ruby_test
 
 %files
-%doc README.md
+%doc ChangeLog LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-msgpack-doc
-%doc README.md
+%doc ChangeLog LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-msgpack-devel
-%doc README.md
+%doc ChangeLog LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.8.4-alt1
+- ^ 1.7.2 -> 1.8.4
+
 * Wed May 08 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.2-alt1
 - ^ 1.5.6 -> 1.7.2
 - * relicensed

@@ -5,7 +5,7 @@
 
 Name:          foreman
 Version:       3.19.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -146,7 +146,6 @@ BuildConflicts: gem(ldap_fluff) >= 1.0
 BuildConflicts: gem(logging) >= 3.0.0
 BuildConflicts: gem(mail) >= 3
 BuildConflicts: gem(maruku) >= 1
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(minitest-retry) >= 1
 BuildConflicts: gem(minitest-spec-rails) >= 8
@@ -201,6 +200,7 @@ Autoreq:       yes,nopython3,nopython,noshell
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
 %ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
 %ruby_use_gem_dependency wirb >= 3,wirb < 4
+%ruby_use_gem_dependency minitest >= 5.1
 Requires:      rake
 Requires:      wget
 Requires:      vixie-cron
@@ -208,7 +208,7 @@ Requires:      postgresql-server
 Requires:      dynflow
 Requires:      node
 Requires:      nginx
-Requires:      railsctl >= 1.0.1-alt1.1
+Requires:      railsctl >= 1.0.1-alt1.2
 Requires:      ruby >= 3.1.2
 Requires:      gem(activerecord-nulldb-adapter) >= 0
 Requires:      gem(activerecord-session_store) >= 2.0.0
@@ -358,7 +358,6 @@ Conflicts:     gem(ldap_fluff) >= 1.0
 Conflicts:     gem(logging) >= 3.0.0
 Conflicts:     gem(mail) >= 3
 Conflicts:     gem(maruku) >= 1
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
 Conflicts:     gem(minitest-retry) >= 1
 Conflicts:     gem(minitest-spec-rails) >= 8
@@ -410,12 +409,12 @@ foundation.
 %if_enabled    doc
 %package       -n foreman-doc
 Version:       3.19.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1.1
+Requires:      foreman = 3.19.1-alt1.2
 
 %description   -n foreman-doc
 An application that automates the lifecycle of servers documentation
@@ -438,12 +437,12 @@ foundation.
 %if_enabled    devel
 %package       -n foreman-devel
 Version:       3.19.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1.1
+Requires:      foreman = 3.19.1-alt1.2
 
 %description   -n foreman-devel
 Foreman is a free open source project that gives you the power to easily
@@ -646,6 +645,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1.2
+- ! fixed dep to minitest gem
+
 * Thu Aug 06 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1.1
 - ! fixed symlinkings
 

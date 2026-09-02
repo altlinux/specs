@@ -6,7 +6,7 @@
 
 Name:          gem-net-http-digest-auth
 Version:       1.4.1
-Release:       alt2
+Release:       alt2.1
 Summary:       An implementation of RFC 2617 Digest Access Authentication
 License:       MIT
 Group:         Development/Ruby
@@ -16,22 +16,18 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.17.0
-BuildRequires: gem(rdoc) >= 4.0
-BuildRequires: gem(hoe) >= 4.2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(minitest) >= 5.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.0
 %ruby_alias_names net-http-digest_auth,net-http-digest-auth
+Requires:      ruby >= 1.8.7
 Provides:      gem(net-http-digest_auth) = 1.4.1
-
 
 %description
 An implementation of RFC 2617 - Digest Access Authentication. At this time the
@@ -46,7 +42,7 @@ an example.
 %if_enabled    doc
 %package       -n gem-net-http-digest-auth-doc
 Version:       1.4.1
-Release:       alt2
+Release:       alt2.1
 Summary:       An implementation of RFC 2617 Digest Access Authentication documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета net-http-digest_auth
 Group:         Development/Documentation
@@ -74,19 +70,15 @@ an example.
 %if_enabled    devel
 %package       -n gem-net-http-digest-auth-devel
 Version:       1.4.1
-Release:       alt2
+Release:       alt2.1
 Summary:       An implementation of RFC 2617 Digest Access Authentication development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета net-http-digest_auth
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(net-http-digest_auth) = 1.4.1
-Requires:      gem(minitest) >= 5.17.0
-Requires:      gem(rdoc) >= 4.0
-Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
+Requires:      gem(hoe) >= 0
+Requires:      gem(minitest) >= 5.0
 
 %description   -n gem-net-http-digest-auth-devel
 An implementation of RFC 2617 Digest Access Authentication development
@@ -118,23 +110,26 @@ an example.
 %ruby_test
 
 %files
-%doc README.txt
+%doc History.txt README.txt
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-net-http-digest-auth-doc
-%doc README.txt
+%doc History.txt README.txt
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-net-http-digest-auth-devel
-%doc README.txt
+%doc History.txt README.txt
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt2.1
+- ! fixed dep to minitest gem
+
 * Wed Oct 23 2024 Pavel Skrylev <majioa@altlinux.org> 1.4.1-alt2
 - ! fixed .gear place and spec
 

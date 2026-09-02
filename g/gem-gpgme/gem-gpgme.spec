@@ -6,8 +6,8 @@
 %define        gemname gpgme
 
 Name:          gem-gpgme
-Version:       2.0.26
-Release:       alt1
+Version:       2.0.26.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy
 License:       LGPL-2.1+
 Group:         Development/Ruby
@@ -28,7 +28,6 @@ BuildRequires: gem(minitest) >= 2.1.0
 BuildRequires: gem(mocha) >= 0.9.12
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(yard) >= 0.9.11
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(yard) >= 1
 %endif
@@ -36,14 +35,16 @@ BuildConflicts: gem(yard) >= 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency mocha >= 2.7.1,mocha < 3
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
+%ruby_use_gem_dependency minitest >= 2.1.0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(mini_portile2) >= 2.7
 Conflicts:     gem(mini_portile2) >= 3
 Obsoletes:     ruby-gpgme < %EVR
 Provides:      ruby-gpgme = %EVR
-Provides:      gem(gpgme) = 2.0.26
+Provides:      gem(gpgme) = 2.0.26.4
+
+%ruby_use_gem_version gpgme:2.0.26.4
 
 %description
 Ruby interface to GnuPG Made Easy (GPGME).
@@ -51,14 +52,14 @@ Ruby interface to GnuPG Made Easy (GPGME).
 
 %if_enabled    doc
 %package       -n gem-gpgme-doc
-Version:       2.0.26
-Release:       alt1
+Version:       2.0.26.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gpgme
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gpgme) = 2.0.26
+Requires:      gem(gpgme) = 2.0.26.4
 Obsoletes:     ruby-gpgme-doc < %EVR
 Provides:      ruby-gpgme-doc = %EVR
 
@@ -74,20 +75,22 @@ Ruby interface to GnuPG Made Easy (GPGME).
 
 %if_enabled    devel
 %package       -n gem-gpgme-devel
-Version:       2.0.26
-Release:       alt1
+Version:       2.0.26.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gpgme
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gpgme) = 2.0.26
+Requires:      pkgconfig(gpgme)
+Requires:      gem(gpgme) = 2.0.26.4
 Requires:      gem(byebug) >= 0
 Requires:      gem(coveralls_reborn) >= 0
+Requires:      gem(mini_portile2) >= 2.7
 Requires:      gem(minitest) >= 2.1.0
 Requires:      gem(mocha) >= 0.9.12
 Requires:      gem(yard) >= 0.9.11
-Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(mini_portile2) >= 3
 Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(yard) >= 1
 
@@ -114,24 +117,28 @@ Ruby interface to GnuPG Made Easy (GPGME).
 %ruby_test
 
 %files
-%doc COPYING COPYING.LESSER README.rdoc
+%doc COPYING COPYING.LESSER README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-gpgme-doc
-%doc COPYING COPYING.LESSER README.rdoc
+%doc COPYING COPYING.LESSER README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-gpgme-devel
-%doc COPYING COPYING.LESSER README.rdoc
+%doc COPYING COPYING.LESSER README.md
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.26.4-alt0.1
+- ^ 2.0.26 -> 2.0.26p4
+- ! fixed dep to minitest gem
+
 * Wed Jul 15 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.26-alt1
 - ^ 2.0.24p4 -> 2.0.26 (closes ALT #59833)
 

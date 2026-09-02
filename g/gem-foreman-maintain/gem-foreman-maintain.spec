@@ -6,7 +6,7 @@
 
 Name:          gem-foreman-maintain
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman maintenance tool belt
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -28,16 +28,15 @@ BuildRequires: gem(mocha) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rexml) >= 0
 BuildRequires: gem(theforeman-rubocop) >= 0
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.0
 %ruby_alias_names foreman_maintain,foreman-maintain
 Requires:      ruby >= 2.7
 Requires:      gem(clamp) >= 0
 Requires:      gem(highline) >= 0
-Requires:      gem(rexml) >= 0
 Conflicts:     ruby >= 4
 Provides:      gem(foreman_maintain) = 1.16.0
 
@@ -48,14 +47,13 @@ running.
 
 %package       -n foreman-maintain
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman maintenance tool belt executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета foreman_maintain
 Group:         Other
 BuildArch:     noarch
 
 Requires:      gem(foreman_maintain) = 1.16.0
-Requires:      gem(rexml) >= 0
 
 %description   -n foreman-maintain
 Foreman maintenance tool belt executable(s).
@@ -70,7 +68,7 @@ running.
 %if_enabled    doc
 %package       -n gem-foreman-maintain-doc
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman maintenance tool belt documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_maintain
 Group:         Development/Documentation
@@ -92,7 +90,7 @@ running.
 %if_enabled    devel
 %package       -n gem-foreman-maintain-devel
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman maintenance tool belt development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_maintain
 Group:         Development/Ruby
@@ -106,7 +104,6 @@ Requires:      gem(minitest-stub-const) >= 0
 Requires:      gem(mocha) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(theforeman-rubocop) >= 0
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-foreman-maintain-devel
 Foreman maintenance tool belt development package.
@@ -154,6 +151,9 @@ running.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Sat Aug 08 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt1
 - ^ 1.7.5 -> 1.16.0
 

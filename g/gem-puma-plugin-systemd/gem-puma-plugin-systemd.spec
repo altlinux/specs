@@ -7,7 +7,7 @@
 
 Name:          gem-puma-plugin-systemd
 Version:       0.1.5.9
-Release:       alt1
+Release:       alt1.1
 Summary:       Puma integration with systemd: notify, status, watchdog
 License:       MIT
 Group:         Development/Ruby
@@ -17,7 +17,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.13
 BuildRequires: gem(rake) >= 12.3.3
@@ -25,12 +25,12 @@ BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(puma) >= 3.6
 BuildRequires: gem(json) >= 0
 BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(puma) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      gem(puma) >= 3.6
 Requires:      gem(json) >= 0
 Conflicts:     gem(puma) >= 7
@@ -50,7 +50,7 @@ locked up or run out of memory
 %if_enabled    doc
 %package       -n gem-puma-plugin-systemd-doc
 Version:       0.1.5.9
-Release:       alt1
+Release:       alt1.1
 Summary:       Puma integration with systemd: notify, status, watchdog documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma-plugin-systemd
 Group:         Development/Documentation
@@ -78,7 +78,7 @@ locked up or run out of memory
 %if_enabled    devel
 %package       -n gem-puma-plugin-systemd-devel
 Version:       0.1.5.9
-Release:       alt1
+Release:       alt1.1
 Summary:       Puma integration with systemd: notify, status, watchdog development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma-plugin-systemd
 Group:         Development/Ruby
@@ -89,7 +89,6 @@ Requires:      gem(bundler) >= 1.13
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(minitest) >= 5.0
 Conflicts:     gem(bundler) >= 3
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-puma-plugin-systemd-devel
 Puma integration with systemd: notify, status, watchdog development
@@ -138,6 +137,9 @@ locked up or run out of memory
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.1.5.9-alt1.1
+- ! fixed dep minitest gem
+
 * Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 0.1.5.9-alt1
 - ^ 0.1.5 -> 0.1.5p9
 

@@ -5,7 +5,7 @@
 %define        gemname backburner
 
 Name:          gem-backburner
-Version:       1.6.1
+Version:       1.7.0
 Release:       alt1
 Summary:       Reliable beanstalk background job processing made easy for Ruby and Sinatra
 License:       MIT
@@ -16,29 +16,31 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(minitest) >= 3.2.0
-BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(activejob) >= 6.0
+BuildRequires: gem(activesupport) >= 6.0
 BuildRequires: gem(beaneater) >= 1.0
-BuildRequires: gem(dante) > 0.1.5
 BuildRequires: gem(concurrent-ruby) >= 1.0.1
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(dante) > 0.1.5
+BuildRequires: gem(minitest) >= 5.1.0
+BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(rake) >= 0
 BuildConflicts: gem(beaneater) >= 2
 BuildConflicts: gem(concurrent-ruby) >= 2
+BuildConflicts: gem(minitest) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
 Requires:      gem(beaneater) >= 1.0
-Requires:      gem(dante) > 0.1.5
 Requires:      gem(concurrent-ruby) >= 1.0.1
+Requires:      gem(dante) > 0.1.5
 Conflicts:     gem(beaneater) >= 2
 Conflicts:     gem(concurrent-ruby) >= 2
-Provides:      gem(backburner) = 1.6.1
-
+Provides:      gem(backburner) = 1.7.0
 
 %description
 Backburner is a beanstalkd-powered job queue that can handle a very high volume
@@ -60,14 +62,14 @@ cases, custom logging, and extensible plugin hooks.
 
 
 %package       -n backburner
-Version:       1.6.1
+Version:       1.7.0
 Release:       alt1
 Summary:       Reliable beanstalk background job processing made easy for Ruby and Sinatra executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета backburner
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(backburner) = 1.6.1
+Requires:      gem(backburner) = 1.7.0
 
 %description   -n backburner
 Reliable beanstalk background job processing made easy for Ruby and Sinatra
@@ -90,21 +92,20 @@ Backburner supports multiple queues, job priorities, delays, and timeouts. In
 addition, Backburner has robust support for retrying failed jobs, handling error
 cases, custom logging, and extensible plugin hooks.
 
-
 %description   -n backburner -l ru_RU.UTF-8
 Исполнямка для самоцвета backburner.
 
 
 %if_enabled    doc
 %package       -n gem-backburner-doc
-Version:       1.6.1
+Version:       1.7.0
 Release:       alt1
 Summary:       Reliable beanstalk background job processing made easy for Ruby and Sinatra documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета backburner
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(backburner) = 1.6.1
+Requires:      gem(backburner) = 1.7.0
 
 %description   -n gem-backburner-doc
 Reliable beanstalk background job processing made easy for Ruby and Sinatra
@@ -127,7 +128,6 @@ Backburner supports multiple queues, job priorities, delays, and timeouts. In
 addition, Backburner has robust support for retrying failed jobs, handling error
 cases, custom logging, and extensible plugin hooks.
 
-
 %description   -n gem-backburner-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета backburner.
 %endif
@@ -135,18 +135,20 @@ cases, custom logging, and extensible plugin hooks.
 
 %if_enabled    devel
 %package       -n gem-backburner-devel
-Version:       1.6.1
+Version:       1.7.0
 Release:       alt1
 Summary:       Reliable beanstalk background job processing made easy for Ruby and Sinatra development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета backburner
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(backburner) = 1.6.1
-Requires:      gem(rake) >= 0
-Requires:      gem(minitest) >= 3.2.0
+Requires:      gem(backburner) = 1.7.0
+Requires:      gem(activejob) >= 6.0
+Requires:      gem(activesupport) >= 6.0
+Requires:      gem(minitest) >= 5.1.0
 Requires:      gem(mocha) >= 0
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(rake) >= 0
+Conflicts:     gem(minitest) >= 7
 
 %description   -n gem-backburner-devel
 Reliable beanstalk background job processing made easy for Ruby and Sinatra
@@ -169,7 +171,6 @@ Backburner supports multiple queues, job priorities, delays, and timeouts. In
 addition, Backburner has robust support for retrying failed jobs, handling error
 cases, custom logging, and extensible plugin hooks.
 
-
 %description   -n gem-backburner-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета backburner.
 %endif
@@ -188,26 +189,29 @@ cases, custom logging, and extensible plugin hooks.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n backburner
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %_bindir/backburner
 
 %if_enabled    doc
 %files         -n gem-backburner-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-backburner-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE README.md
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.7.0-alt1
+- ^ 1.6.1 -> 1.7.0
+
 * Wed Apr 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt1
 - + packaged gem with Ruby Policy 2.0

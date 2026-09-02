@@ -5,7 +5,7 @@
 %define        gemname rubocop-minitest
 
 Name:          gem-rubocop-minitest
-Version:       0.38.2
+Version:       0.40.0
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool
 License:       MIT
@@ -16,11 +16,11 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(bump) >= 0
+BuildRequires: gem(irb) >= 0
 BuildRequires: gem(lint_roller) >= 1.1
 BuildRequires: gem(minitest) >= 5.11
 BuildRequires: gem(minitest-proveit) >= 0
@@ -29,10 +29,9 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-ast) >= 1.7.0
 BuildRequires: gem(rubocop-performance) >= 1.11.3
-BuildRequires: gem(test-queue) >= 0
 BuildRequires: gem(yard) >= 0.9
 BuildConflicts: gem(lint_roller) >= 2
-BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-ast) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
@@ -42,16 +41,19 @@ BuildConflicts: gem(yard) >= 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_use_gem_dependency rubocop-ast >= 1.7.0,rubocop-ast < 2
 Requires:      ruby >= 2.7.0
+Requires:      gem(irb) >= 0
 Requires:      gem(lint_roller) >= 1.1
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-ast) >= 1.7.0
 Conflicts:     gem(lint_roller) >= 2
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-ast) >= 2
-Provides:      gem(rubocop-minitest) = 0.38.2
+Provides:      rubocop-minitest = %EVR
+Provides:      gem(rubocop-minitest) = 0.40.0
 
 %description
 Automatic Minitest code style checking tool. A RuboCop extension focused on
@@ -60,16 +62,14 @@ enforcing Minitest best practices and coding conventions.
 
 %if_enabled    doc
 %package       -n gem-rubocop-minitest-doc
-Version:       0.38.2
+Version:       0.40.0
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-minitest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(rubocop-minitest) = 0.38.2
+Requires:      gem(rubocop-minitest) = 0.40.0
 
 %description   -n gem-rubocop-minitest-doc
 Automatic Minitest code style checking tool documentation files.
@@ -84,33 +84,14 @@ enforcing Minitest best practices and coding conventions.
 
 %if_enabled    devel
 %package       -n gem-rubocop-minitest-devel
-Version:       0.38.2
+Version:       0.40.0
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-minitest
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(rubocop-minitest) = 0.38.2
-Requires:      gem(bump) >= 0
-Requires:      gem(lint_roller) >= 1.1
-Requires:      gem(minitest) >= 5.11
-Requires:      gem(minitest-proveit) >= 0
-Requires:      gem(prism) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(rubocop-ast) >= 1.7.0
-Requires:      gem(rubocop-performance) >= 1.11.3
-Requires:      gem(test-queue) >= 0
-Requires:      gem(yard) >= 0.9
-Conflicts:     gem(lint_roller) >= 2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-ast) >= 2
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(yard) >= 1
+Requires:      gem(rubocop-minitest) = 0.40.0
 
 %description   -n gem-rubocop-minitest-devel
 Automatic Minitest code style checking tool development package.
@@ -153,6 +134,9 @@ enforcing Minitest best practices and coding conventions.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.40.0-alt1
+- ^ 0.38.2 -> 0.40.0
+
 * Sun Nov 23 2025 Pavel Skrylev <majioa@altlinux.org> 0.38.2-alt1
 - ^ 0.19.1 -> 0.38.2
 

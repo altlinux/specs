@@ -5,7 +5,7 @@
 %define        gemname net-http-persistent
 
 Name:          gem-net-http-persistent
-Version:       4.0.4
+Version:       4.0.8
 Release:       alt1
 Summary:       Thread-safe persistent connections with Net::HTTP
 License:       MIT
@@ -16,28 +16,31 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(connection_pool) >= 2.2.4
 BuildRequires: gem(minitest) >= 5.15
-BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-manifest) >= 0.2
-BuildRequires: gem(connection_pool) >= 2.2
+BuildRequires: gem(rdoc) >= 4.0
+BuildConflicts: gem(connection_pool) >= 4
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
 BuildConflicts: gem(rake-manifest) >= 1
-BuildConflicts: gem(connection_pool) >= 3
+BuildConflicts: gem(rdoc) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(connection_pool) >= 2.2
-Conflicts:     gem(connection_pool) >= 3
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
+Requires:      ruby >= 2.4
+Requires:      gem(connection_pool) >= 2.2.4
+Conflicts:     gem(connection_pool) >= 4
 Obsoletes:     ruby-net-http-persistent < %EVR
 Provides:      ruby-net-http-persistent = %EVR
-Provides:      gem(net-http-persistent) = 4.0.4
-
+Provides:      net-http-persistent = %EVR
+Provides:      gem(net-http-persistent) = 4.0.8
 
 %description
 Manages persistent connections using Net::HTTP plus a speed fix for Ruby 1.8.
@@ -55,14 +58,14 @@ retry according to RFC 2616.
 
 %if_enabled    doc
 %package       -n gem-net-http-persistent-doc
-Version:       4.0.4
+Version:       4.0.8
 Release:       alt1
 Summary:       Thread-safe persistent connections with Net::HTTP documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета net-http-persistent
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(net-http-persistent) = 4.0.4
+Requires:      gem(net-http-persistent) = 4.0.8
 
 %description   -n gem-net-http-persistent-doc
 Thread-safe persistent connections with Net::HTTP documentation files.
@@ -86,22 +89,14 @@ retry according to RFC 2616.
 
 %if_enabled    devel
 %package       -n gem-net-http-persistent-devel
-Version:       4.0.4
+Version:       4.0.8
 Release:       alt1
 Summary:       Thread-safe persistent connections with Net::HTTP development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета net-http-persistent
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(net-http-persistent) = 4.0.4
-Requires:      gem(rake) >= 13.0
-Requires:      gem(minitest) >= 5.15
-Requires:      gem(rdoc) >= 4.0
-Requires:      gem(rake-manifest) >= 0.2
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(rake-manifest) >= 1
+Requires:      gem(net-http-persistent) = 4.0.8
 
 %description   -n gem-net-http-persistent-devel
 Thread-safe persistent connections with Net::HTTP development package.
@@ -136,23 +131,26 @@ retry according to RFC 2616.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.txt README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-net-http-persistent-doc
-%doc README.rdoc
+%doc History.txt README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-net-http-persistent-devel
-%doc README.rdoc
+%doc History.txt README.rdoc
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 4.0.8-alt1
+- ^ 4.0.4 -> 4.0.8
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 4.0.4-alt1
 - ^ 4.0.1 -> 4.0.4
 

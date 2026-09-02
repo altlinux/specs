@@ -4,8 +4,8 @@
 %def_enable    devel
 
 Name:          trilogy
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible client library
 License:       MIT
 Group:         Databases
@@ -14,7 +14,7 @@ Vcs:           https://github.com/trilogy-libraries/trilogy.git
 Packager:      Baltix Maintainers Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: openssl-devel
 BuildRequires: cmake
@@ -26,13 +26,14 @@ BuildRequires: gem(benchmark-ips) >= 0
 BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(minitest) >= 5.5
 BuildRequires: gem(mysql2) >= 0
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency simplecov >= 0
+%ruby_use_gem_dependency minitest >= 5.5
 
-%ruby_use_gem_version trilogy:2.9.0.36
+%ruby_use_gem_version trilogy:2.13.0
 %ruby_regard_path_tokens contrib
 
 %description
@@ -56,8 +57,8 @@ Features:
 
 
 %package       -n libtrilogy
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible library
 Group:         Development/C
 
@@ -82,14 +83,13 @@ Features:
 
 
 %package       -n gem-trilogy
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy
 Group:         Development/Ruby
 
 Requires:      gem(bigdecimal) >= 0
-Requires:      gem(trilogy) >= 0
-Provides:      gem(trilogy) = 2.9.0.36
+Provides:      gem(trilogy) = 2.13.0
 
 %description   -n gem-trilogy
 A friendly MySQL-compatible library for Ruby, binding to libtrilogy.
@@ -113,14 +113,14 @@ Features:
 
 %if_enabled    doc
 %package       -n gem-trilogy-doc
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета trilogy
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(trilogy) = 2.9.0.36
+Requires:      gem(trilogy) = 2.13.0
 
 %description   -n gem-trilogy-doc
 A friendly MySQL-compatible library for Ruby, binding to libtrilogy
@@ -149,21 +149,19 @@ Features:
 
 %if_enabled    devel
 %package       -n gem-trilogy-devel
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета trilogy
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(trilogy) = 2.9.0.36
+Requires:      gem(trilogy) = 2.13.0
 Requires:      gem(benchmark-ips) >= 0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(minitest) >= 5.5
 Requires:      gem(mysql2) >= 0
 Requires:      gem(rake-compiler) >= 1.0
-Requires:      gem(trilogy) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rake-compiler) >= 2
 
 %description   -n gem-trilogy-devel
@@ -193,8 +191,8 @@ Features:
 
 %if_enabled    devel
 %package       -n libtrilogy-devel
-Version:       2.9.0.36
-Release:       alt0.2
+Version:       2.13.0
+Release:       alt1
 Summary:       A friendly MySQL-compatible library development package
 Summary(ru_RU.UTF-8): Файлы для разработки буковины trilogy
 Group:         Development/C
@@ -250,14 +248,14 @@ Features:
 
 %files         -n gem-trilogy
 %doc LICENSE README.md
-%ruby_gemspecdir/trilogy-2.9.0.36.gemspec
-%ruby_gemslibdir/trilogy-2.9.0.36
-%ruby_gemsextdir/trilogy-2.9.0.36
+%ruby_gemspecdir/trilogy-2.13.0.gemspec
+%ruby_gemslibdir/trilogy-2.13.0
+%ruby_gemsextdir/trilogy-2.13.0
 
 %if_enabled    doc
 %files         -n gem-trilogy-doc
 %doc LICENSE README.md
-%ruby_gemsdocdir/trilogy-2.9.0.36
+%ruby_gemsdocdir/trilogy-2.13.0
 %endif
 
 %if_enabled    devel
@@ -276,6 +274,9 @@ Features:
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.13.0-alt1
+- ^ 2.9.0p36 -> 2.13.0
+
 * Wed Nov 26 2025 Pavel Skrylev <majioa@altlinux.org> 2.9.0.36-alt0.2
 - ! fixed NTBFS removing lost path
 

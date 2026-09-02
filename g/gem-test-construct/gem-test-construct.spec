@@ -6,7 +6,7 @@
 
 Name:          gem-test-construct
 Version:       2.0.2.9
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Creates temporary files and directories for testing
 License:       MIT
 Group:         Development/Ruby
@@ -23,7 +23,6 @@ BuildRequires: gem(minitest) >= 5.0.8
 BuildRequires: gem(mocha) >= 0.14.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(rspec) >= 4
 %endif
@@ -32,9 +31,8 @@ BuildConflicts: gem(rspec) >= 4
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency mocha >= 2.0,mocha < 3
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 5.0.8
 %ruby_alias_names test_construct,test-construct
-Provides:      test_construct = %EVR
 Provides:      gem(test_construct) = 2.0.2.9
 
 %ruby_use_gem_version test_construct:2.0.2.9
@@ -47,7 +45,7 @@ testing.
 %if_enabled    doc
 %package       -n gem-test-construct-doc
 Version:       2.0.2.9
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Creates temporary files and directories for testing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test_construct
 Group:         Development/Documentation
@@ -66,7 +64,7 @@ Creates temporary files and directories for testing documentation files.
 %if_enabled    devel
 %package       -n gem-test-construct-devel
 Version:       2.0.2.9
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Creates temporary files and directories for testing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета test_construct
 Group:         Development/Ruby
@@ -78,7 +76,6 @@ Requires:      gem(minitest) >= 5.0.8
 Requires:      gem(mocha) >= 0.14.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rspec) >= 4
 
@@ -120,6 +117,9 @@ Creates temporary files and directories for testing development package.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.2.9-alt0.2
+- ! fixed dep to minitest
+
 * Sun Jan 26 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.2.9-alt0.1
 - ^ 2.0.2 -> 2.0.2p9
 

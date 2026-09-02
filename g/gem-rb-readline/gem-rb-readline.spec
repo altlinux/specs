@@ -6,7 +6,7 @@
 
 Name:          gem-rb-readline
 Version:       0.5.5.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pure-Ruby Readline Implementation
 License:       BSD
 Group:         Development/Ruby
@@ -19,11 +19,11 @@ BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.2
 BuildRequires: gem(rake) >= 0
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.2
 Requires:      ruby >= 1.8.6
 Requires:      rubygems >= 1.3.5
 Provides:      gem(rb-readline) = 0.5.5.3
@@ -39,7 +39,7 @@ library.
 %if_enabled    doc
 %package       -n gem-rb-readline-doc
 Version:       0.5.5.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pure-Ruby Readline Implementation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rb-readline
 Group:         Development/Documentation
@@ -62,7 +62,7 @@ library.
 %if_enabled    devel
 %package       -n gem-rb-readline-devel
 Version:       0.5.5.3
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Pure-Ruby Readline Implementation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rb-readline
 Group:         Development/Ruby
@@ -71,7 +71,6 @@ BuildArch:     noarch
 Requires:      gem(rb-readline) = 0.5.5.3
 Requires:      gem(minitest) >= 5.2
 Requires:      gem(rake) >= 0
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-rb-readline-devel
 Pure-Ruby Readline Implementation development package.
@@ -115,6 +114,9 @@ library.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.5.5.3-alt0.2
+- ! fixed dep to minitest gem
+
 * Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 0.5.5.3-alt0.1
 - ^ 0.5.5 -> 0.5.5p3
 - * updated to upstream git base

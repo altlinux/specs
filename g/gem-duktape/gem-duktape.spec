@@ -6,7 +6,7 @@
 
 Name:          gem-duktape
 Version:       2.7.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Bindings to the Duktape JavaScript interpreter
 License:       MIT
 Group:         Development/Ruby
@@ -15,19 +15,19 @@ Vcs:           https://github.com/judofyr/duktape.rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
+BuildRequires: gem(minitest) >= 5.2
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(sdoc) >= 0
-BuildRequires: gem(minitest) >= 5.2
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.2
+Requires:      ruby >= 1.9.3
 Provides:      gem(duktape) = 2.7.0.0
-
 
 %description
 Bindings to the Duktape JavaScript interpreter
@@ -36,7 +36,7 @@ Bindings to the Duktape JavaScript interpreter
 %if_enabled    doc
 %package       -n gem-duktape-doc
 Version:       2.7.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Bindings to the Duktape JavaScript interpreter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета duktape
 Group:         Development/Documentation
@@ -55,18 +55,17 @@ Bindings to the Duktape JavaScript interpreter documentation files.
 %if_enabled    devel
 %package       -n gem-duktape-devel
 Version:       2.7.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Bindings to the Duktape JavaScript interpreter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета duktape
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(duktape) = 2.7.0.0
+Requires:      gem(minitest) >= 5.2
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(sdoc) >= 0
-Requires:      gem(minitest) >= 5.2
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-duktape-devel
 Bindings to the Duktape JavaScript interpreter development package.
@@ -89,25 +88,28 @@ Bindings to the Duktape JavaScript interpreter development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-duktape-doc
-%doc README.md
+%doc CHANGELOG.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-duktape-devel
-%doc README.md
+%doc CHANGELOG.md README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.7.0.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 2.7.0.0-alt1
 - ^ 2.3.0.0 -> 2.7.0.0
 

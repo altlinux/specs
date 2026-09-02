@@ -6,7 +6,7 @@
 
 Name:          gem-pry-byebug
 Version:       3.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast debugging with Pry
 License:       MIT
 Group:         Development/Ruby
@@ -28,7 +28,6 @@ BuildRequires: gem(pry) >= 0.13
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rubocop) >= 1.0
 BuildConflicts: gem(byebug) >= 14
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-bisect) >= 2
 BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rake) >= 14
@@ -41,6 +40,7 @@ BuildConflicts: gem(rubocop) >= 2
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
 %ruby_use_gem_dependency chandler >= 0.9.0.5,chandler < 1
 %ruby_use_gem_dependency mdl >= 0.17.0,mdl < 1
+%ruby_use_gem_dependency minitest >= 5.14
 Requires:      ruby >= 3.2.0
 Requires:      gem(byebug) >= 11.1.3
 Requires:      gem(pry) >= 0.13
@@ -56,7 +56,7 @@ Combine 'pry' with 'byebug'. Adds 'step', 'next', 'finish', 'continue' and
 %if_enabled    doc
 %package       -n gem-pry-byebug-doc
 Version:       3.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast debugging with Pry documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pry-byebug
 Group:         Development/Documentation
@@ -78,7 +78,7 @@ Combine 'pry' with 'byebug'. Adds 'step', 'next', 'finish', 'continue' and
 %if_enabled    devel
 %package       -n gem-pry-byebug-devel
 Version:       3.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast debugging with Pry development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pry-byebug
 Group:         Development/Ruby
@@ -95,7 +95,6 @@ Requires:      gem(pry) >= 0.13
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rubocop) >= 1.0
 Conflicts:     gem(byebug) >= 14
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-bisect) >= 2
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rake) >= 14
@@ -142,6 +141,9 @@ Combine 'pry' with 'byebug'. Adds 'step', 'next', 'finish', 'continue' and
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 3.12.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Mon Jun 22 2026 Pavel Skrylev <majioa@altlinux.org> 3.12.0-alt1
 - ^ 3.11.0 -> 3.12.0
 

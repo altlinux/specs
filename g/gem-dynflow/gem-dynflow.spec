@@ -5,7 +5,7 @@
 %define        gemname dynflow
 
 Name:          gem-dynflow
-Version:       1.9.3
+Version:       2.0.1
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
@@ -15,11 +15,11 @@ Vcs:           https://github.com/dynflow/dynflow.git
 Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
-Source3:       dynflow.service
-Source2:       dynflow.sysconfig
 Source1:       dynflow
+Source2:       dynflow.sysconfig
+Source3:       dynflow.service
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(activejob) >= 0
 BuildRequires: gem(activerecord) >= 0
@@ -28,6 +28,7 @@ BuildRequires: gem(concurrent-ruby) >= 1.1.3
 BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0
 BuildRequires: gem(csv) >= 3.1
 BuildRequires: gem(drb) >= 0
+BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(minitest-reporters) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
 BuildRequires: gem(mocha) >= 0
@@ -42,20 +43,17 @@ BuildRequires: gem(sinatra) >= 0
 BuildRequires: gem(sqlite3) >= 0
 BuildRequires: gem(syslog) >= 0
 BuildConflicts: gem(algebrick) >= 0.8
-BuildConflicts: gem(concurrent-ruby) >= 2
-BuildConflicts: gem(concurrent-ruby-edge) >= 1
 BuildConflicts: gem(csv) >= 4
-BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency concurrent-ruby >= 1.2.3,concurrent-ruby < 2
-%ruby_use_gem_dependency concurrent-ruby-edge >= 0.7,concurrent-ruby-edge < 1
 %ruby_use_gem_dependency msgpack >= 1.7.2,msgpack < 2
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency rails >= 7.1,rails < 8
-Requires:      ruby >= 2.7.0
+%ruby_use_gem_dependency minitest >= 6.0
+%ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
+%ruby_use_gem_dependency concurrent-ruby >= 1.1.3
+%ruby_use_gem_dependency concurrent-ruby-edge >= 0.6.0
+Requires:      ruby >= 3.0.0
 Requires:      gem(algebrick) >= 0.7.0
 Requires:      gem(concurrent-ruby) >= 1.1.3
 Requires:      gem(concurrent-ruby-edge) >= 0.6.0
@@ -64,12 +62,10 @@ Requires:      gem(msgpack) >= 1.3
 Requires:      gem(multi_json) >= 0
 Requires:      gem(sequel) >= 4.0.0
 Conflicts:     gem(algebrick) >= 0.8
-Conflicts:     gem(concurrent-ruby) >= 2
-Conflicts:     gem(concurrent-ruby-edge) >= 1
 Conflicts:     gem(csv) >= 4
 Obsoletes:     ruby-dynflow < %EVR
 Provides:      ruby-dynflow = %EVR
-Provides:      gem(dynflow) = 1.9.3
+Provides:      gem(dynflow) = 2.0.1
 
 %description
 Dynflow [DYN(amic work)FLOW] is a workflow engine written in Ruby that allows
@@ -96,14 +92,14 @@ choosing the right one (providing default implementations as well).
 
 %if_enabled    doc
 %package       -n gem-dynflow-doc
-Version:       1.9.3
+Version:       2.0.1
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dynflow
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.3
+Requires:      gem(dynflow) = 2.0.1
 
 %description   -n gem-dynflow-doc
 DYNamic workFLOW orchestration engine documentation files.
@@ -136,17 +132,18 @@ choosing the right one (providing default implementations as well).
 
 %if_enabled    devel
 %package       -n gem-dynflow-devel
-Version:       1.9.3
+Version:       2.0.1
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dynflow
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.3
+Requires:      gem(dynflow) = 2.0.1
 Requires:      gem(activejob) >= 0
 Requires:      gem(activerecord) >= 0
 Requires:      gem(drb) >= 0
+Requires:      gem(minitest) >= 0
 Requires:      gem(minitest-reporters) >= 0
 Requires:      gem(minitest-stub-const) >= 0
 Requires:      gem(mocha) >= 0
@@ -157,7 +154,6 @@ Requires:      gem(rake) >= 0
 Requires:      gem(sinatra) >= 0
 Requires:      gem(sqlite3) >= 0
 Requires:      gem(syslog) >= 0
-Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-dynflow-devel
 DYNamic workFLOW orchestration engine development package.
@@ -189,15 +185,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n dynflow
-Version:       1.9.3
+Version:       2.0.1
 Release:       alt1
 Summary:       DYNamic workFLOW engine executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета dynflow
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.3
-Requires:      gem-dynflow = %EVR
+Requires:      gem(dynflow) = 2.0.1
 
 %description   -n dynflow
 Ruby workflow/orchestration engine
@@ -259,6 +254,9 @@ exit 0
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
+- ^ 1.9.3 -> 2.0.1
+
 * Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 1.9.3-alt1
 - ^ 1.9.0 -> 1.9.3
 - ! fixed lost files by their restoration

@@ -6,7 +6,7 @@
 
 Name:          gem-chandler
 Version:       0.9.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Syncs CHANGELOG entries to GitHub's release notes
 License:       MIT
 Group:         Development/Ruby
@@ -30,7 +30,6 @@ BuildRequires: gem(rubocop) >= 0.48.1
 BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(coveralls) >= 0.9
 BuildConflicts: gem(danger) >= 10
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(rake) >= 14
@@ -42,6 +41,7 @@ BuildConflicts: gem(rubocop) >= 2
 %ruby_use_gem_dependency mocha >= 2.0,mocha < 3
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency minitest >= 5.10
 Requires:      ruby >= 2.3.0
 Requires:      gem(netrc) >= 0
 Requires:      gem(octokit) >= 2.2.0
@@ -56,7 +56,7 @@ process!
 
 %package       -n chandler
 Version:       0.9.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Syncs CHANGELOG entries to GitHub's release notes executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chandler
 Group:         Other
@@ -79,7 +79,7 @@ process!
 %if_enabled    doc
 %package       -n gem-chandler-doc
 Version:       0.9.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Syncs CHANGELOG entries to GitHub's release notes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chandler
 Group:         Development/Documentation
@@ -103,7 +103,7 @@ process!
 %if_enabled    devel
 %package       -n gem-chandler-devel
 Version:       0.9.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Syncs CHANGELOG entries to GitHub's release notes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chandler
 Group:         Development/Ruby
@@ -121,7 +121,6 @@ Requires:      gem(rubocop) >= 0.48.1
 Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(coveralls) >= 0.9
 Conflicts:     gem(danger) >= 10
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
 Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
@@ -174,6 +173,9 @@ process!
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.0.5-alt1.1
+- ! fixed dep to minitest gem
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.9.0.5-alt1
 - ^ 0.9.0 -> 0.9.0.5
 

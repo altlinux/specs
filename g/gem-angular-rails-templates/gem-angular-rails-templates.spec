@@ -6,7 +6,7 @@
 
 Name:          gem-angular-rails-templates
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Use your angular templates with rails' asset pipeline
 License:       MIT
 Group:         Development/Ruby
@@ -15,8 +15,6 @@ Vcs:           https://github.com/pitr/angular-rails-templates.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(capybara) >= 0
@@ -30,7 +28,6 @@ BuildRequires: gem(sprockets) >= 3.0
 BuildRequires: gem(sprockets-rails) >= 0
 BuildRequires: gem(tilt) >= 0
 BuildRequires: gem(uglifier) >= 0
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(rails) >= 9
 BuildConflicts: gem(railties) >= 8.2
 BuildConflicts: gem(sprockets) >= 5
@@ -38,6 +35,7 @@ BuildConflicts: gem(sprockets) >= 5
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_version minitest >= 0
 Requires:      gem(railties) >= 5.0
 Requires:      gem(sprockets) >= 3.0
 Requires:      gem(sprockets-rails) >= 0
@@ -53,14 +51,12 @@ Use your angular templates with rails' asset pipeline
 %if_enabled    doc
 %package       -n gem-angular-rails-templates-doc
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Use your angular templates with rails' asset pipeline documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета angular-rails-templates
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(angular-rails-templates) = 1.4.0
 
 %description   -n gem-angular-rails-templates-doc
@@ -74,14 +70,12 @@ Use your angular templates with rails' asset pipeline documentation files.
 %if_enabled    devel
 %package       -n gem-angular-rails-templates-devel
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Use your angular templates with rails' asset pipeline development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета angular-rails-templates
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(angular-rails-templates) = 1.4.0
 Requires:      gem(capybara) >= 0
 Requires:      gem(coveralls_reborn) >= 0
@@ -90,7 +84,6 @@ Requires:      gem(kramdown) >= 0
 Requires:      gem(rails) >= 5.0
 Requires:      gem(slim-rails) >= 0
 Requires:      gem(uglifier) >= 0
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rails) >= 9
 
 %description   -n gem-angular-rails-templates-devel
@@ -131,6 +124,9 @@ Use your angular templates with rails' asset pipeline development package.
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Tue Mar 10 2026 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

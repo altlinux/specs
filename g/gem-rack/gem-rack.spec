@@ -6,7 +6,7 @@
 
 Name:          gem-rack
 Epoch:         1
-Version:       3.1.7
+Version:       3.2.0
 Release:       alt1
 Summary:       Modular Ruby webserver interface
 License:       MIT
@@ -18,26 +18,23 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         fix-digit-when-nil-body.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.0
-BuildRequires: gem(minitest-global_expectations) >= 0
-BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rubocop) >= 0
-BuildRequires: gem(rubocop-packaging) >= 0
-BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(bake-test-external) >= 0
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(logger) >= 0
+BuildRequires: gem(minitest) > 5
+BuildRequires: gem(minitest-global_expectations) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(webrick) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 2.7.3
 Obsoletes:     ruby-rack < %EVR
 Provides:      ruby-rack = %EVR
-Provides:      gem(rack) = 3.1.7
-
+Provides:      gem(rack) = 3.2.0
 
 %description
 Rack provides a minimal, modular and adaptable interface for developing web
@@ -51,14 +48,14 @@ You may need to install appropriate gem-rack-handler-XXX.
 
 %if_enabled    doc
 %package       -n gem-rack-doc
-Version:       3.1.7
+Version:       3.2.0
 Release:       alt1
 Summary:       Modular Ruby webserver interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rack) = 3.1.7
+Requires:      gem(rack) = 3.2.0
 
 %description   -n gem-rack-doc
 Modular Ruby webserver interface documentation files.
@@ -78,24 +75,21 @@ You may need to install appropriate gem-rack-handler-XXX.
 
 %if_enabled    devel
 %package       -n gem-rack-devel
-Version:       3.1.7
+Version:       3.2.0
 Release:       alt1
 Summary:       Modular Ruby webserver interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rack) = 3.1.7
-Requires:      gem(minitest) >= 5.0
-Requires:      gem(minitest-global_expectations) >= 0
-Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rubocop) >= 0
-Requires:      gem(rubocop-packaging) >= 0
-Requires:      gem(rdoc) >= 0
-Requires:      gem(webrick) >= 0
+Requires:      gem(rack) = 3.2.0
 Requires:      gem(bake-test-external) >= 0
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(bundler) >= 0
+Requires:      gem(logger) >= 0
+Requires:      gem(minitest) > 5
+Requires:      gem(minitest-global_expectations) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(webrick) >= 0
 
 %description   -n gem-rack-devel
 Modular Ruby webserver interface development package.
@@ -127,23 +121,26 @@ You may need to install appropriate gem-rack-handler-XXX.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md MIT-LICENSE README.md contrib
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-rack-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md MIT-LICENSE README.md contrib
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rack-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTING.md MIT-LICENSE README.md contrib
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 1:3.2.0-alt1
+- ^ 3.1.7 -> 3.2.0
+
 * Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.1.7-alt1
 - ^ 3.0.10 -> 3.1.7
 

@@ -5,7 +5,7 @@
 %define        gemname oj
 
 Name:          gem-oj
-Version:       3.16.4
+Version:       3.17.6
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
@@ -15,30 +15,38 @@ Vcs:           https://github.com/ohler55/oj.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(bigdecimal) >= 3.0
 BuildRequires: gem(minitest) >= 5
+BuildRequires: gem(ostruct) >= 0.2
 BuildRequires: gem(rake-compiler) >= 0.9
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-minitest) >= 0.13.0
+BuildRequires: gem(ruby_memcheck) >= 2.2.1
 BuildRequires: gem(test-unit) >= 3.0
-BuildRequires: gem(bigdecimal) >= 3.0
-BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-minitest) >= 1
+BuildConflicts: gem(ruby_memcheck) >= 4
 BuildConflicts: gem(test-unit) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
 %ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
+%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 3
+Requires:      ruby >= 2.7
 Requires:      gem(bigdecimal) >= 3.0
+Requires:      gem(ostruct) >= 0.2
 Obsoletes:     ruby-oj < %EVR
 Provides:      ruby-oj = %EVR
-Provides:      gem(oj) = 3.16.4
-
+Provides:      oj = %EVR
+Provides:      gem(oj) = 3.17.6
 
 %description
 Version 3.0 is out! 3.0 provides better json gem and Rails compatibility. It
@@ -47,14 +55,14 @@ also provides additional optimization options.
 
 %if_enabled    doc
 %package       -n gem-oj-doc
-Version:       3.16.4
+Version:       3.17.6
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета oj
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(oj) = 3.16.4
+Requires:      gem(oj) = 3.17.6
 
 %description   -n gem-oj-doc
 A fast JSON parser and Object marshaller as a Ruby gem documentation
@@ -70,23 +78,21 @@ also provides additional optimization options.
 
 %if_enabled    devel
 %package       -n gem-oj-devel
-Version:       3.16.4
+Version:       3.17.6
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета oj
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(oj) = 3.16.4
+Requires:      gem(oj) = 3.17.6
 Requires:      gem(minitest) >= 5
 Requires:      gem(rake-compiler) >= 0.9
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(rubocop-minitest) >= 0.13.0
+Requires:      gem(ruby_memcheck) >= 2.2.1
 Requires:      gem(test-unit) >= 3.0
-Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest) >= 7
 Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-minitest) >= 1
+Conflicts:     gem(ruby_memcheck) >= 4
 Conflicts:     gem(test-unit) >= 4
 
 %description   -n gem-oj-devel
@@ -114,25 +120,28 @@ also provides additional optimization options.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-oj-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-oj-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 3.17.6-alt1
+- ^ 3.16.4 -> 3.17.6
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 3.16.4-alt1
 - ^ 3.13.21 -> 3.16.4
 

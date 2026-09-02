@@ -6,7 +6,7 @@
 
 Name:          gem-ldap-fluff
 Version:       0.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style
 License:       GPL-2.0-only
 Group:         Other
@@ -24,7 +24,6 @@ BuildRequires: gem(net-ldap) >= 0.11
 BuildRequires: gem(rake) >= 13.1
 BuildRequires: gem(theforeman-rubocop) >= 0.0.6
 BuildConflicts: gem(activesupport) >= 8
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(net-ldap) >= 1
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(theforeman-rubocop) >= 1
@@ -33,6 +32,7 @@ BuildConflicts: gem(theforeman-rubocop) >= 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
+%ruby_use_gem_dependency minitest >= 5.0
 %ruby_alias_names ldap_fluff,ldap-fluff
 Requires:      ruby >= 2.7
 Requires:      gem(activesupport) >= 5
@@ -50,7 +50,7 @@ implementations
 %if_enabled    doc
 %package       -n gem-ldap-fluff-doc
 Version:       0.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ldap_fluff
 Group:         Development/Documentation
@@ -73,7 +73,7 @@ implementations
 %if_enabled    devel
 %package       -n gem-ldap-fluff-devel
 Version:       0.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ldap_fluff
 Group:         Development/Ruby
@@ -82,7 +82,6 @@ BuildArch:     noarch
 Requires:      gem(ldap_fluff) = 0.9.0
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake) >= 13.1
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rake) >= 14
 
 %description   -n gem-ldap-fluff-devel
@@ -127,6 +126,9 @@ implementations
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1.1
+- ! fixed dep to minitest gem
+
 * Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1
 - ^ 0.8.0 -> 0.9.0
 

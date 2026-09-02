@@ -5,7 +5,7 @@
 %define        gemname path_expander
 
 Name:          gem-path-expander
-Version:       1.1.3
+Version:       2.0.1
 Release:       alt1
 Summary:       PathExpander helps pre-process command-line arguments expanding directories into their constituent files
 License:       MIT
@@ -16,23 +16,19 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(hoe) >= 0
 BuildRequires: gem(rdoc) >= 4.0
-BuildRequires: gem(hoe) >= 4.2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_alias_names path_expander,path-expander
-%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,(?-mix:mongrel_),fastthread,(?-mix:project)
-Provides:      gem(path_expander) = 1.1.3
-
+%ruby_ignore_names _names
+Provides:      path_expander = %EVR
+Provides:      gem(path_expander) = 2.0.1
 
 %description
 PathExpander helps pre-process command-line arguments expanding directories into
@@ -49,14 +45,14 @@ passing ARGV through PathExpander.
 
 %if_enabled    doc
 %package       -n gem-path-expander-doc
-Version:       1.1.3
+Version:       2.0.1
 Release:       alt1
 Summary:       PathExpander helps pre-process command-line arguments expanding directories into their constituent files documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета path_expander
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(path_expander) = 1.1.3
+Requires:      gem(path_expander) = 2.0.1
 
 %description   -n gem-path-expander-doc
 PathExpander helps pre-process command-line arguments expanding directories into
@@ -80,20 +76,16 @@ passing ARGV through PathExpander.
 
 %if_enabled    devel
 %package       -n gem-path-expander-devel
-Version:       1.1.3
+Version:       2.0.1
 Release:       alt1
 Summary:       PathExpander helps pre-process command-line arguments expanding directories into their constituent files development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета path_expander
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(path_expander) = 1.1.3
-Requires:      gem(minitest) >= 5.17.0
+Requires:      gem(path_expander) = 2.0.1
+Requires:      gem(hoe) >= 0
 Requires:      gem(rdoc) >= 4.0
-Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-path-expander-devel
 PathExpander helps pre-process command-line arguments expanding directories into
@@ -128,23 +120,26 @@ passing ARGV through PathExpander.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-path-expander-doc
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-path-expander-devel
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %endif
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
+- ^ 1.1.3 -> 2.0.1
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1
 - ^ 1.1.0 -> 1.1.3
 
