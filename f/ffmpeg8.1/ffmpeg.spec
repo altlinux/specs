@@ -48,6 +48,7 @@
 %def_enable libfontconfig
 %def_enable libfreetype
 %def_enable libfribidi
+%def_disable libglslang
 %def_enable libgme
 %def_enable libgsm
 %def_enable libharfbuzz
@@ -116,7 +117,6 @@
 %def_disable libkvazaar
 %def_disable libmodplug
 %def_disable libmysofa
-%def_enable libonnxruntime
 %def_disable libopenmpt
 %def_disable libshine
 %def_enable libsrt
@@ -125,9 +125,13 @@
 %def_disable libvmaf
 %def_disable libxavs2
 %def_disable mbedtls
+%def_disable omx
 %def_disable pocketsphinx
 %def_disable vapoursynth
 %def_enable v4l2_m2m
+
+# need libcelt >= 0.11.0
+%def_disable libcelt
 
 %if_enabled mmx
 %set_verify_elf_method textrel=relaxed
@@ -146,22 +150,22 @@
 %def_disable cuvid
 %endif # cuvid
 
-%define avdevicever 63
-%define avformatver 63
-%define avfilterver 12
-%define avcodecver 63
-%define swresamplever 7
-%define swscalever 10
-%define avutilver 61
+%define avdevicever 62
+%define avformatver 62
+%define avfilterver 11
+%define avcodecver 62
+%define swresamplever 6
+%define swscalever 9
+%define avutilver 60
 
 %ifarch %ix86
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg
+Name:		ffmpeg8.1
 Epoch:		2
-Version: 9.0.1
-Release: alt1
+Version: 8.1.2
+Release: alt3
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -173,7 +177,7 @@ VCS: https://github.com/FFmpeg/FFmpeg
 # https://git.ffmpeg.org/ffmpeg.git
 Source:		%name-%version.tar
 Patch:		%name-%version-%release.patch
-Patch2000: %name-e2k-simd.patch
+Patch2000: ffmpeg-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 BuildRequires: nasm
@@ -194,6 +198,7 @@ BuildRequires:	yasm
 %{?_enable_libbs2b:BuildRequires: libbs2b-devel}
 %{?_enable_libcaca:BuildRequires: libcaca-devel}
 %{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
+%{?_enable_libcelt:BuildRequires: libcelt-devel}
 %{?_enable_libcodec2:BuildRequires: libcodec2-devel}
 %{?_enable_libdav1d:BuildRequires: libdav1d-devel}
 %{?_enable_libsvtav1:BuildRequires: libsvt-av1-devel}
@@ -203,6 +208,7 @@ BuildRequires:	yasm
 %{?_enable_libflite:BuildRequires: flite-devel}
 %{?_enable_libfontconfig:BuildRequires: fontconfig-devel}
 %{?_enable_libfribidi:BuildRequires: libfribidi-devel}
+%{?_enable_libglslang:BuildRequires: glslang-devel}
 %{?_enable_libgme:BuildRequires: libgme-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
 %{?_enable_libharfbuzz:BuildRequires: libharfbuzz-devel}
@@ -213,7 +219,6 @@ BuildRequires:	yasm
 %{?_enable_libvpl:BuildRequires: libvpl-devel}
 %{?_enable_libopenh264:BuildRequires: libopenh264-devel}
 %{?_enable_librabbitmq:BuildRequires: librabbitmq-c-devel}
-%{?_enable_libonnxruntime:BuildRequires: libonnxruntime-devel}
 %{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
 %{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
 %{?_enable_libopenjpeg:BuildRequires: libopenjpeg2.0-devel}
@@ -266,77 +271,6 @@ such as audio, video, subtitles and related metadata.
 The ffmpeg is a command line toolbox to manipulate, convert and stream
 multimedia content.
 
-%package	doc
-Summary:	FFmpeg documentation
-Group:		Documentation
-BuildArch:	noarch
-
-%description	doc
-%common_descr
-
-This package contains documentation for FFmpeg.
-
-%package -n	ffplay
-Summary:	A minimalistic multimedia player
-Group:		Video
-Obsoletes:	avplay
-Provides:	avplay
-
-%description -n	ffplay
-%common_descr
-
-This package contains a minimalistic multimedia player.
-
-%package -n	ffplay-doc
-Summary:	Documentation for ffplay
-Group:		Documentation
-BuildArch:	noarch
-
-%description -n	ffplay-doc
-%common_descr
-
-This package contains documentation for ffplay.
-
-%package -n	ffprobe
-Summary:	A simple analysis tool to inspect multimedia content
-Group:		Video
-Obsoletes:	avprobe
-Provides:	avprobe
-
-%description -n	ffprobe
-%common_descr
-
-This package contains ffprobe, a simple analysis tool to inspect
-multimedia content.
-
-%package -n	ffprobe-doc
-Summary:	Documentation for ffprobe
-Group:		Documentation
-BuildArch:	noarch
-
-%description -n	ffprobe-doc
-%common_descr
-
-This package contains documentation for ffprobe.
-
-%package -n	ffserver
-Summary:	A multimedia streaming server for live broadcasts
-Group:		Video
-
-%description -n ffserver
-%common_descr
-
-This package contains a multimedia streaming server for live broadcasts.
-
-%package -n	ffserver-doc
-Summary:	Documentation for ffserver
-Group:		Documentation
-BuildArch:	noarch
-
-%description -n ffserver-doc
-%common_descr
-
-This package contains documentation for ffserver.
 
 %package -n	libavcodec%avcodecver
 Summary:	provides implementation of a wider range of codecs
@@ -348,26 +282,10 @@ Group:		System/Libraries
 The libavcodec library provides implementation of a wider range of
 codecs.
 
-%package -n libavcodec-devel
-Summary: Development files for libavcodec
-Group: Development/C
-Requires: libavcodec%avcodecver = %EVR
-Requires: libavutil-devel = %EVR
-
-%description -n libavcodec-devel
-This package contains development files for libavcodec.
-
-%package -n libavcodec-devel-static
-Summary: Static development files for libavcodec
-Group: Development/C
-Requires: libavcodec-devel = %EVR
-
-%description -n libavcodec-devel-static
-This package contains static development files for libavcodec.
-
-%package -n	libavdevice%avdevicever
-Summary:	FFmpeg device handling library
-Group:		System/Libraries
+%package -n    libavdevice%avdevicever
+Summary:       FFmpeg device handling library
+Group:         System/Libraries
+ 
 
 %description -n libavdevice%avdevicever
 %common_descr
@@ -376,22 +294,6 @@ The libavdevice library provides a generic framework for grabbing from
 and rendering to many common multimedia input/output devices, and
 supports several input and output devices, including Video4Linux2, VfW,
 DShow, and ALSA.
-
-%package -n libavdevice-devel
-Summary: Development files for libavdevice
-Group: Development/C
-Requires: libavdevice%avdevicever = %EVR
-
-%description -n libavdevice-devel
-This package contains development files for libavdevice.
-
-%package -n libavdevice-devel-static
-Summary: Static development files for libavdevice
-Group: Development/C
-Requires: libavdevice-devel = %EVR
-
-%description -n libavdevice-devel-static
-This package contains static development files for libavdevice.
 
 %package -n	libavfilter%avfilterver
 Summary:	FFmpeg filter layer library
@@ -403,21 +305,6 @@ Group:		System/Libraries
 The libavfilter library provides a mean to alter decoded Audio and Video
 through chain of filters.
 
-%package -n libavfilter-devel
-Summary: Development files for libavfilter
-Group: Development/C
-Requires: libavfilter%avfilterver = %EVR
-
-%description -n libavfilter-devel
-This package contains development files for libavfilter.
-
-%package -n libavfilter-devel-static
-Summary: Static development files for libavfilter
-Group: Development/C
-Requires: libavfilter-devel = %EVR
-
-%description -n libavfilter-devel-static
-This package contains static development files for libavfilter.
 
 %package -n	libavformat%avformatver
 Summary:	FFmpeg audio, video and subtitle streams (de)multiplexing library
@@ -429,23 +316,6 @@ Group:		System/Libraries
 The libavformat library implements streaming protocols, container
 formats and basic I/O access.
 
-%package -n libavformat-devel
-Summary: Development files for libavcodec
-Group: Development/C
-Requires: libavformat%avformatver = %EVR
-Requires: libavcodec-devel = %EVR
-
-%description -n libavformat-devel
-This package contains development files for libavformat.
-
-%package -n libavformat-devel-static
-Summary: Static development files for libavformat
-Group: Development/C
-Requires: libavformat-devel = %EVR
-
-%description -n libavformat-devel-static
-This package contains static development files for libavformat.
-
 %package -n	libavutil%avutilver
 Summary:	Utility library to aid portable multimedia programming
 Group:		System/Libraries
@@ -455,22 +325,6 @@ Group:		System/Libraries
 
 The libavutil library includes hashers, decompressors and miscellaneous
 utility functions.
-
-%package -n libavutil-devel
-Summary: Development files for libavutil
-Group: Development/C
-Requires: libavutil%avutilver = %EVR
-
-%description -n libavutil-devel
-This package contains development files for libavutil.
-
-%package -n libavutil-devel-static
-Summary: Static development files for libavutil
-Group: Development/C
-Requires: libavutil-devel = %EVR
-
-%description -n libavutil-devel-static
-This package contains static development files for libavutil.
 
 %package -n	libswresample%swresamplever
 Summary:	FFmpeg audio resampling, rematrixing and sample format conversion library
@@ -508,23 +362,6 @@ Group:		System/Libraries
 
 The libswscale library implements color conversion and scaling routines.
 
-%package -n libswscale-devel
-Summary: Development files for libswscale
-Group: Development/C
-Requires: libswscale%swscalever = %EVR
-Requires: libavutil-devel = %EVR
-
-%description -n libswscale-devel
-This package contains development files for libswscale.
-
-%package -n libswscale-devel-static
-Summary: Static development files for libswscale
-Group: Development/C
-Requires: libswscale-devel = %EVR
-
-%description -n libswscale-devel-static
-This package contains static development files for libswscale.
-
 %prep
 %setup
 %patch -p1
@@ -541,8 +378,6 @@ xz Changelog
 %add_optflags %{?_enable_mmx:-DRUNTIME_CPUDETECT}
 %endif
 %endif
-# onnxruntime_c_api.h lives in a subdir and configure checks it without pkg-config
-%{?_enable_libonnxruntime:%add_optflags -I%_includedir/onnxruntime}
 ./configure \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -580,6 +415,7 @@ xz Changelog
 	%{subst_enable libbs2b} \
 	%{subst_enable libcaca} \
 	%{subst_enable libcdio} \
+	%{subst_enable libcelt} \
 	%{subst_enable libcodec2} \
 	%{subst_enable libdav1d} \
 	%{subst_enable libsvtav1} \
@@ -590,6 +426,7 @@ xz Changelog
 	%{subst_enable libfontconfig} \
 	%{subst_enable libfreetype} \
 	%{subst_enable libfribidi} \
+	%{subst_enable libglslang} \
 	%{subst_enable libgme} \
 	%{subst_enable libharfbuzz} \
 	%{subst_enable libgsm} \
@@ -604,7 +441,6 @@ xz Changelog
 	%{subst_enable libmp3lame} \
 	%{subst_enable librabbitmq} \
 	%{subst_enable libmysofa} \
-	%{subst_enable libonnxruntime} \
 	%{subst_enable_with libopencore_amrnb libopencore-amrnb} \
 	%{subst_enable_with libopencore_amrwb libopencore-amrwb} \
 	%{subst_enable libopenh264} \
@@ -644,6 +480,7 @@ xz Changelog
 	%{subst_enable libzmq} \
 	%{subst_enable libzvbi} \
 	%{subst_enable lv2} \
+	%{subst_enable omx} \
 	%{subst_enable openal} \
 	%{subst_enable opencl} \
 	%{subst_enable opengl} \
@@ -692,138 +529,35 @@ tests/checkasm/checkasm
 %_datadir/ffmpeg
 %exclude %_datadir/ffmpeg/examples
 
-%if_enabled doc
-%files doc
-%doc doc/ffmpeg*.html
-%doc doc/faq.html
-%doc doc/fate.html
-%doc doc/general.html
-%doc doc/git-howto.html
-%doc doc/lib*.html
-%doc doc/nut.html
-%doc doc/platform.html
-%_man3dir/*
-%endif
-
-%if_enabled ffplay
-%files -n ffplay
-%_bindir/ffplay
-%{?_enable_doc:%_man1dir/ffplay*}
-
-%if_enabled doc
-%files -n ffplay-doc
-%doc doc/ffplay*.html
-%endif
-%endif
-
-%if_enabled ffprobe
-%files -n ffprobe
-%_bindir/ffprobe
-%{?_enable_doc:%_man1dir/ffprobe*}
-
-%if_enabled doc
-%files -n ffprobe-doc
-%doc doc/ffprobe*.html
-%endif
-%endif
-
-%if_enabled ffserver
-%files -n ffserver
-%_bindir/ffserver
-%{?_enable_doc:%_man1dir/ffserver*}
-%endif
-
-%if_enabled doc
-%files -n ffserver-doc
-%{?_enable_ffserver:%doc doc/ffserver*.html}
-%endif
 
 %files -n libavcodec%avcodecver
 %_libdir/libavcodec.so.%{avcodecver}*
 
-%files -n libavcodec-devel
-%_includedir/libavcodec
-%_libdir/libavcodec.so
-%_pkgconfigdir/libavcodec.pc
-
 %files -n libavdevice%avdevicever
 %_libdir/libavdevice.so.%{avdevicever}*
 
-%files -n libavdevice-devel
-%_includedir/libavdevice
-%_libdir/libavdevice.so
-%_pkgconfigdir/libavdevice.pc
 
 %files -n libavfilter%avfilterver
 %_libdir/libavfilter.so.%{avfilterver}*
 
-%files -n libavfilter-devel
-%_includedir/libavfilter
-%_libdir/libavfilter.so
-%_pkgconfigdir/libavfilter.pc
 
 %files -n libavformat%avformatver
 %_libdir/libavformat.so.%{avformatver}*
 
-%files -n libavformat-devel
-%_includedir/libavformat
-%_pkgconfigdir/libavformat.pc
-%_libdir/libavformat.so
-
 %files -n libavutil%avutilver
 %_libdir/libavutil.so.%{avutilver}*
 
-%files -n libavutil-devel
-%_includedir/libavutil
-%_libdir/libavutil.so
-%_pkgconfigdir/libavutil.pc
 
 %files -n libswresample%swresamplever
 %_libdir/libswresample.so.%{swresamplever}*
 
-%files -n libswresample-devel
-%_includedir/libswresample
-%_libdir/libswresample.so
-%_pkgconfigdir/libswresample.pc
 
 %files -n libswscale%swscalever
 %_libdir/libswscale.so.%{swscalever}*
 
-%files -n libswscale-devel
-%_includedir/libswscale
-%_libdir/libswscale.so
-%_pkgconfigdir/libswscale.pc
-
-%if_enabled static
-%files -n libavformat-devel-static
-%_libdir/libavformat.a
-
-%files -n libavcodec-devel-static
-%_libdir/libavcodec.a
-
-%files -n libavutil-devel-static
-%_libdir/libavutil.a
-
-%files -n libswresample-devel-static
-%_libdir/libswresample.a
-
-%files -n libswscale-devel-static
-%_libdir/libswscale.a
-
-%files -n libavdevice-devel-static
-%_libdir/libavdevice.a
-
-%files -n libavfilter-devel-static
-%_libdir/libavfilter.a
-
-%endif
-
 %changelog
-* Mon Aug 17 2026 Anton Farygin <rider@altlinux.org> 2:9.0.1-alt1
-- 8.1.2 -> 9.0.1
-- rebased v4l2-request patch series (kwiboo/v4l2-request-n8.1) onto 9.0.1
-- dropped upstream-removed options: libcelt, libglslang, omx
-- enabled libonnxruntime DNN backend (dnn_processing, sr, derain filters)
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 2:8.1.2-alt3
+- built as legacy library without devel packages
 
 * Wed Aug 05 2026 Anton Farygin <rider@altlinux.org> 2:8.1.2-alt2
 - Fixes:
