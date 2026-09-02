@@ -16,12 +16,12 @@
 #%%def_without test
 
 Name: perl-Net-SIP
-Version: 0.839
+Version: 0.840
 Release: alt1
 
 Summary: Perl framework for SIP (Voice Over IP, RFC3261)
 
-License: Artistic
+License: Artistic-1.0
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Net-SIP/
 
@@ -57,6 +57,9 @@ layer for common tasks.
 %doc Changes README HOWTO BUGS COPYRIGHT samples bin
 
 %changelog
+* Wed Sep 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.840-alt1
+- NMU: new version
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.839-alt1
 - automated CPAN update
 
