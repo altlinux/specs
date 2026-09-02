@@ -4,13 +4,13 @@
 %add_python3_path %_libdir/obs-scripting/
 %add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
 
-%define websocket_version 5.8.3
+%define websocket_version 5.7.4
 #%%define browser_version 2.26.3
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 32.1.2
+Version: 32.2.2
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
@@ -218,12 +218,17 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Wed Sep 02 2026 Evgeniy Serov <scala@altlinux.org> 32.2.2-alt1
+- New version 32.2.2.
+- Update websocket to 5.7.4.
+- Update upstream/remotes.
+
 * Fri Apr 24 2026 Anton Midyukov <antohami@altlinux.org> 32.1.2-alt1
 - New version 32.1.2.
 
 * Sun Apr 05 2026 Anton Midyukov <antohami@altlinux.org> 32.1.1-alt1
 - New version 32.1.1.
-- Update websocket to 5.8.3.
+- Update websocket to 5.7.3.
 
 * Mon Mar 09 2026 Anton Midyukov <antohami@altlinux.org> 32.1.0-alt1
 - New version 32.1.0.
