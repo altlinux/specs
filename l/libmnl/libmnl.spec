@@ -1,11 +1,12 @@
 Name:           libmnl
 Version:        1.0.5
-Release:        alt1
+Release:        alt2.d24c886
 Summary:        Minimalistic Netlink library
 Group:          System/Libraries
-License:         LGPLv2.1+
+License:        LGPLv2.1+
 URL:            http://netfilter.org/projects/libmnl
-Source:        %name-%version.tar
+Source:         %name-%version.tar
+BuildRequires:  doxygen
 
 %description
 libmnl is a minimalistic user-space library oriented to Netlink developers.
@@ -28,7 +29,7 @@ developing applications that use %name.
 
 %build
 %autoreconf
-%configure
+%configure --with-doxygen=yes
 %make_build
 
 %install
@@ -39,12 +40,17 @@ developing applications that use %name.
 %_libdir/%name.so.*
 
 %files devel
-%doc examples
+%doc examples doxygen/html
 %_libdir/*.so
 %_includedir/%name
 %_libdir/pkgconfig/*.pc
+%_man3dir/*
 
 %changelog
+* Tue Jun 09 2026 Alexei Takaseev <taf@altlinux.org> 1.0.5-alt2.d24c886
+- Build git: d24c886
+- Enable documentation
+
 * Wed Apr 06 2022 Alexei Takaseev <taf@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
