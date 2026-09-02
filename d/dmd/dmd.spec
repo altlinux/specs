@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.112.1
+Version: 2.113.0
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -152,7 +152,7 @@ cp -r ../phobos/std %buildroot%_includedir/dmd/phobos
 cp ../phobos/etc/c/*.d %buildroot%_includedir/dmd/phobos/etc/c/
 
 pushd ../tools
-%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-Idruntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%_prefix
+%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-Idruntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%prefix
 popd
 
 # catdoc conflicts with file from package 'catdoc'; rename it
@@ -205,6 +205,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Sep 02 2026 Andrey Kovalev <ded@altlinux.org> 2.113.0-alt1
+- Updated to upstream version 2.113.0.
+
 * Tue Jan 20 2026 Andrey Kovalev <ded@altlinux.org> 2.112.1-alt1
 - Updated to upstream version 2.112.1.
 
