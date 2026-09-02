@@ -1,5 +1,5 @@
 Name: simpleini
-Version: 4.26
+Version: 4.27
 Release: alt1
 
 Summary: Cross-platform C++ library to read and write INI-style configuration files
@@ -53,6 +53,9 @@ MIT licence.
 %_cmakedir/SimpleIni
 
 %changelog
+* Wed Sep 02 2026 Nazarov Denis <nenderus@altlinux.org> 4.27-alt1
+- New version 4.27.
+
 * Mon Jun 15 2026 Nazarov Denis <nenderus@altlinux.org> 4.26-alt1
 - New version 4.26.
 
