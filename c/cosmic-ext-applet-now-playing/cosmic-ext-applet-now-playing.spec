@@ -2,7 +2,7 @@
 %define oname com.github.DiegoMMR.CosmicExtAppletNowPlaying
 
 Name: cosmic-ext-applet-now-playing
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A small COSMIC panel applet that shows what is currently playing
@@ -109,6 +109,9 @@ install -Dm 0644 res/%oname.desktop %buildroot%_desktopdir/%oname.desktop
 %_desktopdir/%oname.desktop
 
 %changelog
+* Wed Sep 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.1-alt1
+- 0.2.0 -> 0.2.1
+
 * Mon Aug 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
 - Initial build.
 
