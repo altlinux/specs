@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.12.8
+%define uv_version 0.12.9
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -145,6 +145,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Wed Sep 02 2026 Stanislav Levin <slev@altlinux.org> 0.12.9-alt1
+- 0.12.8 -> 0.12.9
+
 * Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 0.12.8-alt1
 - 0.12.7 -> 0.12.8
 - Fixed FTBFS on loongarch64 by adapting upstream patch for linux-raw-sys crate
