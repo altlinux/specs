@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -75,6 +75,25 @@ play network games with people all over the world.
 
 This package contents data files for QML %name client.
 
+%package server
+Summary: Server-side components for %name
+Group: Games/Cards
+License: AGPL-3.0+
+
+%description server
+This package contains the dedicated standalone server
+components for the PokerTH Texas Hold'em poker simulator.
+
+It includes:
+ - pokerth_dedicated_server: A headless console server for hosting
+   LAN or internet games without a graphical user interface.
+ - pokerth_official_server: High-performance backend engine used
+   for large-scale deployments and official lobby replication.
+ - pokerth_chatcleaner: An automated internal moderation utility
+   designed to filter spam and enforce chat security.
+
+These tools are intended for running persistent, 24/7 poker servers.
+
 %prep
 %setup
 %patch -p1
@@ -110,8 +129,7 @@ sed -ri -e "s|QT_PLUGIN_PATH=[^[:blank:]]+|QT_PLUGIN_PATH=$QT_PLUGIN_PATH|" \
 rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 
 %files
-%_bindir/*
-%exclude %_bindir/pokerth_qml-client
+%_bindir/pokerth_client
 %_desktopdir/pokerth.desktop
 
 %files data
@@ -126,7 +144,16 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %files qml-data
 %_datadir/pokerth/data/gfx/qml/
 
+%files server
+%_bindir/pokerth_chatcleaner
+%_bindir/pokerth_dedicated_server
+%_bindir/pokerth_official_server
+
 %changelog
+* Wed Sep 02 2026 Mikhail Efremov <sem@altlinux.org> 2.1.8-alt1
+- Added server subpackage.
+- Updated to 2.1.8.
+
 * Thu Aug 13 2026 Mikhail Efremov <sem@altlinux.org> 2.1.7-alt1
 - Updated to 2.1.7.
 
