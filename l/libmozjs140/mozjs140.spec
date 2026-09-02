@@ -18,13 +18,15 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.13.0
+Version: %ver_major.15.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
 License: MPL-2.0 and GPL-2.0-or-later LGPL-2.1-or-later and BSD
 Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Releases/
+
+#Vcs: https://github.com/mozilla-firefox/firefox
 
 %if_disabled snapshot
 #Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
@@ -43,6 +45,9 @@ Patch4: Bug-1761665-Extend-x86-workaround-to-32-bit-ARM.patch
 Patch5: Fix-math_private.h-for-i386-FTBFS.patch
 # https://src.fedoraproject.org/rpms/mozjs140/blob/rawhide/f/D261512.1755672843.diff
 Patch6: mozjs-python-3.14.patch
+# https://bugzilla.mozilla.org/show_bug.cgi?id=2053518
+# based on https://github.com/mozilla-firefox/firefox/commit/1ecaa12836a6
+Patch10: firefox-154.1-up-rust-1.98-for-140.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -98,6 +103,7 @@ interface to the JavaScript engine.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch10 -p1
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -185,6 +191,10 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Wed Sep 02 2026 Yuri N. Sedunov <aris@altlinux.org> 140.15.0-alt1
+- 140.15.0
+- fixed build with rust-1.98
+
 * Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 140.13.0-alt1
 - 140.13.0
 
