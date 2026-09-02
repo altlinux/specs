@@ -11,7 +11,7 @@
 
 Name:    Uranium
 Version: 5.13.0
-Release: alt4
+Release: alt5
 
 Summary: A Python framework for building Desktop applications.
 License: LGPL-3.0-or-later
@@ -34,7 +34,6 @@ BuildRequires:  python3-module-numpy-testing
 BuildRequires:  python3-module-scipy
 BuildRequires:  python3-module-PyQt6
 BuildRequires:  python3-module-pytest
-BuildRequires:  python3-module-pip
 BuildRequires:  python3-module-shapely
 BuildRequires:  python3-module-twisted-web
 BuildRequires:  python3-modules-sqlite3
@@ -104,8 +103,8 @@ sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 
 # Remove unnecessary plugins
 BAD_PLUGINS=(UpdateChecker)
-printf 'plugins/%%s\0' ${BAD_PLUGINS[@]} | xargs -r0 rm -r --
-%__python3 %SOURCE2 -d resources/bundled_packages ${BAD_PLUGINS[@]}
+printf 'plugins/%%s\0' "${BAD_PLUGINS[@]}" | xargs -r0 rm -r
+%__python3 %SOURCE2 -d resources/bundled_packages "${BAD_PLUGINS[@]}"
 
 %build
 # there is no arch specific content, so we set LIB_SUFFIX to nothing
@@ -129,11 +128,10 @@ popd
 %find_lang uranium
 
 %check
-pip3 freeze
 # skipping failing tests, see:
 # * https://github.com/Ultimaker/Uranium/issues/594
 # * https://github.com/Ultimaker/Uranium/issues/603
-python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
+%__python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 	and not TestHttpRequestManager and not test_isValid \
 	and not test_properties and not test_triggerAction \
 	and not test_triggerActionWithData and not test_activeToolPanel"
@@ -149,6 +147,10 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Wed Sep 02 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt5
+- Drop unnecessary python3-module-pip build dep.
+- Fix cleaning up plugin metadata files.
+
 * Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt4
 - Fix python3-module-pyArcus build dep.
 
