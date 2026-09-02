@@ -1,10 +1,10 @@
 %define rname mpvqt
-%define sover 1
+%define sover 3
 %define major 6
 %define libname libmpvqt%sover
 
 Name: %rname%major
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Group: System/Libraries
@@ -54,11 +54,15 @@ Requires: libmpv-devel
 #%_datadir/qlogging-categories6/*.*categories
 
 %files devel
+%_qt6_archdatadir/metatypes/*mpvqt*
 %_includedir/MpvQt%major/
 %_libdir/cmake/MpvQt/
 %_libdir/lib*.so
 
 %changelog
+* Wed Sep 02 2026 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
+- new version
+
 * Thu Apr 10 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - new version
 
