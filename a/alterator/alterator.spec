@@ -1,5 +1,5 @@
 Name: alterator
-Version: 5.4.5
+Version: 5.4.6
 Release: alt1
 
 Summary: ALT Linux configurator engine
@@ -181,6 +181,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Sep 02 2026 Mikhail Efremov <sem@altlinux.org> 5.4.6-alt1
+- build/xgettext: Fixed compatibility with file 5.x.
+
 * Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 5.4.5-alt1
 - Add a new built-in "debug" step.
 
