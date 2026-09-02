@@ -1,6 +1,6 @@
 Name:     github2spec
 # NOTE update version in github2spec
-Version:  1.4.14
+Version:  1.4.15
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from github using genspec
@@ -34,6 +34,10 @@ install -Dm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Sep 02 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.15-alt1
+- Add environment variable to pass github token
+- (ALT #59036)
+
 * Fri May 16 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.14-alt1
 - Show warning on HTTPError while getting api info instead of aboring
 - (ALT #54293)
