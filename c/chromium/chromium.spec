@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        152.0.7977.64
+Version:        152.0.7977.75
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -94,7 +94,7 @@ Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-disable-font-tests.patch
-Patch017: 0017-DEBIAN-rust-sanitize.patch
+# Patch017:
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
@@ -112,6 +112,7 @@ Patch030: 0030-DEBIAN-disable-rustc-allow-features.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-145-rustc-ftbfs.patch
+# 33-35
 Patch036: 0036-ALT-disable-lens-overlay.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-DEBIAN-iota.patch
@@ -125,7 +126,7 @@ Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
 Patch046: 0046-DEBIAN-libcpp-headers.patch
 Patch047: 0047-DEBIAN-libpng-testonly.patch
-# Patch048: 0048-DEBIAN-clang19.patch
+# Patch048:
 Patch049: 0049-DEBIAN-clang19-cookie-string-view.patch
 
 Patch050: 0050-DEBIAN-jxl-features.patch
@@ -159,7 +160,7 @@ Patch072: 0072-DEBIAN-disable-ai.patch
 Patch073: 0073-FEDORA-chromium-145-rust-1.88-undefined-symbol.patch
 Patch074: 0074-DEBIAN-llvm-19-const-profile.patch
 Patch075: 0075-DEBIAN-llvm-19-keyfactory.patch
-# 76:
+# Patch076:
 Patch077: 0077-DEBIAN-llvm-19-raw-ref-map-find.patch
 Patch078: 0078-DEBIAN-revert-v8-sanitize.patch
 Patch079: 0079-DEBIAN-arm-logging.patch
@@ -730,6 +731,36 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Sep 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 152.0.7977.75-alt1
+- New version (152.0.7977.75).
+- Fixes:
+  + CVE-2026-84353: Use after free in Shared Tab Groups
+  + CVE-2026-84352: Use after free in WebGL
+  + CVE-2026-84354: Incorrect authorization in FileSystem
+  + CVE-2026-84359: Information leak in Skia
+  + CVE-2026-84357: Improper input validation in Omnibox
+  + CVE-2026-84324: Use after free in Proxy
+  + CVE-2026-84349: Use after free in Browser
+  + CVE-2026-84326: Uninitialized resource in V8
+  + CVE-2026-84333: Use after free in Dawn
+  + CVE-2026-84351: Buffer overflow in GPU
+  + CVE-2026-84325: Improper input validation in DataTransfer
+  + CVE-2026-84328: Missing authorization in FileSystem
+  + CVE-2026-84347: Use after free in WebRTC
+  + CVE-2026-84323: Missing authorization in FileSystem
+  + CVE-2026-84355: Incorrect authorization in Navigation
+  + CVE-2026-84358: Improper privilege management in Downloads
+  + CVE-2026-84332: Incorrect authorization in SiteSettings
+  + CVE-2026-84330: UI misrepresentation in FullScreen
+  + CVE-2026-84334: Incorrect authorization in Chromoting
+  + CVE-2026-84348: Information leak in MediaCapture
+  + CVE-2026-84335: Incorrect authorization in TabStrip
+  + CVE-2026-84327: Incorrect authorization in Autofill
+  + CVE-2026-84329: Confused deputy in CredentialProvider
+  + CVE-2026-84356: UI misrepresentation in FullScreen
+  + CVE-2026-84350: Use after free in TabStrip
+  + CVE-2026-84331: Incorrect authorization in Actor
+
 * Thu Aug 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 152.0.7977.64-alt1
 - New version (152.0.7977.64).
 - Fixes:
